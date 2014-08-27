@@ -79,11 +79,14 @@ if [ -n `which git` ] ; then
 		echo "RollBack previous commit:";
 		echo "	git revert \"commit id\"";
 		echo "";
-		echo "how to merge recent remote commit:";
+		echo "Merge recent remote commit:";
 		echo "	1. git pull";
 		echo "		warn: would be overwritten...";
 		echo "	2. git commit -am \"merging hoge file.\"";
-		echo "	3. git mergetool"'
+		echo "	3. git mergetool";
+		echo "";
+		echo "No real file removal [git rm]:";
+		echo "	git rm --cached file"'
 fi
 # }}}
 # With OS {{{
