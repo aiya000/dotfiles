@@ -21,6 +21,9 @@ set visualbell
 nmap     <C-j> <CR>
 imap     <C-j> <CR>
 vmap     <C-j> <CR>
+nnoremap <C-c> <Esc>
+inoremap <C-c> <Esc>
+vnoremap <C-c> <Esc>
 nnoremap <C-l> <Esc>
 inoremap <C-l> <Esc>
 vnoremap <C-l> <Esc>
