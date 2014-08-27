@@ -1,0 +1,7 @@
+link.sh
+unlink.sh
+functions.sh
+ignore_link.txt
+.git
+.gitignore
+README.txt

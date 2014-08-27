@@ -1,0 +1,218 @@
+
+###########################
+# Shunted Develop aliases #
+###########################
+
+# Initialize {{{
+
+if [ ! -d ~/.tmp ] ; then
+	mkdir ~/.tmp
+fi
+
+# }}}
+
+# Setting With OS {{{
+
+if [ $isUbuntu -eq 1 ] ; then
+	alias gobjc='gcc $1 -lobjc'
+	alias gfobjc='gcc $1 -lobjc -lgnustep-base -I/usr/include/GNUstep -fconstant-string-class=NSConstantString'
+	alias g++='g++ -I/usr/include/c++/4.9 -I/usr/include/c++/4.9/x86_64-linux-gnu -std=c++11'
+elif [ $isCygwin -eq 1 ] ; then
+	alias javadoc='cocot javadoc -encoding UTF-8'
+	alias javadocall='javadoc -private'
+	alias javap='cocot javap'
+	alias javac='cocot javac -encoding UTF-8'
+	alias java='cocot java'
+	alias jdb='cocot jdb'
+	alias jar='cocot jar'
+	alias javacsq='cocot javac -classpath .:sqlite-jdbc-3.7.2.jar'
+	alias javasq='cocot java -classpath .:sqlite-jdbc-3.7.2.jar'
+	alias g++='g++ -std=c++11'
+	#alias ghci='ghcii.sh'
+	alias hugs='/cygdrive/c/Program Files (x86)/WinHugs/winhugs.exe &'
+fi
+
+# }}}
+
+# Easy Test of ShellScript {{{
+
+function testsh() {
+	if [ -z "$1" ] ; then
+		if [ ! -f ~/.tmp/test.sh ] ; then
+			echo '#!/bin/sh' > ~/.tmp/test.sh
+			chmod +x ~/.tmp/test.sh
+		fi
+		vim ~/.tmp/test.sh ; flag=$? ; wait
+	fi
+
+	if [ $flag -eq 0 ] ; then
+		echo '' ; echo '-------------------------' ; echo ''
+		~/.tmp/test.sh ; flag=$?
+		echo '' ; echo '-------------------------'
+	else
+		echo
+		echo '>> executing is faild'
+	fi
+	return $flag
+}
+
+# }}}
+
+# Easy Test of C {{{
+function testc() {
+	if [ -z "$1" ] ; then
+		vim ~/.tmp/test.c ; wait
+		gcc -o ~/.tmp/test ~/.tmp/test.c ; flag=$? ; wait
+	elif [ "$1" = "-cpp" ] ; then
+		vim ~/.tmp/test.cpp ; wait
+		g++ -o ~/.tmp/test ~/.tmp/test.cpp ; flag=$? ; wait
+	else
+		echo '>> unknown option'
+		return 1;
+	fi
+
+	if [ $flag -eq 0 ] ; then
+		echo ; echo '-------------------------' ; echo
+		~/.tmp/test ; flag=$?
+		echo ; echo '-------------------------'
+	else
+		echo
+		echo '>> compiling is faild'
+	fi
+	return $flag
+}
+# }}}
+
+# Easy Test of Java {{{
+
+if [ $isCygwin -eq 1 ] ; then
+	alias compileOfTest="cocot javac Test.java"
+else
+	alias compileOfTest="javac Test.java"
+fi
+
+function runjava() {
+	sourceName="$1"
+	javaName=`echo $1 | cut -d. -f1`
+	javac $sourceName
+	java  $javaName
+	[ -s "`ls | grep ${javaName}.*\.class`" ] &&
+		rm ${javaName}*.class
+}
+alias javarun=runjava
+
+function testj() {
+	# Backup Current Directories's path
+	cd - 2> /dev/null 1>&2
+	temp_back=`pwd`
+	cd - 2> /dev/null 1>&2
+	temp_cur=`pwd`
+
+	# Edit and Compile match it with Windows's javac
+	vim ~/.tmp/Test.java ; wait
+	cd ~/.tmp/
+
+	# Counter of cp932
+	if [ $isCygwin -eq 1 ] ; then
+		if [ -n "`which nkf`" ] ; then
+			cp Test.java Test.java.bak
+			nkf --overwrite -s Test.java
+		else
+			echo 'You should have "nkf".'
+			tempfile=`mktemp`
+			iconv -f utf8 -t cp932 Test.java > $tempfile
+			mv $tempfile Test.java
+			return 1
+		fi
+	fi
+
+	compileOfTest ; flag=$? ; wait
+	if [ $flag -eq 0 ] ; then
+		echo ; echo '-------------------------' ; echo
+		java Test
+		echo ; echo '-------------------------'
+		classfiles=`ls ~/.tmp/*.class`
+		for classfile in $classfiles ; do
+			rm $classfile
+		done
+	else
+		echo
+		echo '>> compiling is faild'
+	fi
+
+	# Restore cp932
+	if [ $isCygwin -eq 1 ] ; then
+		rm Test.java
+		mv Test.java.bak Test.java
+	fi
+
+	# End Function and Restore dir path
+	cd $temp_back
+	cd $temp_cur
+	return $flag
+}
+
+# }}}
+
+# Easy Test of Python {{{
+
+function testpy() {
+	# Editing $1 and Waiting finishing of vimpy
+	vim $1 ; wait
+	# Runing Python Script
+	echo ; echo '-------------------------' ; echo
+	python $1
+	echo ; echo '-------------------------'
+}
+
+# Vim editing Python Source
+function vimpy() {
+	# Exits File Check
+	if [ -f "$1" ] ; then
+		echo 'That file already exists.'
+		return 1
+	fi
+	# BaseFile Copy and Open By Vim
+	if [ -n "$1" ] ; then
+		cp ~/bin/Base.py $1 &&
+		vim $1 &&
+		return 0
+	fi
+}
+
+# Vim editing Python Source and Run
+function vimpr() {
+	# Editing $1 and Waiting finishing of vimpy
+	vimpy $1 ; wait
+	# Runing Python Script
+	echo ; echo '-------------------------' ; echo
+	python $1
+	echo ; echo '-------------------------'
+}
+
+# }}}
+
+# Easy Test of ShellScript {{{
+
+function testsh() {
+	vim $1 ; wait
+	chmod +x $1 ; wait
+	echo ; echo '-------------------------' ; echo
+	sh $1
+	echo ; echo '-------------------------'
+}
+
+# }}}
+
+# Easy Test of Haskell {{{
+
+function testh() {
+	vim ~/.tmp/test.hs ; wait
+	echo ; echo '-------------------------' ; echo
+	#TODO not found path by cygwin
+	runghc ~/.tmp/test.hs ; flag=$?
+	echo ; echo '-------------------------'
+	return $flag
+}
+
+# }}}

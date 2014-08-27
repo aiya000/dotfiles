@@ -1,0 +1,59 @@
+"vim:ft=vim
+"3.8.2 (created: 2014/02/13 23:52:43)
+"---------------------"
+"      Settings       "
+"---------------------"
+"{{{
+
+" Follow Hint ([Ff] key) using Alpha
+set hintchars=abcdefghijklmnopqrstuvwxyz
+"set editor=gvim
+set visualbell
+
+"}}}
+
+"---------------------"
+"       KeyMaps       "
+"---------------------"
+"{{{
+
+" Set Customize Base Keys
+nmap     <C-j> <CR>
+imap     <C-j> <CR>
+vmap     <C-j> <CR>
+nnoremap <C-l> <Esc>
+inoremap <C-l> <Esc>
+vnoremap <C-l> <Esc>
+nnoremap <leader>l <C-l>
+inoremap <leader>l <C-l>
+vnoremap <leader>l <C-l>
+
+" Command Mode set Bash like Keys
+cnoremap <C-p> <S-Up>
+cnoremap <C-n> <S-Down>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+"cnoremap <C-h> <BS>
+"cnoremap <C-d> <Del>
+cnoremap <C-i> <Tab>
+
+" Insert Mode is Emacs Like (!?) Configure
+inoremap <C-p>      <Up>
+inoremap <C-n>      <Down>
+inoremap <C-b>      <Left>
+inoremap <C-f>      <Right>
+inoremap <C-h>      <BS>
+inoremap <C-d>      <Del>
+inoremap <C-x><C-c> <Esc>
+
+"}}}
+
+"---------------------"
+"       Aliases       "
+"---------------------"
+"{{{
+
+" Easily Search word in Wikipedia
+command! -nargs=+ WikiSearch :open wikipedia <args>
+
+"}}}

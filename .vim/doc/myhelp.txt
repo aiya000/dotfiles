@@ -1,0 +1,32 @@
+*myhelp.txt*	自分が困ったときの書きまとめです。
+
+Version: 1.0
+Author : aiya000 <aiya.develop@gmail.com>
+
+=============================================
+CONTENTS	*myhelp*
+
+HowToPlugins			|myhelp-howto-plugins|
+
+=============================================
+
+
+================================================================================
+HowToPlugins			*myhelp-howto-plugins*
+
+-- プラグインの存在が認識されていないけど！？
+もしかしてNeoBundleのconfigでdisabledを設定してない？
+
+
+-- ref-hoogleが動かない！！
+cabal update
+cabal install hoogle
+hoogle database
+これらはしたかな？
+
+================================================================================
+
+
+=============================================
+=============================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:fdl=0:
