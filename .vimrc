@@ -64,6 +64,7 @@ scriptencoding utf8
 "  -- What is best event ?
 
 "-- My Hints highlight faild in kaoriya gvim
+"  -- and Cygwin Vim
 
 "}}}
 " Todo {{{
@@ -88,6 +89,7 @@ scriptencoding utf8
 " @Bugs         => This hoge has the bugs.
 " @Unused       => Not used this yet now.
 " @See          => Referred URL, Saw Document, and etc...
+" @Code         => A sample code using it
 "-------------------
 " Designating the target platform.
 " @Hoge{Win|Ubuntu}  : This Hint for Win and Ubuntu.
@@ -150,6 +152,14 @@ endfunction
 function! s:filecreate(file)
 	execute ':tabnew|w '.a:file.'|bd'
 endfunction
+
+function! s:put_text(text)
+	let l:b = @+
+	let @+ = a:text
+	execute 'normal "+p'
+	let @+ = l:b
+endfunction
+
 
 "}}}
 
@@ -856,15 +866,6 @@ augroup END
 "-------------------------"
 " Utility Function {{{
 
-" Puting text
-function! s:put_text(text) "{{{
-	let l:b = @+
-	let @+ = a:text
-	execute 'normal "+p'
-	let @+ = l:b
-endfunction "}}}
-
-
 " Revese string of current line
 function! s:reverse_line()  " {{{
 	let l:reverse = ""
@@ -875,11 +876,11 @@ function! s:reverse_line()  " {{{
 	endfor
 	let l:reverse .= "\n"
 
-	let l:reg = @"
+	let l:r = @"
 	execute 'normal dd'
 	let @" = l:reverse
 	execute 'normal P'
-	let @" = l:reg
+	let @" = l:r
 endfunction  " }}}
 command! ReverseLine call s:reverse_line()
 
@@ -897,9 +898,7 @@ function! s:tac_line() range " {{{
 		for line in range(a:firstline, a:lastline)
 			call add(lines, substitute(getline(line)."\n", "\t", "", 'g'))
 		endfor
-		"a
-		"b
-		"c
+
 		for i in range(a:firstline, a:lastline)
 			execute 'normal "_dd'
 			execute 'normal i' . lines[a:lastline - i]
@@ -918,7 +917,7 @@ command! CursorCenter
 
 
 " Conditions for Different Actions
-if s:isWindows  " different operated sp is ubuntu and ...kaoriya?
+if s:isWindows  " is different operated sp ubuntu and kaoriya?
 	command! ScratchUp  execute ':Scratch' | execute ':resize 5'
 else
 	command! ScratchUp  execute ':sp|Scratch' | execute ':resize 5'
@@ -933,11 +932,6 @@ endfunction"}}}
 command! -nargs=1 RandomPut  call s:put_text( s:random_int(<q-args>) )
 
 " For Movement in a Indent Block {{{
-
-"@Unused('This for up_cursor_lid and down_cursor_ground .')
-function! s:tab_count(text)
-	return count( split(substitute(a:text, "", "\n", 'g'), "\n"), "	" )
-endfunction
 
 function! s:up_cursor_lid() "{{{
 	if &ft == 'netrw' | return | endif
@@ -976,9 +970,10 @@ command! DownCursorGround call s:down_cursor_ground()
 
 
 "@Incompleted('"+" deleted in sql sytax')
-" Surrounded Quotation SQL String to No Surrounded SQL String
-" (simply easily implemention)
-function! s:sql_string_to_sql() range
+"@Code $ "SELECT *" +
+"      $ " FROM table;";
+" ('Select it, and execute this.')"
+function! s:sql_string_to_sql() range "{{{
 	let sql = ""
 	for i in range(a:firstline, a:lastline)
 		let line = getline(i)
@@ -989,7 +984,7 @@ function! s:sql_string_to_sql() range
 		let sql .= lineOfSql
 	endfor
 	let @" = substitute(sql, "\s\s\+", " ", 'g')
-endfunction
+endfunction "}}}
 
 command! -range Sqlnize :<line1>,<line2>call s:sql_string_to_sql()
 
@@ -1255,12 +1250,9 @@ augroup PluginPrefs
 	autocmd FileType w3m nmap <buffer> <leader>E  :W3mShowExtenalBrowser <CR>
 augroup END
 
-augroup PluginPrefs
-	autocmd FileType * nmap <leader>w <Plug>(openbrowser-open)
-augroup END
-
 
 augroup AddtionalKeys
+	autocmd FileType * nmap <leader>w <Plug>(openbrowser-open)
 	autocmd FileType * nmap <leader>b :ScratchUp<CR>
 augroup END
 
