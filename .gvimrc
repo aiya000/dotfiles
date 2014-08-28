@@ -6,10 +6,10 @@ if s:isWindows
 	command! Transparence     set transparency=180
 	command! LowTransparence  set transparency=220
 	command! NoTransparence   set transparency=255
-	set transparency=255
+	set transparency=220
 endif
 
-augroup GuiHighlight
+augroup gui_highlight
 	autocmd VimEnter,WinEnter * match     rcEmSpace /　/
 	autocmd ColorScheme       * highlight rcEmSpace gui=standout guifg=White
 
@@ -19,7 +19,6 @@ augroup END
 highlight CursorLine gui=underline guifg=cyan guibg=NONE
 
 colorscheme evening
-LowTransparence
 
 
 command! DressUpColorEvening
