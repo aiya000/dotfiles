@@ -1,6 +1,8 @@
 
-This repo since [2014-08-27]
-author : aiya\_000(aiya000)
+# dotfiles
+
+## This repo since [2014-08-27]  
+## author : aiya\_000(aiya000)  
 
 License:
 	参考にするなりそのまま使うなりなんなりしてもいいけど
