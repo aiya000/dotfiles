@@ -153,14 +153,6 @@ function! s:filecreate(file)
 	execute ':tabnew|w '.a:file.'|bd'
 endfunction
 
-function! s:put_text(text)
-	let l:b = @+
-	let @+ = a:text
-	execute 'normal "+p'
-	let @+ = l:b
-endfunction
-
-
 "}}}
 
 
@@ -862,7 +854,7 @@ augroup END
 
 
 "-------------------------"
-"    Function Command     "
+"   Functional Command    "
 "-------------------------"
 " Utility Function {{{
 
@@ -929,7 +921,7 @@ function! s:random_int(max)"{{{
 	let l:matchEnd = matchend(reltimestr(reltime()), '\d\+\.') + 1
 	return reltimestr(reltime())[l:matchEnd :] % (a:max + 1)
 endfunction"}}}
-command! -nargs=1 RandomPut  call s:put_text( s:random_int(<q-args>) )
+command! -nargs=1 RandomPut execute 'normal a' . s:random_int(<q-args>) )
 
 " For Movement in a Indent Block {{{
 
@@ -970,9 +962,9 @@ command! DownCursorGround call s:down_cursor_ground()
 
 
 "@Incompleted('"+" deleted in sql sytax')
-"@Code $ "SELECT *" +
-"      $ " FROM table;";
-" ('Select it, and execute this.')"
+"@Code('Select it, and execute this.')
+"  $ "SELECT *" +
+"  $ " FROM table;";
 function! s:sql_string_to_sql() range "{{{
 	let sql = ""
 	for i in range(a:firstline, a:lastline)
@@ -987,6 +979,13 @@ function! s:sql_string_to_sql() range "{{{
 endfunction "}}}
 
 command! -range Sqlnize :<line1>,<line2>call s:sql_string_to_sql()
+
+
+"@See http://leafcage.hateblo.jp/entry/2013/08/02/001600
+" Time Watcher
+command! -bar TimerStart let  s:startTime = reltime()
+command! -bar TimerEcho  echo reltimestr( reltime(s:startTime) )
+command! -bar TimerPut   execute 'normal o' . reltimestr(reltime(s:startTime))
 
 "}}}
 " Development Support {{{
