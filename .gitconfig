@@ -6,4 +6,4 @@
 
 # git config --global credential.helper 'cache --timeout=10800'
 [credential]
-	helper = cache --timeout=10800
+	helper = cache

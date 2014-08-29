@@ -53,6 +53,8 @@ scriptencoding utf8
 "-- point marker line num in a file
 "  -- I can jump marked line and list up mark lines
 
+"-- implement command that print format (%0, %1, %2), ({0}, {1}, {2}) replace arguments on real time
+
 " }}}
 " Issues Board {{{
 
@@ -495,13 +497,13 @@ if s:isUnix
 elseif s:isCygwin
 	let g:quickrun_config['cs'] = {
 	\	'command' : 'cocot csc.exe',
-	\	'exec'     : ['%c %o %s:p > /dev/null', 'mono %s:p:r.exe', 'rm %s:p:r.exe'],
+	\	'exec'     : ['%c %o %s:p > /dev/null', './%s:p:r.exe', 'rm %s:p:r.exe'],
 	\	'tempfile' : '{tempname()}.cs'
 	\}
 elseif s:isWindows
 	let g:quickrun_config['cs'] = {
 	\	'command' : 'csc.exe',
-	\	'exec'     : ['%c %o %s:p', 'mono %s:p:r.exe', 'rm %s:p:r.exe'],
+	\	'exec'     : ['%c %o %s:p', '%s:p:r.exe', 'rm %s:p:r.exe'],
 	\	'tempfile' : '{tempname()}.cs'
 	\}
 endif
@@ -571,6 +573,8 @@ augroup PluginPrefs
 	\	call vimshell#altercmd#define('thanks', "echo \"(*^o^)< You're welcome!\"")
 	\|	call vimshell#set_alias('sp',  ':sp  | VimShellCreate')
 	\|	call vimshell#set_alias('vsp', ':vsp | VimShellCreate')
+
+	autocmd FileType vimshell  set fdm=marker
 augroup END
 
 "}}}
@@ -649,7 +653,8 @@ endif
 set laststatus=2
 
 " Line is not wrap
-set nowrap
+"set nowrap
+set wrap
 
 " View line number
 set number
@@ -986,7 +991,7 @@ function! s:sql_string_to_sql() range "{{{
 	let @" = substitute(sql, "\s\s\+", " ", 'g')
 endfunction "}}}
 
-command! -range Sqlnize :<line1>,<line2>call s:sql_string_to_sql()
+command! -range SqlCopy :<line1>,<line2>call s:sql_string_to_sql()
 
 "}}}
 " Development Support {{{
@@ -1288,17 +1293,16 @@ augroup ProgramTypes
 augroup END
 
 augroup ProgramTypes
-	"@See http://vim-users.jp/2009/07/hack40/
 	autocmd FileType haskell    let &commentstring = " --%s"
 	autocmd FileType yesod      set ts=4|set sw=4|set et
 	" autocmd TextChangedI *
 	" 	\if &ft == 'yesod' &&
 	" 	\	getline('.')[col('.')-2] . getline('.')[col('.')-3] .
-	" 	\	getline('.')[col('.')-4] . getline('.')[col('.')-5] == '   ' |
-	" 	\	execute 'normal ia' |
-	" 	\	imap <C-h> <Backspace>         |
-	" 	\	inoremap <Backspace> <Backspace><Backspace><Backspace><Backspace> |
-	" 	\endif
+	" 	\	getline('.')[col('.')-4] . getline('.')[col('.')-5] == '   '
+	" 	\|	execute 'normal ia'
+	" 	\|	imap <C-h> <Backspace>
+	" 	\|	inoremap <Backspace> <Backspace><Backspace><Backspace><Backspace>
+	" 	\|endif
 
 	autocmd VimEnter,WinEnter * syntax match rcHfSpace /^\s\s*/
 	autocmd FileType haskell    highlight    rcHfSpace cterm=underline ctermfg=Cyan
