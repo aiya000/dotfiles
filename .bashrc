@@ -33,6 +33,7 @@ alias sshknowns='vim ~/.ssh/known_hosts'
 # Vim Util Alias {{{
 
 alias vi='vim -u NONE -U NONE --noplugin'
+alias gvi='gvim -u NONE -U NONE --noplugin'
 alias vimshell='vim -c VimShell'
 alias conshell='vim -c "ConqueTerm bash"'
 alias vimclearview='rm ~/.backup/vim_backup/view/*'
@@ -88,6 +89,14 @@ if [ -n `which git` ] ; then
 		echo "No real file removal [git rm]:";
 		echo "	git rm --cached file"'
 fi
+
+
+if [ -n `which tmux` ] ; then
+	alias tmux-myhelp='
+		echo "Window rename:";
+		echo "	<Prefix> ,"'
+fi
+
 # }}}
 # With OS {{{
 

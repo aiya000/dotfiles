@@ -87,7 +87,8 @@ scriptencoding utf8
 " @Incompleted  => This is not completed making.
 " @Deprecated   => Deprecated This vimrc Version.
 " @Bugs         => This hoge has the bugs.
-" @Unused       => Not used this yet now.
+" @Unused       => Not used this yet now, needs inquires deleting this.
+" @Unchecked    => This was not unchecked that is operate right
 " @See          => Referred URL, Saw Document, and etc...
 " @Code         => A sample code using it
 "-------------------
@@ -641,10 +642,10 @@ endif
 set laststatus=2
 
 " Status Bar format $ @See http://sourceforge.jp/magazine/07/11/06/0151231
-set statusline=%F\ \ $\ \ Format=%{&ff}\ FileType=%y
+set statusline=%F\%=[FileType=%y][Format=%{&ff}]
 
 " Line is not wrap
-set nowrap
+set wrap
 
 " View line number
 set number
@@ -665,7 +666,7 @@ syntax sync fromstart
 syntax on
 
 " Visualize Tab and Space
-if !s:isDosWin
+if !s:isDosWin && &encoding != 'cp932'  "@Unchecked('Is this suitable condition ?')
 	set list
 	set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%
 endif
@@ -686,12 +687,13 @@ augroup SyntaxHighlights
 	autocmd ColorScheme * highlight StatusLineNC                 ctermfg=Blue
 	autocmd ColorScheme * highlight LineNr                       ctermfg=Blue
 	autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
-	autocmd VimEnter,WinEnter * match     EmSpace /　/
-	autocmd ColorScheme       * highlight EmSpace cterm=standout ctermfg=White
 
-	"@Incompleted('not functioned')
-	autocmd VimEnter,WinEnter * match     MyHint /.*"@\w\s/
-	autocmd ColorScheme       * highlight MyHint cterm=standout ctermfg=Red
+	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427}
+	autocmd VimEnter,WinEnter * match     rcEmSpace /　/
+	autocmd ColorScheme       * highlight rcEmSpace cterm=standout ctermfg=White
+
+	autocmd VimEnter,WinEnter * match     rcMyHint /.*"@\w\s/
+	autocmd ColorScheme       * highlight rcMyHint cterm=standout ctermfg=Red
 augroup END
 
 augroup SyntaxHighlights
@@ -854,7 +856,6 @@ augroup FileEvents
 augroup END
 
 "}}}
-
 
 "-------------------------"
 "   Functional Command    "
