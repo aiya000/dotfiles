@@ -356,7 +356,7 @@ NeoBundle 'duff/vim-scratch'
 NeoBundle 'rhysd/vim-grammarous'
 NeoBundleLazy 'thinca/vim-themis'
 NeoBundle 'tomasr/molokai'
-NeoBundle 'soramugi/auto-ctags.vim'  "@Incompleted('maybe not functioned in Windows')
+NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'aiya000/ahoge-put.vim'
 
 call neobundle#end()
@@ -639,6 +639,9 @@ endif
 
 " Status Bar always displayed
 set laststatus=2
+
+" Status Bar format $ @See http://sourceforge.jp/magazine/07/11/06/0151231
+set statusline=%F\ \ $\ \ Format=%{&ff}\ FileType=%y
 
 " Line is not wrap
 set nowrap
@@ -1150,11 +1153,11 @@ command! -nargs=1 Log VimConsoleLog <args>
 command! LogClear VimConsoleClear
 
 if executable('ghc') && executable('ghci')
-	command!  Ghc      !runghc %
-	command!  Ghci     ConqueTerm ghci
-	command!  Sghci    sp|ConqueTerm ghci
-	command!  Vghci    vsp|ConqueTerm ghci
-	command!  GhciTab  tabnew|ConqueTerm ghci
+	command! -nargs=*  Ghc      !runghc % <q-args>
+	command!           Ghci     ConqueTerm ghci
+	command!           Sghci    sp|ConqueTerm ghci
+	command!           Vghci    vsp|ConqueTerm ghci
+	command!           GhciTab  tabnew|ConqueTerm ghci
 endif
 if executable('hoogle')
 	command! -nargs=1  Hoogle Ref hoogle <args>
