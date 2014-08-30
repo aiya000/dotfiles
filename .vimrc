@@ -666,8 +666,10 @@ syntax sync fromstart
 syntax on
 
 " Visualize Tab and Space
-if !s:isDosWin && &encoding != 'cp932'  "@Unchecked('Is this suitable condition ?')
-	set list
+set list
+if &encoding == 'cp932'  "@Unchecked('Is this suitable condition ?')
+	set listchars=tab:>_,trail:_,extends:>,precedes:<,nbsp:%
+else
 	set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%
 endif
 
@@ -916,7 +918,14 @@ command! CursorCenter
 if s:isWindows  " is different operated sp ubuntu and kaoriya?
 	command! ScratchUp  execute ':Scratch' | execute ':resize 5'
 else
-	command! ScratchUp  execute ':sp|Scratch' | execute ':resize 5'
+	function! ScratchUpByCondition()
+		if !&modified
+			execute ':sp|Scratch' | execute ':resize 5'
+		else
+			execute ':Scratch' | execute ':resize 5'
+		endif
+	endfunction
+	command! ScratchUp  call ScratchUpByCondition()
 endif
 
 
