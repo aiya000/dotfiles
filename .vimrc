@@ -642,7 +642,7 @@ endif
 set laststatus=2
 
 " Status Bar format $ @See http://sourceforge.jp/magazine/07/11/06/0151231
-set statusline=%F\%=[FileType=%y][Format=%{&ff}]
+set statusline=%F%m\%=[FileType=%y][Format=%{&ff}]
 
 " Line is not wrap
 set wrap
