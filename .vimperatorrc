@@ -1,4 +1,4 @@
-"vim:ft=vim
+"vim:ft=vim:
 "3.8.2 (created: 2014/02/13 23:52:43)
 "---------------------"
 "      Settings       "
@@ -48,6 +48,9 @@ inoremap <C-f>      <Right>
 inoremap <C-h>      <BS>
 inoremap <C-d>      <Del>
 inoremap <C-x><C-c> <Esc>
+
+" View Bookmarks
+nmap <leader>b :bmarks<CR>
 
 "}}}
 
