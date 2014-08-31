@@ -688,11 +688,11 @@ augroup SyntaxHighlights
 	autocmd ColorScheme * highlight LineNr                       ctermfg=Blue
 	autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 
-	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427}
-	autocmd ColorScheme * match     rcEmSpace /　/
-	autocmd ColorScheme * highlight rcEmSpace cterm=standout ctermfg=White
+	autocmd VimEnter,BufWinEnter * match     rcEmSpace /　/
+	autocmd ColorScheme * highlight rcEmSpace cterm=standout ctermfg=LightBlue
 
-	autocmd ColorScheme * match     rcMyHint /"@\w\+/
+	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427}
+	autocmd VimEnter,BufWinEnter * match     rcMyHint /"@\w\+/
 	autocmd ColorScheme * highlight rcMyHint cterm=standout ctermfg=Red
 augroup END
 
@@ -1294,7 +1294,7 @@ augroup END
 
 
 "-------------------------"
-"        FileType         "
+"       File Type         "
 "-------------------------"
 "{{{
 
@@ -1342,6 +1342,14 @@ augroup ProgramTypes
 	autocmd BufNewFile,BufRead *.v let &ft='coq'
 	autocmd FileType coq execute ':FtCoqInstancyOn'
 	autocmd FileType coq let &commentstring = " (*%s*)"
+augroup END
+
+augroup ProgramTypes
+	autocmd BufNewFile,BufRead *.md set filetype=markdown
+	autocmd FileType markdown
+			\	set tabstop=2
+			\|	set shiftwidth=2
+			\|	set expandtab
 augroup END
 
 "}}}
