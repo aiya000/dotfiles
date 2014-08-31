@@ -53,6 +53,9 @@ scriptencoding utf8
 "-- point marker line num in a file
 "  -- I can jump marked line and list up mark lines
 
+"-- Implement Local vimgrep :Grep
+"  -- correspond for unnamed buffer
+
 " }}}
 " Issues Board {{{
 
@@ -69,11 +72,11 @@ scriptencoding utf8
 "}}}
 " Todo {{{
 
-"-- Implement Cat by Vim script
-
 "-- Implement a command, Englishnize selected lines by QuickRun 'en'
 
 "-- set paste option added after checking operate.
+
+"-- Scratch quit action fixed to same ubuntu in kaoriya
 
 " }}}
 
@@ -141,17 +144,11 @@ endfunction
 
 
 function! s:rm(file)
-	"@Unsupported('Windows(del) unchecked.')
 	if s:isUnix
 		execute '!rm '.a:file
 	else
 		execute '!del '.substitute(a:file, "/", "\\", 'g')
 	endif
-endfunction
-
-
-function! s:filecreate(file)
-	execute ':tabnew|w '.a:file.'|bd'
 endfunction
 
 "}}}
@@ -186,7 +183,7 @@ if s:isKaoriya
 	if s:isWindows && !s:hasMingw && filereadable(suppress)
 		call s:rm(suppress)
 	elseif s:isWindows && s:hasMingw && !filereadable(suppress)
-		call s:filecreate(suppress)
+		call writefile([], suppress)
 	endif
 	unlet suppress
 
@@ -673,7 +670,8 @@ else
 	set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%
 endif
 
-" Powered Up Syntax Highlight " {{{
+" Powered Up Syntax Highlight
+" {{{
 
 augroup SyntaxHighlights
 	"autocmd Colorscheme * highlight Normal       cterm=NONE      ctermfg=Cyan
@@ -691,11 +689,11 @@ augroup SyntaxHighlights
 	autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 
 	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427}
-	autocmd VimEnter,WinEnter * match     rcEmSpace /　/
-	autocmd ColorScheme       * highlight rcEmSpace cterm=standout ctermfg=White
+	autocmd ColorScheme * match     rcEmSpace /　/
+	autocmd ColorScheme * highlight rcEmSpace cterm=standout ctermfg=White
 
-	autocmd VimEnter,WinEnter * match     rcMyHint /.*"@\w\s/
-	autocmd ColorScheme       * highlight rcMyHint cterm=standout ctermfg=Red
+	autocmd ColorScheme * match     rcMyHint /"@\w\+/
+	autocmd ColorScheme * highlight rcMyHint cterm=standout ctermfg=Red
 augroup END
 
 augroup SyntaxHighlights
@@ -713,6 +711,9 @@ if exists('+breakindent')
 	set breakindent
 	set linebreak
 endif
+
+" Invisible character visualize to hex
+"set display=uhex
 
 "}}}
 
@@ -810,9 +811,11 @@ set shellslash
 " Add Match Pairs
 set matchpairs+=<:>
 
-"@Incompleted('not functioned ?')
 " Load Target for ctags
 set tags=./tags,~/tags
+
+" Explore wake up default dir
+set browsedir=buffer
 
 "}}}
 
@@ -908,6 +911,24 @@ command! -range=%
 \	Tac :<line1>, <line2> call s:tac_line()
 
 
+" Catenate and echo files
+function! s:cat_file(...) "{{{
+	let l:catenate = ""
+	if executable('cat')
+		for filePath in a:000
+			let l:catenate .= s:system('cat '.filePath)
+		endfor
+	else
+		for filePath in a:000
+			let l:catenate .= join(readfile(filePath), "\n")
+		endfor
+	endif
+
+	echo l:catenate
+endfunction "}}}
+command! -nargs=* Cat call s:cat_file(<f-args>)
+
+
 " Move Cursor Line's Center
 command! CursorCenter
 \	execute 'normal 0' |
@@ -936,7 +957,9 @@ function! s:random_int(max)"{{{
 endfunction"}}}
 command! -nargs=1 RandomPut execute 'normal a' . s:random_int(<q-args>) )
 
-" For Movement in a Indent Block {{{
+
+" For Movement in a Indent Block
+" {{{
 
 function! s:up_cursor_lid() "{{{
 	if &ft == 'netrw' | return | endif
@@ -978,7 +1001,8 @@ command! DownCursorGround call s:down_cursor_ground()
 "@Code('Select it, and execute this.')
 "  $ "SELECT *" +
 "  $ " FROM table;";
-function! s:sql_string_to_sql() range "{{{
+"  Yank => SELECT * FROM tablle;
+function! s:sql_yank_normalize() range "{{{
 	let sql = ""
 	for i in range(a:firstline, a:lastline)
 		let line = getline(i)
@@ -990,12 +1014,10 @@ function! s:sql_string_to_sql() range "{{{
 	endfor
 	let @" = substitute(sql, "\s\s\+", " ", 'g')
 endfunction "}}}
+command! -range Sqlnize :<line1>,<line2>call s:sql_yank_normalize()
 
-command! -range Sqlnize :<line1>,<line2>call s:sql_string_to_sql()
 
-
-"@See http://leafcage.hateblo.jp/entry/2013/08/02/001600
-" Time Watcher
+" Time Watcher  $ @See http://leafcage.hateblo.jp/entry/2013/08/02/001600
 command! -bar TimerStart let  s:startTime = reltime()
 command! -bar TimerEcho  echo reltimestr( reltime(s:startTime) )
 command! -bar TimerPut   execute 'normal o' . reltimestr(reltime(s:startTime))
