@@ -356,6 +356,7 @@ NeoBundleLazy 'thinca/vim-themis'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'aiya000/ahoge-put.vim'
+NeoBundle 'kannokanno/previm'
 
 call neobundle#end()
 "NeoBundleCheck
@@ -1288,6 +1289,7 @@ augroup END
 augroup AddtionalKeys
 	autocmd FileType * nmap <leader>w <Plug>(openbrowser-open)
 	autocmd FileType * nmap <leader>b :ScratchUp<CR>
+	autocmd FileType * nmap <leader>v :VimShellPop<CR>
 augroup END
 
 " }}}
@@ -1346,10 +1348,10 @@ augroup END
 
 augroup ProgramTypes
 	autocmd BufNewFile,BufRead *.md set filetype=markdown
-	autocmd FileType markdown
-			\	set tabstop=2
-			\|	set shiftwidth=2
-			\|	set expandtab
+	autocmd FileType markdown       set tabstop=2
+	\|                              set shiftwidth=2
+	\|                              set expandtab
+	autocmd FileType markdown       nmap <leader>r :PrevimOpen<CR>
 augroup END
 
 "}}}
