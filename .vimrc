@@ -1049,33 +1049,23 @@ if executable('javac') && executable('java')
 		endif
 
 		execute '!'.
-		\	printf('%s %s.java',   l:command[0], l:javaname).';'
-		\	printf('%s %s',        l:command[1], l:javaname).';'
-		\	printf('rm %s*.class', l:javaname)
+		\	printf('%s %s.java',   l:command[0], l:javaname).';'.
+		\	printf('%s %s',        l:command[1], l:javaname).';'.
+		call s:rm( printf('%s*.class', l:javaname) )
 	endfunction "}}}
 	command! JavaRun call s:java_run_func()
 endif
 
 if executable('python')
-	function! s:initPyJpFunc() "{{{
+	function! s:put_python_import_for_jp() "{{{
 		execute 'normal gg'
-		execute 'normal O'
-		let @+ = "#!/usr/bin/env python"
-		execute 'normal "+P'
-		execute 'normal o'
-		let @+ = "# -*- coding: utf-8 -*-"
-		execute 'normal "+P'
-		execute 'normal o'
-		let @+ = "import sys"
-		execute 'normal "+P'
-		execute 'normal o'
-		let @+ = "import codecs"
-		execute 'normal "+P'
-		execute 'normal o'
-		let @+ = "sys.stdout = codecs.getwriter('utf_8')(sys.stdout)"
-		execute 'normal "+P'
+		execute 'normal O' . "#!/usr/bin/env python"
+		execute 'normal o' . "# -*- coding: utf-8 -*-"
+		execute 'normal o' . "import sys"
+		execute 'normal o' . "import codecs"
+		execute 'normal o' . "sys.stdout = codecs.getwriter('utf_8')(sys.stdout)"
 	endfunc "}}}
-	command! InitPyJP call s:initPyJpFunc()
+	command! ImportPythonJp call s:put_python_import_for_jp()
 endif
 
 " }}}
