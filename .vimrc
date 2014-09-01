@@ -1009,7 +1009,19 @@ command! DownCursorGround call s:down_cursor_ground()
 "  $ "SELECT *" +
 "  $ " FROM table;";
 "  Yank => SELECT * FROM tablle;
-command! -range SqlCopy :<line1>,<line2>call s:sql_string_to_sql()
+function! s:sql_yank_normalize() range "{{{
+	let sql = ""
+	for i in range(a:firstline, a:lastline)
+		let line = getline(i)
+		let lineOfSql = substitute(substitute(
+		\		substitute(line, "\"", "", 'g'),
+		\	"+", "", 'g'), "\t", "", 'g')
+
+		let sql .= lineOfSql
+	endfor
+	let @" = substitute(sql, "\s\s\+", " ", 'g')
+endfunction "}}}
+command! -range SqlCopy :<line1>,<line2>call s:sql_yank_normalize()
 
 " Time Watcher  $ @See http://leafcage.hateblo.jp/entry/2013/08/02/001600
 command! -bar TimerStart let  s:startTime = reltime()
