@@ -60,8 +60,10 @@ scriptencoding utf8
 
 "-- Translate English Plugin By Weblio
 
+"-- Implement a command, Englishnize selected lines by QuickRun 'en'
+
 " }}}
-" Issues Board {{{
+" Issues {{
 
 "-- C-o hard use when vimshell
 
@@ -73,10 +75,11 @@ scriptencoding utf8
 "-- My Hints highlight faild in kaoriya gvim
 "  -- and Cygwin Vim
 
+"-- [autocmd FileType * nnoremap <C-j> :normal o] Applied tweetvim buffer
+"  -- want to not functioned this map in that buffer
+
 "}}}
 " Todo {{{
-
-"-- Implement a command, Englishnize selected lines by QuickRun 'en'
 
 "-- set paste option added after checking operate.
 
