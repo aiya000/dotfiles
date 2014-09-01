@@ -55,6 +55,11 @@ scriptencoding utf8
 
 "-- implement command that print format (%0, %1, %2), ({0}, {1}, {2}) replace arguments on real time
 
+"-- Implement Local vimgrep :Grep
+"  -- correspond for unnamed buffer
+
+"-- Translate English Plugin By Weblio
+
 " }}}
 " Issues Board {{{
 
@@ -71,11 +76,11 @@ scriptencoding utf8
 "}}}
 " Todo {{{
 
-"-- Implement Cat by Vim script
-
 "-- Implement a command, Englishnize selected lines by QuickRun 'en'
 
 "-- set paste option added after checking operate.
+
+"-- Scratch quit action fixed to same ubuntu in kaoriya
 
 " }}}
 
@@ -89,7 +94,8 @@ scriptencoding utf8
 " @Incompleted  => This is not completed making.
 " @Deprecated   => Deprecated This vimrc Version.
 " @Bugs         => This hoge has the bugs.
-" @Unused       => Not used this yet now.
+" @Unused       => Not used this yet now, needs inquires deleting this.
+" @Unchecked    => This was not unchecked that is operate right
 " @See          => Referred URL, Saw Document, and etc...
 " @Code         => A sample code using it
 "-------------------
@@ -142,26 +148,12 @@ endfunction
 
 
 function! s:rm(file)
-	"@Unsupported('Windows(del) unchecked.')
 	if s:isUnix
 		execute '!rm '.a:file
 	else
 		execute '!del '.substitute(a:file, "/", "\\", 'g')
 	endif
 endfunction
-
-
-function! s:filecreate(file)
-	execute ':tabnew|w '.a:file.'|bd'
-endfunction
-
-function! s:put_text(text)
-	let l:b = @+
-	let @+ = a:text
-	execute 'normal "+p'
-	let @+ = l:b
-endfunction
-
 
 "}}}
 
@@ -195,7 +187,7 @@ if s:isKaoriya
 	if s:isWindows && !s:hasMingw && filereadable(suppress)
 		call s:rm(suppress)
 	elseif s:isWindows && s:hasMingw && !filereadable(suppress)
-		call s:filecreate(suppress)
+		call writefile([], suppress)
 	endif
 	unlet suppress
 
@@ -366,8 +358,9 @@ NeoBundle 'duff/vim-scratch'
 NeoBundle 'rhysd/vim-grammarous'
 NeoBundleLazy 'thinca/vim-themis'
 NeoBundle 'tomasr/molokai'
-NeoBundle 'soramugi/auto-ctags.vim'  "@Incompleted('maybe not functioned in Windows')
+NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'aiya000/ahoge-put.vim'
+NeoBundle 'kannokanno/previm'
 
 call neobundle#end()
 "NeoBundleCheck
@@ -652,8 +645,10 @@ endif
 " Status Bar always displayed
 set laststatus=2
 
-" Line is not wrap
-"set nowrap
+" Status Bar format $ @See http://sourceforge.jp/magazine/07/11/06/0151231
+set statusline=%F%m\%=[FileType=%y][Format=%{&ff}]
+
+" Wrap Line
 set wrap
 
 " View line number
@@ -675,12 +670,15 @@ syntax sync fromstart
 syntax on
 
 " Visualize Tab and Space
-if !s:isDosWin
-	set list
+set list
+if &encoding == 'cp932'  "@Unchecked('Is this suitable condition ?')
+	set listchars=tab:>_,trail:_,extends:>,precedes:<,nbsp:%
+else
 	set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%
 endif
 
-" Powered Up Syntax Highlight " {{{
+" Powered Up Syntax Highlight
+" {{{
 
 augroup SyntaxHighlights
 	"autocmd Colorscheme * highlight Normal       cterm=NONE      ctermfg=Cyan
@@ -696,12 +694,13 @@ augroup SyntaxHighlights
 	autocmd ColorScheme * highlight StatusLineNC                 ctermfg=Blue
 	autocmd ColorScheme * highlight LineNr                       ctermfg=Blue
 	autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
-	autocmd VimEnter,WinEnter * match     EmSpace /　/
-	autocmd ColorScheme       * highlight EmSpace cterm=standout ctermfg=White
 
-	"@Incompleted('not functioned')
-	autocmd VimEnter,WinEnter * match     MyHint /.*"@\w\s/
-	autocmd ColorScheme       * highlight MyHint cterm=standout ctermfg=Red
+	autocmd VimEnter,BufWinEnter * match     rcEmSpace /　/
+	autocmd ColorScheme * highlight rcEmSpace cterm=standout ctermfg=LightBlue
+
+	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427}
+	autocmd VimEnter,BufWinEnter * match     rcMyHint /"@\w\+/
+	autocmd ColorScheme * highlight rcMyHint cterm=standout ctermfg=Red
 augroup END
 
 augroup SyntaxHighlights
@@ -719,6 +718,9 @@ if exists('+breakindent')
 	set breakindent
 	set linebreak
 endif
+
+" Invisible character visualize to hex
+"set display=uhex
 
 "}}}
 
@@ -816,9 +818,11 @@ set shellslash
 " Add Match Pairs
 set matchpairs+=<:>
 
-"@Incompleted('not functioned ?')
 " Load Target for ctags
 set tags=./tags,~/tags
+
+" Explore wake up default dir
+set browsedir=buffer
 
 "}}}
 
@@ -865,9 +869,8 @@ augroup END
 
 "}}}
 
-
 "-------------------------"
-"    Function Command     "
+"   Functional Command    "
 "-------------------------"
 " Utility Function {{{
 
@@ -915,6 +918,24 @@ command! -range=%
 \	Tac :<line1>, <line2> call s:tac_line()
 
 
+" Catenate and echo files
+function! s:cat_file(...) "{{{
+	let l:catenate = ""
+	if executable('cat')
+		for filePath in a:000
+			let l:catenate .= s:system('cat '.filePath)
+		endfor
+	else
+		for filePath in a:000
+			let l:catenate .= join(readfile(filePath), "\n")
+		endfor
+	endif
+
+	echo l:catenate
+endfunction "}}}
+command! -nargs=* Cat call s:cat_file(<f-args>)
+
+
 " Move Cursor Line's Center
 command! CursorCenter
 \	execute 'normal 0' |
@@ -925,7 +946,14 @@ command! CursorCenter
 if s:isWindows  " is different operated sp ubuntu and kaoriya?
 	command! ScratchUp  execute ':Scratch' | execute ':resize 5'
 else
-	command! ScratchUp  execute ':sp|Scratch' | execute ':resize 5'
+	function! ScratchUpByCondition()
+		if !&modified
+			execute ':sp|Scratch' | execute ':resize 5'
+		else
+			execute ':Scratch' | execute ':resize 5'
+		endif
+	endfunction
+	command! ScratchUp  call ScratchUpByCondition()
 endif
 
 
@@ -934,9 +962,11 @@ function! s:random_int(max)"{{{
 	let l:matchEnd = matchend(reltimestr(reltime()), '\d\+\.') + 1
 	return reltimestr(reltime())[l:matchEnd :] % (a:max + 1)
 endfunction"}}}
-command! -nargs=1 RandomPut  call s:put_text( s:random_int(<q-args>) )
+command! -nargs=1 RandomPut execute 'normal a' . s:random_int(<q-args>) )
 
-" For Movement in a Indent Block {{{
+
+" For Movement in a Indent Block
+" {{{
 
 function! s:up_cursor_lid() "{{{
 	if &ft == 'netrw' | return | endif
@@ -975,23 +1005,16 @@ command! DownCursorGround call s:down_cursor_ground()
 
 
 "@Incompleted('"+" deleted in sql sytax')
-"@Code $ "SELECT *" +
-"      $ " FROM table;";
-" ('Select it, and execute this.')"
-function! s:sql_string_to_sql() range "{{{
-	let sql = ""
-	for i in range(a:firstline, a:lastline)
-		let line = getline(i)
-		let lineOfSql = substitute(substitute(
-		\		substitute(line, "\"", "", 'g'),
-		\	"+", "", 'g'), "\t", "", 'g')
-
-		let sql .= lineOfSql
-	endfor
-	let @" = substitute(sql, "\s\s\+", " ", 'g')
-endfunction "}}}
-
+"@Code('Select it, and execute this.')
+"  $ "SELECT *" +
+"  $ " FROM table;";
+"  Yank => SELECT * FROM tablle;
 command! -range SqlCopy :<line1>,<line2>call s:sql_string_to_sql()
+
+" Time Watcher  $ @See http://leafcage.hateblo.jp/entry/2013/08/02/001600
+command! -bar TimerStart let  s:startTime = reltime()
+command! -bar TimerEcho  echo reltimestr( reltime(s:startTime) )
+command! -bar TimerPut   execute 'normal o' . reltimestr(reltime(s:startTime))
 
 "}}}
 " Development Support {{{
@@ -1156,11 +1179,11 @@ command! -nargs=1 Log VimConsoleLog <args>
 command! LogClear VimConsoleClear
 
 if executable('ghc') && executable('ghci')
-	command!  Ghc      !runghc %
-	command!  Ghci     ConqueTerm ghci
-	command!  Sghci    sp|ConqueTerm ghci
-	command!  Vghci    vsp|ConqueTerm ghci
-	command!  GhciTab  tabnew|ConqueTerm ghci
+	command! -nargs=*  Ghc      !runghc % <q-args>
+	command!           Ghci     ConqueTerm ghci
+	command!           Sghci    sp|ConqueTerm ghci
+	command!           Vghci    vsp|ConqueTerm ghci
+	command!           GhciTab  tabnew|ConqueTerm ghci
 endif
 if executable('hoogle')
 	command! -nargs=1  Hoogle Ref hoogle <args>
@@ -1231,6 +1254,9 @@ augroup AddtionalKeys
 
 	" Special ESC Map when cannot use default <C-c> Map (Exam: VimShell)
 	autocmd FileType * inoremap <C-k><C-l> <Esc>
+
+	" Empty Line into Under
+	autocmd FileType * nnoremap <C-j> :normal o<CR>
 augroup END
 
 
@@ -1259,13 +1285,15 @@ augroup END
 augroup AddtionalKeys
 	autocmd FileType * nmap <leader>w <Plug>(openbrowser-open)
 	autocmd FileType * nmap <leader>b :ScratchUp<CR>
+	autocmd FileType * nmap <leader>v :VimShellPop<CR>
+	autocmd FileType * nmap <leader>V :VimShell<CR>
 augroup END
 
 " }}}
 
 
 "-------------------------"
-"        FileType         "
+"       File Type         "
 "-------------------------"
 "{{{
 
@@ -1313,6 +1341,20 @@ augroup ProgramTypes
 	autocmd FileType coq execute ':FtCoqInstancyOn'
 	autocmd FileType coq let &commentstring = " (*%s*)"
 augroup END
+
+augroup ProgramTypes
+	autocmd BufNewFile,BufRead *.md set filetype=markdown
+	autocmd FileType markdown       set tabstop=2
+	\|                              set shiftwidth=2
+	\|                              set expandtab
+	autocmd FileType markdown       nmap <leader>r :PrevimOpen<CR>
+augroup END
+
+augroup ProgramTypes
+	autocmd FileType text set tabstop=2
+	\|                    set shiftwidth=2
+	\|                    set expandtab
+	\|                    set textwidth=0
 
 "}}}
 
