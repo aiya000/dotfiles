@@ -1,5 +1,5 @@
 
-let s:isWindows = has('win32') || has('win64')
+let s:isWindows = has('win32')
 
 if s:isWindows
 	command! HighTransparence set transparency=140
@@ -11,13 +11,18 @@ endif
 
 augroup gui_highlight
 	"@Bugs('Not Shown')
-	autocmd VimEnter,WinEnter * match     rcEmSpace /　/
+	autocmd VimEnter,WinEnter * syntax match     rcEmSpace /　/
 	autocmd ColorScheme       * highlight rcEmSpace gui=standout guifg=White
 
-	autocmd VimEnter,WinEnter * syntax match rcHint /.*"@\w\+/
-	autocmd FileType vim        highlight    rcHint gui=bold guifg=#ef5939
+	"@Bugs('?')
+	autocmd VimEnter,WinEnter * syntax match rcHint /"@\w\+/
+	autocmd ColorScheme       *
+	\	if &filetype == 'vim'
+	\		highlight    rcHint gui=bold guifg=#ef5939
+	\	endif
+
+	autocmd ColorScheme * highlight CursorLine gui=underline guifg=cyan guibg=NONE
 augroup END
-highlight CursorLine gui=underline guifg=cyan guibg=NONE
 
 colorscheme evening
 
