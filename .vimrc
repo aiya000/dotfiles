@@ -127,7 +127,7 @@ scriptencoding utf8
 "---------------------"
 "{{{
 
-let s:isWindows = has('win32') || has('win64')
+let s:isWindows = has('win32')
 let s:isCygwin  = has('win32unix')
 let s:isKaoriya = has('kaoriya')
 let s:isDosWin  = s:isWindows && !s:isCygwin &&!s:isKaoriya
@@ -1254,15 +1254,15 @@ nnoremap q:      <NOP>
 " }}}
 " Bash like KeyMaps {{{
 
-nnoremap <C-j> <CR>
-inoremap <C-j> <CR>
+nmap <C-j> <CR>
+imap <C-j> <CR>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
 cnoremap <C-a> <Home>
 cnoremap <C-h> <Backspace>
 cnoremap <C-d> <Del>
 cnoremap <C-e> <End>
-cnoremap <C-k> <C-\>e getcmdpos() < 2 ?'':getcmdline()[:getcmdpos()-2] <CR>
+cnoremap <C-k> <C-\>e getcmdpos() < 2 ?'':getcmdline()[:getcmdpos()-2]<CR>
 
 " }}}
 " Addtional KeyMaps {{{
@@ -1297,7 +1297,6 @@ augroup PluginPrefs
 	autocmd FileType vimshell nunmap <buffer> q
 	autocmd FileType vimshell imap   <buffer> <C-l>       <Plug>(vimshell_clear)
 	autocmd FileType vimshell imap   <buffer> <C-k><C-p>  <Plug>(vimshell_history_unite)
-	autocmd FileType vimshell imap   <buffer> <C-j>       <Plug>(vimshell_enter)
 	autocmd FileType vimshell iunmap <buffer> <C-p>
 	autocmd FileType vimshell iunmap <buffer> <C-n>
 

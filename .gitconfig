@@ -4,6 +4,9 @@
 [merge]
 	tool = vimdiff
 
+[github]
+	user = aiya000
+
 # git config --global credential.helper 'cache --timeout=10800'
 [credential]
-	helper = cache
+	helper = cache --timeout=3600
