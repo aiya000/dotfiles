@@ -64,7 +64,8 @@ alias lingr-lpp='vim -c "J6uil LanguagesPlusPlus"'
 alias lingr-vim='vim -c "J6uil vim"'
 [ $isUbuntu -eq 1 ] && alias vncserver_kill="vncserver -kill hostname:${1}"  # Destop Number
 
-if [ -n `which git` ] ; then
+
+if [ -n "`which git 2> /dev/null`" ] ; then
 	alias git-myhelp='
 		echo "New Branch:";
 		echo "	git branch newBranchName commitId";
@@ -91,7 +92,7 @@ if [ -n `which git` ] ; then
 fi
 
 
-if [ -n `which tmux` ] ; then
+if [ -n "`which tmux 2> /dev/null`" ] ; then
 	alias tmux-myhelp='
 		echo "Window rename:";
 		echo "	<Prefix> ,"'
