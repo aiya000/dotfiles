@@ -93,10 +93,6 @@ scriptencoding utf8
 
 "-- set paste option added after checking operate.
 
-"-- Scratch quit action fixed to same ubuntu in kaoriya
-
-"-- \v(VimShellPop) Popping to Left(not up)
-
 "-- <C-~> is split window size equalize
 
 " }}}
