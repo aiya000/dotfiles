@@ -6,10 +6,11 @@ if s:isWindows
 	command! Transparence     set transparency=180
 	command! LowTransparence  set transparency=220
 	command! NoTransparence   set transparency=255
-	set transparency=220
+	set transparency=220  "@Bugs('not set at start up gvim')
 endif
 
 augroup gui_highlight
+	"@Bugs('Not Shown')
 	autocmd VimEnter,WinEnter * match     rcEmSpace /　/
 	autocmd ColorScheme       * highlight rcEmSpace gui=standout guifg=White
 

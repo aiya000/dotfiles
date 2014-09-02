@@ -85,6 +85,9 @@ scriptencoding utf8
 "-- 'gist:aiya000/ec5f6b2375a639831953' cannot divide configure
 "  -- if diveding then install it as no named plugin
 
+"-- Do filetype not found when enter filetype ?
+"  -- mmm, this take by filetype text ?
+
 "}}}
 " Todo {{{
 
@@ -1277,7 +1280,7 @@ augroup AddtionalKeys
 	autocmd FileType * inoremap <C-k><C-l> <Esc>
 
 	" Empty Line into Under
-	autocmd FileType * nnoremap <C-j> :normal o<CR>
+	autocmd FileType * nnoremap <C-m> :normal o<CR>
 augroup END
 
 
@@ -1288,14 +1291,13 @@ augroup PluginPrefs
 	autocmd FileType tweetvim nmap <buffer> <C-a>      :TweetVimSwitchAccount<Space>
 	autocmd FileType tweetvim nmap <buffer> U          :TweetVimUserTimeline<Space>
 	autocmd FileType tweetvim_say nmap <buffer> q      <NOP>
-	autocmd FileType tweetvim_say nmap <buffer> <C-j>  <CR>
 	autocmd FileType tweetvim_say imap <buffer> <C-i>  <Space><Space>
 
 	autocmd FileType vimshell nunmap <buffer> Q
 	autocmd FileType vimshell nunmap <buffer> q
 	autocmd FileType vimshell imap   <buffer> <C-l>       <Plug>(vimshell_clear)
 	autocmd FileType vimshell imap   <buffer> <C-k><C-p>  <Plug>(vimshell_history_unite)
-	autocmd FileType vimshell imap   <buffer> <C-j> <Plug>(vimshell_enter)
+	autocmd FileType vimshell imap   <buffer> <C-j>       <Plug>(vimshell_enter)
 	autocmd FileType vimshell iunmap <buffer> <C-p>
 	autocmd FileType vimshell iunmap <buffer> <C-n>
 
@@ -1306,10 +1308,12 @@ augroup END
 
 
 augroup AddtionalKeys
-	autocmd FileType * nmap <leader>w <Plug>(openbrowser-open)
-	autocmd FileType * nmap <leader>b :ScratchUp<CR>
-	autocmd FileType * nmap <leader>v :VimShell -split-command=vsp -toggle<CR>
-	autocmd FileType * nmap <leader>V <Plug>(vimshell_create)
+	autocmd FileType * nmap <leader>w          <Plug>(openbrowser-open)
+	autocmd FileType * nmap <leader>b          :ScratchUp<CR>
+	autocmd FileType * nmap <leader>v          :VimShell -split-command=vsp -toggle<CR>
+	autocmd FileType * nmap <leader><leader>v  :VimShellPop<CR>
+	autocmd FileType * nmap <leader>V          <Plug>(vimshell_create)
+	autocmd FileType * nmap <leader><leader>V  :VimShellTab<CR>
 augroup END
 
 " }}}
