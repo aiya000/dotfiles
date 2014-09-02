@@ -62,6 +62,8 @@ scriptencoding utf8
 
 "-- Implement a command, Englishnize selected lines by QuickRun 'en'
 
+"-- Uniteでencoding変えたい…。
+
 " }}}
 " Issues {{{
 
@@ -1282,10 +1284,11 @@ augroup END
 augroup PluginPrefs
 	autocmd FileType tweetvim nmap <buffer> <leader>R  <Plug>(tweetvim_action_remove_status)
 	autocmd FileType tweetvim nmap <buffer> s          :TweetVimSay <CR>
-	autocmd FileType tweetvim nmap <buffer> <C-r>      :TweetVimHomeTimeline <CR>
+	autocmd FileType tweetvim nmap <buffer> <C-r>      <Plug>(tweetvim_action_reload)
 	autocmd FileType tweetvim nmap <buffer> <C-a>      :TweetVimSwitchAccount<Space>
 	autocmd FileType tweetvim nmap <buffer> U          :TweetVimUserTimeline<Space>
 	autocmd FileType tweetvim_say nmap <buffer> q      <NOP>
+	autocmd FileType tweetvim_say nmap <buffer> <C-j>  <CR>
 	autocmd FileType tweetvim_say imap <buffer> <C-i>  <Space><Space>
 
 	autocmd FileType vimshell nunmap <buffer> Q
@@ -1333,9 +1336,10 @@ augroup ProgramTypes
 	autocmd FileType java       let &commentstring = " /*%s*/"
 	autocmd FileType cs         let &commentstring = " /*%s*/"
 
-	"autocmd VimEnter,WinEnter    *  syntax match VarType /var/
-	"autocmd FileType             cs highlight VarType cterm=bold ctermfg=Green
-	autocmd VimEnter,WinEnter *  syntax match Identifier /var/
+	"autocmd VimEnter,WinEnter    *  syntax match TypeInference /var\s\+/
+	"autocmd FileType             cs highlight TypeInference cterm=bold ctermfg=11
+	
+	autocmd VimEnter,WinEnter *  syntax match Identifier /var\s\+/
 	autocmd FileType cs highlight Identifier
 augroup END
 
