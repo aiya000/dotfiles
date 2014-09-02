@@ -1251,8 +1251,8 @@ nnoremap q:      <NOP>
 " }}}
 " Bash like KeyMaps {{{
 
-nmap     <C-j> <CR>
-imap     <C-j> <CR>
+nnoremap <C-j> <CR>
+inoremap <C-j> <CR>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
 cnoremap <C-a> <Home>
@@ -1295,6 +1295,7 @@ augroup PluginPrefs
 	autocmd FileType vimshell nunmap <buffer> q
 	autocmd FileType vimshell imap   <buffer> <C-l>       <Plug>(vimshell_clear)
 	autocmd FileType vimshell imap   <buffer> <C-k><C-p>  <Plug>(vimshell_history_unite)
+	autocmd FileType vimshell imap   <buffer> <C-j> <Plug>(vimshell_enter)
 	autocmd FileType vimshell iunmap <buffer> <C-p>
 	autocmd FileType vimshell iunmap <buffer> <C-n>
 
@@ -1307,8 +1308,8 @@ augroup END
 augroup AddtionalKeys
 	autocmd FileType * nmap <leader>w <Plug>(openbrowser-open)
 	autocmd FileType * nmap <leader>b :ScratchUp<CR>
-	autocmd FileType * nmap <leader>v :VimShellPop<CR>
-	autocmd FileType * nmap <leader>V :VimShell<CR>
+	autocmd FileType * nmap <leader>v :VimShell -split-command=vsp -toggle<CR>
+	autocmd FileType * nmap <leader>V <Plug>(vimshell_create)
 augroup END
 
 " }}}
