@@ -18,8 +18,8 @@ augroup gui_highlight
 	autocmd VimEnter,WinEnter * syntax match rcHint /"@\w\+/
 	autocmd ColorScheme       *
 	\	if &filetype == 'vim'
-	\		highlight    rcHint gui=bold guifg=#ef5939
-	\	endif
+	\|		highlight    rcHint gui=bold guifg=#ef5939
+	\|	endif
 
 	autocmd ColorScheme * highlight CursorLine gui=underline guifg=cyan guibg=NONE
 augroup END
