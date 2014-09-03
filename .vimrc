@@ -143,6 +143,10 @@ let s:viewdir   = s:backupdir.'/view/'
 let s:username  = expand('$USER')
 let s:groupname = $GROUP == '' ? expand('$USER') : expand('$GROUP')
 
+if !exists('g:vimrc_loaded')
+	let g:vimrc_loaded = 0
+endif
+
 "}}}
 
 
@@ -842,6 +846,12 @@ set tags=./tags,~/tags
 " Explore wake up default dir
 set browsedir=buffer
 
+" Auto Judge file encode
+if !g:vimrc_loaded
+	let &fileencodings = 'utf-8,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932,' . &fileencodings
+endif
+
+
 "}}}
 
 
@@ -1263,6 +1273,7 @@ cnoremap <C-k> <C-\>e getcmdpos() < 2 ?'':getcmdline()[:getcmdpos()-2]<CR>
 " }}}
 " Addtional KeyMaps {{{
 
+" All buffers
 augroup AddtionalKeys
 	" Escape Insert Mode by <C-l>
 	autocmd FileType * inoremap <C-l> <Esc>
@@ -1277,9 +1288,13 @@ augroup AddtionalKeys
 
 	" Empty Line into Under
 	autocmd FileType * nnoremap <C-m> :normal o<CR>
+
+	" Easy Tabnew
+	autocmd FileType * noremap <C-w>t :tabnew<CR>
 augroup END
 
 
+" Plugin buffers
 augroup PluginPrefs
 	autocmd FileType tweetvim nmap <buffer> <leader>R  <Plug>(tweetvim_action_remove_status)
 	autocmd FileType tweetvim nmap <buffer> s          :TweetVimSay <CR>
@@ -1302,6 +1317,7 @@ augroup PluginPrefs
 augroup END
 
 
+" All buffers with plugins
 augroup AddtionalKeys
 	autocmd FileType * nmap <leader>w          <Plug>(openbrowser-open)
 	autocmd FileType * nmap <leader>b          :ScratchUp<CR>
@@ -1411,4 +1427,7 @@ if filereadable(expand('~/.vimrc_env'))
 endif
 
 "}}}
+
+
+let g:vimrc_loaded = 1
 
