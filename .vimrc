@@ -64,6 +64,8 @@ scriptencoding utf8
 
 "-- Uniteでencoding変えたい…。
 
+"-- Easy CaslII Emulator for Vim
+
 " }}}
 " Issues {{{
 
@@ -1255,7 +1257,7 @@ nnoremap q:      <NOP>
 " }}}
 " Override Defined KeyMaps {{{
 
-
+nnoremap Q gQ
 
 " }}}
 " Bash like KeyMaps {{{
