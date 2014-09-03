@@ -1107,9 +1107,9 @@ endif
 " Key Maping {{{
 
 augroup AddtionalKeys
-	autocmd FileType * nmap gc :CursorCenter<CR>
-	autocmd FileType * nmap gk :UpCursorLid<CR>
-	autocmd FileType * nmap gj :DownCursorGround<CR>
+	autocmd FileType * nnoremap <silent> gc :CursorCenter<CR>
+	autocmd FileType * nnoremap <silent> gk :UpCursorLid<CR>
+	autocmd FileType * nnoremap <silent> gj :DownCursorGround<CR>
 	"autocmd FileType * xmap gk :UpCursorLid<CR>
 	"autocmd FileType * xmap gj :DownCursorGround<CR>
 	"autocmd FileType * cmap gk :UpCursorLid<CR>
@@ -1242,35 +1242,42 @@ command! FtCoqInstancyOn  NeoBundleSource coq.vim
 "-------------------------"
 " Disable Default Keys {{{
 
-nnoremap <Up>    <NOP>
-nnoremap <Down>  <NOP>
-nnoremap <Left>  <NOP>
-nnoremap <Right> <NOP>
-inoremap <Up>    <NOP>
-inoremap <Down>  <NOP>
-inoremap <Left>  <NOP>
-inoremap <Right> <NOP>
-cnoremap <Left>  <NOP>
-cnoremap <Right> <NOP>
-nnoremap q:      <NOP>
+augroup AddtionalKeys
+	autocmd FileType * nnoremap <Up>    <NOP>
+	autocmd FileType * nnoremap <Down>  <NOP>
+	autocmd FileType * nnoremap <Left>  <NOP>
+	autocmd FileType * nnoremap <Right> <NOP>
+	autocmd FileType * inoremap <Up>    <NOP>
+	autocmd FileType * inoremap <Down>  <NOP>
+	autocmd FileType * inoremap <Left>  <NOP>
+	autocmd FileType * inoremap <Right> <NOP>
+	autocmd FileType * cnoremap <Left>  <NOP>
+	autocmd FileType * cnoremap <Right> <NOP>
+	autocmd FileType * nnoremap q:      <NOP>
+augroup END
 
 " }}}
 " Override Defined KeyMaps {{{
 
-nnoremap Q gQ
+augroup AddtionalKeys
+	autocmd FileType * nnoremap Q gQ
+	autocmd FileType * nnoremap <silent><buffer> <C-l><C-l> :nohlsearch<CR>
+augroup END
 
 " }}}
 " Bash like KeyMaps {{{
 
-nmap <C-j> <CR>
-imap <C-j> <CR>
-cnoremap <C-b> <Left>
-cnoremap <C-f> <Right>
-cnoremap <C-a> <Home>
-cnoremap <C-h> <Backspace>
-cnoremap <C-d> <Del>
-cnoremap <C-e> <End>
-cnoremap <C-k> <C-\>e getcmdpos() < 2 ?'':getcmdline()[:getcmdpos()-2]<CR>
+augroup AddtionalKeys
+	autocmd FileType * nmap     <C-j> <CR>
+	autocmd FileType * imap     <C-j> <CR>
+	autocmd FileType * cnoremap <C-b> <Left>
+	autocmd FileType * cnoremap <C-f> <Right>
+	autocmd FileType * cnoremap <C-a> <Home>
+	autocmd FileType * cnoremap <C-h> <Backspace>
+	autocmd FileType * cnoremap <C-d> <Del>
+	autocmd FileType * cnoremap <C-e> <End>
+	autocmd FileType * cnoremap <C-k> <C-\>e getcmdpos() < 2 ?'':getcmdline()[:getcmdpos()-2]<CR>
+augroup END
 
 " }}}
 " Addtional KeyMaps {{{
@@ -1283,28 +1290,32 @@ augroup AddtionalKeys
 	autocmd FileType * cnoremap <C-l> <Esc>
 
 	" Easy Load
-	autocmd FileType * nnoremap <C-k><C-l> :so %<CR>
+	autocmd FileType * nnoremap <silent> <C-k><C-l> :so %<CR>
 
 	" Special ESC Map when cannot use default <C-c> Map (Exam: VimShell)
 	autocmd FileType * inoremap <C-k><C-l> <Esc>
 
 	" Empty Line into Under
-	autocmd FileType * nnoremap <C-m> :normal o<CR>
+	autocmd FileType * nnoremap <silent> <C-m> :normal o<CR>
 
 	" Easy Tabnew
-	autocmd FileType * noremap <C-w>t :tabnew<CR>
+	autocmd FileType * nnoremap <silent> <C-w>t :tabnew<CR>
 augroup END
 
 
 " Plugin buffers
 augroup PluginPrefs
-	autocmd FileType tweetvim nmap <buffer> <leader>R  <Plug>(tweetvim_action_remove_status)
-	autocmd FileType tweetvim nmap <buffer> s          :TweetVimSay <CR>
-	autocmd FileType tweetvim nmap <buffer> <C-r>      <Plug>(tweetvim_action_reload)
-	autocmd FileType tweetvim nmap <buffer> <C-a>      :TweetVimSwitchAccount<Space>
-	autocmd FileType tweetvim nmap <buffer> U          :TweetVimUserTimeline<Space>
-	autocmd FileType tweetvim_say nmap <buffer> q      <NOP>
-	autocmd FileType tweetvim_say imap <buffer> <C-i>  <Space><Space>
+	autocmd FileType netrw  nunmap   L
+	autocmd FileType netrw  nnoremap <buffer> <C-h>      -
+	autocmd FileType netrw  nnoremap <silent><buffer> Q  :quit<CR>
+
+	autocmd FileType tweetvim nmap <buffer> <leader>R   <Plug>(tweetvim_action_remove_status)
+	autocmd FileType tweetvim nmap <buffer> <C-r>       <Plug>(tweetvim_action_reload)
+	autocmd FileType tweetvim nnoremap <silent><buffer> s      :TweetVimSay <CR>
+	autocmd FileType tweetvim nnoremap <buffer>         <C-a>  :TweetVimSwitchAccount<Space>
+	autocmd FileType tweetvim nnoremap <buffer>         U      :TweetVimUserTimeline<Space>
+	autocmd FileType tweetvim_say nnoremap <buffer> q      <NOP>
+	autocmd FileType tweetvim_say inoremap <buffer> <C-i>  <Space><Space>
 
 	autocmd FileType vimshell nunmap <buffer> Q
 	autocmd FileType vimshell nunmap <buffer> q
@@ -1313,20 +1324,23 @@ augroup PluginPrefs
 	autocmd FileType vimshell iunmap <buffer> <C-p>
 	autocmd FileType vimshell iunmap <buffer> <C-n>
 
-	autocmd FileType w3m nmap <buffer> H          <BS>
-	autocmd FileType w3m nmap <buffer> <C-u>      :W3mAddressBar <CR>
-	autocmd FileType w3m nmap <buffer> <leader>E  :W3mShowExtenalBrowser <CR>
+	autocmd FileType w3m nnoremap <buffer> H       <BS>
+	autocmd FileType w3m nnoremap <silent><buffer> <C-u>      :W3mAddressBar <CR>
+	autocmd FileType w3m nnoremap <silent><buffer> <leader>E  :W3mShowExtenalBrowser <CR>
 augroup END
 
 
 " All buffers with plugins
 augroup AddtionalKeys
-	autocmd FileType * nmap <leader>w          <Plug>(openbrowser-open)
-	autocmd FileType * nmap <leader>b          :ScratchUp<CR>
-	autocmd FileType * nmap <leader>v          :VimShell -split-command=vsp -toggle<CR>
-	autocmd FileType * nmap <leader><leader>v  :VimShellPop<CR>
-	autocmd FileType * nmap <leader>V          <Plug>(vimshell_create)
-	autocmd FileType * nmap <leader><leader>V  :VimShellTab<CR>
+
+	autocmd FileType * nmap <leader>w  <Plug>(openbrowser-open)
+
+	autocmd FileType * nnoremap <silent> <leader>b          :ScratchUp<CR>
+
+	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShellPop<CR>
+	autocmd FileType * nmap              <leader>V          <Plug>(vimshell_create)
+	autocmd FileType * nnoremap <silent> <leader><leader>V  :VimShellTab<CR>
 augroup END
 
 " }}}
@@ -1340,9 +1354,6 @@ augroup END
 augroup ProgramTypes
 	autocmd FileType vim    let &commentstring = ' "%s'
 	autocmd FileType vim    NeoBundleSource 'vim-themis'
-	autocmd FileType netrw  nmap   <C-h> -
-	autocmd FileType netrw  nunmap L
-	autocmd FileType netrw  nmap   Q     :quit<CR>
 
 	autocmd VimEnter,WinEnter * syntax match rcHint /\t*"@\w\+/
 	autocmd FileType vim highlight rcHint cterm=standout ctermfg=DarkYellow
@@ -1388,7 +1399,7 @@ augroup ProgramTypes
 	autocmd FileType markdown       set tabstop=2
 	\|                              set shiftwidth=2
 	\|                              set expandtab
-	autocmd FileType markdown       nmap <leader>r :PrevimOpen<CR>
+	autocmd FileType markdown       nnoremap <silent> <leader>r :PrevimOpen<CR>
 augroup END
 
 augroup ProgramTypes
