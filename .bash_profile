@@ -68,7 +68,7 @@ unset fakeUserName
 export PS1
 export HISTSIZE=10000
 export HISTTIMEFORMAT='%Y/%m/%d %H:%M '
-export HISTIGNORE='ls:fg*:bg*:jobs:history*:*hibernate:screen*:tmux*:twitter:tweet'
+export HISTIGNORE='ls:jobs:history*:*hibernate:twitter:tweet'
 export HISTIGNORE="${HISTIGNORE}:*.bash_history*:*mount*-o*password=*"
 export EDITOR=vim
 
