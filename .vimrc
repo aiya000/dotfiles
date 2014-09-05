@@ -66,6 +66,8 @@ scriptencoding utf8
 
 "-- Easy CaslII Emulator for Vim
 
+"-- ahoge auto include yanked words
+
 " }}}
 " Issues {{{
 
@@ -1446,4 +1448,23 @@ endif
 let g:vimrc_loaded = 1
 
 command! -nargs=1 OpenDatabase let g:VDBC_C = vdbc#connect_by_dsn('vdbc:sqlite3:dbname=./' . <q-args>)
+command! CloseDatabase call g:VDBC_C.disconnect()
+command! -nargs=* Select
+\	let s:data = g:VDBC_C.select_as_dict('SELECT ' . <q-args>)
+\|	let s:columns = []
+\|	for i in items(s:data[0])
+\|		call add(s:columns, i[0])
+\|	endfor
+\|	for indexText in s:columns
+\|		echon indexText
+\|		echon "\t"
+\|	endfor
+\|	echo "\n"
+\|	for row in s:data
+\|		for index in s:columns
+\|			echon row[index]
+\|			echon "\t"
+\|		endfor
+\|		echo "\n"
+\|	endfor
 
