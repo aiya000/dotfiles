@@ -385,6 +385,7 @@ NeoBundle 'gist:aiya000/ec5f6b2375a639831953', {
 \	'name'        : 'gitlogviewer.vim',
 \	'script_type' : 'plugin'
 \}
+NeoBundle 'kamichidu/vim-vdbc'
 
 call neobundle#end()
 "NeoBundleCheck
@@ -1443,4 +1444,6 @@ endif
 
 
 let g:vimrc_loaded = 1
+
+command! -nargs=1 OpenDatabase let g:VDBC_C = vdbc#connect_by_dsn('vdbc:sqlite3:dbname=./' . <q-args>)
 

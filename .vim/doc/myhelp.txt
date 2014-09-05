@@ -3,6 +3,7 @@
 Version: 1.0
 Author : aiya000 <aiya.develop@gmail.com>
 
+'myhelp'
 =============================================
 CONTENTS	*myhelp*
 
