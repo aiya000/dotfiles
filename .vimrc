@@ -1229,7 +1229,7 @@ if executable('bash')
 endif
 
 "}}}
-" PluginOn {{{
+" PluginSwitcher {{{
 
 command! VitalOn          NeoBundleSource vital.vim
 command! FtCoqInstancyOn  NeoBundleSource coq.vim

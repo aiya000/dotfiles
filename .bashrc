@@ -94,7 +94,11 @@ fi
 if [ -n "`which tmux 2> /dev/null`" ] ; then
 	alias tmux-myhelp='
 		echo "Window rename:";
-		echo "	<Prefix> ,"'
+		echo "	<Prefix> ,";
+		echo "Start session with name:";
+		echo "	tmux new -s name";
+		echo "Start session with config file:"
+		echo "	tmux -f file";'
 fi
 
 # }}}
@@ -138,3 +142,4 @@ alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
 # Export Loaded Archive
 alias rc_loaded='echo "rc_loaded"'
+
