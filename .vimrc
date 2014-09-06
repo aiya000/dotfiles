@@ -388,6 +388,7 @@ NeoBundle 'gist:aiya000/ec5f6b2375a639831953', {
 \	'script_type' : 'plugin'
 \}
 NeoBundle 'kamichidu/vim-vdbc'
+NeoBundle 'mattn/vdbi-vim'
 
 call neobundle#end()
 "NeoBundleCheck
@@ -531,7 +532,7 @@ endif
 if s:isCygwin
 	let g:quickrun_config['java'] = {
 	\	'command' : 'javac',
-	\	'exec'    : ['%c %o `echo %s | sed s:¬•:/:g | cygpath -w -f -`', '%c %s:t:r %a'],
+	\	'exec'    : ['%c %o `echo %s | sed s:\:/:g | cygpath -w -f -`', '%c %s:t:r %a'],
 	\	'hook/output_encode/encoding': 'Shift_JIS',
 	\}
 	let javav = s:system('java -version')
@@ -687,7 +688,7 @@ set tabstop=4
 " Highlight Hit Keyword
 set hlsearch
 
-" ‚òÜFix View 2byte Code (Not support gnore-terminal)
+" ÅôFix View 2byte Code (Not support gnore-terminal)
 set ambiwidth=double
 
 " One More Set for 2byte Code !!
@@ -722,7 +723,7 @@ augroup SyntaxHighlights
 	autocmd ColorScheme * highlight LineNr                       ctermfg=Blue
 	autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 
-	autocmd VimEnter,BufWinEnter * match     rcEmSpace /„ÄÄ/
+	autocmd VimEnter,BufWinEnter * match     rcEmSpace /Å@/
 	autocmd ColorScheme * highlight rcEmSpace cterm=standout ctermfg=LightBlue
 
 	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427}
@@ -1061,6 +1062,15 @@ command! -bar TimerStart let  s:startTime = reltime()
 command! -bar TimerEcho  echo reltimestr( reltime(s:startTime) )
 command! -bar TimerPut   execute 'normal o' . reltimestr(reltime(s:startTime))
 
+
+" Easy Toggle Wrap
+function! s:rc_wrap_toggle()
+	if !&wrap | setl wrap
+	else      | setl nowrap
+	endif
+endfunction
+command! ToggleWrap :call s:rc_wrap_toggle()
+
 "}}}
 " Development Support {{{
 
@@ -1117,6 +1127,7 @@ augroup AddtionalKeys
 	"autocmd FileType * xmap gj :DownCursorGround<CR>
 	"autocmd FileType * cmap gk :UpCursorLid<CR>
 	"autocmd FileType * cmap gj :DownCursorGround<CR>
+	autocmd FileType * nnoremap <silent> <C-w><C-w> :ToggleWrap<CR>
 augroup END
 
 " }}}
