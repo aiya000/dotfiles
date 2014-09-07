@@ -381,6 +381,7 @@ NeoBundle 'rhysd/vim-grammarous'
 NeoBundleLazy 'thinca/vim-themis'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'soramugi/auto-ctags.vim'
+NeoBundle 'aiya000/arot13.vim'
 NeoBundle 'aiya000/ahoge-put.vim'
 NeoBundle 'kannokanno/previm'
 NeoBundle 'gist:aiya000/ec5f6b2375a639831953', {
@@ -688,7 +689,7 @@ set tabstop=4
 " Highlight Hit Keyword
 set hlsearch
 
-" ÅôFix View 2byte Code (Not support gnore-terminal)
+" ‚òÜFix View 2byte Code (Not support gnore-terminal)
 set ambiwidth=double
 
 " One More Set for 2byte Code !!
@@ -723,7 +724,7 @@ augroup SyntaxHighlights
 	autocmd ColorScheme * highlight LineNr                       ctermfg=Blue
 	autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 
-	autocmd VimEnter,BufWinEnter * match     rcEmSpace /Å@/
+	autocmd VimEnter,BufWinEnter * match     rcEmSpace /„ÄÄ/
 	autocmd ColorScheme * highlight rcEmSpace cterm=standout ctermfg=LightBlue
 
 	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427}
@@ -830,8 +831,7 @@ set history=50
 
 " Adding Runtime Path
 set runtimepath+=~/.vim/vimball
-set runtimepath+=~/.vim/makes/arot13.vim
-set runtimepath+=~/.vim/makes/ahoge-put.vim
+set runtimepath+=~/.vim/makes/asql.vim
 
 " Set Vimball Install place
 let g:vimball_home = s:vimHome.'/vimball'
@@ -1382,21 +1382,13 @@ augroup ProgramTypes
 	"autocmd VimEnter,WinEnter    *  syntax match TypeInference /var\s\+/
 	"autocmd FileType             cs highlight TypeInference cterm=bold ctermfg=11
 	
-	autocmd VimEnter,WinEnter *  syntax match Identifier /var\s\+/
+	autocmd VimEnter,BufWinEnter *  syntax match Identifier /var\s\+/
 	autocmd FileType cs highlight Identifier
 augroup END
 
 augroup ProgramTypes
 	autocmd FileType haskell    let &commentstring = " --%s"
 	autocmd FileType yesod      set ts=4|set sw=4|set et
-	" autocmd TextChangedI *
-	" 	\if &ft == 'yesod' &&
-	" 	\	getline('.')[col('.')-2] . getline('.')[col('.')-3] .
-	" 	\	getline('.')[col('.')-4] . getline('.')[col('.')-5] == '   '
-	" 	\|	execute 'normal ia'
-	" 	\|	imap <C-h> <Backspace>
-	" 	\|	inoremap <Backspace> <Backspace><Backspace><Backspace><Backspace>
-	" 	\|endif
 
 	autocmd VimEnter,WinEnter * syntax match rcHfSpace /^\s\s*/
 	autocmd FileType haskell    highlight    rcHfSpace cterm=underline ctermfg=Cyan
@@ -1457,25 +1449,4 @@ endif
 
 
 let g:vimrc_loaded = 1
-
-command! -nargs=1 OpenDatabase let g:VDBC_C = vdbc#connect_by_dsn('vdbc:sqlite3:dbname=./' . <q-args>)
-command! CloseDatabase call g:VDBC_C.disconnect()
-command! -nargs=* Select
-\	let s:data = g:VDBC_C.select_as_dict('SELECT ' . <q-args>)
-\|	let s:columns = []
-\|	for i in items(s:data[0])
-\|		call add(s:columns, i[0])
-\|	endfor
-\|	for indexText in s:columns
-\|		echon indexText
-\|		echon "\t"
-\|	endfor
-\|	echo "\n"
-\|	for row in s:data
-\|		for index in s:columns
-\|			echon row[index]
-\|			echon "\t"
-\|		endfor
-\|		echo "\n"
-\|	endfor
 
