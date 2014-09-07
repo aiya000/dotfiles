@@ -390,6 +390,7 @@ NeoBundle 'gist:aiya000/ec5f6b2375a639831953', {
 \}
 NeoBundle 'kamichidu/vim-vdbc'
 NeoBundle 'mattn/vdbi-vim'
+NeoBundle 'LeafCage/foldCC'
 
 call neobundle#end()
 "NeoBundleCheck
