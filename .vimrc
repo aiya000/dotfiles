@@ -176,6 +176,13 @@ function! s:rm(file)
 	endif
 endfunction
 
+
+function! s:echo_error(msg)
+	echohl ERROR
+	echo a:msg
+	echohl NONE
+endfunction
+
 "}}}
 
 
@@ -1081,19 +1088,18 @@ command! ToggleWrap :call s:rc_wrap_toggle()
 let g:rc_temporary_dir = 'undefined'
 function! s:set_temporary_dir(path) "{{{
 	if isdirectory(a:path)
-		"@Incompleted('do not want to system method')
 		let g:rc_temporary_dir =
-		\	a:path == '.' ? s:system('pwd')
+		\	a:path == '.' ? expand('%:p:h')
 		\	              : a:path
 	else
-		echohl ERROR | echo 'No such temporary root dir' | echohl NONE
+		call s:echo_error('No such temporary root dir')
 	endif
 endfunction "}}}
 command! -nargs=1 TDirSet call s:set_temporary_dir(<q-args>)
 command! TDirSetCurrentDir call s:set_temporary_dir('.')
 function! s:cd_temporary_dir() "{{{
 	if g:rc_temporary_dir == 'undefined'
-		echohl ERROR | echo 'Not set temporary root dir' | echohl NONE
+		call s:echo_error('Not set temporary root dir')
 	else
 		execute 'cd '.g:rc_temporary_dir
 		echo g:rc_temporary_dir
