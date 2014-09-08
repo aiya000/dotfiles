@@ -1073,6 +1073,26 @@ endfunction
 command! ToggleWrap :call s:rc_wrap_toggle()
 
 "}}}
+" Action Function {{{
+
+let g:rc_temporary_root_dir
+function! s:set_temporary_root_dir(path)
+	if isdirectory(a:path)
+		let g:rc_temporary_root_dir = a:path
+	else
+		echohl ERROR | echo 'No such temporary root dir' | echohl NONE
+	endif
+endfunction
+command! -nargs=1 SetTRoot call s:set_temporary_root_dir(<q-args>)
+
+"function! s:set_temporary_root_currentdir()
+"	call s:set_temporary_root_dir(
+function! s:cd_temporary_root_dir() "{{{
+	execute 'cd '.g:rc_temporary_root_dir
+endfunction "}}}
+command! CdTRoot call s:cd_temporary_root_dir()
+
+" }}}
 " Development Support {{{
 
 " If use *NIX then use QuickRun else use this.
