@@ -62,8 +62,6 @@ scriptencoding utf8
 
 "-- Implement a command, Englishnize selected lines by QuickRun 'en'
 
-"-- Uniteでencoding変えたい…。
-
 "-- Easy CaslII Emulator for Vim
 
 "-- ahoge auto include yanked words
@@ -870,7 +868,11 @@ if !g:vimrc_loaded
 endif
 
 " Readable My Help
-helptags ~/.vim/doc
+if s:isKaoriya
+	helptags ~/_vim/doc
+else
+	helptags ~/.vim/doc
+endif
 
 "}}}
 
