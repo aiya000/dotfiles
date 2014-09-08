@@ -807,6 +807,9 @@ set shiftwidth=4
 
 " Fold Text with '{{{' and '}}}'
 set foldmethod=marker
+if exists('*FoldCCtext()')
+	set foldtext=FoldCCtext()
+endif
 
 " Collection Swap File
 let &directory = s:directory
