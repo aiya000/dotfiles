@@ -1075,22 +1075,28 @@ command! ToggleWrap :call s:rc_wrap_toggle()
 "}}}
 " Action Function {{{
 
-let g:rc_temporary_root_dir
-function! s:set_temporary_root_dir(path)
+let g:rc_temporary_dir = 'undefined'
+function! s:set_temporary_dir(path) "{{{
 	if isdirectory(a:path)
-		let g:rc_temporary_root_dir = a:path
+		"@Incompleted('do not want to system method')
+		let g:rc_temporary_dir =
+		\	a:path == '.' ? s:system('pwd')
+		\	              : a:path
 	else
 		echohl ERROR | echo 'No such temporary root dir' | echohl NONE
 	endif
-endfunction
-command! -nargs=1 SetTRoot call s:set_temporary_root_dir(<q-args>)
-
-"function! s:set_temporary_root_currentdir()
-"	call s:set_temporary_root_dir(
-function! s:cd_temporary_root_dir() "{{{
-	execute 'cd '.g:rc_temporary_root_dir
 endfunction "}}}
-command! CdTRoot call s:cd_temporary_root_dir()
+command! -nargs=1 TDirSet call s:set_temporary_dir(<q-args>)
+command! TDirSetCurrentDir call s:set_temporary_dir('.')
+function! s:cd_temporary_dir() "{{{
+	if g:rc_temporary_dir == 'undefined'
+		echohl ERROR | echo 'Not set temporary root dir' | echohl NONE
+	else
+		execute 'cd '.g:rc_temporary_dir
+		echo g:rc_temporary_dir
+	endif
+endfunction "}}}
+command! TDirCd call s:cd_temporary_dir()
 
 " }}}
 " Development Support {{{
