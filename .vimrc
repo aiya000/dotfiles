@@ -1297,7 +1297,6 @@ augroup AddtionalKeys
 	autocmd FileType * inoremap <Right> <NOP>
 	autocmd FileType * cnoremap <Left>  <NOP>
 	autocmd FileType * cnoremap <Right> <NOP>
-	autocmd FileType * nnoremap q:      <NOP>
 augroup END
 
 " }}}
