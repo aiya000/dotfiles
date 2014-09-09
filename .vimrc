@@ -1356,7 +1356,7 @@ augroup AddtionalKeys
 	" Special ESC Map when cannot use default <C-c> Map (Exam: VimShell)
 	autocmd FileType * inoremap <C-k><C-l> <Esc>
 
-	" Empty Line into Under
+	" Empty Line into Under (and not sync mapping <C-m> -> <C-j>)
 	autocmd FileType * nnoremap <silent> <C-m> :normal o<CR>
 
 	" Easy Tabnew
@@ -1497,4 +1497,4 @@ endif
 
 let g:vimrc_loaded = 1
 
-"vim:encoding=utf8:fileencoding=utf8:ts=8
+"vim:encoding=utf8:fileencoding=utf8
