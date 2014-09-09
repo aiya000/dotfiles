@@ -875,6 +875,11 @@ elseif isdirectory('~/.vim/doc')
 	helptags ~/.vim/doc
 endif
 
+" If new buffer don't has filetype then execute setf 'none'
+augroup FileEvents
+	autocmd BufNew * if &ft == '' | setf none | endif
+augroup END
+
 "}}}
 
 
@@ -892,8 +897,8 @@ augroup END
 " Save Cursor Position when file closed
 try
 	augroup FilePositSave
-		autocmd BufWinLeave ?* silent mkview
-		autocmd BufWinEnter ?* silent loadview
+		autocmd BufWinLeave * silent mkview
+		autocmd BufWinEnter * silent loadview
 	augroup END
 catch /E32/
 	echo 'File Name is Nothing'
@@ -1424,7 +1429,7 @@ augroup ProgramTypes
 	"autocmd VimEnter,WinEnter    *  syntax match TypeInference /var\s\+/
 	"autocmd FileType             cs highlight TypeInference cterm=bold ctermfg=11
 	
-	autocmd VimEnter,BufWinEnter *  syntax match Identifier /var\s\+/
+	autocmd VimEnter,BufEnter,WinEnter *  syntax match Identifier /\<var\>/
 	autocmd FileType cs highlight Identifier
 augroup END
 
@@ -1490,7 +1495,6 @@ endif
 "}}}
 
 
-setl encoding=utf8
-setl fileencoding=utf8
 let g:vimrc_loaded = 1
 
+"vim:encoding=utf8:fileencoding=utf8:ts=8
