@@ -603,6 +603,7 @@ augroup PluginPrefs
 	\|	call vimshell#set_alias('vsp', ':vsp | VimShellCreate')
 
 	autocmd FileType vimshell  set fdm=marker
+	autocmd FileType vimshell  set nolist
 augroup END
 
 "}}}
@@ -868,9 +869,9 @@ if !g:vimrc_loaded
 endif
 
 " Readable My Help
-if s:isKaoriya
+if s:isKaoriya && isdirectory('~/_vim/doc')
 	helptags ~/_vim/doc
-else
+elseif isdirectory('~/.vim/doc')
 	helptags ~/.vim/doc
 endif
 
@@ -1090,7 +1091,8 @@ command! ToggleWrap :call s:rc_wrap_toggle()
 "}}}
 " Action Function {{{
 
-let g:rc_temporary_dir = 'undefined'
+let g:rc_temporary_dir = get(g:, 'rc_temporary_dir', 'undefined')
+command! TDirPwd   echo g:rc_temporary_dir
 function! s:set_temporary_dir(path) "{{{
 	if isdirectory(a:path)
 		let g:rc_temporary_dir =
@@ -1100,7 +1102,7 @@ function! s:set_temporary_dir(path) "{{{
 		call s:echo_error('No such temporary root dir')
 	endif
 endfunction "}}}
-command! -nargs=1 TDirSet call s:set_temporary_dir(<q-args>)
+command! -nargs=1  TDirSet call s:set_temporary_dir(<q-args>)
 command! TDirSetCurrentDir call s:set_temporary_dir('.')
 function! s:cd_temporary_dir() "{{{
 	if g:rc_temporary_dir == 'undefined'
@@ -1110,7 +1112,7 @@ function! s:cd_temporary_dir() "{{{
 		echo g:rc_temporary_dir
 	endif
 endfunction "}}}
-command! TDirCd call s:cd_temporary_dir()
+command! TDirCd            call s:cd_temporary_dir()
 
 " }}}
 " Development Support {{{
@@ -1488,5 +1490,7 @@ endif
 "}}}
 
 
+setl encoding=utf8
+setl fileencoding=utf8
 let g:vimrc_loaded = 1
 
