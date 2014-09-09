@@ -877,7 +877,7 @@ endif
 
 " If new buffer don't has filetype then execute setf 'none'
 augroup FileEvents
-	autocmd BufNew * if &ft == '' | setf none | endif
+	autocmd VimEnter,BufNew * if &ft == '' | setf none | endif
 augroup END
 
 "}}}
@@ -897,8 +897,8 @@ augroup END
 " Save Cursor Position when file closed
 try
 	augroup FilePositSave
-		autocmd BufWinLeave * silent mkview
-		autocmd BufWinEnter * silent loadview
+		autocmd BufWinLeave ?* silent mkview
+		autocmd BufWinEnter ?* silent loadview
 	augroup END
 catch /E32/
 	echo 'File Name is Nothing'
