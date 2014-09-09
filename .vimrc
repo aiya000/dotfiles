@@ -684,8 +684,8 @@ set laststatus=2
 " Status Bar format $ @See http://sourceforge.jp/magazine/07/11/06/0151231
 set statusline=%F%m\%=[FileType=%y][Format=%{&ff}]
 
-" Wrap Line
-set wrap
+" Do not wrap line
+set nowrap
 
 " View line number
 set number

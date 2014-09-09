@@ -54,7 +54,9 @@ alias gyazo='ruby ~/.vim/bundle/vim-gyazo/gyazo/gyazo.rb'
 alias pbcopy='xsel --clipboard --input'
 
 # }}}
-# Sub Alias (for refer) {{{
+# Others {{{
+
+alias mysql='mysql -E'
 
 alias learn-vimscript='vim -c help learn-vimscript'
 alias lingr-momonga='vim -c "J6uil momonga"'
@@ -117,7 +119,7 @@ elif [ $isCygwin -eq 1 ] ; then
 	alias route='cocot route'
 	alias netstat='cocot netstat'
 	alias updatedb='updatedb --localpaths="/bin /dev /etc /home /lib /usr /var /opt" --prunepaths="/usr/tmp /var/tmp"'
-	alias mysql='mysql --protocol=TCP'
+	alias mysql='mysql --protocol=TCP -E'
 fi
 
 # }}}
