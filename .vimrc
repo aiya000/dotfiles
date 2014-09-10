@@ -810,7 +810,9 @@ set shiftwidth=4
 " Fold Text with '{{{' and '}}}'
 set foldmethod=marker
 if exists('*FoldCCtext()')
-	set foldtext=FoldCCtext()
+	augroup FileEvents
+		autocmd FileType * set foldtext=foldCC#foldtext()
+	augroup END
 endif
 
 " Collection Swap File
@@ -1100,12 +1102,13 @@ command! ToggleWrap :call s:rc_wrap_toggle()
 " Action Function {{{
 
 let g:rc_temporary_dir = get(g:, 'rc_temporary_dir', 'undefined')
-command! TDirPwd   echo g:rc_temporary_dir
+command! TDirPwd           echo g:rc_temporary_dir
 function! s:set_temporary_dir(path) "{{{
 	if isdirectory(a:path)
 		let g:rc_temporary_dir =
 		\	a:path == '.' ? expand('%:p:h')
 		\	              : a:path
+		echo g:rc_temporary_dir
 	else
 		call s:echo_error('No such temporary root dir')
 	endif
@@ -1421,6 +1424,8 @@ augroup ProgramTypes
 
 	autocmd VimEnter,WinEnter * syntax match rcHint /\t*"@\w\+/
 	autocmd FileType vim highlight rcHint cterm=standout ctermfg=DarkYellow
+
+	autocmd FileType netrw  nmap <buffer> H -
 augroup END
 
 augroup ProgramTypes
