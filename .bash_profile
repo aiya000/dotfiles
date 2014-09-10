@@ -9,7 +9,7 @@
 if [ -f ~/.bash_meta_profile ] ; then
 	source ~/.bash_meta_profile
 else
-	export viewFake=0
+	export shell_kawaii=0
 fi
 
 
@@ -52,21 +52,20 @@ function fakeUser() { #{{{
 	unset username hostname
 } #}}}
 
-[ -n "$shell_kawaii" ] && if [ $shell_kawaii -eq 1 ] ; then
-	[ -n "$viewFake" ] && if [ $viewFake -eq 1 ] ; then
-		[ -n "$viewHost" ] && [ $viewHost -eq 1 ] \
-			&& PS1="\[\e]0;\w\a\]\n\[\e[32m\](*^-^)</\[\e[33m\]${fakeUserName}\[\e[32m\]@\[\e[33m\]${fakeHostName}\[\e[32m\]/ \[\e[33m\]\w\[\e[0m\]$ " \
-			|| PS1="\[\e]0;\w\a\]\n\[\e[32m\](*^-^)</\[\e[33m\]${fakeUserName}\[\e[32m\]/ \[\e[33m\]\w\[\e[0m\]$ "
+PS1='\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]$ '
+if [ $shell_kawaii -eq 1 ] ; then
+	[ -n "$view_fake" ] && if [ $view_fake -eq 1 ] ; then
+		[ -n "$view_host" ] && [ $view_host -eq 1 ] \
+			&& PS1="\[\e]0;\w\a\]\n\[\e[32m\](*^-^)</\[\e[33m\]${fake_user_name}\[\e[32m\]@\[\e[33m\]${fake_host_name}\[\e[32m\]/ \[\e[33m\]\w\[\e[0m\]$ " \
+			|| PS1="\[\e]0;\w\a\]\n\[\e[32m\](*^-^)</\[\e[33m\]${fake_user_name}\[\e[32m\]/ \[\e[33m\]\w\[\e[0m\]$ "
 	else
-		[ -n "$viewHost" ] && [ $viewHost -eq 1 ] \
+		[ -n "$view_host" ] && [ $view_host -eq 1 ] \
 			&& PS1="\[\e]0;\w\a\]\n\[\e[32m\](*^-^)</\[\e[33m\]\u\[\e[32m\]@\[\e[33m\]\h\[\e[32m\]/ \[\e[33m\]\w\[\e[0m\]$ " \
 			|| PS1="\[\e]0;\w\a\]\n\[\e[32m\](*^-^)</\[\e[33m\]\u\[\e[32m\]/ \[\e[33m\]\w\[\e[0m\]$ "
 	fi
-else
-	PS1='\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]$ '
 fi
 
-unset fakeUserName
+unset fake_user_name
 # }}}
 export PS1
 export HISTSIZE=10000
