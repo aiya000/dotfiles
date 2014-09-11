@@ -66,6 +66,8 @@ scriptencoding utf8
 
 "-- ahoge auto include yanked words
 
+"-- View prev and next fold head text ...on echo or other buffer ?
+
 " }}}
 " Issues {{{
 
@@ -89,6 +91,8 @@ scriptencoding utf8
 
 "-- Do filetype not found when enter filetype ?
 "  -- mmm, this take by filetype text ?
+
+"-- Not functioned auto backup file when write in kaoriya vim
 
 "}}}
 " Todo {{{
@@ -811,14 +815,14 @@ set shiftwidth=4
 
 " Fold Text with '{{{' and '}}}'
 set foldmethod=marker
-if exists('*FoldCCtext()')
-	augroup FileEvents
-		autocmd FileType * set foldtext=foldCC#foldtext()
-	augroup END
-endif
+augroup FileEvents
+	autocmd FileType *
+	\	if exists('*FoldCCtext()')
+	\|		set foldtext=foldCC#foldtext()
+	\|	endif
+augroup END
 set foldcolumn=1
 let &fillchars = 'vert:|,fold: '
-"set foldopen=hor,search,jump,mark,percent,insert,tag,undo
 set foldopen=search,jump,mark,percent,insert,tag,undo
 set foldclose=all
 
