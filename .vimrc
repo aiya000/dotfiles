@@ -99,7 +99,7 @@ scriptencoding utf8
 
 "-- <C-~> is split window size equalize
 
-"-- normal l action that if in fold then open fold else normal l
+"-- Arranging many keymap Section to one section
 
 " }}}
 
@@ -1209,9 +1209,9 @@ call altercmd#load()
 command! VimConfig         execute 'e  '.$MYVIMRC
 command! VimConfigTab      execute 'tabnew|e '.$MYVIMRC
 command! Reload            execute 'so '.$MYVIMRC
-\|	if has('gui_running')
-\|		execute 'so '.$MYGVIMRC
-\|	endif
+	\|	if has('gui_running')
+	\|		execute 'so '.$MYGVIMRC
+	\|	endif
 command! Wso               w|so %
 if executable('sudo')
 	command! ForceSave     w !sudo tee > /dev/null %
@@ -1361,7 +1361,7 @@ augroup END
 " }}}
 " Addtional KeyMaps {{{
 
-" All buffers
+" To All buffers
 augroup AddtionalKeys
 	" Escape Insert Mode by <C-l>
 	autocmd FileType * inoremap <C-l> <Esc>
@@ -1399,7 +1399,7 @@ augroup AddtionalKeys
 	autocmd FileTYpe * nnoremap zk zkzo
 augroup END
 
-" Plugin buffers
+" To Plugin buffers
 augroup PluginPrefs
 	autocmd FileType netrw  nunmap   L
 	autocmd FileType netrw  nmap     <buffer> H -
@@ -1428,7 +1428,6 @@ augroup END
 
 " All buffers with plugins
 augroup AddtionalKeys
-
 	autocmd FileType * nmap <leader>w  <Plug>(openbrowser-open)
 
 	autocmd FileType * nnoremap <silent> <leader>b          :ScratchUp<CR>
