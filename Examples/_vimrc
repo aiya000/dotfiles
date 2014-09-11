@@ -1,0 +1,14 @@
+
+set shellslash
+
+let $CYGVIMRC = '/cygwin/home/ishikawa/.dotfiles/.vimrc'
+let $WINVIMRC = $MYVIMRC
+let $MYVIMRC  = $CYGVIMRC
+let $DESKTOP = 'C:/Users/ishikawa/Desktop'
+
+command! WinVimConfig e $WINVIMRC
+
+
+so $CYGVIMRC
+cd $DESKTOP
+

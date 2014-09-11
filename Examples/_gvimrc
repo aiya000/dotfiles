@@ -1,0 +1,9 @@
+
+let $CYGGVIMRC = '/cygwin/home/ishikawa/.dotfiles/.gvimrc'
+let $WINVIMRC = $MYVIMRC
+let $MYVIMRC =  $CYGGVIMRC
+
+command! WinGVimConfig e $WINVIMRC
+
+so $CYGGVIMRC
+
