@@ -713,7 +713,7 @@ syntax on
 
 " Visualize Tab and Space
 set list
-if &encoding == 'cp932'  "@Unchecked('Is this suitable condition ?')
+if &encoding == 'cp932'
 	set listchars=tab:>_,trail:_,extends:>,precedes:<,nbsp:%
 else
 	set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%
@@ -737,14 +737,15 @@ augroup SyntaxHighlights
 	autocmd ColorScheme * highlight LineNr                       ctermfg=Blue
 	autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 
-	autocmd VimEnter,BufWinEnter * match     rcEmSpace /　/
+	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427}
+	autocmd VimEnter,BufWinEnter * match rcEmSpace /　/
 	autocmd ColorScheme * highlight rcEmSpace cterm=standout ctermfg=LightBlue
 
-	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427}
-	autocmd VimEnter,BufWinEnter * match     rcMyHint /"@\w\+/
+	autocmd VimEnter,BufWinEnter * match rcMyHint /"@\w\+/
 	autocmd ColorScheme * highlight rcMyHint cterm=standout ctermfg=Red
 augroup END
 
+" Syntax janee
 augroup SyntaxHighlights
 	autocmd InsertEnter * highlight StatusLine ctermfg=Black ctermbg=Cyan
 	autocmd InsertLeave * highlight StatusLine ctermfg=Cyan  ctermbg=Black
@@ -817,9 +818,9 @@ set shiftwidth=4
 set foldmethod=marker
 augroup FileEvents
 	autocmd FileType *
-	\	if exists('*FoldCCtext()')
-	\|		set foldtext=foldCC#foldtext()
-	\|	endif
+		\	if exists('*FoldCCtext()')
+		\|		set foldtext=foldCC#foldtext()
+		\|	endif
 augroup END
 set foldcolumn=1
 let &fillchars = 'vert:|,fold: '
@@ -913,8 +914,8 @@ augroup END
 " Save Cursor Position when file closed
 try
 	augroup FilePositSave
-		autocmd BufWinLeave ?* silent mkview
-		autocmd BufWinEnter ?* silent loadview
+		autocmd BufWinLeave ?+ silent mkview
+		autocmd BufWinEnter ?+ silent loadview
 	augroup END
 catch /E32/
 	echo 'File Name is Nothing'
@@ -936,7 +937,7 @@ function! s:update_backup_by_date() "{{{
 	execute 'w! '.l:dailydir.'/'.filename
 endfunction "}}}
 augroup FileEvents
-	autocmd BufWritePre ?* silent call s:update_backup_by_date()
+	autocmd BufWritePre ?+ silent call s:update_backup_by_date()
 augroup END
 
 "}}}
