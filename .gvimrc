@@ -11,12 +11,12 @@ endif
 
 augroup gui_highlight
 	"@Bugs('Not Shown')
-	autocmd VimEnter,WinEnter * syntax match     rcEmSpace /　/
-	autocmd ColorScheme       * highlight rcEmSpace gui=standout guifg=White
+	autocmd VimEnter,BufWinEnter * syntax match     grcEmSpace /　/
+	autocmd ColorScheme          * highlight grcEmSpace gui=standout guifg=White
 
 	"@Bugs('?')
-	autocmd VimEnter,WinEnter * syntax match rcHint /"@\w\+/
-	autocmd ColorScheme       *
+	autocmd VimEnter,BufWinEnter * syntax match grcHint /\s*"@\w\+/
+	autocmd ColorScheme          *
 	\	if &filetype == 'vim'
 	\|		highlight    rcHint gui=bold guifg=#ef5939
 	\|	endif
