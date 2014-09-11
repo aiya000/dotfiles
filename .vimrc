@@ -661,6 +661,11 @@ let g:unite_source_alias_aliases = {
 \}
 
 "}}}
+"--- foldCC ---"{{{
+
+"let g:foldCCtext_enable_autofdc_adjuster=0
+
+"}}}
 "--- For Private ---"{{{
 
 " Read Privacy Config
@@ -937,7 +942,7 @@ augroup END
 "-------------------------"
 " Utility Function {{{
 
-" Revese string of current line
+" Revese string of current line $ @See('reverse() tukaeYo')
 function! s:reverse_line()  " {{{
 	let l:reverse = ""
 	let l:str = getline('.')
@@ -1383,6 +1388,10 @@ augroup AddtionalKeys
 	endfunction "}}}
 	autocmd FileType * nnoremap <silent> h :call FoldOpenOrIt('normal! h')<CR>
 	autocmd FileType * nnoremap <silent> l :call FoldOpenOrIt('normal! l')<CR>
+
+	" Smart move fold to fold
+	autocmd FileType * nnoremap zj zjzo
+	autocmd FileTYpe * nnoremap zk zkzo
 augroup END
 
 " Plugin buffers
