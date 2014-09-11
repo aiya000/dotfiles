@@ -93,9 +93,9 @@ scriptencoding utf8
 "}}}
 " Todo {{{
 
-"-- set paste option added after checking operate.
-
 "-- <C-~> is split window size equalize
+
+"-- normal l action that if in fold then open fold else normal l
 
 " }}}
 
@@ -819,6 +819,8 @@ if exists('*FoldCCtext()')
 endif
 set foldcolumn=1
 let &fillchars = 'vert:|,fold: '
+set foldopen=search,jump,mark,percent,insert,tag,undo
+set foldclose=all
 
 " Collection Swap File
 let &directory = s:directory
@@ -1372,6 +1374,9 @@ augroup AddtionalKeys
 
 	" Easy Tabnew
 	autocmd FileType * nnoremap <silent> <C-w>t :tabnew<CR>
+
+	" Easy Reload vimrc
+	autocmd FileType * nnoremap <silent> <C-@><C-r> :Reload<CR>
 augroup END
 
 
