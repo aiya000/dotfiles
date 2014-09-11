@@ -188,6 +188,27 @@ endfunction
 "       Initialize        "
 "-------------------------"
 filetype plugin indent on
+" autocmd Groups {{{
+
+augroup PluginPrefs | autocmd!
+augroup END
+
+augroup FileEvents | autocmd!
+augroup END
+
+augroup FilePositSave | autocmd!
+augroup END
+
+augroup ProgramTypes | autocmd!
+augroup END
+
+augroup SyntaxHighlights | autocmd!
+augroup END
+
+augroup AddtionalKeys | autocmd!
+augroup END
+
+"}}}
 " For Support Kaoriya Vim {{{
 
 if s:isKaoriya
@@ -209,7 +230,6 @@ if s:isKaoriya
 
 
 	" For Using No Default vimproc
-	"@Bugs('do not loaded vimproc')
 	let suppress = $VIM.'/switches/enabled/disable-vimproc.vim'
 	if s:isWindows && !s:hasMingw && filereadable(suppress)
 		call s:rm(suppress)
@@ -222,6 +242,10 @@ if s:isKaoriya
 	" Unset Kaoriya Preference
 	set noignorecase
 	set nosmartcase
+
+	augroup FileEvents
+		autocmd BufRead $MYVIMRC setl enc=utf8 | setl fenc=utf8
+	augroup END
 endif
 
 "}}}
@@ -287,27 +311,6 @@ endif
 
 unlet s:neobundleDir
 unlet s:bundleDir
-"}}}
-" autocmd Groups {{{
-
-augroup PluginPrefs | autocmd!
-augroup END
-
-augroup FileEvents | autocmd!
-augroup END
-
-augroup FilePositSave | autocmd!
-augroup END
-
-augroup ProgramTypes | autocmd!
-augroup END
-
-augroup SyntaxHighlights | autocmd!
-augroup END
-
-augroup AddtionalKeys | autocmd!
-augroup END
-
 "}}}
 " Check Backup, Swap and Undo directory exists {{{
 
@@ -814,6 +817,8 @@ if exists('*FoldCCtext()')
 		autocmd FileType * set foldtext=foldCC#foldtext()
 	augroup END
 endif
+set foldcolumn=1
+let &fillchars = 'vert:|,fold: '
 
 " Collection Swap File
 let &directory = s:directory
@@ -894,9 +899,9 @@ augroup END
 "{{{
 
 augroup FileEvents
-	" Auto Reload when save this file
-	autocmd BufWritePost $MYVIMRC  source $MYVIMRC
-	autocmd BufWritePost $MYGVIMRC source $MYGVIMRC
+	" Auto Reload when save this file $ @See('Reload => Alias::Base')
+	autocmd BufWritePost $MYVIMRC  Reload
+	autocmd BufWritePost $MYGVIMRC Reload
 augroup END
 
 " Save Cursor Position when file closed
@@ -1422,7 +1427,7 @@ augroup ProgramTypes
 	autocmd FileType vim    let &commentstring = ' "%s'
 	autocmd FileType vim    NeoBundleSource 'vim-themis'
 
-	autocmd VimEnter,WinEnter * syntax match rcHint /\t*"@\w\+/
+	autocmd VimEnter,BufWinEnter,BufEnter * syntax match rcHint /\s*"@\w\+/
 	autocmd FileType vim highlight rcHint cterm=standout ctermfg=DarkYellow
 
 	autocmd FileType netrw  nmap <buffer> H -
@@ -1437,7 +1442,7 @@ augroup ProgramTypes
 	"autocmd VimEnter,WinEnter    *  syntax match TypeInference /var\s\+/
 	"autocmd FileType             cs highlight TypeInference cterm=bold ctermfg=11
 	
-	autocmd VimEnter,BufEnter,WinEnter *  syntax match Identifier /\<var\>/
+	autocmd VimEnter,BufWinEnter,BufEnter * syntax match Identifier /\<var\>/
 	autocmd FileType cs highlight Identifier
 augroup END
 
@@ -1445,8 +1450,8 @@ augroup ProgramTypes
 	autocmd FileType haskell    let &commentstring = " --%s"
 	autocmd FileType yesod      set ts=4|set sw=4|set et
 
-	autocmd VimEnter,WinEnter * syntax match rcHfSpace /^\s\s*/
-	autocmd FileType haskell    highlight    rcHfSpace cterm=underline ctermfg=Cyan
+	autocmd VimEnter,BufWinEnter,BufEnter * syntax match rcHfSpace /^\s\s*/
+	autocmd FileType haskell highlight rcHfSpace cterm=underline ctermfg=Cyan
 augroup END
 
 augroup ProgramTypes
@@ -1505,4 +1510,3 @@ endif
 
 let g:vimrc_loaded = 1
 
-"vim:encoding=utf8:fileencoding=utf8
