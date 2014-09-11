@@ -755,6 +755,9 @@ endif
 " Invisible character visualize to hex
 "set display=uhex
 
+" Scroll Margin
+set scrolloff=4
+
 "}}}
 
 
@@ -945,9 +948,9 @@ function! s:reverse_line()  " {{{
 	let l:reverse .= "\n"
 
 	let l:r = @"
-	execute 'normal dd'
+	execute 'normal! dd'
 	let @" = l:reverse
-	execute 'normal P'
+	execute 'normal! P'
 	let @" = l:r
 endfunction  " }}}
 command! ReverseLine call s:reverse_line()
@@ -968,8 +971,8 @@ function! s:tac_line() range " {{{
 		endfor
 
 		for i in range(a:firstline, a:lastline)
-			execute 'normal "_dd'
-			execute 'normal i' . lines[a:lastline - i]
+			execute 'normal! "_dd'
+			execute 'normal! i' . lines[a:lastline - i]
 		endfor
 		call setpos('.', posit)
 	endif
@@ -998,8 +1001,8 @@ command! -nargs=* Cat call s:cat_file(<f-args>)
 
 " Move Cursor Line's Center
 command! CursorCenter
-\	execute 'normal 0' |
-\	for i in range(strlen(getline('.'))/2) | execute 'normal l' | endfor
+\	execute 'normal! 0' |
+\	for i in range(strlen(getline('.'))/2) | execute 'normal! l' | endfor
 
 
 " Conditions for Different Actions
@@ -1022,7 +1025,7 @@ function! s:random_int(max)"{{{
 	let l:matchEnd = matchend(reltimestr(reltime()), '\d\+\.') + 1
 	return reltimestr(reltime())[l:matchEnd :] % (a:max + 1)
 endfunction"}}}
-command! -nargs=1 RandomPut execute 'normal a' . s:random_int(<q-args>) )
+command! -nargs=1 RandomPut execute 'normal! a' . s:random_int(<q-args>) )
 
 
 " For Movement in a Indent Block
@@ -1033,11 +1036,11 @@ function! s:up_cursor_lid() "{{{
 
 	while 1
 		let l:p = getpos('.')[2]
-		execute 'normal k'
+		execute 'normal! k'
 
 		let l:isIndentChanged = l:p != getpos('.')[2]
 		if l:isIndentChanged || getpos('.')[1] == 1
-			if l:isIndentChanged | execute 'normal j' | endif
+			if l:isIndentChanged | execute 'normal! j' | endif
 			break
 		endif
 	endwhile
@@ -1050,11 +1053,11 @@ function! s:down_cursor_ground() "{{{
 	let l:eol = len(readfile(@%))
 	while 1
 		let l:p = getpos('.')[2]
-		execute 'normal j'
+		execute 'normal! j'
 
 		let l:isIndentChanged = l:p != getpos('.')[2]
 		if l:isIndentChanged || getpos('.')[1] == l:eol
-			if l:isIndentChanged | execute 'normal k' | endif
+			if l:isIndentChanged | execute 'normal! k' | endif
 			break
 		endif
 	endwhile
@@ -1086,7 +1089,7 @@ command! -range SqlCopy :<line1>,<line2>call s:sql_yank_normalize()
 " Time Watcher  $ @See http://leafcage.hateblo.jp/entry/2013/08/02/001600
 command! -bar TimerStart let  s:startTime = reltime()
 command! -bar TimerEcho  echo reltimestr( reltime(s:startTime) )
-command! -bar TimerPut   execute 'normal o' . reltimestr(reltime(s:startTime))
+command! -bar TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
 
 
 " Easy Toggle Wrap
@@ -1159,12 +1162,12 @@ endif
 
 if executable('python')
 	function! s:put_python_import_for_jp() "{{{
-		execute 'normal gg'
-		execute 'normal O' . "#!/usr/bin/env python"
-		execute 'normal o' . "# -*- coding: utf-8 -*-"
-		execute 'normal o' . "import sys"
-		execute 'normal o' . "import codecs"
-		execute 'normal o' . "sys.stdout = codecs.getwriter('utf_8')(sys.stdout)"
+		execute 'normal! gg'
+		execute 'normal! O' . "#!/usr/bin/env python"
+		execute 'normal! o' . "# -*- coding: utf-8 -*-"
+		execute 'normal! o' . "import sys"
+		execute 'normal! o' . "import codecs"
+		execute 'normal! o' . "sys.stdout = codecs.getwriter('utf_8')(sys.stdout)"
 	endfunc "}}}
 	command! ImportPythonJp call s:put_python_import_for_jp()
 endif
@@ -1206,7 +1209,7 @@ endif
 command! ClearSwap         call s:system('rm '.s:directory.'/{.*,*}')
 command! ClearView         call s:system('rm '.s:viewdir.'/*')
 command! ClearUndo         call s:system('rm '.s:undodir.'/*')
-command! ClearCache        execute 'normal :ClearSwap<CR> :ClearView<CR> :ClearUndo<CR>'
+command! ClearCache        execute 'normal! :ClearSwap<CR> :ClearView<CR> :ClearUndo<CR>'
 
 command! ColorPreview      Unite colorscheme -auto-preview
 command! NeoBundleSearch   Unite neobundle/search
@@ -1362,7 +1365,7 @@ augroup AddtionalKeys
 	autocmd FileType * inoremap <C-k><C-l> <Esc>
 
 	" Empty Line into Under (and not sync mapping <C-m> -> <C-j>)
-	autocmd FileType * nnoremap <silent> <C-m> :normal o<CR>
+	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
 
 	" Easy Tabnew
 	autocmd FileType * nnoremap <silent> <C-w>t :tabnew<CR>
@@ -1375,17 +1378,17 @@ augroup AddtionalKeys
 		if foldlevel(line('.')) > 0 && foldclosed(line('.')) > -1
 			execute 'normal! zo'
 		else
-			execute 'normal! '.a:op
+			execute a:op
 		endif
 	endfunction "}}}
-	autocmd FileType * nnoremap <silent> h :call FoldOpenOrIt('h')<CR>
-	autocmd FileType * nnoremap <silent> l :call FoldOpenOrIt('l')<CR>
+	autocmd FileType * nnoremap <silent> h :call FoldOpenOrIt('normal! h')<CR>
+	autocmd FileType * nnoremap <silent> l :call FoldOpenOrIt('normal! l')<CR>
 augroup END
 
 " Plugin buffers
 augroup PluginPrefs
 	autocmd FileType netrw  nunmap   L
-	autocmd FileType netrw  nnoremap <buffer> <C-h>      -
+	autocmd FileType netrw  nmap     <buffer> H -
 	autocmd FileType netrw  nnoremap <silent><buffer> Q  :quit<CR>
 
 	autocmd FileType tweetvim nmap <buffer> <leader>R   <Plug>(tweetvim_action_remove_status)
@@ -1436,8 +1439,6 @@ augroup ProgramTypes
 
 	autocmd VimEnter,BufWinEnter,BufEnter * syntax match rcHint /\s*"@\w\+/
 	autocmd FileType vim highlight rcHint cterm=standout ctermfg=DarkYellow
-
-	autocmd FileType netrw  nmap <buffer> H -
 augroup END
 
 augroup ProgramTypes
