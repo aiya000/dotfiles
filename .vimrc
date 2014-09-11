@@ -166,15 +166,6 @@ function! s:system(cmd)
 endfunction
 
 
-function! s:rm(file)
-	if s:isUnix
-		execute '!rm '.a:file
-	else
-		execute '!del '.substitute(a:file, "/", "\\", 'g')
-	endif
-endfunction
-
-
 function! s:echo_error(msg)
 	echohl ERROR
 	echo a:msg
@@ -232,7 +223,7 @@ if s:isKaoriya
 	" For Using No Default vimproc
 	let suppress = $VIM.'/switches/enabled/disable-vimproc.vim'
 	if s:isWindows && !s:hasMingw && filereadable(suppress)
-		call s:rm(suppress)
+		call delete(suppress)
 	elseif s:isWindows && s:hasMingw && !filereadable(suppress)
 		call writefile([], suppress)
 	endif
@@ -819,6 +810,7 @@ if exists('*FoldCCtext()')
 endif
 set foldcolumn=1
 let &fillchars = 'vert:|,fold: '
+"set foldopen=hor,search,jump,mark,percent,insert,tag,undo
 set foldopen=search,jump,mark,percent,insert,tag,undo
 set foldclose=all
 
@@ -1160,7 +1152,7 @@ if executable('javac') && executable('java')
 		execute '!'.
 		\	printf('%s %s.java',   l:command[0], l:javaname).';'.
 		\	printf('%s %s',        l:command[1], l:javaname).';'.
-		call s:rm( printf('%s*.class', l:javaname) )
+		call delete( printf('%s*.class', l:javaname) )
 	endfunction "}}}
 	command! JavaRun call s:java_run_func()
 endif
@@ -1377,8 +1369,18 @@ augroup AddtionalKeys
 
 	" Easy Reload vimrc
 	autocmd FileType * nnoremap <silent> <C-@><C-r> :Reload<CR>
-augroup END
 
+	" Set foldopen=hor [hl] only
+	function! FoldOpenOrIt(op) "{{{
+		if foldlevel(line('.')) > 0 && foldclosed(line('.')) > -1
+			execute 'normal! zo'
+		else
+			execute 'normal! '.a:op
+		endif
+	endfunction "}}}
+	autocmd FileType * nnoremap <silent> h :call FoldOpenOrIt('h')<CR>
+	autocmd FileType * nnoremap <silent> l :call FoldOpenOrIt('l')<CR>
+augroup END
 
 " Plugin buffers
 augroup PluginPrefs
