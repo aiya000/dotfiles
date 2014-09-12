@@ -909,21 +909,15 @@ augroup END
 
 augroup FileEvents
 	" Auto Reload when save this file $ @See('Reload => Alias::Base')
-	autocmd BufWritePost $MYVIMRC  Reload
-	autocmd BufWritePost $MYGVIMRC Reload
+	autocmd BufWritePost $MYVIMRC  :Reload
+	autocmd BufWritePost $MYGVIMRC :Reload
 augroup END
 
 " Save Cursor Position when file closed
-try
-	augroup FilePositSave
-		autocmd BufWinLeave ?+ silent mkview
-		autocmd BufWinEnter ?+ silent loadview
-	augroup END
-catch /E32/
-	echo 'File Name is Nothing'
-catch
-	echo 'View Error'
-endtry
+augroup FilePositSave
+	autocmd BufWinLeave ?+ silent mkview
+	autocmd BufWinEnter ?+ silent loadview
+augroup END
 
 " Powered Auto File Backup when written
 set nobackup
@@ -939,7 +933,7 @@ function! s:update_backup_by_date() "{{{
 	execute 'w! '.l:dailydir.'/'.filename
 endfunction "}}}
 augroup FileEvents
-	autocmd BufWritePre ?+ silent call s:update_backup_by_date()
+	autocmd BufWritePre ?+ silent :call s:update_backup_by_date()
 augroup END
 
 "}}}
@@ -1378,9 +1372,7 @@ augroup AddtionalKeys
 
 	autocmd FileType * nnoremap <silent> <C-w>t :tabnew<CR>
 
-	autocmd FileType * nnoremap <silent><expr> <C-@> nr2char(getchar())
-	autocmd FileType * nnoremap <silent>  <C-@><C-r> :Reload<CR>
-	autocmd FileType * cnoremap 
+	autocmd FileType * nnoremap <silent> <C-@><C-r> :Reload<CR>
 	autocmd FileType * cnoremap <C-@><C-p> <Up>
 
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
@@ -1447,10 +1439,7 @@ augroup ProgramTypes
 augroup END
 
 augroup ProgramTypes
-	autocmd FileType c          let &commentstring = " /*%s*/"
-	autocmd FileType cpp        let &commentstring = " /*%s*/"
-	autocmd FileType java       let &commentstring = " /*%s*/"
-	autocmd FileType cs         let &commentstring = " /*%s*/"
+	autocmd FileType c,cpp,java,cs let &commentstring = " /*%s*/"
 
 	"autocmd VimEnter,WinEnter    *  syntax match TypeInference /var\s\+/
 	"autocmd FileType             cs highlight TypeInference cterm=bold ctermfg=11
@@ -1475,17 +1464,11 @@ augroup END
 
 augroup ProgramTypes
 	autocmd BufNewFile,BufRead *.md set filetype=markdown
-	autocmd FileType markdown       set tabstop=2
+	autocmd FileType markdown       nnoremap <silent> <leader>r :PrevimOpen<CR>
+	autocmd FileType markdown,text  set tabstop=2
 	\|                              set shiftwidth=2
 	\|                              set expandtab
-	autocmd FileType markdown       nnoremap <silent> <leader>r :PrevimOpen<CR>
 augroup END
-
-augroup ProgramTypes
-	autocmd FileType text set tabstop=2
-	\|                    set shiftwidth=2
-	\|                    set expandtab
-	\|                    set textwidth=0
 
 "}}}
 
