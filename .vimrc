@@ -94,6 +94,8 @@ scriptencoding utf8
 
 "-- Not functioned auto backup file when write in kaoriya vim
 
+"-- Happened Problem open file when TDirCd -> vim in vimshell
+
 "}}}
 " Todo {{{
 
@@ -667,7 +669,7 @@ let g:unite_source_alias_aliases = {
 "}}}
 "--- foldCC ---"{{{
 
-"let g:foldCCtext_enable_autofdc_adjuster=0
+"let g:foldCCtext_enable_autofdc_adjuster = 0
 
 "}}}
 "--- For Private ---"{{{
@@ -814,7 +816,7 @@ set cindent
 " Indent Width when auto indent
 set shiftwidth=4
 
-" Fold Text with '{{{' and '}}}'
+" Fold Text with foldmarker and fold sets
 set foldmethod=marker
 augroup FileEvents
 	autocmd FileType *
@@ -1363,40 +1365,27 @@ augroup END
 
 " To All buffers
 augroup AddtionalKeys
-	" Escape Insert Mode by <C-l>
 	autocmd FileType * inoremap <C-l> <Esc>
 	autocmd FileType * vnoremap <C-l> <Esc>
 	autocmd FileType * cnoremap <C-l> <Esc>
 
-	" Easy Load
 	autocmd FileType * nnoremap <silent> <C-k><C-l> :so %<CR>
 
 	" Special ESC Map when cannot use default <C-c> Map (Exam: VimShell)
 	autocmd FileType * inoremap <C-k><C-l> <Esc>
 
-	" Empty Line into Under (and not sync mapping <C-m> -> <C-j>)
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
 
-	" Easy Tabnew
 	autocmd FileType * nnoremap <silent> <C-w>t :tabnew<CR>
 
-	" Easy Reload vimrc
 	autocmd FileType * nnoremap <silent> <C-@><C-r> :Reload<CR>
 
-	" Set foldopen=hor [hl] only
-	function! FoldOpenOrIt(op) "{{{
-		if foldlevel(line('.')) > 0 && foldclosed(line('.')) > -1
-			execute 'normal! zo'
-		else
-			execute a:op
-		endif
-	endfunction "}}}
-	autocmd FileType * nnoremap <silent> h :call FoldOpenOrIt('normal! h')<CR>
-	autocmd FileType * nnoremap <silent> l :call FoldOpenOrIt('normal! l')<CR>
-
-	" Smart move fold to fold
-	autocmd FileType * nnoremap zj zjzo
-	autocmd FileTYpe * nnoremap zk zkzo
+	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
+	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
+	autocmd FileType * nnoremap zj zjzo[z
+	autocmd FileType * nnoremap zk zkzo[z
+	autocmd FileType * nnoremap z[ [z
+	autocmd FileType * nnoremap z] ]z
 augroup END
 
 " To Plugin buffers
