@@ -534,7 +534,7 @@ elseif s:isCygwin
 elseif s:isWindows
 	let g:quickrun_config['cs'] = {
 	\	'command' : 'csc.exe',
-	\	'exec'     : ['%c %o %s:p', '%s:p:r.exe', 'rm %s:p:r.exe'],
+	\	'exec'     : ['%c %o %s:p', '%s:p:r.exe', 'del %s:p:r.exe'],
 	\	'tempfile' : '{tempname()}.cs'
 	\}
 endif
@@ -1379,6 +1379,7 @@ augroup AddtionalKeys
 	autocmd FileType * nnoremap <silent> <C-w>t :tabnew<CR>
 
 	autocmd FileType * nnoremap <silent> <C-@><C-r> :Reload<CR>
+	autocmd FileType * cnoremap <C-@><C-p> <Up>
 
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
