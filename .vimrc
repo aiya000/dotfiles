@@ -1378,7 +1378,9 @@ augroup AddtionalKeys
 
 	autocmd FileType * nnoremap <silent> <C-w>t :tabnew<CR>
 
-	autocmd FileType * nnoremap <silent> <C-@><C-r> :Reload<CR>
+	autocmd FileType * nnoremap <silent><expr> <C-@> nr2char(getchar())
+	autocmd FileType * nnoremap <silent>  <C-@><C-r> :Reload<CR>
+	autocmd FileType * cnoremap 
 	autocmd FileType * cnoremap <C-@><C-p> <Up>
 
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
