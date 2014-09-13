@@ -399,9 +399,15 @@ NeoBundle 'LeafCage/foldCC'
 NeoBundle 'katono/rogue.vim'
 NeoBundleDisable 'aiya000/asql.vim'
 NeoBundle 'kamichidu/vim-benchmark'
+NeoBundle 'kana/vim-submode'
 
 call neobundle#end()
-"NeoBundleCheck
+
+if s:isUnix
+	helptags ~/.vim/bundle/.neobundle/doc
+elseif s:isKaoriya
+	helptags ~/_vim/bundle/.neobundle/doc
+endif
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
 
@@ -1377,8 +1383,8 @@ augroup AddtionalKeys
 
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
-	autocmd FileType * nnoremap zj zjzo[z
-	autocmd FileType * nnoremap zk zkzo[z
+	autocmd FileType * nnoremap zj zjzo
+	autocmd FileType * nnoremap zk zkzo
 	autocmd FileType * nnoremap z[ [z
 	autocmd FileType * nnoremap z] ]z
 augroup END
