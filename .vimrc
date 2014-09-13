@@ -352,7 +352,6 @@ NeoBundle 'osyo-manga/vim-gyazo'
 NeoBundle 'yuratomo/w3m.vim'
 NeoBundle 'mattn/learn-vimscript'
 NeoBundle 'rbtnn/vimconsole.vim'
-NeoBundle 'jimsei/winresizer'
 NeoBundle 'add20/vim-conque'
 NeoBundle 'supermomonga/thingspast.vim'
 NeoBundle 'supermomonga/vimshell-kawaii.vim'
@@ -676,6 +675,27 @@ let g:unite_source_alias_aliases = {
 "--- foldCC ---"{{{
 
 "let g:foldCCtext_enable_autofdc_adjuster = 0
+
+"}}}
+"--- vim-submode ---"{{{
+
+let g:submode_timeout = 0
+
+" Window Resizer
+call submode#enter_with('window_resize', 'n', '', '<C-s>w', '<C-w>h')
+call submode#enter_with('window_resize', 'n', '', '<C-s>w', '<C-w>j')
+call submode#enter_with('window_resize', 'n', '', '<C-s>w', '<C-w>k')
+call submode#enter_with('window_resize', 'n', '', '<C-s>w', '<C-w>l')
+call submode#map('window_resize', 'n', '', 'k', '<C-w>+')
+call submode#map('window_resize', 'n', '', 'j', '<C-w>-')
+call submode#map('window_resize', 'n', '', 'h', '<C-w><')
+call submode#map('window_resize', 'n', '', 'l', '<C-w>>')
+
+" Fold Mover
+call submode#enter_with('fold_move', 'n', '', '<C-s>z', 'zj')
+call submode#enter_with('fold_move', 'n', '', '<C-s>z', 'zk')
+call submode#map('fold_move', 'n', '', 'j', 'zczjzozz')
+call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
 
 "}}}
 "--- For Private ---"{{{
