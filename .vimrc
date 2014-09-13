@@ -99,9 +99,7 @@ scriptencoding utf8
 "}}}
 " Todo {{{
 
-"-- <C-~> is split window size equalize
-
-"-- Arranging many keymap Section to one section
+"-- Arranging command sections and function sections
 
 " }}}
 
@@ -117,6 +115,8 @@ scriptencoding utf8
 " @Bugs         => This hoge has the bugs.
 " @Unused       => Not used this yet now, needs inquires deleting this.
 " @Unchecked    => This was not unchecked that is operate right
+
+
 " @See          => Referred URL, Saw Document, and etc...
 " @Code         => A sample code using it
 "-------------------
@@ -844,12 +844,7 @@ set shiftwidth=4
 
 " Fold Text with foldmarker and fold sets
 set foldmethod=marker
-augroup FileEvents
-	autocmd FileType *
-		\	if exists('*FoldCCtext()')
-		\|		set foldtext=foldCC#foldtext()
-		\|	endif
-augroup END
+set foldtext=foldCC#foldtext()
 set foldcolumn=1
 let &fillchars = 'vert:|,fold: '
 set foldopen=search,jump,mark,percent,insert,tag,undo
@@ -1032,9 +1027,12 @@ command! -nargs=* Cat call s:cat_file(<f-args>)
 
 
 " Move Cursor Line's Center
-command! CursorCenter
-\	execute 'normal! 0' |
-\	for i in range(strlen(getline('.'))/2) | execute 'normal! l' | endfor
+function! s:cursor_move_to_center() "{{{
+	execute 'normal! 0'
+	for i in range(strlen(getline('.'))/2)
+		execute 'normal! l'
+	endfor
+endfunction "}}}
 
 
 " Conditions for Different Actions
@@ -1063,7 +1061,7 @@ command! -nargs=1 RandomPut execute 'normal! a' . s:random_int(<q-args>) )
 " For Movement in a Indent Block
 " {{{
 
-function! s:up_cursor_lid() "{{{
+function! s:cursor_up_to_lid() "{{{
 	if &ft == 'netrw' | return | endif
 
 	while 1
@@ -1077,9 +1075,7 @@ function! s:up_cursor_lid() "{{{
 		endif
 	endwhile
 endfunction "}}}
-command! UpCursorLid call s:up_cursor_lid()
-
-function! s:down_cursor_ground() "{{{
+function! s:cursor_down_to_ground() "{{{
 	if &ft == 'netrw' | return | endif
 
 	let l:eol = len(readfile(@%))
@@ -1094,7 +1090,6 @@ function! s:down_cursor_ground() "{{{
 		endif
 	endwhile
 endfunction "}}}
-command! DownCursorGround call s:down_cursor_ground()
 
 " }}}
 
@@ -1125,12 +1120,11 @@ command! -bar TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
 
 
 " Easy Toggle Wrap
-function! s:rc_wrap_toggle()
+function! s:wrap_toggle()
 	if !&wrap | setl wrap
 	else      | setl nowrap
 	endif
 endfunction
-command! ToggleWrap :call s:rc_wrap_toggle()
 
 "}}}
 " Action Function {{{
@@ -1203,20 +1197,6 @@ if executable('python')
 	endfunc "}}}
 	command! ImportPythonJp call s:put_python_import_for_jp()
 endif
-
-" }}}
-" Key Maping {{{
-
-augroup AddtionalKeys
-	autocmd FileType * nnoremap <silent> gc :CursorCenter<CR>
-	autocmd FileType * nnoremap <silent> gk :UpCursorLid<CR>
-	autocmd FileType * nnoremap <silent> gj :DownCursorGround<CR>
-	"autocmd FileType * xmap gk :UpCursorLid<CR>
-	"autocmd FileType * xmap gj :DownCursorGround<CR>
-	"autocmd FileType * cmap gk :UpCursorLid<CR>
-	"autocmd FileType * cmap gj :DownCursorGround<CR>
-	autocmd FileType * nnoremap <silent> <C-w><C-w> :ToggleWrap<CR>
-augroup END
 
 " }}}
 
@@ -1340,8 +1320,10 @@ command! FtCoqInstancyOn  NeoBundleSource coq.vim
 
 
 "-------------------------"
-"     Global KeyMap       "
+"         Key Map         "
 "-------------------------"
+" Global KeyMaps {{{
+
 " Disable Default Keys {{{
 
 augroup AddtionalKeys
@@ -1358,7 +1340,7 @@ augroup AddtionalKeys
 augroup END
 
 " }}}
-" Override Defined KeyMaps {{{
+" Override Defined Keys {{{
 
 augroup AddtionalKeys
 	autocmd FileType * nnoremap Q gQ
@@ -1366,7 +1348,7 @@ augroup AddtionalKeys
 augroup END
 
 " }}}
-" Bash like KeyMaps {{{
+" Bashnize Command Mode {{{
 
 augroup AddtionalKeys
 	autocmd FileType * nmap     <C-j> <CR>
@@ -1381,7 +1363,7 @@ augroup AddtionalKeys
 augroup END
 
 " }}}
-" Addtional KeyMaps {{{
+" Customize Keys {{{
 
 " To All buffers
 augroup AddtionalKeys
@@ -1409,6 +1391,37 @@ augroup AddtionalKeys
 	autocmd FileType * nnoremap z] ]z
 augroup END
 
+" All buffers with plugins
+augroup AddtionalKeys
+	autocmd FileType * nmap <leader>w  <Plug>(openbrowser-open)
+
+	autocmd FileType * nnoremap <silent> <leader>b          :ScratchUp<CR>
+
+	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShellPop<CR>
+	autocmd FileType * nmap              <leader>V          <Plug>(vimshell_create)
+	autocmd FileType * nnoremap <silent> <leader><leader>V  :VimShellTab<CR>
+augroup END
+
+" }}}
+" Functional Keys {{{
+
+augroup AddtionalKeys
+	autocmd FileType * nnoremap <silent> gc :call <SID>cursor_move_to_center()<CR>
+	autocmd FileType * nnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
+	autocmd FileType * nnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
+	"autocmd FileType * xmap gk :UpCursorLid<CR>
+	"autocmd FileType * xmap gj :DownCursorGround<CR>
+	"autocmd FileType * cmap gk :UpCursorLid<CR>
+	"autocmd FileType * cmap gj :DownCursorGround<CR>
+	autocmd FileType * nnoremap <silent> <C-w><C-w> :call <SID>wrap_toggle()<CR>
+augroup END
+
+" }}}
+
+"}}}
+" Buffer Local KeyMaps {{{
+
 " To Plugin buffers
 augroup PluginPrefs
 	autocmd FileType netrw  nunmap   L
@@ -1433,19 +1446,6 @@ augroup PluginPrefs
 	autocmd FileType w3m nnoremap <buffer> H       <BS>
 	autocmd FileType w3m nnoremap <silent><buffer> <C-u>      :W3mAddressBar <CR>
 	autocmd FileType w3m nnoremap <silent><buffer> <leader>E  :W3mShowExtenalBrowser <CR>
-augroup END
-
-
-" All buffers with plugins
-augroup AddtionalKeys
-	autocmd FileType * nmap <leader>w  <Plug>(openbrowser-open)
-
-	autocmd FileType * nnoremap <silent> <leader>b          :ScratchUp<CR>
-
-	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShellPop<CR>
-	autocmd FileType * nmap              <leader>V          <Plug>(vimshell_create)
-	autocmd FileType * nnoremap <silent> <leader><leader>V  :VimShellTab<CR>
 augroup END
 
 " }}}
