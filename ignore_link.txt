@@ -6,3 +6,5 @@ ignore_link.txt
 .gitignore
 README.txt
 .private
+Examples
+README.md
