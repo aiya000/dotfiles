@@ -681,11 +681,7 @@ let g:submode_timeout = 0
 
 
 " Window Resizer
-call submode#enter_with('window_resize', 'n', '', '<C-s>w', '<C-w>h')
-call submode#enter_with('window_resize', 'n', '', '<C-s>w', '<C-w>j')
-call submode#enter_with('window_resize', 'n', '', '<C-s>w', '<C-w>k')
-call submode#enter_with('window_resize', 'n', '', '<C-s>w', '<C-w>l')
-call submode#leave_with('window_resize', 'n', '', 'q')
+call submode#enter_with('window_resize', 'n', '', '<C-s>w', '<NOP>')
 call submode#map('window_resize', 'n', '', 'k', '<C-w>+')
 call submode#map('window_resize', 'n', '', 'j', '<C-w>-')
 call submode#map('window_resize', 'n', '', 'h', '<C-w><')
@@ -693,8 +689,7 @@ call submode#map('window_resize', 'n', '', 'l', '<C-w>>')
 
 
 " Fold Mover
-call submode#enter_with('fold_move', 'n', '', '<C-s>z', 'zRzi')
-call submode#leave_with('fold_move', 'n', '', 'q')
+call submode#enter_with('fold_move', 'n', '', '<C-s>z', '<NOP>')
 call submode#map('fold_move', 'n', '', 'j', 'zczjzozz')
 call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
 
