@@ -164,7 +164,7 @@ endif
 "{{{
 
 function! s:system(cmd)
-	if exists(':VimProcBang')
+	if exists('*vimproc#system()')
 		return vimproc#system(a:cmd)
 	else
 		return system(a:cmd)
@@ -679,19 +679,22 @@ let g:unite_source_alias_aliases = {
 
 let g:submode_timeout = 0
 
+
 " Window Resizer
 call submode#enter_with('window_resize', 'n', '', '<C-s>w', '<C-w>h')
 call submode#enter_with('window_resize', 'n', '', '<C-s>w', '<C-w>j')
 call submode#enter_with('window_resize', 'n', '', '<C-s>w', '<C-w>k')
 call submode#enter_with('window_resize', 'n', '', '<C-s>w', '<C-w>l')
+call submode#leave_with('window_resize', 'n', '', 'q')
 call submode#map('window_resize', 'n', '', 'k', '<C-w>+')
 call submode#map('window_resize', 'n', '', 'j', '<C-w>-')
 call submode#map('window_resize', 'n', '', 'h', '<C-w><')
 call submode#map('window_resize', 'n', '', 'l', '<C-w>>')
 
+
 " Fold Mover
-call submode#enter_with('fold_move', 'n', '', '<C-s>z', 'zj')
-call submode#enter_with('fold_move', 'n', '', '<C-s>z', 'zk')
+call submode#enter_with('fold_move', 'n', '', '<C-s>z', 'zRzi')
+call submode#leave_with('fold_move', 'n', '', 'q')
 call submode#map('fold_move', 'n', '', 'j', 'zczjzozz')
 call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
 
@@ -934,8 +937,8 @@ augroup END
 
 " Save Cursor Position when file closed
 augroup FilePositSave
-	autocmd BufWinLeave ?+ silent mkview
-	autocmd BufWinEnter ?+ silent loadview
+	autocmd BufWinLeave ?\+ silent mkview
+	autocmd BufWinEnter ?\+ silent loadview
 augroup END
 
 " Powered Auto File Backup when written
