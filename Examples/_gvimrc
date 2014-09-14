@@ -1,5 +1,5 @@
 
-let $CYGGVIMRC = '/cygwin/home/ishikawa/.dotfiles/.gvimrc'
+let $CYGGVIMRC = '/cygwin/home/username/.dotfiles/.gvimrc'
 let $WINVIMRC = $MYVIMRC
 let $MYVIMRC =  $CYGGVIMRC
 

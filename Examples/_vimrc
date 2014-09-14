@@ -1,10 +1,10 @@
 
 set shellslash
 
-let $CYGVIMRC = '/cygwin/home/ishikawa/.dotfiles/.vimrc'
+let $CYGVIMRC = '/cygwin/home/username/.dotfiles/.vimrc'
 let $WINVIMRC = $MYVIMRC
 let $MYVIMRC  = $CYGVIMRC
-let $DESKTOP = 'C:/Users/ishikawa/Desktop'
+let $DESKTOP = 'C:/Users/username/Desktop'
 
 command! WinVimConfig e $WINVIMRC
 
