@@ -298,10 +298,8 @@ if has('vim_starting')
 			echo 'Please closing vim and reopening vim once,'
 			echo 'and executing :NeoBundleInstall .'
 		catch
-			echohl Error
-			echo "neobundle.vim clone failed."
-			echo ">> Vim Config Error <<"
-			echohl None
+			call s:echo_error('neobundle.vim clone failed.')
+			call s:echo_error('>> Vim Config Error <<')
 		endtry
 	endtry
 endif
