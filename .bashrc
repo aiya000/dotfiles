@@ -17,36 +17,29 @@ stty start undef  # unbind C-q that is start viewing inputs to screen
 # Bash Short Cuts
 alias reload='source ~/.bash_profile && source ~/.bashrc && echo "bash source reloaded"'
 
-# Opening Vim Short Cuts {{{
+# Vim Utils {{{
 
-alias vimbash='vim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
-alias vimpro='vim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
-alias vimconfig='vim ~/.vimrc'
-alias vimshconfig='vim ~/.vimshrc'
-alias gvimconfig='vim ~/.gvimrc'
-alias scrconfig='vim ~/.screenrc'
-alias sshconfig='vim ~/.ssh/config'
-alias sshknowns='vim ~/.ssh/known_hosts'
-
-#}}}
-# Vim Util Alias {{{
-
-alias vi='vim -u NONE -U NONE --noplugin'
+alias vi='vim -u NONE --noplugin'
 alias gvi='gvim -u NONE -U NONE --noplugin'
 alias vimshell='vim -c VimShell'
 alias conshell='vim -c "ConqueTerm bash"'
+alias vim_record_startup="f=`tempfile` ; vim --startuptime vtime -- $f && rm $f"
 alias vimclearview='rm ~/.backup/vim_backup/view/*'
 alias vimclearswp='rm ~/.backup/vim_backup/swp/*'
 alias vimclearundo='rm ~/.backup/vim_backup/undo/*'
+alias vimclearcache='vimclearview && vimclearundo && vimclearswp'
 alias vimmemo='vim ~/.tmp/memo.txt'
-alias gmail='vim -c Gmail'
 alias twitter='vim -c TweetVimHomeTimeline'
 alias tweet='vim -c TweetVimSay'
 alias twitterPublic='vim -c "call TwitterPublicFunc()"'
 alias tweetPublic='vim -c "call TweetPublicFunc()"'
 
+alias vimconfig='vim ~/.vimrc'
+alias vimbash='vim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
+alias vimpro='vim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
+
 # }}}
-# Shell Util Alias {{{
+# Shell Utils {{{
 
 alias gyazo='ruby ~/.vim/bundle/vim-gyazo/gyazo/gyazo.rb'
 
@@ -58,12 +51,8 @@ alias pbcopy='xsel --clipboard --input'
 
 alias mysql='mysql -E'
 
-alias learn-vimscript='vim -c help learn-vimscript'
-alias lingr-momonga='vim -c "J6uil momonga"'
-alias lingr-cpp='vim -c "J6uil cpp"'
-alias lingr-lpp='vim -c "J6uil LanguagesPlusPlus"'
-alias lingr-vim='vim -c "J6uil vim"'
-[ $isUbuntu -eq 1 ] && alias vncserver_kill="vncserver -kill hostname:${1}"  # Destop Number
+[ $isUbuntu -eq 1 ] \
+	&& alias vncserver_kill="vncserver -kill hostname:${1}"  # Destop Number
 
 
 if [ -n "`which git 2> /dev/null`" ] ; then
@@ -104,7 +93,7 @@ if [ -n "`which tmux 2> /dev/null`" ] ; then
 fi
 
 # }}}
-# With OS {{{
+# Environment Conditions {{{
 
 if [ $isUbuntu -eq 1 ] ; then
 	alias alternatives='update-alternatives'
