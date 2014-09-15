@@ -31,6 +31,7 @@ scriptencoding utf8
 " -- Parameter
 " -- Local Function
 " -- Initialize
+"
 " -- Plugin Manage
 " -- Plugin Configure
 " -- View Setting
@@ -397,6 +398,10 @@ NeoBundle 'katono/rogue.vim'
 NeoBundleDisable 'aiya000/asql.vim'
 NeoBundle 'kamichidu/vim-benchmark'
 NeoBundle 'kana/vim-submode'
+NeoBundle 'gist:aiya000/58931585f8ba6aa43b87', {
+\	'name'        : 'conceal-javadoc.vim',
+\	'script_type' : 'plugin'
+\}
 
 call neobundle#end()
 
