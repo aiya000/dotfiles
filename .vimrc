@@ -712,6 +712,7 @@ call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
 
 "}}}
 "--- ref-dicts-en ---" {{{
+"@See('http://d.hatena.ne.jp/akishin999/20131024/1382569289')
 
 let g:ref_source_webdict_sites = {
 \	'je' : {
