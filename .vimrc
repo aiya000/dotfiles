@@ -1,5 +1,6 @@
 scriptencoding utf8
 
+
 "----------------------------"
 "  Target of this config     "
 "    - UNIX like OS          "
@@ -23,6 +24,7 @@ scriptencoding utf8
 " }}}
 
 "}}}
+
 
 
 "-------------------
@@ -97,10 +99,14 @@ scriptencoding utf8
 
 "-- Happened Problem open file when TDirCd -> vim in vimshell
 
+"-- submode fold_move do not functioned when not exists fold under cursor
+
 "}}}
 " Todo {{{
 
 "-- Arranging command sections and function sections
+
+"-- Fix Clear* command without environment command
 
 " }}}
 
@@ -402,6 +408,8 @@ NeoBundle 'gist:aiya000/58931585f8ba6aa43b87', {
 \	'name'        : 'conceal-javadoc.vim',
 \	'script_type' : 'plugin'
 \}
+NeoBundle 'mfumi/ref-dicts-en'
+
 
 call neobundle#end()
 
@@ -410,6 +418,7 @@ if s:isUnix
 elseif s:isKaoriya
 	helptags ~/_vim/bundle/.neobundle/doc
 endif
+
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
 
@@ -501,6 +510,9 @@ call neobundle#config('coqtop-vim', {
 \})
 call neobundle#config('vim-grammarous', {
 \	'disabled' : !executable('java')
+\})
+call neobundle#config('ref-dicts-en', {
+\	'depends' : ['thinca/vim-ref']
 \})
 
 " }}}
@@ -699,6 +711,26 @@ call submode#map('fold_move', 'n', '', 'j', 'zczjzozz')
 call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
 
 "}}}
+"--- ref-dicts-en ---" {{{
+
+let g:ref_source_webdict_sites = {
+\	'je' : {
+\		'url' : 'http://dictionary.infoseek.ne.jp/jeword/%s'
+\	},
+\	'ej' : {
+\		'url' : 'http://dictionary.infoseek.ne.jp/ejword/%s'
+\	}
+\}
+
+let g:ref_source_webdict_sites['default'] = 'je'
+
+function! s:webdict_filter(output)
+	return join(split(a:output, "\n")[15 : ], "\n")
+endfunction
+let g:ref_source_webdict_sites['je'].filter = function('<SID>webdict_filter')
+let g:ref_source_webdict_sites['ej'].filter = function('<SID>webdict_filter')
+
+" }}}
 "--- For Private ---"{{{
 
 " Read Privacy Config
@@ -1205,29 +1237,30 @@ endif
 "-------------------------"
 "          Alias          "
 "-------------------------"
-" Base {{{
+" Utils {{{
 
 call altercmd#load()
 
+" Vim Utils {{{
 command! VimConfig         execute 'e  '.$MYVIMRC
 command! VimConfigTab      execute 'tabnew|e '.$MYVIMRC
 command! Reload            execute 'so '.$MYVIMRC
 	\|	if has('gui_running')
 	\|		execute 'so '.$MYGVIMRC
 	\|	endif
-command! Wso               w|so %
 if executable('sudo')
 	command! ForceSave     w !sudo tee > /dev/null %
 endif
-command! ClearSwap         call s:system('rm '.s:directory.'/{.*,*}')
-command! ClearView         call s:system('rm '.s:viewdir.'/*')
-command! ClearUndo         call s:system('rm '.s:undodir.'/*')
-command! ClearCache        execute 'normal! :ClearSwap<CR> :ClearView<CR> :ClearUndo<CR>'
+command! ClearSwap   call s:system('rm '.s:directory.'/{.*,*}')
+command! ClearView   call s:system('rm '.s:viewdir.'/*')
+command! ClearUndo   call s:system('rm '.s:undodir.'/*')
+command! ClearCache  execute 'normal! :ClearSwap<CR> :ClearView<CR> :ClearUndo<CR>'
+command! Resetf      let &ft = &ft
 
 command! ColorPreview      Unite colorscheme -auto-preview
 command! NeoBundleSearch   Unite neobundle/search
 
-command! -nargs=+ GistPrivate Gist -p <args>
+" }}}
 " Twitter {{{
 
 "-- Basic --"
@@ -1276,19 +1309,28 @@ function! TweetPublicFunc() "{{{
 endfunction "}}}
 command! TweetPublic        call TweetPublicFunc()
 
+
+command!      Bitly         TweetVimBitly
+AlterCommand  tvs           TweetVimSwitchAccount
+
 " }}}
-command!      Bitly        TweetVimBitly
-AlterCommand  tvs          TweetVimSwitchAccount
-command! -nargs=1
-\             Lingr        J6uil
-command!      Translate    ExciteTranslate
-command!      JazzUpdate   JazzradioUpdateChannels
-command!      JazzList     Unite jazzradio
-AlterCommand  JazzPlay     JazzradioPlay
-command!      JazzStop     JazzradioStop
+
+" Benri
+command! -nargs=+ GistPrivate   Gist -p <args>
+
+" Beautifull Life
+command!      JazzUpdate    JazzradioUpdateChannels
+command!      JazzList      Unite jazzradio
+AlterCommand  JazzPlay      JazzradioPlay
+command!      JazzStop      JazzradioStop
+
+" Translates Languages
+command!          Translate     ExciteTranslate
+command! -nargs=1 TranslateJ2E  Ref webdict je <args>
+command! -nargs=1 TranslateE2J  Ref webdict ej <args>
 
 "}}}
-" Development Support {{{
+" Developments{{{
 
 command! -nargs=1 Log VimConsoleLog <args>
 command! LogClear VimConsoleClear
