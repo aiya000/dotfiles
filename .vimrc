@@ -447,9 +447,6 @@ call neobundle#config('TweetVim', {
 call neobundle#config('vimshell.vim', {
 \	'depends' : ['Shougo/vimproc.vim']
 \})
-call neobundle#config('quickrun-outputter-replace_region', {
-\	'depends' : ['thinca/vim-quickrun']
-\})
 call neobundle#config('gmail.vim', {
 \	'depends' : ['Shougo/vimproc.vim']
 \})
@@ -1569,6 +1566,10 @@ endif
 
 "}}}
 
+
+augroup ProgramTypes
+	autocmd BufRead * let &ft = &ft
+augroup END
 
 let g:vimrc_loaded = 1
 
