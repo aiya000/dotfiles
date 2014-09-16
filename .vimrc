@@ -708,11 +708,11 @@ call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
 "@See('http://d.hatena.ne.jp/akishin999/20131024/1382569289')
 
 let g:ref_source_webdict_sites = {
-\	'je' : {
-\		'url' : 'http://dictionary.infoseek.ne.jp/jeword/%s'
-\	},
 \	'ej' : {
 \		'url' : 'http://dictionary.infoseek.ne.jp/ejword/%s'
+\	},
+\	'je' : {
+\		'url' : 'http://dictionary.infoseek.ne.jp/jeword/%s'
 \	}
 \}
 
@@ -721,8 +721,8 @@ let g:ref_source_webdict_sites['default'] = 'je'
 function! s:webdict_filter(output)
 	return join(split(a:output, "\n")[15 : ], "\n")
 endfunction
-let g:ref_source_webdict_sites['je'].filter = function('<SID>webdict_filter')
-let g:ref_source_webdict_sites['ej'].filter = function('<SID>webdict_filter')
+let g:ref_source_webdict_sites['je'].filter = function('s:webdict_filter')
+let g:ref_source_webdict_sites['ej'].filter = function('s:webdict_filter')
 
 " }}}
 "--- For Private ---"{{{
@@ -1381,7 +1381,6 @@ augroup END
 
 augroup AddtionalKeys
 	autocmd FileType * nnoremap Q gQ
-	autocmd FileType * nnoremap <silent><buffer> <C-l><C-l> :nohlsearch<CR>
 augroup END
 
 " }}}
@@ -1410,7 +1409,7 @@ augroup AddtionalKeys
 
 	autocmd FileType * nnoremap <silent> <C-k><C-l> :so %<CR>
 
-	" Special ESC Map when cannot use default <C-c> Map (Exam: VimShell)
+	" Special ESC Map in the case of cannot use default <C-c> (exam: vimshell)
 	autocmd FileType * inoremap <C-k><C-l> <Esc>
 
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
@@ -1418,7 +1417,11 @@ augroup AddtionalKeys
 	autocmd FileType * nnoremap <silent> <C-w>t :tabnew<CR>
 
 	autocmd FileType * nnoremap <silent> <C-@><C-r> :Reload<CR>
+	autocmd FileType * nnoremap <silent> <C-@>bn    :bn<CR>
+	autocmd FileType * nnoremap <silent> <C-@>bp    :bp<CR>
+	autocmd FileType * nnoremap <silent><buffer> <C-@><C-l> :nohlsearch<CR>
 	autocmd FileType * cnoremap <C-@><C-p> <Up>
+	autocmd FileType * cnoremap <C-@><C-n> <Down>
 
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
@@ -1475,6 +1478,8 @@ augroup PluginPrefs
 
 	autocmd FileType vimshell nunmap <buffer> Q
 	autocmd FileType vimshell nunmap <buffer> q
+	autocmd FileType vimshell nunmap <buffer> gj
+	autocmd FileType vimshell nunmap <buffer> gk
 	autocmd FileType vimshell imap   <buffer> <C-l>       <Plug>(vimshell_clear)
 	autocmd FileType vimshell imap   <buffer> <C-k><C-p>  <Plug>(vimshell_history_unite)
 	autocmd FileType vimshell iunmap <buffer> <C-p>
@@ -1566,10 +1571,6 @@ endif
 
 "}}}
 
-
-augroup ProgramTypes
-	autocmd BufRead * let &ft = &ft
-augroup END
 
 let g:vimrc_loaded = 1
 

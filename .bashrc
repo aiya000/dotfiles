@@ -23,7 +23,7 @@ alias vi='vim -u NONE --noplugin'
 alias gvi='gvim -u NONE -U NONE --noplugin'
 alias vimshell='vim -c VimShell'
 alias conshell='vim -c "ConqueTerm bash"'
-alias vim_record_startup="f=`tempfile` ; vim --startuptime vtime -- $f && rm $f"
+alias vim_record_startup="f=`mktemp` ; vim --startuptime vtime -- $f && rm $f"
 alias vimclearview='rm ~/.backup/vim_backup/view/*'
 alias vimclearswp='rm ~/.backup/vim_backup/swp/*'
 alias vimclearundo='rm ~/.backup/vim_backup/undo/*'
