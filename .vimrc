@@ -692,8 +692,8 @@ let g:submode_timeout = 0
 
 " Window Resizer
 call submode#enter_with('window_resize', 'n', '', '<C-s>w', '<NOP>')
-call submode#map('window_resize', 'n', '', 'k', '<C-w>+')
-call submode#map('window_resize', 'n', '', 'j', '<C-w>-')
+call submode#map('window_resize', 'n', '', 'j', '<C-w>+')
+call submode#map('window_resize', 'n', '', 'k', '<C-w>-')
 call submode#map('window_resize', 'n', '', 'h', '<C-w><')
 call submode#map('window_resize', 'n', '', 'l', '<C-w>>')
 
@@ -1478,8 +1478,6 @@ augroup PluginPrefs
 
 	autocmd FileType vimshell nunmap <buffer> Q
 	autocmd FileType vimshell nunmap <buffer> q
-	autocmd FileType vimshell nunmap <buffer> gj
-	autocmd FileType vimshell nunmap <buffer> gk
 	autocmd FileType vimshell imap   <buffer> <C-l>       <Plug>(vimshell_clear)
 	autocmd FileType vimshell imap   <buffer> <C-k><C-p>  <Plug>(vimshell_history_unite)
 	autocmd FileType vimshell iunmap <buffer> <C-p>
