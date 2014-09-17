@@ -131,9 +131,9 @@ let s:hasMingw  = 0
 let s:vimHome   = expand('~/.vim')
 
 let s:backupdir = expand('~/.backup/vim_backup')
-let s:directory = s:backupdir.'/swp/'
-let s:undodir   = s:backupdir.'/undo/'
-let s:viewdir   = s:backupdir.'/view/'
+let s:directory = s:backupdir.'/swp'
+let s:undodir   = s:backupdir.'/undo'
+let s:viewdir   = s:backupdir.'/view'
 
 let s:username  = expand('$USER')
 let s:groupname = $GROUP == '' ? expand('$USER') : expand('$GROUP')
@@ -1225,11 +1225,7 @@ command! Reload            execute 'so '.$MYVIMRC
 if executable('sudo')
 	command! ForceSave     w !sudo tee > /dev/null %
 endif
-command! ClearSwap   call s:system('rm '.s:directory.'/{.*,*}')
-command! ClearView   call s:system('rm '.s:viewdir.'/*')
-command! ClearUndo   call s:system('rm '.s:undodir.'/*')
-command! ClearCache  execute 'normal! :ClearSwap<CR> :ClearView<CR> :ClearUndo<CR>'
-command! Resetf      let &ft = &ft
+command! Resetf            let &ft = &ft
 
 command! ColorPreview      Unite colorscheme -auto-preview
 command! NeoBundleSearch   Unite neobundle/search
