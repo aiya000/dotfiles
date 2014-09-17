@@ -40,6 +40,9 @@ command! DressUpColorMolokai
 \|	endif
 
 
+set guioptions-=T
+set guioptions-=m
+
 let g:tweetvim_display_username = 1
 let g:tweetvim_display_icon = 1
 let g:J6uil_display_icon = 1
