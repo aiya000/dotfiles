@@ -13,15 +13,19 @@ scriptencoding utf8
 "*** Verified Functioned Environment ***"
 "---------------------------------------"
 
-" --- Windows Kaoriya GVim --- {{{
+"* Windows Kaoriya GVim cooperate to Cygwin
+  "1. Download Kaoriya Vim
+  "2. PATH /cygwin/{,usr/}bin add to Windows
+  "3. Copy Examples/_{,g}vimrc to kaoriya-vim dir
+  "4. Start GVim
+    "- > mmm...?
+    "- nazo(dekitari cannot-tari)
 
-" 1. New Version download by Kaoriya site
-" 2. Reference this config file
-" 3. Starting GVim
-" -> Completely Succeeded.
-
-
-" }}}
+"* Windows Kaoriya GVim(Manually Update)
+  "1. New Version download by Kaoriya site
+  "2. Reference this config file
+  "3. Starting GVim
+    "- > Completely Succeeded.
 
 "}}}
 
@@ -51,21 +55,10 @@ scriptencoding utf8
 
 "-- gJ,gK => zh,zl like scroll up and down
 
-"-- (*^-') < vimshell-kawaii kakuremi no jutsu !!
-
 "-- point marker line num in a file
 "  -- I can jump marked line and list up mark lines
 
 "-- implement command that print format (%0, %1, %2), ({0}, {1}, {2}) replace arguments on real time
-
-"-- Implement Local vimgrep :Grep
-"  -- correspond for unnamed buffer
-
-"-- Translate English Plugin By Weblio
-
-"-- Implement a command, Englishnize selected lines by QuickRun 'en'
-
-"-- Easy CaslII Emulator for Vim
 
 "-- ahoge auto include yanked words
 
@@ -81,23 +74,10 @@ scriptencoding utf8
 "-- color highlight 'var' is not highlight when ...executed vsp|b hoge..?
 "  -- What is best event ?
 
-"-- My Hints highlight faild in kaoriya gvim
-"  -- and Cygwin Vim
-
-"-- [autocmd FileType * nnoremap <C-j> :normal o] Applied tweetvim buffer
-"  -- want to not functioned this map in that buffer
-
-"-- not functioned ./doc/myhelp.txt
-
 "-- 'gist:aiya000/ec5f6b2375a639831953' cannot divide configure
 "  -- if diveding then install it as no named plugin
 
-"-- Do filetype not found when enter filetype ?
-"  -- mmm, this take by filetype text ?
-
 "-- Not functioned auto backup file when write in kaoriya vim
-
-"-- Happened Problem open file when TDirCd -> vim in vimshell
 
 "-- submode fold_move do not functioned when not exists fold under cursor
 
