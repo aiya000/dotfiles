@@ -86,8 +86,6 @@ scriptencoding utf8
 
 "-- Arranging command sections and function sections
 
-"-- Fix Clear* command without environment command
-
 " }}}
 
 
