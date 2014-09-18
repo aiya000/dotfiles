@@ -951,15 +951,20 @@ function! s:update_backup_by_date() "{{{
 	let l:dailydir = s:backupdir . '/' . strftime("%Y-%m-%d")
 	if !isdirectory(l:dailydir)
 		call mkdir(l:dailydir, 'p', 0755)
-		call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, l:dailydir))
+		if s:isUnix
+			call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, l:dailydir))
+		endif
 	endif
 
-	let filepath = split(expand('%'), '/')
-	let filename = filepath[len(filepath)-1] . strftime('_at_%H:%M')
-	execute 'w! '.l:dailydir.'/'.filename
+	let l:filepath = split(expand('%'), '/')
+	let l:filename = s:isWindows
+		\ ? filepath[len(filepath)-1] . strftime('_at_%H-%M')
+		\ : filepath[len(filepath)-1] . strftime('_at_%H:%M')
+
+	call writefile(readfile(expand('%')), l:dailydir.'/'.l:filename)
 endfunction "}}}
 augroup FileEvents
-	autocmd BufWritePre ?+ silent :call s:update_backup_by_date()
+	autocmd BufWritePre ?\+ silent call s:update_backup_by_date()
 augroup END
 
 "}}}
