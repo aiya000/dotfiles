@@ -64,6 +64,8 @@ scriptencoding utf8
 
 "-- View prev and next fold head text ...on echo or other buffer ?
 
+"-- opened filetype auto register for list var
+
 " }}}
 " Issues {{{
 
@@ -85,6 +87,11 @@ scriptencoding utf8
 " Todo {{{
 
 "-- Arranging command sections and function sections
+
+"-- more devide config gvim and vim.
+
+" kamichidu     : <afile>とか使えないのかな writefile(getline(1, '$'), '<afile>')  09/18 18:34
+" kamichidu     : writefile(getline(1, '$'), 'other/dir/' . fnamemodify('<afile>', ':t'))  09/18 18:37
 
 " }}}
 
@@ -383,6 +390,7 @@ NeoBundle 'gist:aiya000/58931585f8ba6aa43b87', {
 \	'script_type' : 'plugin'
 \}
 NeoBundle 'mfumi/ref-dicts-en'
+NeoBundle 'thinca/vim-painter'
 
 
 call neobundle#end()
@@ -965,6 +973,7 @@ function! s:update_backup_by_date() "{{{
 endfunction "}}}
 augroup FileEvents
 	autocmd BufWritePre ?\+ silent call s:update_backup_by_date()
+	autocmd BufWritePre * echo expand('<afile>')
 augroup END
 
 "}}}
