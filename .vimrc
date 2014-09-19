@@ -100,7 +100,7 @@ scriptencoding utf8
 "----------------------------------------
 " {- Hints -} "
 " @Unsupported  => Do not supported functions when now.
-" @Incubated    => I don't know why this functioned.
+" @Unknowned    => I don't know why this functioned.
 "     ／人◕ ‿‿ ◕人＼ <  Wakega wakaranaiyo!
 " @Incompleted  => This is not completed making.
 " @Deprecated   => Deprecated This vimrc Version.
