@@ -44,9 +44,9 @@ scriptencoding utf8
 " -- Action Setting
 " -- Inner Setting
 " -- Event Method
-" -- Function Command
+" -- Functional Command
 " -- Alias
-" -- Global KeyMap
+" -- KeyMap
 " -- FileType
 " -- Ignore Setting
 " -- Environment Pref
@@ -143,9 +143,7 @@ let s:viewdir   = s:backupdir.'/view'
 let s:username  = expand('$USER')
 let s:groupname = $GROUP == '' ? expand('$USER') : expand('$GROUP')
 
-if !exists('g:vimrc_loaded')
-	let g:vimrc_loaded = 0
-endif
+let g:vimrc_loaded = get(g:, 'vimrc_loaded', 0)
 
 "}}}
 
@@ -949,8 +947,8 @@ augroup END
 
 " Save Cursor Position when file closed
 augroup FilePositSave
-	autocmd BufWinLeave ?\+ silent mkview
-	autocmd BufWinEnter ?\+ silent loadview
+	autocmd BufWinLeave + silent mkview
+	autocmd BufWinEnter + silent loadview
 augroup END
 
 " Powered Auto File Backup when written
@@ -972,8 +970,7 @@ function! s:update_backup_by_date() "{{{
 	call writefile(readfile(expand('%')), l:dailydir.'/'.l:filename)
 endfunction "}}}
 augroup FileEvents
-	autocmd BufWritePre ?\+ silent call s:update_backup_by_date()
-	autocmd BufWritePre * echo expand('<afile>')
+	autocmd BufWritePre + silent call s:update_backup_by_date()
 augroup END
 
 "}}}
@@ -1217,6 +1214,15 @@ if executable('python')
 	command! ImportPythonJp call s:put_python_import_for_jp()
 endif
 
+
+command! PutSeparatorShort
+	\	execute 'normal a'.'/* -=-=-=-=-=-=-=-=- */'
+	\|	execute 'normal =='
+command! PutSeparatorLong
+	\	execute 'normal a'.'/* ---===---===---===---===---===---===--- */'
+	\|	execute 'normal =='
+
+
 " }}}
 
 
@@ -1345,7 +1351,7 @@ command! FtCoqInstancyOn  NeoBundleSource coq.vim
 
 
 "-------------------------"
-"         Key Map         "
+"         KeyMap          "
 "-------------------------"
 " Global KeyMaps {{{
 
