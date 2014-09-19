@@ -38,6 +38,10 @@ let s:isWindows = has('win32')
 
 let g:gvimrc_loaded = get(g:, 'gvimrc_loaded', 0)
 
+let g:grc_guifont = get(g:, 'guifont', {})
+let g:grc_guifont.font = get(g:guifont, 'font', 'MS_Gothic')
+let g:grc_guifont.size = get(g:guifont, 'size', 10)
+
 "}}}
 
 
@@ -73,6 +77,23 @@ command! DressUpColorMolokai
 \|	if s:isWindows
 \|		set transparency=255
 \|	endif
+
+
+command! FontSizeUp
+	\	let g:grc_guifont['size'] += 1
+	\|	let &guifont     = g:grc_guifont['font'] .':h'. g:grc_guifont['size']
+	\|	let &guifontwide = g:grc_guifont['font'] .':h'. g:grc_guifont['size']
+
+command! FontSizeDown
+	\	let g:grc_guifont['size'] -= 1
+	\|	let &guifont     = g:grc_guifont['font'] .':h'. g:grc_guifont['size']
+	\|	let &guifontwide = g:grc_guifont['font'] .':h'. g:grc_guifont['size']
+
+command! FontSizeDefault
+	\	let g:grc_guifont['size'] = 10
+	\|	let &guifont     = g:grc_guifont['font'] .':h'. g:grc_guifont['size']
+	\|	let &guifontwide = g:grc_guifont['font'] .':h'. g:grc_guifont['size']
+
 
 "}}}
 
@@ -132,6 +153,14 @@ let g:tweetvim_display_icon = 1
 "--- J6uil ---"{{{
 
 let g:J6uil_display_icon = 1
+
+"}}}
+"--- submode ---"{{{
+
+call submode#enter_with('font_size', 'n', '', '<C-s>f', '<NOP>')
+call submode#map('font_size', 'n', '', ';', ':FontSizeUp<CR>')
+call submode#map('font_size', 'n', '', '-', ':FontSizeDown<CR>')
+call submode#map('font_size', 'n', '', '=', ':FontSizeDefault<CR>')
 
 "}}}
 
