@@ -39,8 +39,8 @@ let s:isWindows = has('win32')
 let g:gvimrc_loaded = get(g:, 'gvimrc_loaded', 0)
 
 let g:grc_guifont = get(g:, 'guifont', {})
-let g:grc_guifont.font = get(g:guifont, 'font', 'MS_Gothic')
-let g:grc_guifont.size = get(g:guifont, 'size', 10)
+let g:grc_guifont.font = get(g:grc_guifont, 'font', 'MS_Gothic')
+let g:grc_guifont.size = get(g:grc_guifont, 'size', 10)
 
 "}}}
 

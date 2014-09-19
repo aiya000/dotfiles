@@ -945,11 +945,13 @@ augroup FileEvents
 	autocmd BufWritePost $MYGVIMRC :Reload
 augroup END
 
+
 " Save Cursor Position when file closed
 augroup FilePositSave
-	autocmd BufWinLeave + silent mkview
-	autocmd BufWinEnter + silent loadview
+	autocmd BufWinLeave ?\+ silent mkview
+	autocmd BufWinEnter ?\+ silent loadview
 augroup END
+
 
 " Powered Auto File Backup when written
 set nobackup
@@ -967,10 +969,10 @@ function! s:update_backup_by_date() "{{{
 		\ ? filepath[len(filepath)-1] . strftime('_at_%H-%M')
 		\ : filepath[len(filepath)-1] . strftime('_at_%H:%M')
 
-	call writefile(readfile(expand('%')), l:dailydir.'/'.l:filename)
+	call writefile(getline(1, '$'), l:dailydir.'/'.l:filename)
 endfunction "}}}
 augroup FileEvents
-	autocmd BufWritePre + silent call s:update_backup_by_date()
+	autocmd BufWritePre ?\+ silent call s:update_backup_by_date()
 augroup END
 
 "}}}
