@@ -49,6 +49,11 @@ let g:gvimrc_loaded = get(g:, 'gvimrc_loaded', 0)
 set guioptions-=T
 set guioptions-=m
 
+if s:isWindows
+	set guifont=MS_Gothic:h10
+	set guifontwide=MS_Gothic:h10
+endif
+
 "}}}
 
 
