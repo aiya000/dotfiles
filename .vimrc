@@ -90,8 +90,8 @@ scriptencoding utf8
 
 "-- more devide config gvim and vim.
 
-" kamichidu     : <afile>とか使えないのかな writefile(getline(1, '$'), '<afile>')  09/18 18:34
-" kamichidu     : writefile(getline(1, '$'), 'other/dir/' . fnamemodify('<afile>', ':t'))  09/18 18:37
+"-- Visualizability for Vim Tab
+"  -- showing window num when one window only
 
 " }}}
 
@@ -939,13 +939,6 @@ augroup END
 "-------------------------"
 "{{{
 
-augroup FileEvents
-	" Auto Reload when save this file $ @See('Reload => Alias::Base')
-	autocmd BufWritePost $MYVIMRC  :Reload
-	autocmd BufWritePost $MYGVIMRC :Reload
-augroup END
-
-
 " Save Cursor Position when file closed
 augroup FilePositSave
 	autocmd BufWinLeave ?\+ silent mkview
@@ -1403,12 +1396,13 @@ augroup AddtionalKeys
 	autocmd FileType * vnoremap <C-l> <Esc>
 	autocmd FileType * cnoremap <C-l> <Esc>
 
-	autocmd FileType * nnoremap <silent> <C-k><C-l> :so %<CR>
+	autocmd FileType * nnoremap <silent> <C-@>r :so %<CR>
 
 	" Special ESC Map in the case of cannot use default <C-c> (exam: vimshell)
 	autocmd FileType * inoremap <C-k><C-l> <Esc>
 
-	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
+	autocmd FileType * nnoremap <silent> <C-k> :normal! O<CR>
+	autocmd FileType * nnoremap <silent> <C-j> :normal! o<CR>
 
 	autocmd FileType * nnoremap <silent> <C-w>t :tabnew<CR>
 
