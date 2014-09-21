@@ -64,8 +64,6 @@ scriptencoding utf8
 
 "-- View prev and next fold head text ...on echo or other buffer ?
 
-"-- opened filetype auto register for list var
-
 " }}}
 " Issues {{{
 
@@ -78,8 +76,6 @@ scriptencoding utf8
 
 "-- 'gist:aiya000/ec5f6b2375a639831953' cannot divide configure
 "  -- if diveding then install it as no named plugin
-
-"-- Not functioned auto backup file when write in kaoriya vim
 
 "-- submode fold_move do not functioned when not exists fold under cursor
 
