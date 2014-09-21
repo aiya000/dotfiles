@@ -40,7 +40,7 @@ let g:gvimrc_loaded = get(g:, 'gvimrc_loaded', 0)
 
 let g:grc_guifont = get(g:, 'grc_guifont', {})
 let g:grc_guifont.font = get(g:grc_guifont, 'font', s:isWindows ? 'MS_Gothic' : 'Monospace')
-let g:grc_guifont.size = get(g:grc_guifont, 'size', 10)
+let g:grc_guifont.size = get(g:grc_guifont, 'size', s:isWindows ? ':h10' : ' 10')
 
 "}}}
 
@@ -57,8 +57,8 @@ set guioptions-=m
 "	set guifont=MS_Gothic:h10
 "	set guifontwide=MS_Gothic:h10
 "endif
-let &guifont     = g:grc_guifont['font'] .' '. g:grc_guifont['size']
-let &guifontwide = g:grc_guifont['font'] .' '. g:grc_guifont['size']
+let &guifont     = g:grc_guifont['font'] . g:grc_guifont['size']
+let &guifontwide = g:grc_guifont['font'] . g:grc_guifont['size']
 
 "}}}
 
