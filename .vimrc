@@ -64,6 +64,8 @@ scriptencoding utf8
 
 "-- View prev and next fold head text ...on echo or other buffer ?
 
+"-- Want to Unite buffer delete
+
 " }}}
 " Issues {{{
 
@@ -1345,6 +1347,15 @@ command! FtCoqInstancyOn  NeoBundleSource coq.vim
 "-------------------------"
 "         KeyMap          "
 "-------------------------"
+"--- Roles ---"{{{
+
+"* <C-k> is Primary prefix key
+"  - Use for be big frequency of operation
+
+"* <C-@> is Secondary prefix key
+"  - Use for be little frequency of operation
+
+"}}}
 " Global KeyMaps {{{
 
 " Disable Default Keys {{{
@@ -1398,14 +1409,13 @@ augroup AddtionalKeys
 	" Special ESC Map in the case of cannot use default <C-c> (exam: vimshell)
 	autocmd FileType * inoremap <C-k><C-l> <Esc>
 
-	autocmd FileType * nnoremap <silent> <C-k> :normal! O<CR>
-	autocmd FileType * nnoremap <silent> <C-j> :normal! o<CR>
+	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
 
 	autocmd FileType * nnoremap <silent> <C-w>t :tabnew<CR>
 
 	autocmd FileType * nnoremap <silent> <C-@><C-r> :Reload<CR>
-	autocmd FileType * nnoremap <silent> <C-@>bn    :bn<CR>
-	autocmd FileType * nnoremap <silent> <C-@>bp    :bp<CR>
+	autocmd FileType * nnoremap <silent> <C-@><C-b><C-n>    :bn<CR>
+	autocmd FileType * nnoremap <silent> <C-@><C-b><C-p>    :bp<CR>
 	autocmd FileType * nnoremap <silent><buffer> <C-@><C-l> :nohlsearch<CR>
 	autocmd FileType * cnoremap <C-@><C-p> <Up>
 	autocmd FileType * cnoremap <C-@><C-n> <Down>
