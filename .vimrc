@@ -524,15 +524,16 @@ if s:isUnix
 	\}
 elseif s:isCygwin
 	let g:quickrun_config['cs'] = {
-	\	'command' : 'cocot csc.exe',
+	\	'command'  : 'cocot csc.exe',
 	\	'exec'     : ['%c %o %s:p > /dev/null', './%s:p:r.exe', 'rm %s:p:r.exe'],
 	\	'tempfile' : '{tempname()}.cs'
 	\}
 elseif s:isWindows
 	let g:quickrun_config['cs'] = {
-	\	'command' : 'csc.exe',
+	\	'command'  : 'csc.exe',
 	\	'exec'     : ['%c %o %s:p', '%s:p:r.exe', 'del %s:p:r.exe'],
-	\	'tempfile' : '{tempname()}.cs'
+	\	'tempfile' : '{tempname()}.cs',
+	\	'hook/output_encode/encoding' : 'cp932:utf8'
 	\}
 endif
 
