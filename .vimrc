@@ -1210,11 +1210,25 @@ endif
 
 
 command! PutSeparatorShort
-	\	execute 'normal a'.'/* -=-=-=-=-=-=-=-=- */'
+	\	execute 'normal! a'.'/* -=-=-=-=-=-=-=-=- */'
 	\|	execute 'normal =='
 command! PutSeparatorLong
-	\	execute 'normal a'.'/* ---===---===---===---===---===---===--- */'
+	\	execute 'normal! a'.'/* ---===---===---===---===---===---===--- */'
 	\|	execute 'normal =='
+
+
+function! s:put_html_base() "{{{
+	execute 'normal! a' . '<html lang="ja">'
+	execute 'normal! o' . '<head>'
+	execute 'normal! o' . '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">'
+	execute 'normal! o' . '<title></title>'
+	execute 'normal! o' . '</head>'
+	execute 'normal! o' . '<body>'
+	execute 'normal! o'
+	execute 'normal! o' . '</body>'
+	execute 'normal! o' . '</html>'
+endfunction "}}}
+command! PutHtmlBase call s:put_html_base()
 
 
 " }}}
