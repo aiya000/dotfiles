@@ -47,7 +47,7 @@ scriptencoding utf8
 " -- Functional Command
 " -- Alias
 " -- KeyMap
-" -- FileType
+" -- FileTypes
 " -- Ignore Setting
 " -- Environment Pref
 " ---
@@ -1506,15 +1506,9 @@ augroup END
 
 
 "-------------------------"
-"       File Type         "
+"        FileTypes        "
 "-------------------------"
 "{{{
-
-" New FileTypes
-augroup ProgramTypes
-	autocmd FileType .vimperatorrc setf vim
-	autocmd FileType .vrapperrc    setf vim
-augroup END
 
 augroup ProgramTypes
 	autocmd FileType vim    let &commentstring = ' "%s'
