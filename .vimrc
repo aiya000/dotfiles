@@ -91,6 +91,8 @@ scriptencoding utf8
 "-- Visualizability for Vim Tab
 "  -- showing window num when one window only
 
+"-- Devide autocmds to just augroup
+
 " }}}
 
 
@@ -1400,6 +1402,7 @@ augroup END
 augroup AddtionalKeys
 	autocmd FileType * nmap     <C-j> <CR>
 	autocmd FileType * imap     <C-j> <CR>
+
 	autocmd FileType * cnoremap <C-b> <Left>
 	autocmd FileType * cnoremap <C-f> <Right>
 	autocmd FileType * cnoremap <C-a> <Home>
@@ -1506,6 +1509,12 @@ augroup END
 "       File Type         "
 "-------------------------"
 "{{{
+
+" New FileTypes
+augroup ProgramTypes
+	autocmd FileType .vimperatorrc setf vim
+	autocmd FileType .vrapperrc    setf vim
+augroup END
 
 augroup ProgramTypes
 	autocmd FileType vim    let &commentstring = ' "%s'

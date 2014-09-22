@@ -1,0 +1,33 @@
+
+augroup AddtionalKeys
+	autocmd!
+augroup END
+
+augroup AddtionalKeys
+	autocmd FileType * nnoremap <Up>    <NOP>
+	autocmd FileType * nnoremap <Down>  <NOP>
+	autocmd FileType * nnoremap <Left>  <NOP>
+	autocmd FileType * nnoremap <Right> <NOP>
+	autocmd FileType * inoremap <Up>    <NOP>
+	autocmd FileType * inoremap <Down>  <NOP>
+	autocmd FileType * inoremap <Left>  <NOP>
+	autocmd FileType * inoremap <Right> <NOP>
+	autocmd FileType * cnoremap <Left>  <NOP>
+	autocmd FileType * cnoremap <Right> <NOP>
+
+	autocmd FileType * nmap     <C-j> <CR>
+	autocmd FileType * imap     <C-j> <CR>
+
+	autocmd FileType * cnoremap <C-b> <Left>
+	autocmd FileType * cnoremap <C-f> <Right>
+	autocmd FileType * cnoremap <C-a> <Home>
+	autocmd FileType * cnoremap <C-h> <Backspace>
+	autocmd FileType * cnoremap <C-d> <Del>
+	autocmd FileType * cnoremap <C-e> <End>
+
+	autocmd FileType * inoremap <C-l> <Esc>
+	autocmd FileType * vnoremap <C-l> <Esc>
+	autocmd FileType * cnoremap <C-l> <Esc>
+
+	autocmd FileType * inoremap <C-k><C-l> <Esc>
+augroup END
