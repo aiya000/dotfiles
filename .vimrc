@@ -177,22 +177,28 @@ endfunction
 filetype plugin indent on
 " autocmd Groups {{{
 
-augroup PluginPrefs | autocmd!
+augroup PluginPrefs
+	autocmd!
 augroup END
 
-augroup FileEvents | autocmd!
+augroup FileEvents
+	autocmd!
 augroup END
 
-augroup FilePositSave | autocmd!
+augroup FilePositSave
+	autocmd!
 augroup END
 
-augroup ProgramTypes | autocmd!
+augroup ProgramTypes
+	autocmd!
 augroup END
 
-augroup SyntaxHighlights | autocmd!
+augroup SyntaxHighlights
+	autocmd!
 augroup END
 
-augroup AddtionalKeys | autocmd!
+augroup AddtionalKeys
+	autocmd!
 augroup END
 
 "}}}
@@ -264,9 +270,9 @@ function! s:fetch_neobundle()  " {{{
 	else
 		echohl Error
 		echo 'Sorry, You do not have git command.'
-		echo 'Cannot introduce NeoBundle.''
+		echo 'Cannot introduce NeoBundle.'
 		echohl None
-		throw "neobundle.vim clone failed."
+		throw 'neobundle.vim clone failed.'
 	endif
 endfunction  " }}}
 
