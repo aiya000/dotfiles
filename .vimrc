@@ -1448,10 +1448,10 @@ augroup AddKeyMap
 
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
-	autocmd FileType * nnoremap zj zjzo
-	autocmd FileType * nnoremap zk zkzo
-	autocmd FileType * noremap  z[ [z
-	autocmd FileType * noremap  z] ]z
+	autocmd FileType * nnoremap zj     zjzo
+	autocmd FileType * nnoremap zk     zkzo
+	autocmd FileType * noremap  z[     [z
+	autocmd FileType * noremap  z]     ]z
 augroup END
 
 " All buffers with plugins
@@ -1470,14 +1470,14 @@ augroup END
 " Functional Keys {{{
 
 augroup AddKeyMap
-	autocmd FileType * nnoremap <silent> gc call <SID>cursor_move_to_center()<CR>
-	autocmd FileType * nnoremap <silent> gk call <SID>cursor_up_to_lid()<CR>
-	autocmd FileType * nnoremap <silent> gj call <SID>cursor_down_to_ground()<CR>
+	autocmd FileType * nnoremap <silent> gc :call <SID>cursor_move_to_center()<CR>
+	autocmd FileType * nnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
+	autocmd FileType * nnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
 	"autocmd FileType * xmap gk <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * xmap gj <SID>cursor_down_to_ground()<CR>
 	"autocmd FileType * cmap gk <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * cmap gj <SID>cursor_down_to_ground()<CR>
-	autocmd FileType * nnoremap <silent> <C-w><C-w> call <SID>wrap_toggle()<CR>
+	autocmd FileType * nnoremap <silent> <C-w><C-w> :call <SID>wrap_toggle()<CR>
 augroup END
 
 " }}}
