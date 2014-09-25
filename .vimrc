@@ -280,7 +280,7 @@ if has('vim_starting')
 	try
 		let &runtimepath = &runtimepath.','.s:vimHome.'/bundle/neobundle.vim'
 		" Throws Error when nothing neobundle in runtime path
-		call neobundle#begin(expand(s:bundleDir))
+		call neobundle#begin()
 	catch
 		if isdirectory(s:neobundleDir) && !exists(':NeoBundle')
 			" Plugin Directories may be empty when git cloned new.
@@ -289,7 +289,7 @@ if has('vim_starting')
 		endif
 		try
 			call s:fetch_neobundle()
-			call neobundle#begin(expand(s:bundleDir))
+			call neobundle#begin()
 			echo 'NeoBundle installed.'
 			echo 'Please closing vim and reopening vim once,'
 			echo 'and executing :NeoBundleInstall .'
