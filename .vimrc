@@ -123,6 +123,8 @@ scriptencoding utf8
 "---------------------"
 "{{{
 
+let g:vimrc_loaded = get(g:, 'vimrc_loaded', 0)
+
 let s:isWindows = has('win32')
 let s:isCygwin  = has('win32unix')
 let s:isKaoriya = has('kaoriya')
@@ -140,10 +142,8 @@ let s:directory = s:backupdir.'/swp'
 let s:undodir   = s:backupdir.'/undo'
 let s:viewdir   = s:backupdir.'/view'
 
-let s:username  = expand('$USER')
-let s:groupname = $GROUP == '' ? expand('$USER') : expand('$GROUP')
-
-let g:vimrc_loaded = get(g:, 'vimrc_loaded', 0)
+let s:username  = $USER
+let s:groupname = $GROUP != '' ? $GROUP : $USER
 
 "}}}
 
@@ -177,11 +177,11 @@ endfunction
 filetype plugin indent on
 " autocmd Groups {{{
 
-augroup PluginPrefs
+augroup PluginPref
 	autocmd!
 augroup END
 
-augroup FileEvents
+augroup FileEvent
 	autocmd!
 augroup END
 
@@ -189,15 +189,15 @@ augroup FilePositSave
 	autocmd!
 augroup END
 
-augroup ProgramTypes
+augroup ProgramType
 	autocmd!
 augroup END
 
-augroup SyntaxHighlights
+augroup Highlight
 	autocmd!
 augroup END
 
-augroup AddtionalKeys
+augroup AddKeyMap
 	autocmd!
 augroup END
 
@@ -236,7 +236,7 @@ if s:isKaoriya
 	set noignorecase
 	set nosmartcase
 
-	augroup FileEvents
+	augroup FileEvent
 		autocmd BufRead $MYVIMRC setl enc=utf8 | setl fenc=utf8
 	augroup END
 endif
@@ -565,7 +565,7 @@ if s:isCygwin
 	\}
 endif
 
-augroup PluginPrefs
+augroup PluginPref
 	autocmd FileType quickrun setlocal wrap
 augroup END
 
@@ -582,7 +582,7 @@ endif
 "--- TweetVim ---"{{{
 
 let g:tweetvim_async_post = 1
-augroup PluginPrefs
+augroup PluginPref
 	autocmd FileType tweetvim setlocal wrap
 augroup END
 
@@ -603,14 +603,14 @@ let g:vimshell_no_save_history_commands = {
 let g:vimshell_enable_transient_user_prompt = 1
 let g:vimshell_force_overwrite_statusline = 1
 
-augroup PluginPrefs
+augroup PluginPref
 	autocmd FileType vimshell
 	\	call vimshell#altercmd#define('thanks', "echo \"(*^o^)< You're welcome!\"")
 	\|	call vimshell#set_alias('sp',  ':sp  | VimShellCreate')
 	\|	call vimshell#set_alias('vsp', ':vsp | VimShellCreate')
 
-	autocmd FileType vimshell  set fdm=marker
-	autocmd FileType vimshell  set nolist
+	autocmd FileType vimshell  setl fdm=marker
+	autocmd FileType vimshell  setl nolist
 augroup END
 
 "}}}
@@ -768,7 +768,7 @@ endif
 " Powered Up Syntax Highlight
 " {{{
 
-augroup SyntaxHighlights
+augroup Highlight
 	"autocmd Colorscheme * highlight Normal       cterm=NONE      ctermfg=Cyan
 	autocmd ColorScheme * highlight Visual       cterm=underline ctermfg=White ctermbg=Cyan
 	autocmd ColorScheme * highlight IncSearch                    ctermfg=Black ctermbg=Cyan
@@ -792,7 +792,7 @@ augroup SyntaxHighlights
 augroup END
 
 " Syntax janee
-augroup SyntaxHighlights
+augroup Highlight
 	autocmd InsertEnter * highlight StatusLine ctermfg=Black ctermbg=Cyan
 	autocmd InsertLeave * highlight StatusLine ctermfg=Cyan  ctermbg=Black
 augroup END
@@ -934,7 +934,7 @@ elseif isdirectory('~/.vim/doc')
 endif
 
 " If new buffer don't has filetype then execute setf 'none'
-augroup FileEvents
+augroup FileEvent
 	autocmd VimEnter,BufNew * if &ft == '' | setf none | endif
 augroup END
 
@@ -971,8 +971,10 @@ function! s:update_backup_by_date() "{{{
 
 	call writefile(getline(1, '$'), l:dailydir.'/'.l:filename)
 endfunction "}}}
-augroup FileEvents
+augroup FileEvent
 	autocmd BufWritePre ?\+ silent call s:update_backup_by_date()
+
+	"autocmd UserGettingBored * :echo 'Naijan!!!!'
 augroup END
 
 "}}}
@@ -1139,8 +1141,8 @@ command! -bar TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
 
 " Easy Toggle Wrap
 function! s:wrap_toggle()
-	if !&wrap | setl wrap
-	else      | setl nowrap
+	if &wrap | setl nowrap
+	else     | setl wrap
 	endif
 endfunction
 
@@ -1382,7 +1384,7 @@ command! FtCoqInstancyOn  NeoBundleSource coq.vim
 
 " Disable Default Keys {{{
 
-augroup AddtionalKeys
+augroup AddKeyMap
 	autocmd FileType * nnoremap <Up>    <NOP>
 	autocmd FileType * nnoremap <Down>  <NOP>
 	autocmd FileType * nnoremap <Left>  <NOP>
@@ -1398,14 +1400,14 @@ augroup END
 " }}}
 " Override Defined Keys {{{
 
-augroup AddtionalKeys
+augroup AddKeyMap
 	autocmd FileType * nnoremap Q gQ
 augroup END
 
 " }}}
 " Bashnize Command Mode {{{
 
-augroup AddtionalKeys
+augroup AddKeyMap
 	autocmd FileType * nmap     <C-j> <CR>
 	autocmd FileType * imap     <C-j> <CR>
 
@@ -1422,7 +1424,7 @@ augroup END
 " Customize Keys {{{
 
 " To All buffers
-augroup AddtionalKeys
+augroup AddKeyMap
 	autocmd FileType * inoremap <C-l> <Esc>
 	autocmd FileType * vnoremap <C-l> <Esc>
 	autocmd FileType * cnoremap <C-l> <Esc>
@@ -1434,7 +1436,8 @@ augroup AddtionalKeys
 
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
 
-	autocmd FileType * nnoremap <silent> <C-w>t :tabnew<CR>
+	autocmd FileType * nnoremap <silent> <C-w>t  :tabnew<CR>
+	autocmd FileType * nnoremap <silent> <C-w>bd :bd<CR>
 
 	autocmd FileType * nnoremap <silent> <C-@><C-r> :Reload<CR>
 	autocmd FileType * nnoremap <silent> <C-@><C-b><C-n>    :bn<CR>
@@ -1447,12 +1450,12 @@ augroup AddtionalKeys
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
 	autocmd FileType * nnoremap zj zjzo
 	autocmd FileType * nnoremap zk zkzo
-	autocmd FileType * nnoremap z[ [z
-	autocmd FileType * nnoremap z] ]z
+	autocmd FileType * noremap  z[ [z
+	autocmd FileType * noremap  z] ]z
 augroup END
 
 " All buffers with plugins
-augroup AddtionalKeys
+augroup AddKeyMap
 	autocmd FileType * nmap <leader>w  <Plug>(openbrowser-open)
 
 	autocmd FileType * nnoremap <silent> <leader>b          :ScratchUp<CR>
@@ -1466,15 +1469,15 @@ augroup END
 " }}}
 " Functional Keys {{{
 
-augroup AddtionalKeys
-	autocmd FileType * nnoremap <silent> gc :call <SID>cursor_move_to_center()<CR>
-	autocmd FileType * nnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
-	autocmd FileType * nnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
-	"autocmd FileType * xmap gk :UpCursorLid<CR>
-	"autocmd FileType * xmap gj :DownCursorGround<CR>
-	"autocmd FileType * cmap gk :UpCursorLid<CR>
-	"autocmd FileType * cmap gj :DownCursorGround<CR>
-	autocmd FileType * nnoremap <silent> <C-w><C-w> :call <SID>wrap_toggle()<CR>
+augroup AddKeyMap
+	autocmd FileType * nnoremap <silent> gc call <SID>cursor_move_to_center()<CR>
+	autocmd FileType * nnoremap <silent> gk call <SID>cursor_up_to_lid()<CR>
+	autocmd FileType * nnoremap <silent> gj call <SID>cursor_down_to_ground()<CR>
+	"autocmd FileType * xmap gk <SID>cursor_up_to_lid()<CR>
+	"autocmd FileType * xmap gj <SID>cursor_down_to_ground()<CR>
+	"autocmd FileType * cmap gk <SID>cursor_up_to_lid()<CR>
+	"autocmd FileType * cmap gj <SID>cursor_down_to_ground()<CR>
+	autocmd FileType * nnoremap <silent> <C-w><C-w> call <SID>wrap_toggle()<CR>
 augroup END
 
 " }}}
@@ -1483,7 +1486,7 @@ augroup END
 " Buffer Local KeyMaps {{{
 
 " To Plugin buffers
-augroup PluginPrefs
+augroup PluginPref
 	autocmd FileType netrw  nunmap   L
 	autocmd FileType netrw  nmap     <buffer> H -
 	autocmd FileType netrw  nnoremap <silent><buffer> Q  :quit<CR>
@@ -1516,7 +1519,7 @@ augroup END
 "-------------------------"
 "{{{
 
-augroup ProgramTypes
+augroup ProgramType
 	autocmd FileType vim    let &commentstring = ' "%s'
 	autocmd FileType vim    NeoBundleSource 'vim-themis'
 
@@ -1524,17 +1527,17 @@ augroup ProgramTypes
 	autocmd FileType vim highlight rcHint cterm=standout ctermfg=DarkYellow
 augroup END
 
-augroup ProgramTypes
+augroup ProgramType
 	autocmd FileType c,cpp,java,cs let &commentstring = " /*%s*/"
 
 	"autocmd VimEnter,WinEnter    *  syntax match TypeInference /var\s\+/
 	"autocmd FileType             cs highlight TypeInference cterm=bold ctermfg=11
 	
-	autocmd VimEnter,BufWinEnter,BufEnter * syntax match Identifier /\<var\>/
+	autocmd VimEnter,BufWinEnter,BufEnter,WinEnter * syntax match Identifier /\<var\>/
 	autocmd FileType cs highlight Identifier
 augroup END
 
-augroup ProgramTypes
+augroup ProgramType
 	autocmd FileType haskell    let &commentstring = " --%s"
 	autocmd FileType yesod      set ts=4|set sw=4|set et
 
@@ -1542,13 +1545,13 @@ augroup ProgramTypes
 	autocmd FileType haskell highlight rcHfSpace cterm=underline ctermfg=Cyan
 augroup END
 
-augroup ProgramTypes
+augroup ProgramType
 	autocmd BufNewFile,BufRead *.v let &ft='coq'
 	autocmd FileType coq execute ':FtCoqInstancyOn'
 	autocmd FileType coq let &commentstring = " (*%s*)"
 augroup END
 
-augroup ProgramTypes
+augroup ProgramType
 	autocmd BufNewFile,BufRead *.md set filetype=markdown
 	autocmd FileType markdown       nnoremap <silent> <leader>r :PrevimOpen<CR>
 	autocmd FileType markdown,text  set tabstop=2
@@ -1571,7 +1574,7 @@ function! s:unload_file_event()  " {{{
 		autocmd!
 	augroup END
 endfunction  " }}}
-augroup FileEvents
+augroup FileEvent
 	autocmd FileType vimshell call s:unload_file_event()
 augroup END
 
