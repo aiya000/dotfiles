@@ -748,7 +748,7 @@ set tabstop=4
 " Highlight Hit Keyword
 set hlsearch
 
-" ☆Fix View 2byte Code (Not support gnore-terminal)
+" ☆ Fix View 2byte Code (Not support gnome-terminal)
 set ambiwidth=double
 
 " One More Set for 2byte Code !!
@@ -783,7 +783,7 @@ augroup Highlight
 	autocmd ColorScheme * highlight LineNr                       ctermfg=Blue
 	autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 
-	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427}
+	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427, Kaoriya:7.4.389}
 	autocmd VimEnter,BufWinEnter * match rcEmSpace /　/
 	autocmd ColorScheme * highlight rcEmSpace cterm=standout ctermfg=LightBlue
 
@@ -1450,8 +1450,16 @@ augroup AddKeyMap
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
 	autocmd FileType * nnoremap zj     zjzo
 	autocmd FileType * nnoremap zk     zkzo
-	autocmd FileType * noremap  z[     [z
-	autocmd FileType * noremap  z]     ]z
+	autocmd FileType * nnoremap z[     [z
+	autocmd FileType * nnoremap z]     ]z
+	"autocmd FileType * nnoremap v      ziv
+	"autocmd FileType * nnoremap V      ziV
+	"autocmd FileType * nnoremap <C-v>  zi<C-v>
+	"autocmd FileType * xnoremap y      yzi
+	"autocmd FileType * xnoremap <Esc>  zi<Esc>
+	"autocmd FileType * xnoremap <C-l>  zi<Esc>
+	"autocmd FileType * xnoremap <C-c>  zi<Esc>
+	"autocmd FileType * xnoremap v      vzi
 augroup END
 
 " All buffers with plugins
@@ -1539,7 +1547,7 @@ augroup END
 
 augroup ProgramType
 	autocmd FileType haskell    let &commentstring = " --%s"
-	autocmd FileType yesod      set ts=4|set sw=4|set et
+	autocmd FileType yesod      setl ts=4|setl sw=4|setl et
 
 	autocmd VimEnter,BufWinEnter,BufEnter * syntax match rcHfSpace /^\s\s*/
 	autocmd FileType haskell highlight rcHfSpace cterm=underline ctermfg=Cyan
@@ -1554,9 +1562,7 @@ augroup END
 augroup ProgramType
 	autocmd BufNewFile,BufRead *.md set filetype=markdown
 	autocmd FileType markdown       nnoremap <silent> <leader>r :PrevimOpen<CR>
-	autocmd FileType markdown,text  set tabstop=2
-	\|                              set shiftwidth=2
-	\|                              set expandtab
+	autocmd FileType markdown,text  setl ts=2|setl sw=2|setl et
 augroup END
 
 "}}}
