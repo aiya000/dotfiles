@@ -1468,17 +1468,17 @@ function! s:wrap_toggle() "{{{
 endfunction "}}}
 
 " Foldopen all on VisualEnter, and Foldclose all on VisualLeave
-let s:visualFoldOpen = 0 "{{{
-function! s:visual_foldopen_all()
+let s:visualFoldToggle = 0 "{{{
+function! s:visual_fold_all()
 	if mode() =~# "^[vV\<C-v>]"
-		if !s:visualFoldOpen || &foldenable
+		if !s:visualFoldToggle && &foldenable
 			execute 'normal! zizz'
-			let s:visualFoldOpen = 1
+			let s:visualFoldToggle = 1
 		endif
 	else
-		if s:visualFoldOpen || !&foldenable
+		if s:visualFoldToggle
 			execute 'normal! zizz'
-			let s:visualFoldOpen = 0
+			let s:visualFoldToggle = 0
 		endif
 	endif
 endfunction "}}}
@@ -1494,7 +1494,7 @@ augroup AddKeyMap
 
 	autocmd FileType * nnoremap <silent> <C-w><C-w> call <SID>wrap_toggle()
 
-	autocmd CursorMoved * call s:visual_foldopen_all()
+	autocmd CursorMoved * call s:visual_fold_all()
 augroup END
 
 " }}}
