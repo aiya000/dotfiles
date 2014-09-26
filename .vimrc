@@ -59,6 +59,7 @@ scriptencoding utf8
 "  -- I can jump marked line and list up mark lines
 
 "-- implement command that print format (%0, %1, %2), ({0}, {1}, {2}) replace arguments on real time
+"  -- covered multi line
 
 "-- ahoge auto include yanked words
 
@@ -83,10 +84,6 @@ scriptencoding utf8
 
 "}}}
 " Todo {{{
-
-"-- Arranging command sections and function sections
-
-"-- more devide config gvim and vim.
 
 "-- Visualizability for Vim Tab
 "  -- showing window num when one window only
@@ -611,6 +608,13 @@ augroup PluginPref
 
 	autocmd FileType vimshell  setl fdm=marker
 	autocmd FileType vimshell  setl nolist
+augroup END
+
+"}}}
+"--- J6uil ---"{{{
+
+augroup PluginPref
+	autocmd FileType J6uil setlocal wrap
 augroup END
 
 "}}}
@@ -1385,6 +1389,7 @@ augroup AddKeyMap
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
 
 	autocmd FileType * nnoremap <silent> <C-w>t  :tabnew<CR>
+	autocmd FileType * nnoremap <silent> <C-w>T  :tabclose<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bd :bd<CR>
 
 	autocmd FileType * nnoremap <silent> <C-@><C-r> :Reload<CR>
@@ -1416,6 +1421,8 @@ augroup END
 
 " }}}
 " Functional Keys {{{
+
+"--- Functions ---" {{{
 
 " Move Cursor Line's Center
 function! s:cursor_move_to_center() "{{{
@@ -1468,7 +1475,7 @@ function! s:wrap_toggle() "{{{
 endfunction "}}}
 
 " Foldopen all on VisualEnter, and Foldclose all on VisualLeave
-let s:visualFoldToggle = 0 "{{{
+let s:visualFoldToggle = get(s:, 'visualFoldToggle', 0) "{{{
 function! s:visual_fold_all()
 	if mode() =~# "^[vV\<C-v>]"
 		if !s:visualFoldToggle && &foldenable
@@ -1483,17 +1490,49 @@ function! s:visual_fold_all()
 	endif
 endfunction "}}}
 
+" Toggle Enable CursorKeys
+let s:enableCursorKeys = get(s:, 'enableCursorKeys', 0) "{{{
+function! s:enable_cursor_keys_toggle()
+	if !s:enableCursorKeys
+		nnoremap <Up>    <Up>
+		nnoremap <Down>  <Down>
+		nnoremap <Left>  <Left>
+		nnoremap <Right> <Right>
+		inoremap <Up>    <Up>
+		inoremap <Down>  <Down>
+		inoremap <Left>  <Left>
+		inoremap <Right> <Right>
+		cnoremap <Left>  <Left>
+		cnoremap <Right> <Right>
+		let s:enableCursorKeys = 1
+	else
+		nnoremap <Up>    <NOP>
+		nnoremap <Down>  <NOP>
+		nnoremap <Left>  <NOP>
+		nnoremap <Right> <NOP>
+		inoremap <Up>    <NOP>
+		inoremap <Down>  <NOP>
+		inoremap <Left>  <NOP>
+		inoremap <Right> <NOP>
+		cnoremap <Left>  <NOP>
+		cnoremap <Right> <NOP>
+		let s:enableCursorKeys = 0
+	endif
+endfunction "}}}
+
+" }}}
+
 augroup AddKeyMap
 	autocmd FileType * nnoremap <silent> gc :call <SID>cursor_move_to_center()<CR>
 	autocmd FileType * nnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
 	autocmd FileType * nnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
-	"autocmd FileType * xmap gk <SID>cursor_up_to_lid()<CR>
-	"autocmd FileType * xmap gj <SID>cursor_down_to_ground()<CR>
-	"autocmd FileType * cmap gk <SID>cursor_up_to_lid()<CR>
-	"autocmd FileType * cmap gj <SID>cursor_down_to_ground()<CR>
+	"autocmd FileType * xnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
+	"autocmd FileType * xnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
+	"autocmd FileType * cnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
+	"autocmd FileType * cnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
 
-	autocmd FileType * nnoremap <silent> <C-w><C-w> :call <SID>wrap_toggle()<CR>
-
+	autocmd FileType * nnoremap <silent> <C-w><C-w>    :call <SID>wrap_toggle()<CR>
+	autocmd FileType * nnoremap <silent> <C-@>jkjkjkjk :call <SID>enable_cursor_keys_toggle()<CR>
 	autocmd CursorMoved * call s:visual_fold_all()
 augroup END
 
@@ -1526,6 +1565,8 @@ augroup PluginPref
 	autocmd FileType w3m nnoremap <buffer> H       <BS>
 	autocmd FileType w3m nnoremap <silent><buffer> <C-u>      :W3mAddressBar <CR>
 	autocmd FileType w3m nnoremap <silent><buffer> <leader>E  :W3mShowExtenalBrowser <CR>
+
+	autocmd FileType J6uil_say nmap <buffer> <C-j> <CR>
 augroup END
 
 " }}}
