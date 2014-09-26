@@ -1544,14 +1544,14 @@ augroup END
 " To Plugin buffers
 augroup PluginPref
 	autocmd FileType netrw  nunmap   L
-	autocmd FileType netrw  nmap     <buffer> H -
+	autocmd FileType netrw  nmap     <buffer> H  -
 	autocmd FileType netrw  nnoremap <silent><buffer> Q  :quit<CR>
 
-	autocmd FileType tweetvim nmap <buffer> <leader>R   <Plug>(tweetvim_action_remove_status)
-	autocmd FileType tweetvim nmap <buffer> <C-r>       <Plug>(tweetvim_action_reload)
+	autocmd FileType tweetvim nmap <buffer> <leader>R  <Plug>(tweetvim_action_remove_status)
+	autocmd FileType tweetvim nmap <buffer> <C-r>      <Plug>(tweetvim_action_reload)
 	autocmd FileType tweetvim nnoremap <silent><buffer> s      :TweetVimSay <CR>
-	autocmd FileType tweetvim nnoremap <buffer>         <C-a>  :TweetVimSwitchAccount<Space>
-	autocmd FileType tweetvim nnoremap <buffer>         U      :TweetVimUserTimeline<Space>
+	autocmd FileType tweetvim nnoremap         <buffer> <C-a>  :TweetVimSwitchAccount<Space>
+	autocmd FileType tweetvim nnoremap         <buffer> U      :TweetVimUserTimeline<Space>
 	autocmd FileType tweetvim_say nnoremap <buffer> q      <NOP>
 	autocmd FileType tweetvim_say inoremap <buffer> <C-i>  <Space><Space>
 
@@ -1562,11 +1562,12 @@ augroup PluginPref
 	autocmd FileType vimshell iunmap <buffer> <C-p>
 	autocmd FileType vimshell iunmap <buffer> <C-n>
 
-	autocmd FileType w3m nnoremap <buffer> H       <BS>
+	autocmd FileType w3m nnoremap         <buffer> H          <BS>
 	autocmd FileType w3m nnoremap <silent><buffer> <C-u>      :W3mAddressBar <CR>
 	autocmd FileType w3m nnoremap <silent><buffer> <leader>E  :W3mShowExtenalBrowser <CR>
 
-	autocmd FileType J6uil_say nmap <buffer> <C-j> <CR>
+	autocmd FileType J6uil_say        nmap     <buffer> <C-j> <CR>
+	autocmd FileType git-log.git-diff nnoremap <buffer> Q     :bd<CR>
 augroup END
 
 " }}}
@@ -1578,27 +1579,20 @@ augroup END
 "{{{
 
 augroup ProgramType
-	autocmd FileType vim    let &commentstring = ' "%s'
-	autocmd FileType vim    NeoBundleSource 'vim-themis'
-
+	autocmd FileType vim  NeoBundleSource 'vim-themis'
 	autocmd VimEnter,BufWinEnter,BufEnter * syntax match rcHint /\s*"@\w\+/
 	autocmd FileType vim highlight rcHint cterm=standout ctermfg=DarkYellow
 augroup END
 
 augroup ProgramType
-	autocmd FileType c,cpp,java,cs let &commentstring = " /*%s*/"
-
 	"autocmd VimEnter,WinEnter    *  syntax match TypeInference /var\s\+/
 	"autocmd FileType             cs highlight TypeInference cterm=bold ctermfg=11
-	
 	autocmd VimEnter,BufWinEnter,BufEnter,WinEnter * syntax match Identifier /\<var\>/
 	autocmd FileType cs highlight Identifier
 augroup END
 
 augroup ProgramType
-	autocmd FileType haskell    let &commentstring = " --%s"
 	autocmd FileType yesod      setl ts=4|setl sw=4|setl et
-
 	autocmd VimEnter,BufWinEnter,BufEnter * syntax match rcHfSpace /^\s\s*/
 	autocmd FileType haskell highlight rcHfSpace cterm=underline ctermfg=Cyan
 augroup END
@@ -1606,13 +1600,21 @@ augroup END
 augroup ProgramType
 	autocmd BufNewFile,BufRead *.v let &ft='coq'
 	autocmd FileType coq execute ':FtCoqInstancyOn'
-	autocmd FileType coq let &commentstring = " (*%s*)"
 augroup END
 
 augroup ProgramType
-	autocmd BufNewFile,BufRead *.md set filetype=markdown
-	autocmd FileType markdown       nnoremap <silent> <leader>r :PrevimOpen<CR>
-	autocmd FileType markdown,text  setl ts=2|setl sw=2|setl et
+	autocmd BufNewFile,BufRead *.md   set filetype=markdown
+	autocmd FileType markdown         nnoremap <silent> <leader>r :PrevimOpen<CR>
+	autocmd FileType markdown,text    setl ts=2|setl sw=2|setl et
+	autocmd FileType git-log.git-diff setl nolist
+augroup END
+
+augroup ProgramType
+	autocmd FileType vim            let &commentstring = ' "%s'
+	autocmd FileType c,cpp,java,cs  let &commentstring = " /*%s*/"
+	autocmd FileType haskell        let &commentstring = " --%s"
+	autocmd FileType coq            let &commentstring = " (*%s*)"
+	autocmd FileType markdown,text  let &commentstring = " %s"
 augroup END
 
 "}}}
