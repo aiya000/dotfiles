@@ -930,14 +930,14 @@ if !g:vimrc_loaded
 	let &fileencodings = 'utf-8,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932,' . &fileencodings
 endif
 
-" Readable My Help
+" Generate HelpTags My Help
 if s:isKaoriya && isdirectory('~/_vim/doc')
 	helptags ~/_vim/doc
 elseif isdirectory('~/.vim/doc')
 	helptags ~/.vim/doc
 endif
 
-" If new buffer don't has filetype then execute setf 'none'
+" If buffer doesn't has filetype then set filetype 'none'
 augroup FileEvent
 	autocmd VimEnter,BufNew * if &ft == '' | setf none | endif
 augroup END
@@ -1052,13 +1052,13 @@ command! -nargs=* Cat call s:cat_file(<f-args>)
 
 " Conditions for Different Actions
 if s:isWindows  " is different operated sp ubuntu and kaoriya?
-	command! ScratchUp  execute ':Scratch' | execute ':resize 5'
+	command! ScratchUp  execute ':Scratch' | resize 5
 else
 	function! ScratchUpByCondition()
 		if !&modified
-			execute ':sp|Scratch' | execute ':resize 5'
+			execute ':sp|Scratch' | resize 5
 		else
-			execute ':Scratch' | execute ':resize 5'
+			execute ':Scratch' | resize 5
 		endif
 	endfunction
 	command! ScratchUp  call ScratchUpByCondition()
@@ -1066,10 +1066,10 @@ endif
 
 
 " Low accuracy randome integer
-function! s:random_int(max)"{{{
+function! s:random_int(max) "{{{
 	let l:matchEnd = matchend(reltimestr(reltime()), '\d\+\.') + 1
 	return reltimestr(reltime())[l:matchEnd :] % (a:max + 1)
-endfunction"}}}
+endfunction "}}}
 command! -nargs=1 RandomPut execute 'normal! a' . s:random_int(<q-args>) )
 
 
@@ -1160,8 +1160,7 @@ endif
 
 if executable('python')
 	function! s:put_python_import_for_jp() "{{{
-		execute 'normal! gg'
-		execute 'normal! O' . "#!/usr/bin/env python"
+		execute 'normal! o' . "#!/usr/bin/env python"
 		execute 'normal! o' . "# -*- coding: utf-8 -*-"
 		execute 'normal! o' . "import sys"
 		execute 'normal! o' . "import codecs"
@@ -1180,7 +1179,7 @@ command! PutSeparatorLong
 
 
 function! s:put_html_base() "{{{
-	execute 'normal! a' . '<html lang="ja">'
+	execute 'normal! o' . '<html lang="ja">'
 	execute 'normal! o' . '<head>'
 	execute 'normal! o' . '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">'
 	execute 'normal! o' . '<title></title>'
@@ -1204,66 +1203,52 @@ command! PutHtmlBase call s:put_html_base()
 call altercmd#load()
 
 " Vim Utils {{{
-command! VimConfig         execute 'e  '.$MYVIMRC
-command! VimConfigTab      execute 'tabnew|e '.$MYVIMRC
-command! Reload            execute 'so '.$MYVIMRC
+command! VimConfig         e  $MYVIMRC
+command! VimConfigTab      tabnew | e $MYVIMRC
+command! Reload            so $MYVIMRC
 	\|	if has('gui_running')
-	\|		execute 'so '.$MYGVIMRC
+	\|		so $MYGVIMRC
 	\|	endif
 if executable('sudo')
 	command! ForceSave     w !sudo tee > /dev/null %
 endif
-command! Resetf            let &ft = &ft
+command! Resetf            let &ft = &ft  " for Event [FileType * ]
 
 command! ColorPreview      Unite colorscheme -auto-preview
-command! NeoBundleSearch   Unite neobundle/search
 
 " }}}
 " Twitter {{{
 
 "-- Basic --"
 command! Twitter            TweetVimHomeTimeline
-function! TwitterTabFunc() "{{{
-	execute ':tabnew | TweetVimHomeTimeline'
-endfunction "}}}
-command! TwitterTab         call TwitterTabFunc()
+command! TwitterTab         tabnew | call TwitterTabFunc()
 command! Tweet              TweetVimSay
-command! UserStream         TweetVimUserStream
-command! UserTimeline       TweetVimUserTimeline
 
 
 "-- Private Account --"
 function! TwitterPrivateFunc() "{{{
-	execute ':TweetVimSwitchAccount '.g:myPriv['twitter'].privAc
-	execute ':TweetVimHomeTimeline'
+	execute ':TweetVimSwitchAccount '.g:rc_private['twitter']['priv_ac']
+	TweetVimHomeTimeline
 endfunction "}}}
 command! TwitterPrivate     call TwitterPrivateFunc()
-function! TwitterPrivateTabFunc() "{{{
-	execute ':tabnew'
-	call TwitterPrivateFunc()
-endfunction "}}}
-command! TwitterPrivateTab  call TwitterPrivateTabFunc()
+command! TwitterPrivateTab  tabnew | call TwitterPrivateFunc()
 function! TweetPrivateFunc() "{{{
-	execute ':TweetVimSwitchAccount '.g:myPriv['twitter'].privAc
-	execute ':TweetVimSay'
+	execute ':TweetVimSwitchAccount '.g:rc_private['twitter']['priv_ac']
+	TweetVimSay
 endfunction "}}}
 command! TweetPrivate       call TweetPrivateFunc()
 
 
 "-- Public Account --"
 function! TwitterPublicFunc() "{{{
-	execute ':TweetVimSwitchAccount '.g:myPriv['twitter'].publAc
-	execute ':TweetVimHomeTimeline'
+	execute ':TweetVimSwitchAccount '.g:rc_private['twitter']['publ_ac']
+	TweetVimHomeTimeline
 endfunction "}}}
 command! TwitterPublic      call TwitterPublicFunc()
-function! TwitterPublicTabFunc() "{{{
-	execute ':tabnew'
-	call TwitterPublicFunc()
-endfunction "}}}
-command! TwitterPublicTab   call TwitterPublicTabFunc()
+command! TwitterPublicTab   tabnew | call TwitterPublicFunc()
 function! TweetPublicFunc() "{{{
-	execute ':TweetVimSwitchAccount '.g:myPriv['twitter'].publAc
-	execute ':TweetVimSay'
+	execute ':TweetVimSwitchAccount '.g:rc_private['twitter']['publ_ac']
+	TweetVimSay
 endfunction "}}}
 command! TweetPublic        call TweetPublicFunc()
 
@@ -1379,7 +1364,9 @@ augroup END
 " To All buffers
 augroup AddKeyMap
 	"-- With Prefixes --"
-	autocmd FileType * inoremap                  <C-k><C-l>  <Esc>  " for case remapped <C-l> (ex:vimsh)
+	autocmd FileType * inoremap                  <C-k><C-l>  <Esc>  " 
+	autocmd FileType * nnoremap                  <C-k><C-z>  <C-z>  " 
+	autocmd FileType * inoremap                  <C-k><C-z>  <C-z>  " for case remapped <C-l> (ex:vimsh)
 	autocmd FileType * nnoremap <silent>         <C-@><C-r>  :Reload<CR>
 	autocmd FileType * nnoremap <silent>         <C-@><C-b><C-n>  :bn<CR>
 	autocmd FileType * nnoremap <silent>         <C-@><C-b><C-p>  :bp<CR>
