@@ -1314,6 +1314,7 @@ endif
 "}}}
 " PluginSwitcher {{{
 
+" These use by this configration
 command! VitalOn          NeoBundleSource vital.vim
 command! FtCoqInstancyOn  NeoBundleSource coq.vim
 
@@ -1377,42 +1378,39 @@ augroup END
 
 " To All buffers
 augroup AddKeyMap
+	"-- With Prefixes --"
+	autocmd FileType * inoremap                  <C-k><C-l>  <Esc>  " for case remapped <C-l> (ex:vimsh)
+	autocmd FileType * nnoremap <silent>         <C-@><C-r>  :Reload<CR>
+	autocmd FileType * nnoremap <silent>         <C-@><C-b><C-n>  :bn<CR>
+	autocmd FileType * nnoremap <silent>         <C-@><C-b><C-p>  :bp<CR>
+	autocmd FileType * nnoremap <silent><buffer> <C-@><C-l>  :nohlsearch<CR>
+	autocmd FileType * nnoremap <silent>         <C-@>l      :so %<CR>
+	autocmd FileType * nnoremap <silent>         <C-@>r      :Resetf<CR>
+	autocmd FileType * cnoremap                  <C-@><C-p>  <Up>
+	autocmd FileType * cnoremap                  <C-@><C-n>  <Down>
+
+	"-- Remap --"
 	autocmd FileType * inoremap <C-l> <Esc>
 	autocmd FileType * vnoremap <C-l> <Esc>
 	autocmd FileType * cnoremap <C-l> <Esc>
 
-	autocmd FileType * nnoremap <silent> <C-@>r :so %<CR>
-
-	" Special ESC Map in the case of cannot use default <C-c> (exam: vimshell)
-	autocmd FileType * inoremap <C-k><C-l> <Esc>
-
+	"-- Appendence --"
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
-
+	" for window
 	autocmd FileType * nnoremap <silent> <C-w>t  :tabnew<CR>
 	autocmd FileType * nnoremap <silent> <C-w>T  :tabclose<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bd :bd<CR>
-
-	autocmd FileType * nnoremap <silent> <C-@><C-r> :Reload<CR>
-	autocmd FileType * nnoremap <silent> <C-@><C-b><C-n>    :bn<CR>
-	autocmd FileType * nnoremap <silent> <C-@><C-b><C-p>    :bp<CR>
-	autocmd FileType * nnoremap <silent><buffer> <C-@><C-l> :nohlsearch<CR>
-	autocmd FileType * cnoremap <C-@><C-p> <Up>
-	autocmd FileType * cnoremap <C-@><C-n> <Down>
-
+	" for folds
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
 	autocmd FileType * nnoremap zj     zjzo
 	autocmd FileType * nnoremap zk     zkzo
 	autocmd FileType * nnoremap z[     [z
 	autocmd FileType * nnoremap z]     ]z
-augroup END
 
-" All buffers with plugins
-augroup AddKeyMap
+	"-- Plugins --"
 	autocmd FileType * nmap <leader>w  <Plug>(openbrowser-open)
-
 	autocmd FileType * nnoremap <silent> <leader>b          :ScratchUp<CR>
-
 	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShellPop<CR>
 	autocmd FileType * nmap              <leader>V          <Plug>(vimshell_create)
@@ -1552,6 +1550,7 @@ augroup PluginPref
 	autocmd FileType tweetvim nnoremap <silent><buffer> s      :TweetVimSay <CR>
 	autocmd FileType tweetvim nnoremap         <buffer> <C-a>  :TweetVimSwitchAccount<Space>
 	autocmd FileType tweetvim nnoremap         <buffer> U      :TweetVimUserTimeline<Space>
+	autocmd FileType tweetvim nnoremap <silent><buffer> Q      :bd<CR>
 	autocmd FileType tweetvim_say nnoremap <buffer> q      <NOP>
 	autocmd FileType tweetvim_say inoremap <buffer> <C-i>  <Space><Space>
 
@@ -1559,15 +1558,16 @@ augroup PluginPref
 	autocmd FileType vimshell nunmap <buffer> q
 	autocmd FileType vimshell imap   <buffer> <C-l>       <Plug>(vimshell_clear)
 	autocmd FileType vimshell imap   <buffer> <C-k><C-p>  <Plug>(vimshell_history_unite)
-	autocmd FileType vimshell iunmap <buffer> <C-p>
-	autocmd FileType vimshell iunmap <buffer> <C-n>
+	autocmd FileType vimshell iunmap <buffer> <C-p>  " 
+	autocmd FileType vimshell iunmap <buffer> <C-n>  " Using default completion
 
 	autocmd FileType w3m nnoremap         <buffer> H          <BS>
 	autocmd FileType w3m nnoremap <silent><buffer> <C-u>      :W3mAddressBar <CR>
 	autocmd FileType w3m nnoremap <silent><buffer> <leader>E  :W3mShowExtenalBrowser <CR>
 
-	autocmd FileType J6uil_say        nmap     <buffer> <C-j> <CR>
-	autocmd FileType git-log.git-diff nnoremap <buffer> Q     :bd<CR>
+	autocmd FileType J6uil            nnoremap <silent><buffer> Q     :bd<CR>
+	autocmd FileType J6uil_say        nmap             <buffer> <C-j> <CR>     " Enter to Say
+	autocmd FileType git-log.git-diff nnoremap         <buffer> Q     :bd<CR>
 augroup END
 
 " }}}
@@ -1578,12 +1578,14 @@ augroup END
 "-------------------------"
 "{{{
 
+" Set for "Vi Improved"
 augroup ProgramType
 	autocmd FileType vim  NeoBundleSource 'vim-themis'
 	autocmd VimEnter,BufWinEnter,BufEnter * syntax match rcHint /\s*"@\w\+/
 	autocmd FileType vim highlight rcHint cterm=standout ctermfg=DarkYellow
 augroup END
 
+" Set for C-Sharp
 augroup ProgramType
 	"autocmd VimEnter,WinEnter    *  syntax match TypeInference /var\s\+/
 	"autocmd FileType             cs highlight TypeInference cterm=bold ctermfg=11
@@ -1591,17 +1593,20 @@ augroup ProgramType
 	autocmd FileType cs highlight Identifier
 augroup END
 
+" Set for Haskell
 augroup ProgramType
 	autocmd FileType yesod      setl ts=4|setl sw=4|setl et
 	autocmd VimEnter,BufWinEnter,BufEnter * syntax match rcHfSpace /^\s\s*/
 	autocmd FileType haskell highlight rcHfSpace cterm=underline ctermfg=Cyan
 augroup END
 
+" Set for extension(*.v)
 augroup ProgramType
 	autocmd BufNewFile,BufRead *.v let &ft='coq'
 	autocmd FileType coq execute ':FtCoqInstancyOn'
 augroup END
 
+" Plain Text like types
 augroup ProgramType
 	autocmd BufNewFile,BufRead *.md   set filetype=markdown
 	autocmd FileType markdown         nnoremap <silent> <leader>r :PrevimOpen<CR>
@@ -1609,6 +1614,7 @@ augroup ProgramType
 	autocmd FileType git-log.git-diff setl nolist
 augroup END
 
+" FileTypes's commentstring
 augroup ProgramType
 	autocmd FileType vim            let &commentstring = ' "%s'
 	autocmd FileType c,cpp,java,cs  let &commentstring = " /*%s*/"
