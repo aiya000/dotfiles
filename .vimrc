@@ -1046,15 +1046,6 @@ endfunction "}}}
 command! -nargs=* Cat call s:cat_file(<f-args>)
 
 
-" Move Cursor Line's Center
-function! s:cursor_move_to_center() "{{{
-	execute 'normal! 0'
-	for i in range(strlen(getline('.'))/2)
-		execute 'normal! l'
-	endfor
-endfunction "}}}
-
-
 " Conditions for Different Actions
 if s:isWindows  " is different operated sp ubuntu and kaoriya?
 	command! ScratchUp  execute ':Scratch' | execute ':resize 5'
@@ -1076,42 +1067,6 @@ function! s:random_int(max)"{{{
 	return reltimestr(reltime())[l:matchEnd :] % (a:max + 1)
 endfunction"}}}
 command! -nargs=1 RandomPut execute 'normal! a' . s:random_int(<q-args>) )
-
-
-" For Movement in a Indent Block
-" {{{
-
-function! s:cursor_up_to_lid() "{{{
-	if &ft == 'netrw' | return | endif
-
-	while 1
-		let l:p = getpos('.')[2]
-		execute 'normal! k'
-
-		let l:isIndentChanged = l:p != getpos('.')[2]
-		if l:isIndentChanged || getpos('.')[1] == 1
-			if l:isIndentChanged | execute 'normal! j' | endif
-			break
-		endif
-	endwhile
-endfunction "}}}
-function! s:cursor_down_to_ground() "{{{
-	if &ft == 'netrw' | return | endif
-
-	let l:eol = len(readfile(@%))
-	while 1
-		let l:p = getpos('.')[2]
-		execute 'normal! j'
-
-		let l:isIndentChanged = l:p != getpos('.')[2]
-		if l:isIndentChanged || getpos('.')[1] == l:eol
-			if l:isIndentChanged | execute 'normal! k' | endif
-			break
-		endif
-	endwhile
-endfunction "}}}
-
-" }}}
 
 
 "@Incompleted('"+" deleted in sql sytax')
@@ -1452,14 +1407,6 @@ augroup AddKeyMap
 	autocmd FileType * nnoremap zk     zkzo
 	autocmd FileType * nnoremap z[     [z
 	autocmd FileType * nnoremap z]     ]z
-	"autocmd FileType * nnoremap v      ziv
-	"autocmd FileType * nnoremap V      ziV
-	"autocmd FileType * nnoremap <C-v>  zi<C-v>
-	"autocmd FileType * xnoremap y      yzi
-	"autocmd FileType * xnoremap <Esc>  zi<Esc>
-	"autocmd FileType * xnoremap <C-l>  zi<Esc>
-	"autocmd FileType * xnoremap <C-c>  zi<Esc>
-	"autocmd FileType * xnoremap v      vzi
 augroup END
 
 " All buffers with plugins
@@ -1477,15 +1424,75 @@ augroup END
 " }}}
 " Functional Keys {{{
 
+" Move Cursor Line's Center
+function! s:cursor_move_to_center() "{{{
+	execute 'normal! 0'
+	for i in range(strlen(getline('.'))/2)
+		execute 'normal! l'
+	endfor
+endfunction "}}}
+
+" For Movement in a Indent Block
+" {{{
+
+function! s:cursor_up_to_lid() "{{{
+	if &ft == 'netrw' | return | endif
+
+	while 1
+		let l:p = getpos('.')[2]
+		execute 'normal! k'
+
+		let l:isIndentChanged = l:p != getpos('.')[2]
+		if l:isIndentChanged || getpos('.')[1] == 1
+			if l:isIndentChanged | execute 'normal! j' | endif
+			break
+		endif
+	endwhile
+endfunction "}}}
+function! s:cursor_down_to_ground() "{{{
+	if &ft == 'netrw' | return | endif
+
+	let l:eol = len(readfile(@%))
+	while 1
+		let l:p = getpos('.')[2]
+		execute 'normal! j'
+
+		let l:isIndentChanged = l:p != getpos('.')[2]
+		if l:isIndentChanged || getpos('.')[1] == l:eol
+			if l:isIndentChanged | execute 'normal! k' | endif
+			break
+		endif
+	endwhile
+endfunction "}}}
+
+" }}}
+
+" Fake VisualEnter => foldopen all
+let s:visualFoldOpen = 0 "{{{
+function! s:visual_foldopen_all()
+	if mode() =~# "^[vV\<C-v>]"
+		if !s:visualFoldOpen
+			execute 'normal! zi'
+			let s:visualFoldOpen = 1
+		endif
+	else
+		if s:visualFoldOpen
+			execute 'normal! zi'
+			let s:visualFoldOpen = 0
+		endif
+	endif
+endfunction "}}}
+
 augroup AddKeyMap
-	autocmd FileType * nnoremap <silent> gc :call <SID>cursor_move_to_center()<CR>
-	autocmd FileType * nnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
-	autocmd FileType * nnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
+	autocmd FileType * nnoremap <silent> gc call <SID>cursor_move_to_center()
+	autocmd FileType * nnoremap <silent> gk call <SID>cursor_up_to_lid()
+	autocmd FileType * nnoremap <silent> gj call <SID>cursor_down_to_ground()
 	"autocmd FileType * xmap gk <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * xmap gj <SID>cursor_down_to_ground()<CR>
 	"autocmd FileType * cmap gk <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * cmap gj <SID>cursor_down_to_ground()<CR>
-	autocmd FileType * nnoremap <silent> <C-w><C-w> :call <SID>wrap_toggle()<CR>
+	autocmd FileType * nnoremap <silent> <C-w><C-w> call <SID>wrap_toggle()
+	autocmd CursorMoved * call s:visual_foldopen_all()
 augroup END
 
 " }}}
