@@ -1484,15 +1484,15 @@ function! s:visual_fold_all()
 endfunction "}}}
 
 augroup AddKeyMap
-	autocmd FileType * nnoremap <silent> gc call <SID>cursor_move_to_center()
-	autocmd FileType * nnoremap <silent> gk call <SID>cursor_up_to_lid()
-	autocmd FileType * nnoremap <silent> gj call <SID>cursor_down_to_ground()
+	autocmd FileType * nnoremap <silent> gc :call <SID>cursor_move_to_center()<CR>
+	autocmd FileType * nnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
+	autocmd FileType * nnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
 	"autocmd FileType * xmap gk <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * xmap gj <SID>cursor_down_to_ground()<CR>
 	"autocmd FileType * cmap gk <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * cmap gj <SID>cursor_down_to_ground()<CR>
 
-	autocmd FileType * nnoremap <silent> <C-w><C-w> call <SID>wrap_toggle()
+	autocmd FileType * nnoremap <silent> <C-w><C-w> :call <SID>wrap_toggle()<CR>
 
 	autocmd CursorMoved * call s:visual_fold_all()
 augroup END
