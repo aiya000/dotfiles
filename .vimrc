@@ -1094,13 +1094,6 @@ command! -bar TimerEcho  echo reltimestr( reltime(s:startTime) )
 command! -bar TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
 
 
-" Easy Toggle Wrap
-function! s:wrap_toggle()
-	if &wrap | setl nowrap
-	else     | setl wrap
-	endif
-endfunction
-
 "}}}
 " Action Function {{{
 
@@ -1467,17 +1460,24 @@ endfunction "}}}
 
 " }}}
 
-" Fake VisualEnter => foldopen all
+" Easy Toggle Wrap
+function! s:wrap_toggle() "{{{
+	if &wrap | setl nowrap
+	else     | setl wrap
+	endif
+endfunction "}}}
+
+" Foldopen all on VisualEnter, and Foldclose all on VisualLeave
 let s:visualFoldOpen = 0 "{{{
 function! s:visual_foldopen_all()
 	if mode() =~# "^[vV\<C-v>]"
-		if !s:visualFoldOpen
-			execute 'normal! zi'
+		if !s:visualFoldOpen || &foldenable
+			execute 'normal! zizz'
 			let s:visualFoldOpen = 1
 		endif
 	else
-		if s:visualFoldOpen
-			execute 'normal! zi'
+		if s:visualFoldOpen || !&foldenable
+			execute 'normal! zizz'
 			let s:visualFoldOpen = 0
 		endif
 	endif
@@ -1491,7 +1491,9 @@ augroup AddKeyMap
 	"autocmd FileType * xmap gj <SID>cursor_down_to_ground()<CR>
 	"autocmd FileType * cmap gk <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * cmap gj <SID>cursor_down_to_ground()<CR>
+
 	autocmd FileType * nnoremap <silent> <C-w><C-w> call <SID>wrap_toggle()
+
 	autocmd CursorMoved * call s:visual_foldopen_all()
 augroup END
 
