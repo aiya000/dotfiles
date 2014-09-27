@@ -1063,22 +1063,6 @@ endfunction "}}}
 command! -nargs=* Cat call s:cat_file(<f-args>)
 
 
-" Conditions for Different Actions
-if s:isWindows  " is different operated sp ubuntu and kaoriya?
-	command! ScratchUp  execute ':Scratch' | resize 5
-else  " for operate ubuntu
-	function! s:scratch_up_by_condition()
-		if !&modified
-			execute ':sp|Scratch' | resize 5
-		else
-			execute ':Scratch' | resize 5
-		endif
-	endfunction
-	command! ScratchUp  call <SID>scratch_up_by_condition()
-endif
-command! EmptyBufUp execute ':new' | resize 5
-
-
 " Low accuracy randome integer
 function! s:random_int(max) "{{{
 	let l:matchEnd = matchend(reltimestr(reltime()), '\d\+\.') + 1
@@ -1410,21 +1394,21 @@ augroup AddKeyMap
 	autocmd FileType * nnoremap z]     ]z
 
 	"-- Plugins --"
-	autocmd FileType * nmap              <leader>w  <Plug>(openbrowser-open)
-	autocmd FileType * nnoremap <silent> <leader>b          :ScratchUp<CR>
-	autocmd FileType * nnoremap <silent> <leader>B          :EmptyBufUp<CR>
+	autocmd FileType * nmap              <leader>w          <Plug>(openbrowser-open)
+	" for vimshell
 	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShellPop<CR>
 	autocmd FileType * nmap              <leader>V          <Plug>(vimshell_create)
 	autocmd FileType * nnoremap <silent> <leader><leader>V  :VimShellTab<CR>
-	autocmd FileType * nmap              n                  <Plug>(anzu-n-with-echo)
-	autocmd FileType * nmap              N                  <Plug>(anzu-N-with-echo)
-	autocmd FileType * nmap              *                  <Plug>(anzu-star-with-echo)
-	autocmd FileType * nmap              #                  <Plug>(anzu-N-with-echo)
+	" for anzu
+	autocmd FileType * nmap              n                  <Plug>(anzu-n-with-echo)zv
+	autocmd FileType * nmap              N                  <Plug>(anzu-N-with-echo)zv
+	autocmd FileType * nmap              *                  <Plug>(anzu-star-with-echo)zv
+	autocmd FileType * nmap              #                  <Plug>(anzu-N-with-echo)zv
 augroup END
 
 " }}}
-" Functional Keys {{{
+" Keys With Function {{{
 
 "--- Functions ---" {{{
 
@@ -1524,6 +1508,23 @@ function! s:enable_cursor_keys_toggle()
 	endif
 endfunction "}}}
 
+" Temporary Buffer Utils
+"{{{
+if s:isWindows  " is different operated sp ubuntu and kaoriya?
+	command! ScratchUp  execute ':Scratch' | resize 5
+else  " for operate ubuntu
+	function! s:scratch_up_by_condition()
+		if !&modified
+			execute ':sp|Scratch' | resize 5
+		else
+			execute ':Scratch' | resize 5
+		endif
+	endfunction
+	command! ScratchUp  call <SID>scratch_up_by_condition()
+endif
+command! EmptyBufUp execute ':new' | resize 5
+"}}}
+
 " }}}
 
 augroup AddKeyMap
@@ -1538,6 +1539,9 @@ augroup AddKeyMap
 	autocmd FileType * nnoremap <silent> <C-w><C-w>    :call <SID>wrap_toggle()<CR>
 	autocmd FileType * nnoremap <silent> <C-@>jkjkjkjk :call <SID>enable_cursor_keys_toggle()<CR>
 	autocmd CursorMoved * call s:visual_fold_all()
+
+	autocmd FileType * nnoremap <silent> <leader>b  :ScratchUp<CR>
+	autocmd FileType * nnoremap <silent> <leader>B  :EmptyBufUp<CR>
 augroup END
 
 " }}}
