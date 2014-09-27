@@ -7,7 +7,7 @@ scriptencoding utf8
 "    - Cygwin                "
 "    - Kaoriya Vim           "
 "----------------------------"
-"     Eigo chu-i !           "
+"     Eigo                   "
 "----------------------------"
 "{{{
 
@@ -102,14 +102,14 @@ scriptencoding utf8
 
 "----------------------------------------
 " {- Hints -} "
+" @Bugs         => This hoge has the bugs.
+" @Incompleted  => This is not completed making.
+" @Unchecked    => This was not unchecked that is operate right
 " @Unsupported  => Do not supported functions when now.
 " @Unknowned    => I don't know why this functioned.
 "     ／人◕ ‿‿ ◕人＼ <  Wakega wakaranaiyo!
-" @Incompleted  => This is not completed making.
-" @Deprecated   => Deprecated This vimrc Version.
-" @Bugs         => This hoge has the bugs.
 " @Unused       => Not used this yet now, needs inquires deleting this.
-" @Unchecked    => This was not unchecked that is operate right
+" @Deprecated   => Deprecated This vimrc Version.
 
 
 " @See          => Referred URL, Saw Document, and etc...
@@ -831,6 +831,9 @@ set scrolloff=4
 " Reset search highlight
 nohlsearch
 
+" View cursor column on <C-g>
+set noruler
+
 "}}}
 
 
@@ -899,6 +902,10 @@ endif
 
 " Bell Sound is instead of Screen flash.
 set visualbell
+
+"TODO "Unchecked()
+" mmm..., this function for paste operation. What's this ?
+set formatoptions-=ro
 
 "}}}
 
