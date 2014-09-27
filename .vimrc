@@ -7,6 +7,8 @@ scriptencoding utf8
 "    - Cygwin                "
 "    - Kaoriya Vim           "
 "----------------------------"
+"     Eigo chu-i !           "
+"----------------------------"
 "{{{
 
 "---------------------------------------"
@@ -33,6 +35,8 @@ scriptencoding utf8
 
 "-------------------
 "--  Recipe Menu  --
+"
+"
 "-------------------
 " -- Parameter
 " -- Local Function
@@ -89,6 +93,8 @@ scriptencoding utf8
 "  -- showing window num when one window only
 
 "-- Devide autocmds to just augroup
+
+"-- One hand view mode
 
 " }}}
 
@@ -392,6 +398,7 @@ NeoBundle 'gist:aiya000/58931585f8ba6aa43b87', {
 \}
 NeoBundle 'mfumi/ref-dicts-en'
 NeoBundle 'thinca/vim-painter'
+NeoBundle 'osyo-manga/vim-anzu'
 
 
 call neobundle#end()
@@ -806,6 +813,9 @@ augroup END
 " Set Color Scheme
 colorscheme desert
 
+" Set Base Color
+set background=dark
+
 " Indent Wrapped Text
 if exists('+breakindent')
 	set breakindent
@@ -817,6 +827,9 @@ endif
 
 " Scroll Margin
 set scrolloff=4
+
+" Reset search highlight
+nohlsearch
 
 "}}}
 
@@ -1053,16 +1066,17 @@ command! -nargs=* Cat call s:cat_file(<f-args>)
 " Conditions for Different Actions
 if s:isWindows  " is different operated sp ubuntu and kaoriya?
 	command! ScratchUp  execute ':Scratch' | resize 5
-else
-	function! ScratchUpByCondition()
+else  " for operate ubuntu
+	function! s:scratch_up_by_condition()
 		if !&modified
 			execute ':sp|Scratch' | resize 5
 		else
 			execute ':Scratch' | resize 5
 		endif
 	endfunction
-	command! ScratchUp  call ScratchUpByCondition()
+	command! ScratchUp  call <SID>scratch_up_by_condition()
 endif
+command! EmptyBufUp execute ':new' | resize 5
 
 
 " Low accuracy randome integer
@@ -1396,12 +1410,17 @@ augroup AddKeyMap
 	autocmd FileType * nnoremap z]     ]z
 
 	"-- Plugins --"
-	autocmd FileType * nmap <leader>w  <Plug>(openbrowser-open)
+	autocmd FileType * nmap              <leader>w  <Plug>(openbrowser-open)
 	autocmd FileType * nnoremap <silent> <leader>b          :ScratchUp<CR>
+	autocmd FileType * nnoremap <silent> <leader>B          :EmptyBufUp<CR>
 	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShellPop<CR>
 	autocmd FileType * nmap              <leader>V          <Plug>(vimshell_create)
 	autocmd FileType * nnoremap <silent> <leader><leader>V  :VimShellTab<CR>
+	autocmd FileType * nmap              n                  <Plug>(anzu-n-with-echo)
+	autocmd FileType * nmap              N                  <Plug>(anzu-N-with-echo)
+	autocmd FileType * nmap              *                  <Plug>(anzu-star-with-echo)
+	autocmd FileType * nmap              #                  <Plug>(anzu-N-with-echo)
 augroup END
 
 " }}}
