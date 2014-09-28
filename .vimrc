@@ -35,13 +35,10 @@ scriptencoding utf8
 
 "-------------------
 "--  Recipe Menu  --
-"
-"
 "-------------------
 " -- Parameter
 " -- Local Function
 " -- Initialize
-"
 " -- Plugin Manage
 " -- Plugin Configure
 " -- View Setting
@@ -56,8 +53,6 @@ scriptencoding utf8
 " -- Environment Pref
 " ---
 " Ideas {{{
-
-"-- gJ,gK => zh,zl like scroll up and down
 
 "-- point marker line num in a file
 "  -- I can jump marked line and list up mark lines
@@ -96,6 +91,8 @@ scriptencoding utf8
 
 "-- One hand view mode
 
+"-- View column on status line always
+
 " }}}
 
 
@@ -110,6 +107,7 @@ scriptencoding utf8
 "     ／人◕ ‿‿ ◕人＼ <  Wakega wakaranaiyo!
 " @Unused       => Not used this yet now, needs inquires deleting this.
 " @Deprecated   => Deprecated This vimrc Version.
+" @Experiment   => This is experimental implementation.
 
 
 " @See          => Referred URL, Saw Document, and etc...
@@ -773,7 +771,7 @@ set list
 if &encoding == 'cp932'
 	set listchars=tab:>_,trail:_,extends:>,precedes:<,nbsp:%
 else
-	set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%
+	set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
 endif
 
 " Powered Up Syntax Highlight
@@ -903,9 +901,13 @@ endif
 " Bell Sound is instead of Screen flash.
 set visualbell
 
-"TODO "Unchecked()
+"@Experiment('2014-09-30') $ @See('tag: fo-table')
 " mmm..., this function for paste operation. What's this ?
 set formatoptions-=ro
+
+" Split Method on BufOpen
+"set splitbelow
+set splitright
 
 "}}}
 
@@ -974,6 +976,9 @@ augroup END
 augroup FilePositSave
 	autocmd BufWinLeave ?\+ silent mkview
 	autocmd BufWinEnter ?\+ silent loadview
+
+	"@Experiment('2014-09-28')
+	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
 
