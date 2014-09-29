@@ -917,6 +917,12 @@ set formatoptions-=ro
 "set splitbelow
 set nosplitright
 
+" Ignore case on Insert completion
+set infercase
+
+" Unlimited Cursor move in screen
+"set virtualedit=all
+
 "}}}
 
 
@@ -1394,8 +1400,8 @@ augroup AddKeyMap
 	autocmd FileType * nnoremap <silent><buffer> <C-@><C-l>  :nohlsearch<CR>
 	autocmd FileType * nnoremap <silent>         <C-@>l      :so %<CR>
 	autocmd FileType * nnoremap <silent>         <C-@>r      :Resetf<CR>
-	autocmd FileType * nnoremap                  <C-@><C-j>  i<C-x><C-e><Esc>
-	autocmd FileType * nnoremap                  <C-@><C-k>  i<C-x><C-y><Esc>
+	autocmd FileType * nnoremap                  <leader>j   i<C-x><C-e><Esc>
+	autocmd FileType * nnoremap                  <leader>k   i<C-x><C-y><Esc>
 	autocmd FileType * cnoremap                  <C-@><C-p>  <Up>
 	autocmd FileType * cnoremap                  <C-@><C-n>  <Down>
 
