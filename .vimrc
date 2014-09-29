@@ -81,6 +81,8 @@ scriptencoding utf8
 
 "-- submode fold_move do not functioned when not exists fold under cursor
 
+"-- not returned foldenabled on visual leaved by zf
+
 "}}}
 " Todo {{{
 
@@ -613,6 +615,7 @@ augroup PluginPref
 
 	autocmd FileType vimshell  setl fdm=marker
 	autocmd FileType vimshell  setl nolist
+	autocmd FileType vimshell  setl wrap
 augroup END
 
 "}}}
@@ -691,7 +694,7 @@ let g:submode_timeout = 0
 
 
 " Window Resizer
-call submode#enter_with('window_resize', 'n', '', '<C-s>w', '<NOP>')
+call submode#enter_with('window_resize', 'n', '', '<C-s>w')
 call submode#map('window_resize', 'n', '', 'j', '<C-w>+')
 call submode#map('window_resize', 'n', '', 'k', '<C-w>-')
 call submode#map('window_resize', 'n', '', 'h', '<C-w><')
@@ -699,9 +702,15 @@ call submode#map('window_resize', 'n', '', 'l', '<C-w>>')
 
 
 " Fold Mover
-call submode#enter_with('fold_move', 'n', '', '<C-s>z', '<NOP>')
+call submode#enter_with('fold_move', 'n', '', '<C-s>z')
 call submode#map('fold_move', 'n', '', 'j', 'zczjzozz')
 call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
+
+" Incremental Search Commands
+"call submode#enter_with('incsearch_command', 'c', '', '<C-@><C-p>', '<Up>')
+"call submode#enter_with('incsearch_command', 'c', '', '<C-@><C-n>', '<Down>')
+"call submode#map('incsearch_command', 'c', '', '<C-p>', '<Up>')
+"call submode#map('incsearch_command', 'c', '', '<C-n>', '<Down>')
 
 "}}}
 "--- ref-dicts-en ---" {{{
@@ -901,13 +910,12 @@ endif
 " Bell Sound is instead of Screen flash.
 set visualbell
 
-"@Experiment('2014-09-30') $ @See('tag: fo-table')
-" mmm..., this function for paste operation. What's this ?
+" Disable Auto Commentalize New Line
 set formatoptions-=ro
 
 " Split Method on BufOpen
 "set splitbelow
-set splitright
+set nosplitright
 
 "}}}
 
@@ -1374,15 +1382,20 @@ augroup END
 " To All buffers
 augroup AddKeyMap
 	"-- With Prefixes --"
-	autocmd FileType * inoremap                  <C-k><C-l>  <Esc>  " 
-	autocmd FileType * nnoremap                  <C-k><C-z>  <C-z>  " 
-	autocmd FileType * inoremap                  <C-k><C-z>  <C-z>  " for case remapped <C-l> (ex:vimsh)
+	" for case remapped by plugin <C-z> (ex:vimsh)
+	autocmd FileType * nnoremap                  <C-k><C-z>  <C-z>
+	autocmd FileType * inoremap                  <C-k><C-l>  <Esc>
+	autocmd FileType * inoremap                  <C-k><C-z>  <C-z>
+	autocmd FileType * inoremap                  <C-k><C-k>  <C-O>d$
+
 	autocmd FileType * nnoremap <silent>         <C-@><C-r>  :Reload<CR>
 	autocmd FileType * nnoremap <silent>         <C-@><C-b><C-n>  :bn<CR>
 	autocmd FileType * nnoremap <silent>         <C-@><C-b><C-p>  :bp<CR>
 	autocmd FileType * nnoremap <silent><buffer> <C-@><C-l>  :nohlsearch<CR>
 	autocmd FileType * nnoremap <silent>         <C-@>l      :so %<CR>
 	autocmd FileType * nnoremap <silent>         <C-@>r      :Resetf<CR>
+	autocmd FileType * nnoremap                  <C-@><C-j>  i<C-x><C-e><Esc>
+	autocmd FileType * nnoremap                  <C-@><C-k>  i<C-x><C-y><Esc>
 	autocmd FileType * cnoremap                  <C-@><C-p>  <Up>
 	autocmd FileType * cnoremap                  <C-@><C-n>  <Down>
 
@@ -1391,12 +1404,13 @@ augroup AddKeyMap
 	autocmd FileType * vnoremap <C-l> <Esc>
 	autocmd FileType * cnoremap <C-l> <Esc>
 
-	"-- Appendence --"
+	"-- Customize --"
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
 	" for window
 	autocmd FileType * nnoremap <silent> <C-w>t  :tabnew<CR>
 	autocmd FileType * nnoremap <silent> <C-w>T  :tabclose<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bd :bd<CR>
+	autocmd FileType * nnoremap <silent> <C-w>Bd :bd!<CR>
 	" for folds
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
@@ -1416,7 +1430,7 @@ augroup AddKeyMap
 	autocmd FileType * nmap              n                  <Plug>(anzu-n-with-echo)zv
 	autocmd FileType * nmap              N                  <Plug>(anzu-N-with-echo)zv
 	autocmd FileType * nmap              *                  <Plug>(anzu-star-with-echo)zv
-	autocmd FileType * nmap              #                  <Plug>(anzu-N-with-echo)zv
+	autocmd FileType * nmap              #                  <Plug>(anzu-sharp-with-echo)zv
 augroup END
 
 " }}}
@@ -1548,7 +1562,7 @@ augroup AddKeyMap
 	"autocmd FileType * cnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * cnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
 
-	autocmd FileType * nnoremap <silent> <C-w><C-w>    :call <SID>wrap_toggle()<CR>
+	autocmd FileType * nnoremap <silent> <C-k><C-w>    :call <SID>wrap_toggle()<CR>
 	autocmd FileType * nnoremap <silent> <C-@>jkjkjkjk :call <SID>enable_cursor_keys_toggle()<CR>
 	autocmd CursorMoved * call s:visual_fold_all()
 
