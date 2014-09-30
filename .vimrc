@@ -399,6 +399,7 @@ NeoBundle 'gist:aiya000/58931585f8ba6aa43b87', {
 NeoBundle 'mfumi/ref-dicts-en'
 NeoBundle 'thinca/vim-painter'
 NeoBundle 'osyo-manga/vim-anzu'
+NeoBundle 'osyo-manga/vim-over'
 
 
 call neobundle#end()
@@ -527,24 +528,17 @@ let g:quickrun_config = {
 \	}
 \}
 
-if s:isUnix
+if s:isWindows
+	let g:quickrun_config['cs'] = {
+	\	'command'  : 'csc.exe',
+	\	'exec'     : ['%c %o %s:p', '%s:p:r.exe', 'del %s:p:r.exe'],
+	\	'hook/output_encode/encoding' : 'cp932:utf8'
+	\}
+elseif s:isUnix
 	let g:quickrun_config['cs'] = {
 	\	'command'  : 'gmcs',
 	\	'exec'     : ['%c %o %s:p > /dev/null', 'mono %s:p:r.exe', 'rm %s:p:r.exe'],
 	\	'tempfile' : '{tempname()}.cs'
-	\}
-elseif s:isCygwin
-	let g:quickrun_config['cs'] = {
-	\	'command'  : 'cocot csc.exe',
-	\	'exec'     : ['%c %o %s:p > /dev/null', './%s:p:r.exe', 'rm %s:p:r.exe'],
-	\	'tempfile' : '{tempname()}.cs'
-	\}
-elseif s:isWindows
-	let g:quickrun_config['cs'] = {
-	\	'command'  : 'csc.exe',
-	\	'exec'     : ['%c %o %s:p', '%s:p:r.exe', 'del %s:p:r.exe'],
-	\	'tempfile' : '{tempname()}.cs',
-	\	'hook/output_encode/encoding' : 'cp932:utf8'
 	\}
 endif
 
@@ -1433,6 +1427,9 @@ augroup AddKeyMap
 
 	"-- Plugins --"
 	autocmd FileType * nmap              <leader>w          <Plug>(openbrowser-open)
+	autocmd FileType * nnoremap <silent> :%s                :OverCommandLine<CR>%s   "Heavy Motion
+	autocmd FileType * nnoremap <silent> :s                 :OverCommandLine<CR>s    "_
+	autocmd FileType * vnoremap <silent> :s                 :OverCommandLine<CR>s    "_
 	" for vimshell
 	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShellPop<CR>

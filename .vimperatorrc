@@ -40,7 +40,7 @@ cnoremap <C-f> <Right>
 "cnoremap <C-d> <Del>
 cnoremap <C-i> <Tab>
 
-" Insert Mode is Emacs Like (!?) Configure
+" Insert Mode is Nano Like
 inoremap <C-p>      <Up>
 inoremap <C-n>      <Down>
 inoremap <C-b>      <Left>
@@ -51,6 +51,9 @@ inoremap <C-x><C-c> <Esc>
 
 " View Bookmarks
 nmap <leader>b :bmarks<CR>
+
+" Appendent
+nnoremap <C-@><C-l> :noh<CR>
 
 "}}}
 
