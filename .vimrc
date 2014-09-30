@@ -1443,9 +1443,10 @@ augroup AddKeyMap
 
 	"-- Plugins --"
 	autocmd FileType * nmap              <leader>w          <Plug>(openbrowser-open)
-	autocmd FileType * nnoremap <silent> :%s                :OverCommandLine<CR>%s   "Heavy Motion
-	autocmd FileType * nnoremap <silent> :s                 :OverCommandLine<CR>s    "_
-	autocmd FileType * vnoremap <silent> :s                 :OverCommandLine<CR>s    "_
+	" Hanpened Heavy Motion
+	autocmd FileType * nnoremap <silent> :%s                :OverCommandLine<CR>%s
+	autocmd FileType * nnoremap <silent> :s                 :OverCommandLine<CR>s
+	autocmd FileType * vnoremap <silent> :s                 :OverCommandLine<CR>s
 	" for vimshell
 	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShellPop<CR>
