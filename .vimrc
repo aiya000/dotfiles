@@ -726,12 +726,15 @@ let g:ref_source_webdict_sites = {
 
 let g:ref_source_webdict_sites['default'] = 'weblio'
 
-function! s:webdict_filter(output)
+function! s:webdict_filter_15(output) "{{{
 	return join(split(a:output, "\n")[15 : ], "\n")
-endfunction
-let g:ref_source_webdict_sites['je'].filter = function('s:webdict_filter')
-let g:ref_source_webdict_sites['ej'].filter = function('s:webdict_filter')
-let g:ref_source_webdict_sites['weblio'].filter = function('s:webdict_filter')
+endfunction "}}}
+function! s:webdict_filter_46(output) "{{{
+	return join(split(a:output, "\n")[46 : ], "\n")
+endfunction "}}}
+let g:ref_source_webdict_sites['je'].filter     = function('s:webdict_filter_15')
+let g:ref_source_webdict_sites['ej'].filter     = function('s:webdict_filter_15')
+let g:ref_source_webdict_sites['weblio'].filter = function('s:webdict_filter_46')
 
 " }}}
 "--- For Private ---"{{{
@@ -1097,30 +1100,22 @@ endfunction "}}}
 command! -nargs=1 RandomPut execute 'normal! a' . s:random_int(<q-args>) )
 
 
-"@Incompleted('"+" deleted in sql sytax')
-"@Code('Select it, and execute this.')
-"  $ "SELECT *" +
-"  $ " FROM table;";
-"  Yank => SELECT * FROM tablle;
-function! s:sql_yank_normalize() range "{{{
-	let sql = ""
-	for i in range(a:firstline, a:lastline)
-		let line = getline(i)
-		let lineOfSql = substitute(substitute(
-		\		substitute(line, "\"", "", 'g'),
-		\	"+", "", 'g'), "\t", "", 'g')
-
-		let sql .= lineOfSql
-	endfor
-	let @" = substitute(sql, "\s\s\+", " ", 'g')
-endfunction "}}}
-command! -range SqlCopy :<line1>,<line2>call s:sql_yank_normalize()
-
 " Time Watcher  $ @See http://leafcage.hateblo.jp/entry/2013/08/02/001600
 command! -bar TimerStart let  s:startTime = reltime()
 command! -bar TimerEcho  echo reltimestr( reltime(s:startTime) )
 command! -bar TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
 
+
+" Translate cmdline by Weblio
+function! s:weblio_translate_cmdline(...) "{{{
+	let l:line = ''
+	for word in a:000
+		let l:line .= word . '+'
+	endfor
+
+	execute 'Ref webdict weblio ' . l:line
+endfunction "}}}
+command! -nargs=* WeblioTranslate call s:weblio_translate_cmdline(<f-args>)
 
 "}}}
 " Action Function {{{
@@ -1216,6 +1211,25 @@ endfunction "}}}
 command! PutHtmlBase call s:put_html_base()
 
 
+"@Incompleted('"+" deleted in sql sytax')
+"@Code('Select it, and execute this.')
+"  $ "SELECT *" +
+"  $ " FROM table;";
+"  Yank => SELECT * FROM tablle;
+function! s:sql_yank_normalize() range "{{{
+	let sql = ""
+	for i in range(a:firstline, a:lastline)
+		let line = getline(i)
+		let lineOfSql = substitute(substitute(
+		\		substitute(line, "\"", "", 'g'),
+		\	"+", "", 'g'), "\t", "", 'g')
+
+		let sql .= lineOfSql
+	endfor
+	let @" = substitute(sql, "\s\s\+", " ", 'g')
+endfunction "}}}
+command! -range SqlCopy :<line1>,<line2>call s:sql_yank_normalize()
+
 " }}}
 
 
@@ -1295,6 +1309,8 @@ command!      JazzStop      JazzradioStop
 command!          Translate     ExciteTranslate
 command! -nargs=1 TranslateJ2E  Ref webdict je <args>
 command! -nargs=1 TranslateE2J  Ref webdict ej <args>
+command! -nargs=1 TranslateE2J  Ref webdict ej <args>
+"command! Weblio => [Functional Command]
 
 "}}}
 " Developments{{{
