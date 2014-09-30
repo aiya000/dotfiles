@@ -513,16 +513,17 @@ call neobundle#config('ref-dicts-en', {
 let g:quickrun_config = {
 \	'_' : {
 \		'split'  : '',
-\		'runner' : 'vimproc',
+\		'runner' : exists('*vimproc#system()') ? 'vimproc' : 'system',
 \		'runner/vimproc/updatetime' : 10,
-\		'hook/time/enable' : 1,
+\		'hook/time/enable' : 1
 \	},
 \	'cpp' : {
 \		'command' : 'g++',
-\		'cmdopt'  : '-I/usr/include/c++/4.9 -I/usr/include/c++/4.9/x86_64-linux-gnu -std=c++11',
+\		'cmdopt'  : '-I/usr/include/c++/4.9 -I/usr/include/c++/4.9/x86_64-linux-gnu -std=c++11'
 \	},
 \	'java' : {
-\		'cmdopt' : '-source 1.8'
+\		'cmdopt' : '-source 1.8',
+\		'runner' : exists('*vimproc#system()') ? 'process_manager' : 'system'
 \	}
 \}
 
@@ -716,22 +717,27 @@ call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
 "--- ref-dicts-en ---" {{{
 "@See('http://d.hatena.ne.jp/akishin999/20131024/1382569289')
 
+let g:ref_use_vimproc = exists('*vimproc#system()') ? 1 : 0
 let g:ref_source_webdict_sites = {
 \	'ej' : {
 \		'url' : 'http://dictionary.infoseek.ne.jp/ejword/%s'
 \	},
 \	'je' : {
 \		'url' : 'http://dictionary.infoseek.ne.jp/jeword/%s'
+\	},
+\	'weblio' : {
+\		'url' : 'http://ejje.weblio.jp/content/%s'
 \	}
 \}
 
-let g:ref_source_webdict_sites['default'] = 'je'
+let g:ref_source_webdict_sites['default'] = 'weblio'
 
 function! s:webdict_filter(output)
 	return join(split(a:output, "\n")[15 : ], "\n")
 endfunction
 let g:ref_source_webdict_sites['je'].filter = function('s:webdict_filter')
 let g:ref_source_webdict_sites['ej'].filter = function('s:webdict_filter')
+let g:ref_source_webdict_sites['weblio'].filter = function('s:webdict_filter')
 
 " }}}
 "--- For Private ---"{{{
@@ -1583,9 +1589,9 @@ augroup END
 
 " To Plugin buffers
 augroup PluginPref
-	autocmd FileType netrw  nunmap   L
-	autocmd FileType netrw  nmap     <buffer> H  -
-	autocmd FileType netrw  nnoremap <silent><buffer> Q  :quit<CR>
+	autocmd FileType netrw nunmap   L
+	autocmd FileType netrw nmap     <buffer> H  -
+	autocmd FileType netrw nnoremap <silent><buffer> Q  :quit<CR>
 
 	autocmd FileType tweetvim nmap <buffer> <leader>R  <Plug>(tweetvim_action_remove_status)
 	autocmd FileType tweetvim nmap <buffer> <C-r>      <Plug>(tweetvim_action_reload)
