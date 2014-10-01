@@ -729,12 +729,12 @@ let g:ref_source_webdict_sites['default'] = 'weblio'
 function! s:webdict_filter_15(output) "{{{
 	return join(split(a:output, "\n")[15 : ], "\n")
 endfunction "}}}
-function! s:webdict_filter_46(output) "{{{
-	return join(split(a:output, "\n")[46 : ], "\n")
+function! s:webdict_filter_101(output) "{{{
+	return join(split(a:output, "\n")[101 : ], "\n")
 endfunction "}}}
 let g:ref_source_webdict_sites['je'].filter     = function('s:webdict_filter_15')
 let g:ref_source_webdict_sites['ej'].filter     = function('s:webdict_filter_15')
-let g:ref_source_webdict_sites['weblio'].filter = function('s:webdict_filter_46')
+let g:ref_source_webdict_sites['weblio'].filter = function('s:webdict_filter_101')
 
 " }}}
 "--- For Private ---"{{{
@@ -1443,10 +1443,10 @@ augroup AddKeyMap
 
 	"-- Plugins --"
 	autocmd FileType * nmap              <leader>w          <Plug>(openbrowser-open)
-	" Hanpened Heavy Motion
-	autocmd FileType * nnoremap <silent> :%s                :OverCommandLine<CR>%s
-	autocmd FileType * nnoremap <silent> :s                 :OverCommandLine<CR>s
-	autocmd FileType * vnoremap <silent> :s                 :OverCommandLine<CR>s
+	"Note: Hanpened Heavy Motion
+	autocmd FileType * nnoremap <silent> :%s/               :OverCommandLine<CR>%s/
+	autocmd FileType * nnoremap <silent> :s/                :OverCommandLine<CR>s/
+	autocmd FileType * vnoremap <silent> :s/                :OverCommandLine<CR>s/
 	" for vimshell
 	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShellPop<CR>
@@ -1604,7 +1604,7 @@ augroup END
 " To Plugin buffers
 augroup PluginPref
 	autocmd FileType netrw nunmap   L
-	autocmd FileType netrw nmap     <buffer> H  -
+	autocmd FileType netrw nmap     <buffer> H -
 	autocmd FileType netrw nnoremap <silent><buffer> Q  :quit<CR>
 
 	autocmd FileType tweetvim nmap <buffer> <leader>R  <Plug>(tweetvim_action_remove_status)
@@ -1620,8 +1620,8 @@ augroup PluginPref
 	autocmd FileType vimshell nunmap <buffer> q
 	autocmd FileType vimshell imap   <buffer> <C-l>       <Plug>(vimshell_clear)
 	autocmd FileType vimshell imap   <buffer> <C-k><C-p>  <Plug>(vimshell_history_unite)
-	autocmd FileType vimshell iunmap <buffer> <C-p>  " 
-	autocmd FileType vimshell iunmap <buffer> <C-n>  " Using default completion
+	autocmd FileType vimshell iunmap <buffer> <C-p>  " Using default completion
+	autocmd FileType vimshell iunmap <buffer> <C-n>  "_
 
 	autocmd FileType w3m nnoremap         <buffer> H          <BS>
 	autocmd FileType w3m nnoremap <silent><buffer> <C-u>      :W3mAddressBar <CR>
