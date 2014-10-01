@@ -649,7 +649,7 @@ let g:ConqueTerm_StartMessages = 1
 "}}}
 "--- jazzradio.vim ---"{{{
 
-"@See sugoi momonga blog
+"@See('momonga-san no sugoi blog')
 if neobundle#tap('jazzradio.vim')
 	call neobundle#config({
 	\	'autoload' : {
@@ -669,7 +669,7 @@ endif
 "}}}
 "--- unite-alias ---"{{{
 
-" :Unite javasrc
+"@Code(':Unite javasrc')
 let g:unite_source_alias_aliases = {
 \	'javasrc' : {
 \		'source' : 'file_rec',
@@ -918,7 +918,7 @@ set formatoptions-=ro
 
 " Split Method on BufOpen
 "set splitbelow
-set nosplitright
+"set splitright
 
 " Ignore case on Insert completion
 set noinfercase
@@ -991,8 +991,8 @@ augroup END
 
 " Save Cursor Position when file closed
 augroup FilePositSave
-	autocmd BufWinLeave ?\+ silent mkview
-	autocmd BufWinEnter ?\+ silent loadview
+	"autocmd BufWinLeave ?\+ silent mkview
+	"autocmd BufWinEnter ?\+ silent loadview
 
 	"@Experiment('2014-09-28')
 	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
@@ -1620,6 +1620,7 @@ augroup PluginPref
 	autocmd FileType tweetvim_say nnoremap <buffer> q      <NOP>
 	autocmd FileType tweetvim_say inoremap <buffer> <C-i>  <Space><Space>
 
+	"@Bugs('error when second startup')
 	autocmd FileType vimshell nunmap <buffer> Q
 	autocmd FileType vimshell nunmap <buffer> q
 	autocmd FileType vimshell imap   <buffer> <C-l>       <Plug>(vimshell_clear)
