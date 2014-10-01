@@ -921,7 +921,7 @@ set formatoptions-=ro
 set nosplitright
 
 " Ignore case on Insert completion
-set infercase
+set noinfercase
 
 " Unlimited Cursor move in screen
 "set virtualedit=all
@@ -1021,6 +1021,10 @@ augroup FileEvent
 	autocmd BufWritePre ?\+ silent call s:update_backup_by_date()
 
 	"autocmd UserGettingBored * :echo 'Naijan!!!!'
+
+	" For infercase
+	autocmd InsertEnter * setl ignorecase
+	autocmd InsertLeave * setl noignorecase
 augroup END
 
 "}}}
@@ -1443,7 +1447,7 @@ augroup AddKeyMap
 
 	"-- Plugins --"
 	autocmd FileType * nmap              <leader>w          <Plug>(openbrowser-open)
-	"Note: Hanpened Heavy Motion
+	"Note: Happened Heavy Motion
 	autocmd FileType * nnoremap <silent> :%s/               :OverCommandLine<CR>%s/
 	autocmd FileType * nnoremap <silent> :s/                :OverCommandLine<CR>s/
 	autocmd FileType * vnoremap <silent> :s/                :OverCommandLine<CR>s/
