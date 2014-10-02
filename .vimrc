@@ -1594,7 +1594,7 @@ augroup AddKeyMap
 	"autocmd FileType * cnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * cnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
 
-	autocmd FileType * nnoremap <silent> <C-k><C-w>    :call <SID>wrap_toggle()<CR>
+	autocmd FileType * nnoremap <silent> <C-@><C-w>    :call <SID>wrap_toggle()<CR>
 	autocmd FileType * nnoremap <silent> <C-@>jkjkjkjk :call <SID>enable_cursor_keys_toggle()<CR>
 	autocmd CursorMoved * call s:visual_fold_all()
 
