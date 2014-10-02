@@ -1316,6 +1316,8 @@ command! -nargs=1 TranslateE2J  Ref webdict ej <args>
 command! -nargs=1 TranslateE2J  Ref webdict ej <args>
 "command! Weblio => [Functional Command]
 
+command! -nargs=* VimGrepNow    vimgrep <f-args> % | cwindow
+
 "}}}
 " Developments{{{
 
