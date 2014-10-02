@@ -5,7 +5,7 @@ scriptencoding utf8
 "  Target of this config     "
 "    - UNIX like OS          "
 "    - Cygwin                "
-"    - Kaoriya Vim           "
+"    - Windows Kaoriya       "
 "----------------------------"
 "     Eigo                   "
 "----------------------------"
@@ -713,12 +713,6 @@ call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
 
 let g:ref_use_vimproc = exists('*vimproc#system()') ? 1 : 0
 let g:ref_source_webdict_sites = {
-\	'ej' : {
-\		'url' : 'http://dictionary.infoseek.ne.jp/ejword/%s'
-\	},
-\	'je' : {
-\		'url' : 'http://dictionary.infoseek.ne.jp/jeword/%s'
-\	},
 \	'weblio' : {
 \		'url' : 'http://ejje.weblio.jp/content/%s'
 \	}
@@ -726,15 +720,10 @@ let g:ref_source_webdict_sites = {
 
 let g:ref_source_webdict_sites['default'] = 'weblio'
 
-function! s:webdict_filter_15(output) "{{{
-	return join(split(a:output, "\n")[15 : ], "\n")
-endfunction "}}}
-function! s:webdict_filter_101(output) "{{{
+function! s:webdict_filter(output)
 	return join(split(a:output, "\n")[101 : ], "\n")
-endfunction "}}}
-let g:ref_source_webdict_sites['je'].filter     = function('s:webdict_filter_15')
-let g:ref_source_webdict_sites['ej'].filter     = function('s:webdict_filter_15')
-let g:ref_source_webdict_sites['weblio'].filter = function('s:webdict_filter_101')
+endfunction
+let g:ref_source_webdict_sites['weblio'].filter = function('s:webdict_filter')
 
 " }}}
 "--- For Private ---"{{{
@@ -991,11 +980,11 @@ augroup END
 
 " Save Cursor Position when file closed
 augroup FilePositSave
-	"autocmd BufWinLeave ?\+ silent mkview
-	"autocmd BufWinEnter ?\+ silent loadview
+	autocmd BufWinLeave ?\+ silent mkview
+	autocmd BufWinEnter ?\+ silent loadview
 
-	"@Experiment('2014-09-28')
-	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+	""@Experiment('2014-09-28')
+	"autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
 
@@ -1311,12 +1300,9 @@ command!      JazzStop      JazzradioStop
 
 " Translates Languages
 command!          Translate     ExciteTranslate
-command! -nargs=1 TranslateJ2E  Ref webdict je <args>
-command! -nargs=1 TranslateE2J  Ref webdict ej <args>
-command! -nargs=1 TranslateE2J  Ref webdict ej <args>
-"command! Weblio => [Functional Command]
+"command! WeblioTranslate => [Functional Command]
 
-command! -nargs=* VimGrepNow    vimgrep <f-args> % | cwindow
+command! -nargs=* VimGrepNow vimgrep <f-args> % | cwindow
 
 "}}}
 " Developments{{{
@@ -1413,8 +1399,9 @@ augroup AddKeyMap
 	" for case remapped by plugin <C-z> (ex:vimsh)
 	autocmd FileType * nnoremap                  <C-k><C-z>  <C-z>
 	autocmd FileType * inoremap                  <C-k><C-l>  <Esc>
-	autocmd FileType * inoremap                  <C-k><C-z>  <C-z>
 	autocmd FileType * inoremap                  <C-k><C-k>  <C-O>d$
+	autocmd FileType * cnoremap                  <C-k><C-p>  <Up>
+	autocmd FileType * cnoremap                  <C-k><C-n>  <Down>
 
 	autocmd FileType * nnoremap <silent>         <C-@><C-r>  :Reload<CR>
 	autocmd FileType * nnoremap <silent>         <C-@><C-b><C-n>  :bn<CR>
@@ -1424,10 +1411,8 @@ augroup AddKeyMap
 	autocmd FileType * nnoremap <silent>         <C-@>r      :Resetf<CR>
 	autocmd FileType * nnoremap                  <leader>j   i<C-x><C-e><Esc>
 	autocmd FileType * nnoremap                  <leader>k   i<C-x><C-y><Esc>
-	autocmd FileType * cnoremap                  <C-@><C-p>  <Up>
-	autocmd FileType * cnoremap                  <C-@><C-n>  <Down>
 
-	"-- Remap --"
+	"-- Overwrite exists map --"
 	autocmd FileType * inoremap <C-l> <Esc>
 	autocmd FileType * vnoremap <C-l> <Esc>
 	autocmd FileType * cnoremap <C-l> <Esc>
