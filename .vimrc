@@ -83,6 +83,8 @@ scriptencoding utf8
 
 "-- not returned foldenabled on visual leaved by zf
 
+"-- duplicated helptag 'g:restart_menu_lang' in openbrowser and restart.vim
+
 "}}}
 " Todo {{{
 
@@ -400,6 +402,7 @@ NeoBundle 'mfumi/ref-dicts-en'
 NeoBundle 'thinca/vim-painter'
 NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'osyo-manga/vim-over'
+NeoBundle 'tyru/restart.vim'
 
 
 call neobundle#end()
@@ -766,9 +769,9 @@ syntax on
 " Visualize Tab and Space
 set list
 if &encoding == 'cp932'
-	set listchars=tab:>_,trail:_,extends:>,precedes:<,nbsp:%
+	let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
 else
-	set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
+	let &listchars = 'tab:» ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
 endif
 
 " Powered Up Syntax Highlight
@@ -783,17 +786,18 @@ augroup Highlight
 	autocmd ColorScheme * highlight TabLine      cterm=standout  ctermfg=Blue
 	autocmd ColorScheme * highlight TabLineSel   cterm=NONE      ctermfg=Cyan
 	autocmd ColorScheme * highlight TabLineFill  cterm=standout  ctermfg=Blue
-	autocmd ColorScheme * highlight VertSplit    cterm=NONE      ctermfg=Cyan ctermbg=Blue
-	autocmd ColorScheme * highlight StatusLine                   ctermfg=Cyan ctermbg=Black
+	autocmd ColorScheme * highlight VertSplit    cterm=NONE      ctermfg=Cyan  ctermbg=Blue
+	autocmd ColorScheme * highlight StatusLine                   ctermfg=Cyan  ctermbg=Black
 	autocmd ColorScheme * highlight StatusLineNC                 ctermfg=Blue
 	autocmd ColorScheme * highlight LineNr                       ctermfg=Blue
 	autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 
-	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427, Kaoriya:7.4.389}
+	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427}
 	autocmd VimEnter,BufWinEnter * match rcEmSpace /　/
-	autocmd ColorScheme * highlight rcEmSpace cterm=standout ctermfg=LightBlue
+	"autocmd ColorScheme * highlight rcEmSpace cterm=standout ctermfg=LightBlue
+	autocmd ColorScheme * highlight rcEmSpace ctermbg=White guibg=White
 
-	autocmd VimEnter,BufWinEnter * match rcMyHint /"@\w\+/
+	autocmd VimEnter,BufWinEnter * match rcMyHint /\s*"@\w\+/
 	autocmd ColorScheme * highlight rcMyHint cterm=standout ctermfg=Red
 augroup END
 
@@ -1178,10 +1182,10 @@ if executable('python')
 endif
 
 
-command! PutSeparatorShort
+command! PutShortSeparator
 	\	execute 'normal! a'.'/* -=-=-=-=-=-=-=-=- */'
 	\|	execute 'normal =='
-command! PutSeparatorLong
+command! PutLongSeparator
 	\	execute 'normal! a'.'/* ---===---===---===---===---===---===--- */'
 	\|	execute 'normal =='
 

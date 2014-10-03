@@ -34,11 +34,12 @@ scriptencoding utf8
 "-------------------------"
 "{{{
 
-let s:isWindows = has('win32')
-
 let g:gvimrc_loaded = get(g:, 'gvimrc_loaded', 0)
 
-let g:grc_guifont = get(g:, 'grc_guifont', {})
+let s:isUnix    = has('unix')
+let s:isWindows = has('win32')
+
+let g:grc_guifont      = get(g:, 'grc_guifont', {})
 let g:grc_guifont.font = get(g:grc_guifont, 'font', s:isWindows ? 'MS_Gothic' : 'Monospace')
 let g:grc_guifont.size = get(g:grc_guifont, 'size', s:isWindows ? ':h10' : ' 10')
 
@@ -53,10 +54,6 @@ let g:grc_guifont.size = get(g:grc_guifont, 'size', s:isWindows ? ':h10' : ' 10'
 set guioptions-=T
 set guioptions-=m
 
-"if s:isWindows
-"	set guifont=MS_Gothic:h10
-"	set guifontwide=MS_Gothic:h10
-"endif
 let &guifont     = g:grc_guifont['font'] . g:grc_guifont['size']
 let &guifontwide = g:grc_guifont['font'] . g:grc_guifont['size']
 
@@ -109,7 +106,7 @@ command! GVimConfig e $MYGVIMRC
 
 if s:isWindows
 	command! HighTransparence set transparency=140
-	command! Transparence     set transparency=180
+	command! MidTransparence  set transparency=180
 	command! LowTransparence  set transparency=220
 	command! NoTransparence   set transparency=255
 endif
@@ -124,10 +121,10 @@ endif
 
 augroup gui_highlight
 	"@Bugs('Not Shown')
-	autocmd VimEnter,BufWinEnter * syntax match     grcEmSpace /　/
-	autocmd ColorScheme          * highlight grcEmSpace gui=standout guifg=White
+	autocmd VimEnter,BufWinEnter * syntax match grcEmSpace /　/
+	autocmd ColorScheme          * highlight grcEmSpace guibg=White
 
-	"@Bugs('?')
+	"@Bugs('okasiisi is if &filetype timing')
 	autocmd VimEnter,BufWinEnter * syntax match grcHint /\s*"@\w\+/
 	autocmd ColorScheme          *
 	\	if &filetype == 'vim'
