@@ -97,6 +97,8 @@ scriptencoding utf8
 
 "-- View column on status line always
 
+"-- highlight prefs devide to vimrc and gvimrc
+
 " }}}
 
 
