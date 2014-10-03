@@ -136,7 +136,7 @@ let s:isUnix    = has('unix')
 let s:isMac     = has('mac')
 
 let s:hasCygwin = isdirectory('/cygwin/bin')
-let s:hasMingw  = 0
+let s:hasMingw  = 0  " dummy
 
 let s:vimHome   = expand('~/.vim')
 
@@ -210,9 +210,9 @@ augroup END
 if s:isKaoriya
 
 	" Set Environment
-	let s:vimHome = $VIM.'/_vim'
-	let &runtimepath = &runtimepath.','.s:vimHome
 	let $HOME = $VIM
+	let s:vimHome = expand('~/.vim')  " Reset with $HOME
+	let &runtimepath = &runtimepath.','.s:vimHome
 	if s:hasCygwin
 		let $PATH = '/cygwin/bin;/cygwin/usr/bin;/cygwin/usr/sbin;'.$PATH
 		let $PATH = $HOME.'/bin;'.$PATH
@@ -404,11 +404,7 @@ NeoBundle 'osyo-manga/vim-over'
 
 call neobundle#end()
 
-if s:isUnix
-	helptags ~/.vim/bundle/.neobundle/doc
-elseif s:isKaoriya
-	helptags ~/_vim/bundle/.neobundle/doc
-endif
+helptags ~/.vim/bundle/.neobundle/doc
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
@@ -574,7 +570,7 @@ augroup END
 if s:isWindows && !s:hasMingw
 	"NeoBundleDisable 'Shougo/vimproc.vim'
 	"@Incompleted('I should use a like NeoBundleDisable')
-	set runtimepath-=~/_vim/bundle/vimproc.vim/
+	set runtimepath-=~/.vim/bundle/vimproc.vim/
 endif
 
 " }}}
@@ -1093,7 +1089,7 @@ endfunction "}}}
 command! -nargs=1 RandomPut execute 'normal! a' . s:random_int(<q-args>) )
 
 
-" Time Watcher  $ @See http://leafcage.hateblo.jp/entry/2013/08/02/001600
+" Time Watcher  $ @See('http://leafcage.hateblo.jp/entry/2013/08/02/001600')
 command! -bar TimerStart let  s:startTime = reltime()
 command! -bar TimerEcho  echo reltimestr( reltime(s:startTime) )
 command! -bar TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
@@ -1302,7 +1298,7 @@ command!      JazzStop      JazzradioStop
 command!          Translate     ExciteTranslate
 "command! WeblioTranslate => [Functional Command]
 
-command! -nargs=* VimGrepNow vimgrep <f-args> % | cwindow
+command! -nargs=* GrepNow       vimgrep <f-args> % | cwindow
 
 "}}}
 " Developments{{{
