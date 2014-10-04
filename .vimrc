@@ -20,7 +20,6 @@ scriptencoding utf8
   "2. PATH /cygwin/{,usr/}bin add to Windows
   "3. Copy Examples/_{,g}vimrc to kaoriya-vim dir
   "4. Start GVim
-    "- > mmm...?
     "- nazo(dekitari cannot-tari)
 
 "* Windows Kaoriya GVim(Manually Update)
@@ -1101,17 +1100,6 @@ command! -bar TimerEcho  echo reltimestr( reltime(s:startTime) )
 command! -bar TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
 
 
-" Translate cmdline by Weblio
-function! s:weblio_translate_cmdline(...) "{{{
-	let l:line = ''
-	for word in a:000
-		let l:line .= word . '+'
-	endfor
-
-	execute 'Ref webdict weblio ' . l:line
-endfunction "}}}
-command! -nargs=* WeblioTranslate call s:weblio_translate_cmdline(<f-args>)
-
 "}}}
 " Action Function {{{
 
@@ -1291,9 +1279,6 @@ AlterCommand  tvs           TweetVimSwitchAccount
 
 " }}}
 
-" Benri
-command! -nargs=+ GistPrivate   Gist -p <args>
-
 " Beautifull Life
 command!      JazzUpdate    JazzradioUpdateChannels
 command!      JazzList      Unite jazzradio
@@ -1302,7 +1287,15 @@ command!      JazzStop      JazzradioStop
 
 " Translates Languages
 command!          Translate     ExciteTranslate
-"command! WeblioTranslate => [Functional Command]
+function! s:weblio_translate_cmdline(...) "{{{
+	let l:line = ''
+	for word in a:000
+		let l:line .= word . '+'
+	endfor
+
+	execute 'Ref webdict weblio ' . l:line
+endfunction "}}}
+command! -nargs=* TranslateWeblio call s:weblio_translate_cmdline(<f-args>)
 
 command! -nargs=* GrepNow       vimgrep <f-args> % | cwindow
 
@@ -1500,13 +1493,6 @@ endfunction "}}}
 
 " }}}
 
-" Easy Toggle Wrap
-function! s:wrap_toggle() "{{{
-	if &wrap | setl nowrap
-	else     | setl wrap
-	endif
-endfunction "}}}
-
 " Foldopen all on VisualEnter, and Foldclose all on VisualLeave
 let s:visualFoldToggle = get(s:, 'visualFoldToggle', 0) "{{{
 function! s:visual_fold_all()
@@ -1581,7 +1567,7 @@ augroup AddKeyMap
 	"autocmd FileType * cnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * cnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
 
-	autocmd FileType * nnoremap <silent> <C-@><C-w>    :call <SID>wrap_toggle()<CR>
+	autocmd FileType * nnoremap <silent> <C-@><C-w>    setl wrap! wrap?
 	autocmd FileType * nnoremap <silent> <C-@>jkjkjkjk :call <SID>enable_cursor_keys_toggle()<CR>
 	autocmd CursorMoved * call s:visual_fold_all()
 
