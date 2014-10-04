@@ -98,6 +98,8 @@ scriptencoding utf8
 
 "-- highlight prefs devide to vimrc and gvimrc
 
+"-- fix mystery pattern ?\+
+
 " }}}
 
 
@@ -183,27 +185,31 @@ endfunction
 filetype plugin indent on
 " autocmd Groups {{{
 
-augroup PluginPref
+augroup plugin_pref
 	autocmd!
 augroup END
 
-augroup FileEvent
+augroup file_event
 	autocmd!
 augroup END
 
-augroup FilePositSave
+augroup file_visit
 	autocmd!
 augroup END
 
-augroup ProgramType
+augroup extension_type
 	autocmd!
 augroup END
 
-augroup Highlight
+augroup def_highlight
 	autocmd!
 augroup END
 
-augroup AddKeyMap
+augroup key_map
+	autocmd!
+augroup END
+
+augroup key_event
 	autocmd!
 augroup END
 
@@ -242,7 +248,7 @@ if s:isKaoriya
 	set noignorecase
 	set nosmartcase
 
-	augroup FileEvent
+	augroup file_event
 		autocmd BufRead $MYVIMRC setl enc=utf8 | setl fenc=utf8
 	augroup END
 endif
@@ -564,7 +570,7 @@ if s:isCygwin
 	\}
 endif
 
-augroup PluginPref
+augroup plugin_pref
 	autocmd FileType quickrun setlocal wrap
 augroup END
 
@@ -581,7 +587,7 @@ endif
 "--- TweetVim ---"{{{
 
 let g:tweetvim_async_post = 1
-augroup PluginPref
+augroup plugin_pref
 	autocmd FileType tweetvim setlocal wrap
 augroup END
 
@@ -602,7 +608,7 @@ let g:vimshell_no_save_history_commands = {
 let g:vimshell_enable_transient_user_prompt = 1
 let g:vimshell_force_overwrite_statusline = 1
 
-augroup PluginPref
+augroup plugin_pref
 	autocmd FileType vimshell
 	\	call vimshell#altercmd#define('thanks', "echo \"(*^o^)< You're welcome!\"")
 	\|	call vimshell#set_alias('sp',  ':sp  | VimShellCreate')
@@ -616,7 +622,7 @@ augroup END
 "}}}
 "--- J6uil ---"{{{
 
-augroup PluginPref
+augroup plugin_pref
 	autocmd FileType J6uil setlocal wrap
 augroup END
 
@@ -778,7 +784,7 @@ endif
 " Powered Up Syntax Highlight
 " {{{
 
-augroup Highlight
+augroup def_highlight
 	"autocmd Colorscheme * highlight Normal       cterm=NONE      ctermfg=Cyan
 	autocmd ColorScheme * highlight Visual       cterm=underline ctermfg=White ctermbg=Cyan
 	autocmd ColorScheme * highlight IncSearch                    ctermfg=Black ctermbg=Cyan
@@ -803,7 +809,7 @@ augroup Highlight
 augroup END
 
 " Syntax janee
-augroup Highlight
+augroup def_highlight
 	autocmd InsertEnter * highlight StatusLine ctermfg=Black ctermbg=Cyan
 	autocmd InsertLeave * highlight StatusLine ctermfg=Cyan  ctermbg=Black
 augroup END
@@ -964,7 +970,7 @@ isdirectory('~/.vim/doc')
 endif
 
 " If buffer doesn't has filetype then set filetype 'none'
-augroup FileEvent
+augroup file_event
 	autocmd VimEnter,BufNew * if &ft == '' | setf none | endif
 augroup END
 
@@ -977,12 +983,9 @@ augroup END
 "{{{
 
 " Save Cursor Position when file closed
-augroup FilePositSave
+augroup file_visit
 	autocmd BufWinLeave ?\+ silent mkview
 	autocmd BufWinEnter ?\+ silent loadview
-
-	""@Experiment('2014-09-28')
-	"autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
 
@@ -1004,12 +1007,14 @@ function! s:update_backup_by_date() "{{{
 
 	call writefile(getline(1, '$'), l:dailydir.'/'.l:filename)
 endfunction "}}}
-augroup FileEvent
+augroup file_event
 	autocmd BufWritePre ?\+ silent call s:update_backup_by_date()
 
 	"autocmd UserGettingBored * :echo 'Naijan!!!!'
+augroup END
 
-	" For infercase
+augroup key_event
+	" For noinfercase
 	autocmd InsertEnter * setl ignorecase
 	autocmd InsertLeave * setl noignorecase
 augroup END
@@ -1346,7 +1351,7 @@ command! FtCoqInstancyOn  NeoBundleSource coq.vim
 
 " Disable Default Keys {{{
 
-augroup AddKeyMap
+augroup key_map
 	autocmd FileType * nnoremap <Up>    <NOP>
 	autocmd FileType * nnoremap <Down>  <NOP>
 	autocmd FileType * nnoremap <Left>  <NOP>
@@ -1362,14 +1367,14 @@ augroup END
 " }}}
 " Override Defined Keys {{{
 
-augroup AddKeyMap
+augroup key_map
 	autocmd FileType * nnoremap Q gQ
 augroup END
 
 " }}}
 " Bashnize Command Mode {{{
 
-augroup AddKeyMap
+augroup key_map
 	autocmd FileType * nmap     <C-j> <CR>
 	autocmd FileType * imap     <C-j> <CR>
 
@@ -1386,7 +1391,7 @@ augroup END
 " Customize Keys {{{
 
 " To All buffers
-augroup AddKeyMap
+augroup key_map
 	"-- With Prefixes --"
 	" for case remapped by plugin <C-z> (ex:vimsh)
 	autocmd FileType * nnoremap                  <C-k><C-z>  <C-z>
@@ -1555,7 +1560,7 @@ command! EmptyBufUp execute ':new' | resize 5
 
 " }}}
 
-augroup AddKeyMap
+augroup key_map
 	autocmd FileType * nnoremap <silent> gc :call <SID>cursor_move_to_center()<CR>
 	autocmd FileType * nnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
 	autocmd FileType * nnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
@@ -1578,7 +1583,7 @@ augroup END
 " Buffer Local KeyMaps {{{
 
 " To Plugin buffers
-augroup PluginPref
+augroup plugin_pref
 	autocmd FileType netrw nunmap   L
 	autocmd FileType netrw nmap     <buffer> H -
 	autocmd FileType netrw nnoremap <silent><buffer> Q  :quit<CR>
@@ -1618,14 +1623,14 @@ augroup END
 "{{{
 
 " Set for "Vi Improved"
-augroup ProgramType
+augroup extension_type
 	autocmd FileType vim  NeoBundleSource 'vim-themis'
 	autocmd VimEnter,BufWinEnter,BufEnter * syntax match rcHint /\s*"@\w\+/
 	autocmd FileType vim highlight rcHint cterm=standout ctermfg=DarkYellow
 augroup END
 
 " Set for C-Sharp
-augroup ProgramType
+augroup extension_type
 	"autocmd VimEnter,WinEnter    *  syntax match TypeInference /var\s\+/
 	"autocmd FileType             cs highlight TypeInference cterm=bold ctermfg=11
 	autocmd VimEnter,BufWinEnter,BufEnter,WinEnter * syntax match Identifier /\<var\>/
@@ -1633,20 +1638,20 @@ augroup ProgramType
 augroup END
 
 " Set for Haskell
-augroup ProgramType
+augroup extension_type
 	autocmd FileType yesod      setl ts=4|setl sw=4|setl et
 	autocmd VimEnter,BufWinEnter,BufEnter * syntax match rcHfSpace /^\s\s*/
 	autocmd FileType haskell highlight rcHfSpace cterm=underline ctermfg=Cyan
 augroup END
 
 " Set for extension(*.v)
-augroup ProgramType
+augroup extension_type
 	autocmd BufNewFile,BufRead *.v let &ft='coq'
 	autocmd FileType coq execute ':FtCoqInstancyOn'
 augroup END
 
 " Plain Text like types
-augroup ProgramType
+augroup extension_type
 	autocmd BufNewFile,BufRead *.md   set filetype=markdown
 	autocmd FileType markdown         nnoremap <silent> <leader>r :PrevimOpen<CR>
 	autocmd FileType markdown,text    setl ts=2|setl sw=2|setl et
@@ -1654,7 +1659,7 @@ augroup ProgramType
 augroup END
 
 " FileTypes's commentstring
-augroup ProgramType
+augroup extension_type
 	autocmd FileType vim            let &commentstring = ' "%s'
 	autocmd FileType c,cpp,java,cs  let &commentstring = " /*%s*/"
 	autocmd FileType haskell        let &commentstring = " --%s"
@@ -1673,11 +1678,11 @@ augroup END
 " Special File's Setting is write on here.
 
 function! s:unload_file_event()  " {{{
-	augroup FilePositSave
+	augroup file_visit
 		autocmd!
 	augroup END
 endfunction  " }}}
-augroup FileEvent
+augroup file_event
 	autocmd FileType vimshell call s:unload_file_event()
 augroup END
 
