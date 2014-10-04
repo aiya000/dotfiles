@@ -794,12 +794,12 @@ augroup Highlight
 	autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 
 	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427}
-	autocmd VimEnter,BufWinEnter * match rcEmSpace /　/
-	"autocmd ColorScheme * highlight rcEmSpace cterm=standout ctermfg=LightBlue
-	autocmd ColorScheme * highlight rcEmSpace ctermbg=White guibg=White
+	autocmd VimEnter,BufWinEnter * match RcEmSpace /　/
+	"autocmd ColorScheme * highlight RcEmSpace cterm=standout ctermfg=LightBlue
+	autocmd ColorScheme * highlight RcEmSpace ctermbg=White guibg=White
 
-	autocmd VimEnter,BufWinEnter * match rcMyHint /\s*"@\w\+/
-	autocmd ColorScheme * highlight rcMyHint cterm=standout ctermfg=Red
+	autocmd VimEnter,BufWinEnter * match RcMyHint /\s*"@\w\+/
+	autocmd ColorScheme * highlight RcMyHint cterm=standout ctermfg=Red
 augroup END
 
 " Syntax janee
@@ -955,14 +955,11 @@ set tags=./tags,~/tags
 set browsedir=buffer
 
 " Auto Judge file encode
-if !g:vimrc_loaded
-	let &fileencodings = 'utf-8,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932,' . &fileencodings
-endif
+"@Experiment('2014-10-04')
+set fileencodings=utf-8,sjis,euc-jp,cp932,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
 
 " Generate HelpTags My Help
-if s:isKaoriya && isdirectory('~/_vim/doc')
-	helptags ~/_vim/doc
-elseif isdirectory('~/.vim/doc')
+isdirectory('~/.vim/doc')
 	helptags ~/.vim/doc
 endif
 
