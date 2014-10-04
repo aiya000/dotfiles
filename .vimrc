@@ -801,8 +801,7 @@ augroup def_highlight
 
 	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427}
 	autocmd VimEnter,BufWinEnter * match RcEmSpace /　/
-	"autocmd ColorScheme * highlight RcEmSpace cterm=standout ctermfg=LightBlue
-	autocmd ColorScheme * highlight RcEmSpace ctermbg=White guibg=White
+	autocmd ColorScheme * highlight RcEmSpace cterm=standout ctermfg=LightBlue
 
 	autocmd VimEnter,BufWinEnter * match RcMyHint /\s*"@\w\+/
 	autocmd ColorScheme * highlight RcMyHint cterm=standout ctermfg=Red
@@ -965,7 +964,7 @@ set browsedir=buffer
 set fileencodings=utf-8,sjis,euc-jp,cp932,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
 
 " Generate HelpTags My Help
-isdirectory('~/.vim/doc')
+if isdirectory('~/.vim/doc')
 	helptags ~/.vim/doc
 endif
 
