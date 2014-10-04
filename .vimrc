@@ -100,6 +100,8 @@ scriptencoding utf8
 
 "-- fix mystery pattern ?\+
 
+"-- see experiments
+
 " }}}
 
 
@@ -848,8 +850,6 @@ set nocompatible
 if v:version < 704  " Is this suitable condition ?
 	set whichwrap=b,s,h,l,<,>,[,]
 	set backspace=indent,eol,start
-	"noremap 
-	"noremap! 
 endif
 
 " Auto new line enter off
@@ -894,10 +894,8 @@ let &directory = s:directory
 let &viewdir = s:viewdir
 
 " Hold Undo Archive when file closed
-if has('persistent_undo')
-	set undofile
-	let &undodir = s:undodir
-endif
+set undofile
+let &undodir = s:undodir
 
 " Bell Sound is instead of Screen flash.
 set visualbell
@@ -925,7 +923,8 @@ set noinfercase
 
 
 " Default File Encoding
-set fileencoding=utf-8
+"@Experiment('2014-10-04 : comment out')
+"set fileencoding=utf-8
 
 " Leaving a history and it limit is a 50 pieces
 set history=50
@@ -939,13 +938,13 @@ let g:vimball_home = s:vimHome.'/vimball'
 
 " Display Command Complement
 set wildmenu
-"set wildmode=list
 
 " Path Delimiter is Slash
 set shellslash
 
 " Add Match Pairs
 set matchpairs+=<:>
+set matchpairs+=「:」
 
 " Load Target for ctags
 set tags=./tags,~/tags
@@ -1007,10 +1006,10 @@ augroup file_event
 
 	autocmd VimEnter,BufWinEnter *
 		\	if &encoding == 'cp932'
-		\		let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
-		\	else
-		\		let &listchars = 'tab:» ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
-		\	endif
+		\|		let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
+		\|	else
+		\|		let &listchars = 'tab:» ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
+		\|	endif
 augroup END
 
 augroup key_event
