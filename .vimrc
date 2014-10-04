@@ -976,8 +976,8 @@ augroup END
 
 " Save Cursor Position when file closed
 augroup file_visit
-	autocmd BufWinLeave \+ silent mkview
-	autocmd BufWinEnter \+ silent loadview
+	autocmd BufWinLeave \?\+ silent mkview
+	autocmd BufWinEnter \?\+ silent loadview
 augroup END
 
 
@@ -1000,7 +1000,7 @@ function! s:update_backup_by_date() "{{{
 	call writefile(getline(1, '$'), l:dailydir.'/'.l:filename)
 endfunction "}}}
 augroup file_event
-	autocmd BufWritePre \+ silent call s:update_backup_by_date()
+	autocmd BufWritePre \?\+ silent call s:update_backup_by_date()
 
 	"autocmd UserGettingBored * echo 'Naijan!!!!'
 
@@ -1096,9 +1096,9 @@ command! -nargs=1 RandomPut execute 'normal! a' . s:random_int(<q-args>) )
 
 
 " Time Watcher  $ @See('http://leafcage.hateblo.jp/entry/2013/08/02/001600')
-command! -bar TimerStart let  s:startTime = reltime()
-command! -bar TimerEcho  echo reltimestr( reltime(s:startTime) )
-command! -bar TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
+command! TimerStart let  s:startTime = reltime()
+command! TimerEcho  echo reltimestr( reltime(s:startTime) )
+command! TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
 
 
 "}}}
@@ -1415,6 +1415,7 @@ augroup key_map
 
 	"-- Customize --"
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
+	autocmd FileType * nnoremap          q:    :digraphs<CR>
 	" for window
 	autocmd FileType * nnoremap <silent> <C-w>t  :tabnew<CR>
 	autocmd FileType * nnoremap <silent> <C-w>T  :tabclose<CR>
