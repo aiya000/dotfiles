@@ -82,8 +82,6 @@ scriptencoding utf8
 
 "-- not returned foldenabled on visual leaved by zf
 
-"-- duplicated helptag 'g:restart_menu_lang' in openbrowser and restart.vim
-
 "}}}
 " Todo {{{
 
@@ -416,7 +414,11 @@ NeoBundle 'tyru/restart.vim'
 
 call neobundle#end()
 
-helptags ~/.vim/bundle/.neobundle/doc
+try
+	helptags ~/.vim/bundle/.neobundle/doc
+catch /.*E154.*/
+	" Suppressed helptags duplication error
+endtry
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
@@ -729,7 +731,7 @@ let g:ref_source_webdict_sites = {
 let g:ref_source_webdict_sites['default'] = 'weblio'
 
 function! s:webdict_filter(output)
-	return join(split(a:output, "\n")[101 : ], "\n")
+	return join(split(a:output, "\n")[45 : ], "\n")
 endfunction
 let g:ref_source_webdict_sites['weblio'].filter = function('s:webdict_filter')
 
@@ -1296,7 +1298,7 @@ function! s:weblio_translate_cmdline(...) "{{{
 
 	execute 'Ref webdict weblio ' . l:line
 endfunction "}}}
-command! -nargs=* TranslateWeblio call s:weblio_translate_cmdline(<f-args>)
+command! -nargs=* TransWeblio call s:weblio_translate_cmdline(<f-args>)
 
 command! -nargs=* GrepNow       vimgrep <f-args> % | cwindow
 
