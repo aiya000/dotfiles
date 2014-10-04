@@ -976,8 +976,8 @@ augroup END
 
 " Save Cursor Position when file closed
 augroup file_visit
-	autocmd BufWinLeave ?\+ silent mkview
-	autocmd BufWinEnter ?\+ silent loadview
+	autocmd BufWinLeave \+ silent mkview
+	autocmd BufWinEnter \+ silent loadview
 augroup END
 
 
@@ -1000,7 +1000,7 @@ function! s:update_backup_by_date() "{{{
 	call writefile(getline(1, '$'), l:dailydir.'/'.l:filename)
 endfunction "}}}
 augroup file_event
-	autocmd BufWritePre ?\+ silent call s:update_backup_by_date()
+	autocmd BufWritePre \+ silent call s:update_backup_by_date()
 
 	"autocmd UserGettingBored * echo 'Naijan!!!!'
 
