@@ -773,13 +773,8 @@ syntax sync fromstart
 " Syntax Highlight On
 syntax on
 
-" Visualize Tab and Space
+" Visualize Tab and Space $ See('listchars : Event Method => file_event')
 set list
-if &encoding == 'cp932'
-	let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
-else
-	let &listchars = 'tab:» ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
-endif
 
 " Powered Up Syntax Highlight
 " {{{
@@ -807,7 +802,6 @@ augroup def_highlight
 	autocmd ColorScheme * highlight RcMyHint cterm=standout ctermfg=Red
 augroup END
 
-" Syntax janee
 augroup def_highlight
 	autocmd InsertEnter * highlight StatusLine ctermfg=Black ctermbg=Cyan
 	autocmd InsertLeave * highlight StatusLine ctermfg=Cyan  ctermbg=Black
@@ -1009,7 +1003,14 @@ endfunction "}}}
 augroup file_event
 	autocmd BufWritePre ?\+ silent call s:update_backup_by_date()
 
-	"autocmd UserGettingBored * :echo 'Naijan!!!!'
+	"autocmd UserGettingBored * echo 'Naijan!!!!'
+
+	autocmd VimEnter,BufWinEnter *
+		\	if &encoding == 'cp932'
+		\		let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
+		\	else
+		\		let &listchars = 'tab:» ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
+		\	endif
 augroup END
 
 augroup key_event
