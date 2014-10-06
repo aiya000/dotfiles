@@ -96,9 +96,11 @@ scriptencoding utf8
 
 "-- highlight prefs devide to vimrc and gvimrc
 
-"-- fix mystery pattern ?\+
+"-- fix mystery pattern ?\+ => 
 
 "-- see experiments
+
+"-- open new tab current buffer
 
 " }}}
 
@@ -925,8 +927,7 @@ set noinfercase
 
 
 " Default File Encoding
-"@Experiment('2014-10-04 : comment out')
-"set fileencoding=utf-8
+setlocal fileencoding=utf-8
 
 " Leaving a history and it limit is a 50 pieces
 set history=50
@@ -946,7 +947,6 @@ set shellslash
 
 " Add Match Pairs
 set matchpairs+=<:>
-set matchpairs+=「:」
 
 " Load Target for ctags
 set tags=./tags,~/tags
@@ -955,7 +955,6 @@ set tags=./tags,~/tags
 set browsedir=buffer
 
 " Auto Judge file encode
-"@Experiment('2014-10-04')
 set fileencodings=utf-8,sjis,euc-jp,cp932,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
 
 " Generate HelpTags My Help
@@ -1008,7 +1007,7 @@ augroup file_event
 
 	autocmd VimEnter,BufWinEnter *
 		\	if &encoding == 'cp932'
-		\|		let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
+		\|		let &listchars = 'tab:> ,trail:_,extends:>,precedes:<,nbsp:%,eol:$'
 		\|	else
 		\|		let &listchars = 'tab:» ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
 		\|	endif
@@ -1210,7 +1209,7 @@ function! s:sql_yank_normalize() range "{{{
 		\		substitute(line, "\"", "", 'g'),
 		\	"+", "", 'g'), "\t", "", 'g')
 
-		let sql .= lineOfSql
+		let sql .= lineOfSql . "\n"
 	endfor
 	let @" = substitute(sql, "\s\s\+", " ", 'g')
 endfunction "}}}
@@ -1571,7 +1570,7 @@ augroup key_map
 	"autocmd FileType * cnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * cnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
 
-	autocmd FileType * nnoremap <silent> <C-@><C-w>    setl wrap! wrap?
+	autocmd FileType * nnoremap <silent> <C-@><C-w>    :setl wrap! wrap?<CR>
 	autocmd FileType * nnoremap <silent> <C-@>jkjkjkjk :call <SID>enable_cursor_keys_toggle()<CR>
 	autocmd CursorMoved * call s:visual_fold_all()
 
