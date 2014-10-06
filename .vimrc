@@ -1393,16 +1393,17 @@ augroup END
 " To All buffers
 augroup key_map
 	"-- With Prefixes --"
-	" for case remapped by plugin <C-z> (ex:vimsh)
+	" for case already mapped keys by plugin (ex:vimshell => <C-l> : clean)
 	autocmd FileType * nnoremap                  <C-k><C-z>  <C-z>
 	autocmd FileType * inoremap                  <C-k><C-l>  <Esc>
-	autocmd FileType * inoremap                  <C-k><C-k>  <C-O>d$
+	autocmd FileType * inoremap                  <C-k><C-k>  <C-o>d$
+	" Customize with prefix
 	autocmd FileType * cnoremap                  <C-k><C-p>  <Up>
 	autocmd FileType * cnoremap                  <C-k><C-n>  <Down>
+	autocmd FileType * nnoremap <silent>         <C-k><C-b><C-n>  :bn<CR>
+	autocmd FileType * nnoremap <silent>         <C-k><C-b><C-p>  :bp<CR>
 
 	autocmd FileType * nnoremap <silent>         <C-@><C-r>  :Reload<CR>
-	autocmd FileType * nnoremap <silent>         <C-@><C-b><C-n>  :bn<CR>
-	autocmd FileType * nnoremap <silent>         <C-@><C-b><C-p>  :bp<CR>
 	autocmd FileType * nnoremap <silent><buffer> <C-@><C-l>  :nohlsearch<CR>
 	autocmd FileType * nnoremap <silent>         <C-@>l      :so %<CR>
 	autocmd FileType * nnoremap <silent>         <C-@>r      :Resetf<CR>
@@ -1422,6 +1423,10 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> <C-w>T  :tabclose<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bd :bd<CR>
 	autocmd FileType * nnoremap <silent> <C-w>Bd :bd!<CR>
+	function! s:buf_open_new_tab() "{{{
+		execute 'tabnew | ' . bufnr('%') . 'b'
+	endfunction "}}}
+	autocmd FileType * nnoremap <silent> <C-w>bt   :call <SID>buf_open_new_tab()<CR>
 	" for folds
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
