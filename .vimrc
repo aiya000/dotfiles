@@ -1001,7 +1001,7 @@ augroup file_event
 	"autocmd UserGettingBored * echo 'Naijan!!!!'
 
 	autocmd BufWinEnter,WinEnter,BufRead,EncodingChanged *
-		\	if &encoding == 'utf8'
+		\	if &encoding == 'utf-8'
 		\|		let &listchars = 'tab:» ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
 		\|	else
 		\|		let &listchars = 'tab:> ,trail:_,extends:>,precedes:<,nbsp:%'
