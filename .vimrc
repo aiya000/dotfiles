@@ -708,13 +708,20 @@ call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
 "call submode#map('incsearch_command', 'c', '', '<C-n>', '<Down>')
 
 "}}}
+"--- vim-ref ---" {{{
+
+let g:ref_use_vimproc = exists('*vimproc#system()') ? 1 : 0
+
+" }}}
 "--- ref-dicts-en ---" {{{
 "@See('http://d.hatena.ne.jp/akishin999/20131024/1382569289')
 
-let g:ref_use_vimproc = exists('*vimproc#system()') ? 1 : 0
 let g:ref_source_webdict_sites = {
 \	'weblio' : {
 \		'url' : 'http://ejje.weblio.jp/content/%s'
+\	},
+\	'wikipedia' : {
+\		'url' : 'http://ja.wikipedia.org/wiki/%s'
 \	}
 \}
 
@@ -1285,7 +1292,7 @@ function! s:weblio_translate_cmdline(...) "{{{
 
 	execute 'Ref webdict weblio ' . l:line
 endfunction "}}}
-command! -nargs=* TransWeblio call s:weblio_translate_cmdline(<f-args>)
+command! -nargs=* Weblio        call s:weblio_translate_cmdline(<f-args>)
 
 command! -nargs=* GrepNow       vimgrep <f-args> % | cwindow
 
