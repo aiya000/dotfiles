@@ -257,8 +257,8 @@ endif
 
 "}}}
 " Check NeoBundle exists {{{
-let s:bundleDir    = s:vimHome.'/bundle/'
-let s:neobundleDir = s:bundleDir.'/neobundle.vim/'
+let s:bundleDir    = s:vimHome.'/bundle'
+let s:neobundleDir = s:bundleDir.'/neobundle.vim'
 
 if !isdirectory(s:bundleDir)
 	call mkdir(s:bundleDir)
@@ -927,7 +927,7 @@ set noinfercase
 
 
 " Default File Encoding
-setlocal fileencoding=utf-8
+set fileencoding=utf-8
 
 " Leaving a history and it limit is a 50 pieces
 set history=50
@@ -977,8 +977,8 @@ augroup END
 
 " Save Cursor Position when file closed
 augroup file_visit
-	autocmd BufWinLeave \?\+ silent mkview
-	autocmd BufWinEnter \?\+ silent loadview
+	autocmd BufWinLeave ?\+ silent mkview
+	autocmd BufWinEnter ?\+ silent loadview
 augroup END
 
 
@@ -1001,13 +1001,13 @@ function! s:update_backup_by_date() "{{{
 	call writefile(getline(1, '$'), l:dailydir.'/'.l:filename)
 endfunction "}}}
 augroup file_event
-	autocmd BufWritePre \?\+ silent call s:update_backup_by_date()
+	autocmd BufWritePre ?\+ silent call s:update_backup_by_date()
 
 	"autocmd UserGettingBored * echo 'Naijan!!!!'
 
-	autocmd VimEnter,BufWinEnter *
+	autocmd BufWinEnter,WinEnter,BufRead,EncodingChanged *
 		\	if &encoding == 'cp932'
-		\|		let &listchars = 'tab:> ,trail:_,extends:>,precedes:<,nbsp:%,eol:$'
+		\|		let &listchars = 'tab:> ,trail:_,extends:>,precedes:<,nbsp:%'
 		\|	else
 		\|		let &listchars = 'tab:» ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
 		\|	endif
