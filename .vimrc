@@ -11,19 +11,13 @@ scriptencoding utf8
 "----------------------------"
 "{{{
 
-"---------------------------------------"
-"*** Verified Functioned Environment ***"
-"---------------------------------------"
-
-"* Windows Kaoriya GVim cooperate to Cygwin
-  "1. Download Kaoriya Vim
-  "2. PATH /cygwin/{,usr/}bin add to Windows
-  "3. Copy Examples/_{,g}vimrc to kaoriya-vim dir
-  "4. Start GVim
-    "- nazo(dekitari cannot-tari)
+"-----------------------------
+"*** Verified Environment ***"
+"-----------------------------
 
 "* Windows Kaoriya GVim(Manually Update)
   "1. New Version download by Kaoriya site
+  "2. Unset Env var $SHELL
   "2. Reference this config file
   "3. Starting GVim
     "- > Completely Succeeded.
@@ -88,19 +82,13 @@ scriptencoding utf8
 "-- Visualizability for Vim Tab
 "  -- showing window num when one window only
 
-"-- Devide autocmds to just augroup
-
-"-- One hand view mode
-
 "-- View column on status line always
 
 "-- highlight prefs devide to vimrc and gvimrc
 
-"-- fix mystery pattern ?\+ => 
-
 "-- see experiments
 
-"-- open new tab current buffer
+"-- read options.jax
 
 " }}}
 
@@ -1006,10 +994,10 @@ augroup file_event
 	"autocmd UserGettingBored * echo 'Naijan!!!!'
 
 	autocmd BufWinEnter,WinEnter,BufRead,EncodingChanged *
-		\	if &encoding == 'cp932'
-		\|		let &listchars = 'tab:> ,trail:_,extends:>,precedes:<,nbsp:%'
-		\|	else
+		\	if &encoding == 'utf8'
 		\|		let &listchars = 'tab:» ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
+		\|	else
+		\|		let &listchars = 'tab:> ,trail:_,extends:>,precedes:<,nbsp:%'
 		\|	endif
 augroup END
 
