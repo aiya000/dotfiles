@@ -76,6 +76,10 @@ scriptencoding utf8
 
 "-- not returned foldenabled on visual leaved by zf
 
+"-- apply listchars at funny timing
+
+"-- startup vimshell is faild often
+
 "}}}
 " Todo {{{
 
@@ -400,6 +404,7 @@ NeoBundle 'thinca/vim-painter'
 NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'tyru/restart.vim'
+NeoBundle 'koron/minimap-vim'
 
 
 call neobundle#end()
@@ -582,7 +587,8 @@ endif
 
 let g:tweetvim_async_post = 1
 augroup plugin_pref
-	autocmd FileType tweetvim setlocal wrap
+	autocmd FileType tweetvim     setl wrap
+	autocmd FileType tweetvim_say setl ts=2 | setl sw=2 | set et
 augroup END
 
 "}}}
@@ -1020,6 +1026,7 @@ augroup END
 "   Functional Command    "
 "-------------------------"
 " Utility Function {{{
+call altercmd#load()
 
 " Revese string of current line $ @See('reverse() tukaeYo')
 function! s:reverse_line()  " {{{
@@ -1169,10 +1176,10 @@ if executable('python')
 endif
 
 
-command! PutShortSeparator
+command!     PutShortSeparator
 	\	execute 'normal! a'.'/* -=-=-=-=-=-=-=-=- */'
 	\|	execute 'normal =='
-command! PutLongSeparator
+command!     PutLongSeparator
 	\	execute 'normal! a'.'/* ---===---===---===---===---===---===--- */'
 	\|	execute 'normal =='
 
@@ -1218,9 +1225,7 @@ command! -range SqlCopy :<line1>,<line2>call s:sql_yank_normalize()
 "-------------------------"
 " Utils {{{
 
-call altercmd#load()
-
-" Vim Utils {{{
+" Vim Core Utils {{{
 command! VimConfig         e  $MYVIMRC
 command! VimConfigTab      tabnew | e $MYVIMRC
 command! Reload            so $MYVIMRC
@@ -1296,8 +1301,10 @@ command! -nargs=* Weblio        call s:weblio_translate_cmdline(<f-args>)
 
 command! -nargs=* GrepNow       vimgrep <f-args> % | cwindow
 
-"}}}
-" Developments{{{
+command!          MinimapReSync execute 'MinimapStop' | execute 'MinimapSync'
+
+" }}}
+" Developments {{{
 
 command! -nargs=1 Log VimConsoleLog <args>
 command! LogClear VimConsoleClear
@@ -1320,14 +1327,14 @@ if executable('bash')
 	command!  BashTab  tabnew|ConqueTerm bash
 endif
 
-"}}}
+" }}}
 " PluginSwitcher {{{
 
 " These use by this configration
 command! VitalOn          NeoBundleSource vital.vim
 command! FtCoqInstancyOn  NeoBundleSource coq.vim
 
-"}}}
+" }}}
 
 
 "-------------------------"
@@ -1395,8 +1402,8 @@ augroup key_map
 	" Customize with prefix
 	autocmd FileType * cnoremap                  <C-k><C-p>  <Up>
 	autocmd FileType * cnoremap                  <C-k><C-n>  <Down>
-	autocmd FileType * nnoremap <silent>         <C-k><C-b><C-n>  :bn<CR>
-	autocmd FileType * nnoremap <silent>         <C-k><C-b><C-p>  :bp<CR>
+	autocmd FileType * nnoremap <silent>         <C-k>bn     :bn<CR>
+	autocmd FileType * nnoremap <silent>         <C-k>bp     :bp<CR>
 
 	autocmd FileType * nnoremap <silent>         <C-@><C-r>  :Reload<CR>
 	autocmd FileType * nnoremap <silent><buffer> <C-@><C-l>  :nohlsearch<CR>
@@ -1634,7 +1641,7 @@ augroup END
 augroup extension_type
 	"autocmd VimEnter,WinEnter    *  syntax match TypeInference /var\s\+/
 	"autocmd FileType             cs highlight TypeInference cterm=bold ctermfg=11
-	autocmd VimEnter,BufWinEnter,BufEnter,WinEnter * syntax match Identifier /\<var\>/
+	autocmd VimEnter,BufWinEnter,BufEnter * syntax match Identifier /\<var\>/
 	autocmd FileType cs highlight Identifier
 augroup END
 
