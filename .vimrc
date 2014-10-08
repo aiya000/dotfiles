@@ -739,6 +739,11 @@ endfunction
 let g:ref_source_webdict_sites['weblio'].filter = function('s:webdict_filter')
 
 " }}}
+"--- restart.vim ---" {{{
+
+let g:restart_sessionoptions = 'blank,curdir,folds,help'
+
+" }}}
 "--- For Private ---"{{{
 
 " Read Privacy Config
@@ -1176,10 +1181,10 @@ if executable('python')
 endif
 
 
-command!     PutShortSeparator
+command! PutShortSeparator
 	\	execute 'normal! a'.'/* -=-=-=-=-=-=-=-=- */'
 	\|	execute 'normal =='
-command!     PutLongSeparator
+command! PutLongSeparator
 	\	execute 'normal! a'.'/* ---===---===---===---===---===---===--- */'
 	\|	execute 'normal =='
 
