@@ -597,6 +597,7 @@ augroup END
 " Add to VimShell Commands Directory of My Home
 let &runtimepath = &runtimepath.','.s:vimHome.'/autoload/vimshell/commands'
 
+"Note: これをenvで定義すればかくれみのじゅとぅーに使えそう
 "let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
 let g:vimshell_no_save_history_commands = {
 \	'history': 1,
@@ -684,11 +685,6 @@ let g:unite_source_alias_aliases = {
 \}
 
 "}}}
-"--- foldCC ---"{{{
-
-"let g:foldCCtext_enable_autofdc_adjuster = 0
-
-"}}}
 "--- vim-submode ---"{{{
 
 let g:submode_timeout = 0
@@ -741,7 +737,7 @@ let g:ref_source_webdict_sites['weblio'].filter = function('s:webdict_filter')
 " }}}
 "--- restart.vim ---" {{{
 
-let g:restart_sessionoptions = 'blank,curdir,folds,help'
+let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
 
 " }}}
 "--- For Private ---"{{{
