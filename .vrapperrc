@@ -1,4 +1,9 @@
 
+set tabstop=4
+set shiftwidth=4
+set noexpandtab
+
+
 nnoremap <Up>    <NOP>
 nnoremap <Down>  <NOP>
 nnoremap <Left>  <NOP>
