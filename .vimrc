@@ -1448,7 +1448,7 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShellPop<CR>
 	autocmd FileType * nmap              <leader>V          <Plug>(vimshell_create)
-	autocmd FileType * nnoremap <silent> <leader><leader>V  :VimShellTab<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>V  :tabnew<CR>:VimShellCreate<CR>
 	" for anzu
 	autocmd FileType * nmap              n                  <Plug>(anzu-n-with-echo)zv
 	autocmd FileType * nmap              N                  <Plug>(anzu-N-with-echo)zv
