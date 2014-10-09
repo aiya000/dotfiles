@@ -841,6 +841,9 @@ nohlsearch
 " View cursor column on <C-g>
 set noruler
 
+" Hard Conceal
+set conceallevel=2
+
 "}}}
 
 

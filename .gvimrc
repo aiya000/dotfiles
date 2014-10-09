@@ -118,20 +118,39 @@ endif
 "      View Setting       "
 "-------------------------"
 "{{{
+"
+augroup def_highlight
+	"autocmd Colorscheme * highlight Normal       gui=NONE      guifg=Cyan
+	autocmd ColorScheme * highlight Visual       gui=underline guifg=White guibg=Cyan
+	autocmd ColorScheme * highlight IncSearch                  guifg=Black guibg=Cyan
+	autocmd ColorScheme * highlight Pmenu        gui=standout  guifg=Blue
+	autocmd ColorScheme * highlight PmenuSel                   guifg=Black guibg=White
+	autocmd ColorScheme * highlight TabLine      gui=standout  guifg=Blue
+	autocmd ColorScheme * highlight TabLineSel   gui=NONE      guifg=Cyan
+	autocmd ColorScheme * highlight TabLineFill  gui=standout  guifg=Blue
+	autocmd ColorScheme * highlight VertSplit    gui=NONE      guifg=Cyan  guibg=Blue
+	autocmd ColorScheme * highlight StatusLine                 guifg=Cyan  guibg=Black
+	autocmd ColorScheme * highlight StatusLineNC               guifg=Blue
+	autocmd ColorScheme * highlight LineNr                     guifg=Blue
+	autocmd ColorScheme * highlight CursorLine   gui=underline guifg=Cyan
 
-augroup gui_highlight
 	"@Bugs('Not Shown')
-	autocmd VimEnter,BufWinEnter * syntax match grcEmSpace /　/
-	autocmd ColorScheme          * highlight grcEmSpace guibg=White
+	autocmd VimEnter,BufWinEnter * syntax match GrcEmSpace /　/
+	autocmd ColorScheme          * highlight GrcEmSpace guibg=White
 
 	"@Bugs('okasiisi is if &filetype timing')
-	autocmd VimEnter,BufWinEnter * syntax match grcHint /\s*"@\w\+/
+	autocmd VimEnter,BufWinEnter * syntax match GrcHint /\s*"@\w\+/
 	autocmd ColorScheme          *
 	\	if &filetype == 'vim'
-	\|		highlight    rcHint gui=bold guifg=#ef5939
+	\|		highlight    GrcHint gui=bold guifg=#ef5939
 	\|	endif
 
 	autocmd ColorScheme * highlight CursorLine gui=underline guifg=cyan guibg=NONE
+augroup END
+
+augroup def_highlight
+	autocmd InsertEnter * highlight StatusLine guifg=Black guibg=Cyan
+	autocmd InsertLeave * highlight StatusLine guifg=Cyan  guibg=Black
 augroup END
 
 
