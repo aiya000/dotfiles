@@ -875,7 +875,7 @@ function! WithDelimitterTabLine() "{{{
 	return tabpages
 endfunction "}}}
 set tabline=%!WithDelimitterTabLine()
-休暇
+
 "}}}
 
 
