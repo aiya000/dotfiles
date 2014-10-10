@@ -51,14 +51,7 @@ scriptencoding utf8
 "-- point marker line num in a file
 "  -- I can jump marked line and list up mark lines
 
-"-- implement command that print format (%0, %1, %2), ({0}, {1}, {2}) replace arguments on real time
-"  -- covered multi line
-
-"-- ahoge auto include yanked words
-
 "-- View prev and next fold head text ...on echo or other buffer ?
-
-"-- Want to Unite buffer delete
 
 " }}}
 " Issues {{{
@@ -71,25 +64,15 @@ scriptencoding utf8
 "  -- What is best event ?
 
 "-- 'gist:aiya000/ec5f6b2375a639831953' cannot divide configure
-"  -- if diveding then install it as no named plugin
 
 "-- submode fold_move do not functioned when not exists fold under cursor
 
 "-- not returned foldenabled on visual leaved by zf
 
-"-- apply listchars at funny timing
-
-"-- startup vimshell is faild often
-
-"-- not shown tabname of noname tab
+"-- apply listchars at funny timing on windows(default cp932)
 
 "}}}
 " Todo {{{
-
-"-- Visualizability for Vim Tab
-"  -- showing window num when one window only
-
-"-- View column on status line always
 
 "-- highlight prefs devide to vimrc and gvimrc
 
@@ -1655,7 +1638,6 @@ augroup plugin_pref
 	autocmd FileType tweetvim_say nnoremap <buffer> q      <NOP>
 	autocmd FileType tweetvim_say inoremap <buffer> <C-i>  <Space><Space>
 
-	"@Bugs('error when second startup')
 	autocmd FileType vimshell nunmap <buffer> Q
 	autocmd FileType vimshell nunmap <buffer> q
 	autocmd FileType vimshell imap   <buffer> <C-l>       <Plug>(vimshell_clear)
