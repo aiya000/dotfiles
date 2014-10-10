@@ -80,6 +80,8 @@ scriptencoding utf8
 
 "-- startup vimshell is faild often
 
+"-- not shown tabname of noname tab
+
 "}}}
 " Todo {{{
 
@@ -1280,7 +1282,7 @@ command! ColorPreview      Unite colorscheme -auto-preview
 
 "-- Basic --"
 command! Twitter            TweetVimHomeTimeline
-command! TwitterTab         tabnew | call TwitterTabFunc()
+command! TwitterTab         tabnew | Twitter
 command! Tweet              TweetVimSay
 
 
@@ -1290,7 +1292,7 @@ function! TwitterPrivateFunc() "{{{
 	TweetVimHomeTimeline
 endfunction "}}}
 command! TwitterPrivate     call TwitterPrivateFunc()
-command! TwitterPrivateTab  tabnew | call TwitterPrivateFunc()
+command! TwitterPrivateTab  tabnew | TwitterPrivate
 function! TweetPrivateFunc() "{{{
 	execute ':TweetVimSwitchAccount '.g:rc_private['twitter']['priv_ac']
 	TweetVimSay
@@ -1304,7 +1306,7 @@ function! TwitterPublicFunc() "{{{
 	TweetVimHomeTimeline
 endfunction "}}}
 command! TwitterPublic      call TwitterPublicFunc()
-command! TwitterPublicTab   tabnew | call TwitterPublicFunc()
+command! TwitterPublicTab   tabnew | TwitterPublic
 function! TweetPublicFunc() "{{{
 	execute ':TweetVimSwitchAccount '.g:rc_private['twitter']['publ_ac']
 	TweetVimSay
@@ -1671,6 +1673,10 @@ augroup extension_type
 	autocmd FileType vim  NeoBundleSource 'vim-themis'
 	autocmd VimEnter,BufWinEnter,BufEnter * syntax match rcHint /\s*"@\w\+/
 	autocmd FileType vim highlight rcHint cterm=standout ctermfg=DarkYellow
+
+	"@Deprecated('must move to ftplugin')
+	autocmd BufNewFile,BufRead .vimperatorrc setf vim
+	autocmd BufNewFile,BufRead .vrapperrc    setf vim
 augroup END
 
 " Set for C-Sharp
@@ -1690,7 +1696,7 @@ augroup END
 
 " Set for extension(*.v)
 augroup extension_type
-	autocmd BufNewFile,BufRead *.v let &ft='coq'
+	autocmd BufNewFile,BufRead *.v setf coq
 	autocmd FileType coq execute ':FtCoqInstancyOn'
 augroup END
 
