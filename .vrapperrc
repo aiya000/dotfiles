@@ -3,7 +3,7 @@
 
 set tabstop=4
 set shiftwidth=4
-set expandtab
+set noexpandtab
 
 
 nnoremap <Up>    <NOP>
@@ -620,6 +620,4 @@ eclipseaction Move org.eclipse.ui.edit.move
 eclipseaction Rename org.eclipse.ui.edit.rename
 
 " }}}
-
-inoremap <C-Space> :ContentAssistCompletePrefix<CR>
 

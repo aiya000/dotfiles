@@ -127,7 +127,8 @@ scriptencoding utf8
 "---------------------"
 "{{{
 
-let g:vimrc_loaded = get(g:, 'vimrc_loaded', 0)
+let g:vimrc = get(g:, 'vimrc', {})
+let g:vimrc['loaded'] = get(g:vimrc, 'loaded', 0)
 
 let s:isWindows = has('win32')
 let s:isCygwin  = has('win32unix')
@@ -587,7 +588,7 @@ endif
 " }}}
 "--- TweetVim ---"{{{
 
-let g:tweetvim_async_post = 1
+let g:tweetvim_async_post = exists('*vimproc#system()') ? 1 : 0
 augroup plugin_pref
 	autocmd FileType tweetvim     setl wrap
 	autocmd FileType tweetvim_say setl ts=2 | setl sw=2 | set et
@@ -873,8 +874,7 @@ endfunction "}}}
 function! WithDelimitterTabLine() "{{{
 	let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
 	let delimitter = ' | '
-	let tabpages = join(titles, delimitter) . delimitter . '%#TabLineFil#%T'
-	return tabpages
+	return join(titles, delimitter) . delimitter . '%#TabLineFil#%T'
 endfunction "}}}
 set tabline=%!WithDelimitterTabLine()
 
@@ -1280,6 +1280,10 @@ command! ColorPreview      Unite colorscheme -auto-preview
 " }}}
 " Twitter {{{
 
+"Note: if ask more, add hooks
+"    (let g:vimrc.private['twitter']['curr_ac'] = ~~)
+"    on tweetvim's TweetVimSwitchAccount command.
+
 "-- Basic --"
 command! Twitter            TweetVimHomeTimeline
 command! TwitterTab         tabnew | Twitter
@@ -1288,21 +1292,25 @@ command! Tweet              TweetVimSay
 
 "-- Private Account --"
 function! TwitterPrivateFunc() "{{{
-	execute ':TweetVimSwitchAccount '.g:rc_private['twitter']['priv_ac']
+	execute ':TweetVimSwitchAccount ' . g:vimrc.private['twitter']['priv_ac']
+	let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['priv_ac']
 	TweetVimHomeTimeline
 endfunction "}}}
 command! TwitterPrivate     call TwitterPrivateFunc()
 command! TwitterPrivateTab  tabnew | TwitterPrivate
 function! TweetPrivateFunc() "{{{
-	execute ':TweetVimSwitchAccount '.g:rc_private['twitter']['priv_ac']
+	execute ':TweetVimSwitchAccount ' . g:vimrc.private['twitter']['priv_ac']
 	TweetVimSay
+	"@Incompleted('wait here')
+	execute ':TweetVimSwitchAccount ' . g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
 command! TweetPrivate       call TweetPrivateFunc()
 
 
 "-- Public Account --"
 function! TwitterPublicFunc() "{{{
-	execute ':TweetVimSwitchAccount '.g:rc_private['twitter']['publ_ac']
+	execute ':TweetVimSwitchAccount ' . g:vimrc.private['twitter']['publ_ac']
+	let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['publ_ac']
 	TweetVimHomeTimeline
 endfunction "}}}
 command! TwitterPublic      call TwitterPublicFunc()
@@ -1310,6 +1318,8 @@ command! TwitterPublicTab   tabnew | TwitterPublic
 function! TweetPublicFunc() "{{{
 	execute ':TweetVimSwitchAccount '.g:rc_private['twitter']['publ_ac']
 	TweetVimSay
+	"@Incompleted('wait here')
+	execute ':TweetVimSwitchAccount '.g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
 command! TweetPublic        call TweetPublicFunc()
 
@@ -1751,5 +1761,5 @@ endif
 "}}}
 
 
-let g:vimrc_loaded = 1
+let g:vimrc['loaded'] = 1
 
