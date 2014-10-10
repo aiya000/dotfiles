@@ -874,19 +874,8 @@ function! s:tabpage_label(n) "{{{
 endfunction "}}}
 function! WithDelimitterTabLine() "{{{
 	let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
-	let unnamed_tab = "%.*T%#TabLine#%T%#TabLineFill#"
-	for i in range(0, len(titles)-1)
-		if titles[i] =~# unnamed_tab
-			let titles[i] = substitute(titles[i], "#TabLine#%T%#TabLineFill#", "#TabLine#[no name]%T%#TabLineFill#", 'g')
-		endif
-	endfor
 	let delimitter = ' | '
 	let tabpages = join(titles, delimitter) . delimitter . '%#TabLineFill#%T'
-
-	let unnamed_page = "%.*T%#TabLineSel#%T%#TabLineFill# "
-	if tabpages =~# unnamed_page
-		let tabpages = substitute(tabpages, "#TabLineSel#%T%#TabLineFill#", "#TabLineSel#[*no name*]%T%#TabLineFill#", 'g')
-	endif
 	return tabpages
 endfunction "}}}
 set tabline=%!WithDelimitterTabLine()
