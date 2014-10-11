@@ -226,11 +226,10 @@ if s:isKaoriya
 
 
 	" Unset Kaoriya Preference
-	set noignorecase
-	set nosmartcase
+	set noignorecase nosmartcase
 
 	augroup file_event
-		autocmd BufRead $MYVIMRC setl enc=utf8 | setl fenc=utf8
+		autocmd BufRead $MYVIMRC setl enc=utf8 fenc=utf8
 	augroup END
 endif
 
@@ -557,7 +556,7 @@ if s:isCygwin
 endif
 
 augroup plugin_pref
-	autocmd FileType quickrun setlocal wrap
+	autocmd FileType quickrun setl wrap
 augroup END
 
 " }}}
@@ -575,7 +574,7 @@ endif
 let g:tweetvim_async_post = exists('*vimproc#system()') ? 1 : 0
 augroup plugin_pref
 	autocmd FileType tweetvim     setl wrap
-	autocmd FileType tweetvim_say setl ts=2 | setl sw=2 | set et
+	autocmd FileType tweetvim_say setl ts=2 sw=2 et
 augroup END
 
 "}}}
@@ -602,16 +601,14 @@ augroup plugin_pref
 	\|	call vimshell#set_alias('sp',  ':sp  | VimShellCreate')
 	\|	call vimshell#set_alias('vsp', ':vsp | VimShellCreate')
 
-	autocmd FileType vimshell  setl fdm=marker
-	autocmd FileType vimshell  setl nolist
-	autocmd FileType vimshell  setl wrap
+	autocmd FileType vimshell  setl fdm=marker nolist wrap
 augroup END
 
 "}}}
 "--- J6uil ---"{{{
 
 augroup plugin_pref
-	autocmd FileType J6uil setlocal wrap
+	autocmd FileType J6uil setl wrap
 augroup END
 
 "}}}
@@ -753,9 +750,6 @@ set nowrap
 " View line number
 set number
 
-" Indent Width
-set tabstop=4
-
 " Highlight Hit Keyword
 set hlsearch
 
@@ -812,8 +806,7 @@ set background=dark
 
 " Indent Wrapped Text
 if exists('+breakindent')
-	set breakindent
-	set linebreak
+	set breakindent linebreak
 endif
 
 " Invisible character visualize to hex
@@ -883,8 +876,8 @@ endif
 " Auto new line enter off
 set textwidth=0
 
-" Auto Indent on
-set autoindent
+" C Type Auto Indent on
+set autoindent cindent
 
 " Regex Search Engine Type[1]
 "   0: if search new engine is failure then search old engine [default]
@@ -901,11 +894,9 @@ set incsearch
 " Tag Jump Quickly
 "set tagbsearch
 
-" C Type Auto Indent
-set cindent
 
-" Indent Width when auto indent
-set shiftwidth=4
+" Manually Indent width and Auto Indent width
+set tabstop=4 shiftwidth=4
 
 " Fold Text with foldmarker and fold sets
 set foldmethod=marker
@@ -951,7 +942,7 @@ set noinfercase
 
 
 " Default File Encoding
-set fileencoding=utf-8
+set fileencoding=utf-8 encoding=utf-8
 
 " Leaving a history and it limit is a 50 pieces
 set history=50
@@ -1683,7 +1674,7 @@ augroup END
 
 " Set for Haskell
 augroup extension_type
-	autocmd FileType yesod      setl ts=4|setl sw=4|setl et
+	autocmd FileType yesod setl ts=4 sw=4 et
 	autocmd VimEnter,BufWinEnter,BufEnter * syntax match rcHfSpace /^\s\s*/
 	autocmd FileType haskell highlight rcHfSpace cterm=underline ctermfg=Cyan
 augroup END
@@ -1698,17 +1689,17 @@ augroup END
 augroup extension_type
 	autocmd BufNewFile,BufRead *.md   set filetype=markdown
 	autocmd FileType markdown         nnoremap <silent> <leader>r :PrevimOpen<CR>
-	autocmd FileType markdown,text    setl ts=2|setl sw=2|setl et
+	autocmd FileType markdown,text    setl ts=2 sw=2 et
 	autocmd FileType git-log.git-diff setl nolist
 augroup END
 
 " FileTypes's commentstring
 augroup extension_type
-	autocmd FileType vim            let &commentstring = ' "%s'
-	autocmd FileType c,cpp,java,cs  let &commentstring = " /*%s*/"
-	autocmd FileType haskell        let &commentstring = " --%s"
-	autocmd FileType coq            let &commentstring = " (*%s*)"
-	autocmd FileType markdown,text  let &commentstring = " %s"
+	autocmd FileType vim                let &commentstring = ' "%s'
+	autocmd FileType c,cpp,java,cs      let &commentstring = " /*%s*/"
+	autocmd FileType haskell            let &commentstring = " --%s"
+	autocmd FileType coq                let &commentstring = " (*%s*)"
+	autocmd FileType markdown,text,none let &commentstring = " %s"
 augroup END
 
 "}}}
