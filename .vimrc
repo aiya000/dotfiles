@@ -341,7 +341,6 @@ NeoBundle 'add20/vim-conque'
 NeoBundle 'supermomonga/thingspast.vim'
 NeoBundle 'supermomonga/vimshell-kawaii.vim'
 NeoBundle 'mattn/excitetranslate-vim'
-NeoBundle 'kana/vim-altercmd'
 NeoBundle 'mattn/unite-advent_calendar'
 NeoBundleLazy 'thinca/vim-splash'
 NeoBundle 'supermomonga/jazzradio.vim'
@@ -1040,7 +1039,6 @@ augroup END
 "   Functional Command    "
 "-------------------------"
 " Utility Function {{{
-call altercmd#load()
 
 " Revese string of current line $ @See('reverse() tukaeYo')
 function! s:reverse_line()  " {{{
@@ -1300,16 +1298,16 @@ endfunction "}}}
 command! TweetPublic        call TweetPublicFunc()
 
 
-command!      Bitly         TweetVimBitly
-AlterCommand  tvs           TweetVimSwitchAccount
+command! Bitly TweetVimBitly
+cabbr    tvs   TweetVimSwitchAccount
 
 " }}}
 
 " Beautifull Life
-command!      JazzUpdate    JazzradioUpdateChannels
-command!      JazzList      Unite jazzradio
-AlterCommand  JazzPlay      JazzradioPlay
-command!      JazzStop      JazzradioStop
+command! JazzUpdate    JazzradioUpdateChannels
+command! JazzList      Unite jazzradio
+cabbr    JazzPlay      JazzradioPlay
+command! JazzStop      JazzradioStop
 
 " Translates Languages
 command!          Translate     ExciteTranslate
