@@ -1638,8 +1638,8 @@ augroup plugin_pref
 	autocmd FileType tweetvim_say nnoremap <buffer> q      <NOP>
 	autocmd FileType tweetvim_say inoremap <buffer> <C-i>  <Space><Space>
 
-	autocmd FileType vimshell nunmap <buffer> Q
-	autocmd FileType vimshell nunmap <buffer> q
+	autocmd FileType vimshell nnoremap <buffer> Q Q
+	autocmd FileType vimshell nnoremap <buffer> q q
 	autocmd FileType vimshell imap   <buffer> <C-l>       <Plug>(vimshell_clear)
 	autocmd FileType vimshell imap   <buffer> <C-k><C-p>  <Plug>(vimshell_history_unite)
 	autocmd FileType vimshell iunmap <buffer> <C-p>  " Using default completion
