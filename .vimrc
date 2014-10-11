@@ -150,13 +150,6 @@ function! s:system(cmd)
 	endif
 endfunction
 
-
-function! s:echo_error(msg)
-	echohl ERROR
-	echo a:msg
-	echohl NONE
-endfunction
-
 "}}}
 
 
@@ -286,8 +279,8 @@ if has('vim_starting')
 			echo 'Please closing vim and reopening vim once,'
 			echo 'and executing :NeoBundleInstall .'
 		catch
-			call s:echo_error('neobundle.vim clone failed.')
-			call s:echo_error('>> Vim Config Error <<')
+			echoerr 'neobundle.vim clone failed.'
+			echoerr '>> Vim Config Error <<'
 		endtry
 	endtry
 endif
@@ -1128,14 +1121,14 @@ function! s:set_temporary_dir(path) "{{{
 		\	              : a:path
 		echo g:rc_temporary_dir
 	else
-		call s:echo_error('No such temporary root dir')
+		echoerr 'No such temporary root dir'
 	endif
 endfunction "}}}
 command! -nargs=1  TDirSet call s:set_temporary_dir(<q-args>)
 command! TDirSetCurrentDir call s:set_temporary_dir('.')
 function! s:cd_temporary_dir() "{{{
 	if g:rc_temporary_dir == 'undefined'
-		call s:echo_error('Not set temporary root dir')
+		echoerr 'Not set temporary root dir'
 	else
 		execute 'cd '.g:rc_temporary_dir
 		echo g:rc_temporary_dir
