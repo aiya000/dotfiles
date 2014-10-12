@@ -74,11 +74,15 @@ scriptencoding utf8
 "}}}
 " Todo {{{
 
+"-- Eigo to English
+
 "-- highlight prefs devide to vimrc and gvimrc
 
 "-- see experiments
 
 "-- read options.jax
+
+"-- Special Unite outline for this file
 
 " }}}
 
@@ -403,9 +407,9 @@ let vimproc_config = {
 \	}
 \}
 if s:isCygwin
-	let vimproc_config.build["cygwin"]  = 'make -f make_cygwin.mak'
+	let vimproc_config.build['cygwin']  = 'make -f make_cygwin.mak'
 elseif s:hasMingw
-	let vimproc_config.build["windows"] = 'make -f make_mingw32.mak'
+	let vimproc_config.build['windows'] = 'make -f make_mingw32.mak'
 endif
 call neobundle#config('vimproc.vim', vimproc_config)
 unlet vimproc_config
@@ -575,8 +579,6 @@ augroup END
 " Add to VimShell Commands Directory of My Home
 let &runtimepath = &runtimepath.','.s:vimHome.'/autoload/vimshell/commands'
 
-"Note: これをenvで定義すればかくれみのじゅとぅーに使えそう
-"let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
 let g:vimshell_no_save_history_commands = {
 \	'history': 1,
 \	'ls'     : 1,
@@ -706,7 +708,7 @@ let g:ref_source_webdict_sites = {
 let g:ref_source_webdict_sites['default'] = 'weblio'
 
 function! s:webdict_filter(output)
-	return join(split(a:output, "\n")[45 : ], "\n")
+	return join(split(a:output, "\n")[56 : ], "\n")
 endfunction
 let g:ref_source_webdict_sites['weblio'].filter = function('s:webdict_filter')
 
@@ -924,6 +926,9 @@ set noinfercase
 " Unlimited Cursor move in screen
 "set virtualedit=all
 
+" No timeout key maps
+set notimeout
+
 "}}}
 
 
@@ -935,6 +940,9 @@ set noinfercase
 
 " Default File Encoding
 set fileencoding=utf-8 encoding=utf-8
+
+" Auto Judge file encode
+set fileencodings=utf-8,sjis,euc-jp,cp932,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
 
 " Leaving a history and it limit is a 50 pieces
 set history=50
@@ -961,18 +969,10 @@ set tags=./tags,~/tags
 " Explore wake up default dir
 set browsedir=buffer
 
-" Auto Judge file encode
-set fileencodings=utf-8,sjis,euc-jp,cp932,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
-
 " Generate HelpTags My Help
 if isdirectory('~/.vim/doc')
 	helptags ~/.vim/doc
 endif
-
-" If buffer doesn't has filetype then set filetype 'none'
-augroup file_event
-	autocmd VimEnter,BufNew * if &ft == '' | setf none | endif
-augroup END
 
 "}}}
 
@@ -1007,21 +1007,22 @@ function! s:update_backup_by_date() "{{{
 
 	call writefile(getline(1, '$'), l:dailydir.'/'.l:filename)
 endfunction "}}}
+
 augroup file_event
 	autocmd BufWritePre ?\+ silent call s:update_backup_by_date()
 
-	"autocmd UserGettingBored * echo 'Naijan!!!!'
-
 	autocmd BufWinEnter,WinEnter,BufRead,EncodingChanged *
 		\	if &encoding == 'utf-8'
-		\|		let &listchars = 'tab:» ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
+		\|		set listchars=tab:»\ ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
 		\|	else
-		\|		let &listchars = 'tab:> ,trail:_,extends:>,precedes:<,nbsp:%'
+		\|		set listchars=tab:>\ ,trail:_,extends:>,precedes:<,nbsp:%
 		\|	endif
 augroup END
 
 augroup key_event
-	" For noinfercase
+	"autocmd UserGettingBored * echo 'Naijan!!!!'
+
+	" Set ignorecase completion only insert mode
 	autocmd InsertEnter * setl ignorecase
 	autocmd InsertLeave * setl noignorecase
 augroup END
@@ -1207,7 +1208,7 @@ command! PutHtmlBase call s:put_html_base()
 "@Code('Select it, and execute this.')
 "  $ "SELECT *" +
 "  $ " FROM table;";
-"  Yank => SELECT * FROM tablle;
+"  Yank => SELECT * FROM table;
 function! s:sql_yank_normalize() range "{{{
 	let sql = ""
 	for i in range(a:firstline, a:lastline)
@@ -1413,7 +1414,8 @@ augroup key_map
 	" for case already mapped keys by plugin (ex:vimshell => <C-l> : clean)
 	autocmd FileType * nnoremap                  <C-k><C-z>  <C-z>
 	autocmd FileType * inoremap                  <C-k><C-l>  <Esc>
-	autocmd FileType * inoremap                  <C-k><C-k>  <C-o>d$
+	autocmd FileType * inoremap                  <C-k><C-k>  <C-o>"_d$
+	autocmd FileType * inoremap                  <C-k><C-z>  <C-o>:normal! <C-z><CR>
 	" Customize with prefix
 	autocmd FileType * cnoremap                  <C-k><C-p>  <Up>
 	autocmd FileType * cnoremap                  <C-k><C-n>  <Down>
@@ -1607,21 +1609,20 @@ augroup END
 
 " To Plugin buffers
 augroup plugin_pref
-	autocmd FileType netrw nunmap   L
 	autocmd FileType netrw nmap     <buffer> H -
-	autocmd FileType netrw nnoremap <silent><buffer> Q  :quit<CR>
+	autocmd FileType netrw nnoremap <silent><buffer> Q  :q<CR>
+	autocmd FileType netrw nunmap   L
 
 	autocmd FileType tweetvim nmap <buffer> <leader>R  <Plug>(tweetvim_action_remove_status)
 	autocmd FileType tweetvim nmap <buffer> <C-r>      <Plug>(tweetvim_action_reload)
-	autocmd FileType tweetvim nnoremap <silent><buffer> s      :TweetVimSay <CR>
+	autocmd FileType tweetvim nnoremap <silent><buffer> s      :TweetVimSay<CR>
 	autocmd FileType tweetvim nnoremap         <buffer> <C-a>  :TweetVimSwitchAccount<Space>
 	autocmd FileType tweetvim nnoremap         <buffer> U      :TweetVimUserTimeline<Space>
 	autocmd FileType tweetvim nnoremap <silent><buffer> Q      :bd<CR>
-	autocmd FileType tweetvim_say nnoremap <buffer> q      <NOP>
-	autocmd FileType tweetvim_say inoremap <buffer> <C-i>  <Space><Space>
+	autocmd FileType tweetvim_say iunmap <buffer> <C-i>
 
-	autocmd FileType vimshell nnoremap <buffer> Q Q
-	autocmd FileType vimshell nnoremap <buffer> q q
+	autocmd FileType vimshell nunmap <buffer> Q
+	autocmd FileType vimshell nunmap <buffer> q
 	autocmd FileType vimshell imap   <buffer> <C-l>       <Plug>(vimshell_clear)
 	autocmd FileType vimshell imap   <buffer> <C-k><C-p>  <Plug>(vimshell_history_unite)
 	autocmd FileType vimshell iunmap <buffer> <C-p>  " Using default completion
@@ -1632,7 +1633,7 @@ augroup plugin_pref
 	autocmd FileType w3m nnoremap <silent><buffer> <leader>E  :W3mShowExtenalBrowser <CR>
 
 	autocmd FileType J6uil            nnoremap <silent><buffer> Q     :bd<CR>
-	autocmd FileType J6uil_say        nmap             <buffer> <C-j> <CR>     " Enter to Say
+	autocmd FileType J6uil_say        nmap             <buffer> <C-j> <CR>  " Enter to Say
 	autocmd FileType git-log.git-diff nnoremap         <buffer> Q     :bd<CR>
 augroup END
 
@@ -1644,13 +1645,18 @@ augroup END
 "-------------------------"
 "{{{
 
+" If buffer doesn't has filetype then set filetype 'none'
+augroup file_event
+	autocmd VimEnter,BufNew * if &ft == '' | setf none | endif
+augroup END
+
+
 " Set for "Vi Improved"
 augroup extension_type
 	autocmd FileType vim  NeoBundleSource 'vim-themis'
 	autocmd VimEnter,BufWinEnter,BufEnter * syntax match rcHint /\s*"@\w\+/
 	autocmd FileType vim highlight rcHint cterm=standout ctermfg=DarkYellow
 
-	"@Deprecated('must move to ftplugin')
 	autocmd BufNewFile,BufRead .vimperatorrc setf vim
 	autocmd BufNewFile,BufRead .vrapperrc    setf vim
 augroup END
@@ -1700,16 +1706,15 @@ augroup END
 "     Ignore Setting      "
 "-------------------------"
 "{{{
-
 " Special File's Setting is write on here.
 
-function! s:unload_file_event()  " {{{
+function! s:unload_file_visit()  " {{{
 	augroup file_visit
 		autocmd!
 	augroup END
 endfunction  " }}}
 augroup file_event
-	autocmd FileType vimshell call s:unload_file_event()
+	autocmd FileType vimshell call s:unload_file_visit()
 augroup END
 
 "}}}
