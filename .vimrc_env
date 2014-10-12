@@ -1,1 +1,2 @@
 " write for your env
+"let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
