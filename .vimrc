@@ -566,10 +566,10 @@ endif
 " }}}
 "--- TweetVim ---"{{{
 
-let g:tweetvim_async_post = exists('*vimproc#system()') ? 1 : 0
 augroup plugin_pref
 	autocmd FileType tweetvim     setl wrap
 	autocmd FileType tweetvim_say setl ts=2 sw=2 et
+	autocmd BufRead  tweetvim_say let g:tweetvim_async_post = exists('*vimproc#system()') ? 1 : 0
 augroup END
 
 "}}}
@@ -1310,13 +1310,6 @@ if executable('ghc') && executable('ghci')
 endif
 if executable('hoogle')
 	command! -nargs=1  Hoogle Ref hoogle <args>
-endif
-
-if executable('bash')
-	command!  Bash     VimShellInteractive bash
-	command!  Sbash    sp|VimShellInteractive bash
-	command!  Vbash    vsp|VimShellInteractive bash
-	command!  BashTab  tabnew|VimShellInteractive bash
 endif
 
 " }}}
