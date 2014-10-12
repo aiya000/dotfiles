@@ -732,20 +732,14 @@ endif
 "-------------------------"
 "{{{
 
+" Set Basic Preferences
+set number nowrap hlsearch list
+
 " Status Bar always displayed
 set laststatus=2
 
 " Status Bar format $ @See http://sourceforge.jp/magazine/07/11/06/0151231
 set statusline=%F%m\%=[FileType=%y][Format=%{&ff}]
-
-" Do not wrap line
-set nowrap
-
-" View line number
-set number
-
-" Highlight Hit Keyword
-set hlsearch
 
 " ☆ Fix View 2byte Code (Not support gnome-terminal)
 set ambiwidth=double
@@ -755,9 +749,6 @@ syntax sync fromstart
 
 " Syntax Highlight On
 syntax on
-
-" Visualize Tab and Space $ See('listchars : Event Method => file_event')
-set list
 
 " Powered Up Syntax Highlight
 " {{{
@@ -867,16 +858,13 @@ if v:version < 704  " Is this suitable condition ?
 	set backspace=indent,eol,start
 endif
 
-" Auto new line enter off
+" Auto new line enter is off
 set textwidth=0
 
 " C Type Auto Indent on
 set autoindent cindent
 
-" Regex Search Engine Type[1]
-"   0: if search new engine is failure then search old engine [default]
-"   1: search old engine only
-"   2: search new engine only
+" Use Regex Search Engine
 "set regexpengine=0
 
 " Incremental Searching
@@ -888,8 +876,7 @@ set incsearch
 " Tag Jump Quickly
 "set tagbsearch
 
-
-" Manually Indent width and Auto Indent width
+" Manually and Automatic Indent width
 set tabstop=4 shiftwidth=4
 
 " Fold Text with foldmarker and fold sets
@@ -1613,24 +1600,24 @@ augroup plugin_pref
 	autocmd FileType netrw nnoremap <silent><buffer> Q  :q<CR>
 	autocmd FileType netrw nunmap   L
 
-	autocmd FileType tweetvim nmap <buffer> <leader>R  <Plug>(tweetvim_action_remove_status)
-	autocmd FileType tweetvim nmap <buffer> <C-r>      <Plug>(tweetvim_action_reload)
-	autocmd FileType tweetvim nnoremap <silent><buffer> s      :TweetVimSay<CR>
-	autocmd FileType tweetvim nnoremap         <buffer> <C-a>  :TweetVimSwitchAccount<Space>
-	autocmd FileType tweetvim nnoremap         <buffer> U      :TweetVimUserTimeline<Space>
-	autocmd FileType tweetvim nnoremap <silent><buffer> Q      :bd<CR>
+	autocmd FileType tweetvim nmap <buffer> <leader>R <Plug>(tweetvim_action_remove_status)
+	autocmd FileType tweetvim nmap <buffer> <C-r>     <Plug>(tweetvim_action_reload)
+	autocmd FileType tweetvim nnoremap <silent><buffer> s     :TweetVimSay<CR>
+	autocmd FileType tweetvim nnoremap         <buffer> <C-a> :TweetVimSwitchAccount<Space>
+	autocmd FileType tweetvim nnoremap         <buffer> U     :TweetVimUserTimeline<Space>
+	autocmd FileType tweetvim nnoremap <silent><buffer> Q     :bd<CR>
 	autocmd FileType tweetvim_say iunmap <buffer> <C-i>
 
 	autocmd FileType vimshell nunmap <buffer> Q
 	autocmd FileType vimshell nunmap <buffer> q
-	autocmd FileType vimshell imap   <buffer> <C-l>       <Plug>(vimshell_clear)
-	autocmd FileType vimshell imap   <buffer> <C-k><C-p>  <Plug>(vimshell_history_unite)
-	autocmd FileType vimshell iunmap <buffer> <C-p>  " Using default completion
-	autocmd FileType vimshell iunmap <buffer> <C-n>  "_
+	autocmd FileType vimshell imap   <buffer> <C-l>      <Plug>(vimshell_clear)
+	autocmd FileType vimshell imap   <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
+	autocmd FileType vimshell iunmap <buffer> <C-p>
+	autocmd FileType vimshell iunmap <buffer> <C-n>
 
-	autocmd FileType w3m nnoremap         <buffer> H          <BS>
-	autocmd FileType w3m nnoremap <silent><buffer> <C-u>      :W3mAddressBar <CR>
-	autocmd FileType w3m nnoremap <silent><buffer> <leader>E  :W3mShowExtenalBrowser <CR>
+	autocmd FileType w3m nnoremap         <buffer> H         <BS>
+	autocmd FileType w3m nnoremap <silent><buffer> <C-u>     :W3mAddressBar <CR>
+	autocmd FileType w3m nnoremap <silent><buffer> <leader>E :W3mShowExtenalBrowser <CR>
 
 	autocmd FileType J6uil            nnoremap <silent><buffer> Q     :bd<CR>
 	autocmd FileType J6uil_say        nmap             <buffer> <C-j> <CR>  " Enter to Say
@@ -1726,7 +1713,7 @@ augroup END
 "{{{
 
 if filereadable(expand('~/.vimrc_env'))
-	so ~/.vimrc_env
+	source ~/.vimrc_env
 endif
 
 "}}}
