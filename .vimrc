@@ -1271,7 +1271,7 @@ endfunction "}}}
 command! TwitterPublic      call TwitterPublicFunc()
 command! TwitterPublicTab   tabnew | TwitterPublic
 function! TweetPublicFunc() "{{{
-	execute ':TweetVimSwitchAccount '.g:rc_private['twitter']['publ_ac']
+	execute ':TweetVimSwitchAccount '.g:vimrc.private['twitter']['publ_ac']
 	TweetVimSay
 	"@Incompleted('wait here')
 	"execute ':TweetVimSwitchAccount '.g:vimrc.private['twitter']['curr_ac']
