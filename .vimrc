@@ -31,20 +31,20 @@ scriptencoding utf8
 "--  Recipe Menu  --
 "-------------------
 " -- Parameter
-" -- Local Function
+" -- Local_Function
 " -- Initialize
-" -- Plugin Manage
-" -- Plugin Configure
-" -- View Setting
-" -- Action Setting
-" -- Inner Setting
-" -- Event Method
-" -- Functional Command
+" -- Plugin_Manage
+" -- Plugin_Configure
+" -- View_Setting
+" -- Action_Setting
+" -- Inner_Setting
+" -- Event_Method
+" -- Functional_Command
 " -- Alias
-" -- KeyMap
-" -- FileTypes
-" -- Ignore Setting
-" -- Environment Pref
+" -- Key_Map
+" -- File_Types
+" -- Ignore_Setting
+" -- Environment_Pref
 " ---
 " Ideas {{{
 
@@ -142,7 +142,7 @@ let s:groupname = $GROUP != '' ? $GROUP : $USER
 
 
 "---------------------"
-"    Local Function   "
+"    Local_Function   "
 "---------------------"
 "{{{
 
@@ -313,7 +313,7 @@ endif
 
 
 "-------------------------"
-"     Plugin Manage       "
+"     Plugin_Manage       "
 "-------------------------"
 "*** Plugin List ***"{{{
 
@@ -493,7 +493,7 @@ call neobundle#config('ref-dicts-en', {
 
 
 "------------------------"
-"*** Plugin Configure ***"
+"*** Plugin_Configure ***"
 "------------------------"
 "--- vim-quickrun ---" {{{
 
@@ -717,7 +717,7 @@ endif
 "}}}
 
 "-------------------------"
-"      View Setting       "
+"      View_Setting       "
 "-------------------------"
 "{{{
 
@@ -834,7 +834,7 @@ set tabline=%!WithDelimitterTabLine()
 
 
 "-------------------------"
-"     Action Setting      "
+"     Action_Setting      "
 "-------------------------"
 "{{{
 
@@ -909,7 +909,7 @@ set notimeout
 
 
 "-------------------------"
-"     Inner Setting       "
+"     Inner_Setting       "
 "-------------------------"
 "{{{
 
@@ -954,7 +954,7 @@ endif
 
 
 "-------------------------"
-"      Event Method       "
+"      Event_Method       "
 "-------------------------"
 "{{{
 
@@ -1006,7 +1006,7 @@ augroup END
 "}}}
 
 "-------------------------"
-"   Functional Command    "
+"   Functional_Command    "
 "-------------------------"
 " Utility Function {{{
 
@@ -1217,6 +1217,8 @@ command! Reload            so $MYVIMRC
 if executable('sudo')
 	command! ForceSave     w !sudo tee > /dev/null %
 endif
+
+command! CdBufDir          cd %:p:h
 command! Resetf            let &ft = &ft  " for Event [FileType * ]
 
 command! ColorPreview      Unite colorscheme -auto-preview
@@ -1323,7 +1325,7 @@ command! FtCoqInstancyOn  NeoBundleSource coq.vim
 
 
 "-------------------------"
-"         KeyMap          "
+"         Key_Map         "
 "-------------------------"
 "--- Roles ---"{{{
 
@@ -1588,7 +1590,7 @@ augroup plugin_pref
 	autocmd FileType tweetvim nnoremap         <buffer> <C-a> :TweetVimSwitchAccount<Space>
 	autocmd FileType tweetvim nnoremap         <buffer> U     :TweetVimUserTimeline<Space>
 	autocmd FileType tweetvim nnoremap <silent><buffer> Q     :bd<CR>
-	autocmd FileType tweetvim_say iunmap <buffer> <C-i>
+	autocmd FileType tweetvim_say inoremap <buffer> <C-i> <C-i>
 
 	autocmd FileType vimshell nunmap <buffer> Q
 	autocmd FileType vimshell nunmap <buffer> q
@@ -1610,7 +1612,7 @@ augroup END
 
 
 "-------------------------"
-"        FileTypes        "
+"        File_Types       "
 "-------------------------"
 "{{{
 
@@ -1672,7 +1674,7 @@ augroup END
 
 
 "-------------------------"
-"     Ignore Setting      "
+"     Ignore_Setting      "
 "-------------------------"
 "{{{
 " Special File's Setting is write on here.
@@ -1690,7 +1692,7 @@ augroup END
 
 
 "-------------------------"
-"    Environment Pref     "
+"    Environment_Pref     "
 "-------------------------"
 "{{{
 

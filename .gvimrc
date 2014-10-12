@@ -5,11 +5,11 @@ scriptencoding utf8
 "--  Recipe Menu  --
 "-------------------
 " -- Parameter
-" -- Application Setting
-" -- Functional Command
+" -- Application_Setting
+" -- Functional_Command
 " -- Alias
-" -- View Setting
-" -- Plugin Configure
+" -- View_Setting
+" -- Plugin_Configure
 " ---
 " Ideas {{{
 
@@ -47,7 +47,7 @@ let g:grc_guifont.size = get(g:grc_guifont, 'size', s:isWindows ? ':h10' : ' 10'
 
 
 "-------------------------"
-"   Application Setting   "
+"   Application_Setting   "
 "-------------------------"
 "{{{
 
@@ -61,7 +61,7 @@ let &guifontwide = g:grc_guifont['font'] . g:grc_guifont['size']
 
 
 "-------------------------"
-"   Functional Command    "
+"   Functional_Command    "
 "-------------------------"
 "{{{
 
@@ -115,7 +115,7 @@ endif
 
 
 "-------------------------"
-"      View Setting       "
+"       View_Setting      "
 "-------------------------"
 "{{{
 "
@@ -156,7 +156,7 @@ colorscheme evening
 
 
 "------------------------"
-"*** Plugin Configure ***"
+"*** Plugin_Configure ***"
 "------------------------"
 "--- TweetVim ---"{{{
 

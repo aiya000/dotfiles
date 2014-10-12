@@ -36,6 +36,9 @@ cnoremap <C-l> <Esc>
 inoremap <C-k><C-l> <Esc>
 
 
+inoremap <C-k><C-k> <C-o>"_d$
+noremap  <F1>       <NOP>
+
 " specialize for eclipse
 "--- eclipse actions ---" {{{
 
