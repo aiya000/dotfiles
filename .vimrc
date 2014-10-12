@@ -334,7 +334,6 @@ NeoBundle 'osyo-manga/vim-gyazo'
 NeoBundle 'yuratomo/w3m.vim'
 NeoBundle 'mattn/learn-vimscript'
 NeoBundle 'rbtnn/vimconsole.vim'
-NeoBundle 'add20/vim-conque'
 NeoBundle 'supermomonga/thingspast.vim'
 NeoBundle 'supermomonga/vimshell-kawaii.vim'
 NeoBundle 'mattn/excitetranslate-vim'
@@ -620,16 +619,6 @@ let g:w3m#homepage = 'http://www.google.co.jp/'
 "--- vimconsole.vim ---"{{{
 
 let g:vimconsole#auto_redraw = 1
-
-"}}}
-"--- vim-conque ---"{{{
-
-let g:ConqueTerm_CloseOnEnd = 1
-let g:ConqueTerm_SessionSupport = 1
-let g:ConqueTerm_ReadUnfocused = 1
-let g:ConqueTerm_Color = 1
-let g:ConqueTerm_InsertOnEnter = 0
-let g:ConqueTerm_StartMessages = 1
 
 "}}}
 "--- jazzradio.vim ---"{{{
@@ -1314,20 +1303,20 @@ command! LogClear VimConsoleClear
 
 if executable('ghc') && executable('ghci')
 	command! -nargs=*  Ghc      !runghc % <q-args>
-	command!           Ghci     ConqueTerm ghci
-	command!           Sghci    sp|ConqueTerm ghci
-	command!           Vghci    vsp|ConqueTerm ghci
-	command!           GhciTab  tabnew|ConqueTerm ghci
+	command!           Ghci     VimShellInteractive ghci
+	command!           Sghci    sp|VimShellInteractive ghci
+	command!           Vghci    vsp|VimShellInteractive ghci
+	command!           GhciTab  tabnew|VimShellInteractive ghci
 endif
 if executable('hoogle')
 	command! -nargs=1  Hoogle Ref hoogle <args>
 endif
 
 if executable('bash')
-	command!  Bash     ConqueTerm bash
-	command!  Sbash    sp|ConqueTerm bash
-	command!  Vbash    vsp|ConqueTerm bash
-	command!  BashTab  tabnew|ConqueTerm bash
+	command!  Bash     VimShellInteractive bash
+	command!  Sbash    sp|VimShellInteractive bash
+	command!  Vbash    vsp|VimShellInteractive bash
+	command!  BashTab  tabnew|VimShellInteractive bash
 endif
 
 " }}}
