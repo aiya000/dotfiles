@@ -71,6 +71,8 @@ scriptencoding utf8
 
 "-- apply listchars at funny timing on windows(default cp932)
 
+"-- not functioned ? conceal-javadoc .
+
 "}}}
 " Todo {{{
 
@@ -78,11 +80,7 @@ scriptencoding utf8
 
 "-- highlight prefs devide to vimrc and gvimrc
 
-"-- see experiments
-
 "-- read options.jax
-
-"-- Special Unite outline for this file
 
 " }}}
 
