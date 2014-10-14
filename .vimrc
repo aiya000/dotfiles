@@ -321,7 +321,7 @@ NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'basyura/bitly.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimproc.vim'
-NeoBundle 'basyura/TweetVim'
+NeoBundleLazy 'basyura/TweetVim'
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'Shougo/vimshell.vim'
 NeoBundle 'rhysd/wandbox-vim'
@@ -461,7 +461,7 @@ call neobundle#config('ref-hoogle', {
 \	'depends'  : ['thinca/vim-ref'],
 \})
 call neobundle#config('vital.vim', {
-\	'autoload' : {'commands' : ['VitalOn']}
+\	'autoload' : {'filetypes' : 'vim'}
 \})
 call neobundle#config('puyo.vim', {
 \	'autoload' : {'commands' : ['Puyo']}
@@ -476,13 +476,16 @@ call neobundle#config('yamada-vim', {
 \	'autoload' : {'commands' : ['Yamada']}
 \})
 call neobundle#config('coq.vim', {
-\	'autoload' : {'commands' : ['FtCoqInstancyOn']}
+\	'autoload' : {'filetypes' : 'coq'}
 \})
 call neobundle#config('coqtop-vim', {
 \	'depends' : ['Shougo/vimproc.vim']
 \})
 call neobundle#config('vim-grammarous', {
 \	'disabled' : !executable('java')
+\})
+call neobundle#config('vim-themis', {
+\	'autoload' : {'filetypes' : 'vim'}
 \})
 call neobundle#config('ref-dicts-en', {
 \	'depends' : ['thinca/vim-ref']
@@ -1317,13 +1320,6 @@ if executable('hoogle')
 endif
 
 " }}}
-" PluginSwitcher {{{
-
-" These use by this configration
-command! VitalOn          NeoBundleSource vital.vim
-command! FtCoqInstancyOn  NeoBundleSource coq.vim
-
-" }}}
 
 
 "-------------------------"
@@ -1399,8 +1395,6 @@ augroup key_map
 	autocmd FileType * nnoremap <silent><buffer> <C-@><C-l>  :nohlsearch<CR>
 	autocmd FileType * nnoremap <silent>         <C-@>l      :so %<CR>
 	autocmd FileType * nnoremap <silent>         <C-@>r      :Resetf<CR>
-	autocmd FileType * nnoremap                  <leader>j   i<C-x><C-e><Esc>
-	autocmd FileType * nnoremap                  <leader>k   i<C-x><C-y><Esc>
 
 	"-- Overwrite exists map --"
 	autocmd FileType * inoremap <C-l> <Esc>
@@ -1626,7 +1620,6 @@ augroup END
 
 " Set for "Vi Improved"
 augroup extension_type
-	autocmd FileType vim  NeoBundleSource 'vim-themis'
 	autocmd VimEnter,BufWinEnter,BufEnter * syntax match rcHint /\s*"@\w\+/
 	autocmd FileType vim highlight rcHint cterm=standout ctermfg=DarkYellow
 
