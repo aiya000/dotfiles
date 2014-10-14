@@ -384,6 +384,7 @@ NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'tyru/restart.vim'
 NeoBundle 'koron/minimap-vim'
+NeoBundle 'mattn/excelview-vim'
 
 
 call neobundle#end()
@@ -485,6 +486,9 @@ call neobundle#config('vim-grammarous', {
 \})
 call neobundle#config('ref-dicts-en', {
 \	'depends' : ['thinca/vim-ref']
+\})
+call neobundle#config('excelview-vim', {
+\	'depends' : ['mattn/webapi-vim']
 \})
 
 " }}}
@@ -592,7 +596,7 @@ augroup plugin_pref
 	\|	call vimshell#set_alias('sp',  ':sp  | VimShellCreate')
 	\|	call vimshell#set_alias('vsp', ':vsp | VimShellCreate')
 
-	autocmd FileType vimshell  setl fdm=marker nolist wrap
+	autocmd FileType vimshell setl fdm=marker nolist wrap
 augroup END
 
 "}}}
