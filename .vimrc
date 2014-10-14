@@ -315,76 +315,76 @@ endif
 "-------------------------"
 "*** Plugin List ***"{{{
 
-NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'basyura/twibill.vim'
-NeoBundle 'tyru/open-browser.vim'
-NeoBundle 'basyura/bitly.vim'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimproc.vim'
-NeoBundleLazy 'basyura/TweetVim'
-NeoBundle 'mattn/webapi-vim'
-NeoBundle 'Shougo/vimshell.vim'
-NeoBundle 'rhysd/wandbox-vim'
-NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'kashewnuts/gmail.vim'
-NeoBundle 'basyura/J6uil.vim'
-NeoBundle 'osyo-manga/vim-gyazo'
-NeoBundle 'yuratomo/w3m.vim'
-NeoBundle 'mattn/learn-vimscript'
-NeoBundle 'rbtnn/vimconsole.vim'
-NeoBundle 'supermomonga/thingspast.vim'
-NeoBundle 'supermomonga/vimshell-kawaii.vim'
-NeoBundle 'mattn/excitetranslate-vim'
-NeoBundle 'mattn/unite-advent_calendar'
-NeoBundleLazy 'thinca/vim-splash'
-NeoBundle 'supermomonga/jazzradio.vim'
-NeoBundle 'mattn/favstar-vim'
-NeoBundle 'ujihisa/unite-colorscheme'
-NeoBundle 'Shougo/vinarise.vim'
-NeoBundle 'mattn/gist-vim'
-NeoBundle 'vim-scripts/Align'
-NeoBundle 'thinca/vim-ref'
-NeoBundle 'ujihisa/ref-hoogle'
-NeoBundleLazy 'vim-jp/vital.vim'
-NeoBundle 'Shougo/unite-outline'
-NeoBundle 'ebc-2in2crc/vim-ref-jvmis'
-NeoBundleLazy 'rbtnn/puyo.vim'
-NeoBundleLazy 'mattn/benchvimrc-vim'
-NeoBundle 'tacroe/unite-alias'
-NeoBundle 'mattn/ideone-vim'
-NeoBundleLazy 'mattn/yamada-vim'
-NeoBundleLazy 'jvoorhis/coq.vim'
-NeoBundle 'eagletmt/coqtop-vim'
-NeoBundle 'duff/vim-scratch'
-NeoBundle 'rhysd/vim-grammarous'
-NeoBundleLazy 'thinca/vim-themis'
-NeoBundle 'tomasr/molokai'
-NeoBundle 'soramugi/auto-ctags.vim'
-NeoBundle 'aiya000/arot13.vim'
-NeoBundle 'aiya000/ahoge-put.vim'
-NeoBundle 'kannokanno/previm'
-NeoBundle 'gist:aiya000/ec5f6b2375a639831953', {
+NeoBundleFetch   'Shougo/neobundle.vim'
+NeoBundleLazy    'basyura/twibill.vim'
+NeoBundle        'tyru/open-browser.vim'
+NeoBundleLazy    'basyura/bitly.vim'
+NeoBundle        'Shougo/unite.vim'
+NeoBundleLazy    'Shougo/vimproc.vim'
+NeoBundleLazy    'basyura/TweetVim'
+NeoBundle        'mattn/webapi-vim'
+NeoBundle        'Shougo/vimshell.vim'
+NeoBundle        'rhysd/wandbox-vim'
+NeoBundle        'thinca/vim-quickrun'
+NeoBundleLazy    'kashewnuts/gmail.vim'
+NeoBundleLazy    'basyura/J6uil.vim'
+NeoBundle        'osyo-manga/vim-gyazo'
+NeoBundle        'yuratomo/w3m.vim'
+NeoBundle        'mattn/learn-vimscript'
+NeoBundleLazy    'rbtnn/vimconsole.vim'
+NeoBundle        'supermomonga/thingspast.vim'
+NeoBundle        'supermomonga/vimshell-kawaii.vim'
+NeoBundle        'mattn/excitetranslate-vim'
+NeoBundle        'mattn/unite-advent_calendar'
+NeoBundleLazy    'thinca/vim-splash'
+NeoBundle        'supermomonga/jazzradio.vim'
+NeoBundle        'mattn/favstar-vim'
+NeoBundle        'ujihisa/unite-colorscheme'
+NeoBundle        'Shougo/vinarise.vim'
+NeoBundle        'mattn/gist-vim'
+NeoBundle        'vim-scripts/Align'
+NeoBundle        'thinca/vim-ref'
+NeoBundle        'ujihisa/ref-hoogle'
+NeoBundleLazy    'vim-jp/vital.vim'
+NeoBundle        'Shougo/unite-outline'
+NeoBundle        'ebc-2in2crc/vim-ref-jvmis'
+NeoBundleLazy    'rbtnn/puyo.vim'
+NeoBundleLazy    'mattn/benchvimrc-vim'
+NeoBundle        'tacroe/unite-alias'
+NeoBundle        'mattn/ideone-vim'
+NeoBundleLazy    'mattn/yamada-vim'
+NeoBundleLazy    'jvoorhis/coq.vim'
+NeoBundleLazy    'eagletmt/coqtop-vim'
+NeoBundle        'duff/vim-scratch'
+NeoBundle        'rhysd/vim-grammarous'
+NeoBundleLazy    'thinca/vim-themis'
+NeoBundle        'tomasr/molokai'
+NeoBundle        'soramugi/auto-ctags.vim'
+NeoBundle        'aiya000/arot13.vim'
+NeoBundle        'aiya000/ahoge-put.vim'
+NeoBundleLazy    'kannokanno/previm'
+NeoBundle        'gist:aiya000/ec5f6b2375a639831953', {
 \	'name'        : 'gitlogviewer.vim',
 \	'script_type' : 'plugin'
 \}
-NeoBundle 'kamichidu/vim-vdbc'
-NeoBundle 'mattn/vdbi-vim'
-NeoBundle 'LeafCage/foldCC'
-NeoBundle 'katono/rogue.vim'
+NeoBundle        'kamichidu/vim-vdbc'
+NeoBundle        'mattn/vdbi-vim'
+NeoBundle        'LeafCage/foldCC'
+NeoBundleLazy    'katono/rogue.vim'
 NeoBundleDisable 'aiya000/asql.vim'
-NeoBundle 'kamichidu/vim-benchmark'
-NeoBundle 'kana/vim-submode'
-NeoBundle 'gist:aiya000/58931585f8ba6aa43b87', {
+NeoBundleLazy    'kamichidu/vim-benchmark'
+NeoBundle        'kana/vim-submode'
+NeoBundle        'gist:aiya000/58931585f8ba6aa43b87', {
 \	'name'        : 'conceal-javadoc.vim',
 \	'script_type' : 'plugin'
 \}
-NeoBundle 'mfumi/ref-dicts-en'
-NeoBundle 'thinca/vim-painter'
-NeoBundle 'osyo-manga/vim-anzu'
-NeoBundle 'osyo-manga/vim-over'
-NeoBundle 'tyru/restart.vim'
-NeoBundle 'koron/minimap-vim'
-NeoBundle 'mattn/excelview-vim'
+NeoBundle        'mfumi/ref-dicts-en'
+NeoBundle        'thinca/vim-painter'
+NeoBundle        'osyo-manga/vim-anzu'
+NeoBundle        'osyo-manga/vim-over'
+NeoBundle        'tyru/restart.vim'
+NeoBundle        'koron/minimap-vim'
+NeoBundleLazy    'mattn/excelview-vim'
 
 
 call neobundle#end()
@@ -422,13 +422,14 @@ call neobundle#config('TweetVim', {
 \		'Shougo/vimproc.vim',
 \		'mattn/favstar-vim'
 \	],
-\	'autoload' : {'on_source' : ['vimproc.vim']}
+\	'autoload' : {'commands' : 'TweetVim'}
 \})
 call neobundle#config('vimshell.vim', {
-\	'depends' : ['Shougo/vimproc.vim']
+\	'depends' : 'Shougo/vimproc.vim'
 \})
 call neobundle#config('gmail.vim', {
-\	'depends' : ['Shougo/vimproc.vim']
+\	'depends'  : 'Shougo/vimproc.vim',
+\	'autoload' : {'commands' : 'Gmail'}
 \})
 call neobundle#config('J6uil.vim', {
 \	'depends' : [
@@ -436,7 +437,8 @@ call neobundle#config('J6uil.vim', {
 \		'Shougo/vimproc.vim',
 \		'tyru/open-browser.vim',
 \		'Shougo/unite.vim'
-\	]
+\	],
+\	'autoload' : {'commands' : 'J6uil'}
 \})
 call neobundle#config('vim-gyazo', {
 \	'depends' : [
@@ -445,41 +447,44 @@ call neobundle#config('vim-gyazo', {
 \	]
 \})
 call neobundle#config('vimshell-kawaii.vim', {
-\	'depends'  : ['Shougo/vimshell.vim'],
-\	'autoload' : {'on_source' : ['vimshell.vim']}
+\	'depends'  : 'Shougo/vimshell.vim'
+\})
+call neobundle#config('vimconsole.vim', {
+\	'autoload' : {'filetypes' : 'vim'}
 \})
 call neobundle#config('unite-advent_calendar', {
-\	'depends' : ['h1mesuke/unite-outline']
+\	'depends' : 'Shougo/unite-outline'
 \})
 call neobundle#config('vim-splash', {
-\	'autoload' : {'commands' : ['Splash']}
+\	'autoload' : {'commands' : 'Splash'}
 \})
 call neobundle#config('jazzradio.vim', {
-\	'depends'  : ['Shougo/unite.vim'],
+\	'depends'  : 'Shougo/unite.vim'
 \})
 call neobundle#config('ref-hoogle', {
-\	'depends'  : ['thinca/vim-ref'],
+\	'depends'  : 'thinca/vim-ref'
 \})
 call neobundle#config('vital.vim', {
 \	'autoload' : {'filetypes' : 'vim'}
 \})
 call neobundle#config('puyo.vim', {
-\	'autoload' : {'commands' : ['Puyo']}
+\	'autoload' : {'commands' : 'Puyo'}
 \})
 call neobundle#config('benchvimrc-vim', {
-\	'autoload' : {'commands' : ['BenchVimrc']}
+\	'autoload' : {'commands' : 'BenchVimrc'}
 \})
 call neobundle#config('unite-alias', {
-\	'depends' : ['Shougo/unite.vim']
+\	'depends' : 'Shougo/unite.vim'
 \})
 call neobundle#config('yamada-vim', {
-\	'autoload' : {'commands' : ['Yamada']}
+\	'autoload' : {'commands' : 'Yamada'}
 \})
 call neobundle#config('coq.vim', {
 \	'autoload' : {'filetypes' : 'coq'}
 \})
 call neobundle#config('coqtop-vim', {
-\	'depends' : ['Shougo/vimproc.vim']
+\	'depends'  : 'Shougo/vimproc.vim',
+\	'autoload' : {'filetypes' : 'coq'}
 \})
 call neobundle#config('vim-grammarous', {
 \	'disabled' : !executable('java')
@@ -487,11 +492,23 @@ call neobundle#config('vim-grammarous', {
 call neobundle#config('vim-themis', {
 \	'autoload' : {'filetypes' : 'vim'}
 \})
+call neobundle#config('previm', {
+\	'autoload' : {'filetypes' : 'markdown'}
+})
+call neobundle#config('rogue.vim', {
+\	'autoload' : {'commands' : [
+\		'Rogue',
+\		'RogueRestore',
+\		'RogueResume',
+\		'RogueScores'
+\	]}
+\})
 call neobundle#config('ref-dicts-en', {
-\	'depends' : ['thinca/vim-ref']
+\	'depends' : 'thinca/vim-ref'
 \})
 call neobundle#config('excelview-vim', {
-\	'depends' : ['mattn/webapi-vim']
+\	'depends'  : 'mattn/webapi-vim',
+\	'autoload' : {'commands' : 'ExcelView'}
 \})
 
 " }}}
