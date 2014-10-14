@@ -494,7 +494,7 @@ call neobundle#config('vim-themis', {
 \})
 call neobundle#config('previm', {
 \	'autoload' : {'filetypes' : 'markdown'}
-})
+\})
 call neobundle#config('rogue.vim', {
 \	'autoload' : {'commands' : [
 \		'Rogue',
