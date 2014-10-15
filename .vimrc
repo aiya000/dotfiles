@@ -1510,12 +1510,14 @@ let s:visualFoldToggle = get(s:, 'visualFoldToggle', 0) "{{{
 function! s:visual_fold_all()
 	if mode() =~# "^[vV\<C-v>]"
 		if !s:visualFoldToggle && &foldenable
-			execute 'normal! zizz'
+			set nofoldenable
+			execute 'normal! zz'
 			let s:visualFoldToggle = 1
 		endif
 	else
 		if s:visualFoldToggle
-			execute 'normal! zizz'
+			set foldenable
+			execute 'normal! zz'
 			let s:visualFoldToggle = 0
 		endif
 	endif
