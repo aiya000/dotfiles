@@ -1398,21 +1398,21 @@ augroup END
 augroup key_map
 	"-- With Prefixes --"
 	" for case already mapped keys by plugin (ex:vimshell => <C-l> : clean)
-	autocmd FileType * nnoremap                  <C-k><C-z>  <C-z>
-	autocmd FileType * inoremap                  <C-k><C-l>  <Esc>
-	autocmd FileType * inoremap                  <C-k><C-k>  <C-o>"_d$
-	autocmd FileType * inoremap                  <C-k><C-z>  <C-o>:normal! <C-z><CR>
+	autocmd FileType * nnoremap                  <C-k><C-z> <C-z>
+	autocmd FileType * inoremap                  <C-k><C-l> <Esc>
+	autocmd FileType * inoremap                  <C-k><C-k> <C-o>"_d$
+	autocmd FileType * inoremap                  <C-k><C-z> <C-o>:normal! <C-z><CR>
 	" Customize with prefix
-	autocmd FileType * cnoremap                  <C-k><C-p>  <Up>
-	autocmd FileType * cnoremap                  <C-k><C-n>  <Down>
-	autocmd FileType * nnoremap <silent>         <C-k>bn     :bn<CR>
-	autocmd FileType * nnoremap <silent>         <C-k>bp     :bp<CR>
-	autocmd FileType * nnoremap <silent>         <C-k><C-u>  :Unite outline:foldings<CR>
+	autocmd FileType * cnoremap                  <C-k><C-p>      <Up>
+	autocmd FileType * cnoremap                  <C-k><C-n>      <Down>
+	autocmd FileType * nnoremap <silent>         <C-k>bn         :bn<CR>
+	autocmd FileType * nnoremap <silent>         <C-k>bp         :bp<CR>
+	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-f> :Unite outline:foldings<CR>
 
-	autocmd FileType * nnoremap <silent>         <C-@><C-r>  :Reload<CR>
-	autocmd FileType * nnoremap <silent><buffer> <C-@><C-l>  :nohlsearch<CR>
-	autocmd FileType * nnoremap <silent>         <C-@>l      :so %<CR>
-	autocmd FileType * nnoremap <silent>         <C-@>r      :Resetf<CR>
+	autocmd FileType * nnoremap <silent>         <C-@><C-r> :Reload<CR>
+	autocmd FileType * nnoremap <silent><buffer> <C-@><C-l> :nohlsearch<CR>
+	autocmd FileType * nnoremap <silent>         <C-@>l     :so %<CR>
+	autocmd FileType * nnoremap <silent>         <C-@>r     :Resetf<CR>
 
 	"-- Overwrite exists map --"
 	autocmd FileType * inoremap <C-l> <Esc>
