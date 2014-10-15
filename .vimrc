@@ -1407,6 +1407,7 @@ augroup key_map
 	autocmd FileType * cnoremap                  <C-k><C-n>  <Down>
 	autocmd FileType * nnoremap <silent>         <C-k>bn     :bn<CR>
 	autocmd FileType * nnoremap <silent>         <C-k>bp     :bp<CR>
+	autocmd FileType * nnoremap <silent>         <C-k><C-u>  :Unite outline:foldings<CR>
 
 	autocmd FileType * nnoremap <silent>         <C-@><C-r>  :Reload<CR>
 	autocmd FileType * nnoremap <silent><buffer> <C-@><C-l>  :nohlsearch<CR>
