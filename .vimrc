@@ -1162,7 +1162,7 @@ if executable('javac') && executable('java')
 
 		execute '!'.
 		\	printf('%s %s.java',   l:command[0], l:javaname).';'.
-		\	printf('%s %s',        l:command[1], l:javaname).';'.
+		\	printf('%s %s',        l:command[1], l:javaname).';'
 		call delete( printf('%s*.class', l:javaname) )
 	endfunction "}}}
 	command! JavaRun call s:java_run_func()
