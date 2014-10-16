@@ -606,9 +606,9 @@ let g:vimshell_no_save_history_commands = {
 \	'clear'  : 1
 \}
 
-" Suteki Shell
 let g:vimshell_enable_transient_user_prompt = 1
 let g:vimshell_force_overwrite_statusline = 1
+let g:vimshell_enable_start_insert = 0
 
 augroup plugin_pref
 	autocmd FileType vimshell
@@ -1405,9 +1405,10 @@ augroup key_map
 	" Customize with prefix
 	autocmd FileType * cnoremap                  <C-k><C-p>      <Up>
 	autocmd FileType * cnoremap                  <C-k><C-n>      <Down>
-	autocmd FileType * nnoremap <silent>         <C-k>bn         :bn<CR>
-	autocmd FileType * nnoremap <silent>         <C-k>bp         :bp<CR>
+	autocmd FileType * nnoremap <silent>         <C-k><C-b><C-n> :bn<CR>
+	autocmd FileType * nnoremap <silent>         <C-k><C-b><C-p> :bp<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-f> :Unite outline:foldings<CR>
+	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-m> :Unite mapping<CR>
 
 	autocmd FileType * nnoremap <silent>         <C-@><C-r> :Reload<CR>
 	autocmd FileType * nnoremap <silent><buffer> <C-@><C-l> :nohlsearch<CR>
