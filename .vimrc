@@ -1369,14 +1369,6 @@ augroup key_map
 augroup END
 
 " }}}
-" Override Defined Keys {{{
-
-augroup key_map
-	autocmd FileType * nnoremap Q gQ
-augroup END
-
-" }}}
-
 " Bashnize Command Mode {{{
 
 augroup key_map
@@ -1397,13 +1389,16 @@ augroup END
 
 " To All buffers
 augroup key_map
+	" God Of The Vim
+	autocmd FileType * nnoremap Q gQ
+
 	"-- With Prefixes --"
 	" for case already mapped keys by plugin (ex:vimshell => <C-l> : clean)
 	autocmd FileType * nnoremap                  <C-k><C-z> <C-z>
 	autocmd FileType * inoremap                  <C-k><C-l> <Esc>
 	autocmd FileType * inoremap                  <C-k><C-k> <C-o>"_d$
 	autocmd FileType * inoremap                  <C-k><C-z> <C-o>:normal! <C-z><CR>
-	" Customize with prefix
+	" Customize with prefix (veneration... digraphs.)
 	autocmd FileType * cnoremap                  <C-k><C-p>      <Up>
 	autocmd FileType * cnoremap                  <C-k><C-n>      <Down>
 	autocmd FileType * nnoremap <silent>         <C-k><C-b><C-n> :bn<CR>
@@ -1411,10 +1406,10 @@ augroup key_map
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-f> :Unite -ignorecase outline:foldings<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-m> :Unite mapping<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-b> :Unite -ignorecase buffer<CR>
-	autocmd FileType * nnoremap                  <C-k><Space>    :s/\s\s\+/ /g<CR>:execute 'normal! =='<CR>:noh<CR>
+	autocmd FileType * nnoremap                  <C-k><Space>    :let __t=@/<CR>:s/\s\s\+/ /g<CR>:execute 'normal! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
 
 	autocmd FileType * nnoremap <silent>         <C-@><C-r> :Reload<CR>
-	autocmd FileType * nnoremap <silent><buffer> <C-@><C-l> :nohlsearch<CR>
+	autocmd FileType * nnoremap <silent><buffer> <C-@><C-l> :noh<CR>
 	autocmd FileType * nnoremap <silent>         <C-@>l     :so %<CR>
 	autocmd FileType * nnoremap <silent>         <C-@>r     :Resetf<CR>
 
@@ -1425,7 +1420,7 @@ augroup key_map
 
 	"-- Customize --"
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
-	autocmd FileType * nnoremap          q:    :digraphs<CR>
+	autocmd FileType * nnoremap          q:    :digraphs<CR>   " Oh, digraphs!
 	" for window
 	autocmd FileType * nnoremap <silent> <C-w>t  :tabnew<CR>
 	autocmd FileType * nnoremap <silent> <C-w>T  :tabclose<CR>
@@ -1447,7 +1442,7 @@ augroup key_map
 
 	"-- Plugins --"
 	autocmd FileType * nmap              <leader>w          <Plug>(openbrowser-open)
-	"Note: Happened Heavy Motion
+	" baba-n!!
 	autocmd FileType * nnoremap <silent> :%s/               :OverCommandLine<CR>%s/
 	autocmd FileType * nnoremap <silent> :s/                :OverCommandLine<CR>s/
 	autocmd FileType * vnoremap <silent> :s/                :OverCommandLine<CR>s/
@@ -1461,8 +1456,8 @@ augroup key_map
 	autocmd FileType * nmap              N                  <Plug>(anzu-N-with-echo)zv
 	autocmd FileType * nmap              *                  <Plug>(anzu-star-with-echo)zv
 	autocmd FileType * nmap              #                  <Plug>(anzu-sharp-with-echo)zv
-	autocmd FileType * nmap              <C-k>*             <C-w><C-v><Plug>(anzu-star-with-echo)zv
-	autocmd FileType * nmap              <C-k>#             <C-w><C-v><Plug>(anzu-sharp-with-echo)zv
+	autocmd FileType * nmap              <C-w>*             <C-w><C-v><Plug>(anzu-star-with-echo)zv
+	autocmd FileType * nmap              <C-w>#             <C-w><C-v><Plug>(anzu-sharp-with-echo)zv
 augroup END
 
 " }}}
