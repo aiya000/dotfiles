@@ -134,7 +134,7 @@ let s:undodir   = s:backupdir.'/undo'
 let s:viewdir   = s:backupdir.'/view'
 
 let s:username  = $USER
-let s:groupname = $GROUP != '' ? $GROUP : $USER
+let s:groupname = $GROUP !=# '' ? $GROUP : $USER
 
 "}}}
 
@@ -241,7 +241,7 @@ function! s:remove_empty_bundledir()  "{{{
 	let dirs = split(s:system('ls '.s:bundleDir), '\n')
 	for dir in dirs
 		let pluginDir = s:bundleDir.'/'.dir
-		let isEmpty = s:system('ls '.pluginDir) ==# ''
+		let isEmpty = s:system('ls '.pluginDir) == ''
 		if isEmpty
 			call s:system('rmdir '.pluginDir)
 		endif
@@ -836,7 +836,7 @@ function! s:tabpage_label(n) "{{{
 	endif
 
 	let mod = len(filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')) ? '+' : ''
-	let sp = (no . mod) ==# '' ? '' : ' '
+	let sp = (no . mod) == '' ? '' : ' '
 
 	let curbufnr = bufnrs[tabpagewinnr(a:n) - 1]
 	let fname = pathshorten(bufname(curbufnr))
@@ -1056,7 +1056,7 @@ function! s:tac_line() range " {{{
 	if executable('tac')
 		execute "'<,'>!tac"
 	else
-		if a:firstline == a:lastline
+		if a:firstline is a:lastline
 			return
 		endif
 		let lines = []
@@ -1126,7 +1126,7 @@ endfunction "}}}
 command! -nargs=1  TDirSet call s:set_temporary_dir(<q-args>)
 command! TDirSetCurrentDir call s:set_temporary_dir('.')
 function! s:cd_temporary_dir() "{{{
-	if g:rc_temporary_dir == 'undefined'
+	if g:rc_temporary_dir ==# 'undefined'
 		echoerr 'Not set temporary root dir'
 	else
 		execute 'cd '.g:rc_temporary_dir
@@ -1376,6 +1376,7 @@ augroup key_map
 augroup END
 
 " }}}
+
 " Bashnize Command Mode {{{
 
 augroup key_map
@@ -1407,8 +1408,10 @@ augroup key_map
 	autocmd FileType * cnoremap                  <C-k><C-n>      <Down>
 	autocmd FileType * nnoremap <silent>         <C-k><C-b><C-n> :bn<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-b><C-p> :bp<CR>
-	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-f> :Unite outline:foldings<CR>
+	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-f> :Unite -ignorecase outline:foldings<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-m> :Unite mapping<CR>
+	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-b> :Unite -ignorecase buffer<CR>
+	autocmd FileType * nnoremap                  <C-k><Space>    :s/\s\s\+/ /g<CR>:execute 'normal! =='<CR>:noh<CR>
 
 	autocmd FileType * nnoremap <silent>         <C-@><C-r> :Reload<CR>
 	autocmd FileType * nnoremap <silent><buffer> <C-@><C-l> :nohlsearch<CR>
@@ -1429,7 +1432,9 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> <C-w>bd :bd<CR>
 	autocmd FileType * nnoremap <silent> <C-w>Bd :bd!<CR>
 	function! s:buf_open_new_tab() "{{{
+		let l:lnum = getpos('.')[1]
 		execute 'tabnew | ' . bufnr('%') . 'b'
+		execute 'normal! ' . l:lnum . 'G'
 	endfunction "}}}
 	autocmd FileType * nnoremap <silent> <C-w>bt   :call <SID>buf_open_new_tab()<CR>
 	" for folds
@@ -1456,6 +1461,8 @@ augroup key_map
 	autocmd FileType * nmap              N                  <Plug>(anzu-N-with-echo)zv
 	autocmd FileType * nmap              *                  <Plug>(anzu-star-with-echo)zv
 	autocmd FileType * nmap              #                  <Plug>(anzu-sharp-with-echo)zv
+	autocmd FileType * nmap              <C-k>*             <C-w><C-v><Plug>(anzu-star-with-echo)zv
+	autocmd FileType * nmap              <C-k>#             <C-w><C-v><Plug>(anzu-sharp-with-echo)zv
 augroup END
 
 " }}}
@@ -1475,21 +1482,21 @@ endfunction "}}}
 " {{{
 
 function! s:cursor_up_to_lid() "{{{
-	if &ft == 'netrw' | return | endif
+	if &ft ==# 'netrw' | return | endif
 
 	while 1
 		let l:p = getpos('.')[2]
 		execute 'normal! k'
 
 		let l:isIndentChanged = l:p != getpos('.')[2]
-		if l:isIndentChanged || getpos('.')[1] == 1
+		if l:isIndentChanged || getpos('.')[1] is 1
 			if l:isIndentChanged | execute 'normal! j' | endif
 			break
 		endif
 	endwhile
 endfunction "}}}
 function! s:cursor_down_to_ground() "{{{
-	if &ft == 'netrw' | return | endif
+	if &ft ==# 'netrw' | return | endif
 
 	let l:eol = len(readfile(@%))
 	while 1
@@ -1497,7 +1504,7 @@ function! s:cursor_down_to_ground() "{{{
 		execute 'normal! j'
 
 		let l:isIndentChanged = l:p != getpos('.')[2]
-		if l:isIndentChanged || getpos('.')[1] == l:eol
+		if l:isIndentChanged || getpos('.')[1] is l:eol
 			if l:isIndentChanged | execute 'normal! k' | endif
 			break
 		endif
@@ -1579,8 +1586,6 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
 	"autocmd FileType * xnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * xnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
-	"autocmd FileType * cnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
-	"autocmd FileType * cnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
 
 	autocmd FileType * nnoremap <silent> <C-@><C-w>    :setl wrap! wrap?<CR>
 	autocmd FileType * nnoremap <silent> <C-@>jkjkjkjk :call <SID>enable_cursor_keys_toggle()<CR>
@@ -1666,7 +1671,6 @@ augroup END
 " Set for extension(*.v)
 augroup extension_type
 	autocmd BufNewFile,BufRead *.v setf coq
-	autocmd FileType coq execute ':FtCoqInstancyOn'
 augroup END
 
 " Plain Text like types
