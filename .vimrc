@@ -43,6 +43,7 @@ scriptencoding utf8
 " -- Alias
 " -- Key_Map
 " -- File_Types
+"
 " -- Ignore_Setting
 " -- Environment_Pref
 " ---
@@ -846,6 +847,9 @@ function! s:tabpage_label(n) "{{{
 
 	let curbufnr = bufnrs[tabpagewinnr(a:n) - 1]
 	let fname = pathshorten(bufname(curbufnr))
+	if fname == ''
+		let fname .= '[ NoName ]'
+	endif
 
 	let label = no . mod . sp . fname
 	return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
@@ -1496,7 +1500,6 @@ function! s:cursor_up_to_lid() "{{{
 		execute 'normal! k'
 
 		let l:isIndentChanged = l:p != getpos('.')[2]
-		"@Experiment('getpos(".")[1] -> line(".")')
 		if l:isIndentChanged || line('.') is 1
 			if l:isIndentChanged | execute 'normal! j' | endif
 			break
@@ -1614,12 +1617,12 @@ augroup plugin_pref
 	autocmd FileType netrw nnoremap <silent><buffer> Q  :q<CR>
 	autocmd FileType netrw nunmap   L
 
-	autocmd FileType tweetvim nmap <buffer> <leader>R <Plug>(tweetvim_action_remove_status)
-	autocmd FileType tweetvim nmap <buffer> <C-r>     <Plug>(tweetvim_action_reload)
-	autocmd FileType tweetvim nnoremap <silent><buffer> s     :TweetVimSay<CR>
-	autocmd FileType tweetvim nnoremap         <buffer> <C-a> :TweetVimSwitchAccount<Space>
-	autocmd FileType tweetvim nnoremap         <buffer> U     :TweetVimUserTimeline<Space>
-	autocmd FileType tweetvim nnoremap <silent><buffer> Q     :bd<CR>
+	autocmd FileType tweetvim     nmap     <buffer> <leader>R     <Plug>(tweetvim_action_remove_status)
+	autocmd FileType tweetvim     nmap     <buffer> <C-r>         <Plug>(tweetvim_action_reload)
+	autocmd FileType tweetvim     nnoremap <silent><buffer> s     :TweetVimSay<CR>
+	autocmd FileType tweetvim     nnoremap         <buffer> <C-a> :TweetVimSwitchAccount<Space>
+	autocmd FileType tweetvim     nnoremap         <buffer> U     :TweetVimUserTimeline<Space>
+	autocmd FileType tweetvim     nnoremap <silent><buffer> Q     :bd<CR>
 	autocmd FileType tweetvim_say inoremap <buffer> <C-i> <C-i>
 
 	autocmd FileType vimshell nunmap <buffer> Q
@@ -1633,9 +1636,11 @@ augroup plugin_pref
 	autocmd FileType w3m nnoremap <silent><buffer> <C-u>     :W3mAddressBar <CR>
 	autocmd FileType w3m nnoremap <silent><buffer> <leader>E :W3mShowExtenalBrowser <CR>
 
-	autocmd FileType J6uil            nnoremap <silent><buffer> Q     :bd<CR>
-	autocmd FileType J6uil_say        nmap             <buffer> <C-j> <CR>  " Enter to Say
-	autocmd FileType git-log.git-diff nnoremap         <buffer> Q     :bd<CR>
+	autocmd FileType J6uil     nnoremap <silent><buffer> Q     :bd<CR>
+	autocmd FileType J6uil_say nmap             <buffer> <C-j> <CR>  " Enter to Say
+
+	autocmd FileType git-log.git-diff nnoremap <silent><buffer> Q         :bd<CR>
+	autocmd FileType markdown         nnoremap <silent><buffer> <leader>r :PrevimOpen<CR>
 augroup END
 
 " }}}
@@ -1654,16 +1659,13 @@ augroup END
 
 " Set for "Vi Improved"
 augroup extension_type
-	autocmd VimEnter,BufWinEnter,BufEnter * syntax match rcHint /\s*"@\w\+/
-	autocmd FileType vim highlight rcHint cterm=standout ctermfg=DarkYellow
-
-	autocmd BufNewFile,BufRead .vimperatorrc setf vim
-	autocmd BufNewFile,BufRead .vrapperrc    setf vim
+	autocmd VimEnter,BufWinEnter,BufEnter * syntax match RcHint /\s*"@\w\+/
+	autocmd FileType vim highlight RcHint cterm=standout ctermfg=DarkYellow
 augroup END
 
 " Set for C-Sharp
 augroup extension_type
-	"autocmd VimEnter,WinEnter    *  syntax match TypeInference /var\s\+/
+	"autocmd VimEnter,WinEnter    *  syntax match TypeInference /\<var\>/
 	"autocmd FileType             cs highlight TypeInference cterm=bold ctermfg=11
 	autocmd VimEnter,BufWinEnter,BufEnter * syntax match Identifier /\<var\>/
 	autocmd FileType cs highlight Identifier
@@ -1671,25 +1673,19 @@ augroup END
 
 " Set for Haskell
 augroup extension_type
+	"@Experiment('RcHfSpace /^\s\s*/ -> /^\s\+/')
+	autocmd VimEnter,BufWinEnter,BufEnter * syntax match RcHfSpace /^\s\+/
+	autocmd FileType haskell highlight RcHfSpace cterm=underline ctermfg=Cyan
 	autocmd FileType yesod setl ts=4 sw=4 et
-	autocmd VimEnter,BufWinEnter,BufEnter * syntax match rcHfSpace /^\s\s*/
-	autocmd FileType haskell highlight rcHfSpace cterm=underline ctermfg=Cyan
-augroup END
-
-" Set for extension(*.v)
-augroup extension_type
-	autocmd BufNewFile,BufRead *.v setf coq
 augroup END
 
 " Plain Text like types
 augroup extension_type
-	autocmd BufNewFile,BufRead *.md   set filetype=markdown
-	autocmd FileType markdown         nnoremap <silent> <leader>r :PrevimOpen<CR>
 	autocmd FileType markdown,text    setl ts=2 sw=2 et
 	autocmd FileType git-log.git-diff setl nolist
 augroup END
 
-" FileTypes's commentstring
+" FileTypes commentstrings
 augroup extension_type
 	autocmd FileType vim                let &commentstring = ' "%s'
 	autocmd FileType c,cpp,java,cs      let &commentstring = " /*%s*/"
