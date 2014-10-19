@@ -60,6 +60,7 @@ scriptencoding utf8
 "-- C-o hard use when vimshell
 
 "-- automatic mkdir './C:' when execute NeoBundleInstall in windows kaoriya
+"  -- neobundle thinks that is repository...?
 
 "-- color highlight 'var' is not highlight when ...executed vsp|b hoge..?
 "  -- What is best event ?
@@ -68,11 +69,12 @@ scriptencoding utf8
 
 "-- submode fold_move do not functioned when not exists fold under cursor
 
-"-- not returned foldenabled on visual leaved by zf
-
-"-- apply listchars at funny timing on windows(default cp932)
-
 "-- not functioned ? conceal-javadoc .
+
+"-- vimshell startup is failed
+"  -- is related view of vimshell
+
+"-- cannot use vimproc on autocmd
 
 "}}}
 " Todo {{{
@@ -82,6 +84,8 @@ scriptencoding utf8
 "-- highlight prefs devide to vimrc and gvimrc
 
 "-- read options.jax
+
+"-- exists('*system()') -> exists('*system')
 
 " }}}
 
@@ -127,7 +131,7 @@ let s:isDosWin  = s:isWindows && !s:isCygwin &&!s:isKaoriya
 let s:isUnix    = has('unix')
 let s:isMac     = has('mac')
 
-let s:hasCygwin = isdirectory('/cygwin/bin')
+let s:hasCygwin = isdirectory('/cygwin')
 let s:hasMingw  = 0  " dummy
 
 let s:vimHome   = expand('~/.vim')
@@ -138,7 +142,7 @@ let s:undodir   = s:backupdir.'/undo'
 let s:viewdir   = s:backupdir.'/view'
 
 let s:username  = $USER
-let s:groupname = $GROUP !=# '' ? $GROUP : $USER
+let s:groupname = $GROUP != '' ? $GROUP : $USER
 
 "}}}
 
@@ -1627,6 +1631,8 @@ augroup plugin_pref
 
 	autocmd FileType vimshell nunmap <buffer> Q
 	autocmd FileType vimshell nunmap <buffer> q
+	autocmd FileType vimshell nunmap <buffer> gk
+	autocmd FileType vimshell nunmap <buffer> gj
 	autocmd FileType vimshell imap   <buffer> <C-l>      <Plug>(vimshell_clear)
 	autocmd FileType vimshell imap   <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
 	autocmd FileType vimshell iunmap <buffer> <C-p>
