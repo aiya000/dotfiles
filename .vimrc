@@ -96,6 +96,7 @@ scriptencoding utf8
 "     ／人◕ ‿‿ ◕人＼ <  Wakega wakaranaiyo!
 " @Unused       => Not used this yet now, needs inquires deleting this.
 " @Deprecated   => Deprecated This vimrc Version.
+
 " @Experiment   => This is experimental implementation.
 
 
@@ -115,6 +116,8 @@ scriptencoding utf8
 
 let g:vimrc = get(g:, 'vimrc', {})
 let g:vimrc['loaded'] = get(g:vimrc, 'loaded', 0)
+
+let s:isNvim    = exists('##JobActivity')
 
 let s:isWindows = has('win32')
 let s:isCygwin  = has('win32unix')
@@ -320,7 +323,7 @@ NeoBundleLazy    'basyura/twibill.vim'
 NeoBundle        'tyru/open-browser.vim'
 NeoBundleLazy    'basyura/bitly.vim'
 NeoBundle        'Shougo/unite.vim'
-NeoBundleLazy    'Shougo/vimproc.vim'
+NeoBundle        'Shougo/vimproc.vim'
 NeoBundleLazy    'basyura/TweetVim'
 NeoBundle        'mattn/webapi-vim'
 NeoBundle        'Shougo/vimshell.vim'
@@ -400,8 +403,8 @@ endtry
 
 let vimproc_config = {
 \	'build' : {
-\		'unix'    : 'make -f make_unix.mak',
-\		'mac'     : 'make -f make_mac.mak'
+\		'unix' : 'make -f make_unix.mak',
+\		'mac'  : 'make -f make_mac.mak'
 \	}
 \}
 if s:isCygwin
@@ -591,7 +594,7 @@ endif
 augroup plugin_pref
 	autocmd FileType tweetvim     setl wrap
 	autocmd FileType tweetvim_say setl ts=2 sw=2 et
-	autocmd BufRead  tweetvim_say let g:tweetvim_async_post = exists('*vimproc#system()') ? 1 : 0
+	autocmd BufRead  tweetvim_say let g:tweetvim_async_post = exists('*vimproc#system()')
 augroup END
 
 "}}}
@@ -701,7 +704,8 @@ call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
 "}}}
 "--- vim-ref ---" {{{
 
-let g:ref_use_vimproc = exists('*vimproc#system()') ? 1 : 0
+"TODO: eventalize
+let g:ref_use_vimproc = exists('*vimproc#system()')
 
 " }}}
 "--- ref-dicts-en ---" {{{
@@ -809,13 +813,15 @@ endif
 "set display=uhex
 
 " Scroll Margin
-set scrolloff=4
+set scrolloff=6
 
 " Reset search highlight
 nohlsearch
 
 " View cursor column on <C-g>
 set noruler
+
+
 
 " Hard Conceal
 set conceallevel=2
@@ -1414,6 +1420,8 @@ augroup key_map
 	autocmd FileType * nnoremap <silent>         <C-@>r     :Resetf<CR>
 
 	"-- Overwrite exists map --"
+	autocmd FileType * nnoremap <C-n> gt
+	autocmd FileType * nnoremap <C-p> gT
 	autocmd FileType * inoremap <C-l> <Esc>
 	autocmd FileType * vnoremap <C-l> <Esc>
 	autocmd FileType * cnoremap <C-l> <Esc>
@@ -1427,11 +1435,12 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> <C-w>bd :bd<CR>
 	autocmd FileType * nnoremap <silent> <C-w>Bd :bd!<CR>
 	function! s:buf_open_new_tab() "{{{
-		let l:lnum = getpos('.')[1]
+		let l:lnum = line('.')
 		execute 'tabnew | ' . bufnr('%') . 'b'
 		execute 'normal! ' . l:lnum . 'G'
 	endfunction "}}}
 	autocmd FileType * nnoremap <silent> <C-w>bt   :call <SID>buf_open_new_tab()<CR>
+	"TODO: With clone current_buf// autocmd FileType * nnoremap <silent> <C-w>bt   :call <SID>buf_open_new_tab()<CR>
 	" for folds
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
@@ -1484,7 +1493,8 @@ function! s:cursor_up_to_lid() "{{{
 		execute 'normal! k'
 
 		let l:isIndentChanged = l:p != getpos('.')[2]
-		if l:isIndentChanged || getpos('.')[1] is 1
+		"@Experiment('getpos(".")[1] -> line(".")')
+		if l:isIndentChanged || line('.') is 1
 			if l:isIndentChanged | execute 'normal! j' | endif
 			break
 		endif
@@ -1499,7 +1509,7 @@ function! s:cursor_down_to_ground() "{{{
 		execute 'normal! j'
 
 		let l:isIndentChanged = l:p != getpos('.')[2]
-		if l:isIndentChanged || getpos('.')[1] is l:eol
+		if l:isIndentChanged || line('.') is l:eol
 			if l:isIndentChanged | execute 'normal! k' | endif
 			break
 		endif
