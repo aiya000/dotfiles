@@ -1,21 +1,4 @@
-set swapsync=fsync
-set dictionary=usr/dict/words
-set t_Co=256
-" L35 diff にした瞬間vimrc再読み込みとかしてるんだろうか  10/11 23:09
-if (&t_Co == 256 || &t_Co == 88) && !has('gui_running') "{{{
-  " terminal
-  colorscheme xoria256
-elseif &diff
-  " diff
-  colorscheme peaksea
-else
-  " gvim
-  colorscheme xoria256
-endif "}}}
 set report=0 " Always report when changing lines.
-set more " Pause listings when whole screen is filled.
-set modelines=5 " Just to make sure.
-set pastetoggle=<F2>
 set winaltkeys=no " Allow use of <alt> for mappings by disabling window alt.
 set virtualedit=block " So useful, f11 virtualedit=all, f9 back to block.
 set nojoinspaces " Oh historical reasons... for SHAME.

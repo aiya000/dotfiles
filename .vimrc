@@ -973,6 +973,9 @@ set tags=./tags,~/tags
 " Explore wake up default dir
 set browsedir=buffer
 
+" Load Xmode<C-k> completion dictionary
+"set dictionary=path
+
 " Generate HelpTags My Help
 if isdirectory('~/.vim/doc')
 	helptags ~/.vim/doc
