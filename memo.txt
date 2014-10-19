@@ -1,0 +1,97 @@
+set swapsync=fsync
+set dictionary=usr/dict/words
+set t_Co=256
+" L35 diff にした瞬間vimrc再読み込みとかしてるんだろうか  10/11 23:09
+if (&t_Co == 256 || &t_Co == 88) && !has('gui_running') "{{{
+  " terminal
+  colorscheme xoria256
+elseif &diff
+  " diff
+  colorscheme peaksea
+else
+  " gvim
+  colorscheme xoria256
+endif "}}}
+set report=0 " Always report when changing lines.
+set more " Pause listings when whole screen is filled.
+set modelines=5 " Just to make sure.
+set pastetoggle=<F2>
+set winaltkeys=no " Allow use of <alt> for mappings by disabling window alt.
+set virtualedit=block " So useful, f11 virtualedit=all, f9 back to block.
+set nojoinspaces " Oh historical reasons... for SHAME.
+set iskeyword+=-
+set showmode
+set showcmd
+set showmatch " Matching brackets
+set magic     " See pattern.txt
+set autoread  " When a file is changed outside of vim and it's in the buffer.
+set matchtime=3   " 3/10 of second paren matches.
+set wildmode=full " All I need (and default).
+set wildcharm=<C-z> " Let me tab a cmdline mapping.
+set wildignore+=*~
+set wildignore+=*.DS_Store?,*.0,*.obj,*.exe,*.dll,*.manifest
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
+set suffixes+=.git,.hg,.svn,tags " Lower priority for wildmenu.
+set sidescrolloff=2
+set timeoutlen=1250
+set ttimeoutlen=50
+if filereadable("/usr/bin/par") "{{{
+  set formatprg=par " Use par to format paragraphs. Default tw is 72.
+endif "}}}
+set cpoptions+=$ " Compatibility with vi options, when using nmode c or C,
+set mousehide  " Hide mouse until it's moved.
+set mouse=a
+set mousemodel=popup " Windows at least got this right.
+set path+=.,,./**
+set laststatus=2  " All windows have status lines
+set shortmess=at  " To avoid the 'Hit ENTER to continue' promp
+set winfixwidth   " Splits resize width of current window only
+set helpheight=20 " Minimum height for help wins, default=20, 0 is default
+set sessionoptions-=options
+set viminfo+='15,<500,s15,h,:50,/50
+" *encoding (set)* "{{{
+" http://vim.wikia.com/wiki/Working_with_Unicode
+if has("multi_byte")
+  if &termencoding == ""
+    let &termencoding = &encoding
+  endif
+  set encoding=utf-8
+  setglobal fileencoding=utf-8
+  "setglobal bomb
+  set fileencodings=ucs-bom,utf-8,latin1
+endif
+" /encoding (set) "}}}
+if exists("+spelllang") "{{{
+  set spelllang=en_us
+endif "}}}
+onoremap p i(
+command! -nargs=0 Swrap setl wrap linebreak nolist showbreak=…
+au VimEnter * set lines=38 columns=92
+au VimEnter * winpos 618 24
+au GUIEnter * set noicon guioptions-=T
+:func-abort
+execute 'setf' type
+v:val, v:val.dir
+Bundle 'https://github.com/rhysd/clever-f.vim'
+Bundle 'https://github.com/vim-scripts/AutoComplPop'
+Bundle 'https://github.com/vim-scripts/dbext.vim'
+Bundle 'tpope/vim-fugitive'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'https://github.com/alpaca-tc/alpaca_tags'
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+Bundle 'tpope/vim-endwise'
+Bundle 'vim-scripts/java.vim'
+Bundle 'vim-scripts/javacomplete'
+Bundle 'vim-scripts/java_getset.vim'
+Bundle 'vim-scripts/java_checkstyle.vim'
+Bundle 'tsukkee/unite-tag'
+Bundle 'alpaca-tc/neorspec.vim'
+Bundle 'https://github.com/thoughtbot/vim-rspec'
+Bundle 'https://github.com/tpope/vim-dispatch'
+Bundle 'AndrewRadev/switch.vim'
+Bundle 'edsono/vim-matchit'
+Bundle 'alpaca-tc/vim-endwise.git'
+"
+Bundle "https://github.com/kakkyz81/evervim"
+Bundle 'glidenote/memolist.vim'
+"
