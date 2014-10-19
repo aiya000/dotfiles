@@ -1629,14 +1629,14 @@ augroup plugin_pref
 	autocmd FileType tweetvim     nnoremap <silent><buffer> Q     :bd<CR>
 	autocmd FileType tweetvim_say inoremap <buffer> <C-i> <C-i>
 
-	autocmd FileType vimshell nunmap <buffer> Q
-	autocmd FileType vimshell nunmap <buffer> q
-	autocmd FileType vimshell nunmap <buffer> gk
-	autocmd FileType vimshell nunmap <buffer> gj
-	autocmd FileType vimshell imap   <buffer> <C-l>      <Plug>(vimshell_clear)
-	autocmd FileType vimshell imap   <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
-	autocmd FileType vimshell iunmap <buffer> <C-p>
-	autocmd FileType vimshell iunmap <buffer> <C-n>
+	autocmd FileType vimshell nunmap   <buffer> Q
+	autocmd FileType vimshell nunmap   <buffer> q
+	autocmd FileType vimshell nnoremap <buffer> gk <NOP>
+	autocmd FileType vimshell nnoremap <buffer> gj <NOP>
+	autocmd FileType vimshell imap     <buffer> <C-l>      <Plug>(vimshell_clear)
+	autocmd FileType vimshell imap     <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
+	autocmd FileType vimshell iunmap   <buffer> <C-p>
+	autocmd FileType vimshell iunmap   <buffer> <C-n>
 
 	autocmd FileType w3m nnoremap         <buffer> H         <BS>
 	autocmd FileType w3m nnoremap <silent><buffer> <C-u>     :W3mAddressBar <CR>
