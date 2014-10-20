@@ -53,6 +53,7 @@ let g:grc_guifont.size = get(g:grc_guifont, 'size', s:isWindows ? ':h10' : ' 10'
 
 set guioptions-=T
 set guioptions-=m
+set winaltkeys=no
 
 let &guifont     = g:grc_guifont['font'] . g:grc_guifont['size']
 let &guifontwide = g:grc_guifont['font'] . g:grc_guifont['size']

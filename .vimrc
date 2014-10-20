@@ -826,8 +826,6 @@ nohlsearch
 " View cursor column on <C-g>
 set noruler
 
-
-
 " Hard Conceal
 set conceallevel=2
 
@@ -865,6 +863,9 @@ function! WithDelimitterTabLine() "{{{
 	return tabpages
 endfunction "}}}
 set tabline=%!WithDelimitterTabLine()
+
+" Always view the changed line num in Ex-command
+set report=0
 
 "}}}
 
@@ -929,8 +930,7 @@ set visualbell
 set formatoptions-=ro
 
 " Split Method on BufOpen
-"set splitbelow
-"set splitright
+"set splitbelow splitright
 
 " Ignore case on Insert completion
 set noinfercase
@@ -983,6 +983,11 @@ set browsedir=buffer
 
 " Load Xmode<C-k> completion dictionary
 "set dictionary=path
+
+" Set spell lang
+if exists('+spelllang')
+	set spelllang=en_US
+endif
 
 " Generate HelpTags My Help
 if isdirectory('~/.vim/doc')
@@ -1448,10 +1453,10 @@ augroup key_map
 	function! s:buf_open_new_tab() "{{{
 		let l:lnum = line('.')
 		execute 'tabnew | ' . bufnr('%') . 'b'
-		execute 'normal! ' . l:lnum . 'G'
+		execute 'normal! ' . l:lnum . 'Gzvzz'
 	endfunction "}}}
 	autocmd FileType * nnoremap <silent> <C-w>bt   :call <SID>buf_open_new_tab()<CR>
-	"TODO: With clone current_buf// autocmd FileType * nnoremap <silent> <C-w>bt   :call <SID>buf_open_new_tab()<CR>
+	"TODO: With close current_buf// autocmd FileType * nnoremap <silent> <C-w>bt   :call <SID>buf_open_new_tab()<CR>
 	" for folds
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
@@ -1467,9 +1472,9 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> :s/                :OverCommandLine<CR>s/
 	autocmd FileType * vnoremap <silent> :s/                :OverCommandLine<CR>s/
 	" for vimshell
-	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShellPop<CR>
-	autocmd FileType * nmap              <leader>V          <Plug>(vimshell_create)
+	autocmd FileType * nnoremap <silent> <leader>v          :VimShellBufferDir -split-command=vsp -toggle<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShellBufferDir -split-command=sp  -toggle<CR>
+	autocmd FileType * nnoremap <silent> <leader>V          :VimShellCreate<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>V  :tabnew<CR>:VimShellCreate<CR>
 	" for anzu
 	autocmd FileType * nmap              n                  <Plug>(anzu-n-with-echo)zv
