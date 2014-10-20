@@ -260,7 +260,7 @@ function! s:fetch_neobundle()  " {{{
 		echo 'NeoBundle was not installed...'
 		echo 'Installing NeoBundle.'
 
-		execute '!git clone http://github.com/Shougo/neobundle.vim '.s:neobundleDir
+		execute '!git clone http://github.com/Shougo/neobundle.vim ' s:neobundleDir
 		return
 	else
 		echohl Error
@@ -1105,7 +1105,7 @@ function! s:tac_line() range " {{{
 
 		for i in range(a:firstline, a:lastline)
 			execute 'normal! "_dd'
-			execute 'normal! i' . lines[a:lastline - i]
+			execute 'normal! i' lines[a:lastline - i]
 		endfor
 		call setpos('.', posit)
 	endif
@@ -1137,13 +1137,13 @@ function! s:random_int(max) "{{{
 	let l:matchEnd = matchend(reltimestr(reltime()), '\d\+\.') + 1
 	return reltimestr(reltime())[l:matchEnd :] % (a:max + 1)
 endfunction "}}}
-command! -nargs=1 RandomPut execute 'normal! a' . s:random_int(<q-args>) )
+command! -nargs=1 RandomPut execute 'normal! a' s:random_int(<q-args>)
 
 
 " Time Watcher  $ @See('http://leafcage.hateblo.jp/entry/2013/08/02/001600')
 command! TimerStart let  s:startTime = reltime()
 command! TimerEcho  echo reltimestr( reltime(s:startTime) )
-command! TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
+command! TimerPut   execute 'normal! o' reltimestr(reltime(s:startTime))
 
 
 "}}}
@@ -1167,7 +1167,7 @@ function! s:cd_temporary_dir() "{{{
 	if g:rc_temporary_dir ==# 'undefined'
 		echoerr 'Not set temporary root dir'
 	else
-		execute 'cd '.g:rc_temporary_dir
+		execute 'cd ' g:rc_temporary_dir
 		echo g:rc_temporary_dir
 	endif
 endfunction "}}}
@@ -1208,34 +1208,37 @@ endif
 
 if executable('python')
 	function! s:put_python_import_for_jp() "{{{
-		execute 'normal! o' . "#!/usr/bin/env python"
-		execute 'normal! o' . "# -*- coding: utf-8 -*-"
-		execute 'normal! o' . "import sys"
-		execute 'normal! o' . "import codecs"
-		execute 'normal! o' . "sys.stdout = codecs.getwriter('utf_8')(sys.stdout)"
+		let paste = &paste
+		set paste
+		execute 'normal! O' "#!/usr/bin/env python"
+		execute 'normal! o' "# -*- coding: utf-8 -*-"
+		execute 'normal! o' "import sys"
+		execute 'normal! o' "import codecs"
+		execute 'normal! o' "sys.stdout = codecs.getwriter('utf_8')(sys.stdout)"
+		let &paste = paste
 	endfunc "}}}
 	command! ImportPythonJp call s:put_python_import_for_jp()
 endif
 
 
 command! PutShortSeparator
-	\	execute 'normal! a'.'/* -=-=-=-=-=-=-=-=- */'
+	\	execute 'normal! a' '/* -=-=-=-=-=-=-=-=- */'
 	\|	execute 'normal =='
 command! PutLongSeparator
-	\	execute 'normal! a'.'/* ---===---===---===---===---===---===--- */'
+	\	execute 'normal! a' '/* ---===---===---===---===---===---===--- */'
 	\|	execute 'normal =='
 
 
 function! s:put_html_base() "{{{
-	execute 'normal! o' . '<html lang="ja">'
-	execute 'normal! o' . '<head>'
-	execute 'normal! o' . '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">'
-	execute 'normal! o' . '<title></title>'
-	execute 'normal! o' . '</head>'
-	execute 'normal! o' . '<body>'
+	execute 'normal! O' '<html lang="ja">'
+	execute 'normal! o' '<head>'
+	execute 'normal! o' '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">'
+	execute 'normal! o' '<title></title>'
+	execute 'normal! o' '</head>'
+	execute 'normal! o' '<body>'
 	execute 'normal! o'
-	execute 'normal! o' . '</body>'
-	execute 'normal! o' . '</html>'
+	execute 'normal! o' '</body>'
+	execute 'normal! o' '</html>'
 endfunction "}}}
 command! PutHtmlBase call s:put_html_base()
 
@@ -1298,34 +1301,34 @@ command! Tweet              TweetVimSay
 
 "-- Private Account --"
 function! TwitterPrivateFunc() "{{{
-	execute ':TweetVimSwitchAccount ' . g:vimrc.private['twitter']['priv_ac']
+	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['priv_ac']
 	let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['priv_ac']
 	TweetVimHomeTimeline
 endfunction "}}}
 command! TwitterPrivate     call TwitterPrivateFunc()
 command! TwitterPrivateTab  tabnew | TwitterPrivate
 function! TweetPrivateFunc() "{{{
-	execute ':TweetVimSwitchAccount ' . g:vimrc.private['twitter']['priv_ac']
+	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['priv_ac']
 	TweetVimSay
 	"@Incompleted('wait here')
-	"execute ':TweetVimSwitchAccount ' . g:vimrc.private['twitter']['curr_ac']
+	"execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
 command! TweetPrivate       call TweetPrivateFunc()
 
 
 "-- Public Account --"
 function! TwitterPublicFunc() "{{{
-	execute ':TweetVimSwitchAccount ' . g:vimrc.private['twitter']['publ_ac']
+	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['publ_ac']
 	let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['publ_ac']
 	TweetVimHomeTimeline
 endfunction "}}}
 command! TwitterPublic      call TwitterPublicFunc()
 command! TwitterPublicTab   tabnew | TwitterPublic
 function! TweetPublicFunc() "{{{
-	execute ':TweetVimSwitchAccount '.g:vimrc.private['twitter']['publ_ac']
+	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['publ_ac']
 	TweetVimSay
 	"@Incompleted('wait here')
-	"execute ':TweetVimSwitchAccount '.g:vimrc.private['twitter']['curr_ac']
+	"execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
 command! TweetPublic        call TweetPublicFunc()
 
@@ -1349,7 +1352,7 @@ function! s:weblio_translate_cmdline(...) "{{{
 		let l:line .= word . '+'
 	endfor
 
-	execute 'Ref webdict weblio ' . l:line
+	execute 'Ref webdict weblio ' l:line
 endfunction "}}}
 command! -nargs=* Weblio        call s:weblio_translate_cmdline(<f-args>)
 
@@ -1470,8 +1473,8 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> <C-w>Bd :bd!<CR>
 	function! s:buf_open_new_tab() "{{{
 		let l:lnum = line('.')
-		execute 'tabnew | ' . bufnr('%') . 'b'
-		execute 'normal! ' . l:lnum . 'Gzvzz'
+		execute 'tabnew| ' bufnr('%') . 'b'
+		execute 'normal! ' l:lnum . 'Gzvzz'
 	endfunction "}}}
 	autocmd FileType * nnoremap <silent> <C-w>bt   :call <SID>buf_open_new_tab()<CR>
 	"TODO: With close current_buf// autocmd FileType * nnoremap <silent> <C-w>bt   :call <SID>buf_open_new_tab()<CR>

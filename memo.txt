@@ -46,7 +46,6 @@ au VimEnter * set lines=38 columns=92
 au VimEnter * winpos 618 24
 au GUIEnter * set noicon guioptions-=T
 :func-abort
-execute 'setf' type
 v:val, v:val.dir
 Bundle 'https://github.com/rhysd/clever-f.vim'
 Bundle 'https://github.com/vim-scripts/AutoComplPop'
@@ -67,7 +66,3 @@ Bundle 'https://github.com/tpope/vim-dispatch'
 Bundle 'AndrewRadev/switch.vim'
 Bundle 'edsono/vim-matchit'
 Bundle 'alpaca-tc/vim-endwise.git'
-"
-Bundle "https://github.com/kakkyz81/evervim"
-Bundle 'glidenote/memolist.vim'
-"
