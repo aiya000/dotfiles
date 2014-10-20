@@ -393,6 +393,7 @@ NeoBundle        'osyo-manga/vim-over'
 NeoBundle        'tyru/restart.vim'
 NeoBundle        'koron/minimap-vim'
 NeoBundleLazy    'mattn/excelview-vim'
+NeoBundle        'glidenote/memolist.vim'
 
 
 call neobundle#end()
@@ -738,6 +739,21 @@ let g:ref_source_webdict_sites['weblio'].filter = function('s:webdict_filter')
 let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
 
 " }}}
+"--- memolist.vim ---"{{{
+
+let g:memolist_path = expand('~/.memolist')
+if !isdirectory(g:memolist_path)
+	call mkdir(g:memolist_path)
+endif
+let g:memolist_memo_suffix = 'md'
+let g:memolist_prompt_tags = 1
+let g:memolist_prompt_categories = 1
+let g:memolist_unite = exists(':Unite')
+if g:memolist_unite
+	let g:memolist_unite_option = '-auto-preview -tab'
+endif
+
+"}}}
 "--- For Private ---"{{{
 
 " Read Privacy Config
@@ -1416,6 +1432,8 @@ augroup key_map
 
 	"-- With Prefixes --"
 	" for case already mapped keys by plugin (ex:vimshell => <C-l> : clean)
+	autocmd FileType * nnoremap                  <C-k><C-n> gt
+	autocmd FileType * nnoremap                  <C-k><C-p> gT
 	autocmd FileType * nnoremap                  <C-k><C-z> <C-z>
 	autocmd FileType * inoremap                  <C-k><C-l> <Esc>
 	autocmd FileType * inoremap                  <C-k><C-k> <C-o>"_d$
@@ -1472,8 +1490,8 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> :s/                :OverCommandLine<CR>s/
 	autocmd FileType * vnoremap <silent> :s/                :OverCommandLine<CR>s/
 	" for vimshell
-	autocmd FileType * nnoremap <silent> <leader>v          :VimShellBufferDir -split-command=vsp -toggle<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShellBufferDir -split-command=sp  -toggle<CR>
+	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShell -split-command=sp  -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader>V          :VimShellCreate<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>V  :tabnew<CR>:VimShellCreate<CR>
 	" for anzu
