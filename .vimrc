@@ -122,7 +122,7 @@ scriptencoding utf8
 let g:vimrc = get(g:, 'vimrc', {})
 let g:vimrc['loaded'] = get(g:vimrc, 'loaded', 0)
 
-let s:isNvim    = exists('##JobActivity')
+let s:isNvim    = has('nvim')
 
 let s:isWindows = has('win32')
 let s:isCygwin  = has('win32unix')
@@ -219,13 +219,21 @@ if s:isKaoriya
 
 
 	" For Using No Default vimproc
-	let suppress = $VIM.'/switches/enabled/disable-vimproc.vim'
+	let switch_dir = $VIM.'/switches/enabled/'
+	let suppress = switch_dir . 'disable-vimproc.vim'
 	if s:isWindows && !s:hasMingw && filereadable(suppress)
 		call delete(suppress)
 	elseif s:isWindows && s:hasMingw && !filereadable(suppress)
 		call writefile([], suppress)
 	endif
 	unlet suppress
+
+	for disf in map(['disable-vimdoc-ja.vim', 'utf-8.vim'], "switch_dir . v:val")
+		if !filereadable(disf)
+			call writefile([], disf)
+		endif
+	endfor
+	unlet switch_dir
 
 
 	" Unset Kaoriya Preference

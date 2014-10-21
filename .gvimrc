@@ -34,14 +34,15 @@ scriptencoding utf8
 "-------------------------"
 "{{{
 
-let g:gvimrc_loaded = get(g:, 'gvimrc_loaded', 0)
+let g:gvimrc = get(g:, 'gvimrc', {})
+let g:gvimrc['loaded'] = get(g:gvimrc, 'loaded', 0)
 
 let s:isUnix    = has('unix')
 let s:isWindows = has('win32')
 
-let g:grc_guifont      = get(g:, 'grc_guifont', {})
-let g:grc_guifont.font = get(g:grc_guifont, 'font', s:isWindows ? 'MS_Gothic' : 'Monospace')
-let g:grc_guifont.size = get(g:grc_guifont, 'size', s:isWindows ? ':h10' : ' 10')
+let g:gvimrc['guifont']      = get(g:gvimrc, 'guifont', {})
+let g:gvimrc['guifont'].font = get(g:gvimrc, 'font', s:isWindows ? 'MS_Gothic' : 'Monospace')
+let g:gvimrc['guifont'].size = get(g:gvimrc, 'size', s:isWindows ? ':h10' : ' 10')
 
 "}}}
 
@@ -55,8 +56,8 @@ set guioptions-=T
 set guioptions-=m
 set winaltkeys=no
 
-let &guifont     = g:grc_guifont['font'] . g:grc_guifont['size']
-let &guifontwide = g:grc_guifont['font'] . g:grc_guifont['size']
+let &guifont     = g:gvimrc.guifont['font'] . g:gvimrc.guifont['size']
+let &guifontwide = g:gvimrc.guifont['font'] . g:gvimrc.guifont['size']
 
 "}}}
 
@@ -80,19 +81,19 @@ command! DressUpColorMolokai
 
 
 command! FontSizeUp
-	\	let g:grc_guifont['size'] += 1
-	\|	let &guifont     = g:grc_guifont['font'] .':h'. g:grc_guifont['size']
-	\|	let &guifontwide = g:grc_guifont['font'] .':h'. g:grc_guifont['size']
+	\	let g:gvimrc.guifont['size'] += 1
+	\|	let &guifont     = g:gvimrc.guifont['font'] .':h'. g:gvimrc.guifont['size']
+	\|	let &guifontwide = g:gvimrc.guifont['font'] .':h'. g:gvimrc.guifont['size']
 
 command! FontSizeDown
-	\	let g:grc_guifont['size'] -= 1
-	\|	let &guifont     = g:grc_guifont['font'] .':h'. g:grc_guifont['size']
-	\|	let &guifontwide = g:grc_guifont['font'] .':h'. g:grc_guifont['size']
+	\	let g:gvimrc.guifont['size'] -= 1
+	\|	let &guifont     = g:gvimrc.guifont['font'] .':h'. g:gvimrc.guifont['size']
+	\|	let &guifontwide = g:gvimrc.guifont['font'] .':h'. g:gvimrc.guifont['size']
 
 command! FontSizeDefault
-	\	let g:grc_guifont['size'] = 10
-	\|	let &guifont     = g:grc_guifont['font'] .':h'. g:grc_guifont['size']
-	\|	let &guifontwide = g:grc_guifont['font'] .':h'. g:grc_guifont['size']
+	\	let g:gvimrc.guifont['size'] = 10
+	\|	let &guifont     = g:gvimrc.guifont['font'] .':h'. g:gvimrc.guifont['size']
+	\|	let &guifontwide = g:gvimrc.guifont['font'] .':h'. g:gvimrc.guifont['size']
 
 
 "}}}
@@ -119,7 +120,7 @@ endif
 "       View_Setting      "
 "-------------------------"
 "{{{
-"
+
 augroup def_highlight
 	"autocmd Colorscheme * highlight Normal       gui=NONE      guifg=Cyan
 	"autocmd ColorScheme * highlight Visual       gui=underline guifg=White guibg=Cyan
@@ -180,5 +181,5 @@ call submode#map('font_size', 'n', '', '=', ':FontSizeDefault<CR>')
 "}}}
 
 
-let g:gvimrc_loaded = 1
+let g:gvimrc['loaded'] = 1
 
