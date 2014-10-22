@@ -87,6 +87,8 @@ scriptencoding utf8
 
 "-- exists('*system()') -> exists('*system')
 
+"-- Unite outline -> auto view C-Sharp <summary>~</summary>
+
 " }}}
 
 
@@ -127,7 +129,7 @@ let s:isNvim    = has('nvim')
 let s:isWindows = has('win32')
 let s:isCygwin  = has('win32unix')
 let s:isKaoriya = has('kaoriya')
-let s:isDosWin  = s:isWindows && !s:isCygwin &&!s:isKaoriya
+let s:isDosWin  = s:isWindows && !has('gui')
 let s:isUnix    = has('unix')
 let s:isMac     = has('mac')
 
@@ -778,6 +780,9 @@ endif
 
 " Set Basic Preferences
 set number nowrap hlsearch list
+let s:listchars = s:isDosWin
+	\	? 'tab:> ,trail:_,extends:>,precedes:<,nbsp:%'
+	\	: 'tab:» ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
 
 " Status Bar always displayed
 set laststatus=2
@@ -980,8 +985,8 @@ set fileencoding=utf-8 encoding=utf-8
 " Auto Judge file encode
 set fileencodings=utf-8,sjis,euc-jp,cp932,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
 
-" Leaving a history and it limit is a 50 pieces
-set history=50
+" Leaving a history and it limit is a 500 pieces
+set history=500
 
 " Adding Runtime Path
 set runtimepath+=~/.vim/vimball
@@ -997,7 +1002,7 @@ set wildmenu
 set shellslash
 
 " Add Match Pairs
-set matchpairs+=<:>
+set matchpairs+=<:>,?::
 
 " Load Target for ctags
 set tags=./tags,~/tags
@@ -1057,9 +1062,9 @@ augroup file_event
 
 	autocmd BufWinEnter,WinEnter,BufRead,EncodingChanged *
 		\	if &encoding == 'utf-8'
-		\|		set listchars=tab:»\ ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
+		\|		let &listchars = s:listchars
 		\|	else
-		\|		set listchars=tab:>\ ,trail:_,extends:>,precedes:<,nbsp:%
+		\|		let &listchars = 'tab:> ,trail:_,extends:>,precedes:<,nbsp:%'
 		\|	endif
 augroup END
 
@@ -1279,6 +1284,7 @@ command! -range SqlCopy :<line1>,<line2>call s:sql_yank_normalize()
 " Utils {{{
 
 " Vim Core Utils {{{
+cabbr    vimconfig         VimConfig
 command! VimConfig         e  $MYVIMRC
 command! VimConfigTab      tabnew | e $MYVIMRC
 command! Reload            so $MYVIMRC
