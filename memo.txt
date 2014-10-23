@@ -1,8 +1,4 @@
-set iskeyword+=-
-set showmode
 set showcmd
-set showmatch " Matching brackets
-set magic     " See pattern.txt
 set autoread  " When a file is changed outside of vim and it's in the buffer.
 set matchtime=3   " 3/10 of second paren matches.
 set wildmode=full " All I need (and default).

@@ -230,7 +230,7 @@ if s:isKaoriya
 	endif
 	unlet suppress
 
-	for disf in map(['disable-vimdoc-ja.vim', 'utf-8.vim'], "switch_dir . v:val")
+	for disf in map(['utf-8.vim'], "switch_dir . v:val")
 		if !filereadable(disf)
 			call writefile([], disf)
 		endif
