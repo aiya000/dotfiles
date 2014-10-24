@@ -7,6 +7,7 @@ alias vimconfig='vim --split=tabedit ~/.vimrc'
 alias vimshconfig='vim --split=tabedit ~/.vimshrc'
 alias vimpro='vim --split=tabedit ~/.bash_profile'
 alias vimbash='vim --split=tabedit ~/.bashrc'
+alias vimshell=':tabnew | VimShellCreate'
 
 # Shell Config
 alias reload='vimsh ~/.vimshrc'
@@ -15,6 +16,7 @@ alias reload='vimsh ~/.vimshrc'
 alias g++='g++ -I/usr/include/c++/4.9 -I/usr/include/c++/4.9/x86_64-linux-gnu -std=c++11'
 
 # Other Alias
+alias thanks="echo \"(*^o^)< You're welcome!\""
 alias gyazo='ruby ~/.vim/bundle/vim-gyazo/gyazo/gyazo.rb'
 
 let $PATH = $PATH . ":~/.vim/bin/vimshell"

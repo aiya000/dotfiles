@@ -630,11 +630,6 @@ let g:vimshell_force_overwrite_statusline = 1
 let g:vimshell_enable_start_insert = 0
 
 augroup plugin_pref
-	autocmd FileType vimshell
-	\	call vimshell#altercmd#define('thanks', "echo \"(*^o^)< You're welcome!\"")
-	\|	call vimshell#set_alias('sp',  ':sp  | VimShellCreate')
-	\|	call vimshell#set_alias('vsp', ':vsp | VimShellCreate')
-
 	autocmd FileType vimshell setl fdm=marker nolist wrap
 augroup END
 
@@ -653,7 +648,6 @@ let g:vimshell_kawaii_smiley = 1
 "}}}
 "--- w3m.vim ---"{{{
 
-"let g:w3m#external_browser = 'firefox'
 let g:w3m#homepage = 'http://www.google.co.jp/'
 
 "}}}
@@ -688,8 +682,8 @@ endif
 let g:unite_source_alias_aliases = {
 \	'javasrc' : {
 \		'source' : 'file_rec',
-\		'args'   : '~/Documents/workspace/Java/src',
-\	},
+\		'args'   : '~/Documents/workspace/Java/src'
+\	}
 \}
 
 "}}}
@@ -779,7 +773,7 @@ endif
 "{{{
 
 " Set Basic Preferences
-set number nowrap hlsearch list
+set number nowrap hlsearch list scrolloff=6
 let s:listchars = s:isDosWin
 	\	? 'tab:> ,trail:_,extends:>,precedes:<,nbsp:%'
 	\	: 'tab:» ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
@@ -792,15 +786,12 @@ set statusline=%F%m\%=[FileType=%y][Format=%{&ff}]
 
 " ☆ Fix View 2byte Code (Not support gnome-terminal)
 set ambiwidth=double
-
-" One More Set for 2byte Code !!
 syntax sync fromstart
-
-" Syntax Highlight On
-syntax on
 
 " Powered Up Syntax Highlight
 " {{{
+
+syntax on
 
 augroup def_highlight
 	"autocmd Colorscheme * highlight Normal       cterm=NONE      ctermfg=Cyan
@@ -830,27 +821,18 @@ augroup def_highlight
 	autocmd InsertLeave * highlight StatusLine ctermfg=Cyan  ctermbg=Black
 augroup END
 
+nohlsearch
+
 " }}}
 
 " Set Color Scheme
-colorscheme desert
-
-" Set Base Color
 set background=dark
+colorscheme desert
 
 " Indent Wrapped Text
 if exists('+breakindent')
 	set breakindent linebreak
 endif
-
-" Invisible character visualize to hex
-"set display=uhex
-
-" Scroll Margin
-set scrolloff=6
-
-" Reset search highlight
-nohlsearch
 
 " View cursor column on <C-g>
 set noruler
@@ -1011,7 +993,7 @@ set tags=./tags,~/tags
 set browsedir=buffer
 
 " Load Xmode<C-k> completion dictionary
-"set dictionary=path
+"set dictionary=/path/to/dir
 
 " Set spell lang
 if exists('+spelllang')
@@ -1038,7 +1020,7 @@ augroup file_visit
 augroup END
 
 
-" Powered Auto File Backup when written
+" Powered Up Auto File Backup when written
 set nobackup
 function! s:update_backup_by_date() "{{{
 	let l:dailydir = s:backupdir . '/' . strftime("%Y-%m-%d")
@@ -1189,49 +1171,45 @@ command! TDirCd            call s:cd_temporary_dir()
 " }}}
 " Development Support {{{
 
-" If use *NIX then use QuickRun else use this.
-if executable('javac') && executable('java')
-	function! s:java_run_func() "{{{
-		let l:javaname = split(@%, '\.')[0]
-		let l:javav = s:system('java -version')
-		if l:javav =~# '1\.8'
-			let l:command  = ['javac -source 1.8 -encoding utf8', 'java']
-		elseif l:javav =~# '1\.7'
-			let l:command  = ['javac -source 1.7 -encoding utf8', 'java']
+" If use *NIX then use QuickRun else if cannot use it, you can use this.
+function! s:java_run_func() "{{{
+	let l:javaname = expand('%:t:r')
+	let l:javav = s:system('java -version')
+	if l:javav =~# "1\.8"
+		let l:command  = ['javac -source 1.8 -encoding utf8', 'java']
+	elseif l:javav =~# "1\.7"
+		let l:command  = ['javac -source 1.7 -encoding utf8', 'java']
+	else
+		let l:command  = ['javac -encoding utf8', 'java']
+	endif
+	if s:isCygwin
+		if executable('cocot')
+			let l:command[0] = 'cocot ' . l:command[0]
+			let l:command[1] = 'cocot ' . l:command[1]
 		else
-			let l:command  = ['javac -encoding utf8', 'java']
+			echo 'You must be get [cocot] command.'
+			return
 		endif
-		if s:isCygwin
-			if executable('cocot')
-				let l:command[0] = 'cocot '.l:command[0]
-				let l:command[1] = 'cocot '.l:command[1]
-			else
-				echo 'You must be get [cocot] command.'
-				return
-			endif
-		endif
+	endif
 
-		execute '!'.
-		\	printf('%s %s.java',   l:command[0], l:javaname).';'.
-		\	printf('%s %s',        l:command[1], l:javaname).';'
-		call delete( printf('%s*.class', l:javaname) )
-	endfunction "}}}
-	command! JavaRun call s:java_run_func()
-endif
+	execute '!'.
+	\	printf('%s %s.java',   l:command[0], l:javaname) . ';' .
+	\	printf('%s %s',        l:command[1], l:javaname) . ';'
+	call delete(l:javaname . '.class')
+endfunction "}}}
+command! JavaRun call s:java_run_func()
 
-if executable('python')
-	function! s:put_python_import_for_jp() "{{{
-		let paste = &paste
-		set paste
-		execute 'normal! O' "#!/usr/bin/env python"
-		execute 'normal! o' "# -*- coding: utf-8 -*-"
-		execute 'normal! o' "import sys"
-		execute 'normal! o' "import codecs"
-		execute 'normal! o' "sys.stdout = codecs.getwriter('utf_8')(sys.stdout)"
-		let &paste = paste
-	endfunc "}}}
-	command! ImportPythonJp call s:put_python_import_for_jp()
-endif
+function! s:put_python_import_for_jp() "{{{
+	let paste = &paste
+	set paste
+	execute 'normal! O' "#!/usr/bin/env python"
+	execute 'normal! o' "# -*- coding: utf-8 -*-"
+	execute 'normal! o' "import sys"
+	execute 'normal! o' "import codecs"
+	execute 'normal! o' "sys.stdout = codecs.getwriter('utf_8')(sys.stdout)"
+	let &paste = paste
+endfunc "}}}
+command! ImportPythonJp call s:put_python_import_for_jp()
 
 
 command! PutShortSeparator
@@ -1284,7 +1262,7 @@ command! -range SqlCopy :<line1>,<line2>call s:sql_yank_normalize()
 "-------------------------"
 " Utils {{{
 
-" Vim Core Utils {{{
+" Vim Utils {{{
 cabbr    vimconfig         VimConfig
 command! VimConfig         e  $MYVIMRC
 command! VimConfigTab      tabnew | e $MYVIMRC
@@ -1292,9 +1270,7 @@ command! Reload            so $MYVIMRC
 	\|	if has('gui_running')
 	\|		so $MYGVIMRC
 	\|	endif
-if executable('sudo')
-	command! ForceSave     w !sudo tee > /dev/null %
-endif
+command! ForceSave     w !sudo tee > /dev/null %
 
 command! CdBufDir          cd %:p:h
 command! Resetf            let &ft = &ft  " for Event [FileType * ]
@@ -1381,16 +1357,12 @@ command!          MinimapReSync execute 'MinimapStop' | execute 'MinimapSync'
 command! -nargs=1 Log VimConsoleLog <args>
 command! LogClear VimConsoleClear
 
-if executable('ghc') && executable('ghci')
-	command! -nargs=*  Ghc      !runghc % <q-args>
-	command!           Ghci     VimShellInteractive ghci
-	command!           Sghci    sp|VimShellInteractive ghci
-	command!           Vghci    vsp|VimShellInteractive ghci
-	command!           GhciTab  tabnew|VimShellInteractive ghci
-endif
-if executable('hoogle')
-	command! -nargs=1  Hoogle Ref hoogle <args>
-endif
+command! -nargs=*  Ghc      !runghc % <q-args>
+command!           Ghci     VimShellInteractive ghci
+command!           Sghci    sp|VimShellInteractive ghci
+command!           Vghci    vsp|VimShellInteractive ghci
+command!           GhciTab  tabnew|VimShellInteractive ghci
+command! -nargs=1  Hoogle Ref hoogle <args>
 
 " }}}
 
@@ -1521,132 +1493,112 @@ augroup key_map
 	autocmd FileType * nmap              <C-w>#             <C-w><C-v><Plug>(anzu-sharp-with-echo)zv
 augroup END
 
-" }}}
-" Keys With Function {{{
-
-"--- Functions ---" {{{
-
-" Move Cursor Line's Center
-function! s:cursor_move_to_center() "{{{
-	execute 'normal! 0'
-	for i in range(strlen(getline('.'))/2)
-		execute 'normal! l'
-	endfor
-endfunction "}}}
-
-" For Movement in a Indent Block
-" {{{
-
-function! s:cursor_up_to_lid() "{{{
-	if &ft ==# 'netrw' | return | endif
-
-	while 1
-		let l:p = getpos('.')[2]
-		execute 'normal! k'
-
-		let l:isIndentChanged = l:p != getpos('.')[2]
-		if l:isIndentChanged || line('.') is 1
-			if l:isIndentChanged | execute 'normal! j' | endif
-			break
-		endif
-	endwhile
-endfunction "}}}
-function! s:cursor_down_to_ground() "{{{
-	if &ft ==# 'netrw' | return | endif
-
-	let l:eol = len(readfile(@%))
-	while 1
-		let l:p = getpos('.')[2]
-		execute 'normal! j'
-
-		let l:isIndentChanged = l:p != getpos('.')[2]
-		if l:isIndentChanged || line('.') is l:eol
-			if l:isIndentChanged | execute 'normal! k' | endif
-			break
-		endif
-	endwhile
-endfunction "}}}
-
-" }}}
-
-" Foldopen all on VisualEnter, and Foldclose all on VisualLeave
-let s:visualFoldToggle = get(s:, 'visualFoldToggle', 0) "{{{
-function! s:visual_fold_all()
-	if mode() =~# "^[vV\<C-v>]"
-		if !s:visualFoldToggle && &foldenable
-			set nofoldenable
-			execute 'normal! zz'
-			let s:visualFoldToggle = 1
-		endif
-	else
-		if s:visualFoldToggle
-			set foldenable
-			execute 'normal! zz'
-			let s:visualFoldToggle = 0
-		endif
-	endif
-endfunction "}}}
-
-" Toggle Enable CursorKeys
-let s:enableCursorKeys = get(s:, 'enableCursorKeys', 0) "{{{
-function! s:enable_cursor_keys_toggle()
-	if !s:enableCursorKeys
-		nnoremap <Up>    <Up>
-		nnoremap <Down>  <Down>
-		nnoremap <Left>  <Left>
-		nnoremap <Right> <Right>
-		inoremap <Up>    <Up>
-		inoremap <Down>  <Down>
-		inoremap <Left>  <Left>
-		inoremap <Right> <Right>
-		cnoremap <Left>  <Left>
-		cnoremap <Right> <Right>
-		let s:enableCursorKeys = 1
-	else
-		nnoremap <Up>    <NOP>
-		nnoremap <Down>  <NOP>
-		nnoremap <Left>  <NOP>
-		nnoremap <Right> <NOP>
-		inoremap <Up>    <NOP>
-		inoremap <Down>  <NOP>
-		inoremap <Left>  <NOP>
-		inoremap <Right> <NOP>
-		cnoremap <Left>  <NOP>
-		cnoremap <Right> <NOP>
-		let s:enableCursorKeys = 0
-	endif
-endfunction "}}}
-
-" Temporary Buffer Utils
-"{{{
-if s:isWindows  " is different operated sp ubuntu and kaoriya?
-	command! ScratchUp  execute ':Scratch' | resize 5
-else  " for operate ubuntu
-	function! s:scratch_up_by_condition()
-		if !&modified
-			execute ':sp|Scratch' | resize 5
-		else
-			execute ':Scratch' | resize 5
-		endif
-	endfunction
-	command! ScratchUp  call <SID>scratch_up_by_condition()
-endif
-command! EmptyBufUp execute ':new' | resize 5
-"}}}
-
-" }}}
 
 augroup key_map
+	function! s:cursor_move_to_center() "{{{
+		execute 'normal! 0'
+		for i in range(strlen(getline('.'))/2)
+			execute 'normal! l'
+		endfor
+	endfunction "}}}
 	autocmd FileType * nnoremap <silent> gc :call <SID>cursor_move_to_center()<CR>
+	function! s:cursor_up_to_lid() "{{{
+		if &ft ==# 'netrw' | return | endif
+
+		while 1
+			let l:p = getpos('.')[2]
+			execute 'normal! k'
+
+			let l:isIndentChanged = l:p != getpos('.')[2]
+			if l:isIndentChanged || line('.') is 1
+				if l:isIndentChanged | execute 'normal! j' | endif
+				break
+			endif
+		endwhile
+	endfunction "}}}
 	autocmd FileType * nnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
+	function! s:cursor_down_to_ground() "{{{
+		if &ft ==# 'netrw' | return | endif
+
+		let l:eol = len(readfile(@%))
+		while 1
+			let l:p = getpos('.')[2]
+			execute 'normal! j'
+
+			let l:isIndentChanged = l:p != getpos('.')[2]
+			if l:isIndentChanged || line('.') is l:eol
+				if l:isIndentChanged | execute 'normal! k' | endif
+				break
+			endif
+		endwhile
+	endfunction "}}}
 	autocmd FileType * nnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
 	"autocmd FileType * xnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * xnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
 
 	autocmd FileType * nnoremap <silent> <C-@><C-w>    :setl wrap! wrap?<CR>
+	let s:enableCursorKeys = get(s:, 'enableCursorKeys', 0) "{{{
+	function! s:enable_cursor_keys_toggle()
+		if !s:enableCursorKeys
+			nnoremap <Up>    <Up>
+			nnoremap <Down>  <Down>
+			nnoremap <Left>  <Left>
+			nnoremap <Right> <Right>
+			inoremap <Up>    <Up>
+			inoremap <Down>  <Down>
+			inoremap <Left>  <Left>
+			inoremap <Right> <Right>
+			cnoremap <Left>  <Left>
+			cnoremap <Right> <Right>
+			let s:enableCursorKeys = 1
+		else
+			nnoremap <Up>    <NOP>
+			nnoremap <Down>  <NOP>
+			nnoremap <Left>  <NOP>
+			nnoremap <Right> <NOP>
+			inoremap <Up>    <NOP>
+			inoremap <Down>  <NOP>
+			inoremap <Left>  <NOP>
+			inoremap <Right> <NOP>
+			cnoremap <Left>  <NOP>
+			cnoremap <Right> <NOP>
+			let s:enableCursorKeys = 0
+		endif
+	endfunction "}}}
 	autocmd FileType * nnoremap <silent> <C-@>jkjkjkjk :call <SID>enable_cursor_keys_toggle()<CR>
+	let s:visualFoldToggle = get(s:, 'visualFoldToggle', 0) "{{{
+	function! s:visual_fold_all()
+		if mode() =~# "^[vV\<C-v>]"
+			if !s:visualFoldToggle && &foldenable
+				set nofoldenable
+				execute 'normal! zz'
+				let s:visualFoldToggle = 1
+			endif
+		else
+			if s:visualFoldToggle
+				set foldenable
+				execute 'normal! zz'
+				let s:visualFoldToggle = 0
+			endif
+		endif
+	endfunction "}}}
 	autocmd CursorMoved * call s:visual_fold_all()
 
+	"{{{
+	if s:isWindows  " is different operated sp ubuntu and kaoriya?
+		command! ScratchUp  execute ':Scratch' | resize 5
+	else  " for operate ubuntu
+		function! s:scratch_up_by_condition()
+			if !&modified
+				execute ':sp|Scratch' | resize 5
+			else
+				execute ':Scratch' | resize 5
+			endif
+		endfunction
+		command! ScratchUp  call <SID>scratch_up_by_condition()
+	endif
+	command! EmptyBufUp execute ':new' | resize 5
+	"}}}
 	autocmd FileType * nnoremap <silent> <leader>b  :ScratchUp<CR>
 	autocmd FileType * nnoremap <silent> <leader>B  :EmptyBufUp<CR>
 augroup END
