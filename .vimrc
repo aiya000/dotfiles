@@ -1240,6 +1240,7 @@ command! PutShortSeparator
 command! PutLongSeparator
 	\	execute 'normal! a' '/* ---===---===---===---===---===---===--- */'
 	\|	execute 'normal =='
+command! Date execute 'normal! a' system('date')
 
 
 function! s:put_html_base() "{{{
@@ -1267,7 +1268,7 @@ function! s:sql_yank_normalize() range "{{{
 		let line = getline(i)
 		let lineOfSql = substitute(substitute(
 		\		substitute(line, "\"", "", 'g'),
-		\	"+", "", 'g'), "\t", "", 'g')
+		\	"\v(^\s*+|+\s*$)", "", 'g'), "\t", "", 'g')
 
 		let sql .= lineOfSql . "\n"
 	endfor
