@@ -7,7 +7,7 @@ scriptencoding utf8
 "    - Cygwin                "
 "    - Windows Kaoriya       "
 "----------------------------"
-"     Eigo                   "
+"     Eigo - Ingulisshu      "
 "----------------------------"
 "{{{
 
@@ -88,6 +88,8 @@ scriptencoding utf8
 "-- exists('*system()') -> exists('*system')
 
 "-- Unite outline -> auto view C-Sharp <summary>~</summary>
+
+"-- L1469, always VimShellCreate in tab
 
 " }}}
 
@@ -404,6 +406,7 @@ NeoBundle        'tyru/restart.vim'
 NeoBundle        'koron/minimap-vim'
 NeoBundleLazy    'mattn/excelview-vim'
 NeoBundle        'glidenote/memolist.vim'
+NeoBundle        'vim-jp/vimdoc-ja'
 
 
 call neobundle#end()
@@ -610,7 +613,7 @@ endif
 augroup plugin_pref
 	autocmd FileType tweetvim     setl wrap
 	autocmd FileType tweetvim_say setl ts=2 sw=2 et
-	autocmd BufRead  tweetvim_say let g:tweetvim_async_post = exists('*vimproc#system()')
+	autocmd BufRead,BufEnter  tweetvim_say let g:tweetvim_async_post = exists('*vimproc#system')
 augroup END
 
 "}}}
@@ -1454,10 +1457,11 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
 	autocmd FileType * nnoremap          q:    :digraphs<CR>   " Oh, digraphs!
 	" for window
-	autocmd FileType * nnoremap <silent> <C-w>t  :tabnew<CR>
-	autocmd FileType * nnoremap <silent> <C-w>T  :tabclose<CR>
-	autocmd FileType * nnoremap <silent> <C-w>bd :bd<CR>
-	autocmd FileType * nnoremap <silent> <C-w>Bd :bd!<CR>
+	autocmd FileType * nnoremap <silent> <C-w>t     :tabnew<CR>
+	autocmd FileType * nnoremap <silent> <C-w>T     :tabclose<CR>
+	autocmd FileType * nnoremap <silent> <C-w>bd    :bd<CR>
+	autocmd FileType * nnoremap <silent> <C-w>Bd    :bd!<CR>
+	autocmd FileType * nnoremap <silent> <C-w><C-w> :w<CR>
 	function! s:buf_open_new_tab() "{{{
 		let l:lnum = line('.')
 		execute 'tabnew| ' bufnr('%') . 'b'
@@ -1503,8 +1507,6 @@ augroup key_map
 	endfunction "}}}
 	autocmd FileType * nnoremap <silent> gc :call <SID>cursor_move_to_center()<CR>
 	function! s:cursor_up_to_lid() "{{{
-		if &ft ==# 'netrw' | return | endif
-
 		while 1
 			let l:p = getpos('.')[2]
 			execute 'normal! k'
@@ -1518,15 +1520,12 @@ augroup key_map
 	endfunction "}}}
 	autocmd FileType * nnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
 	function! s:cursor_down_to_ground() "{{{
-		if &ft ==# 'netrw' | return | endif
-
-		let l:eol = len(readfile(@%))
 		while 1
 			let l:p = getpos('.')[2]
 			execute 'normal! j'
 
 			let l:isIndentChanged = l:p != getpos('.')[2]
-			if l:isIndentChanged || line('.') is l:eol
+			if l:isIndentChanged || line('.') is line('$')
 				if l:isIndentChanged | execute 'normal! k' | endif
 				break
 			endif
