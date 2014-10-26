@@ -41,6 +41,7 @@ noremap  <F1>       <NOP>
 
 nnoremap <C-n> gt
 nnoremap <C-p> gT
+nnoremap <C-w><C-w> :w<CR>
 
 " specialize for eclipse
 "--- eclipse actions ---" {{{
