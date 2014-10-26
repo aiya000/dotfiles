@@ -81,8 +81,6 @@ scriptencoding utf8
 
 "-- Eigo to English
 
-"-- highlight prefs devide to vimrc and gvimrc
-
 "-- read options.jax
 
 "-- exists('*system()') -> exists('*system')
@@ -90,6 +88,8 @@ scriptencoding utf8
 "-- Unite outline -> auto view C-Sharp <summary>~</summary>
 
 "-- L1469, always VimShellCreate in tab
+
+"-- Ubuntu Desktop image change to workspaces
 
 " }}}
 
@@ -157,7 +157,7 @@ let s:groupname = $GROUP != '' ? $GROUP : $USER
 "{{{
 
 function! s:system(cmd)
-	if exists('*vimproc#system()')
+	if exists('*vimproc#system')
 		return vimproc#system(a:cmd)
 	else
 		return system(a:cmd)
@@ -544,7 +544,7 @@ call neobundle#config('excelview-vim', {
 let g:quickrun_config = {
 \	'_' : {
 \		'split'  : '',
-\		'runner' : exists('*vimproc#system()') ? 'vimproc' : 'system',
+\		'runner' : exists('*vimproc#system') ? 'vimproc' : 'system',
 \		'runner/vimproc/updatetime' : 10,
 \		'hook/time/enable' : 1
 \	},
@@ -554,7 +554,7 @@ let g:quickrun_config = {
 \	},
 \	'java' : {
 \		'cmdopt' : '-source 1.8',
-\		'runner' : exists('*vimproc#system()') ? 'process_manager' : 'system'
+\		'runner' : exists('*vimproc#system') ? 'process_manager' : 'system'
 \	}
 \}
 
@@ -718,7 +718,7 @@ call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
 "--- vim-ref ---" {{{
 
 "TODO: eventalize
-let g:ref_use_vimproc = exists('*vimproc#system()')
+let g:ref_use_vimproc = exists('*vimproc#system')
 
 " }}}
 "--- ref-dicts-en ---" {{{
@@ -871,9 +871,9 @@ function! s:tabpage_label(n) "{{{
 	return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
 endfunction "}}}
 function! WithDelimitterTabLine() "{{{
-	let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
+	let titles     = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
 	let delimitter = ' | '
-	let tabpages = join(titles, delimitter) . delimitter . '%#TabLineFill#%T'
+	let tabpages   = delimitter . join(titles, delimitter) . delimitter . '%#TabLineFill#%T'
 	return tabpages
 endfunction "}}}
 set tabline=%!WithDelimitterTabLine()
@@ -1412,7 +1412,7 @@ augroup key_map
 	autocmd FileType * cnoremap <C-h> <Backspace>
 	autocmd FileType * cnoremap <C-d> <Del>
 	autocmd FileType * cnoremap <C-e> <End>
-	autocmd FileType * cnoremap <C-k> <C-\>e getcmdpos() < 2 ?'':getcmdline()[:getcmdpos()-2]<CR>
+	autocmd FileType * cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ?'':getcmdline()[:getcmdpos()-2]<CR>
 augroup END
 
 " }}}
@@ -1486,7 +1486,7 @@ augroup key_map
 	" for vimshell
 	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShell -split-command=sp  -toggle<CR>
-	autocmd FileType * nnoremap <silent> <leader>V          :VimShellCreate<CR>
+	autocmd FileType * nnoremap <silent> <leader>V          :VimShellBufferDir -create<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>V  :tabnew<CR>:VimShellCreate<CR>
 	" for anzu
 	autocmd FileType * nmap              n                  <Plug>(anzu-n-with-echo)zv
