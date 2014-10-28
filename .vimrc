@@ -1375,6 +1375,8 @@ command! -nargs=1  Hoogle Ref hoogle <args>
 "-------------------------"
 "--- Roles ---"{{{
 
+"* <leader> is utility type key map
+
 "* <C-k> is Primary prefix key
 "  - Use for be big frequency of operation
 
@@ -1424,10 +1426,11 @@ augroup key_map
 	autocmd FileType * nnoremap Q gQ
 
 	"-- With Prefixes --"
+	autocmd FileType * nnoremap <silent>         <leader>t  :Translate<CR>
+
 	" for case already mapped keys by plugin (ex:vimshell => <C-l> : clean)
 	autocmd FileType * nnoremap                  <C-k><C-n> gt
 	autocmd FileType * nnoremap                  <C-k><C-p> gT
-	autocmd FileType * nnoremap                  <C-k><C-z> <C-z>
 	autocmd FileType * inoremap                  <C-k><C-l> <Esc>
 	autocmd FileType * inoremap                  <C-k><C-k> <C-o>"_d$
 	autocmd FileType * inoremap                  <C-k><C-z> <C-o>:normal! <C-z><CR>
@@ -1439,12 +1442,13 @@ augroup key_map
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-f> :Unite -ignorecase outline:foldings<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-m> :Unite mapping<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-b> :Unite -ignorecase buffer<CR>
-	autocmd FileType * nnoremap                  <C-k><Space>    :let __t=@/<CR>:s/\s\s\+/ /g<CR>:execute 'normal! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
 
-	autocmd FileType * nnoremap <silent>         <C-@><C-r> :Reload<CR>
-	autocmd FileType * nnoremap <silent><buffer> <C-@><C-l> :noh<CR>
-	autocmd FileType * nnoremap <silent>         <C-@>l     :so %<CR>
-	autocmd FileType * nnoremap <silent>         <C-@>r     :Resetf<CR>
+	autocmd FileType * nnoremap <silent>         <C-@><C-r>     :Reload<CR>
+	autocmd FileType * nnoremap <silent>         <C-@><C-l>     :noh<CR>
+	autocmd FileType * nnoremap <silent>         <C-@>l         :so %<CR>
+	autocmd FileType * nnoremap <silent>         <C-@>r         :Resetf<CR>
+	autocmd FileType * nnoremap <silent>         <C-@><C-w>     :setl wrap! wrap?<CR>
+	autocmd FileType * nnoremap <silent>         <C-@><C-Space> :let __t=@/<CR>:s/\s\s\+/ /g<CR>:execute 'normal! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
 
 	"-- Overwrite exists map --"
 	autocmd FileType * nnoremap <C-n> gt
@@ -1534,8 +1538,22 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
 	"autocmd FileType * xnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * xnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
+	"
+	function! s:toggle_case() "{{{
+		let case = expand('<cword>') =~? '_' ? 'snake' : 'camel'
 
-	autocmd FileType * nnoremap <silent> <C-@><C-w>    :setl wrap! wrap?<CR>
+		execute 'normal! b'
+		if case ==? 'snake'
+			while expand('<cword>') =~? '_'
+				execute 'normal! f_x~'
+			endwhile
+		else
+			while expand('<cword>') =~# '[A-Z]'
+			endwhile
+		endif
+	endfunction "}}}
+	autocmd FileType * nnoremap <silent> <C-k><C-Space> :call <SID>toggle_case()<CR>
+
 	let s:enableCursorKeys = get(s:, 'enableCursorKeys', 0) "{{{
 	function! s:enable_cursor_keys_toggle()
 		if !s:enableCursorKeys
@@ -1609,17 +1627,19 @@ augroup END
 
 " To Plugin buffers
 augroup plugin_pref
-	autocmd FileType netrw nmap     <buffer> H -
-	autocmd FileType netrw nnoremap <silent><buffer> Q  :q<CR>
-	autocmd FileType netrw nunmap   L
+	autocmd FileType help nnoremap <buffer> q :q<CR>
 
-	autocmd FileType tweetvim     nmap     <buffer> <leader>R     <Plug>(tweetvim_action_remove_status)
-	autocmd FileType tweetvim     nmap     <buffer> <C-r>         <Plug>(tweetvim_action_reload)
-	autocmd FileType tweetvim     nnoremap <silent><buffer> s     :TweetVimSay<CR>
-	autocmd FileType tweetvim     nnoremap         <buffer> <C-a> :TweetVimSwitchAccount<Space>
-	autocmd FileType tweetvim     nnoremap         <buffer> U     :TweetVimUserTimeline<Space>
-	autocmd FileType tweetvim     nnoremap <silent><buffer> Q     :bd<CR>
-	autocmd FileType tweetvim_say inoremap <buffer> <C-i> <C-i>
+	autocmd FileType netrw nmap             <buffer> H -
+	autocmd FileType netrw nnoremap <silent><buffer> Q :q<CR>
+	autocmd FileType netrw nnoremap         <buffer> L G
+
+	autocmd FileType tweetvim     nmap             <buffer> <leader>R <Plug>(tweetvim_action_remove_status)
+	autocmd FileType tweetvim     nmap             <buffer> <C-r>     <Plug>(tweetvim_action_reload)
+	autocmd FileType tweetvim     nnoremap <silent><buffer> s         :TweetVimSay<CR>
+	autocmd FileType tweetvim     nnoremap         <buffer> <C-a>     :TweetVimSwitchAccount<Space>
+	autocmd FileType tweetvim     nnoremap         <buffer> U         :TweetVimUserTimeline<Space>
+	autocmd FileType tweetvim     nnoremap <silent><buffer> Q         :bd<CR>
+	autocmd FileType tweetvim_say inoremap         <buffer> <C-i>     <C-i>
 
 	autocmd FileType vimshell nunmap   <buffer> Q
 	autocmd FileType vimshell nunmap   <buffer> q
