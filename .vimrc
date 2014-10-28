@@ -232,7 +232,7 @@ if s:isKaoriya
 	endif
 	unlet suppress
 
-	for disf in map(['utf-8.vim'], "switch_dir . v:val")
+	for disf in map(['utf-8.vim', 'vimdoc-ja.vim'], "switch_dir . v:val")
 		if !filereadable(disf)
 			call writefile([], disf)
 		endif
@@ -407,6 +407,7 @@ NeoBundle        'koron/minimap-vim'
 NeoBundleLazy    'mattn/excelview-vim'
 NeoBundle        'glidenote/memolist.vim'
 NeoBundle        'vim-jp/vimdoc-ja'
+NeoBundle        'mattn/googletranslate-vim'
 
 
 call neobundle#end()
@@ -1018,8 +1019,8 @@ endif
 
 " Save Cursor Position when file closed
 augroup file_visit
-	autocmd BufWinLeave ?\+ silent mkview
-	autocmd BufWinEnter ?\+ silent loadview
+	autocmd BufWinLeave ?\+ silent if expand('%') !=? '' | mkview   | endif
+	autocmd BufWinEnter ?\+ silent if expand('%') !=? '' | loadview | endif
 augroup END
 
 
@@ -1540,19 +1541,23 @@ augroup key_map
 	"autocmd FileType * xnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
 	"
 	function! s:toggle_case() "{{{
-		let case = expand('<cword>') =~? '_' ? 'snake' : 'camel'
+		let word = expand('<cword>')
+		let is_snake = word =~? '_' ? 1 : 0
 
 		execute 'normal! b'
-		if case ==? 'snake'
+		if expand('<cword>') !=# word
+			execute 'normal! w'
+		endif
+
+		if is_snake
 			while expand('<cword>') =~? '_'
 				execute 'normal! f_x~'
 			endwhile
 		else
-			while expand('<cword>') =~# '[A-Z]'
-			endwhile
+			execute 'normal! ce' . substitute(word, '[A-Z]', '_\l\0', 'g')
 		endif
 	endfunction "}}}
-	autocmd FileType * nnoremap <silent> <C-k><C-Space> :call <SID>toggle_case()<CR>
+	autocmd FileType * nnoremap <silent> <C-k><C-Space> :call <SID>toggleCase()<CR>
 
 	let s:enableCursorKeys = get(s:, 'enableCursorKeys', 0) "{{{
 	function! s:enable_cursor_keys_toggle()
