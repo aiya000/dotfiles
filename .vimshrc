@@ -19,4 +19,3 @@ alias g++='g++ -I/usr/include/c++/4.9 -I/usr/include/c++/4.9/x86_64-linux-gnu -s
 alias thanks="echo \"(*^o^)< You're welcome!\""
 alias gyazo='ruby ~/.vim/bundle/vim-gyazo/gyazo/gyazo.rb'
 
-let $PATH = $PATH . ":~/.vim/bin/vimshell"
