@@ -408,6 +408,7 @@ NeoBundleLazy    'mattn/excelview-vim'
 NeoBundle        'glidenote/memolist.vim'
 NeoBundle        'vim-jp/vimdoc-ja'
 NeoBundle        'mattn/googletranslate-vim'
+NeoBundle        'Shougo/vimfiler.vim'
 
 
 call neobundle#end()
@@ -533,6 +534,9 @@ call neobundle#config('excelview-vim', {
 \	'depends'  : 'mattn/webapi-vim',
 \	'autoload' : {'commands' : 'ExcelView'}
 \})
+call neobundle#config('vimfiler.vim', {
+\	'depends' : 'Shougo/unite.vim'
+\})
 
 " }}}
 
@@ -540,6 +544,13 @@ call neobundle#config('excelview-vim', {
 "------------------------"
 "*** Plugin_Configure ***"
 "------------------------"
+"--- netrw ---"{{{
+
+augroup plugin_pref
+	autocmd FileType netrw setl ignorecase
+augroup END
+
+"}}}
 "--- vim-quickrun ---" {{{
 
 let g:quickrun_config = {
@@ -760,6 +771,14 @@ let g:memolist_unite = exists(':Unite')
 if g:memolist_unite
 	let g:memolist_unite_option = '-auto-preview -tab'
 endif
+
+"}}}
+"--- vimfiler.vim ---"{{{
+
+let g:vimfiler_as_default_explorer = 1
+augroup plugin_pref
+	autocmd FileType vimfiler nmap <C-j> <Plug>(vimfiler_cd_or_edit)
+augroup END
 
 "}}}
 "--- For Private ---"{{{
@@ -1424,7 +1443,9 @@ augroup END
 " To All buffers
 augroup key_map
 	" God Of The Vim
-	autocmd FileType * nnoremap Q gQ
+	autocmd FileType * nnoremap Q   gQ
+	autocmd FileType * nnoremap ci[ f[ci[
+	autocmd FileType * nnoremap ci] f]ci]
 
 	"-- With Prefixes --"
 	autocmd FileType * nnoremap <silent>         <leader>t  :Translate<CR>
@@ -1541,7 +1562,9 @@ augroup key_map
 	"autocmd FileType * xnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
 	"
 	function! s:toggle_case() "{{{
-		let word = expand('<cword>')
+		let pos  = getpos('.')
+
+		let word     = expand('<cword>')
 		let is_snake = word =~? '_' ? 1 : 0
 
 		execute 'normal! b'
@@ -1550,14 +1573,13 @@ augroup key_map
 		endif
 
 		if is_snake
-			while expand('<cword>') =~? '_'
-				execute 'normal! f_x~'
-			endwhile
 		else
 			execute 'normal! ce' . substitute(word, '[A-Z]', '_\l\0', 'g')
 		endif
+
+		call setpos('.', pos)
 	endfunction "}}}
-	autocmd FileType * nnoremap <silent> <C-k><C-Space> :call <SID>toggleCase()<CR>
+	autocmd FileType * nnoremap <silent> <C-k><C-Space> :call <SID>toggle_case()<CR>
 
 	let s:enableCursorKeys = get(s:, 'enableCursorKeys', 0) "{{{
 	function! s:enable_cursor_keys_toggle()
