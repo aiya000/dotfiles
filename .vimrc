@@ -775,9 +775,22 @@ endif
 "}}}
 "--- vimfiler.vim ---"{{{
 
-let g:vimfiler_as_default_explorer = 1
+let g:vimfiler_tree_leaf_icon = ' '
+let g:vimfiler_tree_opened_icon = '▾'
+let g:vimfiler_tree_closed_icon = '▸'
+let g:vimfiler_file_icon = '-'
+let g:vimfiler_marked_file_icon = '*'
+
 augroup plugin_pref
-	autocmd FileType vimfiler nmap <C-j> <Plug>(vimfiler_cd_or_edit)
+	autocmd FileType vimfiler setl cul ignorecase
+	"autocmd FileType,BufWinEnter vimfiler
+	"	\	if &enc == 'utf-8'
+	"	\|		let g:vimfiler_tree_leaf_icon = ' '
+	"	\|		let g:vimfiler_tree_opened_icon = '▾'
+	"	\|		let g:vimfiler_tree_closed_icon = '▸'
+	"	\|		let g:vimfiler_file_icon = '-'
+	"	\|		let g:vimfiler_marked_file_icon = '*'
+	"	\|	endif
 augroup END
 
 "}}}
@@ -1444,8 +1457,11 @@ augroup END
 augroup key_map
 	" God Of The Vim
 	autocmd FileType * nnoremap Q   gQ
+	"TODO: omap
 	autocmd FileType * nnoremap ci[ f[ci[
 	autocmd FileType * nnoremap ci] f]ci]
+	autocmd FileType * nnoremap ci( f(ci(
+	autocmd FileType * nnoremap ci) f)ci)
 
 	"-- With Prefixes --"
 	autocmd FileType * nnoremap <silent>         <leader>t  :Translate<CR>
@@ -1514,7 +1530,12 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShell -split-command=sp  -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader>V          :VimShellBufferDir -create<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>V  :tabnew<CR>:VimShellCreate<CR>
-	" for anzu
+	" for vimfiler
+	autocmd FileType * nnoremap <silent> <leader>e          :VimFilerExplorer -force-quit<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>e  :VimFilerSplit -force-quit<CR>
+	autocmd FileType * nnoremap <silent> <leader>E          :VimFiler -force-quit<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>E  :VimFilerTab -force-quit<CR>
+	" for anzu-chan
 	autocmd FileType * nmap              n                  <Plug>(anzu-n-with-echo)zv
 	autocmd FileType * nmap              N                  <Plug>(anzu-N-with-echo)zv
 	autocmd FileType * nmap              *                  <Plug>(anzu-star-with-echo)zv
@@ -1676,6 +1697,12 @@ augroup plugin_pref
 	autocmd FileType vimshell imap     <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
 	autocmd FileType vimshell iunmap   <buffer> <C-p>
 	autocmd FileType vimshell iunmap   <buffer> <C-n>
+
+	autocmd FileType vimfiler nmap   <buffer> <C-j> <Plug>(vimfiler_cd_or_edit)
+	autocmd FileType vimfiler nmap   <buffer> <C-h> <C-h>
+	autocmd FileType vimfiler nmap   <buffer> q     <Plug>(vimfiler_exit)
+	autocmd FileType vimfiler nmap   <buffer> l     <Plug>(vimfiler_expand_or_edit)
+	autocmd FileType vimfiler nunmap <buffer> H
 
 	autocmd FileType w3m nnoremap         <buffer> H         <BS>
 	autocmd FileType w3m nnoremap <silent><buffer> <C-u>     :W3mAddressBar <CR>
