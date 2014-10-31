@@ -775,23 +775,12 @@ endif
 "}}}
 "--- vimfiler.vim ---"{{{
 
-let g:vimfiler_tree_leaf_icon = ' '
-let g:vimfiler_tree_opened_icon = '▾'
-let g:vimfiler_tree_closed_icon = '▸'
-let g:vimfiler_file_icon = '-'
-let g:vimfiler_marked_file_icon = '*'
-
-augroup plugin_pref
-	autocmd FileType vimfiler setl cul ignorecase
-	"autocmd FileType,BufWinEnter vimfiler
-	"	\	if &enc == 'utf-8'
-	"	\|		let g:vimfiler_tree_leaf_icon = ' '
-	"	\|		let g:vimfiler_tree_opened_icon = '▾'
-	"	\|		let g:vimfiler_tree_closed_icon = '▸'
-	"	\|		let g:vimfiler_file_icon = '-'
-	"	\|		let g:vimfiler_marked_file_icon = '*'
-	"	\|	endif
-augroup END
+if &enc == 'utf-8' && !s:isDosWin
+	let g:vimfiler_tree_opened_icon = '▾'
+	let g:vimfiler_tree_closed_icon = '▸'
+	let g:vimfiler_marked_file_icon = '*'
+endif
+let g:vimfiler_tree_indention = 2
 
 "}}}
 "--- For Private ---"{{{
@@ -1254,7 +1243,9 @@ command! PutShortSeparator
 command! PutLongSeparator
 	\	execute 'normal! a' '/* ---===---===---===---===---===---===--- */'
 	\|	execute 'normal =='
-command! Date execute 'normal! a' system('date')
+command! Date
+	\	execute 'normal! a' .
+	\	substitute(s:isUnix ? system('date') : system('echo %date% %time%'), "\n", "", 'g')
 
 
 function! s:put_html_base() "{{{
@@ -1458,10 +1449,10 @@ augroup key_map
 	" God Of The Vim
 	autocmd FileType * nnoremap Q   gQ
 	"TODO: omap
-	autocmd FileType * nnoremap ci[ f[ci[
-	autocmd FileType * nnoremap ci] f]ci]
-	autocmd FileType * nnoremap ci( f(ci(
-	autocmd FileType * nnoremap ci) f)ci)
+	"autocmd FileType * nnoremap ci[ f[ci[
+	"autocmd FileType * nnoremap ci] f]ci]
+	"autocmd FileType * nnoremap ci( f(ci(
+	"autocmd FileType * nnoremap ci) f)ci)
 
 	"-- With Prefixes --"
 	autocmd FileType * nnoremap <silent>         <leader>t  :Translate<CR>
@@ -1510,7 +1501,6 @@ augroup key_map
 		execute 'normal! ' l:lnum . 'Gzvzz'
 	endfunction "}}}
 	autocmd FileType * nnoremap <silent> <C-w>bt   :call <SID>buf_open_new_tab()<CR>
-	"TODO: With close current_buf// autocmd FileType * nnoremap <silent> <C-w>bt   :call <SID>buf_open_new_tab()<CR>
 	" for folds
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
@@ -1528,13 +1518,13 @@ augroup key_map
 	" for vimshell
 	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShell -split-command=sp  -toggle<CR>
-	autocmd FileType * nnoremap <silent> <leader>V          :VimShellBufferDir -create<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>V  :tabnew<CR>:VimShellCreate<CR>
+	autocmd FileType * nnoremap <silent> <leader>V          :VimShellBufferDir   -create<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>V  :tabnew<CR>:VimShell -create<CR>
 	" for vimfiler
-	autocmd FileType * nnoremap <silent> <leader>e          :VimFilerExplorer -force-quit<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>e  :VimFilerSplit -force-quit<CR>
-	autocmd FileType * nnoremap <silent> <leader>E          :VimFiler -force-quit<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>E  :VimFilerTab -force-quit<CR>
+	autocmd FileType * nnoremap <silent> <leader>e          :VimFilerExplorer  -status -toggle<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>e  :VimFilerBufferDir -status -split -horizontal -force-quit<CR>
+	autocmd FileType * nnoremap <silent> <leader>E          :VimFilerBufferDir -status -force-quit<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>E  :VimFilerBufferDir -status -tab -force-quit<CR>
 	" for anzu-chan
 	autocmd FileType * nmap              n                  <Plug>(anzu-n-with-echo)zv
 	autocmd FileType * nmap              N                  <Plug>(anzu-N-with-echo)zv
@@ -1698,11 +1688,11 @@ augroup plugin_pref
 	autocmd FileType vimshell iunmap   <buffer> <C-p>
 	autocmd FileType vimshell iunmap   <buffer> <C-n>
 
-	autocmd FileType vimfiler nmap   <buffer> <C-j> <Plug>(vimfiler_cd_or_edit)
-	autocmd FileType vimfiler nmap   <buffer> <C-h> <C-h>
-	autocmd FileType vimfiler nmap   <buffer> q     <Plug>(vimfiler_exit)
-	autocmd FileType vimfiler nmap   <buffer> l     <Plug>(vimfiler_expand_or_edit)
-	autocmd FileType vimfiler nunmap <buffer> H
+	autocmd FileType vimfiler nmap <buffer> <C-j> <Plug>(vimfiler_cd_or_edit)
+	autocmd FileType vimfiler nmap <buffer> <C-h> <C-h>
+	autocmd FileType vimfiler nmap <buffer> h     <Plug>(vimfiler_expand_or_edit)
+	autocmd FileType vimfiler nmap <buffer> l     <Plug>(vimfiler_expand_or_edit)
+	autocmd FileType vimfiler nmap <buffer> H     ggk<CR>
 
 	autocmd FileType w3m nnoremap         <buffer> H         <BS>
 	autocmd FileType w3m nnoremap <silent><buffer> <C-u>     :W3mAddressBar <CR>
@@ -1781,7 +1771,9 @@ function! s:unload_file_visit()  " {{{
 	augroup END
 endfunction  " }}}
 augroup file_event
+	"@Bugs('not functioned ?')
 	autocmd FileType vimshell call s:unload_file_visit()
+	autocmd FileType vimfiler call s:unload_file_visit()
 augroup END
 
 "}}}

@@ -1,7 +1,3 @@
-set showcmd
-set autoread  " When a file is changed outside of vim and it's in the buffer.
-set matchtime=3   " 3/10 of second paren matches.
-set wildmode=full " All I need (and default).
 set wildcharm=<C-z> " Let me tab a cmdline mapping.
 set wildignore+=*~
 set wildignore+=*.DS_Store?,*.0,*.obj,*.exe,*.dll,*.manifest
