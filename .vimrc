@@ -71,11 +71,6 @@ scriptencoding utf8
 
 "-- not functioned ? conceal-javadoc .
 
-"-- vimshell startup is failed
-"  -- is related view of vimshell
-
-"-- cannot use vimproc on autocmd
-
 "}}}
 " Todo {{{
 
@@ -83,13 +78,7 @@ scriptencoding utf8
 
 "-- read options.jax
 
-"-- exists('*system()') -> exists('*system')
-
 "-- Unite outline -> auto view C-Sharp <summary>~</summary>
-
-"-- L1469, always VimShellCreate in tab
-
-"-- Ubuntu Desktop image change to workspaces
 
 " }}}
 
@@ -380,8 +369,8 @@ NeoBundle        'rhysd/vim-grammarous'
 NeoBundleLazy    'thinca/vim-themis'
 NeoBundle        'tomasr/molokai'
 NeoBundle        'soramugi/auto-ctags.vim'
-NeoBundle        'aiya000/arot13.vim'
-NeoBundle        'aiya000/ahoge-put.vim'
+NeoBundleDisable 'aiya000/arot13.vim'
+NeoBundleDisable 'aiya000/ahoge-put.vim'
 NeoBundleLazy    'kannokanno/previm'
 NeoBundle        'gist:aiya000/ec5f6b2375a639831953', {
 \	'name'        : 'gitlogviewer.vim',
@@ -835,10 +824,10 @@ augroup def_highlight
 	autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 
 	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427}
-	autocmd VimEnter,BufWinEnter * match RcEmSpace /　/
+	autocmd VimEnter,WinEnter * match RcEmSpace /　/
 	autocmd ColorScheme * highlight RcEmSpace cterm=standout ctermfg=LightBlue
 
-	autocmd VimEnter,BufWinEnter * match RcMyHint /\s*"@\w\+/
+	autocmd VimEnter,WinEnter * match RcMyHint /\s*"@\w\+/
 	autocmd ColorScheme * highlight RcMyHint cterm=standout ctermfg=Red
 augroup END
 
@@ -999,6 +988,8 @@ set history=500
 " Adding Runtime Path
 set runtimepath+=~/.vim/vimball
 set runtimepath+=~/.vim/makes/asql.vim
+set runtimepath+=~/.vim/makes/arot13.vim/
+set runtimepath+=~/.vim/makes/ahoge-put.vim/
 
 " Set Vimball Install place
 let g:vimball_home = s:vimHome.'/vimball'
@@ -1068,7 +1059,7 @@ endfunction "}}}
 augroup file_event
 	autocmd BufWritePre ?\+ silent call s:update_backup_by_date()
 
-	autocmd BufWinEnter,WinEnter,BufRead,EncodingChanged *
+	autocmd VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 		\	if &encoding == 'utf-8'
 		\|		let &listchars = s:listchars
 		\|	else
@@ -1357,6 +1348,9 @@ cabbr    tvs   TweetVimSwitchAccount
 
 " }}}
 
+" To Service Name
+cabbr Lingr J6uil
+
 " Beautifull Life
 command! JazzUpdate    JazzradioUpdateChannels
 command! JazzList      Unite jazzradio
@@ -1376,7 +1370,6 @@ endfunction "}}}
 command! -nargs=* Weblio        call s:weblio_translate_cmdline(<f-args>)
 
 command! -nargs=* GrepNow       vimgrep <f-args> % | cwindow
-
 command!          MinimapReSync execute 'MinimapStop' | execute 'MinimapSync'
 
 " }}}
@@ -1448,7 +1441,17 @@ augroup END
 " To All buffers
 augroup key_map
 	" God Of The Vim
-	autocmd FileType * nnoremap Q   gQ
+	autocmd FileType * nnoremap Q gQ
+
+	"-- Overwrite exists map --"
+	autocmd FileType * nnoremap <C-n> gt
+	autocmd FileType * nnoremap <C-p> gT
+	autocmd FileType * nnoremap zl    8zl
+	autocmd FileType * nnoremap zh    8zh
+	autocmd FileType * inoremap <C-l> <Esc>
+	autocmd FileType * vnoremap <C-l> <Esc>
+	autocmd FileType * cnoremap <C-l> <Esc>
+
 	"TODO: omap
 	"autocmd FileType * nnoremap ci[ f[ci[
 	"autocmd FileType * nnoremap ci] f]ci]
@@ -1465,13 +1468,13 @@ augroup key_map
 	autocmd FileType * inoremap                  <C-k><C-k> <C-o>"_d$
 	autocmd FileType * inoremap                  <C-k><C-z> <C-o>:normal! <C-z><CR>
 	" Customize with prefix (veneration... digraphs.)
-	autocmd FileType * cnoremap                  <C-k><C-p>      <Up>
-	autocmd FileType * cnoremap                  <C-k><C-n>      <Down>
 	autocmd FileType * nnoremap <silent>         <C-k><C-b><C-n> :bn<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-b><C-p> :bp<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-f> :Unite -ignorecase outline:foldings<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-m> :Unite mapping<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-b> :Unite -ignorecase buffer<CR>
+	autocmd FileType * cnoremap                  <C-k><C-p>      <Up>
+	autocmd FileType * cnoremap                  <C-k><C-n>      <Down>
 
 	autocmd FileType * nnoremap <silent>         <C-@><C-r>     :Reload<CR>
 	autocmd FileType * nnoremap <silent>         <C-@><C-l>     :noh<CR>
@@ -1479,13 +1482,6 @@ augroup key_map
 	autocmd FileType * nnoremap <silent>         <C-@>r         :Resetf<CR>
 	autocmd FileType * nnoremap <silent>         <C-@><C-w>     :setl wrap! wrap?<CR>
 	autocmd FileType * nnoremap <silent>         <C-@><C-Space> :let __t=@/<CR>:s/\s\s\+/ /g<CR>:execute 'normal! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
-
-	"-- Overwrite exists map --"
-	autocmd FileType * nnoremap <C-n> gt
-	autocmd FileType * nnoremap <C-p> gT
-	autocmd FileType * inoremap <C-l> <Esc>
-	autocmd FileType * vnoremap <C-l> <Esc>
-	autocmd FileType * cnoremap <C-l> <Esc>
 
 	"-- Customize --"
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
@@ -1507,10 +1503,8 @@ augroup key_map
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
 	autocmd FileType * nnoremap zj     zjzo
 	autocmd FileType * nnoremap zk     zkzo
-	autocmd FileType * nnoremap z[     [z
-	autocmd FileType * nnoremap z]     ]z
 
-	"-- Plugins --"
+	"-- With Plugins --"
 	autocmd FileType * nmap              <leader>w          <Plug>(openbrowser-open)
 	" baba-n!!
 	autocmd FileType * nnoremap <silent> :%s/               :OverCommandLine<CR>%s/
@@ -1722,7 +1716,7 @@ augroup END
 
 " Set for "Vi Improved"
 augroup extension_type
-	autocmd VimEnter,BufWinEnter,BufEnter * syntax match RcHint /\s*"@\w\+/
+	autocmd VimEnter,BufEnter * syntax match RcHint /\s*"@\w\+/
 	autocmd FileType vim highlight RcHint cterm=standout ctermfg=DarkYellow
 augroup END
 
@@ -1730,14 +1724,14 @@ augroup END
 augroup extension_type
 	"autocmd VimEnter,WinEnter    *  syntax match TypeInference /\<var\>/
 	"autocmd FileType             cs highlight TypeInference cterm=bold ctermfg=11
-	autocmd VimEnter,BufWinEnter,BufEnter * syntax match Identifier /\<var\>/
+	autocmd VimEnter,BufEnter * syntax match Identifier /\<var\>/
 	autocmd FileType cs highlight Identifier
 augroup END
 
 " Set for Haskell
 augroup extension_type
 	"@Experiment('RcHfSpace /^\s\s*/ -> /^\s\+/')
-	autocmd VimEnter,BufWinEnter,BufEnter * syntax match RcHfSpace /^\s\+/
+	autocmd VimEnter,BufEnter * syntax match RcHfSpace /^\s\+/
 	autocmd FileType haskell highlight RcHfSpace cterm=underline ctermfg=Cyan
 	autocmd FileType yesod setl ts=4 sw=4 et
 augroup END
