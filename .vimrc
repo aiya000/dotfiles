@@ -623,9 +623,9 @@ endif
 "--- TweetVim ---"{{{
 
 augroup plugin_pref
-	autocmd FileType tweetvim     setl wrap
-	autocmd FileType tweetvim_say setl ts=2 sw=2 et
-	autocmd BufRead,BufEnter  tweetvim_say let g:tweetvim_async_post = exists('*vimproc#system')
+	autocmd FileType         tweetvim     setl wrap
+	autocmd FileType         tweetvim_say setl ts=2 sw=2 et
+	autocmd BufRead,BufEnter tweetvim_say let g:tweetvim_async_post = exists('*vimproc#system')
 augroup END
 
 "}}}
@@ -729,8 +729,9 @@ call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
 "}}}
 "--- vim-ref ---" {{{
 
-"TODO: eventalize
-let g:ref_use_vimproc = exists('*vimproc#system')
+augroup plugin_pref
+	autocmd FileType ref-* let g:ref_use_vimproc = exists('*vimproc#system')
+augroup END
 
 " }}}
 "--- ref-dicts-en ---" {{{
