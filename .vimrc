@@ -623,15 +623,15 @@ augroup END
 " Add to VimShell Commands Directory of My Home
 let &runtimepath = &runtimepath.','.s:vimHome.'/autoload/vimshell/commands'
 
+
 let g:vimshell_no_save_history_commands = {
 \	'history': 1,
 \	'ls'     : 1,
 \	'clear'  : 1
 \}
-
 let g:vimshell_enable_transient_user_prompt = 1
 let g:vimshell_force_overwrite_statusline = 1
-let g:vimshell_enable_start_insert = 0
+
 
 augroup plugin_pref
 	autocmd FileType vimshell setl fdm=marker nolist wrap
@@ -765,12 +765,13 @@ endif
 "}}}
 "--- vimfiler.vim ---"{{{
 
-if &enc == 'utf-8' && !s:isDosWin
+if !s:isDosWin
 	let g:vimfiler_tree_opened_icon = '▾'
 	let g:vimfiler_tree_closed_icon = '▸'
 	let g:vimfiler_marked_file_icon = '*'
 endif
-let g:vimfiler_tree_indention = 2
+let g:vimfiler_file_icon = ' $'
+let g:vimfiler_ignore_pattern = ''
 
 "}}}
 "--- For Private ---"{{{
@@ -1660,7 +1661,7 @@ augroup END
 
 " To Plugin buffers
 augroup plugin_pref
-	autocmd FileType help nnoremap <buffer> q :q<CR>
+	autocmd FileType help nnoremap <buffer> Q :q<CR>
 
 	autocmd FileType netrw nmap             <buffer> H -
 	autocmd FileType netrw nnoremap <silent><buffer> Q :q<CR>

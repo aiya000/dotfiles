@@ -1,4 +1,3 @@
-set showcmd
 set autoread  " When a file is changed outside of vim and it's in the buffer.
 set matchtime=3   " 3/10 of second paren matches.
 set wildmode=full " All I need (and default).
