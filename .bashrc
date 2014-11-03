@@ -27,12 +27,12 @@ alias vim-record-startup="f=`mktemp` ; vim --startuptime vtime -- $f && rm $f"
 alias vimclearview='rm ~/.backup/vim_backup/view/* > /dev/null 2>&1'
 alias vimclearswp='rm ~/.backup/vim_backup/swp/* > /dev/null 2>&1'
 alias vimclearundo='rm ~/.backup/vim_backup/undo/* > /dev/null 2>&1'
-alias vimclearcache='vimclearview > /dev/null 2>&1 && vimclearundo > /dev/null 2>&1 && vimclearswp > /dev/null 2>&1'
-alias vimmemo='vim ~/.tmp/memo.txt'
+alias vimclearcache='vimclearview && vimclearundo && vimclearswp > /dev/null 2>&1'
+alias vim-memo='vim ~/.tmp/memo.txt'
 alias twitter='vim -c TweetVimHomeTimeline'
 alias tweet='vim -c TweetVimSay'
-alias twitter-public='vim -c "call TwitterPublicFunc()"'
-alias tweet-public='vim -c "call TweetPublicFunc()"'
+alias twitter-public='vim -c TwitterPublic'
+alias tweet-public='vim -c TweetPublic'
 
 alias vimconfig='vim ~/.vimrc'
 alias vimbash='vim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
@@ -51,32 +51,33 @@ alias pbcopy='xsel --clipboard --input'
 
 alias mysql='mysql -E'
 
-[ $isUbuntu -eq 1 ] \
-	&& alias vncserver_kill="vncserver -kill hostname:${1}"  # Destop Number
-
-
 if [ -n "`which git 2> /dev/null`" ] ; then
 	alias git-myhelp='
 		echo "New Branch:";
 		echo "	git branch newBranchName commitId";
+		echo ;
 		echo "Branch List:";
 		echo "	git branch -a";
+		echo ;
 		echo "Delete Branch:";
 		echo "	git branch -d branchName";
+		echo ;
 		echo "Stash local and Stash List:";
 		echo "	git stash save";
 		echo "	git stash list";
+		echo ;
 		echo "Fixing recent local commit:";
 		echo "	git commit --amend -m \"hoge\"";
+		echo ;
 		echo "RollBack previous commit:";
 		echo "	git revert \"commit id\"";
-		echo "";
+		echo ;
 		echo "Merge recent remote commit:";
 		echo "	1. git pull";
 		echo "		warn: would be overwritten...";
 		echo "	2. git commit -am \"merging hoge file.\"";
 		echo "	3. git mergetool";
-		echo "";
+		echo ;
 		echo "No real file removal [git rm]:";
 		echo "	git rm --cached file"'
 fi
@@ -86,9 +87,11 @@ if [ -n "`which tmux 2> /dev/null`" ] ; then
 	alias tmux-myhelp='
 		echo "Window rename:";
 		echo "	<Prefix> ,";
+		echo ;
 		echo "Start session with name:";
 		echo "	tmux new -s name";
-		echo "Start session with config file:"
+		echo ;
+		echo "Start session with config file:";
 		echo "	tmux -f file";'
 fi
 
@@ -108,7 +111,7 @@ elif [ $isCygwin -eq 1 ] ; then
 	alias route='cocot route'
 	alias netstat='cocot netstat'
 	alias updatedb='updatedb --localpaths="/bin /dev /etc /home /lib /usr /var /opt" --prunepaths="/usr/tmp /var/tmp"'
-	alias mysql='mysql --protocol=TCP -E'
+	alias mysql='mysql --protocol=TCP'
 fi
 
 # }}}
@@ -120,8 +123,10 @@ fi
 #{{{
 
 # The aliases shunted to other file
-source ~/.bashrc_develop
-alias vimdev='vim ~/.bashrc_develop && source ~/.bashrc && echo ">> .bashrc_develop loaded"'
+if [ -f ~/.bashrc_develop ] ; then
+	source ~/.bashrc_develop
+	alias vimdev='vim ~/.bashrc_develop && source ~/.bashrc && echo ">> .bashrc_develop loaded"'
+fi
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
 #}}}

@@ -71,11 +71,6 @@ scriptencoding utf8
 
 "-- not functioned ? conceal-javadoc .
 
-"-- vimshell startup is failed
-"  -- is related view of vimshell
-
-"-- cannot use vimproc on autocmd
-
 "}}}
 " Todo {{{
 
@@ -83,13 +78,7 @@ scriptencoding utf8
 
 "-- read options.jax
 
-"-- exists('*system()') -> exists('*system')
-
 "-- Unite outline -> auto view C-Sharp <summary>~</summary>
-
-"-- L1469, always VimShellCreate in tab
-
-"-- Ubuntu Desktop image change to workspaces
 
 " }}}
 
@@ -380,8 +369,8 @@ NeoBundle        'rhysd/vim-grammarous'
 NeoBundleLazy    'thinca/vim-themis'
 NeoBundle        'tomasr/molokai'
 NeoBundle        'soramugi/auto-ctags.vim'
-NeoBundle        'aiya000/arot13.vim'
-NeoBundle        'aiya000/ahoge-put.vim'
+NeoBundleDisable 'aiya000/arot13.vim'
+NeoBundleDisable 'aiya000/ahoge-put.vim'
 NeoBundleLazy    'kannokanno/previm'
 NeoBundle        'gist:aiya000/ec5f6b2375a639831953', {
 \	'name'        : 'gitlogviewer.vim',
@@ -409,6 +398,7 @@ NeoBundle        'glidenote/memolist.vim'
 NeoBundle        'vim-jp/vimdoc-ja'
 NeoBundle        'mattn/googletranslate-vim'
 NeoBundle        'Shougo/vimfiler.vim'
+NeoBundleLazy    'rbtnn/game_engine.vim'
 
 
 call neobundle#end()
@@ -492,7 +482,8 @@ call neobundle#config('vital.vim', {
 \	'autoload' : {'filetypes' : 'vim'}
 \})
 call neobundle#config('puyo.vim', {
-\	'autoload' : {'commands' : 'Puyo'}
+\	'autoload' : {'commands' : 'Puyo'},
+\	'depends'  : 'rbtnn/game_engine.vim'
 \})
 call neobundle#config('benchvimrc-vim', {
 \	'autoload' : {'commands' : 'BenchVimrc'}
@@ -507,8 +498,8 @@ call neobundle#config('coq.vim', {
 \	'autoload' : {'filetypes' : 'coq'}
 \})
 call neobundle#config('coqtop-vim', {
-\	'depends'  : 'Shougo/vimproc.vim',
-\	'autoload' : {'filetypes' : 'coq'}
+\	'autoload' : {'filetypes' : 'coq'},
+\	'depends'  : 'Shougo/vimproc.vim'
 \})
 call neobundle#config('vim-grammarous', {
 \	'disabled' : !executable('java')
@@ -623,9 +614,9 @@ endif
 "--- TweetVim ---"{{{
 
 augroup plugin_pref
-	autocmd FileType tweetvim     setl wrap
-	autocmd FileType tweetvim_say setl ts=2 sw=2 et
-	autocmd BufRead,BufEnter  tweetvim_say let g:tweetvim_async_post = exists('*vimproc#system')
+	autocmd FileType         tweetvim     setl wrap
+	autocmd FileType         tweetvim_say setl ts=2 sw=2 et
+	autocmd BufRead,BufEnter tweetvim_say let g:tweetvim_async_post = exists('*vimproc#system')
 augroup END
 
 "}}}
@@ -634,15 +625,15 @@ augroup END
 " Add to VimShell Commands Directory of My Home
 let &runtimepath = &runtimepath.','.s:vimHome.'/autoload/vimshell/commands'
 
+
 let g:vimshell_no_save_history_commands = {
 \	'history': 1,
 \	'ls'     : 1,
 \	'clear'  : 1
 \}
-
 let g:vimshell_enable_transient_user_prompt = 1
 let g:vimshell_force_overwrite_statusline = 1
-let g:vimshell_enable_start_insert = 0
+
 
 augroup plugin_pref
 	autocmd FileType vimshell setl fdm=marker nolist wrap
@@ -721,16 +712,17 @@ call submode#map('fold_move', 'n', '', 'j', 'zczjzozz')
 call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
 
 " Incremental Search Commands
-"call submode#enter_with('incsearch_command', 'c', '', '<C-@><C-p>', '<Up>')
-"call submode#enter_with('incsearch_command', 'c', '', '<C-@><C-n>', '<Down>')
+"call submode#enter_with('incsearch_command', 'c', '', '<C-h><C-p>', '<Up>')
+"call submode#enter_with('incsearch_command', 'c', '', '<C-h><C-n>', '<Down>')
 "call submode#map('incsearch_command', 'c', '', '<C-p>', '<Up>')
 "call submode#map('incsearch_command', 'c', '', '<C-n>', '<Down>')
 
 "}}}
 "--- vim-ref ---" {{{
 
-"TODO: eventalize
-let g:ref_use_vimproc = exists('*vimproc#system')
+augroup plugin_pref
+	autocmd FileType ref-* let g:ref_use_vimproc = exists('*vimproc#system')
+augroup END
 
 " }}}
 "--- ref-dicts-en ---" {{{
@@ -775,12 +767,13 @@ endif
 "}}}
 "--- vimfiler.vim ---"{{{
 
-if &enc == 'utf-8' && !s:isDosWin
+if !s:isDosWin
 	let g:vimfiler_tree_opened_icon = '▾'
 	let g:vimfiler_tree_closed_icon = '▸'
 	let g:vimfiler_marked_file_icon = '*'
 endif
-let g:vimfiler_tree_indention = 2
+let g:vimfiler_file_icon = ' $'
+let g:vimfiler_ignore_pattern = ''
 
 "}}}
 "--- For Private ---"{{{
@@ -834,10 +827,10 @@ augroup def_highlight
 	autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 
 	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427}
-	autocmd VimEnter,BufWinEnter * match RcEmSpace /　/
+	autocmd VimEnter,WinEnter * match RcEmSpace /　/
 	autocmd ColorScheme * highlight RcEmSpace cterm=standout ctermfg=LightBlue
 
-	autocmd VimEnter,BufWinEnter * match RcMyHint /\s*"@\w\+/
+	autocmd VimEnter,WinEnter * match RcMyHint /\s*"@\w\+/
 	autocmd ColorScheme * highlight RcMyHint cterm=standout ctermfg=Red
 augroup END
 
@@ -998,6 +991,8 @@ set history=500
 " Adding Runtime Path
 set runtimepath+=~/.vim/vimball
 set runtimepath+=~/.vim/makes/asql.vim
+set runtimepath+=~/.vim/makes/arot13.vim/
+set runtimepath+=~/.vim/makes/ahoge-put.vim/
 
 " Set Vimball Install place
 let g:vimball_home = s:vimHome.'/vimball'
@@ -1067,7 +1062,7 @@ endfunction "}}}
 augroup file_event
 	autocmd BufWritePre ?\+ silent call s:update_backup_by_date()
 
-	autocmd BufWinEnter,WinEnter,BufRead,EncodingChanged *
+	autocmd VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 		\	if &encoding == 'utf-8'
 		\|		let &listchars = s:listchars
 		\|	else
@@ -1356,6 +1351,9 @@ cabbr    tvs   TweetVimSwitchAccount
 
 " }}}
 
+" To Service Name
+cabbr Lingr J6uil
+
 " Beautifull Life
 command! JazzUpdate    JazzradioUpdateChannels
 command! JazzList      Unite jazzradio
@@ -1375,7 +1373,6 @@ endfunction "}}}
 command! -nargs=* Weblio        call s:weblio_translate_cmdline(<f-args>)
 
 command! -nargs=* GrepNow       vimgrep <f-args> % | cwindow
-
 command!          MinimapReSync execute 'MinimapStop' | execute 'MinimapSync'
 
 " }}}
@@ -1404,7 +1401,7 @@ command! -nargs=1  Hoogle Ref hoogle <args>
 "* <C-k> is Primary prefix key
 "  - Use for be big frequency of operation
 
-"* <C-@> is Secondary prefix key
+"* <C-h> is Secondary prefix key
 "  - Use for be little frequency of operation
 
 "}}}
@@ -1447,7 +1444,17 @@ augroup END
 " To All buffers
 augroup key_map
 	" God Of The Vim
-	autocmd FileType * nnoremap Q   gQ
+	autocmd FileType * nnoremap Q gQ
+
+	"-- Overwrite exists map --"
+	autocmd FileType * nnoremap <C-n> gt
+	autocmd FileType * nnoremap <C-p> gT
+	autocmd FileType * nnoremap zl    8zl
+	autocmd FileType * nnoremap zh    8zh
+	autocmd FileType * inoremap <C-l> <Esc>
+	autocmd FileType * vnoremap <C-l> <Esc>
+	autocmd FileType * cnoremap <C-l> <Esc>
+
 	"TODO: omap
 	"autocmd FileType * nnoremap ci[ f[ci[
 	"autocmd FileType * nnoremap ci] f]ci]
@@ -1464,27 +1471,20 @@ augroup key_map
 	autocmd FileType * inoremap                  <C-k><C-k> <C-o>"_d$
 	autocmd FileType * inoremap                  <C-k><C-z> <C-o>:normal! <C-z><CR>
 	" Customize with prefix (veneration... digraphs.)
-	autocmd FileType * cnoremap                  <C-k><C-p>      <Up>
-	autocmd FileType * cnoremap                  <C-k><C-n>      <Down>
 	autocmd FileType * nnoremap <silent>         <C-k><C-b><C-n> :bn<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-b><C-p> :bp<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-f> :Unite -ignorecase outline:foldings<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-m> :Unite mapping<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-b> :Unite -ignorecase buffer<CR>
+	autocmd FileType * cnoremap                  <C-k><C-p>      <Up>
+	autocmd FileType * cnoremap                  <C-k><C-n>      <Down>
 
-	autocmd FileType * nnoremap <silent>         <C-@><C-r>     :Reload<CR>
-	autocmd FileType * nnoremap <silent>         <C-@><C-l>     :noh<CR>
-	autocmd FileType * nnoremap <silent>         <C-@>l         :so %<CR>
-	autocmd FileType * nnoremap <silent>         <C-@>r         :Resetf<CR>
-	autocmd FileType * nnoremap <silent>         <C-@><C-w>     :setl wrap! wrap?<CR>
-	autocmd FileType * nnoremap <silent>         <C-@><C-Space> :let __t=@/<CR>:s/\s\s\+/ /g<CR>:execute 'normal! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
-
-	"-- Overwrite exists map --"
-	autocmd FileType * nnoremap <C-n> gt
-	autocmd FileType * nnoremap <C-p> gT
-	autocmd FileType * inoremap <C-l> <Esc>
-	autocmd FileType * vnoremap <C-l> <Esc>
-	autocmd FileType * cnoremap <C-l> <Esc>
+	autocmd FileType * nnoremap <silent>         <C-h><C-r>     :Reload<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-l>     :noh<CR>
+	autocmd FileType * nnoremap <silent>         <C-h>l         :so %<CR>
+	autocmd FileType * nnoremap <silent>         <C-h>r         :Resetf<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-w>     :setl wrap! wrap?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-Space> :let __t=@/<CR>:s/\s\s\+/ /g<CR>:execute 'normal! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
 
 	"-- Customize --"
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
@@ -1506,10 +1506,8 @@ augroup key_map
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
 	autocmd FileType * nnoremap zj     zjzo
 	autocmd FileType * nnoremap zk     zkzo
-	autocmd FileType * nnoremap z[     [z
-	autocmd FileType * nnoremap z]     ]z
 
-	"-- Plugins --"
+	"-- With Plugins --"
 	autocmd FileType * nmap              <leader>w          <Plug>(openbrowser-open)
 	" baba-n!!
 	autocmd FileType * nnoremap <silent> :%s/               :OverCommandLine<CR>%s/
@@ -1620,7 +1618,7 @@ augroup key_map
 			let s:enableCursorKeys = 0
 		endif
 	endfunction "}}}
-	autocmd FileType * nnoremap <silent> <C-@>jkjkjkjk :call <SID>enable_cursor_keys_toggle()<CR>
+	autocmd FileType * nnoremap <silent> <C-h>jkjkjkjk :call <SID>enable_cursor_keys_toggle()<CR>
 	let s:visualFoldToggle = get(s:, 'visualFoldToggle', 0) "{{{
 	function! s:visual_fold_all()
 		if mode() =~# "^[vV\<C-v>]"
@@ -1665,7 +1663,7 @@ augroup END
 
 " To Plugin buffers
 augroup plugin_pref
-	autocmd FileType help nnoremap <buffer> q :q<CR>
+	autocmd FileType help nnoremap <buffer> Q :q<CR>
 
 	autocmd FileType netrw nmap             <buffer> H -
 	autocmd FileType netrw nnoremap <silent><buffer> Q :q<CR>
@@ -1721,7 +1719,7 @@ augroup END
 
 " Set for "Vi Improved"
 augroup extension_type
-	autocmd VimEnter,BufWinEnter,BufEnter * syntax match RcHint /\s*"@\w\+/
+	autocmd VimEnter,WinEnter * syntax match RcHint /\s*"@\w\+/
 	autocmd FileType vim highlight RcHint cterm=standout ctermfg=DarkYellow
 augroup END
 
@@ -1729,14 +1727,14 @@ augroup END
 augroup extension_type
 	"autocmd VimEnter,WinEnter    *  syntax match TypeInference /\<var\>/
 	"autocmd FileType             cs highlight TypeInference cterm=bold ctermfg=11
-	autocmd VimEnter,BufWinEnter,BufEnter * syntax match Identifier /\<var\>/
+	autocmd VimEnter,WinEnter * syntax match Identifier /\<var\>/
 	autocmd FileType cs highlight Identifier
 augroup END
 
 " Set for Haskell
 augroup extension_type
 	"@Experiment('RcHfSpace /^\s\s*/ -> /^\s\+/')
-	autocmd VimEnter,BufWinEnter,BufEnter * syntax match RcHfSpace /^\s\+/
+	autocmd VimEnter,WinEnter * syntax match RcHfSpace /^\s\+/
 	autocmd FileType haskell highlight RcHfSpace cterm=underline ctermfg=Cyan
 	autocmd FileType yesod setl ts=4 sw=4 et
 augroup END
