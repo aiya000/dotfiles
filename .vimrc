@@ -398,6 +398,7 @@ NeoBundle        'glidenote/memolist.vim'
 NeoBundle        'vim-jp/vimdoc-ja'
 NeoBundle        'mattn/googletranslate-vim'
 NeoBundle        'Shougo/vimfiler.vim'
+NeoBundleLazy    'rbtnn/game_engine.vim'
 
 
 call neobundle#end()
@@ -481,7 +482,8 @@ call neobundle#config('vital.vim', {
 \	'autoload' : {'filetypes' : 'vim'}
 \})
 call neobundle#config('puyo.vim', {
-\	'autoload' : {'commands' : 'Puyo'}
+\	'autoload' : {'commands' : 'Puyo'},
+\	'depends'  : 'rbtnn/game_engine.vim'
 \})
 call neobundle#config('benchvimrc-vim', {
 \	'autoload' : {'commands' : 'BenchVimrc'}
@@ -496,8 +498,8 @@ call neobundle#config('coq.vim', {
 \	'autoload' : {'filetypes' : 'coq'}
 \})
 call neobundle#config('coqtop-vim', {
-\	'depends'  : 'Shougo/vimproc.vim',
-\	'autoload' : {'filetypes' : 'coq'}
+\	'autoload' : {'filetypes' : 'coq'},
+\	'depends'  : 'Shougo/vimproc.vim'
 \})
 call neobundle#config('vim-grammarous', {
 \	'disabled' : !executable('java')
@@ -710,8 +712,8 @@ call submode#map('fold_move', 'n', '', 'j', 'zczjzozz')
 call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
 
 " Incremental Search Commands
-"call submode#enter_with('incsearch_command', 'c', '', '<C-@><C-p>', '<Up>')
-"call submode#enter_with('incsearch_command', 'c', '', '<C-@><C-n>', '<Down>')
+"call submode#enter_with('incsearch_command', 'c', '', '<C-h><C-p>', '<Up>')
+"call submode#enter_with('incsearch_command', 'c', '', '<C-h><C-n>', '<Down>')
 "call submode#map('incsearch_command', 'c', '', '<C-p>', '<Up>')
 "call submode#map('incsearch_command', 'c', '', '<C-n>', '<Down>')
 
@@ -1399,7 +1401,7 @@ command! -nargs=1  Hoogle Ref hoogle <args>
 "* <C-k> is Primary prefix key
 "  - Use for be big frequency of operation
 
-"* <C-@> is Secondary prefix key
+"* <C-h> is Secondary prefix key
 "  - Use for be little frequency of operation
 
 "}}}
@@ -1477,12 +1479,12 @@ augroup key_map
 	autocmd FileType * cnoremap                  <C-k><C-p>      <Up>
 	autocmd FileType * cnoremap                  <C-k><C-n>      <Down>
 
-	autocmd FileType * nnoremap <silent>         <C-@><C-r>     :Reload<CR>
-	autocmd FileType * nnoremap <silent>         <C-@><C-l>     :noh<CR>
-	autocmd FileType * nnoremap <silent>         <C-@>l         :so %<CR>
-	autocmd FileType * nnoremap <silent>         <C-@>r         :Resetf<CR>
-	autocmd FileType * nnoremap <silent>         <C-@><C-w>     :setl wrap! wrap?<CR>
-	autocmd FileType * nnoremap <silent>         <C-@><C-Space> :let __t=@/<CR>:s/\s\s\+/ /g<CR>:execute 'normal! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-r>     :Reload<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-l>     :noh<CR>
+	autocmd FileType * nnoremap <silent>         <C-h>l         :so %<CR>
+	autocmd FileType * nnoremap <silent>         <C-h>r         :Resetf<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-w>     :setl wrap! wrap?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-Space> :let __t=@/<CR>:s/\s\s\+/ /g<CR>:execute 'normal! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
 
 	"-- Customize --"
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
@@ -1616,7 +1618,7 @@ augroup key_map
 			let s:enableCursorKeys = 0
 		endif
 	endfunction "}}}
-	autocmd FileType * nnoremap <silent> <C-@>jkjkjkjk :call <SID>enable_cursor_keys_toggle()<CR>
+	autocmd FileType * nnoremap <silent> <C-h>jkjkjkjk :call <SID>enable_cursor_keys_toggle()<CR>
 	let s:visualFoldToggle = get(s:, 'visualFoldToggle', 0) "{{{
 	function! s:visual_fold_all()
 		if mode() =~# "^[vV\<C-v>]"
