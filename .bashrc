@@ -35,12 +35,13 @@ alias twitter-public='vim -c TwitterPublic'
 alias tweet-public='vim -c TweetPublic'
 
 alias vimconfig='vim ~/.vimrc'
-alias vimbash='vim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
-alias vimpro='vim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
+alias vim-bash='vim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
+alias vim-bashprofile='vim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
 
 # }}}
 # Shell Utils {{{
 
+# Tuide(Benri)
 alias gyazo='ruby ~/.vim/bundle/vim-gyazo/gyazo/gyazo.rb'
 
 # MacOS Like command

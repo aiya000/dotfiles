@@ -1,32 +1,5 @@
 scriptencoding utf8
 
-
-"----------------------------"
-"  Target of this config     "
-"    - UNIX like OS          "
-"    - Cygwin                "
-"    - Windows Kaoriya       "
-"----------------------------"
-"     Eigo - Ingulisshu      "
-"----------------------------"
-"{{{
-
-"-----------------------------
-"*** Verified Environment ***"
-"-----------------------------
-
-
-"* Windows Kaoriya GVim(Manually Update)
-  "1. New Version download by Kaoriya site
-  "2. Unset Env var $SHELL
-  "2. Reference this config file
-  "3. Starting GVim
-    "- > Completely Succeeded.
-
-"}}}
-
-
-
 "-------------------
 "--  Recipe Menu  --
 "-------------------
@@ -43,10 +16,20 @@ scriptencoding utf8
 " -- Alias
 " -- Key_Map
 " -- File_Types
-"
 " -- Ignore_Setting
 " -- Environment_Pref
 " ---
+
+
+
+"----------------------------"
+"  Target of this config     "
+"    - UNIX like OS          "
+"    - Cygwin                "
+"    - Windows Kaoriya       "
+"----------------------------"
+"     Eigo - Ingulisshu      "
+"----------------------------"
 " Ideas {{{
 
 "-- point marker line num in a file
@@ -399,6 +382,7 @@ NeoBundle        'vim-jp/vimdoc-ja'
 NeoBundle        'mattn/googletranslate-vim'
 NeoBundle        'Shougo/vimfiler.vim'
 NeoBundleLazy    'rbtnn/game_engine.vim'
+NeoBundle        'vim-scripts/AutoComplPop'
 
 
 call neobundle#end()
@@ -1285,7 +1269,6 @@ command! -range SqlCopy :<line1>,<line2>call s:sql_yank_normalize()
 " Utils {{{
 
 " Vim Utils {{{
-cabbr    vimconfig         VimConfig
 command! VimConfig         e  $MYVIMRC
 command! VimConfigTab      tabnew | e $MYVIMRC
 command! Reload            so $MYVIMRC
@@ -1446,7 +1429,7 @@ augroup key_map
 	" God Of The Vim
 	autocmd FileType * nnoremap Q gQ
 
-	"-- Overwrite exists map --"
+	"-- Overwrite mapping --"
 	autocmd FileType * nnoremap <C-n> gt
 	autocmd FileType * nnoremap <C-p> gT
 	autocmd FileType * nnoremap zl    8zl
@@ -1479,17 +1462,19 @@ augroup key_map
 	autocmd FileType * cnoremap                  <C-k><C-p>      <Up>
 	autocmd FileType * cnoremap                  <C-k><C-n>      <Down>
 
-	autocmd FileType * nnoremap <silent>         <C-h><C-r>     :Reload<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-l>     :noh<CR>
-	autocmd FileType * nnoremap <silent>         <C-h>l         :so %<CR>
-	autocmd FileType * nnoremap <silent>         <C-h>r         :Resetf<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-w>     :setl wrap! wrap?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-Space> :let __t=@/<CR>:s/\s\s\+/ /g<CR>:execute 'normal! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-r>      :Reload<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-l>      :noh<CR>
+	autocmd FileType * nnoremap <silent>         <C-h>l          :so %<CR>
+	autocmd FileType * nnoremap <silent>         <C-h>r          :Resetf<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-w>      :setl wrap! wrap?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-Space>  :let __t=@/<CR>:s/\s\s\+/ /g<CR>:execute 'normal! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-p><C-l> :PutLongSeparator<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-p><C-s> :PutShortSeparator<CR>
 
 	"-- Customize --"
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
 	autocmd FileType * nnoremap          q:    :digraphs<CR>   " Oh, digraphs!
-	" for window
+	" for window or buffer
 	autocmd FileType * nnoremap <silent> <C-w>t     :tabnew<CR>
 	autocmd FileType * nnoremap <silent> <C-w>T     :tabclose<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bd    :bd<CR>
@@ -1500,7 +1485,8 @@ augroup key_map
 		execute 'tabnew| ' bufnr('%') . 'b'
 		execute 'normal! ' l:lnum . 'Gzvzz'
 	endfunction "}}}
-	autocmd FileType * nnoremap <silent> <C-w>bt   :call <SID>buf_open_new_tab()<CR>
+	autocmd FileType * nnoremap <silent> <C-w>bt    :call <SID>buf_open_new_tab()<CR>
+	autocmd FileType * nnoremap <silent> <C-w>N     :enew!<CR>
 	" for folds
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
@@ -1530,6 +1516,8 @@ augroup key_map
 	autocmd FileType * nmap              #                  <Plug>(anzu-sharp-with-echo)zv
 	autocmd FileType * nmap              <C-w>*             <C-w><C-v><Plug>(anzu-star-with-echo)zv
 	autocmd FileType * nmap              <C-w>#             <C-w><C-v><Plug>(anzu-sharp-with-echo)zv
+	" for autocomplpop
+	autocmd FileType * inoremap <CR> <Esc>o
 augroup END
 
 

@@ -1,7 +1,3 @@
-set wildcharm=<C-z> " Let me tab a cmdline mapping.
-set wildignore+=*~
-set wildignore+=*.DS_Store?,*.0,*.obj,*.exe,*.dll,*.manifest
-set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
 set suffixes+=.git,.hg,.svn,tags " Lower priority for wildmenu.
 set sidescrolloff=2
 if filereadable("/usr/bin/par") "{{{
@@ -34,8 +30,6 @@ au VimEnter * set lines=38 columns=92
 au VimEnter * winpos 618 24
 au GUIEnter * set noicon guioptions-=T
 :func-abort
-Bundle 'https://github.com/rhysd/clever-f.vim'
-Bundle 'https://github.com/vim-scripts/AutoComplPop'
 Bundle 'https://github.com/vim-scripts/dbext.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
