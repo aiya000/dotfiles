@@ -50,7 +50,7 @@ alias pbcopy='xsel --clipboard --input'
 # }}}
 # Others {{{
 
-alias mysql='mysql -E'
+alias mysql="mysql -E --pager='less -S -n -i -F -X'"
 
 if [ -n "`which git 2> /dev/null`" ] ; then
 	alias git-myhelp='
