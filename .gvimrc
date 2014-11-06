@@ -54,6 +54,10 @@ let g:gvimrc['guifont'].size = get(g:gvimrc, 'size', s:isWindows ? ':h10' : ' 10
 
 set guioptions-=T
 set guioptions-=m
+set guioptions-=e
+set guioptions-=r
+set guioptions-=L
+set guioptions+=c
 set winaltkeys=no
 
 let &guifont     = g:gvimrc.guifont['font'] . g:gvimrc.guifont['size']
