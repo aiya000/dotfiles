@@ -701,6 +701,12 @@ call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
 "call submode#map('incsearch_command', 'c', '', '<C-p>', '<Up>')
 "call submode#map('incsearch_command', 'c', '', '<C-n>', '<Down>')
 
+
+" Buffer Reader
+call submode#enter_with('buffer_read', 'n', '', '<C-k><C-b>')
+call submode#map('buffer_read', 'n', '', 'n', ':bnext<CR>')
+call submode#map('buffer_read', 'n', '', 'p', ':bprevious<CR>')
+
 "}}}
 "--- vim-ref ---" {{{
 
@@ -1454,8 +1460,6 @@ augroup key_map
 	autocmd FileType * inoremap                  <C-k><C-k> <C-o>"_d$
 	autocmd FileType * inoremap                  <C-k><C-z> <C-o>:normal! <C-z><CR>
 	" Customize with prefix (veneration... digraphs.)
-	autocmd FileType * nnoremap <silent>         <C-k><C-b><C-n> :bn<CR>
-	autocmd FileType * nnoremap <silent>         <C-k><C-b><C-p> :bp<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-f> :Unite -ignorecase outline:foldings<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-m> :Unite mapping<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-b> :Unite -ignorecase buffer<CR>
