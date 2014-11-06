@@ -142,7 +142,12 @@ endfunction
 "-------------------------"
 "       Initialize        "
 "-------------------------"
+" {{{
+
+" Load ftplugin.vim and indent.vim
 filetype plugin indent on
+
+" }}}
 " autocmd Groups {{{
 
 augroup plugin_pref
@@ -590,7 +595,7 @@ augroup END
 
 if s:isWindows && !s:hasMingw
 	"NeoBundleDisable 'Shougo/vimproc.vim'
-	"@Incompleted('I should use a like NeoBundleDisable')
+	"@Incompleted('I should use a like NeoBundleDisable ... ?')
 	set runtimepath-=~/.vim/bundle/vimproc.vim/
 endif
 
@@ -701,11 +706,10 @@ call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
 "call submode#map('incsearch_command', 'c', '', '<C-p>', '<Up>')
 "call submode#map('incsearch_command', 'c', '', '<C-n>', '<Down>')
 
-
-" Buffer Reader
-call submode#enter_with('buffer_read', 'n', '', '<C-k><C-b>')
-call submode#map('buffer_read', 'n', '', 'n', ':bnext<CR>')
-call submode#map('buffer_read', 'n', '', 'p', ':bprevious<CR>')
+" Window Buffer Changer
+call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
+call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
+call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
 
 "}}}
 "--- vim-ref ---" {{{
@@ -762,8 +766,16 @@ if !s:isDosWin
 	let g:vimfiler_tree_closed_icon = '▸'
 	let g:vimfiler_marked_file_icon = '*'
 endif
-let g:vimfiler_file_icon = ' $'
+let g:vimfiler_file_icon = ' '
 let g:vimfiler_ignore_pattern = ''
+
+"}}}
+"--- AutoComplPop ---"{{{
+
+augroup plugin_pref
+	autocmd FileType *     AcpEnable
+	autocmd FileType unite AcpDisable
+augroup END
 
 "}}}
 "--- For Private ---"{{{
@@ -780,6 +792,9 @@ endif
 "-------------------------"
 "{{{
 
+" Highlight enable
+syntax enable
+
 " Set Basic Preferences
 set number nowrap hlsearch list scrolloff=6
 let s:listchars = s:isDosWin
@@ -794,12 +809,9 @@ set statusline=%F%m\%=[FileType=%y][Format=%{&ff}]
 
 " ☆ Fix View 2byte Code (Not support gnome-terminal)
 set ambiwidth=double
-syntax sync fromstart
 
 " Powered Up Syntax Highlight
 " {{{
-
-syntax on
 
 augroup def_highlight
 	"autocmd Colorscheme * highlight Normal       cterm=NONE      ctermfg=Cyan
@@ -1678,11 +1690,12 @@ augroup plugin_pref
 	autocmd FileType vimshell iunmap   <buffer> <C-p>
 	autocmd FileType vimshell iunmap   <buffer> <C-n>
 
-	autocmd FileType vimfiler nmap <buffer> <C-j> <Plug>(vimfiler_cd_or_edit)
-	autocmd FileType vimfiler nmap <buffer> <C-h> <C-h>
-	autocmd FileType vimfiler nmap <buffer> h     <Plug>(vimfiler_expand_or_edit)
-	autocmd FileType vimfiler nmap <buffer> l     <Plug>(vimfiler_expand_or_edit)
-	autocmd FileType vimfiler nmap <buffer> H     ggk<CR>
+	autocmd FileType vimfiler nmap         <buffer> <C-j> <Plug>(vimfiler_cd_or_edit)
+	autocmd FileType vimfiler nmap         <buffer> <C-h> <C-h>
+	autocmd FileType vimfiler nmap         <buffer> h     <Plug>(vimfiler_expand_or_edit)
+	autocmd FileType vimfiler nmap         <buffer> l     <Plug>(vimfiler_expand_or_edit)
+	autocmd FileType vimfiler nmap         <buffer> H     <Plug>(vimfiler_pushd)ggk<CR>
+	autocmd FileType vimfiler nmap <silent><buffer> L     <Plug>(vimfiler_popd)<CR><Plug>(vimfiler_popd)d:q<CR>
 
 	autocmd FileType w3m nnoremap         <buffer> H         <BS>
 	autocmd FileType w3m nnoremap <silent><buffer> <C-u>     :W3mAddressBar <CR>
