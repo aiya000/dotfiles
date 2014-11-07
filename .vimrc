@@ -339,7 +339,6 @@ NeoBundle        'mattn/favstar-vim'
 NeoBundle        'ujihisa/unite-colorscheme'
 NeoBundle        'Shougo/vinarise.vim'
 NeoBundle        'mattn/gist-vim'
-NeoBundle        'vim-scripts/Align'
 NeoBundle        'thinca/vim-ref'
 NeoBundle        'ujihisa/ref-hoogle'
 NeoBundleLazy    'vim-jp/vital.vim'
@@ -387,7 +386,7 @@ NeoBundle        'vim-jp/vimdoc-ja'
 NeoBundle        'mattn/googletranslate-vim'
 NeoBundle        'Shougo/vimfiler.vim'
 NeoBundleLazy    'rbtnn/game_engine.vim'
-NeoBundle        'vim-scripts/AutoComplPop'
+NeoBundle        'h1mesuke/vim-alignta'
 
 
 call neobundle#end()
@@ -768,14 +767,6 @@ if !s:isDosWin
 endif
 let g:vimfiler_file_icon = ' '
 let g:vimfiler_ignore_pattern = ''
-
-"}}}
-"--- AutoComplPop ---"{{{
-
-augroup plugin_pref
-	autocmd FileType *     AcpEnable
-	autocmd FileType unite AcpDisable
-augroup END
 
 "}}}
 "--- For Private ---"{{{
@@ -1463,15 +1454,14 @@ augroup key_map
 	"autocmd FileType * nnoremap ci) f)ci)
 
 	"-- With Prefixes --"
-	autocmd FileType * nnoremap <silent>         <leader>t  :Translate<CR>
-
-	" for case already mapped keys by plugin (ex:vimshell => <C-l> : clean)
+	" for case duplicated maps by plugin map (ex:vimshell => <C-l> : clean)
 	autocmd FileType * nnoremap                  <C-k><C-n> gt
 	autocmd FileType * nnoremap                  <C-k><C-p> gT
+	autocmd FileType * nnoremap <silent><expr>   <C-k><C-s> ':OverCommandLine<CR>s/\<' . expand('<cword>') . '\>/'
 	autocmd FileType * inoremap                  <C-k><C-l> <Esc>
 	autocmd FileType * inoremap                  <C-k><C-k> <C-o>"_d$
 	autocmd FileType * inoremap                  <C-k><C-z> <C-o>:normal! <C-z><CR>
-	" Customize with prefix (veneration... digraphs.)
+	" Customize with prefix
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-f> :Unite -ignorecase outline:foldings<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-m> :Unite mapping<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-b> :Unite -ignorecase buffer<CR>
@@ -1510,8 +1500,9 @@ augroup key_map
 	autocmd FileType * nnoremap zk     zkzo
 
 	"-- With Plugins --"
-	autocmd FileType * nmap              <leader>w          <Plug>(openbrowser-open)
-	" baba-n!!
+	autocmd FileType * nmap              <leader>w <Plug>(openbrowser-open)
+	autocmd FileType * nnoremap <silent> <leader>t :Translate<CR>
+	" Visualize substitute target and new word (Increase Gravity!!)
 	autocmd FileType * nnoremap <silent> :%s/               :OverCommandLine<CR>%s/
 	autocmd FileType * nnoremap <silent> :s/                :OverCommandLine<CR>s/
 	autocmd FileType * vnoremap <silent> :s/                :OverCommandLine<CR>s/
@@ -1521,7 +1512,7 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> <leader>V          :VimShellBufferDir   -create<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>V  :tabnew<CR>:VimShell -create<CR>
 	" for vimfiler
-	autocmd FileType * nnoremap <silent> <leader>e          :VimFilerExplorer  -status -toggle<CR>
+	autocmd FileType * nnoremap <silent> <leader>e          :VimFilerExplorer  -status -parent -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>e  :VimFilerBufferDir -status -split -horizontal -force-quit<CR>
 	autocmd FileType * nnoremap <silent> <leader>E          :VimFilerBufferDir -status -force-quit<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>E  :VimFilerBufferDir -status -tab -force-quit<CR>
@@ -1532,8 +1523,6 @@ augroup key_map
 	autocmd FileType * nmap              #                  <Plug>(anzu-sharp-with-echo)zv
 	autocmd FileType * nmap              <C-w>*             <C-w><C-v><Plug>(anzu-star-with-echo)zv
 	autocmd FileType * nmap              <C-w>#             <C-w><C-v><Plug>(anzu-sharp-with-echo)zv
-	" for autocomplpop
-	autocmd FileType * inoremap <CR> <Esc>o
 augroup END
 
 

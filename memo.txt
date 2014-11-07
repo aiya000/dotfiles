@@ -1,3 +1,5 @@
+vim:ft=vim
+
 set suffixes+=.git,.hg,.svn,tags " Lower priority for wildmenu.
 set sidescrolloff=2
 if filereadable("/usr/bin/par") "{{{
@@ -47,14 +49,6 @@ Bundle 'https://github.com/tpope/vim-dispatch'
 Bundle 'AndrewRadev/switch.vim'
 Bundle 'edsono/vim-matchit'
 Bundle 'alpaca-tc/vim-endwise.git'
-
-Bundle 'Align'
-cohama        : L10 日本人なら Alignta おすすめ  11/01 23:16
-kazuakiM      : SQLUtilitiesの依存関係もあるのでAlignで良いと思われます > cohama  11/01 23:20
-
-" 編集しているファイルのディレクトリに自動で移動
-set autochdir
-set tags=tags;
 
 nnoremap <expr> s* ':%substitute/\<' . expand('<cword>') . '\>/'
 
