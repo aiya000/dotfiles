@@ -50,11 +50,6 @@ Bundle 'AndrewRadev/switch.vim'
 Bundle 'edsono/vim-matchit'
 Bundle 'alpaca-tc/vim-endwise.git'
 
-nnoremap <expr> s* ':%substitute/\<' . expand('<cword>') . '\>/'
-
-nmap y9 y$
-cohama        : L551 これは 9 を omap しておけば不要ですね。ついでに d とか c にも使えるようになるし  11/01 23:42
-
 let g:Align_xstrlen = 3
 
 incsearch.vim

@@ -387,6 +387,7 @@ NeoBundle        'mattn/googletranslate-vim'
 NeoBundle        'Shougo/vimfiler.vim'
 NeoBundleLazy    'rbtnn/game_engine.vim'
 NeoBundle        'h1mesuke/vim-alignta'
+NeoBundle        'haya14busa/incsearch.vim'
 
 
 call neobundle#end()
@@ -767,6 +768,11 @@ if !s:isDosWin
 endif
 let g:vimfiler_file_icon = ' '
 let g:vimfiler_ignore_pattern = ''
+
+"}}}
+"--- incsearch.vim ---"{{{
+
+IncSearchNoreMap <CR> <CR>
 
 "}}}
 "--- For Private ---"{{{
@@ -1523,6 +1529,10 @@ augroup key_map
 	autocmd FileType * nmap              #                  <Plug>(anzu-sharp-with-echo)zv
 	autocmd FileType * nmap              <C-w>*             <C-w><C-v><Plug>(anzu-star-with-echo)zv
 	autocmd FileType * nmap              <C-w>#             <C-w><C-v><Plug>(anzu-sharp-with-echo)zv
+	" for incsearch.vim
+	autocmd FileType * nmap              /                  <Plug>(incsearch-forward)
+	autocmd FileType * nmap              ?                  <Plug>(incsearch-backward)
+	autocmd FileType * nmap              g/                 <Plug>(incsearch-stay)
 augroup END
 
 
@@ -1683,7 +1693,7 @@ augroup plugin_pref
 	autocmd FileType vimfiler nmap         <buffer> <C-h> <C-h>
 	autocmd FileType vimfiler nmap         <buffer> h     <Plug>(vimfiler_expand_or_edit)
 	autocmd FileType vimfiler nmap         <buffer> l     <Plug>(vimfiler_expand_or_edit)
-	autocmd FileType vimfiler nmap         <buffer> H     <Plug>(vimfiler_pushd)ggk<CR>
+	autocmd FileType vimfiler nmap <silent><buffer> H     <Plug>(vimfiler_pushd)ggk<CR>
 	autocmd FileType vimfiler nmap <silent><buffer> L     <Plug>(vimfiler_popd)<CR><Plug>(vimfiler_popd)d:q<CR>
 
 	autocmd FileType w3m nnoremap         <buffer> H         <BS>
