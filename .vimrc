@@ -770,11 +770,6 @@ let g:vimfiler_file_icon = ' '
 let g:vimfiler_ignore_pattern = ''
 
 "}}}
-"--- incsearch.vim ---"{{{
-
-IncSearchNoreMap <CR> <CR>
-
-"}}}
 "--- For Private ---"{{{
 
 " Read Privacy Config
@@ -1380,7 +1375,7 @@ command! -nargs=1 Log VimConsoleLog <args>
 command! LogClear VimConsoleClear
 
 command! -nargs=*  Ghc      !runghc % <q-args>
-command!           Ghci     VimShellInteractive ghci
+command!           Ghci     enew!|VimShellInteractive ghci
 command!           Sghci    sp|VimShellInteractive ghci
 command!           Vghci    vsp|VimShellInteractive ghci
 command!           GhciTab  tabnew|VimShellInteractive ghci
@@ -1530,9 +1525,10 @@ augroup key_map
 	autocmd FileType * nmap              <C-w>*             <C-w><C-v><Plug>(anzu-star-with-echo)zv
 	autocmd FileType * nmap              <C-w>#             <C-w><C-v><Plug>(anzu-sharp-with-echo)zv
 	" for incsearch.vim
-	autocmd FileType * nmap              /                  <Plug>(incsearch-forward)
-	autocmd FileType * nmap              ?                  <Plug>(incsearch-backward)
-	autocmd FileType * nmap              g/                 <Plug>(incsearch-stay)
+	autocmd FileType * nmap <expr>       /                  foldclosed('.') > -1 ? 'zO<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
+	autocmd FileType * nmap <expr>       ?                  foldclosed('.') > -1 ? 'zO<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
+	autocmd FileType * nmap <expr>       g/                 foldclosed('.') > -1 ? 'zO<Plug>(incsearch-stay)'     : '<Plug>(incsearch-stay)'
+	autocmd VimEnter * IncSearchNoreMap  <C-j>              <CR>
 augroup END
 
 
@@ -1672,6 +1668,8 @@ augroup plugin_pref
 	autocmd FileType netrw nnoremap <silent><buffer> Q :q<CR>
 	autocmd FileType netrw nnoremap         <buffer> L G
 
+	autocmd FileType quickrun nnoremap <silent> Q :q<CR>
+
 	autocmd FileType tweetvim     nmap             <buffer> <leader>R <Plug>(tweetvim_action_remove_status)
 	autocmd FileType tweetvim     nmap             <buffer> <C-r>     <Plug>(tweetvim_action_reload)
 	autocmd FileType tweetvim     nnoremap <silent><buffer> s         :TweetVimSay<CR>
@@ -1688,6 +1686,9 @@ augroup plugin_pref
 	autocmd FileType vimshell imap     <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
 	autocmd FileType vimshell iunmap   <buffer> <C-p>
 	autocmd FileType vimshell iunmap   <buffer> <C-n>
+	autocmd FileType int-*    nmap     <buffer> Q          <Plug>(vimshell_int_exit)
+	autocmd FileType int-*    imap     <buffer> <C-l>      <C-o><C-l>
+	autocmd FileType int-*    imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
 
 	autocmd FileType vimfiler nmap         <buffer> <C-j> <Plug>(vimfiler_cd_or_edit)
 	autocmd FileType vimfiler nmap         <buffer> <C-h> <C-h>
