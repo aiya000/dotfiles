@@ -22,7 +22,6 @@ alias reload='source ~/.bash_profile && source ~/.bashrc && echo "bash source re
 alias vi='vim -u NONE --noplugin'
 alias gvi='gvim -u NONE -U NONE --noplugin'
 alias vimshell='vim -c VimShell'
-alias conshell='vim -c "ConqueTerm bash"'
 alias vim-record-startup="f=`mktemp` ; vim --startuptime vtime -- $f && rm $f"
 alias vimclearview='rm ~/.backup/vim_backup/view/* > /dev/null 2>&1'
 alias vimclearswp='rm ~/.backup/vim_backup/swp/* > /dev/null 2>&1'
@@ -35,8 +34,9 @@ alias twitter-public='vim -c TwitterPublic'
 alias tweet-public='vim -c TweetPublic'
 
 alias vimconfig='vim ~/.vimrc'
-alias vim-bash='vim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
-alias vim-bashprofile='vim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
+alias gvimconfig='vim ~/.gvimrc'
+alias vim-bashrc='vim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
+alias vim-bashpr='vim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
 
 # }}}
 # Shell Utils {{{

@@ -166,7 +166,7 @@ augroup extension_type
 	autocmd!
 augroup END
 
-augroup def_highlight
+augroup highlight_pref
 	autocmd!
 augroup END
 
@@ -805,7 +805,7 @@ set ambiwidth=double
 " Powered Up Syntax Highlight
 " {{{
 
-augroup def_highlight
+augroup highlight_pref
 	"autocmd Colorscheme * highlight Normal       cterm=NONE      ctermfg=Cyan
 	autocmd ColorScheme * highlight Visual       cterm=underline ctermfg=White ctermbg=Cyan
 	autocmd ColorScheme * highlight IncSearch                    ctermfg=Black ctermbg=Cyan
@@ -821,14 +821,14 @@ augroup def_highlight
 	autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 
 	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427}
-	autocmd VimEnter,WinEnter * match RcEmSpace /　/
+	autocmd VimEnter    * match RcEmSpace /　/
 	autocmd ColorScheme * highlight RcEmSpace cterm=standout ctermfg=LightBlue
 
-	autocmd VimEnter,WinEnter * match RcMyHint /\s*"@\w\+/
+	autocmd VimEnter    * match RcMyHint /\s*"@\w\+/
 	autocmd ColorScheme * highlight RcMyHint cterm=standout ctermfg=Red
 augroup END
 
-augroup def_highlight
+augroup highlight_pref
 	autocmd InsertEnter * highlight StatusLine ctermfg=Black ctermbg=Cyan
 	autocmd InsertLeave * highlight StatusLine ctermfg=Cyan  ctermbg=Black
 augroup END
@@ -1448,17 +1448,11 @@ augroup key_map
 	autocmd FileType * vnoremap <C-l> <Esc>
 	autocmd FileType * cnoremap <C-l> <Esc>
 
-	"TODO: omap
-	"autocmd FileType * nnoremap ci[ f[ci[
-	"autocmd FileType * nnoremap ci] f]ci]
-	"autocmd FileType * nnoremap ci( f(ci(
-	"autocmd FileType * nnoremap ci) f)ci)
-
 	"-- With Prefixes --"
 	" for case duplicated maps by plugin map (ex:vimshell => <C-l> : clean)
 	autocmd FileType * nnoremap                  <C-k><C-n> gt
 	autocmd FileType * nnoremap                  <C-k><C-p> gT
-	autocmd FileType * nnoremap <silent><expr>   <C-k><C-s> ':OverCommandLine<CR>s/\<' . expand('<cword>') . '\>/'
+	autocmd FileType * nnoremap <silent><expr>   <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
 	autocmd FileType * inoremap                  <C-k><C-l> <Esc>
 	autocmd FileType * inoremap                  <C-k><C-k> <C-o>"_d$
 	autocmd FileType * inoremap                  <C-k><C-z> <C-o>:normal! <C-z><CR>
