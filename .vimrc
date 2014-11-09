@@ -388,6 +388,7 @@ NeoBundle        'Shougo/vimfiler.vim'
 NeoBundleLazy    'rbtnn/game_engine.vim'
 NeoBundle        'h1mesuke/vim-alignta'
 NeoBundle        'haya14busa/incsearch.vim'
+NeoBundle        'thinca/vim-scouter'
 
 
 call neobundle#end()
@@ -817,12 +818,8 @@ augroup highlight_pref
 	autocmd ColorScheme * highlight LineNr                       ctermfg=Blue
 	autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 
-	"@Incompleted('not functioned'){Ubuntu:vim_7.4.427}
-	autocmd VimEnter    * match RcEmSpace /　/
-	autocmd ColorScheme * highlight RcEmSpace cterm=standout ctermfg=LightBlue
-
-	autocmd VimEnter    * match RcMyHint /\s*"@\w\+/
-	autocmd ColorScheme * highlight RcMyHint cterm=standout ctermfg=Red
+	autocmd ColorScheme       * highlight RcEmSpace cterm=standout ctermfg=LightBlue
+	autocmd VimEnter,WinEnter * call matchadd('RcEmSpace', '　')
 augroup END
 
 augroup highlight_pref
@@ -1410,6 +1407,7 @@ augroup key_map
 	autocmd FileType * cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ?'':getcmdline()[:getcmdpos()-2]<CR>
 
 	" for incsearch.vim
+	autocmd FileType * IncSearchNoreMap <C-j> <CR>
 	autocmd FileType * IncSearchNoreMap <C-b> <Left>
 	autocmd FileType * IncSearchNoreMap <C-f> <Right>
 	autocmd FileType * IncSearchNoreMap <C-a> <Home>
@@ -1509,7 +1507,6 @@ augroup key_map
 	autocmd FileType * nmap <expr>       /                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
 	autocmd FileType * nmap <expr>       ?                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
 	autocmd FileType * nmap <expr>       g/                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-stay)'     : '<Plug>(incsearch-stay)'
-	autocmd VimEnter * IncSearchNoreMap  <C-j>              <CR>
 augroup END
 
 
@@ -1702,26 +1699,24 @@ augroup file_event
 augroup END
 
 
+"@Incompleted('when window split not functioned')
 " Set for "Vi Improved"
 augroup extension_type
-	autocmd VimEnter,WinEnter * syntax match RcHint /\s*"@\w\+/
-	autocmd FileType vim highlight RcHint cterm=standout ctermfg=DarkYellow
+	autocmd FileType *   highlight RcMyHint cterm=standout ctermfg=DarkYellow
+	autocmd FileType vim call matchadd('RcMyHint', '\s*"\zs@\w\+\ze')
 augroup END
 
 " Set for C-Sharp
 augroup extension_type
-	"autocmd VimEnter,WinEnter    *  syntax match TypeInference /\<var\>/
-	"autocmd FileType             cs highlight TypeInference cterm=bold ctermfg=11
-	autocmd VimEnter,WinEnter * syntax match Identifier /\<var\>/
-	autocmd FileType cs highlight Identifier
+	autocmd FileType *  highlight TypeInference cterm=bold ctermfg=11
+	autocmd FileType cs call matchadd('TypeInference', '\<var\>')
 augroup END
 
 " Set for Haskell
 augroup extension_type
-	"@Experiment('RcHfSpace /^\s\s*/ -> /^\s\+/')
-	autocmd VimEnter,WinEnter * syntax match RcHfSpace /^\s\+/
-	autocmd FileType haskell highlight RcHfSpace cterm=underline ctermfg=Cyan
-	autocmd FileType yesod setl ts=4 sw=4 et
+	autocmd FileType  *       highlight RcHeadHfSpace cterm=underline ctermfg=Cyan
+	autocmd FileType  haskell call matchadd('RcHeadHfSpace', '^\s\+')
+	autocmd FileType  yesod   setl ts=4 sw=4 et
 augroup END
 
 " Plain Text like types
