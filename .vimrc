@@ -1419,8 +1419,8 @@ augroup END
 " Bashnize Command Mode {{{
 
 augroup key_map
-	autocmd FileType * nmap     <C-j> <CR>
-	autocmd FileType * imap     <C-j> <CR>
+	autocmd FileType * nnoremap     <C-j> <CR>
+	autocmd FileType * inoremap     <C-j> <CR>
 
 	autocmd FileType * cnoremap <C-b> <Left>
 	autocmd FileType * cnoremap <C-f> <Right>
@@ -1429,6 +1429,14 @@ augroup key_map
 	autocmd FileType * cnoremap <C-d> <Del>
 	autocmd FileType * cnoremap <C-e> <End>
 	autocmd FileType * cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ?'':getcmdline()[:getcmdpos()-2]<CR>
+
+	" for incsearch.vim
+	autocmd FileType * IncSearchNoreMap <C-b> <Left>
+	autocmd FileType * IncSearchNoreMap <C-f> <Right>
+	autocmd FileType * IncSearchNoreMap <C-a> <Home>
+	autocmd FileType * IncSearchNoreMap <C-h> <Backspace>
+	autocmd FileType * IncSearchNoreMap <C-d> <Del>
+	autocmd FileType * IncSearchNoreMap <C-e> <End>
 augroup END
 
 " }}}
@@ -1468,7 +1476,7 @@ augroup key_map
 	autocmd FileType * nnoremap <silent>         <C-h>l          :so %<CR>
 	autocmd FileType * nnoremap <silent>         <C-h>r          :Resetf<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-w>      :setl wrap! wrap?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-Space>  :let __t=@/<CR>:s/\s\s\+/ /g<CR>:execute 'normal! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-Space>  :let __t=@/<CR>:s/\s\s\+/ /g<CR>:exe 'norm! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-p><C-l> :PutLongSeparator<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-p><C-s> :PutShortSeparator<CR>
 
