@@ -29,6 +29,18 @@ scriptencoding utf8
 
 
 "-------------------------"
+"       Initialize        "
+"-------------------------"
+" autcmd Groups {{{
+
+augroup gui_prefs
+	autocmd!
+augroup END
+
+"}}}
+
+
+"-------------------------"
 "        Parameter        "
 "-------------------------"
 "{{{
@@ -40,7 +52,7 @@ let s:isUnix    = has('unix')
 let s:isWindows = has('win32')
 
 let g:gvimrc['guifont']      = get(g:gvimrc, 'guifont', {})
-let g:gvimrc['guifont'].font = get(g:gvimrc, 'font', s:isWindows ? 'MS_Gothic' : 'Nimbus Mono L')
+let g:gvimrc['guifont'].font = get(g:gvimrc, 'font', s:isWindows ? 'MS_Gothic' : 'Andale Mono')
 let g:gvimrc['guifont'].size = get(g:gvimrc, 'size', s:isWindows ? ':h10' : ' 10')
 
 "}}}
@@ -87,7 +99,8 @@ command! DressUpColorMolokai
 "-------------------------"
 "{{{
 
-command! GVimConfig e $MYGVIMRC
+command! GVimConfig    e $MYGVIMRC
+command! GVImConfigTab tabnew | e $MYGVIMRC
 
 if s:isWindows
 	command! HighTransparence set transparency=140
@@ -104,7 +117,7 @@ endif
 "-------------------------"
 "{{{
 
-augroup def_highlight
+augroup highlight_pref
 	"autocmd Colorscheme * highlight Normal       gui=NONE      guifg=Cyan
 	"autocmd ColorScheme * highlight Visual       gui=underline guifg=White guibg=Cyan
 	"autocmd ColorScheme * highlight IncSearch                  guifg=Black guibg=Cyan
@@ -121,12 +134,12 @@ augroup def_highlight
 
 
 	"@Bugs('Not Shown')
-	autocmd VimEnter,BufWinEnter * syntax match GrcEmSpace /　/
-	autocmd ColorScheme          * highlight GrcEmSpace guibg=White
+	autocmd VimEnter    * syntax match GrcEmSpace /　/
+	autocmd ColorScheme * highlight GrcEmSpace guibg=White
 
 	"@Bugs('okasiisi is if &filetype timing')
-	autocmd VimEnter,BufWinEnter * syntax match GrcHint /\s*"@\w\+/
-	autocmd ColorScheme          *
+	autocmd VimEnter    * syntax match GrcHint /\s*"@\w\+/
+	autocmd ColorScheme *
 	\	if &filetype == 'vim'
 	\|		highlight    GrcHint gui=bold guifg=#ef5939
 	\|	endif
@@ -135,7 +148,11 @@ augroup def_highlight
 augroup END
 
 
-colorscheme evening
+if s:isUnix
+	colorscheme molokai
+elseif s:isWindows
+	colorscheme evening
+endif
 
 "}}}
 
