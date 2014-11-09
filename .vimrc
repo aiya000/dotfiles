@@ -602,10 +602,11 @@ endif
 " }}}
 "--- TweetVim ---"{{{
 
+let g:tweetvim_async_post = 1
+
 augroup plugin_pref
 	autocmd FileType         tweetvim     setl wrap
 	autocmd FileType         tweetvim_say setl ts=2 sw=2 et
-	autocmd BufRead,BufEnter tweetvim_say let g:tweetvim_async_post = exists('*vimproc#system')
 augroup END
 
 "}}}
@@ -714,9 +715,7 @@ call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
 "}}}
 "--- vim-ref ---" {{{
 
-augroup plugin_pref
-	autocmd FileType ref-* let g:ref_use_vimproc = exists('*vimproc#system')
-augroup END
+let g:ref_use_vimproc = 1
 
 " }}}
 "--- ref-dicts-en ---" {{{
@@ -753,10 +752,8 @@ endif
 let g:memolist_memo_suffix = 'md'
 let g:memolist_prompt_tags = 1
 let g:memolist_prompt_categories = 1
-let g:memolist_unite = exists(':Unite')
-if g:memolist_unite
-	let g:memolist_unite_option = '-auto-preview -tab'
-endif
+let g:memolist_unite = 1
+let g:memolist_unite_option = '-auto-preview -tab'
 
 "}}}
 "--- vimfiler.vim ---"{{{
@@ -791,7 +788,7 @@ syntax enable
 set number nowrap hlsearch list scrolloff=6
 let s:listchars = s:isDosWin
 	\	? 'tab:> ,trail:_,extends:>,precedes:<,nbsp:%'
-	\	: 'tab:» ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
+	\	: 'tab:› ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
 
 " Status Bar always displayed
 set laststatus=2
@@ -907,26 +904,14 @@ if v:version < 704  " Is this suitable condition ?
 	set backspace=indent,eol,start
 endif
 
-" Auto new line enter is off
-set textwidth=0
+" Input Sets
+set textwidth=0 tabstop=4 shiftwidth=4
 
 " C Type Auto Indent on
 set autoindent cindent
 
-" Use Regex Search Engine
-"set regexpengine=0
-
 " Incremental Searching
-set incsearch
-
-" Do not return file top when completed searching
-"set nowrapscan
-
-" Tag Jump Quickly
-"set tagbsearch
-
-" Manually and Automatic Indent width
-set tabstop=4 shiftwidth=4
+"set incsearch
 
 " Fold Text with foldmarker and fold sets
 set foldmethod=marker
@@ -952,14 +937,8 @@ set visualbell
 " Disable Auto Commentalize New Line
 set formatoptions-=ro
 
-" Split Method on BufOpen
-"set splitbelow splitright
-
 " Ignore case on Insert completion
 set noinfercase
-
-" Unlimited Cursor move in screen
-"set virtualedit=all
 
 " No timeout key maps
 set notimeout
@@ -1005,9 +984,6 @@ set tags=./tags,~/tags
 
 " Explore wake up default dir
 set browsedir=buffer
-
-" Load Xmode<C-k> completion dictionary
-"set dictionary=/path/to/dir
 
 " Set spell lang
 if exists('+spelllang')
@@ -1065,7 +1041,7 @@ augroup file_event
 augroup END
 
 augroup key_event
-	"autocmd UserGettingBored * echo 'Naijan!!!!'
+	"autocmd UserGettingBored * echo "What's this !?"
 
 	" Set ignorecase completion only insert mode
 	autocmd InsertEnter * setl ignorecase
@@ -1146,13 +1122,13 @@ function! s:random_int(max) "{{{
 	let l:matchEnd = matchend(reltimestr(reltime()), '\d\+\.') + 1
 	return reltimestr(reltime())[l:matchEnd :] % (a:max + 1)
 endfunction "}}}
-command! -nargs=1 RandomPut execute 'normal! a' s:random_int(<q-args>)
+command! -nargs=1 PutRandom execute 'normal! a' . s:random_int(<q-args>)
 
 
 " Time Watcher  $ @See('http://leafcage.hateblo.jp/entry/2013/08/02/001600')
 command! TimerStart let  s:startTime = reltime()
 command! TimerEcho  echo reltimestr( reltime(s:startTime) )
-command! TimerPut   execute 'normal! o' reltimestr(reltime(s:startTime))
+command! TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
 
 
 "}}}
@@ -1253,10 +1229,12 @@ command! PutHtmlBase call s:put_html_base()
 
 "@Incompleted('"+" deleted in sql sytax')
 "@Code('Select it, and execute this.')
+" {{{
 "  $ "SELECT *" +
 "  $ " FROM table;";
-"  Yank => SELECT * FROM table;
-function! s:sql_yank_normalize() range "{{{
+"  Yank => SELECT * FROM table; 
+
+function! s:sql_yank_normalize() range 
 	let sql = ""
 	for i in range(a:firstline, a:lastline)
 		let line = getline(i)
@@ -1267,7 +1245,8 @@ function! s:sql_yank_normalize() range "{{{
 		let sql .= lineOfSql . "\n"
 	endfor
 	let @" = substitute(sql, "\s\s\+", " ", 'g')
-endfunction "}}}
+endfunction
+" }}}
 command! -range SqlCopy :<line1>,<line2>call s:sql_yank_normalize()
 
 " }}}
@@ -1419,8 +1398,8 @@ augroup END
 " Bashnize Command Mode {{{
 
 augroup key_map
-	autocmd FileType * nnoremap     <C-j> <CR>
-	autocmd FileType * inoremap     <C-j> <CR>
+	autocmd FileType * nmap     <C-j> <CR>
+	autocmd FileType * imap     <C-j> <CR>
 
 	autocmd FileType * cnoremap <C-b> <Left>
 	autocmd FileType * cnoremap <C-f> <Right>
@@ -1444,7 +1423,7 @@ augroup END
 
 " To All buffers
 augroup key_map
-	" God Of The Vim
+	" ✠ God Of The Vim
 	autocmd FileType * nnoremap Q gQ
 
 	"-- Overwrite mapping --"
