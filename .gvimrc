@@ -1,6 +1,5 @@
 scriptencoding utf8
 
-
 "-------------------
 "--  Recipe Menu  --
 "-------------------
@@ -41,7 +40,7 @@ let s:isUnix    = has('unix')
 let s:isWindows = has('win32')
 
 let g:gvimrc['guifont']      = get(g:gvimrc, 'guifont', {})
-let g:gvimrc['guifont'].font = get(g:gvimrc, 'font', s:isWindows ? 'MS_Gothic' : 'Monospace')
+let g:gvimrc['guifont'].font = get(g:gvimrc, 'font', s:isWindows ? 'MS_Gothic' : 'Nimbus Mono L')
 let g:gvimrc['guifont'].size = get(g:gvimrc, 'size', s:isWindows ? ':h10' : ' 10')
 
 "}}}
@@ -52,11 +51,7 @@ let g:gvimrc['guifont'].size = get(g:gvimrc, 'size', s:isWindows ? ':h10' : ' 10
 "-------------------------"
 "{{{
 
-set guioptions-=T
-set guioptions-=m
-set guioptions-=e
-set guioptions-=r
-set guioptions-=L
+set guioptions-=TmerL
 set guioptions+=c
 set winaltkeys=no
 
@@ -71,6 +66,7 @@ let &guifontwide = g:gvimrc.guifont['font'] . g:gvimrc.guifont['size']
 "-------------------------"
 "{{{
 
+" DressUp kawaii-vim
 command! DressUpColorEvening
 \	colorscheme evening
 \|	if s:isWindows
@@ -82,23 +78,6 @@ command! DressUpColorMolokai
 \|	if s:isWindows
 \|		set transparency=255
 \|	endif
-
-
-command! FontSizeUp
-	\	let g:gvimrc.guifont['size'] += 1
-	\|	let &guifont     = g:gvimrc.guifont['font'] .':h'. g:gvimrc.guifont['size']
-	\|	let &guifontwide = g:gvimrc.guifont['font'] .':h'. g:gvimrc.guifont['size']
-
-command! FontSizeDown
-	\	let g:gvimrc.guifont['size'] -= 1
-	\|	let &guifont     = g:gvimrc.guifont['font'] .':h'. g:gvimrc.guifont['size']
-	\|	let &guifontwide = g:gvimrc.guifont['font'] .':h'. g:gvimrc.guifont['size']
-
-command! FontSizeDefault
-	\	let g:gvimrc.guifont['size'] = 10
-	\|	let &guifont     = g:gvimrc.guifont['font'] .':h'. g:gvimrc.guifont['size']
-	\|	let &guifontwide = g:gvimrc.guifont['font'] .':h'. g:gvimrc.guifont['size']
-
 
 "}}}
 
@@ -173,14 +152,6 @@ let g:tweetvim_display_icon = 1
 "--- J6uil ---"{{{
 
 let g:J6uil_display_icon = 1
-
-"}}}
-"--- submode ---"{{{
-
-call submode#enter_with('font_size', 'n', '', '<C-s>f', '<NOP>')
-call submode#map('font_size', 'n', '', ';', ':FontSizeUp<CR>')
-call submode#map('font_size', 'n', '', '-', ':FontSizeDown<CR>')
-call submode#map('font_size', 'n', '', '=', ':FontSizeDefault<CR>')
 
 "}}}
 

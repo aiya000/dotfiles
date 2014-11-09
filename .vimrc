@@ -796,7 +796,7 @@ let s:listchars = s:isDosWin
 " Status Bar always displayed
 set laststatus=2
 
-" Status Bar format $ @See http://sourceforge.jp/magazine/07/11/06/0151231
+" Status Bar format $ @See('http://sourceforge.jp/magazine/07/11/06/0151231')
 set statusline=%F%m\%=[FileType=%y][Format=%{&ff}]
 
 " ☆ Fix View 2byte Code (Not support gnome-terminal)
@@ -852,7 +852,7 @@ set noruler
 " Hard Conceal
 set conceallevel=2
 
-" Spatto view tabline $ See('http://d.hatena.ne.jp/thinca/20111204/1322932585')
+" Spatto view tabline $ @See('http://d.hatena.ne.jp/thinca/20111204/1322932585')
 function! s:tabpage_label(n) "{{{
 	let title = gettabvar(a:n, 'title')
 	if title !=# ''
@@ -1525,9 +1525,9 @@ augroup key_map
 	autocmd FileType * nmap              <C-w>*             <C-w><C-v><Plug>(anzu-star-with-echo)zv
 	autocmd FileType * nmap              <C-w>#             <C-w><C-v><Plug>(anzu-sharp-with-echo)zv
 	" for incsearch.vim
-	autocmd FileType * nmap <expr>       /                  foldclosed('.') > -1 ? 'zO<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
-	autocmd FileType * nmap <expr>       ?                  foldclosed('.') > -1 ? 'zO<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
-	autocmd FileType * nmap <expr>       g/                 foldclosed('.') > -1 ? 'zO<Plug>(incsearch-stay)'     : '<Plug>(incsearch-stay)'
+	autocmd FileType * nmap <expr>       /                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
+	autocmd FileType * nmap <expr>       ?                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
+	autocmd FileType * nmap <expr>       g/                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-stay)'     : '<Plug>(incsearch-stay)'
 	autocmd VimEnter * IncSearchNoreMap  <C-j>              <CR>
 augroup END
 
@@ -1568,7 +1568,6 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
 	"autocmd FileType * xnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * xnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
-	"
 	function! s:toggle_case() "{{{
 		let pos  = getpos('.')
 
