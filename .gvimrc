@@ -138,15 +138,12 @@ augroup highlight_pref
 
 
 	"@Bugs('Not Shown')
-	autocmd VimEnter    * syntax match GrcEmSpace /　/
-	autocmd ColorScheme * highlight GrcEmSpace guibg=White
+	autocmd FileType *   highlight GrcEmSpace guibg=White
+	autocmd FileType vim call matchadd('GrcEmSpace', '　')
 
 	"@Bugs('okasiisi is if &filetype timing')
-	autocmd VimEnter    * syntax match GrcHint /\s*"@\w\+/
-	autocmd ColorScheme *
-	\	if &filetype == 'vim'
-	\|		highlight    GrcHint gui=bold guifg=#ef5939
-	\|	endif
+	autocmd FileType *   highlight GrcHint gui=bold guifg=#ef5939
+	autocmd FileType vim call matchadd('GrcHint', '\s*"\zs@\w\+\ze')
 
 	autocmd ColorScheme * highlight CursorLine gui=underline guifg=cyan guibg=NONE
 augroup END
