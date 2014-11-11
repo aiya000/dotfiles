@@ -137,15 +137,10 @@ augroup highlight_pref
 	"autocmd ColorScheme * highlight CursorLine   gui=underline guifg=Cyan
 
 
-	"@Bugs('Not Shown')
-	autocmd FileType *   highlight GrcEmSpace guibg=White
-	autocmd FileType vim call matchadd('GrcEmSpace', '　')
-
-	"@Bugs('okasiisi is if &filetype timing')
-	autocmd FileType *   highlight GrcHint gui=bold guifg=#ef5939
-	autocmd FileType vim call matchadd('GrcHint', '\s*"\zs@\w\+\ze')
-
 	autocmd ColorScheme * highlight CursorLine gui=underline guifg=cyan guibg=NONE
+
+	autocmd ColorScheme       * highlight GrcEmSpace guibg=White
+	autocmd VimEnter,WinEnter * call matchadd('GrcEmSpace', '　')
 augroup END
 
 
@@ -170,6 +165,35 @@ let g:tweetvim_display_icon = 1
 "--- J6uil ---"{{{
 
 let g:J6uil_display_icon = 1
+
+"}}}
+
+
+"-------------------------"
+"        File_Types       "
+"-------------------------"
+"{{{
+
+"@Incompleted('when window split not functioned')
+" Set for "Vi Improved"
+augroup extension_type
+	autocmd FileType *   highlight GrcHint gui=bold guifg=#ef5939
+	autocmd FileType vim call matchadd('GrcHint', '\s*"\zs@\w\+(.*)\ze')
+augroup END
+
+"@Incompleted('not functioned'){win-kaoriya}
+" Set for C-Sharp
+augroup extension_type
+	autocmd FileType *  highlight GrcTypeInference cterm=bold ctermfg=11
+	autocmd FileType cs call matchadd('GrcTypeInference', '\<var\>')
+augroup END
+
+" Set for Haskell
+augroup extension_type
+	autocmd FileType *       highlight GrcHeadHfSpace cterm=underline ctermfg=Cyan
+	autocmd FileType haskell call matchadd('GrcHeadHfSpace', '^\s\+')
+	autocmd FileType yesod   setl ts=4 sw=4 et
+augroup END
 
 "}}}
 

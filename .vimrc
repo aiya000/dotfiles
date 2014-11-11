@@ -789,7 +789,9 @@ syntax enable
 set number nowrap hlsearch list scrolloff=6
 let s:listchars = s:isDosWin
 	\	? 'tab:> ,trail:_,extends:>,precedes:<,nbsp:%'
-	\	: 'tab:› ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
+	\	: s:isUnix
+	\		? 'tab:› ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
+	\		: 'tab:» ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
 
 " Status Bar always displayed
 set laststatus=2
@@ -817,15 +819,20 @@ augroup highlight_pref
 	autocmd ColorScheme * highlight StatusLineNC                 ctermfg=Blue
 	autocmd ColorScheme * highlight LineNr                       ctermfg=Blue
 	autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
+augroup END
 
+
+augroup highlight_pref
 	autocmd ColorScheme       * highlight RcEmSpace cterm=standout ctermfg=LightBlue
 	autocmd VimEnter,WinEnter * call matchadd('RcEmSpace', '　')
 augroup END
+
 
 augroup highlight_pref
 	autocmd InsertEnter * highlight StatusLine ctermfg=Black ctermbg=Cyan
 	autocmd InsertLeave * highlight StatusLine ctermfg=Cyan  ctermbg=Black
 augroup END
+
 
 nohlsearch
 
@@ -1700,33 +1707,25 @@ augroup END
 
 
 "@Incompleted('when window split not functioned')
-" Set for "Vi Improved"
 augroup extension_type
+	" Set for "Vi Improved"
 	autocmd FileType *   highlight RcMyHint cterm=standout ctermfg=DarkYellow
-	autocmd FileType vim call matchadd('RcMyHint', '\s*"\zs@\w\+\ze')
-augroup END
+	autocmd FileType vim call matchadd('RcMyHint', '\s*"\zs@\w\+(.*)\ze')
 
-" Set for C-Sharp
-augroup extension_type
-	autocmd FileType *  highlight TypeInference cterm=bold ctermfg=11
-	autocmd FileType cs call matchadd('TypeInference', '\<var\>')
-augroup END
+	" Set for C-Sharp
+	autocmd FileType *  highlight RcTypeInference cterm=bold ctermfg=11
+	autocmd FileType cs call matchadd('RcTypeInference', '\<var\>')
 
-" Set for Haskell
-augroup extension_type
-	autocmd FileType  *       highlight RcHeadHfSpace cterm=underline ctermfg=Cyan
-	autocmd FileType  haskell call matchadd('RcHeadHfSpace', '^\s\+')
-	autocmd FileType  yesod   setl ts=4 sw=4 et
-augroup END
+	" Set for Haskell
+	autocmd FileType *       highlight RcHeadHfSpace cterm=underline ctermfg=Cyan
+	autocmd FileType haskell call matchadd('RcHeadHfSpace', '^\s\+')
+	autocmd FileType yesod   setl ts=4 sw=4 et
 
-" Plain Text like types
-augroup extension_type
+	" Plain Text like types
 	autocmd FileType markdown,text    setl ts=2 sw=2 et
 	autocmd FileType git-log.git-diff setl nolist
-augroup END
 
-" FileTypes commentstrings
-augroup extension_type
+	" FileTypes commentstrings
 	autocmd FileType vim                let &commentstring = ' "%s'
 	autocmd FileType c,cpp,java,cs      let &commentstring = " /*%s*/"
 	autocmd FileType haskell            let &commentstring = " --%s"
