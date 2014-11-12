@@ -1472,6 +1472,7 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> <C-w>T     :tabclose<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bd    :bd<CR>
 	autocmd FileType * nnoremap <silent> <C-w>Bd    :bd!<CR>
+	autocmd FileType * nnoremap <silent> <C-w>C     :hide<CR>
 	autocmd FileType * nnoremap <silent> <C-w><C-w> :w<CR>
 	function! s:buf_open_new_tab() "{{{
 		let l:lnum = line('.')
