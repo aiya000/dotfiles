@@ -1456,8 +1456,8 @@ augroup key_map
 	autocmd FileType * cnoremap                  <C-k><C-n>      <Down>
 
 	autocmd FileType * nnoremap <silent>         <C-h><C-r>      :Reload<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-l>      :noh<CR>
-	autocmd FileType * nnoremap <silent>         <C-h>l          :so %<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-l>      :nohlsearch<CR>
+	autocmd FileType * nnoremap <silent>         <C-h>l          :source %<CR>
 	autocmd FileType * nnoremap <silent>         <C-h>r          :Resetf<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-w>      :setl wrap! wrap?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-Space>  :let __t=@/<CR>:s/\s\s\+/ /g<CR>:exe 'norm! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
@@ -1466,7 +1466,7 @@ augroup key_map
 
 	"-- Customize --"
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
-	autocmd FileType * nnoremap          q:    :digraphs<CR>   " Oh, digraphs!
+	autocmd FileType * nnoremap          q:    :register<CR>
 	" for window or buffer
 	autocmd FileType * nnoremap <silent> <C-w>t     :tabnew<CR>
 	autocmd FileType * nnoremap <silent> <C-w>T     :tabclose<CR>
@@ -1474,6 +1474,7 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> <C-w>Bd    :bd!<CR>
 	autocmd FileType * nnoremap <silent> <C-w>C     :hide<CR>
 	autocmd FileType * nnoremap <silent> <C-w><C-w> :w<CR>
+	autocmd FileType * nnoremap <silent> <C-w>W     :wa<CR>
 	function! s:buf_open_new_tab() "{{{
 		let l:lnum = line('.')
 		execute 'tabnew| ' bufnr('%') . 'b'
@@ -1500,10 +1501,14 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> <leader>V          :VimShellBufferDir   -create<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>V  :tabnew<CR>:VimShell -create<CR>
 	" for vimfiler
-	autocmd FileType * nnoremap <silent> <leader>e          :VimFilerExplorer  -status -parent -toggle<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>e  :VimFilerBufferDir -status -split -horizontal -force-quit<CR>
-	autocmd FileType * nnoremap <silent> <leader>E          :VimFilerBufferDir -status -force-quit<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>E  :VimFilerBufferDir -status -tab -force-quit<CR>
+	autocmd FileType * nnoremap <silent> <leader>e          :Vexplore<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>e  :Sexplore<CR>
+	autocmd FileType * nnoremap <silent> <leader>E          :Explore<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>E  :Texplore<CR>
+	"autocmd FileType * nnoremap <silent> <leader>e          :VimFilerExplorer  -status -parent -toggle<CR>
+	"autocmd FileType * nnoremap <silent> <leader><leader>e  :VimFilerBufferDir -status -split -horizontal -force-quit<CR>
+	"autocmd FileType * nnoremap <silent> <leader>E          :VimFilerBufferDir -status -force-quit<CR>
+	"autocmd FileType * nnoremap <silent> <leader><leader>E  :VimFilerBufferDir -status -tab -force-quit<CR>
 	" for anzu-chan
 	autocmd FileType * nmap              n                  <Plug>(anzu-n-with-echo)zv
 	autocmd FileType * nmap              N                  <Plug>(anzu-N-with-echo)zv
