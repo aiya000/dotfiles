@@ -1657,6 +1657,7 @@ augroup plugin_pref
 	autocmd FileType netrw nmap             <buffer> H -
 	autocmd FileType netrw nnoremap <silent><buffer> Q :q<CR>
 	autocmd FileType netrw nnoremap         <buffer> L G
+	autocmd FileType netrw nnoremap <silent><buffer> ~ :Explore ~<CR>
 
 	autocmd FileType quickrun nnoremap <silent> Q :q<CR>
 
@@ -1712,7 +1713,7 @@ augroup file_event
 augroup END
 
 
-"@Incompleted('when window split not functioned')
+"@Incompleted('not functioned when window split')
 augroup extension_type
 	" Set for "Vi Improved"
 	autocmd FileType *   highlight RcMyHint cterm=standout ctermfg=DarkYellow
