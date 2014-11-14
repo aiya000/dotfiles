@@ -1655,9 +1655,9 @@ augroup plugin_pref
 	autocmd FileType help nnoremap <buffer> Q :q<CR>
 
 	autocmd FileType netrw nmap             <buffer> H -
-	autocmd FileType netrw nnoremap <silent><buffer> Q :q<CR>
-	autocmd FileType netrw nnoremap         <buffer> L G
-	autocmd FileType netrw nnoremap <silent><buffer> ~ :Explore ~<CR>
+	autocmd FileType netrw nnoremap         <buffer> L <NOP>
+	autocmd FileType netrw nnoremap <silent><buffer> Q :quit<CR>
+	autocmd FileType netrw nnoremap <silent><buffer> ~ :execute 'Explore' expand('~')<CR>
 
 	autocmd FileType quickrun nnoremap <silent> Q :q<CR>
 
@@ -1666,8 +1666,8 @@ augroup plugin_pref
 	autocmd FileType tweetvim     nnoremap <silent><buffer> s         :TweetVimSay<CR>
 	autocmd FileType tweetvim     nnoremap         <buffer> <C-a>     :TweetVimSwitchAccount<Space>
 	autocmd FileType tweetvim     nnoremap         <buffer> U         :TweetVimUserTimeline<Space>
-	autocmd FileType tweetvim     nnoremap <silent><buffer> Q         :bd<CR>
-	autocmd FileType tweetvim_say inoremap         <buffer> <C-i>     <C-i>
+	autocmd FileType tweetvim     nnoremap <silent><buffer> Q         :bdelete<CR>
+	autocmd FileType tweetvim_say inoremap         <buffer> <C-i>     <TAB>
 
 	autocmd FileType vimshell nunmap   <buffer> Q
 	autocmd FileType vimshell nunmap   <buffer> q
