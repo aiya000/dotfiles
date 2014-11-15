@@ -384,7 +384,6 @@ NeoBundleLazy    'mattn/excelview-vim'
 NeoBundle        'glidenote/memolist.vim'
 NeoBundle        'vim-jp/vimdoc-ja'
 NeoBundle        'mattn/googletranslate-vim'
-NeoBundle        'Shougo/vimfiler.vim'
 NeoBundleLazy    'rbtnn/game_engine.vim'
 NeoBundle        'h1mesuke/vim-alignta'
 NeoBundle        'haya14busa/incsearch.vim'
@@ -514,9 +513,6 @@ call neobundle#config('ref-dicts-en', {
 call neobundle#config('excelview-vim', {
 \	'depends'  : 'mattn/webapi-vim',
 \	'autoload' : {'commands' : 'ExcelView'}
-\})
-call neobundle#config('vimfiler.vim', {
-\	'depends' : 'Shougo/unite.vim'
 \})
 
 " }}}
@@ -755,17 +751,6 @@ let g:memolist_prompt_tags = 1
 let g:memolist_prompt_categories = 1
 let g:memolist_unite = 1
 let g:memolist_unite_option = '-auto-preview -tab'
-
-"}}}
-"--- vimfiler.vim ---"{{{
-
-if !s:isDosWin
-	let g:vimfiler_tree_opened_icon = '▾'
-	let g:vimfiler_tree_closed_icon = '▸'
-	let g:vimfiler_marked_file_icon = '*'
-endif
-let g:vimfiler_file_icon = ' '
-let g:vimfiler_ignore_pattern = ''
 
 "}}}
 "--- For Private ---"{{{
@@ -1500,15 +1485,11 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShell -split-command=sp  -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader>V          :VimShellBufferDir   -create<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>V  :tabnew<CR>:VimShell -create<CR>
-	" for vimfiler
+	" for netrw
 	autocmd FileType * nnoremap <silent> <leader>e          :Vexplore<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>e  :Sexplore<CR>
 	autocmd FileType * nnoremap <silent> <leader>E          :Explore<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>E  :Texplore<CR>
-	"autocmd FileType * nnoremap <silent> <leader>e          :VimFilerExplorer  -status -parent -toggle<CR>
-	"autocmd FileType * nnoremap <silent> <leader><leader>e  :VimFilerBufferDir -status -split -horizontal -force-quit<CR>
-	"autocmd FileType * nnoremap <silent> <leader>E          :VimFilerBufferDir -status -force-quit<CR>
-	"autocmd FileType * nnoremap <silent> <leader><leader>E  :VimFilerBufferDir -status -tab -force-quit<CR>
 	" for anzu-chan
 	autocmd FileType * nmap              n                  <Plug>(anzu-n-with-echo)zv
 	autocmd FileType * nmap              N                  <Plug>(anzu-N-with-echo)zv
@@ -1681,13 +1662,6 @@ augroup plugin_pref
 	autocmd FileType int-*    imap     <buffer> <C-l>      <C-o><C-l>
 	autocmd FileType int-*    imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
 
-	autocmd FileType vimfiler nmap         <buffer> <C-j> <Plug>(vimfiler_cd_or_edit)
-	autocmd FileType vimfiler nmap         <buffer> <C-h> <C-h>
-	autocmd FileType vimfiler nmap         <buffer> h     <Plug>(vimfiler_expand_or_edit)
-	autocmd FileType vimfiler nmap         <buffer> l     <Plug>(vimfiler_expand_or_edit)
-	autocmd FileType vimfiler nmap <silent><buffer> H     <Plug>(vimfiler_pushd)ggk<CR>
-	autocmd FileType vimfiler nmap <silent><buffer> L     <Plug>(vimfiler_popd)<CR><Plug>(vimfiler_popd)d:q<CR>
-
 	autocmd FileType w3m nnoremap         <buffer> H         <BS>
 	autocmd FileType w3m nnoremap <silent><buffer> <C-u>     :W3mAddressBar <CR>
 	autocmd FileType w3m nnoremap <silent><buffer> <leader>E :W3mShowExtenalBrowser <CR>
@@ -1757,7 +1731,6 @@ endfunction  " }}}
 augroup file_event
 	"@Bugs('not functioned ?')
 	autocmd FileType vimshell call s:unload_file_visit()
-	autocmd FileType vimfiler call s:unload_file_visit()
 augroup END
 
 "}}}
