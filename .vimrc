@@ -388,6 +388,7 @@ NeoBundleLazy    'rbtnn/game_engine.vim'
 NeoBundle        'h1mesuke/vim-alignta'
 NeoBundle        'haya14busa/incsearch.vim'
 NeoBundle        'thinca/vim-scouter'
+NeoBundle        'deris/vim-shot-f'
 
 
 call neobundle#end()
