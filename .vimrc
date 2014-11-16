@@ -252,10 +252,8 @@ function! s:fetch_neobundle()  " {{{
 		execute '!git clone http://github.com/Shougo/neobundle.vim ' s:neobundleDir
 		return
 	else
-		echohl Error
-		echo 'Sorry, You do not have git command.'
-		echo 'Cannot introduce NeoBundle.'
-		echohl None
+		echoerr 'Sorry, You do not have git command.'
+		echoerr 'Cannot introduce NeoBundle.'
 		throw 'neobundle.vim clone failed.'
 	endif
 endfunction  " }}}
@@ -819,9 +817,6 @@ augroup highlight_pref
 	autocmd InsertLeave * highlight StatusLine ctermfg=Cyan  ctermbg=Black
 augroup END
 
-
-nohlsearch
-
 " }}}
 
 " Set Color Scheme
@@ -876,6 +871,9 @@ set tabline=%!WithDelimitterTabLine()
 
 " Always view the changed line num in Ex-command
 set report=0
+
+" turn off highlight
+nohlsearch
 
 "}}}
 
@@ -1276,23 +1274,38 @@ command! Tweet              TweetVimSay
 
 "-- Private Account --"
 function! TwitterPrivateFunc() "{{{
-	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['priv_ac']
+	if !exists("g:vimrc.private['twitter']['priv_ac']")
+		echoerr "Not set env variable => g:vimrc.private['twitter']['priv_ac']"
+		return
+	endif
+
+	execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['priv_ac']
 	let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['priv_ac']
 	TweetVimHomeTimeline
 endfunction "}}}
 command! TwitterPrivate     call TwitterPrivateFunc()
 command! TwitterPrivateTab  tabnew | TwitterPrivate
 function! TweetPrivateFunc() "{{{
-	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['priv_ac']
+	if !exists("g:vimrc.private['twitter']['priv_ac']")
+		echoerr "Not set env variable => g:vimrc.private['twitter']['priv_ac']"
+		return
+	endif
+
+	execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['priv_ac']
 	TweetVimSay
+
 	"@Incompleted('wait here')
-	"execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
+	"execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
 command! TweetPrivate       call TweetPrivateFunc()
 
 
 "-- Public Account --"
 function! TwitterPublicFunc() "{{{
+	if !exists("g:vimrc.private['twitter']['publ_ac']")
+		echoerr "Not set env variable => g:vimrc.private['twitter']['publ_ac']"
+		return
+	endif
 	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['publ_ac']
 	let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['publ_ac']
 	TweetVimHomeTimeline
@@ -1300,8 +1313,14 @@ endfunction "}}}
 command! TwitterPublic      call TwitterPublicFunc()
 command! TwitterPublicTab   tabnew | TwitterPublic
 function! TweetPublicFunc() "{{{
+	if !exists("g:vimrc.private['twitter']['publ_ac']")
+		echoerr "Not set env variable => g:vimrc.private['twitter']['publ_ac']"
+		return
+	endif
+
 	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['publ_ac']
 	TweetVimSay
+
 	"@Incompleted('wait here')
 	"execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
@@ -1344,10 +1363,10 @@ command! -nargs=1 Log VimConsoleLog <args>
 command! LogClear VimConsoleClear
 
 command! -nargs=*  Ghc      !runghc % <q-args>
-command!           Ghci     enew!|VimShellInteractive ghci
-command!           Sghci    sp|VimShellInteractive ghci
-command!           Vghci    vsp|VimShellInteractive ghci
-command!           GhciTab  tabnew|VimShellInteractive ghci
+command!           Ghci     enew!  | VimShellInteractive ghci
+command!           Sghci    sp     | VimShellInteractive ghci
+command!           Vghci    vsp    | VimShellInteractive ghci
+command!           GhciTab  tabnew | VimShellInteractive ghci
 command! -nargs=1  Hoogle Ref hoogle <args>
 
 " }}}

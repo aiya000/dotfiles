@@ -51,6 +51,7 @@ alias pbcopy='xsel --clipboard --input'
 # }}}
 # Others {{{
 
+alias ghci-hi='ghci 2>&1 | HsColour -tty'
 alias mysql="mysql -E --pager='less -S -n -i -F -X'"
 
 if [ -n "`which git 2> /dev/null`" ] ; then
