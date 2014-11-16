@@ -252,10 +252,8 @@ function! s:fetch_neobundle()  " {{{
 		execute '!git clone http://github.com/Shougo/neobundle.vim ' s:neobundleDir
 		return
 	else
-		echohl Error
-		echo 'Sorry, You do not have git command.'
-		echo 'Cannot introduce NeoBundle.'
-		echohl None
+		echoerr 'Sorry, You do not have git command.'
+		echoerr 'Cannot introduce NeoBundle.'
 		throw 'neobundle.vim clone failed.'
 	endif
 endfunction  " }}}
@@ -384,11 +382,11 @@ NeoBundleLazy    'mattn/excelview-vim'
 NeoBundle        'glidenote/memolist.vim'
 NeoBundle        'vim-jp/vimdoc-ja'
 NeoBundle        'mattn/googletranslate-vim'
-NeoBundle        'Shougo/vimfiler.vim'
 NeoBundleLazy    'rbtnn/game_engine.vim'
 NeoBundle        'h1mesuke/vim-alignta'
 NeoBundle        'haya14busa/incsearch.vim'
 NeoBundle        'thinca/vim-scouter'
+NeoBundle        'deris/vim-shot-f'
 
 
 call neobundle#end()
@@ -514,9 +512,6 @@ call neobundle#config('ref-dicts-en', {
 call neobundle#config('excelview-vim', {
 \	'depends'  : 'mattn/webapi-vim',
 \	'autoload' : {'commands' : 'ExcelView'}
-\})
-call neobundle#config('vimfiler.vim', {
-\	'depends' : 'Shougo/unite.vim'
 \})
 
 " }}}
@@ -757,17 +752,6 @@ let g:memolist_unite = 1
 let g:memolist_unite_option = '-auto-preview -tab'
 
 "}}}
-"--- vimfiler.vim ---"{{{
-
-if !s:isDosWin
-	let g:vimfiler_tree_opened_icon = '▾'
-	let g:vimfiler_tree_closed_icon = '▸'
-	let g:vimfiler_marked_file_icon = '*'
-endif
-let g:vimfiler_file_icon = ' '
-let g:vimfiler_ignore_pattern = ''
-
-"}}}
 "--- For Private ---"{{{
 
 " Read Privacy Config
@@ -833,9 +817,6 @@ augroup highlight_pref
 	autocmd InsertLeave * highlight StatusLine ctermfg=Cyan  ctermbg=Black
 augroup END
 
-
-nohlsearch
-
 " }}}
 
 " Set Color Scheme
@@ -890,6 +871,9 @@ set tabline=%!WithDelimitterTabLine()
 
 " Always view the changed line num in Ex-command
 set report=0
+
+" turn off highlight
+nohlsearch
 
 "}}}
 
@@ -1290,23 +1274,38 @@ command! Tweet              TweetVimSay
 
 "-- Private Account --"
 function! TwitterPrivateFunc() "{{{
-	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['priv_ac']
+	if !exists("g:vimrc.private['twitter']['priv_ac']")
+		echoerr "Not set env variable => g:vimrc.private['twitter']['priv_ac']"
+		return
+	endif
+
+	execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['priv_ac']
 	let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['priv_ac']
 	TweetVimHomeTimeline
 endfunction "}}}
 command! TwitterPrivate     call TwitterPrivateFunc()
 command! TwitterPrivateTab  tabnew | TwitterPrivate
 function! TweetPrivateFunc() "{{{
-	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['priv_ac']
+	if !exists("g:vimrc.private['twitter']['priv_ac']")
+		echoerr "Not set env variable => g:vimrc.private['twitter']['priv_ac']"
+		return
+	endif
+
+	execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['priv_ac']
 	TweetVimSay
+
 	"@Incompleted('wait here')
-	"execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
+	"execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
 command! TweetPrivate       call TweetPrivateFunc()
 
 
 "-- Public Account --"
 function! TwitterPublicFunc() "{{{
+	if !exists("g:vimrc.private['twitter']['publ_ac']")
+		echoerr "Not set env variable => g:vimrc.private['twitter']['publ_ac']"
+		return
+	endif
 	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['publ_ac']
 	let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['publ_ac']
 	TweetVimHomeTimeline
@@ -1314,8 +1313,14 @@ endfunction "}}}
 command! TwitterPublic      call TwitterPublicFunc()
 command! TwitterPublicTab   tabnew | TwitterPublic
 function! TweetPublicFunc() "{{{
+	if !exists("g:vimrc.private['twitter']['publ_ac']")
+		echoerr "Not set env variable => g:vimrc.private['twitter']['publ_ac']"
+		return
+	endif
+
 	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['publ_ac']
 	TweetVimSay
+
 	"@Incompleted('wait here')
 	"execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
@@ -1358,10 +1363,10 @@ command! -nargs=1 Log VimConsoleLog <args>
 command! LogClear VimConsoleClear
 
 command! -nargs=*  Ghc      !runghc % <q-args>
-command!           Ghci     enew!|VimShellInteractive ghci
-command!           Sghci    sp|VimShellInteractive ghci
-command!           Vghci    vsp|VimShellInteractive ghci
-command!           GhciTab  tabnew|VimShellInteractive ghci
+command!           Ghci     enew!  | VimShellInteractive ghci
+command!           Sghci    sp     | VimShellInteractive ghci
+command!           Vghci    vsp    | VimShellInteractive ghci
+command!           GhciTab  tabnew | VimShellInteractive ghci
 command! -nargs=1  Hoogle Ref hoogle <args>
 
 " }}}
@@ -1500,15 +1505,11 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShell -split-command=sp  -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader>V          :VimShellBufferDir   -create<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>V  :tabnew<CR>:VimShell -create<CR>
-	" for vimfiler
+	" for netrw
 	autocmd FileType * nnoremap <silent> <leader>e          :Vexplore<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>e  :Sexplore<CR>
 	autocmd FileType * nnoremap <silent> <leader>E          :Explore<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>E  :Texplore<CR>
-	"autocmd FileType * nnoremap <silent> <leader>e          :VimFilerExplorer  -status -parent -toggle<CR>
-	"autocmd FileType * nnoremap <silent> <leader><leader>e  :VimFilerBufferDir -status -split -horizontal -force-quit<CR>
-	"autocmd FileType * nnoremap <silent> <leader>E          :VimFilerBufferDir -status -force-quit<CR>
-	"autocmd FileType * nnoremap <silent> <leader><leader>E  :VimFilerBufferDir -status -tab -force-quit<CR>
 	" for anzu-chan
 	autocmd FileType * nmap              n                  <Plug>(anzu-n-with-echo)zv
 	autocmd FileType * nmap              N                  <Plug>(anzu-N-with-echo)zv
@@ -1519,7 +1520,6 @@ augroup key_map
 	" for incsearch.vim
 	autocmd FileType * nmap <expr>       /                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
 	autocmd FileType * nmap <expr>       ?                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
-	autocmd FileType * nmap <expr>       g/                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-stay)'     : '<Plug>(incsearch-stay)'
 augroup END
 
 
@@ -1681,13 +1681,6 @@ augroup plugin_pref
 	autocmd FileType int-*    imap     <buffer> <C-l>      <C-o><C-l>
 	autocmd FileType int-*    imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
 
-	autocmd FileType vimfiler nmap         <buffer> <C-j> <Plug>(vimfiler_cd_or_edit)
-	autocmd FileType vimfiler nmap         <buffer> <C-h> <C-h>
-	autocmd FileType vimfiler nmap         <buffer> h     <Plug>(vimfiler_expand_or_edit)
-	autocmd FileType vimfiler nmap         <buffer> l     <Plug>(vimfiler_expand_or_edit)
-	autocmd FileType vimfiler nmap <silent><buffer> H     <Plug>(vimfiler_pushd)ggk<CR>
-	autocmd FileType vimfiler nmap <silent><buffer> L     <Plug>(vimfiler_popd)<CR><Plug>(vimfiler_popd)d:q<CR>
-
 	autocmd FileType w3m nnoremap         <buffer> H         <BS>
 	autocmd FileType w3m nnoremap <silent><buffer> <C-u>     :W3mAddressBar <CR>
 	autocmd FileType w3m nnoremap <silent><buffer> <leader>E :W3mShowExtenalBrowser <CR>
@@ -1757,7 +1750,6 @@ endfunction  " }}}
 augroup file_event
 	"@Bugs('not functioned ?')
 	autocmd FileType vimshell call s:unload_file_visit()
-	autocmd FileType vimfiler call s:unload_file_visit()
 augroup END
 
 "}}}

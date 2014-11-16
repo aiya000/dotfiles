@@ -191,7 +191,6 @@ augroup END
 augroup extension_type
 	autocmd FileType *       highlight GrcHeadHfSpace cterm=underline ctermfg=Cyan
 	autocmd FileType haskell call matchadd('GrcHeadHfSpace', '^\s\+')
-	autocmd FileType yesod   setl ts=4 sw=4 et
 augroup END
 
 "}}}
