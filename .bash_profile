@@ -78,16 +78,18 @@ export EDITOR=vim
 ###################
 # ReConfig PATHes #
 ###################
-export PATH=/bin:/sbin
-export PATH=$PATH:$HOME/bin:$HOME/sbin
-export PATH=$PATH:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
-export PATH=$PATH:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
+new_path=/bin:/sbin
+new_path=$new_path:$HOME/bin:$HOME/sbin
+new_path=$new_path:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+new_path=$new_path:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
 # For Cabal
 [ -d ~/.cabal ] \
-	&& export PATH=$PATH:$HOME/.cabal/bin
+	&& new_path=$new_path:$HOME/.cabal/bin
 # For pkgsrc
 [ -d ~/pkg ] \
-	&& export PATH=$PATH:$HOME/pkg/bin:$HOME/pkg/sbin
+	&& new_path=$new_path:$HOME/pkg/bin:$HOME/pkg/sbin
+export PATH=$new_path:$PATH
+unset new_path
 
 # With OS
 if [ $isUbuntu -eq 1 ] ; then

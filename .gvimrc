@@ -181,10 +181,9 @@ augroup extension_type
 	autocmd FileType vim call matchadd('GrcHint', '\s*"\zs@\w\+(.*)\ze')
 augroup END
 
-"@Incompleted('not functioned'){win-kaoriya}
 " Set for C-Sharp
 augroup extension_type
-	autocmd FileType *  highlight GrcTypeInference cterm=bold ctermfg=11
+	autocmd FileType *  highlight GrcTypeInference gui=none guifg=Cyan
 	autocmd FileType cs call matchadd('GrcTypeInference', '\<var\>')
 augroup END
 
