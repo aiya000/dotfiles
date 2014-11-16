@@ -1520,7 +1520,6 @@ augroup key_map
 	" for incsearch.vim
 	autocmd FileType * nmap <expr>       /                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
 	autocmd FileType * nmap <expr>       ?                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
-	autocmd FileType * nmap <expr>       g/                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-stay)'     : '<Plug>(incsearch-stay)'
 augroup END
 
 
