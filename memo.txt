@@ -1,11 +1,5 @@
 vim:ft=vim
 
-set suffixes+=.git,.hg,.svn,tags " Lower priority for wildmenu.
-set sidescrolloff=2
-if filereadable("/usr/bin/par") "{{{
-  set formatprg=par " Use par to format paragraphs. Default tw is 72.
-endif "}}}
-set cpoptions+=$ " Compatibility with vi options, when using nmode c or C,
 set mouse=a
 set mousemodel=popup " Windows at least got this right.
 set path+=.,,./**

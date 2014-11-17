@@ -37,6 +37,8 @@ scriptencoding utf8
 
 "-- View prev and next fold head text ...on echo or other buffer ?
 
+"-- unite unite-actions
+
 " }}}
 " Issues {{{
 
@@ -931,6 +933,9 @@ set noinfercase
 " No timeout key maps
 set notimeout
 
+" Do not set file name order priority on c-mode completion
+set suffixes=
+
 "}}}
 
 
@@ -1456,7 +1461,7 @@ augroup key_map
 	" Customize with prefix
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-f> :Unite -ignorecase outline:foldings<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-m> :Unite mapping<CR>
-	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-b> :Unite -ignorecase buffer<CR>
+	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-b> :Unite -ignorecase -start-insert buffer<CR>
 	autocmd FileType * cnoremap                  <C-k><C-p>      <Up>
 	autocmd FileType * cnoremap                  <C-k><C-n>      <Down>
 
@@ -1652,7 +1657,7 @@ augroup END
 
 " To Plugin buffers
 augroup plugin_pref
-	autocmd FileType help nnoremap <buffer> Q :q<CR>
+	autocmd FileType help nnoremap <buffer> Q :quit<CR>
 
 	autocmd FileType netrw nmap             <buffer> H -
 	autocmd FileType netrw nnoremap         <buffer> L <NOP>
@@ -1667,12 +1672,12 @@ augroup plugin_pref
 	autocmd FileType tweetvim     nnoremap         <buffer> <C-a>     :TweetVimSwitchAccount<Space>
 	autocmd FileType tweetvim     nnoremap         <buffer> U         :TweetVimUserTimeline<Space>
 	autocmd FileType tweetvim     nnoremap <silent><buffer> Q         :bdelete<CR>
-	autocmd FileType tweetvim_say inoremap         <buffer> <C-i>     <TAB>
+	autocmd FileType tweetvim_say inoremap         <buffer> <C-i>     <Tab>
 
 	autocmd FileType vimshell nunmap   <buffer> Q
 	autocmd FileType vimshell nunmap   <buffer> q
-	autocmd FileType vimshell nnoremap <buffer> gk <NOP>
-	autocmd FileType vimshell nnoremap <buffer> gj <NOP>
+	autocmd FileType vimshell nnoremap <buffer> gk         <NOP>
+	autocmd FileType vimshell nnoremap <buffer> gj         <NOP>
 	autocmd FileType vimshell imap     <buffer> <C-l>      <Plug>(vimshell_clear)
 	autocmd FileType vimshell imap     <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
 	autocmd FileType vimshell iunmap   <buffer> <C-p>
@@ -1685,10 +1690,10 @@ augroup plugin_pref
 	autocmd FileType w3m nnoremap <silent><buffer> <C-u>     :W3mAddressBar <CR>
 	autocmd FileType w3m nnoremap <silent><buffer> <leader>E :W3mShowExtenalBrowser <CR>
 
-	autocmd FileType J6uil     nnoremap <silent><buffer> Q     :bd<CR>
+	autocmd FileType J6uil     nnoremap <silent><buffer> Q     :bdelete<CR>
 	autocmd FileType J6uil_say nmap             <buffer> <C-j> <CR>  " Enter to Say
 
-	autocmd FileType git-log.git-diff nnoremap <silent><buffer> Q         :bd<CR>
+	autocmd FileType git-log.git-diff nnoremap <silent><buffer> Q         :bdelete<CR>
 	autocmd FileType markdown         nnoremap <silent><buffer> <leader>r :PrevimOpen<CR>
 augroup END
 
@@ -1731,25 +1736,6 @@ augroup extension_type
 	autocmd FileType haskell            let &commentstring = " --%s"
 	autocmd FileType coq                let &commentstring = " (*%s*)"
 	autocmd FileType markdown,text,none let &commentstring = " %s"
-augroup END
-
-"}}}
-
-
-"-------------------------"
-"     Ignore_Setting      "
-"-------------------------"
-"{{{
-" Special File's Setting is write on here.
-
-function! s:unload_file_visit()  " {{{
-	augroup file_visit
-		autocmd!
-	augroup END
-endfunction  " }}}
-augroup file_event
-	"@Bugs('not functioned ?')
-	autocmd FileType vimshell call s:unload_file_visit()
 augroup END
 
 "}}}
