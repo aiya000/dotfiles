@@ -869,7 +869,7 @@ function! WithDelimitterTabLine() "{{{
 	let tabpages   = delimitter . join(titles, delimitter) . delimitter . '%#TabLineFill#%T'
 	return tabpages
 endfunction "}}}
-set tabline=%!WithDelimitterTabLine()
+set tabline=%!WithDelimitterTabLine() showtabline=2
 
 " Always view the changed line num in Ex-command
 set report=0
@@ -1473,6 +1473,7 @@ augroup key_map
 	autocmd FileType * nnoremap <silent>         <C-h><C-Space>  :let __t=@/<CR>:s/\s\s\+/ /g<CR>:exe 'norm! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-p><C-l> :PutLongSeparator<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-p><C-s> :PutShortSeparator<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-i>      :set ignorecase! ignorecase?<CR>
 
 	"-- Customize --"
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
