@@ -959,6 +959,7 @@ set runtimepath+=~/.vim/vimball
 set runtimepath+=~/.vim/makes/asql.vim
 set runtimepath+=~/.vim/makes/arot13.vim/
 set runtimepath+=~/.vim/makes/ahoge-put.vim/
+set runtimepath+=~/.vim/makes/adrone.vim/
 
 " Set Vimball Install place
 let g:vimball_home = s:vimHome.'/vimball'
@@ -1459,9 +1460,6 @@ augroup key_map
 	autocmd FileType * inoremap                  <C-k><C-k> <C-o>"_d$
 	autocmd FileType * inoremap                  <C-k><C-z> <C-o>:normal! <C-z><CR>
 	" Customize with prefix
-	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-f> :Unite -ignorecase outline:foldings<CR>
-	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-m> :Unite mapping<CR>
-	autocmd FileType * nnoremap <silent>         <C-k><C-u><C-b> :Unite -ignorecase -start-insert buffer<CR>
 	autocmd FileType * cnoremap                  <C-k><C-p>      <Up>
 	autocmd FileType * cnoremap                  <C-k><C-n>      <Down>
 
@@ -1479,6 +1477,7 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
 	autocmd FileType * nnoremap          q:    :register<CR>
 	autocmd FileType * nmap              //    :set ignorecase<CR>/
+	autocmd FileType * nmap              g/    /<C-r>"<CR>
 	" for window or buffer
 	autocmd FileType * nnoremap <silent> <C-w>t     :tabnew<CR>
 	autocmd FileType * nnoremap <silent> <C-w>T     :tabclose<CR>
@@ -1503,7 +1502,11 @@ augroup key_map
 	"-- With Plugins --"
 	autocmd FileType * nmap              <leader>w <Plug>(openbrowser-open)
 	autocmd FileType * nnoremap <silent> <leader>t :Translate<CR>
-	" Visualize substitute target and new word (Increase Gravity!!)
+	" for Unite
+	autocmd FileType * nnoremap <silent> <C-k><C-u><C-f>    :Unite -ignorecase outline:foldings<CR>
+	autocmd FileType * nnoremap <silent> <C-k><C-u><C-m>    :Unite mapping<CR>
+	autocmd FileType * nnoremap <silent> <C-k><C-u><C-b>    :Unite -ignorecase -start-insert buffer<CR>
+	" for vim-over
 	autocmd FileType * nnoremap <silent> :%s/               :OverCommandLine<CR>%s/
 	autocmd FileType * nnoremap <silent> :s/                :OverCommandLine<CR>s/
 	autocmd FileType * vnoremap <silent> :s/                :OverCommandLine<CR>s/
