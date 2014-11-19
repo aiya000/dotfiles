@@ -1478,6 +1478,7 @@ augroup key_map
 	"-- Customize --"
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
 	autocmd FileType * nnoremap          q:    :register<CR>
+	autocmd FileType * nmap              //    :set ignorecase<CR>/
 	" for window or buffer
 	autocmd FileType * nnoremap <silent> <C-w>t     :tabnew<CR>
 	autocmd FileType * nnoremap <silent> <C-w>T     :tabclose<CR>
