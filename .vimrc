@@ -1476,8 +1476,6 @@ augroup key_map
 	"-- Customize --"
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
 	autocmd FileType * nnoremap          q:    :register<CR>
-	autocmd FileType * nmap              //    :set ignorecase<CR>/
-	autocmd FileType * nmap              g/    /<C-r>"<CR>
 	" for window or buffer
 	autocmd FileType * nnoremap <silent> <C-w>t     :tabnew<CR>
 	autocmd FileType * nnoremap <silent> <C-w>T     :tabclose<CR>
@@ -1530,6 +1528,9 @@ augroup key_map
 	" for incsearch.vim
 	autocmd FileType * nmap <expr>       /                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
 	autocmd FileType * nmap <expr>       ?                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
+	autocmd FileType * nmap <silent>     \/                 :set noignorecase<CR>/
+	autocmd FileType * nmap <silent>     //                 :set ignorecase<CR>/
+	autocmd FileType * nmap              g/                 /<C-r>"<CR>
 augroup END
 
 
