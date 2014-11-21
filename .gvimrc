@@ -70,6 +70,7 @@ set guioptions-=r
 set guioptions-=L
 set guioptions+=c
 set winaltkeys=no
+set mouse=
 
 let &guifont     = g:gvimrc.guifont['font'] . g:gvimrc.guifont['size']
 let &guifontwide = g:gvimrc.guifont['font'] . g:gvimrc.guifont['size']
@@ -83,6 +84,12 @@ let &guifontwide = g:gvimrc.guifont['font'] . g:gvimrc.guifont['size']
 "{{{
 
 " DressUp kawaii-vim
+command! DressUpColorDesert
+\	colorscheme desert
+\|	if s:isWindows
+\|		set transparency=245
+\|	endif
+
 command! DressUpColorEvening
 \	colorscheme evening
 \|	if s:isWindows
@@ -107,10 +114,11 @@ command! GVimConfig    e $MYGVIMRC
 command! GVImConfigTab tabnew | e $MYGVIMRC
 
 if s:isWindows
-	command! HighTransparence set transparency=140
-	command! MidTransparence  set transparency=180
-	command! LowTransparence  set transparency=220
-	command! NoTransparence   set transparency=255
+	command! HighTransparence  set transparency=140
+	command! MidTransparence   set transparency=180
+	command! LowTransparence   set transparency=220
+	command! LightTransparence set transparency=245
+	command! NoTransparence    set transparency=255
 endif
 
 "}}}
