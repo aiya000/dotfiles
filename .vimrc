@@ -783,7 +783,7 @@ endif
 syntax enable
 
 " Set Basic Preferences
-set number nowrap hlsearch list scrolloff=6
+set number nowrap hlsearch list scrolloff=8
 let s:listchars = s:isDosWin
 	\	? 'tab:> ,trail:_,extends:>,precedes:<,nbsp:%'
 	\	: s:isUnix
@@ -905,10 +905,10 @@ if v:version < 704  " Is this suitable condition ?
 	set backspace=indent,eol,start
 endif
 
-" Input Sets
+" No auto Carriage Return and Set tab style
 set textwidth=0 tabstop=4 shiftwidth=4
 
-" C Type Auto Indent on
+" C type auto indent on
 set autoindent cindent
 
 " Incremental Searching
@@ -1482,7 +1482,16 @@ augroup key_map
 	autocmd FileType * nnoremap <silent>         <C-h><C-Space>  :let __t=@/<CR>:s/\s\s\+/ /g<CR>:exe 'norm! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-p><C-l> :PutLongSeparator<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-p><C-s> :PutShortSeparator<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-i>      :set ignorecase! ignorecase?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-i>      :set ignorecase!  ignorecase?<CR>
+	function! s:toggle_virtual_edit() "{{{
+		if &virtualedit == ''
+			set virtualedit=all
+		else
+			set virtualedit=
+		endif
+		set virtualedit?
+	endfunction "}}}
+	autocmd FileType * nnoremap <silent>         <C-h><C-v>      :call <SID>toggle_virtual_edit()<CR>
 
 	"-- Customize --"
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
