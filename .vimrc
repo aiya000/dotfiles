@@ -389,7 +389,7 @@ NeoBundle        'h1mesuke/vim-alignta'
 NeoBundle        'haya14busa/incsearch.vim'
 NeoBundle        'thinca/vim-scouter'
 NeoBundle        'deris/vim-shot-f'
-NeoBundle        'vim-scripts/Conque-Shell'
+NeoBundle        'oplatek/Conque-Shell'
 
 
 call neobundle#end()

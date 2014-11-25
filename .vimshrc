@@ -11,6 +11,7 @@ alias vim-bashpr='vim --split=tabedit ~/.bash_profile'
 alias vimshell=':tabnew | VimShellCreate'
 alias vsp=':vsp | VimShellCreate'
 alias sp=':sp | VimShellCreate'
+alias tabnew=':tabnew | VimShellCreate'
 
 # Shell Config
 alias reload='vimsh ~/.vimshrc'
