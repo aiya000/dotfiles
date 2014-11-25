@@ -389,6 +389,7 @@ NeoBundle        'h1mesuke/vim-alignta'
 NeoBundle        'haya14busa/incsearch.vim'
 NeoBundle        'thinca/vim-scouter'
 NeoBundle        'deris/vim-shot-f'
+NeoBundle        'vim-scripts/Conque-Shell'
 
 
 call neobundle#end()
@@ -752,6 +753,16 @@ let g:memolist_prompt_tags = 1
 let g:memolist_prompt_categories = 1
 let g:memolist_unite = 1
 let g:memolist_unite_option = '-auto-preview -tab'
+
+"}}}
+"--- Conque-Shell ---"{{{
+
+let g:ConqueTerm_CloseOnEnd     = 1
+let g:ConqueTerm_SessionSupport = 1
+let g:ConqueTerm_ReadUnfocused  = 1
+let g:ConqueTerm_Color          = 1
+let g:ConqueTerm_InsertOnEnter  = 0
+let g:ConqueTerm_StartMessages  = 1
 
 "}}}
 "--- For Private ---"{{{
@@ -1369,10 +1380,10 @@ command! -nargs=1 Log VimConsoleLog <args>
 command! LogClear VimConsoleClear
 
 command! -nargs=*  Ghc      !runghc % <q-args>
-command!           Ghci     enew!  | VimShellInteractive ghci
-command!           Sghci    sp     | VimShellInteractive ghci
-command!           Vghci    vsp    | VimShellInteractive ghci
-command!           GhciTab  tabnew | VimShellInteractive ghci
+command!           Ghci     enew!  | ConqueTerm ghci
+command!           Sghci    sp     | ConqueTerm ghci
+command!           Vghci    vsp    | ConqueTerm ghci
+command!           GhciTab  tabnew | ConqueTerm ghci
 command! -nargs=1  Hoogle Ref hoogle <args>
 
 " }}}
