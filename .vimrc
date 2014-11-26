@@ -1450,7 +1450,7 @@ augroup END
 
 " To All buffers
 augroup key_map
-	" ✠ God Of The Vim
+	" † God Of The Vim
 	autocmd FileType * nnoremap Q gQ
 
 	"-- Overwrite mapping --"
