@@ -160,10 +160,6 @@ augroup file_event
 	autocmd!
 augroup END
 
-augroup file_visit
-	autocmd!
-augroup END
-
 augroup extension_type
 	autocmd!
 augroup END
@@ -1009,9 +1005,13 @@ endif
 "{{{
 
 " Save Cursor Position when file closed
-augroup file_visit
-	autocmd BufWinLeave ?\+ silent if expand('%') !=? '' | mkview   | endif
-	autocmd BufWinEnter ?\+ silent if expand('%') !=? '' | loadview | endif
+augroup file_event
+	function! s:visit_past_position() "{{{
+		if line("'\"") > 0 && line("'\"") <= line("$")
+			execute "normal! g`\""
+		endif
+	endfunction "}}}
+	autocmd BufReadPost * call <SID>visit_past_position()
 augroup END
 
 
