@@ -142,9 +142,6 @@ augroup highlight_pref
 	"autocmd ColorScheme * highlight StatusLine                 guifg=Cyan  guibg=Black
 	"autocmd ColorScheme * highlight StatusLineNC               guifg=Blue
 	"autocmd ColorScheme * highlight LineNr                     guifg=Blue
-	"autocmd ColorScheme * highlight CursorLine   gui=underline guifg=Cyan
-
-
 	autocmd ColorScheme * highlight CursorLine gui=underline guifg=cyan guibg=NONE
 
 	autocmd ColorScheme       * highlight GrcEmSpace guibg=White
@@ -203,7 +200,7 @@ augroup END
 
 " Set for Haskell
 augroup extension_type
-	autocmd ColorScheme       * highlight GrcHeadHfSpace cterm=underline ctermfg=Cyan
+	autocmd ColorScheme       * highlight GrcHeadHfSpace gui=underline guifg=Cyan
 	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('haskell', 'GrcHeadHfSpace', '^\s\+')
 augroup END
 
