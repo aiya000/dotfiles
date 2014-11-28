@@ -1685,10 +1685,11 @@ augroup END
 augroup plugin_pref
 	autocmd FileType help nnoremap <buffer> Q :quit<CR>
 
-	autocmd FileType netrw nmap             <buffer> H -
-	autocmd FileType netrw nnoremap         <buffer> L <NOP>
-	autocmd FileType netrw nnoremap <silent><buffer> Q :quit<CR>
-	autocmd FileType netrw nnoremap <silent><buffer> ~ :execute 'Explore' expand('~')<CR>
+	autocmd FileType netrw nmap             <buffer> H         -
+	autocmd FileType netrw nnoremap         <buffer> L         <NOP>
+	autocmd FileType netrw nnoremap <silent><buffer> Q         :quit<CR>
+	autocmd FileType netrw nnoremap <silent><buffer> ~         :execute 'Explore' expand('~')<CR>
+	autocmd FileType netrw nnoremap <silent><buffer> <leader>e :quit<CR>
 
 	autocmd FileType quickrun nnoremap <silent> Q :q<CR>
 
@@ -1731,25 +1732,31 @@ augroup END
 "-------------------------"
 "{{{
 
+" Call matchadd when that file is target filetype
+function! s:matchadd_with_filetype(ft, tag, regex) "{{{
+	if &filetype == a:ft
+		call matchadd(a:tag, a:regex)
+	endif
+endfunction "}}}
+
 " If buffer doesn't has filetype then set filetype 'none'
 augroup file_event
 	autocmd VimEnter,BufNew * if &ft == '' | setf none | endif
 augroup END
 
 
-"@Incompleted('not functioned when window split')
 augroup extension_type
 	" Set for "Vi Improved"
-	autocmd FileType *   highlight RcMyHint cterm=standout ctermfg=DarkYellow
-	autocmd FileType vim call matchadd('RcMyHint', '\s*"\zs@\w\+(.*)\ze')
+	autocmd ColorScheme       * highlight RcMyHint cterm=standout ctermfg=DarkYellow
+	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('vim', 'RcMyHint', '\s*"\zs@\w\+(.*)\ze')
 
 	" Set for C-Sharp
-	autocmd FileType *  highlight RcTypeInference cterm=bold ctermfg=11
-	autocmd FileType cs call matchadd('RcTypeInference', '\<var\>')
+	autocmd ColorScheme       * highlight RcTypeInference cterm=bold ctermfg=11
+	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('cs', 'RcTypeInference', '\<var\>')
 
 	" Set for Haskell
-	autocmd FileType *       highlight RcHeadHfSpace cterm=underline ctermfg=Cyan
-	autocmd FileType haskell call matchadd('RcHeadHfSpace', '^\s\+')
+	autocmd ColorScheme       * highlight RcHeadHfSpace cterm=underline ctermfg=Cyan
+	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('haskell', 'RcHeadHfSpace', '^\s\+')
 	autocmd FileType yesod   setl ts=4 sw=4 et
 
 	" Plain Text like types

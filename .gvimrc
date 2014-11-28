@@ -189,11 +189,10 @@ function! s:matchadd_with_filetype(ft, tag, regex) "{{{
 	endif
 endfunction "}}}
 
-"@Incompleted('when window split not functioned')
 " Set for "Vi Improved"
 augroup extension_type
-	autocmd ColorScheme       * highlight GrcHint gui=bold guifg=#ef5939
-	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('vim', 'GrcHint', '\s*"\zs@\w\+(.*)\ze')
+	autocmd ColorScheme       * highlight GrcMyHint gui=bold guifg=#ef5939
+	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('vim', 'GrcMyHint', '\s*"\zs@\w\+(.*)\ze')
 augroup END
 
 " Set for C-Sharp
