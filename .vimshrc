@@ -1,7 +1,7 @@
 
 # Vim Config
-alias vis='vim --split=vsp $$args'
-alias viv='vim --split=sp $$args'
+alias vis='vim --split=sp $$args'
+alias viv='vim --split=vsp $$args'
 alias vim='vim --split=tabedit $$args'
 alias vimconfig='vim --split=tabedit ~/.vimrc'
 alias gvimconfig='vim --split=tabedit ~/.gvimrc'

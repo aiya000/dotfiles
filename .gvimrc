@@ -182,23 +182,30 @@ let g:J6uil_display_icon = 1
 "-------------------------"
 "{{{
 
+" Call matchadd when that file is target filetype
+function! s:matchadd_with_filetype(ft, tag, regex) "{{{
+	if &filetype == a:ft
+		call matchadd(a:tag, a:regex)
+	endif
+endfunction "}}}
+
 "@Incompleted('when window split not functioned')
 " Set for "Vi Improved"
 augroup extension_type
-	autocmd FileType *   highlight GrcHint gui=bold guifg=#ef5939
-	autocmd FileType vim call matchadd('GrcHint', '\s*"\zs@\w\+(.*)\ze')
+	autocmd ColorScheme       * highlight GrcHint gui=bold guifg=#ef5939
+	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('vim', 'GrcHint', '\s*"\zs@\w\+(.*)\ze')
 augroup END
 
 " Set for C-Sharp
 augroup extension_type
-	autocmd FileType *  highlight GrcTypeInference gui=none guifg=Cyan
-	autocmd FileType cs call matchadd('GrcTypeInference', '\<var\>')
+	autocmd ColorScheme       * highlight GrcTypeInference gui=none guifg=Cyan
+	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('cs', 'GrcTypeInference', '\<var\>')
 augroup END
 
 " Set for Haskell
 augroup extension_type
-	autocmd FileType *       highlight GrcHeadHfSpace cterm=underline ctermfg=Cyan
-	autocmd FileType haskell call matchadd('GrcHeadHfSpace', '^\s\+')
+	autocmd ColorScheme       * highlight GrcHeadHfSpace cterm=underline ctermfg=Cyan
+	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('haskell', 'GrcHeadHfSpace', '^\s\+')
 augroup END
 
 "}}}
