@@ -775,9 +775,6 @@ endif
 "-------------------------"
 "{{{
 
-" Highlight enable
-syntax enable
-
 " Set Basic Preferences
 set number nowrap hlsearch list scrolloff=8
 let s:listchars = s:isDosWin
@@ -891,9 +888,6 @@ nohlsearch
 "     Action_Setting      "
 "-------------------------"
 "{{{
-
-" Set Compatibility with vi is off
-set nocompatible
 
 " Set Backspace can delete empty line
 if v:version < 704  " Is this suitable condition ?
@@ -1521,32 +1515,32 @@ augroup key_map
 	"-- With Plugins --"
 	autocmd FileType * nmap              <leader>w <Plug>(openbrowser-open)
 	autocmd FileType * nnoremap <silent> <leader>t :Translate<CR>
-	" for Unite
+	" Unite
 	autocmd FileType * nnoremap <silent> <C-k><C-u><C-f>    :Unite -ignorecase outline:foldings<CR>
 	autocmd FileType * nnoremap <silent> <C-k><C-u><C-m>    :Unite mapping<CR>
 	autocmd FileType * nnoremap <silent> <C-k><C-u><C-b>    :Unite -ignorecase -start-insert buffer<CR>
-	" for vim-over
+	" vim-over
 	autocmd FileType * nnoremap <silent> :%s/               :OverCommandLine<CR>%s/
 	autocmd FileType * nnoremap <silent> :s/                :OverCommandLine<CR>s/
 	autocmd FileType * vnoremap <silent> :s/                :OverCommandLine<CR>s/
-	" for vimshell
+	" vimshell
 	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShell -split-command=sp  -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader>V          :VimShellBufferDir   -create<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>V  :tabnew<CR>:VimShell -create<CR>
-	" for netrw
+	" netrw
 	autocmd FileType * nnoremap <silent> <leader>e          :Vexplore<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>e  :Sexplore<CR>
 	autocmd FileType * nnoremap <silent> <leader>E          :Explore<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>E  :Texplore<CR>
-	" for anzu-chan
+	" anzu-chan
 	autocmd FileType * nmap              n                  <Plug>(anzu-n-with-echo)zv
 	autocmd FileType * nmap              N                  <Plug>(anzu-N-with-echo)zv
 	autocmd FileType * nmap              *                  <Plug>(anzu-star-with-echo)zv
 	autocmd FileType * nmap              #                  <Plug>(anzu-sharp-with-echo)zv
 	autocmd FileType * nmap              <C-w>*             <C-w><C-v><Plug>(anzu-star-with-echo)zv
 	autocmd FileType * nmap              <C-w>#             <C-w><C-v><Plug>(anzu-sharp-with-echo)zv
-	" for incsearch.vim
+	" incsearch.vim
 	autocmd FileType * nmap <expr>       /                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
 	autocmd FileType * nmap <expr>       ?                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
 	autocmd FileType * nmap <silent>     \/                 :set noignorecase<CR>/
@@ -1787,5 +1781,6 @@ endif
 "}}}
 
 
+syntax enable
 let g:vimrc['loaded'] = 1
 
