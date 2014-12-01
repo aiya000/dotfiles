@@ -981,9 +981,7 @@ set tags=./tags,~/tags
 set browsedir=buffer
 
 " Set spell lang
-if exists('+spelllang')
-	set spelllang=en_US
-endif
+set spelllang=en_US
 
 " Generate HelpTags My Help
 if isdirectory('~/.vim/doc')
