@@ -388,6 +388,7 @@ NeoBundle        'haya14busa/incsearch.vim'
 NeoBundle        'thinca/vim-scouter'
 NeoBundle        'deris/vim-shot-f'
 NeoBundle        'oplatek/Conque-Shell'
+NeoBundle        'osyo-manga/vim-brightest'
 
 
 call neobundle#end()
@@ -761,6 +762,13 @@ let g:ConqueTerm_ReadUnfocused  = 1
 let g:ConqueTerm_Color          = 1
 let g:ConqueTerm_InsertOnEnter  = 0
 let g:ConqueTerm_StartMessages  = 1
+
+"}}}
+"--- vim-brightest ---"{{{
+
+let g:brightest#highlight = {
+\	'group' : 'BrightestUnderline'
+\}
 
 "}}}
 "--- For Private ---"{{{
