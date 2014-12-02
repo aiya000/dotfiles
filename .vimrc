@@ -388,7 +388,6 @@ NeoBundle        'haya14busa/incsearch.vim'
 NeoBundle        'thinca/vim-scouter'
 NeoBundle        'deris/vim-shot-f'
 NeoBundle        'oplatek/Conque-Shell'
-NeoBundle        'osyo-manga/vim-brightest'
 
 
 call neobundle#end()
@@ -762,13 +761,6 @@ let g:ConqueTerm_ReadUnfocused  = 1
 let g:ConqueTerm_Color          = 1
 let g:ConqueTerm_InsertOnEnter  = 0
 let g:ConqueTerm_StartMessages  = 1
-
-"}}}
-"--- vim-brightest ---"{{{
-
-let g:brightest#highlight = {
-\	'group' : 'BrightestUnderline'
-\}
 
 "}}}
 "--- For Private ---"{{{
@@ -1738,10 +1730,10 @@ augroup END
 "{{{
 
 " Call matchadd when that file is target filetype
-function! s:matchadd_with_filetype(ft, tag, regex, priorty, id) "{{{
+function! s:matchadd_with_filetype(ft, tag, regex, priority, id) "{{{
 	if &filetype == a:ft
 		try
-			let l:id = matchadd(a:tag, a:regex, a:priorty, a:id)
+			let l:id = matchadd(a:tag, a:regex, a:priority, a:id)
 		catch /\vE(799|801)/
 			" Suppress repeate add
 			let l:id = a:id
@@ -1769,15 +1761,15 @@ augroup END
 augroup extension_type
 	" Set for "Vi Improved"
 	autocmd VimEnter,ColorScheme * highlight RcMyHint cterm=standout ctermfg=DarkYellow
-	autocmd VimEnter,WinEnter    * let s:rcHint = s:matchadd_with_filetype('vim', 'RcMyHint', '\s*"\zs@\w\+(.*)\ze', 1, get(s:, 'rcHint', 8810))
+	autocmd VimEnter,WinEnter    * let s:rcHint = s:matchadd_with_filetype('vim', 'RcMyHint', '\s*"\zs@\w\+(.*)\ze', 10, get(s:, 'rcHint', 8810))
 
 	" Set for C-Sharp
 	autocmd VimEnter,ColorScheme * highlight RcTypeInference cterm=bold ctermfg=11
-	autocmd VimEnter,WinEnter    * let s:rcTypeInference = s:matchadd_with_filetype('cs', 'RcTypeInference', '\<var\>', 1, get(s:, 'rcTypeInference', 8820))
+	autocmd VimEnter,WinEnter    * let s:rcTypeInference = s:matchadd_with_filetype('cs', 'RcTypeInference', '\<var\>', 10, get(s:, 'rcTypeInference', 8820))
 
 	" Set for Haskell
 	autocmd VimEnter,ColorScheme * highlight RcHeadHfSpace cterm=underline ctermfg=Cyan
-	autocmd VimEnter,WinEnter    * let s:rcHeadHfSpace = s:matchadd_with_filetype('haskell', 'RcHeadHfSpace', '^\s\+', 1, get(s:, 'rcHeadHfSpace', 8830))
+	autocmd VimEnter,WinEnter    * let s:rcHeadHfSpace = s:matchadd_with_filetype('haskell', 'RcHeadHfSpace', '^\s\+', 10, get(s:, 'rcHeadHfSpace', 8830))
 	autocmd FileType yesod setl ts=4 sw=4 et
 
 	" Plain Text like types
