@@ -39,6 +39,8 @@ scriptencoding utf8
 
 "-- unite unite-actions
 
+"-- netrw opened files history
+
 " }}}
 " Issues {{{
 
@@ -778,10 +780,10 @@ endif
 " Set Basic Preferences
 set number nowrap hlsearch list scrolloff=8
 let s:listchars = s:isDosWin
-	\	? 'tab:> ,trail:_,extends:>,precedes:<,nbsp:%'
+	\	? 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
 	\	: s:isUnix
-	\		? 'tab:› ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
-	\		: 'tab:» ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
+	\		? 'tab:›_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
+	\		: 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
 
 " Status Bar always displayed
 set laststatus=2
@@ -1033,7 +1035,7 @@ augroup file_event
 		\	if &encoding == 'utf-8'
 		\|		let &listchars = s:listchars
 		\|	else
-		\|		let &listchars = 'tab:> ,trail:_,extends:>,precedes:<,nbsp:%'
+		\|		let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
 		\|	endif
 augroup END
 
@@ -1245,6 +1247,10 @@ function! s:sql_yank_normalize() range
 endfunction
 " }}}
 command! -range SqlCopy :<line1>,<line2>call s:sql_yank_normalize()
+
+
+" Echo script local values in this file
+command! EchoRcSl echo s:
 
 " }}}
 
@@ -1515,8 +1521,6 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> <leader>t :Translate<CR>
 	" Unite
 	autocmd FileType * nnoremap <silent> <C-k><C-u><C-f>    :Unite -ignorecase outline:foldings<CR>
-	autocmd FileType * nnoremap <silent> <C-k><C-u><C-m>    :Unite mapping<CR>
-	autocmd FileType * nnoremap <silent> <C-k><C-u><C-b>    :Unite -ignorecase -start-insert buffer<CR>
 	" vim-over
 	autocmd FileType * nnoremap <silent> :%s/               :OverCommandLine<CR>%s/
 	autocmd FileType * nnoremap <silent> :s/                :OverCommandLine<CR>s/
@@ -1726,10 +1730,25 @@ augroup END
 "{{{
 
 " Call matchadd when that file is target filetype
-function! s:matchadd_with_filetype(ft, tag, regex) "{{{
+function! s:matchadd_with_filetype(ft, tag, regex, priorty, id) "{{{
 	if &filetype == a:ft
-		call matchadd(a:tag, a:regex)
+		try
+			let l:id = matchadd(a:tag, a:regex, a:priorty, a:id)
+		catch /\vE(799|801)/
+			" Suppress repeate add
+			let l:id = a:id
+		endtry
+	else
+		try
+			call matchdelete(a:id)
+		catch /\vE(802|803)/
+			" Suppress repeate delete
+		endtry
+
+		let l:id = a:id
 	endif
+
+	return l:id
 endfunction "}}}
 
 " If buffer doesn't has filetype then set filetype 'none'
@@ -1738,29 +1757,34 @@ augroup file_event
 augroup END
 
 
+"@Bugs('duplicated multi filetype highlight')
 augroup extension_type
 	" Set for "Vi Improved"
-	autocmd ColorScheme       * highlight RcMyHint cterm=standout ctermfg=DarkYellow
-	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('vim', 'RcMyHint', '\s*"\zs@\w\+(.*)\ze')
+	autocmd VimEnter,ColorScheme * highlight RcMyHint cterm=standout ctermfg=DarkYellow
+	autocmd VimEnter,WinEnter    * let s:rcHint = s:matchadd_with_filetype('vim', 'RcMyHint', '\s*"\zs@\w\+(.*)\ze', 1, get(s:, 'rcHint', 8810))
 
 	" Set for C-Sharp
-	autocmd ColorScheme       * highlight RcTypeInference cterm=bold ctermfg=11
-	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('cs', 'RcTypeInference', '\<var\>')
+	autocmd VimEnter,ColorScheme * highlight RcTypeInference cterm=bold ctermfg=11
+	autocmd VimEnter,WinEnter    * let s:rcTypeInference = s:matchadd_with_filetype('cs', 'RcTypeInference', '\<var\>', 1, get(s:, 'rcTypeInference', 8820))
 
 	" Set for Haskell
-	autocmd ColorScheme       * highlight RcHeadHfSpace cterm=underline ctermfg=Cyan
-	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('haskell', 'RcHeadHfSpace', '^\s\+')
-	autocmd FileType yesod   setl ts=4 sw=4 et
+	autocmd VimEnter,ColorScheme * highlight RcHeadHfSpace cterm=underline ctermfg=Cyan
+	autocmd VimEnter,WinEnter    * let s:rcHeadHfSpace = s:matchadd_with_filetype('haskell', 'RcHeadHfSpace', '^\s\+', 1, get(s:, 'rcHeadHfSpace', 8830))
+	autocmd FileType yesod setl ts=4 sw=4 et
 
 	" Plain Text like types
 	autocmd FileType markdown,text    setl ts=2 sw=2 et
 	autocmd FileType git-log.git-diff setl nolist
+
+	" SQL types
+	autocmd FileType mysql setl ts=4 sw=4 et
 
 	" FileTypes commentstrings
 	autocmd FileType vim                let &commentstring = ' "%s'
 	autocmd FileType c,cpp,java,cs      let &commentstring = " /*%s*/"
 	autocmd FileType haskell            let &commentstring = " --%s"
 	autocmd FileType coq                let &commentstring = " (*%s*)"
+	autocmd FileType mysql              let &commentstring = " -- %s"
 	autocmd FileType markdown,text,none let &commentstring = " %s"
 augroup END
 
