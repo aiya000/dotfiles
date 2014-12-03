@@ -39,6 +39,8 @@ scriptencoding utf8
 
 "-- unite unite-actions
 
+"-- netrw opened files history
+
 " }}}
 " Issues {{{
 
@@ -55,6 +57,8 @@ scriptencoding utf8
 "-- submode fold_move do not functioned when not exists fold under cursor
 
 "-- not functioned ? conceal-javadoc .
+
+"-- shot-f not functioned in <C-o> normal mode
 
 "}}}
 " Todo {{{
@@ -775,16 +779,13 @@ endif
 "-------------------------"
 "{{{
 
-" Highlight enable
-syntax enable
-
 " Set Basic Preferences
 set number nowrap hlsearch list scrolloff=8
 let s:listchars = s:isDosWin
-	\	? 'tab:> ,trail:_,extends:>,precedes:<,nbsp:%'
+	\	? 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
 	\	: s:isUnix
-	\		? 'tab:› ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
-	\		: 'tab:» ,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
+	\		? 'tab:›_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
+	\		: 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
 
 " Status Bar always displayed
 set laststatus=2
@@ -892,9 +893,6 @@ nohlsearch
 "-------------------------"
 "{{{
 
-" Set Compatibility with vi is off
-set nocompatible
-
 " Set Backspace can delete empty line
 if v:version < 704  " Is this suitable condition ?
 	set whichwrap=b,s,h,l,<,>,[,]
@@ -987,9 +985,7 @@ set tags=./tags,~/tags
 set browsedir=buffer
 
 " Set spell lang
-if exists('+spelllang')
-	set spelllang=en_US
-endif
+set spelllang=en_US
 
 " Generate HelpTags My Help
 if isdirectory('~/.vim/doc')
@@ -1041,7 +1037,7 @@ augroup file_event
 		\	if &encoding == 'utf-8'
 		\|		let &listchars = s:listchars
 		\|	else
-		\|		let &listchars = 'tab:> ,trail:_,extends:>,precedes:<,nbsp:%'
+		\|		let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
 		\|	endif
 augroup END
 
@@ -1254,6 +1250,10 @@ endfunction
 " }}}
 command! -range SqlCopy :<line1>,<line2>call s:sql_yank_normalize()
 
+
+" Echo script local values in this file
+command! EchoRcSl echo s:
+
 " }}}
 
 
@@ -1462,6 +1462,9 @@ augroup key_map
 	autocmd FileType * vnoremap <C-l> <Esc>
 	autocmd FileType * cnoremap <C-l> <Esc>
 
+	"-- Origin --"
+	autocmd FileType * nnoremap <silent> m: :marks<CR>
+
 	"-- With Prefixes --"
 	" for case duplicated maps by plugin map (ex:vimshell => <C-l> : clean)
 	autocmd FileType * nnoremap                  <C-k><C-n> gt
@@ -1521,32 +1524,30 @@ augroup key_map
 	"-- With Plugins --"
 	autocmd FileType * nmap              <leader>w <Plug>(openbrowser-open)
 	autocmd FileType * nnoremap <silent> <leader>t :Translate<CR>
-	" for Unite
+	" Unite
 	autocmd FileType * nnoremap <silent> <C-k><C-u><C-f>    :Unite -ignorecase outline:foldings<CR>
-	autocmd FileType * nnoremap <silent> <C-k><C-u><C-m>    :Unite mapping<CR>
-	autocmd FileType * nnoremap <silent> <C-k><C-u><C-b>    :Unite -ignorecase -start-insert buffer<CR>
-	" for vim-over
+	" vim-over
 	autocmd FileType * nnoremap <silent> :%s/               :OverCommandLine<CR>%s/
 	autocmd FileType * nnoremap <silent> :s/                :OverCommandLine<CR>s/
 	autocmd FileType * vnoremap <silent> :s/                :OverCommandLine<CR>s/
-	" for vimshell
+	" vimshell
 	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShell -split-command=sp  -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader>V          :VimShellBufferDir   -create<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>V  :tabnew<CR>:VimShell -create<CR>
-	" for netrw
+	" netrw
 	autocmd FileType * nnoremap <silent> <leader>e          :Vexplore<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>e  :Sexplore<CR>
 	autocmd FileType * nnoremap <silent> <leader>E          :Explore<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>E  :Texplore<CR>
-	" for anzu-chan
+	" anzu-chan
 	autocmd FileType * nmap              n                  <Plug>(anzu-n-with-echo)zv
 	autocmd FileType * nmap              N                  <Plug>(anzu-N-with-echo)zv
 	autocmd FileType * nmap              *                  <Plug>(anzu-star-with-echo)zv
 	autocmd FileType * nmap              #                  <Plug>(anzu-sharp-with-echo)zv
 	autocmd FileType * nmap              <C-w>*             <C-w><C-v><Plug>(anzu-star-with-echo)zv
 	autocmd FileType * nmap              <C-w>#             <C-w><C-v><Plug>(anzu-sharp-with-echo)zv
-	" for incsearch.vim
+	" incsearch.vim
 	autocmd FileType * nmap <expr>       /                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
 	autocmd FileType * nmap <expr>       ?                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
 	autocmd FileType * nmap <silent>     \/                 :set noignorecase<CR>/
@@ -1734,10 +1735,25 @@ augroup END
 "{{{
 
 " Call matchadd when that file is target filetype
-function! s:matchadd_with_filetype(ft, tag, regex) "{{{
+function! s:matchadd_with_filetype(ft, tag, regex, priority, id) "{{{
 	if &filetype == a:ft
-		call matchadd(a:tag, a:regex)
+		try
+			let l:id = matchadd(a:tag, a:regex, a:priority, a:id)
+		catch /\vE(799|801)/
+			" Suppress repeate add
+			let l:id = a:id
+		endtry
+	else
+		try
+			call matchdelete(a:id)
+		catch /\vE(802|803)/
+			" Suppress repeate delete
+		endtry
+
+		let l:id = a:id
 	endif
+
+	return l:id
 endfunction "}}}
 
 " If buffer doesn't has filetype then set filetype 'none'
@@ -1746,29 +1762,34 @@ augroup file_event
 augroup END
 
 
+"@Bugs('duplicated multi filetype highlight')
 augroup extension_type
 	" Set for "Vi Improved"
-	autocmd ColorScheme       * highlight RcMyHint cterm=standout ctermfg=DarkYellow
-	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('vim', 'RcMyHint', '\s*"\zs@\w\+(.*)\ze')
+	autocmd VimEnter,ColorScheme * highlight RcMyHint cterm=standout ctermfg=DarkYellow
+	autocmd VimEnter,WinEnter    * let s:rcHint = s:matchadd_with_filetype('vim', 'RcMyHint', '\s*"\zs@\w\+(.*)\ze', 10, get(s:, 'rcHint', 8810))
 
 	" Set for C-Sharp
-	autocmd ColorScheme       * highlight RcTypeInference cterm=bold ctermfg=11
-	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('cs', 'RcTypeInference', '\<var\>')
+	autocmd VimEnter,ColorScheme * highlight RcTypeInference cterm=bold ctermfg=11
+	autocmd VimEnter,WinEnter    * let s:rcTypeInference = s:matchadd_with_filetype('cs', 'RcTypeInference', '\<var\>', 10, get(s:, 'rcTypeInference', 8820))
 
 	" Set for Haskell
-	autocmd ColorScheme       * highlight RcHeadHfSpace cterm=underline ctermfg=Cyan
-	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('haskell', 'RcHeadHfSpace', '^\s\+')
-	autocmd FileType yesod   setl ts=4 sw=4 et
+	autocmd VimEnter,ColorScheme * highlight RcHeadHfSpace cterm=underline ctermfg=Cyan
+	autocmd VimEnter,WinEnter    * let s:rcHeadHfSpace = s:matchadd_with_filetype('haskell', 'RcHeadHfSpace', '^\s\+', 10, get(s:, 'rcHeadHfSpace', 8830))
+	autocmd FileType yesod setl ts=4 sw=4 et
 
 	" Plain Text like types
 	autocmd FileType markdown,text    setl ts=2 sw=2 et
 	autocmd FileType git-log.git-diff setl nolist
+
+	" SQL types
+	autocmd FileType mysql setl ts=4 sw=4 et
 
 	" FileTypes commentstrings
 	autocmd FileType vim                let &commentstring = ' "%s'
 	autocmd FileType c,cpp,java,cs      let &commentstring = " /*%s*/"
 	autocmd FileType haskell            let &commentstring = " --%s"
 	autocmd FileType coq                let &commentstring = " (*%s*)"
+	autocmd FileType mysql              let &commentstring = " -- %s"
 	autocmd FileType markdown,text,none let &commentstring = " %s"
 augroup END
 
@@ -1787,5 +1808,6 @@ endif
 "}}}
 
 
+syntax enable
 let g:vimrc['loaded'] = 1
 

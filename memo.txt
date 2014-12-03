@@ -1,7 +1,5 @@
 vim:ft=vim
 
-set mouse=a
-set mousemodel=popup " Windows at least got this right.
 set path+=.,,./**
 set laststatus=2  " All windows have status lines
 set shortmess=at  " To avoid the 'Hit ENTER to continue' promp
