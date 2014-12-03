@@ -58,6 +58,8 @@ scriptencoding utf8
 
 "-- not functioned ? conceal-javadoc .
 
+"-- shot-f not functioned in <C-o> normal mode
+
 "}}}
 " Todo {{{
 
@@ -1459,6 +1461,9 @@ augroup key_map
 	autocmd FileType * inoremap <C-l> <Esc>
 	autocmd FileType * vnoremap <C-l> <Esc>
 	autocmd FileType * cnoremap <C-l> <Esc>
+
+	"-- Origin --"
+	autocmd FileType * nnoremap <silent> m: :marks<CR>
 
 	"-- With Prefixes --"
 	" for case duplicated maps by plugin map (ex:vimshell => <C-l> : clean)
