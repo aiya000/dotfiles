@@ -72,8 +72,10 @@ set guioptions+=c
 set winaltkeys=no
 set mouse=
 
-let &guifont     = g:gvimrc.guifont['font'] . g:gvimrc.guifont['size']
-let &guifontwide = g:gvimrc.guifont['font'] . g:gvimrc.guifont['size']
+if !g:gvimrc['loaded']
+	let &guifont     = g:gvimrc.guifont['font'] . g:gvimrc.guifont['size']
+	let &guifontwide = g:gvimrc.guifont['font'] . g:gvimrc.guifont['size']
+endif
 
 "}}}
 
