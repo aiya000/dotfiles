@@ -83,10 +83,7 @@ scriptencoding utf8
 "     ／人◕ ‿‿ ◕人＼ <  Wakega wakaranaiyo!
 " @Unused       => Not used this yet now, needs inquires deleting this.
 " @Deprecated   => Deprecated This vimrc Version.
-
 " @Experiment   => This is experimental implementation.
-
-
 " @See          => Referred URL, Saw Document, and etc...
 " @Code         => A sample code using it
 "-------------------
@@ -845,7 +842,7 @@ set noruler
 " Hard Conceal
 set conceallevel=2
 
-" Spatto view tabline $ @See('http://d.hatena.ne.jp/thinca/20111204/1322932585')
+" Sugoi view tabline $ @See('http://d.hatena.ne.jp/thinca/20111204/1322932585')
 function! s:tabpage_label(n) "{{{
 	let title = gettabvar(a:n, 'title')
 	if title !=# ''
@@ -1555,7 +1552,7 @@ augroup key_map
 	autocmd FileType * nmap <silent>     //                 :set ignorecase<CR>/
 	autocmd FileType * nmap              g/                 /<C-r>"<CR>
 	" TaskList.vim
-	autocmd FileType * nmap <leader>T <Plug>TaskList
+	autocmd FileType * nnoremap <leader>T :TaskList<CR>
 augroup END
 
 
