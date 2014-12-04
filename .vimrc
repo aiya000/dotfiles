@@ -390,6 +390,7 @@ NeoBundle        'haya14busa/incsearch.vim'
 NeoBundle        'thinca/vim-scouter'
 NeoBundle        'deris/vim-shot-f'
 NeoBundle        'oplatek/Conque-Shell'
+NeoBundle        'vim-scripts/TaskList.vim'
 
 
 call neobundle#end()
@@ -1553,6 +1554,8 @@ augroup key_map
 	autocmd FileType * nmap <silent>     \/                 :set noignorecase<CR>/
 	autocmd FileType * nmap <silent>     //                 :set ignorecase<CR>/
 	autocmd FileType * nmap              g/                 /<C-r>"<CR>
+	" TaskList.vim
+	autocmd FileType * nmap <leader>T <Plug>TaskList
 augroup END
 
 
