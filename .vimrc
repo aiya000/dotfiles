@@ -41,6 +41,8 @@ scriptencoding utf8
 
 "-- netrw opened files history
 
+" <C-a> alter key [asdfghjkl;] to [1234567890]
+
 " }}}
 " Issues {{{
 
@@ -1547,10 +1549,13 @@ augroup key_map
 	autocmd FileType * nmap              <C-w>#             <C-w><C-v><Plug>(anzu-sharp-with-echo)zv
 	" incsearch.vim
 	autocmd FileType * nmap <expr>       /                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
-	autocmd FileType * nmap <expr>       ?                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
 	autocmd FileType * nmap <silent>     \/                 :set noignorecase<CR>/
 	autocmd FileType * nmap <silent>     //                 :set ignorecase<CR>/
 	autocmd FileType * nmap              g/                 /<C-r>"<CR>
+	autocmd FileType * nmap <expr>       ?                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
+	autocmd FileType * nmap <silent>     \?                 :set noignorecase<CR>?
+	autocmd FileType * nmap <silent>     ??                 :set ignorecase<CR>?
+	autocmd FileType * nmap              g?                 ?<C-r>"<CR>
 	" TaskList.vim
 	autocmd FileType * nnoremap <leader>T :TaskList<CR>
 augroup END
