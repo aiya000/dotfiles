@@ -88,8 +88,6 @@ new_path=$new_path:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
 # For pkgsrc
 [ -d ~/pkg ] \
 	&& new_path=$new_path:$HOME/pkg/bin:$HOME/pkg/sbin
-export PATH=$new_path:$PATH
-unset new_path
 
 # With OS
 if [ $isUbuntu -eq 1 ] ; then
@@ -99,28 +97,34 @@ if [ $isUbuntu -eq 1 ] ; then
 		&& export CPLUS_LIBRARY_PATH=$CPLUS_LIBRARY_PATH:/usr/lib/lib64
 elif [ $isCygwin -eq 1 ] ; then
 	export HOME=/home/$USER
-	export PATH=$PATH:/opt/local/bin/exec
-	export PATH=$PATH:/opt/local/ghc/bin
-	export PATH=$PATH:/opt/local/bin/java_wrapper
+	new_path=$new_path:/opt/local/bin/exec
+	new_path=$new_path:/opt/local/ghc/bin
+	new_path=$new_path:/opt/local/bin/java_wrapper
 
 	# Auto detect JDK PATH
 	if [ -d /cygdrive/c/Program\ Files\ \(x86\)/ ] ; then
 		jPath=/cygdrive/c/Program\ Files\ \(x86\)/Java/
 		jdkPath=`ls "$jPath" | grep 'jdk' | sort -r | head -1`
-		export PATH=$PATH:"$jPath/$jdkPath/bin"
+		new_path=$new_path:"$jPath/$jdkPath/bin"
 
-		export PATH=$PATH:/cygdrive/c/Program\ Files/pleiades/java/6/bin/
+		new_path=$new_path:/cygdrive/c/Program\ Files/pleiades/java/6/bin/
 	else
 		jPath=/cygdrive/c/Program\ Files/Java/
 		jdkPath=`ls "$jPath" | grep 'jdk' | sort -r | head -1`
-		export PATH=$PATH:"$jPath/$jdkPath/bin"
+		new_path=$new_path:"$jPath/$jdkPath/bin"
 
-		export PATH=$PATH:/cygdrive/c/Program\ Files\ \(x86\)/pleiades/java/6/bin/
+		new_path=$new_path:/cygdrive/c/Program\ Files\ \(x86\)/pleiades/java/6/bin/
 	fi
 	export JAVA_HOME=/opt/local/share/jdk_home
 
-	export PATH=$PATH:/cygdrive/c/Windows/system32:/cygdrive/c/Windows
+	new_path=$new_path:/cygdrive/c/Windows/system32:/cygdrive/c/Windows
 fi
+
+# YukiTask
+new_path=$new_path:$HOME/bin/yukitask
+
+export PATH=$new_path:$PATH
+unset new_path
 
 
 #############################################
