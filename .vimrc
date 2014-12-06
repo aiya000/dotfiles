@@ -41,6 +41,8 @@ scriptencoding utf8
 
 "-- netrw opened files history
 
+" <C-a> alter key [asdfghjkl;] to [1234567890]
+
 " }}}
 " Issues {{{
 
@@ -83,10 +85,7 @@ scriptencoding utf8
 "     ／人◕ ‿‿ ◕人＼ <  Wakega wakaranaiyo!
 " @Unused       => Not used this yet now, needs inquires deleting this.
 " @Deprecated   => Deprecated This vimrc Version.
-
 " @Experiment   => This is experimental implementation.
-
-
 " @See          => Referred URL, Saw Document, and etc...
 " @Code         => A sample code using it
 "-------------------
@@ -390,6 +389,7 @@ NeoBundle        'haya14busa/incsearch.vim'
 NeoBundle        'thinca/vim-scouter'
 NeoBundle        'deris/vim-shot-f'
 NeoBundle        'oplatek/Conque-Shell'
+NeoBundle        'vim-scripts/TaskList.vim'
 
 
 call neobundle#end()
@@ -844,7 +844,7 @@ set noruler
 " Hard Conceal
 set conceallevel=2
 
-" Spatto view tabline $ @See('http://d.hatena.ne.jp/thinca/20111204/1322932585')
+" Sugoi view tabline $ @See('http://d.hatena.ne.jp/thinca/20111204/1322932585')
 function! s:tabpage_label(n) "{{{
 	let title = gettabvar(a:n, 'title')
 	if title !=# ''
@@ -1549,10 +1549,15 @@ augroup key_map
 	autocmd FileType * nmap              <C-w>#             <C-w><C-v><Plug>(anzu-sharp-with-echo)zv
 	" incsearch.vim
 	autocmd FileType * nmap <expr>       /                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
-	autocmd FileType * nmap <expr>       ?                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
 	autocmd FileType * nmap <silent>     \/                 :set noignorecase<CR>/
 	autocmd FileType * nmap <silent>     //                 :set ignorecase<CR>/
 	autocmd FileType * nmap              g/                 /<C-r>"<CR>
+	autocmd FileType * nmap <expr>       ?                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
+	autocmd FileType * nmap <silent>     \?                 :set noignorecase<CR>?
+	autocmd FileType * nmap <silent>     ??                 :set ignorecase<CR>?
+	autocmd FileType * nmap              g?                 ?<C-r>"<CR>
+	" TaskList.vim
+	autocmd FileType * nnoremap <leader>T :TaskList<CR>
 augroup END
 
 
