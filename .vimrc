@@ -1470,6 +1470,8 @@ augroup key_map
 	autocmd FileType * nnoremap                  <C-k><C-n> gt
 	autocmd FileType * nnoremap                  <C-k><C-p> gT
 	autocmd FileType * nnoremap <silent><expr>   <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
+	autocmd FileType * nnoremap <silent>         <C-k><C-p><C-l> :PutLongSeparator<CR>
+	autocmd FileType * nnoremap <silent>         <C-k><C-p><C-s> :PutShortSeparator<CR>
 	autocmd FileType * inoremap                  <C-k><C-l> <Esc>
 	autocmd FileType * inoremap                  <C-k><C-k> <C-o>"_d$
 	autocmd FileType * inoremap                  <C-k><C-z> <C-o>:normal! <C-z><CR>
@@ -1483,8 +1485,6 @@ augroup key_map
 	autocmd FileType * nnoremap <silent>         <C-h>r          :Resetf<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-w>      :setl wrap! wrap?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-Space>  :let __t=@/<CR>:s/\s\s\+/ /g<CR>:exe 'norm! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-p><C-l> :PutLongSeparator<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-p><C-s> :PutShortSeparator<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-i>      :set ignorecase! ignorecase?<CR>
 	function! s:toggle_virtual_edit() "{{{
 		if &virtualedit == ''
@@ -1496,6 +1496,7 @@ augroup key_map
 	endfunction "}}}
 	autocmd FileType * nnoremap <silent>         <C-h><C-v>      :call <SID>toggle_virtual_edit()<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-c>      :set cursorline! cursorline?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-e>      :set expandtab! expandtab?<CR>
 
 	"-- Customize --"
 	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
