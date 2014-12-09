@@ -121,9 +121,11 @@ elif [ $isCygwin -eq 1 ] ; then
 fi
 
 # YukiTask
-new_path=$new_path:$HOME/bin/yukitask
-source ~/bin/yukitask/command_aliases
-source ~/bin/yukitask/here_aliases
+if [ -d $HOME/bin/yukitask ] ; then
+	new_path=$new_path:$HOME/bin/yukitask
+	source $HOME/bin/yukitask/command_aliases
+	source $HOME/bin/yukitask/here_aliases
+fi
 
 # Apply to PATH
 export PATH=$new_path:$PATH
