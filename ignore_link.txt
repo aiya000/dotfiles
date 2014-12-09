@@ -1,10 +1,12 @@
-link.sh
-unlink.sh
-functions.sh
-ignore_link.txt
 .git
 .gitignore
-README.txt
 .private
 Examples
 README.md
+README.txt
+ignore_link.txt
+link.sh
+memo.txt
+unlink.sh
+upload_dropbox.sh
+utils.sh

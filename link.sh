@@ -1,5 +1,5 @@
 #!/bin/bash
-source ./functions.sh
+source ./utils.sh
 
 backupdir="$HOME/.backup_dotfiles"
 usage() {  #{{{
@@ -52,7 +52,7 @@ if [ "$dotdir" = "." ] ; then
 	dotdir=`pwd`
 fi
 
-ignorefiles=`getRXFormatIgnoreFiles`
+ignorefiles=`formatIgnoreFiles`
 if [ $privateFlag -eq 1 ] ; then
 	echo "TODO"
 fi

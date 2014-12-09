@@ -4,7 +4,7 @@
 # Return Formatted of Regex ignore linking files list
 ignoreListFile=./ignore_link.txt
 
-getRXFormatIgnoreFiles () {
+formatIgnoreFiles () {
 	ignoreFormat=''
 
 	if [ -f $ignoreListFile ] ; then

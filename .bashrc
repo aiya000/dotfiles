@@ -52,7 +52,7 @@ alias pbcopy='xsel --clipboard --input'
 # Others {{{
 
 alias ghci-hi='ghci 2>&1 | HsColour -tty'
-alias mysql="mysql -E --pager='less -S -n -i -F -X'"
+alias mysql="mysql -E --pager='less -r -S -n -i -F -X'"
 
 if [ -n "`which git 2> /dev/null`" ] ; then
 	alias git-myhelp='
@@ -114,7 +114,7 @@ elif [ $isCygwin -eq 1 ] ; then
 	alias route='cocot route'
 	alias netstat='cocot netstat'
 	alias updatedb='updatedb --localpaths="/bin /dev /etc /home /lib /usr /var /opt" --prunepaths="/usr/tmp /var/tmp"'
-	alias mysql="mysql -E --pager='less -S -n -i -F -X' --protocol=TCP"
+	alias mysql="mysql -E --pager='less -r -S -n -i -F -X' --protocol=TCP"
 fi
 
 # }}}

@@ -12,6 +12,7 @@ alias vimshell=':tabnew | VimShellCreate'
 alias vsp=':vsp | VimShellCreate'
 alias sp=':sp | VimShellCreate'
 alias tabnew=':tabnew | VimShellCreate'
+alias lcd='cd .'
 
 # Shell Config
 alias reload='vimsh ~/.vimshrc'
