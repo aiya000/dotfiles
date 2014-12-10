@@ -898,6 +898,9 @@ set textwidth=0 tabstop=4 shiftwidth=4
 " C type auto indent on
 set autoindent cindent
 
+"@Experiment('test')
+set preserveindent
+
 " Incremental Searching
 "set incsearch
 
@@ -979,6 +982,9 @@ set browsedir=buffer
 
 " Set spell lang
 set spelllang=en_US
+
+" Set reference path, using by :find, gf and more
+set path=.,,./**
 
 " Generate HelpTags My Help
 if isdirectory('~/.vim/doc')
@@ -1458,13 +1464,15 @@ augroup key_map
 	autocmd FileType * nnoremap                  <C-k><C-n> gt
 	autocmd FileType * nnoremap                  <C-k><C-p> gT
 	autocmd FileType * nnoremap <silent><expr>   <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
-	" for case duplicated maps by plugin map (ex:vimshell => <C-l> : clean)
-	autocmd FileType * inoremap                  <C-k><C-l> <Esc>
+	autocmd FileType * nnoremap <silent>         <C-k><C-r>      :Reload<CR>
 	autocmd FileType * inoremap                  <C-k><C-k> <C-o>"_d$
 	autocmd FileType * inoremap                  <C-k><C-z> <C-o>:normal! <C-z><CR>
 	autocmd FileType * inoremap                  <C-k><C-i> <C-o>:set infercase! infercase?<CR>
+	autocmd FileType * cnoremap                  <C-k><C-p>      <Up>
+	autocmd FileType * cnoremap                  <C-k><C-n>      <Down>
+	" for case duplicated maps by plugin map (ex:vimshell => <C-l> : clean)
+	autocmd FileType * inoremap                  <C-k><C-l> <Esc>
 	" Customize with prefix
-	autocmd FileType * nnoremap <silent>         <C-h><C-r>      :Reload<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-l>      :nohlsearch<CR>
 	autocmd FileType * nnoremap <silent>         <C-h>l          :source %<CR>
 	autocmd FileType * nnoremap <silent>         <C-h>r          :Resetf<CR>
@@ -1482,8 +1490,7 @@ augroup key_map
 	autocmd FileType * nnoremap <silent>         <C-h><C-v>      :call <SID>toggle_virtual_edit()<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-c>      :set cursorline! cursorline?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-e>      :set expandtab! expandtab?<CR>
-	autocmd FileType * cnoremap                  <C-k><C-p>      <Up>
-	autocmd FileType * cnoremap                  <C-k><C-n>      <Down>
+	autocmd FileType * nnoremap <silent>         <C-h><C-r>      :set relativenumber! relativenumber?<CR>
 	"
 	autocmd FileType * nnoremap <silent>         <leader>pl :PutLongSeparator<CR>
 	autocmd FileType * nnoremap <silent>         <leader>ps :PutShortSeparator<CR>
