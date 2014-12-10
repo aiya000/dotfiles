@@ -42,7 +42,4 @@ Bundle 'AndrewRadev/switch.vim'
 Bundle 'edsono/vim-matchit'
 Bundle 'alpaca-tc/vim-endwise.git'
 
-let g:Align_xstrlen = 3
-
-incsearch.vim
 lexima

@@ -190,20 +190,20 @@ endfunction "}}}
 
 " Set for "Vi Improved"
 augroup extension_type
-	autocmd ColorScheme * highlight GrcMyHint gui=bold guifg=#ef5939
-	autocmd VimEnter,WinEnter    * call s:matchadd_with_filetype('vim', 'GrcMyHint', '\s*"\zs@\w\+(.*)\ze')
+	autocmd ColorScheme       * highlight GrcMyHint gui=bold guifg=#ef5939
+	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('vim', 'GrcMyHint', '\s*"\zs@\w\+(.*)\ze')
 augroup END
 
 " Set for C-Sharp
 augroup extension_type
-	autocmd ColorScheme * highlight GrcTypeInference gui=none guifg=Cyan
-	autocmd VimEnter,WinEnter    * call s:matchadd_with_filetype('cs', 'GrcTypeInference', '\<var\>')
+	autocmd ColorScheme       * highlight GrcTypeInference gui=none guifg=Cyan
+	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('cs', 'GrcTypeInference', '\<var\>')
 augroup END
 
 " Set for Haskell
 augroup extension_type
-	autocmd ColorScheme * highlight GrcHeadHfSpace gui=underline guifg=Cyan
-	autocmd VimEnter,WinEnter    * call s:matchadd_with_filetype('haskell', 'GrcHeadHfSpace', '^\s\+')
+	autocmd ColorScheme       * highlight GrcHeadHfSpace gui=underline guifg=Cyan
+	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('haskell', 'GrcHeadHfSpace', '^\s\+')
 augroup END
 
 "}}}
