@@ -1,7 +1,5 @@
 vim:ft=vim
 
-set path+=.,,./**
-set laststatus=2  " All windows have status lines
 set shortmess=at  " To avoid the 'Hit ENTER to continue' promp
 set winfixwidth   " Splits resize width of current window only
 set helpheight=20 " Minimum height for help wins, default=20, 0 is default
@@ -42,7 +40,4 @@ Bundle 'AndrewRadev/switch.vim'
 Bundle 'edsono/vim-matchit'
 Bundle 'alpaca-tc/vim-endwise.git'
 
-let g:Align_xstrlen = 3
-
-incsearch.vim
 lexima
