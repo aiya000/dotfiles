@@ -1,5 +1,9 @@
 #!/bin/sh
 
+#
+# This file must be execute dotfiles directory.
+#
+
 ##TODO{{{
 # - auto merging files [here <-> local-old]
 # - show updated files
