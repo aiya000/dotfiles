@@ -925,8 +925,8 @@ set visualbell
 " Disable Auto Commentalize New Line
 set formatoptions-=ro
 
-" Ignore case on Insert completion
-set noinfercase
+" Ignore case on NormalMode searching and InsertMode completion
+set ignorecase noinfercase
 
 " No timeout key maps
 set notimeout
@@ -1036,10 +1036,6 @@ augroup END
 
 augroup key_event
 	"autocmd UserGettingBored * echo "What's this !?"
-
-	" Set ignorecase completion only insert mode
-	autocmd InsertEnter * setl ignorecase
-	autocmd InsertLeave * setl noignorecase
 augroup END
 
 "}}}
