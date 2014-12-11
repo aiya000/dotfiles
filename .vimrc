@@ -390,6 +390,7 @@ NeoBundle        'thinca/vim-scouter'
 NeoBundle        'deris/vim-shot-f'
 NeoBundle        'oplatek/Conque-Shell'
 NeoBundle        'vim-scripts/TaskList.vim'
+NeoBundle        'vim-scripts/monday'
 
 
 call neobundle#end()
@@ -758,6 +759,12 @@ let g:ConqueTerm_InsertOnEnter  = 0
 let g:ConqueTerm_StartMessages  = 1
 
 "}}}
+"--- monday ---"{{{
+
+"call <SID>AddPair('false', 'true')
+"call <SID>AddPair('true', 'false')
+
+"}}}
 "--- For Private ---"{{{
 
 " Read Privacy Config
@@ -897,9 +904,6 @@ set textwidth=0 tabstop=4 shiftwidth=4
 
 " C type auto indent on
 set autoindent cindent
-
-"@Experiment('test')
-set preserveindent
 
 " Incremental Searching
 "set incsearch
