@@ -35,7 +35,7 @@ scriptencoding utf8
 "-- point marker line num in a file
 "  -- I can jump marked line and list up mark lines
 
-"-- View prev and next fold head text ...on echo or other buffer ?
+"-- View prev and next fold head text ...on echo or other buffer ? on submode-foldings
 
 "-- unite unite-actions
 
@@ -50,17 +50,14 @@ scriptencoding utf8
 
 "-- automatic mkdir './C:' when execute NeoBundleInstall in windows kaoriya
 "  -- neobundle thinks that is repository...?
-
-"-- color highlight 'var' is not highlight when ...executed vsp|b hoge..?
-"  -- What is best event ?
-
+"
 "-- 'gist:aiya000/ec5f6b2375a639831953' cannot divide configure
 
 "-- submode fold_move do not functioned when not exists fold under cursor
 
 "-- not functioned ? conceal-javadoc .
 
-"-- shot-f not functioned in <C-o> normal mode
+"-- shot-f not functioned in <C-o> temporary normal mode
 
 "}}}
 " Todo {{{
@@ -201,8 +198,8 @@ if s:isKaoriya
 
 
 	" For Using No Default vimproc
-	let switch_dir = $VIM.'/switches/enabled/'
-	let suppress = switch_dir . 'disable-vimproc.vim'
+	let switch_dir = $VIM.'/switches/enabled'
+	let suppress = switch_dir . '/disable-vimproc.vim'
 	if s:isWindows && !s:hasMingw && filereadable(suppress)
 		call delete(suppress)
 	elseif s:isWindows && s:hasMingw && !filereadable(suppress)
@@ -210,7 +207,7 @@ if s:isKaoriya
 	endif
 	unlet suppress
 
-	for disf in map(['utf-8.vim', 'vimdoc-ja.vim'], "switch_dir . v:val")
+	for disf in map(['/utf-8.vim', '/vimdoc-ja.vim'], 'switch_dir . v:val')
 		if !filereadable(disf)
 			call writefile([], disf)
 		endif
@@ -390,7 +387,8 @@ NeoBundle        'thinca/vim-scouter'
 NeoBundle        'deris/vim-shot-f'
 NeoBundle        'oplatek/Conque-Shell'
 NeoBundle        'vim-scripts/TaskList.vim'
-NeoBundle        'vim-scripts/monday'
+NeoBundle        'tyru/vim-altercmd'
+NeoBundle        'mbbill/undotree'
 
 
 call neobundle#end()
@@ -404,19 +402,19 @@ endtry
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
 
-let vimproc_config = {
+let s:vimproc_config = {
 \	'build' : {
 \		'unix' : 'make -f make_unix.mak',
 \		'mac'  : 'make -f make_mac.mak'
 \	}
 \}
 if s:isCygwin
-	let vimproc_config.build['cygwin']  = 'make -f make_cygwin.mak'
+	let s:vimproc_config.build['cygwin']  = 'make -f make_cygwin.mak'
 elseif s:hasMingw
-	let vimproc_config.build['windows'] = 'make -f make_mingw32.mak'
+	let s:vimproc_config.build['windows'] = 'make -f make_mingw32.mak'
 endif
-call neobundle#config('vimproc.vim', vimproc_config)
-unlet vimproc_config
+call neobundle#config('vimproc.vim', s:vimproc_config)
+unlet s:vimproc_config
 
 call neobundle#config('TweetVim', {
 \	'depends' : [
@@ -759,12 +757,6 @@ let g:ConqueTerm_InsertOnEnter  = 0
 let g:ConqueTerm_StartMessages  = 1
 
 "}}}
-"--- monday ---"{{{
-
-"call <SID>AddPair('false', 'true')
-"call <SID>AddPair('true', 'false')
-
-"}}}
 "--- For Private ---"{{{
 
 " Read Privacy Config
@@ -1055,27 +1047,8 @@ augroup END
 "-------------------------"
 " Utility Function {{{
 
-" Revese string of current line $ @See('reverse() tukaeYo')
-function! s:reverse_line()  " {{{
-	let l:reverse = ""
-	let l:str = getline('.')
-	let l:len = strlen(l:str)
-	for i in range(1, l:len)
-		let l:reverse .= l:str[l:len - i]
-	endfor
-	let l:reverse .= "\n"
-
-	let l:r = @"
-	execute 'normal! dd'
-	let @" = l:reverse
-	execute 'normal! P'
-	let @" = l:r
-endfunction  " }}}
-command! ReverseLine call s:reverse_line()
-
-
-" Revese Ranged Lines
-function! s:tac_line() range " {{{
+" Revese Lines
+function! s:reverse_line() range " {{{
 	if executable('tac')
 		execute "'<,'>!tac"
 	else
@@ -1096,7 +1069,7 @@ function! s:tac_line() range " {{{
 	endif
 endfunction " }}}
 command! -range=%
-\	Tac :<line1>, <line2> call s:tac_line()
+\	ReverseLine :<line1>, <line2> call s:reverse_line()
 
 
 " Catenate and echo files
@@ -1469,6 +1442,9 @@ augroup key_map
 	autocmd FileType * nnoremap                  <C-k><C-p> gT
 	autocmd FileType * nnoremap <silent><expr>   <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
 	autocmd FileType * nnoremap <silent>         <C-k><C-r>      :Reload<CR>
+	autocmd FileType * nnoremap <silent>         <C-k><C-l>      :nohlsearch<CR>
+	autocmd FileType * nnoremap <silent>         <C-k>l          :source %<CR>
+	autocmd FileType * nnoremap <silent>         <C-k>r          :Resetf<CR>
 	autocmd FileType * inoremap                  <C-k><C-k> <C-o>"_d$
 	autocmd FileType * inoremap                  <C-k><C-z> <C-o>:normal! <C-z><CR>
 	autocmd FileType * inoremap                  <C-k><C-i> <C-o>:set infercase! infercase?<CR>
@@ -1477,9 +1453,6 @@ augroup key_map
 	" for case duplicated maps by plugin map (ex:vimshell => <C-l> : clean)
 	autocmd FileType * inoremap                  <C-k><C-l> <Esc>
 	" Customize with prefix
-	autocmd FileType * nnoremap <silent>         <C-h><C-l>      :nohlsearch<CR>
-	autocmd FileType * nnoremap <silent>         <C-h>l          :source %<CR>
-	autocmd FileType * nnoremap <silent>         <C-h>r          :Resetf<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-w>      :setl wrap! wrap?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-Space>  :let __t=@/<CR>:s/\s\s\+/ /g<CR>:exe 'norm! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-i>      :set ignorecase! ignorecase?<CR>
@@ -1495,6 +1468,7 @@ augroup key_map
 	autocmd FileType * nnoremap <silent>         <C-h><C-c>      :set cursorline! cursorline?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-e>      :set expandtab! expandtab?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-r>      :set relativenumber! relativenumber?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-l>      :set list! list?<CR>
 	"
 	autocmd FileType * nnoremap <silent>         <leader>pl :PutLongSeparator<CR>
 	autocmd FileType * nnoremap <silent>         <leader>ps :PutShortSeparator<CR>
@@ -1560,6 +1534,8 @@ augroup key_map
 	autocmd FileType * nmap              g?                 ?<C-r>"<CR>
 	" TaskList.vim
 	autocmd FileType * nnoremap <leader>T :TaskList<CR>
+	" undotree
+	autocmd FileType * nnoremap <leader>u :UndotreeToggle<CR>
 augroup END
 
 
