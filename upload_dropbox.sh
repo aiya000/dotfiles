@@ -1,7 +1,8 @@
 #!/bin/sh
 
 #
-# This file must be execute dotfiles directory.
+# If you want to execute this,
+# you must be execute here (dotfiles directory).
 #
 
 ##TODO{{{
