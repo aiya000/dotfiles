@@ -41,3 +41,93 @@ Bundle 'edsono/vim-matchit'
 Bundle 'alpaca-tc/vim-endwise.git'
 
 lexima
+
+"- - -"
+
+set autoread
+set complete=.,w,b,u,k
+set completeopt=menu,preview,longest
+set pumheight=20
+set helplang=ja
+set foldmethod=manual
+au FileType go compiler go
+"改行コード
+set fileformats=unix,dos,mac
+"補完候補があってもEnterは改行
+inoremap <expr> <CR> pumvisible() ? "\<C-e>\<CR>" : "\<CR>"
+" text object
+nnoremap gc `[v`]
+onoremap gc :normal gc<CR>
+
+onoremap <silent> q
+\      :for i in range(v:count1)
+\ <Bar>   call search('.\&\(\k\<Bar>\_s\)\@!', 'W')
+\ <Bar> endfor<CR>
+
+function! OverridePaste(type, ...) "{{{
+    if a:0
+        silent execute "normal! `<" . a:type . "`>\"xp"
+    elseif a:type == 'line'
+        silent execute "normal! '[V']\"xp"
+    elseif a:type == 'block'
+        silent execute "normal! `[\<C-V>`]\"xp"
+    else
+        silent execute "normal! `[v`]\"xp"
+    endif
+endfunction "}}}
+nnoremap <C-p> :<C-u>set opfunc=OverridePaste<CR>g@
+nnoremap <C-p><C-p> :<C-u>set opfunc=OverridePaste<CR>g@g@
+
+" インデント選択
+function! VisualCurrentIndentBlock(type) "{{{
+    let current_indent = indent('.')
+    let current_line   = line('.')
+    let current_col    = col('.')
+    let last_line      = line('$')
+
+    let start_line = current_line
+    while start_line != 1 && current_indent <= indent(start_line) || getline(start_line) == ''
+        let start_line -= 1
+    endwhile
+    if a:type ==# 'i'
+        let start_line += 1
+    endif
+
+    let end_line = current_line
+    while end_line != last_line && current_indent <= indent(end_line) || getline(end_line) == ''
+        let end_line += 1
+    endwhile
+    if a:type ==# 'i'
+        let end_line -= 1
+    endif
+
+    call cursor(start_line, current_col)
+    normal! V
+    call cursor(end_line, current_col)
+endfunction "}}}
+nnoremap vii :call VisualCurrentIndentBlock('i')<CR>
+nnoremap vai :call VisualCurrentIndentBlock('a')<CR>
+onoremap ii :normal vii<CR>
+onoremap ai :normal vai<CR>
+
+autocmd FileType perl set isfname-=- isfname-=/ isfname-=+
+set includeexpr=substitute(v:fname,'^\\/','','')
+
+noremap <C-j><C-R> :Unite file_mru<CR>
+NeoBundle 'thinca/vim-localrc'
+NeoBundle 'vim-scripts/closetag.vim'
+NeoBundle 'vim-scripts/errormarker.vim'
+NeoBundle 'ack.vim'
+NeoBundle 'mattn/vimplenote-vim'
+NeoBundle 'toritori0318/vim-redmine'
+NeoBundle 'taglist.vim'
+NeoBundle 'airblade/vim-rooter'
+NeoBundle 'othree/eregex.vim'
+NeoBundle 'motemen/xslate-vim'
+NeoBundle 'mattn/sonictemplate-vim'
+NeoBundle 'chase/vim-ansible-yaml'
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'gre/play2vim'
+NeoBundle 'leafgarland/typescript-vim'
+NeoBundle 'clausreinke/typescript-tools'
+NeoBundle 'sorah/unite-ghq'
