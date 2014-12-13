@@ -131,3 +131,5 @@ NeoBundle 'gre/play2vim'
 NeoBundle 'leafgarland/typescript-vim'
 NeoBundle 'clausreinke/typescript-tools'
 NeoBundle 'sorah/unite-ghq'
+
+L421 これは poslist.vim 案件  12/14 00:00
