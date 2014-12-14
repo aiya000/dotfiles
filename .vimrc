@@ -41,7 +41,10 @@ scriptencoding utf8
 
 "-- netrw opened files history
 
-" <C-a> alter key [asdfghjkl;] to [1234567890]
+"-- <C-a> alter key [asdfghjkl;] to [1234567890]
+
+"-- add submode "tabmove-mode"
+"  -- selected tab move left and right
 
 " }}}
 " Issues {{{
@@ -747,6 +750,12 @@ let g:memolist_unite = 1
 let g:memolist_unite_option = '-auto-preview -tab'
 
 "}}}
+"--- vimdoc-ja ---"{{{
+
+" vimdoc-ja is secondary
+set helplang=en,ja
+
+"}}}
 "--- Conque-Shell ---"{{{
 
 let g:ConqueTerm_CloseOnEnd     = 1
@@ -1441,15 +1450,15 @@ augroup key_map
 	autocmd FileType * nnoremap                  <C-k><C-n> gt
 	autocmd FileType * nnoremap                  <C-k><C-p> gT
 	autocmd FileType * nnoremap <silent><expr>   <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
-	autocmd FileType * nnoremap <silent>         <C-k><C-r>      :Reload<CR>
-	autocmd FileType * nnoremap <silent>         <C-k><C-l>      :nohlsearch<CR>
-	autocmd FileType * nnoremap <silent>         <C-k>l          :source %<CR>
-	autocmd FileType * nnoremap <silent>         <C-k>r          :Resetf<CR>
+	autocmd FileType * nnoremap <silent>         <C-k><C-r> :Reload<CR>
+	autocmd FileType * nnoremap <silent>         <C-k><C-l> :nohlsearch<CR>
+	autocmd FileType * nnoremap <silent>         <C-k>l     :source %<CR>
+	autocmd FileType * nnoremap <silent>         <C-k>r     :Resetf<CR>
 	autocmd FileType * inoremap                  <C-k><C-k> <C-o>"_d$
 	autocmd FileType * inoremap                  <C-k><C-z> <C-o>:normal! <C-z><CR>
 	autocmd FileType * inoremap                  <C-k><C-i> <C-o>:set infercase! infercase?<CR>
-	autocmd FileType * cnoremap                  <C-k><C-p>      <Up>
-	autocmd FileType * cnoremap                  <C-k><C-n>      <Down>
+	autocmd FileType * cnoremap                  <C-k><C-p> <Up>
+	autocmd FileType * cnoremap                  <C-k><C-n> <Down>
 	" for case duplicated maps by plugin map (ex:vimshell => <C-l> : clean)
 	autocmd FileType * inoremap                  <C-k><C-l> <Esc>
 	" Customize with prefix
@@ -1676,7 +1685,7 @@ augroup plugin_pref
 	autocmd FileType netrw nnoremap <silent><buffer> ~         :execute 'Explore' expand('~')<CR>
 	autocmd FileType netrw nnoremap <silent><buffer> <leader>e :quit<CR>
 
-	autocmd FileType quickrun nnoremap <silent> Q :q<CR>
+	autocmd FileType quickrun nnoremap <silent><buffer> Q :q<CR>
 
 	autocmd FileType tweetvim     nmap             <buffer> <leader>R <Plug>(tweetvim_action_remove_status)
 	autocmd FileType tweetvim     nmap             <buffer> <C-r>     <Plug>(tweetvim_action_reload)
