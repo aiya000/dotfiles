@@ -1386,7 +1386,7 @@ command! -nargs=1  Hoogle Ref hoogle <args>
 "}}}
 " Global KeyMaps {{{
 
-" Disable Default Keys {{{
+" Disables {{{
 
 augroup key_map
 	autocmd FileType * nnoremap <Up>    <NOP>
@@ -1474,7 +1474,7 @@ augroup key_map
 		set virtualedit?
 	endfunction "}}}
 	autocmd FileType * nnoremap <silent>         <C-h><C-v>      :call <SID>toggle_virtual_edit()<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-c>      :set cursorline! cursorline?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-k>      :set cursorline! cursorline?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-e>      :set expandtab! expandtab?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-r>      :set relativenumber! relativenumber?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-l>      :set list! list?<CR>
