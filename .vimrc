@@ -1677,15 +1677,15 @@ augroup END
 
 " To Plugin buffers
 augroup plugin_pref
-	autocmd FileType help nnoremap <buffer> Q :quit<CR>
+	autocmd FileType help     nnoremap <silent><buffer> Q :quit<CR>
 
-	autocmd FileType netrw nmap             <buffer> H         -
-	autocmd FileType netrw nnoremap         <buffer> L         <NOP>
-	autocmd FileType netrw nnoremap <silent><buffer> Q         :quit<CR>
-	autocmd FileType netrw nnoremap <silent><buffer> ~         :execute 'Explore' expand('~')<CR>
-	autocmd FileType netrw nnoremap <silent><buffer> <leader>e :quit<CR>
+	autocmd FileType netrw    nmap             <buffer> H         -
+	autocmd FileType netrw    nnoremap         <buffer> L         <NOP>
+	autocmd FileType netrw    nnoremap <silent><buffer> Q         :quit<CR>
+	autocmd FileType netrw    nnoremap <silent><buffer> ~         :execute 'Explore' expand('~')<CR>
+	autocmd FileType netrw    nnoremap <silent><buffer> <leader>e :quit<CR>
 
-	autocmd FileType quickrun nnoremap <silent><buffer> Q :q<CR>
+	autocmd FileType quickrun nnoremap <silent><buffer> Q :quit<CR>
 
 	autocmd FileType tweetvim     nmap             <buffer> <leader>R <Plug>(tweetvim_action_remove_status)
 	autocmd FileType tweetvim     nmap             <buffer> <C-r>     <Plug>(tweetvim_action_reload)
@@ -1695,24 +1695,26 @@ augroup plugin_pref
 	autocmd FileType tweetvim     nnoremap <silent><buffer> Q         :bdelete<CR>
 	autocmd FileType tweetvim_say inoremap         <buffer> <C-i>     <Tab>
 
-	autocmd FileType vimshell nunmap   <buffer> Q
-	autocmd FileType vimshell nunmap   <buffer> q
-	autocmd FileType vimshell nnoremap <buffer> gk         <NOP>
-	autocmd FileType vimshell nnoremap <buffer> gj         <NOP>
-	autocmd FileType vimshell imap     <buffer> <C-l>      <Plug>(vimshell_clear)
-	autocmd FileType vimshell imap     <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
-	autocmd FileType vimshell iunmap   <buffer> <C-p>
-	autocmd FileType vimshell iunmap   <buffer> <C-n>
-	autocmd FileType int-*    nmap     <buffer> Q          <Plug>(vimshell_int_exit)
-	autocmd FileType int-*    imap     <buffer> <C-l>      <C-o><C-l>
-	autocmd FileType int-*    imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
-
-	autocmd FileType w3m nnoremap         <buffer> H         <BS>
-	autocmd FileType w3m nnoremap <silent><buffer> <C-u>     :W3mAddressBar <CR>
-	autocmd FileType w3m nnoremap <silent><buffer> <leader>E :W3mShowExtenalBrowser <CR>
+	autocmd FileType vimshell  nunmap   <buffer> Q
+	autocmd FileType vimshell  nunmap   <buffer> q
+	autocmd FileType vimshell  nnoremap <buffer> gk         <NOP>
+	autocmd FileType vimshell  nnoremap <buffer> gj         <NOP>
+	autocmd FileType vimshell  imap     <buffer> <C-l>      <Plug>(vimshell_clear)
+	autocmd FileType vimshell  imap     <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
+	autocmd FileType vimshell  iunmap   <buffer> <C-p>
+	autocmd FileType vimshell  iunmap   <buffer> <C-n>
+	autocmd FileType int-*     nmap     <buffer> Q          <Plug>(vimshell_int_exit)
+	autocmd FileType int-*     imap     <buffer> <C-l>      <C-o><C-l>
+	autocmd FileType int-*     imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
 
 	autocmd FileType J6uil     nnoremap <silent><buffer> Q     :bdelete<CR>
 	autocmd FileType J6uil_say nmap             <buffer> <C-j> <CR>  " Enter to Say
+
+	autocmd FileType w3m       nnoremap         <buffer> H         <BS>
+	autocmd FileType w3m       nnoremap <silent><buffer> <C-u>     :W3mAddressBar <CR>
+	autocmd FileType w3m       nnoremap <silent><buffer> <leader>E :W3mShowExtenalBrowser <CR>
+
+	autocmd FileType ref-*     nnoremap <silent><buffer> Q :quit<CR>
 
 	autocmd FileType git-log.git-diff nnoremap <silent><buffer> Q         :bdelete<CR>
 	autocmd FileType markdown         nnoremap <silent><buffer> <leader>r :PrevimOpen<CR>
@@ -1747,6 +1749,7 @@ function! s:matchadd_with_filetype(ft, tag, regex, priority, id) "{{{
 
 	return l:id
 endfunction "}}}
+
 
 " If buffer doesn't has filetype then set filetype 'none'
 augroup file_event
@@ -1783,6 +1786,9 @@ augroup extension_type
 	autocmd FileType coq                let &commentstring = " (*%s*)"
 	autocmd FileType mysql              let &commentstring = " -- %s"
 	autocmd FileType markdown,text,none let &commentstring = " %s"
+
+	" Conque Ghci
+	autocmd FileType ghci* setl nolist
 augroup END
 
 "}}}
