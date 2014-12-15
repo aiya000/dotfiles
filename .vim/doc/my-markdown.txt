@@ -1,7 +1,7 @@
 
 *markdown.txt*
 
-Version: 1.0
+Version: 1.2
 Writer : aiya000 <aiya.develop@gmail.com>
 
 'markdown'
@@ -19,10 +19,19 @@ URL: kojika17.com/2013/01/starting-markdown.html
 
 
 ================================================================================
-
+CONTENTS			*my-markdown-contents*
+Markdownとは		|my-markdown-howto|
+見出し			|my-markdown-pickup|
+改行			|my-markdown-breakdown|
+強調			|my-markdown-strong|
+リスト			|my-markdown-list|
+罫線			|my-markdown-ruled-line|
+リンク			|my-markdown-link|
+ソースコード		|my-markdown-code|
+画像			|my-markdown-image|
 
 ================================================================================
-HowToMarkdown			*markdown-howto*
+HowToMarkdown			*my-markdown-howto*
 
 文章作成やメモ書きにも便利、Markdown記法
 
@@ -57,7 +66,7 @@ Markdownには1つのHTMLのタグを示す場合でも、様々な書き方が�
 ================================================================================
 
 =============================================
-見出し			|markdown-pickup|
+見出し			*my-markdown-pickup*
 
 #(ハッシュ)の数と見出しのレベルが一致します。
 
@@ -82,7 +91,7 @@ HTML
 
 
 =============================================
-段落と改行			|markdown-breakdown|
+段落と改行			*my-markdown-breakdown*
 
 空白行で囲まれた1行、または複数行の文章は、ひとつの段落になります。
 改行が入っていても、1行以上の空白が入っていなければ、ひとつの段落と見なされます。
@@ -129,7 +138,7 @@ HTML
 
 =============================================
 
-強調			|markdown-dodo-n|
+強調			*my-markdown-strong*
 強調を示す場合は、2つの*(アスタリスク)か、_(アンダースコア)で文言を囲みます。
 
 ====================
@@ -150,7 +159,7 @@ HTML
 
 
 =============================================
-リスト			|markdown-list|
+リスト			*my-markdown-list*
 
 リストを示す場合は、*(アスタリスク), -(ハイフン), +(プラス)のどれかを入力し、スペース、またはタブを挿入します。
 リストの途中で、スペース、タブを入れて記号を変更すると、入れ子として扱われます。
@@ -219,7 +228,7 @@ HTML
 
 
 =============================================
-罫線			|markdown-shaki-n|
+罫線			*my-markdown-ruled-line*
 
 3つ以上の*(アスタリスク), -(ハイフン), _(アンダースコア)と半角スペースのみの行は、罫線として扱われます。
 
@@ -244,7 +253,7 @@ ___
 
 
 =============================================
-リンク			|markdown-link|
+リンク			*my-markdown-link*
 
 角括弧で文言、丸括弧でURLを囲むと、リンクになります。
 
@@ -266,8 +275,10 @@ HTML
 ====================
 Markdown
 
-I get 10 times more traffic from [Google] [1] than from
-[Yahoo] [2] or [MSN] [3].
+I get 10 times more traffic from
+ [Google] [1] than from
+ [Yahoo]  [2] or
+ [MSN]    [3].
 
   [1]: http://google.com/        "Google"
   [2]: http://search.yahoo.com/  "Yahoo Search"
@@ -276,11 +287,13 @@ I get 10 times more traffic from [Google] [1] than from
 ====================
 HTML
 
-<p>I get 10 times more traffic from <a href="http://google.com/" title="Google">Google</a> than from
-<a href="http://search.yahoo.com/" title="Yahoo Search">Yahoo</a> or <a href="http://search.msn.com/" title="MSN Search">MSN</a>.</p>
+<p>I get 10 times more traffic from<br>
+ <a href="http://google.com/" title="Google">Google</a> than from<br>
+ <a href="http://search.yahoo.com/" title="Yahoo Search">Yahoo</a> or<br>
+ <a href="http://search.msn.com/" title="MSN Search">MSN</a>.</p>
 
 ====================
-コード			|markdown-code|
+コード			*my-markdown-code*
 
 行頭スペース4つで、コードタグで囲んだ状態になります。
 
@@ -297,7 +310,7 @@ HTML
 ====================
 
 =============================================
-画像			|markdown-picture|
+画像			*my-markdown-image*
 
 画像入れる。
 

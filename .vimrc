@@ -392,6 +392,7 @@ NeoBundle        'oplatek/Conque-Shell'
 NeoBundle        'vim-scripts/TaskList.vim'
 NeoBundle        'tyru/vim-altercmd'
 NeoBundle        'mbbill/undotree'
+NeoBundle        'Shougo/neomru.vim'
 
 
 call neobundle#end()
@@ -1483,16 +1484,16 @@ augroup key_map
 	autocmd FileType * nnoremap <silent>         <leader>ps :PutShortSeparator<CR>
 
 	"-- Customize --"
-	autocmd FileType * nnoremap <silent> <C-m> :normal! o<CR>
+	autocmd FileType * nnoremap <silent> <C-m> o<Esc>
 	autocmd FileType * nnoremap          q:    :register<CR>
 	" for window or buffer
 	autocmd FileType * nnoremap <silent> <C-w>t     :tabnew<CR>
 	autocmd FileType * nnoremap <silent> <C-w>T     :tabclose<CR>
-	autocmd FileType * nnoremap <silent> <C-w>bd    :bd<CR>
-	autocmd FileType * nnoremap <silent> <C-w>Bd    :bd!<CR>
+	autocmd FileType * nnoremap <silent> <C-w>bd    :bdelete<CR>
+	autocmd FileType * nnoremap <silent> <C-w>Bd    :bdelete!<CR>
 	autocmd FileType * nnoremap <silent> <C-w>C     :hide<CR>
-	autocmd FileType * nnoremap <silent> <C-w><C-w> :w<CR>
-	autocmd FileType * nnoremap <silent> <C-w>W     :wa<CR>
+	autocmd FileType * nnoremap <silent> <C-w><C-w> :write<CR>
+	autocmd FileType * nnoremap <silent> <C-w>W     :wall<CR>
 	function! s:buf_open_new_tab() "{{{
 		let l:lnum = line('.')
 		execute 'tabnew| ' bufnr('%') . 'b'
@@ -1500,20 +1501,25 @@ augroup key_map
 	endfunction "}}}
 	autocmd FileType * nnoremap <silent> <C-w>bt    :call <SID>buf_open_new_tab()<CR>
 	autocmd FileType * nnoremap <silent> <C-w>N     :enew!<CR>
-	" for folds
+	" for foldings
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
 	autocmd FileType * nnoremap zj     zjzo
 	autocmd FileType * nnoremap zk     zkzo
+	autocmd FileType * nnoremap z<     V$%zf
 
 	"-- With Plugins --"
 	autocmd FileType * nmap              <leader>w <Plug>(openbrowser-open)
 	autocmd FileType * nnoremap <silent> <leader>t :Translate<CR>
 	" Unite
 	autocmd FileType * nnoremap <silent> <C-k><C-u><C-f>    :Unite -ignorecase outline:foldings<CR>
+	autocmd FileType * nnoremap <silent> <C-w>~             :Unite -ignorecase neomru/file<CR>
 	" vim-over
 	autocmd FileType * nnoremap <silent> :%s/               :OverCommandLine<CR>%s/
 	autocmd FileType * nnoremap <silent> :s/                :OverCommandLine<CR>s/
+	autocmd FileType * nnoremap <silent> g:                 :OverCommandLine<CR>
+	autocmd FileType * vnoremap <silent> :s/                :OverCommandLine<CR>s/
+	" vimshell
 	autocmd FileType * vnoremap <silent> :s/                :OverCommandLine<CR>s/
 	" vimshell
 	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
