@@ -1763,7 +1763,7 @@ augroup file_event
 augroup END
 
 
-"@Bugs('duplicated multi filetype highlight')
+"@Bugs('these filetype's highlight is not local >>= duplication')
 augroup extension_type
 	" Set for "Vi Improved"
 	autocmd VimEnter,ColorScheme * highlight RcMyHint cterm=standout ctermfg=DarkYellow
