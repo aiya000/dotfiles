@@ -696,16 +696,31 @@ call submode#enter_with('fold_move', 'n', '', '<C-s>z')
 call submode#map('fold_move', 'n', '', 'j', 'zczjzozz')
 call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
 
-" Incremental Search Commands
-"call submode#enter_with('incsearch_command', 'c', '', '<C-h><C-p>', '<Up>')
-"call submode#enter_with('incsearch_command', 'c', '', '<C-h><C-n>', '<Down>')
-"call submode#map('incsearch_command', 'c', '', '<C-p>', '<Up>')
-"call submode#map('incsearch_command', 'c', '', '<C-n>', '<Down>')
-
 " Window Buffer Changer
 call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
 call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
 call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
+
+" Tab Mover
+function! s:loopable_tab_move_prev() "{{{
+	if tabpagenr() is 1
+		execute ':tabmove' tabpagenr('$')
+	else
+		execute ':tabmove -1'
+	endif
+endfunction
+let g:vimrc['LoopableTabMovePrev'] = function('s:loopable_tab_move_prev') "}}}
+function! s:loopable_tab_move_next()  "{{{
+	if tabpagenr() is tabpagenr('$')
+		execute 'tabmove 0'
+	else
+		execute 'tabmove +1'
+	endif
+endfunction
+let g:vimrc['LoopableTabMoveNext'] = function('s:loopable_tab_move_next') "}}}
+call submode#enter_with('tab_move', 'n', '', '<C-s>t')
+call submode#map('tab_move', 'n', 's', 'p', ':call g:vimrc.LoopableTabMovePrev()<CR>')
+call submode#map('tab_move', 'n', 's', 'n', ':call g:vimrc.LoopableTabMoveNext()<CR>')
 
 "}}}
 "--- vim-ref ---" {{{
@@ -1117,14 +1132,14 @@ command! TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
 "}}}
 " Action Function {{{
 
-let g:rc_temporary_dir = get(g:, 'rc_temporary_dir', 'undefined')
-command! TDirPwd           echo g:rc_temporary_dir
+let g:vimrc['tdir_dir'] = get(g:vimrc, 'tdir_dir', 'Not set tdir')
+command! TDirPwd           echo g:vimrc['tdir_dir']
 function! s:set_temporary_dir(path) "{{{
 	if isdirectory(a:path)
-		let g:rc_temporary_dir =
+		let g:vimrc['tdir_dir'] =
 		\	a:path == '.' ? expand('%:p:h')
 		\	              : a:path
-		echo g:rc_temporary_dir
+		echo g:vimrc['tdir_dir']
 	else
 		echoerr 'No such temporary root dir'
 	endif
@@ -1132,11 +1147,11 @@ endfunction "}}}
 command! -nargs=1  TDirSet call s:set_temporary_dir(<q-args>)
 command! TDirSetCurrentDir call s:set_temporary_dir('.')
 function! s:cd_temporary_dir() "{{{
-	if g:rc_temporary_dir ==# 'undefined'
+	if g:vimrc['tdir_dir'] ==# 'undefined'
 		echoerr 'Not set temporary root dir'
 	else
-		execute 'cd ' g:rc_temporary_dir
-		echo g:rc_temporary_dir
+		execute 'cd ' g:vimrc['tdir_dir']
+		echo g:vimrc['tdir_dir']
 	endif
 endfunction "}}}
 command! TDirCd            call s:cd_temporary_dir()
@@ -1366,7 +1381,7 @@ command!           Ghci     enew!  | ConqueTerm ghci
 command!           Sghci    sp     | ConqueTerm ghci
 command!           Vghci    vsp    | ConqueTerm ghci
 command!           GhciTab  tabnew | ConqueTerm ghci
-command! -nargs=1  Hoogle Ref hoogle <args>
+cabbr              Hoogle   Ref hoogle
 
 " }}}
 
@@ -1517,9 +1532,6 @@ augroup key_map
 	" vim-over
 	autocmd FileType * nnoremap <silent> :%s/               :OverCommandLine<CR>%s/
 	autocmd FileType * nnoremap <silent> :s/                :OverCommandLine<CR>s/
-	autocmd FileType * nnoremap <silent> g:                 :OverCommandLine<CR>
-	autocmd FileType * vnoremap <silent> :s/                :OverCommandLine<CR>s/
-	" vimshell
 	autocmd FileType * vnoremap <silent> :s/                :OverCommandLine<CR>s/
 	" vimshell
 	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
@@ -1538,6 +1550,8 @@ augroup key_map
 	autocmd FileType * nmap              #                  <Plug>(anzu-sharp-with-echo)zv
 	autocmd FileType * nmap              <C-w>*             <C-w><C-v><Plug>(anzu-star-with-echo)zv
 	autocmd FileType * nmap              <C-w>#             <C-w><C-v><Plug>(anzu-sharp-with-echo)zv
+	" vim-over
+	autocmd FileType * OverCommandLineNoremap <C-l>         <Esc>
 	" incsearch.vim
 	autocmd FileType * nmap <expr>       /                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
 	autocmd FileType * nmap <silent>     \/                 :set noignorecase<CR>/
@@ -1683,7 +1697,7 @@ augroup END
 
 " To Plugin buffers
 augroup plugin_pref
-	autocmd FileType help     nnoremap <silent><buffer> Q :quit<CR>
+	autocmd FileType help     nnoremap <silent><buffer> Q :helpclose<CR>
 
 	autocmd FileType netrw    nmap             <buffer> H         -
 	autocmd FileType netrw    nnoremap         <buffer> L         <NOP>
@@ -1786,13 +1800,15 @@ augroup extension_type
 	autocmd FileType mysql setl ts=4 sw=4 et
 
 	" FileTypes commentstrings
-	autocmd FileType vim                let &commentstring = ' "%s'
-	autocmd FileType c,cpp,java,cs      let &commentstring = " /*%s*/"
-	autocmd FileType haskell            let &commentstring = " --%s"
-	autocmd FileType coq                let &commentstring = " (*%s*)"
-	autocmd FileType mysql              let &commentstring = " -- %s"
-	autocmd FileType markdown,text,none let &commentstring = " %s"
+	autocmd FileType vim           let &commentstring = ' "%s'
+	autocmd FileType c,cpp,java,cs let &commentstring = " /*%s*/"
+	autocmd FileType haskell       let &commentstring = " --%s"
+	autocmd FileType coq           let &commentstring = " (*%s*)"
+	autocmd FileType mysql         let &commentstring = " -- %s"
+	autocmd FileType markdown      let &commentstring = "<!--%s-->"
+	autocmd FileType text,none     let &commentstring = " %s"
 
+	"@Bugs('do not functioned?')
 	" Conque Ghci
 	autocmd FileType ghci* setl nolist
 augroup END

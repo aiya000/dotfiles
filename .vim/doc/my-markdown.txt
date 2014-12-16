@@ -29,6 +29,7 @@ Markdownとは		|my-markdown-howto|
 リンク			|my-markdown-link|
 ソースコード		|my-markdown-code|
 画像			|my-markdown-image|
+テーブル		|my-markdown-table|
 
 ================================================================================
 HowToMarkdown			*my-markdown-howto*
@@ -312,7 +313,7 @@ HTML
 =============================================
 画像			*my-markdown-image*
 
-画像入れる。
+画像入れる
 
 ====================
 Markdown
@@ -323,6 +324,28 @@ Markdown
 HTML
 
 そーすなんたら。
+
+====================
+
+=============================================
+テーブル			*my-markdown-table*
+
+テーブル記法
+
+====================
+Markdown
+
+\| RightAlign  | CenterAlign  | LeftAlign |
+\|:-----------\|:------------\|----------:|
+\|       hoge  |     foo      | ahoge     |
+\|       hoge  |     foo      | ahoge     |
+
+s/\\//gしてね。
+
+====================
+HTML
+
+略
 
 ====================
 

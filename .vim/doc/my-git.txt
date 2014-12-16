@@ -1,0 +1,98 @@
+
+*my-git.txt*	gitを扱う上での参考です
+
+Version: 1.0
+Author : aiya000 <aiya.develop@gmail.com>
+
+'my-git'
+=============================================
+CONTENTS	*my-git*
+
+Let's English Commit			|my-git-commit-english|
+基本操作				|my-git-operation-basic|
+コンフリクト				|my-git-operation-conflict|
+
+=============================================
+
+
+================================================================================
+Let's English Commit			*my-git-commit-english*
+
+
+[参考ページ](http://www.sssg.org/blogs/hiro345/archives/11721.html)
+
+
+* 主な参考事項
+  - 一文の場合、文末にピリオドを付けない
+  - 主語は省く
+  - 時制は現在形
+  - 文頭の英単語は大文字
+
+
+* コミット接頭語 ( 参考 )
+  - バグ修正         … Fix
+  - 修正             … Modify
+  - 変更を取り消し   … Revert
+  - 回避             … Avoid
+  - 新規機能追加     … Add
+  - 新規             … New
+  - 仕様変更         … Change
+  - 小さな変更       … Minor changes
+  - 大きな変更       … Major changes
+  - 改良             … Improve
+  - バージョンアップ … Upgrade
+  - 更新             … Update
+  - 機能拡張         … Extend
+  - 機能向上         … Enhance
+  - 最適化           … Optimize
+  - 有効化           … Enable
+  - 無効化           … Disable
+  - 減量             … Reduce
+  - 整理             … Clean
+  - 削除             … Remove
+  - 設定             … Set
+  - 設定解除         … Unset
+
+
+================================================================================
+基本操作				*my-git-operation-basic*
+
+新規ブランチの作成
+$ git branch 新規ブランチ名 分岐元コミットID
+
+ブランチ一覧
+$ git branch -a
+
+ブランチの削除
+$ git branch -d ブランチ名
+
+stashの作成
+$ git stash save
+
+stash一覧
+$ git stash list
+
+直前コミットの修正
+$ git commit --amend -m "修正コミットメッセージ"
+  #-> もちろん-mである必要はない
+
+ロールバック
+$ git revert ロールバック対象のコミットID
+
+実際のファイルを削除せずにgit rm
+$ git rm --cached file
+
+
+================================================================================
+コンフリクト				*my-git-operation-conflict*
+
+プルでエラーが出た際のマージ
+$ git pull
+  #-> 警告メッセージ: would be overwritten...
+$ git commit -am "merging hoge file."
+$ git mergetool
+
+
+=============================================
+=============================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:fdl=0:
