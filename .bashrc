@@ -38,6 +38,7 @@ alias gvimconfig='vim ~/.gvimrc'
 alias gvim-vimconfig='gvim ~/.gvimrc'
 alias vim-bashrc='vim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
 alias vim-bashpr='vim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
+alias vim-mutt='vim ~/.tmp/mutt.txt'
 
 # }}}
 # Shell Utils {{{
