@@ -526,6 +526,11 @@ call neobundle#config('excelview-vim', {
 "------------------------"
 "*** Plugin_Configure ***"
 "------------------------"
+"--- netrw ---" {{{
+
+let g:netrw_preview = 1
+
+" }}}
 "--- vim-quickrun ---" {{{
 
 let g:quickrun_config = {
@@ -1494,6 +1499,7 @@ augroup key_map
 	autocmd FileType * nnoremap <silent>         <C-h><C-e>      :set expandtab! expandtab?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-r>      :set relativenumber! relativenumber?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-l>      :set list! list?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-n>      :set nu! nu?<CR>
 	"
 	autocmd FileType * nnoremap <silent>         <leader>pl :PutLongSeparator<CR>
 	autocmd FileType * nnoremap <silent>         <leader>ps :PutShortSeparator<CR>
@@ -1704,6 +1710,9 @@ augroup plugin_pref
 	autocmd FileType netrw    nnoremap <silent><buffer> Q         :quit<CR>
 	autocmd FileType netrw    nnoremap <silent><buffer> ~         :execute 'Explore' expand('~')<CR>
 	autocmd FileType netrw    nnoremap <silent><buffer> <leader>e :quit<CR>
+	autocmd FileType netrw    nnoremap <silent><buffer> V         :vsp<CR>
+	autocmd FileType netrw    nnoremap <silent><buffer> S         :sp<CR>
+	autocmd FileType netrw    nnoremap         <buffer> s         <NOP>
 
 	autocmd FileType quickrun nnoremap <silent><buffer> Q :quit<CR>
 
