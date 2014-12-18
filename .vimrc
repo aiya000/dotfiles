@@ -43,8 +43,8 @@ scriptencoding utf8
 
 "-- <C-a> alter key [asdfghjkl;] to [1234567890]
 
-"-- add submode "tabmove-mode"
-"  -- selected tab move left and right
+"-- buffer_mover is current buffer move to other tab
+"  -- like a copy and paste ?
 
 " }}}
 " Issues {{{
@@ -528,7 +528,8 @@ call neobundle#config('excelview-vim', {
 "------------------------"
 "--- netrw ---" {{{
 
-let g:netrw_preview = 1
+let g:netrw_preview   = 1
+let g:netrw_liststyle = 3
 
 " }}}
 "--- vim-quickrun ---" {{{
@@ -568,7 +569,7 @@ if s:isCygwin
 	let g:quickrun_config['java'] = {
 	\	'command' : 'javac',
 	\	'exec'    : ['%c %o `echo %s | sed s:\:/:g | cygpath -w -f -`', '%c %s:t:r %a'],
-	\	'hook/output_encode/encoding': 'Shift_JIS',
+	\	'hook/output_encode/encoding': 'Shift_JIS'
 	\}
 	let javav = s:system('java -version')
 	if javav =~# '1\.8'
@@ -579,11 +580,6 @@ if s:isCygwin
 		let g:quickrun_config.java['cmdopt'] = '-encoding UTF-8'
 	endif
 	unlet javav
-
-	let g:quickrun_config['haskell'] = {
-	\	'command' : 'ghc',
-	\	'exec'    : 'ghc %s',
-	\}
 endif
 
 augroup plugin_pref
@@ -615,7 +611,6 @@ augroup END
 " Add to VimShell Commands Directory of My Home
 let &runtimepath = &runtimepath.','.s:vimHome.'/autoload/vimshell/commands'
 
-
 let g:vimshell_no_save_history_commands = {
 \	'history': 1,
 \	'ls'     : 1,
@@ -623,7 +618,6 @@ let g:vimshell_no_save_history_commands = {
 \}
 let g:vimshell_enable_transient_user_prompt = 1
 let g:vimshell_force_overwrite_statusline = 1
-
 
 augroup plugin_pref
 	autocmd FileType vimshell setl fdm=marker nolist wrap
@@ -687,14 +681,14 @@ let g:unite_source_alias_aliases = {
 
 let g:submode_timeout = 0
 
-
 " Window Resizer
 call submode#enter_with('window_resize', 'n', '', '<C-s>w')
 call submode#map('window_resize', 'n', '', 'j', '<C-w>+')
 call submode#map('window_resize', 'n', '', 'k', '<C-w>-')
 call submode#map('window_resize', 'n', '', 'h', '<C-w><')
 call submode#map('window_resize', 'n', '', 'l', '<C-w>>')
-
+call submode#map('window_resize', 'n', '', '=', '<C-w>=')
+call submode#map('window_resize', 'n', '', '_', '<C-w>_')
 
 " Fold Mover
 call submode#enter_with('fold_move', 'n', '', '<C-s>z')

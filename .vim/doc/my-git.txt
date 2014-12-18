@@ -8,9 +8,10 @@ Author : aiya000 <aiya.develop@gmail.com>
 =============================================
 CONTENTS	*my-git*
 
-Let's English Commit			|my-git-commit-english|
-基本操作				|my-git-operation-basic|
-コンフリクト				|my-git-operation-conflict|
+Let's English Commit				|my-git-commit-english|
+基本操作					|my-git-operation-basic|
+コンフリクト					|my-git-operation-conflict|
+複数のコミットを1つにまとめる			|my-git-operation-commit-compress|
 
 =============================================
 
@@ -91,6 +92,16 @@ $ git pull
   #-> 警告メッセージ: would be overwritten...
 $ git commit -am "merging hoge file."
 $ git mergetool
+
+================================================================================
+複数のコミットを1つにまとめる		*my-git-operation-commit-compress*
+
+[参考](http://blog.6vox.com/2014/03/git-1.html)
+$ git rebase -i HEAD~(n-1)  # n => まとめたい直前のコミット数
+
+(exam)$ git rebase -i HEAD~~  #=> 直前2つのコミットを1つにまとめる
+# エディタが開かれるので、ベースにコミットを "pick"
+# それ以外を "fixup" に変更する
 
 
 =============================================
