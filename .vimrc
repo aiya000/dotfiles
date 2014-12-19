@@ -86,6 +86,7 @@ scriptencoding utf8
 " @Unused       => Not used this yet now, needs inquires deleting this.
 " @Deprecated   => Deprecated This vimrc Version.
 " @Experiment   => This is experimental implementation.
+" @Marked       => Have eye on this.
 " @See          => Referred URL, Saw Document, and etc...
 " @Code         => A sample code using it
 "-------------------
@@ -1805,7 +1806,7 @@ augroup extension_type
 	" FileTypes commentstrings
 	autocmd FileType vim           let &commentstring = ' "%s'
 	autocmd FileType c,cpp,java,cs let &commentstring = " /*%s*/"
-	autocmd FileType haskell       let &commentstring = " --%s"
+	autocmd FileType haskell       let &commentstring = " -- %s"
 	autocmd FileType coq           let &commentstring = " (*%s*)"
 	autocmd FileType mysql         let &commentstring = " -- %s"
 	autocmd FileType markdown      let &commentstring = "<!--%s-->"
