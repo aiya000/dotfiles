@@ -46,6 +46,8 @@ scriptencoding utf8
 "-- buffer_mover is current buffer move to other tab
 "  -- like a copy and paste ?
 
+"-- C-/ => comment out by filetypes
+
 " }}}
 " Issues {{{
 

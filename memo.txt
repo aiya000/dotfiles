@@ -48,7 +48,6 @@ set autoread
 set complete=.,w,b,u,k
 set completeopt=menu,preview,longest
 set pumheight=20
-set helplang=ja
 set foldmethod=manual
 au FileType go compiler go
 "改行コード
@@ -133,3 +132,20 @@ NeoBundle 'clausreinke/typescript-tools'
 NeoBundle 'sorah/unite-ghq'
 
 L421 これは poslist.vim 案件  12/14 00:00
+
+
+NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'jceb/vim-hier'
+NeoBundle 'dannyob/quickfixstatus'
+NeoBundle "osyo-manga/shabadou.vim"
+NeoBundle "osyo-manga/vim-watchdogs"
+NeoBundle "motemen/vim-guess-abbrev"
+NeoBundle 'kana/vim-fakeclip'
+NeoBundle 'gcmt/wildfire.vim'
+NeoBundle "syui/airsave.vim"
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'motemen/vim-help-random'
+NeoBundle 'sgur/unite-qf'
+NeoBundle 'thinca/vim-unite-history'
+NeoBundle 'sgur/unite-git_grep'
