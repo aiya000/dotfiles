@@ -1131,6 +1131,10 @@ command! TimerEcho  echo reltimestr( reltime(s:startTime) )
 command! TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
 
 
+" Copy all to plus register
+command! CopyPlusAll execute 'normal! ggVG"+y'
+
+
 "}}}
 " Action Function {{{
 
