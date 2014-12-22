@@ -78,6 +78,8 @@ scriptencoding utf8
 
 "-- Unite outline -> auto view C-Sharp <summary>~</summary>
 
+"-- a keymapp "diffthis toggle"
+
 " }}}
 
 
@@ -315,18 +317,6 @@ endif
 
 
 "-------------------------"
-"    Environment_Pref     "
-"-------------------------"
-"{{{
-
-if filereadable(expand('~/.vimrc_env'))
-	source ~/.vimrc_env
-endif
-
-"}}}
-
-
-"-------------------------"
 "     Plugin_Manage       "
 "-------------------------"
 "*** Plugin List ***"{{{
@@ -413,7 +403,6 @@ NeoBundle        'vim-scripts/TaskList.vim'
 NeoBundle        'tyru/vim-altercmd'
 NeoBundle        'mbbill/undotree'
 NeoBundle        'Shougo/neomru.vim'
-NeoBundle        'tmhedberg/matchit'
 
 
 call neobundle#end()
@@ -714,10 +703,12 @@ call submode#map('window_resize', 'n', '', '_', '<C-w>_')
 
 " Fold Mover
 call submode#enter_with('fold_move', 'n', '', '<C-s>z')
-call submode#map('fold_move', 'n', '', 'j', 'zczjzozz')
-call submode#map('fold_move', 'n', '', 'k', 'zczkzozz')
+call submode#map('fold_move', 'n', 'e', 'j', "foldlevel('.') > 0 ? 'zczjzozz'   : 'zjzozz'")
+call submode#map('fold_move', 'n', 'e', 'k', "foldlevel('.') > 0 ? 'zczkzo[zzz' : 'zkzo[zzz'")
+call submode#map('fold_move', 'n', '',  'h', '[z')
+call submode#map('fold_move', 'n', '',  'l', ']z')
 
-" Window Buffer Changer
+" Buffer Changer
 call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
 call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
 call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
@@ -740,9 +731,9 @@ let g:vimrc['LoopableTabMovePrev'] = function('s:loopable_tab_move_prev')
 
 function! s:loopable_tab_move_next()
 	if tabpagenr() is tabpagenr('$')
-		execute 'tabmove 0'
+		execute ':tabmove 0'
 	else
-		execute 'tabmove +1'
+		execute ':tabmove +1'
 	endif
 endfunction
 
@@ -750,7 +741,6 @@ let g:vimrc['LoopableTabMoveNext'] = function('s:loopable_tab_move_next')
 
 "}}}
 call submode#enter_with('tab_move', 'n', '', '<C-s>t')
-call submode#map('tab_move', 'n', 's', 'p', ':call g:vimrc.LoopableTabMovePrev()<CR>')
 call submode#map('tab_move', 'n', 's', 'n', ':call g:vimrc.LoopableTabMoveNext()<CR>')
 
 "}}}
@@ -881,7 +871,6 @@ augroup END
 " Set Color Scheme
 set background=dark
 colorscheme desert
-"autocmd highlight_pref VimEnter * colorscheme desert
 
 " Indent Wrapped Text
 if exists('+breakindent')
@@ -1095,8 +1084,6 @@ augroup file_event
 augroup END
 
 augroup key_event
-	autocmd CursorMoved * call s:visual_fold_all()
-
 	"autocmd UserGettingBored * echo "What's this !?"
 augroup END
 
@@ -1162,6 +1149,10 @@ command! -nargs=1 PutRandom execute 'normal! a' . s:random_int(<q-args>)
 command! TimerStart let  s:startTime = reltime()
 command! TimerEcho  echo reltimestr( reltime(s:startTime) )
 command! TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
+
+
+" Copy all to plus register
+command! CopyPlusAll execute 'normal! ggVG"+y'
 
 
 "}}}
@@ -1493,10 +1484,6 @@ augroup END
 " }}}
 " Customize Keys {{{
 
-" Prepare specific variable "{{{
-
-
-" "}}}
 " Prepare temporary functions {{{
 
 " Compress continuous space
@@ -1631,8 +1618,8 @@ augroup key_map
 	"autocmd FileType * vnoremap <silent> gj             :call <SID>cursor_down_to_ground()<CR>
 	autocmd FileType * nnoremap <silent> <C-m>          o<Esc>
 	autocmd FileType * nnoremap <silent> <Space><Space> :call <SID>compress_spaces()<CR>
-	autocmd FileType * nnoremap <silent> <leader>b  :ScratchUp<CR>
-	autocmd FileType * nnoremap <silent> <leader>B  :EmptyBufUp<CR>
+	autocmd FileType * nnoremap <silent> <leader>b      :ScratchUp<CR>
+	autocmd FileType * nnoremap <silent> <leader>B      :EmptyBufUp<CR>
 augroup END
 
 "-- For foldings --"
@@ -1699,8 +1686,8 @@ augroup END
 
 "-- For Plugins --"
 augroup key_map
-	autocmd FileType * nmap              <leader>w <Plug>(openbrowser-open)
-	autocmd FileType * nnoremap <silent> <leader>t :Translate<CR>
+	autocmd FileType * nmap              <leader>w          <Plug>(openbrowser-open)
+	autocmd FileType * nnoremap <silent> <leader>t          :Translate<CR>
 
 	" Unite
 	autocmd FileType * nnoremap <silent> <C-k><C-u><C-f>    :Unite -ignorecase outline:foldings<CR>
@@ -1732,16 +1719,14 @@ augroup key_map
 	autocmd FileType * nmap              <C-w>#             <C-w><C-v><Plug>(anzu-sharp-with-echo)zv
 
 	" vim-over
-	autocmd FileType * OverCommandLineNoremap <C-l>         <Esc>
+	autocmd FileType * OverCommandLineNoremap <C-l> <Esc>
 
 	" incsearch.vim
 	autocmd FileType * nmap <expr>       /                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
-	autocmd FileType * nmap <silent>     \/                 :set noignorecase<CR>/
-	autocmd FileType * nmap <silent>     //                 :set ignorecase<CR>/
+	autocmd FileType * nmap <silent>     \/                 /\m\C
 	autocmd FileType * nmap              g/                 /<C-r>"<CR>
 	autocmd FileType * nmap <expr>       ?                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
-	autocmd FileType * nmap <silent>     \?                 :set noignorecase<CR>?
-	autocmd FileType * nmap <silent>     ??                 :set ignorecase<CR>?
+	autocmd FileType * nmap <silent>     \?                 ?\m\C
 	autocmd FileType * nmap              g?                 ?<C-r>"<CR>
 
 	" TaskList.vim
@@ -1857,7 +1842,7 @@ augroup extension_type
 	autocmd FileType yesod setl ts=4 sw=4 et
 
 	" Set for Plain Text FileTypes
-	autocmd FileType markdown,text    setl ts=2 sw=2 et
+	autocmd FileType markdown,text    setl tw=0 ts=2 sw=2 et
 	autocmd FileType git-log.git-diff setl nolist
 
 	" Set for SQL FileTypes
@@ -1876,6 +1861,18 @@ augroup extension_type
 	" Not Shown visible hidden strings on Conque Ghci
 	autocmd FileType ghci* setl nolist
 augroup END
+
+"}}}
+
+
+"-------------------------"
+"    Environment_Pref     "
+"-------------------------"
+"{{{
+
+if filereadable(expand('~/.vimrc_env'))
+	source ~/.vimrc_env
+endif
 
 "}}}
 
