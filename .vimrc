@@ -6,6 +6,7 @@ scriptencoding utf8
 " -- Parameter
 " -- Local_Function
 " -- Initialize
+" -- Environment_Pref
 " -- Plugin_Manage
 " -- Plugin_Configure
 " -- View_Setting
@@ -17,7 +18,6 @@ scriptencoding utf8
 " -- Key_Map
 " -- File_Types
 " -- Ignore_Setting
-" -- Environment_Pref
 " ---
 
 
@@ -302,6 +302,18 @@ endif
 if !isdirectory(s:undodir)
 	call mkdir(s:undodir, 'p', 0755)
 	call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, s:backupdir))
+endif
+
+"}}}
+
+
+"-------------------------"
+"    Environment_Pref     "
+"-------------------------"
+"{{{
+
+if filereadable(expand('~/.vimrc_env'))
+	source ~/.vimrc_env
 endif
 
 "}}}
@@ -798,11 +810,12 @@ endif
 
 " Set Basic Preferences
 set number nowrap hlsearch list scrolloff=8
-let s:listchars = s:isDosWin
-	\	? 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
-	\	: s:isUnix
+let g:vimrc['listchars'] = get(g:vimrc, 'listchars',
+	\	s:isDosWin
+	\		? 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%' :
+	\	s:isUnix
 	\		? 'tab:›_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
-	\		: 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
+	\		: 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲')
 
 " Status Bar always displayed
 set laststatus=2
@@ -1055,7 +1068,7 @@ augroup file_event
 
 	autocmd VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 		\	if &encoding == 'utf-8'
-		\|		let &listchars = s:listchars
+		\|		let &listchars = g:vimrc['listchars']
 		\|	else
 		\|		let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
 		\|	endif
@@ -1816,18 +1829,6 @@ augroup extension_type
 	" Conque Ghci
 	autocmd FileType ghci* setl nolist
 augroup END
-
-"}}}
-
-
-"-------------------------"
-"    Environment_Pref     "
-"-------------------------"
-"{{{
-
-if filereadable(expand('~/.vimrc_env'))
-	source ~/.vimrc_env
-endif
 
 "}}}
 
