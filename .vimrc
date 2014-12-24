@@ -6,6 +6,7 @@ scriptencoding utf8
 " -- Parameter
 " -- Local_Function
 " -- Initialize
+" -- Environment_Pref
 " -- Plugin_Manage
 " -- Plugin_Configure
 " -- View_Setting
@@ -17,7 +18,6 @@ scriptencoding utf8
 " -- Key_Map
 " -- File_Types
 " -- Ignore_Setting
-" -- Environment_Pref
 " ---
 
 
@@ -46,7 +46,8 @@ scriptencoding utf8
 "-- buffer_mover is current buffer move to other tab
 "  -- like a copy and paste ?
 
-"-- C-/ => comment out by filetypes
+"-- search from history
+"  -- exam) 2/ => searching by 2 prev search word
 
 " }}}
 " Issues {{{
@@ -63,6 +64,10 @@ scriptencoding utf8
 "-- not functioned ? conceal-javadoc .
 
 "-- shot-f not functioned in <C-o> temporary normal mode
+
+"-- couldn't auto make vimproc at anywhere
+
+"-- happend error when opened vrapperrc or vimperatorrc
 
 "}}}
 " Todo {{{
@@ -88,7 +93,7 @@ scriptencoding utf8
 " @Unused       => Not used this yet now, needs inquires deleting this.
 " @Deprecated   => Deprecated This vimrc Version.
 " @Experiment   => This is experimental implementation.
-" @Marked       => Have eye on this.
+" @Marked       => I have eye on this.
 " @See          => Referred URL, Saw Document, and etc...
 " @Code         => A sample code using it
 "-------------------
@@ -310,6 +315,18 @@ endif
 
 
 "-------------------------"
+"    Environment_Pref     "
+"-------------------------"
+"{{{
+
+if filereadable(expand('~/.vimrc_env'))
+	source ~/.vimrc_env
+endif
+
+"}}}
+
+
+"-------------------------"
 "     Plugin_Manage       "
 "-------------------------"
 "*** Plugin List ***"{{{
@@ -396,6 +413,7 @@ NeoBundle        'vim-scripts/TaskList.vim'
 NeoBundle        'tyru/vim-altercmd'
 NeoBundle        'mbbill/undotree'
 NeoBundle        'Shougo/neomru.vim'
+NeoBundle        'tmhedberg/matchit'
 
 
 call neobundle#end()
@@ -531,8 +549,7 @@ call neobundle#config('excelview-vim', {
 "------------------------"
 "--- netrw ---" {{{
 
-let g:netrw_preview   = 1
-let g:netrw_liststyle = 3
+let g:netrw_preview = 1
 
 " }}}
 "--- vim-quickrun ---" {{{
@@ -621,6 +638,8 @@ let g:vimshell_no_save_history_commands = {
 \}
 let g:vimshell_enable_transient_user_prompt = 1
 let g:vimshell_force_overwrite_statusline = 1
+let g:vimshell_max_command_history = 10000
+let g:vimshell_scrollback_limit = 10000
 
 augroup plugin_pref
 	autocmd FileType vimshell setl fdm=marker nolist wrap
@@ -704,22 +723,32 @@ call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
 call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
 
 " Tab Mover
-function! s:loopable_tab_move_prev() "{{{
+" s:loopable_tab_move_prev() "{{{
+
+function! s:loopable_tab_move_prev()
 	if tabpagenr() is 1
 		execute ':tabmove' tabpagenr('$')
 	else
 		execute ':tabmove -1'
 	endif
 endfunction
-let g:vimrc['LoopableTabMovePrev'] = function('s:loopable_tab_move_prev') "}}}
-function! s:loopable_tab_move_next()  "{{{
+
+let g:vimrc['LoopableTabMovePrev'] = function('s:loopable_tab_move_prev')
+
+"}}}
+" s:loopable_tab_move_next() "{{{
+
+function! s:loopable_tab_move_next()
 	if tabpagenr() is tabpagenr('$')
 		execute 'tabmove 0'
 	else
 		execute 'tabmove +1'
 	endif
 endfunction
-let g:vimrc['LoopableTabMoveNext'] = function('s:loopable_tab_move_next') "}}}
+
+let g:vimrc['LoopableTabMoveNext'] = function('s:loopable_tab_move_next')
+
+"}}}
 call submode#enter_with('tab_move', 'n', '', '<C-s>t')
 call submode#map('tab_move', 'n', 's', 'p', ':call g:vimrc.LoopableTabMovePrev()<CR>')
 call submode#map('tab_move', 'n', 's', 'n', ':call g:vimrc.LoopableTabMoveNext()<CR>')
@@ -800,11 +829,12 @@ endif
 
 " Set Basic Preferences
 set number nowrap hlsearch list scrolloff=8
-let s:listchars = s:isDosWin
-	\	? 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
-	\	: s:isUnix
+let g:vimrc['listchars'] = get(g:vimrc, 'listchars',
+	\	s:isDosWin
+	\		? 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%' :
+	\	s:isUnix
 	\		? 'tab:›_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
-	\		: 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
+	\		: 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲')
 
 " Status Bar always displayed
 set laststatus=2
@@ -851,6 +881,7 @@ augroup END
 " Set Color Scheme
 set background=dark
 colorscheme desert
+"autocmd highlight_pref VimEnter * colorscheme desert
 
 " Indent Wrapped Text
 if exists('+breakindent')
@@ -1057,13 +1088,15 @@ augroup file_event
 
 	autocmd VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 		\	if &encoding == 'utf-8'
-		\|		let &listchars = s:listchars
+		\|		let &listchars = g:vimrc['listchars']
 		\|	else
 		\|		let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
 		\|	endif
 augroup END
 
 augroup key_event
+	autocmd CursorMoved * call s:visual_fold_all()
+
 	"autocmd UserGettingBored * echo "What's this !?"
 augroup END
 
@@ -1131,13 +1164,10 @@ command! TimerEcho  echo reltimestr( reltime(s:startTime) )
 command! TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
 
 
-" Copy all to plus register
-command! CopyPlusAll execute 'normal! ggVG"+y'
-
-
 "}}}
 " Action Function {{{
 
+" Save a Temporary Directory
 let g:vimrc['tdir_dir'] = get(g:vimrc, 'tdir_dir', 'Not set tdir')
 command! TDirPwd           echo g:vimrc['tdir_dir']
 function! s:set_temporary_dir(path) "{{{
@@ -1161,6 +1191,29 @@ function! s:cd_temporary_dir() "{{{
 	endif
 endfunction "}}}
 command! TDirCd            call s:cd_temporary_dir()
+
+
+" Pop up Scratch Buffers
+" command! ScratchUp "{{{
+
+" The cushion of environments
+if s:isWindows  " is different operated sp ubuntu and kaoriya?
+	command! ScratchUp  execute ':Scratch' | resize 5
+else  " for operate ubuntu
+	function! s:scratch_up_by_condition()
+		if !&modified
+			execute ':sp|Scratch' | resize 5
+		else
+			execute ':Scratch' | resize 5
+		endif
+	endfunction
+	command! ScratchUp  call <SID>scratch_up_by_condition()
+endif "}}}
+command! EmptyBufUp execute ':new' | resize 5
+
+
+" CopyAll to plus register
+command! CopyAll execute 'normal! ggVG"+y<C-o><C-o>'
 
 " }}}
 " Development Support {{{
@@ -1395,17 +1448,6 @@ cabbr              Hoogle   Ref hoogle
 "-------------------------"
 "         Key_Map         "
 "-------------------------"
-"--- Roles ---"{{{
-
-"* <leader> is utility type key map
-
-"* <C-k> is Primary prefix key
-"  - Use for be big frequency of operation
-
-"* <C-h> is Secondary prefix key
-"  - Use for be little frequency of operation
-
-"}}}
 " Global KeyMaps {{{
 
 " Disables {{{
@@ -1451,12 +1493,124 @@ augroup END
 " }}}
 " Customize Keys {{{
 
-" To All buffers
+" Prepare specific variable "{{{
+
+
+" "}}}
+" Prepare temporary functions {{{
+
+" Compress continuous space
+function! s:compress_spaces() "{{{
+	let recent_pattern = @/
+
+	try
+		silent execute ':substitute/\s\s\+/ /g'
+		silent execute 'normal! =='
+	catch
+		" GanMusi
+	finally
+		let @/ = recent_pattern
+		unlet recent_pattern
+	endtry
+
+	execute ':noh'
+endfunction "}}}
+
+" Easy toggle virtualedit
+function! s:toggle_virtual_edit() "{{{
+	if &virtualedit == ''
+		set virtualedit=all
+	else
+		set virtualedit=
+	endif
+	set virtualedit?
+endfunction "}}}
+
+" Open current buffer new tab
+function! s:buf_open_new_tab() "{{{
+	let l:lnum = line('.')
+	execute 'tabnew| ' bufnr('%') . 'b'
+	execute 'normal! ' l:lnum . 'Gzvzz'
+endfunction "}}}
+
+" Move cursor to topmost of this indent
+function! s:cursor_up_to_lid() "{{{
+	while 1
+		let l:p = getpos('.')[2]
+		execute 'normal! k'
+
+		let l:isIndentChanged = l:p != getpos('.')[2]
+		if l:isIndentChanged || line('.') is 1
+			if l:isIndentChanged | execute 'normal! j' | endif
+			break
+		endif
+	endwhile
+endfunction "}}}
+
+" Move cursor to bottommost of this indent
+function! s:cursor_down_to_ground() "{{{
+	while 1
+		let l:p = getpos('.')[2]
+		execute 'normal! j'
+
+		let l:isIndentChanged = l:p != getpos('.')[2]
+		if l:isIndentChanged || line('.') is line('$')
+			if l:isIndentChanged | execute 'normal! k' | endif
+			break
+		endif
+	endwhile
+endfunction "}}}
+
+" Toggle camel case and sneak case
+"@Incompleted('a part do not implemented')
+function! s:toggle_case() "{{{
+	let pos  = getpos('.')
+
+	let word     = expand('<cword>')
+	let is_snake = word =~? '_' ? 1 : 0
+
+	execute 'normal! b'
+	if expand('<cword>') !=# word
+		execute 'normal! w'
+	endif
+
+	if is_snake
+		throw 'not implemented'
+	else
+		execute 'normal! ce' . substitute(word, '[A-Z]', '_\l\0', 'g')
+	endif
+
+	call setpos('.', pos)
+endfunction "}}}
+
+" If visualmode then Open all fold line
+" s:visual_fold_all()"{{{
+let s:visualFoldToggle = get(s:, 'visualFoldToggle', 0)
+
+function! s:visual_fold_all()
+	if mode() =~# "^[vV\<C-v>]"
+		if !s:visualFoldToggle && &foldenable
+			set nofoldenable
+			execute 'normal! zz'
+			let s:visualFoldToggle = 1
+		endif
+	else
+		if s:visualFoldToggle
+			set foldenable
+			execute 'normal! zz'
+			let s:visualFoldToggle = 0
+		endif
+	endif
+endfunction
+"}}}
+
+" }}}
+
+"-- Overwrite mapping --"
 augroup key_map
 	" † God Of The Vim
 	autocmd FileType * nnoremap Q gQ
 
-	"-- Overwrite mapping --"
 	autocmd FileType * nnoremap <C-n> gt
 	autocmd FileType * nnoremap <C-p> gT
 	autocmd FileType * nnoremap zl    8zl
@@ -1464,51 +1618,35 @@ augroup key_map
 	autocmd FileType * inoremap <C-l> <Esc>
 	autocmd FileType * vnoremap <C-l> <Esc>
 	autocmd FileType * cnoremap <C-l> <Esc>
+augroup END
 
-	"-- Origin --"
-	autocmd FileType * nnoremap <silent> m: :marks<CR>
 
-	"-- With Prefixes --"
-	autocmd FileType * nnoremap                  <C-k><C-n> gt
-	autocmd FileType * nnoremap                  <C-k><C-p> gT
-	autocmd FileType * nnoremap <silent><expr>   <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
-	autocmd FileType * nnoremap <silent>         <C-k><C-r> :Reload<CR>
-	autocmd FileType * nnoremap <silent>         <C-k><C-l> :nohlsearch<CR>
-	autocmd FileType * nnoremap <silent>         <C-k>l     :source %<CR>
-	autocmd FileType * nnoremap <silent>         <C-k>r     :Resetf<CR>
-	autocmd FileType * inoremap                  <C-k><C-k> <C-o>"_d$
-	autocmd FileType * inoremap                  <C-k><C-z> <C-o>:normal! <C-z><CR>
-	autocmd FileType * inoremap                  <C-k><C-i> <C-o>:set infercase! infercase?<CR>
-	autocmd FileType * cnoremap                  <C-k><C-p> <Up>
-	autocmd FileType * cnoremap                  <C-k><C-n> <Down>
-	" for case duplicated maps by plugin map (ex:vimshell => <C-l> : clean)
-	autocmd FileType * inoremap                  <C-k><C-l> <Esc>
-	" Customize with prefix
-	autocmd FileType * nnoremap <silent>         <C-h><C-w>      :setl wrap! wrap?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-Space>  :let __t=@/<CR>:s/\s\s\+/ /g<CR>:exe 'norm! =='<CR>:noh<CR>:let @/=__t<CR>:unlet __t<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-i>      :set ignorecase! ignorecase?<CR>
-	function! s:toggle_virtual_edit() "{{{
-		if &virtualedit == ''
-			set virtualedit=all
-		else
-			set virtualedit=
-		endif
-		set virtualedit?
-	endfunction "}}}
-	autocmd FileType * nnoremap <silent>         <C-h><C-v>      :call <SID>toggle_virtual_edit()<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-k>      :set cursorline! cursorline?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-e>      :set expandtab! expandtab?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-r>      :set relativenumber! relativenumber?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-l>      :set list! list?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-n>      :set nu! nu?<CR>
-	"
-	autocmd FileType * nnoremap <silent>         <leader>pl :PutLongSeparator<CR>
-	autocmd FileType * nnoremap <silent>         <leader>ps :PutShortSeparator<CR>
+"-- Appends --"
+augroup key_map
+	autocmd FileType * nnoremap <silent> m:             :marks<CR>
+	autocmd FileType * nnoremap <silent> q:             :register<CR>
+	autocmd FileType * nnoremap <silent> gk             :call <SID>cursor_up_to_lid()<CR>
+	autocmd FileType * nnoremap <silent> gj             :call <SID>cursor_down_to_ground()<CR>
+	"autocmd FileType * vnoremap <silent> gk             :call <SID>cursor_up_to_lid()<CR>
+	"autocmd FileType * vnoremap <silent> gj             :call <SID>cursor_down_to_ground()<CR>
+	autocmd FileType * nnoremap <silent> <C-m>          o<Esc>
+	autocmd FileType * nnoremap <silent> <Space><Space> :call <SID>compress_spaces()<CR>
+	autocmd FileType * nnoremap <silent> <leader>b  :ScratchUp<CR>
+	autocmd FileType * nnoremap <silent> <leader>B  :EmptyBufUp<CR>
+augroup END
 
-	"-- Customize --"
-	autocmd FileType * nnoremap <silent> <C-m> o<Esc>
-	autocmd FileType * nnoremap          q:    :register<CR>
-	" for window or buffer
+"-- For foldings --"
+augroup key_map
+	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
+	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
+	autocmd FileType * nnoremap zj     zjzo
+	autocmd FileType * nnoremap zk     zkzo
+	autocmd FileType * nnoremap z<     V$%zf
+augroup END
+
+
+"-- For window and buffer --"
+augroup key_map
 	autocmd FileType * nnoremap <silent> <C-w>t     :tabnew<CR>
 	autocmd FileType * nnoremap <silent> <C-w>T     :tabclose<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bd    :bdelete<CR>
@@ -1516,40 +1654,75 @@ augroup key_map
 	autocmd FileType * nnoremap <silent> <C-w>C     :hide<CR>
 	autocmd FileType * nnoremap <silent> <C-w><C-w> :write<CR>
 	autocmd FileType * nnoremap <silent> <C-w>W     :wall<CR>
-	function! s:buf_open_new_tab() "{{{
-		let l:lnum = line('.')
-		execute 'tabnew| ' bufnr('%') . 'b'
-		execute 'normal! ' l:lnum . 'Gzvzz'
-	endfunction "}}}
 	autocmd FileType * nnoremap <silent> <C-w>bt    :call <SID>buf_open_new_tab()<CR>
 	autocmd FileType * nnoremap <silent> <C-w>N     :enew!<CR>
-	" for foldings
-	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
-	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
-	autocmd FileType * nnoremap zj     zjzo
-	autocmd FileType * nnoremap zk     zkzo
-	autocmd FileType * nnoremap z<     V$%zf
+augroup END
 
-	"-- With Plugins --"
+
+"-- Actions --"
+augroup key_map
+	autocmd FileType * nnoremap                  <C-k><C-n>     gt
+	autocmd FileType * nnoremap                  <C-k><C-p>     gT
+	autocmd FileType * nnoremap <silent><expr>   <C-k><C-s>     ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
+	autocmd FileType * nnoremap <silent>         <C-k><C-r>     :Reload<CR>
+	autocmd FileType * nnoremap <silent>         <C-k><C-l>     :nohlsearch<CR>
+	autocmd FileType * nnoremap <silent>         <C-k>l         :source %<CR>
+	autocmd FileType * nnoremap <silent>         <C-k>r         :Resetf<CR>
+	autocmd FileType * nnoremap <silent>         <C-k><C-Space> :call <SID>toggle_case()<CR>
+	autocmd FileType * inoremap                  <C-k><C-k>     <C-o>"_d$
+	autocmd FileType * inoremap                  <C-k><C-z>     <C-o>:normal! <C-z><CR>
+	autocmd FileType * inoremap                  <C-k><C-i>     <C-o>:set infercase! infercase?<CR>
+	autocmd FileType * cnoremap                  <C-k><C-p>     <Up>
+	autocmd FileType * cnoremap                  <C-k><C-n>     <Down>
+
+	" If cannot use default, use this.
+	autocmd FileType * inoremap                  <C-k><C-l> <Esc>
+augroup END
+
+
+"-- Toggle options --"
+augroup key_map
+	autocmd FileType * nnoremap <silent>         <C-h><C-w>      :setl wrap! wrap?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-i>      :set ignorecase! ignorecase?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-v>      :call <SID>toggle_virtual_edit()<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-k>      :set cursorline! cursorline?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-e>      :set expandtab! expandtab?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-r>      :set relativenumber! relativenumber?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-l>      :set list! list?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-n>      :set nu! nu?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h>jkjkjkjk   :call <SID>enable_cursor_keys_toggle()<CR>
+	"
+	autocmd FileType * nnoremap <silent>         <leader>pl :PutLongSeparator<CR>
+	autocmd FileType * nnoremap <silent>         <leader>ps :PutShortSeparator<CR>
+augroup END
+
+
+"-- For Plugins --"
+augroup key_map
 	autocmd FileType * nmap              <leader>w <Plug>(openbrowser-open)
 	autocmd FileType * nnoremap <silent> <leader>t :Translate<CR>
+
 	" Unite
 	autocmd FileType * nnoremap <silent> <C-k><C-u><C-f>    :Unite -ignorecase outline:foldings<CR>
 	autocmd FileType * nnoremap <silent> <C-w>~             :Unite -ignorecase neomru/file<CR>
+
 	" vim-over
 	autocmd FileType * nnoremap <silent> :%s/               :OverCommandLine<CR>%s/
 	autocmd FileType * nnoremap <silent> :s/                :OverCommandLine<CR>s/
 	autocmd FileType * vnoremap <silent> :s/                :OverCommandLine<CR>s/
+
 	" vimshell
 	autocmd FileType * nnoremap <silent> <leader>v          :VimShell -split-command=vsp -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>v  :VimShell -split-command=sp  -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader>V          :VimShellBufferDir   -create<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>V  :tabnew<CR>:VimShell -create<CR>
+
 	" netrw
 	autocmd FileType * nnoremap <silent> <leader>e          :Vexplore<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>e  :Sexplore<CR>
 	autocmd FileType * nnoremap <silent> <leader>E          :Explore<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>E  :Texplore<CR>
+
 	" anzu-chan
 	autocmd FileType * nmap              n                  <Plug>(anzu-n-with-echo)zv
 	autocmd FileType * nmap              N                  <Plug>(anzu-N-with-echo)zv
@@ -1557,8 +1730,10 @@ augroup key_map
 	autocmd FileType * nmap              #                  <Plug>(anzu-sharp-with-echo)zv
 	autocmd FileType * nmap              <C-w>*             <C-w><C-v><Plug>(anzu-star-with-echo)zv
 	autocmd FileType * nmap              <C-w>#             <C-w><C-v><Plug>(anzu-sharp-with-echo)zv
+
 	" vim-over
 	autocmd FileType * OverCommandLineNoremap <C-l>         <Esc>
+
 	" incsearch.vim
 	autocmd FileType * nmap <expr>       /                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
 	autocmd FileType * nmap <silent>     \/                 :set noignorecase<CR>/
@@ -1568,133 +1743,12 @@ augroup key_map
 	autocmd FileType * nmap <silent>     \?                 :set noignorecase<CR>?
 	autocmd FileType * nmap <silent>     ??                 :set ignorecase<CR>?
 	autocmd FileType * nmap              g?                 ?<C-r>"<CR>
+
 	" TaskList.vim
 	autocmd FileType * nnoremap <leader>T :TaskList<CR>
+
 	" undotree
 	autocmd FileType * nnoremap <leader>u :UndotreeToggle<CR>
-augroup END
-
-
-augroup key_map
-	function! s:cursor_move_to_center() "{{{
-		execute 'normal! 0'
-		for i in range(strlen(getline('.'))/2)
-			execute 'normal! l'
-		endfor
-	endfunction "}}}
-	autocmd FileType * nnoremap <silent> gc :call <SID>cursor_move_to_center()<CR>
-	function! s:cursor_up_to_lid() "{{{
-		while 1
-			let l:p = getpos('.')[2]
-			execute 'normal! k'
-
-			let l:isIndentChanged = l:p != getpos('.')[2]
-			if l:isIndentChanged || line('.') is 1
-				if l:isIndentChanged | execute 'normal! j' | endif
-				break
-			endif
-		endwhile
-	endfunction "}}}
-	autocmd FileType * nnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
-	function! s:cursor_down_to_ground() "{{{
-		while 1
-			let l:p = getpos('.')[2]
-			execute 'normal! j'
-
-			let l:isIndentChanged = l:p != getpos('.')[2]
-			if l:isIndentChanged || line('.') is line('$')
-				if l:isIndentChanged | execute 'normal! k' | endif
-				break
-			endif
-		endwhile
-	endfunction "}}}
-	autocmd FileType * nnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
-	"autocmd FileType * xnoremap <silent> gk :call <SID>cursor_up_to_lid()<CR>
-	"autocmd FileType * xnoremap <silent> gj :call <SID>cursor_down_to_ground()<CR>
-	function! s:toggle_case() "{{{
-		let pos  = getpos('.')
-
-		let word     = expand('<cword>')
-		let is_snake = word =~? '_' ? 1 : 0
-
-		execute 'normal! b'
-		if expand('<cword>') !=# word
-			execute 'normal! w'
-		endif
-
-		if is_snake
-		else
-			execute 'normal! ce' . substitute(word, '[A-Z]', '_\l\0', 'g')
-		endif
-
-		call setpos('.', pos)
-	endfunction "}}}
-	autocmd FileType * nnoremap <silent> <C-k><C-Space> :call <SID>toggle_case()<CR>
-
-	let s:enableCursorKeys = get(s:, 'enableCursorKeys', 0) "{{{
-	function! s:enable_cursor_keys_toggle()
-		if !s:enableCursorKeys
-			nnoremap <Up>    <Up>
-			nnoremap <Down>  <Down>
-			nnoremap <Left>  <Left>
-			nnoremap <Right> <Right>
-			inoremap <Up>    <Up>
-			inoremap <Down>  <Down>
-			inoremap <Left>  <Left>
-			inoremap <Right> <Right>
-			cnoremap <Left>  <Left>
-			cnoremap <Right> <Right>
-			let s:enableCursorKeys = 1
-		else
-			nnoremap <Up>    <NOP>
-			nnoremap <Down>  <NOP>
-			nnoremap <Left>  <NOP>
-			nnoremap <Right> <NOP>
-			inoremap <Up>    <NOP>
-			inoremap <Down>  <NOP>
-			inoremap <Left>  <NOP>
-			inoremap <Right> <NOP>
-			cnoremap <Left>  <NOP>
-			cnoremap <Right> <NOP>
-			let s:enableCursorKeys = 0
-		endif
-	endfunction "}}}
-	autocmd FileType * nnoremap <silent> <C-h>jkjkjkjk :call <SID>enable_cursor_keys_toggle()<CR>
-	let s:visualFoldToggle = get(s:, 'visualFoldToggle', 0) "{{{
-	function! s:visual_fold_all()
-		if mode() =~# "^[vV\<C-v>]"
-			if !s:visualFoldToggle && &foldenable
-				set nofoldenable
-				execute 'normal! zz'
-				let s:visualFoldToggle = 1
-			endif
-		else
-			if s:visualFoldToggle
-				set foldenable
-				execute 'normal! zz'
-				let s:visualFoldToggle = 0
-			endif
-		endif
-	endfunction "}}}
-	autocmd CursorMoved * call s:visual_fold_all()
-
-	"{{{
-	if s:isWindows  " is different operated sp ubuntu and kaoriya?
-		command! ScratchUp  execute ':Scratch' | resize 5
-	else  " for operate ubuntu
-		function! s:scratch_up_by_condition()
-			if !&modified
-				execute ':sp|Scratch' | resize 5
-			else
-				execute ':Scratch' | resize 5
-			endif
-		endfunction
-		command! ScratchUp  call <SID>scratch_up_by_condition()
-	endif
-	command! EmptyBufUp execute ':new' | resize 5
-	"}}}
-	autocmd FileType * nnoremap <silent> <leader>b  :ScratchUp<CR>
-	autocmd FileType * nnoremap <silent> <leader>B  :EmptyBufUp<CR>
 augroup END
 
 " }}}
@@ -1781,13 +1835,13 @@ function! s:matchadd_with_filetype(ft, tag, regex, priority, id) "{{{
 endfunction "}}}
 
 
-" If buffer doesn't has filetype then set filetype 'none'
+" If buffer does not has filetype, set filetype 'none'
 augroup file_event
 	autocmd VimEnter,BufNew * if &ft == '' | setf none | endif
 augroup END
 
 
-"@Bugs('these filetype's highlight is not local >>= duplication')
+"@Bugs('these highlight of filetype is not local >>= duplication')
 augroup extension_type
 	" Set for "Vi Improved"
 	autocmd VimEnter,ColorScheme * highlight RcMyHint cterm=standout ctermfg=DarkYellow
@@ -1802,11 +1856,11 @@ augroup extension_type
 	autocmd VimEnter,WinEnter    * let s:rcHeadHfSpace = s:matchadd_with_filetype('haskell', 'RcHeadHfSpace', '^\s\+', 10, get(s:, 'rcHeadHfSpace', 8830))
 	autocmd FileType yesod setl ts=4 sw=4 et
 
-	" Plain Text like types
+	" Set for Plain Text FileTypes
 	autocmd FileType markdown,text    setl ts=2 sw=2 et
 	autocmd FileType git-log.git-diff setl nolist
 
-	" SQL types
+	" Set for SQL FileTypes
 	autocmd FileType mysql setl ts=4 sw=4 et
 
 	" FileTypes commentstrings
@@ -1819,21 +1873,9 @@ augroup extension_type
 	autocmd FileType text,none     let &commentstring = " %s"
 
 	"@Bugs('do not functioned?')
-	" Conque Ghci
+	" Not Shown visible hidden strings on Conque Ghci
 	autocmd FileType ghci* setl nolist
 augroup END
-
-"}}}
-
-
-"-------------------------"
-"    Environment_Pref     "
-"-------------------------"
-"{{{
-
-if filereadable(expand('~/.vimrc_env'))
-	source ~/.vimrc_env
-endif
 
 "}}}
 

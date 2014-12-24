@@ -47,7 +47,11 @@ inoremap <C-b>      <Left>
 inoremap <C-f>      <Right>
 inoremap <C-h>      <BS>
 inoremap <C-d>      <Del>
+
+" Append Original to Nano ppoino
 inoremap <C-x><C-c> <Esc>
+inoremap <C-k> <S-Left>
+inoremap <C-j> <S-Right>
 
 " View Bookmarks
 nmap <leader>b :bmarks<CR>
