@@ -1,5 +1,3 @@
-vim:ft=vim
-
 set shortmess=at  " To avoid the 'Hit ENTER to continue' promp
 set winfixwidth   " Splits resize width of current window only
 set helpheight=20 " Minimum height for help wins, default=20, 0 is default
