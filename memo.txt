@@ -37,7 +37,6 @@ Bundle 'alpaca-tc/neorspec.vim'
 Bundle 'https://github.com/thoughtbot/vim-rspec'
 Bundle 'https://github.com/tpope/vim-dispatch'
 Bundle 'AndrewRadev/switch.vim'
-Bundle 'edsono/vim-matchit'
 Bundle 'alpaca-tc/vim-endwise.git'
 
 lexima
