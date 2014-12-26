@@ -80,6 +80,8 @@ scriptencoding utf8
 
 "-- a keymapp "diffthis toggle"
 
+"-- do not use echoerr
+
 " }}}
 
 
@@ -193,7 +195,6 @@ augroup END
 " For Support Kaoriya Vim {{{
 
 if s:isKaoriya
-
 	" Set Environment
 	let $HOME = $VIM
 	let s:vimHome = expand('~/.vim')  " Reset with $HOME
@@ -218,14 +219,13 @@ if s:isKaoriya
 	elseif s:isWindows && s:hasMingw && !filereadable(suppress)
 		call writefile([], suppress)
 	endif
-	unlet suppress
 
 	for disf in map(['/utf-8.vim', '/vimdoc-ja.vim'], 'switch_dir . v:val')
 		if !filereadable(disf)
 			call writefile([], disf)
 		endif
 	endfor
-	unlet switch_dir
+	unlet switch_dir suppress disf
 
 
 	" Unset Kaoriya Preference
@@ -238,20 +238,20 @@ endif
 
 "}}}
 " Check NeoBundle exists {{{
-let s:bundleDir    = s:vimHome.'/bundle'
-let s:neobundleDir = s:bundleDir.'/neobundle.vim'
+let s:bundleDir    = s:vimHome . '/bundle'
+let s:neobundleDir = s:bundleDir . '/neobundle.vim'
 
 if !isdirectory(s:bundleDir)
 	call mkdir(s:bundleDir)
 endif
 
 function! s:remove_empty_bundledir()  "{{{
-	let dirs = split(s:system('ls '.s:bundleDir), '\n')
-	for dir in dirs
-		let pluginDir = s:bundleDir.'/'.dir
-		let isEmpty = s:system('ls '.pluginDir) == ''
-		if isEmpty
-			call s:system('rmdir '.pluginDir)
+	let l:dirs = split(s:system('ls ' . s:bundleDir), '\n')
+	for l:dir in l:dirs
+		let l:pluginDir = s:bundleDir . '/' . l:dir
+		let l:isEmpty = s:system('ls ' . l:pluginDir) == ''
+		if l:isEmpty
+			call s:system('rmdir ' . l:pluginDir)
 		endif
 	endfor
 endfunction  "}}}
@@ -580,15 +580,15 @@ if s:isCygwin
 	\	'exec'    : ['%c %o `echo %s | sed s:\:/:g | cygpath -w -f -`', '%c %s:t:r %a'],
 	\	'hook/output_encode/encoding': 'Shift_JIS'
 	\}
-	let javav = s:system('java -version')
-	if javav =~# '1\.8'
+	let s:javav = s:system('java -version')
+	if s:javav =~# '1\.8'
 		let g:quickrun_config.java['cmdopt'] = '-source 1.8 -encoding UTF-8'
-	elseif javav =~# '1\.7'
+	elseif s:javav =~# '1\.7'
 		let g:quickrun_config.java['cmdopt'] = '-source 1.7 -encoding UTF-8'
 	else
 		let g:quickrun_config.java['cmdopt'] = '-encoding UTF-8'
 	endif
-	unlet javav
+	unlet s:javav
 endif
 
 augroup plugin_pref
@@ -742,6 +742,7 @@ let g:vimrc['LoopableTabMoveNext'] = function('s:loopable_tab_move_next')
 "}}}
 call submode#enter_with('tab_move', 'n', '', '<C-s>t')
 call submode#map('tab_move', 'n', 's', 'n', ':call g:vimrc.LoopableTabMoveNext()<CR>')
+call submode#map('tab_move', 'n', 's', 'p', ':call g:vimrc.LoopableTabMovePrev()<CR>')
 
 "}}}
 "--- vim-ref ---" {{{
@@ -819,7 +820,7 @@ endif
 
 " Set Basic Preferences
 set number nowrap hlsearch list scrolloff=8
-let g:vimrc['listchars'] = get(g:vimrc, 'listchars',
+let s:listchars = get(s:, 'listchars',
 	\	s:isDosWin
 	\		? 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%' :
 	\	s:isUnix
@@ -885,36 +886,36 @@ set conceallevel=2
 
 " Sugoi view tabline $ @See('http://d.hatena.ne.jp/thinca/20111204/1322932585')
 function! s:tabpage_label(n) "{{{
-	let title = gettabvar(a:n, 'title')
-	if title !=# ''
-		return title
+	let l:title = gettabvar(a:n, 'title')
+	if l:title !=# ''
+		return l:title
 	endif
 
-	let bufnrs = tabpagebuflist(a:n)
-	let hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
+	let l:bufnrs = tabpagebuflist(a:n)
+	let l:hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
 
-	let no = len(bufnrs)
-	if no is 1
-		let no = ''
+	let l:no = len(l:bufnrs)
+	if l:no is 1
+		let l:no = ''
 	endif
 
-	let mod = len(filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')) ? '+' : ''
-	let sp = (no . mod) == '' ? '' : ' '
+	let l:mod = len(filter(copy(l:bufnrs), "getbufvar(v:val, '&modified')")) ? '+' : ''
+	let l:sp = (l:no . l:mod) == '' ? '' : ' '
 
-	let curbufnr = bufnrs[tabpagewinnr(a:n) - 1]
-	let fname = pathshorten(bufname(curbufnr))
-	if fname == ''
-		let fname .= '[ NoName ]'
+	let l:curbufnr = bufnrs[tabpagewinnr(a:n) - 1]
+	let l:fname = pathshorten(bufname(l:curbufnr))
+	if l:fname == ''
+		let l:fname .= '[ NoName ]'
 	endif
 
-	let label = no . mod . sp . fname
-	return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
+	let l:label = l:no . l:mod . l:sp . l:fname
+	return '%' . a:n . 'T' . l:hi . l:label . '%T%#TabLineFill#'
 endfunction "}}}
 function! WithDelimitterTabLine() "{{{
-	let titles     = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
-	let delimitter = ' | '
-	let tabpages   = delimitter . join(titles, delimitter) . delimitter . '%#TabLineFill#%T'
-	return tabpages
+	let l:titles     = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
+	let l:delimitter = ' | '
+	let l:tabpages   = l:delimitter . join(l:titles, l:delimitter) . l:delimitter . '%#TabLineFill#%T'
+	return l:tabpages
 endfunction "}}}
 set tabline=%!WithDelimitterTabLine() showtabline=2
 
@@ -1045,8 +1046,9 @@ endif
 " Save Cursor Position when file closed
 augroup file_event
 	function! s:visit_past_position() "{{{
-		if line("'\"") > 0 && line("'\"") <= line("$")
-			execute "normal! g`\""
+		let l:past_posit = line("'\"")
+		if l:past_posit > 0 && l:past_posit <= line('$')
+			execute 'normal! g`"'
 		endif
 	endfunction "}}}
 	autocmd BufReadPost * call <SID>visit_past_position()
@@ -1066,10 +1068,11 @@ function! s:update_backup_by_date() "{{{
 
 	let l:filepath = split(expand('%'), '/')
 	let l:filename = s:isWindows
-		\ ? filepath[len(filepath)-1] . strftime('_at_%H-%M')
-		\ : filepath[len(filepath)-1] . strftime('_at_%H:%M')
+		\ ? l:filepath[len(l:filepath)-1] . strftime('_at_%H-%M')
+		\ : l:filepath[len(l:filepath)-1] . strftime('_at_%H:%M')
+	let l:location = l:dailydir . '/' . l:filename
 
-	call writefile(getline(1, '$'), l:dailydir.'/'.l:filename)
+	call writefile(getline(1, '$'), l:location)
 endfunction "}}}
 
 augroup file_event
@@ -1077,7 +1080,7 @@ augroup file_event
 
 	autocmd VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 		\	if &encoding == 'utf-8'
-		\|		let &listchars = g:vimrc['listchars']
+		\|		let &listchars = s:listchars
 		\|	else
 		\|		let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
 		\|	endif
@@ -1102,17 +1105,17 @@ function! s:reverse_line() range " {{{
 		if a:firstline is a:lastline
 			return
 		endif
-		let lines = []
-		let posit = getpos('.')
-		for line in range(a:firstline, a:lastline)
-			call add(lines, substitute(getline(line)."\n", "\t", "", 'g'))
+		let l:lines = []
+		let l:posit = getpos('.')
+		for l:line in range(a:firstline, a:lastline)
+			call add(l:lines, substitute(getline(l:line)."\n", "\t", "", 'g'))
 		endfor
 
-		for i in range(a:firstline, a:lastline)
+		for l:i in range(a:firstline, a:lastline)
 			execute 'normal! "_dd'
-			execute 'normal! i' lines[a:lastline - i]
+			execute 'normal! i' lines[a:lastline - l:i]
 		endfor
-		call setpos('.', posit)
+		call setpos('.', l:posit)
 	endif
 endfunction " }}}
 command! -range=%
@@ -1123,12 +1126,12 @@ command! -range=%
 function! s:cat_file(...) "{{{
 	let l:catenate = ""
 	if executable('cat')
-		for filePath in a:000
-			let l:catenate .= s:system('cat '.filePath)
+		for l:filePath in a:000
+			let l:catenate .= s:system('cat ' . l:filePath)
 		endfor
 	else
-		for filePath in a:000
-			let l:catenate .= join(readfile(filePath), "\n")
+		for l:filePath in a:000
+			let l:catenate .= join(readfile(l:filePath), "\n")
 		endfor
 	endif
 
@@ -1151,22 +1154,18 @@ command! TimerEcho  echo reltimestr( reltime(s:startTime) )
 command! TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
 
 
-" Copy all to plus register
-command! CopyPlusAll execute 'normal! ggVG"+y'
-
-
 "}}}
 " Action Function {{{
 
 " Save a Temporary Directory
-let g:vimrc['tdir_dir'] = get(g:vimrc, 'tdir_dir', 'Not set tdir')
-command! TDirPwd           echo g:vimrc['tdir_dir']
+let s:tdir_dir = get(s:, 'tdir_dir', 'Not set tdir')
+command! TDirPwd           echo s:tdir_dir
 function! s:set_temporary_dir(path) "{{{
 	if isdirectory(a:path)
-		let g:vimrc['tdir_dir'] =
+		let s:tdir_dir =
 		\	a:path == '.' ? expand('%:p:h')
 		\	              : a:path
-		echo g:vimrc['tdir_dir']
+		echo s:tdir_dir
 	else
 		echoerr 'No such temporary root dir'
 	endif
@@ -1174,11 +1173,11 @@ endfunction "}}}
 command! -nargs=1  TDirSet call s:set_temporary_dir(<q-args>)
 command! TDirSetCurrentDir call s:set_temporary_dir('.')
 function! s:cd_temporary_dir() "{{{
-	if g:vimrc['tdir_dir'] ==# 'undefined'
+	if s:tdir_dir ==# 'Not set tdir'
 		echoerr 'Not set temporary root dir'
 	else
-		execute 'cd ' g:vimrc['tdir_dir']
-		echo g:vimrc['tdir_dir']
+		execute 'cd' s:tdir_dir
+		echo s:tdir_dir
 	endif
 endfunction "}}}
 command! TDirCd            call s:cd_temporary_dir()
@@ -1187,10 +1186,11 @@ command! TDirCd            call s:cd_temporary_dir()
 " Pop up Scratch Buffers
 " command! ScratchUp "{{{
 
-" The cushion of environments
-if s:isWindows  " is different operated sp ubuntu and kaoriya?
-	command! ScratchUp  execute ':Scratch' | resize 5
-else  " for operate ubuntu
+" The cushion of the environments
+if s:isWindows
+	" Is different operated :sp ubuntu and kaoriya ?
+	command! ScratchUp execute ':Scratch' | resize 5
+else
 	function! s:scratch_up_by_condition()
 		if !&modified
 			execute ':sp|Scratch' | resize 5
@@ -1198,13 +1198,16 @@ else  " for operate ubuntu
 			execute ':Scratch' | resize 5
 		endif
 	endfunction
-	command! ScratchUp  call <SID>scratch_up_by_condition()
-endif "}}}
+
+	command! ScratchUp call s:scratch_up_by_condition()
+endif
+
+"}}}
 command! EmptyBufUp execute ':new' | resize 5
 
 
-" CopyAll to plus register
-command! CopyAll execute 'normal! ggVG"+y<C-o><C-o>'
+" Yank all to plus register
+command! CopyPlusAll execute 'normal! ggVG"+y<C-o><C-o>'
 
 " }}}
 " Development Support {{{
@@ -1214,11 +1217,11 @@ function! s:java_run_func() "{{{
 	let l:javaname = expand('%:t:r')
 	let l:javav = s:system('java -version')
 	if l:javav =~# "1\.8"
-		let l:command  = ['javac -source 1.8 -encoding utf8', 'java']
+		let l:command = ['javac -source 1.8 -encoding utf8', 'java']
 	elseif l:javav =~# "1\.7"
-		let l:command  = ['javac -source 1.7 -encoding utf8', 'java']
+		let l:command = ['javac -source 1.7 -encoding utf8', 'java']
 	else
-		let l:command  = ['javac -encoding utf8', 'java']
+		let l:command = ['javac -encoding utf8', 'java']
 	endif
 	if s:isCygwin
 		if executable('cocot')
@@ -1238,14 +1241,14 @@ endfunction "}}}
 command! JavaRun call s:java_run_func()
 
 function! s:put_python_import_for_jp() "{{{
-	let paste = &paste
+	let l:paste = &paste
 	set paste
 	execute 'normal! O' "#!/usr/bin/env python"
 	execute 'normal! o' "# -*- coding: utf-8 -*-"
 	execute 'normal! o' "import sys"
 	execute 'normal! o' "import codecs"
 	execute 'normal! o' "sys.stdout = codecs.getwriter('utf_8')(sys.stdout)"
-	let &paste = paste
+	let &paste = l:paste
 endfunc "}}}
 command! ImportPythonJp call s:put_python_import_for_jp()
 
@@ -1262,6 +1265,8 @@ command! Date
 
 
 function! s:put_html_base() "{{{
+	let l:paste = &paste
+	set paste
 	execute 'normal! O' '<html lang="ja">'
 	execute 'normal! o' '<head>'
 	execute 'normal! o' '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">'
@@ -1271,6 +1276,7 @@ function! s:put_html_base() "{{{
 	execute 'normal! o'
 	execute 'normal! o' '</body>'
 	execute 'normal! o' '</html>'
+	let &paste = l:paste
 endfunction "}}}
 command! PutHtmlBase call s:put_html_base()
 
@@ -1283,23 +1289,23 @@ command! PutHtmlBase call s:put_html_base()
 "  Yank => SELECT * FROM table; 
 
 function! s:sql_yank_normalize() range 
-	let sql = ""
-	for i in range(a:firstline, a:lastline)
-		let line = getline(i)
-		let lineOfSql = substitute(substitute(
-		\		substitute(line, "\"", "", 'g'),
-		\	"\v(^\s*+|+\s*$)", "", 'g'), "\t", "", 'g')
+	let l:sql = ""
+	for l:i in range(a:firstline, a:lastline)
+		let l:line = getline(l:i)
+		let l:lineOfSql = substitute(substitute(
+		\		substitute(l:line, '"', '', 'g'),
+		\	'\v(^\s*+|+\s*$)', '', 'g'), "\t", '', 'g')
 
-		let sql .= lineOfSql . "\n"
+		let l:sql .= l:lineOfSql . "\n"
 	endfor
-	let @" = substitute(sql, "\s\s\+", " ", 'g')
+	let @" = substitute(l:sql, '\s\s\+', ' ', 'g')
 endfunction
 " }}}
 command! -range SqlCopy :<line1>,<line2>call s:sql_yank_normalize()
 
 
 " Echo script local values in this file
-command! EchoRcSl echo s:
+command! ShowRcDict echo s:
 
 " }}}
 
@@ -1338,8 +1344,8 @@ command! Tweet              TweetVimSay
 
 "-- Private Account --"
 function! TwitterPrivateFunc() "{{{
-	if !exists("g:vimrc.private['twitter']['priv_ac']")
-		echoerr "Not set env variable => g:vimrc.private['twitter']['priv_ac']"
+	if !exists('g:vimrc.private["twitter"]["priv_ac"]')
+		echoerr 'Not set env variable => g:vimrc.private["twitter"]["priv_ac"]'
 		return
 	endif
 
@@ -1350,8 +1356,8 @@ endfunction "}}}
 command! TwitterPrivate     call TwitterPrivateFunc()
 command! TwitterPrivateTab  tabnew | TwitterPrivate
 function! TweetPrivateFunc() "{{{
-	if !exists("g:vimrc.private['twitter']['priv_ac']")
-		echoerr "Not set env variable => g:vimrc.private['twitter']['priv_ac']"
+	if !exists('g:vimrc.private["twitter"]["priv_ac"]')
+		echoerr 'Not set env variable => g:vimrc.private["twitter"]["priv_ac"]'
 		return
 	endif
 
@@ -1377,8 +1383,8 @@ endfunction "}}}
 command! TwitterPublic      call TwitterPublicFunc()
 command! TwitterPublicTab   tabnew | TwitterPublic
 function! TweetPublicFunc() "{{{
-	if !exists("g:vimrc.private['twitter']['publ_ac']")
-		echoerr "Not set env variable => g:vimrc.private['twitter']['publ_ac']"
+	if !exists('g:vimrc.private["twitter"]["publ_ac"]')
+		echoerr 'Not set env variable => g:vimrc.private["twitter"]["publ_ac"]'
 		return
 	endif
 
@@ -1409,8 +1415,8 @@ command! JazzStop      JazzradioStop
 command!          Translate     ExciteTranslate
 function! s:weblio_translate_cmdline(...) "{{{
 	let l:line = ''
-	for word in a:000
-		let l:line .= word . '+'
+	for l:word in a:000
+		let l:line .= l:word . '+'
 	endfor
 
 	execute 'Ref webdict weblio ' l:line
@@ -1488,7 +1494,7 @@ augroup END
 
 " Compress continuous space
 function! s:compress_spaces() "{{{
-	let recent_pattern = @/
+	let l:recent_pattern = @/
 
 	try
 		silent execute ':substitute/\s\s\+/ /g'
@@ -1496,8 +1502,8 @@ function! s:compress_spaces() "{{{
 	catch
 		" GanMusi
 	finally
-		let @/ = recent_pattern
-		unlet recent_pattern
+		let @/ = l:recent_pattern
+		unlet l:recent_pattern
 	endtry
 
 	execute ':noh'
@@ -1551,23 +1557,23 @@ endfunction "}}}
 " Toggle camel case and sneak case
 "@Incompleted('a part do not implemented')
 function! s:toggle_case() "{{{
-	let pos  = getpos('.')
+	let l:pos  = getpos('.')
 
-	let word     = expand('<cword>')
-	let is_snake = word =~? '_' ? 1 : 0
+	let l:word     = expand('<cword>')
+	let l:is_snake = l:word =~? '_' ? 1 : 0
 
 	execute 'normal! b'
-	if expand('<cword>') !=# word
+	if expand('<cword>') !=# l:word
 		execute 'normal! w'
 	endif
 
-	if is_snake
+	if l:is_snake
 		throw 'not implemented'
 	else
-		execute 'normal! ce' . substitute(word, '[A-Z]', '_\l\0', 'g')
+		execute 'normal! ce' . substitute(l:word, '[A-Z]', '_\l\0', 'g')
 	endif
 
-	call setpos('.', pos)
+	call setpos('.', l:pos)
 endfunction "}}}
 
 " If visualmode then Open all fold line
