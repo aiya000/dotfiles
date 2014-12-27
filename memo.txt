@@ -148,3 +148,9 @@ NeoBundle 'thinca/vim-unite-history'
 NeoBundle 'sgur/unite-git_grep'
 
 http://step-learn.com/markdown/index.html
+
+
+set indentexpr&
+NeoBundle 'thinca/vim-showtime'
+                L288 visualstar.vim 案件  12/27 23:24
+vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
