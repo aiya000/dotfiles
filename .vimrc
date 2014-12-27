@@ -220,7 +220,6 @@ if s:is_kaoriya
 		call writefile([], s:suppress)
 	endif
 
-	"@Marked('I changed a variable name "switch_dir" to "s:switch_dir", can map func throw s: variable ?')
 	for s:disf in map(['/utf-8.vim', '/vimdoc-ja.vim'], 's:switch_dir . v:val')
 		if !filereadable(s:disf)
 			call writefile([], s:disf)
@@ -805,13 +804,6 @@ let g:ConqueTerm_ReadUnfocused  = 1
 let g:ConqueTerm_Color          = 1
 let g:ConqueTerm_InsertOnEnter  = 0
 let g:ConqueTerm_StartMessages  = 1
-
-"}}}
-"--- dbext.vim ---"{{{
-
-function! s:easy_integrate_dbext_login()
-
-endfunction
 
 "}}}
 "--- For Private ---"{{{
