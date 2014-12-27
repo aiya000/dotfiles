@@ -647,6 +647,7 @@ augroup END
 let g:vimshell_kawaii_smiley = 1
 
 "}}}
+"
 "--- w3m.vim ---"{{{
 
 let g:w3m#homepage = 'http://www.google.co.jp/'
@@ -1768,6 +1769,7 @@ augroup plugin_pref
 	autocmd FileType tweetvim     nnoremap         <buffer> <C-a>     :TweetVimSwitchAccount<Space>
 	autocmd FileType tweetvim     nnoremap         <buffer> U         :TweetVimUserTimeline<Space>
 	autocmd FileType tweetvim     nnoremap <silent><buffer> Q         :bdelete<CR>
+	autocmd FileType tweetvim_say nnoremap         <buffer> <C-j>     <CR>
 	autocmd FileType tweetvim_say inoremap         <buffer> <C-i>     <Tab>
 
 	autocmd FileType vimshell  nunmap   <buffer> Q
