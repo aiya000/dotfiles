@@ -1,3 +1,6 @@
+Getting Start:
+  execute this
+  $ mv (this directory name) .dotfiles
 
 .vimrc_private:
   written vimrc private configuration.
