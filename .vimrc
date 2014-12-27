@@ -1398,19 +1398,19 @@ endfunction "}}}
 command! TweetPublic        call TweetPublicFunc()
 
 
-command! Bitly TweetVimBitly
-cabbr    tvs   TweetVimSwitchAccount
+command!  Bitly TweetVimBitly
+cnoreabbr tvs   TweetVimSwitchAccount
 
 " }}}
 
 " To Service Name
-cabbr Lingr J6uil
+cnoreabbr Lingr J6uil
 
 " Beautifull Life
-command! JazzUpdate    JazzradioUpdateChannels
-command! JazzList      Unite jazzradio
-cabbr    JazzPlay      JazzradioPlay
-command! JazzStop      JazzradioStop
+command!  JazzUpdate    JazzradioUpdateChannels
+command!  JazzList      Unite jazzradio
+cnoreabbr JazzPlay      JazzradioPlay
+command!  JazzStop      JazzradioStop
 
 " Translates Languages
 command!          Translate     ExciteTranslate
@@ -1434,11 +1434,11 @@ command! -nargs=1 Log VimConsoleLog <args>
 command! LogClear VimConsoleClear
 
 command! -nargs=*  Ghc      !runghc % <q-args>
-command!           Ghci     enew!  | ConqueTerm ghci
-command!           Sghci    sp     | ConqueTerm ghci
-command!           Vghci    vsp    | ConqueTerm ghci
-command!           GhciTab  tabnew | ConqueTerm ghci
-cabbr              Hoogle   Ref hoogle
+cnoreabbr          Ghci     enew! \| ConqueTerm ghci
+cnoreabbr          Sghci    sp \| ConqueTerm ghci
+cnoreabbr          Vghci    vsp \| ConqueTerm ghci
+cnoreabbr          GhciTab  tabnew \| ConqueTerm ghci
+cnoreabbr          Hoogle   Ref hoogle
 
 " }}}
 
@@ -1757,8 +1757,8 @@ augroup plugin_pref
 	autocmd FileType netrw    nnoremap <silent><buffer> Q         :quit<CR>
 	autocmd FileType netrw    nnoremap <silent><buffer> ~         :execute 'Explore' expand('~')<CR>
 	autocmd FileType netrw    nnoremap <silent><buffer> <leader>e :quit<CR>
-	autocmd FileType netrw    nnoremap <silent><buffer> V         :vsp<CR>
-	autocmd FileType netrw    nnoremap <silent><buffer> S         :sp<CR>
+	autocmd FileType netrw    nnoremap <silent><buffer> V         :vertical split<CR>
+	autocmd FileType netrw    nnoremap <silent><buffer> S         :split<CR>
 	autocmd FileType netrw    nnoremap         <buffer> s         <NOP>
 
 	autocmd FileType quickrun nnoremap <silent><buffer> Q :quit<CR>
@@ -1865,9 +1865,8 @@ augroup extension_type
 	autocmd FileType markdown      let &commentstring = "<!--%s-->"
 	autocmd FileType text,none     let &commentstring = " %s"
 
-	"@Bugs('do not functioned?')
-	" Not Shown visible hidden strings on Conque Ghci
-	autocmd FileType ghci* setl nolist
+	" Set for ConqueTerm
+	autocmd FileType conque_term setl nolist
 augroup END
 
 "}}}
