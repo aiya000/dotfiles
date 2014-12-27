@@ -15,7 +15,7 @@ scriptencoding utf8
 " -- Event_Method
 " -- Functional_Command
 " -- Alias
-" -- Key_Map
+" -- KeyMapping
 " -- File_Types
 " -- Ignore_Setting
 " ---
@@ -115,24 +115,23 @@ scriptencoding utf8
 let g:vimrc = get(g:, 'vimrc', {})
 let g:vimrc['loaded'] = get(g:vimrc, 'loaded', 0)
 
-let s:isNvim    = has('nvim')
+let s:is_nvim    = has('nvim')
+let s:is_windows = has('win32')
+let s:is_cygwin  = has('win32unix')
+let s:is_kaoriya = has('kaoriya')
+let s:is_doswin  = s:is_windows && !has('gui')
+let s:is_unix    = has('unix')
+let s:is_mac     = has('mac')
 
-let s:isWindows = has('win32')
-let s:isCygwin  = has('win32unix')
-let s:isKaoriya = has('kaoriya')
-let s:isDosWin  = s:isWindows && !has('gui')
-let s:isUnix    = has('unix')
-let s:isMac     = has('mac')
+let s:has_cygwin = isdirectory('/cygwin')
+let s:has_mingw  = 0  "@Incomplete('dummy')
 
-let s:hasCygwin = isdirectory('/cygwin')
-let s:hasMingw  = 0  " dummy
-
-let s:vimHome   = expand('~/.vim')
+let s:vim_home = expand('~/.vim')
 
 let s:backupdir = expand('~/.backup/vim_backup')
-let s:directory = s:backupdir.'/swp'
-let s:undodir   = s:backupdir.'/undo'
-let s:viewdir   = s:backupdir.'/view'
+let s:directory = s:backupdir . '/swp'
+let s:undodir   = s:backupdir . '/undo'
+let s:viewdir   = s:backupdir . '/view'
 
 let s:username  = $USER
 let s:groupname = $GROUP != '' ? $GROUP : $USER
@@ -167,122 +166,130 @@ filetype plugin indent on
 " }}}
 " autocmd Groups {{{
 
-augroup plugin_pref
+augroup PluginPrefs
 	autocmd!
 augroup END
 
-augroup file_event
+augroup FileEvent
 	autocmd!
 augroup END
 
-augroup extension_type
+augroup ExtensionType
 	autocmd!
 augroup END
 
-augroup highlight_pref
+augroup HighlightPref
 	autocmd!
 augroup END
 
-augroup key_map
+augroup KeyMapping
 	autocmd!
 augroup END
 
-augroup key_event
+augroup KeyEvent
 	autocmd!
 augroup END
 
 "}}}
 " For Support Kaoriya Vim {{{
 
-if s:isKaoriya
+if s:is_kaoriya
 	" Set Environment
-	let $HOME = $VIM
-	let s:vimHome = expand('~/.vim')  " Reset with $HOME
-	let &runtimepath = &runtimepath.','.s:vimHome
-	if s:hasCygwin
-		let $PATH = '/cygwin/bin;/cygwin/usr/bin;/cygwin/usr/sbin;'.$PATH
-		let $PATH = $HOME.'/bin;'.$PATH
+	let $HOME        = $VIM
+	let s:vim_home   = expand('~/.vim')  " Reset with $HOME
+	let &runtimepath = &runtimepath . ',' . s:vim_home
+	if s:has_cygwin
+		let $PATH = '/cygwin/bin;/cygwin/usr/bin;/cygwin/usr/sbin;' . $PATH
+		let $PATH = $HOME . '/bin;' . $PATH
 	endif
 
 
 	" Build Base Directories
-	if !isdirectory(s:vimHome)
-		call mkdir(s:vimHome)
+	if !isdirectory(s:vim_home)
+		call mkdir(s:vim_home)
 	endif
 
 
 	" For Using No Default vimproc
-	let switch_dir = $VIM.'/switches/enabled'
-	let suppress = switch_dir . '/disable-vimproc.vim'
-	if s:isWindows && !s:hasMingw && filereadable(suppress)
-		call delete(suppress)
-	elseif s:isWindows && s:hasMingw && !filereadable(suppress)
-		call writefile([], suppress)
+	let s:switch_dir = $VIM . '/switches/enabled'
+	let s:suppress   = s:switch_dir . '/disable-vimproc.vim'
+
+	if s:is_windows && !s:has_mingw && filereadable(s:suppress)
+		call delete(s:suppress)
+	elseif s:is_windows && s:has_mingw && !filereadable(s:suppress)
+		call writefile([], s:suppress)
 	endif
 
-	for disf in map(['/utf-8.vim', '/vimdoc-ja.vim'], 'switch_dir . v:val')
-		if !filereadable(disf)
-			call writefile([], disf)
+	"@Marked('I changed a variable name "switch_dir" to "s:switch_dir", can map func throw s: variable ?')
+	for s:disf in map(['/utf-8.vim', '/vimdoc-ja.vim'], 's:switch_dir . v:val')
+		if !filereadable(s:disf)
+			call writefile([], s:disf)
 		endif
 	endfor
-	unlet switch_dir suppress disf
+	unlet s:switch_dir s:suppress s:disf
 
 
 	" Unset Kaoriya Preference
 	set noignorecase nosmartcase
 
-	augroup file_event
+	augroup FileEvent
 		autocmd BufRead $MYVIMRC setl enc=utf8 fenc=utf8
 	augroup END
 endif
 
 "}}}
 " Check NeoBundle exists {{{
-let s:bundleDir    = s:vimHome . '/bundle'
-let s:neobundleDir = s:bundleDir . '/neobundle.vim'
+let s:bundle_dir    = s:vim_home . '/bundle'
+let s:neobundle_dir = s:bundle_dir . '/neobundle.vim'
 
-if !isdirectory(s:bundleDir)
-	call mkdir(s:bundleDir)
+if !isdirectory(s:bundle_dir)
+	call mkdir(s:bundle_dir)
 endif
 
 function! s:remove_empty_bundledir()  "{{{
-	let l:dirs = split(s:system('ls ' . s:bundleDir), '\n')
+	let l:dirs = split(s:system('ls ' . s:bundle_dir), '\n')
+
 	for l:dir in l:dirs
-		let l:pluginDir = s:bundleDir . '/' . l:dir
-		let l:isEmpty = s:system('ls ' . l:pluginDir) == ''
-		if l:isEmpty
-			call s:system('rmdir ' . l:pluginDir)
+		let l:plugin_dir = s:bundle_dir . '/' . l:dir
+		let l:is_empty = s:system('ls ' . l:plugin_dir) == ''
+
+		if l:is_empty
+			call s:system('rmdir ' . l:plugin_dir)
 		endif
 	endfor
 endfunction  "}}}
-function! s:fetch_neobundle()  " {{{
+function! s:fetch_neobundle() " {{{
 	if executable('git')
 		echo 'NeoBundle was not installed...'
 		echo 'Installing NeoBundle.'
 
-		execute '!git clone http://github.com/Shougo/neobundle.vim ' s:neobundleDir
+		execute '!git clone http://github.com/Shougo/neobundle.vim ' s:neobundle_dir
 		return
 	else
 		echoerr 'Sorry, You do not have git command.'
 		echoerr 'Cannot introduce NeoBundle.'
+
 		throw 'neobundle.vim clone failed.'
 	endif
-endfunction  " }}}
+endfunction " }}}
 
 if has('vim_starting')
 	try
-		let &runtimepath = &runtimepath.','.s:vimHome.'/bundle/neobundle.vim'
+		let &runtimepath = &runtimepath . ',' . s:vim_home . '/bundle/neobundle.vim'
+
 		" Throws Error when nothing neobundle in runtime path
 		call neobundle#begin()
 	catch
-		if isdirectory(s:neobundleDir) && !exists(':NeoBundle')
+		if isdirectory(s:neobundle_dir) && !exists(':NeoBundle')
 			" Plugin Directories may be empty when git cloned new.
 			call s:remove_empty_bundledir()
 			echo 'bundle directories initialized.'
 		endif
+
 		try
 			call s:fetch_neobundle()
 			call neobundle#begin()
+
 			echo 'NeoBundle installed.'
 			echo 'Please closing vim and reopening vim once,'
 			echo 'and executing :NeoBundleInstall .'
@@ -293,8 +300,8 @@ if has('vim_starting')
 	endtry
 endif
 
-unlet s:neobundleDir
-unlet s:bundleDir
+unlet s:neobundle_dir
+unlet s:bundle_dir
 "}}}
 " Check Backup, Swap and Undo directory exists {{{
 
@@ -403,32 +410,28 @@ NeoBundle        'vim-scripts/TaskList.vim'
 NeoBundle        'tyru/vim-altercmd'
 NeoBundle        'mbbill/undotree'
 NeoBundle        'Shougo/neomru.vim'
+NeoBundle        'vim-scripts/dbext.vim'
 
 
 call neobundle#end()
 
 try
 	helptags ~/.vim/bundle/.neobundle/doc
-catch /.*E154.*/
+catch /E154/
 	" Suppressed helptags duplication error
 endtry
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
 
-let s:vimproc_config = {
+call neobundle#config('vimproc.vim', {
 \	'build' : {
-\		'unix' : 'make -f make_unix.mak',
-\		'mac'  : 'make -f make_mac.mak'
+\		'unix'    : 'make -f make_unix.mak',
+\		'mac'     : 'make -f make_mac.mak',
+\		'cygwin'  : 'make -f make_cygwin.mak',
+\		'windows' : 'make -f make_mingw32.mak'
 \	}
-\}
-if s:isCygwin
-	let s:vimproc_config.build['cygwin']  = 'make -f make_cygwin.mak'
-elseif s:hasMingw
-	let s:vimproc_config.build['windows'] = 'make -f make_mingw32.mak'
-endif
-call neobundle#config('vimproc.vim', s:vimproc_config)
-unlet s:vimproc_config
+\})
 
 call neobundle#config('TweetVim', {
 \	'depends' : [
@@ -560,13 +563,13 @@ let g:quickrun_config = {
 \	}
 \}
 
-if s:isWindows
+if s:is_windows
 	let g:quickrun_config['cs'] = {
 	\	'command'  : 'csc.exe',
 	\	'exec'     : ['%c %o %s:p', '%s:p:r.exe', 'del %s:p:r.exe'],
 	\	'hook/output_encode/encoding' : 'cp932:utf8'
 	\}
-elseif s:isUnix
+elseif s:is_unix
 	let g:quickrun_config['cs'] = {
 	\	'command'  : 'gmcs',
 	\	'exec'     : ['%c %o %s:p > /dev/null', 'mono %s:p:r.exe', 'rm %s:p:r.exe'],
@@ -574,31 +577,31 @@ elseif s:isUnix
 	\}
 endif
 
-if s:isCygwin
+if s:is_cygwin
 	let g:quickrun_config['java'] = {
 	\	'command' : 'javac',
 	\	'exec'    : ['%c %o `echo %s | sed s:\:/:g | cygpath -w -f -`', '%c %s:t:r %a'],
 	\	'hook/output_encode/encoding': 'Shift_JIS'
 	\}
+
 	let s:javav = s:system('java -version')
-	if s:javav =~# '1\.8'
-		let g:quickrun_config.java['cmdopt'] = '-source 1.8 -encoding UTF-8'
-	elseif s:javav =~# '1\.7'
-		let g:quickrun_config.java['cmdopt'] = '-source 1.7 -encoding UTF-8'
-	else
-		let g:quickrun_config.java['cmdopt'] = '-encoding UTF-8'
-	endif
+
+	let g:quickrun_config.java['cmdopt'] =
+	\	s:javav =~# '1\.8' ? '-source 1.8 -encoding UTF-8' :
+	\	s:javav =~# '1\.7' ? '-source 1.7 -encoding UTF-8'
+	\	                   : '-encoding UTF-8'
+
 	unlet s:javav
 endif
 
-augroup plugin_pref
+augroup PluginPrefs
 	autocmd FileType quickrun setl wrap
 augroup END
 
 " }}}
 "--- vimproc.vim ---"{{{
 
-if s:isWindows && !s:hasMingw
+if s:is_windows && !s:has_mingw
 	"NeoBundleDisable 'Shougo/vimproc.vim'
 	"@Incompleted('I should use a like NeoBundleDisable ... ?')
 	set runtimepath-=~/.vim/bundle/vimproc.vim/
@@ -609,7 +612,7 @@ endif
 
 let g:tweetvim_async_post = 1
 
-augroup plugin_pref
+augroup PluginPrefs
 	autocmd FileType tweetvim     setl wrap
 	autocmd FileType tweetvim_say setl ts=2 sw=2 et
 augroup END
@@ -618,7 +621,7 @@ augroup END
 "--- vimshell.vim ---"{{{
 
 " Add to VimShell Commands Directory of My Home
-let &runtimepath = &runtimepath.','.s:vimHome.'/autoload/vimshell/commands'
+let &runtimepath = &runtimepath.','.s:vim_home.'/autoload/vimshell/commands'
 
 let g:vimshell_no_save_history_commands = {
 \	'history': 1,
@@ -630,14 +633,14 @@ let g:vimshell_force_overwrite_statusline = 1
 let g:vimshell_max_command_history = 10000
 let g:vimshell_scrollback_limit = 10000
 
-augroup plugin_pref
+augroup PluginPrefs
 	autocmd FileType vimshell setl fdm=marker nolist wrap
 augroup END
 
 "}}}
 "--- J6uil ---"{{{
 
-augroup plugin_pref
+augroup PluginPrefs
 	autocmd FileType J6uil setl wrap
 augroup END
 
@@ -647,7 +650,6 @@ augroup END
 let g:vimshell_kawaii_smiley = 1
 
 "}}}
-"
 "--- w3m.vim ---"{{{
 
 let g:w3m#homepage = 'http://www.google.co.jp/'
@@ -805,6 +807,13 @@ let g:ConqueTerm_InsertOnEnter  = 0
 let g:ConqueTerm_StartMessages  = 1
 
 "}}}
+"--- dbext.vim ---"{{{
+
+function! s:easy_integrate_dbext_login()
+
+endfunction
+
+"}}}
 "--- For Private ---"{{{
 
 " Read Privacy Config
@@ -822,9 +831,9 @@ endif
 " Set Basic Preferences
 set number nowrap hlsearch list scrolloff=8
 let s:listchars = get(s:, 'listchars',
-	\	s:isDosWin
+	\	s:is_doswin
 	\		? 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%' :
-	\	s:isUnix
+	\	s:is_unix
 	\		? 'tab:›_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
 	\		: 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲')
 
@@ -840,7 +849,7 @@ set ambiwidth=double
 " Powered Up Syntax Highlight
 " {{{
 
-augroup highlight_pref
+augroup HighlightPref
 	"autocmd Colorscheme * highlight Normal       cterm=NONE      ctermfg=Cyan
 	autocmd ColorScheme * highlight Visual       cterm=underline ctermfg=White ctermbg=Cyan
 	autocmd ColorScheme * highlight IncSearch                    ctermfg=Black ctermbg=Cyan
@@ -857,13 +866,13 @@ augroup highlight_pref
 augroup END
 
 
-augroup highlight_pref
+augroup HighlightPref
 	autocmd ColorScheme       * highlight RcEmSpace cterm=standout ctermfg=LightBlue
 	autocmd VimEnter,WinEnter * call matchadd('RcEmSpace', '　')
 augroup END
 
 
-augroup highlight_pref
+augroup HighlightPref
 	autocmd InsertEnter * highlight StatusLine ctermfg=Black ctermbg=Cyan
 	autocmd InsertLeave * highlight StatusLine ctermfg=Cyan  ctermbg=Black
 augroup END
@@ -1002,13 +1011,15 @@ set history=500
 
 " Adding Runtime Path
 set runtimepath+=~/.vim/vimball
+
+" For Tests
 set runtimepath+=~/.vim/makes/asql.vim
 set runtimepath+=~/.vim/makes/arot13.vim/
 set runtimepath+=~/.vim/makes/ahoge-put.vim/
 set runtimepath+=~/.vim/makes/adrone.vim/
 
 " Set Vimball Install place
-let g:vimball_home = s:vimHome.'/vimball'
+let g:vimball_home = s:vim_home . '/vimball'
 
 " Display Command Complement
 set wildmenu
@@ -1045,9 +1056,10 @@ endif
 "{{{
 
 " Save Cursor Position when file closed
-augroup file_event
+augroup FileEvent
 	function! s:visit_past_position() "{{{
 		let l:past_posit = line("'\"")
+
 		if l:past_posit > 0 && l:past_posit <= line('$')
 			execute 'normal! g`"'
 		endif
@@ -1060,23 +1072,22 @@ augroup END
 set nobackup
 function! s:update_backup_by_date() "{{{
 	let l:dailydir = s:backupdir . '/' . strftime("%Y-%m-%d")
+
 	if !isdirectory(l:dailydir)
 		call mkdir(l:dailydir, 'p', 0755)
-		if s:isUnix
+		if s:is_unix
 			call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, l:dailydir))
 		endif
 	endif
 
 	let l:filepath = split(expand('%'), '/')
-	let l:filename = s:isWindows
-		\ ? l:filepath[len(l:filepath)-1] . strftime('_at_%H-%M')
-		\ : l:filepath[len(l:filepath)-1] . strftime('_at_%H:%M')
+	let l:filename = l:filepath[len(l:filepath)-1] . strftime(s:is_windows ? '_at_%H-%M' : '_at_%H:%M')
 	let l:location = l:dailydir . '/' . l:filename
 
 	call writefile(getline(1, '$'), l:location)
 endfunction "}}}
 
-augroup file_event
+augroup FileEvent
 	autocmd BufWritePre ?\+ silent call s:update_backup_by_date()
 
 	autocmd VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
@@ -1087,7 +1098,7 @@ augroup file_event
 		\|	endif
 augroup END
 
-augroup key_event
+augroup KeyEvent
 	"autocmd UserGettingBored * echo "What's this !?"
 augroup END
 
@@ -1106,16 +1117,19 @@ function! s:reverse_line() range " {{{
 		if a:firstline is a:lastline
 			return
 		endif
+
 		let l:lines = []
 		let l:posit = getpos('.')
+
 		for l:line in range(a:firstline, a:lastline)
-			call add(l:lines, substitute(getline(l:line)."\n", "\t", "", 'g'))
+			call add(l:lines, substitute(getline(l:line)."\n", "\t", '', 'g'))
 		endfor
 
 		for l:i in range(a:firstline, a:lastline)
 			execute 'normal! "_dd'
 			execute 'normal! i' lines[a:lastline - l:i]
 		endfor
+
 		call setpos('.', l:posit)
 	endif
 endfunction " }}}
@@ -1125,7 +1139,8 @@ command! -range=%
 
 " Catenate and echo files
 function! s:cat_file(...) "{{{
-	let l:catenate = ""
+	let l:catenate = ''
+
 	if executable('cat')
 		for l:filePath in a:000
 			let l:catenate .= s:system('cat ' . l:filePath)
@@ -1154,7 +1169,6 @@ command! TimerStart let  s:startTime = reltime()
 command! TimerEcho  echo reltimestr( reltime(s:startTime) )
 command! TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
 
-
 "}}}
 " Action Function {{{
 
@@ -1163,9 +1177,8 @@ let s:tdir_dir = get(s:, 'tdir_dir', 'Not set tdir')
 command! TDirPwd           echo s:tdir_dir
 function! s:set_temporary_dir(path) "{{{
 	if isdirectory(a:path)
-		let s:tdir_dir =
-		\	a:path == '.' ? expand('%:p:h')
-		\	              : a:path
+		let s:tdir_dir = a:path == '.' ? expand('%:p:h')
+		\                              : a:path
 		echo s:tdir_dir
 	else
 		echoerr 'No such temporary root dir'
@@ -1188,7 +1201,7 @@ command! TDirCd            call s:cd_temporary_dir()
 " command! ScratchUp "{{{
 
 " The cushion of the environments
-if s:isWindows
+if s:is_windows
 	" Is different operated :sp ubuntu and kaoriya ?
 	command! ScratchUp execute ':Scratch' | resize 5
 else
@@ -1213,10 +1226,11 @@ command! CopyPlusAll execute 'normal! ggVG"+y<C-o><C-o>'
 " }}}
 " Development Support {{{
 
-" If use *NIX then use QuickRun else if cannot use it, you can use this.
+" If you cannot use QuickRun, you can use this.
 function! s:java_run_func() "{{{
 	let l:javaname = expand('%:t:r')
 	let l:javav = s:system('java -version')
+
 	if l:javav =~# "1\.8"
 		let l:command = ['javac -source 1.8 -encoding utf8', 'java']
 	elseif l:javav =~# "1\.7"
@@ -1224,7 +1238,8 @@ function! s:java_run_func() "{{{
 	else
 		let l:command = ['javac -encoding utf8', 'java']
 	endif
-	if s:isCygwin
+
+	if s:is_cygwin
 		if executable('cocot')
 			let l:command[0] = 'cocot ' . l:command[0]
 			let l:command[1] = 'cocot ' . l:command[1]
@@ -1237,6 +1252,7 @@ function! s:java_run_func() "{{{
 	execute '!'.
 	\	printf('%s %s.java',   l:command[0], l:javaname) . ';' .
 	\	printf('%s %s',        l:command[1], l:javaname) . ';'
+
 	call delete(l:javaname . '.class')
 endfunction "}}}
 command! JavaRun call s:java_run_func()
@@ -1262,7 +1278,7 @@ command! PutLongSeparator
 	\|	execute 'normal =='
 command! Date
 	\	execute 'normal! a' .
-	\	substitute(s:isUnix ? system('date') : system('echo %date% %time%'), "\n", "", 'g')
+	\	substitute(s:is_windows ? system('echo %date% %time%') : system('date'), "\n", '', 'g')
 
 
 function! s:put_html_base() "{{{
@@ -1290,7 +1306,8 @@ command! PutHtmlBase call s:put_html_base()
 "  Yank => SELECT * FROM table; 
 
 function! s:sql_yank_normalize() range 
-	let l:sql = ""
+	let l:sql = ''
+
 	for l:i in range(a:firstline, a:lastline)
 		let l:line = getline(l:i)
 		let l:lineOfSql = substitute(substitute(
@@ -1299,6 +1316,7 @@ function! s:sql_yank_normalize() range
 
 		let l:sql .= l:lineOfSql . "\n"
 	endfor
+
 	let @" = substitute(l:sql, '\s\s\+', ' ', 'g')
 endfunction
 " }}}
@@ -1317,16 +1335,16 @@ command! ShowRcDict echo s:
 " Utils {{{
 
 " Vim Utils {{{
-command! VimConfig         e  $MYVIMRC
+command! VimConfig         e $MYVIMRC
 command! VimConfigTab      tabnew | e $MYVIMRC
 command! Reload            so $MYVIMRC
 	\|	if has('gui_running')
 	\|		so $MYGVIMRC
 	\|	endif
-command! ForceSave     w !sudo tee > /dev/null %
+command! ForceSave         w !sudo tee > /dev/null %
 
 command! CdBufDir          cd %:p:h
-command! Resetf            let &ft = &ft  " for Event [FileType * ]
+command! Resetf            let &ft = &ft  " for actuate autocmd Events [FileType *]
 
 command! ColorPreview      Unite colorscheme -auto-preview
 
@@ -1352,7 +1370,8 @@ function! TwitterPrivateFunc() "{{{
 
 	execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['priv_ac']
 	let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['priv_ac']
-	TweetVimHomeTimeline
+
+	execute ':TweetVimHomeTimeline'
 endfunction "}}}
 command! TwitterPrivate     call TwitterPrivateFunc()
 command! TwitterPrivateTab  tabnew | TwitterPrivate
@@ -1363,9 +1382,9 @@ function! TweetPrivateFunc() "{{{
 	endif
 
 	execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['priv_ac']
-	TweetVimSay
+	execute ':TweetVimSay'
 
-	"@Incompleted('wait here')
+	"@Incompleted('wait sync here')
 	"execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
 command! TweetPrivate       call TweetPrivateFunc()
@@ -1377,9 +1396,11 @@ function! TwitterPublicFunc() "{{{
 		echoerr "Not set env variable => g:vimrc.private['twitter']['publ_ac']"
 		return
 	endif
+
 	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['publ_ac']
 	let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['publ_ac']
-	TweetVimHomeTimeline
+
+	execute ':TweetVimHomeTimeline'
 endfunction "}}}
 command! TwitterPublic      call TwitterPublicFunc()
 command! TwitterPublicTab   tabnew | TwitterPublic
@@ -1390,7 +1411,7 @@ function! TweetPublicFunc() "{{{
 	endif
 
 	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['publ_ac']
-	TweetVimSay
+	execute ':TweetVimSay'
 
 	"@Incompleted('wait here')
 	"execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
@@ -1413,16 +1434,8 @@ cnoreabbr JazzPlay      JazzradioPlay
 command!  JazzStop      JazzradioStop
 
 " Translates Languages
-command!          Translate     ExciteTranslate
-function! s:weblio_translate_cmdline(...) "{{{
-	let l:line = ''
-	for l:word in a:000
-		let l:line .= l:word . '+'
-	endfor
-
-	execute 'Ref webdict weblio ' l:line
-endfunction "}}}
-command! -nargs=* Weblio        call s:weblio_translate_cmdline(<f-args>)
+cnoreabbr         Translate     ExciteTranslate
+cnoreabbr         Weblio        Ref webdict weblio
 
 command! -nargs=* GrepNow       vimgrep <f-args> % | cwindow
 command!          MinimapReSync execute 'MinimapStop' | execute 'MinimapSync'
@@ -1430,27 +1443,27 @@ command!          MinimapReSync execute 'MinimapStop' | execute 'MinimapSync'
 " }}}
 " Developments {{{
 
-command! -nargs=1 Log VimConsoleLog <args>
-command! LogClear VimConsoleClear
+cnoreabbr Log      VimConsoleLog
+command!  LogClear VimConsoleClear
 
-command! -nargs=*  Ghc      !runghc % <q-args>
-cnoreabbr          Ghci     enew! \| ConqueTerm ghci
-cnoreabbr          Sghci    sp \| ConqueTerm ghci
-cnoreabbr          Vghci    vsp \| ConqueTerm ghci
-cnoreabbr          GhciTab  tabnew \| ConqueTerm ghci
-cnoreabbr          Hoogle   Ref hoogle
+cnoreabbr Ghc      !runghc %
+cnoreabbr Ghci     enew! \| ConqueTerm ghci
+cnoreabbr Sghci    sp \| ConqueTerm ghci
+cnoreabbr Vghci    vsp \| ConqueTerm ghci
+cnoreabbr GhciTab  tabnew \| ConqueTerm ghci
+cnoreabbr Hoogle   Ref hoogle
 
 " }}}
 
 
 "-------------------------"
-"         Key_Map         "
+"         KeyMapping         "
 "-------------------------"
 " Global KeyMaps {{{
 
 " Disables {{{
 
-augroup key_map
+augroup KeyMapping
 	autocmd FileType * nnoremap <Up>    <NOP>
 	autocmd FileType * nnoremap <Down>  <NOP>
 	autocmd FileType * nnoremap <Left>  <NOP>
@@ -1466,7 +1479,7 @@ augroup END
 " }}}
 " Bashnize Command Mode {{{
 
-augroup key_map
+augroup KeyMapping
 	autocmd FileType * nmap     <C-j> <CR>
 	autocmd FileType * imap     <C-j> <CR>
 
@@ -1601,7 +1614,7 @@ endfunction
 " }}}
 
 "-- Overwrite mapping --"
-augroup key_map
+augroup KeyMapping
 	" † God Of The Vim
 	autocmd FileType * nnoremap Q gQ
 
@@ -1616,7 +1629,7 @@ augroup END
 
 
 "-- Appends --"
-augroup key_map
+augroup KeyMapping
 	autocmd FileType * nnoremap <silent> m:             :marks<CR>
 	autocmd FileType * nnoremap <silent> q:             :register<CR>
 	autocmd FileType * nnoremap <silent> gk             :call <SID>cursor_up_to_lid()<CR>
@@ -1630,7 +1643,7 @@ augroup key_map
 augroup END
 
 "-- For foldings --"
-augroup key_map
+augroup KeyMapping
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
 	autocmd FileType * nnoremap zj     zjzo
@@ -1640,7 +1653,7 @@ augroup END
 
 
 "-- For window and buffer --"
-augroup key_map
+augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <C-w>t     :tabnew<CR>
 	autocmd FileType * nnoremap <silent> <C-w>T     :tabclose<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bd    :bdelete<CR>
@@ -1654,7 +1667,7 @@ augroup END
 
 
 "-- Actions --"
-augroup key_map
+augroup KeyMapping
 	autocmd FileType * nnoremap                  <C-k><C-n>     gt
 	autocmd FileType * nnoremap                  <C-k><C-p>     gT
 	autocmd FileType * nnoremap <silent><expr>   <C-k><C-s>     ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
@@ -1669,13 +1682,13 @@ augroup key_map
 	autocmd FileType * cnoremap                  <C-k><C-p>     <Up>
 	autocmd FileType * cnoremap                  <C-k><C-n>     <Down>
 
-	" If cannot use default, use this.
+	" If cannot use default, You can use this.
 	autocmd FileType * inoremap                  <C-k><C-l> <Esc>
 augroup END
 
 
 "-- Toggle options --"
-augroup key_map
+augroup KeyMapping
 	autocmd FileType * nnoremap <silent>         <C-h><C-w>      :setl wrap! wrap?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-i>      :set ignorecase! ignorecase?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-v>      :call <SID>toggle_virtual_edit()<CR>
@@ -1683,8 +1696,8 @@ augroup key_map
 	autocmd FileType * nnoremap <silent>         <C-h><C-e>      :set expandtab! expandtab?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-r>      :set relativenumber! relativenumber?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-l>      :set list! list?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-n>      :set nu! nu?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h>jkjkjkjk   :call <SID>enable_cursor_keys_toggle()<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-n>      :set number! number?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h>jkjkjkjk   :call <SID>toggle_enable_cursor_key()<CR>
 	"
 	autocmd FileType * nnoremap <silent>         <leader>pl :PutLongSeparator<CR>
 	autocmd FileType * nnoremap <silent>         <leader>ps :PutShortSeparator<CR>
@@ -1692,9 +1705,9 @@ augroup END
 
 
 "-- For Plugins --"
-augroup key_map
+augroup KeyMapping
 	autocmd FileType * nmap              <leader>w          <Plug>(openbrowser-open)
-	autocmd FileType * nnoremap <silent> <leader>t          :Translate<CR>
+	autocmd FileType * nnoremap <silent> <leader>t          :ExciteTranslate<CR>
 
 	" Unite
 	autocmd FileType * nnoremap <silent> <C-k><C-u><C-f>    :Unite -ignorecase outline:foldings<CR>
@@ -1749,7 +1762,7 @@ augroup END
 " Buffer Local KeyMaps {{{
 
 " To Plugin buffers
-augroup plugin_pref
+augroup PluginPrefs
 	autocmd FileType help     nnoremap <silent><buffer> Q :helpclose<CR>
 
 	autocmd FileType netrw    nmap             <buffer> H         -
@@ -1829,13 +1842,13 @@ endfunction "}}}
 
 
 " If buffer does not has filetype, set filetype 'none'
-augroup file_event
+augroup FileEvent
 	autocmd VimEnter,BufNew * if &ft == '' | setf none | endif
 augroup END
 
 
 "@Bugs('these highlight of filetype is not local >>= duplication')
-augroup extension_type
+augroup ExtensionType
 	" Set for "Vi Improved"
 	autocmd VimEnter,ColorScheme * highlight RcMyHint cterm=standout ctermfg=DarkYellow
 	autocmd VimEnter,WinEnter    * let s:rcHint = s:matchadd_with_filetype('vim', 'RcMyHint', '\s*"\zs@\w\+(.*)\ze', 10, get(s:, 'rcHint', 8810))
