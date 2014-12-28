@@ -32,13 +32,13 @@ alias twitter='vim -c TweetVimHomeTimeline'
 alias tweet='vim -c TweetVimSay'
 alias twitter-public='vim -c TwitterPublic'
 alias tweet-public='vim -c TweetPublic'
+alias adrone='vim -c AdroneOpen'
 
 alias vimconfig='vim ~/.vimrc'
 alias gvimconfig='vim ~/.gvimrc'
 alias gvim-vimconfig='gvim ~/.gvimrc'
 alias vim-bashrc='vim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
 alias vim-bashpr='vim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
-alias vim-mutt='vim ~/.tmp/mutt.txt'
 
 # }}}
 # Shell Utils {{{
