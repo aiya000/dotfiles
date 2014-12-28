@@ -1454,7 +1454,7 @@ cnoreabbr Hoogle   Ref hoogle
 
 
 "-------------------------"
-"         KeyMapping         "
+"        KeyMapping       "
 "-------------------------"
 " Global KeyMaps {{{
 
@@ -1797,7 +1797,7 @@ augroup PluginPrefs
 	autocmd FileType J6uil     nnoremap <silent><buffer> Q     :bdelete<CR>
 	autocmd FileType J6uil_say nmap             <buffer> <C-j> <CR>  " Enter to Say
 
-	autocmd FileType w3m       nnoremap         <buffer> H         <BS>
+	autocmd FileType w3m       nmap             <buffer> H         <BS>
 	autocmd FileType w3m       nnoremap <silent><buffer> <C-u>     :W3mAddressBar <CR>
 	autocmd FileType w3m       nnoremap <silent><buffer> <leader>E :W3mShowExtenalBrowser <CR>
 
