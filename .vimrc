@@ -806,6 +806,11 @@ let g:ConqueTerm_InsertOnEnter  = 0
 let g:ConqueTerm_StartMessages  = 1
 
 "}}}
+"--- dbext.vim ---"{{{
+
+let g:dbext_default_history_file = expand('~/.dbext_sql_history')
+
+"}}}
 "--- For Private ---"{{{
 
 " Read Privacy Config
