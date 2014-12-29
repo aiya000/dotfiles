@@ -811,6 +811,20 @@ let g:ConqueTerm_StartMessages  = 1
 let g:dbext_default_history_file = expand('~/.dbext_sql_history')
 
 "}}}
+"--- For Debug ---"{{{
+
+" Set for my projects
+set runtimepath+=~/.vim/makes/arot13.vim/
+set runtimepath+=~/.vim/makes/ahoge-put.vim/
+set runtimepath+=~/.vim/makes/asql.vim
+set runtimepath+=~/.vim/makes/adrone.vim/
+
+augroup PluginPrefs
+	autocmd FileType adrone_view nnoremap <silent><buffer> Q     :bdelete<CR>
+	autocmd FileType adrone_say  nnoremap <silent><buffer> <C-j> <CR>
+augroup END
+
+"}}}
 "--- For Private ---"{{{
 
 " Read Privacy Config
@@ -819,6 +833,7 @@ if filereadable(expand('~/.vimrc_private'))
 endif
 
 "}}}
+
 
 "-------------------------"
 "      View_Setting       "
@@ -1008,12 +1023,6 @@ set history=500
 
 " Adding Runtime Path
 set runtimepath+=~/.vim/vimball
-
-" For Tests
-set runtimepath+=~/.vim/makes/asql.vim
-set runtimepath+=~/.vim/makes/arot13.vim/
-set runtimepath+=~/.vim/makes/ahoge-put.vim/
-set runtimepath+=~/.vim/makes/adrone.vim/
 
 " Set Vimball Install place
 let g:vimball_home = s:vim_home . '/vimball'
@@ -1660,6 +1669,10 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <C-w>W     :wall<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bt    :call <SID>buf_open_new_tab()<CR>
 	autocmd FileType * nnoremap <silent> <C-w>N     :enew!<CR>
+<<<<<<< HEAD
+=======
+	autocmd FileType * nnoremap <silent> <C-w>Q     :quitall!<CR>
+>>>>>>> 34d9825... Split set for my projects
 augroup END
 
 
@@ -1779,7 +1792,7 @@ augroup PluginPrefs
 	autocmd FileType tweetvim     nnoremap         <buffer> <C-a>     :TweetVimSwitchAccount<Space>
 	autocmd FileType tweetvim     nnoremap         <buffer> U         :TweetVimUserTimeline<Space>
 	autocmd FileType tweetvim     nnoremap <silent><buffer> Q         :bdelete<CR>
-	autocmd FileType tweetvim_say nnoremap         <buffer> <C-j>     <CR>
+	autocmd FileType tweetvim_say nnoremap         <buffer> <C-j>     <CR>  " avoid <C-j> to say
 	autocmd FileType tweetvim_say inoremap         <buffer> <C-i>     <Tab>
 
 	autocmd FileType vimshell  nunmap   <buffer> Q
