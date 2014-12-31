@@ -69,6 +69,8 @@ scriptencoding utf8
 
 "-- happend error when opened vrapperrc or vimperatorrc
 
+"-- please link.sh do not overwrite .backup_dotfiles/{.,}* when exists ~/(dotfiles)
+
 "}}}
 " Todo {{{
 
