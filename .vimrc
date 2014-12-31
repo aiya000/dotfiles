@@ -1669,7 +1669,11 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <C-w>W     :wall<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bt    :call <SID>buf_open_new_tab()<CR>
 	autocmd FileType * nnoremap <silent> <C-w>N     :enew!<CR>
+<<<<<<< HEAD
 	autocmd FileType * nnoremap <silent> <C-w>Q     :quitall!<CR>
+=======
+	autocmd FileType * nnoremap <silent> <C-w>aq    :quitall!<CR>
+>>>>>>> 4511851... Added a keymapping
 augroup END
 
 
