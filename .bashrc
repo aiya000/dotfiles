@@ -54,11 +54,7 @@ alias pbcopy='xsel --clipboard --input'
 
 alias ghci-hi='ghci 2>&1 | HsColour -tty'
 alias mysql="mysql -E --pager='less -r -S -n -i -F -X'"
-<<<<<<< HEAD
 alias git-push-om='git push -u origin master'
-=======
-alias git-ompush='git push -u origin master'
->>>>>>> 294eab7... Added an alias
 
 if [ -n "`which git 2> /dev/null`" ] ; then
 	alias git-myhelp='
