@@ -1862,14 +1862,15 @@ augroup ExtensionType
 	autocmd VimEnter,ColorScheme * highlight RcMyHint cterm=standout ctermfg=DarkYellow
 	autocmd VimEnter,WinEnter    * let s:rcHint = s:matchadd_with_filetype('vim', 'RcMyHint', '\s*"\zs@\w\+(.*)\ze', 10, get(s:, 'rcHint', 8810))
 
-	" Set for C-Sharp
-	autocmd VimEnter,ColorScheme * highlight RcTypeInference cterm=bold ctermfg=11
-	autocmd VimEnter,WinEnter    * let s:rcTypeInference = s:matchadd_with_filetype('cs', 'RcTypeInference', '\<var\>', 10, get(s:, 'rcTypeInference', 8820))
-
 	" Set for Haskell
 	autocmd VimEnter,ColorScheme * highlight RcHeadHfSpace cterm=underline ctermfg=Cyan
 	autocmd VimEnter,WinEnter    * let s:rcHeadHfSpace = s:matchadd_with_filetype('haskell', 'RcHeadHfSpace', '^\s\+', 10, get(s:, 'rcHeadHfSpace', 8830))
 	autocmd FileType yesod setl ts=4 sw=4 et
+
+	"@Marked('do not depends filetype, but depends extend type...tabun')
+	" Set for C-Sharp
+	autocmd VimEnter,ColorScheme *    highlight RcTypeInference cterm=bold ctermfg=11
+	autocmd VimEnter,WinEnter    *.cs syntax keyword RcTypeInference var
 
 	" Set for Plain Text FileTypes
 	autocmd FileType markdown,text    setl tw=0 ts=2 sw=2 et
