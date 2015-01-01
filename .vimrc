@@ -748,6 +748,14 @@ call submode#enter_with('tab_move', 'n', '', '<C-s>t')
 call submode#map('tab_move', 'n', 's', 'n', ':call g:vimrc.LoopableTabMoveNext()<CR>')
 call submode#map('tab_move', 'n', 's', 'p', ':call g:vimrc.LoopableTabMovePrev()<CR>')
 
+" WinTab Mover
+call submode#enter_with('wintab_move', 'n', '', '<C-s>N', ':BufTabMoveNext<CR>')
+call submode#enter_with('wintab_move', 'n', '', '<C-s>P', ':BufTabMovePrev<CR>')
+call submode#map('wintab_move', 'n', '', 'N', ':BufTabMoveNext<CR>')
+call submode#map('wintab_move', 'n', '', 'n', ':BufTabMoveNext<CR>')
+call submode#map('wintab_move', 'n', '', 'P', ':BufTabMovePrev<CR>')
+call submode#map('wintab_move', 'n', '', 'p', ':BufTabMovePrev<CR>')
+
 "}}}
 "--- vim-ref ---" {{{
 
@@ -1230,6 +1238,11 @@ command! EmptyBufUp execute ':new' | resize 5
 
 " Yank all to plus register
 command! CopyPlusAll execute 'normal! ggVG"+y<C-o><C-o>'
+
+
+" Current buffer move to next_tab $ @Incompleted('If current tab has one buffer only, move point is (current_tab + 2)')
+command! BufTabMovePrev execute 'normal! mZ<C-w>cgT<C-w>v`Z'
+command! BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? '<C-w>c' : '<C-w>cgt') . '<C-w>v`Z'
 
 " }}}
 " Development Support {{{
