@@ -1240,9 +1240,13 @@ command! EmptyBufUp execute ':new' | resize 5
 command! CopyPlusAll execute 'normal! ggVG"+y<C-o><C-o>'
 
 
-" Current buffer move to next_tab $ @Incompleted('If current tab has one buffer only, move point is (current_tab + 2)')
+" Current buffer move to next_tab
 command! BufTabMovePrev execute 'normal! mZ<C-w>cgT<C-w>v`Z'
 command! BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? '<C-w>c' : '<C-w>cgt') . '<C-w>v`Z'
+
+
+" Current buffer move to new_tab
+command! BufMoveNewTab execute 'normal! mZ<C-w>c:tabnew<CR>`Z'
 
 " }}}
 " Development Support {{{
@@ -1683,6 +1687,7 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <C-w><C-w> :write<CR>
 	autocmd FileType * nnoremap <silent> <C-w>W     :wall<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bt    :call <SID>buf_open_new_tab()<CR>
+	autocmd FileType * nnoremap <silent> <C-w>bT    :BufMoveNewTab<CR>
 	autocmd FileType * nnoremap <silent> <C-w>N     :enew!<CR>
 	autocmd FileType * nnoremap <silent> <C-w>Q     :quitall!<CR>
 augroup END
