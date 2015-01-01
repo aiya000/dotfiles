@@ -958,10 +958,10 @@ nohlsearch
 "{{{
 
 " Set Backspace can delete empty line
-if v:version < 704  " Is this suitable condition ?
+"if v:version < 704  " Is this suitable condition ?
 	set whichwrap=b,s,h,l,<,>,[,]
 	set backspace=indent,eol,start
-endif
+"endif
 
 " No auto Carriage Return and Set tab style
 set textwidth=0 tabstop=4 shiftwidth=4
