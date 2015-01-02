@@ -1,7 +1,7 @@
 #!/bin/bash
 source ./utils.sh
 
-backupdir="$HOME/.backup_dotfiles"
+backupdir="${HOME}/.backup_dotfiles/`date +'%Y-%d-%m'"
 usage() {  #{{{
 		echo 'This script is some dotfiles easialy linking to HOME.'
 		echo
@@ -63,11 +63,11 @@ for fileName in $dotfiles ; do
 	fromFile=$dotdir/$fileName
 	toFile=$HOME/$fileName
 
-	echo ">> linking [$fromFile] -> [$toFile]"
+	echo ">> linking [${fromFile}] -> [${toFile}]"
 	if [ -f "$toFile" ] ; then
-		echo "  >> [$toFile] is already exist ."
+		echo "  >> [${toFile}] is already exist ."
 		mv $toFile $backupdir
-		echo "    >> moved [$toFile] to [$backupdir/$file] ."
+		echo "    >> moved [${toFile}] to [${backupdir}/${file}] ."
 	fi
 	ln -s $fromFile $HOME &&
 		echo ">> succeed ."
