@@ -154,3 +154,29 @@ set indentexpr&
 NeoBundle 'thinca/vim-showtime'
                 L288 visualstar.vim 案件  12/27 23:24
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
+
+
+
+" ファイルをtree表示してくれる
+NeoBundle 'scrooloose/nerdtree'
+" コメントON/OFFを手軽に実行
+NeoBundle 'tomtom/tcomment_vim'
+" 行末の半角スペースを可視化(うまく動かない？)
+NeoBundle 'bronson/vim-trailing-whitespace'
+" less用のsyntaxハイライト
+NeoBundle 'KohPoll/vim-less'
+""""""""""""""""""""""""""""""
+" 全角スペースの表示
+""""""""""""""""""""""""""""""
+function! ZenkakuSpace()
+    highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=darkgray
+endfunction
+
+if has('syntax')
+    augroup ZenkakuSpace
+        autocmd!
+        autocmd ColorScheme * call ZenkakuSpace()
+        autocmd VimEnter,WinEnter,BufRead * let w:m1=matchadd('ZenkakuSpace', '　')
+    augroup END
+    call ZenkakuSpace()
+endif
