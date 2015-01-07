@@ -20,6 +20,14 @@ DROPBOX_COMMAND=$HOME/bin/dropbox_uploader.sh
 DROPBOX_DOTFILES_DIR=dotfiles
 # path of temporary file output location
 TMP_DIR=$HOME/.tmp
+# if true then do not remove archive
+no_remove_archive=0
+
+
+# Checking an argument
+if [ "$1" = "-n" -o "$1" = "--no-remove-archive" ] ; then
+	no_remove_archive=1
+fi
 
 
 ### Script Start
@@ -61,14 +69,16 @@ echo
 
 
 ## Removing temporary file
-echo '>> removing archived file...'
-rm $upload_file \
-	&& echo '>> removing succeed' \
-	|| (
-		echo '>> removing failed'
-		echo '>> please manually remove a file'
-	) 1>&2
-echo
+if [ $no_remove_archive -eq 0 ] ; then
+	echo '>> removing archived file...'
+	rm $upload_file \
+		&& echo '>> removing succeed' \
+		|| (
+			echo '>> removing failed'
+			echo '>> please manually remove a file'
+		) 1>&2
+	echo
+fi
 
 
 # Finished !

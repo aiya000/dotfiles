@@ -1,26 +1,5 @@
-set shortmess=at  " To avoid the 'Hit ENTER to continue' promp
-set winfixwidth   " Splits resize width of current window only
-set helpheight=20 " Minimum height for help wins, default=20, 0 is default
-set sessionoptions-=options
-set viminfo+='15,<500,s15,h,:50,/50
-" *encoding (set)* "{{{
-" http://vim.wikia.com/wiki/Working_with_Unicode
-if has("multi_byte")
-  if &termencoding == ""
-    let &termencoding = &encoding
-  endif
-  set encoding=utf-8
-  setglobal fileencoding=utf-8
-  "setglobal bomb
-  set fileencodings=ucs-bom,utf-8,latin1
-endif
-" /encoding (set) "}}}
-onoremap p i(
-au VimEnter * set lines=38 columns=92
-au VimEnter * winpos 618 24
 au GUIEnter * set noicon guioptions-=T
 :func-abort
-Bundle 'https://github.com/vim-scripts/dbext.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'https://github.com/alpaca-tc/alpaca_tags'

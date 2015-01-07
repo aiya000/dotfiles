@@ -49,6 +49,8 @@ scriptencoding utf8
 "-- search from history
 "  -- exam) 2/ => searching by 2 prev search word
 
+"-- Unite outline -> view C-Sharp <summary>~</summary>
+
 " }}}
 " Issues {{{
 
@@ -71,7 +73,7 @@ scriptencoding utf8
 
 "-- please link.sh do not overwrite .backup_dotfiles/{.,}* when exists ~/(dotfiles)
 
-"-- lost highlight vimrc when open other buffer from vimrc...maybe it.
+"-- lost highlight of buffer when delete other buffer
 
 "}}}
 " Todo {{{
@@ -79,8 +81,6 @@ scriptencoding utf8
 "-- Eigo to English
 
 "-- read options.jax
-
-"-- Unite outline -> auto view C-Sharp <summary>~</summary>
 
 "-- a keymapp "diffthis toggle"
 
@@ -414,6 +414,7 @@ NeoBundle        'tyru/vim-altercmd'
 NeoBundle        'mbbill/undotree'
 NeoBundle        'Shougo/neomru.vim'
 NeoBundle        'vim-scripts/dbext.vim'
+NeoBundle        'aiya000/adrone.vim'
 
 
 call neobundle#end()
@@ -605,8 +606,8 @@ augroup END
 "--- vimproc.vim ---"{{{
 
 if s:is_windows && !s:has_mingw
+	"@Incompleted('I couldn't use a like NeoBundleDisable on this situation')
 	"NeoBundleDisable 'Shougo/vimproc.vim'
-	"@Incompleted('I should use a like NeoBundleDisable ... ?')
 	set runtimepath-=~/.vim/bundle/vimproc.vim/
 endif
 
@@ -854,12 +855,6 @@ endif
 
 " Set Basic Preferences
 set number nowrap hlsearch list scrolloff=8
-let s:listchars = get(s:, 'listchars',
-	\	s:is_doswin
-	\		? 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%' :
-	\	s:is_unix
-	\		? 'tab:›_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
-	\		: 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲')
 
 " Status Bar always displayed
 set laststatus=2
@@ -956,7 +951,7 @@ set tabline=%!WithDelimitterTabLine() showtabline=2
 " Always view the changed line num in Ex-command
 set report=0
 
-" turn off highlight
+" Turn off highlight
 nohlsearch
 
 "}}}
@@ -967,11 +962,8 @@ nohlsearch
 "-------------------------"
 "{{{
 
-" Set Backspace can delete empty line
-"if v:version < 704  " Is this suitable condition ?
-	set whichwrap=b,s,h,l,<,>,[,]
-	set backspace=indent,eol,start
-"endif
+" Backspace can delete it
+set backspace=indent,eol,start
 
 " No auto Carriage Return and Set tab style
 set textwidth=0 tabstop=4 shiftwidth=4
@@ -1110,14 +1102,14 @@ augroup FileEvent
 
 	autocmd VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 		\	if &encoding == 'utf-8'
-		\|		let &listchars = s:listchars
+		\|		let &listchars = 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
 		\|	else
 		\|		let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
 		\|	endif
 augroup END
 
 augroup KeyEvent
-	"autocmd UserGettingBored * echo "What's this !?"
+	"autocmd UserGettingBored * echo 'HA HA HA'
 augroup END
 
 "}}}
@@ -1720,14 +1712,15 @@ augroup END
 
 "-- Toggle options --"
 augroup KeyMapping
-	autocmd FileType * nnoremap <silent>         <C-h><C-w>      :<C-u>setl wrap! wrap?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-i>      :<C-u>set ignorecase! ignorecase?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-w>      :<C-u>setl wrap!           wrap?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-i>      :<C-u>set  ignorecase!     ignorecase?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-k>      :<C-u>set  cursorline!     cursorline?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-e>      :<C-u>set  expandtab!      expandtab?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-r>      :<C-u>set  relativenumber! relativenumber?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-l>      :<C-u>set  list!           list?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-n>      :<C-u>set  number!         number?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-d>      :<C-u>set  diff!           diff?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-v>      :<C-u>call <SID>toggle_virtual_edit()<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-k>      :<C-u>set cursorline! cursorline?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-e>      :<C-u>set expandtab! expandtab?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-r>      :<C-u>set relativenumber! relativenumber?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-l>      :<C-u>set list! list?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-n>      :<C-u>set number! number?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h>jkjkjkjk   :<C-u>call <SID>toggle_enable_cursor_key()<CR>
 	"
 	autocmd FileType * nnoremap <silent>         <leader>pl :<C-u>PutLongSeparator<CR>
@@ -1882,11 +1875,12 @@ augroup END
 augroup ExtensionType
 	" Set for "Vi Improved"
 	autocmd VimEnter,ColorScheme * highlight RcMyHint cterm=standout ctermfg=DarkYellow
-	autocmd VimEnter,WinEnter    * let s:rcHint = s:matchadd_with_filetype('vim', 'RcMyHint', '\s*"\zs@\w\+(.*)\ze', 10, get(s:, 'rcHint', 8810))
+	"@Incomplete('These were not deleted')
+	autocmd VimEnter,WinEnter    * let s:rcHint = s:matchadd_with_filetype('vim', 'RcMyHint', '\s*"\zs@\w\+(.*)\ze', 10, get(s:, 'rcHint', 10001))
 
 	" Set for Haskell
 	autocmd VimEnter,ColorScheme * highlight RcHeadHfSpace cterm=underline ctermfg=Cyan
-	autocmd VimEnter,WinEnter    * let s:rcHeadHfSpace = s:matchadd_with_filetype('haskell', 'RcHeadHfSpace', '^\s\+', 10, get(s:, 'rcHeadHfSpace', 8830))
+	autocmd VimEnter,WinEnter    * let s:rcHeadHfSpace = s:matchadd_with_filetype('haskell', 'RcHeadHfSpace', '^\s\+', 10, get(s:, 'rcHeadHfSpace', 10002))
 	autocmd FileType yesod setl ts=4 sw=4 et
 
 	"@Marked('do not depends filetype, but depends extend type...tabun')
