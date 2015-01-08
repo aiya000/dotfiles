@@ -84,7 +84,7 @@ scriptencoding utf8
 
 "-- a keymapp "diffthis toggle"
 
-"-- do not use echoerr
+"-- specialize filetypes for vim-indent-guides
 
 " }}}
 
@@ -154,6 +154,12 @@ function! s:system(cmd)
 	else
 		return system(a:cmd)
 	endif
+endfunction
+
+function! s:echo_error(msg)
+	echohl Error
+	echo a:msg
+	echohl None
 endfunction
 
 "}}}
@@ -242,19 +248,19 @@ endif
 
 "}}}
 " Check NeoBundle exists {{{
-let s:bundle_dir    = s:vim_home . '/bundle'
-let s:neobundle_dir = s:bundle_dir . '/neobundle.vim'
+let s:bundledir    = s:vim_home . '/bundle'
+let s:neobundledir = s:bundledir . '/neobundle.vim'
 
-if !isdirectory(s:bundle_dir)
-	call mkdir(s:bundle_dir)
+if !isdirectory(s:bundledir)
+	call mkdir(s:bundledir)
 endif
 
 function! s:remove_empty_bundledir()  "{{{
-	let l:dirs = split(s:system('ls ' . s:bundle_dir), '\n')
+	let l:dirs = split(s:system('ls ' . s:bundledir), '\n')
 
 	for l:dir in l:dirs
-		let l:plugin_dir = s:bundle_dir . '/' . l:dir
-		let l:is_empty = s:system('ls ' . l:plugin_dir) == ''
+		let l:plugin_dir = s:bundledir . '/' . l:dir
+		let l:is_empty   = s:system('ls ' . l:plugin_dir) == ''
 
 		if l:is_empty
 			call s:system('rmdir ' . l:plugin_dir)
@@ -266,11 +272,11 @@ function! s:fetch_neobundle() " {{{
 		echo 'NeoBundle was not installed...'
 		echo 'Installing NeoBundle.'
 
-		execute '!git clone http://github.com/Shougo/neobundle.vim ' s:neobundle_dir
+		execute '!git clone http://github.com/Shougo/neobundle.vim ' s:neobundledir
 		return
 	else
-		echoerr 'Sorry, You do not have git command.'
-		echoerr 'Cannot introduce NeoBundle.'
+		call s:echo_error('Sorry, You do not have git command.')
+		call s:echo_error('Cannot introduce NeoBundle.')
 
 		throw 'neobundle.vim clone failed.'
 	endif
@@ -283,7 +289,7 @@ if has('vim_starting')
 		" Throws Error when nothing neobundle in runtime path
 		call neobundle#begin()
 	catch
-		if isdirectory(s:neobundle_dir) && !exists(':NeoBundle')
+		if isdirectory(s:neobundledir) && !exists(':NeoBundle')
 			" Plugin Directories may be empty when git cloned new.
 			call s:remove_empty_bundledir()
 			echo 'bundle directories initialized.'
@@ -297,14 +303,14 @@ if has('vim_starting')
 			echo 'Please closing vim and reopening vim once,'
 			echo 'and executing :NeoBundleInstall .'
 		catch
-			echoerr 'neobundle.vim clone failed.'
-			echoerr '>> Vim Config Error <<'
+			call s:echo_error('neobundle.vim clone failed.')
+			call s:echo_error('>> Vim Config Error <<')
 		endtry
 	endtry
 endif
 
-unlet s:neobundle_dir
-unlet s:bundle_dir
+unlet s:neobundledir
+unlet s:bundledir
 "}}}
 " Check Backup, Swap and Undo directory exists {{{
 
@@ -1191,14 +1197,14 @@ function! s:set_temporary_dir(path) "{{{
 		\                              : a:path
 		echo s:tdir_dir
 	else
-		echoerr 'No such temporary root dir'
+		call s:echo_error('No such temporary root dir')
 	endif
 endfunction "}}}
 command! -nargs=1  TDirSet call s:set_temporary_dir(<q-args>)
 command! TDirSetCurrentDir call s:set_temporary_dir('.')
 function! s:cd_temporary_dir() "{{{
 	if s:tdir_dir ==# 'Not set tdir'
-		echoerr 'Not set temporary root dir'
+		call s:echo_error('Not set temporary root dir')
 	else
 		execute 'cd' s:tdir_dir
 		echo s:tdir_dir
@@ -1263,7 +1269,7 @@ function! s:java_run_func() "{{{
 			let l:command[0] = 'cocot ' . l:command[0]
 			let l:command[1] = 'cocot ' . l:command[1]
 		else
-			echo 'You must be get [cocot] command.'
+			call s:echo_error('You must be get [cocot] command.')
 			return
 		endif
 	endif
@@ -1291,13 +1297,13 @@ command! ImportPythonJp call s:put_python_import_for_jp()
 
 command! PutShortSeparator
 	\	execute 'normal! a' '/* -=-=-=-=-=-=-=-=- */'
-	\|	execute 'normal =='
+	\|	execute 'normal! =='
 command! PutLongSeparator
 	\	execute 'normal! a' '/* ---===---===---===---===---===---===--- */'
-	\|	execute 'normal =='
-command! Date
-	\	execute 'normal! a' .
-	\	substitute(s:is_windows ? system('echo %date% %time%') : system('date'), "\n", '', 'g')
+	\|	execute 'normal! =='
+command! PutDate
+	\	execute 'normal! a' strftime('%c')
+	\|	execute 'normal! =='
 
 
 function! s:put_html_base() "{{{
@@ -1343,7 +1349,7 @@ command! -range SqlCopy :<line1>,<line2>call s:sql_yank_normalize()
 
 
 " Echo script local values in this file
-command! ShowRcDict echo s:
+command! ShowRcDict for s:v in items(s:) | echo s:v | endfor
 
 " }}}
 
@@ -1383,7 +1389,7 @@ command! Tweet              TweetVimSay
 "-- Private Account --"
 function! TwitterPrivateFunc() "{{{
 	if !exists('g:vimrc.private["twitter"]["priv_ac"]')
-		echoerr 'Not set env variable => g:vimrc.private["twitter"]["priv_ac"]'
+		call s:echo_error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
 		return
 	endif
 
@@ -1396,7 +1402,7 @@ command! TwitterPrivate     call TwitterPrivateFunc()
 command! TwitterPrivateTab  tabnew | TwitterPrivate
 function! TweetPrivateFunc() "{{{
 	if !exists('g:vimrc.private["twitter"]["priv_ac"]')
-		echoerr 'Not set env variable => g:vimrc.private["twitter"]["priv_ac"]'
+		call s:echo_error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
 		return
 	endif
 
@@ -1412,7 +1418,7 @@ command! TweetPrivate       call TweetPrivateFunc()
 "-- Public Account --"
 function! TwitterPublicFunc() "{{{
 	if !exists("g:vimrc.private['twitter']['publ_ac']")
-		echoerr "Not set env variable => g:vimrc.private['twitter']['publ_ac']"
+		call s:echo_error("Not set env variable => g:vimrc.private['twitter']['publ_ac']")
 		return
 	endif
 
@@ -1425,7 +1431,7 @@ command! TwitterPublic      call TwitterPublicFunc()
 command! TwitterPublicTab   tabnew | TwitterPublic
 function! TweetPublicFunc() "{{{
 	if !exists('g:vimrc.private["twitter"]["publ_ac"]')
-		echoerr 'Not set env variable => g:vimrc.private["twitter"]["publ_ac"]'
+		call s:echo_error('Not set env variable => g:vimrc.private["twitter"]["publ_ac"]')
 		return
 	endif
 
