@@ -645,6 +645,9 @@ let g:vimshell_scrollback_limit = 10000
 
 augroup PluginPrefs
 	autocmd FileType vimshell setl fdm=marker nolist wrap
+	autocmd FileType vimshell call vimshell#altercmd#define('tdirset', ':TDirSet')
+	autocmd FileType vimshell call vimshell#altercmd#define('tdircd',  ':TDirCd')
+	autocmd FileType vimshell call vimshell#altercmd#define('tdirpwd', ':TDirPwd')
 augroup END
 
 "}}}
