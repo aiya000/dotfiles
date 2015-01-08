@@ -830,6 +830,33 @@ let g:ConqueTerm_StartMessages  = 1
 let g:dbext_default_history_file = expand('~/.dbext_sql_history')
 
 "}}}
+"--- adrone.vim ---"{{{
+
+augroup PluginPrefs
+	autocmd FileType adrone_home nnoremap <silent><buffer> Q     :<C-u>bdelete<CR>
+	autocmd FileType adrone_say  nnoremap <silent><buffer> <C-j> <CR>
+	autocmd FileType adrone_say  setl tabstop=2 shiftwidth=2 expandtab
+augroup END
+
+"}}}
+"--- vim-indent-guides ---"{{{
+
+let g:indent_guides_default_mapping = 0
+let g:indent_guides_auto_colors = 0
+let g:indent_guides_guide_size = 1
+
+augroup PluginPrefs
+	"@Incompleted('tabun incomplete')
+	autocmd ColorScheme * highlight IndentGuidesOdd  ctermbg=blue
+	autocmd ColorScheme * highlight IndentGuidesEven ctermbg=red
+augroup END
+
+augroup FileEvent
+	autocmd WinEnter,BufWinEnter *            IndentGuidesDisable
+	autocmd WinEnter,BufWinEnter *.html,*.xml IndentGuidesEnable
+augroup END
+
+"}}}
 "--- For Debug ---"{{{
 
 " Set for my projects
@@ -837,11 +864,6 @@ set runtimepath+=~/.vim/makes/arot13.vim/
 set runtimepath+=~/.vim/makes/ahoge-put.vim/
 set runtimepath+=~/.vim/makes/asql.vim
 "set runtimepath+=~/.vim/makes/adrone.vim/
-
-augroup PluginPrefs
-	autocmd FileType adrone_view nnoremap <silent><buffer> Q     :<C-u>bdelete<CR>
-	autocmd FileType adrone_say  nnoremap <silent><buffer> <C-j> <CR>
-augroup END
 
 "}}}
 "--- For Private ---"{{{
