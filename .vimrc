@@ -421,6 +421,7 @@ NeoBundle        'mbbill/undotree'
 NeoBundle        'Shougo/neomru.vim'
 NeoBundle        'vim-scripts/dbext.vim'
 NeoBundle        'aiya000/adrone.vim'
+NeoBundle        'nathanaelkane/vim-indent-guides'
 
 
 call neobundle#end()
@@ -442,7 +443,6 @@ call neobundle#config('vimproc.vim', {
 \		'windows' : 'make -f make_mingw32.mak'
 \	}
 \})
-
 call neobundle#config('TweetVim', {
 \	'depends' : [
 \		'basyura/twibill.vim',
@@ -1144,6 +1144,7 @@ augroup KeyEvent
 augroup END
 
 "}}}
+
 
 "-------------------------"
 "   Functional_Command    "
