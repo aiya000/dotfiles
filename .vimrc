@@ -421,6 +421,7 @@ NeoBundle        'mbbill/undotree'
 NeoBundle        'Shougo/neomru.vim'
 NeoBundle        'vim-scripts/dbext.vim'
 NeoBundle        'aiya000/adrone.vim'
+NeoBundleFetch   'Shougo/fakecygpty'
 NeoBundle        'nathanaelkane/vim-indent-guides'
 
 
@@ -541,6 +542,13 @@ call neobundle#config('ref-dicts-en', {
 call neobundle#config('excelview-vim', {
 \	'depends'  : 'mattn/webapi-vim',
 \	'autoload' : {'commands' : 'ExcelView'}
+\})
+"@Bugs('do not functioned?')
+"@Incomplete('add hook function => fakecygpty.exe move or add to $PATH')
+call neobundle#config('fakecygpty', {
+\	'build' : {
+\		'cygwin' : 'gcc fakecygpty.c -o fakecygpty.exe'
+\	}
 \})
 
 " }}}
