@@ -645,6 +645,7 @@ let g:vimshell_scrollback_limit = 10000
 
 augroup PluginPrefs
 	autocmd FileType vimshell setl fdm=marker nolist wrap
+	" Depends the command that is defined by this vimrc
 	autocmd FileType vimshell call vimshell#altercmd#define('tdirset', ':TDirSet')
 	autocmd FileType vimshell call vimshell#altercmd#define('tdircd',  ':TDirCd')
 	autocmd FileType vimshell call vimshell#altercmd#define('tdirpwd', ':TDirPwd')
@@ -1683,6 +1684,7 @@ augroup END
 augroup KeyMapping
 	autocmd FileType * nnoremap <silent> m:             :<C-u>marks<CR>
 	autocmd FileType * nnoremap <silent> q:             :<C-u>register<CR>
+	autocmd FileType * nnoremap <silent> z:             :<C-u>tabs<CR>
 	autocmd FileType * nnoremap <silent> gk             :<C-u>call <SID>cursor_up_to_lid()<CR>
 	autocmd FileType * nnoremap <silent> gj             :<C-u>call <SID>cursor_down_to_ground()<CR>
 	"autocmd FileType * vnoremap <silent> gk             :<C-u>call <SID>cursor_up_to_lid()<CR>
@@ -1721,8 +1723,6 @@ augroup END
 
 "-- Actions --"
 augroup KeyMapping
-	autocmd FileType * nnoremap                  <C-k><C-n>     gt
-	autocmd FileType * nnoremap                  <C-k><C-p>     gT
 	autocmd FileType * nnoremap <silent><expr>   <C-k><C-s>     ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
 	autocmd FileType * nnoremap <silent>         <C-k><C-r>     :<C-u>Reload<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-l>     :<C-u>nohlsearch<CR>
@@ -1757,6 +1757,7 @@ augroup KeyMapping
 	"
 	autocmd FileType * nnoremap <silent>         <leader>pl :<C-u>PutLongSeparator<CR>
 	autocmd FileType * nnoremap <silent>         <leader>ps :<C-u>PutShortSeparator<CR>
+	autocmd FileType * nnoremap <silent>         <leader>pd :<C-u>PutDate<CR>
 augroup END
 
 
@@ -1830,7 +1831,9 @@ augroup PluginPrefs
 	autocmd FileType netrw    nnoremap <silent><buffer> S         :<C-u>split<CR>
 	autocmd FileType netrw    nnoremap         <buffer> s         <NOP>
 
-	autocmd FileType quickrun nnoremap <silent><buffer> Q :<C-u>quit<CR>
+	autocmd FileType unite    inoremap         <buffer> <C-l> <Esc>
+
+	autocmd FileType quickrun nnoremap <silent><buffer> Q     :<C-u>quit<CR>
 
 	autocmd FileType tweetvim     nmap             <buffer> <leader>R <Plug>(tweetvim_action_remove_status)
 	autocmd FileType tweetvim     nmap             <buffer> <C-r>     <Plug>(tweetvim_action_reload)
@@ -1841,26 +1844,31 @@ augroup PluginPrefs
 	autocmd FileType tweetvim_say nnoremap         <buffer> <C-j>     <CR>  " avoid <C-j> to say
 	autocmd FileType tweetvim_say inoremap         <buffer> <C-i>     <Tab>
 
-	autocmd FileType vimshell  nunmap   <buffer> Q
-	autocmd FileType vimshell  nunmap   <buffer> q
+	"NOTE: I don't use nunmap, because happned exception 'no such keymapping' on many vimshell situation. ( on reload filetype, and etc )
+	autocmd FileType vimshell  nnoremap <buffer> Q          <NOP>
+	autocmd FileType vimshell  nnoremap <buffer> q          <NOP>
 	autocmd FileType vimshell  nnoremap <buffer> gk         <NOP>
 	autocmd FileType vimshell  nnoremap <buffer> gj         <NOP>
-	autocmd FileType vimshell  imap     <buffer> <C-l>      <Plug>(vimshell_clear)
+	autocmd FileType vimshell  nnoremap <buffer> <C-n>      gt
+	autocmd FileType vimshell  nnoremap <buffer> <C-p>      gT
+	autocmd FileType vimshell  nmap     <buffer> >          <Plug>(vimshell_next_prompt)
+	autocmd FileType vimshell  nmap     <buffer> <          <Plug>(vimshell_previous_prompt)
+	autocmd FileType vimshell  inoremap <buffer> <C-l>      <Esc>
+	autocmd FileType vimshell  imap     <buffer> <C-j>      <Plug>(vimshell_enter)
+	autocmd FileType vimshell  imap     <buffer> <C-]>      <Plug>(vimshell_clear)
 	autocmd FileType vimshell  imap     <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
-	autocmd FileType vimshell  iunmap   <buffer> <C-p>
-	autocmd FileType vimshell  iunmap   <buffer> <C-n>
 	autocmd FileType int-*     nmap     <buffer> Q          <Plug>(vimshell_int_exit)
 	autocmd FileType int-*     imap     <buffer> <C-l>      <C-o><C-l>
 	autocmd FileType int-*     imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
 
-	autocmd FileType J6uil     nnoremap <silent><buffer> Q     :<C-u>bdelete<CR>
-	autocmd FileType J6uil_say nnoremap         <buffer> <C-j> <NOP>
+	autocmd FileType J6uil     nnoremap <silent><buffer> Q         :<C-u>bdelete<CR>
+	autocmd FileType J6uil_say nnoremap         <buffer> <C-j>     <NOP>
 
 	autocmd FileType w3m       nmap             <buffer> H         <BS>
 	autocmd FileType w3m       nnoremap <silent><buffer> <C-u>     :<C-u>W3mAddressBar <CR>
 	autocmd FileType w3m       nnoremap <silent><buffer> <leader>E :<C-u>W3mShowExtenalBrowser <CR>
 
-	autocmd FileType ref-*     nnoremap <silent><buffer> Q :<C-u>quit<CR>
+	autocmd FileType ref-*     nnoremap <silent><buffer> Q         :<C-u>quit<CR>
 
 	autocmd FileType git-log.git-diff nnoremap <silent><buffer> Q         :<C-u>bdelete<CR>
 	autocmd FileType markdown         nnoremap <silent><buffer> <leader>r :<C-u>PrevimOpen<CR>
