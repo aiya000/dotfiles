@@ -17,6 +17,12 @@ stty start undef  # unbind C-q that is start viewing inputs to screen
 # Bash Short Cuts
 alias reload='source ~/.bash_profile && source ~/.bashrc && echo "bash source reloaded"'
 
+# I'm a coward {{{
+
+alias mv='mv -i'
+alias cp='cp -i'
+
+# }}}
 # Vim Utils {{{
 
 alias vi='vim -u NONE --noplugin'
