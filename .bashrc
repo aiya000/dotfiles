@@ -60,7 +60,7 @@ alias pbcopy='xsel --clipboard --input'
 
 alias ghci-hi='ghci 2>&1 | HsColour -tty'
 alias mysql="mysql -E --pager='less -r -S -n -i -F -X'"
-alias git-push-main='git push -u origin master'
+alias git-push-master='git push -u origin master'
 
 if [ -n "`which git 2> /dev/null`" ] ; then
 	alias git-myhelp='
