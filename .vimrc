@@ -1865,9 +1865,6 @@ augroup PluginPrefs
 	autocmd FileType vimshell  imap     <buffer> <C-j>      <Plug>(vimshell_enter)
 	autocmd FileType vimshell  imap     <buffer> <C-]>      <Plug>(vimshell_clear)
 	autocmd FileType vimshell  imap     <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
-	autocmd FileType int-*     nmap     <buffer> Q          <Plug>(vimshell_int_exit)
-	autocmd FileType int-*     imap     <buffer> <C-l>      <C-o><C-l>
-	autocmd FileType int-*     imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
 
 	autocmd FileType J6uil     nnoremap <silent><buffer> Q         :<C-u>bdelete<CR>
 	autocmd FileType J6uil_say nnoremap         <buffer> <C-j>     <NOP>
