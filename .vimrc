@@ -1224,13 +1224,13 @@ command! TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
 " Action Function {{{
 
 " Save a Temporary Directory
-let s:tdir_dir = get(s:, 'tdir_dir', 'Not set tdir')
-command! TDirPwd           echo s:tdir_dir
+autocmd FileEvent FileType * let b:tdir_dir = get(b:, 'tdir_dir', 'Not set tdir')
+command! TDirPwd           echo b:tdir_dir
 function! s:set_temporary_dir(path) "{{{
 	if isdirectory(a:path)
-		let s:tdir_dir = a:path == '.' ? expand('%:p:h')
+		let b:tdir_dir = a:path == '.' ? expand('%:p:h')
 		\                              : a:path
-		echo s:tdir_dir
+		echo b:tdir_dir
 	else
 		call s:echo_error('No such temporary root dir')
 	endif
@@ -1238,11 +1238,11 @@ endfunction "}}}
 command! -nargs=1  TDirSet call s:set_temporary_dir(<q-args>)
 command! TDirSetCurrentDir call s:set_temporary_dir('.')
 function! s:cd_temporary_dir() "{{{
-	if s:tdir_dir ==# 'Not set tdir'
+	if b:tdir_dir ==# 'Not set tdir'
 		call s:echo_error('Not set temporary root dir')
 	else
-		execute 'cd' s:tdir_dir
-		echo s:tdir_dir
+		execute 'cd' b:tdir_dir
+		echo b:tdir_dir
 	endif
 endfunction "}}}
 command! TDirCd            call s:cd_temporary_dir()
@@ -1942,6 +1942,9 @@ augroup ExtensionType
 
 	" Set for SQL FileTypes
 	autocmd FileType mysql setl ts=4 sw=4 et
+
+	" Set for Markup Languages
+	autocmd FileType html,xml setl ts=4 sw=4 et
 
 	" FileTypes commentstrings
 	autocmd FileType vim           let &commentstring = ' "%s'
