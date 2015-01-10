@@ -20,6 +20,8 @@ DROPBOX_COMMAND=$HOME/bin/dropbox_uploader.sh
 DROPBOX_DOTFILES_DIR=dotfiles
 # path of temporary file output location
 TMP_DIR=$HOME/.tmp
+# exclude files by tar
+ARCHIVE_EXCLUDE='.vim/bundle/*'
 # if true then do not remove archive
 no_remove_archive=0
 
@@ -27,6 +29,8 @@ no_remove_archive=0
 # Checking an argument
 if [ "$1" = "-n" -o "$1" = "--no-remove-archive" ] ; then
 	no_remove_archive=1
+	echo 'option: no remove archive ... Enabled'
+	echo
 fi
 
 
@@ -47,7 +51,7 @@ fi
 ## Archiving dotfiles dir by tar.gz
 echo '>> archiving start...'
 upload_file="${TMP_DIR}/dotfiles-`date +'%Y-%m-%d'`.tar.gz"
-tar zcvf $upload_file ../.dotfiles > /dev/null \
+tar zcvf $upload_file ../.dotfiles --exclude "$ARCHIVE_EXCLUDE" > /dev/null \
 	&& echo '>> done' \
 	|| (
 		echo '>> happened problems'
