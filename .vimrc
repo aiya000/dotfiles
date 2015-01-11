@@ -1926,7 +1926,8 @@ augroup ExtensionType
 	" Set for Haskell
 	autocmd VimEnter,ColorScheme * highlight RcHeadHfSpace cterm=underline ctermfg=Cyan
 	autocmd VimEnter,WinEnter    * let s:rcHeadHfSpace = s:matchadd_with_filetype('haskell', 'RcHeadHfSpace', '^\s\+', 10, get(s:, 'rcHeadHfSpace', 10002))
-	autocmd FileType haskell,yesod setl ts=4 sw=4 et
+	autocmd FileType haskell setl ts=2 sw=2 et
+	autocmd FileType yesod   setl ts=4 sw=4 et
 
 	"@Marked('do not depends filetype, but depends extend type...tabun')
 	" Set for C-Sharp
