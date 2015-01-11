@@ -120,13 +120,6 @@ elif [ $isCygwin -eq 1 ] ; then
 	new_path=$new_path:/cygdrive/c/Windows/system32:/cygdrive/c/Windows
 fi
 
-# YukiTask
-if [ -d $HOME/bin/yukitask ] ; then
-	new_path=$new_path:$HOME/bin/yukitask
-	source $HOME/bin/yukitask/command_aliases
-	source $HOME/bin/yukitask/here_aliases
-fi
-
 # Apply to PATH
 export PATH=$new_path:$PATH
 unset new_path
