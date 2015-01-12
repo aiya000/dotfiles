@@ -4,6 +4,7 @@
 Examples
 README.md
 README.txt
+auto_vimdiff.sh
 ignore_link.txt
 link.sh
 memo.txt
