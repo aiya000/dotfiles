@@ -1507,11 +1507,15 @@ cnoreabbr Log      VimConsoleLog
 command!  LogClear VimConsoleClear
 
 cnoreabbr Ghc      !runghc %
-cnoreabbr Ghci     enew! \| ConqueTerm ghci
-cnoreabbr Sghci    sp \| ConqueTerm ghci
-cnoreabbr Vghci    vsp \| ConqueTerm ghci
-cnoreabbr GhciTab  tabnew \| ConqueTerm ghci
+"cnoreabbr Ghci     enew! \| ConqueTerm ghci
+"cnoreabbr Sghci    sp \| ConqueTerm ghci
+"cnoreabbr Vghci    vsp \| ConqueTerm ghci
+"cnoreabbr GhciTab  tabnew \| ConqueTerm ghci
 cnoreabbr Hoogle   Ref hoogle
+cnoreabbr Ghci     VimShellInteractive ghci
+cnoreabbr Sghci    VimShellInteractive --split='sp' ghci
+cnoreabbr Vghci    VimShellInteractive --split='vsp' ghci
+cnoreabbr GhciTab  VimShellInteractive --split='tabnew' ghci
 
 " }}}
 
@@ -1849,14 +1853,13 @@ augroup PluginPrefs
 	autocmd FileType tweetvim     nnoremap         <buffer> <C-a>     :<C-u>TweetVimSwitchAccount<Space>
 	autocmd FileType tweetvim     nnoremap         <buffer> U         :<C-u>TweetVimUserTimeline<Space>
 	autocmd FileType tweetvim     nnoremap <silent><buffer> Q         :<C-u>bdelete<CR>
-	autocmd FileType tweetvim_say nnoremap         <buffer> <C-j>     <CR>  " avoid <C-j> to say
+	" avoid <C-j> to say
+	autocmd FileType tweetvim_say nnoremap         <buffer> <C-j>     <CR>
 	autocmd FileType tweetvim_say inoremap         <buffer> <C-i>     <Tab>
 
 	"NOTE: I don't use nunmap, because happned exception 'no such keymapping' on many vimshell situation. ( on reload filetype, and etc )
 	autocmd FileType vimshell  nnoremap <buffer> Q          <NOP>
 	autocmd FileType vimshell  nnoremap <buffer> q          <NOP>
-	autocmd FileType vimshell  nnoremap <buffer> gk         <NOP>
-	autocmd FileType vimshell  nnoremap <buffer> gj         <NOP>
 	autocmd FileType vimshell  nnoremap <buffer> <C-n>      gt
 	autocmd FileType vimshell  nnoremap <buffer> <C-p>      gT
 	autocmd FileType vimshell  nmap     <buffer> >          <Plug>(vimshell_next_prompt)
@@ -1865,6 +1868,17 @@ augroup PluginPrefs
 	autocmd FileType vimshell  imap     <buffer> <C-j>      <Plug>(vimshell_enter)
 	autocmd FileType vimshell  imap     <buffer> <C-]>      <Plug>(vimshell_clear)
 	autocmd FileType vimshell  imap     <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
+
+	autocmd FileType int-*     nnoremap <buffer> q          <NOP>
+	autocmd FileType int-*     nnoremap <buffer> <C-n>      gt
+	autocmd FileType int-*     nnoremap <buffer> <C-p>      gT
+	autocmd FileType int-*     nmap     <buffer> Q          <Plug>(vimshell_int_exit)
+	autocmd FileType int-*     nmap     <buffer> >          <Plug>(vimshell_int_next_prompt)
+	autocmd FileType int-*     nmap     <buffer> <          <Plug>(vimshell_int_previous_prompt)
+	autocmd FileType int-*     inoremap <buffer> <C-l>      <Esc>
+	autocmd FileType int-*     imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
+	autocmd FileType int-*     imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
+	autocmd FileType int-*     imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
 
 	autocmd FileType J6uil     nnoremap <silent><buffer> Q         :<C-u>bdelete<CR>
 	autocmd FileType J6uil_say nnoremap         <buffer> <C-j>     <NOP>
