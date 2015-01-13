@@ -2,13 +2,12 @@
 .gitignore
 .private
 Examples
+Files
 README.md
 README.txt
 auto_vimdiff.sh
 ignore_link.txt
 link.sh
-memo.txt
 unlink.sh
 upload_dropbox.sh
 utils.sh
-vrapper_keymapping.epf
