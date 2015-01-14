@@ -420,7 +420,7 @@ NeoBundle        'tyru/vim-altercmd'
 NeoBundle        'mbbill/undotree'
 NeoBundle        'Shougo/neomru.vim'
 NeoBundle        'vim-scripts/dbext.vim'
-NeoBundle        'aiya000/adrone.vim'
+NeoBundleLazy    'aiya000/adrone.vim'
 NeoBundleFetch   'Shougo/fakecygpty'
 NeoBundle        'nathanaelkane/vim-indent-guides'
 
@@ -543,6 +543,9 @@ call neobundle#config('excelview-vim', {
 \	'depends'  : 'mattn/webapi-vim',
 \	'autoload' : {'commands' : 'ExcelView'}
 \})
+"call neobundle#config('adrone.vim', {
+"\	'autoload' : {'commands' : 'MyPluginOn'}
+"\})
 "@Bugs('do not functioned?')
 "@Incomplete('add hook function => fakecygpty.exe move or add to $PATH')
 call neobundle#config('fakecygpty', {
@@ -1862,11 +1865,13 @@ augroup PluginPrefs
 	autocmd FileType vimshell  nnoremap <buffer> q          <NOP>
 	autocmd FileType vimshell  nnoremap <buffer> <C-n>      gt
 	autocmd FileType vimshell  nnoremap <buffer> <C-p>      gT
+	autocmd FileType vimshell  nnoremap <buffer> <C-l>      <NOP>
 	autocmd FileType vimshell  nmap     <buffer> >          <Plug>(vimshell_next_prompt)
 	autocmd FileType vimshell  nmap     <buffer> <          <Plug>(vimshell_previous_prompt)
+	autocmd FileType vimshell  nmap     <buffer> <C-]>      <Plug>(vimshell_clear)
 	autocmd FileType vimshell  inoremap <buffer> <C-l>      <Esc>
-	autocmd FileType vimshell  imap     <buffer> <C-j>      <Plug>(vimshell_enter)
 	autocmd FileType vimshell  imap     <buffer> <C-]>      <Plug>(vimshell_clear)
+	autocmd FileType vimshell  imap     <buffer> <C-j>      <Plug>(vimshell_enter)
 	autocmd FileType vimshell  imap     <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
 
 	autocmd FileType int-*     nnoremap <buffer> q          <NOP>

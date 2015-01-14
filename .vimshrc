@@ -1,4 +1,3 @@
-
 # Vim Config
 alias vis='vim --split=sp $$args'
 alias viv='vim --split=vsp $$args'
@@ -8,7 +7,8 @@ alias gvimconfig='vim --split=tabedit ~/.gvimrc'
 alias vimshconfig='vim --split=tabedit ~/.vimshrc'
 alias vim-bashrc='vim --split=tabedit ~/.bashrc'
 alias vim-bashpr='vim --split=tabedit ~/.bash_profile'
-alias vimshell=':tabnew | VimShellCreate'
+alias vimshell=':VimShellCreate'
+alias new=':VimShellCreate'
 alias vsp=':vsp | VimShellCreate'
 alias sp=':sp | VimShellCreate'
 alias tabnew=':tabnew | VimShellCreate'
@@ -25,4 +25,3 @@ alias g++='g++ -I/usr/include/c++/4.9 -I/usr/include/c++/4.9/x86_64-linux-gnu -s
 # Other Alias
 alias thanks='echo "(*^o^)< You are welcome!"'
 alias gyazo='ruby ~/.vim/bundle/vim-gyazo/gyazo/gyazo.rb'
-
