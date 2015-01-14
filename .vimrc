@@ -543,9 +543,9 @@ call neobundle#config('excelview-vim', {
 \	'depends'  : 'mattn/webapi-vim',
 \	'autoload' : {'commands' : 'ExcelView'}
 \})
-"call neobundle#config('adrone.vim', {
-"\	'autoload' : {'commands' : 'MyPluginOn'}
-"\})
+call neobundle#config('adrone.vim', {
+\	'autoload' : {'commands' : 'MyPluginOn'}
+\})
 "@Bugs('do not functioned?')
 "@Incomplete('add hook function => fakecygpty.exe move or add to $PATH')
 call neobundle#config('fakecygpty', {
@@ -878,7 +878,7 @@ augroup END
 set runtimepath+=~/.vim/makes/arot13.vim/
 set runtimepath+=~/.vim/makes/ahoge-put.vim/
 set runtimepath+=~/.vim/makes/asql.vim
-"set runtimepath+=~/.vim/makes/adrone.vim/
+set runtimepath+=~/.vim/makes/adrone.vim/
 
 "}}}
 "--- For Private ---"{{{
