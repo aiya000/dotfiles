@@ -564,6 +564,10 @@ call neobundle#config('fakecygpty', {
 
 let g:netrw_preview = 1
 
+augroup PluginPrefs
+	autocmd FileType netrw setl nolist
+augroup END
+
 " }}}
 "--- vim-quickrun ---" {{{
 
@@ -1500,7 +1504,7 @@ command!  JazzStop      JazzradioStop
 cnoreabbr         Translate     ExciteTranslate
 cnoreabbr         Weblio        Ref webdict weblio
 
-command! -nargs=* GrepNow       vimgrep <f-args> % | cwindow
+command! -nargs=1 GrepNow       vimgrep <args> % | cwindow
 command!          MinimapReSync execute 'MinimapStop' | execute 'MinimapSync'
 
 " }}}
@@ -1541,6 +1545,8 @@ augroup KeyMapping
 	autocmd FileType * inoremap <Right> <NOP>
 	autocmd FileType * cnoremap <Left>  <NOP>
 	autocmd FileType * cnoremap <Right> <NOP>
+
+	autocmd FileType * cnoremap [Left] <Left>
 augroup END
 
 " }}}
@@ -1816,10 +1822,12 @@ augroup KeyMapping
 	" incsearch.vim
 	autocmd FileType * nmap <expr>       /                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
 	autocmd FileType * nmap <silent>     \/                 /\m\C
+	autocmd FileType * nmap <silent>     \\/                /\m\C\<\>[Left][Left]
 	autocmd FileType * nmap              g/                 /<C-r>"<CR>
 	autocmd FileType * nmap <expr>       ?                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
 	autocmd FileType * nmap <silent>     \?                 ?\m\C
 	autocmd FileType * nmap              g?                 ?<C-r>"<CR>
+	autocmd FileType * nmap <silent>     \\?                ?\m\C\<\>[Left][Left]
 
 	" TaskList.vim
 	autocmd FileType * nnoremap <leader>T :<C-u>TaskList<CR>
@@ -1866,6 +1874,7 @@ augroup PluginPrefs
 	autocmd FileType vimshell  nnoremap <buffer> <C-n>      gt
 	autocmd FileType vimshell  nnoremap <buffer> <C-p>      gT
 	autocmd FileType vimshell  nnoremap <buffer> <C-l>      <NOP>
+	autocmd FileType vimshell  nmap     <buffer> <C-]>      <Plug>(vimshell_clear)
 	autocmd FileType vimshell  nmap     <buffer> >          <Plug>(vimshell_next_prompt)
 	autocmd FileType vimshell  nmap     <buffer> <          <Plug>(vimshell_previous_prompt)
 	autocmd FileType vimshell  nmap     <buffer> <C-]>      <Plug>(vimshell_clear)
@@ -1877,12 +1886,14 @@ augroup PluginPrefs
 	autocmd FileType int-*     nnoremap <buffer> q          <NOP>
 	autocmd FileType int-*     nnoremap <buffer> <C-n>      gt
 	autocmd FileType int-*     nnoremap <buffer> <C-p>      gT
+	autocmd FileType int-*     nnoremap <buffer> <C-l>      <NOP>
+	autocmd FileType int-*     nmap     <buffer> <C-]>      <Plug>(vimshell_int_clear)
 	autocmd FileType int-*     nmap     <buffer> Q          <Plug>(vimshell_int_exit)
 	autocmd FileType int-*     nmap     <buffer> >          <Plug>(vimshell_int_next_prompt)
 	autocmd FileType int-*     nmap     <buffer> <          <Plug>(vimshell_int_previous_prompt)
 	autocmd FileType int-*     inoremap <buffer> <C-l>      <Esc>
-	autocmd FileType int-*     imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
 	autocmd FileType int-*     imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
+	autocmd FileType int-*     imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
 	autocmd FileType int-*     imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
 
 	autocmd FileType J6uil     nnoremap <silent><buffer> Q         :<C-u>bdelete<CR>

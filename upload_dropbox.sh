@@ -17,7 +17,7 @@
 # path of dropbox_upload command
 DROPBOX_COMMAND=$HOME/bin/dropbox_uploader.sh
 # remote upload directory path ( ~cloud_app_dir/$DROPBOX_DOTFILES_DIR )
-DROPBOX_DOTFILES_DIR=dotfiles
+DROPBOX_DOTFILES_DIR=Room
 # path of temporary file output location
 TMP_DIR=$HOME/.tmp
 # exclude files by tar
