@@ -61,9 +61,7 @@ scriptencoding utf8
 "
 "-- 'gist:aiya000/ec5f6b2375a639831953' cannot divide configure
 
-"-- submode fold_move do not functioned when not exists fold under cursor
-
-"-- not functioned ? conceal-javadoc .
+"-- does not functioned conceal-javadoc ?
 
 "-- shot-f not functioned in <C-o> temporary normal mode
 
@@ -71,9 +69,9 @@ scriptencoding utf8
 
 "-- happend error when opened vrapperrc or vimperatorrc
 
-"-- please link.sh do not overwrite .backup_dotfiles/{.,}* when exists ~/(dotfiles)
-
 "-- lost highlight of buffer when delete other buffer
+
+
 
 "}}}
 " Todo {{{
