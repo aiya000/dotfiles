@@ -86,6 +86,8 @@ scriptencoding utf8
 
 "-- specialize filetypes for vim-indent-guides
 
+"-- quick run buffer toggle
+
 " }}}
 
 
@@ -570,6 +572,8 @@ augroup END
 
 " }}}
 "--- vim-quickrun ---" {{{
+
+let g:quickrun_no_default_key_mappings = 1
 
 let g:quickrun_config = {
 \	'_' : {
@@ -1596,6 +1600,7 @@ function! s:compress_spaces() "{{{
 	execute ':noh'
 endfunction "}}}
 
+
 " Easy toggle virtualedit
 function! s:toggle_virtual_edit() "{{{
 	if &virtualedit == ''
@@ -1606,12 +1611,14 @@ function! s:toggle_virtual_edit() "{{{
 	set virtualedit?
 endfunction "}}}
 
+
 " Open current buffer new tab
 function! s:buf_open_new_tab() "{{{
 	let l:lnum = line('.')
 	execute 'tabnew| ' bufnr('%') . 'b'
 	execute 'normal! ' l:lnum . 'Gzvzz'
 endfunction "}}}
+
 
 " Move cursor to topmost of this indent
 function! s:cursor_up_to_lid() "{{{
@@ -1627,6 +1634,7 @@ function! s:cursor_up_to_lid() "{{{
 	endwhile
 endfunction "}}}
 
+
 " Move cursor to bottommost of this indent
 function! s:cursor_down_to_ground() "{{{
 	while 1
@@ -1641,8 +1649,9 @@ function! s:cursor_down_to_ground() "{{{
 	endwhile
 endfunction "}}}
 
+
 " Toggle camel case and sneak case
-"@Incompleted('a part do not implemented')
+"@Incompleted('do not implemented a part of this')
 function! s:toggle_case() "{{{
 	let l:pos  = getpos('.')
 
@@ -1663,26 +1672,40 @@ function! s:toggle_case() "{{{
 	call setpos('.', l:pos)
 endfunction "}}}
 
+
 " If visualmode then Open all fold line
 " s:visual_fold_all()"{{{
-let s:visualFoldToggle = get(s:, 'visualFoldToggle', 0)
+let s:visual_fold_toggle = get(s:, 'visual_fold_toggle', 0)
 
 function! s:visual_fold_all()
 	if mode() =~# "^[vV\<C-v>]"
-		if !s:visualFoldToggle && &foldenable
+		if !s:visual_fold_toggle && &foldenable
 			set nofoldenable
 			execute 'normal! zz'
-			let s:visualFoldToggle = 1
+			let s:visual_fold_toggle = 1
 		endif
 	else
-		if s:visualFoldToggle
+		if s:visual_fold_toggle
 			set foldenable
 			execute 'normal! zz'
-			let s:visualFoldToggle = 0
+			let s:visual_fold_toggle = 0
 		endif
 	endif
 endfunction
 "}}}
+
+
+" If you don't has quickrun buffer, execute quickrun.
+" If you has quickrun buffer, close it.
+"@Bugs('if you has one buffer only, this does not functioned right.')
+function! s:quickrun_cushion() "{{{
+	let l:bufname_expr = '[quickrun output]'
+	if bufloaded(l:bufname_expr)
+		execute ':' . bufnr(l:bufname_expr) . 'bdelete!'
+	else
+		execute ':QuickRun'
+	endif
+endfunction "}}}
 
 " }}}
 
@@ -1786,6 +1809,7 @@ augroup END
 augroup KeyMapping
 	autocmd FileType * nmap              <leader>w          <Plug>(openbrowser-open)
 	autocmd FileType * nnoremap <silent> <leader>t          :<C-u>ExciteTranslate<CR>
+	autocmd FileType * nnoremap <silent> <leader>r          :<C-u>call <SID>quickrun_cushion()<CR>
 
 	" Unite
 	autocmd FileType * nnoremap <silent> <C-k><C-u><C-f>    :<C-u>Unite -ignorecase outline:foldings<CR>
