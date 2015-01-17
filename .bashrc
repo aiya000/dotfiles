@@ -28,6 +28,7 @@ alias cp='cp -i'
 alias vi='vim -u NONE --noplugin'
 alias gvi='gvim -u NONE -U NONE --noplugin'
 alias vimshell='vim -c VimShell'
+alias vim-js="vim -c 'VimShellInteractive js'"
 alias vim-record-startup="f=`mktemp` ; vim --startuptime vtime -- $f && rm $f"
 alias vimclearview='rm ~/.backup/vim_backup/view/* > /dev/null 2>&1'
 alias vimclearswp='rm ~/.backup/vim_backup/swp/* > /dev/null 2>&1'

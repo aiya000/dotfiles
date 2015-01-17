@@ -61,9 +61,7 @@ scriptencoding utf8
 "
 "-- 'gist:aiya000/ec5f6b2375a639831953' cannot divide configure
 
-"-- submode fold_move do not functioned when not exists fold under cursor
-
-"-- not functioned ? conceal-javadoc .
+"-- does not functioned conceal-javadoc ?
 
 "-- shot-f not functioned in <C-o> temporary normal mode
 
@@ -71,9 +69,9 @@ scriptencoding utf8
 
 "-- happend error when opened vrapperrc or vimperatorrc
 
-"-- please link.sh do not overwrite .backup_dotfiles/{.,}* when exists ~/(dotfiles)
-
 "-- lost highlight of buffer when delete other buffer
+
+"-- indent function crazy ?
 
 "}}}
 " Todo {{{
@@ -85,8 +83,6 @@ scriptencoding utf8
 "-- a keymapp "diffthis toggle"
 
 "-- specialize filetypes for vim-indent-guides
-
-"-- quick run buffer toggle
 
 " }}}
 
@@ -1608,9 +1604,20 @@ function! s:toggle_virtual_edit() "{{{
 	else
 		set virtualedit=
 	endif
+
 	set virtualedit?
 endfunction "}}}
 
+" Easy toggle diffthis and diffoff
+function! s:toggle_diff_mode()
+	if &diff
+		execute ':diffoff'
+	else
+		execute ':diffthis'
+	endif
+
+	set diff?
+endfunction
 
 " Open current buffer new tab
 function! s:buf_open_new_tab() "{{{
@@ -1795,7 +1802,7 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent>         <C-h><C-r>      :<C-u>set  relativenumber! relativenumber?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-l>      :<C-u>set  list!           list?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-n>      :<C-u>set  number!         number?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-d>      :<C-u>set  diff!           diff?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-d>      :<C-u>call <SID>toggle_diff_mode()<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-v>      :<C-u>call <SID>toggle_virtual_edit()<CR>
 	autocmd FileType * nnoremap <silent>         <C-h>jkjkjkjk   :<C-u>call <SID>toggle_enable_cursor_key()<CR>
 	"
