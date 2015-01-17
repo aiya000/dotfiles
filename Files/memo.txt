@@ -159,3 +159,164 @@ if has('syntax')
     augroup END
     call ZenkakuSpace()
 endif
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+deris0126     : L105 80文字への執念を感じると思ったら…  01/17 23:05
+------------------------------------------------------------------------------------------------------------------------------------------------
+"set cpo+=a " :read  command with a file name arg will modify the window's alternate file name
+( {{{
+" Settings for Vi-compatible behavior (Vim default: aABceFs)
+" Note: this list is not exhaustive. See :h 'cpo'
+ set cpoptions=
+"set cpo+=a " :read  command with a file name arg will modify the window's alternate file name
+"set cpo+=A " :write command with a file name arg will modify the window's alternate file name
+ set cpo+=B " Give backslash no special meaning in mappings, abbreviations and the 'to' part of the menu commands
+ set cpo+=c " Searching continues at the end of any match at the cursor position, but not further than the start of the next line
+ set cpo+=e " When executing a register with ':@r', always add a <CR> to the last line even when the register is not linewise
+ set cpo+=F " :write with a file name argument will set the file name for the current buffer if it doesn't have one already
+"set cpo+=i " Interrupting the reading of a file will leave it modified.
+ set cpo+=K " Don't wait for a key code to complete
+"set cpo+=m " 'Showmatch' will always wait half a second, even if a character is typed within that time period
+ set cpo+=q " Joining multiple lines leaves the cursor where it would be when joining two lines
+"set cpo+=s " Set buffer options when first entering the buffer instead of when it's created
+"set cpo+=t " Search pattern for the tag command is remembered for 'n' command
+ set cpo+={ " The |{| and |}| commands also stop at a '{' character at the start of a line.
+) }}}
+------------------------------------------------------------------------------------------------------------------------------------------------
+deris0126     : 人生諦めが肝心というのがわかる  01/17 23:05
+thinca        : 何を諦めたんです?  01/17 23:06
+deris0126     : 1行80文字で揃えるのを… > 何を諦めたんです?  01/17 23:07
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+thinca        : L67 これってバッファ毎の設定だったと思うんだよなぁ、多分  01/17 23:12
+miyako        : L67: 画面外もシンタックスハイライトしてる？  01/17 23:14
+------------------------------------------------------------------------------------------------------------------------------------------------
+" Syntax Highlighting:
+syntax enable                                      " Turn on syntax highlighting
+syntax sync minlines=256            " Update syntax highlighting for more lines
+set synmaxcol=512                            " Don't syntax highlight long lines
+" Default paren match highting is too distracting
+highlight! link MatchParen Comment
+
+" Highlight VCS conflict markers
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+thinca        : えーと、syntax はある程度バッファを遡ってそこから syntax を適用していくんですが、どれくらいまで遡るかってことです  01/17 23:15
+                例えば 51 行まで遡ったら実はそこからコメントアウトが開始されていたとしても、50行までしか遡らない設定だったらそこはコメントとはハイライトされない、みたいな感じ  01/17 23:16
+------------------------------------------------------------------------------------------------------------------------------------------------
+miyako        : あ、なるほど。短すぎるとsyntaxが正しく解釈できないんですね。ありがとうございます。> thincaさん  01/17 23:16
+------------------------------------------------------------------------------------------------------------------------------------------------
+thinca        : ちなみに最強は syntax sync fromstart です。お察しの通り常にバッファの先頭から解釈する。当然バッファがでかくなれば重くなる  01/17 23:18
+------------------------------------------------------------------------------------------------------------------------------------------------
+miyako        : fromstartやばいですねwww  01/17 23:19
+------------------------------------------------------------------------------------------------------------------------------------------------
+thinca        : しかし確実に正しく(もちろんsyntax定義の範囲内で)ハイライトされるので、私はたまに使っちゃう  01/17 23:19
+                これそもそも良くないのが、これバッファ毎で、大体 syntax 定義内に書かれてるのだよね。ユーザーコントロールする手段欲しい感ある。Syntax イベントで上書き設定しろってことなのかもしれないけど  01/17 23:20
+------------------------------------------------------------------------------------------------------------------------------------------------
+miyako        : え、そうだったんですか・・・ >  syntax 定義内に書かれてる  01/17 23:21
+------------------------------------------------------------------------------------------------------------------------------------------------
+haya14busa    : markdownで頻繁にシンタクス壊れるのでいじりたい  01/17 23:21
+------------------------------------------------------------------------------------------------------------------------------------------------
+miyako        : あ、これが原因だったんですね > markdownで頻繁にシンタクス壊れる  01/17 23:22
+------------------------------------------------------------------------------------------------------------------------------------------------
+thinca        : autocmd Syntax markdown syntax sync fromstart
+                これでもしかしたら改善されるかもわからん  01/17 23:25
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+thinca        : comments オプションはだいたいバッファ毎なので、ftplugin がしっかりしていれば定義されていたりしますね  01/17 23:23
+                あとはシンクロナイズパターンを設定することによりよさが生まれる可能性がある  01/17 23:27
+                :help :syn-sync-fourth  01/17 23:27
+thinca        : 正直何言ってるのかわかkらんレベルの難しさがあり、常人に設定するのは困難感を醸し出している  01/17 23:28
+------------------------------------------------------------------------------------------------------------------------------------------------
+set comments-=s1:/*,mb:*,ex:*/                        " /* Make C-style comments
+set comments+=s:/*,mb:\ *,ex:\ */                     "  * wrap like this
+set comments+=fb:*                                    "  */
+
+function! SourceMe(...)
+    let a_reg = @a
+    norm! `["ay`]
+    echo ''
+    exe @a
+    let @a = a_reg
+endfunction
+nnoremap <silent> <Leader>sl :set opfunc=SourceMe<CR>g@
+
+nnoremap <silent> m :<C-U>update!<CR>
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+deris0126     : L367-374 ココらへんはみんなkeymap設定したがるもんなのかなー。私も設定してるし  01/17 23:35
+------------------------------------------------------------------------------------------------------------------------------------------------
+" Hitting { and } constantly gets painful, and ^ and $ are too useful to be so
+" inconvenient. Not sure what to do with the default H and L though. I use
+" keepjumps in normal mode so H and L don't write to the jumplist, and add V to
+" operator-pending mode so the motion acts linewise instead of characterwise
+xnoremap L }
+xnoremap H {
+onoremap L V}
+onoremap H V{
+nnoremap <silent> L :<C-U>execute 'keepjumps normal!' v:count1 . '}'<CR>
+nnoremap <silent> H :<C-U>execute 'keepjumps normal!' v:count1 . '{'<CR>
+noremap { ^
+noremap } $
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+thinca        : L191- ほほう? 興味深い設定  01/17 23:39
+thinca        : L191 やると多分挿入モードで複数キーシーケンスのキーマッピングが使えなくなる  01/17 23:43
+haya14busa    : L191 insertモードからのjj復帰が出来ないことに気づいた  01/17 23:44
+------------------------------------------------------------------------------------------------------------------------------------------------
+    " Remove small delay between pressing Esc and entering Normal mode.
+    set timeout ttimeout ttimeoutlen=-1
+    augroup FastEscape
+        autocmd!
+        au InsertEnter * set timeoutlen=0
+        au InsertLeave * set timeoutlen=1000
+    augroup END
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+thinca        : 今自分の設定確認したら <C-g><C-u> で直前に入力した単語を全て大文字にするキーマッピングが施されていた  01/17 23:45
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+thinca        : L236 一方私は :h<Space> が即座に開けるようにしていた  01/17 23:50
+------------------------------------------------------------------------------------------------------------------------------------------------
+" Open help in a vertical split instead of the default horizontal split
+" " http://vim.wikia.com/wiki/Replace_a_builtin_command_using_cabbrev
+cabbrev h <C-R>=(getcmdtype()==':' && getcmdpos()==1 ? 'vert h' : 'h')<CR>
+cabbrev help <C-R>=(getcmdtype()==':' && getcmdpos()==1 ? 'vert h' : 'help')<CR>
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+hujo          : L417 便利そう  01/17 23:51
+------------------------------------------------------------------------------------------------------------------------------------------------
+    " start command line window in insert mode and no line numbers
+    autocmd CmdwinEnter * startinsert
+    autocmd CmdwinEnter * setl nonumber
+    autocmd BufReadPost *
+                \ if line("'\"") > 0 && line("'\"") <= line("$")
+                \| execute "normal g'\"" | endif
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+thinca        : arpeggio.vim の出番と聞いて >2本指  01/18 00:03
+thinca        : arpeggio.vim は同時押しによるキーマッピングを実現する神のプラグインです  01/18 00:05
+thinca        : jk をほぼ同時に押した場合のみ発動し、普段は j と k は普通に打てる、みたいなことができる(ただし色々とややこしくなる部分もある)  01/18 00:05
+deris0126     : arpeggio.vim便利なのわかってるけど、あれに依存すると素Vimで設定出来ないときなく未来が見えたので、使うのやめてしまった  01/18 00:06
+kamichidu     : 便利そうだけど、同時押しはキータッチのリズムが気になってしまう  01/18 00:07
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+haya14busa    : L236 なるほどそんな手があるのか...すごい  01/18 00:08
+------------------------------------------------------------------------------------------------------------------------------------------------
+" Open help in a vertical split instead of the default horizontal split
+" " http://vim.wikia.com/wiki/Replace_a_builtin_command_using_cabbrev
+cabbrev h <C-R>=(getcmdtype()==':' && getcmdpos()==1 ? 'vert h' : 'h')<CR>
+cabbrev help <C-R>=(getcmdtype()==':' && getcmdpos()==1 ? 'vert h' : 'help')<CR>
+
+https://github.com/kana/vim-niceblock
+set updatecount=0
+set infercase complete-=i completeopt=longest,menuone        " Insert completion
+set nrformats=hex,alpha                     " Accepted bases for <C-A> and <C-X>
