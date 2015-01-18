@@ -6,7 +6,6 @@ scriptencoding utf8
 " -- Parameter
 " -- Local_Function
 " -- Initialize
-" -- Environment_Pref
 " -- Plugin_Manage
 " -- Plugin_Configure
 " -- View_Setting
@@ -14,10 +13,10 @@ scriptencoding utf8
 " -- Inner_Setting
 " -- Event_Method
 " -- Functional_Command
-" -- Alias
-" -- KeyMapping
+" -- Command_Alias
+" -- KeyMappings
 " -- File_Types
-" -- Ignore_Setting
+" -- Environment_Pref
 " ---
 
 
@@ -1397,7 +1396,7 @@ command! ShowRcDict for s:v in items(s:) | echo s:v | endfor
 
 
 "-------------------------"
-"          Alias          "
+"      Command_Alias      "
 "-------------------------"
 " Utils {{{
 
@@ -1528,7 +1527,7 @@ cnoreabbr GhciTab  VimShellInteractive --split='tabnew' ghci
 
 
 "-------------------------"
-"        KeyMapping       "
+"       KeyMappings       "
 "-------------------------"
 " Global KeyMaps {{{
 
