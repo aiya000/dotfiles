@@ -174,6 +174,14 @@ let g:tweetvim_display_icon = 1
 let g:J6uil_display_icon = 1
 
 "}}}
+"--- vim-indent-guides ---"{{{
+
+augroup PluginPrefs
+	autocmd ColorScheme * highlight IndentGuidesOdd  guibg=blue
+	autocmd ColorScheme * highlight IndentGuidesEven guibg=red
+augroup END
+
+"}}}
 
 
 "-------------------------"

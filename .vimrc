@@ -38,12 +38,7 @@ scriptencoding utf8
 
 "-- unite unite-actions
 
-"-- netrw opened files history
-
 "-- <C-a> alter key [asdfghjkl;] to [1234567890]
-
-"-- buffer_mover is current buffer move to other tab
-"  -- like a copy and paste ?
 
 "-- search from history
 "  -- exam) 2/ => searching by 2 prev search word
@@ -78,8 +73,6 @@ scriptencoding utf8
 "-- Eigo to English
 
 "-- read options.jax
-
-"-- a keymapp "diffthis toggle"
 
 "-- specialize filetypes for vim-indent-guides
 
@@ -567,9 +560,7 @@ augroup END
 
 " }}}
 "--- vim-quickrun ---" {{{
-
-let g:quickrun_no_default_key_mappings = 1
-
+"
 let g:quickrun_config = {
 \	'_' : {
 \		'split'  : '',
@@ -864,7 +855,6 @@ let g:indent_guides_auto_colors = 0
 let g:indent_guides_guide_size = 1
 
 augroup PluginPrefs
-	"@Incompleted('tabun incomplete')
 	autocmd ColorScheme * highlight IndentGuidesOdd  ctermbg=blue
 	autocmd ColorScheme * highlight IndentGuidesEven ctermbg=red
 augroup END
@@ -1278,7 +1268,7 @@ command! EmptyBufUp execute ':new' | resize 5
 
 
 " Yank all to plus register
-command! CopyPlusAll execute 'normal! ggVG"+y<C-o><C-o>'
+command! CPAllPlus execute 'normal! ggVG"+y<C-o><C-o>'
 
 
 " Current buffer move to next_tab
@@ -1803,7 +1793,6 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent>         <C-h><C-n>      :<C-u>set  number!         number?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-d>      :<C-u>call <SID>toggle_diff_mode()<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-v>      :<C-u>call <SID>toggle_virtual_edit()<CR>
-	autocmd FileType * nnoremap <silent>         <C-h>jkjkjkjk   :<C-u>call <SID>toggle_enable_cursor_key()<CR>
 	"
 	autocmd FileType * nnoremap <silent>         <leader>pl :<C-u>PutLongSeparator<CR>
 	autocmd FileType * nnoremap <silent>         <leader>ps :<C-u>PutShortSeparator<CR>
@@ -1813,9 +1802,14 @@ augroup END
 
 "-- For Plugins --"
 augroup KeyMapping
+	" open-browser.vim
 	autocmd FileType * nmap              <leader>w          <Plug>(openbrowser-open)
+
+	" excitetranslate-vim
 	autocmd FileType * nnoremap <silent> <leader>t          :<C-u>ExciteTranslate<CR>
-	autocmd FileType * nnoremap <silent> <leader>r          :<C-u>call <SID>quickrun_cushion()<CR>
+
+	" vim-quickrun
+	autocmd FileType * nnoremap <silent> <leader><leader>r  :<C-u>call <SID>quickrun_cushion()<CR>
 
 	" Unite
 	autocmd FileType * nnoremap <silent> <C-k><C-u><C-f>    :<C-u>Unite -ignorecase outline:foldings<CR>
@@ -1829,8 +1823,8 @@ augroup KeyMapping
 	" vimshell
 	autocmd FileType * nnoremap <silent> <leader>v          :<C-u>VimShell -split-command=vsp -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>v  :<C-u>VimShell -split-command=sp  -toggle<CR>
-	autocmd FileType * nnoremap <silent> <leader>V          :<C-u>VimShellBufferDir   -create<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>V  :<C-u>tabnew<CR>:VimShell -create<CR>
+	autocmd FileType * nnoremap <silent> <leader>V          :<C-u>VimShellBufferDir -create<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>V  :<C-u>VimShell -split-command=tab -create<CR>
 
 	" netrw
 	autocmd FileType * nnoremap <silent> <leader>e          :<C-u>Vexplore<CR>
@@ -1856,8 +1850,8 @@ augroup KeyMapping
 	autocmd FileType * nmap              g/                 /<C-r>"<CR>
 	autocmd FileType * nmap <expr>       ?                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
 	autocmd FileType * nmap <silent>     \?                 ?\m\C
-	autocmd FileType * nmap              g?                 ?<C-r>"<CR>
 	autocmd FileType * nmap <silent>     \\?                ?\m\C\<\>[Left][Left]
+	autocmd FileType * nmap              g?                 ?<C-r>"<CR>
 
 	" TaskList.vim
 	autocmd FileType * nnoremap <leader>T :<C-u>TaskList<CR>
@@ -1905,8 +1899,8 @@ augroup PluginPrefs
 	autocmd FileType vimshell  nnoremap <buffer> <C-p>      gT
 	autocmd FileType vimshell  nnoremap <buffer> <C-l>      <NOP>
 	autocmd FileType vimshell  nmap     <buffer> <C-]>      <Plug>(vimshell_clear)
-	autocmd FileType vimshell  nmap     <buffer> >          <Plug>(vimshell_next_prompt)
-	autocmd FileType vimshell  nmap     <buffer> <          <Plug>(vimshell_previous_prompt)
+	autocmd FileType vimshell  nmap     <buffer> gj         <Plug>(vimshell_next_prompt)
+	autocmd FileType vimshell  nmap     <buffer> gk         <Plug>(vimshell_previous_prompt)
 	autocmd FileType vimshell  nmap     <buffer> <C-]>      <Plug>(vimshell_clear)
 	autocmd FileType vimshell  inoremap <buffer> <C-l>      <Esc>
 	autocmd FileType vimshell  imap     <buffer> <C-]>      <Plug>(vimshell_clear)
@@ -1919,8 +1913,8 @@ augroup PluginPrefs
 	autocmd FileType int-*     nnoremap <buffer> <C-l>      <NOP>
 	autocmd FileType int-*     nmap     <buffer> <C-]>      <Plug>(vimshell_int_clear)
 	autocmd FileType int-*     nmap     <buffer> Q          <Plug>(vimshell_int_exit)
-	autocmd FileType int-*     nmap     <buffer> >          <Plug>(vimshell_int_next_prompt)
-	autocmd FileType int-*     nmap     <buffer> <          <Plug>(vimshell_int_previous_prompt)
+	autocmd FileType int-*     nmap     <buffer> gj         <Plug>(vimshell_int_next_prompt)
+	autocmd FileType int-*     nmap     <buffer> gk         <Plug>(vimshell_int_previous_prompt)
 	autocmd FileType int-*     inoremap <buffer> <C-l>      <Esc>
 	autocmd FileType int-*     imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
 	autocmd FileType int-*     imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
