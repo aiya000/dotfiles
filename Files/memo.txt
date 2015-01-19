@@ -320,3 +320,18 @@ https://github.com/kana/vim-niceblock
 set updatecount=0
 set infercase complete-=i completeopt=longest,menuone        " Insert completion
 set nrformats=hex,alpha                     " Accepted bases for <C-A> and <C-X>
+
+------------------------------------------------------------------------------------------------
+例えば、help を開いているウィンドウをフォーカスを動かさずに閉じるとかできるようになります。
+function! CloseHelpWin()
+  for w in range(1, winnr('$'))
+    let bt = getwinvar(w, '&buftype')
+    if bt ==# 'help'
+      execute w . 'wincmd w'
+      q
+      break
+    endif
+  endfor
+endfunction
+http://d.hatena.ne.jp/osyo-manga/20120118/1326838173
+------------------------------------------------------------------------------------------------
