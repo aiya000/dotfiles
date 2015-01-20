@@ -794,10 +794,10 @@ let g:ref_source_webdict_sites = {
 
 let g:ref_source_webdict_sites['default'] = 'weblio'
 
-function! s:webdict_filter(output)
-	return join(split(a:output, "\n")[56 : ], "\n")
+function! s:weblio_filter(output)
+	return join(split(a:output, "\n")[60 : ], "\n")
 endfunction
-let g:ref_source_webdict_sites['weblio'].filter = function('s:webdict_filter')
+let g:ref_source_webdict_sites['weblio'].filter = function('s:weblio_filter')
 
 " }}}
 "--- restart.vim ---" {{{
@@ -1503,15 +1503,11 @@ cnoreabbr Log      VimConsoleLog
 command!  LogClear VimConsoleClear
 
 cnoreabbr Ghc      !runghc %
-"cnoreabbr Ghci     enew! \| ConqueTerm ghci
-"cnoreabbr Sghci    sp \| ConqueTerm ghci
-"cnoreabbr Vghci    vsp \| ConqueTerm ghci
-"cnoreabbr GhciTab  tabnew \| ConqueTerm ghci
-cnoreabbr Hoogle   Ref hoogle
 cnoreabbr Ghci     VimShellInteractive ghci
 cnoreabbr Sghci    VimShellInteractive --split='sp' ghci
 cnoreabbr Vghci    VimShellInteractive --split='vsp' ghci
 cnoreabbr GhciTab  VimShellInteractive --split='tabnew' ghci
+cnoreabbr Hoogle   Ref hoogle
 
 " }}}
 
@@ -1691,16 +1687,18 @@ endfunction
 "}}}
 
 
-" If you don't has quickrun buffer, execute quickrun.
-" If you has quickrun buffer, close it.
-"@Bugs('if you has one buffer only, this does not functioned right.')
-function! s:quickrun_cushion() "{{{
-	let l:bufname_expr = '[quickrun output]'
-	if bufloaded(l:bufname_expr)
-		execute ':' . bufnr(l:bufname_expr) . 'bdelete!'
-	else
-		execute ':QuickRun'
-	endif
+" If you has nofile buffer, close it.
+function! s:nofile_close() "{{{
+	for l:w in range(1, winnr('$'))
+		let l:buftype = getwinvar(l:w, '&buftype')
+
+		if l:buftype ==# 'nofile'
+			execute ':' . l:w . 'wincmd w'
+			execute ':quit'
+
+			break
+		endif
+	endfor
 endfunction "}}}
 
 " }}}
@@ -1725,6 +1723,7 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> m:             :<C-u>marks<CR>
 	autocmd FileType * nnoremap <silent> q:             :<C-u>register<CR>
 	autocmd FileType * nnoremap <silent> z:             :<C-u>tabs<CR>
+	autocmd FileType * nnoremap <silent> g:             :<C-u>buffers<CR>
 	autocmd FileType * nnoremap <silent> gk             :<C-u>call <SID>cursor_up_to_lid()<CR>
 	autocmd FileType * nnoremap <silent> gj             :<C-u>call <SID>cursor_down_to_ground()<CR>
 	"autocmd FileType * vnoremap <silent> gk             :<C-u>call <SID>cursor_up_to_lid()<CR>
@@ -1749,9 +1748,8 @@ augroup END
 augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <C-w>t     :<C-u>tabnew<CR>
 	autocmd FileType * nnoremap <silent> <C-w>T     :<C-u>tabclose<CR>
-	autocmd FileType * nnoremap <silent> <C-w>bd    :<C-u>bdelete<CR>
-	autocmd FileType * nnoremap <silent> <C-w>Bd    :<C-u>bdelete!<CR>
-	autocmd FileType * nnoremap <silent> <C-w>C     :<C-u>hide<CR>
+	autocmd FileType * nnoremap <silent> <C-w>c     :<C-u>bdelete<CR>
+	autocmd FileType * nnoremap <silent> <C-w>C     :<C-u>bdelete!<CR>
 	autocmd FileType * nnoremap <silent> <C-w><C-w> :<C-u>write<CR>
 	autocmd FileType * nnoremap <silent> <C-w>W     :<C-u>wall<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bt    :<C-u>call <SID>buf_open_new_tab()<CR>
@@ -1794,9 +1792,10 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent>         <C-h><C-d>      :<C-u>call <SID>toggle_diff_mode()<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-v>      :<C-u>call <SID>toggle_virtual_edit()<CR>
 	"
-	autocmd FileType * nnoremap <silent>         <leader>pl :<C-u>PutLongSeparator<CR>
-	autocmd FileType * nnoremap <silent>         <leader>ps :<C-u>PutShortSeparator<CR>
-	autocmd FileType * nnoremap <silent>         <leader>pd :<C-u>PutDate<CR>
+	autocmd FileType * nnoremap <silent>         <leader>pl        :<C-u>PutLongSeparator<CR>
+	autocmd FileType * nnoremap <silent>         <leader>ps        :<C-u>PutShortSeparator<CR>
+	autocmd FileType * nnoremap <silent>         <leader>pd        :<C-u>PutDate<CR>
+	autocmd FileType * nnoremap <silent>         <leader><leader>r :<C-u>call <SID>nofile_close()<CR>
 augroup END
 
 
@@ -1807,9 +1806,6 @@ augroup KeyMapping
 
 	" excitetranslate-vim
 	autocmd FileType * nnoremap <silent> <leader>t          :<C-u>ExciteTranslate<CR>
-
-	" vim-quickrun
-	autocmd FileType * nnoremap <silent> <leader><leader>r  :<C-u>call <SID>quickrun_cushion()<CR>
 
 	" Unite
 	autocmd FileType * nnoremap <silent> <C-k><C-u><C-f>    :<C-u>Unite -ignorecase outline:foldings<CR>
