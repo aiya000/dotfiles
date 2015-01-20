@@ -2002,6 +2002,7 @@ augroup ExtensionType
 	autocmd FileType mysql         let &commentstring = " -- %s"
 	autocmd FileType markdown      let &commentstring = "<!--%s-->"
 	autocmd FileType text,none     let &commentstring = " %s"
+	autocmd FIleType sh            let &commentstring = " #%s"
 
 	" Set for ConqueTerm
 	autocmd FileType conque_term setl nolist
