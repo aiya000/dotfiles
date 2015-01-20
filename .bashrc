@@ -142,7 +142,24 @@ fi
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
 #}}}
+#{{{
 
+if [ -f ~/.bashrc_places ] ; then
+	source ~/.bashrc_places
+	alias reload_places='source ~/.bashrc_places && echo "bash places reloaded"'
+fi
+
+function hereis () {
+	place_name=$1
+	alias_detail="${place_name}='cd `pwd`'"
+
+	echo "alias ${alias_detail}" >> ~/.bashrc_places
+	echo "here is '${1}'"
+
+	reload_places
+}
+
+#}}}
 
 #############################################
 #                                           #
