@@ -50,10 +50,10 @@ alias vim-bashpr='vim ~/.bash_profile && source ~/.bash_profile && echo ">> .bas
 # }}}
 # Shell Utils {{{
 
-# Tuide(Benri)
+# Upload the pictures to gyazo
 alias gyazo='ruby ~/.vim/bundle/vim-gyazo/gyazo/gyazo.rb'
 
-# MacOS Like command
+# Console output pipe to clipboard
 alias pbcopy='xsel --clipboard --input'
 
 # }}}
@@ -139,16 +139,22 @@ if [ -f ~/.bashrc_develop ] ; then
 	source ~/.bashrc_develop
 	alias vimdev='vim ~/.bashrc_develop && source ~/.bashrc && echo ">> .bashrc_develop loaded"'
 fi
+
+# Generate items for autotools
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
 #}}}
 #{{{
 
+# Register directory path to file, and Easily cd there
 if [ -f ~/.bashrc_places ] ; then
 	source ~/.bashrc_places
-	alias reload_places='source ~/.bashrc_places && echo "bash places reloaded"'
 fi
 
+# Reload it
+alias reload_places='source ~/.bashrc_places && echo "bash places reloaded"'
+
+# Register it
 function hereis () {
 	place_name=$1
 	alias_detail="${place_name}='cd `pwd`'"
