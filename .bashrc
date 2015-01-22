@@ -156,6 +156,7 @@ alias reload_places='source ~/.bashrc_places && echo "bash places reloaded"'
 
 # もっとましな実装を
 alias places='echo - - - - -; cat ~/.bashrc_places; echo - - - - -'
+alias edit_places='vim ~/.bashrc_places && reload_places'
 
 # Register it
 function hereis () {
