@@ -154,6 +154,9 @@ fi
 # Reload it
 alias reload_places='source ~/.bashrc_places && echo "bash places reloaded"'
 
+# もっとましな実装を
+alias places='echo - - - - -; cat ~/.bashrc_places; echo - - - - -'
+
 # Register it
 function hereis () {
 	place_name=$1
