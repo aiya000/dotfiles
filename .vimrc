@@ -916,7 +916,8 @@ set number nowrap hlsearch list scrolloff=8
 " Status Bar always displayed
 set laststatus=2
 
-" Status Bar format $ @See('http://sourceforge.jp/magazine/07/11/06/0151231')
+"@See('http://sourceforge.jp/magazine/07/11/06/0151231')
+" Status Bar format
 set statusline=%F%m\%=[FileType=%y][Format=%{&ff}]
 
 " ☆ Fix View 2byte Code (Not support gnome-terminal)
@@ -926,7 +927,6 @@ set ambiwidth=double
 " {{{
 
 augroup HighlightPref
-	"autocmd Colorscheme * highlight Normal       cterm=NONE      ctermfg=Cyan
 	autocmd ColorScheme * highlight Visual       cterm=underline ctermfg=White ctermbg=Cyan
 	autocmd ColorScheme * highlight IncSearch                    ctermfg=Black ctermbg=Cyan
 	autocmd ColorScheme * highlight Pmenu        cterm=standout  ctermfg=Blue
@@ -955,7 +955,7 @@ augroup END
 
 " }}}
 
-" Set Color Scheme
+" Set for Color Scheme
 set background=dark
 colorscheme desert
 
@@ -1348,12 +1348,50 @@ endfunc "}}}
 command! ImportPythonJp call s:put_python_import_for_jp()
 
 
+" command! PutShortSeparator {{{
+
+"@Incompleted('I do not write all yet')
+"@Bugs('Inactive extended regexes')
+augroup FileEvent
+	autocmd WinEnter,BufWinEnter * let s:short_sparator =
+	\	&ft ==# 'vim'             ? '" --- --- --- "'
+	\:	&ft =~# '(java|cs|cpp|c)' ? '/* -=-=-=-=-=-=-=-=- */'
+	\:	&ft ==# 'haskell'         ? '-- - - - - - --'
+	\:	&ft ==# 'coq'             ? '(* - - - - - *)'
+	\:	&ft ==# 'mysql'           ? '-- - - - - - --'
+	\:	&ft ==# 'markdown'        ? '<!-- - - - - - -->'
+	\:	&ft ==# 'sh'              ? '#- - - - - - -#'
+	\:	&ft =~# '(text|none)'     ? '- - - - - - - - - -'
+	\:	'short separator undefined'
+augroup END
+
 command! PutShortSeparator
-	\	execute 'normal! a' '/* -=-=-=-=-=-=-=-=- */'
+	\	execute 'normal! o' s:short_sparator
 	\|	execute 'normal! =='
+
+" }}}
+" command! PutLongSeparator {{{
+
+"@Incompleted('I do not write all yet')
+"@Bugs('Inactive extended regexes')
+augroup FileEvent
+	autocmd WinEnter,BufWinEnter * let s:short_sparator =
+	\	&ft ==# 'vim'             ? '" --- --- --- "'
+	\:	&ft =~# '(java|cs|cpp|c)' ? '/* ---===---===---===---===---===---===--- */'
+	\:	&ft ==# 'haskell'         ? '-- - - - - - --'
+	\:	&ft ==# 'coq'             ? '(* - - - - - *)'
+	\:	&ft ==# 'mysql'           ? '-- - - - - - --'
+	\:	&ft ==# 'markdown'        ? '<!-- - - - - - -->'
+	\:	&ft ==# 'sh'              ? '#- - - - - - -#'
+	\:	&ft =~# '(text|none)'     ? '- - - - - - - - - -'
+	\:	'long separator undefined'
+augroup END
+
 command! PutLongSeparator
-	\	execute 'normal! a' '/* ---===---===---===---===---===---===--- */'
+	\	execute 'normal! o' s:long_separator
 	\|	execute 'normal! =='
+
+" }}}
 command! PutDate
 	\	execute 'normal! a' strftime('%c')
 	\|	execute 'normal! =='
