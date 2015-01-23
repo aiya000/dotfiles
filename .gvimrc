@@ -33,7 +33,7 @@ scriptencoding utf8
 "-------------------------"
 " autcmd Groups {{{
 
-augroup gui_prefs
+augroup GuiPrefs
 	autocmd!
 augroup END
 
@@ -131,7 +131,7 @@ endif
 "-------------------------"
 "{{{
 
-augroup highlight_pref
+augroup HighlightPrefs
 	"autocmd Colorscheme * highlight Normal       gui=NONE      guifg=Cyan
 	"autocmd ColorScheme * highlight Visual       gui=underline guifg=White guibg=Cyan
 	"autocmd ColorScheme * highlight IncSearch                  guifg=Black guibg=Cyan
@@ -190,28 +190,40 @@ augroup END
 "{{{
 
 " Call matchadd when that file is target filetype
-function! s:matchadd_with_filetype(ft, tag, regex) "{{{
+function! s:matchadd_with_filetype(ft, tag, regex, priority, id) "{{{
 	if &filetype == a:ft
-		call matchadd(a:tag, a:regex)
+		try
+			let l:id = matchadd(a:tag, a:regex, a:priority, a:id)
+		catch /\vE(799|801)/
+			" Suppress repeate add
+			let l:id = a:id
+		endtry
+	else
+		try
+			call matchdelete(a:id)
+		catch /\vE(802|803)/
+			" Suppress repeate delete
+		endtry
+
+		let l:id = a:id
 	endif
+
+	return l:id
 endfunction "}}}
 
-" Set for "Vi Improved"
-augroup extension_type
-	autocmd ColorScheme       * highlight GrcMyHint gui=bold guifg=#ef5939
-	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('vim', 'GrcMyHint', '\s*"\zs@\w\+(.*)\ze')
-augroup END
+augroup FileEvent
+	" Set for "Vi Improved"
+	autocmd VimEnter,ColorScheme * highlight GrcMyHint gui=bold guifg=#ef5939
+	"@Incomplete('These were not deleted')
+	autocmd BufWinEnter          * let s:grcHint = s:matchadd_with_filetype('vim', 'GrcMyHint', '\s*"\zs@\w\+(.*)\ze', 10, get(s:, 'grcHint', 10101))
 
-" Set for C-Sharp
-augroup extension_type
-	autocmd ColorScheme       * highlight GrcTypeInference gui=none guifg=Cyan
-	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('cs', 'GrcTypeInference', '\<var\>')
-augroup END
+	" Set for Haskell
+	autocmd VimEnter,ColorScheme * highlight GrcHeadHfSpace gui=underline guifg=Cyan
+	autocmd BufWinEnter          * let s:grcHeadHfSpace = s:matchadd_with_filetype('haskell', 'GrcHeadHfSpace', '^\s\+', 10, get(s:, 'grcHeadHfSpace', 10102))
 
-" Set for Haskell
-augroup extension_type
-	autocmd ColorScheme       * highlight GrcHeadHfSpace gui=underline guifg=Cyan
-	autocmd VimEnter,WinEnter * call s:matchadd_with_filetype('haskell', 'GrcHeadHfSpace', '^\s\+')
+	" Set for C-Sharp
+	autocmd VimEnter,ColorScheme * highlight GrcTypeInference gui=none guifg=Cyan
+	autocmd VimEnter,WinEnter    *.cs syntax keyword GrcTypeInference var
 augroup END
 
 "}}}
