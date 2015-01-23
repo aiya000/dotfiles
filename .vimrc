@@ -371,8 +371,8 @@ NeoBundle        'rhysd/vim-grammarous'
 NeoBundleLazy    'thinca/vim-themis'
 NeoBundle        'tomasr/molokai'
 NeoBundle        'soramugi/auto-ctags.vim'
-NeoBundleDisable 'aiya000/arot13.vim'
-NeoBundleDisable 'aiya000/ahoge-put.vim'
+NeoBundleLazy    'aiya000/arot13.vim'
+NeoBundleLazy    'aiya000/ahoge-put.vim'
 NeoBundleLazy    'kannokanno/previm'
 NeoBundle        'gist:aiya000/ec5f6b2375a639831953', {
 \	'name'        : 'gitlogviewer.vim',
@@ -382,7 +382,7 @@ NeoBundle        'kamichidu/vim-vdbc'
 NeoBundle        'mattn/vdbi-vim'
 NeoBundle        'LeafCage/foldCC'
 NeoBundleLazy    'katono/rogue.vim'
-NeoBundleDisable 'aiya000/asql.vim'
+NeoBundleLazy    'aiya000/asql.vim'
 NeoBundleLazy    'kamichidu/vim-benchmark'
 NeoBundle        'kana/vim-submode'
 NeoBundle        'gist:aiya000/58931585f8ba6aa43b87', {
@@ -515,6 +515,12 @@ call neobundle#config('vim-grammarous', {
 call neobundle#config('vim-themis', {
 \	'autoload' : {'filetypes' : 'vim'}
 \})
+call neobundle#config('arot13.vim', {
+\	'autoload' : {'commands' : 'MyPluginOn'}
+\})
+call neobundle#config('ahoge-put.vim', {
+\	'autoload' : {'commands' : 'MyPluginOn'}
+\})
 call neobundle#config('previm', {
 \	'autoload' : {'filetypes' : 'markdown'}
 \})
@@ -525,6 +531,9 @@ call neobundle#config('rogue.vim', {
 \		'RogueResume',
 \		'RogueScores'
 \	]}
+\})
+call neobundle#config('asql.vim', {
+\	'autoload' : {'commands' : 'MyPluginOn'}
 \})
 call neobundle#config('ref-dicts-en', {
 \	'depends' : 'thinca/vim-ref'
@@ -873,6 +882,18 @@ set runtimepath+=~/.vim/makes/ahoge-put.vim/
 set runtimepath+=~/.vim/makes/asql.vim
 set runtimepath+=~/.vim/makes/adrone.vim/
 
+" MyPlugins State
+let s:myplugin_enabled = get(s:, 'myplugin_enabled', 0)
+
+" Switching Command
+command! MyPluginOn
+\	if s:myplugin_enabled
+\|		call s:echo_error('Already loaded my plugins')
+\|	else
+\|		echo 'Loaded my plugins by neobundle'
+\|		let s:myplugin_enabled = 1
+\|	endif
+
 "}}}
 "--- For Private ---"{{{
 
@@ -949,7 +970,8 @@ set noruler
 " Hard Conceal
 set conceallevel=2
 
-" Sugoi view tabline $ @See('http://d.hatena.ne.jp/thinca/20111204/1322932585')
+"@See('http://d.hatena.ne.jp/thinca/20111204/1322932585')
+" Sugoi view tabline
 function! s:tabpage_label(n) "{{{
 	let l:title = gettabvar(a:n, 'title')
 	if l:title !=# ''
@@ -1784,7 +1806,7 @@ augroup END
 augroup KeyMapping
 	autocmd FileType * nnoremap <silent>         <C-h><C-w>      :<C-u>setl wrap!           wrap?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-i>      :<C-u>set  ignorecase!     ignorecase?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-k>      :<C-u>set  cursorline!     cursorline?<CR>
+	autocmd FileType * nnoremap <silent>         <C-h><C-c>      :<C-u>set  cursorline!     cursorline?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-e>      :<C-u>set  expandtab!      expandtab?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-r>      :<C-u>set  relativenumber! relativenumber?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-l>      :<C-u>set  list!           list?<CR>
@@ -1961,14 +1983,14 @@ endfunction "}}}
 
 
 " If buffer does not has filetype, set filetype 'none'
-augroup FileEvent
+augroup ExtensionType
 	autocmd VimEnter,BufNew * if &ft == '' | setf none | endif
 augroup END
 
 
 "@Bugs('these highlight of filetype is not local >>= duplication')
-augroup ExtensionType
-	" Set for "Vi Improved"
+augroup FileEvent
+	" -- Vi Improved --
 	autocmd VimEnter,ColorScheme * highlight RcMyHint cterm=standout ctermfg=DarkYellow
 	"@Incomplete('These were not deleted')
 	autocmd VimEnter,WinEnter    * let s:rcHint = s:matchadd_with_filetype('vim', 'RcMyHint', '\s*"\zs@\w\+(.*)\ze', 10, get(s:, 'rcHint', 10001))
