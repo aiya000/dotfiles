@@ -507,12 +507,12 @@ call neobundle#config('vim-grammarous', {
 call neobundle#config('vim-themis', {
 \	'autoload' : {'filetypes' : 'vim'}
 \})
-call neobundle#config('arot13.vim', {
-\	'autoload' : {'commands' : 'MyPluginOn'}
-\})
-call neobundle#config('ahoge-put.vim', {
-\	'autoload' : {'commands' : 'MyPluginOn'}
-\})
+"call neobundle#config('arot13.vim', {
+"\	'autoload' : {'commands' : 'MyPluginOn'}
+"\})
+"call neobundle#config('ahoge-put.vim', {
+"\	'autoload' : {'commands' : 'MyPluginOn'}
+"\})
 call neobundle#config('previm', {
 \	'autoload' : {'filetypes' : 'markdown'}
 \})
@@ -524,9 +524,9 @@ call neobundle#config('rogue.vim', {
 \		'RogueScores'
 \	]}
 \})
-call neobundle#config('asql.vim', {
-\	'autoload' : {'commands' : 'MyPluginOn'}
-\})
+"call neobundle#config('asql.vim', {
+"\	'autoload' : {'commands' : 'MyPluginOn'}
+"\})
 call neobundle#config('ref-dicts-en', {
 \	'depends' : 'thinca/vim-ref'
 \})
@@ -556,6 +556,17 @@ augroup PluginPrefs
 augroup END
 
 " }}}
+"--- unite.vim ---"{{{
+
+"@Code(':Unite javasrc')
+let g:unite_source_alias_aliases = {
+\	'javasrc' : {
+\		'source' : 'file_rec',
+\		'args'   : '~/Documents/workspace/Java/src'
+\	}
+\}
+
+"}}}
 "--- vim-quickrun ---" {{{
 "
 let g:quickrun_config = {
@@ -859,17 +870,17 @@ set runtimepath+=~/.vim/makes/ahoge-put.vim/
 set runtimepath+=~/.vim/makes/asql.vim
 set runtimepath+=~/.vim/makes/adrone.vim/
 
-" MyPlugins State
-let s:myplugin_enabled = get(s:, 'myplugin_enabled', 0)
-
-" Switching Command
-command! MyPluginOn
-\	if s:myplugin_enabled
-\|		call s:echo_error('Already loaded my plugins')
-\|	else
-\|		echo 'Loaded my plugins by neobundle'
-\|		let s:myplugin_enabled = 1
-\|	endif
+"" MyPlugins State
+"let s:myplugin_enabled = get(s:, 'myplugin_enabled', 0)
+"
+"" Switching Command
+"command! MyPluginOn
+"\	if s:myplugin_enabled
+"\|		call s:echo_error('Already loaded my plugins')
+"\|	else
+"\|		echo 'Loaded my plugins by neobundle'
+"\|		let s:myplugin_enabled = 1
+"\|	endif
 
 "}}}
 "--- For Private ---"{{{
