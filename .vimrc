@@ -361,8 +361,6 @@ NeoBundle        'Shougo/unite-outline'
 NeoBundle        'ebc-2in2crc/vim-ref-jvmis'
 NeoBundleLazy    'rbtnn/puyo.vim'
 NeoBundleLazy    'mattn/benchvimrc-vim'
-NeoBundle        'tacroe/unite-alias'
-NeoBundle        'mattn/ideone-vim'
 NeoBundleLazy    'mattn/yamada-vim'
 NeoBundleLazy    'jvoorhis/coq.vim'
 NeoBundleLazy    'eagletmt/coqtop-vim'
@@ -370,7 +368,6 @@ NeoBundle        'duff/vim-scratch'
 NeoBundle        'rhysd/vim-grammarous'
 NeoBundleLazy    'thinca/vim-themis'
 NeoBundle        'tomasr/molokai'
-NeoBundle        'soramugi/auto-ctags.vim'
 NeoBundleLazy    'aiya000/arot13.vim'
 NeoBundleLazy    'aiya000/ahoge-put.vim'
 NeoBundleLazy    'kannokanno/previm'
@@ -395,10 +392,8 @@ NeoBundle        'osyo-manga/vim-anzu'
 NeoBundle        'osyo-manga/vim-over'
 NeoBundle        'tyru/restart.vim'
 NeoBundle        'koron/minimap-vim'
-NeoBundleLazy    'mattn/excelview-vim'
 NeoBundle        'glidenote/memolist.vim'
 NeoBundle        'vim-jp/vimdoc-ja'
-NeoBundle        'mattn/googletranslate-vim'
 NeoBundleLazy    'rbtnn/game_engine.vim'
 NeoBundle        'h1mesuke/vim-alignta'
 NeoBundle        'haya14busa/incsearch.vim'
@@ -496,9 +491,6 @@ call neobundle#config('puyo.vim', {
 call neobundle#config('benchvimrc-vim', {
 \	'autoload' : {'commands' : 'BenchVimrc'}
 \})
-call neobundle#config('unite-alias', {
-\	'depends' : 'Shougo/unite.vim'
-\})
 call neobundle#config('yamada-vim', {
 \	'autoload' : {'commands' : 'Yamada'}
 \})
@@ -537,10 +529,6 @@ call neobundle#config('asql.vim', {
 \})
 call neobundle#config('ref-dicts-en', {
 \	'depends' : 'thinca/vim-ref'
-\})
-call neobundle#config('excelview-vim', {
-\	'depends'  : 'mattn/webapi-vim',
-\	'autoload' : {'commands' : 'ExcelView'}
 \})
 call neobundle#config('adrone.vim', {
 \	'autoload' : {'commands' : 'MyPluginOn'}
@@ -706,17 +694,6 @@ if neobundle#tap('jazzradio.vim')
 	\	}
 	\})
 endif
-
-"}}}
-"--- unite-alias ---"{{{
-
-"@Code(':Unite javasrc')
-let g:unite_source_alias_aliases = {
-\	'javasrc' : {
-\		'source' : 'file_rec',
-\		'args'   : '~/Documents/workspace/Java/src'
-\	}
-\}
 
 "}}}
 "--- vim-submode ---"{{{
