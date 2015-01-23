@@ -9,9 +9,9 @@ alias vim-bashrc='vim --split=tabedit ~/.bashrc'
 alias vim-bashpr='vim --split=tabedit ~/.bash_profile'
 alias vimshell=':VimShellCreate'
 alias new=':VimShellCreate'
-alias vsp=':vsp | VimShellCreate'
-alias sp=':sp | VimShellCreate'
-alias tabnew=':tabnew | VimShellCreate'
+alias vsp=':VimShellCreate -split-command=vsp'
+alias sp=':VimShellCreate -split-command=sp'
+alias tabnew=':VimShellCreate -split-command=tab'
 alias lcd='cd .'
 
 # Shell Config
@@ -20,7 +20,7 @@ alias mv='mv -i'
 alias cp='cp -i'
 
 # Develop Config
-alias g++='g++ -I/usr/include/c++/4.9 -I/usr/include/c++/4.9/x86_64-linux-gnu -std=c++11'
+#alias g++='g++ -I/usr/include/c++/4.9 -I/usr/include/c++/4.9/x86_64-linux-gnu -std=c++11'
 
 # Other Alias
 alias thanks='echo "(*^o^)< You are welcome!"'
