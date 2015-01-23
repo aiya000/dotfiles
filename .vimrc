@@ -533,11 +533,9 @@ call neobundle#config('ref-dicts-en', {
 call neobundle#config('adrone.vim', {
 \	'autoload' : {'commands' : 'MyPluginOn'}
 \})
-"@Bugs('do not functioned?')
-"@Incomplete('add hook function => fakecygpty.exe move or add to $PATH')
 call neobundle#config('fakecygpty', {
 \	'build' : {
-\		'cygwin' : 'gcc fakecygpty.c -o fakecygpty.exe'
+\		'windows' : expand('gcc fakecygpty.c -o ~/bin/fakecygpty.exe')
 \	}
 \})
 
@@ -2019,41 +2017,52 @@ augroup FileEvent
 	" -- Vi Improved --
 	autocmd VimEnter,ColorScheme * highlight RcMyHint cterm=standout ctermfg=DarkYellow
 	"@Incomplete('These were not deleted')
-	autocmd VimEnter,WinEnter    * let s:rcHint = s:matchadd_with_filetype('vim', 'RcMyHint', '\s*"\zs@\w\+(.*)\ze', 10, get(s:, 'rcHint', 10001))
+	autocmd BufWinEnter          * let s:rcHint = s:matchadd_with_filetype('vim', 'RcMyHint', '\s*"\zs@\w\+(.*)\ze', 10, get(s:, 'rcHint', 10001))
 
-	" Set for Haskell
+	" Haskell
 	autocmd VimEnter,ColorScheme * highlight RcHeadHfSpace cterm=underline ctermfg=Cyan
-	autocmd VimEnter,WinEnter    * let s:rcHeadHfSpace = s:matchadd_with_filetype('haskell', 'RcHeadHfSpace', '^\s\+', 10, get(s:, 'rcHeadHfSpace', 10002))
+	autocmd BufWinEnter          * let s:rcHeadHfSpace = s:matchadd_with_filetype('haskell', 'RcHeadHfSpace', '^\s\+', 10, get(s:, 'rcHeadHfSpace', 10002))
 	autocmd FileType haskell setl ts=2 sw=2 et
 	autocmd FileType yesod   setl ts=4 sw=4 et
 
 	"@Marked('do not depends filetype, but depends extend type...tabun')
-	" Set for C-Sharp
-	autocmd VimEnter,ColorScheme *    highlight RcTypeInference cterm=bold ctermfg=11
+	" C-Sharp
+	autocmd VimEnter,ColorScheme * highlight RcTypeInference cterm=bold ctermfg=11
 	autocmd VimEnter,WinEnter    *.cs syntax keyword RcTypeInference var
 
-	" Set for Plain Text FileTypes
-	autocmd FileType markdown,text    setl tw=0 ts=2 sw=2 et
-	autocmd FileType git-log.git-diff setl nolist
+	" Plain Text FileTypes
+	autocmd FileType markdown,text setl tw=0 ts=2 sw=2 et
 
-	" Set for SQL FileTypes
+	" SQL Languages
 	autocmd FileType mysql setl ts=4 sw=4 et
 
-	" Set for Markup Languages
+	" Markup Languages
 	autocmd FileType html,xml setl ts=4 sw=4 et
 
 	" FileTypes commentstrings
 	autocmd FileType vim           let &commentstring = ' "%s'
-	autocmd FileType c,cpp,java,cs let &commentstring = " /*%s*/"
-	autocmd FileType haskell       let &commentstring = " -- %s"
-	autocmd FileType coq           let &commentstring = " (*%s*)"
-	autocmd FileType mysql         let &commentstring = " -- %s"
-	autocmd FileType markdown      let &commentstring = "<!--%s-->"
-	autocmd FileType text,none     let &commentstring = " %s"
-	autocmd FIleType sh            let &commentstring = " #%s"
+	autocmd FileType java,cs,cpp,c let &commentstring = ' /*%s*/'
+	autocmd FileType haskell       let &commentstring = ' -- %s'
+	autocmd FileType coq           let &commentstring = ' (*%s*)'
+	autocmd FIleType sh            let &commentstring = ' #%s'
+	autocmd FileType mysql         let &commentstring = ' -- %s'
+	autocmd FileType markdown      let &commentstring = '<!--%s-->'
+	autocmd FileType text,none     let &commentstring = ' %s'
+augroup END
 
-	" Set for ConqueTerm
+
+" For Plugin Types
+augroup FileEvent
+	"@Incomplete('do not functioned')
+	"@Incomplete('do not functioned as exchanger')
+	" netrw
+	autocmd FileType netrw highlight default link CursorLine Visual
+
+	" ConqueTerm
 	autocmd FileType conque_term setl nolist
+
+	" gitlogviewer
+	autocmd FileType git-log.git-diff setl nolist
 augroup END
 
 "}}}
