@@ -158,7 +158,11 @@ alias reload-places='source ~/.bashrc_places && echo "bash places reloaded"'
 alias places="cat ~/.bashrc_places | awk -F'[= ]' '{print $ 2 \" : \" $ 4}' | sed s/\'//"
 
 # Edit it
+<<<<<<< HEAD
 alias edit-places='vim ~/.bashrc_places && reload-places'
+=======
+alias edit-places='vim ~/.bashrc_places && reload_places'
+>>>>>>> 23d78e4... Implemented view places in bashrc 'here aliases'
 
 # Register it
 function hereis () {
