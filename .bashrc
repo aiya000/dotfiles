@@ -132,7 +132,7 @@ fi
 #############################
 #  Develop support aliases  #
 #############################
-#{{{
+# develop environment {{{
 
 # The aliases shunted to other file
 if [ -f ~/.bashrc_develop ] ; then
@@ -144,7 +144,7 @@ fi
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
 #}}}
-#{{{
+# here aliases {{{
 
 # Register directory path to file, and Easily cd there
 if [ -f ~/.bashrc_places ] ; then
@@ -154,8 +154,10 @@ fi
 # Reload it
 alias reload-places='source ~/.bashrc_places && echo "bash places reloaded"'
 
-# もっとましな実装を
-alias places='echo - - - - -; cat ~/.bashrc_places; echo - - - - -'
+# View it
+alias places="cat ~/.bashrc_places | awk -F'[= ]' '{print $ 2 \" : \" $ 4}' | sed s/\'//"
+
+# Edit it
 alias edit-places='vim ~/.bashrc_places && reload_places'
 
 # Register it
