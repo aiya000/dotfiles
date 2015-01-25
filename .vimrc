@@ -954,7 +954,7 @@ endif
 set noruler
 
 " Hard Conceal
-set conceallevel=2
+"set conceallevel=2
 
 "@See('http://d.hatena.ne.jp/thinca/20111204/1322932585')
 " Sugoi view tabline
@@ -993,7 +993,7 @@ endfunction "}}}
 set tabline=%!WithDelimitterTabLine() showtabline=2
 
 " Always view the changed line num in Ex-command
-set report=0
+"set report=0
 
 " Turn off highlight
 nohlsearch
