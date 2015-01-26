@@ -1341,19 +1341,17 @@ command! ImportPythonJp call s:put_python_import_for_jp()
 
 " command! PutShortSeparator {{{
 
-"@Incompleted('I do not write all yet')
-"@Bugs('Inactive extended regexes')
 augroup FileEvent
 	autocmd WinEnter,BufWinEnter * let s:short_sparator =
-	\	&ft ==# 'vim'             ? '" --- --- --- "'
-	\:	&ft =~# '(java|cs|cpp|c)' ? '/* -=-=-=-=-=-=-=-=- */'
-	\:	&ft ==# 'haskell'         ? '-- - - - - - --'
-	\:	&ft ==# 'coq'             ? '(* - - - - - *)'
-	\:	&ft ==# 'mysql'           ? '-- - - - - - --'
-	\:	&ft ==# 'markdown'        ? '<!-- - - - - - -->'
-	\:	&ft ==# 'sh'              ? '#- - - - - - -#'
-	\:	&ft =~# '(text|none)'     ? '- - - - - - - - - -'
-	\:	'short separator undefined'
+	\	&ft ==# 'vim'               ? '" --- --- --- "'
+	\:	&ft =~# '\v(java|cs|cpp|c)' ? '/* -=-=-=-=-=-=-=-=- */'
+	\:	&ft ==# 'haskell'           ? '-- - - - - - --'
+	\:	&ft ==# 'coq'               ? '(* - - - - - *)'
+	\:	&ft ==# 'mysql'             ? '-- - - - - - --'
+	\:	&ft ==# 'markdown'          ? '<!-- - - - - - -->'
+	\:	&ft ==# 'sh'                ? '#- - - - - - -#'
+	\:	&ft =~# '\v(text|none)'     ? '- - - - - - - - - -'
+	\:	'short_separator_undefined'
 augroup END
 
 command! PutShortSeparator
@@ -1363,19 +1361,17 @@ command! PutShortSeparator
 " }}}
 " command! PutLongSeparator {{{
 
-"@Incompleted('I do not write all yet')
-"@Bugs('Inactive extended regexes')
 augroup FileEvent
-	autocmd WinEnter,BufWinEnter * let s:short_sparator =
-	\	&ft ==# 'vim'             ? '" --- --- --- "'
-	\:	&ft =~# '(java|cs|cpp|c)' ? '/* ---===---===---===---===---===---===--- */'
-	\:	&ft ==# 'haskell'         ? '-- - - - - - --'
-	\:	&ft ==# 'coq'             ? '(* - - - - - *)'
-	\:	&ft ==# 'mysql'           ? '-- - - - - - --'
-	\:	&ft ==# 'markdown'        ? '<!-- - - - - - -->'
-	\:	&ft ==# 'sh'              ? '#- - - - - - -#'
-	\:	&ft =~# '(text|none)'     ? '- - - - - - - - - -'
-	\:	'long separator undefined'
+	autocmd WinEnter,BufWinEnter * let s:long_separator =
+	\	&ft ==# 'vim'               ? '" --- --- --- --- --- --- --- --- --- "'
+	\:	&ft =~# '\v(java|cs|cpp|c)' ? '/* ---===---===---===---===---===---===--- */'
+	\:	&ft ==# 'haskell'           ? '-- - - - - - - - - - - - - - - - --'
+	\:	&ft ==# 'coq'               ? '(* - - - - - - - - - - - - - - - *)'
+	\:	&ft ==# 'mysql'             ? '-- - - - - - - - - - - - - - - - --'
+	\:	&ft ==# 'markdown'          ? '<!-- - - - - - - - - - - - - - - - -->'
+	\:	&ft ==# 'sh'                ? '#- - - - - - - - - - - - - - - - -#'
+	\:	&ft =~# '\v(text|none)'     ? '- - - - - - - - - - - - - - - - - - - -'
+	\:	'long_separator_undefined'
 augroup END
 
 command! PutLongSeparator
@@ -1771,18 +1767,22 @@ augroup END
 
 "-- Appends --"
 augroup KeyMapping
-	autocmd FileType * nnoremap <silent> m:             :<C-u>marks<CR>
-	autocmd FileType * nnoremap <silent> q:             :<C-u>register<CR>
-	autocmd FileType * nnoremap <silent> z:             :<C-u>tabs<CR>
-	autocmd FileType * nnoremap <silent> g:             :<C-u>buffers<CR>
-	autocmd FileType * nnoremap <silent> gk             :<C-u>call <SID>cursor_up_to_lid()<CR>
-	autocmd FileType * nnoremap <silent> gj             :<C-u>call <SID>cursor_down_to_ground()<CR>
-	"autocmd FileType * vnoremap <silent> gk             :<C-u>call <SID>cursor_up_to_lid()<CR>
-	"autocmd FileType * vnoremap <silent> gj             :<C-u>call <SID>cursor_down_to_ground()<CR>
-	autocmd FileType * nnoremap <silent> <C-m>          o<Esc>
-	autocmd FileType * nnoremap <silent> <Space><Space> :<C-u>call <SID>compress_spaces()<CR>
-	autocmd FileType * nnoremap <silent> <leader>b      :<C-u>ScratchUp<CR>
-	autocmd FileType * nnoremap <silent> <leader>B      :<C-u>EmptyBufUp<CR>
+	autocmd FileType * nnoremap <silent> m:                :<C-u>marks<CR>
+	autocmd FileType * nnoremap <silent> q:                :<C-u>register<CR>
+	autocmd FileType * nnoremap <silent> z:                :<C-u>tabs<CR>
+	autocmd FileType * nnoremap <silent> g:                :<C-u>buffers<CR>
+	autocmd FileType * nnoremap <silent> gk                :<C-u>call <SID>cursor_up_to_lid()<CR>
+	autocmd FileType * nnoremap <silent> gj                :<C-u>call <SID>cursor_down_to_ground()<CR>
+	"autocmd FileType * vnoremap <silent> gk                :<C-u>call <SID>cursor_up_to_lid()<CR>
+	"autocmd FileType * vnoremap <silent> gj                :<C-u>call <SID>cursor_down_to_ground()<CR>
+	autocmd FileType * nnoremap <silent> <C-m>             o<Esc>
+	autocmd FileType * nnoremap <silent> <Space><Space>    :<C-u>call <SID>compress_spaces()<CR>
+	autocmd FileType * nnoremap <silent> <leader>b         :<C-u>ScratchUp<CR>
+	autocmd FileType * nnoremap <silent> <leader>B         :<C-u>EmptyBufUp<CR>
+	autocmd FileType * nnoremap <silent> <leader>pl        :<C-u>PutLongSeparator<CR>
+	autocmd FileType * nnoremap <silent> <leader>ps        :<C-u>PutShortSeparator<CR>
+	autocmd FileType * nnoremap <silent> <leader>pd        :<C-u>PutDate<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>r :<C-u>call <SID>nofile_close()<CR>
 augroup END
 
 "-- For foldings --"
@@ -1842,11 +1842,6 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent>         <C-h><C-n>      :<C-u>set  number!         number?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-d>      :<C-u>call <SID>toggle_diff_mode()<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-v>      :<C-u>call <SID>toggle_virtual_edit()<CR>
-	"
-	autocmd FileType * nnoremap <silent>         <leader>pl        :<C-u>PutLongSeparator<CR>
-	autocmd FileType * nnoremap <silent>         <leader>ps        :<C-u>PutShortSeparator<CR>
-	autocmd FileType * nnoremap <silent>         <leader>pd        :<C-u>PutDate<CR>
-	autocmd FileType * nnoremap <silent>         <leader><leader>r :<C-u>call <SID>nofile_close()<CR>
 augroup END
 
 
@@ -1950,6 +1945,9 @@ augroup PluginPrefs
 	autocmd FileType vimshell  nmap     <buffer> gk         <Plug>(vimshell_previous_prompt)
 	autocmd FileType vimshell  nmap     <buffer> <C-]>      <Plug>(vimshell_clear)
 	autocmd FileType vimshell  inoremap <buffer> <C-l>      <Esc>
+	autocmd FileType vimshell  inoremap <buffer> <C-b>      <Left>
+	autocmd FileType vimshell  inoremap <buffer> <C-f>      <Right>
+	autocmd FileType vimshell  inoremap <buffer> <C-e>      <End>
 	autocmd FileType vimshell  imap     <buffer> <C-]>      <Plug>(vimshell_clear)
 	autocmd FileType vimshell  imap     <buffer> <C-j>      <Plug>(vimshell_enter)
 	autocmd FileType vimshell  imap     <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
@@ -1963,6 +1961,9 @@ augroup PluginPrefs
 	autocmd FileType int-*     nmap     <buffer> gj         <Plug>(vimshell_int_next_prompt)
 	autocmd FileType int-*     nmap     <buffer> gk         <Plug>(vimshell_int_previous_prompt)
 	autocmd FileType int-*     inoremap <buffer> <C-l>      <Esc>
+	autocmd FileType int-*     inoremap <buffer> <C-b>      <Left>
+	autocmd FileType int-*     inoremap <buffer> <C-f>      <Right>
+	autocmd FileType int-*     inoremap <buffer> <C-e>      <End>
 	autocmd FileType int-*     imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
 	autocmd FileType int-*     imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
 	autocmd FileType int-*     imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
