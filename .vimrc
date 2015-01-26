@@ -1020,7 +1020,12 @@ set autoindent cindent
 
 " Fold Text with foldmarker and fold sets
 set foldmethod=marker
-set foldtext=foldCC#foldtext()
+if s:is_cygwin
+	"@Marked('why cannot cygwin loading foldCC#foldtext() ?')
+	set foldtext=FoldCCtext()
+else
+	set foldtext=foldCC#foldtext()
+endif
 set foldcolumn=1
 let &fillchars = 'vert:|,fold: '
 set foldopen=search,jump,mark,percent,insert,tag,undo
@@ -1319,7 +1324,7 @@ function! s:java_run_func() "{{{
 
 	call delete(l:javaname . '.class')
 endfunction "}}}
-command! JavaRun call s:java_run_func()
+command! RunJava call s:java_run_func()
 
 function! s:put_python_import_for_jp() "{{{
 	let l:paste = &paste
@@ -1548,7 +1553,7 @@ command!          MinimapReSync execute 'MinimapStop' | execute 'MinimapSync'
 cnoreabbr Log      VimConsoleLog
 command!  LogClear VimConsoleClear
 
-cnoreabbr Ghc      !runghc %
+cnoreabbr RunGhc   !runghc %
 cnoreabbr Ghci     VimShellInteractive ghci
 cnoreabbr Sghci    VimShellInteractive --split='sp' ghci
 cnoreabbr Vghci    VimShellInteractive --split='vsp' ghci
