@@ -23,9 +23,9 @@ scriptencoding utf8
 
 "----------------------------"
 "  Target of this config     "
-"    - UNIX like OS          "
+"    - UNIX Type             "
 "    - Cygwin                "
-"    - Windows Kaoriya       "
+"    - Windows Kaoriya GVim  "
 "----------------------------"
 "     Eigo - Ingulisshu      "
 "----------------------------"
@@ -113,7 +113,7 @@ let s:is_nvim    = has('nvim')
 let s:is_windows = has('win32')
 let s:is_cygwin  = has('win32unix')
 let s:is_kaoriya = has('kaoriya')
-let s:is_doswin  = s:is_windows && !has('gui')
+let s:is_doswin  = s:is_windows && !s:is_cygwin && !has('gui')
 let s:is_unix    = has('unix')
 let s:is_mac     = has('mac')
 
@@ -576,7 +576,7 @@ let g:quickrun_config = {
 \	},
 \	'cpp' : {
 \		'command' : 'g++',
-\		'cmdopt'  : '-I/usr/include/c++/4.9 -I/usr/include/c++/4.9/x86_64-linux-gnu -std=c++11'
+\		'cmdopt'  : '-std=c++14'
 \	},
 \	'java' : {
 \		'cmdopt' : '-source 1.8',
@@ -1295,6 +1295,7 @@ command! BufMoveNewTab execute 'normal! mZ<C-w>c:tabnew<CR>`Z'
 " }}}
 " Development Support {{{
 
+"@Incompleted('does not removed another temporary class')
 " If you cannot use QuickRun, you can use this.
 function! s:java_run_func() "{{{
 	let l:javaname = expand('%:t:r')
@@ -1318,7 +1319,7 @@ function! s:java_run_func() "{{{
 		endif
 	endif
 
-	execute '!'.
+	execute ':!' .
 	\	printf('%s %s.java',   l:command[0], l:javaname) . ';' .
 	\	printf('%s %s',        l:command[1], l:javaname) . ';'
 
@@ -1329,11 +1330,11 @@ command! RunJava call s:java_run_func()
 function! s:put_python_import_for_jp() "{{{
 	let l:paste = &paste
 	set paste
-	execute 'normal! O' "#!/usr/bin/env python"
-	execute 'normal! o' "# -*- coding: utf-8 -*-"
-	execute 'normal! o' "import sys"
-	execute 'normal! o' "import codecs"
-	execute 'normal! o' "sys.stdout = codecs.getwriter('utf_8')(sys.stdout)"
+	execute 'normal! ggO' "#!/usr/bin/env python"
+	execute 'normal! o'   "# -*- coding: utf-8 -*-"
+	execute 'normal! o'   "import sys"
+	execute 'normal! o'   "import codecs"
+	execute 'normal! o'   "sys.stdout = codecs.getwriter('utf_8')(sys.stdout)"
 	let &paste = l:paste
 endfunc "}}}
 command! ImportPythonJp call s:put_python_import_for_jp()
@@ -1399,31 +1400,6 @@ function! s:put_html_base() "{{{
 	let &paste = l:paste
 endfunction "}}}
 command! PutHtmlBase call s:put_html_base()
-
-
-"@Incompleted('"+" deleted in sql sytax')
-"@Code('Select it, and execute this.')
-" {{{
-"  $ "SELECT *" +
-"  $ " FROM table;";
-"  Yank => SELECT * FROM table; 
-
-function! s:sql_yank_normalize() range 
-	let l:sql = ''
-
-	for l:i in range(a:firstline, a:lastline)
-		let l:line = getline(l:i)
-		let l:lineOfSql = substitute(substitute(
-		\		substitute(l:line, '"', '', 'g'),
-		\	'\v(^\s*+|+\s*$)', '', 'g'), "\t", '', 'g')
-
-		let l:sql .= l:lineOfSql . "\n"
-	endfor
-
-	let @" = substitute(l:sql, '\s\s\+', ' ', 'g')
-endfunction
-" }}}
-command! -range SqlCopy :<line1>,<line2>call s:sql_yank_normalize()
 
 
 " Echo script local values in this file
@@ -1591,7 +1567,7 @@ augroup KeyMapping
 	autocmd FileType * cnoremap <C-b> <Left>
 	autocmd FileType * cnoremap <C-f> <Right>
 	autocmd FileType * cnoremap <C-a> <Home>
-	autocmd FileType * cnoremap <C-h> <Backspace>
+	autocmd FileType * cnoremap <C-h> <BS>
 	autocmd FileType * cnoremap <C-d> <Del>
 	autocmd FileType * cnoremap <C-e> <End>
 	autocmd FileType * cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ?'':getcmdline()[:getcmdpos()-2]<CR>
@@ -1601,7 +1577,7 @@ augroup KeyMapping
 	autocmd FileType * IncSearchNoreMap <C-b> <Left>
 	autocmd FileType * IncSearchNoreMap <C-f> <Right>
 	autocmd FileType * IncSearchNoreMap <C-a> <Home>
-	autocmd FileType * IncSearchNoreMap <C-h> <Backspace>
+	autocmd FileType * IncSearchNoreMap <C-h> <BS>
 	autocmd FileType * IncSearchNoreMap <C-d> <Del>
 	autocmd FileType * IncSearchNoreMap <C-e> <End>
 augroup END
@@ -1931,11 +1907,12 @@ augroup PluginPrefs
 	autocmd FileType tweetvim     nnoremap         <buffer> U         :<C-u>TweetVimUserTimeline<Space>
 	autocmd FileType tweetvim     nnoremap <silent><buffer> Q         :<C-u>bdelete<CR>
 	" avoid <C-j> to say
-	autocmd FileType tweetvim_say nnoremap         <buffer> <C-j>     <CR>
+	autocmd FileType tweetvim_say nnoremap         <buffer> <C-j>     <C-o>o
 	autocmd FileType tweetvim_say inoremap         <buffer> <C-i>     <Tab>
 
-	"NOTE: I don't use nunmap, because happned exception 'no such keymapping' on many vimshell situation. ( on reload filetype, and etc )
-	autocmd FileType vimshell  nnoremap <buffer> Q          <NOP>
+	"NOTE: I don't use nunmap here,
+	"      because happned exception 'no such keymapping' when reload filetype.
+	autocmd FileType vimshell  nnoremap <buffer> Q          gQ
 	autocmd FileType vimshell  nnoremap <buffer> q          <NOP>
 	autocmd FileType vimshell  nnoremap <buffer> <C-n>      gt
 	autocmd FileType vimshell  nnoremap <buffer> <C-p>      gT
@@ -1948,6 +1925,7 @@ augroup PluginPrefs
 	autocmd FileType vimshell  inoremap <buffer> <C-b>      <Left>
 	autocmd FileType vimshell  inoremap <buffer> <C-f>      <Right>
 	autocmd FileType vimshell  inoremap <buffer> <C-e>      <End>
+	autocmd FileType vimshell  inoremap <buffer> <C-d>      <Del>
 	autocmd FileType vimshell  imap     <buffer> <C-]>      <Plug>(vimshell_clear)
 	autocmd FileType vimshell  imap     <buffer> <C-j>      <Plug>(vimshell_enter)
 	autocmd FileType vimshell  imap     <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
@@ -1964,6 +1942,7 @@ augroup PluginPrefs
 	autocmd FileType int-*     inoremap <buffer> <C-b>      <Left>
 	autocmd FileType int-*     inoremap <buffer> <C-f>      <Right>
 	autocmd FileType int-*     inoremap <buffer> <C-e>      <End>
+	autocmd FileType int-*     inoremap <buffer> <C-d>      <Del>
 	autocmd FileType int-*     imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
 	autocmd FileType int-*     imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
 	autocmd FileType int-*     imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
