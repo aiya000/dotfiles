@@ -82,12 +82,18 @@ new_path=/bin:/sbin
 new_path=$new_path:$HOME/bin:$HOME/sbin
 new_path=$new_path:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 new_path=$new_path:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
-# For Cabal
+# cabal
 [ -d ~/.cabal ] \
 	&& new_path=$new_path:$HOME/.cabal/bin
-# For pkgsrc
+# pkgsrc
 [ -d ~/pkg ] \
 	&& new_path=$new_path:$HOME/pkg/bin:$HOME/pkg/sbin
+# rbenv
+[ -d ~/.rbenv ] \
+	&& new_path=$new_path:$HOME/.rbenv/bin
+# ruby-build
+[ -d ~/.rbenv/plugins/ruby-build/bin ] \
+	&& new_path=$new_path:$HOME/.rbenv/plugins/ruby-build/bin
 
 # With OS
 if [ $isUbuntu -eq 1 ] ; then
