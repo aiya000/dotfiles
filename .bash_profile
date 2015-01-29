@@ -78,10 +78,9 @@ export EDITOR=vim
 ###################
 # ReConfig PATHes #
 ###################
-new_path=/bin:/sbin
-new_path=$new_path:$HOME/bin:$HOME/sbin
-new_path=$new_path:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
-new_path=$new_path:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
+# set PATH with priority
+new_path=$HOME/bin:$HOME/sbin
+
 # cabal
 [ -d ~/.cabal ] \
 	&& new_path=$new_path:$HOME/.cabal/bin
@@ -90,14 +89,22 @@ new_path=$new_path:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
 	&& new_path=$new_path:$HOME/pkg/bin:$HOME/pkg/sbin
 # rbenv
 [ -d ~/.rbenv ] \
-	&& new_path=$new_path:$HOME/.rbenv/bin
+	&& new_path=$new_path:$HOME/.rbenv/bin \
+	&& new_path=$new_path:$HOME/.rbenv/versions/`cat ~/.rbenv/version`/bin \
+	&& eval "$($HOME/.rbenv/bin/rbenv init -)"  # Oh, my cygwin... why I cannot use shims...
 # ruby-build
 [ -d ~/.rbenv/plugins/ruby-build/bin ] \
 	&& new_path=$new_path:$HOME/.rbenv/plugins/ruby-build/bin
 
+# and basics
+new_path=$new_path:/bin:/sbin
+new_path=$new_path:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+new_path=$new_path:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
+
 # With OS
 if [ $isUbuntu -eq 1 ] ; then
-	# Fix Recently Build GCC $ @Unchecked
+	#@Unchecked
+	# Fix Recently Build GCC
 	[ -n "`which g++4.9`"] \
 		&& export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/usr/include/c++/4.9:/usr/include/c++/4.9/x86_64-linux-gnu \
 		&& export CPLUS_LIBRARY_PATH=$CPLUS_LIBRARY_PATH:/usr/lib/lib64
@@ -111,13 +118,13 @@ elif [ $isCygwin -eq 1 ] ; then
 	if [ -d /cygdrive/c/Program\ Files\ \(x86\)/ ] ; then
 		jPath=/cygdrive/c/Program\ Files\ \(x86\)/Java/
 		jdkPath=`ls "$jPath" | grep 'jdk' | sort -r | head -1`
-		new_path=$new_path:"$jPath/$jdkPath/bin"
+		new_path=$new_path:$jPath/$jdkPath/bin
 
 		new_path=$new_path:/cygdrive/c/Program\ Files/pleiades/java/6/bin/
 	else
 		jPath=/cygdrive/c/Program\ Files/Java/
 		jdkPath=`ls "$jPath" | grep 'jdk' | sort -r | head -1`
-		new_path=$new_path:"$jPath/$jdkPath/bin"
+		new_path=$new_path:$jPath/$jdkPath/bin
 
 		new_path=$new_path:/cygdrive/c/Program\ Files\ \(x86\)/pleiades/java/6/bin/
 	fi
