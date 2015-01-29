@@ -47,6 +47,15 @@ alias gvim-vimconfig='gvim ~/.gvimrc'
 alias vim-bashrc='vim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
 alias vim-bashpr='vim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
 
+# with conditions {{{
+
+# .bash_profile specified environment
+if [ -f ~/.bash_profile_env ] ; then
+	alias vim-bashpr-env='vim ~/.bash_profile_env && source ~/.bash_profile_env && echo ">> .bash_profile_env loaded"'
+fi
+
+# }}}
+
 # }}}
 # Shell Utils {{{
 
@@ -137,7 +146,7 @@ fi
 # The aliases shunted to other file
 if [ -f ~/.bashrc_develop ] ; then
 	source ~/.bashrc_develop
-	alias vimdev='vim ~/.bashrc_develop && source ~/.bashrc && echo ">> .bashrc_develop loaded"'
+	alias vim-bashrc-dev='vim ~/.bashrc_develop && source ~/.bashrc && echo ">> .bashrc_develop loaded"'
 fi
 
 # Generate items for autotools

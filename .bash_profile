@@ -142,6 +142,11 @@ unset new_path
 #                                           #
 #############################################
 
+# Load Env Config
+if [ -f ~/.bash_profile_env ] ; then
+	source ~/.bash_profile_env
+fi
+
 # Export Loaded Archive
 alias pr_loaded='echo "pr_loaded"'
 

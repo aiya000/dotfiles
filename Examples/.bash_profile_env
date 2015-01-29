@@ -1,0 +1,3 @@
+# Example
+# cygwin import mingw's ruby.
+export PATH=`cygpath -p 'C:\Program Files (x86)\Ruby21-x64\bin'`:$PATH
