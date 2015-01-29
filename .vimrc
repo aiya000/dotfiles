@@ -14,7 +14,7 @@ scriptencoding utf8
 " -- Event_Method
 " -- Functional_Command
 " -- Command_Alias
-" -- KeyMappings
+" -- Key_Mappings
 " -- File_Types
 " -- Environment_Pref
 " ---
@@ -408,6 +408,7 @@ NeoBundle        'vim-scripts/dbext.vim'
 NeoBundleLazy    'aiya000/adrone.vim'
 NeoBundleFetch   'Shougo/fakecygpty'
 NeoBundle        'nathanaelkane/vim-indent-guides'
+NeoBundleLazy    'LeafCage/vimhelpgenerator'
 
 
 call neobundle#end()
@@ -537,6 +538,12 @@ call neobundle#config('fakecygpty', {
 \	'build' : {
 \		'windows' : expand('gcc fakecygpty.c -o ~/bin/fakecygpty.exe')
 \	}
+\})
+call neobundle#config('vimhelpgenerator', {
+\	'autoload' : {'commands' : [
+\		'VimHelpGenerator',
+\		'HelpIntoMarkdown'
+\	]}
 \})
 
 " }}}
@@ -1536,7 +1543,7 @@ cnoreabbr Hoogle   Ref hoogle
 
 
 "-------------------------"
-"       KeyMappings       "
+"      Key_Mappings       "
 "-------------------------"
 " Global KeyMaps {{{
 
@@ -1964,7 +1971,7 @@ augroup END
 
 
 "-------------------------"
-"        File_Types       "
+"       File_Types        "
 "-------------------------"
 "{{{
 
