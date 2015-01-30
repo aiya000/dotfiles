@@ -995,7 +995,7 @@ set noruler
 " Sugoi view tabline
 function! s:tabpage_label(n) "{{{
 	let l:title = gettabvar(a:n, 'title')
-	if empty(l:title)
+	if !empty(l:title)
 		return l:title
 	endif
 
