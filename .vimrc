@@ -320,6 +320,25 @@ if !isdirectory(s:undodir)
 endif
 
 "}}}
+" Enable matchit.vim {{{
+
+if !exists('loaded_matchit')
+	" Load it
+	runtime macros/matchit.vim
+
+	" If I don't have matchit document, I get it
+	let s:matchit_doc_from = expand('$VIMRUNTIME/macros/matchit.txt')
+	let s:matchit_doc_to = expand('~/.vim/doc/matchit.txt')
+
+	if !filereadable(s:matchit_doc_to)
+		call writefile(readfile(s:matchit_doc_from), s:matchit_doc_to)
+	endif
+
+	unlet s:matchit_doc_to
+	unlet s:matchit_doc_from
+endif
+
+"}}}
 
 
 "-------------------------"
@@ -559,6 +578,15 @@ let g:netrw_preview = 1
 augroup PluginPrefs
 	autocmd FileType netrw setl nolist
 augroup END
+
+" }}}
+"--- matchit.vim ---" {{{
+
+"augroup FileEvent
+"	" uooooooooooooo... oh, my triple operator !!!!!!!!!!!
+"	" Why if set you, happend an error when doing match it...
+"	autocmd FileType * let b:match_words = &matchpairs . ',?::'
+"augroup END
 
 " }}}
 "--- unite.vim ---"{{{
@@ -1027,12 +1055,8 @@ set autoindent cindent
 
 " Fold Text with foldmarker and fold sets
 set foldmethod=marker
-if s:is_cygwin
-	"@Marked('why cannot cygwin loading foldCC#foldtext() ?')
-	set foldtext=FoldCCtext()
-else
-	set foldtext=foldCC#foldtext()
-endif
+"@Marked('why cannot cygwin loading foldCC#foldtext() ?')
+let &foldtext  = s:is_cygwin ? 'FoldCCtext()' : 'foldCC#foldtext()'
 set foldcolumn=1
 let &fillchars = 'vert:|,fold: '
 set foldopen=search,jump,mark,percent,insert,tag,undo
@@ -1094,7 +1118,7 @@ set wildmenu
 set shellslash
 
 " Add Match Pairs
-set matchpairs+=<:>,?::
+set matchpairs+=<:>
 
 " Load Target for ctags
 set tags=./tags,~/tags
@@ -1109,7 +1133,7 @@ set spelllang=en_US
 set path=.,,./**
 
 " Generate HelpTags My Help
-if isdirectory('~/.vim/doc')
+if isdirectory(expand('~/.vim/doc'))
 	helptags ~/.vim/doc
 endif
 
