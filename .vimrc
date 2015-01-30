@@ -128,7 +128,7 @@ let s:undodir   = s:backupdir . '/undo'
 let s:viewdir   = s:backupdir . '/view'
 
 let s:username  = $USER
-let s:groupname = $GROUP != '' ? $GROUP : $USER
+let s:groupname = !empty($GROUP) ? $GROUP : $USER
 
 "}}}
 
@@ -250,7 +250,7 @@ function! s:remove_empty_bundledir()  "{{{
 
 	for l:dir in l:dirs
 		let l:plugin_dir = s:bundledir . '/' . l:dir
-		let l:is_empty   = s:system('ls ' . l:plugin_dir) == ''
+		let l:is_empty   = empty(s:system('ls ' . l:plugin_dir))
 
 		if l:is_empty
 			call s:system('rmdir ' . l:plugin_dir)
@@ -995,7 +995,7 @@ set noruler
 " Sugoi view tabline
 function! s:tabpage_label(n) "{{{
 	let l:title = gettabvar(a:n, 'title')
-	if l:title !=# ''
+	if empty(l:title)
 		return l:title
 	endif
 
@@ -1008,11 +1008,11 @@ function! s:tabpage_label(n) "{{{
 	endif
 
 	let l:mod = len(filter(copy(l:bufnrs), "getbufvar(v:val, '&modified')")) ? '+' : ''
-	let l:sp = (l:no . l:mod) == '' ? '' : ' '
+	let l:sp = empty(l:no . l:mod) ? '' : ' '
 
 	let l:curbufnr = bufnrs[tabpagewinnr(a:n) - 1]
 	let l:fname = pathshorten(bufname(l:curbufnr))
-	if l:fname == ''
+	if empty(l:fname)
 		let l:fname .= '[ NoName ]'
 	endif
 
@@ -1161,7 +1161,7 @@ augroup END
 " Powered Up Auto File Backup when written
 set nobackup
 function! s:update_backup_by_date() "{{{
-	let l:dailydir = s:backupdir . '/' . strftime("%Y-%m-%d")
+	let l:dailydir = s:backupdir . '/' . strftime('%Y-%m-%d')
 
 	if !isdirectory(l:dailydir)
 		call mkdir(l:dailydir, 'p', 0755)
@@ -1268,8 +1268,8 @@ autocmd FileEvent FileType * let b:tdir_dir = get(b:, 'tdir_dir', 'Not set tdir'
 command! TDirPwd           echo b:tdir_dir
 function! s:set_temporary_dir(path) "{{{
 	if isdirectory(a:path)
-		let b:tdir_dir = a:path == '.' ? expand('%:p:h')
-		\                              : a:path
+		let b:tdir_dir = a:path ==# '.' ? expand('%:p:h')
+		\                               : a:path
 		echo b:tdir_dir
 	else
 		call s:echo_error('No such temporary root dir')
@@ -1332,9 +1332,9 @@ function! s:java_run_func() "{{{
 	let l:javaname = expand('%:t:r')
 	let l:javav = s:system('java -version')
 
-	if l:javav =~# "1\.8"
+	if l:javav =~# '1.8'
 		let l:command = ['javac -source 1.8 -encoding utf8', 'java']
-	elseif l:javav =~# "1\.7"
+	elseif l:javav =~# '1.7'
 		let l:command = ['javac -source 1.7 -encoding utf8', 'java']
 	else
 		let l:command = ['javac -encoding utf8', 'java']
@@ -1358,17 +1358,17 @@ function! s:java_run_func() "{{{
 endfunction "}}}
 command! RunJava call s:java_run_func()
 
-function! s:put_python_import_for_jp() "{{{
-	let l:paste = &paste
-	set paste
-	execute 'normal! ggO' "#!/usr/bin/env python"
-	execute 'normal! o'   "# -*- coding: utf-8 -*-"
-	execute 'normal! o'   "import sys"
-	execute 'normal! o'   "import codecs"
-	execute 'normal! o'   "sys.stdout = codecs.getwriter('utf_8')(sys.stdout)"
-	let &paste = l:paste
-endfunc "}}}
-command! ImportPythonJp call s:put_python_import_for_jp()
+"function! s:put_python_import_for_jp() "{{{
+"	let l:paste = &paste
+"	set paste
+"	execute 'normal! ggO' '#!/usr/bin/env python'
+"	execute 'normal! o'   '# -*- coding: utf-8 -*-'
+"	execute 'normal! o'   'import sys'
+"	execute 'normal! o'   'import codecs'
+"	execute 'normal! o'   "sys.stdout = codecs.getwriter('utf_8')(sys.stdout)"
+"	let &paste = l:paste
+"endfunc "}}}
+"command! ImportPythonJp call s:put_python_import_for_jp()
 
 
 " command! PutShortSeparator {{{
@@ -1638,7 +1638,7 @@ endfunction "}}}
 
 " Easy toggle virtualedit
 function! s:toggle_virtual_edit() "{{{
-	if &virtualedit == ''
+	if empty(&virtualedit)
 		set virtualedit=all
 	else
 		set virtualedit=
