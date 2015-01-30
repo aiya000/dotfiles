@@ -4,9 +4,10 @@ scriptencoding utf8
 "--  Recipe Menu  --
 "-------------------
 " -- Parameter
+" -- Initialize
 " -- Application_Setting
 " -- Functional_Command
-" -- Alias
+" -- Command_Alias
 " -- View_Setting
 " -- Plugin_Configure
 " ---
@@ -29,18 +30,6 @@ scriptencoding utf8
 
 
 "-------------------------"
-"       Initialize        "
-"-------------------------"
-" autcmd Groups {{{
-
-augroup GuiPrefs
-	autocmd!
-augroup END
-
-"}}}
-
-
-"-------------------------"
 "        Parameter        "
 "-------------------------"
 "{{{
@@ -54,6 +43,18 @@ let s:isWindows = has('win32')
 let g:gvimrc['guifont']      = get(g:gvimrc, 'guifont', {})
 let g:gvimrc['guifont'].font = get(g:gvimrc, 'font', s:isWindows ? 'MS_Gothic' : 'Andale Mono')
 let g:gvimrc['guifont'].size = get(g:gvimrc, 'size', s:isWindows ? ':h10' : ' 10')
+
+"}}}
+
+
+"-------------------------"
+"       Initialize        "
+"-------------------------"
+" autcmd Groups {{{
+
+augroup GuiPrefs
+	autocmd!
+augroup END
 
 "}}}
 
@@ -108,7 +109,7 @@ command! DressUpColorMolokai
 
 
 "-------------------------"
-"          Alias          "
+"      Command_Alias      "
 "-------------------------"
 "{{{
 
