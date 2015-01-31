@@ -1574,6 +1574,7 @@ cnoreabbr Hoogle   Ref hoogle
 " Disables {{{
 
 augroup KeyMapping
+	autocmd FileType * nnoremap <C-c>   <NOP>  " for terminal intterupt
 	autocmd FileType * nnoremap <Up>    <NOP>
 	autocmd FileType * nnoremap <Down>  <NOP>
 	autocmd FileType * nnoremap <Left>  <NOP>
