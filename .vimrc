@@ -743,6 +743,15 @@ if neobundle#tap('jazzradio.vim')
 endif
 
 "}}}
+"--- rogue.vim ---"{{{
+
+let g:rogue#directory = expand('~/.rogue_vim')
+
+if !isdirectory(g:rogue#directory)
+	call mkdir(g:rogue#directory)
+endif
+
+"}}}
 "--- vim-submode ---"{{{
 
 let g:submode_timeout = 0
