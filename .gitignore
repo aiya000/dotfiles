@@ -1,2 +1,4 @@
 .vim/.netrwhist
 .vim/bundle/.neobundle
+.vim/bundle/*
+.vim/makes
