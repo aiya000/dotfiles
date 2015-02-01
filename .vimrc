@@ -431,6 +431,8 @@ NeoBundleLazy    'aiya000/adrone.vim'
 NeoBundleFetch   'Shougo/fakecygpty'
 NeoBundle        'nathanaelkane/vim-indent-guides'
 NeoBundleLazy    'LeafCage/vimhelpgenerator'
+NeoBundleLazy    'thinca/vim-threes'
+
 
 
 call neobundle#end()
@@ -565,6 +567,12 @@ call neobundle#config('vimhelpgenerator', {
 \	'autoload' : {'commands' : [
 \		'VimHelpGenerator',
 \		'HelpIntoMarkdown'
+\	]}
+\})
+call neobundle#config('vim-threes', {
+\	'autoload' : {'commands' : [
+\		'ThreesShowRecord',
+\		'ThreesStart'
 \	]}
 \})
 
