@@ -432,6 +432,7 @@ NeoBundleFetch   'Shougo/fakecygpty'
 NeoBundle        'nathanaelkane/vim-indent-guides'
 NeoBundleLazy    'LeafCage/vimhelpgenerator'
 NeoBundleLazy    'thinca/vim-threes'
+NeoBundle        'thinca/vim-portal'
 
 
 
