@@ -7,6 +7,8 @@ scriptencoding utf8
 " -- Local_Function
 " -- Initialize
 " -- Plugin_Manage
+"
+"
 " -- Plugin_Configure
 " -- View_Setting
 " -- Action_Setting
@@ -116,6 +118,7 @@ let s:is_kaoriya = has('kaoriya')
 let s:is_doswin  = s:is_windows && !s:is_cygwin && !has('gui')
 let s:is_unix    = has('unix')
 let s:is_mac     = has('mac')
+let s:is_mac_osx = has('macunix')
 
 let s:has_cygwin = isdirectory('/cygwin')
 let s:has_mingw  = 0  "@Incomplete('dummy')
@@ -328,7 +331,7 @@ if !exists('loaded_matchit')
 
 	" If I don't have matchit document, I get it
 	let s:matchit_doc_from = expand('$VIMRUNTIME/macros/matchit.txt')
-	let s:matchit_doc_to = expand('~/.vim/doc/matchit.txt')
+	let s:matchit_doc_to   = expand('~/.vim/doc/matchit.txt')
 
 	if !filereadable(s:matchit_doc_to)
 		call writefile(readfile(s:matchit_doc_from), s:matchit_doc_to)
@@ -902,6 +905,7 @@ set runtimepath+=~/.vim/makes/arot13.vim/
 set runtimepath+=~/.vim/makes/ahoge-put.vim/
 set runtimepath+=~/.vim/makes/asql.vim
 set runtimepath+=~/.vim/makes/adrone.vim/
+"set runtimepath+=~/.vim/makes/vital.vim
 
 "" MyPlugins State
 "let s:myplugin_enabled = get(s:, 'myplugin_enabled', 0)
