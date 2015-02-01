@@ -15,13 +15,17 @@
 
 ## Script Parameters
 # path of dropbox_upload command
-DROPBOX_COMMAND=$HOME/bin/dropbox_uploader.sh
+DROPBOX_COMMAND=`which dropbox_uploader.sh`
+
 # remote upload directory path ( ~cloud_app_dir/$DROPBOX_DOTFILES_DIR )
 DROPBOX_DOTFILES_DIR=Room
+
 # path of temporary file output location
 TMP_DIR=$HOME/.tmp
+
 # exclude files by tar
-ARCHIVE_EXCLUDE='.vim/bundle/*'
+TAR_OPT='--exclude .vim/bundle/* --exclude .git --exclude .backup'
+
 # if true then do not remove archive
 no_remove_archive=0
 
@@ -51,7 +55,7 @@ fi
 ## Archiving dotfiles dir by tar.gz
 echo '>> archiving start...'
 upload_file="${TMP_DIR}/dotfiles-`date +'%Y-%m-%d'`.tar.gz"
-tar zcvf $upload_file ../.dotfiles --exclude "$ARCHIVE_EXCLUDE" > /dev/null \
+tar zcvf $upload_file ../../.dotfiles $TAR_OPT > /dev/null \
 	&& echo '>> done' \
 	|| (
 		echo '>> happened problems'

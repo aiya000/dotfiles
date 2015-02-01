@@ -2,3 +2,4 @@
 .vim/bundle/.neobundle
 .vim/bundle/*
 .vim/makes
+.backup/**

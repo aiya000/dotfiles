@@ -1,7 +1,8 @@
 #!/bin/bash
 source ./utils.sh
 
-backupdir="${HOME}/.backup_dotfiles/`date +'%Y-%d-%m'"
+dotdir=$HOME/.dotfiles
+backupdir=$dotdir/.backup/`date +'%Y-%m-%d'`
 usage() {  #{{{
 		echo 'This script is some dotfiles easialy linking to HOME.'
 		echo
@@ -47,7 +48,6 @@ fi
 
 
 # Linking dotfiles in HOME directory.
-dotdir=`dirname ${0}`
 if [ "$dotdir" = "." ] ; then
 	dotdir=`pwd`
 fi
