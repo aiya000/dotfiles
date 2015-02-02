@@ -24,7 +24,7 @@ DROPBOX_DOTFILES_DIR=Room
 TMP_DIR=$HOME/.tmp
 
 # exclude files by tar
-TAR_OPT='--exclude .vim/bundle/* --exclude .git --exclude .backup'
+TAR_OPT='--exclude .vim/bundle/* --exclude .backup'
 
 # if true then do not remove archive
 no_remove_archive=0

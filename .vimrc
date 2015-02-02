@@ -752,6 +752,11 @@ if neobundle#tap('jazzradio.vim')
 endif
 
 "}}}
+"--- foldCC ---"{{{
+
+let g:foldCCtext_maxchars = 120
+
+"}}}
 "--- rogue.vim ---"{{{
 
 let g:rogue#directory = expand('~/.rogue_vim')
@@ -916,6 +921,11 @@ augroup FileEvent
 augroup END
 
 "}}}
+"--- vim-portal ---"{{{
+
+let g:portal_no_default_key_mappings = 0
+
+"}}}
 "--- For Debug ---"{{{
 
 " Set for my projects
@@ -1077,8 +1087,7 @@ set autoindent cindent
 
 " Fold Text with foldmarker and fold sets
 set foldmethod=marker
-"@Marked('why cannot cygwin loading foldCC#foldtext() ?')
-let &foldtext  = s:is_cygwin ? 'FoldCCtext()' : 'foldCC#foldtext()'
+set foldtext=FoldCCtext()
 set foldcolumn=1
 let &fillchars = 'vert:|,fold: '
 set foldopen=search,jump,mark,percent,insert,tag,undo
@@ -1930,6 +1939,11 @@ augroup KeyMapping
 
 	" undotree
 	autocmd FileType * nnoremap <leader>u :<C-u>UndotreeToggle<CR>
+
+	" vim-portal
+	autocmd FileType * nmap              <leader>1 <Plug>(portal-gun-blue)
+	autocmd FileType * nmap              <leader>2 <Plug>(portal-gun-orange)
+	autocmd FileType * nnoremap <silent> <leader>3 :PortalReset<CR>
 augroup END
 
 " }}}
