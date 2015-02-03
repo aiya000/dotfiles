@@ -3,7 +3,7 @@
 DIFF_DIR1=~/.dotfiles
 DIFF_DIR2=~/.tmp/.dotfiles
 
-files=`ls -A $DIFF_DIR2`
+files=`find ~/.tmp/.dotfiles/ -type f | awk -F'.dotfiles/' '{print $2}'`
 
 for file in $files ; do
 	file1=$DIFF_DIR1/$file
