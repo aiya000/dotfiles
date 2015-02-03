@@ -16,9 +16,8 @@ endfunction
 
 function! s:command.execute(args, context)
 	let l:name = substitute(a:args[0], '\s', '', 'g')
-	let l:body = printf("alias %s='%s'", l:name, getcwd())
-	let l:new_alias =
-	\	['call vimshell#interactive#send("' . l:body . '")']
+	let l:new_alias = printf("alias %s='%s'\<CR>", l:name, getcwd())
 
-	call writefile(l:new_alias, g:vimshell_hereis_file, 'a')
+	call writefile([l:new_alias], g:vimshell_hereis_file, 'a')
+	call vimshell#interactive#send('vimsh ' . g:vimshell_hereis_file)
 endfunction
