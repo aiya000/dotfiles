@@ -193,6 +193,7 @@ augroup KeyEvent
 	autocmd!
 augroup END
 
+
 "}}}
 " For Support Kaoriya Vim {{{
 
@@ -432,8 +433,6 @@ NeoBundleFetch   'Shougo/fakecygpty'
 NeoBundle        'nathanaelkane/vim-indent-guides'
 NeoBundleLazy    'LeafCage/vimhelpgenerator'
 NeoBundleLazy    'thinca/vim-threes'
-NeoBundle        'thinca/vim-portal'
-
 
 
 call neobundle#end()
@@ -1939,11 +1938,6 @@ augroup KeyMapping
 
 	" undotree
 	autocmd FileType * nnoremap <leader>u :<C-u>UndotreeToggle<CR>
-
-	" vim-portal
-	autocmd FileType * nmap              <leader>1 <Plug>(portal-gun-blue)
-	autocmd FileType * nmap              <leader>2 <Plug>(portal-gun-orange)
-	autocmd FileType * nnoremap <silent> <leader>3 :PortalReset<CR>
 augroup END
 
 " }}}
