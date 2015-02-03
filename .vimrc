@@ -708,6 +708,12 @@ augroup PluginPrefs
 	autocmd FileType vimshell call vimshell#altercmd#define('tdirpwd', ':TDirPwd')
 augroup END
 
+
+" for My Command
+
+" connect to bash's hereis
+let g:vimshell_hereis_file = expand('~/.bashrc_places')
+
 "}}}
 "--- J6uil ---"{{{
 

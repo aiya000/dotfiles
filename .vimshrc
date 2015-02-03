@@ -22,6 +22,9 @@ alias cp='cp -i'
 # Develop Config
 #alias g++='g++ -I/usr/include/c++/4.9 -I/usr/include/c++/4.9/x86_64-linux-gnu -std=c++11'
 
+# for My Command
+alias reload-places='reload_places'
+
 # Other Alias
 alias thanks='echo "(*^o^)< You are welcome!"'
 alias gyazo='ruby ~/.vim/bundle/vim-gyazo/gyazo/gyazo.rb'
