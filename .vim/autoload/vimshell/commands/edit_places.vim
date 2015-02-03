@@ -1,12 +1,12 @@
 let g:vimshell_hereis_file = get(g:, 'vimshell_hereis_file', expand('~/.vimsh_places.vim'))
 
 let s:command = {
-\	'name' : 'reload_places',
+\	'name' : 'edit_places',
 \	'kind' : 'internal',
-\	'description' : 'reload paths that was defined by hereis - g:vimshell_hereis_file'
+\	'description' : 'simply open places file - g:vimshell_hereis_file'
 \}
 
-function! vimshell#commands#reload_places#define()
+function! vimshell#commands#edit_places#define()
 	return s:command
 endfunction
 
@@ -19,6 +19,6 @@ function! s:command.execute(args, context)
 	if !filereadable(l:file)
 		echoerr 'no such places file'
 	else
-		call vimshell#interactive#send('vimsh ' . l:file)
+		call vimshell#interactive#send('vim ' . l:file)
 	endif
 endfunction
