@@ -22,6 +22,12 @@ function! s:command.execute(args, context)
 	endif
 
 	for l:place in readfile(l:file)
-		call vimshell#interactive#send('echo ' . l:place)
+		let l:alias      = split(l:place, '=')
+		let l:alias_name = split(l:alias[0], ' ')[1]
+
+		let l:path       = split(l:alias[1], ' ')[1]
+		let l:path1      = substitute(l:path, "'", '', '')
+
+		echo l:alias_name . ":\t" . l:path1
 	endfor
 endfunction

@@ -3,7 +3,7 @@ let g:vimshell_hereis_file = get(g:, 'vimshell_hereis_file', expand('~/.vimsh_pl
 let s:command = {
 \	'name' : 'hereis',
 \	'kind' : 'internal',
-\	'description' : 'hereis is cd util'
+\	'description' : 'hereis {place_name}'
 \}
 
 function! vimshell#commands#hereis#define()
