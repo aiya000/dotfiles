@@ -74,9 +74,9 @@ scriptencoding utf8
 
 "-- Eigo to English
 
-"-- read options.jax
+"-- read help options.jax
 
-"-- specialize filetypes for vim-indent-guides
+"-- read help windows.txt
 
 " }}}
 
@@ -161,12 +161,6 @@ endfunction
 "-------------------------"
 "       Initialize        "
 "-------------------------"
-" {{{
-
-" Load ftplugin.vim and indent.vim
-filetype plugin indent on
-
-" }}}
 " autocmd Groups {{{
 
 augroup PluginPrefs
@@ -192,7 +186,6 @@ augroup END
 augroup KeyEvent
 	autocmd!
 augroup END
-
 
 "}}}
 " For Support Kaoriya Vim {{{
@@ -414,7 +407,6 @@ NeoBundle        'thinca/vim-painter'
 NeoBundle        'osyo-manga/vim-anzu'
 NeoBundle        'osyo-manga/vim-over'
 NeoBundle        'tyru/restart.vim'
-NeoBundle        'koron/minimap-vim'
 NeoBundle        'glidenote/memolist.vim'
 NeoBundle        'vim-jp/vimdoc-ja'
 NeoBundleLazy    'rbtnn/game_engine.vim'
@@ -433,6 +425,7 @@ NeoBundleFetch   'Shougo/fakecygpty'
 NeoBundle        'nathanaelkane/vim-indent-guides'
 NeoBundleLazy    'LeafCage/vimhelpgenerator'
 NeoBundleLazy    'thinca/vim-threes'
+NeoBundleLazy    'vim-ruby/vim-ruby'
 
 
 call neobundle#end()
@@ -574,6 +567,9 @@ call neobundle#config('vim-threes', {
 \		'ThreesShowRecord',
 \		'ThreesStart'
 \	]}
+\})
+call neobundle#config('vim-ruby', {
+\	'autoload' : {'filetype' : 'ruby'}
 \})
 
 " }}}
@@ -924,11 +920,6 @@ augroup FileEvent
 	autocmd WinEnter,BufWinEnter *            IndentGuidesDisable
 	autocmd WinEnter,BufWinEnter *.html,*.xml IndentGuidesEnable
 augroup END
-
-"}}}
-"--- vim-portal ---"{{{
-
-let g:portal_no_default_key_mappings = 0
 
 "}}}
 "--- For Debug ---"{{{
@@ -1410,14 +1401,14 @@ command! RunJava call s:java_run_func()
 " command! PutShortSeparator {{{
 
 augroup FileEvent
-	autocmd WinEnter,BufWinEnter * let s:short_sparator =
+	autocmd FileType,WinEnter,BufWinEnter * let s:short_sparator =
 	\	&ft ==# 'vim'               ? '" --- --- --- "'
 	\:	&ft =~# '\v(java|cs|cpp|c)' ? '/* -=-=-=-=-=-=-=-=- */'
 	\:	&ft ==# 'haskell'           ? '-- - - - - - --'
 	\:	&ft ==# 'coq'               ? '(* - - - - - *)'
 	\:	&ft ==# 'mysql'             ? '-- - - - - - --'
 	\:	&ft ==# 'markdown'          ? '<!-- - - - - - -->'
-	\:	&ft ==# 'sh'                ? '#- - - - - - -#'
+	\:	&ft =~# '\v(ruby|sh)'       ? '#- - - - - - -#'
 	\:	&ft =~# '\v(text|none)'     ? '- - - - - - - - - -'
 	\:	'short_separator_undefined'
 augroup END
@@ -1430,14 +1421,14 @@ command! PutShortSeparator
 " command! PutLongSeparator {{{
 
 augroup FileEvent
-	autocmd WinEnter,BufWinEnter * let s:long_separator =
+	autocmd FileType,WinEnter,BufWinEnter * let s:long_separator =
 	\	&ft ==# 'vim'               ? '" --- --- --- --- --- --- --- --- --- "'
 	\:	&ft =~# '\v(java|cs|cpp|c)' ? '/* ---===---===---===---===---===---===--- */'
 	\:	&ft ==# 'haskell'           ? '-- - - - - - - - - - - - - - - - --'
 	\:	&ft ==# 'coq'               ? '(* - - - - - - - - - - - - - - - *)'
 	\:	&ft ==# 'mysql'             ? '-- - - - - - - - - - - - - - - - --'
 	\:	&ft ==# 'markdown'          ? '<!-- - - - - - - - - - - - - - - - -->'
-	\:	&ft ==# 'sh'                ? '#- - - - - - - - - - - - - - - - -#'
+	\:	&ft =~# '\v(ruby|sh)'       ? '#- - - - - - - - - - - - - - - - -#'
 	\:	&ft =~# '\v(text|none)'     ? '- - - - - - - - - - - - - - - - - - - -'
 	\:	'long_separator_undefined'
 augroup END
@@ -1447,9 +1438,7 @@ command! PutLongSeparator
 	\|	execute 'normal! =='
 
 " }}}
-command! PutDate
-	\	execute 'normal! a' strftime('%c')
-	\|	execute 'normal! =='
+command! PutDate execute 'normal! a' strftime('%c')
 
 
 function! s:put_html_base() "{{{
@@ -1478,6 +1467,24 @@ command! ShowRcDict for s:v in items(s:) | echo s:v | endfor
 "-------------------------"
 "      Command_Alias      "
 "-------------------------"
+" Override {{{
+
+call altercmd#load()
+
+" buffer open commands with filetype 'none'
+command! -bang NewOverride new<bang> | setf none
+AlterCommand new NewOverride
+
+command! -bang VnewOverride vnew<bang> | setf none
+AlterCommand vnew VnewOverride
+
+command! -bang EnewOverride enew<bang> | setf none
+AlterCommand enew EnewOverride
+
+command! -bang TabnewOverride tabnew<bang> | setf none
+AlterCommand tabnew TabnewOverride
+
+" }}}
 " Utils {{{
 
 " Vim Utils {{{
@@ -1580,24 +1587,38 @@ cnoreabbr JazzPlay      JazzradioPlay
 command!  JazzStop      JazzradioStop
 
 " Translates Languages
-cnoreabbr         Translate     ExciteTranslate
-cnoreabbr         Weblio        Ref webdict weblio
+cnoreabbr Translate ExciteTranslate
+cnoreabbr Weblio    Ref webdict weblio
 
-command! -nargs=1 GrepNow       vimgrep <args> % | cwindow
-command!          MinimapReSync execute 'MinimapStop' | execute 'MinimapSync'
+" Grep and Open current buffer
+command! -nargs=1 GrepNow vimgrep <args> % | cwindow
 
 " }}}
 " Developments {{{
 
+" vimconsole.vim
 cnoreabbr Log      VimConsoleLog
 command!  LogClear VimConsoleClear
 
+" GHCi
 cnoreabbr RunGhc   !runghc %
 cnoreabbr Ghci     VimShellInteractive ghci
 cnoreabbr Sghci    VimShellInteractive --split='sp' ghci
 cnoreabbr Vghci    VimShellInteractive --split='vsp' ghci
 cnoreabbr GhciTab  VimShellInteractive --split='tabnew' ghci
 cnoreabbr Hoogle   Ref hoogle
+
+" js
+cnoreabbr Js       VimShellInteractive js
+cnoreabbr Sjs      VimShellInteractive --split='sp' js
+cnoreabbr Vjs      VimShellInteractive --split='vsp' js
+cnoreabbr JsTab    VimShellInteractive --split='tabnew' js
+
+" irb
+cnoreabbr Irb      VimShellInteractive irb
+cnoreabbr Sirb     VimShellInteractive --split='sp' irb
+cnoreabbr Virb     VimShellInteractive --split='vsp' irb
+cnoreabbr IrbTab   VimShellInteractive --split='tabnew' irb
 
 " }}}
 
@@ -1850,6 +1871,7 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <C-w>bt    :<C-u>call <SID>buf_open_new_tab()<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bT    :<C-u>BufMoveNewTab<CR>
 	autocmd FileType * nnoremap <silent> <C-w>N     :<C-u>enew!<CR>
+	autocmd FileType * nnoremap <silent> <C-w><C-Q> :<C-u>quitall<CR>
 	autocmd FileType * nnoremap <silent> <C-w>Q     :<C-u>quitall!<CR>
 augroup END
 
@@ -2097,7 +2119,7 @@ augroup FileEvent
 	autocmd FileType java,cs,cpp,c let &commentstring = ' /*%s*/'
 	autocmd FileType haskell       let &commentstring = ' -- %s'
 	autocmd FileType coq           let &commentstring = ' (*%s*)'
-	autocmd FIleType sh            let &commentstring = ' #%s'
+	autocmd FIleType ruby,sh       let &commentstring = ' #%s'
 	autocmd FileType mysql         let &commentstring = ' -- %s'
 	autocmd FileType markdown      let &commentstring = '<!--%s-->'
 	autocmd FileType text,none     let &commentstring = ' %s'
@@ -2133,6 +2155,7 @@ endif
 "}}}
 
 
+filetype plugin indent on
 syntax enable
 let g:vimrc['loaded'] = 1
 
