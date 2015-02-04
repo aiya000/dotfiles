@@ -17,7 +17,6 @@ endfunction
 function! s:command.execute(args, context)
 	if exists(':TweetVimCommandSay')
 		execute ':TweetVimCommandSay ' . join(a:args)
-		return
 	else
 		let l:message = 'TweetVim is not available !'
 		call vimshell#error_line(a:context.fd, l:message)
