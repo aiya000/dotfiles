@@ -25,6 +25,7 @@ alias cp='cp -i'
 # for My Command
 alias reload-places='reload_places'
 alias edit-places='edit_places'
+vimsh ~/.bashrc_places
 
 # Other Alias
 alias thanks='echo "(*^o^)< You are welcome!"'
