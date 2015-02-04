@@ -164,7 +164,7 @@ fi
 alias reload-places='source ~/.bashrc_places && echo "bash places reloaded"'
 
 # View it
-alias places="cat ~/.bashrc_places | awk -F'[= ]' '{print $ 2 \" : \" $ 4}' | sed s/\'//"
+alias places="cat ~/.bashrc_places | awk -F'[= ]' '{print $ 2 \":\t\" $ 4}' | sed s/\'//"
 
 # Edit it
 alias edit-places='vim ~/.bashrc_places && reload-places'
