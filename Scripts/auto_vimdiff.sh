@@ -3,7 +3,7 @@
 DIFF_DIR1=~/.dotfiles
 DIFF_DIR2=~/.tmp/.dotfiles
 
-files=`find ~/.tmp/.dotfiles/ -type f | awk -F'.dotfiles/' '{print $2}' | grep -v '\.git'`
+files=`find ~/.tmp/.dotfiles/ -type f | awk -F'.dotfiles/' '{print $2}' | grep -v -E '(\.git|\.vim/\.netrwhist)'`
 
 for file in $files ; do
 	file1=$DIFF_DIR1/$file
