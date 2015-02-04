@@ -11,7 +11,7 @@ alias vimshell=':VimShellCreate'
 alias new=':VimShellCreate'
 alias vsp=':VimShellCreate -split-command=vsp'
 alias sp=':VimShellCreate -split-command=sp'
-alias tabnew=':VimShellCreate -split-command=tab'
+alias tabnew=':VimShellCreate -split-command=tabnew'
 alias lcd='cd .'
 
 # Shell Config
