@@ -1626,8 +1626,6 @@ cnoreabbr IrbTab   VimShellInteractive --split='tabnew' irb
 "-------------------------"
 "      Key_Mappings       "
 "-------------------------"
-" Global KeyMaps {{{
-
 " Disables {{{
 
 augroup KeyMapping
@@ -1814,8 +1812,8 @@ function! s:nofile_close() "{{{
 endfunction "}}}
 
 " }}}
+" Overwrite mapping {{{
 
-"-- Overwrite mapping --"
 augroup KeyMapping
 	" † God Of The Vim
 	autocmd FileType * nnoremap Q gQ
@@ -1829,8 +1827,9 @@ augroup KeyMapping
 	autocmd FileType * cnoremap <C-l> <Esc>
 augroup END
 
+" }}}
+" Append " {{{
 
-"-- Appends --"
 augroup KeyMapping
 	autocmd FileType * nnoremap <silent> m:                :<C-u>marks<CR>
 	autocmd FileType * nnoremap <silent> q:                :<C-u>register<CR>
@@ -1848,9 +1847,13 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <leader>ps        :<C-u>PutShortSeparator<CR>
 	autocmd FileType * nnoremap <silent> <leader>pd        :<C-u>PutDate<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>r :<C-u>call <SID>nofile_close()<CR>
+
+	autocmd FileType * cnoremap <C-]> '<,'>
 augroup END
 
-"-- For foldings --"
+" }}}
+" for foldings {{{
+
 augroup KeyMapping
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
@@ -1859,10 +1862,11 @@ augroup KeyMapping
 	autocmd FileType * nnoremap z<     V$%zf
 augroup END
 
+" }}}
+" for window and buffer {{{
 
-"-- For window and buffer --"
 augroup KeyMapping
-	autocmd FileType * nnoremap <silent> <C-w>t     :<C-u>tabnew<CR>
+	autocmd FileType * nnoremap <silent> <C-w>t     :<C-u>TabnewOverride<CR>
 	autocmd FileType * nnoremap <silent> <C-w>T     :<C-u>tabclose<CR>
 	autocmd FileType * nnoremap <silent> <C-w>c     :<C-u>bdelete<CR>
 	autocmd FileType * nnoremap <silent> <C-w>C     :<C-u>bdelete!<CR>
@@ -1870,13 +1874,13 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <C-w>W     :<C-u>wall<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bt    :<C-u>call <SID>buf_open_new_tab()<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bT    :<C-u>BufMoveNewTab<CR>
-	autocmd FileType * nnoremap <silent> <C-w>N     :<C-u>enew!<CR>
-	autocmd FileType * nnoremap <silent> <C-w><C-Q> :<C-u>quitall<CR>
-	autocmd FileType * nnoremap <silent> <C-w>Q     :<C-u>quitall!<CR>
+	autocmd FileType * nnoremap <silent> <C-w>N     :<C-u>EnewOverride!<CR>
+	autocmd FileType * nnoremap <silent> <C-w>Q     :<C-u>quitall<CR>
 augroup END
 
+" }}}
+" Actions {{{
 
-"-- Actions --"
 augroup KeyMapping
 	autocmd FileType * nnoremap <silent><expr>   <C-k><C-s>     ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
 	autocmd FileType * nnoremap <silent>         <C-k><C-r>     :<C-u>Reload<CR>
@@ -1896,8 +1900,9 @@ augroup KeyMapping
 	autocmd FileType * inoremap                  <C-k><C-l> <Esc>
 augroup END
 
+" }}}
+" Toggle options {{{
 
-"-- Toggle options --"
 augroup KeyMapping
 	autocmd FileType * nnoremap <silent>         <C-h><C-w>      :<C-u>setl wrap!           wrap?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-i>      :<C-u>set  ignorecase!     ignorecase?<CR>
@@ -1910,8 +1915,9 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent>         <C-h><C-v>      :<C-u>call <SID>toggle_virtual_edit()<CR>
 augroup END
 
+" }}}
+" for Plugins {{{
 
-"-- For Plugins --"
 augroup KeyMapping
 	" open-browser.vim
 	autocmd FileType * nmap              <leader>w          <Plug>(openbrowser-open)
@@ -1970,7 +1976,7 @@ augroup END
 
 " }}}
 
-"}}}
+" }}}
 " Buffer Local KeyMaps {{{
 
 " To Plugin buffers
@@ -2104,6 +2110,9 @@ augroup FileEvent
 	" C-Sharp
 	autocmd VimEnter,ColorScheme * highlight RcTypeInference cterm=bold ctermfg=11
 	autocmd VimEnter,WinEnter    *.cs syntax keyword RcTypeInference var
+
+	" Ruby
+	autocmd FileType ruby setl ts=2 sw=2 et
 
 	" Plain Text FileTypes
 	autocmd FileType markdown,text setl tw=0 ts=2 sw=2 et
