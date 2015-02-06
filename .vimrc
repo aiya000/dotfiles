@@ -33,17 +33,9 @@ scriptencoding utf8
 "----------------------------"
 " Ideas {{{
 
-"-- point marker line num in a file
-"  -- I can jump marked line and list up mark lines
-
 "-- View prev and next fold head text ...on echo or other buffer ? on submode-foldings
 
-"-- unite unite-actions
-
-"-- <C-a> alter key [asdfghjkl;] to [1234567890]
-
-"-- search from history
-"  -- exam) 2/ => searching by 2 prev search word
+"-- <C-/> alter key [asdfghjkl;] to [1234567890]
 
 "-- Unite outline -> view C-Sharp <summary>~</summary>
 
@@ -67,7 +59,7 @@ scriptencoding utf8
 
 "-- lost highlight of buffer when delete other buffer
 
-"-- indent function crazy ?
+"-- conflicted? vim-ruby and rspec.vim
 
 "}}}
 " Todo {{{
@@ -426,6 +418,7 @@ NeoBundle        'nathanaelkane/vim-indent-guides'
 NeoBundleLazy    'LeafCage/vimhelpgenerator'
 NeoBundleLazy    'thinca/vim-threes'
 NeoBundleLazy    'vim-ruby/vim-ruby'
+NeoBundleLazy    'Keithbsmiley/rspec.vim'
 
 
 call neobundle#end()
@@ -571,6 +564,9 @@ call neobundle#config('vim-threes', {
 call neobundle#config('vim-ruby', {
 \	'autoload' : {'filetype' : 'ruby'}
 \})
+call neobundle#config('rspec.vim', {
+\	'autoload' : {'filetype' : 'ruby'}
+\})
 
 " }}}
 
@@ -612,7 +608,7 @@ let g:unite_source_alias_aliases = {
 let g:quickrun_config = {
 \	'_' : {
 \		'split'  : '',
-\		'runner' : exists('*vimproc#system') ? 'vimproc' : 'system',
+\		'runner' : 'vimproc',
 \		'runner/vimproc/updatetime' : 10,
 \		'hook/time/enable' : 1
 \	},
@@ -622,7 +618,7 @@ let g:quickrun_config = {
 \	},
 \	'java' : {
 \		'cmdopt' : '-source 1.8',
-\		'runner' : exists('*vimproc#system') ? 'process_manager' : 'system'
+\		'runner' : 'process_manager'
 \	}
 \}
 
@@ -644,7 +640,7 @@ if s:is_cygwin
 	let g:quickrun_config['java'] = {
 	\	'command' : 'javac',
 	\	'exec'    : ['%c %o `echo %s | sed s:\:/:g | cygpath -w -f -`', '%c %s:t:r %a'],
-	\	'hook/output_encode/encoding': 'Shift_JIS'
+	\	'hook/output_encode/encoding' : 'Shift_JIS'
 	\}
 
 	let s:javav = s:system('java -version')
@@ -1354,7 +1350,7 @@ command! BufMoveNewTab execute 'normal! mZ<C-w>c:tabnew<CR>`Z'
 " Development Support {{{
 
 "@Incompleted('does not removed another temporary class')
-" If you cannot use QuickRun, you can use this.
+" If you cannot use QuickRun or want to use stdio, you can use this.
 function! s:java_run_func() "{{{
 	let l:javaname = expand('%:t:r')
 	let l:javav = s:system('java -version')
@@ -1384,6 +1380,9 @@ function! s:java_run_func() "{{{
 	call delete(l:javaname . '.class')
 endfunction "}}}
 command! RunJava call s:java_run_func()
+
+" Same as RunJava for Ruby
+cnoreabbr RunRuby !ruby %
 
 "function! s:put_python_import_for_jp() "{{{
 "	let l:paste = &paste
@@ -2021,6 +2020,8 @@ augroup PluginPrefs
 	autocmd FileType vimshell  inoremap <buffer> <C-b>      <Left>
 	autocmd FileType vimshell  inoremap <buffer> <C-f>      <Right>
 	autocmd FileType vimshell  inoremap <buffer> <C-e>      <End>
+	autocmd FileType vimshell  inoremap <buffer> <C-n>      <Esc>gt
+	autocmd FileType vimshell  inoremap <buffer> <C-p>      <Esc>gT
 	autocmd FileType vimshell  inoremap <buffer> <C-d>      <Del>
 	autocmd FileType vimshell  imap     <buffer> <C-]>      <Plug>(vimshell_clear)
 	autocmd FileType vimshell  imap     <buffer> <C-j>      <Plug>(vimshell_enter)
@@ -2039,6 +2040,8 @@ augroup PluginPrefs
 	autocmd FileType int-*     inoremap <buffer> <C-f>      <Right>
 	autocmd FileType int-*     inoremap <buffer> <C-e>      <End>
 	autocmd FileType int-*     inoremap <buffer> <C-d>      <Del>
+	autocmd FileType int-*     inoremap <buffer> <C-n>      <Esc>gt
+	autocmd FileType int-*     inoremap <buffer> <C-p>      <Esc>gT
 	autocmd FileType int-*     imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
 	autocmd FileType int-*     imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
 	autocmd FileType int-*     imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
