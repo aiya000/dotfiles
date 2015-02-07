@@ -853,7 +853,10 @@ let g:ref_source_webdict_sites = {
 let g:ref_source_webdict_sites['default'] = 'weblio'
 
 function! s:weblio_filter(output)
-	return join(split(a:output, "\n")[60 : ], "\n")
+	let l:lines  = split(a:output, "\n")
+	"@Incompleted('')
+	let l:lines1 = map(l:lines, 'substitute(v:val, "\v(発音記号|音声を聞く|ダウンロード再生)\n", "", "g")')
+	return join(l:lines1[60 : ], "\n")
 endfunction
 let g:ref_source_webdict_sites['weblio'].filter = function('s:weblio_filter')
 
@@ -2103,12 +2106,12 @@ augroup END
 
 augroup FileEvent
 	" -- Vi Improved --
-	autocmd VimEnter,ColorScheme * highlight RcMyHint cterm=standout ctermfg=DarkYellow
-	autocmd BufWinEnter          * let s:rcHint = s:matchadd_with_filetype('vim', 'RcMyHint', '\s*"\zs@\w\+(.*)\ze', 10, get(s:, 'rcHint', 10001))
+	autocmd VimEnter,ColorScheme * highlight rcMyHint cterm=standout ctermfg=DarkYellow
+	autocmd BufWinEnter          * let s:rcMyHint = s:matchadd_with_filetype('vim', 'rcMyHint', '\s*"\zs@\w\+(.*)\ze', 10, get(s:, 'rcMyHint', 10001))
 
 	" Haskell
-	autocmd VimEnter,ColorScheme * highlight RcHeadHfSpace cterm=underline ctermfg=Black
-	autocmd BufWinEnter          * let s:rcHeadHfSpace = s:matchadd_with_filetype('haskell', 'RcHeadHfSpace', '^\s\+', 10, get(s:, 'rcHeadHfSpace', 10002))
+	autocmd VimEnter,ColorScheme * highlight rcHeadSpace cterm=underline ctermfg=DarkGray
+	autocmd BufWinEnter          * let s:rcHeadSpace = s:matchadd_with_filetype('haskell', 'rcHeadSpace', '^\s\+', 10, get(s:, 'rcHeadSpace', 10002))
 	autocmd FileType haskell setl ts=2 sw=2 et
 	autocmd FileType yesod   setl ts=4 sw=4 et
 
@@ -2146,6 +2149,9 @@ augroup FileEvent
 	"@Incomplete('do not functioned as exchanger')
 	" netrw
 	autocmd FileType netrw highlight default link CursorLine Visual
+
+	" TweetVim
+	autocmd FileType tweetvim setl cursorline
 
 	" ConqueTerm
 	autocmd FileType conque_term setl nolist
