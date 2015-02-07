@@ -2101,11 +2101,9 @@ augroup ExtensionType
 augroup END
 
 
-"@Bugs('these highlight of filetype is not local >>= duplication')
 augroup FileEvent
 	" -- Vi Improved --
 	autocmd VimEnter,ColorScheme * highlight RcMyHint cterm=standout ctermfg=DarkYellow
-	"@Incomplete('These were not deleted')
 	autocmd BufWinEnter          * let s:rcHint = s:matchadd_with_filetype('vim', 'RcMyHint', '\s*"\zs@\w\+(.*)\ze', 10, get(s:, 'rcHint', 10001))
 
 	" Haskell
@@ -2114,7 +2112,7 @@ augroup FileEvent
 	autocmd FileType haskell setl ts=2 sw=2 et
 	autocmd FileType yesod   setl ts=4 sw=4 et
 
-	"@Marked('do not depends filetype, but depends extend type...tabun')
+	"@Marked('do not depends filetype, but depends extend type...tabun') <- ???
 	" C-Sharp
 	autocmd VimEnter,ColorScheme * highlight RcTypeInference cterm=bold ctermfg=11
 	autocmd VimEnter,WinEnter    *.cs syntax keyword RcTypeInference var
