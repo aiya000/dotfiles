@@ -95,7 +95,7 @@ scriptencoding utf8
 "----------------------------------------
 " {- Booked something -}
 " mark     Z => comand[BufMoveNewTab]
-" register Z => inoremap[<C-k>Y]
+" register z => inoremap[<C-k>Y]
 "----------------------------------------
 
 
@@ -423,6 +423,7 @@ NeoBundleLazy    'LeafCage/vimhelpgenerator'
 NeoBundleLazy    'thinca/vim-threes'
 NeoBundleLazy    'vim-ruby/vim-ruby'
 NeoBundleLazy    'Keithbsmiley/rspec.vim'
+NeoBundle        'tsukkee/unite-help'
 
 
 call neobundle#end()
@@ -1892,9 +1893,8 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent>         <C-k>r         :<C-u>Resetf<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-Space> :<C-u>call <SID>toggle_case()<CR>
 	autocmd FileType * inoremap                  <C-k><C-k>     <C-o>"_d$
-	autocmd FileType * inoremap                  <C-k><C-z>     <C-o>:normal! <C-z><CR>
 	autocmd FileType * inoremap                  <C-k><C-i>     <C-o>:set infercase! infercase?<CR>
-	autocmd FileType * inoremap                  <C-k>Y         <Esc>k"ZyyjV"ZpA
+	autocmd FileType * inoremap                  <C-k><C-y>     <Esc>k"zyyjV"zp:let @z = ''<CR>A
 	autocmd FileType * cnoremap                  <C-k><C-p>     <Up>
 	autocmd FileType * cnoremap                  <C-k><C-n>     <Down>
 
