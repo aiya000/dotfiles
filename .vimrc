@@ -93,6 +93,10 @@ scriptencoding utf8
 " @Hoge{Win|Ubuntu}  : This Hint for Win and Ubuntu.
 " @Hoge!{Mac}        : This Hint for other than Mac.
 "----------------------------------------
+" {- Booked something -}
+" mark     Z => comand[BufMoveNewTab]
+" register Z => inoremap[<C-k>Y]
+"----------------------------------------
 
 
 "---------------------"
@@ -1878,7 +1882,7 @@ augroup KeyMapping
 augroup END
 
 " }}}
-" Actions {{{
+" Another actions {{{
 
 augroup KeyMapping
 	autocmd FileType * nnoremap <silent><expr>   <C-k><C-s>     ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
@@ -1890,6 +1894,7 @@ augroup KeyMapping
 	autocmd FileType * inoremap                  <C-k><C-k>     <C-o>"_d$
 	autocmd FileType * inoremap                  <C-k><C-z>     <C-o>:normal! <C-z><CR>
 	autocmd FileType * inoremap                  <C-k><C-i>     <C-o>:set infercase! infercase?<CR>
+	autocmd FileType * inoremap                  <C-k>Y         <Esc>k"ZyyjV"ZpA
 	autocmd FileType * cnoremap                  <C-k><C-p>     <Up>
 	autocmd FileType * cnoremap                  <C-k><C-n>     <Down>
 
@@ -2104,7 +2109,7 @@ augroup FileEvent
 	autocmd BufWinEnter          * let s:rcHint = s:matchadd_with_filetype('vim', 'RcMyHint', '\s*"\zs@\w\+(.*)\ze', 10, get(s:, 'rcHint', 10001))
 
 	" Haskell
-	autocmd VimEnter,ColorScheme * highlight RcHeadHfSpace cterm=underline ctermfg=Cyan
+	autocmd VimEnter,ColorScheme * highlight RcHeadHfSpace cterm=underline ctermfg=Black
 	autocmd BufWinEnter          * let s:rcHeadHfSpace = s:matchadd_with_filetype('haskell', 'RcHeadHfSpace', '^\s\+', 10, get(s:, 'rcHeadHfSpace', 10002))
 	autocmd FileType haskell setl ts=2 sw=2 et
 	autocmd FileType yesod   setl ts=4 sw=4 et
@@ -2129,10 +2134,9 @@ augroup FileEvent
 	" FileTypes commentstrings
 	autocmd FileType vim           let &commentstring = ' "%s'
 	autocmd FileType java,cs,cpp,c let &commentstring = ' /*%s*/'
-	autocmd FileType haskell       let &commentstring = ' -- %s'
+	autocmd FileType haskell,mysql let &commentstring = ' -- %s'
 	autocmd FileType coq           let &commentstring = ' (*%s*)'
 	autocmd FIleType ruby,sh       let &commentstring = ' #%s'
-	autocmd FileType mysql         let &commentstring = ' -- %s'
 	autocmd FileType markdown      let &commentstring = '<!--%s-->'
 	autocmd FileType text,none     let &commentstring = ' %s'
 augroup END
