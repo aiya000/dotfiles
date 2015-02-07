@@ -2020,9 +2020,9 @@ augroup PluginPrefs
 	autocmd FileType vimshell  inoremap <buffer> <C-b>      <Left>
 	autocmd FileType vimshell  inoremap <buffer> <C-f>      <Right>
 	autocmd FileType vimshell  inoremap <buffer> <C-e>      <End>
-	autocmd FileType vimshell  inoremap <buffer> <C-n>      <Esc>gt
-	autocmd FileType vimshell  inoremap <buffer> <C-p>      <Esc>gT
 	autocmd FileType vimshell  inoremap <buffer> <C-d>      <Del>
+	autocmd FileType vimshell  imap     <buffer> <C-n>      <C-o><Plug>(vimshell_next_prompt)
+	autocmd FileType vimshell  imap     <buffer> <C-p>      <C-o><Plug>(vimshell_previous_prompt)
 	autocmd FileType vimshell  imap     <buffer> <C-]>      <Plug>(vimshell_clear)
 	autocmd FileType vimshell  imap     <buffer> <C-j>      <Plug>(vimshell_enter)
 	autocmd FileType vimshell  imap     <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
@@ -2040,8 +2040,8 @@ augroup PluginPrefs
 	autocmd FileType int-*     inoremap <buffer> <C-f>      <Right>
 	autocmd FileType int-*     inoremap <buffer> <C-e>      <End>
 	autocmd FileType int-*     inoremap <buffer> <C-d>      <Del>
-	autocmd FileType int-*     inoremap <buffer> <C-n>      <Esc>gt
-	autocmd FileType int-*     inoremap <buffer> <C-p>      <Esc>gT
+	autocmd FileType int-*     imap     <buffer> <C-n>      <C-o><Plug>(vimshell_int_next_prompt)
+	autocmd FileType int-*     imap     <buffer> <C-p>      <C-o><Plug>(vimshell_int_previous_prompt)
 	autocmd FileType int-*     imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
 	autocmd FileType int-*     imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
 	autocmd FileType int-*     imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
