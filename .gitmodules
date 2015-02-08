@@ -1,0 +1,3 @@
+[submodule ".private"]
+	path = .private
+	url = https://aiya000@git.codebreak.com/aiya000/dotfiles-private.git
