@@ -1,7 +1,7 @@
 #!/bin/bash
 source ./utils.sh
 
-dotdir=$HOME/.dotfiles
+DOT_DIR=$HOME/.dotfiles
 
 # Confirm
 echo 'Realy remove some links in $HOME ?(y/n)'
@@ -22,8 +22,8 @@ echo 'Remove some links.'
 echo '-------------------'
 
 # Remove links
-ignorefiles=`formatIgnoreFiles`
-dotfiles=`ls -A $dotdir | grep -v -E "$ignorefiles"`
+ignorefiles=`grepformat_ignorefiles`
+dotfiles=`ls -A $DOT_DIR | grep -v -E "$ignorefiles"`
 
 for linkName in $dotfiles ; do
 	targetLink=$HOME/$linkName
