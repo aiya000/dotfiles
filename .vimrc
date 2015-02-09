@@ -61,6 +61,8 @@ scriptencoding utf8
 
 "-- conflicted? vim-ruby and rspec.vim
 
+"-- not loaded rspec.vim on load filetype 'ruby'
+
 "}}}
 " Todo {{{
 
@@ -912,17 +914,12 @@ augroup END
 "--- vim-indent-guides ---"{{{
 
 let g:indent_guides_default_mapping = 0
-let g:indent_guides_auto_colors = 0
 let g:indent_guides_guide_size = 1
 
-augroup PluginPrefs
-	autocmd ColorScheme * highlight IndentGuidesOdd  ctermbg=blue
-	autocmd ColorScheme * highlight IndentGuidesEven ctermbg=red
-augroup END
-
+" If matched file extension pattern, indent-guides is enabled (patter match)
 augroup FileEvent
-	autocmd WinEnter,BufWinEnter *            IndentGuidesDisable
-	autocmd WinEnter,BufWinEnter *.html,*.xml IndentGuidesEnable
+	autocmd WinEnter,BufWinEnter *                  IndentGuidesDisable
+	autocmd WinEnter,BufWinEnter *.html,*.xml,*.erb IndentGuidesEnable
 augroup END
 
 "}}}
@@ -1409,14 +1406,14 @@ cnoreabbr RunRuby !ruby %
 
 augroup FileEvent
 	autocmd FileType,WinEnter,BufWinEnter * let s:short_sparator =
-	\	&ft ==# 'vim'               ? '" --- --- --- "'
-	\:	&ft =~# '\v(java|cs|cpp|c)' ? '/* -=-=-=-=-=-=-=-=- */'
-	\:	&ft ==# 'haskell'           ? '-- - - - - - --'
-	\:	&ft ==# 'coq'               ? '(* - - - - - *)'
-	\:	&ft ==# 'mysql'             ? '-- - - - - - --'
-	\:	&ft ==# 'markdown'          ? '<!-- - - - - - -->'
-	\:	&ft =~# '\v(ruby|sh)'       ? '#- - - - - - -#'
-	\:	&ft =~# '\v(text|none)'     ? '- - - - - - - - - -'
+	\	&ft ==# 'vim'                ? '" --- --- --- "'
+	\:	&ft =~# '\v(java|cs|cpp|c)'  ? '/* -=-=-=-=-=-=-=-=- */'
+	\:	&ft ==# 'haskell'            ? '-- - - - - - --'
+	\:	&ft ==# 'coq'                ? '(* - - - - - *)'
+	\:	&ft ==# 'mysql'              ? '-- - - - - - --'
+	\:	&ft =~# '\v(markdown|eruby)' ? '<!-- - - - - - -->'
+	\:	&ft =~# '\v(ruby|sh)'        ? '#- - - - - - -#'
+	\:	&ft =~# '\v(text|none)'      ? '- - - - - - - - - -'
 	\:	'short_separator_undefined'
 augroup END
 
@@ -1429,14 +1426,14 @@ command! PutShortSeparator
 
 augroup FileEvent
 	autocmd FileType,WinEnter,BufWinEnter * let s:long_separator =
-	\	&ft ==# 'vim'               ? '" --- --- --- --- --- --- --- --- --- "'
-	\:	&ft =~# '\v(java|cs|cpp|c)' ? '/* ---===---===---===---===---===---===--- */'
-	\:	&ft ==# 'haskell'           ? '-- - - - - - - - - - - - - - - - --'
-	\:	&ft ==# 'coq'               ? '(* - - - - - - - - - - - - - - - *)'
-	\:	&ft ==# 'mysql'             ? '-- - - - - - - - - - - - - - - - --'
-	\:	&ft ==# 'markdown'          ? '<!-- - - - - - - - - - - - - - - - -->'
-	\:	&ft =~# '\v(ruby|sh)'       ? '#- - - - - - - - - - - - - - - - -#'
-	\:	&ft =~# '\v(text|none)'     ? '- - - - - - - - - - - - - - - - - - - -'
+	\	&ft ==# 'vim'                ? '" --- --- --- --- --- --- --- --- --- "'
+	\:	&ft =~# '\v(java|cs|cpp|c)'  ? '/* ---===---===---===---===---===---===--- */'
+	\:	&ft ==# 'haskell'            ? '-- - - - - - - - - - - - - - - - --'
+	\:	&ft ==# 'coq'                ? '(* - - - - - - - - - - - - - - - *)'
+	\:	&ft ==# 'mysql'              ? '-- - - - - - - - - - - - - - - - --'
+	\:	&ft =~# '\v(markdown|eruby)' ? '<!-- - - - - - - - - - - - - - - - -->'
+	\:	&ft =~# '\v(ruby|sh)'        ? '#- - - - - - - - - - - - - - - - -#'
+	\:	&ft =~# '\v(text|none)'      ? '- - - - - - - - - - - - - - - - - - - -'
 	\:	'long_separator_undefined'
 augroup END
 
@@ -2028,9 +2025,11 @@ augroup PluginPrefs
 	autocmd FileType vimshell  inoremap <buffer> <C-b>      <Left>
 	autocmd FileType vimshell  inoremap <buffer> <C-f>      <Right>
 	autocmd FileType vimshell  inoremap <buffer> <C-e>      <End>
+	autocmd FileType vimshell  inoremap <buffer> <C-n>      <Esc>gt
+	autocmd FileType vimshell  inoremap <buffer> <C-p>      <Esc>gT
 	autocmd FileType vimshell  inoremap <buffer> <C-d>      <Del>
-	autocmd FileType vimshell  imap     <buffer> <C-n>      <C-o><Plug>(vimshell_next_prompt)
-	autocmd FileType vimshell  imap     <buffer> <C-p>      <C-o><Plug>(vimshell_previous_prompt)
+	autocmd FileType vimshell  imap     <buffer> <C-n>      <C-o><Plug>(vimshell_next_prompt)<End>
+	autocmd FileType vimshell  imap     <buffer> <C-p>      <C-o><Plug>(vimshell_previous_prompt)<End>
 	autocmd FileType vimshell  imap     <buffer> <C-]>      <Plug>(vimshell_clear)
 	autocmd FileType vimshell  imap     <buffer> <C-j>      <Plug>(vimshell_enter)
 	autocmd FileType vimshell  imap     <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
@@ -2048,8 +2047,8 @@ augroup PluginPrefs
 	autocmd FileType int-*     inoremap <buffer> <C-f>      <Right>
 	autocmd FileType int-*     inoremap <buffer> <C-e>      <End>
 	autocmd FileType int-*     inoremap <buffer> <C-d>      <Del>
-	autocmd FileType int-*     imap     <buffer> <C-n>      <C-o><Plug>(vimshell_int_next_prompt)
-	autocmd FileType int-*     imap     <buffer> <C-p>      <C-o><Plug>(vimshell_int_previous_prompt)
+	autocmd FileType int-*     imap     <buffer> <C-n>      <C-o><Plug>(vimshell_int_next_prompt)<End>
+	autocmd FileType int-*     imap     <buffer> <C-p>      <C-o><Plug>(vimshell_int_previous_prompt)<End>
 	autocmd FileType int-*     imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
 	autocmd FileType int-*     imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
 	autocmd FileType int-*     imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
@@ -2121,7 +2120,7 @@ augroup FileEvent
 	autocmd VimEnter,WinEnter    *.cs syntax keyword RcTypeInference var
 
 	" Ruby
-	autocmd FileType ruby setl ts=2 sw=2 et
+	autocmd FileType ruby,eruby setl ts=2 sw=2 et
 
 	" Plain Text FileTypes
 	autocmd FileType markdown,text setl tw=0 ts=2 sw=2 et
@@ -2152,6 +2151,9 @@ augroup FileEvent
 
 	" TweetVim
 	autocmd FileType tweetvim setl cursorline
+
+	" vimshell.vim
+	autocmd FileType vimshell setl ts=8 sw=8
 
 	" ConqueTerm
 	autocmd FileType conque_term setl nolist

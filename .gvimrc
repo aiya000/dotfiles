@@ -175,12 +175,16 @@ let g:tweetvim_display_icon = 1
 let g:J6uil_display_icon = 1
 
 "}}}
-"--- vim-indent-guides ---"{{{
+"--- vim-submode ---{{{
 
-augroup PluginPrefs
-	autocmd ColorScheme * highlight IndentGuidesOdd  guibg=blue
-	autocmd ColorScheme * highlight IndentGuidesEven guibg=red
-augroup END
+"augroup KeyMapping
+"	autocmd FileType * nnoremap <Plug>(mygvimrc-transparency-up)   execute ':set transparency=' . (&transparency + 1)
+"	autocmd FileType * nnoremap <Plug>(mygvimrc-transparency-down) execute ':set transparency=' . (&transparency - 1)
+"augroup END
+"
+"call submode#enter_with('transparance_changer', 'n', '', '<C-s>T')
+"call submode#map('transparance_changer', 'n', '', 'j', '\<Plug>(mygvimrc-transparency-up)')
+"call submode#map('transparance_changer', 'n', '', 'k', '\<Plug>(mygvimrc-transparency-down)')
 
 "}}}
 
