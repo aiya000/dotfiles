@@ -105,6 +105,12 @@ command! DressUpColorMolokai
 \|		set transparency=255
 \|	endif
 
+command! DressUpColorSolarized
+\	colorscheme solarized
+\|	if s:isWindows
+\|		set transparency=220
+\|	endif
+
 "}}}
 
 
@@ -152,10 +158,14 @@ augroup HighlightPrefs
 augroup END
 
 
-if s:isUnix
-	colorscheme molokai
-elseif s:isWindows
-	colorscheme evening
+if !g:gvimrc['loaded']
+	set background=dark
+
+	if s:isUnix
+		colorscheme molokai
+	elseif s:isWindows
+		colorscheme solarized
+	endif
 endif
 
 "}}}

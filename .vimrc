@@ -426,6 +426,7 @@ NeoBundleLazy    'thinca/vim-threes'
 NeoBundleLazy    'vim-ruby/vim-ruby'
 NeoBundleLazy    'Keithbsmiley/rspec.vim'
 NeoBundle        'tsukkee/unite-help'
+NeoBundle        'altercation/vim-colors-solarized'
 
 
 call neobundle#end()
@@ -705,6 +706,8 @@ augroup PluginPrefs
 	autocmd FileType vimshell call vimshell#altercmd#define('tdirset', ':TDirSet')
 	autocmd FileType vimshell call vimshell#altercmd#define('tdircd',  ':TDirCd')
 	autocmd FileType vimshell call vimshell#altercmd#define('tdirpwd', ':TDirPwd')
+	autocmd FileType vimshell call vimshell#altercmd#define('tab',     ':BufOpenNewTab')
+	autocmd FileType vimshell call vimshell#altercmd#define('tabopen', ':BufMoveNewTab')
 augroup END
 
 
@@ -1006,13 +1009,13 @@ augroup END
 " }}}
 
 " Set for Color Scheme
-set background=dark
-colorscheme desert
+if !g:vimrc['loaded']
+	set background=dark
+	colorscheme desert
+endif
 
 " Indent Wrapped Text
-if exists('+breakindent')
-	set breakindent linebreak
-endif
+set breakindent linebreak
 
 " View cursor column on <C-g>
 set noruler
@@ -1348,8 +1351,9 @@ command! BufTabMovePrev execute 'normal! mZ<C-w>cgT<C-w>v`Z'
 command! BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? '<C-w>c' : '<C-w>cgt') . '<C-w>v`Z'
 
 
-" Current buffer move to new_tab
-command! BufMoveNewTab execute 'normal! mZ<C-w>c:tabnew<CR>`Z'
+" Current buffer open or move to new_tab
+command! BufOpenNewTab execute 'normal! mZ:tabnew<CR>`Zzz'
+command! BufMoveNewTab execute 'normal! mZ<C-w>c:tabnew<CR>`Zzz'
 
 " }}}
 " Development Support {{{
@@ -1707,8 +1711,9 @@ function! s:toggle_virtual_edit() "{{{
 	set virtualedit?
 endfunction "}}}
 
+
 " Easy toggle diffthis and diffoff
-function! s:toggle_diff_mode()
+function! s:toggle_diff_mode() "{{{
 	if &diff
 		execute ':diffoff'
 	else
@@ -1716,13 +1721,6 @@ function! s:toggle_diff_mode()
 	endif
 
 	set diff?
-endfunction
-
-" Open current buffer new tab
-function! s:buf_open_new_tab() "{{{
-	let l:lnum = line('.')
-	execute 'tabnew| ' bufnr('%') . 'b'
-	execute 'normal! ' l:lnum . 'Gzvzz'
 endfunction "}}}
 
 
@@ -1876,7 +1874,7 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <C-w>C     :<C-u>bdelete!<CR>
 	autocmd FileType * nnoremap <silent> <C-w><C-w> :<C-u>write<CR>
 	autocmd FileType * nnoremap <silent> <C-w>W     :<C-u>wall<CR>
-	autocmd FileType * nnoremap <silent> <C-w>bt    :<C-u>call <SID>buf_open_new_tab()<CR>
+	autocmd FileType * nnoremap <silent> <C-w>bt    :<C-u>BufOpenNewTab<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bT    :<C-u>BufMoveNewTab<CR>
 	autocmd FileType * nnoremap <silent> <C-w>N     :<C-u>EnewOverride!<CR>
 	autocmd FileType * nnoremap <silent> <C-w>Q     :<C-u>quitall<CR>
@@ -1936,7 +1934,7 @@ augroup KeyMapping
 	" vim-over
 	autocmd FileType * nnoremap <silent> :%s/               :<C-u>OverCommandLine<CR>%s/
 	autocmd FileType * nnoremap <silent> :s/                :<C-u>OverCommandLine<CR>s/
-	autocmd FileType * vnoremap <silent> :s/                :<C-u>OverCommandLine<CR>s/
+	autocmd FileType * vnoremap <silent> :s/                :<C-u>OverCommandLine<CR>'<,'>s/
 
 	" vimshell
 	autocmd FileType * nnoremap <silent> <leader>v          :<C-u>VimShell -split-command=vsp -toggle<CR>
@@ -2122,6 +2120,9 @@ augroup FileEvent
 	" Ruby
 	autocmd FileType ruby,eruby setl ts=2 sw=2 et
 
+	" CSS
+	autocmd FileType css,scss setl ts=2 sw=2 et
+
 	" Plain Text FileTypes
 	autocmd FileType markdown,text setl tw=0 ts=2 sw=2 et
 
@@ -2153,7 +2154,7 @@ augroup FileEvent
 	autocmd FileType tweetvim setl cursorline
 
 	" vimshell.vim
-	autocmd FileType vimshell setl ts=8 sw=8
+	autocmd FileType vimshell setl ts=8
 
 	" ConqueTerm
 	autocmd FileType conque_term setl nolist
