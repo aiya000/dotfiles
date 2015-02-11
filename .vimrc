@@ -6,6 +6,7 @@ scriptencoding utf8
 " -- Parameter
 " -- Local_Function
 " -- Initialize
+"
 " -- Plugin_Manage
 "
 "
@@ -382,8 +383,8 @@ NeoBundle        'duff/vim-scratch'
 NeoBundle        'rhysd/vim-grammarous'
 NeoBundleLazy    'thinca/vim-themis'
 NeoBundle        'tomasr/molokai'
-NeoBundleLazy    'aiya000/arot13.vim'
-NeoBundleLazy    'aiya000/ahoge-put.vim'
+NeoBundle        'aiya000/arot13.vim'
+NeoBundle        'aiya000/ahoge-put.vim'
 NeoBundleLazy    'kannokanno/previm'
 NeoBundle        'gist:aiya000/ec5f6b2375a639831953', {
 \	'name'        : 'gitlogviewer.vim',
@@ -393,7 +394,7 @@ NeoBundle        'kamichidu/vim-vdbc'
 NeoBundle        'mattn/vdbi-vim'
 NeoBundle        'LeafCage/foldCC'
 NeoBundleLazy    'katono/rogue.vim'
-NeoBundleLazy    'aiya000/asql.vim'
+NeoBundle        'aiya000/asql.vim'
 NeoBundleLazy    'kamichidu/vim-benchmark'
 NeoBundle        'kana/vim-submode'
 NeoBundle        'gist:aiya000/58931585f8ba6aa43b87', {
@@ -418,7 +419,7 @@ NeoBundle        'tyru/vim-altercmd'
 NeoBundle        'mbbill/undotree'
 NeoBundle        'Shougo/neomru.vim'
 NeoBundle        'vim-scripts/dbext.vim'
-NeoBundleLazy    'aiya000/adrone.vim'
+NeoBundle        'aiya000/adrone.vim'
 NeoBundleFetch   'Shougo/fakecygpty'
 NeoBundle        'nathanaelkane/vim-indent-guides'
 NeoBundleLazy    'LeafCage/vimhelpgenerator'
@@ -928,22 +929,28 @@ augroup END
 "}}}
 "--- For Debug ---"{{{
 
-" Set for my projects
+" Local my plugins
 let s:makes = ['arot13.vim',
 \              'ahoge-put.vim',
 \              'asql.vim',
 \              'adrone.vim']
 "set runtimepath+=~/.vim/makes/vital.vim
+
 let s:makes_dir = '~/.vim/makes/'
 
 
+" If valid local plugin, disable bundled same plugin
 for s:plug in s:makes
-	let &runtimepath .= ',' . s:makes_dir . s:plug
-	execute ':NeoBundleDisable ' . s:plug
+	let s:plug_dir = s:makes_dir . s:plug
+
+	if isdirectory(expand(s:plug_dir))
+		let &runtimepath .= ',' . s:plug_dir
+		NeoBundleDisable s:plug
+	end
 endfor
 
 
-unlet s:plug s:makes_dir s:makes
+unlet s:plug_dir s:plug s:makes_dir s:makes
 
 "}}}
 "--- For Private ---"{{{
