@@ -929,23 +929,21 @@ augroup END
 "--- For Debug ---"{{{
 
 " Set for my projects
-set runtimepath+=~/.vim/makes/arot13.vim/
-set runtimepath+=~/.vim/makes/ahoge-put.vim/
-set runtimepath+=~/.vim/makes/asql.vim
-set runtimepath+=~/.vim/makes/adrone.vim/
+let s:makes = ['arot13.vim',
+\              'ahoge-put.vim',
+\              'asql.vim',
+\              'adrone.vim']
 "set runtimepath+=~/.vim/makes/vital.vim
+let s:makes_dir = '~/.vim/makes/'
 
-"" MyPlugins State
-"let s:myplugin_enabled = get(s:, 'myplugin_enabled', 0)
-"
-"" Switching Command
-"command! MyPluginOn
-"\	if s:myplugin_enabled
-"\|		call s:echo_error('Already loaded my plugins')
-"\|	else
-"\|		echo 'Loaded my plugins by neobundle'
-"\|		let s:myplugin_enabled = 1
-"\|	endif
+
+for s:plug in s:makes
+	let &runtimepath .= ',' . s:makes_dir . s:plug
+	execute ':NeoBundleDisable ' . s:plug
+endfor
+
+
+unlet s:plug s:makes_dir s:makes
 
 "}}}
 "--- For Private ---"{{{
