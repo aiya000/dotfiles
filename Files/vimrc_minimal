@@ -1,0 +1,76 @@
+"-- set --"
+set number nowrap
+set textwidth=0 tabstop=4 shiftwidth=4
+set cindent autoindent
+set incsearch hlsearch
+set ignorecase infercase
+set foldmethod=marker
+set list listchars=tab:>_,trail:_
+set scrolloff=8
+set fileencoding=utf-8 encoding=utf-8
+set fileencodings=utf-8,sjis,euc-jp,cp932,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
+
+
+"-- colorscheme --"
+set background=dark
+colorscheme evening
+
+
+"-- command --"
+command! VimConfig e $MYVIMRC
+
+
+"-- function --"
+function! s:reset_filetype()
+	let l:filetype = &filetype !=# '' ? &filetype : 'none'
+	let &filetype  = l:filetype
+endfunction
+
+
+"-- key_mappings --"
+augroup KeyPrefs
+	autocmd!
+	autocmd FileType * nnoremap <C-j> o<Esc>
+	autocmd FileType * nnoremap <C-n> gt
+	autocmd FileType * nnoremap <C-p> gT
+	autocmd FileType * nnoremap <leader>e         :Vexplore<CR>
+	autocmd FileType * nnoremap <leader>E         :Sexplore<CR>
+	autocmd FileType * nnoremap <leader><leader>e :Texplore<CR>
+
+	autocmd FileType * nnoremap <silent> <C-k><C-r> :source $MYVIMRC<CR>
+	autocmd FileType * nnoremap <silent> <C-k>r     :<C-u>call <SID>reset_filetype()<CR>
+	autocmd FileType * nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
+	autocmd FileType * nnoremap <silent> <C-w><C-w> :write<CR>
+	autocmd FileType * nnoremap <silent> <C-w><C-c> :bdelete<CR>
+	autocmd FileType * nnoremap <silent> <C-w>t     :tabnew<CR>
+	autocmd FileType * nnoremap <silent> <C-w>Q     :quitall<CR>
+
+	autocmd FileType * inoremap <C-j> <CR>
+	autocmd FileType * inoremap <C-l> <Esc>
+
+	autocmd FileType * cnoremap <C-j> <CR>
+augroup END
+
+
+"-- Specifics --"
+let $HOME = $VIMRUNTIME
+set backup
+set backupdir=~/backup/.vim_backup
+let &directory = &backupdir
+
+augroup Backup
+	autocmd!
+	autocmd BufWritePre,FileWritePre,FileAppendPre * call s:update_backup_file()
+augroup END
+
+function! s:update_backup_file()
+	let basedir = expand('~/backup/.vim_backup')
+	let dir = strftime(basedir.'/%Y_%m_XX/%m-%d', localtime())
+	if !isdirectory(dir)
+		let retval = system('mkdir -p '.dir)
+		let retval = system('chown ishikawa:ishikawa '.dir)
+	endif
+	exe 'set backupdir='.dir
+	let time = strftime('_%H:%M', localtime())
+	exe 'set backupext=.'.time
+endfunction

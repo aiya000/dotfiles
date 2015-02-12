@@ -60,9 +60,8 @@ scriptencoding utf8
 
 "-- lost highlight of buffer when delete other buffer
 
-"-- conflicted? vim-ruby and rspec.vim
-
-"-- not loaded rspec.vim on load filetype 'ruby'
+"-- conflicted? vim-ruby and rspec.vim when those was set NeoBundleLazy
+"  -- do not loaded syntax of rspec.vim
 
 "}}}
 " Todo {{{
@@ -130,7 +129,7 @@ let s:undodir   = s:backupdir . '/undo'
 let s:viewdir   = s:backupdir . '/view'
 
 let s:username  = $USER
-let s:groupname = !empty($GROUP) ? $GROUP : $USER
+let s:groupname = $GROUP !=# '' ? $GROUP : $USER
 
 "}}}
 
@@ -246,7 +245,7 @@ function! s:remove_empty_bundledir()  "{{{
 
 	for l:dir in l:dirs
 		let l:plugin_dir = s:bundledir . '/' . l:dir
-		let l:is_empty   = empty(s:system('ls ' . l:plugin_dir))
+		let l:is_empty   = s:system('ls ' . l:plugin_dir) ==# ''
 
 		if l:is_empty
 			call s:system('rmdir ' . l:plugin_dir)
@@ -424,8 +423,8 @@ NeoBundleFetch   'Shougo/fakecygpty'
 NeoBundle        'nathanaelkane/vim-indent-guides'
 NeoBundleLazy    'LeafCage/vimhelpgenerator'
 NeoBundleLazy    'thinca/vim-threes'
-NeoBundleLazy    'vim-ruby/vim-ruby'
-NeoBundleLazy    'Keithbsmiley/rspec.vim'
+NeoBundle        'vim-ruby/vim-ruby'
+NeoBundle        'Keithbsmiley/rspec.vim'
 NeoBundle        'tsukkee/unite-help'
 NeoBundle        'altercation/vim-colors-solarized'
 
@@ -527,12 +526,6 @@ call neobundle#config('vim-grammarous', {
 call neobundle#config('vim-themis', {
 \	'autoload' : {'filetypes' : 'vim'}
 \})
-"call neobundle#config('arot13.vim', {
-"\	'autoload' : {'commands' : 'MyPluginOn'}
-"\})
-"call neobundle#config('ahoge-put.vim', {
-"\	'autoload' : {'commands' : 'MyPluginOn'}
-"\})
 call neobundle#config('previm', {
 \	'autoload' : {'filetypes' : 'markdown'}
 \})
@@ -544,9 +537,6 @@ call neobundle#config('rogue.vim', {
 \		'RogueScores'
 \	]}
 \})
-"call neobundle#config('asql.vim', {
-"\	'autoload' : {'commands' : 'MyPluginOn'}
-"\})
 call neobundle#config('ref-dicts-en', {
 \	'depends' : 'thinca/vim-ref'
 \})
@@ -570,12 +560,12 @@ call neobundle#config('vim-threes', {
 \		'ThreesStart'
 \	]}
 \})
-call neobundle#config('vim-ruby', {
-\	'autoload' : {'filetype' : 'ruby'}
-\})
-call neobundle#config('rspec.vim', {
-\	'autoload' : {'filetype' : 'ruby'}
-\})
+"call neobundle#config('vim-ruby', {
+"\	'autoload' : {'filetype' : 'ruby'}
+"\})
+"call neobundle#config('rspec.vim', {
+"\	'autoload' : {'filetype' : 'ruby'}
+"\})
 
 " }}}
 
@@ -778,28 +768,29 @@ endif
 
 let g:submode_timeout = 0
 
-" Window Resizer
-call submode#enter_with('window_resize', 'n', '', '<C-s>w')
-call submode#map('window_resize', 'n', '', 'j', '<C-w>+')
-call submode#map('window_resize', 'n', '', 'k', '<C-w>-')
-call submode#map('window_resize', 'n', '', 'h', '<C-w><')
-call submode#map('window_resize', 'n', '', 'l', '<C-w>>')
-call submode#map('window_resize', 'n', '', '=', '<C-w>=')
-call submode#map('window_resize', 'n', '', '_', '<C-w>_')
+augroup FileEvent
+	" Window Resizer
+	autocmd FileType * call submode#enter_with('window_resize', 'n', '', '<C-s>w')
+	autocmd FileType * call submode#map('window_resize', 'n', '', 'j', '<C-w>+')
+	autocmd FileType * call submode#map('window_resize', 'n', '', 'k', '<C-w>-')
+	autocmd FileType * call submode#map('window_resize', 'n', '', 'h', '<C-w><')
+	autocmd FileType * call submode#map('window_resize', 'n', '', 'l', '<C-w>>')
+	autocmd FileType * call submode#map('window_resize', 'n', '', '=', '<C-w>=')
+	autocmd FileType * call submode#map('window_resize', 'n', '', '_', '<C-w>_')
 
-" Fold Mover
-call submode#enter_with('fold_move', 'n', '', '<C-s>z')
-call submode#map('fold_move', 'n', 'e', 'j', "foldlevel('.') > 0 ? 'zczjzozz'   : 'zjzozz'")
-call submode#map('fold_move', 'n', 'e', 'k', "foldlevel('.') > 0 ? 'zczkzo[zzz' : 'zkzo[zzz'")
-call submode#map('fold_move', 'n', '',  'h', '[z')
-call submode#map('fold_move', 'n', '',  'l', ']z')
+	" Fold Mover
+	autocmd FileType * call submode#enter_with('fold_move', 'n', '', '<C-s>z')
+	autocmd FileType * call submode#map('fold_move', 'n', 'e', 'j', "foldlevel('.') > 0 ? 'zczjzozz'   : 'zjzozz'")
+	autocmd FileType * call submode#map('fold_move', 'n', 'e', 'k', "foldlevel('.') > 0 ? 'zczkzo[zzz' : 'zkzo[zzz'")
+	autocmd FileType * call submode#map('fold_move', 'n', '',  'h', '[z')
+	autocmd FileType * call submode#map('fold_move', 'n', '',  'l', ']z')
 
-" Buffer Changer
-call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
-call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
-call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
+	" Buffer Changer
+	autocmd FileType * call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
+	autocmd FileType * call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
+	autocmd FileType * call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
 
-" Tab Mover
+	" Tab Mover
 " s:loopable_tab_move_prev() "{{{
 
 function! s:loopable_tab_move_prev()
@@ -826,17 +817,20 @@ endfunction
 let g:vimrc['LoopableTabMoveNext'] = function('s:loopable_tab_move_next')
 
 "}}}
-call submode#enter_with('tab_move', 'n', '', '<C-s>t')
-call submode#map('tab_move', 'n', 's', 'n', ':call g:vimrc.LoopableTabMoveNext()<CR>')
-call submode#map('tab_move', 'n', 's', 'p', ':call g:vimrc.LoopableTabMovePrev()<CR>')
+	autocmd FileType * call submode#enter_with('tab_move', 'n', '', '<C-s>t')
+	autocmd FileType * call submode#map('tab_move', 'n', 's', 'n', ':call g:vimrc.LoopableTabMoveNext()<CR>')
+	autocmd FileType * call submode#map('tab_move', 'n', 's', 'p', ':call g:vimrc.LoopableTabMovePrev()<CR>')
 
-" WinTab Mover
-call submode#enter_with('wintab_move', 'n', '', '<C-s>N', ':BufTabMoveNext<CR>')
-call submode#enter_with('wintab_move', 'n', '', '<C-s>P', ':BufTabMovePrev<CR>')
-call submode#map('wintab_move', 'n', '', 'N', ':BufTabMoveNext<CR>')
-call submode#map('wintab_move', 'n', '', 'n', ':BufTabMoveNext<CR>')
-call submode#map('wintab_move', 'n', '', 'P', ':BufTabMovePrev<CR>')
-call submode#map('wintab_move', 'n', '', 'p', ':BufTabMovePrev<CR>')
+	" WinTab Mover
+	autocmd FileType * call submode#enter_with('wintab_move', 'n', '', '<C-s>N', ':BufTabMoveNext<CR>')
+	autocmd FileType * call submode#enter_with('wintab_move', 'n', '', '<C-s>P', ':BufTabMovePrev<CR>')
+	autocmd FileType * call submode#map('wintab_move', 'n', '', 'N', ':BufTabMoveNext<CR>')
+	autocmd FileType * call submode#map('wintab_move', 'n', '', 'P', ':BufTabMovePrev<CR>')
+	autocmd FileType * call submode#map('wintab_move', 'n', '', 'H', '<C-w>H')
+	autocmd FileType * call submode#map('wintab_move', 'n', '', 'J', '<C-w>J')
+	autocmd FileType * call submode#map('wintab_move', 'n', '', 'K', '<C-w>K')
+	autocmd FileType * call submode#map('wintab_move', 'n', '', 'L', '<C-w>L')
+augroup END
 
 "}}}
 "--- vim-ref ---" {{{
@@ -945,7 +939,7 @@ for s:plug in s:makes
 
 	if isdirectory(expand(s:plug_dir))
 		let &runtimepath .= ',' . s:plug_dir
-		NeoBundleDisable s:plug
+		execute ':NeoBundleDisable' s:plug
 	end
 endfor
 
@@ -1032,7 +1026,7 @@ set noruler
 " Sugoi view tabline
 function! s:tabpage_label(n) "{{{
 	let l:title = gettabvar(a:n, 'title')
-	if !empty(l:title)
+	if l:title !=# ''
 		return l:title
 	endif
 
@@ -1045,11 +1039,11 @@ function! s:tabpage_label(n) "{{{
 	endif
 
 	let l:mod = len(filter(copy(l:bufnrs), "getbufvar(v:val, '&modified')")) ? '+' : ''
-	let l:sp = empty(l:no . l:mod) ? '' : ' '
+	let l:sp = (l:no . l:mod) ==# '' ? '' : ' '
 
 	let l:curbufnr = bufnrs[tabpagewinnr(a:n) - 1]
 	let l:fname = pathshorten(bufname(l:curbufnr))
-	if empty(l:fname)
+	if l:fname ==# ''
 		let l:fname .= '[ NoName ]'
 	endif
 
@@ -1698,16 +1692,15 @@ function! s:compress_spaces() "{{{
 		" GanMusi
 	finally
 		let @/ = l:recent_pattern
-		unlet l:recent_pattern
 	endtry
 
-	execute ':noh'
+	execute ':nohlsearch'
 endfunction "}}}
 
 
 " Easy toggle virtualedit
 function! s:toggle_virtual_edit() "{{{
-	if empty(&virtualedit)
+	if &virtualedit ==# ''
 		set virtualedit=all
 	else
 		set virtualedit=
@@ -1805,11 +1798,11 @@ endfunction
 
 
 " If you has nofile buffer, close it.
-function! s:nofile_close() "{{{
+function! s:quickrun_close() "{{{
 	for l:w in range(1, winnr('$'))
-		let l:buftype = getwinvar(l:w, '&buftype')
+		let l:buf_filetype = getwinvar(l:w, '&filetype')
 
-		if l:buftype ==# 'nofile'
+		if l:buf_filetype ==# 'quickrun'
 			execute ':' . l:w . 'wincmd w'
 			execute ':quit'
 
@@ -1835,7 +1828,7 @@ augroup KeyMapping
 augroup END
 
 " }}}
-" Append " {{{
+" Appends " {{{
 
 augroup KeyMapping
 	autocmd FileType * nnoremap <silent> m:                :<C-u>marks<CR>
@@ -1853,13 +1846,13 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <leader>pl        :<C-u>PutLongSeparator<CR>
 	autocmd FileType * nnoremap <silent> <leader>ps        :<C-u>PutShortSeparator<CR>
 	autocmd FileType * nnoremap <silent> <leader>pd        :<C-u>PutDate<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>r :<C-u>call <SID>nofile_close()<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>r :<C-u>call <SID>quickrun_close()<CR>
 
 	autocmd FileType * cnoremap <C-]> '<,'>
 augroup END
 
 " }}}
-" for foldings {{{
+" Foldings {{{
 
 augroup KeyMapping
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
@@ -1870,7 +1863,7 @@ augroup KeyMapping
 augroup END
 
 " }}}
-" for window and buffer {{{
+" Windows and Buffers {{{
 
 augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <C-w>t     :<C-u>TabnewOverride<CR>
@@ -1896,15 +1889,9 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent>         <C-k>r         :<C-u>Resetf<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-Space> :<C-u>call <SID>toggle_case()<CR>
 	autocmd FileType * inoremap                  <C-k><C-k>     <C-o>"_d$
-	autocmd FileType * inoremap                  <C-k><C-i>     <C-o>:set infercase! infercase?<CR>
 	autocmd FileType * inoremap                  <C-k><C-y>     <Esc>k"zyyjV"zp:let @z = ''<CR>A
 	autocmd FileType * cnoremap                  <C-k><C-p>     <Up>
 	autocmd FileType * cnoremap                  <C-k><C-n>     <Down>
-
-	" If cannot use default, You can use this.
-	autocmd FileType * nnoremap                  <C-k><C-z> <C-z>
-	autocmd FileType * inoremap                  <C-k><C-z> <C-z>
-	autocmd FileType * inoremap                  <C-k><C-l> <Esc>
 augroup END
 
 " }}}
@@ -1912,7 +1899,6 @@ augroup END
 
 augroup KeyMapping
 	autocmd FileType * nnoremap <silent>         <C-h><C-w>      :<C-u>setl wrap!           wrap?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-i>      :<C-u>set  ignorecase!     ignorecase?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-c>      :<C-u>set  cursorline!     cursorline?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-e>      :<C-u>set  expandtab!      expandtab?<CR>
 	autocmd FileType * nnoremap <silent>         <C-h><C-r>      :<C-u>set  relativenumber! relativenumber?<CR>
