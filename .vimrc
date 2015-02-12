@@ -427,6 +427,7 @@ NeoBundle        'vim-ruby/vim-ruby'
 NeoBundle        'Keithbsmiley/rspec.vim'
 NeoBundle        'tsukkee/unite-help'
 NeoBundle        'altercation/vim-colors-solarized'
+NeoBundle        'aiya000/aho-bakaup.vim'
 
 
 call neobundle#end()
@@ -927,7 +928,8 @@ augroup END
 let s:makes = ['arot13.vim',
 \              'ahoge-put.vim',
 \              'asql.vim',
-\              'adrone.vim']
+\              'adrone.vim',
+\              'aho-bakaup.vim']
 "set runtimepath+=~/.vim/makes/vital.vim
 
 let s:makes_dir = '~/.vim/makes/'
@@ -945,6 +947,9 @@ endfor
 
 
 unlet s:plug_dir s:plug s:makes_dir s:makes
+
+let g:bakaup_backup_dir     = s:backupdir
+let g:bakaup_default_config = 1
 
 "}}}
 "--- For Private ---"{{{
@@ -1189,26 +1194,26 @@ augroup END
 
 
 " Powered Up Auto File Backup when written
-set nobackup
-function! s:update_backup_by_date() "{{{
-	let l:dailydir = s:backupdir . '/' . strftime('%Y-%m-%d')
-
-	if !isdirectory(l:dailydir)
-		call mkdir(l:dailydir, 'p', 0755)
-		if s:is_unix
-			call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, l:dailydir))
-		endif
-	endif
-
-	let l:filepath = split(expand('%'), '/')
-	let l:filename = l:filepath[len(l:filepath)-1] . strftime(s:is_windows ? '_at_%H-%M' : '_at_%H:%M')
-	let l:location = l:dailydir . '/' . l:filename
-
-	call writefile(getline(1, '$'), l:location)
-endfunction "}}}
+"set nobackup
+"function! s:update_backup_by_date() "{{{
+"	let l:dailydir = s:backupdir . '/' . strftime('%Y-%m-%d')
+"
+"	if !isdirectory(l:dailydir)
+"		call mkdir(l:dailydir, 'p', 0755)
+"		if s:is_unix
+"			call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, l:dailydir))
+"		endif
+"	endif
+"
+"	let l:filepath = split(expand('%'), '/')
+"	let l:filename = l:filepath[len(l:filepath)-1] . strftime(s:is_windows ? '_at_%H-%M' : '_at_%H:%M')
+"	let l:location = l:dailydir . '/' . l:filename
+"
+"	call writefile(getline(1, '$'), l:location)
+"endfunction "}}}
 
 augroup FileEvent
-	autocmd BufWritePre ?\+ silent call s:update_backup_by_date()
+	"autocmd BufWritePre ?\+ silent call s:update_backup_by_date()
 
 	autocmd VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 		\	if &encoding == 'utf-8'
