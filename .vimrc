@@ -300,18 +300,18 @@ unlet s:bundledir
 " Check Backup, Swap and Undo directory exists {{{
 
 if !isdirectory(s:backupdir)
-	call mkdir(s:backupdir, 'p', 0755)
+	call mkdir(s:backupdir, 'p', 0644)
 	call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, s:backupdir))
 endif
 
 if !isdirectory(s:directory)
-	call mkdir(s:directory, 'p', 0755)
+	call mkdir(s:directory, 'p', 0644)
 	call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, s:directory))
 endif
 
 if !isdirectory(s:undodir)
-	call mkdir(s:undodir, 'p', 0755)
-	call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, s:backupdir))
+	call mkdir(s:undodir, 'p', 0644)
+	call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, s:undodir))
 endif
 
 "}}}
@@ -922,6 +922,13 @@ augroup FileEvent
 augroup END
 
 "}}}
+"--- aho-bakaup.vim ---"{{{
+
+" Powered Up Auto File Backup when written
+let g:bakaup_backup_dir     = s:backupdir
+let g:bakaup_default_config = 1
+
+"}}}
 "--- For Debug ---"{{{
 
 " Local my plugins
@@ -947,9 +954,6 @@ endfor
 
 
 unlet s:plug_dir s:plug s:makes_dir s:makes
-
-let g:bakaup_backup_dir     = s:backupdir
-let g:bakaup_default_config = 1
 
 "}}}
 "--- For Private ---"{{{
@@ -1193,28 +1197,7 @@ augroup FileEvent
 augroup END
 
 
-" Powered Up Auto File Backup when written
-"set nobackup
-"function! s:update_backup_by_date() "{{{
-"	let l:dailydir = s:backupdir . '/' . strftime('%Y-%m-%d')
-"
-"	if !isdirectory(l:dailydir)
-"		call mkdir(l:dailydir, 'p', 0755)
-"		if s:is_unix
-"			call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, l:dailydir))
-"		endif
-"	endif
-"
-"	let l:filepath = split(expand('%'), '/')
-"	let l:filename = l:filepath[len(l:filepath)-1] . strftime(s:is_windows ? '_at_%H-%M' : '_at_%H:%M')
-"	let l:location = l:dailydir . '/' . l:filename
-"
-"	call writefile(getline(1, '$'), l:location)
-"endfunction "}}}
-
 augroup FileEvent
-	"autocmd BufWritePre ?\+ silent call s:update_backup_by_date()
-
 	autocmd VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 		\	if &encoding == 'utf-8'
 		\|		let &listchars = 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
@@ -2108,9 +2091,9 @@ augroup FileEvent
 	autocmd FileType haskell setl ts=2 sw=2 et
 	autocmd FileType yesod   setl ts=4 sw=4 et
 
-	"@Marked('do not depends filetype, but depends extend type...tabun') <- ???
 	" C-Sharp
-	autocmd VimEnter,ColorScheme * highlight RcTypeInference cterm=bold ctermfg=11
+	autocmd VimEnter,ColorScheme * highlight default link RcTypeInference Identifier
+	"autocmd VimEnter,ColorScheme * highlight RcTypeInference cterm=bold ctermfg=11
 	autocmd VimEnter,WinEnter    *.cs syntax keyword RcTypeInference var
 
 	" Ruby
