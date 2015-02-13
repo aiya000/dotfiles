@@ -63,7 +63,11 @@ fi
 alias gyazo='ruby ~/.vim/bundle/vim-gyazo/gyazo/gyazo.rb'
 
 # Console output pipe to clipboard
-alias pbcopy='xsel --clipboard --input'
+if [ $isUbuntu -eq 1 ] ; then
+	alias pbcopy='xsel --clipboard --input'
+elif [ $isCygwin -eq 1 ] ; then
+	alias pbcopy='tee /dev/clipboard'
+fi
 
 # }}}
 # Others {{{
