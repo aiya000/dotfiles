@@ -300,17 +300,17 @@ unlet s:bundledir
 " Check Backup, Swap and Undo directory exists {{{
 
 if !isdirectory(s:backupdir)
-	call mkdir(s:backupdir, 'p', 0644)
+	call mkdir(s:backupdir, 'p', 0744)
 	call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, s:backupdir))
 endif
 
 if !isdirectory(s:directory)
-	call mkdir(s:directory, 'p', 0644)
+	call mkdir(s:directory, 'p', 0744)
 	call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, s:directory))
 endif
 
 if !isdirectory(s:undodir)
-	call mkdir(s:undodir, 'p', 0644)
+	call mkdir(s:undodir, 'p', 0744)
 	call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, s:undodir))
 endif
 
@@ -525,7 +525,10 @@ call neobundle#config('vim-grammarous', {
 \	'disabled' : !executable('java')
 \})
 call neobundle#config('vim-themis', {
-\	'autoload' : {'filetypes' : 'vim'}
+\	'autoload' : {'filetypes' : [
+\		'vim',
+\		'vimspec'
+\	]}
 \})
 call neobundle#config('previm', {
 \	'autoload' : {'filetypes' : 'markdown'}

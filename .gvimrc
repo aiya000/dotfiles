@@ -237,7 +237,8 @@ augroup FileEvent
 	autocmd BufWinEnter          * let s:grcHeadHfSpace = s:matchadd_with_filetype('haskell', 'GrcHeadHfSpace', '^\s\+', 10, get(s:, 'grcHeadHfSpace', 10102))
 
 	" Set for C-Sharp
-	autocmd VimEnter,ColorScheme * highlight GrcTypeInference gui=none guifg=Cyan
+	autocmd VimEnter,ColorScheme * highlight default link GrcTypeInference Identifier
+	"autocmd VimEnter,ColorScheme * highlight GrcTypeInference gui=none guifg=Cyan
 	autocmd VimEnter,WinEnter    *.cs syntax keyword GrcTypeInference var
 augroup END
 

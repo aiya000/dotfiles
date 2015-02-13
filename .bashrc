@@ -40,6 +40,7 @@ alias tweet='vim -c TweetVimSay'
 alias twitter-public='vim -c TwitterPublic'
 alias tweet-public='vim -c TweetPublic'
 alias adrone='vim -c AdroneOpen'
+alias testvim='vim -u ~/vimrc_for_test'
 
 alias vimconfig='vim ~/.vimrc'
 alias gvimconfig='vim ~/.gvimrc'
