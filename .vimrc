@@ -622,6 +622,10 @@ let g:quickrun_config = {
 \	'java' : {
 \		'cmdopt' : '-source 1.8',
 \		'runner' : 'process_manager'
+\	},
+\	'vimspec' : {
+\		'command' : 'themis',
+\		'cmdopt'  : '--runtimepath ".."'
 \	}
 \}
 
