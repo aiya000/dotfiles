@@ -1404,7 +1404,7 @@ cnoreabbr RunRuby !ruby %
 
 augroup FileEvent
 	autocmd FileType,WinEnter,BufWinEnter * let s:short_sparator =
-	\	&ft ==# 'vim'                ? '" --- --- --- "'
+	\	&ft =~# '\v(vim|vimspec)'    ? '"#--- --- ---#"'
 	\:	&ft =~# '\v(java|cs|cpp|c)'  ? '/* -=-=-=-=-=-=-=-=- */'
 	\:	&ft ==# 'haskell'            ? '-- - - - - - --'
 	\:	&ft ==# 'coq'                ? '(* - - - - - *)'
@@ -1424,7 +1424,7 @@ command! PutShortSeparator
 
 augroup FileEvent
 	autocmd FileType,WinEnter,BufWinEnter * let s:long_separator =
-	\	&ft ==# 'vim'                ? '" --- --- --- --- --- --- --- --- --- "'
+	\	&ft =~# '\v(vim|vimspec)'    ? '"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"'
 	\:	&ft =~# '\v(java|cs|cpp|c)'  ? '/* ---===---===---===---===---===---===--- */'
 	\:	&ft ==# 'haskell'            ? '-- - - - - - - - - - - - - - - - --'
 	\:	&ft ==# 'coq'                ? '(* - - - - - - - - - - - - - - - *)'
