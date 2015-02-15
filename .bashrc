@@ -40,7 +40,7 @@ alias tweet='vim -c TweetVimSay'
 alias twitter-public='vim -c TwitterPublic'
 alias tweet-public='vim -c TweetPublic'
 alias adrone='vim -c AdroneOpen'
-alias testvim='vim -u ~/vimrc_for_test'
+alias themis='themis --runtimepath ".."'
 
 alias vimconfig='vim ~/.vimrc'
 alias gvimconfig='vim ~/.gvimrc'
@@ -169,7 +169,7 @@ fi
 alias reload-places='source ~/.bashrc_places && echo "bash places reloaded"'
 
 # View it
-alias places="cat ~/.bashrc_places | awk -F'[= ]' '{print $ 2 \":\t\" $ 4}' | sed s/\'//"
+alias places="cat ~/.bashrc_places | awk -F'[= ]' '{print $ 2 \":\t\" $ 4}' | sed s/\'// | sort"
 
 # Edit it
 alias edit-places='vim ~/.bashrc_places && reload-places'
