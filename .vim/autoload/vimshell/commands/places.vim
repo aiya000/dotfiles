@@ -21,7 +21,7 @@ function! s:command.execute(args, context)
 		return
 	endif
 
-	for l:place in readfile(l:file)
+	for l:place in sort(readfile(l:file))
 		echo s:format_alias(l:place)
 	endfor
 endfunction

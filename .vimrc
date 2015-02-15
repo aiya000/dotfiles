@@ -625,7 +625,8 @@ let g:quickrun_config = {
 \	},
 \	'vimspec' : {
 \		'command' : 'themis',
-\		'cmdopt'  : '--runtimepath ".."'
+\		'cmdopt'  : '--runtimepath ".."',
+\		'exec'    : '%c %o %s:p | tr -d "\r"'
 \	}
 \}
 
@@ -932,8 +933,8 @@ augroup END
 "--- aho-bakaup.vim ---"{{{
 
 " Powered Up Auto File Backup when written
-let g:bakaup_backup_dir     = s:backupdir
-let g:bakaup_default_config = 1
+let g:bakaup_backup_dir  = s:backupdir
+let g:bakaup_auto_backup = 1
 
 "}}}
 "--- For Debug ---"{{{
