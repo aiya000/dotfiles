@@ -20,6 +20,9 @@ DROPBOX_COMMAND=`which dropbox_uploader.sh`
 # remote upload directory path ( ~cloud_app_dir/$DROPBOX_DOTFILES_DIR )
 DROPBOX_DOTFILES_DIR=Room
 
+# target directory
+#DOT_DIR=$HOME/.dotfiles
+
 # path of temporary file output location
 TMP_DIR=$HOME/.tmp
 
@@ -55,6 +58,7 @@ fi
 ## Archiving dotfiles dir by tar.gz
 echo '>> archiving start...'
 upload_file="${TMP_DIR}/dotfiles-`date +'%Y-%m-%d'`.tar.gz"
+#tar zcvf $upload_file $DOT_DIR $TAR_OPT > /dev/null \
 tar zcvf $upload_file ../../.dotfiles $TAR_OPT > /dev/null \
 	&& echo '>> done' \
 	|| (

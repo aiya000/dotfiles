@@ -300,17 +300,17 @@ unlet s:bundledir
 " Check Backup, Swap and Undo directory exists {{{
 
 if !isdirectory(s:backupdir)
-	call mkdir(s:backupdir, 'p', 0744)
+	call mkdir(s:backupdir, 'p', 0700)
 	call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, s:backupdir))
 endif
 
 if !isdirectory(s:directory)
-	call mkdir(s:directory, 'p', 0744)
+	call mkdir(s:directory, 'p', 0700)
 	call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, s:directory))
 endif
 
 if !isdirectory(s:undodir)
-	call mkdir(s:undodir, 'p', 0744)
+	call mkdir(s:undodir, 'p', 0700)
 	call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, s:undodir))
 endif
 
@@ -1342,8 +1342,8 @@ command! CPAllPlus execute 'normal! ggVG"+y<C-o><C-o>'
 
 
 " Current buffer move to next_tab
-command! BufTabMovePrev execute 'normal! mZ<C-w>cgT<C-w>v`Z'
-command! BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? '<C-w>c' : '<C-w>cgt') . '<C-w>v`Z'
+command! BufTabMovePrev execute 'normal! mZ:hide<CR>gT:vsp<CR>`Z'
+command! BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? ':hide<CR>' : ':hide<CR>gt') . ':vsp<CR>`Z'
 
 
 " Current buffer open or move to new_tab
@@ -1632,7 +1632,6 @@ cnoreabbr IrbTab   VimShellInteractive --split='tabnew' irb
 " Disables {{{
 
 augroup KeyMapping
-	autocmd FileType * nnoremap <C-c>   <NOP>  " for terminal intterupt
 	autocmd FileType * nnoremap <Up>    <NOP>
 	autocmd FileType * nnoremap <Down>  <NOP>
 	autocmd FileType * nnoremap <Left>  <NOP>
