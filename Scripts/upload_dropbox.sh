@@ -21,13 +21,14 @@ DROPBOX_COMMAND=`which dropbox_uploader.sh`
 DROPBOX_DOTFILES_DIR=Room
 
 # target directory
-#DOT_DIR=$HOME/.dotfiles
+DOT_DIR_NAME=.dotfiles
+DOT_DIR_PATH=$HOME/$DOT_DIR_NAME
 
 # path of temporary file output location
 TMP_DIR=$HOME/.tmp
 
 # exclude files by tar
-TAR_OPT='--exclude .vim/bundle/* --exclude .backup'
+TAR_OPT='--exclude .vim/bundle --exclude .backup'
 
 # if true then do not remove archive
 no_remove_archive=0
@@ -49,7 +50,7 @@ echo
 
 # temporary directory auto create
 if [ ! -d $TMP_DIR ] ; then
-	mkdir -p  $TMP_DIR
+	mkdir -p $TMP_DIR
 	echo ">> auto created ${TMP_DIR}"
 	echo
 fi
@@ -58,7 +59,8 @@ fi
 ## Archiving dotfiles dir by tar.gz
 echo '>> archiving start...'
 upload_file="${TMP_DIR}/dotfiles-`date +'%Y-%m-%d'`.tar.gz"
-#tar zcvf $upload_file $DOT_DIR $TAR_OPT > /dev/null \
+
+cd $DOT_DIR_PATH/..
 tar zcvf $upload_file ../../.dotfiles $TAR_OPT > /dev/null \
 	&& echo '>> done' \
 	|| (
