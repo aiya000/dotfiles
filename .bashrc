@@ -30,7 +30,7 @@ alias gvi='gvim -u NONE -U NONE --noplugin'
 alias vimshell='vim -c VimShell'
 alias vimdebug='vim -c VimConsoleOpen'
 alias vim-js="vim -c 'VimShellInteractive js'"
-alias vim-record-startup="f=`mktemp` ; vim --startuptime vtime -- $f && rm $f"
+alias vim-record-startup="f=`mktemp` ; vim --startuptime vim_startup_time -- $f && rm $f"
 alias vimclearview='rm ~/.backup/vim_backup/view/*'
 alias vimclearswp='rm ~/.backup/vim_backup/swp/*'
 alias vimclearundo='rm ~/.backup/vim_backup/undo/*'
