@@ -1286,6 +1286,31 @@ command! TimerStart let  s:startTime = reltime()
 command! TimerEcho  echo reltimestr( reltime(s:startTime) )
 command! TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
 
+
+" Rename current buffer file
+function! s:rename_to(to_file) "{{{
+	let l:this_file    = expand('%:t')
+	let l:editing_file = &modified
+
+	if l:editing_file
+		echoerr 'Please :write this file'
+		return
+	endif
+
+	let l:failed = rename(l:this_file, a:to_file)
+	if l:failed
+		echoerr printf('Rename %s to %s is failed', l:this_file, a:to_file)
+		return
+	endif
+
+	let l:bufnr = bufnr('%')
+	execute ':edit' a:to_file
+	execute ':' . l:bufnr . 'bdelete'
+
+	echo printf('Renamed %s to %s', l:this_file, a:to_file)
+endfunction "}}}
+command! -nargs=1 Rename call <SID>rename_to(<q-args>)
+
 "}}}
 " Action Function {{{
 
