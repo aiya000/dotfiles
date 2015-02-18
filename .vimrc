@@ -1875,6 +1875,7 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <C-w>bT    :<C-u>BufMoveNewTab<CR>
 	autocmd FileType * nnoremap <silent> <C-w>N     :<C-u>EnewOverride!<CR>
 	autocmd FileType * nnoremap <silent> <C-w>Q     :<C-u>quitall<CR>
+	autocmd FileType * nnoremap <silent> <C-w>"     :<C-u>resize 5<CR>
 augroup END
 
 " }}}
@@ -1887,6 +1888,7 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent>         <C-k>l         :<C-u>source %<CR>
 	autocmd FileType * nnoremap <silent>         <C-k>r         :<C-u>Resetf<CR>
 	autocmd FileType * nnoremap <silent>         <C-k><C-Space> :<C-u>call <SID>toggle_case()<CR>
+	autocmd FileType * inoremap <silent>         <C-k><C-e>     <C-o>:set expandtab! expandtab?<CR>
 	autocmd FileType * inoremap                  <C-k><C-k>     <C-o>"_d$
 	autocmd FileType * inoremap                  <C-k><C-y>     <Esc>k"zyyjV"zp:let @z = ''<CR>A
 	autocmd FileType * cnoremap                  <C-k><C-p>     <Up>
