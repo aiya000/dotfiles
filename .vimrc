@@ -1632,6 +1632,10 @@ cnoreabbr IrbTab   VimShellInteractive --split='tabnew' irb
 " Disables {{{
 
 augroup KeyMapping
+	" I can use some mapping to hoge<C-c>
+	autocmd FileType * nnoremap <C-c>      <NOP>
+	autocmd FileType * nnoremap <C-c><C-c> <C-c>
+
 	autocmd FileType * nnoremap <Up>    <NOP>
 	autocmd FileType * nnoremap <Down>  <NOP>
 	autocmd FileType * nnoremap <Left>  <NOP>
