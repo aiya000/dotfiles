@@ -61,7 +61,7 @@ echo '>> archiving start...'
 upload_file="${TMP_DIR}/dotfiles-`date +'%Y-%m-%d'`.tar.gz"
 
 cd $DOT_DIR_PATH/..
-tar zcvf $upload_file ../../.dotfiles $TAR_OPT > /dev/null \
+tar zcvf $upload_file $DOT_DIR_NAME $TAR_OPT > /dev/null \
 	&& echo '>> done' \
 	|| (
 		echo '>> happened problems'
