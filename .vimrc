@@ -56,9 +56,7 @@ scriptencoding utf8
 
 "-- couldn't auto make vimproc at anywhere
 
-"-- happend error when opened vrapperrc or vimperatorrc
-
-"-- lost highlight of buffer when delete other buffer
+"-- lost highlight of buffer when delete some buffer
 
 "-- conflicted? vim-ruby and rspec.vim when those was set NeoBundleLazy
 "  -- do not loaded syntax of rspec.vim
@@ -1844,8 +1842,6 @@ augroup KeyMapping
 
 	autocmd FileType * nnoremap <C-n> gt
 	autocmd FileType * nnoremap <C-p> gT
-	autocmd FileType * nnoremap zl    8zl
-	autocmd FileType * nnoremap zh    8zh
 	autocmd FileType * inoremap <C-l> <Esc>
 	autocmd FileType * vnoremap <C-l> <Esc>
 	autocmd FileType * cnoremap <C-l> <Esc>
@@ -2002,7 +1998,7 @@ augroup END
 augroup PluginPrefs
 	autocmd FileType help     nnoremap <silent><buffer> Q :<C-u>helpclose<CR>
 
-	autocmd FileType netrw    nmap             <buffer> H         -
+	autocmd FileType netrw    nmap             <buffer> H         G-
 	autocmd FileType netrw    nnoremap         <buffer> L         <NOP>
 	autocmd FileType netrw    nnoremap <silent><buffer> Q         :<C-u>quit<CR>
 	autocmd FileType netrw    nnoremap <silent><buffer> ~         :<C-u>execute 'Explore' expand('~')<CR>
@@ -2132,7 +2128,7 @@ augroup FileEvent
 	" C-Sharp
 	autocmd VimEnter,ColorScheme * highlight default link RcTypeInference Identifier
 	"autocmd VimEnter,ColorScheme * highlight RcTypeInference cterm=bold ctermfg=11
-	autocmd VimEnter,WinEnter    *.cs syntax keyword RcTypeInference var
+	autocmd VimEnter,WinEnter    *.cs syntax keyword RcTypeInference var dynamic
 
 	" Ruby
 	autocmd FileType ruby,eruby setl ts=2 sw=2 et
