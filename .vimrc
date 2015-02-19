@@ -930,6 +930,9 @@ augroup END
 "}}}
 "--- aho-bakaup.vim ---"{{{
 
+" Devolute to Bakaup
+set nobackup
+
 " Powered Up Auto File Backup when written
 let g:bakaup_backup_dir  = s:backupdir
 let g:bakaup_auto_backup = 1
