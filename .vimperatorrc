@@ -39,22 +39,23 @@ cnoremap <C-f> <Right>
 "cnoremap <C-d> <Del>
 cnoremap <C-i> <Tab>
 
-" Insert Mode is Nano Like
-inoremap <C-p>      <Up>
-inoremap <C-n>      <Down>
-inoremap <C-b>      <Left>
-inoremap <C-f>      <Right>
-inoremap <C-h>      <BS>
-inoremap <C-d>      <Del>
-
-" Append Original to Nano ppoino
-inoremap <C-g> <S-Right>
+" Insert Mode is Nano Base Original
+inoremap <C-p> <Up>
+inoremap <C-n> <Down>
+inoremap <C-b> <Left>
+inoremap <C-f> <Right>
+inoremap <C-h> <BS>
+inoremap <C-d> <Del>
+inoremap <C-,> <S-Left>
+inoremap <C-.> <S-Right>
+inoremap <C-[> <S-Up>
+inoremap <C-]> <S-Down>
 
 " View Bookmarks
 nnoremap <leader>b :bmarks<CR>
 
 " Appendent
-nnoremap <C-k><C-l> :noh<CR>
+nnoremap <C-k><C-l> :nohlsearch<CR>
 
 "}}}
 
