@@ -107,7 +107,6 @@ scriptencoding utf8
 let g:vimrc = get(g:, 'vimrc', {})
 let g:vimrc['loaded'] = get(g:vimrc, 'loaded', 0)
 
-let s:is_nvim    = has('nvim')
 let s:is_windows = has('win32')
 let s:is_cygwin  = has('win32unix')
 let s:is_kaoriya = has('kaoriya')
