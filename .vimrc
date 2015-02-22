@@ -369,7 +369,6 @@ NeoBundle        'thinca/vim-ref'
 NeoBundle        'ujihisa/ref-hoogle'
 NeoBundleLazy    'vim-jp/vital.vim'
 NeoBundle        'Shougo/unite-outline'
-NeoBundle        'ebc-2in2crc/vim-ref-jvmis'
 NeoBundleLazy    'rbtnn/puyo.vim'
 NeoBundleLazy    'mattn/benchvimrc-vim'
 NeoBundleLazy    'mattn/yamada-vim'
@@ -402,7 +401,6 @@ NeoBundle        'thinca/vim-painter'
 NeoBundle        'osyo-manga/vim-anzu'
 NeoBundle        'osyo-manga/vim-over'
 NeoBundle        'tyru/restart.vim'
-NeoBundle        'glidenote/memolist.vim'
 NeoBundle        'vim-jp/vimdoc-ja'
 NeoBundleLazy    'rbtnn/game_engine.vim'
 NeoBundle        'h1mesuke/vim-alignta'
@@ -414,7 +412,6 @@ NeoBundle        'vim-scripts/TaskList.vim'
 NeoBundle        'tyru/vim-altercmd'
 NeoBundle        'mbbill/undotree'
 NeoBundle        'Shougo/neomru.vim'
-NeoBundle        'vim-scripts/dbext.vim'
 NeoBundle        'aiya000/adrone.vim'
 NeoBundleFetch   'Shougo/fakecygpty'
 NeoBundle        'nathanaelkane/vim-indent-guides'
@@ -485,9 +482,6 @@ call neobundle#config('vimshell-kawaii.vim', {
 \})
 call neobundle#config('vimconsole.vim', {
 \	'autoload' : {'filetypes' : 'vim'}
-\})
-call neobundle#config('unite-advent_calendar', {
-\	'depends' : 'Shougo/unite-outline'
 \})
 call neobundle#config('vim-splash', {
 \	'autoload' : {'commands' : 'Splash'}
@@ -561,6 +555,7 @@ call neobundle#config('vim-threes', {
 \		'ThreesStart'
 \	]}
 \})
+"@Bugs('rspec.vim do not highlight syntax before loading vim-ruby')
 "call neobundle#config('vim-ruby', {
 "\	'autoload' : {'filetype' : 'ruby'}
 "\})
@@ -872,19 +867,6 @@ let g:ref_source_webdict_sites['weblio'].filter = function('s:weblio_filter')
 let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
 
 " }}}
-"--- memolist.vim ---"{{{
-
-let g:memolist_path = expand('~/.memolist')
-if !isdirectory(g:memolist_path)
-	call mkdir(g:memolist_path)
-endif
-let g:memolist_memo_suffix = 'md'
-let g:memolist_prompt_tags = 1
-let g:memolist_prompt_categories = 1
-let g:memolist_unite = 1
-let g:memolist_unite_option = '-auto-preview -tab'
-
-"}}}
 "--- vimdoc-ja ---"{{{
 
 " vimdoc-ja is secondary
