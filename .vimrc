@@ -61,6 +61,9 @@ scriptencoding utf8
 "-- conflicted? vim-ruby and rspec.vim when those was set NeoBundleLazy
 "  -- do not loaded syntax of rspec.vim
 
+"-- not functioned [0-9] key range on windows kaoriya gvim
+"  -- I don't know why it happned
+
 "}}}
 " Todo {{{
 
