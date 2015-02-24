@@ -1,5 +1,5 @@
-"vim:ft=vim:
 "3.8.2 (created: 2014/02/13 23:52:43)
+
 "---------------------"
 "      Settings       "
 "---------------------"
@@ -50,6 +50,10 @@ inoremap <C-,> <S-Left>
 inoremap <C-.> <S-Right>
 inoremap <C-[> <S-Up>
 inoremap <C-]> <S-Down>
+inoremap <C-x><C-a> <C-a>
+inoremap <C-x><C-x> <C-x>
+inoremap <C-x><C-c> <C-c>
+inoremap <C-x><C-v> <C-v>
 
 " View Bookmarks
 nnoremap <leader>b :bmarks<CR>

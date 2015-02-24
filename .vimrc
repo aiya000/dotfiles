@@ -489,8 +489,20 @@ call neobundle#config('vimconsole.vim', {
 call neobundle#config('vim-splash', {
 \	'autoload' : {'commands' : 'Splash'}
 \})
+"@Experimental('config moved to here')
 call neobundle#config('jazzradio.vim', {
-\	'depends'  : 'Shougo/unite.vim'
+\	'autoload' : {
+\		'unite_sources' : ['jazzradio'],
+\		'commands'      : [
+\			'JazzradioUpdateChannels',
+\			'JazzradioStop', {
+\				'name'     : 'JazzradioPlay',
+\				'complete' : 'customlist,jazzradio#channel_id_comlete'
+\			}
+\		],
+\		'function_prefix' : 'Jazzradio',
+\		'depends'         : 'Shougo/unite.vim'
+\	}
 \})
 call neobundle#config('ref-hoogle', {
 \	'depends'  : 'thinca/vim-ref'
@@ -664,8 +676,8 @@ augroup END
 "--- vimproc.vim ---"{{{
 
 if s:is_windows && !s:has_mingw
-	"@Incompleted('I couldn't use a like NeoBundleDisable on this situation')
-	"NeoBundleDisable 'Shougo/vimproc.vim'
+	"@Incompleted('I couldn't use a NeoBundleDisable on this situation')
+	"NeoBundleDisable 'vimproc.vim'
 	set runtimepath-=~/.vim/bundle/vimproc.vim/
 endif
 
@@ -676,14 +688,15 @@ let g:tweetvim_async_post = 1
 
 augroup PluginPrefs
 	autocmd FileType tweetvim     setl wrap
-	autocmd FileType tweetvim_say setl ts=2 sw=2 et
+	autocmd FileType tweetvim_say setl tabstop=2 shiftwidth=2 expandtab
 augroup END
 
 "}}}
 "--- vimshell.vim ---"{{{
 
+"@Experimental('test commented out, this without needs?')
 " Add to VimShell Commands Directory of My Home
-let &runtimepath = &runtimepath.','.s:vim_home.'/autoload/vimshell/commands'
+"execute ':set runtimepath+=' . s:vim_home . '/autoload/vimshell/commands'
 
 let g:vimshell_no_save_history_commands = {
 \	'history': 1,
@@ -691,22 +704,20 @@ let g:vimshell_no_save_history_commands = {
 \	'clear'  : 1
 \}
 let g:vimshell_enable_transient_user_prompt = 1
-let g:vimshell_force_overwrite_statusline = 1
-let g:vimshell_max_command_history = 10000
-let g:vimshell_scrollback_limit = 10000
+let g:vimshell_force_overwrite_statusline   = 1
+let g:vimshell_max_command_history          = 10000
+let g:vimshell_scrollback_limit             = 10000
 
 augroup PluginPrefs
 	autocmd FileType vimshell setl fdm=marker nolist wrap
-	" Depends the command that is defined by this vimrc
+
+	" These depends the command that is defined by this vimrc
 	autocmd FileType vimshell call vimshell#altercmd#define('tdirset', ':TDirSet')
 	autocmd FileType vimshell call vimshell#altercmd#define('tdircd',  ':TDirCd')
 	autocmd FileType vimshell call vimshell#altercmd#define('tdirpwd', ':TDirPwd')
 	autocmd FileType vimshell call vimshell#altercmd#define('tab',     ':BufOpenNewTab')
 	autocmd FileType vimshell call vimshell#altercmd#define('tabopen', ':BufMoveNewTab')
 augroup END
-
-
-" for My Command
 
 " connect to bash's hereis
 let g:vimshell_hereis_file = expand('~/.bashrc_places')
@@ -732,26 +743,6 @@ let g:w3m#homepage = 'http://www.google.co.jp/'
 "--- vimconsole.vim ---"{{{
 
 let g:vimconsole#auto_redraw = 1
-
-"}}}
-"--- jazzradio.vim ---"{{{
-
-"@See('momonga-san no sugoi blog')
-if neobundle#tap('jazzradio.vim')
-	call neobundle#config({
-	\	'autoload' : {
-	\		'unite_sources' : ['jazzradio'],
-	\		'commands'      : [
-	\			'JazzradioUpdateChannels',
-	\			'JazzradioStop', {
-	\				'name'     : 'JazzradioPlay',
-	\				'complete' : 'customlist,jazzradio#channel_id_comlete'
-	\			}
-	\		],
-	\		'function_prefix' : 'Jazzradio'
-	\	}
-	\})
-endif
 
 "}}}
 "--- foldCC ---"{{{
@@ -797,7 +788,7 @@ augroup FileEvent
 	" Tab Mover
 " s:loopable_tab_move_prev() "{{{
 
-function! s:loopable_tab_move_prev()
+function! LoopableTabMovePrev()
 	if tabpagenr() is 1
 		execute ':tabmove' tabpagenr('$')
 	else
@@ -805,12 +796,10 @@ function! s:loopable_tab_move_prev()
 	endif
 endfunction
 
-let g:vimrc['LoopableTabMovePrev'] = function('s:loopable_tab_move_prev')
-
 "}}}
 " s:loopable_tab_move_next() "{{{
 
-function! s:loopable_tab_move_next()
+function! LoopableTabMoveNext()
 	if tabpagenr() is tabpagenr('$')
 		execute ':tabmove 0'
 	else
@@ -818,14 +807,16 @@ function! s:loopable_tab_move_next()
 	endif
 endfunction
 
-let g:vimrc['LoopableTabMoveNext'] = function('s:loopable_tab_move_next')
-
 "}}}
 	autocmd FileType * call submode#enter_with('tab_move', 'n', '', '<C-s>t')
-	autocmd FileType * call submode#map('tab_move', 'n', 's', 'n', ':call g:vimrc.LoopableTabMoveNext()<CR>')
-	autocmd FileType * call submode#map('tab_move', 'n', 's', 'p', ':call g:vimrc.LoopableTabMovePrev()<CR>')
+	autocmd FileType * call submode#map('tab_move', 'n', 's', 'n', ':call LoopableTabMoveNext()<CR>')
+	autocmd FileType * call submode#map('tab_move', 'n', 's', 'p', ':call LoopableTabMovePrev()<CR>')
 
 	" WinTab Mover
+	" Current buffer move to next tab "{{{
+	command! BufTabMovePrev execute 'normal! mZ:hide<CR>gT:vsp<CR>`Z'
+	command! BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? ':hide<CR>' : ':hide<CR>gt') . ':vsp<CR>`Z'
+	"}}}
 	autocmd FileType * call submode#enter_with('wintab_move', 'n', '', '<C-s>N', ':BufTabMoveNext<CR>')
 	autocmd FileType * call submode#enter_with('wintab_move', 'n', '', '<C-s>P', ':BufTabMovePrev<CR>')
 	autocmd FileType * call submode#map('wintab_move', 'n', '', 'N', ':BufTabMoveNext<CR>')
@@ -848,9 +839,6 @@ let g:ref_use_vimproc = 1
 let g:ref_source_webdict_sites = {
 \	'weblio' : {
 \		'url' : 'http://ejje.weblio.jp/content/%s'
-\	},
-\	'wikipedia' : {
-\		'url' : 'http://ja.wikipedia.org/wiki/%s'
 \	}
 \}
 
@@ -872,7 +860,7 @@ let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
 " }}}
 "--- vimdoc-ja ---"{{{
 
-" vimdoc-ja is secondary
+" vimdoc-ja is secondary order
 set helplang=en,ja
 
 "}}}
@@ -884,11 +872,6 @@ let g:ConqueTerm_ReadUnfocused  = 1
 let g:ConqueTerm_Color          = 1
 let g:ConqueTerm_InsertOnEnter  = 0
 let g:ConqueTerm_StartMessages  = 1
-
-"}}}
-"--- dbext.vim ---"{{{
-
-let g:dbext_default_history_file = expand('~/.dbext_sql_history')
 
 "}}}
 "--- adrone.vim ---"{{{
@@ -1021,9 +1004,6 @@ set breakindent linebreak
 " View cursor column on <C-g>
 set noruler
 
-" Hard Conceal
-"set conceallevel=2
-
 "@See('http://d.hatena.ne.jp/thinca/20111204/1322932585')
 " Sugoi view tabline
 function! s:tabpage_label(n) "{{{
@@ -1060,9 +1040,6 @@ function! WithDelimitterTabLine() "{{{
 endfunction "}}}
 set tabline=%!WithDelimitterTabLine() showtabline=2
 
-" Always view the changed line num in Ex-command
-"set report=0
-
 " Turn off highlight
 nohlsearch
 
@@ -1083,8 +1060,8 @@ set textwidth=0 tabstop=4 shiftwidth=4
 " C type auto indent on
 set autoindent cindent
 
-" Incremental Searching
-"set incsearch
+" Don't jump bottom to top and top to bottom when searching
+set nowrapscan
 
 " Fold Text with foldmarker and fold sets
 set foldmethod=marker
@@ -1097,7 +1074,7 @@ set foldclose=all
 " Collection Swap File
 let &directory = s:directory
 
-" Hold View Position when file closed
+" Save View Position when execute ':mkview'
 let &viewdir = s:viewdir
 
 " Hold Undo Archive when file closed
@@ -1192,7 +1169,7 @@ augroup END
 
 augroup FileEvent
 	autocmd VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
-		\	if &encoding == 'utf-8'
+		\	if &encoding == 'utf-8' && !s:is_doswin
 		\|		let &listchars = 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
 		\|	else
 		\|		let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
@@ -1200,7 +1177,7 @@ augroup FileEvent
 augroup END
 
 augroup KeyEvent
-	"autocmd UserGettingBored * echo 'HA HA HA'
+	"autocmd UserGettingBored * echo 'Fight!!'
 augroup END
 
 "}}}
@@ -1235,8 +1212,7 @@ function! s:reverse_line() range " {{{
 		call setpos('.', l:posit)
 	endif
 endfunction " }}}
-command! -range=%
-\	ReverseLine :<line1>, <line2> call s:reverse_line()
+command! -range=% ReverseLine :<line1>, <line2> call s:reverse_line()
 
 
 " Catenate and echo files
@@ -1255,18 +1231,20 @@ function! s:cat_file(...) "{{{
 
 	echo l:catenate
 endfunction "}}}
-command! -nargs=* Cat call s:cat_file(<f-args>)
+command! -nargs=* -complete=file Cat call s:cat_file(<f-args>)
 
 
 " Low accuracy randome integer
 function! s:random_int(max) "{{{
+	let l:max = a:max isnot# '' ? a:max : 65535
+
 	let l:matchEnd = matchend(reltimestr(reltime()), '\d\+\.') + 1
-	return reltimestr(reltime())[l:matchEnd :] % (a:max + 1)
+	return reltimestr(reltime())[l:matchEnd :] % (l:max + 1)
 endfunction "}}}
-command! -nargs=1 PutRandom execute 'normal! a' . s:random_int(<q-args>)
+command! -nargs=? PutRandom execute 'normal! a' . s:random_int(<q-args>)
 
-
-" Time Watcher  $ @See('http://leafcage.hateblo.jp/entry/2013/08/02/001600')
+"@See('http://leafcage.hateblo.jp/entry/2013/08/02/001600')
+" Time Watcher
 command! TimerStart let  s:startTime = reltime()
 command! TimerEcho  echo reltimestr( reltime(s:startTime) )
 command! TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
@@ -1349,11 +1327,6 @@ command! EmptyBufUp execute ':new' | resize 5
 
 " Yank all to plus register
 command! CPAllPlus execute 'normal! ggVG"+y<C-o><C-o>'
-
-
-" Current buffer move to next_tab
-command! BufTabMovePrev execute 'normal! mZ:hide<CR>gT:vsp<CR>`Z'
-command! BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? ':hide<CR>' : ':hide<CR>gt') . ':vsp<CR>`Z'
 
 
 " Current buffer open or move to new_tab
@@ -1485,17 +1458,17 @@ command! ShowRcDict for s:v in items(s:) | echo s:v | endfor
 call altercmd#load()
 
 " buffer open commands with filetype 'none'
-command! -bang NewOverride new<bang> | setf none
-AlterCommand new NewOverride
+command! -bang NewOverridden new<bang> | setf none
+AlterCommand new NewOverridden
 
-command! -bang VnewOverride vnew<bang> | setf none
-AlterCommand vnew VnewOverride
+command! -bang VnewOverridden vnew<bang> | setf none
+AlterCommand vnew VnewOverridden
 
-command! -bang EnewOverride enew<bang> | setf none
-AlterCommand enew EnewOverride
+command! -bang EnewOverridden enew<bang> | setf none
+AlterCommand enew EnewOverridden
 
-command! -bang TabnewOverride tabnew<bang> | setf none
-AlterCommand tabnew TabnewOverride
+command! -bang TabnewOverridden tabnew<bang> | setf none
+AlterCommand tabnew TabnewOverridden
 
 " }}}
 " Utils {{{
@@ -1686,7 +1659,7 @@ augroup KeyMapping
 augroup END
 
 " }}}
-" Customize Keys {{{
+" Global KeyMaps {{{
 
 " Prepare temporary functions {{{
 
@@ -1873,7 +1846,7 @@ augroup END
 " Windows and Buffers {{{
 
 augroup KeyMapping
-	autocmd FileType * nnoremap <silent> <C-w>t     :<C-u>TabnewOverride<CR>
+	autocmd FileType * nnoremap <silent> <C-w>t     :<C-u>TabnewOverridden<CR>
 	autocmd FileType * nnoremap <silent> <C-w>T     :<C-u>tabclose<CR>
 	autocmd FileType * nnoremap <silent> <C-w>c     :<C-u>bdelete<CR>
 	autocmd FileType * nnoremap <silent> <C-w>C     :<C-u>bdelete!<CR>
@@ -1881,7 +1854,7 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <C-w>W     :<C-u>wall<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bt    :<C-u>BufOpenNewTab<CR>
 	autocmd FileType * nnoremap <silent> <C-w>bT    :<C-u>BufMoveNewTab<CR>
-	autocmd FileType * nnoremap <silent> <C-w>N     :<C-u>EnewOverride!<CR>
+	autocmd FileType * nnoremap <silent> <C-w>N     :<C-u>EnewOverridden!<CR>
 	autocmd FileType * nnoremap <silent> <C-w>Q     :<C-u>quitall<CR>
 	autocmd FileType * nnoremap <silent> <C-w>"     :<C-u>resize 5<CR>
 augroup END
@@ -2114,7 +2087,6 @@ augroup FileEvent
 
 	" C-Sharp
 	autocmd VimEnter,ColorScheme * highlight default link RcTypeInference Identifier
-	"autocmd VimEnter,ColorScheme * highlight RcTypeInference cterm=bold ctermfg=11
 	autocmd VimEnter,WinEnter    *.cs syntax keyword RcTypeInference var dynamic
 
 	" Ruby

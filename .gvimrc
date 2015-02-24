@@ -238,7 +238,6 @@ augroup FileEvent
 
 	" Set for C-Sharp
 	autocmd VimEnter,ColorScheme * highlight default link GrcTypeInference Identifier
-	"autocmd VimEnter,ColorScheme * highlight GrcTypeInference gui=none guifg=Cyan
 	autocmd VimEnter,WinEnter    *.cs syntax keyword GrcTypeInference var
 augroup END
 
