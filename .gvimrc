@@ -120,7 +120,7 @@ command! DressUpColorSolarized
 "{{{
 
 command! GVimConfig    e $MYGVIMRC
-command! GVimConfigTab tabnew | e $MYGVIMRC
+command! GVimConfigTab tabnew $MYGVIMRC
 
 if s:isWindows
 	command! HighTransparence  set transparency=140
@@ -187,14 +187,11 @@ let g:J6uil_display_icon = 1
 "}}}
 "--- vim-submode ---{{{
 
-"augroup KeyMapping
-"	autocmd FileType * nnoremap <Plug>(mygvimrc-transparency-up)   execute ':set transparency=' . (&transparency + 1)
-"	autocmd FileType * nnoremap <Plug>(mygvimrc-transparency-down) execute ':set transparency=' . (&transparency - 1)
-"augroup END
-"
-"call submode#enter_with('transparance_changer', 'n', '', '<C-s>T')
-"call submode#map('transparance_changer', 'n', '', 'j', '\<Plug>(mygvimrc-transparency-up)')
-"call submode#map('transparance_changer', 'n', '', 'k', '\<Plug>(mygvimrc-transparency-down)')
+augroup FileEvent
+	autocmd FileType * call submode#enter_with('trans_changer', 'n', '', '<C-s>*')
+	autocmd FileType * call submode#map('trans_changer', 'n', '', 'j', ':let &transparency = <C-r>=&transparency<CR> + 10<CR>')
+	autocmd FileType * call submode#map('trans_changer', 'n', '', 'k', ':let &transparency = <C-r>=&transparency<CR> - 10<CR>')
+augroup END
 
 "}}}
 

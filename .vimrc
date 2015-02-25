@@ -589,7 +589,7 @@ call neobundle#config('vim-threes', {
 let g:netrw_preview = 1
 
 augroup PluginPrefs
-	autocmd FileType netrw setl nolist
+	autocmd FileType netrw setl nolist wrapscan
 augroup END
 
 " }}}
@@ -890,8 +890,8 @@ let g:indent_guides_guide_size = 1
 
 " If matched file extension pattern, indent-guides is enabled (patter match)
 augroup FileEvent
-	autocmd WinEnter,BufWinEnter *                  IndentGuidesDisable
-	autocmd WinEnter,BufWinEnter *.html,*.xml,*.erb IndentGuidesEnable
+	autocmd WinEnter,BufWinEnter * IndentGuidesDisable
+	autocmd WinEnter,BufWinEnter *.xml,*.html,*css,*scss,*.erb IndentGuidesEnable
 augroup END
 
 "}}}
@@ -1475,7 +1475,7 @@ AlterCommand tabnew TabnewOverridden
 
 " Vim Utils {{{
 command! VimConfig         e $MYVIMRC
-command! VimConfigTab      tabnew | e $MYVIMRC
+command! VimConfigTab      tabnew $MYVIMRC
 command! Reload            so $MYVIMRC
 	\|	if has('gui_running')
 	\|		so $MYGVIMRC
