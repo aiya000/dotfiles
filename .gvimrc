@@ -187,11 +187,13 @@ let g:J6uil_display_icon = 1
 "}}}
 "--- vim-submode ---{{{
 
-augroup FileEvent
-	autocmd FileType * call submode#enter_with('trans_changer', 'n', '', '<C-s>*')
-	autocmd FileType * call submode#map('trans_changer', 'n', '', 'j', ':let &transparency = <C-r>=&transparency<CR> + 10<CR>')
-	autocmd FileType * call submode#map('trans_changer', 'n', '', 'k', ':let &transparency = <C-r>=&transparency<CR> - 10<CR>')
-augroup END
+if s:isWindows
+	augroup FileEvent
+		autocmd FileType * call submode#enter_with('trans_changer', 'n', '', '<C-s>*')
+		autocmd FileType * call submode#map('trans_changer', 'n', '', 'j', ':let &transparency = <C-r>=&transparency<CR> + 10<CR>')
+		autocmd FileType * call submode#map('trans_changer', 'n', '', 'k', ':let &transparency = <C-r>=&transparency<CR> - 10<CR>')
+	augroup END
+endif
 
 "}}}
 
