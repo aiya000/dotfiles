@@ -6,10 +6,7 @@ scriptencoding utf8
 " -- Parameter
 " -- Local_Function
 " -- Initialize
-"
 " -- Plugin_Manage
-"
-"
 " -- Plugin_Configure
 " -- View_Setting
 " -- Action_Setting
@@ -64,6 +61,9 @@ scriptencoding utf8
 "-- not functioned [0-9] key range on windows kaoriya gvim
 "  -- I don't know why it happned
 
+"-- filetype name git-log.git-diff exclude '.'
+"  -- exam) git-log-diff
+
 "}}}
 " Todo {{{
 
@@ -72,6 +72,10 @@ scriptencoding utf8
 "-- read help options.jax
 
 "-- read help windows.txt
+
+"-- check function JazzRadio on *nix
+
+"-- read help 'cino'
 
 " }}}
 
@@ -550,9 +554,6 @@ call neobundle#config('rogue.vim', {
 call neobundle#config('ref-dicts-en', {
 \	'depends' : 'thinca/vim-ref'
 \})
-call neobundle#config('adrone.vim', {
-\	'autoload' : {'commands' : 'MyPluginOn'}
-\})
 call neobundle#config('fakecygpty', {
 \	'build' : {
 \		'windows' : expand('gcc fakecygpty.c -o ~/bin/fakecygpty.exe')
@@ -886,9 +887,16 @@ augroup END
 "--- vim-indent-guides ---"{{{
 
 let g:indent_guides_default_mapping = 0
-let g:indent_guides_guide_size = 1
+let g:indent_guides_guide_size      = 1
+let g:indent_guides_auto_colors     = 0
 
-" If matched file extension pattern, indent-guides is enabled (patter match)
+" Define guide colors
+augroup HighlightPref
+	autocmd VimEnter,ColorScheme * highlight default link IndentGuidesOdd  PmenuSel
+	autocmd VimEnter,ColorScheme * highlight default link IndentGuidesEven Pmenu
+augroup END
+
+" If matched file extension pattern, indent-guides is enabled
 augroup FileEvent
 	autocmd WinEnter,BufWinEnter * IndentGuidesDisable
 	autocmd WinEnter,BufWinEnter *.xml,*.html,*css,*scss,*.erb IndentGuidesEnable
@@ -1656,6 +1664,7 @@ augroup KeyMapping
 	autocmd FileType * IncSearchNoreMap <C-h> <BS>
 	autocmd FileType * IncSearchNoreMap <C-d> <Del>
 	autocmd FileType * IncSearchNoreMap <C-e> <End>
+	autocmd FileType * IncSearchNoreMap <C-l> <Esc>
 augroup END
 
 " }}}
@@ -1913,7 +1922,7 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <leader>v          :<C-u>VimShell -split-command=vsp -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>v  :<C-u>VimShell -split-command=sp  -toggle<CR>
 	autocmd FileType * nnoremap <silent> <leader>V          :<C-u>VimShellBufferDir -create<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>V  :<C-u>VimShell -split-command=tab -create<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>V  :<C-u>VimShell -split-command=tabnew -create<CR>
 
 	" netrw
 	autocmd FileType * nnoremap <silent> <leader>e          :<C-u>Vexplore<CR>
@@ -1988,6 +1997,7 @@ augroup PluginPrefs
 	autocmd FileType vimshell  nnoremap <buffer> <C-n>      gt
 	autocmd FileType vimshell  nnoremap <buffer> <C-p>      gT
 	autocmd FileType vimshell  nnoremap <buffer> <C-l>      <NOP>
+	autocmd FileType vimshell  nnoremap <buffer> <C-y>      <C-y>
 	autocmd FileType vimshell  nmap     <buffer> <C-]>      <Plug>(vimshell_clear)
 	autocmd FileType vimshell  nmap     <buffer> gj         <Plug>(vimshell_next_prompt)
 	autocmd FileType vimshell  nmap     <buffer> gk         <Plug>(vimshell_previous_prompt)
@@ -2082,36 +2092,10 @@ augroup FileEvent
 	" Haskell
 	autocmd VimEnter,ColorScheme * highlight rcHeadSpace cterm=underline ctermfg=DarkGray
 	autocmd BufWinEnter          * let s:rcHeadSpace = s:matchadd_with_filetype('haskell', 'rcHeadSpace', '^\s\+', 10, get(s:, 'rcHeadSpace', 10002))
-	autocmd FileType haskell setl ts=2 sw=2 et
-	autocmd FileType yesod   setl ts=4 sw=4 et
 
 	" C-Sharp
 	autocmd VimEnter,ColorScheme * highlight default link RcTypeInference Identifier
 	autocmd VimEnter,WinEnter    *.cs syntax keyword RcTypeInference var dynamic
-
-	" Ruby
-	autocmd FileType ruby,eruby setl ts=2 sw=2 et
-
-	" CSS
-	autocmd FileType css,scss setl ts=2 sw=2 et
-
-	" Plain Text FileTypes
-	autocmd FileType markdown,text setl tw=0 ts=2 sw=2 et
-
-	" SQL Languages
-	autocmd FileType mysql setl ts=4 sw=4 et
-
-	" Markup Languages
-	autocmd FileType html,xml setl ts=4 sw=4 et
-
-	" FileTypes commentstrings
-	autocmd FileType vim           let &commentstring = ' "%s'
-	autocmd FileType java,cs,cpp,c let &commentstring = ' /*%s*/'
-	autocmd FileType haskell,mysql let &commentstring = ' -- %s'
-	autocmd FileType coq           let &commentstring = ' (*%s*)'
-	autocmd FIleType ruby,sh       let &commentstring = ' #%s'
-	autocmd FileType markdown      let &commentstring = '<!--%s-->'
-	autocmd FileType text,none     let &commentstring = ' %s'
 augroup END
 
 
@@ -2121,18 +2105,6 @@ augroup FileEvent
 	"@Incomplete('do not functioned as exchanger')
 	" netrw
 	autocmd FileType netrw highlight default link CursorLine Visual
-
-	" TweetVim
-	autocmd FileType tweetvim setl cursorline
-
-	" vimshell.vim
-	autocmd FileType vimshell setl ts=8
-
-	" ConqueTerm
-	autocmd FileType conque_term setl nolist
-
-	" gitlogviewer
-	autocmd FileType git-log.git-diff setl nolist
 augroup END
 
 "}}}
