@@ -7,3 +7,5 @@ let b:undo_ftplugin = 'setl ' . join([
 setl tabstop=2
 setl shiftwidth=2
 setl expandtab
+
+nnoremap <silent><buffer> <C-j> <CR>

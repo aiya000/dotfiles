@@ -589,10 +589,6 @@ call neobundle#config('vim-threes', {
 
 let g:netrw_preview = 1
 
-augroup PluginPrefs
-	autocmd FileType netrw setl nolist wrapscan
-augroup END
-
 " }}}
 "--- matchit.vim ---" {{{
 
@@ -669,10 +665,6 @@ if s:is_cygwin
 	unlet s:javav
 endif
 
-augroup PluginPrefs
-	autocmd FileType quickrun setl wrap
-augroup END
-
 " }}}
 "--- vimproc.vim ---"{{{
 
@@ -686,11 +678,6 @@ endif
 "--- TweetVim ---"{{{
 
 let g:tweetvim_async_post = 1
-
-augroup PluginPrefs
-	autocmd FileType tweetvim     setl wrap
-	autocmd FileType tweetvim_say setl tabstop=2 shiftwidth=2 expandtab
-augroup END
 
 "}}}
 "--- vimshell.vim ---"{{{
@@ -709,26 +696,9 @@ let g:vimshell_force_overwrite_statusline   = 1
 let g:vimshell_max_command_history          = 10000
 let g:vimshell_scrollback_limit             = 10000
 
-augroup PluginPrefs
-	autocmd FileType vimshell setl fdm=marker nolist wrap
-
-	" These depends the command that is defined by this vimrc
-	autocmd FileType vimshell call vimshell#altercmd#define('tdirset', ':TDirSet')
-	autocmd FileType vimshell call vimshell#altercmd#define('tdircd',  ':TDirCd')
-	autocmd FileType vimshell call vimshell#altercmd#define('tdirpwd', ':TDirPwd')
-	autocmd FileType vimshell call vimshell#altercmd#define('tab',     ':BufOpenNewTab')
-	autocmd FileType vimshell call vimshell#altercmd#define('tabopen', ':BufMoveNewTab')
-augroup END
-
-" connect to bash's hereis
+" This variable defined by my command
+" Connect to bash's hereis
 let g:vimshell_hereis_file = expand('~/.bashrc_places')
-
-"}}}
-"--- J6uil ---"{{{
-
-augroup PluginPrefs
-	autocmd FileType J6uil setl wrap
-augroup END
 
 "}}}
 "--- vimshell-kawaii.vim ---"{{{
@@ -873,15 +843,6 @@ let g:ConqueTerm_ReadUnfocused  = 1
 let g:ConqueTerm_Color          = 1
 let g:ConqueTerm_InsertOnEnter  = 0
 let g:ConqueTerm_StartMessages  = 1
-
-"}}}
-"--- adrone.vim ---"{{{
-
-augroup PluginPrefs
-	autocmd FileType adrone_home nnoremap <silent><buffer> Q     :<C-u>bdelete<CR>
-	autocmd FileType adrone_say  nnoremap <silent><buffer> <C-j> <CR>
-	autocmd FileType adrone_say  setl tabstop=2 shiftwidth=2 expandtab
-augroup END
 
 "}}}
 "--- vim-indent-guides ---"{{{
@@ -1963,88 +1924,27 @@ augroup END
 " }}}
 " Buffer Local KeyMaps {{{
 
-" To Plugin buffers
 augroup PluginPrefs
-	autocmd FileType help     nnoremap <silent><buffer> Q :<C-u>helpclose<CR>
+	autocmd FileType int-* nnoremap <buffer> q          <NOP>
+	autocmd FileType int-* nnoremap <buffer> <C-n>      gt
+	autocmd FileType int-* nnoremap <buffer> <C-p>      gT
+	autocmd FileType int-* nnoremap <buffer> <C-l>      <NOP>
+	autocmd FileType int-* nmap     <buffer> <C-]>      <Plug>(vimshell_int_clear)
+	autocmd FileType int-* nmap     <buffer> Q          <Plug>(vimshell_int_exit)
+	autocmd FileType int-* nmap     <buffer> gj         <Plug>(vimshell_int_next_prompt)
+	autocmd FileType int-* nmap     <buffer> gk         <Plug>(vimshell_int_previous_prompt)
+	autocmd FileType int-* inoremap <buffer> <C-l>      <Esc>
+	autocmd FileType int-* inoremap <buffer> <C-b>      <Left>
+	autocmd FileType int-* inoremap <buffer> <C-f>      <Right>
+	autocmd FileType int-* inoremap <buffer> <C-e>      <End>
+	autocmd FileType int-* inoremap <buffer> <C-d>      <Del>
+	autocmd FileType int-* imap     <buffer> <C-n>      <C-o><Plug>(vimshell_int_next_prompt)<End>
+	autocmd FileType int-* imap     <buffer> <C-p>      <C-o><Plug>(vimshell_int_previous_prompt)<End>
+	autocmd FileType int-* imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
+	autocmd FileType int-* imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
+	autocmd FileType int-* imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
 
-	autocmd FileType netrw    nmap             <buffer> H         G-
-	autocmd FileType netrw    nnoremap         <buffer> L         <NOP>
-	autocmd FileType netrw    nnoremap <silent><buffer> Q         :<C-u>quit<CR>
-	autocmd FileType netrw    nnoremap <silent><buffer> ~         :<C-u>execute 'Explore' expand('~')<CR>
-	autocmd FileType netrw    nnoremap <silent><buffer> <leader>e :<C-u>quit<CR>
-	autocmd FileType netrw    nnoremap <silent><buffer> V         :<C-u>vertical split<CR>
-	autocmd FileType netrw    nnoremap <silent><buffer> S         :<C-u>split<CR>
-	autocmd FileType netrw    nnoremap         <buffer> s         <NOP>
-
-	autocmd FileType unite    inoremap         <buffer> <C-l> <Esc>
-
-	autocmd FileType quickrun nnoremap <silent><buffer> Q     :<C-u>quit<CR>
-
-	autocmd FileType tweetvim     nmap             <buffer> <leader>R <Plug>(tweetvim_action_remove_status)
-	autocmd FileType tweetvim     nmap             <buffer> <C-r>     <Plug>(tweetvim_action_reload)
-	autocmd FileType tweetvim     nnoremap <silent><buffer> s         :<C-u>TweetVimSay<CR>
-	autocmd FileType tweetvim     nnoremap         <buffer> <C-a>     :<C-u>TweetVimSwitchAccount<Space>
-	autocmd FileType tweetvim     nnoremap         <buffer> U         :<C-u>TweetVimUserTimeline<Space>
-	autocmd FileType tweetvim     nnoremap <silent><buffer> Q         :<C-u>bdelete<CR>
-	" avoid <C-j> to say
-	autocmd FileType tweetvim_say nnoremap         <buffer> <C-j>     <C-o>o
-	autocmd FileType tweetvim_say inoremap         <buffer> <C-i>     <Tab>
-
-	"NOTE: I don't use nunmap here,
-	"      because happned exception 'no such keymapping' when reload filetype.
-	autocmd FileType vimshell  nnoremap <buffer> Q          gQ
-	autocmd FileType vimshell  nnoremap <buffer> q          <NOP>
-	autocmd FileType vimshell  nnoremap <buffer> <C-n>      gt
-	autocmd FileType vimshell  nnoremap <buffer> <C-p>      gT
-	autocmd FileType vimshell  nnoremap <buffer> <C-l>      <NOP>
-	autocmd FileType vimshell  nnoremap <buffer> <C-y>      <C-y>
-	autocmd FileType vimshell  nmap     <buffer> <C-]>      <Plug>(vimshell_clear)
-	autocmd FileType vimshell  nmap     <buffer> gj         <Plug>(vimshell_next_prompt)
-	autocmd FileType vimshell  nmap     <buffer> gk         <Plug>(vimshell_previous_prompt)
-	autocmd FileType vimshell  nmap     <buffer> <C-]>      <Plug>(vimshell_clear)
-	autocmd FileType vimshell  inoremap <buffer> <C-l>      <Esc>
-	autocmd FileType vimshell  inoremap <buffer> <C-b>      <Left>
-	autocmd FileType vimshell  inoremap <buffer> <C-f>      <Right>
-	autocmd FileType vimshell  inoremap <buffer> <C-e>      <End>
-	autocmd FileType vimshell  inoremap <buffer> <C-n>      <Esc>gt
-	autocmd FileType vimshell  inoremap <buffer> <C-p>      <Esc>gT
-	autocmd FileType vimshell  inoremap <buffer> <C-d>      <Del>
-	autocmd FileType vimshell  imap     <buffer> <C-n>      <C-o><Plug>(vimshell_next_prompt)<End>
-	autocmd FileType vimshell  imap     <buffer> <C-p>      <C-o><Plug>(vimshell_previous_prompt)<End>
-	autocmd FileType vimshell  imap     <buffer> <C-]>      <Plug>(vimshell_clear)
-	autocmd FileType vimshell  imap     <buffer> <C-j>      <Plug>(vimshell_enter)
-	autocmd FileType vimshell  imap     <buffer> <C-k><C-p> <Plug>(vimshell_history_unite)
-
-	autocmd FileType int-*     nnoremap <buffer> q          <NOP>
-	autocmd FileType int-*     nnoremap <buffer> <C-n>      gt
-	autocmd FileType int-*     nnoremap <buffer> <C-p>      gT
-	autocmd FileType int-*     nnoremap <buffer> <C-l>      <NOP>
-	autocmd FileType int-*     nmap     <buffer> <C-]>      <Plug>(vimshell_int_clear)
-	autocmd FileType int-*     nmap     <buffer> Q          <Plug>(vimshell_int_exit)
-	autocmd FileType int-*     nmap     <buffer> gj         <Plug>(vimshell_int_next_prompt)
-	autocmd FileType int-*     nmap     <buffer> gk         <Plug>(vimshell_int_previous_prompt)
-	autocmd FileType int-*     inoremap <buffer> <C-l>      <Esc>
-	autocmd FileType int-*     inoremap <buffer> <C-b>      <Left>
-	autocmd FileType int-*     inoremap <buffer> <C-f>      <Right>
-	autocmd FileType int-*     inoremap <buffer> <C-e>      <End>
-	autocmd FileType int-*     inoremap <buffer> <C-d>      <Del>
-	autocmd FileType int-*     imap     <buffer> <C-n>      <C-o><Plug>(vimshell_int_next_prompt)<End>
-	autocmd FileType int-*     imap     <buffer> <C-p>      <C-o><Plug>(vimshell_int_previous_prompt)<End>
-	autocmd FileType int-*     imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
-	autocmd FileType int-*     imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
-	autocmd FileType int-*     imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
-
-	autocmd FileType J6uil     nnoremap <silent><buffer> Q         :<C-u>bdelete<CR>
-	autocmd FileType J6uil_say nnoremap         <buffer> <C-j>     <NOP>
-
-	autocmd FileType w3m       nmap             <buffer> H         <BS>
-	autocmd FileType w3m       nnoremap <silent><buffer> <C-u>     :<C-u>W3mAddressBar <CR>
-	autocmd FileType w3m       nnoremap <silent><buffer> <leader>E :<C-u>W3mShowExtenalBrowser <CR>
-
-	autocmd FileType ref-*     nnoremap <silent><buffer> Q         :<C-u>quit<CR>
-
-	autocmd FileType git-log.git-diff nnoremap <silent><buffer> Q         :<C-u>bdelete<CR>
-	autocmd FileType markdown         nnoremap <silent><buffer> <leader>r :<C-u>PrevimOpen<CR>
+	autocmd FileType ref-* nnoremap <silent><buffer> Q :<C-u>quit<CR>
 augroup END
 
 " }}}
