@@ -815,12 +815,12 @@ let g:ref_source_webdict_sites = {
 
 let g:ref_source_webdict_sites['default'] = 'weblio'
 
-function! s:weblio_filter(output)
+function! s:weblio_filter(output) "{{{
 	let l:lines  = split(a:output, "\n")
 	"@Incompleted('')
 	let l:lines1 = map(l:lines, 'substitute(v:val, "\v(発音記号|音声を聞く|ダウンロード再生)\n", "", "g")')
 	return join(l:lines1[60 : ], "\n")
-endfunction
+endfunction "}}}
 let g:ref_source_webdict_sites['weblio'].filter = function('s:weblio_filter')
 
 " }}}
@@ -1110,7 +1110,7 @@ set spelllang=en_US
 " Set reference path, using by :find, gf and more
 set path=.,,./**
 
-" Generate HelpTags My Help
+" Manually generate my help tags
 if isdirectory(expand('~/.vim/doc'))
 	helptags ~/.vim/doc
 endif
@@ -1137,6 +1137,7 @@ augroup END
 
 
 augroup FileEvent
+	" If you using wim command prompt, listchars using safe chars
 	autocmd VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 		\	if &encoding == 'utf-8' && !s:is_doswin
 		\|		let &listchars = 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
@@ -1271,6 +1272,7 @@ endfunction "}}}
 command! TDirCd            call s:cd_temporary_dir()
 
 
+"@Marked('I will suppressed kaoriya scratch for using neobundled scratch')
 " Pop up Scratch Buffers
 " command! ScratchUp "{{{
 
@@ -1291,16 +1293,11 @@ else
 endif
 
 "}}}
-command! EmptyBufUp execute ':new' | resize 5
+command! EmptyBufUp new | resize 5
 
 
 " Yank all to plus register
 command! CPAllPlus execute 'normal! ggVG"+y<C-o><C-o>'
-
-
-" Current buffer open or move to new_tab
-command! BufOpenNewTab execute 'normal! mZ:tabnew<CR>`Zzz'
-command! BufMoveNewTab execute 'normal! mZ<C-w>c:tabnew<CR>`Zzz'
 
 " }}}
 " Development Support {{{
@@ -1816,17 +1813,17 @@ augroup END
 " Windows and Buffers {{{
 
 augroup KeyMapping
-	autocmd FileType * nnoremap <silent> <C-w>t     :<C-u>TabnewOverridden<CR>
-	autocmd FileType * nnoremap <silent> <C-w>T     :<C-u>tabclose<CR>
-	autocmd FileType * nnoremap <silent> <C-w>c     :<C-u>bdelete<CR>
-	autocmd FileType * nnoremap <silent> <C-w>C     :<C-u>bdelete!<CR>
-	autocmd FileType * nnoremap <silent> <C-w><C-w> :<C-u>write<CR>
-	autocmd FileType * nnoremap <silent> <C-w>W     :<C-u>wall<CR>
-	autocmd FileType * nnoremap <silent> <C-w>bt    :<C-u>BufOpenNewTab<CR>
-	autocmd FileType * nnoremap <silent> <C-w>bT    :<C-u>BufMoveNewTab<CR>
-	autocmd FileType * nnoremap <silent> <C-w>N     :<C-u>EnewOverridden!<CR>
-	autocmd FileType * nnoremap <silent> <C-w>Q     :<C-u>quitall<CR>
-	autocmd FileType * nnoremap <silent> <C-w>"     :<C-u>resize 5<CR>
+	autocmd FileType * nnoremap <silent>       <C-w>t     :<C-u>TabnewOverridden<CR>
+	autocmd FileType * nnoremap <silent>       <C-w>T     :<C-u>tabclose<CR>
+	autocmd FileType * nnoremap <silent>       <C-w>c     :<C-u>bdelete<CR>
+	autocmd FileType * nnoremap <silent>       <C-w>C     :<C-u>bdelete!<CR>
+	autocmd FileType * nnoremap <silent>       <C-w><C-w> :<C-u>write<CR>
+	autocmd FileType * nnoremap <silent>       <C-w>W     :<C-u>wall<CR>
+	autocmd FileType * nnoremap <silent>       <C-w>N     :<C-u>EnewOverridden!<CR>
+	autocmd FileType * nnoremap <silent>       <C-w>Q     :<C-u>quitall<CR>
+	autocmd FileType * nnoremap <silent>       <C-w>"     :<C-u>resize 5<CR>
+	autocmd FileType * nnoremap <silent><expr> <C-w>bt    'mZ:tabnew<CR>`Zzz'
+	autocmd FileType * nnoremap <silent><expr> <C-w>bT    'mZ<C-w>c:tabnew<CR>`Zzz'
 augroup END
 
 " }}}
