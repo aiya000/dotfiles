@@ -379,7 +379,6 @@ NeoBundleLazy    'mattn/benchvimrc-vim'
 NeoBundleLazy    'mattn/yamada-vim'
 NeoBundleLazy    'jvoorhis/coq.vim'
 NeoBundleLazy    'eagletmt/coqtop-vim'
-NeoBundle        'duff/vim-scratch'
 NeoBundle        'rhysd/vim-grammarous'
 NeoBundleLazy    'thinca/vim-themis'
 NeoBundle        'tomasr/molokai'
@@ -1270,30 +1269,6 @@ endfunction "}}}
 command! TDirCd            call s:cd_temporary_dir()
 
 
-"@Marked('I will suppressed kaoriya scratch for using neobundled scratch')
-" Pop up Scratch Buffers
-" command! ScratchUp "{{{
-
-" The cushion of the environments
-if s:is_windows
-	" Is different operated :sp ubuntu and kaoriya ?
-	command! ScratchUp execute ':Scratch' | resize 5
-else
-	function! s:scratch_up_by_condition()
-		if !&modified
-			execute ':sp|Scratch' | resize 5
-		else
-			execute ':Scratch' | resize 5
-		endif
-	endfunction
-
-	command! ScratchUp call s:scratch_up_by_condition()
-endif
-
-"}}}
-command! EmptyBufUp new | resize 5
-
-
 " Yank all to plus register
 command! CPAllPlus execute 'normal! ggVG"+y<C-o><C-o>'
 
@@ -1784,14 +1759,14 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> gj                :<C-u>call <SID>cursor_down_to_ground()<CR>
 	"autocmd FileType * vnoremap <silent> gk                :<C-u>call <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * vnoremap <silent> gj                :<C-u>call <SID>cursor_down_to_ground()<CR>
-	autocmd FileType * nnoremap <silent> <C-m>             o<Esc>
 	autocmd FileType * nnoremap <silent> <Space><Space>    :<C-u>call <SID>compress_spaces()<CR>
-	autocmd FileType * nnoremap <silent> <leader>b         :<C-u>ScratchUp<CR>
-	autocmd FileType * nnoremap <silent> <leader>B         :<C-u>EmptyBufUp<CR>
+	autocmd FileType * nnoremap <silent> <leader>b         :<C-u>NewOverridden<CR>:resize 5<CR>:setl buftype=nofile<CR>
+	autocmd FileType * nnoremap <silent> <leader>B         :<C-u>NewOverridden<CR>:resize 5<CR>
 	autocmd FileType * nnoremap <silent> <leader>pl        :<C-u>PutLongSeparator<CR>
 	autocmd FileType * nnoremap <silent> <leader>ps        :<C-u>PutShortSeparator<CR>
 	autocmd FileType * nnoremap <silent> <leader>pd        :<C-u>PutDate<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>r :<C-u>call <SID>quickrun_close()<CR>
+	autocmd FileType * nnoremap <C-m> o<Esc>
 
 	autocmd FileType * cnoremap <C-]> '<,'>
 augroup END
