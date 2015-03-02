@@ -53,8 +53,6 @@ scriptencoding utf8
 
 "-- couldn't auto make vimproc at anywhere
 
-"-- lost highlight of buffer when delete some buffer
-
 "-- conflicted? vim-ruby and rspec.vim when those was set NeoBundleLazy
 "  -- do not loaded syntax of rspec.vim
 
