@@ -62,6 +62,8 @@ scriptencoding utf8
 "-- filetype name git-log.git-diff exclude '.'
 "  -- exam) git-log-diff
 
+"-- wrapscan turned on before I know
+
 "}}}
 " Todo {{{
 
@@ -430,6 +432,7 @@ NeoBundle        'aiya000/aho-bakaup.vim'
 
 call neobundle#end()
 
+"@Experiment('commented out')
 try
 	helptags ~/.vim/bundle/.neobundle/doc
 catch /E154/
@@ -1107,6 +1110,7 @@ set spelllang=en_US
 " Set reference path, using by :find, gf and more
 set path=.,,./**
 
+"@Experiment('commented out')
 " Manually generate my help tags
 if isdirectory(expand('~/.vim/doc'))
 	helptags ~/.vim/doc
@@ -1760,8 +1764,8 @@ augroup KeyMapping
 	"autocmd FileType * vnoremap <silent> gk                :<C-u>call <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * vnoremap <silent> gj                :<C-u>call <SID>cursor_down_to_ground()<CR>
 	autocmd FileType * nnoremap <silent> <Space><Space>    :<C-u>call <SID>compress_spaces()<CR>
-	autocmd FileType * nnoremap <silent> <leader>b         :<C-u>NewOverridden<CR>:resize 5<CR>:setl buftype=nofile<CR>
-	autocmd FileType * nnoremap <silent> <leader>B         :<C-u>NewOverridden<CR>:resize 5<CR>
+	autocmd FileType * nnoremap <silent> <leader>b         :<C-u>ScratchUp<CR>
+	autocmd FileType * nnoremap <silent> <leader>B         :<C-u>EmptyBufUp<CR>
 	autocmd FileType * nnoremap <silent> <leader>pl        :<C-u>PutLongSeparator<CR>
 	autocmd FileType * nnoremap <silent> <leader>ps        :<C-u>PutShortSeparator<CR>
 	autocmd FileType * nnoremap <silent> <leader>pd        :<C-u>PutDate<CR>
