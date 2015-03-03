@@ -387,10 +387,6 @@ NeoBundle        'tomasr/molokai'
 NeoBundle        'aiya000/arot13.vim'
 NeoBundle        'aiya000/ahoge-put.vim'
 NeoBundleLazy    'kannokanno/previm'
-NeoBundle        'gist:aiya000/ec5f6b2375a639831953', {
-\	'name'        : 'gitlogviewer.vim',
-\	'script_type' : 'plugin'
-\}
 NeoBundle        'kamichidu/vim-vdbc'
 NeoBundle        'mattn/vdbi-vim'
 NeoBundle        'LeafCage/foldCC'
@@ -398,10 +394,6 @@ NeoBundleLazy    'katono/rogue.vim'
 NeoBundle        'aiya000/asql.vim'
 NeoBundleLazy    'kamichidu/vim-benchmark'
 NeoBundle        'kana/vim-submode'
-NeoBundle        'gist:aiya000/58931585f8ba6aa43b87', {
-\	'name'        : 'conceal-javadoc.vim',
-\	'script_type' : 'plugin'
-\}
 NeoBundle        'mfumi/ref-dicts-en'
 NeoBundle        'thinca/vim-painter'
 NeoBundle        'osyo-manga/vim-anzu'
@@ -1764,13 +1756,15 @@ augroup KeyMapping
 	"autocmd FileType * vnoremap <silent> gk                :<C-u>call <SID>cursor_up_to_lid()<CR>
 	"autocmd FileType * vnoremap <silent> gj                :<C-u>call <SID>cursor_down_to_ground()<CR>
 	autocmd FileType * nnoremap <silent> <Space><Space>    :<C-u>call <SID>compress_spaces()<CR>
-	autocmd FileType * nnoremap <silent> <leader>b         :<C-u>ScratchUp<CR>
-	autocmd FileType * nnoremap <silent> <leader>B         :<C-u>EmptyBufUp<CR>
+	autocmd FileType * nnoremap <silent> <leader>b         :<C-u>NewOverridden<CR>:resize 5<CR>:setl buftype=nofile<CR>
+	autocmd FileType * nnoremap <silent> <leader>B         :<C-u>NewOverridden<CR>:resize 5<CR>
 	autocmd FileType * nnoremap <silent> <leader>pl        :<C-u>PutLongSeparator<CR>
 	autocmd FileType * nnoremap <silent> <leader>ps        :<C-u>PutShortSeparator<CR>
 	autocmd FileType * nnoremap <silent> <leader>pd        :<C-u>PutDate<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>r :<C-u>call <SID>quickrun_close()<CR>
 	autocmd FileType * nnoremap <C-m> o<Esc>
+
+	autocmd FileType * inoremap <C-]> <Esc>:w<CR>
 
 	autocmd FileType * cnoremap <C-]> '<,'>
 augroup END
