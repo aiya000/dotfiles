@@ -111,6 +111,12 @@ command! DressUpColorSolarized
 \|		set transparency=220
 \|	endif
 
+
+" Don't use this
+if !g:gvimrc['loaded']
+	delcommand Revert
+endif
+
 "}}}
 
 
@@ -192,6 +198,9 @@ if s:isWindows
 		autocmd FileType * call submode#enter_with('trans_changer', 'n', '', '<C-s>*')
 		autocmd FileType * call submode#map('trans_changer', 'n', '', 'j', ':let &transparency = <C-r>=&transparency<CR> + 10<CR>')
 		autocmd FileType * call submode#map('trans_changer', 'n', '', 'k', ':let &transparency = <C-r>=&transparency<CR> - 10<CR>')
+		autocmd FileType * call submode#map('trans_changer', 'n', '', 'H', ':set transparency=1<CR>')
+		autocmd FileType * call submode#map('trans_changer', 'n', '', 'M', ':set transparency=127<CR>')
+		autocmd FileType * call submode#map('trans_changer', 'n', '', 'L', ':set transparency=255<CR>')
 	augroup END
 endif
 
