@@ -1418,7 +1418,6 @@ command! Reload            so $MYVIMRC
 command! ForceSave         w !sudo tee > /dev/null %
 
 command! CdBufDir          cd %:p:h
-command! Resetf            let &ft = &ft  " for actuate autocmd Events [FileType *]
 
 command! ColorPreview      Unite colorscheme -auto-preview
 
@@ -1519,7 +1518,8 @@ command! -nargs=1 GrepNow vimgrep <args> % | cwindow
 
 " vimconsole.vim
 cnoreabbr Log      VimConsoleLog
-command!  LogClear VimConsoleClear
+cnoreabbr LogClear VimConsoleClear
+cnoreabbr LogOpen  VimConsoleOpen
 
 " GHCi
 cnoreabbr RunGhc   !runghc %
@@ -1575,23 +1575,13 @@ augroup KeyMapping
 	autocmd FileType * nmap     <C-j> <CR>
 	autocmd FileType * imap     <C-j> <CR>
 
-	autocmd FileType * cnoremap <C-b> <Left>
-	autocmd FileType * cnoremap <C-f> <Right>
-	autocmd FileType * cnoremap <C-a> <Home>
-	autocmd FileType * cnoremap <C-h> <BS>
-	autocmd FileType * cnoremap <C-d> <Del>
-	autocmd FileType * cnoremap <C-e> <End>
-	autocmd FileType * cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ?'':getcmdline()[:getcmdpos()-2]<CR>
-
-	" for incsearch.vim
-	autocmd FileType * IncSearchNoreMap <C-j> <CR>
-	autocmd FileType * IncSearchNoreMap <C-b> <Left>
-	autocmd FileType * IncSearchNoreMap <C-f> <Right>
-	autocmd FileType * IncSearchNoreMap <C-a> <Home>
-	autocmd FileType * IncSearchNoreMap <C-h> <BS>
-	autocmd FileType * IncSearchNoreMap <C-d> <Del>
-	autocmd FileType * IncSearchNoreMap <C-e> <End>
-	autocmd FileType * IncSearchNoreMap <C-l> <Esc>
+	autocmd FileType * cnoremap <C-b>      <Left>
+	autocmd FileType * cnoremap <C-f>      <Right>
+	autocmd FileType * cnoremap <C-a>      <Home>
+	autocmd FileType * cnoremap <C-h>      <BS>
+	autocmd FileType * cnoremap <C-d>      <Del>
+	autocmd FileType * cnoremap <C-e>      <End>
+	autocmd FileType * cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
 augroup END
 
 " }}}
@@ -1604,39 +1594,14 @@ function! s:compress_spaces() "{{{
 	let l:recent_pattern = @/
 
 	try
-		silent execute ':substitute/\s\s\+/ /g'
-		silent execute 'normal! =='
+		execute ':substitute/\s\s\+/ /g'
+		execute 'normal! =='
 	catch
-		" GanMusi
 	finally
 		let @/ = l:recent_pattern
 	endtry
 
-	execute ':nohlsearch'
-endfunction "}}}
-
-
-" Easy toggle virtualedit
-function! s:toggle_virtual_edit() "{{{
-	if &virtualedit ==# ''
-		set virtualedit=all
-	else
-		set virtualedit=
-	endif
-
-	set virtualedit?
-endfunction "}}}
-
-
-" Easy toggle diffthis and diffoff
-function! s:toggle_diff_mode() "{{{
-	if &diff
-		execute ':diffoff'
-	else
-		execute ':diffthis'
-	endif
-
-	set diff?
+	nohlsearch
 endfunction "}}}
 
 
@@ -1667,29 +1632,6 @@ function! s:cursor_down_to_ground() "{{{
 			break
 		endif
 	endwhile
-endfunction "}}}
-
-
-" Toggle camel case and sneak case
-"@Incompleted('do not implemented a part of this')
-function! s:toggle_case() "{{{
-	let l:pos  = getpos('.')
-
-	let l:word     = expand('<cword>')
-	let l:is_snake = l:word =~? '_' ? 1 : 0
-
-	execute 'normal! b'
-	if expand('<cword>') !=# l:word
-		execute 'normal! w'
-	endif
-
-	if l:is_snake
-		throw 'not implemented'
-	else
-		execute 'normal! ce' . substitute(l:word, '[A-Z]', '_\l\0', 'g')
-	endif
-
-	call setpos('.', l:pos)
 endfunction "}}}
 
 
@@ -1733,7 +1675,7 @@ endfunction "}}}
 " Overwrite mapping {{{
 
 augroup KeyMapping
-	" † God Of The Vim
+	" † Rebirth Of The NeoEx
 	autocmd FileType * nnoremap Q gQ
 
 	autocmd FileType * nnoremap <C-n> gt
@@ -1762,11 +1704,25 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <leader>ps        :<C-u>PutShortSeparator<CR>
 	autocmd FileType * nnoremap <silent> <leader>pd        :<C-u>PutDate<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>r :<C-u>call <SID>quickrun_close()<CR>
-	autocmd FileType * nnoremap <C-m> o<Esc>
+	autocmd FileType * nnoremap <silent> <leader><leader>h :<C-u>helpclose<CR>
+	autocmd FileType * nnoremap          <C-m>             o<Esc>
 
-	autocmd FileType * inoremap <C-]> <Esc>:w<CR>
+	autocmd FileType * cnoremap          <C-]>             '<,'>
 
-	autocmd FileType * cnoremap <C-]> '<,'>
+
+	autocmd FileType * nnoremap <silent>       <C-k><C-r>     :<C-u>Reload<CR>
+	autocmd FileType * nnoremap <silent>       <C-k><C-l>     :<C-u>nohlsearch<CR>
+	autocmd FileType * nnoremap <silent>       <C-k>l         :<C-u>source %<CR>
+	" for actuate autocmd Events [FileType *]
+	autocmd FileType * nnoremap <silent>       <C-k>r         :<C-u>let &ft = &ft<CR>
+	autocmd FileType * nnoremap                <C-k><C-j>     :<C-u>write<CR>
+
+	autocmd FileType * inoremap                <C-k><C-k>     <C-o>"_d$
+	autocmd FileType * inoremap                <C-k><C-y>     <Esc>k"zyyjV"zp:let @z = ''<CR>A
+	autocmd FileType * inoremap                <C-k><C-j>     <Esc>:write<CR>
+
+	autocmd FileType * cnoremap                <C-k><C-p>     <Up>
+	autocmd FileType * cnoremap                <C-k><C-n>     <Down>
 augroup END
 
 " }}}
@@ -1788,44 +1744,28 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent>       <C-w>T     :<C-u>tabclose<CR>
 	autocmd FileType * nnoremap <silent>       <C-w>c     :<C-u>bdelete<CR>
 	autocmd FileType * nnoremap <silent>       <C-w>C     :<C-u>bdelete!<CR>
-	autocmd FileType * nnoremap <silent>       <C-w><C-w> :<C-u>write<CR>
 	autocmd FileType * nnoremap <silent>       <C-w>W     :<C-u>wall<CR>
 	autocmd FileType * nnoremap <silent>       <C-w>N     :<C-u>EnewOverridden!<CR>
 	autocmd FileType * nnoremap <silent>       <C-w>Q     :<C-u>quitall<CR>
 	autocmd FileType * nnoremap <silent>       <C-w>"     :<C-u>resize 5<CR>
-	autocmd FileType * nnoremap <silent><expr> <C-w>bt    'mZ:tabnew<CR>`Zzz'
-	autocmd FileType * nnoremap <silent><expr> <C-w>bT    'mZ<C-w>c:tabnew<CR>`Zzz'
-augroup END
-
-" }}}
-" Another actions {{{
-
-augroup KeyMapping
-	autocmd FileType * nnoremap <silent><expr>   <C-k><C-s>     ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
-	autocmd FileType * nnoremap <silent>         <C-k><C-r>     :<C-u>Reload<CR>
-	autocmd FileType * nnoremap <silent>         <C-k><C-l>     :<C-u>nohlsearch<CR>
-	autocmd FileType * nnoremap <silent>         <C-k>l         :<C-u>source %<CR>
-	autocmd FileType * nnoremap <silent>         <C-k>r         :<C-u>Resetf<CR>
-	autocmd FileType * nnoremap <silent>         <C-k><C-Space> :<C-u>call <SID>toggle_case()<CR>
-	autocmd FileType * inoremap <silent>         <C-k><C-e>     <C-o>:set expandtab! expandtab?<CR>
-	autocmd FileType * inoremap                  <C-k><C-k>     <C-o>"_d$
-	autocmd FileType * inoremap                  <C-k><C-y>     <Esc>k"zyyjV"zp:let @z = ''<CR>A
-	autocmd FileType * cnoremap                  <C-k><C-p>     <Up>
-	autocmd FileType * cnoremap                  <C-k><C-n>     <Down>
+	autocmd FileType * nnoremap <silent>       <C-w>bt    mZ:tabnew<CR>`Zzz
+	autocmd FileType * nnoremap <silent>       <C-w>bT    mZ<C-w>c:tabnew<CR>`Zzz
 augroup END
 
 " }}}
 " Toggle options {{{
 
 augroup KeyMapping
-	autocmd FileType * nnoremap <silent>         <C-h><C-w>      :<C-u>setl wrap!           wrap?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-c>      :<C-u>set  cursorline!     cursorline?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-e>      :<C-u>set  expandtab!      expandtab?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-r>      :<C-u>set  relativenumber! relativenumber?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-l>      :<C-u>set  list!           list?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-n>      :<C-u>set  number!         number?<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-d>      :<C-u>call <SID>toggle_diff_mode()<CR>
-	autocmd FileType * nnoremap <silent>         <C-h><C-v>      :<C-u>call <SID>toggle_virtual_edit()<CR>
+	autocmd FileType * nnoremap <silent>       <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
+	autocmd FileType * nnoremap <silent>       <C-h><C-c> :<C-u>setl cursorline!     cursorline?    <CR>
+	autocmd FileType * nnoremap <silent>       <C-h><C-e> :<C-u>setl expandtab!      expandtab?     <CR>
+	autocmd FileType * nnoremap <silent>       <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
+	autocmd FileType * nnoremap <silent>       <C-h><C-l> :<C-u>setl list!           list?          <CR>
+	autocmd FileType * nnoremap <silent>       <C-h><C-n> :<C-u>setl number!         number?        <CR>
+	autocmd FileType * nnoremap <silent>       <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
+	autocmd FileType * nnoremap <silent><expr> <C-h><C-d> (&diff ? ':diffoff' : ':diffthis') . '\|set diff?<CR>'
+	autocmd FileType * nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
+	autocmd FileType * inoremap <silent>       <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
 augroup END
 
 " }}}
@@ -1833,52 +1773,59 @@ augroup END
 
 augroup KeyMapping
 	" open-browser.vim
-	autocmd FileType * nmap              <leader>w          <Plug>(openbrowser-open)
+	autocmd FileType * nmap <leader>w <Plug>(openbrowser-open)
 
 	" excitetranslate-vim
-	autocmd FileType * nnoremap <silent> <leader>t          :<C-u>ExciteTranslate<CR>
+	autocmd FileType * nnoremap <silent> <leader>t :<C-u>ExciteTranslate<CR>
 
 	" Unite
-	autocmd FileType * nnoremap <silent> <C-k><C-u><C-f>    :<C-u>Unite -ignorecase outline:foldings<CR>
-	autocmd FileType * nnoremap <silent> <C-w>~             :<C-u>Unite -ignorecase neomru/file<CR>
+	autocmd FileType * nnoremap <silent> <C-k><C-u><C-f> :<C-u>Unite -ignorecase outline:foldings<CR>
+	autocmd FileType * nnoremap <silent> <C-w>~          :<C-u>Unite -ignorecase neomru/file<CR>
 
 	" vim-over
-	autocmd FileType * nnoremap <silent> :%s/               :<C-u>OverCommandLine<CR>%s/
-	autocmd FileType * nnoremap <silent> :s/                :<C-u>OverCommandLine<CR>s/
-	autocmd FileType * vnoremap <silent> :s/                :<C-u>OverCommandLine<CR>'<,'>s/
+	autocmd FileType * nnoremap <silent>       :%s/       :<C-u>OverCommandLine<CR>%s/
+	autocmd FileType * nnoremap <silent>       :s/        :<C-u>OverCommandLine<CR>s/
+	autocmd FileType * nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
+	autocmd FileType * vnoremap <silent>       :s/        :<C-u>OverCommandLine<CR>'<,'>s/
+	autocmd FileType * OverCommandLineNoremap  <C-l>      <Esc>
 
 	" vimshell
-	autocmd FileType * nnoremap <silent> <leader>v          :<C-u>VimShell -split-command=vsp -toggle<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>v  :<C-u>VimShell -split-command=sp  -toggle<CR>
-	autocmd FileType * nnoremap <silent> <leader>V          :<C-u>VimShellBufferDir -create<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>V  :<C-u>VimShell -split-command=tabnew -create<CR>
+	autocmd FileType * nnoremap <silent> <leader>v         :<C-u>VimShell -split-command=vsp -toggle<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>v :<C-u>VimShell -split-command=sp  -toggle<CR>
+	autocmd FileType * nnoremap <silent> <leader>V         :<C-u>VimShellBufferDir -create<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>V :<C-u>VimShell -split-command=tabnew -create<CR>
 
 	" netrw
-	autocmd FileType * nnoremap <silent> <leader>e          :<C-u>Vexplore<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>e  :<C-u>Sexplore<CR>
-	autocmd FileType * nnoremap <silent> <leader>E          :<C-u>Explore<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>E  :<C-u>Texplore<CR>
+	autocmd FileType * nnoremap <silent> <leader>e         :<C-u>Vexplore<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>e :<C-u>Sexplore<CR>
+	autocmd FileType * nnoremap <silent> <leader>E         :<C-u>Explore<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>E :<C-u>Texplore<CR>
 
 	" anzu-chan
-	autocmd FileType * nmap              n                  <Plug>(anzu-n-with-echo)zv
-	autocmd FileType * nmap              N                  <Plug>(anzu-N-with-echo)zv
-	autocmd FileType * nmap              *                  <Plug>(anzu-star-with-echo)zv
-	autocmd FileType * nmap              #                  <Plug>(anzu-sharp-with-echo)zv
-	autocmd FileType * nmap              <C-w>*             <C-w><C-v><Plug>(anzu-star-with-echo)zv
-	autocmd FileType * nmap              <C-w>#             <C-w><C-v><Plug>(anzu-sharp-with-echo)zv
-
-	" vim-over
-	autocmd FileType * OverCommandLineNoremap <C-l> <Esc>
+	autocmd FileType * nmap n      <Plug>(anzu-n-with-echo)zv
+	autocmd FileType * nmap N      <Plug>(anzu-N-with-echo)zv
+	autocmd FileType * nmap *      <Plug>(anzu-star-with-echo)zv
+	autocmd FileType * nmap #      <Plug>(anzu-sharp-with-echo)zv
+	autocmd FileType * nmap <C-w>* <C-w>v<Plug>(anzu-star-with-echo)zv
+	autocmd FileType * nmap <C-w># <C-w>v<Plug>(anzu-sharp-with-echo)zv
 
 	" incsearch.vim
-	autocmd FileType * nmap <expr>       /                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
-	autocmd FileType * nmap <silent>     \/                 /\m\C
-	autocmd FileType * nmap <silent>     \\/                /\m\C\<\>[Left][Left]
-	autocmd FileType * nmap              g/                 /<C-r>"<CR>
-	autocmd FileType * nmap <expr>       ?                  foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
-	autocmd FileType * nmap <silent>     \?                 ?\m\C
-	autocmd FileType * nmap <silent>     \\?                ?\m\C\<\>[Left][Left]
-	autocmd FileType * nmap              g?                 ?<C-r>"<CR>
+	autocmd FileType * nmap <expr>      /     foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
+	autocmd FileType * nmap <silent>    \/    /\m\C
+	autocmd FileType * nmap <silent>    \\/   /\m\C\<\>[Left][Left]
+	autocmd FileType * nmap             g/    /<C-r>"<CR>
+	autocmd FileType * nmap <expr>      ?     foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
+	autocmd FileType * nmap <silent>    \?    ?\m\C
+	autocmd FileType * nmap <silent>    \\?   ?\m\C\<\>[Left][Left]
+	autocmd FileType * nmap             g?    ?<C-r>"<CR>
+	autocmd FileType * IncSearchNoreMap <C-j> <CR>
+	autocmd FileType * IncSearchNoreMap <C-b> <Left>
+	autocmd FileType * IncSearchNoreMap <C-f> <Right>
+	autocmd FileType * IncSearchNoreMap <C-a> <Home>
+	autocmd FileType * IncSearchNoreMap <C-h> <BS>
+	autocmd FileType * IncSearchNoreMap <C-d> <Del>
+	autocmd FileType * IncSearchNoreMap <C-e> <End>
+	autocmd FileType * IncSearchNoreMap <C-l> <Esc>
 
 	" TaskList.vim
 	autocmd FileType * nnoremap <leader>T :<C-u>TaskList<CR>
