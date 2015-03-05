@@ -49,12 +49,6 @@ alias gvim-vimconfig='gvim ~/.gvimrc'
 alias vim-bashrc='vim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
 alias vim-bashpr='vim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
 
-#vimless=`locate less.sh | grep "vim/vim[0-9]*/macros"`
-#if [ -n "$vimless" ] ; then
-#	alias vimless=$vimless
-#fi
-#unset vimless
-
 # with conditions {{{
 
 # .bash_profile specified environment
