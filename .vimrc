@@ -698,9 +698,15 @@ let g:vimshell_hereis_file = expand('~/.bashrc_places')
 let g:vimshell_kawaii_smiley = 1
 
 "}}}
+"--- excitetraslate-vim ---"{{{
+
+" Don't yank result to @" register
+let g:excitetranslate_options = ["buffer"]
+
+"}}}
 "--- w3m.vim ---"{{{
 
-let g:w3m#homepage = 'http://www.google.co.jp/'
+let g:w3m#homepage = 'http://www.bing.com/'
 
 "}}}
 "--- vimconsole.vim ---"{{{
@@ -1740,16 +1746,20 @@ augroup END
 " Windows and Buffers {{{
 
 augroup KeyMapping
-	autocmd FileType * nnoremap <silent>       <C-w>t     :<C-u>TabnewOverridden<CR>
-	autocmd FileType * nnoremap <silent>       <C-w>T     :<C-u>tabclose<CR>
-	autocmd FileType * nnoremap <silent>       <C-w>c     :<C-u>bdelete<CR>
-	autocmd FileType * nnoremap <silent>       <C-w>C     :<C-u>bdelete!<CR>
-	autocmd FileType * nnoremap <silent>       <C-w>W     :<C-u>wall<CR>
-	autocmd FileType * nnoremap <silent>       <C-w>N     :<C-u>EnewOverridden!<CR>
-	autocmd FileType * nnoremap <silent>       <C-w>Q     :<C-u>quitall<CR>
-	autocmd FileType * nnoremap <silent>       <C-w>"     :<C-u>resize 5<CR>
-	autocmd FileType * nnoremap <silent>       <C-w>bt    mZ:tabnew<CR>`Zzz
-	autocmd FileType * nnoremap <silent>       <C-w>bT    mZ<C-w>c:tabnew<CR>`Zzz
+	autocmd FileType * nnoremap <silent> <C-w>t   :<C-u>TabnewOverridden<CR>
+	autocmd FileType * nnoremap <silent> <C-w>T   :<C-u>tabclose<CR>
+	autocmd FileType * nnoremap <silent> <C-w>c   :<C-u>bdelete<CR>
+	autocmd FileType * nnoremap <silent> <C-w>C   :<C-u>bdelete!<CR>
+	autocmd FileType * nnoremap <silent> <C-w>W   :<C-u>wall<CR>
+	autocmd FileType * nnoremap <silent> <C-w>N   :<C-u>EnewOverridden!<CR>
+	autocmd FileType * nnoremap <silent> <C-w>Q   :<C-u>quitall<CR>
+	autocmd FileType * nnoremap <silent> <C-w>"   :<C-u>resize 5<CR>
+	autocmd FileType * nnoremap <silent> <C-w>bt  mZ:tabnew<CR>`Zzz
+	autocmd FileType * nnoremap <silent> <C-w>bT  mZ<C-w>c:tabnew<CR>`Zzz
+	autocmd FileType * nnoremap          <Space>h <C-w>h
+	autocmd FileType * nnoremap          <Space>j <C-w>j
+	autocmd FileType * nnoremap          <Space>k <C-w>k
+	autocmd FileType * nnoremap          <Space>l <C-w>l
 augroup END
 
 " }}}
