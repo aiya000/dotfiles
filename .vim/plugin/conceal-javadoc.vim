@@ -1,3 +1,6 @@
+" Forked from https://gist.github.com/mfumi/9814303
+"             http://d.hatena.ne.jp/mFumi/20140328/1395946070
+
 if has('conceal')
 	function! s:concealJavaDocTags()
 		syn clear javaDocTags

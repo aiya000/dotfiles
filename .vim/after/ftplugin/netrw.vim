@@ -14,3 +14,4 @@ nnoremap <silent><buffer> <localleader>e :<C-u>quit<CR>
 nnoremap <silent><buffer> V              :<C-u>vertical split<CR>
 nnoremap <silent><buffer> S              :<C-u>split<CR>
 nnoremap         <buffer> s              <NOP>
+nnoremap         <buffer> gg             gg<CR>
