@@ -1063,6 +1063,33 @@ set notimeout
 " Do not set file name order priority on c-mode completion
 set suffixes=
 
+
+" Do foldopen all when visual_mode cursor_move
+augroup KeyEvent
+	" s:visual_fold_all() "{{{
+
+	let s:visual_fold_toggle = get(s:, 'visual_fold_toggle', 0)
+
+	function! s:visual_fold_all()
+		if mode() =~# "^[vV\<C-v>]"
+			if !s:visual_fold_toggle && &foldenable
+				set nofoldenable
+				execute 'normal! zz'
+				let s:visual_fold_toggle = 1
+			endif
+		else
+			if s:visual_fold_toggle
+				set foldenable
+				execute 'normal! zz'
+				let s:visual_fold_toggle = 0
+			endif
+		endif
+	endfunction
+
+	"}}}
+	autocmd CursorMoved * call s:visual_fold_all()
+augroup END
+
 "}}}
 
 
@@ -1641,25 +1668,37 @@ function! s:cursor_down_to_ground() "{{{
 endfunction "}}}
 
 
-" If visualmode then Open all fold line
-" s:visual_fold_all()"{{{
-let s:visual_fold_toggle = get(s:, 'visual_fold_toggle', 0)
+" Optimize key operation to one hand
+" function! s:toggle_onehand_mode() "{{{
 
-function! s:visual_fold_all()
-	if mode() =~# "^[vV\<C-v>]"
-		if !s:visual_fold_toggle && &foldenable
-			set nofoldenable
-			execute 'normal! zz'
-			let s:visual_fold_toggle = 1
-		endif
+let s:onehand_enabled = get(s:, 'onehand_enabled', 0)
+
+function! s:toggle_onehand_mode()
+	if s:onehand_enabled
+		nunmap n
+		nunmap p
+		nunmap f
+		nunmap b
+		nunmap o
+		nunmap i
+		nunmap u
+
+		" doautocmd for normally keymappings
+		let &filetype = &filetype
 	else
-		if s:visual_fold_toggle
-			set foldenable
-			execute 'normal! zz'
-			let s:visual_fold_toggle = 0
-		endif
+		nnoremap n gt
+		nnoremap p gT
+		nnoremap f <C-f>
+		nnoremap b <C-b>
+		nnoremap o <C-o>
+		nnoremap i <C-i>
+		nnoremap u <C-w><C-w>
 	endif
+
+	let s:onehand_enabled = !s:onehand_enabled
+	echo (s:onehand_enabled ? '' : 'no') . 'onehand'
 endfunction
+
 "}}}
 
 
@@ -1776,6 +1815,8 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent><expr> <C-h><C-d> (&diff ? ':diffoff' : ':diffthis') . '\|set diff?<CR>'
 	autocmd FileType * nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
 	autocmd FileType * inoremap <silent>       <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
+
+	autocmd FileType * nnoremap <silent> <C-h>jk :<C-u>call <SID>toggle_onehand_mode()<CR>
 augroup END
 
 " }}}
