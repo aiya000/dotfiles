@@ -419,5 +419,127 @@ let g:bigfilesize = 10 * 1024 * 1024
 
 setlocal synmaxcol=256
 
-" --- --- --- "
+
+"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
+"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
+" Mr. mtth
+
+
+let g:netrw_home = g:runtimepath . '/cache/netrw'                             " cache directory for file explorer
+let g:netrw_banner = 0                                                        " hide help banner (can be shown with `I`)
+
+"NOTE: mtth's plugins
+
+" Compile
+https://github.com/mtth/compile.vim
+let g:compile_default_flags = {
+\ 'rst2html': '--stylesheet-path=b.css,p/default.css % &%:r.html',
+\ 'haml': '% &%:r.html',
+\ 'jade': '%',
+\ 'coffee': '%',
+\ 'hamlc': '--input %:h --output &%:h/jst.js',
+\ 'stylus': '%',
+\ 'cc': '% -o &%:r'
+\ }
+
+" Cursorcross
+https://github.com/mtth/cursorcross.vim
+
+https://github.com/mtth/scratch.vim
+
+"NOTE: plugins
+" Locate
+" Ultisnips
+" Virtualenv
+" Solarized
+let g:solarized_termtrans = 1                                               " transparent background sometimes
+let g:solarized_visibility = 'normal'                                       " visibility of 'list' characters
+
+
+
+set diffopt=filler,vertical
+set eadirection=hor                                                         " only resize automatically horizontally (cf. ``equalalways`` option)
+set nostartofline                                                           " keeps cursor on current column for movements like H, M, ...
+set shellredir=>%s\ 2>&1                                                    " otherwise syntastic isn't able to pick up checker versions
+set comments-=:%                                                            " these shouldn't be considered comments by default
+set formatlistpat=^\\s*\\(\\d\\(\\d\\ze\\d*[\\]:.)}]\\\|[\\]:.)}]\\ze\\)\\\|:[^:]\\ze[^:]*:\\\|[*+-]\\)\\s
+if v:version >=# 704
+  set formatoptions=rqnlj                                                   " only manual formatting by default
+else
+  set formatoptions=rqnl                                                    " j option not supported before 7.4
+endif
+let &dictionary = '/usr/share/dict/words,'                                  " files where to load word for dictionary
+let &dictionary .= g:runtimepath . '/spell/custom.utf-8.add'                " completion for use with <c-x><c-k>
+
+
+haya14busa   : visual-star案件だ  03/08 00:10
+" enable search for selected text, forwards (*) or backwards (#)
+xnoremap <silent> * :<c-u>
+  \let old_reg=getreg('"')<bar>let old_regtype=getregtype('"')<cr>
+  \gvy/<c-r>=substitute(
+  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<cr><cr>
+  \:call setreg('"', old_reg, old_regtype)<cr>
+xnoremap <silent> # :<c-u>
+  \let old_reg=getreg('"')<bar>let old_regtype=getregtype('"')<cr>
+  \gvy?<c-r>=substitute(
+  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<cr><cr>
+  \:call setreg('"', old_reg, old_regtype)<cr>
+
+" easier indentation in visual mode
+xnoremap > >gv
+xnoremap < <gv
+" arglist
+nnoremap <leader>a :args<cr>
+" show locations of latest changes
+nnoremap <leader>J :changes<cr>
+" show latest jumps
+nnoremap <leader>j :jumps<cr>
+" browse oldfiles
+nnoremap <leader>o :browse oldfiles<cr>
+" copy to tmux buffer
+xnoremap <leader>t :w !tmux loadb -<cr>
+
+" open .vimrc (following potential symbolic link)
+nnoremap <leader>ve :tabnew <c-r>=resolve(expand($MYVIMRC))<cr><cr>:help<cr><c-w>L:vertical resize 80<cr>:set winfixwidth<cr><c-w>h
+"source .vimrc (and rerun any filetype settings)
+nnoremap <leader>vs :source $MYVIMRC<cr>:filetype detect<cr>
+
+
+" smart indentation
+inoremap <expr> <s-tab> <SID>smart_tab()
+function! s:smart_tab() "{{{
+  " fills in line with character before cursor until one of the following
+  " * matches indent of characters preceded by two or more whitespace characters
+  "   in the first non-empty line above
+  " * texwidth
+  " * next tabstop
+  " if the current line is empty, the fill character will be a single space
+  let [buf_name, line_number, col_number, off_number] = getpos('.')
+  let cur_line = getline(line_number)
+  if strlen(cur_line)
+    let fill_char = cur_line[col('.') - 2]
+  else
+    let fill_char = ' '
+  endif
+  let line_content = ''
+  while !strlen(line_content) && line_number >=# 1
+    let line_number -= 1
+    let line_content = getline(line_number)
+  endwhile
+  let line_content = line_content[col('.') - 1:]
+  let offset = match(line_content, '\s\s\zs\S\|$')
+  if offset ># 0
+    return repeat(fill_char, offset)
+  elseif &textwidth && col_number <=# &textwidth
+    return repeat(fill_char, &textwidth - col_number + 1)
+  else
+    return repeat(fill_char, &tabstop - (col_number - 1) % &tabstop)
+  endif
+endfunction "}}}
+" expand inline parenthesis arguments to multiline
+nnoremap gJ 0f(a<cr><esc>f)i<cr><esc>kI<tab><esc>0dw:s/\v,\s+/,\r/g<cr>``<c-v>``I<c-r>"<esc>``A
+
+
+
+"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
 vim:ft=vim:
