@@ -420,6 +420,7 @@ NeoBundle        'Keithbsmiley/rspec.vim'
 NeoBundle        'tsukkee/unite-help'
 NeoBundle        'altercation/vim-colors-solarized'
 NeoBundle        'aiya000/aho-bakaup.vim'
+NeoBundleLazy    'yaasita/ore_markdown'
 
 
 call neobundle#end()
@@ -570,6 +571,15 @@ call neobundle#config('vim-threes', {
 "call neobundle#config('rspec.vim', {
 "\	'autoload' : {'filetype' : 'ruby'}
 "\})
+"@Bugs('Do not functioned on windows with this config')
+call neobundle#config('ore_markdown', {
+\	'buld' : {
+\		'unix'    : 'bundle install --gemfile ./bin/Gemfile',
+\		'windows' : 'bundle install --gemfile .\bin\Gemfile',
+\		'mac'     : 'bundle install --gemfile ./bin/Gemfile'
+\	},
+\	'autoload' : {'commands' : 'OreMarkdown'}
+\})
 
 " }}}
 
@@ -1338,6 +1348,7 @@ command! RunJava call s:java_run_func()
 
 " Same as RunJava for Ruby
 cnoreabbr RunRuby !ruby %
+command!  RunRuby <NOP>
 
 "function! s:put_python_import_for_jp() "{{{
 "	let l:paste = &paste
@@ -1441,6 +1452,7 @@ AlterCommand tabnew TabnewOverridden
 " }}}
 " Utils {{{
 
+
 " Vim Utils {{{
 command! VimConfig         e $MYVIMRC
 command! VimConfigTab      tabnew $MYVIMRC
@@ -1530,18 +1542,27 @@ cnoreabbr tvs   TweetVimSwitchAccount
 
 " }}}
 
+
 " To Service Name
 cnoreabbr Lingr J6uil
+command!  Lingr <NOP>
+
 
 " Beautifull Life
-command!  JazzUpdate    JazzradioUpdateChannels
-command!  JazzList      Unite jazzradio
-cnoreabbr JazzPlay      JazzradioPlay
-command!  JazzStop      JazzradioStop
+command!  JazzUpdate JazzradioUpdateChannels
+command!  JazzList   Unite jazzradio
+cnoreabbr JazzPlay   JazzradioPlay
+command!  JazzPlay   <NOP>
+command!  JazzStop   JazzradioStop
+
 
 " Translates Languages
 cnoreabbr Translate ExciteTranslate
 cnoreabbr Weblio    Ref webdict weblio
+
+command!  Translate <NOP>
+command!  Weblio    <NOP>
+
 
 " Grep and Open current buffer
 command! -nargs=1 GrepNow vimgrep <args> % | cwindow
@@ -1549,10 +1570,16 @@ command! -nargs=1 GrepNow vimgrep <args> % | cwindow
 " }}}
 " Developments {{{
 
+
 " vimconsole.vim
 cnoreabbr Log      VimConsoleLog
 cnoreabbr LogClear VimConsoleClear
 cnoreabbr LogOpen  VimConsoleOpen
+
+command!  Log      <NOP>
+command!  LogClear <NOP>
+command!  LogOpen  <NOP>
+
 
 " GHCi
 cnoreabbr RunGhc   !runghc %
@@ -1562,17 +1589,37 @@ cnoreabbr Vghci    VimShellInteractive --split='vsp' ghci
 cnoreabbr GhciTab  VimShellInteractive --split='tabnew' ghci
 cnoreabbr Hoogle   Ref hoogle
 
+command!  RunGhc   <NOP>
+command!  Ghci     <NOP>
+command!  Sghci    <NOP>
+command!  Vghci    <NOP>
+command!  GhciTab  <NOP>
+command!  Hoogle   <NOP>
+
+
 " js
 cnoreabbr Js       VimShellInteractive js
 cnoreabbr Sjs      VimShellInteractive --split='sp' js
 cnoreabbr Vjs      VimShellInteractive --split='vsp' js
 cnoreabbr JsTab    VimShellInteractive --split='tabnew' js
 
+command!  Js       <NOP>
+command!  Sjs      <NOP>
+command!  Vjs      <NOP>
+command!  JsTab    <NOP>
+
+
 " irb
 cnoreabbr Irb      VimShellInteractive irb
 cnoreabbr Sirb     VimShellInteractive --split='sp' irb
 cnoreabbr Virb     VimShellInteractive --split='vsp' irb
 cnoreabbr IrbTab   VimShellInteractive --split='tabnew' irb
+
+command!  Irb      <NOP>
+command!  Sirb     <NOP>
+command!  Virb     <NOP>
+command!  IrbTab   <NOP>
+
 
 " }}}
 
@@ -1591,10 +1638,12 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <Down>  <NOP>
 	autocmd FileType * nnoremap <Left>  <NOP>
 	autocmd FileType * nnoremap <Right> <NOP>
+
 	autocmd FileType * inoremap <Up>    <NOP>
 	autocmd FileType * inoremap <Down>  <NOP>
 	autocmd FileType * inoremap <Left>  <NOP>
 	autocmd FileType * inoremap <Right> <NOP>
+
 	autocmd FileType * cnoremap <Left>  <NOP>
 	autocmd FileType * cnoremap <Right> <NOP>
 
@@ -1717,14 +1766,19 @@ function! s:quickrun_close() "{{{
 endfunction "}}}
 
 " }}}
-" Overwrite mapping {{{
+" Override mapping {{{
 
 augroup KeyMapping
 	" † Rebirth Of The NeoEx
 	autocmd FileType * nnoremap Q gQ
 
+	autocmd FileType * nnoremap <silent> gk :<C-u>call <SID>cursor_up_to_lid()<CR>
+	autocmd FileType * nnoremap <silent> gj :<C-u>call <SID>cursor_down_to_ground()<CR>
+	"autocmd FileType * vnoremap <silent> gk :<C-u>call <SID>cursor_up_to_lid()<CR>
+	"autocmd FileType * vnoremap <silent> gj :<C-u>call <SID>cursor_down_to_ground()<CR>
 	autocmd FileType * nnoremap <C-n> gt
 	autocmd FileType * nnoremap <C-p> gT
+
 	autocmd FileType * inoremap <C-l> <Esc>
 	autocmd FileType * vnoremap <C-l> <Esc>
 	autocmd FileType * cnoremap <C-l> <Esc>
@@ -1738,10 +1792,6 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> q:                :<C-u>register<CR>
 	autocmd FileType * nnoremap <silent> z:                :<C-u>tabs<CR>
 	autocmd FileType * nnoremap <silent> g:                :<C-u>buffers<CR>
-	autocmd FileType * nnoremap <silent> gk                :<C-u>call <SID>cursor_up_to_lid()<CR>
-	autocmd FileType * nnoremap <silent> gj                :<C-u>call <SID>cursor_down_to_ground()<CR>
-	"autocmd FileType * vnoremap <silent> gk                :<C-u>call <SID>cursor_up_to_lid()<CR>
-	"autocmd FileType * vnoremap <silent> gj                :<C-u>call <SID>cursor_down_to_ground()<CR>
 	autocmd FileType * nnoremap <silent> <Space><Space>    :<C-u>call <SID>compress_spaces()<CR>
 	autocmd FileType * nnoremap <silent> <leader>b         :<C-u>NewOverridden<CR>:resize 5<CR>:setl buftype=nofile<CR>
 	autocmd FileType * nnoremap <silent> <leader>B         :<C-u>NewOverridden<CR>:resize 5<CR>
@@ -1836,7 +1886,9 @@ augroup KeyMapping
 	" vim-over
 	autocmd FileType * nnoremap <silent>       :%s/       :<C-u>OverCommandLine<CR>%s/
 	autocmd FileType * nnoremap <silent>       :s/        :<C-u>OverCommandLine<CR>s/
-	autocmd FileType * nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
+	"@Bugs('Unabled input % on OverCommandLine')
+	"autocmd FileType * nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
+	autocmd FileType * nnoremap <expr>         <C-k><C-s> ':%s/\<' . expand('<cword>') . '\>/'
 	autocmd FileType * vnoremap <silent>       :s/        :<C-u>OverCommandLine<CR>'<,'>s/
 	autocmd FileType * OverCommandLineNoremap  <C-l>      <Esc>
 
