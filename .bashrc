@@ -107,6 +107,8 @@ if [ -n "`which git 2> /dev/null`" ] ; then
 		echo ;
 		echo "No real file removal [git rm]:";
 		echo "	git rm --cached file"'
+
+		alias git-merge-m-f-d='git checkout master && git merge devel && git checkout devel'
 fi
 
 
