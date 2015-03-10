@@ -55,10 +55,12 @@ inoremap <C-.> <S-Right>
 inoremap <C-[> <S-Up>
 inoremap <C-]> <S-Down>
 
+inoremap <C-v> <PageDown>
+inoremap <M-v> <PageUp>
+
 inoremap <C-a>      <NOP>
 inoremap <C-x>      <NOP>
 inoremap <C-c>      <NOP>
-inoremap <C-v>      <NOP>
 inoremap <C-x><C-a> <C-a>
 inoremap <C-x><C-x> <C-x>
 inoremap <C-x><C-c> <C-c>
