@@ -77,6 +77,8 @@ fi
 alias ghci-hi='ghci 2>&1 | HsColour -tty'
 alias mysql="mysql -E --pager='less -r -S -n -i -F -X'"
 alias git-push-master='git push -u origin master'
+alias git-push-devel='git push -u origin devel'
+alias git-merge-m-f-d='git checkout master && git merge devel && git checkout devel'
 
 if [ -n "`which git 2> /dev/null`" ] ; then
 	alias git-myhelp='
