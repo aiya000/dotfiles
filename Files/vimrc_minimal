@@ -64,13 +64,16 @@ augroup Backup
 augroup END
 
 function! s:update_backup_file()
-	let basedir = expand('~/backup/.vim_backup')
-	let dir = strftime(basedir.'/%Y_%m_XX/%m-%d', localtime())
-	if !isdirectory(dir)
-		let retval = system('mkdir -p '.dir)
-		let retval = system('chown ishikawa:ishikawa '.dir)
+	let l:basedir = expand('~/backup/.vim_backup')
+	let l:dir     = strftime(l:basedir . '/%Y_%m_XX/%m-%d', localtime())
+
+	if !isdirectory(l:dir)
+		let retval = system('mkdir -p ' . l:dir)
+		let retval = system(printf('chown %s: %s', $USER, l:dir))
 	endif
-	exe 'set backupdir='.dir
-	let time = strftime('_%H:%M', localtime())
-	exe 'set backupext=.'.time
+
+	execute 'set backupdir=' . l:dir
+
+	let l:subext = strftime('_%H-%M', localtime())
+	execute 'set backupext=.' . l:subext
 endfunction
