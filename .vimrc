@@ -64,6 +64,12 @@ scriptencoding utf8
 
 "-- wrapscan turned on before I know
 
+"-- incsearch.vim(?) throw an exception E874 when searched '<leader>~'
+
+"-- I couldn't use diff-enhanced on windows kaoriya gvim
+
+"-- Exeption happened when input '.*' to unite textarea
+
 "}}}
 " Todo {{{
 
@@ -1358,21 +1364,10 @@ function! s:java_run_func() "{{{
 endfunction "}}}
 command! RunJava call s:java_run_func()
 
+
 " Same as RunJava for Ruby
 cnoreabbr RunRuby !ruby %
 command!  RunRuby <NOP>
-
-"function! s:put_python_import_for_jp() "{{{
-"	let l:paste = &paste
-"	set paste
-"	execute 'normal! ggO' '#!/usr/bin/env python'
-"	execute 'normal! o'   '# -*- coding: utf-8 -*-'
-"	execute 'normal! o'   'import sys'
-"	execute 'normal! o'   'import codecs'
-"	execute 'normal! o'   "sys.stdout = codecs.getwriter('utf_8')(sys.stdout)"
-"	let &paste = l:paste
-"endfunc "}}}
-"command! ImportPythonJp call s:put_python_import_for_jp()
 
 
 " command! PutShortSeparator {{{
@@ -1701,13 +1696,19 @@ endfunction "}}}
 
 " Move cursor to topmost of this indent
 function! s:cursor_up_to_lid() "{{{
+	let l:first_line = 1
+
 	while 1
-		let l:p = getpos('.')[2]
+		let l:p = getcurpos()[2]
 		execute 'normal! k'
 
-		let l:isIndentChanged = l:p != getpos('.')[2]
-		if l:isIndentChanged || line('.') is 1
-			if l:isIndentChanged | execute 'normal! j' | endif
+		let l:indent_changed = l:p isnot getcurpos()[2]
+
+		if l:indent_changed || line('.') is l:first_line
+			if l:indent_changed
+				execute 'normal! j'
+			endif
+
 			break
 		endif
 	endwhile
@@ -1716,13 +1717,19 @@ endfunction "}}}
 
 " Move cursor to bottommost of this indent
 function! s:cursor_down_to_ground() "{{{
+	let l:last_line = line('$')
+
 	while 1
-		let l:p = getpos('.')[2]
+		let l:p = getcurpos()[2]
 		execute 'normal! j'
 
-		let l:isIndentChanged = l:p != getpos('.')[2]
-		if l:isIndentChanged || line('.') is line('$')
-			if l:isIndentChanged | execute 'normal! k' | endif
+		let l:indent_changed = l:p isnot getcurpos()[2]
+
+		if l:indent_changed || line('.') is l:last_line
+			if l:indent_changed
+				execute 'normal! k'
+			endif
+
 			break
 		endif
 	endwhile
@@ -1781,13 +1788,8 @@ endfunction "}}}
 " Override mapping {{{
 
 augroup KeyMapping
-	" † Rebirth Of The NeoEx
+	" † Rebirth Of The Neo Ex
 	autocmd FileType * nnoremap Q gQ
-
-	autocmd FileType * nnoremap <silent> gk :<C-u>call <SID>cursor_up_to_lid()<CR>
-	autocmd FileType * nnoremap <silent> gj :<C-u>call <SID>cursor_down_to_ground()<CR>
-	"autocmd FileType * vnoremap <silent> gk :<C-u>call <SID>cursor_up_to_lid()<CR>
-	"autocmd FileType * vnoremap <silent> gj :<C-u>call <SID>cursor_down_to_ground()<CR>
 	autocmd FileType * nnoremap <C-n> gt
 	autocmd FileType * nnoremap <C-p> gT
 
@@ -1800,35 +1802,48 @@ augroup END
 " Appends " {{{
 
 augroup KeyMapping
-	autocmd FileType * nnoremap <silent> m:                :<C-u>marks<CR>
-	autocmd FileType * nnoremap <silent> q:                :<C-u>register<CR>
-	autocmd FileType * nnoremap <silent> z:                :<C-u>tabs<CR>
-	autocmd FileType * nnoremap <silent> g:                :<C-u>buffers<CR>
-	autocmd FileType * nnoremap <silent> <Space><Space>    :<C-u>call <SID>compress_spaces()<CR>
+	autocmd FileType * nnoremap <silent> m: :<C-u>marks<CR>
+	autocmd FileType * nnoremap <silent> q: :<C-u>register<CR>
+	autocmd FileType * nnoremap <silent> z: :<C-u>tabs<CR>
+	autocmd FileType * nnoremap <silent> g: :<C-u>buffers<CR>
+	autocmd FileType * nnoremap <silent> [k :<C-u>call <SID>cursor_up_to_lid()<CR>
+	autocmd FileType * nnoremap <silent> ]k :<C-u>call <SID>cursor_up_to_lid()<CR>
+	autocmd FileType * nnoremap <silent> [j :<C-u>call <SID>cursor_down_to_ground()<CR>
+	autocmd FileType * nnoremap <silent> ]j :<C-u>call <SID>cursor_down_to_ground()<CR>
+
 	autocmd FileType * nnoremap <silent> <leader>b         :<C-u>NewOverridden<CR>:resize 5<CR>:setl buftype=nofile<CR>
 	autocmd FileType * nnoremap <silent> <leader>B         :<C-u>NewOverridden<CR>:resize 5<CR>
 	autocmd FileType * nnoremap <silent> <leader>pl        :<C-u>PutLongSeparator<CR>
 	autocmd FileType * nnoremap <silent> <leader>ps        :<C-u>PutShortSeparator<CR>
 	autocmd FileType * nnoremap <silent> <leader>pd        :<C-u>PutDate<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>h :<C-u>helpclose<CR>
-	autocmd FileType * nnoremap          <C-m>             o<Esc>
+	autocmd FileType * nnoremap <silent> <Space><Space>    :<C-u>call <SID>compress_spaces()<CR>
 
-	autocmd FileType * cnoremap          <C-]>             '<,'>
+	autocmd FileType * nnoremap <C-m> o<Esc>
 
-
-	autocmd FileType * nnoremap <silent>       <C-k><C-r>     :<C-u>Reload<CR>
-	autocmd FileType * nnoremap <silent>       <C-k><C-l>     :<C-u>nohlsearch<CR>
-	autocmd FileType * nnoremap <silent>       <C-k>l         :<C-u>source %<CR>
+	autocmd FileType * nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
+	autocmd FileType * nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
+	autocmd FileType * nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
 	" doautocmd for Events [FileType *]
-	autocmd FileType * nnoremap <silent>       <C-k>r         :<C-u>let &filetype = &filetype<CR>
-	autocmd FileType * nnoremap                <C-k><C-j>     :<C-u>write<CR>
+	autocmd FileType * nnoremap <silent> <C-k>r     :<C-u>let &filetype = &filetype<CR>
+	autocmd FileType * nnoremap <silent> <C-k>l     :<C-u>source %<CR>
 
-	autocmd FileType * inoremap                <C-k><C-k>     <C-o>"_d$
-	autocmd FileType * inoremap                <C-k><C-y>     <Esc>k"zyyjV"zp:let @z = ''<CR>A
-	autocmd FileType * inoremap                <C-k><C-j>     <Esc>:write<CR>
 
-	autocmd FileType * cnoremap                <C-k><C-p>     <Up>
-	autocmd FileType * cnoremap                <C-k><C-n>     <Down>
+	autocmd FileType * inoremap <silent> <C-k><C-j> <Esc>:write<CR>
+
+	autocmd FileType * inoremap <C-k><C-k> <C-o>"_d$
+	autocmd FileType * inoremap <C-k><C-y> <Esc>k"zyyjV"zp:let @z = ''<CR>A
+
+
+	"autocmd FileType * vnoremap <silent> [k :<C-u>call <SID>cursor_up_to_lid()<CR>
+	"autocmd FileType * vnoremap <silent> ]k :<C-u>call <SID>cursor_up_to_lid()<CR>
+	"autocmd FileType * vnoremap <silent> [j :<C-u>call <SID>cursor_down_to_ground()<CR>
+	"autocmd FileType * vnoremap <silent> ]j :<C-u>call <SID>cursor_down_to_ground()<CR>
+
+
+	autocmd FileType * cnoremap <C-k><C-p> <Up>
+	autocmd FileType * cnoremap <C-k><C-n> <Down>
+	autocmd FileType * cnoremap <C-]>      '<,'>
 augroup END
 
 " }}}
@@ -1837,47 +1852,51 @@ augroup END
 augroup KeyMapping
 	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
 	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
-	autocmd FileType * nnoremap zj     zjzo
-	autocmd FileType * nnoremap zk     zkzo
-	autocmd FileType * nnoremap z<     V$%zf
+
+	autocmd FileType * nnoremap zj zjzo
+	autocmd FileType * nnoremap zk zkzo
+	autocmd FileType * nnoremap z< V$%zf
 augroup END
 
 " }}}
 " Windows and Buffers {{{
 
 augroup KeyMapping
-	autocmd FileType * nnoremap <silent> <C-w>t   :<C-u>TabnewOverridden<CR>
-	autocmd FileType * nnoremap <silent> <C-w>T   :<C-u>tabclose<CR>
-	autocmd FileType * nnoremap <silent> <C-w>c   :<C-u>bdelete<CR>
-	autocmd FileType * nnoremap <silent> <C-w>C   :<C-u>bdelete!<CR>
-	autocmd FileType * nnoremap <silent> <C-w>W   :<C-u>wall<CR>
-	autocmd FileType * nnoremap <silent> <C-w>N   :<C-u>EnewOverridden!<CR>
-	autocmd FileType * nnoremap <silent> <C-w>Q   :<C-u>quitall<CR>
-	autocmd FileType * nnoremap <silent> <C-w>"   :<C-u>resize 5<CR>
-	autocmd FileType * nnoremap <silent> <C-w>bt  mZ:tabnew<CR>`Zzz
-	autocmd FileType * nnoremap <silent> <C-w>bT  mZ<C-w>c:tabnew<CR>`Zzz
-	autocmd FileType * nnoremap          <Space>h <C-w>h
-	autocmd FileType * nnoremap          <Space>j <C-w>j
-	autocmd FileType * nnoremap          <Space>k <C-w>k
-	autocmd FileType * nnoremap          <Space>l <C-w>l
+	autocmd FileType * nnoremap <Space>h <C-w>h
+	autocmd FileType * nnoremap <Space>j <C-w>j
+	autocmd FileType * nnoremap <Space>k <C-w>k
+	autocmd FileType * nnoremap <Space>l <C-w>l
+
+	autocmd FileType * nnoremap <silent> <C-w>t :<C-u>TabnewOverridden<CR>
+	autocmd FileType * nnoremap <silent> <C-w>T :<C-u>tabclose<CR>
+	autocmd FileType * nnoremap <silent> <C-w>c :<C-u>bdelete<CR>
+	autocmd FileType * nnoremap <silent> <C-w>C :<C-u>bdelete!<CR>
+	autocmd FileType * nnoremap <silent> <C-w>W :<C-u>wall<CR>
+	autocmd FileType * nnoremap <silent> <C-w>N :<C-u>EnewOverridden!<CR>
+	autocmd FileType * nnoremap <silent> <C-w>Q :<C-u>quitall<CR>
+	autocmd FileType * nnoremap <silent> <C-w>" :<C-u>resize 5<CR>
+
+	autocmd FileType * nnoremap <silent><expr> <C-w>bt 'mZ:tabnew<CR>`Zzz'       . (foldlevel('.') > 0 ? 'zo' : '')
+	autocmd FileType * nnoremap <silent><expr> <C-w>bT 'mZ<C-w>c:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : '')
 augroup END
 
 " }}}
 " Toggle options {{{
 
 augroup KeyMapping
-	autocmd FileType * nnoremap <silent>       <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
-	autocmd FileType * nnoremap <silent>       <C-h><C-c> :<C-u>setl cursorline!     cursorline?    <CR>
-	autocmd FileType * nnoremap <silent>       <C-h><C-e> :<C-u>setl expandtab!      expandtab?     <CR>
-	autocmd FileType * nnoremap <silent>       <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
-	autocmd FileType * nnoremap <silent>       <C-h><C-l> :<C-u>setl list!           list?          <CR>
-	autocmd FileType * nnoremap <silent>       <C-h><C-n> :<C-u>setl number!         number?        <CR>
-	autocmd FileType * nnoremap <silent>       <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
 	autocmd FileType * nnoremap <silent><expr> <C-h><C-d> (&diff ? ':diffoff' : ':diffthis') . '\|set diff?<CR>'
 	autocmd FileType * nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
-	autocmd FileType * inoremap <silent>       <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
 
-	autocmd FileType * nnoremap <silent> <C-h>jk :<C-u>call <SID>toggle_onehand_mode()<CR>
+	autocmd FileType * nnoremap <silent> <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
+	autocmd FileType * nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline!     cursorline?    <CR>
+	autocmd FileType * nnoremap <silent> <C-h><C-e> :<C-u>setl expandtab!      expandtab?     <CR>
+	autocmd FileType * nnoremap <silent> <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
+	autocmd FileType * nnoremap <silent> <C-h><C-l> :<C-u>setl list!           list?          <CR>
+	autocmd FileType * nnoremap <silent> <C-h><C-n> :<C-u>setl number!         number?        <CR>
+	autocmd FileType * nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
+	autocmd FileType * nnoremap <silent> <C-h>jk    :<C-u>call <SID>toggle_onehand_mode()<CR>
+
+	autocmd FileType * inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
 augroup END
 
 " }}}
@@ -1890,9 +1909,11 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <leader>E         :<C-u>Explore<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>E :<C-u>Texplore<CR>
 
+
 	" open-browser.vim
 	autocmd FileType * nmap <leader>w <Plug>(openbrowser-open)
 	autocmd FileType * nnoremap <silent> <leader><leader>r :<C-u>call <SID>filetype_buf_close('quickrun')<CR>
+
 
 	" vimshell
 	autocmd FileType * nnoremap <silent> <leader>v         :<C-u>VimShell -split-command=vsp -toggle<CR>
@@ -1900,13 +1921,16 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <leader>V         :<C-u>VimShellBufferDir -create<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>V :<C-u>VimShell -split-command=tabnew -create<CR>
 
+
 	" Unite
 	autocmd FileType * nnoremap <silent> <leader>uf        :<C-u>Unite -ignorecase outline:foldings<CR>
-	autocmd FileType * nnoremap <silent> <leader>u~        :<C-u>Unite -ignorecase neomru/file<CR>
+	autocmd FileType * nnoremap <silent> <leader>up        :<C-u>Unite -ignorecase neomru/file<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>u :<C-u>call <SID>filetype_buf_close('unite')<CR>
+
 
 	" excitetranslate-vim
 	autocmd FileType * nnoremap <silent> <leader>t :<C-u>ExciteTranslate<CR>
+
 
 	" vim-over
 	autocmd FileType * nnoremap <silent>       :%s/       :<C-u>OverCommandLine<CR>%s/
@@ -1920,6 +1944,7 @@ augroup KeyMapping
 	autocmd FileType * OverCommandLineNoremap  <C-l>      <Esc>
 	autocmd FileType * OverCommandLineNoremap  <C-v><CR>  
 
+
 	" anzu-chan
 	autocmd FileType * nmap n      <Plug>(anzu-n-with-echo)zv
 	autocmd FileType * nmap N      <Plug>(anzu-N-with-echo)zv
@@ -1927,6 +1952,7 @@ augroup KeyMapping
 	autocmd FileType * nmap #      <Plug>(anzu-sharp-with-echo)zv
 	autocmd FileType * nmap <C-w>* <C-w>v<Plug>(anzu-star-with-echo)zv
 	autocmd FileType * nmap <C-w># <C-w>v<Plug>(anzu-sharp-with-echo)zv
+
 
 	" incsearch.vim
 	autocmd FileType * nmap <expr>      /     foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
@@ -1946,8 +1972,10 @@ augroup KeyMapping
 	autocmd FileType * IncSearchNoreMap <C-e> <End>
 	autocmd FileType * IncSearchNoreMap <C-l> <Esc>
 
+
 	" TaskList.vim
 	autocmd FileType * nnoremap <leader>T :<C-u>TaskList<CR>
+
 
 	" undotree
 	autocmd FileType * nnoremap <leader>U :<C-u>UndotreeToggle<CR>
@@ -1963,20 +1991,24 @@ augroup PluginPrefs
 	autocmd FileType int-* nnoremap <buffer> <C-n>      gt
 	autocmd FileType int-* nnoremap <buffer> <C-p>      gT
 	autocmd FileType int-* nnoremap <buffer> <C-l>      <NOP>
+
 	autocmd FileType int-* nmap     <buffer> <C-]>      <Plug>(vimshell_int_clear)
 	autocmd FileType int-* nmap     <buffer> Q          <Plug>(vimshell_int_exit)
 	autocmd FileType int-* nmap     <buffer> gj         <Plug>(vimshell_int_next_prompt)
 	autocmd FileType int-* nmap     <buffer> gk         <Plug>(vimshell_int_previous_prompt)
+
 	autocmd FileType int-* inoremap <buffer> <C-l>      <Esc>
 	autocmd FileType int-* inoremap <buffer> <C-b>      <Left>
 	autocmd FileType int-* inoremap <buffer> <C-f>      <Right>
 	autocmd FileType int-* inoremap <buffer> <C-e>      <End>
 	autocmd FileType int-* inoremap <buffer> <C-d>      <Del>
+
 	autocmd FileType int-* imap     <buffer> <C-n>      <C-o><Plug>(vimshell_int_next_prompt)<End>
 	autocmd FileType int-* imap     <buffer> <C-p>      <C-o><Plug>(vimshell_int_previous_prompt)<End>
 	autocmd FileType int-* imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
 	autocmd FileType int-* imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
 	autocmd FileType int-* imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
+
 
 	autocmd FileType ref-* nnoremap <silent><buffer> Q :<C-u>quit<CR>
 augroup END
@@ -2059,4 +2091,3 @@ endif
 filetype plugin indent on
 syntax enable
 let g:vimrc['loaded'] = 1
-
