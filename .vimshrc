@@ -21,8 +21,10 @@ alias cp='cp -i'
 
 # Develop Config
 #alias g++='g++ -I/usr/include/c++/4.9 -I/usr/include/c++/4.9/x86_64-linux-gnu -std=c++11'
+alias git-merge-m-f-d='git checkout master && git merge devel && git checkout devel'
 
-# for My Command
+
+# for VimShell Plugins
 alias reload-places='reload_places'
 alias edit-places='edit_places'
 vimsh ~/.bashrc_places

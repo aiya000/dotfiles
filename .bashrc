@@ -46,6 +46,7 @@ alias themis='themis --runtimepath ".."'
 alias vimconfig='vim ~/.vimrc'
 alias gvimconfig='vim ~/.gvimrc'
 alias gvim-vimconfig='gvim ~/.gvimrc'
+alias vimshconfig='vim ~/.vimshrc'
 alias vim-bashrc='vim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
 alias vim-bashpr='vim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
 
@@ -74,44 +75,8 @@ fi
 # }}}
 # Others {{{
 
-alias ghci-hi='ghci 2>&1 | HsColour -tty'
 alias mysql="mysql -E --pager='less -r -S -n -i -F -X'"
-alias git-push-master='git push -u origin master'
-alias git-push-devel='git push -u origin devel'
 alias git-merge-m-f-d='git checkout master && git merge devel && git checkout devel'
-
-if [ -n "`which git 2> /dev/null`" ] ; then
-	alias git-myhelp='
-		echo "New Branch:";
-		echo "	git branch newBranchName commitId";
-		echo ;
-		echo "Branch List:";
-		echo "	git branch -a";
-		echo ;
-		echo "Delete Branch:";
-		echo "	git branch -d branchName";
-		echo ;
-		echo "Stash local and Stash List:";
-		echo "	git stash save";
-		echo "	git stash list";
-		echo ;
-		echo "Fixing recent local commit:";
-		echo "	git commit --amend -m \"hoge\"";
-		echo ;
-		echo "RollBack previous commit:";
-		echo "	git revert \"commit id\"";
-		echo ;
-		echo "Merge recent remote commit:";
-		echo "	1. git pull";
-		echo "		warn: would be overwritten...";
-		echo "	2. git commit -am \"merging hoge file.\"";
-		echo "	3. git mergetool";
-		echo ;
-		echo "No real file removal [git rm]:";
-		echo "	git rm --cached file"'
-
-		alias git-merge-m-f-d='git checkout master && git merge devel && git checkout devel'
-fi
 
 
 if [ -n "`which tmux 2> /dev/null`" ] ; then
