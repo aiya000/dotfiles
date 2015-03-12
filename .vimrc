@@ -1982,6 +1982,11 @@ augroup KeyMapping
 
 	" undotree
 	autocmd FileType * nnoremap <leader>U :<C-u>UndotreeToggle<CR>
+
+
+	" neosnippet.vim
+	autocmd FileType * imap <C-s><C-s> <Plug>(neosnippet_expand)
+	autocmd FileType * imap <C-s><C-f> <Plug>(neosnippet_jump)
 augroup END
 
 " }}}
