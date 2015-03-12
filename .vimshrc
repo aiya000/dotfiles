@@ -14,10 +14,12 @@ alias sp=':VimShellCreate -split-command=sp'
 alias tabnew=':VimShellCreate -split-command=tabnew'
 alias lcd='cd .'
 
+
 # Shell Config
 alias reload='vimsh ~/.vimshrc'
 alias mv='mv -i'
 alias cp='cp -i'
+
 
 # Develop Config
 #alias g++='g++ -I/usr/include/c++/4.9 -I/usr/include/c++/4.9/x86_64-linux-gnu -std=c++11'
@@ -27,7 +29,10 @@ alias git-merge-m-f-d='git checkout master && git merge devel && git checkout de
 # for VimShell Plugins
 alias reload-places='reload_places'
 alias edit-places='edit_places'
+
+# Load places
 vimsh ~/.bashrc_places
+
 
 # Other Alias
 alias thanks='echo "(*^o^)< You are welcome!"'

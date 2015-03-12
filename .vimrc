@@ -44,8 +44,6 @@ scriptencoding utf8
 
 "-- automatic mkdir './C:' when execute NeoBundleInstall in windows kaoriya
 "  -- neobundle thinks that is repository...?
-"
-"-- 'gist:aiya000/ec5f6b2375a639831953' cannot divide configure
 
 "-- does not functioned conceal-javadoc ?
 
@@ -55,14 +53,6 @@ scriptencoding utf8
 
 "-- conflicted? vim-ruby and rspec.vim when those was set NeoBundleLazy
 "  -- do not loaded syntax of rspec.vim
-
-"-- not functioned [0-9] key range on windows kaoriya gvim
-"  -- I don't know why it happned
-
-"-- filetype name git-log.git-diff exclude '.'
-"  -- exam) git-log-diff
-
-"-- wrapscan turned on before I know
 
 "-- incsearch.vim(?) throw an exception E874 when searched '<leader>~'
 
@@ -428,16 +418,18 @@ NeoBundle        'altercation/vim-colors-solarized'
 NeoBundle        'aiya000/aho-bakaup.vim'
 NeoBundleLazy    'yaasita/ore_markdown'
 NeoBundle        'chrisbra/vim-diff-enhanced'
+NeoBundle        'Shougo/neosnippet.vim'
+NeoBundle        'Shougo/neosnippet-snippets'
 
 
 call neobundle#end()
 
 "@Experiment('commented out')
-try
-	helptags ~/.vim/bundle/.neobundle/doc
-catch /E154/
-	" Suppressed helptags duplication error
-endtry
+"try
+"	helptags ~/.vim/bundle/.neobundle/doc
+"catch /E154/
+"	" Suppressed helptags duplication error
+"endtry
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
@@ -1165,9 +1157,9 @@ set path=.,,./**
 
 "@Experiment('commented out')
 " Manually generate my help tags
-if isdirectory(expand('~/.vim/doc'))
-	helptags ~/.vim/doc
-endif
+"if isdirectory(expand('~/.vim/doc'))
+"	helptags ~/.vim/doc
+"endif
 
 "}}}
 
@@ -1368,49 +1360,6 @@ command! RunJava call s:java_run_func()
 " Same as RunJava for Ruby
 cnoreabbr RunRuby !ruby %
 command!  RunRuby <NOP>
-
-
-" command! PutShortSeparator {{{
-
-augroup FileEvent
-	autocmd FileType,WinEnter,BufWinEnter * let s:short_sparator =
-	\	&ft =~# '\v(vim|vimspec)'    ? '"#--- --- ---#"'
-	\:	&ft =~# '\v(java|cs|cpp|c)'  ? '/* -=-=-=-=-=-=-=-=- */'
-	\:	&ft ==# 'haskell'            ? '-- - - - - - --'
-	\:	&ft ==# 'coq'                ? '(* - - - - - *)'
-	\:	&ft ==# 'mysql'              ? '-- - - - - - --'
-	\:	&ft =~# '\v(markdown|eruby)' ? '<!-- - - - - - -->'
-	\:	&ft =~# '\v(ruby|sh)'        ? '#- - - - - - -#'
-	\:	&ft =~# '\v(text|none)'      ? '- - - - - - - - - -'
-	\:	'short_separator_undefined'
-augroup END
-
-command! PutShortSeparator
-	\	execute 'normal! o' s:short_sparator
-	\|	execute 'normal! =='
-
-" }}}
-" command! PutLongSeparator {{{
-
-augroup FileEvent
-	autocmd FileType,WinEnter,BufWinEnter * let s:long_separator =
-	\	&ft =~# '\v(vim|vimspec)'    ? '"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"'
-	\:	&ft =~# '\v(java|cs|cpp|c)'  ? '/* ---===---===---===---===---===---===--- */'
-	\:	&ft ==# 'haskell'            ? '-- - - - - - - - - - - - - - - - --'
-	\:	&ft ==# 'coq'                ? '(* - - - - - - - - - - - - - - - *)'
-	\:	&ft ==# 'mysql'              ? '-- - - - - - - - - - - - - - - - --'
-	\:	&ft =~# '\v(markdown|eruby)' ? '<!-- - - - - - - - - - - - - - - - -->'
-	\:	&ft =~# '\v(ruby|sh)'        ? '#- - - - - - - - - - - - - - - - -#'
-	\:	&ft =~# '\v(text|none)'      ? '- - - - - - - - - - - - - - - - - - - -'
-	\:	'long_separator_undefined'
-augroup END
-
-command! PutLongSeparator
-	\	execute 'normal! o' s:long_separator
-	\|	execute 'normal! =='
-
-" }}}
-command! PutDate execute 'normal! a' strftime('%c')
 
 
 function! s:put_html_base() "{{{
@@ -1715,6 +1664,60 @@ function! s:cursor_up_to_lid() "{{{
 endfunction "}}}
 
 
+" Easily putting short separator for many filetypes
+" function! s:put_short_separator(put_upper) {{{
+
+augroup FileEvent
+	autocmd FileType,WinEnter,BufWinEnter * let s:long_separator =
+	\	&ft =~# '\v(vim|vimspec)'    ? '"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"'
+	\:	&ft =~# '\v(java|cs|cpp|c)'  ? '/* ---===---===---===---===---===---===--- */'
+	\:	&ft ==# 'haskell'            ? '-- - - - - - - - - - - - - - - - --'
+	\:	&ft ==# 'coq'                ? '(* - - - - - - - - - - - - - - - *)'
+	\:	&ft ==# 'mysql'              ? '-- - - - - - - - - - - - - - - - --'
+	\:	&ft =~# '\v(markdown|eruby)' ? '<!-- - - - - - - - - - - - - - - - -->'
+	\:	&ft =~# '\v(ruby|sh)'        ? '#- - - - - - - - - - - - - - - - -#'
+	\:	&ft =~# '\v(text|none)'      ? '- - - - - - - - - - - - - - - - - - - -'
+	\                                : 'long_separator_undefined'
+augroup END
+
+
+function! s:put_long_separator(put_upper)
+	execute 'normal!' (a:put_upper ? 'O' : 'o')
+	execute 'normal! 0D'
+	execute 'normal! i' s:long_separator
+	execute 'normal! =='
+endfunction
+
+"}}}
+
+
+" Easily putting long separator for many filetypes
+" function! s:put_short_separator(put_upper) {{{
+
+augroup FileEvent
+	autocmd FileType,WinEnter,BufWinEnter * let s:short_sparator =
+	\	&ft =~# '\v(vim|vimspec)'    ? '"#--- --- ---#"'
+	\:	&ft =~# '\v(java|cs|cpp|c)'  ? '/* -=-=-=-=-=-=-=-=- */'
+	\:	&ft ==# 'haskell'            ? '-- - - - - - --'
+	\:	&ft ==# 'coq'                ? '(* - - - - - *)'
+	\:	&ft ==# 'mysql'              ? '-- - - - - - --'
+	\:	&ft =~# '\v(markdown|eruby)' ? '<!-- - - - - - -->'
+	\:	&ft =~# '\v(ruby|sh)'        ? '#- - - - - - -#'
+	\:	&ft =~# '\v(text|none)'      ? '- - - - - - - - - -'
+	\                                : 'short_separator_undefined'
+augroup END
+
+
+function! s:put_short_separator(put_upper)
+	execute 'normal!' (a:put_upper ? 'O' : 'o')
+	execute 'normal! 0D'
+	execute 'normal! i' s:short_sparator
+	execute 'normal! =='
+endfunction
+
+" }}}
+
+
 " Move cursor to bottommost of this indent
 function! s:cursor_down_to_ground() "{{{
 	let l:last_line = line('$')
@@ -1802,24 +1805,24 @@ augroup END
 " Appends " {{{
 
 augroup KeyMapping
+	autocmd FileType * nnoremap <C-m> o<Esc>
+
 	autocmd FileType * nnoremap <silent> m: :<C-u>marks<CR>
 	autocmd FileType * nnoremap <silent> q: :<C-u>register<CR>
 	autocmd FileType * nnoremap <silent> z: :<C-u>tabs<CR>
 	autocmd FileType * nnoremap <silent> g: :<C-u>buffers<CR>
-	autocmd FileType * nnoremap <silent> [k :<C-u>call <SID>cursor_up_to_lid()<CR>
-	autocmd FileType * nnoremap <silent> ]k :<C-u>call <SID>cursor_up_to_lid()<CR>
-	autocmd FileType * nnoremap <silent> [j :<C-u>call <SID>cursor_down_to_ground()<CR>
-	autocmd FileType * nnoremap <silent> ]j :<C-u>call <SID>cursor_down_to_ground()<CR>
+	autocmd FileType * nnoremap <silent> ;k :<C-u>call <SID>cursor_up_to_lid()<CR>
+	autocmd FileType * nnoremap <silent> ;j :<C-u>call <SID>cursor_down_to_ground()<CR>
 
 	autocmd FileType * nnoremap <silent> <leader>b         :<C-u>NewOverridden<CR>:resize 5<CR>:setl buftype=nofile<CR>
 	autocmd FileType * nnoremap <silent> <leader>B         :<C-u>NewOverridden<CR>:resize 5<CR>
-	autocmd FileType * nnoremap <silent> <leader>pl        :<C-u>PutLongSeparator<CR>
-	autocmd FileType * nnoremap <silent> <leader>ps        :<C-u>PutShortSeparator<CR>
-	autocmd FileType * nnoremap <silent> <leader>pd        :<C-u>PutDate<CR>
+	autocmd FileType * nnoremap <silent> <leader>ps        :<C-u>call <SID>put_short_separator(0)<CR>
+	autocmd FileType * nnoremap <silent> <leader>Ps        :<C-u>call <SID>put_short_separator(1)<CR>
+	autocmd FileType * nnoremap <silent> <leader>pl        :<C-u>call <SID>put_long_separator(0)<CR>
+	autocmd FileType * nnoremap <silent> <leader>Pl        :<C-u>call <SID>put_long_separator(1)<CR>
+	autocmd FileType * nnoremap <silent> <leader>pd        :<C-u>execute 'normal! a' . strftime('%c')<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>h :<C-u>helpclose<CR>
 	autocmd FileType * nnoremap <silent> <Space><Space>    :<C-u>call <SID>compress_spaces()<CR>
-
-	autocmd FileType * nnoremap <C-m> o<Esc>
 
 	autocmd FileType * nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
 	autocmd FileType * nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
@@ -1924,7 +1927,7 @@ augroup KeyMapping
 
 	" Unite
 	autocmd FileType * nnoremap <silent> <leader>uf        :<C-u>Unite -ignorecase outline:foldings<CR>
-	autocmd FileType * nnoremap <silent> <leader>up        :<C-u>Unite -ignorecase neomru/file<CR>
+	autocmd FileType * nnoremap <silent> <leader>um        :<C-u>Unite -ignorecase neomru/file<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>u :<C-u>call <SID>filetype_buf_close('unite')<CR>
 
 
