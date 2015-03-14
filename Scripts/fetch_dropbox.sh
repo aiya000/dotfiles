@@ -3,8 +3,14 @@
 # I use to command line method scriptalized to this.
 # This was simply implemented.
 
+if [ -n "$1" ] ; then
+	subname="$1"
+else
+	subname="`date +'%Y-%m-%d'`"
+fi
+
 cd ~/.tmp
-file_name=dotfiles-`date +'%Y-%m-%d'`.tar.gz
+file_name="dotfiles-${subname}.tar.gz"
 
 dropbox_uploader.sh download Room/$file_name
 tar zxvf $file_name
