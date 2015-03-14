@@ -1,0 +1,37 @@
+snippet Describe
+alias   desc
+    Describe ${1:#:subject}
+        ${0:TARGET}
+    End
+
+snippet Before
+alias   bef
+    Before${1: all}
+        ${0:TARGET}
+    End
+
+snippet After
+alias   af
+    After${1: all}
+        ${0:TARGET}
+    End
+
+snippet Context
+alias   con cont
+    Context ${1:#:subject}
+        ${0:TARGET}
+    End
+
+snippet It
+alias   it
+    It ${1:#:sentence}
+        ${0:TARGET}
+    End
+
+snippet Assert
+alias   assert ass
+    Assert (${0:#:condition})
+
+snippet AssertEquals
+alias   assertequals asseq
+    Assert Equals(${1:#:val1}, ${2:#:val2})
