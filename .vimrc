@@ -1206,27 +1206,23 @@ augroup END
 
 " Revese Lines
 function! s:reverse_line() range " {{{
-	if executable('tac')
-		execute "'<,'>!tac"
-	else
-		if a:firstline is a:lastline
-			return
-		endif
-
-		let l:lines = []
-		let l:posit = getpos('.')
-
-		for l:line in range(a:firstline, a:lastline)
-			call add(l:lines, substitute(getline(l:line)."\n", "\t", '', 'g'))
-		endfor
-
-		for l:i in range(a:firstline, a:lastline)
-			execute 'normal! "_dd'
-			execute 'normal! i' lines[a:lastline - l:i]
-		endfor
-
-		call setpos('.', l:posit)
+	if a:firstline is a:lastline
+		return
 	endif
+
+	let l:lines = []
+	let l:posit = getpos('.')
+
+	for l:line in range(a:firstline, a:lastline)
+		call add(l:lines, substitute(getline(l:line)."\n", "\t", '', 'g'))
+	endfor
+
+	for l:i in range(a:firstline, a:lastline)
+		execute 'normal! "_dd'
+		execute 'normal! i' lines[a:lastline - l:i]
+	endfor
+
+	call setpos('.', l:posit)
 endfunction " }}}
 command! -range=% ReverseLine :<line1>, <line2> call s:reverse_line()
 
@@ -1235,15 +1231,9 @@ command! -range=% ReverseLine :<line1>, <line2> call s:reverse_line()
 function! s:cat_file(...) "{{{
 	let l:catenate = ''
 
-	if executable('cat')
-		for l:filePath in a:000
-			let l:catenate .= s:system('cat ' . l:filePath)
-		endfor
-	else
-		for l:filePath in a:000
-			let l:catenate .= join(readfile(l:filePath), "\n")
-		endfor
-	endif
+	for l:filePath in a:000
+		let l:catenate .= join(readfile(l:filePath), "\n")
+	endfor
 
 	echo l:catenate
 endfunction "}}}
@@ -1985,8 +1975,8 @@ augroup KeyMapping
 
 
 	" neosnippet.vim
-	autocmd FileType * imap <C-s><C-s> <Plug>(neosnippet_expand)
-	autocmd FileType * imap <C-s><C-f> <Plug>(neosnippet_jump)
+	autocmd FileType * imap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
+	autocmd FileType * smap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
 augroup END
 
 " }}}
