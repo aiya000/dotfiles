@@ -1818,12 +1818,14 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
 	autocmd FileType * nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
 	autocmd FileType * nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
+	autocmd FileType * nnoremap <silent> <C-k>J     :<C-u>wall<CR>
 	" doautocmd for Events [FileType *]
 	autocmd FileType * nnoremap <silent> <C-k>r     :<C-u>let &filetype = &filetype<CR>
 	autocmd FileType * nnoremap <silent> <C-k>l     :<C-u>source %<CR>
 
 
 	autocmd FileType * inoremap <silent> <C-k><C-j> <Esc>:write<CR>
+	autocmd FileType * inoremap <silent> <C-k>J     <Esc>:wall<CR>
 
 	autocmd FileType * inoremap <C-k><C-k> <C-o>"_d$
 	autocmd FileType * inoremap <C-k><C-y> <Esc>k"zyyjV"zp:let @z = ''<CR>A
@@ -1865,7 +1867,6 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <C-w>T :<C-u>tabclose<CR>
 	autocmd FileType * nnoremap <silent> <C-w>c :<C-u>bdelete<CR>
 	autocmd FileType * nnoremap <silent> <C-w>C :<C-u>bdelete!<CR>
-	autocmd FileType * nnoremap <silent> <C-w>W :<C-u>wall<CR>
 	autocmd FileType * nnoremap <silent> <C-w>N :<C-u>EnewOverridden!<CR>
 	autocmd FileType * nnoremap <silent> <C-w>Q :<C-u>quitall<CR>
 	autocmd FileType * nnoremap <silent> <C-w>" :<C-u>resize 5<CR>
