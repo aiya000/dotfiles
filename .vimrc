@@ -60,6 +60,8 @@ scriptencoding utf8
 
 "-- Exeption happened when input '.*' to unite textarea
 
+"-- vim open -> 11G => jump L11 -> 100G => jump lastline ( 11, 100 is hogehoge )
+
 "}}}
 " Todo {{{
 
@@ -900,9 +902,8 @@ let s:makes = ['arot13.vim',
 \              'asql.vim',
 \              'adrone.vim',
 \              'aho-bakaup.vim']
-"set runtimepath+=~/.vim/makes/vital.vim
 
-let s:makes_dir = '~/.vim/makes/'
+let s:makes_dir = '~/Repository/'
 
 
 " If valid local plugin, disable bundled same plugin
