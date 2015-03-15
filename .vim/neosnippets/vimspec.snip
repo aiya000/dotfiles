@@ -1,23 +1,23 @@
 snippet Describe
-alias   desc
+alias   desc describe
     Describe ${1:#:subject}
         ${0:TARGET}
     End
 
 snippet Before
-alias   bef
+alias   bef before
     Before${1: all}
         ${0:TARGET}
     End
 
 snippet After
-alias   af
+alias   af after
     After${1: all}
         ${0:TARGET}
     End
 
 snippet Context
-alias   con cont
+alias   con cont context
     Context ${1:#:subject}
         ${0:TARGET}
     End
@@ -29,9 +29,9 @@ alias   it
     End
 
 snippet Assert
-alias   assert ass
+alias   ass assert
     Assert (${0:#:condition})
 
 snippet AssertEquals
-alias   assertequals asseq
+alias   asseq asserteq assertequals
     Assert Equals(${1:#:val1}, ${2:#:val2})

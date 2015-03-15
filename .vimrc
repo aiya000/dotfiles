@@ -1767,9 +1767,9 @@ endfunction
 " If you has nofile buffer, close it.
 function! s:filetype_buf_close(ft) "{{{
 	for l:w in range(1, winnr('$'))
-		let l:buf_filetype = getwinvar(l:w, '&filetype')
+		let l:buf_ft = getwinvar(l:w, '&ft')
 
-		if l:buf_filetype ==# a:ft
+		if l:buf_ft ==# a:ft
 			execute ':' . l:w . 'wincmd w'
 			execute ':quit'
 
