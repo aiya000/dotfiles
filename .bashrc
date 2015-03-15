@@ -41,7 +41,6 @@ alias tweet='vim -c TweetVimSay'
 alias twitter-public='vim -c TwitterPublic'
 alias tweet-public='vim -c TweetPublic'
 alias adrone='vim -c AdroneOpen'
-alias themis='themis --runtimepath ".."'
 
 alias vimconfig='vim ~/.vimrc'
 alias gvimconfig='vim ~/.gvimrc'
