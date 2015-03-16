@@ -1,38 +1,30 @@
-au GUIEnter * set noicon guioptions-=T
-:func-abort
-Bundle 'tpope/vim-fugitive'
+" Yosa
+
+"補完候補があってもEnterは改行
+inoremap <expr> <CR> pumvisible() ? "\<C-e>\<CR>" : "\<CR>"
+
+" text object
+nnoremap gc `[v`]
+onoremap gc :normal gc<CR>
+
+"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
+
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'https://github.com/alpaca-tc/alpaca_tags'
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'tpope/vim-endwise'
 Bundle 'vim-scripts/java.vim'
 Bundle 'vim-scripts/javacomplete'
 Bundle 'vim-scripts/java_getset.vim'
 Bundle 'vim-scripts/java_checkstyle.vim'
-Bundle 'tsukkee/unite-tag'
-Bundle 'alpaca-tc/neorspec.vim'
-Bundle 'https://github.com/thoughtbot/vim-rspec'
-Bundle 'https://github.com/tpope/vim-dispatch'
-Bundle 'AndrewRadev/switch.vim'
-Bundle 'alpaca-tc/vim-endwise.git'
 
 lexima
 
 "- - -"
 
-set autoread
 set complete=.,w,b,u,k
 set completeopt=menu,preview,longest
 set pumheight=20
 set foldmethod=manual
 au FileType go compiler go
-"改行コード
-set fileformats=unix,dos,mac
-"補完候補があってもEnterは改行
-inoremap <expr> <CR> pumvisible() ? "\<C-e>\<CR>" : "\<CR>"
-" text object
-nnoremap gc `[v`]
-onoremap gc :normal gc<CR>
 
 onoremap <silent> q
 \      :for i in range(v:count1)
