@@ -33,17 +33,15 @@ scriptencoding utf8
 
 "-- View prev and next fold head text ...on echo or other buffer ? on submode-foldings
 
-"-- <C-/> alter key [asdfghjkl;] to [1234567890]
-
 "-- Unite outline -> view C-Sharp <summary>~</summary>
 
 " }}}
 " Issues {{{
 
-"-- C-o hard use when vimshell
+"-- C-o hard use on vimshell
 
 "-- automatic mkdir './C:' when execute NeoBundleInstall in windows kaoriya
-"  -- neobundle thinks that is repository...?
+"  -- does neobundle thinks that is repository...?
 
 "-- does not functioned conceal-javadoc ?
 
@@ -57,21 +55,18 @@ scriptencoding utf8
 "-- incsearch.vim(?) throw an exception E874 when searched '<leader>~'
 
 "-- I couldn't use diff-enhanced on windows kaoriya gvim
+"  -- maybe... because it depended git command
 
 "-- Exeption happened when input '.*' to unite textarea
-
-"-- vim open -> 11G => jump L11 -> 100G => jump lastline ( 11, 100 is hogehoge )
 
 "}}}
 " Todo {{{
 
-"-- Eigo to English
+"-- Eigo translate to English in this file
 
 "-- read help options.jax
 
 "-- read help windows.txt
-
-"-- check function JazzRadio on *nix
 
 "-- read help 'cino'
 
@@ -426,13 +421,6 @@ NeoBundle        'Shougo/neosnippet-snippets'
 
 call neobundle#end()
 
-"@Experiment('commented out')
-"try
-"	helptags ~/.vim/bundle/.neobundle/doc
-"catch /E154/
-"	" Suppressed helptags duplication error
-"endtry
-
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
 
@@ -717,7 +705,10 @@ let g:excitetranslate_options = ["buffer"]
 "}}}
 "--- w3m.vim ---"{{{
 
-let g:w3m#homepage = 'http://www.bing.com/'
+let g:w3m#external_browser = 'firefox'
+
+"let g:w3m#homepage = 'http://www.bing.com/'
+let g:w3m#homepage = 'http://www.google.co.jp/'
 
 "}}}
 "--- vimconsole.vim ---"{{{
@@ -826,7 +817,7 @@ let g:ref_source_webdict_sites['default'] = 'weblio'
 
 function! s:weblio_filter(output) "{{{
 	let l:lines  = split(a:output, "\n")
-	"@Incompleted('')
+	"@Incompleted('do not filtered')
 	let l:lines1 = map(l:lines, 'substitute(v:val, "\v(発音記号|音声を聞く|ダウンロード再生)\n", "", "g")')
 	return join(l:lines1[60 : ], "\n")
 endfunction "}}}
@@ -1930,7 +1921,7 @@ augroup KeyMapping
 	" vim-over
 	autocmd FileType * nnoremap <silent>       :%s/       :<C-u>OverCommandLine<CR>%s/
 	autocmd FileType * nnoremap <silent>       :s/        :<C-u>OverCommandLine<CR>s/
-	"@Bugs('Unabled input % on OverCommandLine')
+	"@Bugs('Unabled input % on OverCommandLine when ...?')
 	"autocmd FileType * nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
 	"autocmd FileType * nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/' . expand('<cword>')
 	autocmd FileType * nnoremap <expr>         <C-k><C-s> ':%s/\<' . expand('<cword>') . '\>/'
