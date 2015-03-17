@@ -1761,6 +1761,7 @@ endfunction
 
 
 " If you has nofile buffer, close it.
+"@Marked('maybe this was not does purported function')
 function! s:bufclose_filetype(ft) "{{{
 	for l:w in range(1, winnr('$'))
 		let l:buf_ft = getwinvar(l:w, '&ft')
