@@ -4,6 +4,12 @@ let b:undo_ftplugin = 'setl ' . join([
 
 setl wrapscan
 
-nmap             <buffer> H              <BS>
-nnoremap <silent><buffer> <C-u>          :<C-u>W3mAddressBar <CR>
-nnoremap <silent><buffer> <localleader>E :<C-u>W3mShowExtenalBrowser <CR>
+nmap <buffer> H     <Plug>(w3m-back)
+nmap <buffer> L     <Plug>(w3m-forward)
+nmap <buffer> t     <Plug>(w3m-shift-click)
+nmap <buffer> i     <Plug>(w3m-address-bar)
+nmap <buffer> <C-i> <Plug>(w3m-next-link)
+nmap <buffer> <C-o> <Plug>(w3m-prev-link)
+
+nnoremap <silent><buffer> Q              :<C-u>bdelete!<CR>
+nnoremap <silent><buffer> <localleader>w :<C-u>W3mShowExtenalBrowser<CR>
