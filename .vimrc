@@ -54,9 +54,6 @@ scriptencoding utf8
 
 "-- incsearch.vim(?) throw an exception E874 when searched '<leader>~'
 
-"-- I couldn't use diff-enhanced on windows kaoriya gvim
-"  -- maybe... because it depended git command
-
 "-- Exeption happened when input '.*' to unite textarea
 
 "}}}
@@ -69,6 +66,8 @@ scriptencoding utf8
 "-- read help windows.txt
 
 "-- read help 'cino'
+
+"-- Integrate Functional_Command section and Command_Alias section
 
 " }}}
 
@@ -399,7 +398,7 @@ NeoBundle        'haya14busa/incsearch.vim'
 NeoBundle        'thinca/vim-scouter'
 NeoBundle        'deris/vim-shot-f'
 NeoBundle        'oplatek/Conque-Shell'
-NeoBundle        'vim-scripts/TaskList.vim'
+NeoBundle        'sgelb/TaskList.vim'
 NeoBundle        'tyru/vim-altercmd'
 NeoBundle        'mbbill/undotree'
 NeoBundle        'Shougo/neomru.vim'
@@ -849,6 +848,12 @@ let g:ConqueTerm_StartMessages  = 1
 
 " TaskList search these
 let g:tlTokenList = ["FIXME", "TODO", "XXX", "NOTE"]
+
+" Open window at bottom
+let g:tlWindowPosition = 1
+
+" Restore opened position when closed TaskList
+let g:tlRememberPosition = 1
 
 "}}}
 "--- vim-indent-guides ---"{{{
@@ -1756,7 +1761,7 @@ endfunction
 
 
 " If you has nofile buffer, close it.
-function! s:filetype_buf_close(ft) "{{{
+function! s:bufclose_filetype(ft) "{{{
 	for l:w in range(1, winnr('$'))
 		let l:buf_ft = getwinvar(l:w, '&ft')
 
@@ -1793,8 +1798,6 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> q: :<C-u>register<CR>
 	autocmd FileType * nnoremap <silent> z: :<C-u>tabs<CR>
 	autocmd FileType * nnoremap <silent> g: :<C-u>buffers<CR>
-	autocmd FileType * nnoremap <silent> ;k :<C-u>call <SID>cursor_up_to_lid()<CR>
-	autocmd FileType * nnoremap <silent> ;j :<C-u>call <SID>cursor_down_to_ground()<CR>
 
 	autocmd FileType * nnoremap <silent> <leader>b         :<C-u>NewOverridden<CR>:resize 5<CR>:setl buftype=nofile<CR>
 	autocmd FileType * nnoremap <silent> <leader>B         :<C-u>NewOverridden<CR>:resize 5<CR>
@@ -1805,6 +1808,8 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> <leader>pd        :<C-u>execute 'normal! a' . strftime('%c')<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>h :<C-u>helpclose<CR>
 	autocmd FileType * nnoremap <silent> <Space><Space>    :<C-u>call <SID>compress_spaces()<CR>
+	autocmd FileType * nnoremap <silent> <leader>k         :<C-u>call <SID>cursor_up_to_lid()<CR>
+	autocmd FileType * nnoremap <silent> <leader>j         :<C-u>call <SID>cursor_down_to_ground()<CR>
 
 	autocmd FileType * nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
 	autocmd FileType * nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
@@ -1898,7 +1903,10 @@ augroup KeyMapping
 
 	" open-browser.vim
 	autocmd FileType * nmap <leader>w <Plug>(openbrowser-open)
-	autocmd FileType * nnoremap <silent> <leader><leader>r :<C-u>call <SID>filetype_buf_close('quickrun')<CR>
+
+
+	" vim-quickrun
+	autocmd FileType * nnoremap <silent> <leader><leader>r :<C-u>call <SID>bufclose_filetype('quickrun')<CR>
 
 
 	" vimshell
@@ -1909,9 +1917,9 @@ augroup KeyMapping
 
 
 	" Unite
-	autocmd FileType * nnoremap <silent> <leader>uf        :<C-u>Unite -ignorecase outline:foldings<CR>
+	autocmd FileType * nnoremap <silent> <leader>uf        :<C-u>Unite -ignorecase -start-insert outline:foldings<CR>
 	autocmd FileType * nnoremap <silent> <leader>um        :<C-u>Unite -ignorecase neomru/file<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>u :<C-u>call <SID>filetype_buf_close('unite')<CR>
+	autocmd FileType * nnoremap <silent> <leader><leader>u :<C-u>call <SID>bufclose_filetype('unite')<CR>
 
 
 	" excitetranslate-vim
@@ -1921,14 +1929,13 @@ augroup KeyMapping
 	" vim-over
 	autocmd FileType * nnoremap <silent>       :%s/       :<C-u>OverCommandLine<CR>%s/
 	autocmd FileType * nnoremap <silent>       :s/        :<C-u>OverCommandLine<CR>s/
-	"@Bugs('Unabled input % on OverCommandLine when ...?')
-	"autocmd FileType * nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
-	"autocmd FileType * nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/' . expand('<cword>')
-	autocmd FileType * nnoremap <expr>         <C-k><C-s> ':%s/\<' . expand('<cword>') . '\>/'
-	autocmd FileType * nnoremap <expr>         <C-k>S     ':%s/\<' . expand('<cword>') . '\>/' . expand('<cword>')
+	""@Bugs('Unabled input % on OverCommandLine when ...?')
+	"autocmd FileType * nnoremap <expr>         <C-k><C-s> ':%s/\<' . expand('<cword>') . '\>/'
+	"autocmd FileType * nnoremap <expr>         <C-k>S     ':%s/\<' . expand('<cword>') . '\>/' . expand('<cword>')
+	autocmd FileType * nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
+	autocmd FileType * nnoremap <silent><expr> <C-k>S     ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/' . expand('<cword>')
 	autocmd FileType * vnoremap <silent>       :s/        :<C-u>OverCommandLine<CR>'<,'>s/
 	autocmd FileType * OverCommandLineNoremap  <C-l>      <Esc>
-	autocmd FileType * OverCommandLineNoremap  <C-v><CR>  
 
 
 	" anzu-chan
@@ -1941,14 +1948,14 @@ augroup KeyMapping
 
 
 	" incsearch.vim
-	autocmd FileType * nmap <expr>      /     foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
-	autocmd FileType * nmap <silent>    \/    /\m\C
-	autocmd FileType * nmap <silent>    \\/   /\m\C\<\>[Left][Left]
-	autocmd FileType * nmap             g/    /\<<C-r>"\><CR>
-	autocmd FileType * nmap <expr>      ?     foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
-	autocmd FileType * nmap <silent>    \?    ?\m\C
-	autocmd FileType * nmap <silent>    \\?   ?\m\C\<\>[Left][Left]
-	autocmd FileType * nmap             g?    ?\<<C-r>"\><CR>
+	autocmd FileType * nmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
+	autocmd FileType * nmap <silent>    <leader>/         /\m\C
+	autocmd FileType * nmap <silent>    <leader><leader>/ /\m\C\<\>[Left][Left]
+	autocmd FileType * nmap             g/                /\<<C-r>"\><CR>
+	autocmd FileType * nmap <expr>      ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
+	autocmd FileType * nmap <silent>    <leader>?         ?\m\C
+	autocmd FileType * nmap <silent>    <leader><leader>? ?\m\C\<\>[Left][Left]
+	autocmd FileType * nmap             g?                ?\<<C-r>"\><CR>
 	autocmd FileType * IncSearchNoreMap <C-j> <CR>
 	autocmd FileType * IncSearchNoreMap <C-b> <Left>
 	autocmd FileType * IncSearchNoreMap <C-f> <Right>
@@ -1960,7 +1967,7 @@ augroup KeyMapping
 
 
 	" TaskList.vim
-	autocmd FileType * nnoremap <leader>T :<C-u>TaskList<CR>
+	autocmd FileType * nmap <leader>T <Plug>TaskListToggle
 
 
 	" undotree
@@ -2037,7 +2044,7 @@ endfunction "}}}
 
 " If buffer does not has filetype, set filetype 'none'
 augroup ExtensionType
-	autocmd VimEnter,BufNew * if &ft == '' | setf none | endif
+	autocmd VimEnter,BufNew * if &ft ==# '' | setf none | endif
 augroup END
 
 
