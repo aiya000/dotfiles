@@ -1,6 +1,33 @@
+# ImportPath
 snippet s.r.c
     System.Runtie.CompilerServices
 
+snippet m.v
+    Microsoft.VisualBasic
+
+
+# Method
+snippet messagebox
+alias   msgbox
+    MessageBox.Show("${1:#:text}", "${2:#:caption}", MessageBoxButtons.${3:OK}, MessageBoxIcon.${4:Information});${0}
+
+snippet messageboxyesno
+alias   msgboxq msgboxyesno
+    MessageBox.Show("${1:#:text}", "${2:#:caption}", MessageBoxButtons.YesNo, MessageBoxIcon.Question);${0}
+
+snippet inputbox
+    Interaction.InputBox("${1:#:Prompt}", "${2:#:Title}", "${3:#:DefaultResponse}");${0}
+
+
+# Attribute
 snippet asm_internals_visible_to
 alias   internals asmInternalsVisibleTo
-    [assembly: InternalsVisibleTo("${1:#:FriendName}")]${0}
+    #pragma warning disable 0657
+    [assembly: InternalsVisibleTo("${1:#:FriendName}")]
+    #pragma warning restore 0657${0}
+
+
+# PreProcessor
+snippet pragma_warning
+alias   pragma
+    #pragma warning ${2:disable} ${3:#:errno}
