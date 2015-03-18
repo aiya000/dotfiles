@@ -12,10 +12,9 @@ scriptencoding utf8
 " -- Action_Setting
 " -- Inner_Setting
 " -- Event_Method
-" -- Functional_Command
-" -- Command_Alias
-" -- Key_Mappings
-" -- File_Types
+" -- Command_Util
+" -- Key_Mapping
+" -- File_Type
 " -- Environment_Pref
 " ---
 
@@ -43,7 +42,7 @@ scriptencoding utf8
 "-- automatic mkdir './C:' when execute NeoBundleInstall in windows kaoriya
 "  -- does neobundle thinks that is repository...?
 
-"-- does not functioned conceal-javadoc ?
+"-- doesn't conceal-javadoc functioned ?
 
 "-- shot-f not functioned in <C-o> temporary normal mode
 
@@ -56,6 +55,10 @@ scriptencoding utf8
 
 "-- Exeption happened when input '.*' to unite textarea
 
+"-- 'cs' sneppet 'pragma' circulated with 'warning' in neosnippet-snippets
+
+"-- OverCommandLine throw (E803: ID not found: 1011) when press %
+
 "}}}
 " Todo {{{
 
@@ -66,8 +69,6 @@ scriptencoding utf8
 "-- read help windows.txt
 
 "-- read help 'cino'
-
-"-- Integrate Functional_Command section and Command_Alias section
 
 " }}}
 
@@ -1197,9 +1198,69 @@ augroup END
 
 
 "-------------------------"
-"   Functional_Command    "
+"      Command_Util       "
 "-------------------------"
-" Utility Function {{{
+" For Override {{{
+
+call altercmd#load()
+
+" buffer open commands with filetype 'none'
+command! -bang NewOverridden new<bang> | setf none
+AlterCommand new NewOverridden
+
+command! -bang VnewOverridden vnew<bang> | setf none
+AlterCommand vnew VnewOverridden
+
+command! -bang EnewOverridden enew<bang> | setf none
+AlterCommand enew EnewOverridden
+
+command! -bang TabnewOverridden tabnew<bang> | setf none
+AlterCommand tabnew TabnewOverridden
+
+" }}}
+" Usefull {{{
+
+" Grep and Open current buffer
+command! -nargs=1 GrepNow vimgrep <args> % | cwindow
+
+
+" Save a Temporary Directory
+" {{{
+
+"@Marked('Changed "FileType *" to "BufNew *"')
+autocmd FileEvent BufNew * let b:tdir_dir = get(b:, 'tdir_dir', 'Not set tdir')
+
+command! TDirPwd           echo b:tdir_dir
+
+function! s:set_temporary_dir(path) "{{{
+	if isdirectory(a:path)
+		let b:tdir_dir = a:path ==# '.' ? expand('%:p:h')
+		\                               : a:path
+		echo b:tdir_dir
+	else
+		call s:echo_error('No such temporary root dir')
+	endif
+endfunction "}}}
+command! -nargs=1  TDirSet call s:set_temporary_dir(<q-args>)
+
+command! TDirSetCurrentDir call s:set_temporary_dir('.')
+
+function! s:cd_temporary_dir() "{{{
+	if b:tdir_dir ==# 'Not set tdir'
+		call s:echo_error('Not set temporary root dir')
+	else
+		execute 'cd' b:tdir_dir
+		echo b:tdir_dir
+	endif
+endfunction "}}}
+command! TDirCd            call s:cd_temporary_dir()
+
+" }}}
+
+
+" Yank all to plus register
+command! CPAllPlus execute 'normal! ggVG"+y<C-o><C-o>'
+
 
 " Revese Lines
 function! s:reverse_line() range " {{{
@@ -1246,6 +1307,7 @@ function! s:random_int(max) "{{{
 endfunction "}}}
 command! -nargs=? PutRandom execute 'normal! a' . s:random_int(<q-args>)
 
+
 "@See('http://leafcage.hateblo.jp/entry/2013/08/02/001600')
 " Time Watcher
 command! TimerStart let  s:startTime = reltime()
@@ -1278,136 +1340,25 @@ endfunction "}}}
 command! -nargs=1 Rename call <SID>rename_to(<q-args>)
 
 "}}}
-" Action Function {{{
-
-" Save a Temporary Directory
-autocmd FileEvent FileType * let b:tdir_dir = get(b:, 'tdir_dir', 'Not set tdir')
-command! TDirPwd           echo b:tdir_dir
-function! s:set_temporary_dir(path) "{{{
-	if isdirectory(a:path)
-		let b:tdir_dir = a:path ==# '.' ? expand('%:p:h')
-		\                               : a:path
-		echo b:tdir_dir
-	else
-		call s:echo_error('No such temporary root dir')
-	endif
-endfunction "}}}
-command! -nargs=1  TDirSet call s:set_temporary_dir(<q-args>)
-command! TDirSetCurrentDir call s:set_temporary_dir('.')
-function! s:cd_temporary_dir() "{{{
-	if b:tdir_dir ==# 'Not set tdir'
-		call s:echo_error('Not set temporary root dir')
-	else
-		execute 'cd' b:tdir_dir
-		echo b:tdir_dir
-	endif
-endfunction "}}}
-command! TDirCd            call s:cd_temporary_dir()
-
-
-" Yank all to plus register
-command! CPAllPlus execute 'normal! ggVG"+y<C-o><C-o>'
-
-" }}}
-" Development Support {{{
-
-"@Incompleted('does not removed another temporary class')
-" If you cannot use QuickRun or want to use stdio, you can use this.
-function! s:java_run_func() "{{{
-	let l:javaname = expand('%:t:r')
-	let l:javav = s:system('java -version')
-
-	if l:javav =~# '1.8'
-		let l:command = ['javac -source 1.8 -encoding utf8', 'java']
-	elseif l:javav =~# '1.7'
-		let l:command = ['javac -source 1.7 -encoding utf8', 'java']
-	else
-		let l:command = ['javac -encoding utf8', 'java']
-	endif
-
-	if s:is_cygwin
-		if executable('cocot')
-			let l:command[0] = 'cocot ' . l:command[0]
-			let l:command[1] = 'cocot ' . l:command[1]
-		else
-			call s:echo_error('You must be get [cocot] command.')
-			return
-		endif
-	endif
-
-	execute ':!' .
-	\	printf('%s %s.java',   l:command[0], l:javaname) . ';' .
-	\	printf('%s %s',        l:command[1], l:javaname) . ';'
-
-	call delete(l:javaname . '.class')
-endfunction "}}}
-command! RunJava call s:java_run_func()
-
-
-" Same as RunJava for Ruby
-cnoreabbr RunRuby !ruby %
-command!  RunRuby <NOP>
-
-
-function! s:put_html_base() "{{{
-	let l:paste = &paste
-	set paste
-	execute 'normal! O' '<html lang="ja">'
-	execute 'normal! o' '<head>'
-	execute 'normal! o' '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">'
-	execute 'normal! o' '<title></title>'
-	execute 'normal! o' '</head>'
-	execute 'normal! o' '<body>'
-	execute 'normal! o'
-	execute 'normal! o' '</body>'
-	execute 'normal! o' '</html>'
-	let &paste = l:paste
-endfunction "}}}
-command! PutHtmlBase call s:put_html_base()
-
-
-" Echo script local values in this file
-command! ShowRcDict for s:v in items(s:) | echo s:v | endfor
-
-" }}}
-
-
-"-------------------------"
-"      Command_Alias      "
-"-------------------------"
-" Override {{{
-
-call altercmd#load()
-
-" buffer open commands with filetype 'none'
-command! -bang NewOverridden new<bang> | setf none
-AlterCommand new NewOverridden
-
-command! -bang VnewOverridden vnew<bang> | setf none
-AlterCommand vnew VnewOverridden
-
-command! -bang EnewOverridden enew<bang> | setf none
-AlterCommand enew EnewOverridden
-
-command! -bang TabnewOverridden tabnew<bang> | setf none
-AlterCommand tabnew TabnewOverridden
-
-" }}}
-" Utils {{{
+" Life Helper {{{
 
 
 " Vim Utils {{{
-command! VimConfig         e $MYVIMRC
-command! VimConfigTab      tabnew $MYVIMRC
-command! Reload            so $MYVIMRC
+
+command! VimConfig e $MYVIMRC
+
+command! VimConfigTab tabnew $MYVIMRC
+
+command! Reload so $MYVIMRC
 	\|	if has('gui_running')
 	\|		so $MYGVIMRC
 	\|	endif
-command! ForceSave         w !sudo tee > /dev/null %
 
-command! CdBufDir          cd %:p:h
+command! ForceSave w !sudo tee > /dev/null %
 
-command! ColorPreview      Unite colorscheme -auto-preview
+command! CdBufDir cd %:p:h
+
+command! ColorPreview Unite colorscheme -auto-preview
 
 " }}}
 " Twitter {{{
@@ -1506,13 +1457,10 @@ cnoreabbr Weblio    Ref webdict weblio
 command!  Translate <NOP>
 command!  Weblio    <NOP>
 
-
-" Grep and Open current buffer
-command! -nargs=1 GrepNow vimgrep <args> % | cwindow
-
 " }}}
-" Developments {{{
+" Development {{{
 
+" Open Develop Buffer {{{
 
 " vimconsole.vim
 cnoreabbr Log      VimConsoleLog
@@ -1563,12 +1511,53 @@ command!  Sirb     <NOP>
 command!  Virb     <NOP>
 command!  IrbTab   <NOP>
 
+" }}}
+" Run Program  {{{
+
+"@Incompleted('does not removed another temporary class')
+" If you cannot use QuickRun or want to use IO, you can use this.
+function! s:java_run_func() "{{{
+	let l:javaname = expand('%:t:r')
+	let l:javav = s:system('java -version')
+
+	if l:javav =~# '1.8'
+		let l:command = ['javac -source 1.8 -encoding utf8', 'java']
+	elseif l:javav =~# '1.7'
+		let l:command = ['javac -source 1.7 -encoding utf8', 'java']
+	else
+		let l:command = ['javac -encoding utf8', 'java']
+	endif
+
+	if s:is_cygwin
+		if executable('cocot')
+			let l:command[0] = 'cocot ' . l:command[0]
+			let l:command[1] = 'cocot ' . l:command[1]
+		else
+			call s:echo_error('You must be get [cocot] command.')
+			return
+		endif
+	endif
+
+	execute ':!' .
+	\	printf('%s %s.java',   l:command[0], l:javaname) . ';' .
+	\	printf('%s %s',        l:command[1], l:javaname) . ';'
+
+	call delete(l:javaname . '.class')
+endfunction "}}}
+command! RunJava call s:java_run_func()
+
+
+" Same as RunJava for Ruby
+cnoreabbr RunRuby !ruby %
+command!  RunRuby <NOP>
+
+"  }}}
 
 " }}}
 
 
 "-------------------------"
-"      Key_Mappings       "
+"       Key_Mapping       "
 "-------------------------"
 " Disables {{{
 
@@ -1799,6 +1788,7 @@ augroup KeyMapping
 	autocmd FileType * nnoremap <silent> q: :<C-u>register<CR>
 	autocmd FileType * nnoremap <silent> z: :<C-u>tabs<CR>
 	autocmd FileType * nnoremap <silent> g: :<C-u>buffers<CR>
+	autocmd FileType * nnoremap <silent> g> :<C-u>messages<CR>
 
 	autocmd FileType * nnoremap <silent> <leader>b         :<C-u>NewOverridden<CR>:resize 5<CR>:setl buftype=nofile<CR>
 	autocmd FileType * nnoremap <silent> <leader>B         :<C-u>NewOverridden<CR>:resize 5<CR>
@@ -1930,9 +1920,6 @@ augroup KeyMapping
 	" vim-over
 	autocmd FileType * nnoremap <silent>       :%s/       :<C-u>OverCommandLine<CR>%s/
 	autocmd FileType * nnoremap <silent>       :s/        :<C-u>OverCommandLine<CR>s/
-	""@Bugs('Unabled input % on OverCommandLine when ...?')
-	"autocmd FileType * nnoremap <expr>         <C-k><C-s> ':%s/\<' . expand('<cword>') . '\>/'
-	"autocmd FileType * nnoremap <expr>         <C-k>S     ':%s/\<' . expand('<cword>') . '\>/' . expand('<cword>')
 	autocmd FileType * nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
 	autocmd FileType * nnoremap <silent><expr> <C-k>S     ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/' . expand('<cword>')
 	autocmd FileType * vnoremap <silent>       :s/        :<C-u>OverCommandLine<CR>'<,'>s/
@@ -2016,7 +2003,7 @@ augroup END
 
 
 "-------------------------"
-"       File_Types        "
+"        File_Type        "
 "-------------------------"
 "{{{
 
