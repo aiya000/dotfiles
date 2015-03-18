@@ -32,7 +32,7 @@ highlight CompResult         font-family: monospace; width: 35%; overflow: hidde
 highlight CompTitle          color: DeepPink; font-size: 11pt;
 highlight ErrorMsg           background-color: DarkRed;
 highlight Function           color: RoyalBlue;
-highlight Hint               font-family: monospace; font-size: 16px; font-weight: normal; color: white; background-color: rgba(0, 0, 0, 0.5); border: solid 1px LightGray;
+highlight Hint               font-family: monospace; font-size: 16px; font-weight: normal; color: white; background-color: rgba(135, 206, 250, 0.7); border: solid 1px Blue;
 highlight HintActive         background-color: Orange; color: White;
 highlight HintElem           background-color: Khaki; color: Black;
 highlight InfoMsg            background-color: #333;
@@ -45,6 +45,7 @@ highlight Normal             color: LightGray; background-color: #333;
 highlight Null               color: SlateGray;
 highlight Number             color: Crimson;
 highlight Object             color: Khaki;
+highlight PromptText         color: White; background: CornFlowerBlue;
 highlight Question           color: LightGray; background-color: #333;
 highlight StatusLine         color: LightGray; background-color: #333; font-size: 9pt; font-family: monospace; font-weight: normal; padding: 2px 3px;
 highlight String             color: LimeGreen;
@@ -57,7 +58,7 @@ highlight WarningMsg         background-color: #333;
 
 
 "-------------------------"
-"       Key_Mappings      "
+"       Key_Mapping       "
 "-------------------------"
 "{{{
 
@@ -124,7 +125,7 @@ nnoremap <C-k><C-l> :nohlsearch<CR>
 
 
 "-------------------------"
-"      Command_Alias      "
+"      Command_Util       "
 "-------------------------"
 "{{{
 
