@@ -4,6 +4,6 @@
 .private
 Examples
 Files
+Note
 README.md
-README.txt
 Scripts
