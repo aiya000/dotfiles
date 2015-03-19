@@ -44,12 +44,12 @@ scriptencoding utf8
 
 "-- doesn't conceal-javadoc functioned ?
 
-"-- shot-f not functioned in <C-o> temporary normal mode
+"-- shot-f not functioned in i_<C-o> temporary normal mode
 
 "-- couldn't auto make vimproc at anywhere
 
 "-- conflicted? vim-ruby and rspec.vim when those was set NeoBundleLazy
-"  -- do not loaded syntax of rspec.vim
+"  -- does not loaded syntax of rspec.vim
 
 "-- incsearch.vim(?) throw an exception E874 when searched '<leader>~'
 
@@ -57,7 +57,8 @@ scriptencoding utf8
 
 "-- 'cs' sneppet 'pragma' circulated with 'warning' in neosnippet-snippets
 
-"-- OverCommandLine throw (E803: ID not found: 1011) when press %
+"-- OverCommandLine throw (E803: ID not found: 1011) when press % some times.
+"  -- but doesn't happned some times.
 
 "}}}
 " Todo {{{
@@ -1258,10 +1259,6 @@ command! TDirCd            call s:cd_temporary_dir()
 " }}}
 
 
-" Yank all to plus register
-command! CPAllPlus execute 'normal! ggVG"+y<C-o><C-o>'
-
-
 " Revese Lines
 function! s:reverse_line() range " {{{
 	if a:firstline is a:lastline
@@ -1271,14 +1268,17 @@ function! s:reverse_line() range " {{{
 	let l:lines = []
 	let l:posit = getpos('.')
 
+	let l:z = @z
 	for l:line in range(a:firstline, a:lastline)
-		call add(l:lines, substitute(getline(l:line)."\n", "\t", '', 'g'))
+		execute 'normal! "zdd'
+		call add(l:lines, @z)
 	endfor
 
-	for l:i in range(a:firstline, a:lastline)
-		execute 'normal! "_dd'
-		execute 'normal! i' lines[a:lastline - l:i]
+	for l:r in l:lines
+		let @z = l:r
+		execute 'normal! "zP'
 	endfor
+	let @z = l:z
 
 	call setpos('.', l:posit)
 endfunction " }}}
