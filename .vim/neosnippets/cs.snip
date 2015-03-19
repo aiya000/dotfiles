@@ -31,3 +31,59 @@ alias   internals asmInternalsVisibleTo
 snippet pragma_warning
 alias   pragma
     #pragma warning ${2:disable} ${3:#:errno}
+
+
+# Fix
+snippet try_catch
+alias   try_c
+    try {
+        ${0:TARGET}
+    } catch (${1:Exception} ${2:e}) {
+        ${3:Console.WriteLine(e.Message);}
+    }
+
+snippet try_catch_n
+alias   try_cn
+    try {
+        ${0:TARGET}
+    } catch {
+        ${1}
+    }
+
+snippet try_catch_finally
+alias   try_cf
+    try {
+        ${0:TARGET}
+    } catch (${1:Exception} ${2:e}) {
+        ${3:Console.WriteLine(e.Message);}
+    } finally {
+        ${4}
+    }
+
+snippet try_finally
+alias   try_f
+    try {
+        ${0:TARGET}
+    } finally {
+        ${1}
+    }
+
+snippet try_catch_n_finally
+alias   try_cnf
+    try {
+        ${0:TARGET}
+    } catch {
+        ${1}
+    } finally {
+        ${2}
+    }
+
+snippet catch
+    catch (${1:Exception} ${2:e}) {
+        ${0:Console.WriteLine(e.Message);}
+    }
+
+snippet catch_n
+    catch {
+        ${0}
+    }
