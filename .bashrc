@@ -1,4 +1,3 @@
-
 ###########################
 #  Shell support aliases  #
 ###########################
@@ -28,14 +27,11 @@ alias cp='cp -i'
 alias vi='vim -u NONE --noplugin'
 alias gvi='gvim -u NONE -U NONE --noplugin'
 alias vimshell='vim -c VimShell'
-alias vimdebug='vim -c VimConsoleOpen'
-alias vim-js="vim -c 'VimShellInteractive js'"
 alias vim-record-startup="f=`mktemp` ; vim --startuptime vim_startup_time -- $f && rm $f"
 alias vimclearview='rm ~/.backup/vim_backup/view/*'
 alias vimclearswp='rm ~/.backup/vim_backup/swp/*'
 alias vimclearundo='rm ~/.backup/vim_backup/undo/*'
 alias vimclearcache='vimclearview ; vimclearundo ; vimclearswp'
-alias vim-memo='vim ~/.tmp/memo.txt'
 alias twitter='vim -c TweetVimHomeTimeline'
 alias tweet='vim -c TweetVimSay'
 alias twitter-public='vim -c TwitterPublic'
@@ -44,7 +40,6 @@ alias adrone='vim -c AdroneOpen'
 
 alias vimconfig='vim ~/.vimrc'
 alias gvimconfig='vim ~/.gvimrc'
-alias gvim-vimconfig='gvim ~/.gvimrc'
 alias vimshconfig='vim ~/.vimshrc'
 alias vim-bashrc='vim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
 alias vim-bashpr='vim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
@@ -62,12 +57,14 @@ fi
 # Shell Utils {{{
 
 # Upload the pictures to gyazo
-alias gyazo='ruby ~/.vim/bundle/vim-gyazo/gyazo/gyazo.rb'
+if [ -f ~/.vim/bundle/vim-gyazo/gyazo/gyazo.rb ] ; then
+	alias gyazo='ruby ~/.vim/bundle/vim-gyazo/gyazo/gyazo.rb'
+fi
 
 # Console output pipe to clipboard
-if [ $isUbuntu -eq 1 ] ; then
+if [ $is_ubuntu -eq 1 ] ; then
 	alias pbcopy='xsel --clipboard --input'
-elif [ $isCygwin -eq 1 ] ; then
+elif [ $is_cygwin -eq 1 ] ; then
 	alias pbcopy='tee /dev/clipboard'
 fi
 
@@ -75,8 +72,6 @@ fi
 # Others {{{
 
 alias mysql="mysql -E --pager='less -r -S -n -i -F -X'"
-alias git-merge-m-f-d='git checkout master && git merge devel && git checkout devel'
-
 
 if [ -n "`which tmux 2> /dev/null`" ] ; then
 	alias tmux-myhelp='
@@ -93,11 +88,9 @@ fi
 # }}}
 # Environment Conditions {{{
 
-if [ $isUbuntu -eq 1 ] ; then
-	alias alternatives='update-alternatives'
+if [ $is_ubuntu -eq 1 ] ; then
 	alias ssleep='dbus-send --print-reply --system --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend'
-	alias pic_view='eog'
-elif [ $isCygwin -eq 1 ] ; then
+elif [ $is_cygwin -eq 1 ] ; then
 	alias cygrunsrv='cocot cygrunsrv'
 	alias csc='cocot csc'
 	alias ifconfig='cocot ipconfig'
@@ -146,9 +139,9 @@ alias edit-places='vim ~/.bashrc_places && reload-places'
 # Register it
 function hereis () {
 	place_name=$1
-	alias_detail="${place_name}='cd `pwd`'"
+	alias_body="${place_name}='cd \"`pwd`\"'"
 
-	echo "alias ${alias_detail}" >> ~/.bashrc_places
+	echo "alias ${alias_body}" >> ~/.bashrc_places
 	echo "here is '${1}'"
 
 	reload-places
@@ -162,4 +155,3 @@ function hereis () {
 
 # Export Loaded Archive
 alias rc_loaded='echo "rc_loaded"'
-

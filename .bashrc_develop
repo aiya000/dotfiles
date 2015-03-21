@@ -13,11 +13,11 @@ fi
 
 # Setting With OS {{{
 
-if [ $isUbuntu -eq 1 ] ; then
+if [ $is_ubuntu -eq 1 ] ; then
 	alias gobjc='gcc $1 -lobjc'
 	alias gfobjc='gcc $1 -lobjc -lgnustep-base -I/usr/include/GNUstep -fconstant-string-class=NSConstantString'
 	#alias g++='g++ -I/usr/include/c++/4.9 -I/usr/include/c++/4.9/x86_64-linux-gnu -std=c++11'
-elif [ $isCygwin -eq 1 ] ; then
+elif [ $is_cygwin -eq 1 ] ; then
 	alias javadoc='cocot javadoc -encoding UTF-8'
 	alias javap='cocot javap'
 	alias javac='cocot javac -encoding UTF-8'
@@ -56,7 +56,7 @@ function testc() {
 
 # Easy Test of Java {{{
 
-if [ $isCygwin -eq 1 ] ; then
+if [ $is_cygwin -eq 1 ] ; then
 	alias java_compile_test="cocot javac Test.java"
 else
 	alias java_compile_test="javac Test.java"
@@ -83,7 +83,7 @@ function testj() {
 	cd ~/.tmp/
 
 	# Counter of cp932
-	if [ $isCygwin -eq 1 ] ; then
+	if [ $is_cygwin -eq 1 ] ; then
 		if [ -n "`which nkf`" ] ; then
 			cp Test.java Test.java.bak
 			nkf --overwrite -s Test.java
@@ -111,7 +111,7 @@ function testj() {
 	fi
 
 	# Restore cp932
-	if [ $isCygwin -eq 1 ] ; then
+	if [ $is_cygwin -eq 1 ] ; then
 		rm Test.java
 		mv Test.java.bak Test.java
 	fi

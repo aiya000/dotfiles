@@ -1,5 +1,3 @@
-
-
 #############################################
 #                                           #
 #############################################
@@ -24,17 +22,18 @@ fi
 #{{{
 backIFS=$IFS ; IFS='EOF'
 
-function isArgOS() { #{{{
+function find_name_by_uname() { #{{{
 	uname=`uname -a`
+
 	if [ -n "`echo $uname | grep ${1}`" ] ; then
 		echo 1
 	else
 		echo 0
 	fi
 } #}}}
-export isLinux=`isArgOS Linux`
-export isUbuntu=`isArgOS Ubuntu`
-export isCygwin=`isArgOS Cygwin`
+export is_linux=`find_name_by_uname Linux`
+export is_ubuntu=`find_name_by_uname Ubuntu`
+export is_cygwin=`find_name_by_uname Cygwin`
 
 IFS=$backIFS ; unset backIFS
 #}}}
@@ -43,16 +42,19 @@ IFS=$backIFS ; unset backIFS
 # Environment Variables
 #--- PS1 ---# {{{
 
-function fakeUser() { #{{{
+function fake_user() { #{{{
 	username="$1"
 	hostname="$2"
+
 	[ -n "$hostname" ] \
 		&& PS1="\[\e]0;\w\a\]\n\[\e[32m\](*^-^)</\[\e[33m\]${username}\[\e[32m\]@\[\e[33m\]${hostname}\[\e[32m\]/ \[\e[33m\]\w\[\e[0m\]$ " \
 		|| PS1="\[\e]0;\w\a\]\n\[\e[32m\](*^-^)</\[\e[33m\]${username}\[\e[32m\]/ \[\e[33m\]\w\[\e[0m\]$ "
+
 	unset username hostname
 } #}}}
 
 PS1='\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]$ '
+
 if [ $shell_kawaii -eq 1 ] ; then
 	[ -n "$view_fake" ] && if [ $view_fake -eq 1 ] ; then
 		[ -n "$view_host" ] && [ $view_host -eq 1 ] \
@@ -102,29 +104,24 @@ new_path=$new_path:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 new_path=$new_path:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
 
 # With OS
-if [ $isUbuntu -eq 1 ] ; then
-	#@Unchecked
-	# Fix Recently Build GCC
-	[ -n "`which g++4.9`"] \
-		&& export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/usr/include/c++/4.9:/usr/include/c++/4.9/x86_64-linux-gnu \
-		&& export CPLUS_LIBRARY_PATH=$CPLUS_LIBRARY_PATH:/usr/lib/lib64
-elif [ $isCygwin -eq 1 ] ; then
+if [ $is_cygwin -eq 1 ] ; then
 	export HOME=/home/$USER
+
 	new_path=$new_path:/opt/local/bin/exec
 	new_path=$new_path:/opt/local/ghc/bin
 	new_path=$new_path:/opt/local/bin/java_wrapper
 
 	# Auto detect JDK PATH
 	if [ -d /cygdrive/c/Program\ Files\ \(x86\)/ ] ; then
-		jPath=/cygdrive/c/Program\ Files\ \(x86\)/Java/
-		jdkPath=`ls "$jPath" | grep 'jdk' | sort -r | head -1`
-		new_path=$new_path:$jPath/$jdkPath/bin
+		java_path=/cygdrive/c/Program\ Files\ \(x86\)/Java/
+		jdk_path=`ls "$java_path" | grep 'jdk' | sort -r | head -1`
+		new_path=$new_path:$java_path/$jdk_path/bin
 
 		new_path=$new_path:/cygdrive/c/Program\ Files/pleiades/java/6/bin/
 	else
-		jPath=/cygdrive/c/Program\ Files/Java/
-		jdkPath=`ls "$jPath" | grep 'jdk' | sort -r | head -1`
-		new_path=$new_path:$jPath/$jdkPath/bin
+		java_path=/cygdrive/c/Program\ Files/Java/
+		jdk_path=`ls "$java_path" | grep 'jdk' | sort -r | head -1`
+		new_path=$new_path:$java_path/$jdk_path/bin
 
 		new_path=$new_path:/cygdrive/c/Program\ Files\ \(x86\)/pleiades/java/6/bin/
 	fi
@@ -155,4 +152,3 @@ if [ -z "`alias | grep rc_loaded`" ] ; then
 	source ~/.bashrc
 	export HISTIGNORE="${HISTIGNORE}:twitter*:tweet*:lingr*:"
 fi
-
