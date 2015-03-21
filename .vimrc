@@ -1,5 +1,3 @@
-scriptencoding utf8
-
 "-------------------
 "--  Recipe Menu  --
 "-------------------
@@ -71,6 +69,8 @@ scriptencoding utf8
 
 "-- read help 'cino'
 
+"-- implement add backup directory info to bakaup.vim
+
 " }}}
 
 
@@ -78,10 +78,10 @@ scriptencoding utf8
 "----------------------------------------
 " {- Hints -} "
 " @Bugs         => This hoge has the bugs.
-" @Incompleted  => This is not completed making.
+" @Incomplete   => This is not completed making.
 " @Unchecked    => This was not unchecked that is operate right
 " @Unsupported  => Do not supported functions when now.
-" @Unknowned    => I don't know why this functioned.
+" @Unknown      => I don't know why this functioned.
 "     ／人◕ ‿‿ ◕人＼ <  Wakega wakaranaiyo!
 " @Unused       => Not used this yet now, needs inquires deleting this.
 " @Deprecated   => Deprecated This vimrc Version.
@@ -137,11 +137,11 @@ let s:groupname = $GROUP !=# '' ? $GROUP : $USER
 "---------------------"
 "{{{
 
-function! s:system(cmd)
+function! s:system(...)
 	if exists('*vimproc#system')
-		return vimproc#system(a:cmd)
+		return vimproc#system(a:000)
 	else
-		return system(a:cmd)
+		return system(a:000)
 	endif
 endfunction
 
@@ -157,6 +157,15 @@ endfunction
 "-------------------------"
 "       Initialize        "
 "-------------------------"
+" set file encoding {{{
+
+" Default file encoding
+set fileencoding=utf-8 encoding=utf-8
+
+" Encoding for this script
+scriptencoding utf8
+
+" }}}
 " autocmd Groups {{{
 
 augroup PluginPrefs
@@ -661,7 +670,7 @@ endif
 "--- vimproc.vim ---"{{{
 
 if s:is_windows && !s:has_mingw
-	"@Incompleted('I couldn't use a NeoBundleDisable on this situation')
+	"@Incomplete('I couldn't use a NeoBundleDisable on this situation')
 	"NeoBundleDisable 'vimproc.vim'
 	set runtimepath-=~/.vim/bundle/vimproc.vim/
 endif
@@ -818,7 +827,7 @@ let g:ref_source_webdict_sites['default'] = 'weblio'
 
 function! s:weblio_filter(output) "{{{
 	let l:lines  = split(a:output, "\n")
-	"@Incompleted('do not filtered')
+	"@Incomplete('do not filtered')
 	let l:lines1 = map(l:lines, 'substitute(v:val, "\v(発音記号|音声を聞く|ダウンロード再生)\n", "", "g")')
 	return join(l:lines1[60 : ], "\n")
 endfunction "}}}
@@ -1093,13 +1102,13 @@ augroup KeyEvent
 		if mode() =~# "^[vV\<C-v>]"
 			if !s:visual_fold_toggle && &foldenable
 				set nofoldenable
-				execute 'normal! zz'
+				normal! zz
 				let s:visual_fold_toggle = 1
 			endif
 		else
 			if s:visual_fold_toggle
 				set foldenable
-				execute 'normal! zz'
+				normal! zz
 				let s:visual_fold_toggle = 0
 			endif
 		endif
@@ -1117,12 +1126,8 @@ augroup END
 "-------------------------"
 "{{{
 
-
-" Default File Encoding
-set fileencoding=utf-8 encoding=utf-8
-
 " Auto Judge file encode
-set fileencodings=utf-8,sjis,euc-jp,cp932,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
+set fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
 
 " Leaving a history and it limit is a 500 pieces
 set history=500
@@ -1177,7 +1182,7 @@ augroup FileEvent
 			execute 'normal! g`"'
 		endif
 	endfunction "}}}
-	autocmd BufReadPost * call <SID>visit_past_position()
+	autocmd BufReadPost * call s:visit_past_position()
 augroup END
 
 
@@ -1317,7 +1322,8 @@ command! TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
 
 " Rename current buffer file
 function! s:rename_to(to_file) "{{{
-	let l:this_file    = expand('%:t')
+	let l:this_file    = fnameescape(expand('%:t'))
+	let l:to_file      = fnameescape(a:to_file)
 	let l:editing_file = &modified
 
 	if l:editing_file
@@ -1325,17 +1331,17 @@ function! s:rename_to(to_file) "{{{
 		return
 	endif
 
-	let l:failed = rename(l:this_file, a:to_file)
+	let l:failed = rename(l:this_file, l:to_file)
 	if l:failed
 		echoerr printf('Rename %s to %s is failed', l:this_file, a:to_file)
 		return
 	endif
 
 	let l:bufnr = bufnr('%')
-	execute ':edit' a:to_file
+	execute ':edit' l:to_file
 	execute ':' . l:bufnr . 'bdelete'
 
-	echo printf('Renamed %s to %s', l:this_file, a:to_file)
+	echo printf('Renamed %s to %s', l:this_file, l:to_file)
 endfunction "}}}
 command! -nargs=1 Rename call <SID>rename_to(<q-args>)
 
@@ -1396,7 +1402,7 @@ function! TweetPrivateFunc() "{{{
 	execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['priv_ac']
 	execute ':TweetVimSay'
 
-	"@Incompleted('wait sync here')
+	"@Incomplete('wait sync here')
 	"execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
 command! TweetPrivate       call TweetPrivateFunc()
@@ -1425,7 +1431,7 @@ function! TweetPublicFunc() "{{{
 	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['publ_ac']
 	execute ':TweetVimSay'
 
-	"@Incompleted('wait here')
+	"@Incomplete('wait here')
 	"execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
 command! TweetPublic        call TweetPublicFunc()
@@ -1514,7 +1520,7 @@ command!  IrbTab   <NOP>
 " }}}
 " Run Program  {{{
 
-"@Incompleted('does not removed another temporary class')
+"@Incomplete('does not removed another temporary class')
 " If you cannot use QuickRun or want to use IO, you can use this.
 function! s:java_run_func() "{{{
 	let l:javaname = expand('%:t:r')
@@ -1608,8 +1614,8 @@ function! s:compress_spaces() "{{{
 	let l:recent_pattern = @/
 
 	try
-		execute ':substitute/\s\s\+/ /g'
-		execute 'normal! =='
+		substitute/\s\s\+/ /g
+		normal! ==
 	catch
 	finally
 		let @/ = l:recent_pattern
@@ -1625,13 +1631,13 @@ function! s:cursor_up_to_lid() "{{{
 
 	while 1
 		let l:p = getcurpos()[2]
-		execute 'normal! k'
+		normal! k
 
 		let l:indent_changed = l:p isnot getcurpos()[2]
 
 		if l:indent_changed || line('.') is l:first_line
 			if l:indent_changed
-				execute 'normal! j'
+				normal! j
 			endif
 
 			break
@@ -1944,14 +1950,15 @@ augroup KeyMapping
 	autocmd FileType * nmap <silent>    <leader>?         ?\m\C
 	autocmd FileType * nmap <silent>    <leader><leader>? ?\m\C\<\>[Left][Left]
 	autocmd FileType * nmap             g?                ?\<<C-r>"\><CR>
-	autocmd FileType * IncSearchNoreMap <C-j> <CR>
-	autocmd FileType * IncSearchNoreMap <C-b> <Left>
-	autocmd FileType * IncSearchNoreMap <C-f> <Right>
-	autocmd FileType * IncSearchNoreMap <C-a> <Home>
-	autocmd FileType * IncSearchNoreMap <C-h> <BS>
-	autocmd FileType * IncSearchNoreMap <C-d> <Del>
-	autocmd FileType * IncSearchNoreMap <C-e> <End>
-	autocmd FileType * IncSearchNoreMap <C-l> <Esc>
+	"@Marked('incsearch.vim look up default cmap cnoremap, We does not needs these')
+	"autocmd FileType * IncSearchNoreMap <C-j> <CR>
+	"autocmd FileType * IncSearchNoreMap <C-b> <Left>
+	"autocmd FileType * IncSearchNoreMap <C-f> <Right>
+	"autocmd FileType * IncSearchNoreMap <C-a> <Home>
+	"autocmd FileType * IncSearchNoreMap <C-h> <BS>
+	"autocmd FileType * IncSearchNoreMap <C-d> <Del>
+	"autocmd FileType * IncSearchNoreMap <C-e> <End>
+	"autocmd FileType * IncSearchNoreMap <C-l> <Esc>
 
 
 	" TaskList.vim
