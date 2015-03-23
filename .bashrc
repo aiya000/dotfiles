@@ -72,6 +72,7 @@ fi
 # Others {{{
 
 alias mysql="mysql -E --pager='less -r -S -n -i -F -X'"
+alias git-sync-push-m-d='git push origin devel && git checkout master && git merge devel && git push origin master && git checkout devel'
 
 if [ -n "`which tmux 2> /dev/null`" ] ; then
 	alias tmux-myhelp='
