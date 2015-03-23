@@ -38,7 +38,7 @@
 "-- C-o hard use on vimshell
 
 "-- automatic mkdir './C:' when execute NeoBundleInstall in windows kaoriya
-"  -- does neobundle thinks that is repository...?
+"  -- does neobundle think that is repository...?
 
 "-- doesn't conceal-javadoc functioned ?
 
@@ -137,11 +137,11 @@ let s:groupname = $GROUP !=# '' ? $GROUP : $USER
 "---------------------"
 "{{{
 
-function! s:system(...)
+function! s:system(cmd)
 	if exists('*vimproc#system')
-		return vimproc#system(a:000)
+		return vimproc#system(a:cmd)
 	else
-		return system(a:000)
+		return system(a:cmd)
 	endif
 endfunction
 
@@ -281,7 +281,7 @@ if has('vim_starting')
 		" Throws Error when nothing neobundle in runtime path
 		call neobundle#begin()
 	catch
-		if isdirectory(s:neobundledir) && !exists(':NeoBundle')
+		if isdirectory(s:neobundledir) && exists(':NeoBundle') isnot 2
 			" Plugin Directories may be empty when git cloned new.
 			call s:remove_empty_bundledir()
 			echo 'bundle directories initialized.'
@@ -1154,7 +1154,7 @@ set tags=./tags,~/tags
 set browsedir=buffer
 
 " Set spell lang
-set spelllang=en_US
+set spelllang=en_US,cjk
 
 " Set reference path, using by :find, gf and more
 set path=.,,./**
@@ -1518,46 +1518,6 @@ command!  Virb     <NOP>
 command!  IrbTab   <NOP>
 
 " }}}
-" Run Program  {{{
-
-"@Incomplete('does not removed another temporary class')
-" If you cannot use QuickRun or want to use IO, you can use this.
-function! s:java_run_func() "{{{
-	let l:javaname = expand('%:t:r')
-	let l:javav = s:system('java -version')
-
-	if l:javav =~# '1.8'
-		let l:command = ['javac -source 1.8 -encoding utf8', 'java']
-	elseif l:javav =~# '1.7'
-		let l:command = ['javac -source 1.7 -encoding utf8', 'java']
-	else
-		let l:command = ['javac -encoding utf8', 'java']
-	endif
-
-	if s:is_cygwin
-		if executable('cocot')
-			let l:command[0] = 'cocot ' . l:command[0]
-			let l:command[1] = 'cocot ' . l:command[1]
-		else
-			call s:echo_error('You must be get [cocot] command.')
-			return
-		endif
-	endif
-
-	execute ':!' .
-	\	printf('%s %s.java',   l:command[0], l:javaname) . ';' .
-	\	printf('%s %s',        l:command[1], l:javaname) . ';'
-
-	call delete(l:javaname . '.class')
-endfunction "}}}
-command! RunJava call s:java_run_func()
-
-
-" Same as RunJava for Ruby
-cnoreabbr RunRuby !ruby %
-command!  RunRuby <NOP>
-
-"  }}}
 
 " }}}
 
@@ -1646,6 +1606,27 @@ function! s:cursor_up_to_lid() "{{{
 endfunction "}}}
 
 
+" Move cursor to bottommost of this indent
+function! s:cursor_down_to_ground() "{{{
+	let l:last_line = line('$')
+
+	while 1
+		let l:p = getcurpos()[2]
+		execute 'normal! j'
+
+		let l:indent_changed = l:p isnot getcurpos()[2]
+
+		if l:indent_changed || line('.') is l:last_line
+			if l:indent_changed
+				execute 'normal! k'
+			endif
+
+			break
+		endif
+	endwhile
+endfunction "}}}
+
+
 " Easily putting short separator for many filetypes
 " function! s:put_short_separator(put_upper) {{{
 
@@ -1698,27 +1679,6 @@ function! s:put_short_separator(put_upper)
 endfunction
 
 " }}}
-
-
-" Move cursor to bottommost of this indent
-function! s:cursor_down_to_ground() "{{{
-	let l:last_line = line('$')
-
-	while 1
-		let l:p = getcurpos()[2]
-		execute 'normal! j'
-
-		let l:indent_changed = l:p isnot getcurpos()[2]
-
-		if l:indent_changed || line('.') is l:last_line
-			if l:indent_changed
-				execute 'normal! k'
-			endif
-
-			break
-		endif
-	endwhile
-endfunction "}}}
 
 
 " Optimize key operation to one hand
@@ -1903,6 +1863,7 @@ augroup KeyMapping
 
 
 	" vim-quickrun
+	autocmd FileType * nnoremap <silent> <leader>R         :<C-u>QuickRun -runner shell<CR>
 	autocmd FileType * nnoremap <silent> <leader><leader>r :<C-u>call <SID>bufclose_filetype('quickrun')<CR>
 
 
@@ -1950,15 +1911,10 @@ augroup KeyMapping
 	autocmd FileType * nmap <silent>    <leader>?         ?\m\C
 	autocmd FileType * nmap <silent>    <leader><leader>? ?\m\C\<\>[Left][Left]
 	autocmd FileType * nmap             g?                ?\<<C-r>"\><CR>
-	"@Marked('incsearch.vim look up default cmap cnoremap, We does not needs these')
-	"autocmd FileType * IncSearchNoreMap <C-j> <CR>
-	"autocmd FileType * IncSearchNoreMap <C-b> <Left>
-	"autocmd FileType * IncSearchNoreMap <C-f> <Right>
-	"autocmd FileType * IncSearchNoreMap <C-a> <Home>
-	"autocmd FileType * IncSearchNoreMap <C-h> <BS>
-	"autocmd FileType * IncSearchNoreMap <C-d> <Del>
-	"autocmd FileType * IncSearchNoreMap <C-e> <End>
-	"autocmd FileType * IncSearchNoreMap <C-l> <Esc>
+	autocmd FileType * vmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
+	autocmd FileType * vmap <expr>      ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
+	autocmd FileType * IncSearchNoreMap <C-j> <CR>
+	autocmd FileType * IncSearchNoreMap <C-l> <Esc>
 
 
 	" TaskList.vim
@@ -2052,9 +2008,9 @@ augroup FileEvent
 	autocmd VimEnter,ColorScheme * highlight rcHeadSpace cterm=underline ctermfg=DarkGray
 	autocmd BufWinEnter          * let s:rcHeadSpace = s:matchadd_with_filetype('haskell', 'rcHeadSpace', '^\s\+', 10, get(s:, 'rcHeadSpace', 10002))
 
-	" C-Sharp
-	autocmd VimEnter,ColorScheme * highlight default link RcTypeInference Identifier
-	autocmd VimEnter,WinEnter    *.cs syntax keyword RcTypeInference var dynamic
+	" Set for C-Sharp
+	autocmd VimEnter,ColorScheme * highlight default link GrcTypeInference Identifier
+	autocmd VimEnter,WinEnter,BufRead    *.cs syntax keyword GrcTypeInference var
 augroup END
 
 
