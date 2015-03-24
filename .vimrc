@@ -28,8 +28,6 @@
 "----------------------------"
 " Ideas {{{
 
-"-- View prev and next fold head text ...on echo or other buffer ? on submode-foldings
-
 "-- Unite outline -> view C-Sharp <summary>~</summary>
 
 " }}}
@@ -68,8 +66,6 @@
 "-- read help windows.txt
 
 "-- read help 'cino'
-
-"-- implement add backup directory info to bakaup.vim
 
 " }}}
 
@@ -157,13 +153,13 @@ endfunction
 "-------------------------"
 "       Initialize        "
 "-------------------------"
-" set file encoding {{{
+" file encoding {{{
 
 " Default file encoding
 set fileencoding=utf-8 encoding=utf-8
 
 " Encoding for this script
-scriptencoding utf8
+scriptencoding utf-8
 
 " }}}
 " autocmd Groups {{{
@@ -195,10 +191,10 @@ augroup END
 "}}}
 " For Support Kaoriya Vim {{{
 
-if s:is_kaoriya
+if s:is_kaoriya && s:is_windows
 	" Set Environment
 	let $HOME        = $VIM
-	let s:vim_home   = expand('~/.vim')  " Reset with $HOME
+	let s:vim_home   = $VIM . '/vimfiles'  " Reset with $HOME
 	let &runtimepath = &runtimepath . ',' . s:vim_home
 	if s:has_cygwin
 		let $PATH = '/cygwin/bin;/cygwin/usr/bin;/cygwin/usr/sbin;' . $PATH
@@ -213,21 +209,27 @@ if s:is_kaoriya
 
 
 	" For Using No Default vimproc
-	let s:switch_dir = $VIM . '/switches/enabled'
-	let s:suppress   = s:switch_dir . '/disable-vimproc.vim'
+	let s:switch_dir       = $VIM . '/switches/enabled'
+	let s:suppress_vimproc = s:switch_dir . '/disable-vimproc.vim'
 
-	if s:is_windows && !s:has_mingw && filereadable(s:suppress)
-		call delete(s:suppress)
-	elseif s:is_windows && s:has_mingw && !filereadable(s:suppress)
-		call writefile([], s:suppress)
+	" If you has mingw, your vim built bundled vimproc.vim...maybe
+	if !s:has_mingw && filereadable(s:suppress_vimproc)
+		call delete(s:suppress_vimproc)
+	elseif s:has_mingw && !filereadable(s:suppress_vimproc)
+		call writefile([], s:suppress_vimproc)
 	endif
 
+	unlet s:suppress_vimproc
+
+
+	" Enable kaoriya plugins
 	for s:disf in map(['/utf-8.vim', '/vimdoc-ja.vim'], 's:switch_dir . v:val')
 		if !filereadable(s:disf)
 			call writefile([], s:disf)
 		endif
 	endfor
-	unlet s:switch_dir s:suppress s:disf
+
+	unlet s:switch_dir s:disf
 
 
 	" Unset Kaoriya Preference
@@ -248,7 +250,8 @@ if !isdirectory(s:bundledir)
 endif
 
 function! s:remove_empty_bundledir()  "{{{
-	let l:dirs = split(s:system('ls ' . s:bundledir), '\n')
+	" get bundled plugin directory names
+	let l:dirs = map(split(glob('~/vimfiles/bundle/*'), '\n'), 'fnamemodify(v:val, ":t")')
 
 	for l:dir in l:dirs
 		let l:plugin_dir = s:bundledir . '/' . l:dir
@@ -264,8 +267,7 @@ function! s:fetch_neobundle() " {{{
 		echo 'NeoBundle was not installed...'
 		echo 'Installing NeoBundle.'
 
-		execute '!git clone http://github.com/Shougo/neobundle.vim ' s:neobundledir
-		return
+		execute '!git clone http://github.com/Shougo/neobundle.vim' s:neobundledir
 	else
 		call s:echo_error('Sorry, You do not have git command.')
 		call s:echo_error('Cannot introduce NeoBundle.')
@@ -330,14 +332,13 @@ if !exists('loaded_matchit')
 
 	" If I don't have matchit document, I get it
 	let s:matchit_doc_from = expand('$VIMRUNTIME/macros/matchit.txt')
-	let s:matchit_doc_to   = expand('~/.vim/doc/matchit.txt')
+	let s:matchit_doc_to   = s:vim_home . '/doc/matchit.txt'
 
 	if !filereadable(s:matchit_doc_to)
 		call writefile(readfile(s:matchit_doc_from), s:matchit_doc_to)
 	endif
 
-	unlet s:matchit_doc_to
-	unlet s:matchit_doc_from
+	unlet s:matchit_doc_to s:matchit_doc_from
 endif
 
 "}}}
@@ -669,10 +670,10 @@ endif
 " }}}
 "--- vimproc.vim ---"{{{
 
-if s:is_windows && !s:has_mingw
-	"@Incomplete('I couldn't use a NeoBundleDisable on this situation')
-	"NeoBundleDisable 'vimproc.vim'
-	set runtimepath-=~/.vim/bundle/vimproc.vim/
+" If you use windows kaoriya vim and does not have mingw
+" you use kaoriya vimproc ...maybe
+if s:is_kaoriya && s:is_windows && !s:has_mingw
+	set runtimepath-=~/vimfiles/bundle/vimproc.vim/
 endif
 
 " }}}
@@ -1348,7 +1349,6 @@ command! -nargs=1 Rename call <SID>rename_to(<q-args>)
 "}}}
 " Life Helper {{{
 
-
 " Vim Utils {{{
 
 command! VimConfig e $MYVIMRC
@@ -1445,14 +1445,14 @@ cnoreabbr tvs   TweetVimSwitchAccount
 
 " To Service Name
 cnoreabbr Lingr J6uil
-command!  Lingr <NOP>
+command!  Lingr NOP
 
 
 " Beautifull Life
 command!  JazzUpdate JazzradioUpdateChannels
 command!  JazzList   Unite jazzradio
 cnoreabbr JazzPlay   JazzradioPlay
-command!  JazzPlay   <NOP>
+command!  JazzPlay   NOP
 command!  JazzStop   JazzradioStop
 
 
@@ -1460,8 +1460,12 @@ command!  JazzStop   JazzradioStop
 cnoreabbr Translate ExciteTranslate
 cnoreabbr Weblio    Ref webdict weblio
 
-command!  Translate <NOP>
-command!  Weblio    <NOP>
+command!  Translate NOP
+command!  Weblio    NOP
+
+
+" Markdown help on online
+command! MarkdownHelpOnline W3mTab http://qiita.com/Qiita/items/c686397e4a0f4f11683d#3-4
 
 " }}}
 " Development {{{
@@ -1473,9 +1477,9 @@ cnoreabbr Log      VimConsoleLog
 cnoreabbr LogClear VimConsoleClear
 cnoreabbr LogOpen  VimConsoleOpen
 
-command!  Log      <NOP>
-command!  LogClear <NOP>
-command!  LogOpen  <NOP>
+command!  Log      NOP
+command!  LogClear NOP
+command!  LogOpen  NOP
 
 
 " GHCi
@@ -1486,12 +1490,12 @@ cnoreabbr Vghci    VimShellInteractive --split='vsp' ghci
 cnoreabbr GhciTab  VimShellInteractive --split='tabnew' ghci
 cnoreabbr Hoogle   Ref hoogle
 
-command!  RunGhc   <NOP>
-command!  Ghci     <NOP>
-command!  Sghci    <NOP>
-command!  Vghci    <NOP>
-command!  GhciTab  <NOP>
-command!  Hoogle   <NOP>
+command!  RunGhc   NOP
+command!  Ghci     NOP
+command!  Sghci    NOP
+command!  Vghci    NOP
+command!  GhciTab  NOP
+command!  Hoogle   NOP
 
 
 " js
@@ -1500,10 +1504,10 @@ cnoreabbr Sjs      VimShellInteractive --split='sp' js
 cnoreabbr Vjs      VimShellInteractive --split='vsp' js
 cnoreabbr JsTab    VimShellInteractive --split='tabnew' js
 
-command!  Js       <NOP>
-command!  Sjs      <NOP>
-command!  Vjs      <NOP>
-command!  JsTab    <NOP>
+command!  Js       NOP
+command!  Sjs      NOP
+command!  Vjs      NOP
+command!  JsTab    NOP
 
 
 " irb
@@ -1512,10 +1516,10 @@ cnoreabbr Sirb     VimShellInteractive --split='sp' irb
 cnoreabbr Virb     VimShellInteractive --split='vsp' irb
 cnoreabbr IrbTab   VimShellInteractive --split='tabnew' irb
 
-command!  Irb      <NOP>
-command!  Sirb     <NOP>
-command!  Virb     <NOP>
-command!  IrbTab   <NOP>
+command!  Irb      NOP
+command!  Sirb     NOP
+command!  Virb     NOP
+command!  IrbTab   NOP
 
 " }}}
 
