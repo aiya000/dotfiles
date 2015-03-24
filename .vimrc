@@ -1291,36 +1291,6 @@ endfunction " }}}
 command! -range=% ReverseLine :<line1>, <line2> call s:reverse_line()
 
 
-" Catenate and echo files
-function! s:cat_file(...) "{{{
-	let l:catenate = ''
-
-	for l:filePath in a:000
-		let l:catenate .= join(readfile(l:filePath), "\n")
-	endfor
-
-	echo l:catenate
-endfunction "}}}
-command! -nargs=* -complete=file Cat call s:cat_file(<f-args>)
-
-
-" Low accuracy randome integer
-function! s:random_int(max) "{{{
-	let l:max = a:max isnot# '' ? a:max : 65535
-
-	let l:matchEnd = matchend(reltimestr(reltime()), '\d\+\.') + 1
-	return reltimestr(reltime())[l:matchEnd :] % (l:max + 1)
-endfunction "}}}
-command! -nargs=? PutRandom execute 'normal! a' . s:random_int(<q-args>)
-
-
-"@See('http://leafcage.hateblo.jp/entry/2013/08/02/001600')
-" Time Watcher
-command! TimerStart let  s:startTime = reltime()
-command! TimerEcho  echo reltimestr( reltime(s:startTime) )
-command! TimerPut   execute 'normal! o' . reltimestr(reltime(s:startTime))
-
-
 " Rename current buffer file
 function! s:rename_to(to_file) "{{{
 	let l:this_file    = fnameescape(expand('%:t'))
