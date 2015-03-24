@@ -1973,43 +1973,9 @@ augroup END
 "-------------------------"
 "{{{
 
-" Call matchadd when that file is target filetype
-function! s:matchadd_with_filetype(ft, tag, regex, priority, id) "{{{
-	if &filetype == a:ft
-		try
-			let l:id = matchadd(a:tag, a:regex, a:priority, a:id)
-		catch /\vE(799|801)/
-			" Suppress repeate add
-			let l:id = a:id
-		endtry
-	else
-		try
-			call matchdelete(a:id)
-		catch /\vE(802|803)/
-			" Suppress repeate delete
-		endtry
-
-		let l:id = a:id
-	endif
-
-	return l:id
-endfunction "}}}
-
-
 " If buffer does not has filetype, set filetype 'none'
 augroup ExtensionType
 	autocmd VimEnter,BufNew * if &ft ==# '' | setf none | endif
-augroup END
-
-
-augroup FileEvent
-	" -- Vi Improved --
-	autocmd VimEnter,ColorScheme * highlight rcMyHint cterm=standout ctermfg=DarkYellow
-	autocmd BufWinEnter          * let s:rcMyHint = s:matchadd_with_filetype('vim', 'rcMyHint', '\s*"\zs@\w\+(.*)\ze', 10, get(s:, 'rcMyHint', 10001))
-
-	" Set for C-Sharp
-	autocmd VimEnter,ColorScheme * highlight default link GrcTypeInference Identifier
-	autocmd VimEnter,WinEnter,BufRead    *.cs syntax keyword GrcTypeInference var
 augroup END
 
 
