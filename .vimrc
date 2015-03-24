@@ -1492,6 +1492,35 @@ command!  Virb     NOP
 command!  IrbTab   NOP
 
 " }}}
+" Read something {{{
+
+" command! HighlightListTab {{{
+
+function! s:highlight_list_tab()
+	" open new tab that doesn't need :write
+	tabnew
+	setl buftype=nofile
+
+	" read highlight list to z register
+	let l:z = @z
+	redir @z
+		" execute no wait key
+		silent! highlight
+	redir END
+
+	" read detail apply to buffer
+	execute 'normal! "zp'
+	execute 'normal! "_dd'
+
+	" Restore past z register
+	let @z = l:z
+endfunction
+
+command! HighlightListTab call s:highlight_list_tab()
+
+" }}}
+
+" }}}
 
 " }}}
 
@@ -1977,10 +2006,6 @@ augroup FileEvent
 	" -- Vi Improved --
 	autocmd VimEnter,ColorScheme * highlight rcMyHint cterm=standout ctermfg=DarkYellow
 	autocmd BufWinEnter          * let s:rcMyHint = s:matchadd_with_filetype('vim', 'rcMyHint', '\s*"\zs@\w\+(.*)\ze', 10, get(s:, 'rcMyHint', 10001))
-
-	" Haskell
-	autocmd VimEnter,ColorScheme * highlight rcHeadSpace cterm=underline ctermfg=DarkGray
-	autocmd BufWinEnter          * let s:rcHeadSpace = s:matchadd_with_filetype('haskell', 'rcHeadSpace', '^\s\+', 10, get(s:, 'rcHeadSpace', 10002))
 
 	" Set for C-Sharp
 	autocmd VimEnter,ColorScheme * highlight default link GrcTypeInference Identifier
