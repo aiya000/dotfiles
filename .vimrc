@@ -38,18 +38,19 @@
 "-- automatic mkdir './C:' when execute NeoBundleInstall in windows kaoriya
 "  -- does neobundle think that is repository...?
 
-"-- doesn't conceal-javadoc functioned ?
+"-- conceal-javadoc don't functioned ?
 
-"-- shot-f not functioned in i_<C-o> temporary normal mode
+"-- shot-f don't functioned in i_<C-o> temporary normal mode
 
-"-- couldn't auto make vimproc at anywhere
+"-- I couldn't auto make vimproc at anywhere
 
 "-- conflicted? vim-ruby and rspec.vim when those was set NeoBundleLazy
 "  -- does not loaded syntax of rspec.vim
 
 "-- incsearch.vim(?) throw an exception E874 when searched '<leader>~'
+"  -- on windows only ?
 
-"-- Exeption happened when input '.*' to unite textarea
+"-- happened exception when input '.*' to unite textarea
 
 "}}}
 " Todo {{{
@@ -814,6 +815,7 @@ endif
 "}}}
 "--- vim-over ---"{{{
 
+"@Imcomplete('do not functioned')
 if neobundle#tap('vim-over')
 	function! neobundle#hooks.on_source(bundle)
 		autocmd KeyMapping User * OverCommandLineNoremap <C-l> <Esc>
@@ -931,6 +933,7 @@ set helplang=en,ja
 "}}}
 "--- incsearch.vim ---"{{{
 
+"@Imcomplete('do not functioned')
 if neobundle#tap('incsearch.vim')
 	function! neobundle#hooks.on_source(bundle)
 		augroup KeyMapping
