@@ -230,9 +230,8 @@ if s:is_kaoriya && s:is_windows
 	" Unset Kaoriya Preference
 	set noignorecase nosmartcase
 
-	augroup FileEvent
-		autocmd BufRead $MYVIMRC setl enc=utf8 fenc=utf8
-	augroup END
+	" I said 'you must be open vimrc with utf-8...'
+	autocmd FileEvent BufRead $MYVIMRC setl enc=utf8 fenc=utf8
 endif
 
 "}}}
@@ -672,11 +671,9 @@ let g:netrw_preview = 1
 " }}}
 "--- matchit.vim ---" {{{
 
-"augroup FileEvent
-"	" uooooooooooooo... oh, my triple operator !!!!!!!!!!!
-"	" Why if set you, happend an error when doing match it...
-"	autocmd User * let b:match_words = &matchpairs . ',?::'
-"augroup END
+"" uooooooooooooo... oh, my triple operator !!!!!!!!!!!
+"" Why if set you, happend an error when doing match it...
+"autocmd PluginPrefs User * let b:match_words = &matchpairs . ',?::'
 
 " }}}
 "--- unite.vim ---"{{{
@@ -762,10 +759,6 @@ let g:tweetvim_async_post = 1
 "}}}
 "--- vimshell.vim ---"{{{
 
-"@Experimental('test commented out, this without needs?')
-" Add to VimShell Commands Directory of My Home
-"execute ':set runtimepath+=' . s:vim_home . '/autoload/vimshell/commands'
-
 let g:vimshell_no_save_history_commands = {
 \	'history': 1,
 \	'ls'     : 1,
@@ -823,9 +816,7 @@ endif
 
 if neobundle#tap('vim-over')
 	function! neobundle#hooks.on_source(bundle)
-		augroup KeyMapping
-			autocmd User * OverCommandLineNoremap <C-l> <Esc>
-		augroup END
+		autocmd KeyMapping User * OverCommandLineNoremap <C-l> <Esc>
 	endfunction
 	call neobundle#untap()
 endif
@@ -835,69 +826,71 @@ endif
 
 let g:submode_timeout = 0
 
-augroup FileEvent
-	" Window Resizer
-	autocmd User * call submode#enter_with('window_resize', 'n', '', '<C-s>w')
-	autocmd User * call submode#map('window_resize', 'n', '', 'j', '<C-w>+')
-	autocmd User * call submode#map('window_resize', 'n', '', 'k', '<C-w>-')
-	autocmd User * call submode#map('window_resize', 'n', '', 'h', '<C-w><')
-	autocmd User * call submode#map('window_resize', 'n', '', 'l', '<C-w>>')
-	autocmd User * call submode#map('window_resize', 'n', '', '=', '<C-w>=')
-	autocmd User * call submode#map('window_resize', 'n', '', '_', '<C-w>_')
+if neobundle#tap('vim-submode')
+	augroup PluginPrefs
+		" Window Resizer
+		autocmd User * call submode#enter_with('window_resize', 'n', '', '<C-s>w')
+		autocmd User * call submode#map('window_resize', 'n', '', 'j', '<C-w>+')
+		autocmd User * call submode#map('window_resize', 'n', '', 'k', '<C-w>-')
+		autocmd User * call submode#map('window_resize', 'n', '', 'h', '<C-w><')
+		autocmd User * call submode#map('window_resize', 'n', '', 'l', '<C-w>>')
+		autocmd User * call submode#map('window_resize', 'n', '', '=', '<C-w>=')
+		autocmd User * call submode#map('window_resize', 'n', '', '_', '<C-w>_')
 
-	" Fold Mover
-	autocmd User * call submode#enter_with('fold_move', 'n', '', '<C-s>z')
-	autocmd User * call submode#map('fold_move', 'n', 'e', 'j', "foldlevel('.') > 0 ? 'zczjzozz'   : 'zjzozz'")
-	autocmd User * call submode#map('fold_move', 'n', 'e', 'k', "foldlevel('.') > 0 ? 'zczkzo[zzz' : 'zkzo[zzz'")
-	autocmd User * call submode#map('fold_move', 'n', '',  'h', '[z')
-	autocmd User * call submode#map('fold_move', 'n', '',  'l', ']z')
+		" Fold Mover
+		autocmd User * call submode#enter_with('fold_move', 'n', '', '<C-s>z')
+		autocmd User * call submode#map('fold_move', 'n', 'e', 'j', "foldlevel('.') > 0 ? 'zczjzozz'   : 'zjzozz'")
+		autocmd User * call submode#map('fold_move', 'n', 'e', 'k', "foldlevel('.') > 0 ? 'zczkzo[zzz' : 'zkzo[zzz'")
+		autocmd User * call submode#map('fold_move', 'n', '',  'h', '[z')
+		autocmd User * call submode#map('fold_move', 'n', '',  'l', ']z')
 
-	" Buffer Changer
-	autocmd User * call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
-	autocmd User * call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
-	autocmd User * call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
+		" Buffer Changer
+		autocmd User * call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
+		autocmd User * call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
+		autocmd User * call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
 
-	" Tab Mover
-" s:loopable_tab_move_prev() "{{{
-
-function! LoopableTabMovePrev()
-	if tabpagenr() is 1
-		execute ':tabmove' tabpagenr('$')
-	else
-		execute ':tabmove -1'
-	endif
-endfunction
-
-"}}}
-" s:loopable_tab_move_next() "{{{
-
-function! LoopableTabMoveNext()
-	if tabpagenr() is tabpagenr('$')
-		execute ':tabmove 0'
-	else
-		execute ':tabmove +1'
-	endif
-endfunction
-
-"}}}
-	autocmd User * call submode#enter_with('tab_move', 'n', '', '<C-s>t')
-	autocmd User * call submode#map('tab_move', 'n', 's', 'n', ':call LoopableTabMoveNext()<CR>')
-	autocmd User * call submode#map('tab_move', 'n', 's', 'p', ':call LoopableTabMovePrev()<CR>')
-
-	" WinTab Mover
-	" Current buffer move to next tab "{{{
-	command! BufTabMovePrev execute 'normal! mZ:hide<CR>gT:vsp<CR>`Z'
-	command! BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? ':hide<CR>' : ':hide<CR>gt') . ':vsp<CR>`Z'
+		" Tab Mover
+	" s:loopable_tab_move_prev() "{{{
+	
+	function! LoopableTabMovePrev()
+		if tabpagenr() is 1
+			execute ':tabmove' tabpagenr('$')
+		else
+			execute ':tabmove -1'
+		endif
+	endfunction
+	
 	"}}}
-	autocmd User * call submode#enter_with('wintab_move', 'n', '', '<C-s>N', ':BufTabMoveNext<CR>')
-	autocmd User * call submode#enter_with('wintab_move', 'n', '', '<C-s>P', ':BufTabMovePrev<CR>')
-	autocmd User * call submode#map('wintab_move', 'n', '', 'N', ':BufTabMoveNext<CR>')
-	autocmd User * call submode#map('wintab_move', 'n', '', 'P', ':BufTabMovePrev<CR>')
-	autocmd User * call submode#map('wintab_move', 'n', '', 'H', '<C-w>H')
-	autocmd User * call submode#map('wintab_move', 'n', '', 'J', '<C-w>J')
-	autocmd User * call submode#map('wintab_move', 'n', '', 'K', '<C-w>K')
-	autocmd User * call submode#map('wintab_move', 'n', '', 'L', '<C-w>L')
-augroup END
+	" s:loopable_tab_move_next() "{{{
+	
+	function! LoopableTabMoveNext()
+		if tabpagenr() is tabpagenr('$')
+			execute ':tabmove 0'
+		else
+			execute ':tabmove +1'
+		endif
+	endfunction
+	
+	"}}}
+		autocmd User * call submode#enter_with('tab_move', 'n', '', '<C-s>t')
+		autocmd User * call submode#map('tab_move', 'n', 's', 'n', ':call LoopableTabMoveNext()<CR>')
+		autocmd User * call submode#map('tab_move', 'n', 's', 'p', ':call LoopableTabMovePrev()<CR>')
+
+		" WinTab Mover
+		" Current buffer move to next tab "{{{
+		command! BufTabMovePrev execute 'normal! mZ:hide<CR>gT:vsp<CR>`Z'
+		command! BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? ':hide<CR>' : ':hide<CR>gt') . ':vsp<CR>`Z'
+		"}}}
+		autocmd User * call submode#enter_with('wintab_move', 'n', '', '<C-s>N', ':BufTabMoveNext<CR>')
+		autocmd User * call submode#enter_with('wintab_move', 'n', '', '<C-s>P', ':BufTabMovePrev<CR>')
+		autocmd User * call submode#map('wintab_move', 'n', '', 'N', ':BufTabMoveNext<CR>')
+		autocmd User * call submode#map('wintab_move', 'n', '', 'P', ':BufTabMovePrev<CR>')
+		autocmd User * call submode#map('wintab_move', 'n', '', 'H', '<C-w>H')
+		autocmd User * call submode#map('wintab_move', 'n', '', 'J', '<C-w>J')
+		autocmd User * call submode#map('wintab_move', 'n', '', 'K', '<C-w>K')
+		autocmd User * call submode#map('wintab_move', 'n', '', 'L', '<C-w>L')
+	augroup END
+endif
 
 "}}}
 "--- vim-ref ---" {{{
@@ -1195,32 +1188,29 @@ set notimeout
 " Do not set file name order priority on c-mode completion
 set suffixes=
 
-
 " Do foldopen all when visual_mode cursor_move
-augroup KeyEvent
-	" s:visual_fold_all() "{{{
+" s:visual_fold_all() "{{{
 
-	let s:visual_fold_toggle = get(s:, 'visual_fold_toggle', 0)
+let s:visual_fold_toggle = get(s:, 'visual_fold_toggle', 0)
 
-	function! s:visual_fold_all()
-		if mode() =~# "^[vV\<C-v>]"
-			if !s:visual_fold_toggle && &foldenable
-				set nofoldenable
-				normal! zz
-				let s:visual_fold_toggle = 1
-			endif
-		else
-			if s:visual_fold_toggle
-				set foldenable
-				normal! zz
-				let s:visual_fold_toggle = 0
-			endif
+function! s:visual_fold_all()
+	if mode() =~# "^[vV\<C-v>]"
+		if !s:visual_fold_toggle && &foldenable
+			set nofoldenable
+			normal! zz
+			let s:visual_fold_toggle = 1
 		endif
-	endfunction
+	else
+		if s:visual_fold_toggle
+			set foldenable
+			normal! zz
+			let s:visual_fold_toggle = 0
+		endif
+	endif
+endfunction
 
-	"}}}
-	autocmd CursorMoved * call s:visual_fold_all()
-augroup END
+"}}}
+autocmd KeyEvent CursorMoved * call s:visual_fold_all()
 
 "}}}
 
@@ -1278,31 +1268,26 @@ set path=.,,./**
 "{{{
 
 " Save Cursor Position when file closed
-augroup FileEvent
-	function! s:visit_past_position() "{{{
-		let l:past_posit = line("'\"")
+function! s:visit_past_position() "{{{
+	let l:past_posit = line("'\"")
 
-		if l:past_posit > 0 && l:past_posit <= line('$')
-			execute 'normal! g`"'
-		endif
-	endfunction "}}}
-	autocmd BufReadPost * call s:visit_past_position()
-augroup END
+	if l:past_posit > 0 && l:past_posit <= line('$')
+		execute 'normal! g`"'
+	endif
+endfunction "}}}
+autocmd FileEvent BufReadPost * call s:visit_past_position()
 
 
-augroup FileEvent
-	" If you using wim command prompt, listchars using safe chars
-	autocmd VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
-		\	if &encoding == 'utf-8' && !s:is_doswin
-		\|		let &listchars = 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
-		\|	else
-		\|		let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
-		\|	endif
-augroup END
+" If you using wim command prompt, listchars using safe chars
+autocmd FileEvent VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
+	\	if &encoding ==# 'utf-8' && !s:is_doswin
+	\|		let &listchars = 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
+	\|	else
+	\|		let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
+	\|	endif
 
-augroup KeyEvent
-	"autocmd UserGettingBored * echo 'Fight!!'
-augroup END
+"" Foooooo!!!!!!! I hope get this omoshiro event!!
+"autocmd KeyEvent UserGettingBored * echo 'oooooiiiii!!!!!'
 
 "}}}
 
@@ -1337,7 +1322,6 @@ command! -nargs=1 GrepNow vimgrep <args> % | cwindow
 " Save a Temporary Directory
 " {{{
 
-"@Marked('Changed "FileType *" to "BufNew *"')
 autocmd FileEvent BufNew * let b:tdir_dir = get(b:, 'tdir_dir', 'Not set tdir')
 
 command! TDirPwd           echo b:tdir_dir
@@ -1736,18 +1720,16 @@ endfunction "}}}
 " Easily putting short separator for many filetypes
 " function! s:put_short_separator(put_upper) {{{
 
-augroup FileEvent
-	autocmd FileType,WinEnter,BufWinEnter * let s:long_separator =
-	\	&ft =~# '\v(vim|vimspec)'    ? '"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"'
-	\:	&ft =~# '\v(java|cs|cpp|c)'  ? '/* ---===---===---===---===---===---===--- */'
-	\:	&ft ==# 'haskell'            ? '-- - - - - - - - - - - - - - - - --'
-	\:	&ft ==# 'coq'                ? '(* - - - - - - - - - - - - - - - *)'
-	\:	&ft ==# 'mysql'              ? '-- - - - - - - - - - - - - - - - --'
-	\:	&ft =~# '\v(markdown|eruby)' ? '<!-- - - - - - - - - - - - - - - - -->'
-	\:	&ft =~# '\v(ruby|sh)'        ? '#- - - - - - - - - - - - - - - - -#'
-	\:	&ft =~# '\v(text|none)'      ? '- - - - - - - - - - - - - - - - - - - -'
-	\                                : 'long_separator_undefined'
-augroup END
+autocmd FileEvent FileType,WinEnter,BufWinEnter * let s:long_separator =
+\	&ft =~# '\v(vim|vimspec)'    ? '"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"'
+\:	&ft =~# '\v(java|cs|cpp|c)'  ? '/* ---===---===---===---===---===---===--- */'
+\:	&ft ==# 'haskell'            ? '-- - - - - - - - - - - - - - - - --'
+\:	&ft ==# 'coq'                ? '(* - - - - - - - - - - - - - - - *)'
+\:	&ft ==# 'mysql'              ? '-- - - - - - - - - - - - - - - - --'
+\:	&ft =~# '\v(markdown|eruby)' ? '<!-- - - - - - - - - - - - - - - - -->'
+\:	&ft =~# '\v(ruby|sh)'        ? '#- - - - - - - - - - - - - - - - -#'
+\:	&ft =~# '\v(text|none)'      ? '- - - - - - - - - - - - - - - - - - - -'
+\                                : 'long_separator_undefined'
 
 
 function! s:put_long_separator(put_upper)
@@ -1763,18 +1745,16 @@ endfunction
 " Easily putting long separator for many filetypes
 " function! s:put_short_separator(put_upper) {{{
 
-augroup FileEvent
-	autocmd FileType,WinEnter,BufWinEnter * let s:short_sparator =
-	\	&ft =~# '\v(vim|vimspec)'    ? '"#--- --- ---#"'
-	\:	&ft =~# '\v(java|cs|cpp|c)'  ? '/* -=-=-=-=-=-=-=-=- */'
-	\:	&ft ==# 'haskell'            ? '-- - - - - - --'
-	\:	&ft ==# 'coq'                ? '(* - - - - - *)'
-	\:	&ft ==# 'mysql'              ? '-- - - - - - --'
-	\:	&ft =~# '\v(markdown|eruby)' ? '<!-- - - - - - -->'
-	\:	&ft =~# '\v(ruby|sh)'        ? '#- - - - - - -#'
-	\:	&ft =~# '\v(text|none)'      ? '- - - - - - - - - -'
-	\                                : 'short_separator_undefined'
-augroup END
+autocmd FileEvent FileType,WinEnter,BufWinEnter * let s:short_sparator =
+\	&ft =~# '\v(vim|vimspec)'    ? '"#--- --- ---#"'
+\:	&ft =~# '\v(java|cs|cpp|c)'  ? '/* -=-=-=-=-=-=-=-=- */'
+\:	&ft ==# 'haskell'            ? '-- - - - - - --'
+\:	&ft ==# 'coq'                ? '(* - - - - - *)'
+\:	&ft ==# 'mysql'              ? '-- - - - - - --'
+\:	&ft =~# '\v(markdown|eruby)' ? '<!-- - - - - - -->'
+\:	&ft =~# '\v(ruby|sh)'        ? '#- - - - - - -#'
+\:	&ft =~# '\v(text|none)'      ? '- - - - - - - - - -'
+\                                : 'short_separator_undefined'
 
 
 function! s:put_short_separator(put_upper)
@@ -2074,18 +2054,12 @@ augroup END
 "{{{
 
 " If buffer does not has filetype, set filetype 'none'
-augroup ExtensionType
-	autocmd VimEnter,BufNew * if &ft ==# '' | setf none | endif
-augroup END
+autocmd ExtensionType VimEnter,BufNew * if &ft ==# '' | setf none | endif
 
 
-" For Plugin Types
-augroup FileEvent
-	"@Incomplete('do not functioned')
-	"@Incomplete('do not functioned as exchanger')
-	" netrw
-	autocmd User netrw highlight default link CursorLine Visual
-augroup END
+"@Incomplete('do not functioned')
+" netrw
+autocmd FileEvent User netrw highlight default link CursorLine Visual
 
 "}}}
 
@@ -2102,7 +2076,7 @@ endif
 "}}}
 
 
-doautocmd User
 filetype plugin indent on
 syntax enable
+doautocmd User
 let g:vimrc['loaded'] = 1
