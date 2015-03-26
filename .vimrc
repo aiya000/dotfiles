@@ -435,151 +435,234 @@ call neobundle#end()
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
 
-call neobundle#config('vimproc.vim', {
-\	'build' : {
-\		'unix'    : 'make -f make_unix.mak',
-\		'mac'     : 'make -f make_mac.mak',
-\		'cygwin'  : 'make -f make_cygwin.mak',
-\		'windows' : 'make -f make_mingw32.mak'
-\	}
-\})
-call neobundle#config('TweetVim', {
-\	'depends' : [
-\		'basyura/twibill.vim',
-\		'tyru/open-browser.vim',
-\		'h1mesuke/unite-outline',
-\		'basyura/bitly.vim',
-\		'Shougo/unite.vim',
-\		'Shougo/vimproc.vim',
-\		'mattn/favstar-vim'
-\	],
-\	'autoload' : {'commands' : 'TweetVim'}
-\})
-call neobundle#config('vimshell.vim', {
-\	'depends' : 'Shougo/vimproc.vim'
-\})
-call neobundle#config('gmail.vim', {
-\	'depends'  : 'Shougo/vimproc.vim',
-\	'autoload' : {'commands' : 'Gmail'}
-\})
-call neobundle#config('J6uil.vim', {
-\	'depends' : [
-\		'mattn/webapi-vim',
-\		'Shougo/vimproc.vim',
-\		'tyru/open-browser.vim',
-\		'Shougo/unite.vim'
-\	],
-\	'autoload' : {'commands' : 'J6uil'}
-\})
-call neobundle#config('vim-gyazo', {
-\	'depends' : [
-\		'tyru/open-browser.vim',
-\		'basyura/TweetVim'
-\	]
-\})
-call neobundle#config('vimshell-kawaii.vim', {
-\	'depends'  : 'Shougo/vimshell.vim'
-\})
-call neobundle#config('vimconsole.vim', {
-\	'autoload' : {'filetypes' : 'vim'}
-\})
-call neobundle#config('vim-splash', {
-\	'autoload' : {'commands' : 'Splash'}
-\})
-"@Experimental('config moved to here')
-call neobundle#config('jazzradio.vim', {
-\	'autoload' : {
-\		'unite_sources' : ['jazzradio'],
-\		'commands'      : [
-\			'JazzradioUpdateChannels',
-\			'JazzradioStop', {
-\				'name'     : 'JazzradioPlay',
-\				'complete' : 'customlist,jazzradio#channel_id_comlete'
-\			}
-\		],
-\		'function_prefix' : 'Jazzradio',
-\		'depends'         : 'Shougo/unite.vim'
-\	}
-\})
-call neobundle#config('ref-hoogle', {
-\	'depends'  : 'thinca/vim-ref'
-\})
-call neobundle#config('vital.vim', {
-\	'autoload' : {'filetypes' : 'vim'}
-\})
-call neobundle#config('puyo.vim', {
-\	'autoload' : {'commands' : 'Puyo'},
-\	'depends'  : 'rbtnn/game_engine.vim'
-\})
-call neobundle#config('benchvimrc-vim', {
-\	'autoload' : {'commands' : 'BenchVimrc'}
-\})
-call neobundle#config('yamada-vim', {
-\	'autoload' : {'commands' : 'Yamada'}
-\})
-call neobundle#config('coq.vim', {
-\	'autoload' : {'filetypes' : 'coq'}
-\})
-call neobundle#config('coqtop-vim', {
-\	'autoload' : {'filetypes' : 'coq'},
-\	'depends'  : 'Shougo/vimproc.vim'
-\})
-call neobundle#config('vim-grammarous', {
-\	'disabled' : !executable('java')
-\})
-call neobundle#config('vim-themis', {
-\	'autoload' : {'filetypes' : [
-\		'vim',
-\		'vimspec'
-\	]}
-\})
-call neobundle#config('previm', {
-\	'autoload' : {'filetypes' : 'markdown'}
-\})
-call neobundle#config('rogue.vim', {
-\	'autoload' : {'commands' : [
-\		'Rogue',
-\		'RogueRestore',
-\		'RogueResume',
-\		'RogueScores'
-\	]}
-\})
-call neobundle#config('ref-dicts-en', {
-\	'depends' : 'thinca/vim-ref'
-\})
-call neobundle#config('fakecygpty', {
-\	'build' : {
-\		'windows' : expand('gcc fakecygpty.c -o ~/bin/fakecygpty.exe')
-\	}
-\})
-call neobundle#config('vimhelpgenerator', {
-\	'autoload' : {'commands' : [
-\		'VimHelpGenerator',
-\		'HelpIntoMarkdown'
-\	]}
-\})
-call neobundle#config('vim-threes', {
-\	'autoload' : {'commands' : [
-\		'ThreesShowRecord',
-\		'ThreesStart'
-\	]}
-\})
-"@Bugs('rspec.vim do not highlight syntax before loading vim-ruby')
-"call neobundle#config('vim-ruby', {
-"\	'autoload' : {'filetype' : 'ruby'}
-"\})
-"call neobundle#config('rspec.vim', {
-"\	'autoload' : {'filetype' : 'ruby'}
-"\})
-"@Bugs('Do not functioned on windows with this config')
-call neobundle#config('ore_markdown', {
-\	'buld' : {
-\		'unix'    : 'bundle install --gemfile ./bin/Gemfile',
-\		'windows' : 'bundle install --gemfile .\bin\Gemfile',
-\		'mac'     : 'bundle install --gemfile ./bin/Gemfile'
-\	},
-\	'autoload' : {'commands' : 'OreMarkdown'}
-\})
+if neobundle#tap('vimproc.vim')
+	call neobundle#config('vimproc.vim', {
+	\	'build' : {
+	\		'unix'    : 'make -f make_unix.mak',
+	\		'mac'     : 'make -f make_mac.mak',
+	\		'cygwin'  : 'make -f make_cygwin.mak',
+	\		'windows' : 'make -f make_mingw32.mak'
+	\	}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('TweetVim')
+	call neobundle#config('TweetVim', {
+	\	'depends' : [
+	\		'basyura/twibill.vim',
+	\		'tyru/open-browser.vim',
+	\		'h1mesuke/unite-outline',
+	\		'basyura/bitly.vim',
+	\		'Shougo/unite.vim',
+	\		'Shougo/vimproc.vim',
+	\		'mattn/favstar-vim'
+	\	],
+	\	'autoload' : {'commands' : 'TweetVim'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vimshell.vim')
+	call neobundle#config('vimshell.vim', {
+	\	'depends' : 'Shougo/vimproc.vim'
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('gmail.vim')
+	call neobundle#config('gmail.vim', {
+	\	'depends'  : 'Shougo/vimproc.vim',
+	\	'autoload' : {'commands' : 'Gmail'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('J6uil.vim')
+	call neobundle#config('J6uil.vim', {
+	\	'depends' : [
+	\		'mattn/webapi-vim',
+	\		'Shougo/vimproc.vim',
+	\		'tyru/open-browser.vim',
+	\		'Shougo/unite.vim'
+	\	],
+	\	'autoload' : {'commands' : 'J6uil'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-gyazo')
+	call neobundle#config('vim-gyazo', {
+	\	'depends' : [
+	\		'tyru/open-browser.vim',
+	\		'basyura/TweetVim'
+	\	]
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vimshell-kawaii.vim')
+	call neobundle#config('vimshell-kawaii.vim', {
+	\	'depends'  : 'Shougo/vimshell.vim'
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vimconsole.vim')
+	call neobundle#config('vimconsole.vim', {
+	\	'autoload' : {'filetypes' : 'vim'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-splash')
+	call neobundle#config('vim-splash', {
+	\	'autoload' : {'commands' : 'Splash'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('jazzradio.vim')
+	call neobundle#config('jazzradio.vim', {
+	\	'autoload' : {
+	\		'unite_sources' : ['jazzradio'],
+	\		'commands'      : [
+	\			'JazzradioUpdateChannels',
+	\			'JazzradioStop', {
+	\				'name'     : 'JazzradioPlay',
+	\				'complete' : 'customlist,jazzradio#channel_id_comlete'
+	\			}
+	\		],
+	\		'function_prefix' : 'Jazzradio',
+	\		'depends'         : 'Shougo/unite.vim'
+	\	}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('ref-hoogle')
+	call neobundle#config('ref-hoogle', {
+	\	'depends'  : 'thinca/vim-ref'
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vital.vim')
+	call neobundle#config('vital.vim', {
+	\	'autoload' : {'filetypes' : 'vim'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('puyo.vim')
+	call neobundle#config('puyo.vim', {
+	\	'autoload' : {'commands' : 'Puyo'},
+	\	'depends'  : 'rbtnn/game_engine.vim'
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('benchvimrc-vim')
+	call neobundle#config('benchvimrc-vim', {
+	\	'autoload' : {'commands' : 'BenchVimrc'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('yamada-vim')
+	call neobundle#config('yamada-vim', {
+	\	'autoload' : {'commands' : 'Yamada'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('coq.vim')
+	call neobundle#config('coq.vim', {
+	\	'autoload' : {'filetypes' : 'coq'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('coqtop-vim')
+	call neobundle#config('coqtop-vim', {
+	\	'autoload' : {'filetypes' : 'coq'},
+	\	'depends'  : 'Shougo/vimproc.vim'
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-grammarous')
+	call neobundle#config('vim-grammarous', {
+	\	'disabled' : !executable('java')
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-themis')
+	call neobundle#config('vim-themis', {
+	\	'autoload' : {'filetypes' : [
+	\		'vim',
+	\		'vimspec'
+	\	]}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('previm')
+	call neobundle#config('previm', {
+	\	'autoload' : {'filetypes' : 'markdown'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('rogue.vim')
+	call neobundle#config('rogue.vim', {
+	\	'autoload' : {'commands' : [
+	\		'Rogue',
+	\		'RogueRestore',
+	\		'RogueResume',
+	\		'RogueScores'
+	\	]}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('ref-dicts-en')
+	call neobundle#config('ref-dicts-en', {
+	\	'depends' : 'thinca/vim-ref'
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('fakecygpty')
+	call neobundle#config('fakecygpty', {
+	\	'build' : {
+	\		'windows' : expand('gcc fakecygpty.c -o ~/bin/fakecygpty.exe')
+	\	}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vimhelpgenerator')
+	call neobundle#config('vimhelpgenerator', {
+	\	'autoload' : {'commands' : [
+	\		'VimHelpGenerator',
+	\		'HelpIntoMarkdown'
+	\	]}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-threes')
+	call neobundle#config('vim-threes', {
+	\	'autoload' : {'commands' : [
+	\		'ThreesShowRecord',
+	\		'ThreesStart'
+	\	]}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-ruby')
+	"@Bugs('rspec.vim do not highlight syntax before loading vim-ruby')
+	call neobundle#config('vim-ruby', {
+	\	'autoload' : {'filetype' : 'ruby'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('rspec.vim')
+	call neobundle#config('rspec.vim', {
+	\	'autoload' : {'filetype' : 'ruby'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('ore_markdown')
+	"@Bugs('Do not functioned on windows with this config')
+	call neobundle#config('ore_markdown', {
+	\	'buld' : {
+	\		'unix'    : 'bundle install --gemfile ./bin/Gemfile',
+	\		'windows' : 'bundle install --gemfile .\bin\Gemfile',
+	\		'mac'     : 'bundle install --gemfile ./bin/Gemfile'
+	\	},
+	\	'autoload' : {'commands' : 'OreMarkdown'}
+	\})
+	call neobundle#untap()
+endif
 
 " }}}
 
@@ -597,7 +680,7 @@ let g:netrw_preview = 1
 "augroup FileEvent
 "	" uooooooooooooo... oh, my triple operator !!!!!!!!!!!
 "	" Why if set you, happend an error when doing match it...
-"	autocmd FileType * let b:match_words = &matchpairs . ',?::'
+"	autocmd User * let b:match_words = &matchpairs . ',?::'
 "augroup END
 
 " }}}
@@ -741,31 +824,43 @@ if !isdirectory(g:rogue#directory)
 endif
 
 "}}}
+"--- vim-over ---"{{{
+
+if neobundle#tap('vim-over')
+	function! neobundle#hooks.on_source(bundle)
+		augroup KeyMapping
+			autocmd User * OverCommandLineNoremap <C-l> <Esc>
+		augroup END
+	endfunction
+	call neobundle#untap()
+endif
+
+"}}}
 "--- vim-submode ---"{{{
 
 let g:submode_timeout = 0
 
 augroup FileEvent
 	" Window Resizer
-	autocmd FileType * call submode#enter_with('window_resize', 'n', '', '<C-s>w')
-	autocmd FileType * call submode#map('window_resize', 'n', '', 'j', '<C-w>+')
-	autocmd FileType * call submode#map('window_resize', 'n', '', 'k', '<C-w>-')
-	autocmd FileType * call submode#map('window_resize', 'n', '', 'h', '<C-w><')
-	autocmd FileType * call submode#map('window_resize', 'n', '', 'l', '<C-w>>')
-	autocmd FileType * call submode#map('window_resize', 'n', '', '=', '<C-w>=')
-	autocmd FileType * call submode#map('window_resize', 'n', '', '_', '<C-w>_')
+	autocmd User * call submode#enter_with('window_resize', 'n', '', '<C-s>w')
+	autocmd User * call submode#map('window_resize', 'n', '', 'j', '<C-w>+')
+	autocmd User * call submode#map('window_resize', 'n', '', 'k', '<C-w>-')
+	autocmd User * call submode#map('window_resize', 'n', '', 'h', '<C-w><')
+	autocmd User * call submode#map('window_resize', 'n', '', 'l', '<C-w>>')
+	autocmd User * call submode#map('window_resize', 'n', '', '=', '<C-w>=')
+	autocmd User * call submode#map('window_resize', 'n', '', '_', '<C-w>_')
 
 	" Fold Mover
-	autocmd FileType * call submode#enter_with('fold_move', 'n', '', '<C-s>z')
-	autocmd FileType * call submode#map('fold_move', 'n', 'e', 'j', "foldlevel('.') > 0 ? 'zczjzozz'   : 'zjzozz'")
-	autocmd FileType * call submode#map('fold_move', 'n', 'e', 'k', "foldlevel('.') > 0 ? 'zczkzo[zzz' : 'zkzo[zzz'")
-	autocmd FileType * call submode#map('fold_move', 'n', '',  'h', '[z')
-	autocmd FileType * call submode#map('fold_move', 'n', '',  'l', ']z')
+	autocmd User * call submode#enter_with('fold_move', 'n', '', '<C-s>z')
+	autocmd User * call submode#map('fold_move', 'n', 'e', 'j', "foldlevel('.') > 0 ? 'zczjzozz'   : 'zjzozz'")
+	autocmd User * call submode#map('fold_move', 'n', 'e', 'k', "foldlevel('.') > 0 ? 'zczkzo[zzz' : 'zkzo[zzz'")
+	autocmd User * call submode#map('fold_move', 'n', '',  'h', '[z')
+	autocmd User * call submode#map('fold_move', 'n', '',  'l', ']z')
 
 	" Buffer Changer
-	autocmd FileType * call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
-	autocmd FileType * call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
-	autocmd FileType * call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
+	autocmd User * call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
+	autocmd User * call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
+	autocmd User * call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
 
 	" Tab Mover
 " s:loopable_tab_move_prev() "{{{
@@ -790,23 +885,23 @@ function! LoopableTabMoveNext()
 endfunction
 
 "}}}
-	autocmd FileType * call submode#enter_with('tab_move', 'n', '', '<C-s>t')
-	autocmd FileType * call submode#map('tab_move', 'n', 's', 'n', ':call LoopableTabMoveNext()<CR>')
-	autocmd FileType * call submode#map('tab_move', 'n', 's', 'p', ':call LoopableTabMovePrev()<CR>')
+	autocmd User * call submode#enter_with('tab_move', 'n', '', '<C-s>t')
+	autocmd User * call submode#map('tab_move', 'n', 's', 'n', ':call LoopableTabMoveNext()<CR>')
+	autocmd User * call submode#map('tab_move', 'n', 's', 'p', ':call LoopableTabMovePrev()<CR>')
 
 	" WinTab Mover
 	" Current buffer move to next tab "{{{
 	command! BufTabMovePrev execute 'normal! mZ:hide<CR>gT:vsp<CR>`Z'
 	command! BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? ':hide<CR>' : ':hide<CR>gt') . ':vsp<CR>`Z'
 	"}}}
-	autocmd FileType * call submode#enter_with('wintab_move', 'n', '', '<C-s>N', ':BufTabMoveNext<CR>')
-	autocmd FileType * call submode#enter_with('wintab_move', 'n', '', '<C-s>P', ':BufTabMovePrev<CR>')
-	autocmd FileType * call submode#map('wintab_move', 'n', '', 'N', ':BufTabMoveNext<CR>')
-	autocmd FileType * call submode#map('wintab_move', 'n', '', 'P', ':BufTabMovePrev<CR>')
-	autocmd FileType * call submode#map('wintab_move', 'n', '', 'H', '<C-w>H')
-	autocmd FileType * call submode#map('wintab_move', 'n', '', 'J', '<C-w>J')
-	autocmd FileType * call submode#map('wintab_move', 'n', '', 'K', '<C-w>K')
-	autocmd FileType * call submode#map('wintab_move', 'n', '', 'L', '<C-w>L')
+	autocmd User * call submode#enter_with('wintab_move', 'n', '', '<C-s>N', ':BufTabMoveNext<CR>')
+	autocmd User * call submode#enter_with('wintab_move', 'n', '', '<C-s>P', ':BufTabMovePrev<CR>')
+	autocmd User * call submode#map('wintab_move', 'n', '', 'N', ':BufTabMoveNext<CR>')
+	autocmd User * call submode#map('wintab_move', 'n', '', 'P', ':BufTabMovePrev<CR>')
+	autocmd User * call submode#map('wintab_move', 'n', '', 'H', '<C-w>H')
+	autocmd User * call submode#map('wintab_move', 'n', '', 'J', '<C-w>J')
+	autocmd User * call submode#map('wintab_move', 'n', '', 'K', '<C-w>K')
+	autocmd User * call submode#map('wintab_move', 'n', '', 'L', '<C-w>L')
 augroup END
 
 "}}}
@@ -844,6 +939,19 @@ let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
 
 " vimdoc-ja is secondary order
 set helplang=en,ja
+
+"}}}
+"--- incsearch.vim ---"{{{
+
+if neobundle#tap('incsearch.vim')
+	function! neobundle#hooks.on_source(bundle)
+		augroup KeyMapping
+			autocmd User * IncSearchNoreMap <C-j> <CR>
+			autocmd User * IncSearchNoreMap <C-l> <Esc>
+		augroup END
+	endfunction
+	call neobundle#untap()
+endif
 
 "}}}
 "--- Conque-Shell ---"{{{
@@ -1532,39 +1640,39 @@ command! HighlightListTab call s:highlight_list_tab()
 
 augroup KeyMapping
 	" I can use some mapping to hoge<C-c>
-	autocmd FileType * nnoremap <C-c>      <NOP>
-	autocmd FileType * nnoremap <C-c><C-c> <C-c>
+	autocmd User * nnoremap <C-c>      <NOP>
+	autocmd User * nnoremap <C-c><C-c> <C-c>
 
-	autocmd FileType * nnoremap <Up>    <NOP>
-	autocmd FileType * nnoremap <Down>  <NOP>
-	autocmd FileType * nnoremap <Left>  <NOP>
-	autocmd FileType * nnoremap <Right> <NOP>
+	autocmd User * nnoremap <Up>    <NOP>
+	autocmd User * nnoremap <Down>  <NOP>
+	autocmd User * nnoremap <Left>  <NOP>
+	autocmd User * nnoremap <Right> <NOP>
 
-	autocmd FileType * inoremap <Up>    <NOP>
-	autocmd FileType * inoremap <Down>  <NOP>
-	autocmd FileType * inoremap <Left>  <NOP>
-	autocmd FileType * inoremap <Right> <NOP>
+	autocmd User * inoremap <Up>    <NOP>
+	autocmd User * inoremap <Down>  <NOP>
+	autocmd User * inoremap <Left>  <NOP>
+	autocmd User * inoremap <Right> <NOP>
 
-	autocmd FileType * cnoremap <Left>  <NOP>
-	autocmd FileType * cnoremap <Right> <NOP>
+	autocmd User * cnoremap <Left>  <NOP>
+	autocmd User * cnoremap <Right> <NOP>
 
-	autocmd FileType * cnoremap [Left] <Left>
+	autocmd User * cnoremap [Left] <Left>
 augroup END
 
 " }}}
 " Bashnize Command Mode {{{
 
 augroup KeyMapping
-	autocmd FileType * nmap     <C-j> <CR>
-	autocmd FileType * imap     <C-j> <CR>
+	autocmd User * nmap     <C-j> <CR>
+	autocmd User * imap     <C-j> <CR>
 
-	autocmd FileType * cnoremap <C-b>      <Left>
-	autocmd FileType * cnoremap <C-f>      <Right>
-	autocmd FileType * cnoremap <C-a>      <Home>
-	autocmd FileType * cnoremap <C-h>      <BS>
-	autocmd FileType * cnoremap <C-d>      <Del>
-	autocmd FileType * cnoremap <C-e>      <End>
-	autocmd FileType * cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
+	autocmd User * cnoremap <C-b>      <Left>
+	autocmd User * cnoremap <C-f>      <Right>
+	autocmd User * cnoremap <C-a>      <Home>
+	autocmd User * cnoremap <C-h>      <BS>
+	autocmd User * cnoremap <C-d>      <Del>
+	autocmd User * cnoremap <C-e>      <End>
+	autocmd User * cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
 augroup END
 
 " }}}
@@ -1738,116 +1846,116 @@ endfunction "}}}
 
 augroup KeyMapping
 	" † Rebirth Of The Neo Ex
-	autocmd FileType * nnoremap Q gQ
-	autocmd FileType * nnoremap <C-n> gt
-	autocmd FileType * nnoremap <C-p> gT
+	autocmd User * nnoremap Q gQ
+	autocmd User * nnoremap <C-n> gt
+	autocmd User * nnoremap <C-p> gT
 
-	autocmd FileType * inoremap <C-l> <Esc>
-	autocmd FileType * vnoremap <C-l> <Esc>
-	autocmd FileType * cnoremap <C-l> <Esc>
+	autocmd User * inoremap <C-l> <Esc>
+	autocmd User * vnoremap <C-l> <Esc>
+	autocmd User * cnoremap <C-l> <Esc>
 augroup END
 
 " }}}
 " Appends " {{{
 
 augroup KeyMapping
-	autocmd FileType * nnoremap <C-m> o<Esc>
+	autocmd User * nnoremap <C-m> o<Esc>
 
-	autocmd FileType * nnoremap <silent> m: :<C-u>marks<CR>
-	autocmd FileType * nnoremap <silent> q: :<C-u>register<CR>
-	autocmd FileType * nnoremap <silent> z: :<C-u>tabs<CR>
-	autocmd FileType * nnoremap <silent> g: :<C-u>buffers<CR>
-	autocmd FileType * nnoremap <silent> g> :<C-u>messages<CR>
+	autocmd User * nnoremap <silent> m: :<C-u>marks<CR>
+	autocmd User * nnoremap <silent> q: :<C-u>register<CR>
+	autocmd User * nnoremap <silent> z: :<C-u>tabs<CR>
+	autocmd User * nnoremap <silent> g: :<C-u>buffers<CR>
+	autocmd User * nnoremap <silent> g> :<C-u>messages<CR>
 
-	autocmd FileType * nnoremap <silent> <leader>b         :<C-u>NewOverridden<CR>:resize 5<CR>:setl buftype=nofile<CR>
-	autocmd FileType * nnoremap <silent> <leader>B         :<C-u>NewOverridden<CR>:resize 5<CR>
-	autocmd FileType * nnoremap <silent> <leader>ps        :<C-u>call <SID>put_short_separator(0)<CR>
-	autocmd FileType * nnoremap <silent> <leader>Ps        :<C-u>call <SID>put_short_separator(1)<CR>
-	autocmd FileType * nnoremap <silent> <leader>pl        :<C-u>call <SID>put_long_separator(0)<CR>
-	autocmd FileType * nnoremap <silent> <leader>Pl        :<C-u>call <SID>put_long_separator(1)<CR>
-	autocmd FileType * nnoremap <silent> <leader>pd        :<C-u>execute 'normal! a' . strftime('%c')<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>h :<C-u>helpclose<CR>
-	autocmd FileType * nnoremap <silent> <Space><Space>    :<C-u>call <SID>compress_spaces()<CR>
-	autocmd FileType * nnoremap <silent> <leader>k         :<C-u>call <SID>cursor_up_to_lid()<CR>
-	autocmd FileType * nnoremap <silent> <leader>j         :<C-u>call <SID>cursor_down_to_ground()<CR>
+	autocmd User * nnoremap <silent> <leader>b         :<C-u>NewOverridden<CR>:resize 5<CR>:setl buftype=nofile<CR>
+	autocmd User * nnoremap <silent> <leader>B         :<C-u>NewOverridden<CR>:resize 5<CR>
+	autocmd User * nnoremap <silent> <leader>ps        :<C-u>call <SID>put_short_separator(0)<CR>
+	autocmd User * nnoremap <silent> <leader>Ps        :<C-u>call <SID>put_short_separator(1)<CR>
+	autocmd User * nnoremap <silent> <leader>pl        :<C-u>call <SID>put_long_separator(0)<CR>
+	autocmd User * nnoremap <silent> <leader>Pl        :<C-u>call <SID>put_long_separator(1)<CR>
+	autocmd User * nnoremap <silent> <leader>pd        :<C-u>execute 'normal! a' . strftime('%c')<CR>
+	autocmd User * nnoremap <silent> <leader><leader>h :<C-u>helpclose<CR>
+	autocmd User * nnoremap <silent> <Space><Space>    :<C-u>call <SID>compress_spaces()<CR>
+	autocmd User * nnoremap <silent> <leader>k         :<C-u>call <SID>cursor_up_to_lid()<CR>
+	autocmd User * nnoremap <silent> <leader>j         :<C-u>call <SID>cursor_down_to_ground()<CR>
 
-	autocmd FileType * nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
-	autocmd FileType * nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
-	autocmd FileType * nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
-	autocmd FileType * nnoremap <silent> <C-k>J     :<C-u>wall<CR>
-	" doautocmd for Events [FileType *]
-	autocmd FileType * nnoremap <silent> <C-k>r     :<C-u>let &filetype = &filetype<CR>
-	autocmd FileType * nnoremap <silent> <C-k>l     :<C-u>source %<CR>
-
-
-	autocmd FileType * inoremap <silent> <C-k><C-j> <Esc>:write<CR>
-	autocmd FileType * inoremap <silent> <C-k>J     <Esc>:wall<CR>
-
-	autocmd FileType * inoremap <C-k><C-k> <C-o>"_d$
-	autocmd FileType * inoremap <C-k><C-y> <Esc>k"zyyjV"zp:let @z = ''<CR>A
+	autocmd User * nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
+	autocmd User * nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
+	autocmd User * nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
+	autocmd User * nnoremap <silent> <C-k>J     :<C-u>wall<CR>
+	autocmd User * nnoremap <silent> <C-k>R     :<C-u>let &filetype = &filetype<CR>
+	autocmd User * nnoremap <silent> <C-k>r     :<C-u>doautocmd User<CR>
+	autocmd User * nnoremap <silent> <C-k>l     :<C-u>source %<CR>
 
 
-	"autocmd FileType * vnoremap <silent> [k :<C-u>call <SID>cursor_up_to_lid()<CR>
-	"autocmd FileType * vnoremap <silent> ]k :<C-u>call <SID>cursor_up_to_lid()<CR>
-	"autocmd FileType * vnoremap <silent> [j :<C-u>call <SID>cursor_down_to_ground()<CR>
-	"autocmd FileType * vnoremap <silent> ]j :<C-u>call <SID>cursor_down_to_ground()<CR>
+	autocmd User * inoremap <silent> <C-k><C-j> <Esc>:write<CR>
+	autocmd User * inoremap <silent> <C-k>J     <Esc>:wall<CR>
+
+	autocmd User * inoremap <C-k><C-k> <C-o>"_d$
+	autocmd User * inoremap <C-k><C-y> <Esc>k"zyyjV"zp:let @z = ''<CR>A
 
 
-	autocmd FileType * cnoremap <C-k><C-p> <Up>
-	autocmd FileType * cnoremap <C-k><C-n> <Down>
-	autocmd FileType * cnoremap <C-]>      '<,'>
+	"autocmd User * vnoremap <silent> [k :<C-u>call <SID>cursor_up_to_lid()<CR>
+	"autocmd User * vnoremap <silent> ]k :<C-u>call <SID>cursor_up_to_lid()<CR>
+	"autocmd User * vnoremap <silent> [j :<C-u>call <SID>cursor_down_to_ground()<CR>
+	"autocmd User * vnoremap <silent> ]j :<C-u>call <SID>cursor_down_to_ground()<CR>
+
+
+	autocmd User * cnoremap <C-k><C-p> <Up>
+	autocmd User * cnoremap <C-k><C-n> <Down>
+	autocmd User * cnoremap <C-]>      '<,'>
 augroup END
 
 " }}}
 " Foldings {{{
 
 augroup KeyMapping
-	autocmd FileType * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
-	autocmd FileType * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
+	autocmd User * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
+	autocmd User * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
 
-	autocmd FileType * nnoremap zj zjzo
-	autocmd FileType * nnoremap zk zkzo
-	autocmd FileType * nnoremap z< V$%zf
+	autocmd User * nnoremap zj zjzo
+	autocmd User * nnoremap zk zkzo
+	autocmd User * nnoremap z< V$%zf
 augroup END
 
 " }}}
 " Windows and Buffers {{{
 
 augroup KeyMapping
-	autocmd FileType * nnoremap <Space>h <C-w>h
-	autocmd FileType * nnoremap <Space>j <C-w>j
-	autocmd FileType * nnoremap <Space>k <C-w>k
-	autocmd FileType * nnoremap <Space>l <C-w>l
+	autocmd User * nnoremap <Space>h <C-w>h
+	autocmd User * nnoremap <Space>j <C-w>j
+	autocmd User * nnoremap <Space>k <C-w>k
+	autocmd User * nnoremap <Space>l <C-w>l
 
-	autocmd FileType * nnoremap <silent> <C-w>t :<C-u>TabnewOverridden<CR>
-	autocmd FileType * nnoremap <silent> <C-w>T :<C-u>tabclose<CR>
-	autocmd FileType * nnoremap <silent> <C-w>c :<C-u>bdelete<CR>
-	autocmd FileType * nnoremap <silent> <C-w>C :<C-u>bdelete!<CR>
-	autocmd FileType * nnoremap <silent> <C-w>N :<C-u>EnewOverridden!<CR>
-	autocmd FileType * nnoremap <silent> <C-w>Q :<C-u>quitall<CR>
-	autocmd FileType * nnoremap <silent> <C-w>" :<C-u>resize 5<CR>
+	autocmd User * nnoremap <silent> <C-w>t :<C-u>TabnewOverridden<CR>
+	autocmd User * nnoremap <silent> <C-w>T :<C-u>tabclose<CR>
+	autocmd User * nnoremap <silent> <C-w>c :<C-u>bdelete<CR>
+	autocmd User * nnoremap <silent> <C-w>C :<C-u>bdelete!<CR>
+	autocmd User * nnoremap <silent> <C-w>N :<C-u>EnewOverridden!<CR>
+	autocmd User * nnoremap <silent> <C-w>Q :<C-u>quitall<CR>
+	autocmd User * nnoremap <silent> <C-w>" :<C-u>resize 5<CR>
 
-	autocmd FileType * nnoremap <silent><expr> <C-w>bt 'mZ:tabnew<CR>`Zzz'       . (foldlevel('.') > 0 ? 'zo' : '')
-	autocmd FileType * nnoremap <silent><expr> <C-w>bT 'mZ<C-w>c:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : '')
+	autocmd User * nnoremap <silent><expr> <C-w>bt 'mZ:tabnew<CR>`Zzz'       . (foldlevel('.') > 0 ? 'zo' : '')
+	autocmd User * nnoremap <silent><expr> <C-w>bT 'mZ<C-w>c:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : '')
 augroup END
 
 " }}}
 " Toggle options {{{
 
 augroup KeyMapping
-	autocmd FileType * nnoremap <silent><expr> <C-h><C-d> (&diff ? ':diffoff' : ':diffthis') . '\|set diff?<CR>'
-	autocmd FileType * nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
+	autocmd User * nnoremap <silent><expr> <C-h><C-d> (&diff ? ':diffoff' : ':diffthis') . '\|set diff?<CR>'
+	autocmd User * nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
 
-	autocmd FileType * nnoremap <silent> <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
-	autocmd FileType * nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline!     cursorline?    <CR>
-	autocmd FileType * nnoremap <silent> <C-h><C-e> :<C-u>setl expandtab!      expandtab?     <CR>
-	autocmd FileType * nnoremap <silent> <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
-	autocmd FileType * nnoremap <silent> <C-h><C-l> :<C-u>setl list!           list?          <CR>
-	autocmd FileType * nnoremap <silent> <C-h><C-n> :<C-u>setl number!         number?        <CR>
-	autocmd FileType * nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
-	autocmd FileType * nnoremap <silent> <C-h>jk    :<C-u>call <SID>toggle_onehand_mode()<CR>
+	autocmd User * nnoremap <silent> <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
+	autocmd User * nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline!     cursorline?    <CR>
+	autocmd User * nnoremap <silent> <C-h><C-e> :<C-u>setl expandtab!      expandtab?     <CR>
+	autocmd User * nnoremap <silent> <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
+	autocmd User * nnoremap <silent> <C-h><C-l> :<C-u>setl list!           list?          <CR>
+	autocmd User * nnoremap <silent> <C-h><C-n> :<C-u>setl number!         number?        <CR>
+	autocmd User * nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
+	autocmd User * nnoremap <silent> <C-h>jk    :<C-u>call <SID>toggle_onehand_mode()<CR>
 
-	autocmd FileType * inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
+	autocmd User * inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
 augroup END
 
 " }}}
@@ -1855,82 +1963,79 @@ augroup END
 
 augroup KeyMapping
 	" netrw
-	autocmd FileType * nnoremap <silent> <leader>e         :<C-u>Vexplore<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>e :<C-u>Sexplore<CR>
-	autocmd FileType * nnoremap <silent> <leader>E         :<C-u>Explore<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>E :<C-u>Texplore<CR>
+	autocmd User * nnoremap <silent> <leader>e         :<C-u>Vexplore<CR>
+	autocmd User * nnoremap <silent> <leader><leader>e :<C-u>Sexplore<CR>
+	autocmd User * nnoremap <silent> <leader>E         :<C-u>Explore<CR>
+	autocmd User * nnoremap <silent> <leader><leader>E :<C-u>Texplore<CR>
 
 
 	" open-browser.vim
-	autocmd FileType * nmap <leader>w <Plug>(openbrowser-open)
+	autocmd User * nmap <leader>w <Plug>(openbrowser-open)
 
 
 	" vim-quickrun
-	autocmd FileType * nnoremap <silent> <leader>R         :<C-u>QuickRun -runner shell<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>r :<C-u>call <SID>bufclose_filetype('quickrun')<CR>
+	autocmd User * nnoremap <silent> <leader>R         :<C-u>QuickRun -runner shell<CR>
+	autocmd User * nnoremap <silent> <leader><leader>r :<C-u>call <SID>bufclose_filetype('quickrun')<CR>
 
 
 	" vimshell
-	autocmd FileType * nnoremap <silent> <leader>v         :<C-u>VimShell -split-command=vsp -toggle<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>v :<C-u>VimShell -split-command=sp  -toggle<CR>
-	autocmd FileType * nnoremap <silent> <leader>V         :<C-u>VimShellBufferDir -create<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>V :<C-u>VimShell -split-command=tabnew -create<CR>
+	autocmd User * nnoremap <silent> <leader>v         :<C-u>VimShell -split-command=vsp -toggle<CR>
+	autocmd User * nnoremap <silent> <leader><leader>v :<C-u>VimShell -split-command=sp  -toggle<CR>
+	autocmd User * nnoremap <silent> <leader>V         :<C-u>VimShellBufferDir -create<CR>
+	autocmd User * nnoremap <silent> <leader><leader>V :<C-u>VimShell -split-command=tabnew -create<CR>
 
 
 	" Unite
-	autocmd FileType * nnoremap <silent> <leader>uf        :<C-u>Unite -ignorecase -start-insert outline:foldings<CR>
-	autocmd FileType * nnoremap <silent> <leader>um        :<C-u>Unite -ignorecase neomru/file<CR>
-	autocmd FileType * nnoremap <silent> <leader><leader>u :<C-u>call <SID>bufclose_filetype('unite')<CR>
+	autocmd User * nnoremap <silent> <leader>uf        :<C-u>Unite -ignorecase -start-insert outline:foldings<CR>
+	autocmd User * nnoremap <silent> <leader>um        :<C-u>Unite -ignorecase neomru/file<CR>
+	autocmd User * nnoremap <silent> <leader><leader>u :<C-u>call <SID>bufclose_filetype('unite')<CR>
 
 
 	" excitetranslate-vim
-	autocmd FileType * nnoremap <silent> <leader>t :<C-u>ExciteTranslate<CR>
+	autocmd User * nnoremap <silent> <leader>t :<C-u>ExciteTranslate<CR>
 
 
 	" vim-over
-	autocmd FileType * nnoremap <silent>       :%s/       :<C-u>OverCommandLine<CR>%s/
-	autocmd FileType * nnoremap <silent>       :s/        :<C-u>OverCommandLine<CR>s/
-	autocmd FileType * nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
-	autocmd FileType * nnoremap <silent><expr> <C-k>S     ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/' . expand('<cword>')
-	autocmd FileType * vnoremap <silent>       :s/        :<C-u>OverCommandLine<CR>'<,'>s/
-	autocmd FileType * OverCommandLineNoremap  <C-l>      <Esc>
+	autocmd User * nnoremap <silent>       :%s/       :<C-u>OverCommandLine<CR>%s/
+	autocmd User * nnoremap <silent>       :s/        :<C-u>OverCommandLine<CR>s/
+	autocmd User * nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
+	autocmd User * nnoremap <silent><expr> <C-k>S     ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/' . expand('<cword>')
+	autocmd User * vnoremap <silent>       :s/        :<C-u>OverCommandLine<CR>'<,'>s/
 
 
 	" anzu-chan
-	autocmd FileType * nmap n      <Plug>(anzu-n-with-echo)zv
-	autocmd FileType * nmap N      <Plug>(anzu-N-with-echo)zv
-	autocmd FileType * nmap *      <Plug>(anzu-star-with-echo)zv
-	autocmd FileType * nmap #      <Plug>(anzu-sharp-with-echo)zv
-	autocmd FileType * nmap <C-w>* <C-w>v<Plug>(anzu-star-with-echo)zv
-	autocmd FileType * nmap <C-w># <C-w>v<Plug>(anzu-sharp-with-echo)zv
+	autocmd User * nmap n      <Plug>(anzu-n-with-echo)zv
+	autocmd User * nmap N      <Plug>(anzu-N-with-echo)zv
+	autocmd User * nmap *      <Plug>(anzu-star-with-echo)zv
+	autocmd User * nmap #      <Plug>(anzu-sharp-with-echo)zv
+	autocmd User * nmap <C-w>* <C-w>v<Plug>(anzu-star-with-echo)zv
+	autocmd User * nmap <C-w># <C-w>v<Plug>(anzu-sharp-with-echo)zv
 
 
 	" incsearch.vim
-	autocmd FileType * nmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
-	autocmd FileType * nmap <silent>    <leader>/         /\m\C
-	autocmd FileType * nmap <silent>    <leader><leader>/ /\m\C\<\>[Left][Left]
-	autocmd FileType * nmap             g/                /\<<C-r>"\><CR>
-	autocmd FileType * nmap <expr>      ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
-	autocmd FileType * nmap <silent>    <leader>?         ?\m\C
-	autocmd FileType * nmap <silent>    <leader><leader>? ?\m\C\<\>[Left][Left]
-	autocmd FileType * nmap             g?                ?\<<C-r>"\><CR>
-	autocmd FileType * vmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
-	autocmd FileType * vmap <expr>      ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
-	autocmd FileType * IncSearchNoreMap <C-j> <CR>
-	autocmd FileType * IncSearchNoreMap <C-l> <Esc>
+	autocmd User * nmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
+	autocmd User * nmap <silent>    <leader>/         /\m\C
+	autocmd User * nmap <silent>    <leader><leader>/ /\m\C\<\>[Left][Left]
+	autocmd User * nmap             g/                /\<<C-r>"\><CR>
+	autocmd User * nmap <expr>      ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
+	autocmd User * nmap <silent>    <leader>?         ?\m\C
+	autocmd User * nmap <silent>    <leader><leader>? ?\m\C\<\>[Left][Left]
+	autocmd User * nmap             g?                ?\<<C-r>"\><CR>
+	autocmd User * vmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
+	autocmd User * vmap <expr>      ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
 
 
 	" TaskList.vim
-	autocmd FileType * nmap <leader>T <Plug>TaskListToggle
+	autocmd User * nmap <leader>T <Plug>TaskListToggle
 
 
 	" undotree
-	autocmd FileType * nnoremap <leader>U :<C-u>UndotreeToggle<CR>
+	autocmd User * nnoremap <leader>U :<C-u>UndotreeToggle<CR>
 
 
 	" neosnippet.vim
-	autocmd FileType * imap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
-	autocmd FileType * smap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
+	autocmd User * imap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
+	autocmd User * smap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
 augroup END
 
 " }}}
@@ -1939,30 +2044,30 @@ augroup END
 " Buffer Local KeyMaps {{{
 
 augroup PluginPrefs
-	autocmd FileType int-* nnoremap <buffer> q          <NOP>
-	autocmd FileType int-* nnoremap <buffer> <C-n>      gt
-	autocmd FileType int-* nnoremap <buffer> <C-p>      gT
-	autocmd FileType int-* nnoremap <buffer> <C-l>      <NOP>
+	autocmd User int-* nnoremap <buffer> q          <NOP>
+	autocmd User int-* nnoremap <buffer> <C-n>      gt
+	autocmd User int-* nnoremap <buffer> <C-p>      gT
+	autocmd User int-* nnoremap <buffer> <C-l>      <NOP>
 
-	autocmd FileType int-* nmap     <buffer> <C-]>      <Plug>(vimshell_int_clear)
-	autocmd FileType int-* nmap     <buffer> Q          <Plug>(vimshell_int_exit)
-	autocmd FileType int-* nmap     <buffer> gj         <Plug>(vimshell_int_next_prompt)
-	autocmd FileType int-* nmap     <buffer> gk         <Plug>(vimshell_int_previous_prompt)
+	autocmd User int-* nmap     <buffer> <C-]>      <Plug>(vimshell_int_clear)
+	autocmd User int-* nmap     <buffer> Q          <Plug>(vimshell_int_exit)
+	autocmd User int-* nmap     <buffer> gj         <Plug>(vimshell_int_next_prompt)
+	autocmd User int-* nmap     <buffer> gk         <Plug>(vimshell_int_previous_prompt)
 
-	autocmd FileType int-* inoremap <buffer> <C-l>      <Esc>
-	autocmd FileType int-* inoremap <buffer> <C-b>      <Left>
-	autocmd FileType int-* inoremap <buffer> <C-f>      <Right>
-	autocmd FileType int-* inoremap <buffer> <C-e>      <End>
-	autocmd FileType int-* inoremap <buffer> <C-d>      <Del>
+	autocmd User int-* inoremap <buffer> <C-l>      <Esc>
+	autocmd User int-* inoremap <buffer> <C-b>      <Left>
+	autocmd User int-* inoremap <buffer> <C-f>      <Right>
+	autocmd User int-* inoremap <buffer> <C-e>      <End>
+	autocmd User int-* inoremap <buffer> <C-d>      <Del>
 
-	autocmd FileType int-* imap     <buffer> <C-n>      <C-o><Plug>(vimshell_int_next_prompt)<End>
-	autocmd FileType int-* imap     <buffer> <C-p>      <C-o><Plug>(vimshell_int_previous_prompt)<End>
-	autocmd FileType int-* imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
-	autocmd FileType int-* imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
-	autocmd FileType int-* imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
+	autocmd User int-* imap     <buffer> <C-n>      <C-o><Plug>(vimshell_int_next_prompt)<End>
+	autocmd User int-* imap     <buffer> <C-p>      <C-o><Plug>(vimshell_int_previous_prompt)<End>
+	autocmd User int-* imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
+	autocmd User int-* imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
+	autocmd User int-* imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
 
 
-	autocmd FileType ref-* nnoremap <silent><buffer> Q :<C-u>quit<CR>
+	autocmd User ref-* nnoremap <silent><buffer> Q :<C-u>quit<CR>
 augroup END
 
 " }}}
@@ -1984,7 +2089,7 @@ augroup FileEvent
 	"@Incomplete('do not functioned')
 	"@Incomplete('do not functioned as exchanger')
 	" netrw
-	autocmd FileType netrw highlight default link CursorLine Visual
+	autocmd User netrw highlight default link CursorLine Visual
 augroup END
 
 "}}}
@@ -2002,6 +2107,7 @@ endif
 "}}}
 
 
+doautocmd User
 filetype plugin indent on
 syntax enable
 let g:vimrc['loaded'] = 1
