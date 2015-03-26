@@ -51,11 +51,6 @@
 
 "-- Exeption happened when input '.*' to unite textarea
 
-"-- 'cs' sneppet 'pragma' circulated with 'warning' in neosnippet-snippets
-
-"-- OverCommandLine throw (E803: ID not found: 1011) when press % some times.
-"  -- but doesn't happned some times.
-
 "}}}
 " Todo {{{
 
