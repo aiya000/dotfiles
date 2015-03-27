@@ -246,13 +246,16 @@ endif
 
 function! s:remove_empty_bundledir()  "{{{
 	" get bundled plugin directory names
-	let l:dirs = map(split(glob('~/vimfiles/bundle/*'), '\n'), 'fnamemodify(v:val, ":t")')
+	let l:dirs = split(glob('~/vimfiles/bundle/*'), '\n')
+	let l:dir_names = map(l:dirs, 'fnamemodify(v:val, ":t")')
 
-	for l:dir in l:dirs
-		let l:plugin_dir = s:bundledir . '/' . l:dir
-		let l:is_empty   = s:system('ls ' . l:plugin_dir) ==# ''
+	for l:dir_name in l:dir_names
+		let l:plugin_dir   = s:bundledir . '/' . l:dir_name
 
-		if l:is_empty
+		let l:is_empty_dir = glob('autoload/*') ==# ''
+
+		if l:is_empty_dir
+			"@Deprecated('should not be use unix command')
 			call s:system('rmdir ' . l:plugin_dir)
 		endif
 	endfor
@@ -813,17 +816,6 @@ if !isdirectory(g:rogue#directory)
 endif
 
 "}}}
-"--- vim-over ---"{{{
-
-"@Imcomplete('do not functioned')
-if neobundle#tap('vim-over')
-	function! neobundle#hooks.on_source(bundle)
-		autocmd KeyMapping User * OverCommandLineNoremap <C-l> <Esc>
-	endfunction
-	call neobundle#untap()
-endif
-
-"}}}
 "--- vim-submode ---"{{{
 
 let g:submode_timeout = 0
@@ -929,20 +921,6 @@ let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
 
 " vimdoc-ja is secondary order
 set helplang=en,ja
-
-"}}}
-"--- incsearch.vim ---"{{{
-
-"@Imcomplete('do not functioned')
-if neobundle#tap('incsearch.vim')
-	function! neobundle#hooks.on_source(bundle)
-		augroup KeyMapping
-			autocmd User * IncSearchNoreMap <C-j> <CR>
-			autocmd User * IncSearchNoreMap <C-l> <Esc>
-		augroup END
-	endfunction
-	call neobundle#untap()
-endif
 
 "}}}
 "--- Conque-Shell ---"{{{
@@ -1823,7 +1801,7 @@ endfunction "}}}
 " Override mapping {{{
 
 augroup KeyMapping
-	" † Rebirth Of The Neo Ex
+	" † Ex Improved
 	autocmd User * nnoremap Q gQ
 	autocmd User * nnoremap <C-n> gt
 	autocmd User * nnoremap <C-p> gT
@@ -1860,7 +1838,7 @@ augroup KeyMapping
 	autocmd User * nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
 	autocmd User * nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
 	autocmd User * nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
-	autocmd User * nnoremap <silent> <C-k>J     :<C-u>wall<CR>
+	autocmd User * nnoremap <silent> <C-k>J     :<C-u>wall<CR>:echo 'written all !'<CR>
 	autocmd User * nnoremap <silent> <C-k>R     :<C-u>let &filetype = &filetype<CR>
 	autocmd User * nnoremap <silent> <C-k>r     :<C-u>doautocmd User<CR>
 	autocmd User * nnoremap <silent> <C-k>l     :<C-u>source %<CR>
@@ -1873,10 +1851,8 @@ augroup KeyMapping
 	autocmd User * inoremap <C-k><C-y> <Esc>k"zyyjV"zp:let @z = ''<CR>A
 
 
-	"autocmd User * vnoremap <silent> [k :<C-u>call <SID>cursor_up_to_lid()<CR>
-	"autocmd User * vnoremap <silent> ]k :<C-u>call <SID>cursor_up_to_lid()<CR>
-	"autocmd User * vnoremap <silent> [j :<C-u>call <SID>cursor_down_to_ground()<CR>
-	"autocmd User * vnoremap <silent> ]j :<C-u>call <SID>cursor_down_to_ground()<CR>
+	"autocmd User * vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
+	"autocmd User * vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
 
 
 	autocmd User * cnoremap <C-k><C-p> <Up>
@@ -1970,7 +1946,7 @@ augroup KeyMapping
 
 
 	" excitetranslate-vim
-	autocmd User * nnoremap <silent> <leader>t :<C-u>ExciteTranslate<CR>
+	autocmd User * nnoremap <silent> <leader>T :<C-u>ExciteTranslate<CR>
 
 
 	" vim-over
@@ -1979,6 +1955,9 @@ augroup KeyMapping
 	autocmd User * nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
 	autocmd User * nnoremap <silent><expr> <C-k>S     ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/' . expand('<cword>')
 	autocmd User * vnoremap <silent>       :s/        :<C-u>OverCommandLine<CR>'<,'>s/
+	autocmd User * cnoremap <silent>       <C-k>:     :<C-u>OverCommandLine<CR>
+	autocmd User * OverCommandLineNoremap <C-l> <Esc>
+	autocmd User * OverCommandLineNoremap <C-]> '<,'>
 
 
 	" anzu-chan
@@ -2001,10 +1980,12 @@ augroup KeyMapping
 	autocmd User * nmap             g?                ?\<<C-r>"\><CR>
 	autocmd User * vmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
 	autocmd User * vmap <expr>      ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
+	autocmd User * IncSearchNoreMap <C-j> <CR>
+	autocmd User * IncSearchNoreMap <C-l> <Esc>
 
 
 	" TaskList.vim
-	autocmd User * nmap <leader>T <Plug>TaskListToggle
+	autocmd User * nmap <leader>t <Plug>TaskListToggle
 
 
 	" undotree
@@ -2022,30 +2003,30 @@ augroup END
 " Buffer Local KeyMaps {{{
 
 augroup PluginPrefs
-	autocmd User int-* nnoremap <buffer> q          <NOP>
-	autocmd User int-* nnoremap <buffer> <C-n>      gt
-	autocmd User int-* nnoremap <buffer> <C-p>      gT
-	autocmd User int-* nnoremap <buffer> <C-l>      <NOP>
+	autocmd FileType int-* nnoremap <buffer> q          <NOP>
+	autocmd FileType int-* nnoremap <buffer> <C-n>      gt
+	autocmd FileType int-* nnoremap <buffer> <C-p>      gT
+	autocmd FileType int-* nnoremap <buffer> <C-l>      <NOP>
 
-	autocmd User int-* nmap     <buffer> <C-]>      <Plug>(vimshell_int_clear)
-	autocmd User int-* nmap     <buffer> Q          <Plug>(vimshell_int_exit)
-	autocmd User int-* nmap     <buffer> gj         <Plug>(vimshell_int_next_prompt)
-	autocmd User int-* nmap     <buffer> gk         <Plug>(vimshell_int_previous_prompt)
+	autocmd FileType int-* nmap     <buffer> <C-]>      <Plug>(vimshell_int_clear)
+	autocmd FileType int-* nmap     <buffer> Q          <Plug>(vimshell_int_exit)
+	autocmd FileType int-* nmap     <buffer> gj         <Plug>(vimshell_int_next_prompt)
+	autocmd FileType int-* nmap     <buffer> gk         <Plug>(vimshell_int_previous_prompt)
 
-	autocmd User int-* inoremap <buffer> <C-l>      <Esc>
-	autocmd User int-* inoremap <buffer> <C-b>      <Left>
-	autocmd User int-* inoremap <buffer> <C-f>      <Right>
-	autocmd User int-* inoremap <buffer> <C-e>      <End>
-	autocmd User int-* inoremap <buffer> <C-d>      <Del>
+	autocmd FileType int-* inoremap <buffer> <C-l>      <Esc>
+	autocmd FileType int-* inoremap <buffer> <C-b>      <Left>
+	autocmd FileType int-* inoremap <buffer> <C-f>      <Right>
+	autocmd FileType int-* inoremap <buffer> <C-e>      <End>
+	autocmd FileType int-* inoremap <buffer> <C-d>      <Del>
 
-	autocmd User int-* imap     <buffer> <C-n>      <C-o><Plug>(vimshell_int_next_prompt)<End>
-	autocmd User int-* imap     <buffer> <C-p>      <C-o><Plug>(vimshell_int_previous_prompt)<End>
-	autocmd User int-* imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
-	autocmd User int-* imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
-	autocmd User int-* imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
+	autocmd FileType int-* imap     <buffer> <C-n>      <C-o><Plug>(vimshell_int_next_prompt)<End>
+	autocmd FileType int-* imap     <buffer> <C-p>      <C-o><Plug>(vimshell_int_previous_prompt)<End>
+	autocmd FileType int-* imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
+	autocmd FileType int-* imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
+	autocmd FileType int-* imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
 
 
-	autocmd User ref-* nnoremap <silent><buffer> Q :<C-u>quit<CR>
+	autocmd FileType ref-* nnoremap <silent><buffer> Q :<C-u>quit<CR>
 augroup END
 
 " }}}
@@ -2079,6 +2060,7 @@ endif
 "}}}
 
 
+doautocmd User
 filetype plugin indent on
 syntax enable
 doautocmd User
