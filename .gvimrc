@@ -54,13 +54,6 @@ let g:gvimrc['guifont'].size = get(g:gvimrc, 'size', s:is_windows ? ':h10' : ' 1
 scriptencoding utf8
 
 " }}}
-" autcmd Groups {{{
-
-augroup GuiPrefs
-	autocmd!
-augroup END
-
-"}}}
 
 
 "-------------------------"

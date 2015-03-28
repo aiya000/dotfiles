@@ -12,6 +12,8 @@ let &commentstring = ' -- %s'
 
 augroup MyFtpluginHaskell
 	autocmd!
-	autocmd VimEnter,ColorScheme * highlight ftHaskellHeadSpace cterm=underline ctermfg=DarkGray
+	autocmd VimEnter,ColorScheme * highlight ftHaskellHeadSpace
+	\                              cterm=underline ctermfg=DarkGray
+	\                              gui=underline   guifg=Cyan
 	autocmd VimEnter             * call matchadd('ftHaskellHeadSpace', '^\s\+')
 augroup END
