@@ -63,6 +63,8 @@
 
 "-- read help 'cino'
 
+"-- see help 'ftplugin' L2159
+
 " }}}
 
 
@@ -1951,11 +1953,11 @@ augroup KeyMapping
 
 
 	" vim-over
-	autocmd User * nnoremap <silent>       :%s/       :<C-u>OverCommandLine<CR>%s/
-	autocmd User * nnoremap <silent>       :s/        :<C-u>OverCommandLine<CR>s/
-	autocmd User * nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/'
-	autocmd User * nnoremap <silent><expr> <C-k>S     ':OverCommandLine<CR>%s/\<' . expand('<cword>') . '\>/' . expand('<cword>')
-	autocmd User * vnoremap <silent>       :s/        :<C-u>OverCommandLine<CR>'<,'>s/
+	autocmd User * nnoremap <silent>       :%s/       :<C-u>OverCommandLine %s/<CR>
+	autocmd User * nnoremap <silent>       :s/        :<C-u>OverCommandLine s/<CR>
+	autocmd User * nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine %s/\<' . expand('<cword>') . '\>/<CR>'
+	autocmd User * nnoremap <silent><expr> <C-k>S     ':OverCommandLine %s/\<' . expand('<cword>') . '\>/' . expand('<cword>') . '<CR>'
+	autocmd User * vnoremap <silent>       :s/        :<C-u>OverCommandLine '<,'>s/<CR>
 	autocmd User * cnoremap <silent>       <C-k>:     :<C-u>OverCommandLine<CR>
 	autocmd User * OverCommandLineNoremap <C-l> <Esc>
 	autocmd User * OverCommandLineNoremap <C-]> '<,'>
