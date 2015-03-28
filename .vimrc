@@ -1234,11 +1234,10 @@ set spelllang=en_US,cjk
 " Set reference path, using by :find, gf and more
 set path=.,,./**
 
-"@Experiment('commented out')
 " Manually generate my help tags
-"if isdirectory(expand('~/.vim/doc'))
-"	helptags ~/.vim/doc
-"endif
+if isdirectory(s:vim_home . '/doc')
+	execute 'helptags' (s:vim_home . '/doc')
+endif
 
 "}}}
 
@@ -1560,7 +1559,6 @@ command!  Virb     NOP
 command!  IrbTab   NOP
 
 " }}}
-" Read something {{{
 
 " command! HighlightListTab {{{
 
@@ -1587,6 +1585,7 @@ endfunction
 command! HighlightListTab call s:highlight_list_tab()
 
 " }}}
+command! GitAdd !git add %
 
 " }}}
 
@@ -1710,6 +1709,7 @@ autocmd FileEvent FileType,WinEnter,BufWinEnter * let s:long_separator =
 \:	&ft =~# '\v(markdown|eruby)' ? '<!-- - - - - - - - - - - - - - - - -->'
 \:	&ft =~# '\v(ruby|sh)'        ? '#- - - - - - - - - - - - - - - - -#'
 \:	&ft =~# '\v(text|none)'      ? '- - - - - - - - - - - - - - - - - - - -'
+\:	&ft ==# 'help'               ? '================================================================================'
 \                                : 'long_separator_undefined'
 
 
@@ -1735,6 +1735,7 @@ autocmd FileEvent FileType,WinEnter,BufWinEnter * let s:short_sparator =
 \:	&ft =~# '\v(markdown|eruby)' ? '<!-- - - - - - -->'
 \:	&ft =~# '\v(ruby|sh)'        ? '#- - - - - - -#'
 \:	&ft =~# '\v(text|none)'      ? '- - - - - - - - - -'
+\:	&ft ==# 'help'               ? '============================================='
 \                                : 'short_separator_undefined'
 
 
