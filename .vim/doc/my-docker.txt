@@ -8,8 +8,9 @@ Author : aiya000 <aiya.develop@gmail.com>
 =============================================
 CONTENTS	*my-docker*
 
-Dockerのイメージリスト			|my-docker-list|
-Dockerのイメージにログイン		|my-docker-login|
+Docker Image List			|my-docker-list|
+Docker Login				|my-docker-login|
+Docker Commit	 			|my-docker-commit|
 
 =============================================
 
@@ -21,6 +22,15 @@ $ sudo docker ps -a
 
 
 ================================================================================
+Docker Login 				*my-docker-login*
+
+$ sudo docker run -i -u {user-name} -t {image-name} /bin/bash
+
+
+================================================================================
+Docker Commit	 			*my-docker-commit*
+
+$ sudo docker commit {commit-id} {image-name}
 
 
 ================================================================================
