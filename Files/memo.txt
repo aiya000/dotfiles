@@ -673,4 +673,128 @@ let QFixHowm_Title = '='
 
 
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
+" 2015-03-28
+
+" Installation check.
+if neobundle#exists_not_installed_bundles()
+  echomsg 'Not installed bundles : ' .
+          \ string(neobundle#get_not_installed_bundle_names())
+  echomsg 'Please execute ":NeoBundleInstall" command.'
+              "finish
+endif
+
+" すべての数値を10進数と考える"
+set nrformats =
+
+"" 終了するときにファイル情報を保存する
+autocmd BufWinLeave *? silent mkview
+autocmd BufWinEnter *? silent loadview
+
+"" commentを自動で挿入しない
+set formatoptions-=r
+------------------------------------------------------------------------------------------------------------------------------------------------
+cohama        : L456 formatoptions は直でこういう風に書いても ftplugin で無効にされちゃうことがあるんだよなぁ...。  03/28 23:22
+                結論 ftplugin が悪い  03/28 23:22
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+"" "%"の拡張
+runtime macros/matchit.vim
+runtime macros/editexisting.vim
+
+
+" quickrun.vim 用設定
+let g:quickrun_config['python.test'] = {'command': 'nosetests', 'exec': ['%c -v %s']}
+let g:quickrun_config['python'] = {'command': 'python3'}
+
+let g:quickrun_config['maxima'] = {'command': 'maxima', 'exec': ['%c -b %s']}
+" blockdiag
+let g:quickrun_config['blockdiag'] = {
+            \'command': 'blockdiag',
+            \'exec': ['%c -a %s -o %{expand("%:r")}.png', 'display %{expand("%:r")}.png'],
+            \'outputter':'message',
+            \}
+
+let g:quickrun_config['tex'] = {
+            \'command': 'platex',
+            \'exec': ['%c %s && dvipdfmx %{expand("%:r").dvi && evince'],
+            \'outputter': 'message'
+            \}
+
+let g:quickrun_config['plantuml'] = {
+            \'command': 'java',
+            \'exec': [
+                \'%c -jar ~/bin/plantuml.8020.jar %s -tpng',
+                \'display %s:p:r.png'
+                \],
+            \'outputter': 'null'
+            \}
+------------------------------------------------------------------------------------------------------------------------------------------------
+yassu0320     : ちょっとだけblockdiagのplugin宣伝https://bitbucket.org/yassu0320/blockdiagcontrib-tex  03/28 23:45
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+"" task
+let g:task_suffix = "task"
+let g:task_path = "~/Dropbox/task/"
+let g:task_date = "%Y/%m/%d(%a) %H:%M"
+function! s:task_edit(...) "{{{
+    " assume that len(a:000) <= 1
+let l:advance = get(a:, 1, '0')
+python << EOF
+import vim
+from datetime import datetime, timedelta
+
+date = datetime.today()
+advance_day = int(vim.eval('l:advance'))
+date += timedelta(days=advance_day)
+task_filename = '%02d' % date.year + '-%02d' % date.month + '-%02d' % date.day
+task_filename += '.' + vim.eval('g:task_suffix')
+vim.command("execute 'e' g:task_path . '{}'".format(task_filename))
+EOF
+endfunction
+" }}}
+command! -nargs=? TEdit call s:task_edit(<f-args>)
+command! -nargs=1 TGrep :execute 'vimgrep' <f-args> g:task_path. '/*'
+
+set makeprg=scons
+
+
+NeoBundle 'yegappan/mru'
+NeoBundle 'jlanzarotta/bufexplorer'
+NeoBundle 'Yggdroot/indentLine'
+NeoBundle 'bronson/vim-trailing-whitespace'
+NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'vim-scripts/maxima.vim'
+NeoBundle 'mhaig/vim-blockdiag-series'
+NeoBundle 'aklt/plantuml-syntax'
+NeoBundle 'nicoraffo/conque'
+NeoBundle 'rhysd/committia.vim'
+NeoBundle 'yassu/todo-env.vim'
+NeoBundle 'ngmy/vim-rubocop'
+
+
+NeoBundle 'xolox/vim-session', {
+    \ 'depends': 'xolox/vim-misc'
+\}
+" 現在のディレクトリ直下の .vimsessions/ を取得 
+let s:local_session_directory = xolox#misc#path#merge(getcwd(), '.vimsessions')
+" 存在すれば
+if isdirectory(s:local_session_directory)
+  " session保存ディレクトリをそのディレクトリの設定
+  let g:session_directory = s:local_session_directory
+  " vimを辞める時に自動保存
+  let g:session_autosave = 'yes'
+  " 引数なしでvimを起動した時にsession保存ディレクトリのdefault.vimを開く
+  let g:session_autoload = 'yes'
+else
+  let g:session_autosave = 'no'
+  let g:session_autoload = 'no'
+endif
+unlet s:local_session_directory
+command! SaveS :SaveSession
+
+autocmd BufNewFile *.rb 0r ~/.vim/templates/rb.tpl
+
+
+"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
 vim:ft=vim:
