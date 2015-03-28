@@ -1053,7 +1053,7 @@ augroup END
 
 
 augroup HighlightPref
-	autocmd ColorScheme       * highlight RcEmSpace cterm=standout ctermfg=LightBlue
+	autocmd ColorScheme       * highlight RcEmSpace ctermbg=LightBlue
 	autocmd VimEnter,WinEnter * call matchadd('RcEmSpace', '　')
 augroup END
 
@@ -2061,7 +2061,6 @@ endif
 "}}}
 
 
-doautocmd User
 filetype plugin indent on
 syntax enable
 doautocmd User
