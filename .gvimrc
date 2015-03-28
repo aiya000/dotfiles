@@ -1,5 +1,3 @@
-scriptencoding utf8
-
 "-------------------
 "--  Recipe Menu  --
 "-------------------
@@ -37,12 +35,12 @@ scriptencoding utf8
 let g:gvimrc = get(g:, 'gvimrc', {})
 let g:gvimrc['loaded'] = get(g:gvimrc, 'loaded', 0)
 
-let s:isUnix    = has('unix')
-let s:isWindows = has('win32')
+let s:is_unix    = has('unix')
+let s:is_windows = has('win32')
 
 let g:gvimrc['guifont']      = get(g:gvimrc, 'guifont', {})
-let g:gvimrc['guifont'].font = get(g:gvimrc, 'font', s:isWindows ? 'MS_Gothic' : 'Andale Mono')
-let g:gvimrc['guifont'].size = get(g:gvimrc, 'size', s:isWindows ? ':h10' : ' 10')
+let g:gvimrc['guifont'].font = get(g:gvimrc, 'font', s:is_windows ? 'MS_Gothic' : 'Andale Mono')
+let g:gvimrc['guifont'].size = get(g:gvimrc, 'size', s:is_windows ? ':h10' : ' 10')
 
 "}}}
 
@@ -50,6 +48,12 @@ let g:gvimrc['guifont'].size = get(g:gvimrc, 'size', s:isWindows ? ':h10' : ' 10
 "-------------------------"
 "       Initialize        "
 "-------------------------"
+" file encoding {{{
+
+" Encoding for this script
+scriptencoding utf8
+
+" }}}
 " autcmd Groups {{{
 
 augroup GuiPrefs
@@ -89,25 +93,25 @@ endif
 " DressUp kawaii-vim
 command! DressUpColorDesert
 \	colorscheme desert
-\|	if s:isWindows
+\|	if s:is_windows
 \|		set transparency=245
 \|	endif
 
 command! DressUpColorEvening
 \	colorscheme evening
-\|	if s:isWindows
+\|	if s:is_windows
 \|		set transparency=220
 \|	endif
 
 command! DressUpColorMolokai
 \	colorscheme molokai
-\|	if s:isWindows
+\|	if s:is_windows
 \|		set transparency=255
 \|	endif
 
 command! DressUpColorSolarized
 \	colorscheme solarized
-\|	if s:isWindows
+\|	if s:is_windows
 \|		set transparency=220
 \|	endif
 
@@ -128,7 +132,7 @@ endif
 command! GVimConfig    e $MYGVIMRC
 command! GVimConfigTab tabnew $MYGVIMRC
 
-if s:isWindows
+if s:is_windows
 	command! HighTransparence  set transparency=140
 	command! MidTransparence   set transparency=180
 	command! LowTransparence   set transparency=220
@@ -167,9 +171,9 @@ augroup END
 if !g:gvimrc['loaded']
 	set background=dark
 
-	if s:isUnix
+	if s:is_unix
 		colorscheme molokai
-	elseif s:isWindows
+	elseif s:is_windows
 		colorscheme solarized
 	endif
 endif
@@ -183,7 +187,7 @@ endif
 "--- TweetVim ---"{{{
 
 let g:tweetvim_display_username = 1
-let g:tweetvim_display_icon = 1
+let g:tweetvim_display_icon     = 1
 
 "}}}
 "--- J6uil ---"{{{
@@ -193,65 +197,20 @@ let g:J6uil_display_icon = 1
 "}}}
 "--- vim-submode ---{{{
 
-if s:isWindows
-	augroup FileEvent
-		autocmd FileType * call submode#enter_with('trans_changer', 'n', '', '<C-s>*')
-		autocmd FileType * call submode#map('trans_changer', 'n', '', 'j', ':let &transparency = <C-r>=&transparency<CR> + 10<CR>')
-		autocmd FileType * call submode#map('trans_changer', 'n', '', 'k', ':let &transparency = <C-r>=&transparency<CR> - 10<CR>')
-		autocmd FileType * call submode#map('trans_changer', 'n', '', 'H', ':set transparency=1<CR>')
-		autocmd FileType * call submode#map('trans_changer', 'n', '', 'M', ':set transparency=127<CR>')
-		autocmd FileType * call submode#map('trans_changer', 'n', '', 'L', ':set transparency=255<CR>')
+if s:is_windows
+	augroup keymappings
+		autocmd User * call submode#enter_with('trans_changer', 'n', '', '<C-s>*')
+		autocmd User * call submode#map('trans_changer', 'n', '', 'j', ':let &transparency = <C-r>=&transparency<CR> + 10<CR>')
+		autocmd User * call submode#map('trans_changer', 'n', '', 'k', ':let &transparency = <C-r>=&transparency<CR> - 10<CR>')
+		autocmd User * call submode#map('trans_changer', 'n', '', 'H', ':set transparency=1<CR>')
+		autocmd User * call submode#map('trans_changer', 'n', '', 'M', ':set transparency=127<CR>')
+		autocmd User * call submode#map('trans_changer', 'n', '', 'L', ':set transparency=255<CR>')
 	augroup END
 endif
 
 "}}}
 
 
-"-------------------------"
-"        File_Types       "
-"-------------------------"
-"{{{
-
-" Call matchadd when that file is target filetype
-function! s:matchadd_with_filetype(ft, tag, regex, priority, id) "{{{
-	if &filetype == a:ft
-		try
-			let l:id = matchadd(a:tag, a:regex, a:priority, a:id)
-		catch /\vE(799|801)/
-			" Suppress repeate add
-			let l:id = a:id
-		endtry
-	else
-		try
-			call matchdelete(a:id)
-		catch /\vE(802|803)/
-			" Suppress repeate delete
-		endtry
-
-		let l:id = a:id
-	endif
-
-	return l:id
-endfunction "}}}
-
-augroup FileEvent
-	" Set for "Vi Improved"
-	autocmd VimEnter,ColorScheme * highlight GrcMyHint gui=bold guifg=#ef5939
-	"@Incomplete('These were not deleted')
-	autocmd BufWinEnter          * let s:grcHint = s:matchadd_with_filetype('vim', 'GrcMyHint', '\s*"\zs@\w\+(.*)\ze', 10, get(s:, 'grcHint', 10101))
-
-	" Set for Haskell
-	autocmd VimEnter,ColorScheme * highlight GrcHeadHfSpace gui=underline guifg=Cyan
-	autocmd BufWinEnter          * let s:grcHeadHfSpace = s:matchadd_with_filetype('haskell', 'GrcHeadHfSpace', '^\s\+', 10, get(s:, 'grcHeadHfSpace', 10102))
-
-	" Set for C-Sharp
-	autocmd VimEnter,ColorScheme * highlight default link GrcTypeInference Identifier
-	autocmd VimEnter,WinEnter,BufRead    *.cs syntax keyword GrcTypeInference var
-augroup END
-
-"}}}
-
-
 syntax enable
+doautocmd User
 let g:gvimrc['loaded'] = 1
-
