@@ -71,10 +71,12 @@ nnoremap <leader>l <C-l>
 imap     <C-j>     <CR>
 inoremap <C-c>     <Esc>
 inoremap <C-l>     <Esc>
+inoremap <leader>l <C-l>
 
 vmap     <C-j>     <CR>
 vnoremap <C-c>     <Esc>
 vnoremap <C-l>     <Esc>
+vnoremap <leader>l <C-l>
 
 
 " Bash like keys

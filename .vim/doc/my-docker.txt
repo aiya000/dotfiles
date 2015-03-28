@@ -24,7 +24,7 @@ $ sudo docker ps -a
 ================================================================================
 Docker Login 				*my-docker-login*
 
-$ sudo docker run -i -u {user-name} -t {image-name} /bin/bash
+$ sudo docker run -u {user-name} -i -t {image-name} /bin/bash
 
 
 ================================================================================
