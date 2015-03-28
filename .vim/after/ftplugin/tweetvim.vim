@@ -13,8 +13,8 @@ nnoremap <silent><buffer> Q              :<C-u>bdelete<CR>
 
 nmap             <buffer> <localleader>R <Plug>(tweetvim_action_remove_status)
 nmap             <buffer> <C-r>          <Plug>(tweetvim_action_reload)
-nmap             <buffer> <CR>           <Plug>(openbrowser-open)
-nmap             <buffer> [f             <Plug>(tweetvim_action_page_next)
-nmap             <buffer> ]f             <Plug>(tweetvim_action_page_next)
-nmap             <buffer> [b             <Plug>(tweetvim_action_page_previous)
-nmap             <buffer> ]b             <Plug>(tweetvim_action_page_previous)
+nmap             <buffer> >              <Plug>(tweetvim_action_page_next)
+nmap             <buffer> <              <Plug>(tweetvim_action_page_previous)
+
+nunmap           <buffer> ff
+nunmap           <buffer> bb
