@@ -12,6 +12,8 @@ source $BASE_DIR/utils.sh
 ignorefiles=`grepformat_ignorefiles`
 dotfiles=`ls -A $DOT_DIR | grep -v -E "^($ignorefiles)$"`
 
+yes_flag=`[ "$1" == "-y" ] && echo 1 || echo 0`
+
 
 # Define usage
 usage() {  #{{{
@@ -24,17 +26,19 @@ usage() {  #{{{
 
 
 # Confirm
-echo 'Realy link some links in $HOME ?(y/n)'
-while true ; do
-	read confirm
-	if [ "$confirm" = "n" ] ; then
-		echo 'Abort.'
-		exit 0
-	elif [ "$confirm" = "y" ] ; then
-		break
-	fi
-	echo '(y) or (n).'
-done
+if [ $yes_flag -eq 0 ] ; then
+	echo 'Realy link some links in $HOME ?(y/n)'
+	while true ; do
+		read confirm
+		if [ "$confirm" = "n" ] ; then
+			echo 'Abort.'
+			exit 0
+		elif [ "$confirm" = "y" ] ; then
+			break
+		fi
+		echo '(y) or (n).'
+	done
+fi
 
 
 # Start
