@@ -10,10 +10,9 @@ setl shiftwidth=2
 setl expandtab
 let &commentstring = ' -- %s'
 
+highlight ftHaskellHeadSpace cterm=underline ctermfg=DarkGray gui=underline guifg=Cyan
 augroup MyFtpluginHaskell
 	autocmd!
-	autocmd VimEnter,ColorScheme * highlight ftHaskellHeadSpace
-	\                              cterm=underline ctermfg=DarkGray
-	\                              gui=underline   guifg=Cyan
-	autocmd VimEnter             * call matchadd('ftHaskellHeadSpace', '^\s\+')
+	autocmd ColorScheme * highlight ftHaskellHeadSpace cterm=underline ctermfg=DarkGray gui=underline guifg=Cyan
+	autocmd BufWinEnter *.hs call matchadd('ftHaskellHeadSpace', '^\s\+')
 augroup END
