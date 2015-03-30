@@ -38,19 +38,22 @@
 "-- automatic mkdir './C:' when execute NeoBundleInstall in windows kaoriya
 "  -- does neobundle think that is repository...?
 
-"-- conceal-javadoc don't functioned ?
+"-- conceal-javadoc doesn't functioned ?
 
-"-- shot-f don't functioned in i_<C-o> temporary normal mode
+"-- shot-f doesn't functioned in i_<C-o> temporary normal mode
 
 "-- I couldn't auto make vimproc at anywhere
 
 "-- conflicted? vim-ruby and rspec.vim when those was set NeoBundleLazy
 "  -- does not loaded syntax of rspec.vim
 
-"-- incsearch.vim(?) throw an exception E874 when searched '<leader>~'
-"  -- on windows only ?
-
 "-- happened exception when input '.*' to unite textarea
+
+"-- neosnippet-snippets cs.snipt -> 'catch' must not be set option head
+"-- neosnippet-snippets cs.snipt -> 'finally' must not be set option head
+"-- neosnippet-snippets cs.snipt -> 'method' must not be set option head
+"-- neosnippet-snippets cs.snipt -> add alias to 'try_without_catch_nor_finally'
+"-- neosnippet-snippets cs.snipt -> remove '///' from xml comment snippets
 
 "}}}
 " Todo {{{
@@ -63,10 +66,18 @@
 
 "-- read help 'cino'
 
-"-- see help 'ftplugin' L2159
+"-- reference to help 'ftplugin' L2159
+
+"-- optimize to lazy load or strict load some plugins
+
+"-- :CheckAlwaysTodo(Enable|Disable) -> always check TODO use TaskList.vim when file opened
 
 " }}}
+" Note "{{{
 
+"-- almost all of command appended -bar option
+
+ "}}}
 
 
 "----------------------------------------
@@ -132,6 +143,7 @@ let s:groupname = $GROUP !=# '' ? $GROUP : $USER
 "{{{
 
 function! s:system(cmd)
+	"Incomplete('vimproc#system was not executed in this script, refer to vital.vim')
 	if exists('*vimproc#system')
 		return vimproc#system(a:cmd)
 	else
@@ -428,6 +440,7 @@ NeoBundleLazy    'yaasita/ore_markdown'
 NeoBundle        'chrisbra/vim-diff-enhanced'
 NeoBundle        'Shougo/neosnippet.vim'
 NeoBundle        'Shougo/neosnippet-snippets'
+NeoBundle        'tyru/operator-reverse.vim'
 
 
 call neobundle#end()
@@ -695,6 +708,7 @@ let g:unite_source_alias_aliases = {
 "}}}
 "--- vim-quickrun ---" {{{
 "
+"@Experiment('tempfile fields branched off unix or windows')
 let g:quickrun_config = {
 \	'_' : {
 \		'split'  : '',
@@ -703,49 +717,49 @@ let g:quickrun_config = {
 \		'hook/time/enable' : 1
 \	},
 \	'cpp' : {
-\		'command' : 'g++',
+\		'command' : executable('clang++') ? 'clang++' : 'g++',
 \		'cmdopt'  : '-std=c++14'
 \	},
 \	'java' : {
-\		'cmdopt' : '-source 1.8',
-\		'runner' : 'process_manager'
+\		'runner'   : 'process_manager',
+\		'tempfile' :  printf('%s/{tempname()}.java', $TMP)
 \	},
 \	'vimspec' : {
-\		'command' : 'themis',
-\		'cmdopt'  : '--runtimepath ".."',
-\		'exec'    : '%c %o %s:p | tr -d "\r"'
+\		'command'  : 'themis',
+\		'cmdopt'   : '--runtimepath ".."',
+\		'exec'     : '%c %o %s:p | tr -d "\r"',
+\		'tempfile' :  printf('%s/{tempname()}.vimspec', $TMP)
 \	}
 \}
 
-if s:is_windows
-	let g:quickrun_config['cs'] = {
-	\	'command'  : 'csc.exe',
-	\	'exec'     : ['%c %o %s:p', '%s:p:r.exe', 'del %s:p:r.exe'],
-	\	'hook/output_encode/encoding' : 'cp932:utf8'
-	\}
-elseif s:is_unix
+" Set java version
+let s:javav = s:system('java -version')
+let g:quickrun_config.java['cmdopt'] = s:javav =~# '1\.8' ? '-encoding UTF-8 -source 1.8'
+\                                    : s:javav =~# '1\.7' ? '-encoding UTF-8 -source 1.7'
+\                                                         : '-encoding UTF-8'
+unlet s:javav
+
+
+" Branch with env
+if s:is_unix
+	"@Experiment('changed tempfile field')
 	let g:quickrun_config['cs'] = {
 	\	'command'  : 'gmcs',
 	\	'exec'     : ['%c %o %s:p > /dev/null', 'mono %s:p:r.exe', 'rm %s:p:r.exe'],
-	\	'tempfile' : '{tempname()}.cs'
+	\	'tempfile' : printf('%s/{tempname()}.cs', $TMP)
+	\}
+elseif s:is_windows
+	let g:quickrun_config['cs'] = {
+	\	'command'  : 'csc.exe',
+	\	'exec'     : ['%c %o %s:p', '%s:p:r.exe', 'del %s:p:r.exe'],
+	\	'tempfile' : printf('%s/{tempname()}.cs', $TMP),
+	\	'hook/output_encode/encoding' : 'cp932:utf-8'
 	\}
 endif
 
 if s:is_cygwin
-	let g:quickrun_config['java'] = {
-	\	'command' : 'javac',
-	\	'exec'    : ['%c %o `echo %s | sed s:\:/:g | cygpath -w -f -`', '%c %s:t:r %a'],
-	\	'hook/output_encode/encoding' : 'Shift_JIS'
-	\}
-
-	let s:javav = s:system('java -version')
-
-	let g:quickrun_config.java['cmdopt'] =
-	\	s:javav =~# '1\.8' ? '-source 1.8 -encoding UTF-8' :
-	\	s:javav =~# '1\.7' ? '-source 1.7 -encoding UTF-8'
-	\	                   : '-encoding UTF-8'
-
-	unlet s:javav
+	let g:quickrun_config.java['exec'] = ['%c %o `echo %s | sed s:\:/:g | cygpath -w -f -`', '%c %s:t:r %a']
+	let g:quickrun_config.java['hook/output_encode/encoding'] = 'Shift_JIS'
 endif
 
 " }}}
@@ -874,8 +888,8 @@ if neobundle#tap('vim-submode')
 
 		" WinTab Mover
 		" Current buffer move to next tab "{{{
-		command! BufTabMovePrev execute 'normal! mZ:hide<CR>gT:vsp<CR>`Z'
-		command! BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? ':hide<CR>' : ':hide<CR>gt') . ':vsp<CR>`Z'
+		command! -bar BufTabMovePrev execute 'normal! mZ:hide<CR>gT:vsp<CR>`Z'
+		command! -bar BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? ':hide<CR>' : ':hide<CR>gt') . ':vsp<CR>`Z'
 		"}}}
 		autocmd User * call submode#enter_with('wintab_move', 'n', '', '<C-s>N', ':BufTabMoveNext<CR>')
 		autocmd User * call submode#enter_with('wintab_move', 'n', '', '<C-s>P', ':BufTabMovePrev<CR>')
@@ -1282,23 +1296,23 @@ autocmd FileEvent VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 call altercmd#load()
 
 " buffer open commands with filetype 'none'
-command! -bang NewOverridden new<bang> | setf none
+command! -bar -bang NewOverridden new<bang> | setf none
 AlterCommand new NewOverridden
 
-command! -bang VnewOverridden vnew<bang> | setf none
+command! -bar -bang VnewOverridden vnew<bang> | setf none
 AlterCommand vnew VnewOverridden
 
-command! -bang EnewOverridden enew<bang> | setf none
+command! -bar -bang EnewOverridden enew<bang> | setf none
 AlterCommand enew EnewOverridden
 
-command! -bang TabnewOverridden tabnew<bang> | setf none
+command! -bar -bang TabnewOverridden tabnew<bang> | setf none
 AlterCommand tabnew TabnewOverridden
 
 " }}}
 " Usefull {{{
 
 " Grep and Open current buffer
-command! -nargs=1 GrepNow vimgrep <args> % | cwindow
+command! -bar -nargs=1 GrepNow vimgrep <args> % | cwindow
 
 
 " Save a Temporary Directory
@@ -1306,7 +1320,7 @@ command! -nargs=1 GrepNow vimgrep <args> % | cwindow
 
 autocmd FileEvent BufNew * let b:tdir_dir = get(b:, 'tdir_dir', 'Not set tdir')
 
-command! TDirPwd           echo b:tdir_dir
+command! -bar TDirPwd           echo b:tdir_dir
 
 function! s:set_temporary_dir(path) "{{{
 	if isdirectory(a:path)
@@ -1317,9 +1331,9 @@ function! s:set_temporary_dir(path) "{{{
 		call s:echo_error('No such temporary root dir')
 	endif
 endfunction "}}}
-command! -nargs=1  TDirSet call s:set_temporary_dir(<q-args>)
+command! -bar -nargs=1  TDirSet call s:set_temporary_dir(<q-args>)
 
-command! TDirSetCurrentDir call s:set_temporary_dir('.')
+command! -bar TDirSetCurrentDir call s:set_temporary_dir('.')
 
 function! s:cd_temporary_dir() "{{{
 	if b:tdir_dir ==# 'Not set tdir'
@@ -1329,81 +1343,67 @@ function! s:cd_temporary_dir() "{{{
 		echo b:tdir_dir
 	endif
 endfunction "}}}
-command! TDirCd            call s:cd_temporary_dir()
+command! -bar TDirCd            call s:cd_temporary_dir()
 
 " }}}
 
 
-" Revese Lines
-function! s:reverse_line() range " {{{
-	if a:firstline is a:lastline
-		return
-	endif
-
-	let l:lines = []
-	let l:posit = getpos('.')
-
-	let l:z = @z
-	for l:line in range(a:firstline, a:lastline)
-		execute 'normal! "zdd'
-		call add(l:lines, @z)
-	endfor
-
-	for l:r in l:lines
-		let @z = l:r
-		execute 'normal! "zP'
-	endfor
-	let @z = l:z
-
-	call setpos('.', l:posit)
-endfunction " }}}
-command! -range=% ReverseLine :<line1>, <line2> call s:reverse_line()
+" Reverse ranged lines
+command! -bar -range=% ReverseLine :<line1>,<line2> OperatorReverseLines
 
 
 " Rename current buffer file
-function! s:rename_to(to_file) "{{{
+function! s:rename_to(to_file) abort "{{{
 	let l:this_file    = fnameescape(expand('%:t'))
 	let l:to_file      = fnameescape(a:to_file)
-	let l:editing_file = &modified
 
+	if fnamemodify(l:this_file, '%h') ==# fnamemodify(l:to_file, '%h')
+		call s:echo_error('New name is same old name, operation abort')
+		return
+	endif
+
+	let l:editing_file = &modified
 	if l:editing_file
-		echoerr 'Please :write this file'
+		call s:echo_error('Please :write this file')
 		return
 	endif
 
 	let l:failed = rename(l:this_file, l:to_file)
 	if l:failed
-		echoerr printf('Rename %s to %s is failed', l:this_file, a:to_file)
+		call s:echo_error(printf('Rename %s to %s is failed', l:this_file, a:to_file))
 		return
 	endif
 
-	let l:bufnr = bufnr('%')
 	execute ':edit' l:to_file
-	execute ':' . l:bufnr . 'bdelete'
+	silent write
+	silent execute ':bdelete' fnamemodify(l:this_file, '%h')
 
 	echo printf('Renamed %s to %s', l:this_file, l:to_file)
 endfunction "}}}
-command! -nargs=1 Rename call <SID>rename_to(<q-args>)
+command! -bar -nargs=1 Rename call <SID>rename_to(<q-args>)
 
 "}}}
 " Life Helper {{{
 
 " Vim Utils {{{
 
-command! VimConfig e $MYVIMRC
+command! -bar VimConfig e $MYVIMRC
 
-command! VimConfigTab tabnew $MYVIMRC
+command! -bar VimConfigTab tabnew $MYVIMRC
 
-command! Reload so $MYVIMRC
+command! -bar Reload so $MYVIMRC
 	\|	if has('gui_running')
 	\|		so $MYGVIMRC
 	\|	endif
 
-command! ForceSave w !sudo tee > /dev/null %
+cnoreabbr ForceSave w !sudo tee > /dev/null %
+command!  ForceSave NOP
 
-command! CdBufDir cd %:p:h
+command! -bar CdBufDir cd %:p:h
 
-command! ColorPreview Unite colorscheme -auto-preview
+command! -bar ColorPreview Unite colorscheme -auto-preview
+
+command! -bar FtpluginAfterEdit execute ':edit' (s:vim_home . '/after/ftplugin/' . &filetype . '.vim')
 
 " }}}
 " Twitter {{{
@@ -1413,9 +1413,9 @@ command! ColorPreview Unite colorscheme -auto-preview
 "    on tweetvim's TweetVimSwitchAccount command.
 
 "-- Basic --"
-command! Twitter            TweetVimHomeTimeline
-command! TwitterTab         tabnew | Twitter
-command! Tweet              TweetVimSay
+command! -bar Twitter            TweetVimHomeTimeline
+command! -bar TwitterTab         tabnew | Twitter
+command! -bar Tweet              TweetVimSay
 
 
 "-- Private Account --"
@@ -1428,10 +1428,10 @@ function! TwitterPrivateFunc() "{{{
 	execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['priv_ac']
 	let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['priv_ac']
 
-	execute ':TweetVimHomeTimeline'
+	TweetVimHomeTimeline
 endfunction "}}}
-command! TwitterPrivate     call TwitterPrivateFunc()
-command! TwitterPrivateTab  tabnew | TwitterPrivate
+command! -bar TwitterPrivate     call TwitterPrivateFunc()
+command! -bar TwitterPrivateTab  tabnew | TwitterPrivate
 function! TweetPrivateFunc() "{{{
 	if !exists('g:vimrc.private["twitter"]["priv_ac"]')
 		call s:echo_error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
@@ -1439,12 +1439,12 @@ function! TweetPrivateFunc() "{{{
 	endif
 
 	execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['priv_ac']
-	execute ':TweetVimSay'
+	TweetVimSay
 
 	"@Incomplete('wait sync here')
 	"execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
-command! TweetPrivate       call TweetPrivateFunc()
+command! -bar TweetPrivate       call TweetPrivateFunc()
 
 
 "-- Public Account --"
@@ -1457,10 +1457,10 @@ function! TwitterPublicFunc() "{{{
 	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['publ_ac']
 	let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['publ_ac']
 
-	execute ':TweetVimHomeTimeline'
+	TweetVimHomeTimeline
 endfunction "}}}
-command! TwitterPublic      call TwitterPublicFunc()
-command! TwitterPublicTab   tabnew | TwitterPublic
+command! -bar TwitterPublic      call TwitterPublicFunc()
+command! -bar TwitterPublicTab   tabnew | TwitterPublic
 function! TweetPublicFunc() "{{{
 	if !exists('g:vimrc.private["twitter"]["publ_ac"]')
 		call s:echo_error('Not set env variable => g:vimrc.private["twitter"]["publ_ac"]')
@@ -1468,15 +1468,15 @@ function! TweetPublicFunc() "{{{
 	endif
 
 	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['publ_ac']
-	execute ':TweetVimSay'
+	TweetVimSay
 
 	"@Incomplete('wait here')
 	"execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
-command! TweetPublic        call TweetPublicFunc()
+command! -bar TweetPublic        call TweetPublicFunc()
 
 
-command!  Bitly TweetVimBitly
+command! -bar  Bitly TweetVimBitly
 cnoreabbr tvs   TweetVimSwitchAccount
 
 " }}}
@@ -1488,23 +1488,23 @@ command!  Lingr NOP
 
 
 " Beautifull Life
-command!  JazzUpdate JazzradioUpdateChannels
-command!  JazzList   Unite jazzradio
-cnoreabbr JazzPlay   JazzradioPlay
-command!  JazzPlay   NOP
-command!  JazzStop   JazzradioStop
+command! -bar  JazzUpdate JazzradioUpdateChannels
+command! -bar  JazzList   Unite jazzradio
+cnoreabbr      JazzPlay   JazzradioPlay
+command!       JazzPlay   NOP
+command! -bar  JazzStop   JazzradioStop
 
 
 " Translates Languages
 cnoreabbr Translate ExciteTranslate
-cnoreabbr Weblio    Ref webdict weblio
-
 command!  Translate NOP
+
+cnoreabbr Weblio    Ref webdict weblio
 command!  Weblio    NOP
 
 
 " Markdown help on online
-command! MarkdownHelpOnline W3mTab http://qiita.com/Qiita/items/c686397e4a0f4f11683d#3-4
+command! -bar MarkdownHelpOnline W3mTab http://qiita.com/Qiita/items/c686397e4a0f4f11683d#3-4
 
 " }}}
 " Development {{{
@@ -1584,10 +1584,10 @@ function! s:highlight_list_tab()
 	let @z = l:z
 endfunction
 
-command! HighlightListTab call s:highlight_list_tab()
+command! -bar HighlightListTab call s:highlight_list_tab()
 
 " }}}
-command! GitAdd !git add %
+command! -bar GitAdd !git add %
 
 " }}}
 
@@ -1811,6 +1811,7 @@ augroup KeyMapping
 
 	autocmd User * inoremap <C-l> <Esc>
 	autocmd User * vnoremap <C-l> <Esc>
+	autocmd User * snoremap <C-l> <Esc>
 	autocmd User * cnoremap <C-l> <Esc>
 augroup END
 
@@ -1822,8 +1823,8 @@ augroup KeyMapping
 
 	autocmd User * nnoremap <silent> m: :<C-u>marks<CR>
 	autocmd User * nnoremap <silent> q: :<C-u>register<CR>
-	autocmd User * nnoremap <silent> z: :<C-u>tabs<CR>
-	autocmd User * nnoremap <silent> g: :<C-u>buffers<CR>
+	autocmd User * nnoremap <silent> g: :<C-u>tabs<CR>
+	autocmd User * nnoremap <silent> z: :<C-u>buffers<CR>
 	autocmd User * nnoremap <silent> g> :<C-u>messages<CR>
 
 	autocmd User * nnoremap <silent> <leader>b         :<C-u>NewOverridden<CR>:resize 5<CR>:setl buftype=nofile<CR>
@@ -1959,8 +1960,9 @@ augroup KeyMapping
 	autocmd User * nnoremap <silent><expr> <C-k>S     ':OverCommandLine %s/\<' . expand('<cword>') . '\>/' . expand('<cword>') . '<CR>'
 	autocmd User * vnoremap <silent>       :s/        :<C-u>OverCommandLine '<,'>s/<CR>
 	autocmd User * cnoremap <silent>       <C-k>:     :<C-u>OverCommandLine<CR>
-	autocmd User * OverCommandLineNoremap <C-l> <Esc>
-	autocmd User * OverCommandLineNoremap <C-]> '<,'>
+	"@Imcomplete('Set event FileType *, because avoid error. please suitable event')
+	autocmd FileType * OverCommandLineNoremap <C-l> <Esc>
+	autocmd FileType * OverCommandLineNoremap <C-]> '<,'>
 
 
 	" anzu-chan
@@ -1983,8 +1985,9 @@ augroup KeyMapping
 	autocmd User * nmap             g?                ?\<<C-r>"\><CR>
 	autocmd User * vmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
 	autocmd User * vmap <expr>      ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
-	autocmd User * IncSearchNoreMap <C-j> <CR>
-	autocmd User * IncSearchNoreMap <C-l> <Esc>
+	"@Imcomplete('Set event FileType *, because avoid error. please suitable event')
+	autocmd FileType * IncSearchNoreMap <C-j> <CR>
+	autocmd FileType * IncSearchNoreMap <C-l> <Esc>
 
 
 	" TaskList.vim
@@ -2063,6 +2066,7 @@ endif
 "}}}
 
 
+doautocmd User
 filetype plugin indent on
 syntax enable
 doautocmd User

@@ -1,30 +1,7 @@
-" Yosa
-
-"補完候補があってもEnterは改行
-inoremap <expr> <CR> pumvisible() ? "\<C-e>\<CR>" : "\<CR>"
-
-" text object
-nnoremap gc `[v`]
-onoremap gc :normal gc<CR>
-
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
-
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'vim-scripts/java.vim'
-Bundle 'vim-scripts/javacomplete'
-Bundle 'vim-scripts/java_getset.vim'
-Bundle 'vim-scripts/java_checkstyle.vim'
-
-lexima
-
-"- - -"
 
 set complete=.,w,b,u,k
 set completeopt=menu,preview,longest
-set pumheight=20
-set foldmethod=manual
-au FileType go compiler go
 
 onoremap <silent> q
 \      :for i in range(v:count1)
@@ -86,24 +63,18 @@ NeoBundle 'vim-scripts/closetag.vim'
 NeoBundle 'vim-scripts/errormarker.vim'
 NeoBundle 'ack.vim'
 NeoBundle 'mattn/vimplenote-vim'
-NeoBundle 'toritori0318/vim-redmine'
 NeoBundle 'taglist.vim'
 NeoBundle 'airblade/vim-rooter'
 NeoBundle 'othree/eregex.vim'
 NeoBundle 'motemen/xslate-vim'
 NeoBundle 'mattn/sonictemplate-vim'
 NeoBundle 'chase/vim-ansible-yaml'
-NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'gre/play2vim'
-NeoBundle 'leafgarland/typescript-vim'
-NeoBundle 'clausreinke/typescript-tools'
 NeoBundle 'sorah/unite-ghq'
 
 L421 これは poslist.vim 案件  12/14 00:00
 
 
-NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'bling/vim-airline'
 NeoBundle 'jceb/vim-hier'
 NeoBundle 'dannyob/quickfixstatus'
 NeoBundle "osyo-manga/shabadou.vim"
@@ -128,29 +99,10 @@ vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><C
 
 
 
-" ファイルをtree表示してくれる
-NeoBundle 'scrooloose/nerdtree'
-" コメントON/OFFを手軽に実行
-NeoBundle 'tomtom/tcomment_vim'
 " 行末の半角スペースを可視化(うまく動かない？)
 NeoBundle 'bronson/vim-trailing-whitespace'
 " less用のsyntaxハイライト
 NeoBundle 'KohPoll/vim-less'
-""""""""""""""""""""""""""""""
-" 全角スペースの表示
-""""""""""""""""""""""""""""""
-function! ZenkakuSpace()
-    highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=darkgray
-endfunction
-
-if has('syntax')
-    augroup ZenkakuSpace
-        autocmd!
-        autocmd ColorScheme * call ZenkakuSpace()
-        autocmd VimEnter,WinEnter,BufRead * let w:m1=matchadd('ZenkakuSpace', '　')
-    augroup END
-    call ZenkakuSpace()
-endif
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------
@@ -228,43 +180,9 @@ set comments-=s1:/*,mb:*,ex:*/                        " /* Make C-style comments
 set comments+=s:/*,mb:\ *,ex:\ */                     "  * wrap like this
 set comments+=fb:*                                    "  */
 
-function! SourceMe(...)
-    let a_reg = @a
-    norm! `["ay`]
-    echo ''
-    exe @a
-    let @a = a_reg
-endfunction
-nnoremap <silent> <Leader>sl :set opfunc=SourceMe<CR>g@
-
-nnoremap <silent> m :<C-U>update!<CR>
-
-------------------------------------------------------------------------------------------------------------------------------------------------
-thinca        : L191- ほほう? 興味深い設定  01/17 23:39
-thinca        : L191 やると多分挿入モードで複数キーシーケンスのキーマッピングが使えなくなる  01/17 23:43
-haya14busa    : L191 insertモードからのjj復帰が出来ないことに気づいた  01/17 23:44
-------------------------------------------------------------------------------------------------------------------------------------------------
-    " Remove small delay between pressing Esc and entering Normal mode.
-    set timeout ttimeout ttimeoutlen=-1
-    augroup FastEscape
-        autocmd!
-        au InsertEnter * set timeoutlen=0
-        au InsertLeave * set timeoutlen=1000
-    augroup END
-
 ------------------------------------------------------------------------------------------------------------------------------------------------
 thinca        : 今自分の設定確認したら <C-g><C-u> で直前に入力した単語を全て大文字にするキーマッピングが施されていた  01/17 23:45
 ------------------------------------------------------------------------------------------------------------------------------------------------
-
-------------------------------------------------------------------------------------------------------------------------------------------------
-hujo          : L417 便利そう  01/17 23:51
-------------------------------------------------------------------------------------------------------------------------------------------------
-    " start command line window in insert mode and no line numbers
-    autocmd CmdwinEnter * startinsert
-    autocmd CmdwinEnter * setl nonumber
-    autocmd BufReadPost *
-                \ if line("'\"") > 0 && line("'\"") <= line("$")
-                \| execute "normal g'\"" | endif
 
 ------------------------------------------------------------------------------------------------------------------------------------------------
 thinca        : arpeggio.vim の出番と聞いて >2本指  01/18 00:03
@@ -662,14 +580,6 @@ let QFixHowm_Title = '='
 "let QFixHowm_Key_Cmd_C = "o<ESC>".QFixHowm_Cmd_New
 
 " }}}
-
-
-"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
-" Read My vimrc, thanks!!
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
- thinca       : L2050 ここ、FileType が設定されるファイルならばそっちでやった方がいいかも。Syntax ってイベントがある  03/22 01:09
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
