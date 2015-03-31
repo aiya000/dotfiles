@@ -42,18 +42,12 @@
 
 "-- shot-f doesn't functioned in i_<C-o> temporary normal mode
 
-"-- I couldn't auto make vimproc at anywhere
+"-- I couldn't auto make vimproc some environment
 
 "-- conflicted? vim-ruby and rspec.vim when those was set NeoBundleLazy
 "  -- does not loaded syntax of rspec.vim
 
 "-- happened exception when input '.*' to unite textarea
-
-"-- neosnippet-snippets cs.snipt -> 'catch' must not be set option head
-"-- neosnippet-snippets cs.snipt -> 'finally' must not be set option head
-"-- neosnippet-snippets cs.snipt -> 'method' must not be set option head
-"-- neosnippet-snippets cs.snipt -> add alias to 'try_without_catch_nor_finally'
-"-- neosnippet-snippets cs.snipt -> remove '///' from xml comment snippets
 
 "}}}
 " Todo {{{
@@ -70,12 +64,10 @@
 
 "-- optimize to lazy load or strict load some plugins
 
-"-- :CheckAlwaysTodo(Enable|Disable) -> always check TODO use TaskList.vim when file opened
-
 " }}}
 " Note "{{{
 
-"-- almost all of command appended -bar option
+
 
  "}}}
 
@@ -370,18 +362,12 @@ NeoBundle        'Shougo/vimproc.vim'
 NeoBundleLazy    'basyura/TweetVim'
 NeoBundle        'mattn/webapi-vim'
 NeoBundle        'Shougo/vimshell.vim'
-NeoBundle        'rhysd/wandbox-vim'
 NeoBundle        'thinca/vim-quickrun'
-NeoBundleLazy    'kashewnuts/gmail.vim'
 NeoBundleLazy    'basyura/J6uil.vim'
 NeoBundle        'osyo-manga/vim-gyazo'
 NeoBundle        'yuratomo/w3m.vim'
-NeoBundle        'mattn/learn-vimscript'
-NeoBundleLazy    'rbtnn/vimconsole.vim'
-NeoBundle        'supermomonga/thingspast.vim'
 NeoBundle        'supermomonga/vimshell-kawaii.vim'
 NeoBundle        'mattn/excitetranslate-vim'
-NeoBundle        'mattn/unite-advent_calendar'
 NeoBundleLazy    'thinca/vim-splash'
 NeoBundle        'supermomonga/jazzradio.vim'
 NeoBundle        'mattn/favstar-vim'
@@ -400,14 +386,9 @@ NeoBundleLazy    'eagletmt/coqtop-vim'
 NeoBundle        'rhysd/vim-grammarous'
 NeoBundleLazy    'thinca/vim-themis'
 NeoBundle        'tomasr/molokai'
-NeoBundle        'aiya000/arot13.vim'
-NeoBundle        'aiya000/ahoge-put.vim'
 NeoBundleLazy    'kannokanno/previm'
-NeoBundle        'kamichidu/vim-vdbc'
-NeoBundle        'mattn/vdbi-vim'
 NeoBundle        'LeafCage/foldCC'
 NeoBundleLazy    'katono/rogue.vim'
-NeoBundle        'aiya000/asql.vim'
 NeoBundleLazy    'kamichidu/vim-benchmark'
 NeoBundle        'kana/vim-submode'
 NeoBundle        'mfumi/ref-dicts-en'
@@ -440,7 +421,6 @@ NeoBundleLazy    'yaasita/ore_markdown'
 NeoBundle        'chrisbra/vim-diff-enhanced'
 NeoBundle        'Shougo/neosnippet.vim'
 NeoBundle        'Shougo/neosnippet-snippets'
-NeoBundle        'tyru/operator-reverse.vim'
 
 
 call neobundle#end()
@@ -480,13 +460,6 @@ if neobundle#tap('vimshell.vim')
 	\})
 	call neobundle#untap()
 endif
-if neobundle#tap('gmail.vim')
-	call neobundle#config('gmail.vim', {
-	\	'depends'  : 'Shougo/vimproc.vim',
-	\	'autoload' : {'commands' : 'Gmail'}
-	\})
-	call neobundle#untap()
-endif
 if neobundle#tap('J6uil.vim')
 	call neobundle#config('J6uil.vim', {
 	\	'depends' : [
@@ -511,12 +484,6 @@ endif
 if neobundle#tap('vimshell-kawaii.vim')
 	call neobundle#config('vimshell-kawaii.vim', {
 	\	'depends'  : 'Shougo/vimshell.vim'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vimconsole.vim')
-	call neobundle#config('vimconsole.vim', {
-	\	'autoload' : {'filetypes' : 'vim'}
 	\})
 	call neobundle#untap()
 endif
@@ -1349,7 +1316,29 @@ command! -bar TDirCd            call s:cd_temporary_dir()
 
 
 " Reverse ranged lines
-command! -bar -range=% ReverseLine :<line1>,<line2> OperatorReverseLines
+function! s:reverse_line() range " {{{
+	if a:firstline is a:lastline
+		return
+	endif
+
+	let l:lines = []
+	let l:posit = getpos('.')
+
+	let l:z = @z
+	for l:line in range(a:firstline, a:lastline)
+		execute 'normal! "zdd'
+		call add(l:lines, @z)
+	endfor
+
+	for l:r in l:lines
+		let @z = l:r
+		execute 'normal! "zP'
+	endfor
+	let @z = l:z
+
+	call setpos('.', l:posit)
+endfunction " }}}
+command! -range=% ReverseLine :<line1>, <line2> call s:reverse_line()
 
 
 " Rename current buffer file
@@ -1944,7 +1933,7 @@ augroup KeyMapping
 
 
 	" Unite
-	autocmd User * nnoremap <silent> <leader>uf        :<C-u>Unite -ignorecase -start-insert outline:foldings<CR>
+	autocmd User * nnoremap <silent> <leader>uf        :<C-u>Unite -ignorecase outline:foldings<CR>
 	autocmd User * nnoremap <silent> <leader>um        :<C-u>Unite -ignorecase neomru/file<CR>
 	autocmd User * nnoremap <silent> <leader><leader>u :<C-u>call <SID>bufclose_filetype('unite')<CR>
 
