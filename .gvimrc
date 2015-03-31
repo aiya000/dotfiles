@@ -5,7 +5,7 @@
 " -- Initialize
 " -- Application_Setting
 " -- Functional_Command
-" -- Command_Alias
+"k -- Command_Utils
 " -- View_Setting
 " -- Plugin_Configure
 " ---
@@ -16,7 +16,8 @@
 " }}}
 " Issues {{{
 
-
+"-- filetype cs lost highlight keyword 'var'
+"  -- when vertical split maybe
 
 "}}}
 " Todo {{{
@@ -24,7 +25,11 @@
 
 
 " }}}
+" Note {{{
 
+
+
+" }}}
 
 
 "-------------------------"
@@ -79,9 +84,13 @@ endif
 
 
 "-------------------------"
-"   Functional_Command    "
+"      Command_Utils      "
 "-------------------------"
 "{{{
+
+command! -bar GVimConfig    e $MYGVIMRC
+command! -bar GVimConfigTab tabnew $MYGVIMRC
+
 
 " DressUp kawaii-vim
 command! DressUpColorDesert
@@ -110,27 +119,8 @@ command! DressUpColorSolarized
 
 
 " Don't use this
-if !g:gvimrc['loaded']
+if exists(':Revert') is 2
 	delcommand Revert
-endif
-
-"}}}
-
-
-"-------------------------"
-"      Command_Alias      "
-"-------------------------"
-"{{{
-
-command! GVimConfig    e $MYGVIMRC
-command! GVimConfigTab tabnew $MYGVIMRC
-
-if s:is_windows
-	command! HighTransparence  set transparency=140
-	command! MidTransparence   set transparency=180
-	command! LowTransparence   set transparency=220
-	command! LightTransparence set transparency=245
-	command! NoTransparence    set transparency=255
 endif
 
 "}}}
