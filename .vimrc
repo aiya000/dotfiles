@@ -969,7 +969,8 @@ let s:makes = ['arot13.vim',
 \              'ahoge-put.vim',
 \              'asql.vim',
 \              'adrone.vim',
-\              'aho-bakaup.vim']
+\              'aho-bakaup.vim',
+\              'ahoge-separator.vim']
 
 let s:makes_dir = '~/Repository/'
 
@@ -979,8 +980,8 @@ for s:plug in s:makes
 	let s:plug_dir = s:makes_dir . s:plug
 
 	if isdirectory(expand(s:plug_dir))
-		let &runtimepath .= ',' . s:plug_dir
-		execute ':NeoBundleDisable' s:plug
+		execute ':set runtimepath+=' . s:plug_dir
+		execute ':NeoBundleDisable'    s:plug
 	end
 endfor
 
@@ -1498,6 +1499,8 @@ command! -bar MarkdownHelpOnline W3mTab http://qiita.com/Qiita/items/c686397e4a0
 " }}}
 " Development {{{
 
+
+" VimShellInteractive executors
 " Open Develop Buffer {{{
 
 " vimconsole.vim
@@ -1551,6 +1554,8 @@ command!  IrbTab   NOP
 
 " }}}
 
+
+" Check highlight statuses
 " command! HighlightListTab {{{
 
 function! s:highlight_list_tab()
@@ -1576,9 +1581,15 @@ endfunction
 command! -bar HighlightListTab call s:highlight_list_tab()
 
 " }}}
+
+
+" Staging current file to git
 command! -bar GitAdd !git add %
 
-" }}}
+
+" Search branch lines for git merge
+command! -bar SearchBranch :/\v(<<<<<<<|\=\=\=\=\=\=\=|>>>>>>>)
+
 
 " }}}
 
@@ -2038,7 +2049,7 @@ autocmd ExtensionType VimEnter,BufNew * if &ft ==# '' | setf none | endif
 
 "@Incomplete('do not functioned')
 " netrw
-autocmd FileEvent User netrw highlight default link CursorLine Visual
+autocmd FileEvent FileType netrw highlight default link CursorLine Visual
 
 "}}}
 
