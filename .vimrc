@@ -421,6 +421,7 @@ NeoBundleLazy    'yaasita/ore_markdown'
 NeoBundle        'chrisbra/vim-diff-enhanced'
 NeoBundle        'Shougo/neosnippet.vim'
 NeoBundle        'Shougo/neosnippet-snippets'
+NeoBundle        'aiya000/separetaro.vim'
 
 
 call neobundle#end()
@@ -970,7 +971,7 @@ let s:makes = ['arot13.vim',
 \              'asql.vim',
 \              'adrone.vim',
 \              'aho-bakaup.vim',
-\              'ahoge-separator.vim']
+\              'separetaro.vim']
 
 let s:makes_dir = '~/Repository/'
 
@@ -1948,11 +1949,11 @@ augroup KeyMapping
 	autocmd User * smap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
 
 
-	" ahoge-separator.vim
-	autocmd User * nmap <silent> <leader>ps <Plug>(ahoge_separator_put_short_under)
-	autocmd User * nmap <silent> <leader>Ps <Plug>(ahoge_separator_put_short_over)
-	autocmd User * nmap <silent> <leader>pl <Plug>(ahoge_separator_put_long_under)
-	autocmd User * nmap <silent> <leader>Pl <Plug>(ahoge_separator_put_long_over)
+	" separetaro.vim
+	autocmd User * nmap <silent> <leader>ps <Plug>(separetoro_put_short_under)
+	autocmd User * nmap <silent> <leader>Ps <Plug>(separetoro_put_short_over)
+	autocmd User * nmap <silent> <leader>pl <Plug>(separetoro_put_long_under)
+	autocmd User * nmap <silent> <leader>Pl <Plug>(separetoro_put_long_over)
 augroup END
 
 " }}}
