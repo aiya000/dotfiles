@@ -1699,58 +1699,6 @@ function! s:cursor_down_to_ground() "{{{
 endfunction "}}}
 
 
-" Easily putting short separator for many filetypes
-" function! s:put_short_separator(put_upper) {{{
-
-autocmd FileEvent FileType,WinEnter,BufWinEnter * let s:long_separator =
-\	&ft =~# '\v(vim|vimspec)'    ? '"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"'
-\:	&ft =~# '\v(java|cs|cpp|c)'  ? '/* ---===---===---===---===---===---===--- */'
-\:	&ft ==# 'haskell'            ? '-- - - - - - - - - - - - - - - - --'
-\:	&ft ==# 'coq'                ? '(* - - - - - - - - - - - - - - - *)'
-\:	&ft ==# 'mysql'              ? '-- - - - - - - - - - - - - - - - --'
-\:	&ft =~# '\v(markdown|eruby)' ? '<!-- - - - - - - - - - - - - - - - -->'
-\:	&ft =~# '\v(ruby|sh)'        ? '#- - - - - - - - - - - - - - - - -#'
-\:	&ft =~# '\v(text|none)'      ? '- - - - - - - - - - - - - - - - - - - -'
-\:	&ft ==# 'help'               ? '================================================================================'
-\                                : 'long_separator_undefined'
-
-
-function! s:put_long_separator(put_upper)
-	execute 'normal!' (a:put_upper ? 'O' : 'o')
-	execute 'normal! 0D'
-	execute 'normal! i' s:long_separator
-	execute 'normal! =='
-endfunction
-
-"}}}
-
-
-" Easily putting long separator for many filetypes
-" function! s:put_short_separator(put_upper) {{{
-
-autocmd FileEvent FileType,WinEnter,BufWinEnter * let s:short_sparator =
-\	&ft =~# '\v(vim|vimspec)'    ? '"#--- --- ---#"'
-\:	&ft =~# '\v(java|cs|cpp|c)'  ? '/* -=-=-=-=-=-=-=-=- */'
-\:	&ft ==# 'haskell'            ? '-- - - - - - --'
-\:	&ft ==# 'coq'                ? '(* - - - - - *)'
-\:	&ft ==# 'mysql'              ? '-- - - - - - --'
-\:	&ft =~# '\v(markdown|eruby)' ? '<!-- - - - - - -->'
-\:	&ft =~# '\v(ruby|sh)'        ? '#- - - - - - -#'
-\:	&ft =~# '\v(text|none)'      ? '- - - - - - - - - -'
-\:	&ft ==# 'help'               ? '============================================='
-\                                : 'short_separator_undefined'
-
-
-function! s:put_short_separator(put_upper)
-	execute 'normal!' (a:put_upper ? 'O' : 'o')
-	execute 'normal! 0D'
-	execute 'normal! i' s:short_sparator
-	execute 'normal! =='
-endfunction
-
-" }}}
-
-
 " Optimize key operation to one hand
 " function! s:toggle_onehand_mode() "{{{
 
@@ -1829,10 +1777,6 @@ augroup KeyMapping
 
 	autocmd User * nnoremap <silent> <leader>b         :<C-u>NewOverridden<CR>:resize 5<CR>:setl buftype=nofile<CR>
 	autocmd User * nnoremap <silent> <leader>B         :<C-u>NewOverridden<CR>:resize 5<CR>
-	autocmd User * nnoremap <silent> <leader>ps        :<C-u>call <SID>put_short_separator(0)<CR>
-	autocmd User * nnoremap <silent> <leader>Ps        :<C-u>call <SID>put_short_separator(1)<CR>
-	autocmd User * nnoremap <silent> <leader>pl        :<C-u>call <SID>put_long_separator(0)<CR>
-	autocmd User * nnoremap <silent> <leader>Pl        :<C-u>call <SID>put_long_separator(1)<CR>
 	autocmd User * nnoremap <silent> <leader>pd        :<C-u>execute 'normal! a' . strftime('%c')<CR>
 	autocmd User * nnoremap <silent> <leader><leader>h :<C-u>helpclose<CR>
 	autocmd User * nnoremap <silent> <Space><Space>    :<C-u>call <SID>compress_spaces()<CR>
@@ -1927,6 +1871,7 @@ augroup KeyMapping
 	autocmd User * nnoremap <silent> <leader><leader>E :<C-u>Texplore<CR>
 
 
+
 	" open-browser.vim
 	autocmd User * nmap <leader>w <Plug>(openbrowser-open)
 
@@ -2001,6 +1946,13 @@ augroup KeyMapping
 	" neosnippet.vim
 	autocmd User * imap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
 	autocmd User * smap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
+
+
+	" ahoge-separator.vim
+	autocmd User * nmap <silent> <leader>ps <Plug>(ahoge_separator_put_short_under)
+	autocmd User * nmap <silent> <leader>Ps <Plug>(ahoge_separator_put_short_over)
+	autocmd User * nmap <silent> <leader>pl <Plug>(ahoge_separator_put_long_under)
+	autocmd User * nmap <silent> <leader>Pl <Plug>(ahoge_separator_put_long_over)
 augroup END
 
 " }}}
@@ -2066,7 +2018,6 @@ endif
 "}}}
 
 
-doautocmd User
 filetype plugin indent on
 syntax enable
 doautocmd User
