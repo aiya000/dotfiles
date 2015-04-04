@@ -80,6 +80,8 @@ vnoremap <leader>l <C-l>
 
 
 " Bash like keys
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
 cnoremap <C-p> <S-Up>
 cnoremap <C-n> <S-Down>
 cnoremap <C-b> <Left>
@@ -91,6 +93,8 @@ cnoremap <C-l> <Esc>
 
 
 " Movement on insert mode
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
 inoremap <C-p> <Up>
 inoremap <C-n> <Down>
 inoremap <C-b> <Left>
@@ -102,12 +106,12 @@ inoremap <C-.> <S-Right>
 inoremap <C-[> <S-Up>
 inoremap <C-]> <S-Down>
 
-inoremap <C-a>      <NOP>
 inoremap <C-x>      <NOP>
 inoremap <C-c>      <NOP>
 inoremap <C-v>      <NOP>
 inoremap <C-x><C-a> <C-a>
 inoremap <C-x><C-x> <C-x>
+inoremap <C-x><C-t> <C-x>
 inoremap <C-x><C-c> <C-c>
 inoremap <C-x><C-v> <C-v>
 
