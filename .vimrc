@@ -422,6 +422,7 @@ NeoBundle        'chrisbra/vim-diff-enhanced'
 NeoBundle        'Shougo/neosnippet.vim'
 NeoBundle        'Shougo/neosnippet-snippets'
 NeoBundle        'aiya000/separetaro.vim'
+NeoBundleLazy    'kurocode25/mdforvim'
 
 
 call neobundle#end()
@@ -641,6 +642,12 @@ if neobundle#tap('ore_markdown')
 	\		'mac'     : 'bundle install --gemfile ./bin/Gemfile'
 	\	},
 	\	'autoload' : {'commands' : 'OreMarkdown'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('mdforvim')
+	call neobundle#config('mdforvim', {
+	\	'autoload' : {'filetypes' : 'markdown'}
 	\})
 	call neobundle#untap()
 endif
