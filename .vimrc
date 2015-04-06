@@ -424,6 +424,7 @@ NeoBundle        'Shougo/neosnippet.vim'
 NeoBundle        'Shougo/neosnippet-snippets'
 NeoBundle        'aiya000/separetaro.vim'
 NeoBundleLazy    'kurocode25/mdforvim'
+NeoBundleLazy    'rbtnn/vimconsole.vim'
 
 
 call neobundle#end()
@@ -637,6 +638,12 @@ endif
 if neobundle#tap('mdforvim')
 	call neobundle#config('mdforvim', {
 	\	'autoload' : {'filetypes' : 'markdown'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vimconsole.vim')
+	call neobundle#config('vimconsole.vim', {
+	\	'autoload' : {'filetypes' : 'vim'}
 	\})
 	call neobundle#untap()
 endif
