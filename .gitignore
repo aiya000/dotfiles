@@ -1,4 +1,5 @@
 .backup/**
+.private/**
 .vim/.netrwhist
 .vim/bundle/*
 .vim/bundle/.neobundle
