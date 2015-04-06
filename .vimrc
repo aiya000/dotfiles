@@ -967,6 +967,12 @@ let g:bakaup_backup_dir  = s:backupdir
 let g:bakaup_auto_backup = 1
 
 "}}}
+"--- vimconsole.vim ---"{{{
+
+" auto output log to debug console
+let g:vimconsole#auto_redraw = 1
+
+"}}}
 "--- For Debug ---"{{{
 
 " Local my plugins
