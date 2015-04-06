@@ -158,7 +158,9 @@ endfunction
 " file encoding {{{
 
 " Default file encoding
-set fileencoding=utf-8 encoding=utf-8
+if g:vimrc['loaded']
+	set fileencoding=utf-8 encoding=utf-8
+endif
 
 " Encoding for this script
 scriptencoding utf-8
@@ -417,7 +419,6 @@ NeoBundle        'Keithbsmiley/rspec.vim'
 NeoBundle        'tsukkee/unite-help'
 NeoBundle        'altercation/vim-colors-solarized'
 NeoBundle        'aiya000/aho-bakaup.vim'
-NeoBundleLazy    'yaasita/ore_markdown'
 NeoBundle        'chrisbra/vim-diff-enhanced'
 NeoBundle        'Shougo/neosnippet.vim'
 NeoBundle        'Shougo/neosnippet-snippets'
@@ -630,18 +631,6 @@ endif
 if neobundle#tap('rspec.vim')
 	call neobundle#config('rspec.vim', {
 	\	'autoload' : {'filetype' : 'ruby'}
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('ore_markdown')
-	"@Bugs('Do not functioned on windows with this config')
-	call neobundle#config('ore_markdown', {
-	\	'buld' : {
-	\		'unix'    : 'bundle install --gemfile ./bin/Gemfile',
-	\		'windows' : 'bundle install --gemfile .\bin\Gemfile',
-	\		'mac'     : 'bundle install --gemfile ./bin/Gemfile'
-	\	},
-	\	'autoload' : {'commands' : 'OreMarkdown'}
 	\})
 	call neobundle#untap()
 endif
@@ -895,7 +884,8 @@ let g:ref_source_webdict_sites = {
 let g:ref_source_webdict_sites['default'] = 'weblio'
 
 function! s:weblio_filter(output) "{{{
-	let l:lines  = split(a:output, "\n")
+	let l:lines = split(a:output, "\n")
+
 	"@Incomplete('do not filtered')
 	let l:lines1 = map(l:lines, 'substitute(v:val, "\v(発音記号|音声を聞く|ダウンロード再生)\n", "", "g")')
 	return join(l:lines1[60 : ], "\n")
@@ -1020,7 +1010,7 @@ set laststatus=2
 
 "@See('http://sourceforge.jp/magazine/07/11/06/0151231')
 " Status Bar format
-set statusline=%F%m\%=[FileType=%y][Format=%{&ff}]
+set statusline=%F%m\%=\ \ [FileType=%y][Format=%{&fileencoding}][Encode=%{&encoding}][%4l,%4v]
 
 " ☆ Fix View 2byte Code (Not support gnome-terminal)
 set ambiwidth=double
@@ -1250,7 +1240,7 @@ endfunction "}}}
 autocmd FileEvent BufReadPost * call s:visit_past_position()
 
 
-" If you using wim command prompt, listchars using safe chars
+" If you using windows cmd prompt, listchars using safe chars
 autocmd FileEvent VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 	\	if &encoding ==# 'utf-8' && !s:is_doswin
 	\|		let &listchars = 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
@@ -1285,7 +1275,7 @@ command! -bar -bang TabnewOverridden tabnew<bang> | setf none
 AlterCommand tabnew TabnewOverridden
 
 " }}}
-" Usefull {{{
+" Our Usefull {{{
 
 " Grep and Open current buffer
 command! -bar -nargs=1 GrepNow vimgrep <args> % | cwindow
@@ -1378,7 +1368,7 @@ function! s:rename_to(to_file) abort "{{{
 
 	echo printf('Renamed %s to %s', l:this_file, l:to_file)
 endfunction "}}}
-command! -bar -nargs=1 Rename call <SID>rename_to(<q-args>)
+command! -bar -nargs=1 Rename call s:rename_to(<q-args>)
 
 "}}}
 " Life Helper {{{
@@ -1501,7 +1491,12 @@ cnoreabbr Weblio    Ref webdict weblio
 command!  Weblio    NOP
 
 
-" Markdown help on online
+" NeoBundle redirect alias
+cnoreabbr NeoBundleInstallLog NeoBundleLog
+command!  NeoBundleInstallLog NOP
+
+
+" Markdown help on online (maru nage)
 command! -bar MarkdownHelpOnline W3mTab http://qiita.com/Qiita/items/c686397e4a0f4f11683d#3-4
 
 " }}}
