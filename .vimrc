@@ -102,19 +102,18 @@
 "---------------------"
 "{{{
 
-let g:vimrc = get(g:, 'vimrc', {})
-let g:vimrc['loaded'] = get(g:vimrc, 'loaded', 0)
+let g:vimrc = get(g:, 'vimrc', { 'loaded' : 0 })
 
 let s:is_windows = has('win32')
 let s:is_cygwin  = has('win32unix')
 let s:is_kaoriya = has('kaoriya')
 let s:is_doswin  = s:is_windows && !s:is_cygwin && !has('gui')
 let s:is_unix    = has('unix')
-let s:is_mac     = has('mac')
-let s:is_mac_osx = has('macunix')
+let s:is_mac     = has('mac')      "@Unused('')
+let s:is_mac_osx = has('macunix')  "@Unused('')
 
 let s:has_cygwin = isdirectory('/cygwin')
-let s:has_mingw  = 0  "@Incomplete('dummy')
+let s:has_mingw  = 0  "@Unused('dummy')
 
 let s:vim_home = expand('~/.vim')
 
@@ -656,6 +655,7 @@ endif
 "------------------------"
 "--- netrw ---" {{{
 
+" Enable netrw preview
 let g:netrw_preview = 1
 
 " }}}
@@ -745,6 +745,7 @@ endif
 " }}}
 "--- TweetVim ---"{{{
 
+" Smooth post tweet
 let g:tweetvim_async_post = 1
 
 "}}}
@@ -761,12 +762,13 @@ let g:vimshell_max_command_history          = 10000
 let g:vimshell_scrollback_limit             = 10000
 
 " This variable defined by my command
-" Connect to bash's hereis
+" The cd aliases reference to here
 let g:vimshell_hereis_file = expand('~/.bashrc_places')
 
 "}}}
 "--- vimshell-kawaii.vim ---"{{{
 
+" Prompt is kawaii
 let g:vimshell_kawaii_smiley = 1
 
 "}}}
@@ -780,12 +782,12 @@ let g:excitetranslate_options = ["buffer"]
 
 let g:w3m#external_browser = 'firefox'
 
-"let g:w3m#homepage = 'http://www.bing.com/'
 let g:w3m#homepage = 'http://www.google.co.jp/'
 
 "}}}
 "--- vimconsole.vim ---"{{{
 
+" Auto output debug log to console
 let g:vimconsole#auto_redraw = 1
 
 "}}}
@@ -874,11 +876,6 @@ if neobundle#tap('vim-submode')
 endif
 
 "}}}
-"--- vim-ref ---" {{{
-
-let g:ref_use_vimproc = 1
-
-" }}}
 "--- ref-dicts-en ---" {{{
 "@See('http://d.hatena.ne.jp/akishin999/20131024/1382569289')
 
@@ -893,9 +890,7 @@ let g:ref_source_webdict_sites['default'] = 'weblio'
 function! s:weblio_filter(output) "{{{
 	let l:lines = split(a:output, "\n")
 
-	"@Incomplete('do not filtered')
-	let l:lines1 = map(l:lines, 'substitute(v:val, "\v(発音記号|音声を聞く|ダウンロード再生)\n", "", "g")')
-	return join(l:lines1[60 : ], "\n")
+	return join(l:lines[60 : ], "\n")
 endfunction "}}}
 let g:ref_source_webdict_sites['weblio'].filter = function('s:weblio_filter')
 
@@ -976,19 +971,20 @@ let g:vimconsole#auto_redraw = 1
 "--- For Debug ---"{{{
 
 " Local my plugins
-let s:makes = ['arot13.vim',
-\              'ahoge-put.vim',
-\              'asql.vim',
-\              'adrone.vim',
-\              'aho-bakaup.vim',
-\              'separetaro.vim']
+let s:repos = [ 'arot13.vim'
+\             , 'ahoge-put.vim'
+\             , 'asql.vim'
+\             , 'adrone.vim'
+\             , 'aho-bakaup.vim'
+\             , 'separetaro.vim'
+\             ]
 
-let s:makes_dir = '~/Repository/'
+let s:repos_dir = '~/Repository/'
 
 
 " If valid local plugin, disable bundled same plugin
-for s:plug in s:makes
-	let s:plug_dir = s:makes_dir . s:plug
+for s:plug in s:repos
+	let s:plug_dir = s:repos_dir . s:plug
 
 	if isdirectory(expand(s:plug_dir))
 		execute ':set runtimepath+=' . s:plug_dir
@@ -997,7 +993,7 @@ for s:plug in s:makes
 endfor
 
 
-unlet s:plug_dir s:plug s:makes_dir s:makes
+unlet s:plug_dir s:plug s:repos_dir s:repos
 
 "}}}
 "--- For Private ---"{{{
@@ -1088,13 +1084,13 @@ function! s:tabpage_label(n) "{{{
 		let l:no = ''
 	endif
 
-	let l:mod = len(filter(copy(l:bufnrs), "getbufvar(v:val, '&modified')")) ? '+' : ''
+	let l:mod = len(filter(copy(l:bufnrs), 'getbufvar(v:val, "&modified")')) ? '+' : ''
 	let l:sp = (l:no . l:mod) ==# '' ? '' : ' '
 
 	let l:curbufnr = bufnrs[tabpagewinnr(a:n) - 1]
 	let l:fname = pathshorten(bufname(l:curbufnr))
 	if l:fname ==# ''
-		let l:fname .= '[ NoName ]'
+		let l:fname = '[ NoName ]'
 	endif
 
 	let l:label = l:no . l:mod . l:sp . l:fname

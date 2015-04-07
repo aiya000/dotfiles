@@ -10,6 +10,7 @@ setl nolist
 setl wrap
 setl foldmethod=marker
 
+" Override defaut keymappings
 nnoremap <buffer> Q          gQ
 nnoremap <buffer> q          <NOP>
 nnoremap <buffer> <C-n>      gt
