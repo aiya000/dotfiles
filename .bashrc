@@ -57,17 +57,23 @@ fi
 # }}}
 # Shell Utils {{{
 
-# Upload the pictures to gyazo
-if [ -f ~/.vim/bundle/vim-gyazo/gyazo/gyazo.rb ] ; then
-	alias gyazo='ruby ~/.vim/bundle/vim-gyazo/gyazo/gyazo.rb'
-fi
-
 # Console output pipe to clipboard
 if [ $is_ubuntu -eq 1 ] ; then
 	alias pbcopy='xsel --clipboard --input'
 elif [ $is_cygwin -eq 1 ] ; then
 	alias pbcopy='tee /dev/clipboard'
 fi
+
+# }}}
+# Media Utils {{{
+
+# Upload the pictures to gyazo
+[ -f ~/.vim/bundle/vim-gyazo/gyazo/gyazo.rb ] && \
+	alias gyazo='ruby ~/.vim/bundle/vim-gyazo/gyazo/gyazo.rb'
+
+# Capture size optimized for Ubuntu Unity Desktop on My-bluemc PC
+[ -n "`which byzanz-record 2> /dev/null`" ] && \
+	alias byzanz-optimized-mini-record='byzanz-record --delay=0 -d 600 -x 55 -y 25 -w 720 -h 465'
 
 # }}}
 # Others {{{
