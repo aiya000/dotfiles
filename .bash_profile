@@ -82,6 +82,7 @@ export EDITOR=vim
 ###################
 # set PATH with priority
 new_path=$HOME/bin:$HOME/sbin
+new_path=$new_path:$HOME/.dotfiles/Scripts
 
 # cabal
 [ -d ~/.cabal ] \
