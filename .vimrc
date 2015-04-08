@@ -49,6 +49,8 @@
 
 "-- happened exception when input '.*' to unite textarea
 
+"-- ftplugin vim.vim don't highlight hints on gvim
+
 "}}}
 " Todo {{{
 
@@ -424,6 +426,8 @@ NeoBundle        'Shougo/neosnippet-snippets'
 NeoBundle        'aiya000/separetaro.vim'
 NeoBundleLazy    'kurocode25/mdforvim'
 NeoBundleLazy    'rbtnn/vimconsole.vim'
+NeoBundle        'osyo-manga/vim-jplus'
+NeoBundleLazy    'Shougo/echodoc.vim'
 
 
 call neobundle#end()
@@ -643,6 +647,12 @@ endif
 if neobundle#tap('vimconsole.vim')
 	call neobundle#config('vimconsole.vim', {
 	\	'autoload' : {'filetypes' : 'vim'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('echodoc.vim')
+	call neobundle#config('echodoc.vim', {
+	\	'autoload' : {'insert' : 1}
 	\})
 	call neobundle#untap()
 endif
@@ -968,6 +978,11 @@ let g:bakaup_auto_backup = 1
 let g:vimconsole#auto_redraw = 1
 
 "}}}
+"--- echodoc.vim ---" "{{{
+
+let g:echodoc_enable_at_startup = 1
+
+ "}}}
 "--- For Debug ---"{{{
 
 " Local my plugins
@@ -1633,22 +1648,6 @@ augroup KeyMapping
 augroup END
 
 " }}}
-" Bashnize Command Mode {{{
-
-augroup KeyMapping
-	autocmd User * nmap     <C-j> <CR>
-	autocmd User * imap     <C-j> <CR>
-
-	autocmd User * cnoremap <C-b>      <Left>
-	autocmd User * cnoremap <C-f>      <Right>
-	autocmd User * cnoremap <C-a>      <Home>
-	autocmd User * cnoremap <C-h>      <BS>
-	autocmd User * cnoremap <C-d>      <Del>
-	autocmd User * cnoremap <C-e>      <End>
-	autocmd User * cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
-augroup END
-
-" }}}
 " Global KeyMaps {{{
 
 " Prepare temporary functions {{{
@@ -1761,24 +1760,18 @@ function! s:bufclose_filetype(ft) "{{{
 endfunction "}}}
 
 " }}}
-" Override mapping {{{
+" Power keymapping {{{
 
 augroup KeyMapping
+	" normal mode "{{{
+
+	autocmd User * nmap <C-j> <CR>
+
 	" † Ex Improved
 	autocmd User * nnoremap Q gQ
+
 	autocmd User * nnoremap <C-n> gt
 	autocmd User * nnoremap <C-p> gT
-
-	autocmd User * inoremap <C-l> <Esc>
-	autocmd User * vnoremap <C-l> <Esc>
-	autocmd User * snoremap <C-l> <Esc>
-	autocmd User * cnoremap <C-l> <Esc>
-augroup END
-
-" }}}
-" Appends " {{{
-
-augroup KeyMapping
 	autocmd User * nnoremap <C-m> o<Esc>
 
 	autocmd User * nnoremap <silent> m: :<C-u>marks<CR>
@@ -1787,8 +1780,8 @@ augroup KeyMapping
 	autocmd User * nnoremap <silent> z: :<C-u>buffers<CR>
 	autocmd User * nnoremap <silent> g> :<C-u>messages<CR>
 
-	autocmd User * nnoremap <silent> <leader>b         :<C-u>NewOverridden<CR>:resize 5<CR>:setl buftype=nofile<CR>
-	autocmd User * nnoremap <silent> <leader>B         :<C-u>NewOverridden<CR>:resize 5<CR>
+	autocmd User * nnoremap <silent> <leader>b         :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile<CR>
+	autocmd User * nnoremap <silent> <leader>B         :<C-u>NewOverridden \| resize 5<CR>
 	autocmd User * nnoremap <silent> <leader>pd        :<C-u>execute 'normal! a' . strftime('%c')<CR>
 	autocmd User * nnoremap <silent> <leader><leader>h :<C-u>helpclose<CR>
 	autocmd User * nnoremap <silent> <Space><Space>    :<C-u>call <SID>compress_spaces()<CR>
@@ -1798,26 +1791,51 @@ augroup KeyMapping
 	autocmd User * nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
 	autocmd User * nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
 	autocmd User * nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
-	autocmd User * nnoremap <silent> <C-k>J     :<C-u>wall<CR>:echo 'written all !'<CR>
+	autocmd User * nnoremap <silent> <C-k>J     :<C-u>wall \| echo 'written all !'<CR>
 	autocmd User * nnoremap <silent> <C-k>R     :<C-u>let &filetype = &filetype<CR>
 	autocmd User * nnoremap <silent> <C-k>r     :<C-u>doautocmd User<CR>
 	autocmd User * nnoremap <silent> <C-k>l     :<C-u>source %<CR>
 
+	"}}}
+	" insert mode "{{{
 
+	autocmd User * imap <C-j> <CR>
+
+	autocmd User * inoremap <C-l> <Esc>
 	autocmd User * inoremap <silent> <C-k><C-j> <Esc>:write<CR>
-	autocmd User * inoremap <silent> <C-k>J     <Esc>:wall<CR>
+	autocmd User * inoremap <silent> <C-k>J     <Esc>:wall \| echo 'written all !'<CR>
 
 	autocmd User * inoremap <C-k><C-k> <C-o>"_d$
 	autocmd User * inoremap <C-k><C-y> <Esc>k"zyyjV"zp:let @z = ''<CR>A
 
+	"}}}
+	" command line mode "{{{
 
+	autocmd User * cnoremap <C-b>      <Left>
+	autocmd User * cnoremap <C-f>      <Right>
+	autocmd User * cnoremap <C-a>      <Home>
+	autocmd User * cnoremap <C-h>      <BS>
+	autocmd User * cnoremap <C-d>      <Del>
+	autocmd User * cnoremap <C-e>      <End>
+	autocmd User * cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
+	autocmd User * cnoremap <C-l>      <Esc>
+	autocmd User * cnoremap <C-]>      '<,'>
+	autocmd User * cnoremap <C-k><C-p> <Up>
+	autocmd User * cnoremap <C-k><C-n> <Down>
+
+	"}}}
+	" visual mode "{{{
+
+	autocmd User * vnoremap <C-l> <Esc>
 	"autocmd User * vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
 	"autocmd User * vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
 
+	"}}}
+	" select mode "{{{
 
-	autocmd User * cnoremap <C-k><C-p> <Up>
-	autocmd User * cnoremap <C-k><C-n> <Down>
-	autocmd User * cnoremap <C-]>      '<,'>
+	autocmd User * snoremap <C-l> <Esc>
+
+	"}}}
 augroup END
 
 " }}}
@@ -1829,6 +1847,10 @@ augroup KeyMapping
 
 	autocmd User * nnoremap zj zjzo
 	autocmd User * nnoremap zk zkzo
+	autocmd User * nnoremap {  {zv
+	autocmd User * nnoremap }  }zv
+	autocmd User * nnoremap (  (zv
+	autocmd User * nnoremap )  )zv
 	autocmd User * nnoremap z< V$%zf
 augroup END
 
@@ -1883,7 +1905,6 @@ augroup KeyMapping
 	autocmd User * nnoremap <silent> <leader><leader>E :<C-u>Texplore<CR>
 
 
-
 	" open-browser.vim
 	autocmd User * nmap <leader>w <Plug>(openbrowser-open)
 
@@ -1907,19 +1928,27 @@ augroup KeyMapping
 
 
 	" excitetranslate-vim
-	autocmd User * nnoremap <silent> <leader>T :<C-u>ExciteTranslate<CR>
+	autocmd User * nnoremap <silent> <leader>T :ExciteTranslate<CR>
 
 
 	" vim-over
 	autocmd User * nnoremap <silent>       :%s/       :<C-u>OverCommandLine %s/<CR>
 	autocmd User * nnoremap <silent>       :s/        :<C-u>OverCommandLine s/<CR>
 	autocmd User * nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine %s/\<' . expand('<cword>') . '\>/<CR>'
-	autocmd User * nnoremap <silent><expr> <C-k>S     ':OverCommandLine %s/\<' . expand('<cword>') . '\>/' . expand('<cword>') . '<CR>'
+	autocmd User * nnoremap <silent><expr> <C-k>s     ':OverCommandLine %s/\<' . expand('<cword>') . '\>/' . expand('<cword>') . '<CR>'
 	autocmd User * vnoremap <silent>       :s/        :<C-u>OverCommandLine '<,'>s/<CR>
 	autocmd User * cnoremap <silent>       <C-k>:     :<C-u>OverCommandLine<CR>
-	"@Imcomplete('Set event FileType *, because avoid error. please suitable event')
-	autocmd FileType * OverCommandLineNoremap <C-l> <Esc>
-	autocmd FileType * OverCommandLineNoremap <C-]> '<,'>
+	"@Imcomplete('this is temporary keymapping, because vim-over do not imported cnoremap maybe')
+	" please delete this when fixed it
+	autocmd FileType * OverCommandLineNoremap <C-b>      <Left>
+	autocmd FileType * OverCommandLineNoremap <C-f>      <Right>
+	autocmd FileType * OverCommandLineNoremap <C-a>      <Home>
+	autocmd FileType * OverCommandLineNoremap <C-h>      <BS>
+	autocmd FileType * OverCommandLineNoremap <C-d>      <Del>
+	autocmd FileType * OverCommandLineNoremap <C-e>      <End>
+	"autocmd FileType * OverCommandLineNoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
+	autocmd FileType * OverCommandLineNoremap <C-l>      <Esc>
+	autocmd FileType * OverCommandLineNoremap <C-]>      '<,'>
 
 
 	" anzu-chan
@@ -1961,10 +1990,14 @@ augroup KeyMapping
 
 
 	" separetaro.vim
-	autocmd User * nmap <silent> <leader>ps <Plug>(separetoro_put_short_under)
-	autocmd User * nmap <silent> <leader>Ps <Plug>(separetoro_put_short_over)
-	autocmd User * nmap <silent> <leader>pl <Plug>(separetoro_put_long_under)
-	autocmd User * nmap <silent> <leader>Pl <Plug>(separetoro_put_long_over)
+	autocmd User * nmap <leader>ps <Plug>(separetoro_put_short_under)
+	autocmd User * nmap <leader>Ps <Plug>(separetoro_put_short_over)
+	autocmd User * nmap <leader>pl <Plug>(separetoro_put_long_under)
+	autocmd User * nmap <leader>Pl <Plug>(separetoro_put_long_over)
+
+
+	" vim-jplus
+	autocmd User * nmap J <Plug>(jplus)
 augroup END
 
 " }}}
