@@ -42,8 +42,6 @@
 
 "-- shot-f doesn't functioned in i_<C-o> temporary normal mode
 
-"-- I couldn't auto make vimproc some environment
-
 "-- conflicted? vim-ruby and rspec.vim when those was set NeoBundleLazy
 "  -- does not loaded syntax of rspec.vim
 
@@ -428,6 +426,7 @@ NeoBundleLazy    'kurocode25/mdforvim'
 NeoBundleLazy    'rbtnn/vimconsole.vim'
 NeoBundle        'osyo-manga/vim-jplus'
 NeoBundleLazy    'Shougo/echodoc.vim'
+NeoBundle        'Shougo/context_filetype.vim'
 
 
 call neobundle#end()
@@ -770,6 +769,7 @@ let g:vimshell_enable_transient_user_prompt = 1
 let g:vimshell_force_overwrite_statusline   = 1
 let g:vimshell_max_command_history          = 10000
 let g:vimshell_scrollback_limit             = 10000
+let g:vimshell_split_command                = 'split'
 
 " This variable defined by my command
 " The cd aliases reference to here
@@ -978,11 +978,11 @@ let g:bakaup_auto_backup = 1
 let g:vimconsole#auto_redraw = 1
 
 "}}}
-"--- echodoc.vim ---" "{{{
+"--- echodoc.vim ---"{{{
 
 let g:echodoc_enable_at_startup = 1
 
- "}}}
+"}}}
 "--- For Debug ---"{{{
 
 " Local my plugins
@@ -1080,8 +1080,12 @@ endif
 " Indent Wrapped Text
 set breakindent linebreak
 
-" View cursor column on <C-g>
+" View more info on <C-g>
 set noruler
+
+"@Experiment('if not usefull, remove this with echodoc.vim')
+" Allocate echodoc.vim area
+set cmdheight=2
 
 "@See('http://d.hatena.ne.jp/thinca/20111204/1322932585')
 " Sugoi view tabline
@@ -1997,6 +2001,15 @@ augroup KeyMapping
 
 
 	" vim-jplus
+	""Imcomplete('could not correspond multi line')
+	"function! s:jplus_stay() "{{{
+	"	let l:past_pos = getpos('.')
+
+	"	execute 'normal <Plug>(jplus)'
+
+	"	call setpos('.', l:past_pos)
+	"endfunction "}}}
+	"autocmd User * nnoremap <silent> J :call <SID>jplus_stay()<CR>
 	autocmd User * nmap J <Plug>(jplus)
 augroup END
 
