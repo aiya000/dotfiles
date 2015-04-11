@@ -1247,7 +1247,7 @@ autocmd FileEvent VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 \	if s:is_doswin
 \|		let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
 \|	else
-\|		let &listchars = 'tab:▸_,trail:_,extends:❯,precedes:❮,nbsp:%,eol:↲'
+\|		let &listchars = 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
 \|	endif
 
 "" Foooooo!!!!!!! I hope get this omoshiro event!!
