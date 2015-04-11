@@ -49,6 +49,10 @@
 
 "-- ftplugin vim.vim don't highlight hints on gvim
 
+"-- missing plugin conceal-javadoc.vim
+
+"-- couldn't run quickrun java on kaoriya gvim
+
 "}}}
 " Todo {{{
 
@@ -88,7 +92,7 @@
 " @Code         => A sample code using it
 "-------------------
 " Designating the target platform.
-" @Hoge{Win|Ubuntu}  : This Hint for Win and Ubuntu.
+" @Hoge{Win,Ubuntu}  : This Hint for Win and Ubuntu.
 " @Hoge!{Mac}        : This Hint for other than Mac.
 "----------------------------------------
 " {- Booked something -}
@@ -109,13 +113,12 @@ let s:is_cygwin  = has('win32unix')
 let s:is_kaoriya = has('kaoriya')
 let s:is_doswin  = s:is_windows && !s:is_cygwin && !has('gui')
 let s:is_unix    = has('unix')
-let s:is_mac     = has('mac')      "@Unused('')
-let s:is_mac_osx = has('macunix')  "@Unused('')
 
-let s:has_cygwin = isdirectory('/cygwin')
-let s:has_mingw  = 0  "@Unused('dummy')
+let s:has_cygwin = executable('cygstart')
+let s:has_mingw  = 0  "NOTE: ('dummy')
 
-let s:vim_home = expand('~/.vim')
+let s:vim_home  = expand('~/.vim')
+let s:vimrc_env = expand('~/.vimrc_env')
 
 let s:backupdir = expand('~/.backup/vim_backup')
 let s:directory = s:backupdir . '/swp'
@@ -672,7 +675,7 @@ let g:netrw_preview = 1
 
 "" uooooooooooooo... oh, my triple operator !!!!!!!!!!!
 "" Why if set you, happend an error when doing match it...
-"autocmd PluginPrefs User * let b:match_words = &matchpairs . ',?::'
+"autocmd PluginPrefs User MyVimRc let b:match_words = &matchpairs . ',?::'
 
 " }}}
 "--- unite.vim ---"{{{
@@ -687,8 +690,9 @@ let g:unite_source_alias_aliases = {
 
 "}}}
 "--- vim-quickrun ---" {{{
-"
-"@Experiment('tempfile fields branched off unix or windows')
+"@Unchecked('java'){Ubuntu}
+"@Unchecked('cs'){Ubuntu}
+
 let g:quickrun_config = {
 \	'_' : {
 \		'split'  : '',
@@ -697,12 +701,10 @@ let g:quickrun_config = {
 \		'hook/time/enable' : 1
 \	},
 \	'cpp' : {
-\		'command' : executable('clang++') ? 'clang++' : 'g++',
-\		'cmdopt'  : '-std=c++14'
+\		'cmdopt' : '-std=c++14'
 \	},
 \	'java' : {
-\		'runner'   : 'process_manager',
-\		'tempfile' :  printf('%s/{tempname()}.java', $TMP)
+\		'cmdopt' : '-encoding UTF-8 -source 1.8'
 \	},
 \	'vimspec' : {
 \		'command'  : 'themis',
@@ -712,34 +714,17 @@ let g:quickrun_config = {
 \	}
 \}
 
-" Set java version
-let s:javav = s:system('java -version')
-let g:quickrun_config.java['cmdopt'] = s:javav =~# '1\.8' ? '-encoding UTF-8 -source 1.8'
-\                                    : s:javav =~# '1\.7' ? '-encoding UTF-8 -source 1.7'
-\                                                         : '-encoding UTF-8'
-unlet s:javav
-
-
 " Branch with env
-if s:is_unix
-	"@Experiment('changed tempfile field')
-	let g:quickrun_config['cs'] = {
-	\	'command'  : 'gmcs',
-	\	'exec'     : ['%c %o %s:p > /dev/null', 'mono %s:p:r.exe', 'rm %s:p:r.exe'],
-	\	'tempfile' : printf('%s/{tempname()}.cs', $TMP)
-	\}
-elseif s:is_windows
-	let g:quickrun_config['cs'] = {
-	\	'command'  : 'csc.exe',
-	\	'exec'     : ['%c %o %s:p', '%s:p:r.exe', 'del %s:p:r.exe'],
-	\	'tempfile' : printf('%s/{tempname()}.cs', $TMP),
-	\	'hook/output_encode/encoding' : 'cp932:utf-8'
-	\}
-endif
+let g:quickrun_config['cs'] = s:is_unix    ? {'command' : 'gmcs'}
+\                           : s:is_windows ? {'command' : 'csc.exe', 'hook/output_encode/encoding' : 'cp932:utf-8'}
+\                                          : {}
 
-if s:is_cygwin
-	let g:quickrun_config.java['exec'] = ['%c %o `echo %s | sed s:\:/:g | cygpath -w -f -`', '%c %s:t:r %a']
-	let g:quickrun_config.java['hook/output_encode/encoding'] = 'Shift_JIS'
+if s:is_windows
+	let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
+elseif s:is_cygwin
+	let g:quickrun_config.java['exec']                        = ['%c %o `echo %s | sed s:\:/:g | cygpath -w -f -`', '%c %s:t:r %a']
+	let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
+	let g:quickrun_config.java['tempfile']                    = printf('%s/{tempname()}.java', $TMP)
 endif
 
 " }}}
@@ -822,25 +807,25 @@ let g:submode_timeout = 0
 if neobundle#tap('vim-submode')
 	augroup PluginPrefs
 		" Window Resizer
-		autocmd User * call submode#enter_with('window_resize', 'n', '', '<C-s>w')
-		autocmd User * call submode#map('window_resize', 'n', '', 'j', '<C-w>+')
-		autocmd User * call submode#map('window_resize', 'n', '', 'k', '<C-w>-')
-		autocmd User * call submode#map('window_resize', 'n', '', 'h', '<C-w><')
-		autocmd User * call submode#map('window_resize', 'n', '', 'l', '<C-w>>')
-		autocmd User * call submode#map('window_resize', 'n', '', '=', '<C-w>=')
-		autocmd User * call submode#map('window_resize', 'n', '', '_', '<C-w>_')
+		autocmd User MyVimRc call submode#enter_with('window_resize', 'n', '', '<C-s>w')
+		autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'j', '<C-w>+')
+		autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'k', '<C-w>-')
+		autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'h', '<C-w><')
+		autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'l', '<C-w>>')
+		autocmd User MyVimRc call submode#map('window_resize', 'n', '', '=', '<C-w>=')
+		autocmd User MyVimRc call submode#map('window_resize', 'n', '', '_', '<C-w>_')
 
 		" Fold Mover
-		autocmd User * call submode#enter_with('fold_move', 'n', '', '<C-s>z')
-		autocmd User * call submode#map('fold_move', 'n', 'e', 'j', "foldlevel('.') > 0 ? 'zczjzozz'   : 'zjzozz'")
-		autocmd User * call submode#map('fold_move', 'n', 'e', 'k', "foldlevel('.') > 0 ? 'zczkzo[zzz' : 'zkzo[zzz'")
-		autocmd User * call submode#map('fold_move', 'n', '',  'h', '[z')
-		autocmd User * call submode#map('fold_move', 'n', '',  'l', ']z')
+		autocmd User MyVimRc call submode#enter_with('fold_move', 'n', '', '<C-s>z')
+		autocmd User MyVimRc call submode#map('fold_move', 'n', 'e', 'j', "foldlevel('.') > 0 ? 'zczjzozz'   : 'zjzozz'")
+		autocmd User MyVimRc call submode#map('fold_move', 'n', 'e', 'k', "foldlevel('.') > 0 ? 'zczkzo[zzz' : 'zkzo[zzz'")
+		autocmd User MyVimRc call submode#map('fold_move', 'n', '',  'h', '[z')
+		autocmd User MyVimRc call submode#map('fold_move', 'n', '',  'l', ']z')
 
 		" Buffer Changer
-		autocmd User * call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
-		autocmd User * call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
-		autocmd User * call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
+		autocmd User MyVimRc call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
+		autocmd User MyVimRc call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
+		autocmd User MyVimRc call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
 
 		" Tab Mover
 	" s:loopable_tab_move_prev() "{{{
@@ -865,23 +850,23 @@ if neobundle#tap('vim-submode')
 	endfunction
 	
 	"}}}
-		autocmd User * call submode#enter_with('tab_move', 'n', '', '<C-s>t')
-		autocmd User * call submode#map('tab_move', 'n', 's', 'n', ':call LoopableTabMoveNext()<CR>')
-		autocmd User * call submode#map('tab_move', 'n', 's', 'p', ':call LoopableTabMovePrev()<CR>')
+		autocmd User MyVimRc call submode#enter_with('tab_move', 'n', '', '<C-s>t')
+		autocmd User MyVimRc call submode#map('tab_move', 'n', 's', 'n', ':call LoopableTabMoveNext()<CR>')
+		autocmd User MyVimRc call submode#map('tab_move', 'n', 's', 'p', ':call LoopableTabMovePrev()<CR>')
 
 		" WinTab Mover
 		" Current buffer move to next tab "{{{
 		command! -bar BufTabMovePrev execute 'normal! mZ:hide<CR>gT:vsp<CR>`Z'
 		command! -bar BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? ':hide<CR>' : ':hide<CR>gt') . ':vsp<CR>`Z'
 		"}}}
-		autocmd User * call submode#enter_with('wintab_move', 'n', '', '<C-s>N', ':BufTabMoveNext<CR>')
-		autocmd User * call submode#enter_with('wintab_move', 'n', '', '<C-s>P', ':BufTabMovePrev<CR>')
-		autocmd User * call submode#map('wintab_move', 'n', '', 'N', ':BufTabMoveNext<CR>')
-		autocmd User * call submode#map('wintab_move', 'n', '', 'P', ':BufTabMovePrev<CR>')
-		autocmd User * call submode#map('wintab_move', 'n', '', 'H', '<C-w>H')
-		autocmd User * call submode#map('wintab_move', 'n', '', 'J', '<C-w>J')
-		autocmd User * call submode#map('wintab_move', 'n', '', 'K', '<C-w>K')
-		autocmd User * call submode#map('wintab_move', 'n', '', 'L', '<C-w>L')
+		autocmd User MyVimRc call submode#enter_with('wintab_move', 'n', '', '<C-s>N', ':BufTabMoveNext<CR>')
+		autocmd User MyVimRc call submode#enter_with('wintab_move', 'n', '', '<C-s>P', ':BufTabMovePrev<CR>')
+		autocmd User MyVimRc call submode#map('wintab_move', 'n', '', 'N', ':BufTabMoveNext<CR>')
+		autocmd User MyVimRc call submode#map('wintab_move', 'n', '', 'P', ':BufTabMovePrev<CR>')
+		autocmd User MyVimRc call submode#map('wintab_move', 'n', '', 'H', '<C-w>H')
+		autocmd User MyVimRc call submode#map('wintab_move', 'n', '', 'J', '<C-w>J')
+		autocmd User MyVimRc call submode#map('wintab_move', 'n', '', 'K', '<C-w>K')
+		autocmd User MyVimRc call submode#map('wintab_move', 'n', '', 'L', '<C-w>L')
 	augroup END
 endif
 
@@ -1293,13 +1278,13 @@ call altercmd#load()
 command! -bar -bang NewOverridden new<bang> | setf none
 AlterCommand new NewOverridden
 
-command! -bar -bang VnewOverridden vnew<bang> | setf none
+command! -bar -bang -complete=file -nargs=? VnewOverridden vnew<bang> <args> | if empty(&ft) | setf none | endif
 AlterCommand vnew VnewOverridden
 
-command! -bar -bang EnewOverridden enew<bang> | setf none
+command! -bar -bang -complete=file -nargs=? EnewOverridden enew<bang> <args> | if empty(&ft) | setf none | endif
 AlterCommand enew EnewOverridden
 
-command! -bar -bang TabnewOverridden tabnew<bang> | setf none
+command! -bar -bang -complete=file -nargs=? TabnewOverridden tabnew<bang> <args> | if empty(&ft) | setf none | endif
 AlterCommand tabnew TabnewOverridden
 
 " }}}
@@ -1365,7 +1350,7 @@ function! s:reverse_line() range " {{{
 
 	call setpos('.', l:posit)
 endfunction " }}}
-command! -range=% ReverseLine :<line1>, <line2> call s:reverse_line()
+command! -range=% ReverseLine :<line1>, <line2>call s:reverse_line()
 
 
 " Rename current buffer file
@@ -1415,11 +1400,12 @@ command! -bar Reload so $MYVIMRC
 cnoreabbr ForceSave w !sudo tee > /dev/null %
 command!  ForceSave NOP
 
-command! -bar CdBufDir cd %:p:h
+cnoreabbr CdBufDir cd %:p:h
+command!  CdBufDir NOP
 
 command! -bar ColorPreview Unite colorscheme -auto-preview
 
-command! -bar FtpluginAfterEdit execute ':edit' (s:vim_home . '/after/ftplugin/' . &filetype . '.vim')
+command! -bar AfterFtpluginEdit execute ':edit' (s:vim_home . '/after/ftplugin/' . &filetype . '.vim')
 
 " }}}
 " Twitter {{{
@@ -1492,8 +1478,8 @@ endfunction "}}}
 command! -bar TweetPublic        call TweetPublicFunc()
 
 
-command! -bar  Bitly TweetVimBitly
-cnoreabbr tvs   TweetVimSwitchAccount
+command! -bar Bitly TweetVimBitly
+cnoreabbr tvs TweetVimSwitchAccount
 
 " }}}
 
@@ -1517,11 +1503,12 @@ command!  Translate NOP
 
 cnoreabbr Weblio    Ref webdict weblio
 command!  Weblio    NOP
+cnoreabbr weblio    Ref webdict weblio
 
 
 " NeoBundle redirect alias
-cnoreabbr NeoBundleInstallLog NeoBundleLog
-command!  NeoBundleInstallLog NOP
+cnoreabbr NeoBundleInstallsLog NeoBundleLog
+command!  NeoBundleInstallsLog NOP
 
 
 " Markdown help on online (maru nage)
@@ -1586,7 +1573,7 @@ command!  IrbTab   NOP
 " }}}
 
 
-" Check highlight statuses
+" View highlight statuses
 " command! HighlightListTab {{{
 
 function! s:highlight_list_tab()
@@ -1632,23 +1619,23 @@ command! -bar SearchBranch :/\v(<<<<<<<|\=\=\=\=\=\=\=|>>>>>>>)
 
 augroup KeyMapping
 	" I can use some mapping to hoge<C-c>
-	autocmd User * nnoremap <C-c>      <NOP>
-	autocmd User * nnoremap <C-c><C-c> <C-c>
+	autocmd User MyVimRc nnoremap <C-c>      <NOP>
+	autocmd User MyVimRc nnoremap <C-c><C-c> <C-c>
 
-	autocmd User * nnoremap <Up>    <NOP>
-	autocmd User * nnoremap <Down>  <NOP>
-	autocmd User * nnoremap <Left>  <NOP>
-	autocmd User * nnoremap <Right> <NOP>
+	autocmd User MyVimRc nnoremap <Up>    <NOP>
+	autocmd User MyVimRc nnoremap <Down>  <NOP>
+	autocmd User MyVimRc nnoremap <Left>  <NOP>
+	autocmd User MyVimRc nnoremap <Right> <NOP>
 
-	autocmd User * inoremap <Up>    <NOP>
-	autocmd User * inoremap <Down>  <NOP>
-	autocmd User * inoremap <Left>  <NOP>
-	autocmd User * inoremap <Right> <NOP>
+	autocmd User MyVimRc inoremap <Up>    <NOP>
+	autocmd User MyVimRc inoremap <Down>  <NOP>
+	autocmd User MyVimRc inoremap <Left>  <NOP>
+	autocmd User MyVimRc inoremap <Right> <NOP>
 
-	autocmd User * cnoremap <Left>  <NOP>
-	autocmd User * cnoremap <Right> <NOP>
+	autocmd User MyVimRc cnoremap <Left>  <NOP>
+	autocmd User MyVimRc cnoremap <Right> <NOP>
 
-	autocmd User * cnoremap [Left] <Left>
+	autocmd User MyVimRc cnoremap [Left] <Left>
 augroup END
 
 " }}}
@@ -1769,75 +1756,75 @@ endfunction "}}}
 augroup KeyMapping
 	" normal mode "{{{
 
-	autocmd User * nmap <C-j> <CR>
+	autocmd User MyVimRc nmap <C-j> <CR>
 
 	" † Ex Improved
-	autocmd User * nnoremap Q gQ
+	autocmd User MyVimRc nnoremap Q gQ
 
-	autocmd User * nnoremap <C-n> gt
-	autocmd User * nnoremap <C-p> gT
-	autocmd User * nnoremap <C-m> o<Esc>
+	autocmd User MyVimRc nnoremap <C-n> gt
+	autocmd User MyVimRc nnoremap <C-p> gT
+	autocmd User MyVimRc nnoremap <C-m> o<Esc>
 
-	autocmd User * nnoremap <silent> m: :<C-u>marks<CR>
-	autocmd User * nnoremap <silent> q: :<C-u>register<CR>
-	autocmd User * nnoremap <silent> g: :<C-u>tabs<CR>
-	autocmd User * nnoremap <silent> z: :<C-u>buffers<CR>
-	autocmd User * nnoremap <silent> g> :<C-u>messages<CR>
+	autocmd User MyVimRc nnoremap <silent> m: :<C-u>marks<CR>
+	autocmd User MyVimRc nnoremap <silent> q: :<C-u>register<CR>
+	autocmd User MyVimRc nnoremap <silent> g: :<C-u>tabs<CR>
+	autocmd User MyVimRc nnoremap <silent> z: :<C-u>buffers<CR>
+	autocmd User MyVimRc nnoremap <silent> g> :<C-u>messages<CR>
 
-	autocmd User * nnoremap <silent> <leader>b         :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile<CR>
-	autocmd User * nnoremap <silent> <leader>B         :<C-u>NewOverridden \| resize 5<CR>
-	autocmd User * nnoremap <silent> <leader>pd        :<C-u>execute 'normal! a' . strftime('%c')<CR>
-	autocmd User * nnoremap <silent> <leader><leader>h :<C-u>helpclose<CR>
-	autocmd User * nnoremap <silent> <Space><Space>    :<C-u>call <SID>compress_spaces()<CR>
-	autocmd User * nnoremap <silent> <leader>k         :<C-u>call <SID>cursor_up_to_lid()<CR>
-	autocmd User * nnoremap <silent> <leader>j         :<C-u>call <SID>cursor_down_to_ground()<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>b         :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>B         :<C-u>NewOverridden \| resize 5<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>pd        :<C-u>execute 'normal! a' . strftime('%c')<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>h :<C-u>helpclose<CR>
+	autocmd User MyVimRc nnoremap <silent> <Space><Space>    :<C-u>call <SID>compress_spaces()<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>k         :<C-u>call <SID>cursor_up_to_lid()<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>j         :<C-u>call <SID>cursor_down_to_ground()<CR>
 
-	autocmd User * nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
-	autocmd User * nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
-	autocmd User * nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
-	autocmd User * nnoremap <silent> <C-k>J     :<C-u>wall \| echo 'written all !'<CR>
-	autocmd User * nnoremap <silent> <C-k>R     :<C-u>let &filetype = &filetype<CR>
-	autocmd User * nnoremap <silent> <C-k>r     :<C-u>doautocmd User<CR>
-	autocmd User * nnoremap <silent> <C-k>l     :<C-u>source %<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>J     :<C-u>wall \| echo 'written all !'<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>R     :<C-u>let &filetype = &filetype<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>r     :<C-u>doautocmd User<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>l     :<C-u>source %<CR>
 
 	"}}}
 	" insert mode "{{{
 
-	autocmd User * imap <C-j> <CR>
+	autocmd User MyVimRc imap <C-j> <CR>
 
-	autocmd User * inoremap <C-l> <Esc>
-	autocmd User * inoremap <silent> <C-k><C-j> <Esc>:write<CR>
-	autocmd User * inoremap <silent> <C-k>J     <Esc>:wall \| echo 'written all !'<CR>
+	autocmd User MyVimRc inoremap <C-l> <Esc>
+	autocmd User MyVimRc inoremap <silent> <C-k><C-j> <Esc>:write<CR>
+	autocmd User MyVimRc inoremap <silent> <C-k>J     <Esc>:wall \| echo 'written all !'<CR>
 
-	autocmd User * inoremap <C-k><C-k> <C-o>"_d$
-	autocmd User * inoremap <C-k><C-y> <Esc>k"zyyjV"zp:let @z = ''<CR>A
+	autocmd User MyVimRc inoremap <C-k><C-k> <C-o>"_d$
+	autocmd User MyVimRc inoremap <C-k><C-y> <Esc>k"zyyjV"zp:let @z = ''<CR>A
 
 	"}}}
 	" command line mode "{{{
 
-	autocmd User * cnoremap <C-b>      <Left>
-	autocmd User * cnoremap <C-f>      <Right>
-	autocmd User * cnoremap <C-a>      <Home>
-	autocmd User * cnoremap <C-h>      <BS>
-	autocmd User * cnoremap <C-d>      <Del>
-	autocmd User * cnoremap <C-e>      <End>
-	autocmd User * cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
-	autocmd User * cnoremap <C-l>      <Esc>
-	autocmd User * cnoremap <C-]>      '<,'>
-	autocmd User * cnoremap <C-k><C-p> <Up>
-	autocmd User * cnoremap <C-k><C-n> <Down>
+	autocmd User MyVimRc cnoremap <C-b>      <Left>
+	autocmd User MyVimRc cnoremap <C-f>      <Right>
+	autocmd User MyVimRc cnoremap <C-a>      <Home>
+	autocmd User MyVimRc cnoremap <C-h>      <BS>
+	autocmd User MyVimRc cnoremap <C-d>      <Del>
+	autocmd User MyVimRc cnoremap <C-e>      <End>
+	autocmd User MyVimRc cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
+	autocmd User MyVimRc cnoremap <C-l>      <Esc>
+	autocmd User MyVimRc cnoremap <C-]>      '<,'>
+	autocmd User MyVimRc cnoremap <C-k><C-p> <Up>
+	autocmd User MyVimRc cnoremap <C-k><C-n> <Down>
 
 	"}}}
 	" visual mode "{{{
 
-	autocmd User * vnoremap <C-l> <Esc>
-	"autocmd User * vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
-	"autocmd User * vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
+	autocmd User MyVimRc vnoremap <C-l> <Esc>
+	"autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
+	"autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
 
 	"}}}
 	" select mode "{{{
 
-	autocmd User * snoremap <C-l> <Esc>
+	autocmd User MyVimRc snoremap <C-l> <Esc>
 
 	"}}}
 augroup END
@@ -1846,56 +1833,56 @@ augroup END
 " Foldings {{{
 
 augroup KeyMapping
-	autocmd User * nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
-	autocmd User * nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
+	autocmd User MyVimRc nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
+	autocmd User MyVimRc nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
 
-	autocmd User * nnoremap zj zjzo
-	autocmd User * nnoremap zk zkzo
-	autocmd User * nnoremap {  {zv
-	autocmd User * nnoremap }  }zv
-	autocmd User * nnoremap (  (zv
-	autocmd User * nnoremap )  )zv
-	autocmd User * nnoremap z< V$%zf
+	autocmd User MyVimRc nnoremap zj zjzo
+	autocmd User MyVimRc nnoremap zk zkzo
+	autocmd User MyVimRc nnoremap {  {zv
+	autocmd User MyVimRc nnoremap }  }zv
+	autocmd User MyVimRc nnoremap (  (zv
+	autocmd User MyVimRc nnoremap )  )zv
+	autocmd User MyVimRc nnoremap z< V$%zf
 augroup END
 
 " }}}
 " Windows and Buffers {{{
 
 augroup KeyMapping
-	autocmd User * nnoremap <Space>h <C-w>h
-	autocmd User * nnoremap <Space>j <C-w>j
-	autocmd User * nnoremap <Space>k <C-w>k
-	autocmd User * nnoremap <Space>l <C-w>l
+	autocmd User MyVimRc nnoremap <Space>h <C-w>h
+	autocmd User MyVimRc nnoremap <Space>j <C-w>j
+	autocmd User MyVimRc nnoremap <Space>k <C-w>k
+	autocmd User MyVimRc nnoremap <Space>l <C-w>l
 
-	autocmd User * nnoremap <silent> <C-w>t :<C-u>TabnewOverridden<CR>
-	autocmd User * nnoremap <silent> <C-w>T :<C-u>tabclose<CR>
-	autocmd User * nnoremap <silent> <C-w>c :<C-u>bdelete<CR>
-	autocmd User * nnoremap <silent> <C-w>C :<C-u>bdelete!<CR>
-	autocmd User * nnoremap <silent> <C-w>N :<C-u>EnewOverridden!<CR>
-	autocmd User * nnoremap <silent> <C-w>Q :<C-u>quitall<CR>
-	autocmd User * nnoremap <silent> <C-w>" :<C-u>resize 5<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>t :<C-u>TabnewOverridden<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>T :<C-u>tabclose<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>c :<C-u>bdelete<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>C :<C-u>bdelete!<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>N :<C-u>EnewOverridden!<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>Q :<C-u>quitall<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>" :<C-u>resize 5<CR>
 
-	autocmd User * nnoremap <silent><expr> <C-w>bt 'mZ:tabnew<CR>`Zzz'       . (foldlevel('.') > 0 ? 'zo' : '')
-	autocmd User * nnoremap <silent><expr> <C-w>bT 'mZ<C-w>c:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : '')
+	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bt 'mZ:tabnew<CR>`Zzz'       . (foldlevel('.') > 0 ? 'zo' : '')
+	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bT 'mZ<C-w>c:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : '')
 augroup END
 
 " }}}
 " Toggle options {{{
 
 augroup KeyMapping
-	autocmd User * nnoremap <silent><expr> <C-h><C-d> (&diff ? ':diffoff' : ':diffthis') . '\|set diff?<CR>'
-	autocmd User * nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
+	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-d> (&diff ? ':diffoff' : ':diffthis') . '\|set diff?<CR>'
+	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
 
-	autocmd User * nnoremap <silent> <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
-	autocmd User * nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline!     cursorline?    <CR>
-	autocmd User * nnoremap <silent> <C-h><C-e> :<C-u>setl expandtab!      expandtab?     <CR>
-	autocmd User * nnoremap <silent> <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
-	autocmd User * nnoremap <silent> <C-h><C-l> :<C-u>setl list!           list?          <CR>
-	autocmd User * nnoremap <silent> <C-h><C-n> :<C-u>setl number!         number?        <CR>
-	autocmd User * nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
-	autocmd User * nnoremap <silent> <C-h>jk    :<C-u>call <SID>toggle_onehand_mode()<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline!     cursorline?    <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-e> :<C-u>setl expandtab!      expandtab?     <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-l> :<C-u>setl list!           list?          <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-n> :<C-u>setl number!         number?        <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h>jk    :<C-u>call <SID>toggle_onehand_mode()<CR>
 
-	autocmd User * inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
+	autocmd User MyVimRc inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
 augroup END
 
 " }}}
@@ -1903,45 +1890,45 @@ augroup END
 
 augroup KeyMapping
 	" netrw
-	autocmd User * nnoremap <silent> <leader>e         :<C-u>Vexplore<CR>
-	autocmd User * nnoremap <silent> <leader><leader>e :<C-u>Sexplore<CR>
-	autocmd User * nnoremap <silent> <leader>E         :<C-u>Explore<CR>
-	autocmd User * nnoremap <silent> <leader><leader>E :<C-u>Texplore<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>e         :<C-u>Vexplore<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>e :<C-u>Sexplore<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>E         :<C-u>Explore<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>E :<C-u>Texplore<CR>
 
 
 	" open-browser.vim
-	autocmd User * nmap <leader>w <Plug>(openbrowser-open)
+	autocmd User MyVimRc nmap <leader>w <Plug>(openbrowser-open)
 
 
 	" vim-quickrun
-	autocmd User * nnoremap <silent> <leader>R         :<C-u>QuickRun -runner shell<CR>
-	autocmd User * nnoremap <silent> <leader><leader>r :<C-u>call <SID>bufclose_filetype('quickrun')<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>R         :<C-u>QuickRun -runner shell<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>r :<C-u>call <SID>bufclose_filetype('quickrun')<CR>
 
 
 	" vimshell
-	autocmd User * nnoremap <silent> <leader>v         :<C-u>VimShell -split-command=vsp -toggle<CR>
-	autocmd User * nnoremap <silent> <leader><leader>v :<C-u>VimShell -split-command=sp  -toggle<CR>
-	autocmd User * nnoremap <silent> <leader>V         :<C-u>VimShellBufferDir -create<CR>
-	autocmd User * nnoremap <silent> <leader><leader>V :<C-u>VimShell -split-command=tabnew -create<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>v         :<C-u>VimShell -split-command=vsp -toggle<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>v :<C-u>VimShell -split-command=sp  -toggle<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>V         :<C-u>VimShellBufferDir -create<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>V :<C-u>VimShell -split-command=tabnew -create<CR>
 
 
 	" Unite
-	autocmd User * nnoremap <silent> <leader>uf        :<C-u>Unite -ignorecase outline:foldings<CR>
-	autocmd User * nnoremap <silent> <leader>um        :<C-u>Unite -ignorecase neomru/file<CR>
-	autocmd User * nnoremap <silent> <leader><leader>u :<C-u>call <SID>bufclose_filetype('unite')<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>uf        :<C-u>Unite -ignorecase outline:foldings<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>um        :<C-u>Unite -ignorecase neomru/file<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>u :<C-u>call <SID>bufclose_filetype('unite')<CR>
 
 
 	" excitetranslate-vim
-	autocmd User * nnoremap <silent> <leader>T :ExciteTranslate<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>T :ExciteTranslate<CR>
 
 
 	" vim-over
-	autocmd User * nnoremap <silent>       :%s/       :<C-u>OverCommandLine %s/<CR>
-	autocmd User * nnoremap <silent>       :s/        :<C-u>OverCommandLine s/<CR>
-	autocmd User * nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine %s/\<' . expand('<cword>') . '\>/<CR>'
-	autocmd User * nnoremap <silent><expr> <C-k>s     ':OverCommandLine %s/\<' . expand('<cword>') . '\>/' . expand('<cword>') . '<CR>'
-	autocmd User * vnoremap <silent>       :s/        :<C-u>OverCommandLine '<,'>s/<CR>
-	autocmd User * cnoremap <silent>       <C-k>:     :<C-u>OverCommandLine<CR>
+	autocmd User MyVimRc nnoremap <silent>       :%s/       :<C-u>OverCommandLine %s/<CR>
+	autocmd User MyVimRc nnoremap <silent>       :s/        :<C-u>OverCommandLine s/<CR>
+	autocmd User MyVimRc nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine %s/\<' . expand('<cword>') . '\>/<CR>'
+	autocmd User MyVimRc nnoremap <silent><expr> <C-k>s     ':OverCommandLine %s/\<' . expand('<cword>') . '\>/' . expand('<cword>') . '<CR>'
+	autocmd User MyVimRc vnoremap <silent>       :s/        :<C-u>OverCommandLine '<,'>s/<CR>
+	autocmd User MyVimRc cnoremap <silent>       <C-k>:     :<C-u>OverCommandLine<CR>
 	"@Imcomplete('this is temporary keymapping, because vim-over do not imported cnoremap maybe')
 	" please delete this when fixed it
 	autocmd FileType * OverCommandLineNoremap <C-b>      <Left>
@@ -1956,48 +1943,48 @@ augroup KeyMapping
 
 
 	" anzu-chan
-	autocmd User * nmap n      <Plug>(anzu-n-with-echo)zv
-	autocmd User * nmap N      <Plug>(anzu-N-with-echo)zv
-	autocmd User * nmap *      <Plug>(anzu-star-with-echo)zv
-	autocmd User * nmap #      <Plug>(anzu-sharp-with-echo)zv
-	autocmd User * nmap <C-w>* <C-w>v<Plug>(anzu-star-with-echo)zv
-	autocmd User * nmap <C-w># <C-w>v<Plug>(anzu-sharp-with-echo)zv
+	autocmd User MyVimRc nmap n      <Plug>(anzu-n-with-echo)zv
+	autocmd User MyVimRc nmap N      <Plug>(anzu-N-with-echo)zv
+	autocmd User MyVimRc nmap *      <Plug>(anzu-star-with-echo)zv
+	autocmd User MyVimRc nmap #      <Plug>(anzu-sharp-with-echo)zv
+	autocmd User MyVimRc nmap <C-w>* <C-w>v<Plug>(anzu-star-with-echo)zv
+	autocmd User MyVimRc nmap <C-w># <C-w>v<Plug>(anzu-sharp-with-echo)zv
 
 
 	" incsearch.vim
-	autocmd User * nmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
-	autocmd User * nmap <silent>    <leader>/         /\m\C
-	autocmd User * nmap <silent>    <leader><leader>/ /\m\C\<\>[Left][Left]
-	autocmd User * nmap             g/                /\<<C-r>"\><CR>
-	autocmd User * nmap <expr>      ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
-	autocmd User * nmap <silent>    <leader>?         ?\m\C
-	autocmd User * nmap <silent>    <leader><leader>? ?\m\C\<\>[Left][Left]
-	autocmd User * nmap             g?                ?\<<C-r>"\><CR>
-	autocmd User * vmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
-	autocmd User * vmap <expr>      ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
+	autocmd User MyVimRc nmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
+	autocmd User MyVimRc nmap <silent>    <leader>/         /\m\C
+	autocmd User MyVimRc nmap <silent>    <leader><leader>/ /\m\C\<\>[Left][Left]
+	autocmd User MyVimRc nmap             g/                /\<<C-r>"\><CR>
+	autocmd User MyVimRc nmap <expr>      ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
+	autocmd User MyVimRc nmap <silent>    <leader>?         ?\m\C
+	autocmd User MyVimRc nmap <silent>    <leader><leader>? ?\m\C\<\>[Left][Left]
+	autocmd User MyVimRc nmap             g?                ?\<<C-r>"\><CR>
+	autocmd User MyVimRc vmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
+	autocmd User MyVimRc vmap <expr>      ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
 	"@Imcomplete('Set event FileType *, because avoid error. please suitable event')
 	autocmd FileType * IncSearchNoreMap <C-j> <CR>
 	autocmd FileType * IncSearchNoreMap <C-l> <Esc>
 
 
 	" TaskList.vim
-	autocmd User * nmap <leader>t <Plug>TaskListToggle
+	autocmd User MyVimRc nmap <leader>t <Plug>TaskListToggle
 
 
 	" undotree
-	autocmd User * nnoremap <leader>U :<C-u>UndotreeToggle<CR>
+	autocmd User MyVimRc nnoremap <leader>U :<C-u>UndotreeToggle<CR>
 
 
 	" neosnippet.vim
-	autocmd User * imap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
-	autocmd User * smap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
+	autocmd User MyVimRc imap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
+	autocmd User MyVimRc smap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
 
 
 	" separetaro.vim
-	autocmd User * nmap <leader>ps <Plug>(separetoro_put_short_under)
-	autocmd User * nmap <leader>Ps <Plug>(separetoro_put_short_over)
-	autocmd User * nmap <leader>pl <Plug>(separetoro_put_long_under)
-	autocmd User * nmap <leader>Pl <Plug>(separetoro_put_long_over)
+	autocmd User MyVimRc nmap <leader>ps <Plug>(separetoro_put_short_under)
+	autocmd User MyVimRc nmap <leader>Ps <Plug>(separetoro_put_short_over)
+	autocmd User MyVimRc nmap <leader>pl <Plug>(separetoro_put_long_under)
+	autocmd User MyVimRc nmap <leader>Pl <Plug>(separetoro_put_long_over)
 
 
 	" vim-jplus
@@ -2009,8 +1996,8 @@ augroup KeyMapping
 
 	"	call setpos('.', l:past_pos)
 	"endfunction "}}}
-	"autocmd User * nnoremap <silent> J :call <SID>jplus_stay()<CR>
-	autocmd User * nmap J <Plug>(jplus)
+	"autocmd User MyVimRc nnoremap <silent> J :call <SID>jplus_stay()<CR>
+	autocmd User MyVimRc nmap J <Plug>(jplus)
 augroup END
 
 " }}}
@@ -2069,7 +2056,7 @@ autocmd FileEvent FileType netrw highlight default link CursorLine Visual
 "-------------------------"
 "{{{
 
-if filereadable(expand('~/.vimrc_env'))
+if filereadable(s:vimrc_env)
 	source ~/.vimrc_env
 endif
 
@@ -2078,5 +2065,5 @@ endif
 
 filetype plugin indent on
 syntax enable
-doautocmd User
+doautocmd User MyVimRc
 let g:vimrc['loaded'] = 1
