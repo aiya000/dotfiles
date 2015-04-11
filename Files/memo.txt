@@ -707,4 +707,59 @@ autocmd BufNewFile *.rb 0r ~/.vim/templates/rb.tpl
 
 
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
+
+"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
+" 11  4月 2015
+
+" Load vimrc from current directory and disable unsafe commands in them
+set exrc
+set secure
+
+" Use UTF-8 without BOM
+set encoding=utf-8 nobomb
+
+" =============================================================================
+" Terminal Interaction
+" =============================================================================
+
+" Prevent Vim from clearing the scrollback buffer
+" http://www.shallowsky.com/linux/noaltscreen.html
+set t_ti= t_te=
+
+" Clear PAGER if Vim's Man function is needed
+let $PAGER=''
+
+
+" Don't reset cursor to start of line when moving around
+set nostartofline
+
+" Do not jump to the matching bracket upon bracket insert (default)
+set noshowmatch
+
+
+set stl+=%{fugitive#statusline()} " git via fugitive.vim
+set gdefault   " Use global search by default
+
+" Some file types use real tabs
+au FileType {make,gitconfig} set noexpandtab sw=4
+
+" Update syntax highlighting for more lines increased scrolling performance
+syntax sync minlines=256
+
+" Don't syntax highlight long lines
+set synmaxcol=256
+
+
+""
+"" Smooth Scroll
+""
+
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 12, 2)<cr>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 14, 2)<cr>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 22, 4)<cr>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 24, 4)<cr>
+
+
+
+"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
 vim:ft=vim:

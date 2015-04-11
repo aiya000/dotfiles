@@ -47,7 +47,7 @@
 
 "-- happened exception when input '.*' to unite textarea
 
-"-- ftplugin vim.vim don't highlight hints on gvim
+"-- ftplugin vim.vim don't highlight hints on gvim and vim
 
 "-- missing plugin conceal-javadoc.vim
 
@@ -1241,13 +1241,14 @@ endfunction "}}}
 autocmd FileEvent BufReadPost * call s:visit_past_position()
 
 
+"@Experiment('changed tab:»_ to it')
 " If you using windows cmd prompt, listchars using safe chars
 autocmd FileEvent VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
-	\	if &encoding ==# 'utf-8' && !s:is_doswin
-	\|		let &listchars = 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
-	\|	else
-	\|		let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
-	\|	endif
+\	if s:is_doswin
+\|		let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
+\|	else
+\|		let &listchars = 'tab:▸_,trail:_,extends:❯,precedes:❮,nbsp:%,eol:↲'
+\|	endif
 
 "" Foooooo!!!!!!! I hope get this omoshiro event!!
 "autocmd KeyEvent UserGettingBored * echo 'oooooiiiii!!!!!'
@@ -1759,20 +1760,21 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> z: :<C-u>buffers<CR>
 	autocmd User MyVimRc nnoremap <silent> g> :<C-u>messages<CR>
 
-	autocmd User MyVimRc nnoremap <silent> <leader>b         :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>B         :<C-u>NewOverridden \| resize 5<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>pd        :<C-u>execute 'normal! a' . strftime('%c')<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>h :<C-u>helpclose<CR>
-	autocmd User MyVimRc nnoremap <silent> <Space><Space>    :<C-u>call <SID>compress_spaces()<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>k         :<C-u>call <SID>cursor_up_to_lid()<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>j         :<C-u>call <SID>cursor_down_to_ground()<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| resize 5<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>pd               :<C-u>execute 'normal! a' . strftime('%c')<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>h        :<C-u>helpclose<CR>
+	autocmd User MyVimRc nnoremap <silent> <Space><Space>           :<C-u>call <SID>compress_spaces()<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>k                :<C-u>call <SID>cursor_up_to_lid()<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>j                :<C-u>call <SID>cursor_down_to_ground()<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader><leader> :<C-u>echo "Don't rush it, keep cool."<CR>
 
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>J     :<C-u>wall \| echo 'written all !'<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k>R     :<C-u>let &filetype = &filetype<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k>r     :<C-u>doautocmd User<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>r     :<C-u>let &filetype = &filetype<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>R     :<C-u>doautocmd User MyVimRc<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>l     :<C-u>source %<CR>
 
 	"}}}
