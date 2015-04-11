@@ -428,8 +428,6 @@ NeoBundle        'aiya000/separetaro.vim'
 NeoBundleLazy    'kurocode25/mdforvim'
 NeoBundleLazy    'rbtnn/vimconsole.vim'
 NeoBundle        'osyo-manga/vim-jplus'
-NeoBundleLazy    'Shougo/echodoc.vim'
-NeoBundle        'Shougo/context_filetype.vim'
 
 
 call neobundle#end()
@@ -649,12 +647,6 @@ endif
 if neobundle#tap('vimconsole.vim')
 	call neobundle#config('vimconsole.vim', {
 	\	'autoload' : {'filetypes' : 'vim'}
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('echodoc.vim')
-	call neobundle#config('echodoc.vim', {
-	\	'autoload' : {'insert' : 1}
 	\})
 	call neobundle#untap()
 endif
@@ -1067,10 +1059,6 @@ set breakindent linebreak
 
 " View more info on <C-g>
 set noruler
-
-"@Experiment('if not usefull, remove this with echodoc.vim')
-" Allocate echodoc.vim area
-set cmdheight=2
 
 "@See('http://d.hatena.ne.jp/thinca/20111204/1322932585')
 " Sugoi view tabline
