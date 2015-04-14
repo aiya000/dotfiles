@@ -8,7 +8,7 @@ set foldmethod=marker
 set list listchars=tab:>_,trail:_
 set scrolloff=8
 set fileencoding=utf-8 encoding=utf-8
-set fileencodings=utf-8,sjis,euc-jp,cp932,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
+set fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
 
 
 "-- colorscheme --"
@@ -30,30 +30,47 @@ endfunction
 "-- key_mappings --"
 augroup KeyPrefs
 	autocmd!
-	autocmd FileType * nnoremap <C-j> o<Esc>
-	autocmd FileType * nnoremap <C-n> gt
-	autocmd FileType * nnoremap <C-p> gT
-	autocmd FileType * nnoremap <leader>e         :Vexplore<CR>
-	autocmd FileType * nnoremap <leader>E         :Sexplore<CR>
-	autocmd FileType * nnoremap <leader><leader>e :Texplore<CR>
+	autocmd User MyVimRc nnoremap q:    :<C-u>register<CR>
+	autocmd User MyVimRc nnoremap g:    :<C-u>ls<CR>
+	autocmd User MyVimRc nnoremap z:    :<C-u>tabs<CR>
+	autocmd User MyVimRc nnoremap m:    :<C-u>marks<CR>
+	autocmd User MyVimRc nnoremap g>    :<C-u>messages<CR>
+	autocmd User MyVimRc nnoremap <C-j> o<Esc>
+	autocmd User MyVimRc nnoremap <C-n> gt
+	autocmd User MyVimRc nnoremap <C-p> gT
+	autocmd User MyVimRc nnoremap <leader>e         :<C-u>Vexplore<CR>
+	autocmd User MyVimRc nnoremap <leader>E         :<C-u>Explore<CR>
+	autocmd User MyVimRc nnoremap <leader><leader>e :<C-u>Sexplore<CR>
+	autocmd User MyVimRc nnoremap <leader><leader>E :<C-u>Texplore<CR>
 
-	autocmd FileType * nnoremap <silent> <C-k><C-r> :source $MYVIMRC<CR>
-	autocmd FileType * nnoremap <silent> <C-k>r     :<C-u>call <SID>reset_filetype()<CR>
-	autocmd FileType * nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
-	autocmd FileType * nnoremap <silent> <C-w><C-w> :write<CR>
-	autocmd FileType * nnoremap <silent> <C-w><C-c> :bdelete<CR>
-	autocmd FileType * nnoremap <silent> <C-w>t     :tabnew<CR>
-	autocmd FileType * nnoremap <silent> <C-w>Q     :quitall<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-r> :<C-u>source $MYVIMRC<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>r     :<C-u>call <SID>reset_filetype()<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>J     :<C-u>wall \| echo 'written all'<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w><C-c> :<C-u>bdelete<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>t     :<C-u>tabnew<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>Q     :<C-u>quitall<CR>
 
-	autocmd FileType * inoremap <C-j> <CR>
-	autocmd FileType * inoremap <C-l> <Esc>
+	autocmd User MyVimRc inoremap <C-j> <CR>
+	autocmd User MyVimRc inoremap <C-l> <Esc>
+	autocmd User MyVimRc inoremap <silent> <C-k><C-j> :<Esc>write<CR>
 
-	autocmd FileType * cnoremap <C-j> <CR>
+	autocmd User MyVimRc cnoremap <C-b>      <Left>
+	autocmd User MyVimRc cnoremap <C-f>      <Right>
+	autocmd User MyVimRc cnoremap <C-a>      <Home>
+	autocmd User MyVimRc cnoremap <C-h>      <BS>
+	autocmd User MyVimRc cnoremap <C-d>      <Del>
+	autocmd User MyVimRc cnoremap <C-e>      <End>
+	autocmd User MyVimRc cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
+	autocmd User MyVimRc cnoremap <C-l>      <Esc>
+	autocmd User MyVimRc cnoremap <C-]>      '<,'>
+	autocmd User MyVimRc cnoremap <C-k><C-p> <Up>
+	autocmd User MyVimRc cnoremap <C-k><C-n> <Down>
 augroup END
 
 
 "-- Specifics --"
-let $HOME = $VIMRUNTIME
 set backup
 set backupdir=~/backup/.vim_backup
 let &directory = &backupdir
@@ -68,8 +85,8 @@ function! s:update_backup_file()
 	let l:dir     = strftime(l:basedir . '/%Y_%m_XX/%m-%d', localtime())
 
 	if !isdirectory(l:dir)
-		let retval = system('mkdir -p ' . l:dir)
-		let retval = system(printf('chown %s: %s', $USER, l:dir))
+		call system('mkdir -p ' . l:dir)
+		call system(printf('chown -R %s: %s', $USER, l:dir))
 	endif
 
 	execute 'set backupdir=' . l:dir

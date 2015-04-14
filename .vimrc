@@ -69,11 +69,6 @@
 "-- optimize to lazy load or strict load some plugins
 
 " }}}
-" Note "{{{
-
-
-
- "}}}
 
 
 "----------------------------------------
@@ -427,7 +422,6 @@ NeoBundle        'Shougo/neosnippet-snippets'
 NeoBundle        'aiya000/separetaro.vim'
 NeoBundleLazy    'kurocode25/mdforvim'
 NeoBundleLazy    'rbtnn/vimconsole.vim'
-NeoBundle        'osyo-manga/vim-jplus'
 
 
 call neobundle#end()
@@ -1394,7 +1388,7 @@ command!  CdBufDir NOP
 
 command! -bar ColorPreview Unite colorscheme -auto-preview
 
-command! -bar AfterFtpluginEdit execute ':edit' (s:vim_home . '/after/ftplugin/' . &filetype . '.vim')
+command! -bar -nargs=? AfterFtpluginEdit execute ':edit' (s:vim_home . '/after/ftplugin/' . (empty(<q-args>) ? &filetype : <q-args>) . '.vim')
 
 " }}}
 " Twitter {{{
@@ -1632,6 +1626,7 @@ augroup END
 
 " Prepare temporary functions {{{
 
+
 " Compress continuous space
 function! s:compress_spaces() "{{{
 	let l:recent_pattern = @/
@@ -1739,6 +1734,36 @@ function! s:bufclose_filetype(ft) "{{{
 	endfor
 endfunction "}}}
 
+
+" text-object current indent lines
+function! s:visual_current_indent(type) "{{{
+    let current_indent = indent('.')
+    let current_line   = line('.')
+    let current_col    = col('.')
+    let last_line      = line('$')
+
+    let start_line = current_line
+    while start_line != 1 && current_indent <= indent(start_line) || getline(start_line) == ''
+        let start_line -= 1
+    endwhile
+    if a:type ==# 'i'
+        let start_line += 1
+    endif
+
+    let end_line = current_line
+    while end_line != last_line && current_indent <= indent(end_line) || getline(end_line) == ''
+        let end_line += 1
+    endwhile
+    if a:type ==# 'i'
+        let end_line -= 1
+    endif
+
+    call cursor(start_line, current_col)
+    normal! V
+    call cursor(end_line, current_col)
+endfunction "}}}
+
+
 " }}}
 " Power keymapping {{{
 
@@ -1760,14 +1785,15 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> z: :<C-u>buffers<CR>
 	autocmd User MyVimRc nnoremap <silent> g> :<C-u>messages<CR>
 
+	autocmd User MyVimRc nnoremap <silent> <Space><Space> :<C-u>call <SID>compress_spaces()<CR>
+
 	autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| resize 5<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>pd               :<C-u>execute 'normal! a' . strftime('%c')<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>h        :<C-u>helpclose<CR>
-	autocmd User MyVimRc nnoremap <silent> <Space><Space>           :<C-u>call <SID>compress_spaces()<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>k                :<C-u>call <SID>cursor_up_to_lid()<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>j                :<C-u>call <SID>cursor_down_to_ground()<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader><leader> :<C-u>echo "Don't rush it, keep cool."<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader><leader> :<C-u>echohl ErrorMsg \| echo "Don't rush it, keep cool." \| echohl None<CR>
 
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
@@ -1776,6 +1802,9 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-k>r     :<C-u>let &filetype = &filetype<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>R     :<C-u>doautocmd User MyVimRc<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>l     :<C-u>source %<CR>
+
+	autocmd User MyVimRc nnoremap vii :call <SID>visual_current_indent('i')<CR>
+	autocmd User MyVimRc nnoremap vai :call <SID>visual_current_indent('a')<CR>
 
 	"}}}
 	" insert mode "{{{
@@ -1817,6 +1846,12 @@ augroup KeyMapping
 	autocmd User MyVimRc snoremap <C-l> <Esc>
 
 	"}}}
+	" operator "{{{
+
+	autocmd User MyVimRc onoremap ii :normal vii<CR>
+	autocmd User MyVimRc onoremap ai :normal vai<CR>
+
+	 "}}}
 augroup END
 
 " }}}
@@ -1975,19 +2010,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap <leader>Ps <Plug>(separetoro_put_short_over)
 	autocmd User MyVimRc nmap <leader>pl <Plug>(separetoro_put_long_under)
 	autocmd User MyVimRc nmap <leader>Pl <Plug>(separetoro_put_long_over)
-
-
-	" vim-jplus
-	""Imcomplete('could not correspond multi line')
-	"function! s:jplus_stay() "{{{
-	"	let l:past_pos = getpos('.')
-
-	"	execute 'normal <Plug>(jplus)'
-
-	"	call setpos('.', l:past_pos)
-	"endfunction "}}}
-	"autocmd User MyVimRc nnoremap <silent> J :call <SID>jplus_stay()<CR>
-	autocmd User MyVimRc nmap J <Plug>(jplus)
 augroup END
 
 " }}}

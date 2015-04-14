@@ -1,8 +1,5 @@
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
 
-set complete=.,w,b,u,k
-set completeopt=menu,preview,longest
-
 onoremap <silent> q
 \      :for i in range(v:count1)
 \ <Bar>   call search('.\&\(\k\<Bar>\_s\)\@!', 'W')
@@ -21,38 +18,6 @@ function! OverridePaste(type, ...) "{{{
 endfunction "}}}
 nnoremap <C-p> :<C-u>set opfunc=OverridePaste<CR>g@
 nnoremap <C-p><C-p> :<C-u>set opfunc=OverridePaste<CR>g@g@
-
-" インデント選択
-function! VisualCurrentIndentBlock(type) "{{{
-    let current_indent = indent('.')
-    let current_line   = line('.')
-    let current_col    = col('.')
-    let last_line      = line('$')
-
-    let start_line = current_line
-    while start_line != 1 && current_indent <= indent(start_line) || getline(start_line) == ''
-        let start_line -= 1
-    endwhile
-    if a:type ==# 'i'
-        let start_line += 1
-    endif
-
-    let end_line = current_line
-    while end_line != last_line && current_indent <= indent(end_line) || getline(end_line) == ''
-        let end_line += 1
-    endwhile
-    if a:type ==# 'i'
-        let end_line -= 1
-    endif
-
-    call cursor(start_line, current_col)
-    normal! V
-    call cursor(end_line, current_col)
-endfunction "}}}
-nnoremap vii :call VisualCurrentIndentBlock('i')<CR>
-nnoremap vai :call VisualCurrentIndentBlock('a')<CR>
-onoremap ii :normal vii<CR>
-onoremap ai :normal vai<CR>
 
 autocmd FileType perl set isfname-=- isfname-=/ isfname-=+
 set includeexpr=substitute(v:fname,'^\\/','','')
