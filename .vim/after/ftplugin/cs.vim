@@ -5,7 +5,9 @@ let b:undo_ftplugin = 'setl ' . join([
 let &commentstring = ' /*%s*/'
 
 highlight default link ftCsTypeInference Identifier
+syntax keyword ftCsTypeInference var
+
 augroup MyFtpluginCSharp
 	autocmd!
-	autocmd BufEnter,BufWinEnter *.cs syntax keyword ftCsTypeInference var
+	autocmd FileType,BufEnter,BufWinEnter {*.,}cs syntax keyword ftCsTypeInference var
 augroup END

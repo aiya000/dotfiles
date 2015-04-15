@@ -1,1 +1,1 @@
-autocmd BufNewFile,BufRead *.v set ft=coq
+autocmd! BufNewFile,BufRead *.v setf coq

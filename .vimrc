@@ -28,7 +28,9 @@
 "----------------------------"
 " Ideas {{{
 
-"-- Unite outline -> view C-Sharp <summary>~</summary>
+"-- Unite outline ? -> view C-Sharp <summary>~</summary> with method name
+
+"-- separetaro.vim -> operator between separetor (long|short) and separator (long|short)
 
 " }}}
 " Issues {{{
@@ -422,6 +424,7 @@ NeoBundle        'Shougo/neosnippet-snippets'
 NeoBundle        'aiya000/separetaro.vim'
 NeoBundleLazy    'kurocode25/mdforvim'
 NeoBundleLazy    'rbtnn/vimconsole.vim'
+NeoBundleLazy    'fatih/vim-go'
 
 
 call neobundle#end()
@@ -641,6 +644,12 @@ endif
 if neobundle#tap('vimconsole.vim')
 	call neobundle#config('vimconsole.vim', {
 	\	'autoload' : {'filetypes' : 'vim'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-go')
+	call neobundle#config('vim-go', {
+	\	'autoload' : {'filetypes' : 'go'}
 	\})
 	call neobundle#untap()
 endif
@@ -949,9 +958,11 @@ let g:bakaup_auto_backup = 1
 let g:vimconsole#auto_redraw = 1
 
 "}}}
-"--- echodoc.vim ---"{{{
+"--- vim-go ---"{{{
 
-let g:echodoc_enable_at_startup = 1
+" Disable defaults
+let g:go_fmt_autosave        = 0
+let g:go_def_mapping_enabled = 0
 
 "}}}
 "--- For Debug ---"{{{
@@ -1235,7 +1246,6 @@ endfunction "}}}
 autocmd FileEvent BufReadPost * call s:visit_past_position()
 
 
-"@Experiment('changed tab:»_ to it')
 " If you using windows cmd prompt, listchars using safe chars
 autocmd FileEvent VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 \	if s:is_doswin
@@ -1376,7 +1386,7 @@ command! -bar VimConfig e $MYVIMRC
 command! -bar VimConfigTab tabnew $MYVIMRC
 
 command! -bar Reload so $MYVIMRC
-	\|	if has('gui_running')
+	\|	if has('gui_running') && filereadable($MYGVIMRC)
 	\|		so $MYGVIMRC
 	\|	endif
 
@@ -1598,7 +1608,7 @@ command! -bar SearchBranch :/\v(<<<<<<<|\=\=\=\=\=\=\=|>>>>>>>)
 "-------------------------"
 "       Key_Mapping       "
 "-------------------------"
-" Disables {{{
+" Disable keys {{{
 
 augroup KeyMapping
 	" I can use some mapping to hoge<C-c>
@@ -1622,9 +1632,9 @@ augroup KeyMapping
 augroup END
 
 " }}}
-" Global KeyMaps {{{
+" Global keyMaps {{{
 
-" Prepare temporary functions {{{
+" Prepare functions {{{
 
 
 " Compress continuous space
@@ -1721,11 +1731,11 @@ endfunction
 
 " If you has nofile buffer, close it.
 "@Marked('maybe this was not does purported function')
-function! s:bufclose_filetype(ft) "{{{
+function! s:bufclose_filetype(filetype) "{{{
 	for l:w in range(1, winnr('$'))
-		let l:buf_ft = getwinvar(l:w, '&ft')
+		let l:buf_ft = getwinvar(l:w, '&filetype')
 
-		if l:buf_ft ==# a:ft
+		if l:buf_ft ==# a:filetype
 			execute ':' . l:w . 'wincmd w'
 			execute ':quit'
 
@@ -1736,31 +1746,48 @@ endfunction "}}}
 
 
 " text-object current indent lines
-function! s:visual_current_indent(type) "{{{
-    let current_indent = indent('.')
-    let current_line   = line('.')
-    let current_col    = col('.')
-    let last_line      = line('$')
+function! s:visual_current_indent(type) abort "{{{
+	if a:type != 'i' && a:type != 'a'
+		throw "an argument must be 'i' or 'a'"
+	endif
 
-    let start_line = current_line
-    while start_line != 1 && current_indent <= indent(start_line) || getline(start_line) == ''
-        let start_line -= 1
-    endwhile
-    if a:type ==# 'i'
-        let start_line += 1
-    endif
+	let l:current_indent = indent('.')
+	let l:current_line   = line('.')
+	let l:current_col    = col('.')
 
-    let end_line = current_line
-    while end_line != last_line && current_indent <= indent(end_line) || getline(end_line) == ''
-        let end_line += 1
-    endwhile
-    if a:type ==# 'i'
-        let end_line -= 1
-    endif
+	" Detect over line num
+	let l:start_line = l:current_line
 
-    call cursor(start_line, current_col)
-    normal! V
-    call cursor(end_line, current_col)
+	" While indent not down
+	while l:current_indent <= indent(l:start_line) || getline(l:start_line) ==# ''
+		let l:start_line -= 1
+
+		if l:start_line == 1 | break | endif
+	endwhile
+
+	" if operator type inner
+	if a:type ==# 'i'
+		let l:start_line += 1
+	endif
+
+	" Detect under line num
+	let l:end_line = l:current_line
+
+	" While indent not down
+	while l:current_indent <= indent(l:end_line) || getline(l:end_line) ==# ''
+		let l:end_line += 1
+
+		if l:end_line == line('$') | break | endif
+	endwhile
+
+	if a:type ==# 'i'
+		let l:end_line -= 1
+	endif
+
+	" Select detected range
+	call cursor(l:start_line, l:current_col)
+	normal! V
+	call cursor(l:end_line, l:current_col)
 endfunction "}}}
 
 
@@ -1785,11 +1812,13 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> z: :<C-u>buffers<CR>
 	autocmd User MyVimRc nnoremap <silent> g> :<C-u>messages<CR>
 
+	autocmd User MyVimRc nnoremap <silent> vii :<C-u>call <SID>visual_current_indent('i')<CR>
+	autocmd User MyVimRc nnoremap <silent> vai :<C-u>call <SID>visual_current_indent('a')<CR>
+
 	autocmd User MyVimRc nnoremap <silent> <Space><Space> :<C-u>call <SID>compress_spaces()<CR>
 
 	autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| resize 5<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>pd               :<C-u>execute 'normal! a' . strftime('%c')<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>h        :<C-u>helpclose<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>k                :<C-u>call <SID>cursor_up_to_lid()<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>j                :<C-u>call <SID>cursor_down_to_ground()<CR>
@@ -1801,10 +1830,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-k>J     :<C-u>wall \| echo 'written all !'<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>r     :<C-u>let &filetype = &filetype<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>R     :<C-u>doautocmd User MyVimRc<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k>l     :<C-u>source %<CR>
-
-	autocmd User MyVimRc nnoremap vii :call <SID>visual_current_indent('i')<CR>
-	autocmd User MyVimRc nnoremap vai :call <SID>visual_current_indent('a')<CR>
 
 	"}}}
 	" insert mode "{{{
@@ -1812,11 +1837,11 @@ augroup KeyMapping
 	autocmd User MyVimRc imap <C-j> <CR>
 
 	autocmd User MyVimRc inoremap <C-l> <Esc>
-	autocmd User MyVimRc inoremap <silent> <C-k><C-j> <Esc>:write<CR>
-	autocmd User MyVimRc inoremap <silent> <C-k>J     <Esc>:wall \| echo 'written all !'<CR>
-
 	autocmd User MyVimRc inoremap <C-k><C-k> <C-o>"_d$
 	autocmd User MyVimRc inoremap <C-k><C-y> <Esc>k"zyyjV"zp:let @z = ''<CR>A
+
+	autocmd User MyVimRc inoremap <silent> <C-k><C-j> <Esc>:write<CR>
+	autocmd User MyVimRc inoremap <silent> <C-k>J     <Esc>:wall \| echo 'written all !'<CR>
 
 	"}}}
 	" command line mode "{{{
@@ -1954,7 +1979,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent><expr> <C-k>s     ':OverCommandLine %s/\<' . expand('<cword>') . '\>/' . expand('<cword>') . '<CR>'
 	autocmd User MyVimRc vnoremap <silent>       :s/        :<C-u>OverCommandLine '<,'>s/<CR>
 	autocmd User MyVimRc cnoremap <silent>       <C-k>:     :<C-u>OverCommandLine<CR>
-	"@Imcomplete('this is temporary keymapping, because vim-over do not imported cnoremap maybe')
+	"@Marked('this is temporary keymapping, because vim-over do not imported cnoremap maybe')
 	" please delete this when fixed it
 	autocmd FileType * OverCommandLineNoremap <C-b>      <Left>
 	autocmd FileType * OverCommandLineNoremap <C-f>      <Right>
@@ -1987,7 +2012,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap             g?                ?\<<C-r>"\><CR>
 	autocmd User MyVimRc vmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
 	autocmd User MyVimRc vmap <expr>      ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
-	"@Imcomplete('Set event FileType *, because avoid error. please suitable event')
+	"@Marked('Set event FileType *, because avoid error. please suitable event')
 	autocmd FileType * IncSearchNoreMap <C-j> <CR>
 	autocmd FileType * IncSearchNoreMap <C-l> <Esc>
 
@@ -2015,7 +2040,7 @@ augroup END
 " }}}
 
 " }}}
-" Buffer Local KeyMaps {{{
+" Buffer local keyMaps {{{
 
 augroup PluginPrefs
 	autocmd FileType int-* nnoremap <buffer> q          <NOP>
@@ -2054,11 +2079,6 @@ augroup END
 
 " If buffer does not has filetype, set filetype 'none'
 autocmd ExtensionType VimEnter,BufNew * if &ft ==# '' | setf none | endif
-
-
-"@Incomplete('do not functioned')
-" netrw
-autocmd FileEvent FileType netrw highlight default link CursorLine Visual
 
 "}}}
 

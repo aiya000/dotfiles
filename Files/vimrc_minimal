@@ -17,7 +17,11 @@ colorscheme evening
 
 
 "-- command --"
-command! VimConfig e $MYVIMRC
+command! -bar VimConfig e $MYVIMRC
+command! -bar Reload so $MYVIMRC
+	\|	if has('gui_running') && filereadable($MYGVIMRC)
+	\|		so $MYGVIMRC
+	\|	endif
 
 
 "-- function --"
@@ -25,49 +29,6 @@ function! s:reset_filetype()
 	let l:filetype = &filetype !=# '' ? &filetype : 'none'
 	let &filetype  = l:filetype
 endfunction
-
-
-"-- key_mappings --"
-augroup KeyPrefs
-	autocmd!
-	autocmd User MyVimRc nnoremap q:    :<C-u>register<CR>
-	autocmd User MyVimRc nnoremap g:    :<C-u>ls<CR>
-	autocmd User MyVimRc nnoremap z:    :<C-u>tabs<CR>
-	autocmd User MyVimRc nnoremap m:    :<C-u>marks<CR>
-	autocmd User MyVimRc nnoremap g>    :<C-u>messages<CR>
-	autocmd User MyVimRc nnoremap <C-j> o<Esc>
-	autocmd User MyVimRc nnoremap <C-n> gt
-	autocmd User MyVimRc nnoremap <C-p> gT
-	autocmd User MyVimRc nnoremap <leader>e         :<C-u>Vexplore<CR>
-	autocmd User MyVimRc nnoremap <leader>E         :<C-u>Explore<CR>
-	autocmd User MyVimRc nnoremap <leader><leader>e :<C-u>Sexplore<CR>
-	autocmd User MyVimRc nnoremap <leader><leader>E :<C-u>Texplore<CR>
-
-	autocmd User MyVimRc nnoremap <silent> <C-k><C-r> :<C-u>source $MYVIMRC<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k>r     :<C-u>call <SID>reset_filetype()<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k>J     :<C-u>wall \| echo 'written all'<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w><C-c> :<C-u>bdelete<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>t     :<C-u>tabnew<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>Q     :<C-u>quitall<CR>
-
-	autocmd User MyVimRc inoremap <C-j> <CR>
-	autocmd User MyVimRc inoremap <C-l> <Esc>
-	autocmd User MyVimRc inoremap <silent> <C-k><C-j> :<Esc>write<CR>
-
-	autocmd User MyVimRc cnoremap <C-b>      <Left>
-	autocmd User MyVimRc cnoremap <C-f>      <Right>
-	autocmd User MyVimRc cnoremap <C-a>      <Home>
-	autocmd User MyVimRc cnoremap <C-h>      <BS>
-	autocmd User MyVimRc cnoremap <C-d>      <Del>
-	autocmd User MyVimRc cnoremap <C-e>      <End>
-	autocmd User MyVimRc cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
-	autocmd User MyVimRc cnoremap <C-l>      <Esc>
-	autocmd User MyVimRc cnoremap <C-]>      '<,'>
-	autocmd User MyVimRc cnoremap <C-k><C-p> <Up>
-	autocmd User MyVimRc cnoremap <C-k><C-n> <Down>
-augroup END
 
 
 "-- Specifics --"
@@ -94,3 +55,338 @@ function! s:update_backup_file()
 	let l:subext = strftime('_%H-%M', localtime())
 	execute 'set backupext=.' . l:subext
 endfunction
+
+
+"-------------------------"
+"       Key_Mapping       "
+"-------------------------"
+" Disable keys {{{
+
+augroup KeyMapping
+	" I can use some mapping to hoge<C-c>
+	autocmd User MyVimRc nnoremap <C-c>      <NOP>
+	autocmd User MyVimRc nnoremap <C-c><C-c> <C-c>
+
+	autocmd User MyVimRc nnoremap <Up>    <NOP>
+	autocmd User MyVimRc nnoremap <Down>  <NOP>
+	autocmd User MyVimRc nnoremap <Left>  <NOP>
+	autocmd User MyVimRc nnoremap <Right> <NOP>
+
+	autocmd User MyVimRc inoremap <Up>    <NOP>
+	autocmd User MyVimRc inoremap <Down>  <NOP>
+	autocmd User MyVimRc inoremap <Left>  <NOP>
+	autocmd User MyVimRc inoremap <Right> <NOP>
+
+	autocmd User MyVimRc cnoremap <Left>  <NOP>
+	autocmd User MyVimRc cnoremap <Right> <NOP>
+
+	autocmd User MyVimRc cnoremap [Left] <Left>
+augroup END
+
+" }}}
+" Global keyMaps {{{
+
+" Prepare functions {{{
+
+
+" Compress continuous space
+function! s:compress_spaces() "{{{
+	let l:recent_pattern = @/
+
+	try
+		substitute/\s\s\+/ /g
+		normal! ==
+	catch
+	finally
+		let @/ = l:recent_pattern
+	endtry
+
+	nohlsearch
+endfunction "}}}
+
+
+" Move cursor to topmost of this indent
+function! s:cursor_up_to_lid() "{{{
+	let l:first_line = 1
+
+	while 1
+		let l:p = getcurpos()[2]
+		normal! k
+
+		let l:indent_changed = l:p isnot getcurpos()[2]
+
+		if l:indent_changed || line('.') is l:first_line
+			if l:indent_changed
+				normal! j
+			endif
+
+			break
+		endif
+	endwhile
+endfunction "}}}
+
+
+" Move cursor to bottommost of this indent
+function! s:cursor_down_to_ground() "{{{
+	let l:last_line = line('$')
+
+	while 1
+		let l:p = getcurpos()[2]
+		execute 'normal! j'
+
+		let l:indent_changed = l:p isnot getcurpos()[2]
+
+		if l:indent_changed || line('.') is l:last_line
+			if l:indent_changed
+				execute 'normal! k'
+			endif
+
+			break
+		endif
+	endwhile
+endfunction "}}}
+
+
+" Optimize key operation to one hand
+" function! s:toggle_onehand_mode() "{{{
+
+let s:onehand_enabled = get(s:, 'onehand_enabled', 0)
+
+function! s:toggle_onehand_mode()
+	if s:onehand_enabled
+		nunmap n
+		nunmap p
+		nunmap f
+		nunmap b
+		nunmap o
+		nunmap i
+		nunmap u
+
+		" doautocmd for normally keymappings
+		let &filetype = &filetype
+	else
+		nnoremap n gt
+		nnoremap p gT
+		nnoremap f <C-f>
+		nnoremap b <C-b>
+		nnoremap o <C-o>
+		nnoremap i <C-i>
+		nnoremap u <C-w><C-w>
+	endif
+
+	let s:onehand_enabled = !s:onehand_enabled
+	echo (s:onehand_enabled ? '' : 'no') . 'onehand'
+endfunction
+
+"}}}
+
+
+" text-object current indent lines
+function! s:visual_current_indent(type) abort "{{{
+	if a:type != 'i' && a:type != 'a'
+		throw "an argument must be 'i' or 'a'"
+	endif
+
+	let l:current_indent = indent('.')
+	let l:current_line   = line('.')
+	let l:current_col    = col('.')
+
+	" Detect over line num
+	let l:start_line = l:current_line
+
+	" While indent not down
+	while l:current_indent <= indent(l:start_line) || getline(l:start_line) ==# ''
+		let l:start_line -= 1
+
+		if l:start_line == 1 | break | endif
+	endwhile
+
+	" if operator type inner
+	if a:type ==# 'i'
+		let l:start_line += 1
+	endif
+
+	" Detect under line num
+	let l:end_line = l:current_line
+
+	" While indent not down
+	while l:current_indent <= indent(l:end_line) || getline(l:end_line) ==# ''
+		let l:end_line += 1
+
+		if l:end_line == line('$') | break | endif
+	endwhile
+
+	if a:type ==# 'i'
+		let l:end_line -= 1
+	endif
+
+	" Select detected range
+	call cursor(l:start_line, l:current_col)
+	normal! V
+	call cursor(l:end_line, l:current_col)
+endfunction "}}}
+
+
+" }}}
+" Power keymapping {{{
+
+augroup KeyMapping
+	" normal mode "{{{
+
+	autocmd User MyVimRc nmap <C-j> <CR>
+
+	" † Ex Improved
+	autocmd User MyVimRc nnoremap Q gQ
+
+	autocmd User MyVimRc nnoremap <C-n> gt
+	autocmd User MyVimRc nnoremap <C-p> gT
+	autocmd User MyVimRc nnoremap <C-m> o<Esc>
+
+	autocmd User MyVimRc nnoremap <silent> m: :<C-u>marks<CR>
+	autocmd User MyVimRc nnoremap <silent> q: :<C-u>register<CR>
+	autocmd User MyVimRc nnoremap <silent> g: :<C-u>tabs<CR>
+	autocmd User MyVimRc nnoremap <silent> z: :<C-u>buffers<CR>
+	autocmd User MyVimRc nnoremap <silent> g> :<C-u>messages<CR>
+
+	autocmd User MyVimRc nnoremap <silent> vii :<C-u>call <SID>visual_current_indent('i')<CR>
+	autocmd User MyVimRc nnoremap <silent> vai :<C-u>call <SID>visual_current_indent('a')<CR>
+
+	autocmd User MyVimRc nnoremap <silent> <Space><Space> :<C-u>call <SID>compress_spaces()<CR>
+
+	autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| resize 5<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>pd               :<C-u>execute 'normal! a' . strftime('%c')<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>h        :<C-u>helpclose<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>k                :<C-u>call <SID>cursor_up_to_lid()<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>j                :<C-u>call <SID>cursor_down_to_ground()<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader><leader> :<C-u>echohl ErrorMsg \| echo "Don't rush it, keep cool." \| echohl None<CR>
+
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>J     :<C-u>wall \| echo 'written all !'<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>r     :<C-u>let &filetype = &filetype<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>R     :<C-u>doautocmd User MyVimRc<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>l     :<C-u>source %<CR>
+
+	"}}}
+	" insert mode "{{{
+
+	autocmd User MyVimRc imap <C-j> <CR>
+
+	autocmd User MyVimRc inoremap <C-l> <Esc>
+	autocmd User MyVimRc inoremap <silent> <C-k><C-j> <Esc>:write<CR>
+	autocmd User MyVimRc inoremap <silent> <C-k>J     <Esc>:wall \| echo 'written all !'<CR>
+
+	autocmd User MyVimRc inoremap <C-k><C-k> <C-o>"_d$
+	autocmd User MyVimRc inoremap <C-k><C-y> <Esc>k"zyyjV"zp:let @z = ''<CR>A
+
+	"}}}
+	" command line mode "{{{
+
+	autocmd User MyVimRc cnoremap <C-b>      <Left>
+	autocmd User MyVimRc cnoremap <C-f>      <Right>
+	autocmd User MyVimRc cnoremap <C-a>      <Home>
+	autocmd User MyVimRc cnoremap <C-h>      <BS>
+	autocmd User MyVimRc cnoremap <C-d>      <Del>
+	autocmd User MyVimRc cnoremap <C-e>      <End>
+	autocmd User MyVimRc cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
+	autocmd User MyVimRc cnoremap <C-l>      <Esc>
+	autocmd User MyVimRc cnoremap <C-]>      '<,'>
+	autocmd User MyVimRc cnoremap <C-k><C-p> <Up>
+	autocmd User MyVimRc cnoremap <C-k><C-n> <Down>
+
+	"}}}
+	" visual mode "{{{
+
+	autocmd User MyVimRc vnoremap <C-l> <Esc>
+	"autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
+	"autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
+
+	"}}}
+	" select mode "{{{
+
+	autocmd User MyVimRc snoremap <C-l> <Esc>
+
+	"}}}
+	" operator "{{{
+
+	autocmd User MyVimRc onoremap ii :normal vii<CR>
+	autocmd User MyVimRc onoremap ai :normal vai<CR>
+
+	 "}}}
+augroup END
+
+" }}}
+" Foldings {{{
+
+augroup KeyMapping
+	autocmd User MyVimRc nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
+	autocmd User MyVimRc nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
+
+	autocmd User MyVimRc nnoremap zj zjzo
+	autocmd User MyVimRc nnoremap zk zkzo
+	autocmd User MyVimRc nnoremap {  {zv
+	autocmd User MyVimRc nnoremap }  }zv
+	autocmd User MyVimRc nnoremap (  (zv
+	autocmd User MyVimRc nnoremap )  )zv
+	autocmd User MyVimRc nnoremap z< V$%zf
+augroup END
+
+" }}}
+" Windows and Buffers {{{
+
+augroup KeyMapping
+	autocmd User MyVimRc nnoremap <Space>h <C-w>h
+	autocmd User MyVimRc nnoremap <Space>j <C-w>j
+	autocmd User MyVimRc nnoremap <Space>k <C-w>k
+	autocmd User MyVimRc nnoremap <Space>l <C-w>l
+
+	autocmd User MyVimRc nnoremap <silent> <C-w>t :<C-u>tabnew<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>T :<C-u>tabclose<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>c :<C-u>bdelete<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>C :<C-u>bdelete!<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>N :<C-u>enew!<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>Q :<C-u>quitall<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>" :<C-u>resize 5<CR>
+
+	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bt 'mZ:tabnew<CR>`Zzz'       . (foldlevel('.') > 0 ? 'zo' : '')
+	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bT 'mZ<C-w>c:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : '')
+augroup END
+
+" }}}
+" Toggle options {{{
+
+augroup KeyMapping
+	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-d> (&diff ? ':diffoff' : ':diffthis') . '\|set diff?<CR>'
+	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
+
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline!     cursorline?    <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-e> :<C-u>setl expandtab!      expandtab?     <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-l> :<C-u>setl list!           list?          <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-n> :<C-u>setl number!         number?        <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h>jk    :<C-u>call <SID>toggle_onehand_mode()<CR>
+
+	autocmd User MyVimRc inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
+augroup END
+
+" }}}
+" for Plugins {{{
+
+augroup KeyMapping
+	" netrw
+	autocmd User MyVimRc nnoremap <silent> <leader>e         :<C-u>Vexplore<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>e :<C-u>Sexplore<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>E         :<C-u>Explore<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>E :<C-u>Texplore<CR>
+augroup END
+
+" }}}
+
+" }}}
+
+
+nohlsearch
