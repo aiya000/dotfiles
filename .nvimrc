@@ -46,8 +46,9 @@ augroup END
 augroup NeoKeyMapping
 	" terminal mode "{{{
 
-	autocmd User MyNVimRc tnoremap <silent> <C-l> <C-\><C-n>
-	autocmd User MyNVimRc tnoremap <silent> <C-\><C-n> <Esc>
+	autocmd User MyNVimRc tnoremap <C-l> <C-\><C-n>
+	autocmd User MyNVimRc tnoremap <C-\><C-n> <Esc>
+	autocmd User MyNVimRc tnoremap <C-]>      <C-l>
 
 	"}}}
 	" normal mode "{{{
