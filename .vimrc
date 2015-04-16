@@ -415,7 +415,6 @@ NeoBundleLazy    'LeafCage/vimhelpgenerator'
 NeoBundleLazy    'thinca/vim-threes'
 NeoBundle        'vim-ruby/vim-ruby'
 NeoBundle        'Keithbsmiley/rspec.vim'
-NeoBundle        'tsukkee/unite-help'
 NeoBundle        'altercation/vim-colors-solarized'
 NeoBundle        'aiya000/aho-bakaup.vim'
 NeoBundle        'chrisbra/vim-diff-enhanced'
@@ -425,6 +424,7 @@ NeoBundle        'aiya000/separetaro.vim'
 NeoBundleLazy    'kurocode25/mdforvim'
 NeoBundleLazy    'rbtnn/vimconsole.vim'
 NeoBundleLazy    'fatih/vim-go'
+NeoBundle        'tpope/vim-surround'
 
 
 call neobundle#end()
@@ -606,10 +606,7 @@ if neobundle#tap('fakecygpty')
 endif
 if neobundle#tap('vimhelpgenerator')
 	call neobundle#config('vimhelpgenerator', {
-	\	'autoload' : {'commands' : [
-	\		'VimHelpGenerator',
-	\		'HelpIntoMarkdown'
-	\	]}
+	\	'autoload' : {'filetype' : 'vim'}
 	\})
 	call neobundle#untap()
 endif
@@ -664,6 +661,9 @@ endif
 
 " Enable netrw preview
 let g:netrw_preview = 1
+
+" Place for .netwhist and .netrwbook
+let g:netrw_home = s:vim_home
 
 " }}}
 "--- matchit.vim ---" {{{
@@ -1180,6 +1180,9 @@ endfunction
 
 "}}}
 autocmd KeyEvent CursorMoved * call s:visual_fold_all()
+
+" no put two space on join (J)
+set nojoinspaces
 
 "}}}
 
@@ -1876,7 +1879,13 @@ augroup KeyMapping
 	autocmd User MyVimRc onoremap ii :normal vii<CR>
 	autocmd User MyVimRc onoremap ai :normal vai<CR>
 
-	 "}}}
+	"}}}
+	" digraph "{{{
+
+	digraph %% 8984
+	digraph 8: 9731
+
+	"}}}
 augroup END
 
 " }}}
@@ -1963,8 +1972,8 @@ augroup KeyMapping
 
 
 	" Unite
-	autocmd User MyVimRc nnoremap <silent> <leader>uf        :<C-u>Unite -ignorecase outline:foldings<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>um        :<C-u>Unite -ignorecase neomru/file<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-h>        :<C-u>Unite -ignorecase neomru/file<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Unite -ignorecase outline:foldings<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>u :<C-u>call <SID>bufclose_filetype('unite')<CR>
 
 

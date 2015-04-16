@@ -1,32 +1,40 @@
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
+" nazo
 
 onoremap <silent> q
 \      :for i in range(v:count1)
 \ <Bar>   call search('.\&\(\k\<Bar>\_s\)\@!', 'W')
 \ <Bar> endfor<CR>
 
-function! OverridePaste(type, ...) "{{{
-    if a:0
-        silent execute "normal! `<" . a:type . "`>\"xp"
-    elseif a:type == 'line'
-        silent execute "normal! '[V']\"xp"
-    elseif a:type == 'block'
-        silent execute "normal! `[\<C-V>`]\"xp"
-    else
-        silent execute "normal! `[v`]\"xp"
-    endif
-endfunction "}}}
-nnoremap <C-p> :<C-u>set opfunc=OverridePaste<CR>g@
-nnoremap <C-p><C-p> :<C-u>set opfunc=OverridePaste<CR>g@g@
+set indentexpr&  " &...?
 
-autocmd FileType perl set isfname-=- isfname-=/ isfname-=+
-set includeexpr=substitute(v:fname,'^\\/','','')
 
-noremap <C-j><C-R> :Unite file_mru<CR>
+"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
+" Note
+
+
+" syntax sync fromstart {{{
+------------------------------------------------------------------------------------------------------------------------------------------------
+miyako        : fromstartやばいですねwww  01/17 23:19
+------------------------------------------------------------------------------------------------------------------------------------------------
+thinca        : しかし確実に正しく(もちろんsyntax定義の範囲内で)ハイライトされるので、私はたまに使っちゃう  01/17 23:19
+                これそもそも良くないのが、これバッファ毎で、大体 syntax 定義内に書かれてるのだよね。ユーザーコントロールする手段欲しい感ある。Syntax イベントで上書き設定しろってことなのかもしれないけど  01/17 23:20
+------------------------------------------------------------------------------------------------------------------------------------------------
+haya14busa    : markdownで頻繁にシンタクス壊れるのでいじりたい  01/17 23:21
+------------------------------------------------------------------------------------------------------------------------------------------------
+thinca        : autocmd Syntax markdown syntax sync fromstart
+                これでもしかしたら改善されるかもわからん  01/17 23:25
+------------------------------------------------------------------------------------------------------------------------------------------------
+"}}}
+
+
+"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
+
+
+
 NeoBundle 'thinca/vim-localrc'
 NeoBundle 'vim-scripts/closetag.vim'
 NeoBundle 'vim-scripts/errormarker.vim'
-NeoBundle 'ack.vim'
 NeoBundle 'mattn/vimplenote-vim'
 NeoBundle 'taglist.vim'
 NeoBundle 'airblade/vim-rooter'
@@ -54,10 +62,7 @@ NeoBundle 'sgur/unite-qf'
 NeoBundle 'thinca/vim-unite-history'
 NeoBundle 'sgur/unite-git_grep'
 
-http://step-learn.com/markdown/index.html
 
-
-set indentexpr&
 NeoBundle 'thinca/vim-showtime'
                 L288 visualstar.vim 案件  12/27 23:24
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
@@ -98,42 +103,10 @@ thinca        : 何を諦めたんです?  01/17 23:06
 deris0126     : 1行80文字で揃えるのを… > 何を諦めたんです?  01/17 23:07
 ------------------------------------------------------------------------------------------------------------------------------------------------
 
-------------------------------------------------------------------------------------------------------------------------------------------------
-thinca        : L67 これってバッファ毎の設定だったと思うんだよなぁ、多分  01/17 23:12
-miyako        : L67: 画面外もシンタックスハイライトしてる？  01/17 23:14
-------------------------------------------------------------------------------------------------------------------------------------------------
-" Syntax Highlighting:
-syntax enable                                      " Turn on syntax highlighting
-syntax sync minlines=256            " Update syntax highlighting for more lines
-set synmaxcol=512                            " Don't syntax highlight long lines
-" Default paren match highting is too distracting
-highlight! link MatchParen Comment
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
-------------------------------------------------------------------------------------------------------------------------------------------------
-thinca        : えーと、syntax はある程度バッファを遡ってそこから syntax を適用していくんですが、どれくらいまで遡るかってことです  01/17 23:15
-                例えば 51 行まで遡ったら実はそこからコメントアウトが開始されていたとしても、50行までしか遡らない設定だったらそこはコメントとはハイライトされない、みたいな感じ  01/17 23:16
-------------------------------------------------------------------------------------------------------------------------------------------------
-miyako        : あ、なるほど。短すぎるとsyntaxが正しく解釈できないんですね。ありがとうございます。> thincaさん  01/17 23:16
-------------------------------------------------------------------------------------------------------------------------------------------------
-thinca        : ちなみに最強は syntax sync fromstart です。お察しの通り常にバッファの先頭から解釈する。当然バッファがでかくなれば重くなる  01/17 23:18
-------------------------------------------------------------------------------------------------------------------------------------------------
-miyako        : fromstartやばいですねwww  01/17 23:19
-------------------------------------------------------------------------------------------------------------------------------------------------
-thinca        : しかし確実に正しく(もちろんsyntax定義の範囲内で)ハイライトされるので、私はたまに使っちゃう  01/17 23:19
-                これそもそも良くないのが、これバッファ毎で、大体 syntax 定義内に書かれてるのだよね。ユーザーコントロールする手段欲しい感ある。Syntax イベントで上書き設定しろってことなのかもしれないけど  01/17 23:20
-------------------------------------------------------------------------------------------------------------------------------------------------
-miyako        : え、そうだったんですか・・・ >  syntax 定義内に書かれてる  01/17 23:21
-------------------------------------------------------------------------------------------------------------------------------------------------
-haya14busa    : markdownで頻繁にシンタクス壊れるのでいじりたい  01/17 23:21
-------------------------------------------------------------------------------------------------------------------------------------------------
-miyako        : あ、これが原因だったんですね > markdownで頻繁にシンタクス壊れる  01/17 23:22
-------------------------------------------------------------------------------------------------------------------------------------------------
-thinca        : autocmd Syntax markdown syntax sync fromstart
-                これでもしかしたら改善されるかもわからん  01/17 23:25
-------------------------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------
 thinca        : comments オプションはだいたいバッファ毎なので、ftplugin がしっかりしていれば定義されていたりしますね  01/17 23:23
@@ -147,14 +120,6 @@ set comments+=fb:*                                    "  */
 
 ------------------------------------------------------------------------------------------------------------------------------------------------
 thinca        : 今自分の設定確認したら <C-g><C-u> で直前に入力した単語を全て大文字にするキーマッピングが施されていた  01/17 23:45
-------------------------------------------------------------------------------------------------------------------------------------------------
-
-------------------------------------------------------------------------------------------------------------------------------------------------
-thinca        : arpeggio.vim の出番と聞いて >2本指  01/18 00:03
-thinca        : arpeggio.vim は同時押しによるキーマッピングを実現する神のプラグインです  01/18 00:05
-thinca        : jk をほぼ同時に押した場合のみ発動し、普段は j と k は普通に打てる、みたいなことができる(ただし色々とややこしくなる部分もある)  01/18 00:05
-deris0126     : arpeggio.vim便利なのわかってるけど、あれに依存すると素Vimで設定出来ないときなく未来が見えたので、使うのやめてしまった  01/18 00:06
-kamichidu     : 便利そうだけど、同時押しはキータッチのリズムが気になってしまう  01/18 00:07
 ------------------------------------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------
@@ -177,13 +142,6 @@ set backupext=.bak
 set backupskip+=*/shm/*
 set nowritebackup
 
-" A few very important custom digraphs
-if has('digraphs')
-  digraph ./ 8230  " Ellipsis (HORIZONTAL ELLIPSIS U+2026)
-  digraph %% 8984  " Mac command key (PLACE OF INTEREST SIGN U+2318)
-  digraph 8: 9731  " Snowman (SNOWMAN U+2603)
-endif
-
 " Insert four spaces when Tab is pressed
 set softtabstop=4
 " Indent intelligently to 'shiftwidth' at the starts of lines with Tab, but
@@ -193,20 +151,6 @@ set smarttab
 " 'shiftwidth', so even if the line is indented by one space it will indent
 " up to 4 and down to 0, for example
 set shiftround
-" Don't join lines with two spaces at the end of sentences; I don't two-space,
-" despite the noble Steve Losh's exhortations
-set nojoinspaces
-
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
- aiya000      : includeされるの保管できるのすごい、賢こVim。  01/24 23:12
- thinca       : それを使うことで Java の import もざっくり辿ることができなくもない  01/24 23:13
- rbtnn        : L429 KをNOPにしているのか、もったいない  01/24 23:13
- aiya000      : えっ、そうなんですね！？
-                Vimすごい。  01/24 23:13
- thinca       : :help 'includeexpr'  01/24 23:14
- kamichidu    : &path にclasspath設定しないといけなかったり、.jarとかは対応してないのでつらいところはある  01/24 23:16
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 st formatoptions+=j
@@ -216,10 +160,6 @@ st formatoptions+=j
 nnoremap & :&&<CR>
 vnoremap & :&&<CR>
 
-" Try to run the version of matchit.vim included in the distribution, if there
-" is one; extends % to match more than it does by default
-silent! runtime macros/matchit.vim
-
 " Don't use modelines at all, they're apparently potential security problems
 " and I've never used them anyway
 set nomodeline
@@ -227,22 +167,6 @@ set nomodeline
 " Don't assume a number with a leading zero is octal; it's far more likely a
 " zero-padded decimal, so increment and decrement with ^A and ^X on that basis
 set nrformats-=octal
-
-" Don't use modelines at all, they're apparently potential security problems
-" and I've never used them anyway
-set nomodeline
-
-" Don't keep .viminfo information for files in temporary directories or shared
-" memory filesystems; this is because they're used as scratch spaces for tools
-" like sudoedit(8) and pass(1) and hence could present a security problem
-if has('viminfo') && has('autocmd')
-  augroup viminfoskip
-    autocmd!
-    silent! autocmd BufNewFile,BufReadPre
-        \ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*
-        \ setlocal viminfo=
-  augroup END
-endif
 
 " Don't bother about checking whether Escape is being used as a means to enter
 " a Meta-key combination, just register Escape immediately
@@ -262,17 +186,6 @@ endif
 " case of the character under the cursor
 set tildeop
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-thinca       : :command でコマンドを定義した場合に定義内で使えるやつですね ><bang>  01/24 23:42
-thinca       : :help <bang>  01/24 23:42
-thinca       : bang がコマンドに与えられたかどうかを式で判定するエディオムもあります。
-               function MyCommand(is_bang)
-                 " ...
-               endfunction
-               command -bang MyCommand call MyCommand(<bang>0)  01/24 23:46
-               <bang>0 とすることで、! が与えられると !0 になって 1 になります  01/24 23:46
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 " Get rid of visually noisy folding characters
 if has('folding')
   let &fillchars = 'diff: ,fold: ,vert: '
@@ -289,47 +202,10 @@ else
   set switchbuf=useopen
 endif
 
-" Threshold is 10 MB in size
-let g:bigfilesize = 10 * 1024 * 1024
-
-setlocal synmaxcol=256
-
 
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
 " mtth
-
-
-let g:netrw_home = g:runtimepath . '/cache/netrw'                             " cache directory for file explorer
-let g:netrw_banner = 0                                                        " hide help banner (can be shown with `I`)
-
-"NOTE: mtth's plugins
-
-" Compile
-https://github.com/mtth/compile.vim
-let g:compile_default_flags = {
-\ 'rst2html': '--stylesheet-path=b.css,p/default.css % &%:r.html',
-\ 'haml': '% &%:r.html',
-\ 'jade': '%',
-\ 'coffee': '%',
-\ 'hamlc': '--input %:h --output &%:h/jst.js',
-\ 'stylus': '%',
-\ 'cc': '% -o &%:r'
-\ }
-
-" Cursorcross
-https://github.com/mtth/cursorcross.vim
-
-https://github.com/mtth/scratch.vim
-
-"NOTE: plugins
-" Locate
-" Ultisnips
-" Virtualenv
-" Solarized
-let g:solarized_termtrans = 1                                               " transparent background sometimes
-let g:solarized_visibility = 'normal'                                       " visibility of 'list' characters
-
 
 
 set diffopt=filler,vertical
@@ -359,20 +235,6 @@ xnoremap <silent> # :<c-u>
   \gvy?<c-r>=substitute(
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<cr><cr>
   \:call setreg('"', old_reg, old_regtype)<cr>
-
-" easier indentation in visual mode
-xnoremap > >gv
-xnoremap < <gv
-" arglist
-nnoremap <leader>a :args<cr>
-" show locations of latest changes
-nnoremap <leader>J :changes<cr>
-" show latest jumps
-nnoremap <leader>j :jumps<cr>
-" browse oldfiles
-nnoremap <leader>o :browse oldfiles<cr>
-" copy to tmux buffer
-xnoremap <leader>t :w !tmux loadb -<cr>
 
 " open .vimrc (following potential symbolic link)
 nnoremap <leader>ve :tabnew <c-r>=resolve(expand($MYVIMRC))<cr><cr>:help<cr><c-w>L:vertical resize 80<cr>:set winfixwidth<cr><c-w>h
@@ -421,7 +283,6 @@ nnoremap gJ 0f(a<cr><esc>f)i<cr><esc>kI<tab><esc>0dw:s/\v,\s+/,\r/g<cr>``<c-v>``
 
 Bundle 'ciaranm/detectindent'
 Bundle 'L9'
-Bundle 'FuzzyFinder'
 Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
 
@@ -446,9 +307,6 @@ set cedit=<C-O>
 vnoremap <silent> sn :Stn2NumChar<CR> " あ => &#12354;
 vnoremap <silent> sh :Str2HexLiteral<CR> " あ => \\xE3\\x81\\x82
 
-" 適当なテンポラリファイルの作成
-command! -nargs=0 NewTmp :new `=tempname().'.vim'`
-
 " ウィンドウの高さを選択範囲と同じになるよう調整
 vnoremap <silent> _ <Esc>`<zt:execute (line("'>") - line("'<") + 1) 'wincmd' '_'<Return>
 
@@ -457,9 +315,6 @@ vnoremap <silent> _ <Esc>`<zt:execute (line("'>") - line("'<") + 1) 'wincmd' '_'
 " yanktmp.vim
 noremap <silent> sy :call YanktmpYank()<CR>
 noremap <silent> sp :call YanktmpPaste_p()<CR>
-
-" 第二引数取れるのかー
-system("pbcopy", @0)
 
 set nofsync
 set grepprg=internal
@@ -492,10 +347,6 @@ let g:changelog_new_entry_format= '  * %c'
 
 " ack.vim 
 let g:AckAllFiles=0
-
-" - も fname に含む
-autocmd BufRead * setlocal isfname+=- " どこかの plugin で上書きされてる？
-set isfname+=-
 
 " QuickFix のサイズ調整,自動で抜ける 
 function! s:autoCloseQuickFix()
