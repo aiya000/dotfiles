@@ -1527,14 +1527,12 @@ command!  LogOpen  NOP
 
 
 " GHCi
-cnoreabbr RunGhc   !runghc %
 cnoreabbr Ghci     VimShellInteractive ghci
 cnoreabbr Sghci    VimShellInteractive --split='sp' ghci
 cnoreabbr Vghci    VimShellInteractive --split='vsp' ghci
 cnoreabbr GhciTab  VimShellInteractive --split='tabnew' ghci
 cnoreabbr Hoogle   Ref hoogle
 
-command!  RunGhc   NOP
 command!  Ghci     NOP
 command!  Sghci    NOP
 command!  Vghci    NOP
