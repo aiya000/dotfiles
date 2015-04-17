@@ -127,9 +127,9 @@ function testj() {
 # Easy Test of Python {{{
 
 function testpy() {
-	vim $1 ; wait
+	vim ~/.tmp/test.py ; wait
 	echo ; echo '-------------------------' ; echo
-	python $1
+	python ~/.tmp/test.py
 	echo ; echo '-------------------------'
 }
 
@@ -138,10 +138,10 @@ function testpy() {
 # Easy Test of ShellScript {{{
 
 function testsh() {
-	vim $1 ; wait
-	chmod +x $1 ; wait
+	vim ~/.tmp/test.sh ; wait
+	chmod +x ~/.tmp/test.sh ; wait
 	echo ; echo '-------------------------' ; echo
-	sh $1
+	~/.tmp/test.sh
 	echo ; echo '-------------------------'
 }
 

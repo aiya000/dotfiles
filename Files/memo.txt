@@ -32,15 +32,6 @@ thinca        : autocmd Syntax markdown syntax sync fromstart
 
 
 
-NeoBundle 'thinca/vim-localrc'
-NeoBundle 'vim-scripts/closetag.vim'
-NeoBundle 'vim-scripts/errormarker.vim'
-NeoBundle 'mattn/vimplenote-vim'
-NeoBundle 'taglist.vim'
-NeoBundle 'airblade/vim-rooter'
-NeoBundle 'othree/eregex.vim'
-NeoBundle 'motemen/xslate-vim'
-NeoBundle 'mattn/sonictemplate-vim'
 NeoBundle 'chase/vim-ansible-yaml'
 NeoBundle 'gre/play2vim'
 NeoBundle 'sorah/unite-ghq'

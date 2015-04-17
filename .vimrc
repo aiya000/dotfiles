@@ -751,7 +751,6 @@ let g:vimshell_max_command_history          = 10000
 let g:vimshell_scrollback_limit             = 10000
 let g:vimshell_split_command                = 'split'
 
-" This variable defined by my command
 " The cd aliases reference to here
 let g:vimshell_hereis_file = expand('~/.bashrc_places')
 
