@@ -12,16 +12,17 @@ setl foldmethod=marker
 
 " Override defaut keymappings
 nnoremap <buffer> Q          gQ
-nnoremap <buffer> q          <NOP>
 nnoremap <buffer> <C-n>      gt
 nnoremap <buffer> <C-p>      gT
-nnoremap <buffer> <C-l>      <NOP>
 nnoremap <buffer> <C-y>      <C-y>
 
 nmap     <buffer> <C-]>      <Plug>(vimshell_clear)
 nmap     <buffer> gj         <Plug>(vimshell_next_prompt)
 nmap     <buffer> gk         <Plug>(vimshell_previous_prompt)
 nmap     <buffer> <C-]>      <Plug>(vimshell_clear)
+
+nunmap <buffer> q
+nunmap <buffer> <C-l>
 
 inoremap <buffer> <C-l>      <Esc>
 inoremap <buffer> <C-b>      <Left>
