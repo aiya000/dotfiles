@@ -425,6 +425,8 @@ NeoBundleLazy    'kurocode25/mdforvim'
 NeoBundleLazy    'rbtnn/vimconsole.vim'
 NeoBundleLazy    'fatih/vim-go'
 NeoBundle        'tpope/vim-surround'
+NeoBundle        'kana/vim-textobj-user'
+NeoBundle        'rhysd/vim-textobj-conflict'
 
 
 call neobundle#end()
@@ -811,8 +813,8 @@ if neobundle#tap('vim-submode')
 
 		" Fold Mover
 		autocmd User MyVimRc call submode#enter_with('fold_move', 'n', '', '<C-s>z')
-		autocmd User MyVimRc call submode#map('fold_move', 'n', 'e', 'j', "foldlevel('.') > 0 ? 'zczjzozz'   : 'zjzozz'")
-		autocmd User MyVimRc call submode#map('fold_move', 'n', 'e', 'k', "foldlevel('.') > 0 ? 'zczkzo[zzz' : 'zkzo[zzz'")
+		autocmd User MyVimRc call submode#map('fold_move', 'n', 'e', 'j', 'foldlevel('.') > 0 ? "zczjzozz"   : "zjzozz"')
+		autocmd User MyVimRc call submode#map('fold_move', 'n', 'e', 'k', 'foldlevel('.') > 0 ? "zczkzo[zzz" : "zkzo[zzz"')
 		autocmd User MyVimRc call submode#map('fold_move', 'n', '',  'h', '[z')
 		autocmd User MyVimRc call submode#map('fold_move', 'n', '',  'l', ']z')
 
@@ -823,7 +825,7 @@ if neobundle#tap('vim-submode')
 
 		" Tab Mover
 	" s:loopable_tab_move_prev() "{{{
-	
+
 	function! LoopableTabMovePrev()
 		if tabpagenr() is 1
 			execute ':tabmove' tabpagenr('$')
@@ -831,10 +833,10 @@ if neobundle#tap('vim-submode')
 			execute ':tabmove -1'
 		endif
 	endfunction
-	
+
 	"}}}
 	" s:loopable_tab_move_next() "{{{
-	
+
 	function! LoopableTabMoveNext()
 		if tabpagenr() is tabpagenr('$')
 			execute ':tabmove 0'
@@ -842,7 +844,7 @@ if neobundle#tap('vim-submode')
 			execute ':tabmove +1'
 		endif
 	endfunction
-	
+
 	"}}}
 		autocmd User MyVimRc call submode#enter_with('tab_move', 'n', '', '<C-s>t')
 		autocmd User MyVimRc call submode#map('tab_move', 'n', 's', 'n', ':call LoopableTabMoveNext()<CR>')
@@ -850,8 +852,10 @@ if neobundle#tap('vim-submode')
 
 		" WinTab Mover
 		" Current buffer move to next tab "{{{
+
 		command! -bar BufTabMovePrev execute 'normal! mZ:hide<CR>gT:vsp<CR>`Z'
 		command! -bar BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? ':hide<CR>' : ':hide<CR>gt') . ':vsp<CR>`Z'
+
 		"}}}
 		autocmd User MyVimRc call submode#enter_with('wintab_move', 'n', '', '<C-s>N', ':BufTabMoveNext<CR>')
 		autocmd User MyVimRc call submode#enter_with('wintab_move', 'n', '', '<C-s>P', ':BufTabMovePrev<CR>')
