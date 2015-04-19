@@ -26,18 +26,17 @@ alias cp='cp -i'
 
 alias vi='vim -u NONE --noplugin'
 alias gvi='gvim -u NONE -U NONE --noplugin'
-alias vimshell='vim -c VimShell'
-alias vimconsole='vim -c VimConsoleOpen'
+alias vimshell='vim +VimShell'
+alias vimconsole='vim +VimConsoleOpen'
 alias vim-record-startup="f=`mktemp` ; vim --startuptime vim_startup_time -- $f && rm $f"
 alias vimclearview='rm ~/.backup/vim_backup/view/*'
 alias vimclearswp='rm ~/.backup/vim_backup/swp/*'
 alias vimclearundo='rm ~/.backup/vim_backup/undo/*'
 alias vimclearcache='vimclearview ; vimclearundo ; vimclearswp'
-alias twitter='vim -c TweetVimHomeTimeline'
-alias tweet='vim -c TweetVimSay'
-alias twitter-public='vim -c TwitterPublic'
-alias tweet-public='vim -c TweetPublic'
-alias adrone='vim -c AdroneOpen'
+alias twitter='vim +TweetVimHomeTimeline'
+alias tweet='vim +TweetVimSay'
+alias twitter-public='vim +TwitterPublic'
+alias tweet-public='vim +TweetPublic'
 
 alias vimconfig='vim ~/.vimrc'
 alias gvimconfig='vim ~/.gvimrc'
@@ -53,6 +52,21 @@ if [ -f ~/.bash_profile_env ] ; then
 fi
 
 # }}}
+
+# }}}
+# NVim Utils {{{
+
+alias nvimconfig='nvim ~/.nvimrc'
+alias nvim-bashrc='nvim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
+alias nvim-bashpr='nvim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
+
+alias nvi='nvim -u NONE --noplugin'  # (not a original nvi)
+alias nvim-terminal='nvim +terminal'
+alias nvimconsole='nvim +VimConsoleOpen'
+alias twitter='nvim +TweetVimHomeTimeline'
+alias tweet='nvim +TweetVimSay'
+alias twitter-public='nvim +TwitterPublic'
+alias tweet-public='nvim +TweetPublic'
 
 # }}}
 # Shell Utils {{{

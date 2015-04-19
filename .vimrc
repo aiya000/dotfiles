@@ -427,6 +427,7 @@ NeoBundleLazy    'fatih/vim-go'
 NeoBundle        'tpope/vim-surround'
 NeoBundle        'kana/vim-textobj-user'
 NeoBundle        'rhysd/vim-textobj-conflict'
+NeoBundleLazy    'osyo-manga/vim-itunes-bgm'
 
 
 call neobundle#end()
@@ -651,6 +652,16 @@ if neobundle#tap('vim-go')
 	\	'autoload' : {'filetypes' : 'go'}
 	\})
 	call neobundle#untap()
+endif
+if neobundle#tap('vim-itunes-bgm')
+	call neobundle#config('vim-itunes-bgm', {
+	\	'depends'  : 'vimproc.vim',
+	\	'autoload' : {'commands' : [
+	\		'ITunesBGMStart',
+	\		'ITunesBGMStop',
+	\		'ITunesBGMNext'
+	\	]}
+	\})
 endif
 
 " }}}
@@ -1495,6 +1506,9 @@ cnoreabbr      JazzPlay   JazzradioPlay
 command!       JazzPlay   NOP
 command! -bar  JazzStop   JazzradioStop
 
+" Current iTunes musics (Overridden)
+command! -bar ITunesBGMPlayList Unite itunes_bgm
+
 
 " Translates Languages
 cnoreabbr Translate ExciteTranslate
@@ -1511,7 +1525,7 @@ command!  NeoBundleInstallsLog NOP
 
 
 " Markdown help on online (maru nage)
-command! -bar MarkdownHelpOnline W3mTab http://qiita.com/Qiita/items/c686397e4a0f4f11683d#3-4
+command! -bar MarkdownHelpOnline W3mTab http://qiita.com/Qiita/items/c686397e4a0f4f11683d
 
 " }}}
 " Development {{{
