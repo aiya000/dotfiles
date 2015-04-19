@@ -1510,8 +1510,8 @@ command! -bar -nargs=1 ITunesBGMSafeStart
 \|			delcommand ITunesBGMStart
 \|			delcommand ITunesBGMPlay
 \|			delcommand ITunesBGMStop
-\|			delcommand ITunesBGMNext
 \|			delcommand ITunesBGMPlayList
+\|			set updatetime=200
 \|		endif
 \|	endif
 
@@ -1529,10 +1529,13 @@ command! -bar -nargs=1 ITunesBGMSafePlay
 command! -bar ITunesBGMSafeStop
 \	call itunes_bgm#stop()
 \|	let s:itunes_bgm.playing = 0
+\|	set updatetime=4000
 
 
-" List iTunes musics
-command! -bar ITunesBGMUnitePlayList Unite itunes_bgm
+" List iTunes musics with Stop playing music
+command! -bar ITunesBGMUnitePlayList
+\	call itunes_bgm#stop()
+\|	Unite itunes_bgm
 
 
 " }}}
@@ -1544,11 +1547,11 @@ command!  Lingr NOP
 
 
 " Beautifull Life
-command! -bar  JazzUpdate JazzradioUpdateChannels
-command! -bar  JazzList   Unite jazzradio
-cnoreabbr      JazzPlay   JazzradioPlay
-command!       JazzPlay   NOP
-command! -bar  JazzStop   JazzradioStop
+command! -bar JazzUpdate JazzradioUpdateChannels
+command! -bar JazzList   Unite jazzradio
+cnoreabbr     JazzPlay   JazzradioPlay
+command!      JazzPlay   NOP
+command! -bar JazzStop   JazzradioStop
 
 
 " Translates Languages
