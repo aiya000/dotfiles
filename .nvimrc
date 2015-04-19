@@ -90,5 +90,14 @@ cnoreabbr Virb    vsp    \| terminal irb
 cnoreabbr IrbTab  tabnew \| terminal irb
 
 " }}}
+" Vim Utils {{{
+
+command! -bar VimConfig     e ~/.vimrc
+command! -bar VimConfigTab  tabnew ~/.vimrc
+command! -bar NVimConfig    e $MYVIMRC
+command! -bar NVimConfigTab tabnew $MYVIMRC
+
+" }}}
+
 
 doautocmd User MyNVimRc
