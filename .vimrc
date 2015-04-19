@@ -657,11 +657,13 @@ if neobundle#tap('vim-itunes-bgm')
 	call neobundle#config('vim-itunes-bgm', {
 	\	'depends'  : 'vimproc.vim',
 	\	'autoload' : {'commands' : [
-	\		'ITunesBGMStart',
-	\		'ITunesBGMStop',
+	\		'ITunesBGMSafeStart',
+	\		'ITunesBGMSafePlay',
+	\		'ITunesBGMSafeStop',
 	\		'ITunesBGMNext'
 	\	]}
 	\})
+	call neobundle#untap()
 endif
 
 " }}}
@@ -1492,6 +1494,48 @@ command! -bar Bitly TweetVimBitly
 cnoreabbr tvs TweetVimSwitchAccount
 
 " }}}
+" vim-itunes-bgm {{{
+
+let s:itunes_bgm = {'playing' : 0}
+
+
+" Start iTunes music, disable default commands, and register flag
+command! -bar -nargs=1 ITunesBGMSafeStart
+\	if s:itunes_bgm.playing
+\|		call s:echo_error('vim-itunes-bgm already playing or searching now')
+\|	else
+\|		call itunes_bgm#start_by_term(<q-args>)
+\|		let s:itunes_bgm.playing = 1
+\|		if exists(':ITunesBGMStart') is 2
+\|			delcommand ITunesBGMStart
+\|			delcommand ITunesBGMPlay
+\|			delcommand ITunesBGMStop
+\|			delcommand ITunesBGMNext
+\|			delcommand ITunesBGMPlayList
+\|		endif
+\|	endif
+
+
+" If not already play music, play iTunes music
+command! -bar -nargs=1 ITunesBGMSafePlay
+\	if s:itunes_bgm.playing
+\|		call s:echo_error('vim-itunes-bgm already playing now')
+\|	else
+\|		call itunes_bgm#play()
+\|	endif
+
+
+" Stop iTunes music and register flag
+command! -bar ITunesBGMSafeStop
+\	call itunes_bgm#stop()
+\|	let s:itunes_bgm.playing = 0
+
+
+" List iTunes musics
+command! -bar ITunesBGMUnitePlayList Unite itunes_bgm
+
+
+" }}}
 
 
 " To Service Name
@@ -1505,9 +1549,6 @@ command! -bar  JazzList   Unite jazzradio
 cnoreabbr      JazzPlay   JazzradioPlay
 command!       JazzPlay   NOP
 command! -bar  JazzStop   JazzradioStop
-
-" Current iTunes musics (Overridden)
-command! -bar ITunesBGMPlayList Unite itunes_bgm
 
 
 " Translates Languages
