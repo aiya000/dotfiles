@@ -393,10 +393,10 @@ NeoBundleLazy    'katono/rogue.vim'
 NeoBundleLazy    'kamichidu/vim-benchmark'
 NeoBundle        'kana/vim-submode'
 NeoBundle        'mfumi/ref-dicts-en'
-NeoBundle        'thinca/vim-painter'
+NeoBundleLazy    'thinca/vim-painter'
 NeoBundle        'osyo-manga/vim-anzu'
 NeoBundle        'osyo-manga/vim-over'
-NeoBundle        'tyru/restart.vim'
+NeoBundleLazy    'tyru/restart.vim'
 NeoBundle        'vim-jp/vimdoc-ja'
 NeoBundleLazy    'rbtnn/game_engine.vim'
 NeoBundle        'h1mesuke/vim-alignta'
@@ -438,6 +438,7 @@ call neobundle#end()
 if neobundle#tap('vimproc.vim')
 	call neobundle#config('vimproc.vim', {
 	\	'build' : {
+	\		'linux'   : 'make -f make_unix.mak',
 	\		'unix'    : 'make -f make_unix.mak',
 	\		'mac'     : 'make -f make_mac.mak',
 	\		'cygwin'  : 'make -f make_cygwin.mak',
@@ -463,7 +464,7 @@ if neobundle#tap('TweetVim')
 endif
 if neobundle#tap('vimshell.vim')
 	call neobundle#config('vimshell.vim', {
-	\	'depends' : 'Shougo/vimproc.vim'
+	\	'depends'  : 'Shougo/vimproc.vim'
 	\})
 	call neobundle#untap()
 endif
@@ -500,8 +501,11 @@ if neobundle#tap('vim-splash')
 	\})
 	call neobundle#untap()
 endif
+"@Bugs('not fuond jazzradio#channel_id_comlete')
 if neobundle#tap('jazzradio.vim')
 	call neobundle#config('jazzradio.vim', {
+	\	'depends' : 'Shougo/unite.vim',
+	\	'external_commands' : 'mplayer',
 	\	'autoload' : {
 	\		'unite_sources' : ['jazzradio'],
 	\		'commands'      : [
@@ -511,8 +515,7 @@ if neobundle#tap('jazzradio.vim')
 	\				'complete' : 'customlist,jazzradio#channel_id_comlete'
 	\			}
 	\		],
-	\		'function_prefix' : 'Jazzradio',
-	\		'depends'         : 'Shougo/unite.vim'
+	\		'function_prefix' : 'Jazzradio'
 	\	}
 	\})
 	call neobundle#untap()
@@ -531,8 +534,8 @@ if neobundle#tap('vital.vim')
 endif
 if neobundle#tap('puyo.vim')
 	call neobundle#config('puyo.vim', {
-	\	'autoload' : {'commands' : 'Puyo'},
-	\	'depends'  : 'rbtnn/game_engine.vim'
+	\	'depends'  : 'rbtnn/game_engine.vim',
+	\	'autoload' : {'commands' : 'Puyo'}
 	\})
 	call neobundle#untap()
 endif
@@ -556,14 +559,8 @@ if neobundle#tap('coq.vim')
 endif
 if neobundle#tap('coqtop-vim')
 	call neobundle#config('coqtop-vim', {
-	\	'autoload' : {'filetypes' : 'coq'},
-	\	'depends'  : 'Shougo/vimproc.vim'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-grammarous')
-	call neobundle#config('vim-grammarous', {
-	\	'disabled' : !executable('java')
+	\	'depends'  : 'Shougo/vimproc.vim',
+	\	'autoload' : {'filetypes' : 'coq'}
 	\})
 	call neobundle#untap()
 endif
@@ -578,7 +575,7 @@ if neobundle#tap('vim-themis')
 endif
 if neobundle#tap('previm')
 	call neobundle#config('previm', {
-	\	'autoload' : {'filetypes' : 'markdown'}
+	\	'autoload' : {'commands' : 'PrevimOpen'}
 	\})
 	call neobundle#untap()
 endif
@@ -599,17 +596,35 @@ if neobundle#tap('ref-dicts-en')
 	\})
 	call neobundle#untap()
 endif
+if neobundle#tap('vim-painter')
+	call neobundle#config('vim-painter', {
+	\	'gui'      : 1,
+	\	'autoload' : {'commands' : 'PainterStart'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('restart.vim')
+	call neobundle#config('restart.vim', {
+	\	'gui'      : 1,
+	\	'autoload' : {'commands' : 'Restart'}
+	\})
+	call neobundle#untap()
+endif
 if neobundle#tap('fakecygpty')
 	call neobundle#config('fakecygpty', {
 	\	'build' : {
-	\		'windows' : expand('gcc fakecygpty.c -o ~/bin/fakecygpty.exe')
+	\		'windows' : expand((executable('clang') ? 'clang' : 'gcc') . ' fakecygpty.c -o ~/bin/fakecygpty.exe')
 	\	}
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('vimhelpgenerator')
 	call neobundle#config('vimhelpgenerator', {
-	\	'autoload' : {'filetype' : 'vim'}
+	\	'autoload' : {'commands' : [
+	\		'VimHelpGenerator',
+	\		'VimHelpGeneratorVirtual',
+	\		'HelpIntoMarkdown'
+	\	]}
 	\})
 	call neobundle#untap()
 endif
@@ -637,7 +652,14 @@ if neobundle#tap('rspec.vim')
 endif
 if neobundle#tap('mdforvim')
 	call neobundle#config('mdforvim', {
-	\	'autoload' : {'filetypes' : 'markdown'}
+	\	'autoload' : {'commands' : [
+	\		'MdConvert',
+	\		'MdPreview',
+	\		'MdStopPreview', {
+	\			'name'     : 'MdSaveAs',
+	\			'complete' : 'file'
+	\		}
+	\	]}
 	\})
 	call neobundle#untap()
 endif
@@ -656,6 +678,7 @@ endif
 if neobundle#tap('vim-itunes-bgm')
 	call neobundle#config('vim-itunes-bgm', {
 	\	'depends'  : 'vimproc.vim',
+	\	'external_commands' : 'mplayer',
 	\	'autoload' : {'commands' : [
 	\		'ITunesBGMSafeStart',
 	\		'ITunesBGMSafePlay',
@@ -1417,7 +1440,7 @@ command!  CdBufDir NOP
 
 command! -bar ColorPreview Unite colorscheme -auto-preview
 
-command! -bar -nargs=? AfterFtpluginEdit execute ':edit' (s:vim_home . '/after/ftplugin/' . (empty(<q-args>) ? &filetype : <q-args>) . '.vim')
+command! -bar -nargs=? FtpluginEditAfter execute ':edit' (s:vim_home . '/after/ftplugin/' . (empty(<q-args>) ? &filetype : <q-args>) . '.vim')
 
 " }}}
 " Twitter {{{
