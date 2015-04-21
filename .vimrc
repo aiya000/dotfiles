@@ -1440,7 +1440,8 @@ command!  CdBufDir NOP
 
 command! -bar ColorPreview Unite colorscheme -auto-preview
 
-command! -bar -nargs=? FtpluginEditAfter execute ':edit' (s:vim_home . '/after/ftplugin/' . (empty(<q-args>) ? &filetype : <q-args>) . '.vim')
+command! -bar -nargs=? -complete=filetype FtpluginEditAfter
+\	execute ':edit' (s:vim_home . '/after/ftplugin/' . (empty(<q-args>) ? &filetype : <q-args>) . '.vim')
 
 " }}}
 " Twitter {{{
@@ -1519,7 +1520,7 @@ cnoreabbr tvs TweetVimSwitchAccount
 " }}}
 " vim-itunes-bgm {{{
 
-let s:itunes_bgm = {'playing' : 0}
+let s:itunes_bgm = get(s:, 'itunes_bgm', {'playing' : 0})
 
 
 " Start iTunes music, disable default commands, and register flag

@@ -11,5 +11,4 @@ nmap <buffer> i     <Plug>(w3m-address-bar)
 nmap <buffer> <C-i> <Plug>(w3m-next-link)
 nmap <buffer> <C-o> <Plug>(w3m-prev-link)
 
-nnoremap <silent><buffer> Q              :<C-u>bdelete!<CR>
-nnoremap <silent><buffer> <localleader>w :<C-u>W3mShowExtenalBrowser<CR>
+nnoremap <silent><buffer> <localleader>r :<C-u>W3mShowExtenalBrowser<CR>
