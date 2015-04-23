@@ -32,7 +32,7 @@ highlight CompResult         font-family: monospace; width: 35%; overflow: hidde
 highlight CompTitle          color: DeepPink; font-size: 11pt;
 highlight ErrorMsg           background-color: DarkRed;
 highlight Function           color: RoyalBlue;
-highlight Hint               font-family: monospace; font-size: 16px; font-weight: bold; color: Blue; background-color: rgba(135, 206, 250, 0.7); border: solid 1px Blue;
+highlight Hint               font-family: monospace; font-size: 16px; font-weight: bold; color: Blue; background-color: rgba(135, 206, 250, 0.9); border: solid 1px Blue;
 highlight HintActive         background-color: Orange; color: White;
 highlight HintElem           background-color: Khaki; color: Black;
 highlight InfoMsg            background-color: #333;
@@ -71,12 +71,10 @@ nnoremap <leader>l <C-l>
 imap     <C-j>     <CR>
 inoremap <C-c>     <Esc>
 inoremap <C-l>     <Esc>
-inoremap <leader>l <C-l>
 
 vmap     <C-j>     <CR>
 vnoremap <C-c>     <Esc>
 vnoremap <C-l>     <Esc>
-vnoremap <leader>l <C-l>
 
 
 " Bash like keys
@@ -111,7 +109,6 @@ inoremap <C-c>      <NOP>
 inoremap <C-v>      <NOP>
 inoremap <C-x><C-a> <C-a>
 inoremap <C-x><C-x> <C-x>
-inoremap <C-x><C-t> <C-x>
 inoremap <C-x><C-c> <C-c>
 inoremap <C-x><C-v> <C-v>
 

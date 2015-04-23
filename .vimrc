@@ -401,14 +401,13 @@ NeoBundle        'vim-jp/vimdoc-ja'
 NeoBundleLazy    'rbtnn/game_engine.vim'
 NeoBundle        'h1mesuke/vim-alignta'
 NeoBundle        'haya14busa/incsearch.vim'
-NeoBundle        'thinca/vim-scouter'
+NeoBundleLazy    'thinca/vim-scouter'
 NeoBundle        'deris/vim-shot-f'
-NeoBundle        'oplatek/Conque-Shell'
-NeoBundle        'sgelb/TaskList.vim'
+NeoBundleLazy    'sgelb/TaskList.vim'
 NeoBundle        'tyru/vim-altercmd'
-NeoBundle        'mbbill/undotree'
+NeoBundleLazy    'mbbill/undotree'
 NeoBundle        'Shougo/neomru.vim'
-NeoBundle        'aiya000/adrone.vim'
+NeoBundleLazy    'aiya000/adrone.vim'
 NeoBundleFetch   'Shougo/fakecygpty'
 NeoBundle        'nathanaelkane/vim-indent-guides'
 NeoBundleLazy    'LeafCage/vimhelpgenerator'
@@ -610,6 +609,45 @@ if neobundle#tap('restart.vim')
 	\})
 	call neobundle#untap()
 endif
+if neobundle#tap('vim-scouter')
+	call neobundle#config('vim-scouter', {
+	\	'autoload' : {'commands' : {
+	\		'name'     : 'Scouter',
+	\		'complete' : 'file'
+	\	}}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('TaskList.vim')
+	call neobundle#config('TaskList.vim', {
+	\	'autoload' : {'commands' : [
+	\		'TaskList',
+	\		'TaskListToggle'
+	\	]}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('undotree')
+	call neobundle#config('undotree', {
+	\	'autoload' : {'commands' : [
+	\		'UndotreeToggle',
+	\		'UndotreeFocus',
+	\		'UndotreeShow',
+	\		'UndotreeHide'
+	\	]}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('adrone.vim')
+	call neobundle#config('adrone.vim', {
+	\	'autoload' : {'commands' : [
+	\		'AdroneOpen',
+	\		'AdroneSay',
+	\		'AdroneVersion'
+	\	]}
+	\})
+	call neobundle#untap()
+endif
 if neobundle#tap('fakecygpty')
 	call neobundle#config('fakecygpty', {
 	\	'build' : {
@@ -665,7 +703,14 @@ if neobundle#tap('mdforvim')
 endif
 if neobundle#tap('vimconsole.vim')
 	call neobundle#config('vimconsole.vim', {
-	\	'autoload' : {'filetypes' : 'vim'}
+	\	'autoload' : {'commands' : [
+	\		'VimConsoleLog',
+	\		'VimConsoleOpen',
+	\		'VimConsoleClose',
+	\		'VimConsoleToggle',
+	\		'VimConsoleClear',
+	\		'VimConsoleRedraw'
+	\	]}
 	\})
 	call neobundle#untap()
 endif
@@ -933,16 +978,6 @@ let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
 
 " vimdoc-ja is secondary order
 set helplang=en,ja
-
-"}}}
-"--- Conque-Shell ---"{{{
-
-let g:ConqueTerm_CloseOnEnd     = 1
-let g:ConqueTerm_SessionSupport = 1
-let g:ConqueTerm_ReadUnfocused  = 1
-let g:ConqueTerm_Color          = 1
-let g:ConqueTerm_InsertOnEnter  = 0
-let g:ConqueTerm_StartMessages  = 1
 
 "}}}
 "--- TaskList.vim ---"{{{
