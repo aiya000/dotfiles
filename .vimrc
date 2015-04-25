@@ -1467,8 +1467,7 @@ command! -bar Reload so $MYVIMRC
 	\|		so $MYGVIMRC
 	\|	endif
 
-cnoreabbr ForceSave w !sudo tee > /dev/null %
-command!  ForceSave NOP
+cnoreabbr w!! w !sudo tee % > /dev/null
 
 cnoreabbr CdBufDir cd %:p:h
 command!  CdBufDir NOP

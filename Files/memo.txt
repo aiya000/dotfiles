@@ -26,17 +26,12 @@ thinca        : autocmd Syntax markdown syntax sync fromstart
                 これでもしかしたら改善されるかもわからん  01/17 23:25
 ------------------------------------------------------------------------------------------------------------------------------------------------
 "}}}
+"
+NeoBundle 'sorah/unite-ghq'
 
 
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
 
-
-
-NeoBundle 'chase/vim-ansible-yaml'
-NeoBundle 'gre/play2vim'
-NeoBundle 'sorah/unite-ghq'
-
-L421 これは poslist.vim 案件  12/14 00:00
 
 
 NeoBundle 'jceb/vim-hier'
@@ -565,6 +560,46 @@ noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 12, 2)<cr>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 14, 2)<cr>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 22, 4)<cr>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 24, 4)<cr>
+
+
+
+"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
+" 25  4月 2015
+
+set nostartofline
+set gdefault
+set showfulltag
+
+if has('guicolors')
+    let &t_8f="\e[38;2;%ld;%ld;%ldm"
+    let &t_8b="\e[48;2;%ld;%ld;%ldm"
+    set guicolors
+endif
+
+colorscheme lucius
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+
+" bar cursor in insert mode
+if exists('$TMUX')
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+
+
+thinca : quickhl.vim ってのがありますよ 04/25 23:23
+https://github.com/t9md/vim-quickhl 04/25 23:24
+
+if exists('&cryptmethod')
+    set cryptmethod=blowfish
+endif
+
+augroup Stdin
+	au!
+	au StdinReadPost * :set buftype=nofile
+augroup END
 
 
 
