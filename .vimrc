@@ -1913,100 +1913,6 @@ endfunction "}}}
 
 
 " }}}
-" Power keymapping {{{
-
-augroup KeyMapping
-	" normal mode "{{{
-
-	autocmd User MyVimRc nmap <C-j> <CR>
-
-	" † Ex Improved
-	autocmd User MyVimRc nnoremap Q gQ
-
-	autocmd User MyVimRc nnoremap <C-n> gt
-	autocmd User MyVimRc nnoremap <C-p> gT
-	autocmd User MyVimRc nnoremap <C-m> o<Esc>
-
-	autocmd User MyVimRc nnoremap <silent> m: :<C-u>marks<CR>
-	autocmd User MyVimRc nnoremap <silent> q: :<C-u>register<CR>
-	autocmd User MyVimRc nnoremap <silent> g: :<C-u>tabs<CR>
-	autocmd User MyVimRc nnoremap <silent> z: :<C-u>buffers<CR>
-	autocmd User MyVimRc nnoremap <silent> g> :<C-u>messages<CR>
-
-	autocmd User MyVimRc nnoremap <silent> vii :<C-u>call <SID>visual_current_indent('i')<CR>
-	autocmd User MyVimRc nnoremap <silent> vai :<C-u>call <SID>visual_current_indent('a')<CR>
-
-	autocmd User MyVimRc nnoremap <silent> <Space><Space> :<C-u>call <SID>compress_spaces()<CR>
-
-	autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| resize 5<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>h        :<C-u>helpclose<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>k                :<C-u>call <SID>cursor_up_to_lid()<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>j                :<C-u>call <SID>cursor_down_to_ground()<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader><leader> :<C-u>echohl ErrorMsg \| echo "Don't rush it, keep cool." \| echohl None<CR>
-
-	autocmd User MyVimRc nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k>J     :<C-u>wall \| echo 'written all !'<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k>r     :<C-u>let &filetype = &filetype<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k>R     :<C-u>doautocmd User MyVimRc<CR>
-
-	"}}}
-	" insert mode "{{{
-
-	autocmd User MyVimRc imap <C-j> <CR>
-
-	autocmd User MyVimRc inoremap <C-l> <Esc>
-	autocmd User MyVimRc inoremap <C-k><C-k> <C-o>"_d$
-	autocmd User MyVimRc inoremap <C-k><C-y> <Esc>k"zyyjV"zp:let @z = ''<CR>A
-
-	autocmd User MyVimRc inoremap <silent> <C-k><C-j> <Esc>:write<CR>
-	autocmd User MyVimRc inoremap <silent> <C-k>J     <Esc>:wall \| echo 'written all !'<CR>
-
-	"}}}
-	" command line mode "{{{
-
-	autocmd User MyVimRc cnoremap <C-b>      <Left>
-	autocmd User MyVimRc cnoremap <C-f>      <Right>
-	autocmd User MyVimRc cnoremap <C-a>      <Home>
-	autocmd User MyVimRc cnoremap <C-h>      <BS>
-	autocmd User MyVimRc cnoremap <C-d>      <Del>
-	autocmd User MyVimRc cnoremap <C-e>      <End>
-	autocmd User MyVimRc cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
-	autocmd User MyVimRc cnoremap <C-l>      <Esc>
-	autocmd User MyVimRc cnoremap <C-]>      '<,'>
-	autocmd User MyVimRc cnoremap <C-k><C-p> <Up>
-	autocmd User MyVimRc cnoremap <C-k><C-n> <Down>
-
-	"}}}
-	" visual mode "{{{
-
-	autocmd User MyVimRc vnoremap <C-l> <Esc>
-	"autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
-	"autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
-
-	"}}}
-	" select mode "{{{
-
-	autocmd User MyVimRc snoremap <C-l> <Esc>
-
-	"}}}
-	" operator "{{{
-
-	autocmd User MyVimRc onoremap ii :normal vii<CR>
-	autocmd User MyVimRc onoremap ai :normal vai<CR>
-
-	"}}}
-	" digraph "{{{
-
-	digraph %% 8984
-	digraph 8: 9731
-
-	"}}}
-augroup END
-
-" }}}
 " Foldings {{{
 
 augroup KeyMapping
@@ -2038,6 +1944,8 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-w>N :<C-u>EnewOverridden!<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>Q :<C-u>quitall<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>" :<C-u>resize 5<CR>
+
+	autocmd User MyVimRc nnoremap <C-w><C-r> <C-w>r<C-w>p
 
 	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bt 'mZ:tabnew<CR>`Zzz'       . (foldlevel('.') > 0 ? 'zo' : '')
 	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bT 'mZ<C-w>c:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : '')
@@ -2162,6 +2070,101 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap <leader>Ps <Plug>(separetoro_put_short_over)
 	autocmd User MyVimRc nmap <leader>pl <Plug>(separetoro_put_long_under)
 	autocmd User MyVimRc nmap <leader>Pl <Plug>(separetoro_put_long_over)
+augroup END
+
+" }}}
+" Others {{{
+
+augroup KeyMapping
+	" normal mode "{{{
+
+	autocmd User MyVimRc nmap <C-j> <CR>
+
+	" † Ex Improved
+	autocmd User MyVimRc nnoremap Q gQ
+
+	autocmd User MyVimRc nnoremap <C-n> gt
+	autocmd User MyVimRc nnoremap <C-p> gT
+	autocmd User MyVimRc nnoremap <C-m> o<Esc>
+
+	autocmd User MyVimRc nnoremap <silent> m: :<C-u>marks<CR>
+	autocmd User MyVimRc nnoremap <silent> q: :<C-u>register<CR>
+	autocmd User MyVimRc nnoremap <silent> g: :<C-u>tabs<CR>
+	autocmd User MyVimRc nnoremap <silent> z: :<C-u>buffers<CR>
+	autocmd User MyVimRc nnoremap <silent> g> :<C-u>messages<CR>
+
+	autocmd User MyVimRc nnoremap <silent> vii :<C-u>call <SID>visual_current_indent('i')<CR>
+	autocmd User MyVimRc nnoremap <silent> vai :<C-u>call <SID>visual_current_indent('a')<CR>
+
+	autocmd User MyVimRc nnoremap <silent> <Space><Space> :<C-u>call <SID>compress_spaces()<CR>
+
+	autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| resize 5<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>h        :<C-u>helpclose<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>k                :<C-u>call <SID>cursor_up_to_lid()<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>j                :<C-u>call <SID>cursor_down_to_ground()<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader><leader> :<C-u>echohl ErrorMsg \| echo "Don't rush it, keep cool." \| echohl None<CR>
+
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>J     :<C-u>wall \| echo 'written all !'<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>r     :<C-u>let &filetype = &filetype<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>R     :<C-u>doautocmd User MyVimRc<CR>
+
+	"}}}
+	" insert mode "{{{
+
+	autocmd User MyVimRc imap <C-j> <CR>
+
+	autocmd User MyVimRc inoremap <C-l> <Esc>
+	autocmd User MyVimRc inoremap <C-k><C-k> <C-o>"_d$
+	autocmd User MyVimRc inoremap <C-k><C-y> <Esc>k"zyyjV"zp:let @z = ''<CR>A
+
+	autocmd User MyVimRc inoremap <silent> <C-k><C-j> <Esc>:write<CR>
+	autocmd User MyVimRc inoremap <silent> <C-k>J     <Esc>:wall \| echo 'written all !'<CR>
+
+	"}}}
+	" command line mode "{{{
+
+	autocmd User MyVimRc cnoremap <C-b>      <Left>
+	autocmd User MyVimRc cnoremap <C-f>      <Right>
+	autocmd User MyVimRc cnoremap <C-a>      <Home>
+	autocmd User MyVimRc cnoremap <C-h>      <BS>
+	autocmd User MyVimRc cnoremap <C-d>      <Del>
+	autocmd User MyVimRc cnoremap <C-e>      <End>
+	autocmd User MyVimRc cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
+	autocmd User MyVimRc cnoremap <C-l>      <Esc>
+	autocmd User MyVimRc cnoremap <C-]>      '<,'>
+	autocmd User MyVimRc cnoremap <C-k><C-p> <Up>
+	autocmd User MyVimRc cnoremap <C-k><C-n> <Down>
+
+	"}}}
+	" visual mode "{{{
+
+	autocmd User MyVimRc vnoremap <C-l> <Esc>
+	"autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
+	"autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
+	autocmd User MyVimRc vnoremap <silent> i= :Align =<CR>
+
+	"}}}
+	" select mode "{{{
+
+	autocmd User MyVimRc snoremap <C-l> <Esc>
+
+	"}}}
+	" operator "{{{
+
+	autocmd User MyVimRc onoremap ii :normal vii<CR>
+	autocmd User MyVimRc onoremap ai :normal vai<CR>
+
+	"}}}
+	" digraph "{{{
+
+	digraph %% 8984
+	digraph 8: 9731
+
+	"}}}
 augroup END
 
 " }}}
