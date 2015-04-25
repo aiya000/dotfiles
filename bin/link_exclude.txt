@@ -1,4 +1,5 @@
 .backup
+.config
 .git
 .gitignore
 .private

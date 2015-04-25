@@ -1,0 +1,30 @@
+{
+    "usageCount": 3, 
+    "omitTrigger": false, 
+    "prompt": false, 
+    "description": "C-b", 
+    "abbreviation": {
+        "wordChars": "[\\w]", 
+        "abbreviations": [], 
+        "immediate": false, 
+        "ignoreCase": false, 
+        "backspace": true, 
+        "triggerInside": false
+    }, 
+    "hotkey": {
+        "hotKey": "b", 
+        "modifiers": [
+            "<ctrl>"
+        ]
+    }, 
+    "modes": [
+        3
+    ], 
+    "showInTrayMenu": false, 
+    "filter": {
+        "regex": "autokey-gtk.Autokey-gtk", 
+        "isRecursive": false
+    }, 
+    "type": "script", 
+    "store": {}
+}
