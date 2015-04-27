@@ -32,6 +32,8 @@
 
 "-- separetaro.vim -> operator between separetor (long|short) and separator (long|short)
 
+"-- create ftdetect {ipmsg.log : 'ipmsg-log'} and ftplugin syntax ipmsg-log
+
 " }}}
 " Issues {{{
 
@@ -425,8 +427,9 @@ NeoBundleLazy    'rbtnn/vimconsole.vim'
 NeoBundleLazy    'fatih/vim-go'
 NeoBundle        'tpope/vim-surround'
 NeoBundle        'kana/vim-textobj-user'
-NeoBundle        'rhysd/vim-textobj-conflict'
 NeoBundleLazy    'osyo-manga/vim-itunes-bgm'
+NeoBundle        'kana/vim-textobj-function'
+NeoBundle        'kana/vim-textobj-indent'
 
 
 call neobundle#end()
@@ -1865,52 +1868,6 @@ function! s:bufclose_filetype(filetype) "{{{
 endfunction "}}}
 
 
-" text-object current indent lines
-function! s:visual_current_indent(type) abort "{{{
-	if a:type != 'i' && a:type != 'a'
-		throw "an argument must be 'i' or 'a'"
-	endif
-
-	let l:current_indent = indent('.')
-	let l:current_line   = line('.')
-	let l:current_col    = col('.')
-
-	" Detect over line num
-	let l:start_line = l:current_line
-
-	" While indent not down
-	while l:current_indent <= indent(l:start_line) || getline(l:start_line) ==# ''
-		let l:start_line -= 1
-
-		if l:start_line == 1 | break | endif
-	endwhile
-
-	" if operator type inner
-	if a:type ==# 'i'
-		let l:start_line += 1
-	endif
-
-	" Detect under line num
-	let l:end_line = l:current_line
-
-	" While indent not down
-	while l:current_indent <= indent(l:end_line) || getline(l:end_line) ==# ''
-		let l:end_line += 1
-
-		if l:end_line == line('$') | break | endif
-	endwhile
-
-	if a:type ==# 'i'
-		let l:end_line -= 1
-	endif
-
-	" Select detected range
-	call cursor(l:start_line, l:current_col)
-	normal! V
-	call cursor(l:end_line, l:current_col)
-endfunction "}}}
-
-
 " }}}
 " Foldings {{{
 
@@ -2091,10 +2048,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> g: :<C-u>tabs<CR>
 	autocmd User MyVimRc nnoremap <silent> z: :<C-u>buffers<CR>
 	autocmd User MyVimRc nnoremap <silent> g> :<C-u>messages<CR>
-
-	autocmd User MyVimRc nnoremap <silent> vii :<C-u>call <SID>visual_current_indent('i')<CR>
-	autocmd User MyVimRc nnoremap <silent> vai :<C-u>call <SID>visual_current_indent('a')<CR>
-
 	autocmd User MyVimRc nnoremap <silent> <Space><Space> :<C-u>call <SID>compress_spaces()<CR>
 
 	autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile<CR>
