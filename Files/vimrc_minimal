@@ -228,7 +228,74 @@ endfunction "}}}
 
 
 " }}}
-" Power keymapping {{{
+" Foldings {{{
+
+augroup KeyMapping
+	autocmd User MyVimRc nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
+	autocmd User MyVimRc nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
+
+	autocmd User MyVimRc nnoremap zj zjzo
+	autocmd User MyVimRc nnoremap zk zkzo
+	autocmd User MyVimRc nnoremap {  {zv
+	autocmd User MyVimRc nnoremap }  }zv
+	autocmd User MyVimRc nnoremap (  (zv
+	autocmd User MyVimRc nnoremap )  )zv
+	autocmd User MyVimRc nnoremap z< V$%zf
+augroup END
+
+" }}}
+" Windows and Buffers {{{
+
+augroup KeyMapping
+	autocmd User MyVimRc nnoremap <Space>h <C-w>h
+	autocmd User MyVimRc nnoremap <Space>j <C-w>j
+	autocmd User MyVimRc nnoremap <Space>k <C-w>k
+	autocmd User MyVimRc nnoremap <Space>l <C-w>l
+
+	autocmd User MyVimRc nnoremap <silent> <C-w>t :<C-u>tabnew<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>T :<C-u>tabclose<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>c :<C-u>bdelete<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>C :<C-u>bdelete!<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>N :<C-u>enew!<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>Q :<C-u>quitall<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>" :<C-u>resize 5<CR>
+
+	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bt 'mZ:tabnew<CR>`Zzz'       . (foldlevel('.') > 0 ? 'zo' : '')
+	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bT 'mZ<C-w>c:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : '')
+augroup END
+
+" }}}
+" Toggle options {{{
+
+augroup KeyMapping
+	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-d> (&diff ? ':diffoff' : ':diffthis') . '\|set diff?<CR>'
+	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
+
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline!     cursorline?    <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-e> :<C-u>setl expandtab!      expandtab?     <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-l> :<C-u>setl list!           list?          <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-n> :<C-u>setl number!         number?        <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h>jk    :<C-u>call <SID>toggle_onehand_mode()<CR>
+
+	autocmd User MyVimRc inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
+augroup END
+
+" }}}
+" for Plugins {{{
+
+augroup KeyMapping
+	" netrw
+	autocmd User MyVimRc nnoremap <silent> <leader>e         :<C-u>Vexplore<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>e :<C-u>Sexplore<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>E         :<C-u>Explore<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>E :<C-u>Texplore<CR>
+augroup END
+
+" }}}
+" Others {{{
 
 augroup KeyMapping
 	" normal mode "{{{
@@ -318,75 +385,9 @@ augroup KeyMapping
 augroup END
 
 " }}}
-" Foldings {{{
-
-augroup KeyMapping
-	autocmd User MyVimRc nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
-	autocmd User MyVimRc nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
-
-	autocmd User MyVimRc nnoremap zj zjzo
-	autocmd User MyVimRc nnoremap zk zkzo
-	autocmd User MyVimRc nnoremap {  {zv
-	autocmd User MyVimRc nnoremap }  }zv
-	autocmd User MyVimRc nnoremap (  (zv
-	autocmd User MyVimRc nnoremap )  )zv
-	autocmd User MyVimRc nnoremap z< V$%zf
-augroup END
-
-" }}}
-" Windows and Buffers {{{
-
-augroup KeyMapping
-	autocmd User MyVimRc nnoremap <Space>h <C-w>h
-	autocmd User MyVimRc nnoremap <Space>j <C-w>j
-	autocmd User MyVimRc nnoremap <Space>k <C-w>k
-	autocmd User MyVimRc nnoremap <Space>l <C-w>l
-
-	autocmd User MyVimRc nnoremap <silent> <C-w>t :<C-u>tabnew<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>T :<C-u>tabclose<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>c :<C-u>bdelete<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>C :<C-u>bdelete!<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>N :<C-u>enew!<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>Q :<C-u>quitall<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>" :<C-u>resize 5<CR>
-
-	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bt 'mZ:tabnew<CR>`Zzz'       . (foldlevel('.') > 0 ? 'zo' : '')
-	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bT 'mZ<C-w>c:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : '')
-augroup END
-
-" }}}
-" Toggle options {{{
-
-augroup KeyMapping
-	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-d> (&diff ? ':diffoff' : ':diffthis') . '\|set diff?<CR>'
-	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
-
-	autocmd User MyVimRc nnoremap <silent> <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
-	autocmd User MyVimRc nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline!     cursorline?    <CR>
-	autocmd User MyVimRc nnoremap <silent> <C-h><C-e> :<C-u>setl expandtab!      expandtab?     <CR>
-	autocmd User MyVimRc nnoremap <silent> <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-h><C-l> :<C-u>setl list!           list?          <CR>
-	autocmd User MyVimRc nnoremap <silent> <C-h><C-n> :<C-u>setl number!         number?        <CR>
-	autocmd User MyVimRc nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
-	autocmd User MyVimRc nnoremap <silent> <C-h>jk    :<C-u>call <SID>toggle_onehand_mode()<CR>
-
-	autocmd User MyVimRc inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
-augroup END
-
-" }}}
-" for Plugins {{{
-
-augroup KeyMapping
-	" netrw
-	autocmd User MyVimRc nnoremap <silent> <leader>e         :<C-u>Vexplore<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>e :<C-u>Sexplore<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>E         :<C-u>Explore<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>E :<C-u>Texplore<CR>
-augroup END
-
-" }}}
 
 " }}}
 
 
+doautocmd User MyVimRc
 nohlsearch

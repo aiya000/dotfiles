@@ -34,6 +34,8 @@
 
 "-- create ftdetect {ipmsg.log : 'ipmsg-log'} and ftplugin syntax ipmsg-log
 
+"-- textobj-function add support C# and PR it
+
 " }}}
 " Issues {{{
 
@@ -1040,6 +1042,16 @@ let g:vimconsole#auto_redraw = 1
 " Disable defaults
 let g:go_fmt_autosave        = 0
 let g:go_def_mapping_enabled = 0
+
+"}}}
+"--- vim-textobj-function ---"{{{
+
+let g:textobj_function_no_default_key_mappings = 1
+
+"}}}
+"--- vim-textobj-indent ---"{{{
+
+let g:textobj_indent_no_default_key_mappings = 1
 
 "}}}
 "--- For Debug ---"{{{
@@ -2094,6 +2106,14 @@ augroup KeyMapping
 	"}}}
 	" visual mode "{{{
 
+	" textobj-function
+	autocmd User MyVimRc vmap af <Plug>(textobj-function-a)
+	autocmd User MyVimRc vmap if <Plug>(textobj-function-i)
+
+	" textobj-indent
+	autocmd User MyVimRc vmap ai <Plug>(textobj-indent-a)
+	autocmd User MyVimRc vmap ii <Plug>(textobj-indent-i)
+
 	autocmd User MyVimRc vnoremap <C-l> <Esc>
 	"autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
 	"autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
@@ -2107,8 +2127,13 @@ augroup KeyMapping
 	"}}}
 	" operator "{{{
 
-	autocmd User MyVimRc onoremap ii :normal vii<CR>
-	autocmd User MyVimRc onoremap ai :normal vai<CR>
+	" textobj-function
+	autocmd User MyVimRc omap af <Plug>(textobj-function-a)
+	autocmd User MyVimRc omap if <Plug>(textobj-function-i)
+
+	" textobj-indent
+	autocmd User MyVimRc omap ai <Plug>(textobj-indent-a)
+	autocmd User MyVimRc omap ii <Plug>(textobj-indent-i)
 
 	"}}}
 	" digraph "{{{
