@@ -727,14 +727,9 @@ if neobundle#tap('vim-go')
 endif
 if neobundle#tap('vim-itunes-bgm')
 	call neobundle#config('vim-itunes-bgm', {
-	\	'depends'  : 'vimproc.vim',
+	\	'depends'           : 'vimproc.vim',
 	\	'external_commands' : 'mplayer',
-	\	'autoload' : {'commands' : [
-	\		'ITunesBGMSafeStart',
-	\		'ITunesBGMSafePlay',
-	\		'ITunesBGMSafeStop',
-	\		'ITunesBGMNext'
-	\	]}
+	\	'autoload'          : {'commands' : 'ITunesBGMSafeStart'}
 	\})
 	call neobundle#untap()
 endif
@@ -1567,51 +1562,6 @@ command! -bar Bitly TweetVimBitly
 cnoreabbr tvs TweetVimSwitchAccount
 
 " }}}
-" vim-itunes-bgm {{{
-
-let s:itunes_bgm = get(s:, 'itunes_bgm', {'playing' : 0})
-
-
-" Start iTunes music, disable default commands, and register flag
-command! -bar -nargs=1 ITunesBGMSafeStart
-\	if s:itunes_bgm.playing
-\|		call s:echo_error('vim-itunes-bgm already playing or searching now')
-\|	else
-\|		call itunes_bgm#start_by_term(<q-args>)
-\|		let s:itunes_bgm.playing = 1
-\|		if exists(':ITunesBGMStart') is 2
-\|			delcommand ITunesBGMStart
-\|			delcommand ITunesBGMPlay
-\|			delcommand ITunesBGMStop
-\|			delcommand ITunesBGMPlayList
-\|			set updatetime=200
-\|		endif
-\|	endif
-
-
-" If not already play music, play iTunes music
-command! -bar -nargs=1 ITunesBGMSafePlay
-\	if s:itunes_bgm.playing
-\|		call s:echo_error('vim-itunes-bgm already playing now')
-\|	else
-\|		call itunes_bgm#play()
-\|	endif
-
-
-" Stop iTunes music and register flag
-command! -bar ITunesBGMSafeStop
-\	call itunes_bgm#stop()
-\|	let s:itunes_bgm.playing = 0
-\|	set updatetime=4000
-
-
-" List iTunes musics with Stop playing music
-command! -bar ITunesBGMUnitePlayList
-\	call itunes_bgm#stop()
-\|	Unite itunes_bgm
-
-
-" }}}
 
 
 " To Service Name
@@ -1733,10 +1683,6 @@ command! -bar HighlightListTab call s:highlight_list_tab()
 command! -bar GitAdd !git add %
 
 
-" Search branch lines for git merge
-command! -bar SearchBranch :/\v(<<<<<<<|\=\=\=\=\=\=\=|>>>>>>>)
-
-
 " }}}
 
 
@@ -1777,9 +1723,8 @@ function! s:compress_spaces() "{{{
 	let l:recent_pattern = @/
 
 	try
-		substitute/\s\s\+/ /g
+		substitute/\s\+/ /g
 		normal! ==
-	catch
 	finally
 		let @/ = l:recent_pattern
 	endtry
@@ -1865,7 +1810,6 @@ endfunction
 
 
 " If you has nofile buffer, close it.
-"@Marked('maybe this was not does purported function')
 function! s:bufclose_filetype(filetype) "{{{
 	for l:w in range(1, winnr('$'))
 		let l:buf_ft = getwinvar(l:w, '&filetype')
@@ -1873,8 +1817,6 @@ function! s:bufclose_filetype(filetype) "{{{
 		if l:buf_ft ==# a:filetype
 			execute ':' . l:w . 'wincmd w'
 			execute ':quit'
-
-			break
 		endif
 	endfor
 endfunction "}}}
