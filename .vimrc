@@ -2039,7 +2039,7 @@ augroup KeyMapping
 	autocmd User MyVimRc cnoremap <C-h>      <BS>
 	autocmd User MyVimRc cnoremap <C-d>      <Del>
 	autocmd User MyVimRc cnoremap <C-e>      <End>
-	autocmd User MyVimRc cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
+	autocmd User MyVimRc cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[ : getcmdpos() - 2]<CR>
 	autocmd User MyVimRc cnoremap <C-l>      <Esc>
 	autocmd User MyVimRc cnoremap <C-]>      '<,'>
 	autocmd User MyVimRc cnoremap <C-k><C-p> <Up>
