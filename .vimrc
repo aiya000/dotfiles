@@ -1790,8 +1790,8 @@ function! s:toggle_onehand_mode()
 		nunmap i
 		nunmap u
 
-		" doautocmd for normally keymappings
-		let &filetype = &filetype
+		" restore normal keymapping
+		doautocmd User MyVimRc
 	else
 		nnoremap n gt
 		nnoremap p gT
@@ -1857,8 +1857,8 @@ augroup KeyMapping
 
 	autocmd User MyVimRc nnoremap <C-w><C-r> <C-w>r<C-w>p
 
-	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bt 'mZ:tabnew<CR>`Zzz'       . (foldlevel('.') > 0 ? 'zo' : '')
-	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bT 'mZ<C-w>c:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : '')
+	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bt 'mZ:tabnew<CR>`Zzz'          . (foldlevel('.') > 0 ? 'zo' : '')
+	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bT 'mZ:hide<CR>:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : '')
 augroup END
 
 " }}}

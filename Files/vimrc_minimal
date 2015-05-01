@@ -336,6 +336,15 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-k>R     :<C-u>doautocmd User MyVimRc<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>l     :<C-u>source %<CR>
 
+	autocmd User MyVimRc nnoremap <expr>      /                 foldclosed('.') > -1 ? 'zv/' : '/'
+	autocmd User MyVimRc nnoremap <silent>    <leader>/         /\m\C
+	autocmd User MyVimRc nnoremap <silent>    <leader><leader>/ /\m\C\<\>[Left][Left]
+	autocmd User MyVimRc nnoremap             g/                /\<<C-r>"\><CR>
+	autocmd User MyVimRc nnoremap <expr>      ?                 foldclosed('.') > -1 ? 'zv?' : '?'
+	autocmd User MyVimRc nnoremap <silent>    <leader>?         ?\m\C
+	autocmd User MyVimRc nnoremap <silent>    <leader><leader>? ?\m\C\<\>[Left][Left]
+	autocmd User MyVimRc nnoremap             g?                ?\<<C-r>"\><CR>
+
 	"}}}
 	" insert mode "{{{
 
@@ -370,6 +379,9 @@ augroup KeyMapping
 	"autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
 	"autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
 
+	autocmd User MyVimRc vnoremap <expr> / foldclosed('.') > -1 ? 'zv/' : '/'
+	autocmd User MyVimRc vnoremap <expr> ? foldclosed('.') > -1 ? 'zv?' : '?'
+
 	"}}}
 	" select mode "{{{
 
@@ -387,7 +399,28 @@ augroup END
 " }}}
 
 " }}}
+" Local KeyMaps "{{{
 
+" for Pluins {{{
+
+augroup KeyMapping
+	" netrw
+	autocmd FileType netrw nmap             <buffer> H              G-
+	autocmd FileType netrw nmap             <buffer> gg             gg<CR>
+	autocmd FileType netrw nnoremap         <buffer> L              <NOP>
+	autocmd FileType netrw nnoremap <silent><buffer> Q              :<C-u>quit<CR>
+	autocmd FileType netrw nnoremap <silent><buffer> ~              :<C-u>execute 'Explore' expand('~')<CR>
+	autocmd FileType netrw nnoremap <silent><buffer> <localleader>e :<C-u>quit<CR>
+	autocmd FileType netrw nnoremap <silent><buffer> V              :<C-u>vertical split<CR>
+	autocmd FileType netrw nnoremap         <buffer> v              <NOP>
+	autocmd FileType netrw nnoremap <silent><buffer> S              :<C-u>split<CR>
+	autocmd FileType netrw nnoremap         <buffer> s              <NOP>
+augroup END
+
+" }}}
+
+" }}}
 
 doautocmd User MyVimRc
 nohlsearch
+syntax enable
