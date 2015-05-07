@@ -80,6 +80,7 @@ export EDITOR=vim
 ###################
 # ReConfig PATHes #
 ###################
+#{{{
 # set PATH with priority
 new_path=$HOME/bin:$HOME/sbin
 new_path=$new_path:$HOME/.dotfiles/bin
@@ -98,6 +99,11 @@ new_path=$new_path:$HOME/.dotfiles/bin
 # ruby-build
 [ -d ~/.rbenv/plugins/ruby-build/bin ] \
 	&& new_path=$new_path:$HOME/.rbenv/plugins/ruby-build/bin
+# pyenv
+[ -d ~/.pyenv ] \
+	&& export PYENV_ROOT=~/.pyenv \
+	&& new_path=$new_path:$PYENV_ROOT/bin \
+	&& eval "$($HOME/.pyenv/bin/pyenv init -)"
 
 # and basics
 new_path=$new_path:/bin:/sbin
@@ -108,25 +114,25 @@ new_path=$new_path:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
 if [ $is_cygwin -eq 1 ] ; then
 	export HOME=/home/$USER
 
-	new_path=$new_path:/opt/local/bin/exec
-	new_path=$new_path:/opt/local/ghc/bin
-	new_path=$new_path:/opt/local/bin/java_wrapper
+	#new_path=$new_path:/opt/local/bin/exec
+	#new_path=$new_path:/opt/local/ghc/bin
+	#new_path=$new_path:/opt/local/bin/java_wrapper
 
-	# Auto detect JDK PATH
-	if [ -d /cygdrive/c/Program\ Files\ \(x86\)/ ] ; then
-		java_path=/cygdrive/c/Program\ Files\ \(x86\)/Java/
-		jdk_path=`ls "$java_path" | grep 'jdk' | sort -r | head -1`
-		new_path=$new_path:$java_path/$jdk_path/bin
+	## Auto detect JDK PATH
+	#if [ -d /cygdrive/c/Program\ Files\ \(x86\)/ ] ; then
+	#	java_path=/cygdrive/c/Program\ Files\ \(x86\)/Java/
+	#	jdk_path=`ls "$java_path" | grep 'jdk' | sort -r | head -1`
+	#	new_path=$new_path:$java_path/$jdk_path/bin
 
-		new_path=$new_path:/cygdrive/c/Program\ Files/pleiades/java/6/bin/
-	else
-		java_path=/cygdrive/c/Program\ Files/Java/
-		jdk_path=`ls "$java_path" | grep 'jdk' | sort -r | head -1`
-		new_path=$new_path:$java_path/$jdk_path/bin
+	#	new_path=$new_path:/cygdrive/c/Program\ Files/pleiades/java/6/bin/
+	#else
+	#	java_path=/cygdrive/c/Program\ Files/Java/
+	#	jdk_path=`ls "$java_path" | grep 'jdk' | sort -r | head -1`
+	#	new_path=$new_path:$java_path/$jdk_path/bin
 
-		new_path=$new_path:/cygdrive/c/Program\ Files\ \(x86\)/pleiades/java/6/bin/
-	fi
-	export JAVA_HOME=/opt/local/share/jdk_home
+	#	new_path=$new_path:/cygdrive/c/Program\ Files\ \(x86\)/pleiades/java/6/bin/
+	#fi
+	#export JAVA_HOME=/opt/local/share/jdk_home
 
 	new_path=$new_path:/cygdrive/c/Windows/system32:/cygdrive/c/Windows
 fi
@@ -134,6 +140,8 @@ fi
 # Apply to PATH
 export PATH=$new_path:$PATH
 unset new_path
+
+#}}}
 
 
 #############################################

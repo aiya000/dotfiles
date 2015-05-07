@@ -72,7 +72,9 @@
 
 "-- reference to help 'ftplugin' L2159
 
-"-- optimize to lazy load or strict load some plugins
+"-- <leader>e to toggle Explore
+
+"-- implement add separator function from outside by separetaro.vim
 
 " }}}
 
@@ -1461,7 +1463,7 @@ function! s:rename_to(to_file) abort "{{{
 
 	echo printf('Renamed %s to %s', l:this_file, l:to_file)
 endfunction "}}}
-command! -bar -nargs=1 Rename call s:rename_to(<q-args>)
+command! -bar -nargs=1 -complete=file Rename call s:rename_to(<q-args>)
 
 "}}}
 " Life Helper {{{
@@ -1909,7 +1911,7 @@ augroup KeyMapping
 
 	" Unite
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-h>        :<C-u>Unite -ignorecase neomru/file<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Unite -ignorecase outline:foldings<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Unite -ignorecase outline<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>u :<C-u>call <SID>bufclose_filetype('unite')<CR>
 
 
@@ -2057,6 +2059,7 @@ augroup KeyMapping
 	autocmd User MyVimRc vmap ii <Plug>(textobj-indent-i)
 
 	autocmd User MyVimRc vnoremap <C-l> <Esc>
+	autocmd User MyVimRc vnoremap a" 2i"
 	"autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
 	"autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
 	autocmd User MyVimRc vnoremap <silent> i= :Align =<CR>
@@ -2068,6 +2071,9 @@ augroup KeyMapping
 
 	"}}}
 	" operator "{{{
+
+	" Don't select blank
+	autocmd User MyVimRc onoremap a" 2i"
 
 	" textobj-function
 	autocmd User MyVimRc omap af <Plug>(textobj-function-a)
