@@ -140,7 +140,7 @@ let s:groupname = $GROUP !=# '' ? $GROUP : $USER
 "{{{
 
 function! s:system(cmd)
-	"Incomplete('vimproc#system was not executed in this script, refer to vital.vim')
+	"@Incomplete('vimproc#system was not executed in this script, refer to vital.vim')
 	if exists('*vimproc#system')
 		return vimproc#system(a:cmd)
 	else
@@ -435,9 +435,6 @@ NeoBundleLazy    'osyo-manga/vim-itunes-bgm'
 NeoBundle        'kana/vim-textobj-function'
 NeoBundle        'kana/vim-textobj-indent'
 
-
-call neobundle#end()
-
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
 
@@ -449,7 +446,8 @@ if neobundle#tap('vimproc.vim')
 	\		'mac'     : 'make -f make_mac.mak',
 	\		'cygwin'  : 'make -f make_cygwin.mak',
 	\		'windows' : 'make -f make_mingw32.mak'
-	\	}
+	\	},
+	\	'disabled' : s:is_kaoriya && s:is_windows && !s:has_mingw
 	\})
 	call neobundle#untap()
 endif
@@ -736,6 +734,9 @@ if neobundle#tap('vim-itunes-bgm')
 	call neobundle#untap()
 endif
 
+
+call neobundle#end()
+
 " }}}
 
 
@@ -805,15 +806,6 @@ elseif s:is_cygwin
 	let g:quickrun_config.java['exec']                        = ['%c %o `echo %s | sed s:\:/:g | cygpath -w -f -`', '%c %s:t:r %a']
 	let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
 	let g:quickrun_config.java['tempfile']                    = printf('%s/{tempname()}.java', $TMP)
-endif
-
-" }}}
-"--- vimproc.vim ---"{{{
-
-" If you use windows kaoriya vim and does not have mingw
-" you use kaoriya vimproc ...maybe
-if s:is_kaoriya && s:is_windows && !s:has_mingw
-	set runtimepath-=~/vimfiles/bundle/vimproc.vim/
 endif
 
 " }}}
