@@ -13,3 +13,5 @@ setl expandtab
 let &commentstring = '<!--%s-->'
 
 nnoremap <silent><buffer> <localleader>r :<C-u>PrevimOpen<CR>
+
+syntax sync fromstart

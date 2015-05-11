@@ -59,6 +59,8 @@
 
 "-- couldn't run quickrun java on kaoriya gvim
 
+"-- lazy load... oh... tasklist.vim.
+
 "}}}
 " Todo {{{
 
@@ -75,6 +77,8 @@
 "-- <leader>e to toggle Explore
 
 "-- implement add separator function from outside by separetaro.vim
+
+"-- fix dot-merge script diff function
 
 " }}}
 
@@ -730,6 +734,18 @@ if neobundle#tap('vim-itunes-bgm')
 	\	'depends'           : 'vimproc.vim',
 	\	'external_commands' : 'mplayer',
 	\	'autoload'          : {'commands' : 'ITunesBGMSafeStart'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-textobj-function')
+	call neobundle#config('vim-textobj-function', {
+	\	'depends' : 'vim-textobj-user'
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-textobj-indent')
+	call neobundle#config('vim-textobj-indent', {
+	\	'depends' : 'vim-textobj-user'
 	\})
 	call neobundle#untap()
 endif
