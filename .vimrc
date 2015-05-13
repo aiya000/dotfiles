@@ -36,6 +36,10 @@
 
 "-- textobj-function add support C# and PR it
 
+"-- C# foldmethod #region~~#endregion
+
+"-- Buffer Memo of Marks
+
 " }}}
 " Issues {{{
 
@@ -44,22 +48,14 @@
 "-- automatic mkdir './C:' when execute NeoBundleInstall in windows kaoriya
 "  -- does neobundle think that is repository...?
 
-"-- conceal-javadoc doesn't functioned ?
-
 "-- shot-f doesn't functioned in i_<C-o> temporary normal mode
 
 "-- conflicted? vim-ruby and rspec.vim when those was set NeoBundleLazy
 "  -- does not loaded syntax of rspec.vim
 
-"-- happened exception when input '.*' to unite textarea
-
-"-- ftplugin vim.vim don't highlight hints on gvim and vim
-
-"-- missing plugin conceal-javadoc.vim
-
 "-- couldn't run quickrun java on kaoriya gvim
 
-"-- lazy load... oh... tasklist.vim.
+"-- echo warning message by netobundle when reloading this
 
 "}}}
 " Todo {{{
@@ -75,8 +71,6 @@
 "-- reference to help 'ftplugin' L2159
 
 "-- <leader>e to toggle Explore
-
-"-- implement add separator function from outside by separetaro.vim
 
 "-- fix dot-merge script diff function
 
@@ -364,80 +358,80 @@ endif
 "-------------------------"
 "*** Plugin List ***"{{{
 
-NeoBundleFetch   'Shougo/neobundle.vim'
-NeoBundleLazy    'basyura/twibill.vim'
-NeoBundle        'tyru/open-browser.vim'
-NeoBundleLazy    'basyura/bitly.vim'
-NeoBundle        'Shougo/unite.vim'
-NeoBundle        'Shougo/vimproc.vim'
-NeoBundleLazy    'basyura/TweetVim'
-NeoBundle        'mattn/webapi-vim'
-NeoBundle        'Shougo/vimshell.vim'
-NeoBundle        'thinca/vim-quickrun'
-NeoBundleLazy    'basyura/J6uil.vim'
-NeoBundle        'osyo-manga/vim-gyazo'
-NeoBundle        'yuratomo/w3m.vim'
-NeoBundle        'supermomonga/vimshell-kawaii.vim'
-NeoBundle        'mattn/excitetranslate-vim'
-NeoBundleLazy    'thinca/vim-splash'
-NeoBundle        'supermomonga/jazzradio.vim'
-NeoBundle        'mattn/favstar-vim'
-NeoBundle        'ujihisa/unite-colorscheme'
-NeoBundle        'Shougo/vinarise.vim'
-NeoBundle        'mattn/gist-vim'
-NeoBundle        'thinca/vim-ref'
-NeoBundle        'ujihisa/ref-hoogle'
-NeoBundleLazy    'vim-jp/vital.vim'
-NeoBundle        'Shougo/unite-outline'
-NeoBundleLazy    'rbtnn/puyo.vim'
-NeoBundleLazy    'mattn/benchvimrc-vim'
-NeoBundleLazy    'mattn/yamada-vim'
-NeoBundleLazy    'jvoorhis/coq.vim'
-NeoBundleLazy    'eagletmt/coqtop-vim'
-NeoBundle        'rhysd/vim-grammarous'
-NeoBundleLazy    'thinca/vim-themis'
-NeoBundle        'tomasr/molokai'
-NeoBundleLazy    'kannokanno/previm'
-NeoBundle        'LeafCage/foldCC'
-NeoBundleLazy    'katono/rogue.vim'
-NeoBundleLazy    'kamichidu/vim-benchmark'
-NeoBundle        'kana/vim-submode'
-NeoBundle        'mfumi/ref-dicts-en'
-NeoBundleLazy    'thinca/vim-painter'
-NeoBundle        'osyo-manga/vim-anzu'
-NeoBundle        'osyo-manga/vim-over'
-NeoBundleLazy    'tyru/restart.vim'
-NeoBundle        'vim-jp/vimdoc-ja'
-NeoBundleLazy    'rbtnn/game_engine.vim'
-NeoBundle        'h1mesuke/vim-alignta'
-NeoBundle        'haya14busa/incsearch.vim'
-NeoBundleLazy    'thinca/vim-scouter'
-NeoBundle        'deris/vim-shot-f'
-NeoBundleLazy    'sgelb/TaskList.vim'
-NeoBundle        'tyru/vim-altercmd'
-NeoBundleLazy    'mbbill/undotree'
-NeoBundle        'Shougo/neomru.vim'
-NeoBundleLazy    'aiya000/adrone.vim'
-NeoBundleFetch   'Shougo/fakecygpty'
-NeoBundle        'nathanaelkane/vim-indent-guides'
-NeoBundleLazy    'LeafCage/vimhelpgenerator'
-NeoBundleLazy    'thinca/vim-threes'
-NeoBundle        'vim-ruby/vim-ruby'
-NeoBundle        'Keithbsmiley/rspec.vim'
-NeoBundle        'altercation/vim-colors-solarized'
-NeoBundle        'aiya000/aho-bakaup.vim'
-NeoBundle        'chrisbra/vim-diff-enhanced'
-NeoBundle        'Shougo/neosnippet.vim'
-NeoBundle        'Shougo/neosnippet-snippets'
-NeoBundle        'aiya000/separetaro.vim'
-NeoBundleLazy    'kurocode25/mdforvim'
-NeoBundleLazy    'rbtnn/vimconsole.vim'
-NeoBundleLazy    'fatih/vim-go'
-NeoBundle        'tpope/vim-surround'
-NeoBundle        'kana/vim-textobj-user'
-NeoBundleLazy    'osyo-manga/vim-itunes-bgm'
-NeoBundle        'kana/vim-textobj-function'
-NeoBundle        'kana/vim-textobj-indent'
+NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundleLazy  'basyura/twibill.vim'
+NeoBundle      'tyru/open-browser.vim'
+NeoBundleLazy  'basyura/bitly.vim'
+NeoBundle      'Shougo/unite.vim'
+NeoBundle      'Shougo/vimproc.vim'
+NeoBundleLazy  'basyura/TweetVim'
+NeoBundle      'mattn/webapi-vim'
+NeoBundle      'Shougo/vimshell.vim'
+NeoBundle      'thinca/vim-quickrun'
+NeoBundleLazy  'basyura/J6uil.vim'
+NeoBundle      'osyo-manga/vim-gyazo'
+NeoBundle      'yuratomo/w3m.vim'
+NeoBundle      'supermomonga/vimshell-kawaii.vim'
+NeoBundle      'mattn/excitetranslate-vim'
+NeoBundleLazy  'thinca/vim-splash'
+NeoBundle      'supermomonga/jazzradio.vim'
+NeoBundle      'mattn/favstar-vim'
+NeoBundle      'ujihisa/unite-colorscheme'
+NeoBundle      'Shougo/vinarise.vim'
+NeoBundle      'mattn/gist-vim'
+NeoBundle      'thinca/vim-ref'
+NeoBundle      'ujihisa/ref-hoogle'
+NeoBundleLazy  'vim-jp/vital.vim'
+NeoBundle      'Shougo/unite-outline'
+NeoBundleLazy  'rbtnn/puyo.vim'
+NeoBundleLazy  'mattn/benchvimrc-vim'
+NeoBundleLazy  'mattn/yamada-vim'
+NeoBundleLazy  'jvoorhis/coq.vim'
+NeoBundleLazy  'eagletmt/coqtop-vim'
+NeoBundle      'rhysd/vim-grammarous'
+NeoBundleLazy  'thinca/vim-themis'
+NeoBundle      'tomasr/molokai'
+NeoBundleLazy  'kannokanno/previm'
+NeoBundle      'LeafCage/foldCC'
+NeoBundleLazy  'katono/rogue.vim'
+NeoBundleLazy  'kamichidu/vim-benchmark'
+NeoBundle      'kana/vim-submode'
+NeoBundle      'mfumi/ref-dicts-en'
+NeoBundleLazy  'thinca/vim-painter'
+NeoBundle      'osyo-manga/vim-anzu'
+NeoBundle      'osyo-manga/vim-over'
+NeoBundleLazy  'tyru/restart.vim'
+NeoBundle      'vim-jp/vimdoc-ja'
+NeoBundleLazy  'rbtnn/game_engine.vim'
+NeoBundle      'h1mesuke/vim-alignta'
+NeoBundle      'haya14busa/incsearch.vim'
+NeoBundleLazy  'thinca/vim-scouter'
+NeoBundle      'deris/vim-shot-f'
+NeoBundleLazy  'sgelb/TaskList.vim'
+NeoBundle      'tyru/vim-altercmd'
+NeoBundleLazy  'mbbill/undotree'
+NeoBundle      'Shougo/neomru.vim'
+NeoBundleLazy  'aiya000/adrone.vim'
+NeoBundleFetch 'Shougo/fakecygpty'
+NeoBundle      'nathanaelkane/vim-indent-guides'
+NeoBundleLazy  'LeafCage/vimhelpgenerator'
+NeoBundleLazy  'thinca/vim-threes'
+NeoBundle      'vim-ruby/vim-ruby'
+NeoBundle      'Keithbsmiley/rspec.vim'
+NeoBundle      'altercation/vim-colors-solarized'
+NeoBundle      'aiya000/aho-bakaup.vim'
+NeoBundle      'chrisbra/vim-diff-enhanced'
+NeoBundle      'Shougo/neosnippet.vim'
+NeoBundle      'Shougo/neosnippet-snippets'
+NeoBundle      'aiya000/separetaro.vim'
+NeoBundleLazy  'kurocode25/mdforvim'
+NeoBundleLazy  'rbtnn/vimconsole.vim'
+NeoBundleLazy  'fatih/vim-go'
+NeoBundle      'tpope/vim-surround'
+NeoBundle      'kana/vim-textobj-user'
+NeoBundleLazy  'osyo-manga/vim-itunes-bgm'
+NeoBundle      'kana/vim-textobj-function'
+NeoBundle      'kana/vim-textobj-indent'
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
@@ -629,10 +623,13 @@ if neobundle#tap('vim-scouter')
 endif
 if neobundle#tap('TaskList.vim')
 	call neobundle#config('TaskList.vim', {
-	\	'autoload' : {'commands' : [
-	\		'TaskList',
-	\		'TaskListToggle'
-	\	]}
+	\	'autoload' : {
+	\		'commands' : [
+	\			'TaskList',
+	\			'TaskListToggle'
+	\		],
+	\		'mappings' : '<Plug>TaskListToggle'
+	\	}
 	\})
 	call neobundle#untap()
 endif
@@ -1034,6 +1031,17 @@ set nobackup
 " Powered Up Auto File Backup when written
 let g:bakaup_backup_dir  = s:backupdir
 let g:bakaup_auto_backup = 1
+
+"}}}
+"--- separetaro.vim ---"{{{
+
+let g:separetaro_short_separator_of = {
+\	'php' : '/* -=-=-=-=-=-=-=-=- */'
+\}
+
+let g:separetaro_long_separator_of = {
+\	'php' : '/* ---===---===---===---===---===---===--- */'
+\}
 
 "}}}
 "--- vimconsole.vim ---"{{{
