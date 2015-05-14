@@ -248,7 +248,7 @@ endif
 
 "}}}
 " Check NeoBundle exists {{{
-let s:bundledir    = s:vim_home . '/bundle'
+let s:bundledir    = s:vim_home  . '/bundle'
 let s:neobundledir = s:bundledir . '/neobundle.vim'
 
 if !isdirectory(s:bundledir)
@@ -281,7 +281,7 @@ function! s:fetch_neobundle() " {{{
 		call s:echo_error('Sorry, You do not have git command.')
 		call s:echo_error('Cannot introduce NeoBundle.')
 
-		throw 'neobundle.vim clone failed.'
+		throw 'FALIED: cloning neobundle.vim failed.'
 	endif
 endfunction " }}}
 
@@ -289,9 +289,8 @@ if has('vim_starting')
 	try
 		let &runtimepath = &runtimepath . ',' . s:vim_home . '/bundle/neobundle.vim'
 
-		" Throws Error when nothing neobundle in runtime path
 		call neobundle#begin()
-	catch
+	catch /E117/
 		if isdirectory(s:neobundledir) && exists(':NeoBundle') isnot 2
 			" Plugin Directories may be empty when git cloned new.
 			call s:remove_empty_bundledir()
@@ -305,8 +304,8 @@ if has('vim_starting')
 			echo 'NeoBundle installed.'
 			echo 'Please closing vim and reopening vim once,'
 			echo 'and executing :NeoBundleInstall .'
-		catch
-			call s:echo_error('neobundle.vim clone failed.')
+		catch /FALIED/
+			call s:echo_error('cloning neobundle.vim failed.')
 			call s:echo_error('>> Vim Config Error <<')
 		endtry
 	endtry
@@ -339,6 +338,7 @@ if !exists('loaded_matchit')
 	" Load it
 	runtime macros/matchit.vim
 
+	"@See('dokka matchit.txt...dokoitta?')
 	" If I don't have matchit document, I get it
 	let s:matchit_doc_from = expand('$VIMRUNTIME/macros/matchit.txt')
 	let s:matchit_doc_to   = s:vim_home . '/doc/matchit.txt'
@@ -416,8 +416,8 @@ NeoBundleFetch 'Shougo/fakecygpty'
 NeoBundle      'nathanaelkane/vim-indent-guides'
 NeoBundleLazy  'LeafCage/vimhelpgenerator'
 NeoBundleLazy  'thinca/vim-threes'
-NeoBundle      'vim-ruby/vim-ruby'
-NeoBundle      'Keithbsmiley/rspec.vim'
+NeoBundleLazy  'vim-ruby/vim-ruby'
+NeoBundleLazy  'Keithbsmiley/rspec.vim'
 NeoBundle      'altercation/vim-colors-solarized'
 NeoBundle      'aiya000/aho-bakaup.vim'
 NeoBundle      'chrisbra/vim-diff-enhanced'
@@ -683,6 +683,7 @@ if neobundle#tap('vim-threes')
 endif
 if neobundle#tap('vim-ruby')
 	"@Bugs('rspec.vim do not highlight syntax before loading vim-ruby')
+	"@Marked(' -> was fixed by commit a516 ?')
 	call neobundle#config('vim-ruby', {
 	\	'autoload' : {'filetype' : 'ruby'}
 	\})
