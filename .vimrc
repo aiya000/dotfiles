@@ -2077,6 +2077,8 @@ augroup KeyMapping
 
 	autocmd User MyVimRc vnoremap <C-l> <Esc>
 	autocmd User MyVimRc vnoremap a" 2i"
+	autocmd User MyVimRc vnoremap a' 2i'
+	autocmd User MyVimRc vnoremap a` 2i`
 	"autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
 	"autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
 	autocmd User MyVimRc vnoremap <silent> i= :Align =<CR>
@@ -2091,6 +2093,8 @@ augroup KeyMapping
 
 	" Don't select blank
 	autocmd User MyVimRc onoremap a" 2i"
+	autocmd User MyVimRc onoremap a' 2i'
+	autocmd User MyVimRc onoremap a` 2i`
 
 	" textobj-function
 	autocmd User MyVimRc omap af <Plug>(textobj-function-a)
