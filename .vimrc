@@ -727,11 +727,12 @@ if neobundle#tap('vim-go')
 	\})
 	call neobundle#untap()
 endif
+"@Incomplete('add hook set updatetime shortly')
 if neobundle#tap('vim-itunes-bgm')
 	call neobundle#config('vim-itunes-bgm', {
 	\	'depends'           : 'vimproc.vim',
 	\	'external_commands' : 'mplayer',
-	\	'autoload'          : {'commands' : 'ITunesBGMSafeStart'}
+	\	'autoload'          : {'commands' : 'ITunesBGMStart'}
 	\})
 	call neobundle#untap()
 endif
