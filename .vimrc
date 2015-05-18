@@ -57,6 +57,8 @@
 
 "-- echo warning message by netobundle when reloading this
 
+"-- submode wintab-move over 1 previous tab
+
 "}}}
 " Todo {{{
 
@@ -73,6 +75,8 @@
 "-- <leader>e to toggle Explore
 
 "-- fix dot-merge script diff function
+
+"-- operator i%
 
 " }}}
 
@@ -733,6 +737,18 @@ if neobundle#tap('vim-itunes-bgm')
 	\	'depends'           : 'vimproc.vim',
 	\	'external_commands' : 'mplayer',
 	\	'autoload'          : {'commands' : 'ITunesBGMStart'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-textobj-function')
+	call neobundle#config('vim-textobj-function', {
+	\	'depends' : 'vim-textobj-user'
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-textobj-indent')
+	call neobundle#config('vim-textobj-indent', {
+	\	'depends' : 'vim-textobj-user'
 	\})
 	call neobundle#untap()
 endif
@@ -1753,6 +1769,21 @@ function! s:compress_spaces() "{{{
 endfunction "}}}
 
 
+" Clear all lines end space
+function! s:clear_ends_space() "{{{
+	let l:recent_pattern = @/
+	let l:curpos = getcurpos()
+
+	try
+		%substitute/\s\+$//g
+	finally
+		let @/ = l:recent_pattern
+
+		call setpos('.', l:curpos)
+	endtry
+endfunction "}}}
+
+
 " Move cursor to topmost of this indent
 function! s:cursor_up_to_lid() "{{{
 	let l:first_line = 1
@@ -1855,7 +1886,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap }  }zv
 	autocmd User MyVimRc nnoremap (  (zv
 	autocmd User MyVimRc nnoremap )  )zv
-	autocmd User MyVimRc nnoremap z< V$%zf
 augroup END
 
 " }}}
@@ -1886,8 +1916,10 @@ augroup END
 
 augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-d> (&diff ? ':diffoff' : ':diffthis') . '\|set diff?<CR>'
-	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
+	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# ''       ? 'all'    : '')       . ' virtualedit?<CR>'
+	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-f> ':setl foldmethod='  . (&foldmethod  ==# 'marker' ? 'syntax' : 'marker') . ' foldmethod?<CR>'
 
+	autocmd User MyVimRc nnoremap <silent> <C-h>jk    :<C-u>call <SID>toggle_onehand_mode()<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline!     cursorline?    <CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-e> :<C-u>setl expandtab!      expandtab?     <CR>
@@ -1895,7 +1927,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-l> :<C-u>setl list!           list?          <CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-n> :<C-u>setl number!         number?        <CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
-	autocmd User MyVimRc nnoremap <silent> <C-h>jk    :<C-u>call <SID>toggle_onehand_mode()<CR>
 
 	autocmd User MyVimRc inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
 augroup END
@@ -2022,7 +2053,8 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> g: :<C-u>tabs<CR>
 	autocmd User MyVimRc nnoremap <silent> z: :<C-u>buffers<CR>
 	autocmd User MyVimRc nnoremap <silent> g> :<C-u>messages<CR>
-	autocmd User MyVimRc nnoremap <silent> <Space><Space> :<C-u>call <SID>compress_spaces()<CR>
+	autocmd User MyVimRc nnoremap <silent> <Space><Space>   :<C-u>call <SID>compress_spaces()<CR>
+	autocmd User MyVimRc nnoremap <silent> <Space><S-Space> :<C-u>call <SID>clear_ends_space()<CR>
 
 	autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| resize 5<CR>
@@ -2068,6 +2100,18 @@ augroup KeyMapping
 	"}}}
 	" visual mode "{{{
 
+	autocmd User MyVimRc vnoremap <C-l> <Esc>
+	"autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
+	"autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
+	autocmd User MyVimRc vnoremap <silent> i= :Align =<CR>
+	autocmd User MyVimRc vnoremap a% V%
+	autocmd User MyVimRc vnoremap A% V$%
+
+	" Don't select blank
+	autocmd User MyVimRc vnoremap a" 2i"
+	autocmd User MyVimRc vnoremap a' 2i'
+	autocmd User MyVimRc vnoremap a` 2i`
+
 	" textobj-function
 	autocmd User MyVimRc vmap af <Plug>(textobj-function-a)
 	autocmd User MyVimRc vmap if <Plug>(textobj-function-i)
@@ -2076,14 +2120,6 @@ augroup KeyMapping
 	autocmd User MyVimRc vmap ai <Plug>(textobj-indent-a)
 	autocmd User MyVimRc vmap ii <Plug>(textobj-indent-i)
 
-	autocmd User MyVimRc vnoremap <C-l> <Esc>
-	autocmd User MyVimRc vnoremap a" 2i"
-	autocmd User MyVimRc vnoremap a' 2i'
-	autocmd User MyVimRc vnoremap a` 2i`
-	"autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
-	"autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
-	autocmd User MyVimRc vnoremap <silent> i= :Align =<CR>
-
 	"}}}
 	" select mode "{{{
 
@@ -2091,6 +2127,9 @@ augroup KeyMapping
 
 	"}}}
 	" operator "{{{
+
+	autocmd User MyVimRc onoremap a% V%
+	autocmd User MyVimRc onoremap A% V$%
 
 	" Don't select blank
 	autocmd User MyVimRc onoremap a" 2i"
