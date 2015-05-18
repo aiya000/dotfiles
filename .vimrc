@@ -1017,6 +1017,11 @@ let g:tlWindowPosition = 1
 let g:tlRememberPosition = 1
 
 "}}}
+"--- adrone.vim ---"{{{
+
+let g:adrone_home_default_keymappings = 0
+
+"}}}
 "--- vim-indent-guides ---"{{{
 
 let g:indent_guides_default_mapping = 0
