@@ -1780,7 +1780,9 @@ function! s:clear_ends_space() "{{{
 	let l:curpos = getcurpos()
 
 	try
-		%substitute/\s\+$//g
+		%substitute/\s*\?$//g
+	catch /E486/
+		echo 'nothing todo'
 	finally
 		let @/ = l:recent_pattern
 
