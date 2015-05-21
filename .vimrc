@@ -111,7 +111,12 @@
 "---------------------"
 "{{{
 
-let g:vimrc = get(g:, 'vimrc', { 'loaded' : 0 })
+let g:vimrc = get(g:, 'vimrc', {
+\	'loaded'   : 0,
+\	'vim_home' : expand('~/.vim')
+\})
+
+let s:vimrc_env = expand('~/.vimrc_env')
 
 let s:is_windows = has('win32')
 let s:is_cygwin  = has('win32unix')
@@ -121,9 +126,6 @@ let s:is_unix    = has('unix')
 
 let s:has_cygwin = executable('cygstart')
 let s:has_mingw  = 0  "NOTE: ('dummy')
-
-let s:vim_home  = expand('~/.vim')
-let s:vimrc_env = expand('~/.vimrc_env')
 
 let s:backupdir = expand('~/.backup/vim_backup')
 let s:directory = s:backupdir . '/swp'
@@ -204,9 +206,10 @@ augroup END
 
 if s:is_kaoriya && s:is_windows
 	" Set Environment
-	let $HOME        = $VIM
-	let s:vim_home   = $VIM . '/vimfiles'  " Reset with $HOME
-	let &runtimepath = &runtimepath . ',' . s:vim_home
+	let $HOME               = $VIM
+	let g:vimrc['vim_home'] = $VIM . '/vimfiles'  " Reset with $HOME
+	let &runtimepath        = &runtimepath . ',' . g:vimrc['vim_home']
+
 	if s:has_cygwin
 		let $PATH = '/cygwin/bin;/cygwin/usr/bin;/cygwin/usr/sbin;' . $PATH
 		let $PATH = $HOME . '/bin;' . $PATH
@@ -214,8 +217,8 @@ if s:is_kaoriya && s:is_windows
 
 
 	" Build Base Directories
-	if !isdirectory(s:vim_home)
-		call mkdir(s:vim_home)
+	if !isdirectory(g:vimrc['vim_home'])
+		call mkdir(g:vimrc['vim_home'])
 	endif
 
 
@@ -252,7 +255,7 @@ endif
 
 "}}}
 " Check NeoBundle exists {{{
-let s:bundledir    = s:vim_home  . '/bundle'
+let s:bundledir    = g:vimrc['vim_home'] . '/bundle'
 let s:neobundledir = s:bundledir . '/neobundle.vim'
 
 if !isdirectory(s:bundledir)
@@ -291,7 +294,7 @@ endfunction " }}}
 
 if has('vim_starting')
 	try
-		let &runtimepath = &runtimepath . ',' . s:vim_home . '/bundle/neobundle.vim'
+		let &runtimepath = &runtimepath . ',' . g:vimrc['vim_home'] . '/bundle/neobundle.vim'
 
 		call neobundle#begin()
 	catch /E117/
@@ -345,7 +348,7 @@ if !exists('loaded_matchit')
 	"@See('dokka matchit.txt...dokoitta?')
 	" If I don't have matchit document, I get it
 	let s:matchit_doc_from = expand('$VIMRUNTIME/macros/matchit.txt')
-	let s:matchit_doc_to   = s:vim_home . '/doc/matchit.txt'
+	let s:matchit_doc_to   = g:vimrc['vim_home'] . '/doc/matchit.txt'
 
 	if !filereadable(s:matchit_doc_to)
 		call writefile(readfile(s:matchit_doc_from), s:matchit_doc_to)
@@ -780,7 +783,7 @@ call neobundle#end()
 let g:netrw_preview = 1
 
 " Place for .netwhist and .netrwbook
-let g:netrw_home = s:vim_home
+let g:netrw_home = g:vimrc['vim_home']
 
 " }}}
 "--- matchit.vim ---" {{{
@@ -1136,7 +1139,7 @@ endif
 "{{{
 
 " Set Basic Preferences
-set number nowrap hlsearch list scrolloff=8
+set number nowrap hlsearch list scrolloff=16
 
 " Status Bar always displayed
 set laststatus=2
@@ -1329,7 +1332,7 @@ set history=500
 set runtimepath+=~/.vim/vimball
 
 " Set Vimball Install place
-let g:vimball_home = s:vim_home . '/vimball'
+let g:vimball_home = g:vimrc['vim_home'] . '/vimball'
 
 " Display Command Complement
 set wildmenu
@@ -1353,8 +1356,8 @@ set spelllang=en_US,cjk
 set path=.,,./**
 
 " Manually generate my help tags
-if isdirectory(s:vim_home . '/doc')
-	execute 'helptags' (s:vim_home . '/doc')
+if isdirectory(g:vimrc['vim_home'] . '/doc')
+	execute 'helptags' (g:vimrc['vim_home'] . '/doc')
 endif
 
 "}}}
@@ -1528,7 +1531,7 @@ command!  CdBufDir NOP
 command! -bar ColorPreview Unite colorscheme -auto-preview
 
 command! -bar -nargs=? -complete=filetype FtpluginEditAfter
-\	execute ':edit' (s:vim_home . '/after/ftplugin/' . (empty(<q-args>) ? &filetype : <q-args>) . '.vim')
+\	execute ':edit' (g:vimrc['vim_home'] . '/after/ftplugin/' . (empty(<q-args>) ? &filetype : <q-args>) . '.vim')
 
 " }}}
 " Twitter {{{
@@ -1613,20 +1616,17 @@ command!  Lingr NOP
 
 
 " Beautifull Life
-command! -bar JazzUpdate JazzradioUpdateChannels
-command! -bar JazzList   Unite jazzradio
-cnoreabbr     JazzPlay   JazzradioPlay
-command!      JazzPlay   NOP
-command! -bar JazzStop   JazzradioStop
+cnoreabbr JazzList Unite jazzradio
+command!  JazzList NOP
 
 
 " Translates Languages
 cnoreabbr Translate ExciteTranslate
 command!  Translate NOP
 
+cnoreabbr weblio    Ref webdict weblio
 cnoreabbr Weblio    Ref webdict weblio
 command!  Weblio    NOP
-cnoreabbr weblio    Ref webdict weblio
 
 
 " NeoBundle redirect alias
