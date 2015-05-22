@@ -1871,14 +1871,30 @@ endfunction
 
 " If you has nofile buffer, close it.
 function! s:bufclose_filetype(filetype) "{{{
+	let l:closed = 0
+
 	for l:w in range(1, winnr('$'))
 		let l:buf_ft = getwinvar(l:w, '&filetype')
 
 		if l:buf_ft ==# a:filetype
 			execute ':' . l:w . 'wincmd w'
 			execute ':quit'
+
+			let l:closed = 1
 		endif
 	endfor
+
+	return l:closed
+endfunction "}}}
+
+
+" Toggle open netrw explorer ( vertical split )
+function! s:toggle_netrw_vexplorer() "{{{
+	let l:closed = s:bufclose_filetype('netrw')
+
+	if !l:closed
+		Vexplore
+	endif
 endfunction "}}}
 
 
@@ -1945,7 +1961,7 @@ augroup END
 
 augroup KeyMapping
 	" netrw
-	autocmd User MyVimRc nnoremap <silent> <leader>e         :<C-u>Vexplore<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>e         :<C-u>call <SID>toggle_netrw_vexplorer()<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>e :<C-u>Sexplore<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>E         :<C-u>Explore<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>E :<C-u>Texplore<CR>
