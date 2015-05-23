@@ -1,7 +1,5 @@
 .backup/**
 .private/**
 .vim/.netrwhist
-.vim/bundle/*
-.vim/bundle/.neobundle
+.vim/bundle/**
 .vim/doc/tags
-.vim/makes
