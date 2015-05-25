@@ -111,12 +111,10 @@
 "---------------------"
 "{{{
 
-let g:vimrc = get(g:, 'vimrc', {
-\	'loaded'   : 0,
-\	'vim_home' : expand('~/.vim')
-\})
+let g:vimrc = get(g:, 'vimrc', {'loaded' : 0})
 
 let s:vimrc_env = expand('~/.vimrc_env')
+let s:vim_home  = expand('~/.vim')
 
 let s:is_windows = has('win32')
 let s:is_cygwin  = has('win32unix')
@@ -206,9 +204,9 @@ augroup END
 
 if s:is_kaoriya && s:is_windows
 	" Set Environment
-	let $HOME               = $VIM
-	let g:vimrc['vim_home'] = $VIM . '/vimfiles'  " Reset with $HOME
-	let &runtimepath        = &runtimepath . ',' . g:vimrc['vim_home']
+	let $HOME        = $VIM
+	let s:vim_home   = $VIM . '/vimfiles'  " Reset with $HOME
+	let &runtimepath = &runtimepath . ',' . s:vim_home
 
 	if s:has_cygwin
 		let $PATH = '/cygwin/bin;/cygwin/usr/bin;/cygwin/usr/sbin;' . $PATH
@@ -217,8 +215,8 @@ if s:is_kaoriya && s:is_windows
 
 
 	" Build Base Directories
-	if !isdirectory(g:vimrc['vim_home'])
-		call mkdir(g:vimrc['vim_home'])
+	if !isdirectory(s:vim_home)
+		call mkdir(s:vim_home)
 	endif
 
 
@@ -255,7 +253,7 @@ endif
 
 "}}}
 " Check NeoBundle exists {{{
-let s:bundledir    = g:vimrc['vim_home'] . '/bundle'
+let s:bundledir    = s:vim_home . '/bundle'
 let s:neobundledir = s:bundledir . '/neobundle.vim'
 
 if !isdirectory(s:bundledir)
@@ -294,7 +292,7 @@ endfunction " }}}
 
 if has('vim_starting')
 	try
-		let &runtimepath = &runtimepath . ',' . g:vimrc['vim_home'] . '/bundle/neobundle.vim'
+		let &runtimepath = &runtimepath . ',' . s:vim_home . '/bundle/neobundle.vim'
 
 		call neobundle#begin()
 	catch /E117/
@@ -348,7 +346,7 @@ if !exists('loaded_matchit')
 	"@See('dokka matchit.txt...dokoitta?')
 	" If I don't have matchit document, I get it
 	let s:matchit_doc_from = expand('$VIMRUNTIME/macros/matchit.txt')
-	let s:matchit_doc_to   = g:vimrc['vim_home'] . '/doc/matchit.txt'
+	let s:matchit_doc_to   = s:vim_home . '/doc/matchit.txt'
 
 	if !filereadable(s:matchit_doc_to)
 		call writefile(readfile(s:matchit_doc_from), s:matchit_doc_to)
@@ -783,7 +781,7 @@ call neobundle#end()
 let g:netrw_preview = 1
 
 " Place for .netwhist and .netrwbook
-let g:netrw_home = g:vimrc['vim_home']
+let g:netrw_home = s:vim_home
 
 " }}}
 "--- matchit.vim ---" {{{
@@ -1332,7 +1330,7 @@ set history=500
 set runtimepath+=~/.vim/vimball
 
 " Set Vimball Install place
-let g:vimball_home = g:vimrc['vim_home'] . '/vimball'
+let g:vimball_home = s:vim_home . '/vimball'
 
 " Display Command Complement
 set wildmenu
@@ -1356,8 +1354,8 @@ set spelllang=en_US,cjk
 set path=.,,./**
 
 " Manually generate my help tags
-if isdirectory(g:vimrc['vim_home'] . '/doc')
-	execute 'helptags' (g:vimrc['vim_home'] . '/doc')
+if isdirectory(s:vim_home . '/doc')
+	execute 'helptags' (s:vim_home . '/doc')
 endif
 
 "}}}
@@ -1370,13 +1368,22 @@ endif
 
 " Save Cursor Position when file closed
 function! s:visit_past_position() "{{{
-	let l:past_posit = line("'\"")
+		let l:past_posit = line("'\"")
 
-	if l:past_posit > 0 && l:past_posit <= line('$')
-		execute 'normal! g`"'
-	endif
-endfunction "}}}
-autocmd FileEvent BufReadPost * call s:visit_past_position()
+		if l:past_posit > 0 && l:past_posit <= line('$')
+			execute 'normal! g`"'
+		endif
+	endfunction "}}}
+
+augroup FileEvent
+	autocmd BufReadPost * call s:visit_past_position()
+
+	" Auto load filetype dictionary
+	autocmd FileType *
+	\	if filereadable(printf('%s/dict/filetype/%s.dict', s:vim_home, &filetype))
+	\|		execute 'setl dict+=' . printf('%s/dict/filetype/%s.dict', s:vim_home, &filetype)
+	\|	endif
+augroup END
 
 
 " If you using windows cmd prompt, listchars using safe chars
@@ -1531,7 +1538,7 @@ command!  CdBufDir NOP
 command! -bar ColorPreview Unite colorscheme -auto-preview
 
 command! -bar -nargs=? -complete=filetype FtpluginEditAfter
-\	execute ':edit' (g:vimrc['vim_home'] . '/after/ftplugin/' . (empty(<q-args>) ? &filetype : <q-args>) . '.vim')
+\	execute ':edit' printf('%s/after/ftplugin/%s.vim', s:vim_home, (empty(<q-args>) ? &filetype : <q-args>))
 
 " }}}
 " Twitter {{{
@@ -1954,6 +1961,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
 
 	autocmd User MyVimRc inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
+	autocmd User MyVimRc inoremap <silent> <C-k><C-w> <C-o>:setl wrap!      wrap?<CR>
 augroup END
 
 " }}}
@@ -2067,7 +2075,9 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap <C-j> <CR>
 
 	" † Ex Improved
-	autocmd User MyVimRc nnoremap Q gQ
+	autocmd User MyVimRc nnoremap Q  gQ
+	"@Incomplete('if found only one')
+	autocmd User MyVimRc nnoremap g* *<C-o>
 
 	autocmd User MyVimRc nnoremap <C-n> gt
 	autocmd User MyVimRc nnoremap <C-p> gT
