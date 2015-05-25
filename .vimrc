@@ -437,6 +437,7 @@ NeoBundle      'kana/vim-textobj-user'
 NeoBundleLazy  'osyo-manga/vim-itunes-bgm'
 NeoBundle      'kana/vim-textobj-function'
 NeoBundle      'kana/vim-textobj-indent'
+NeoBundle      'haya14busa/vim-easymotion'
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
@@ -1091,6 +1092,12 @@ let g:textobj_function_no_default_key_mappings = 1
 "--- vim-textobj-indent ---"{{{
 
 let g:textobj_indent_no_default_key_mappings = 1
+
+"}}}
+"--- vim-easymotion ---"{{{
+
+" View hitchars on current column line
+let g:EasyMotion_startofline = 0
 
 "}}}
 "--- For Debug ---"{{{
@@ -2064,6 +2071,28 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap <leader>Ps <Plug>(separetoro_put_short_over)
 	autocmd User MyVimRc nmap <leader>pl <Plug>(separetoro_put_long_under)
 	autocmd User MyVimRc nmap <leader>Pl <Plug>(separetoro_put_long_over)
+
+	" vim-easymotion
+	autocmd User MyVimRc nmap <leader>j  <Plug>(easymotion-j)
+	autocmd User MyVimRc nmap <leader>k  <Plug>(easymotion-k)
+	autocmd User MyVimRc nmap <leader>w  <Plug>(easymotion-w)
+	autocmd User MyVimRc nmap <leader>W  <Plug>(easymotion-W)
+	autocmd User MyVimRc nmap <leader>b  <Plug>(easymotion-b)
+	autocmd User MyVimRc nmap <leader>B  <Plug>(easymotion-B)
+	autocmd User MyVimRc nmap <leader>n  <Plug>(easymotion-n)
+	autocmd User MyVimRc nmap <leader>N  <Plug>(easymotion-N)
+	autocmd User MyVimRc nmap <leader>s  <Plug>(easymotion-s)
+	autocmd User MyVimRc nmap <leader>S  <Plug>(easymotion-S)
+	autocmd User MyVimRc vmap <leader>j  <Plug>(easymotion-j)
+	autocmd User MyVimRc vmap <leader>k  <Plug>(easymotion-k)
+	autocmd User MyVimRc vmap <leader>w  <Plug>(easymotion-w)
+	autocmd User MyVimRc vmap <leader>W  <Plug>(easymotion-W)
+	autocmd User MyVimRc vmap <leader>b  <Plug>(easymotion-b)
+	autocmd User MyVimRc vmap <leader>B  <Plug>(easymotion-B)
+	autocmd User MyVimRc vmap <leader>n  <Plug>(easymotion-n)
+	autocmd User MyVimRc vmap <leader>N  <Plug>(easymotion-N)
+	autocmd User MyVimRc vmap <leader>s  <Plug>(easymotion-s)
+	autocmd User MyVimRc vmap <leader>S  <Plug>(easymotion-S)
 augroup END
 
 " }}}
@@ -2091,11 +2120,11 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <Space><Space>   :<C-u>call <SID>compress_spaces()<CR>
 	autocmd User MyVimRc nnoremap <silent> <Space><S-Space> :<C-u>call <SID>clear_ends_space()<CR>
 
-	autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| resize 5<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>b        :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>B        :<C-u>NewOverridden \| resize 5<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>h        :<C-u>helpclose<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>k                :<C-u>call <SID>cursor_up_to_lid()<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>j                :<C-u>call <SID>cursor_down_to_ground()<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>k        :<C-u>call <SID>cursor_up_to_lid()<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>j        :<C-u>call <SID>cursor_down_to_ground()<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader><leader> :<C-u>echohl ErrorMsg \| echo "Don't rush it, keep cool." \| echohl None<CR>
 
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
