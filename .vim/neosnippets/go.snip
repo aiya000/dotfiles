@@ -1,0 +1,15 @@
+snippet func
+    func ${1:fname}(${2})${3:#:int} {
+        ${0:#:return}
+    }
+
+snippet print
+    fmt.Print(${0})
+
+snippet import
+alias   imp
+    import (
+        "${1:fmt}"
+        ${2}
+    )
+    ${0}

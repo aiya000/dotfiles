@@ -437,7 +437,7 @@ NeoBundle      'kana/vim-textobj-user'
 NeoBundleLazy  'osyo-manga/vim-itunes-bgm'
 NeoBundle      'kana/vim-textobj-function'
 NeoBundle      'kana/vim-textobj-indent'
-NeoBundle      'haya14busa/vim-easymotion'
+NeoBundle      'Lokaltog/vim-easymotion'
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
@@ -1056,6 +1056,12 @@ set nobackup
 " Powered Up Auto File Backup when written
 let g:bakaup_backup_dir  = s:backupdir
 let g:bakaup_auto_backup = 1
+
+"}}}
+"--- neosnippet.vim ---"{{{
+
+" for :NeoSnippetEdit
+let g:neosnippet#snippets_directory = s:vim_home . '/neosnippets'
 
 "}}}
 "--- separetaro.vim ---"{{{

@@ -1,5 +1,7 @@
 let b:undo_ftplugin = 'setl ' . join([
-\	'commentstring<'
+\	'commentstring<',
+\	'foldmethod<'
 \])
 
 let &commentstring = ' /*%s*/'
+setl foldmethod=syntax
