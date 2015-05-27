@@ -1,8 +1,10 @@
 let b:undo_ftplugin = 'setl ' . join([
-\	'wrap<'
+\	'wrap<',
+\	'list<'
 \])
 
 setl wrap
+setl nolist
 
 nnoremap <silent><buffer> Q :<C-u>quit<CR>
 

@@ -1553,6 +1553,9 @@ command! -bar ColorPreview Unite colorscheme -auto-preview
 command! -bar -nargs=? -complete=filetype FtpluginEditAfter
 \	execute ':edit' printf('%s/after/ftplugin/%s.vim', s:vim_home, (empty(<q-args>) ? &filetype : <q-args>))
 
+command! -bar -nargs=? -complete=filetype FtDictionaryEdit
+\	execute ':edit' printf('%s/dict/filetype/%s.dict', s:vim_home, (empty(<q-args>) ? &filetype : <q-args>))
+
 " }}}
 " Twitter {{{
 
@@ -2081,22 +2084,10 @@ augroup KeyMapping
 	" vim-easymotion
 	autocmd User MyVimRc nmap <leader>j  <Plug>(easymotion-j)
 	autocmd User MyVimRc nmap <leader>k  <Plug>(easymotion-k)
-	autocmd User MyVimRc nmap <leader>w  <Plug>(easymotion-w)
-	autocmd User MyVimRc nmap <leader>W  <Plug>(easymotion-W)
-	autocmd User MyVimRc nmap <leader>b  <Plug>(easymotion-b)
-	autocmd User MyVimRc nmap <leader>B  <Plug>(easymotion-B)
-	autocmd User MyVimRc nmap <leader>n  <Plug>(easymotion-n)
-	autocmd User MyVimRc nmap <leader>N  <Plug>(easymotion-N)
 	autocmd User MyVimRc nmap <leader>s  <Plug>(easymotion-s)
 	autocmd User MyVimRc nmap <leader>S  <Plug>(easymotion-S)
 	autocmd User MyVimRc vmap <leader>j  <Plug>(easymotion-j)
 	autocmd User MyVimRc vmap <leader>k  <Plug>(easymotion-k)
-	autocmd User MyVimRc vmap <leader>w  <Plug>(easymotion-w)
-	autocmd User MyVimRc vmap <leader>W  <Plug>(easymotion-W)
-	autocmd User MyVimRc vmap <leader>b  <Plug>(easymotion-b)
-	autocmd User MyVimRc vmap <leader>B  <Plug>(easymotion-B)
-	autocmd User MyVimRc vmap <leader>n  <Plug>(easymotion-n)
-	autocmd User MyVimRc vmap <leader>N  <Plug>(easymotion-N)
 	autocmd User MyVimRc vmap <leader>s  <Plug>(easymotion-s)
 	autocmd User MyVimRc vmap <leader>S  <Plug>(easymotion-S)
 augroup END
