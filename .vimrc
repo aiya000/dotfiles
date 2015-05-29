@@ -59,6 +59,10 @@
 
 "-- submode wintab-move over 1 previous tab
 
+"-- bashrc or bash_profile lead up burden of load
+
+"-- int-git does not loaded ftplugin int-git.vim (by hyphenate ?)
+
 "}}}
 " Todo {{{
 
@@ -2063,11 +2067,11 @@ augroup KeyMapping
 
 
 	" TaskList.vim
-	autocmd User MyVimRc nmap <leader>t <Plug>TaskListToggle
+	autocmd User MyVimRc nmap <silent> <leader>t <Plug>TaskListToggle
 
 
 	" undotree
-	autocmd User MyVimRc nnoremap <leader>U :<C-u>UndotreeToggle<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>u :<C-u>UndotreeToggle<CR>
 
 
 	" neosnippet.vim
@@ -2102,8 +2106,6 @@ augroup KeyMapping
 
 	" † Ex Improved
 	autocmd User MyVimRc nnoremap Q  gQ
-	"@Incomplete('if found only one')
-	autocmd User MyVimRc nnoremap g* *<C-o>
 
 	autocmd User MyVimRc nnoremap <C-n> gt
 	autocmd User MyVimRc nnoremap <C-p> gT
@@ -2114,6 +2116,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> g: :<C-u>tabs<CR>
 	autocmd User MyVimRc nnoremap <silent> z: :<C-u>buffers<CR>
 	autocmd User MyVimRc nnoremap <silent> g> :<C-u>messages<CR>
+	autocmd User MyVimRc nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
 	autocmd User MyVimRc nnoremap <silent> <Space><Space>   :<C-u>call <SID>compress_spaces()<CR>
 	autocmd User MyVimRc nnoremap <silent> <Space><S-Space> :<C-u>call <SID>clear_ends_space()<CR>
 

@@ -10,6 +10,7 @@
 	^k::SendInput {F4}{Space}
 	^u::SendInput {Esc}
 	^l::SendInput {Esc}cls{Enter}
+	^V::SendInput !{Space}ep
 #IfWinActive
 
 ; Firefox, Thunderbird
