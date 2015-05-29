@@ -1,25 +1,36 @@
-#############################################
-#                                           #
-#############################################
+#----------------------------------------
+# {- Hints -}
+# @Bugs         => This hoge has the bugs.
+# @Incomplete   => This is not completed making.
+# @Unchecked    => This was not unchecked that is operate right
+# @Unsupported  => Do not supported functions when now.
+# @Unknown      => I don't know why this functioned.
+# @Unused       => Not used this yet now, needs inquires deleting this.
+# @Deprecated   => Deprecated This vimrc Version.
+# @Experiment   => This is experimental implementation.
+# @Marked       => I have eye on this.
+# @See          => Referred URL, Saw Document, and etc...
+# @Code         => A sample code using it
+#-------------------
+# Designating the target platform.
+# @Hoge{Win,Ubuntu}  : This Hint for Win and Ubuntu.
+# @Hoge!{Mac}        : This Hint for other than Mac.
+#----------------------------------------
 
 
 # Load Meta Config
 if [ -f ~/.bash_meta_profile ] ; then
 	source ~/.bash_meta_profile
 else
-	export shell_kawaii=0
+	export SHELL_KAWAII=0
 fi
 
 
 ################
 #  Parameters  #
 ################
-#----------------------------------------
-# {- Hints -}
-# @Unsupported => 完全に動作するか未確定
-# @Unchecked   => 未検査です
-#----------------------------------------
 #{{{
+
 backIFS=$IFS ; IFS='EOF'
 
 function find_name_by_uname() { #{{{
@@ -31,11 +42,13 @@ function find_name_by_uname() { #{{{
 		echo 0
 	fi
 } #}}}
+
 export is_linux=`find_name_by_uname Linux`
 export is_ubuntu=`find_name_by_uname Ubuntu`
 export is_cygwin=`find_name_by_uname Cygwin`
 
 IFS=$backIFS ; unset backIFS
+
 #}}}
 
 
@@ -55,19 +68,6 @@ function fake_user() { #{{{
 
 PS1='\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]$ '
 
-if [ $shell_kawaii -eq 1 ] ; then
-	[ -n "$view_fake" ] && if [ $view_fake -eq 1 ] ; then
-		[ -n "$view_host" ] && [ $view_host -eq 1 ] \
-			&& PS1="\[\e]0;\w\a\]\n\[\e[32m\](*^-^)</\[\e[33m\]${fake_user_name}\[\e[32m\]@\[\e[33m\]${fake_host_name}\[\e[32m\]/ \[\e[33m\]\w\[\e[0m\]$ " \
-			|| PS1="\[\e]0;\w\a\]\n\[\e[32m\](*^-^)</\[\e[33m\]${fake_user_name}\[\e[32m\]/ \[\e[33m\]\w\[\e[0m\]$ "
-	else
-		[ -n "$view_host" ] && [ $view_host -eq 1 ] \
-			&& PS1="\[\e]0;\w\a\]\n\[\e[32m\](*^-^)</\[\e[33m\]\u\[\e[32m\]@\[\e[33m\]\h\[\e[32m\]/ \[\e[33m\]\w\[\e[0m\]$ " \
-			|| PS1="\[\e]0;\w\a\]\n\[\e[32m\](*^-^)</\[\e[33m\]\u\[\e[32m\]/ \[\e[33m\]\w\[\e[0m\]$ "
-	fi
-fi
-
-unset fake_user_name
 # }}}
 export PS1
 export HISTSIZE=10000

@@ -60,13 +60,13 @@ alias nvimconfig='nvim ~/.nvimrc'
 alias nvim-bashrc='nvim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
 alias nvim-bashpr='nvim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
 
-alias nvi='nvim -u NONE --noplugin'  # (not a original nvi)
+alias nvi='nvim -u NONE --noplugin'  # (not a original nvi, hahaha)
 alias nvim-terminal='nvim +terminal'
 alias nvimconsole='nvim +VimConsoleOpen'
-alias twitter='nvim +TweetVimHomeTimeline'
-alias tweet='nvim +TweetVimSay'
-alias twitter-public='nvim +TwitterPublic'
-alias tweet-public='nvim +TweetPublic'
+alias ntwitter='nvim +TweetVimHomeTimeline'
+alias ntweet='nvim +TweetVimSay'
+alias ntwitter-public='nvim +TwitterPublic'
+alias ntweet-public='nvim +TweetPublic'
 
 # }}}
 # Shell Utils {{{
@@ -75,7 +75,7 @@ alias tweet-public='nvim +TweetPublic'
 if [ $is_ubuntu -eq 1 ] ; then
 	alias pbcopy='xsel --clipboard --input'
 elif [ $is_cygwin -eq 1 ] ; then
-	alias pbcopy='tee /dev/clipboard'
+	alias pbcopy='tee /dev/clipboard > /dev/null'
 fi
 
 # }}}
@@ -94,18 +94,6 @@ fi
 
 alias mysql="mysql -E --pager='less -r -S -n -i -F -X'"
 alias git-sync-push-m-d='git push origin devel && git checkout master && git merge devel && git push origin master && git checkout devel'
-
-if [ -n "`which tmux 2> /dev/null`" ] ; then
-	alias tmux-myhelp='
-		echo "Window rename:";
-		echo "	<Prefix> ,";
-		echo ;
-		echo "Start session with name:";
-		echo "	tmux new -s name";
-		echo ;
-		echo "Start session with config file:";
-		echo "	tmux -f file";'
-fi
 
 # }}}
 # Environment Conditions {{{
@@ -142,32 +130,30 @@ fi
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
 #}}}
-# here aliases {{{
+# plugins {{{
 
-# Register directory path to file, and Easily cd there
-if [ -f ~/.bashrc_places ] ; then
-	source ~/.bashrc_places
+# shell_kawaii {{{
+
+# values for shell_kawaii plugin
+
+# load plugin
+if [ -f ~/.bashfiles/plugin/shell_kawaii.sh ] ; then
+	source ~/.bashfiles/plugin/shell_kawaii.sh
 fi
 
-# Reload it
-alias reload-places='source ~/.bashrc_places && echo "bash places reloaded"'
+# }}}
 
-# View it
-alias places="cat ~/.bashrc_places | awk -F'[= ]' '{print $ 2 \":\t\" $ 4}' | sed s/\'// | sort"
+# hereis {{{
 
-# Edit it
-alias edit-places='vim ~/.bashrc_places && reload-places'
+# value for hereis plugin
+export HEREIS_PLACES_FILE=~/.bashrc_places
 
-# Register it
-function hereis () {
-	place_name=$1
-	alias_body="${place_name}='cd \"`pwd`\"'"
+# load plugin
+if [ -f ~/.bashfiles/plugin/hereis.sh ] ; then
+	source ~/.bashfiles/plugin/hereis.sh
+fi
 
-	echo "alias ${alias_body}" >> ~/.bashrc_places
-	echo "here is '${1}'"
-
-	reload-places
-}
+# }}}
 
 #}}}
 
