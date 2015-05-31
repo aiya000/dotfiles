@@ -1090,8 +1090,8 @@ let g:vimconsole#auto_redraw = 1
 "--- vim-go ---"{{{
 
 " Disable defaults
-let g:go_fmt_autosave        = 0
-let g:go_def_mapping_enabled = 0
+"let g:go_fmt_autosave        = 0
+"let g:go_def_mapping_enabled = 0
 
 "}}}
 "--- vim-textobj-function ---"{{{

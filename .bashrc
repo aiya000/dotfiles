@@ -54,7 +54,7 @@ fi
 # }}}
 
 # }}}
-# NVim Utils {{{
+# NeoVim Utils {{{
 
 alias nvimconfig='nvim ~/.nvimrc'
 alias nvim-bashrc='nvim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
@@ -92,8 +92,8 @@ fi
 # }}}
 # Others {{{
 
-alias mysql="mysql -E --pager='less -r -S -n -i -F -X'"
-alias git-sync-push-m-d='git push origin devel && git checkout master && git merge devel && git push origin master && git checkout devel'
+alias mysql='mysql -E --pager="less -r -S -n -i -F -X"'
+alias docker_rm_archives='sudo docker rm `sudo docker ps -a -q`'
 
 # }}}
 # Environment Conditions {{{
