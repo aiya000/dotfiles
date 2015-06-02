@@ -18,14 +18,6 @@
 #----------------------------------------
 
 
-# Load Meta Config
-if [ -f ~/.bash_meta_profile ] ; then
-	source ~/.bash_meta_profile
-else
-	export SHELL_KAWAII=0
-fi
-
-
 ################
 #  Parameters  #
 ################
@@ -43,9 +35,8 @@ function find_name_by_uname() { #{{{
 	fi
 } #}}}
 
-export is_linux=`find_name_by_uname Linux`
-export is_ubuntu=`find_name_by_uname Ubuntu`
-export is_cygwin=`find_name_by_uname Cygwin`
+export IS_UBUNTU=`find_name_by_uname Ubuntu`
+export IS_CYGWIN=`find_name_by_uname Cygwin`
 
 IFS=$backIFS ; unset backIFS
 
@@ -53,26 +44,9 @@ IFS=$backIFS ; unset backIFS
 
 
 # Environment Variables
-#--- PS1 ---# {{{
-
-function fake_user() { #{{{
-	username="$1"
-	hostname="$2"
-
-	[ -n "$hostname" ] \
-		&& PS1="\[\e]0;\w\a\]\n\[\e[32m\](*^-^)</\[\e[33m\]${username}\[\e[32m\]@\[\e[33m\]${hostname}\[\e[32m\]/ \[\e[33m\]\w\[\e[0m\]$ " \
-		|| PS1="\[\e]0;\w\a\]\n\[\e[32m\](*^-^)</\[\e[33m\]${username}\[\e[32m\]/ \[\e[33m\]\w\[\e[0m\]$ "
-
-	unset username hostname
-} #}}}
-
-PS1='\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]$ '
-
-# }}}
-export PS1
 export HISTSIZE=10000
 export HISTTIMEFORMAT='%Y/%m/%d %H:%M '
-export HISTIGNORE='ls:jobs:history*:*hibernate:twitter:tweet'
+export HISTIGNORE='ls:jobs:history*:*hibernate:twitter*:tweet*:lingr*'
 export HISTIGNORE="${HISTIGNORE}:*.bash_history*:*mount*-o*password=*"
 export EDITOR=vim
 
@@ -111,7 +85,7 @@ new_path=$new_path:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 new_path=$new_path:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
 
 # With OS
-if [ $is_cygwin -eq 1 ] ; then
+if [ $IS_CYGWIN -eq 1 ] ; then
 	export HOME=/home/$USER
 
 	#new_path=$new_path:/opt/local/bin/exec
@@ -159,5 +133,4 @@ alias pr_loaded='echo "pr_loaded"'
 # Counterolan of do not loading
 if [ -z "`alias | grep rc_loaded`" ] ; then
 	source ~/.bashrc
-	export HISTIGNORE="${HISTIGNORE}:twitter*:tweet*:lingr*:"
 fi

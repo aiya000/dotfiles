@@ -72,9 +72,9 @@ alias ntweet-public='nvim +TweetPublic'
 # Shell Utils {{{
 
 # Console output pipe to clipboard
-if [ $is_ubuntu -eq 1 ] ; then
+if [ $IS_UBUNTU -eq 1 ] ; then
 	alias pbcopy='xsel --clipboard --input'
-elif [ $is_cygwin -eq 1 ] ; then
+elif [ $IS_CYGWIN -eq 1 ] ; then
 	alias pbcopy='tee /dev/clipboard > /dev/null'
 fi
 
@@ -98,9 +98,9 @@ alias docker_rm_archives='sudo docker rm `sudo docker ps -a -q`'
 # }}}
 # Environment Conditions {{{
 
-if [ $is_ubuntu -eq 1 ] ; then
+if [ $IS_UBUNTU -eq 1 ] ; then
 	alias ssleep='dbus-send --print-reply --system --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend'
-elif [ $is_cygwin -eq 1 ] ; then
+elif [ $IS_CYGWIN -eq 1 ] ; then
 	alias cygrunsrv='cocot cygrunsrv'
 	alias csc='cocot csc'
 	alias ifconfig='cocot ipconfig'
@@ -134,10 +134,7 @@ alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
 # shell_kawaii {{{
 
-# values for shell_kawaii plugin
-
-# load plugin
-if [ -f ~/.bashfiles/plugin/shell_kawaii.sh ] ; then
+if [ -f ~/.bashfiles/plugin/shell_kawaii.sh -a -n "$ENABLE_SHELL_KAWAII" -a $ENABLE_SHELL_KAWAII -eq 1 ] ; then
 	source ~/.bashfiles/plugin/shell_kawaii.sh
 fi
 
@@ -148,9 +145,8 @@ fi
 # value for hereis plugin
 export HEREIS_PLACES_FILE=~/.bashrc_places
 
-# load plugin
-if [ -f ~/.bashfiles/plugin/hereis.sh ] ; then
-	source ~/.bashfiles/plugin/hereis.sh
+if [ -f ~/.bashfiles/plugin/shell_kawaii.sh ] ; then
+	source ~/.bashfiles/plugin/shell_kawaii.sh
 fi
 
 # }}}
