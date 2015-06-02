@@ -145,8 +145,8 @@ fi
 # value for hereis plugin
 export HEREIS_PLACES_FILE=~/.bashrc_places
 
-if [ -f ~/.bashfiles/plugin/shell_kawaii.sh ] ; then
-	source ~/.bashfiles/plugin/shell_kawaii.sh
+if [ -f ~/.bashfiles/plugin/hereis.sh ] ; then
+	source ~/.bashfiles/plugin/hereis.sh
 fi
 
 # }}}

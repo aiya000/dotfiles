@@ -103,6 +103,8 @@ unset new_path
 
 # Load Env Config
 if [ -f ~/.bash_profile_env ] ; then
+	# if you want that define plugin prefs in this file
+	# see ~/.bashfiles/plugin/*.sh
 	source ~/.bash_profile_env
 fi
 

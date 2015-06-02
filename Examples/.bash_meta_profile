@@ -1,6 +1,0 @@
-#!/bin/sh
-export SHELL_KAWAII=1
-export VIEW_FAKE=1
-export VIEW_HOST=1
-export FAKE_USER_NAME='aiya_000'
-export FAKE_HOST_NAME='Ubuntu'
