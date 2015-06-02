@@ -93,7 +93,7 @@ fi
 # Others {{{
 
 alias mysql='mysql -E --pager="less -r -S -n -i -F -X"'
-alias docker_rm_archives='sudo docker rm `sudo docker ps -a -q`'
+alias docker-rm-archives='sudo docker rm `sudo docker ps -a -q`'
 
 # }}}
 # Environment Conditions {{{
@@ -134,7 +134,7 @@ alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
 # shell_kawaii {{{
 
-if [ -f ~/.bashfiles/plugin/shell_kawaii.sh -a -n "$ENABLE_SHELL_KAWAII" -a $ENABLE_SHELL_KAWAII -eq 1 ] ; then
+if [ -f ~/.bashfiles/plugin/shell_kawaii.sh -a -n "$ENABLE_SHELL_KAWAII" ] && [ $ENABLE_SHELL_KAWAII -eq 1 ] ; then
 	source ~/.bashfiles/plugin/shell_kawaii.sh
 fi
 
