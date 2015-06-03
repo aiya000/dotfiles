@@ -134,7 +134,7 @@ alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
 # shell_kawaii {{{
 
-if [ -f ~/.bashfiles/plugin/shell_kawaii.sh -a -n "$ENABLE_SHELL_KAWAII" ] && [ $ENABLE_SHELL_KAWAII -eq 1 ] ; then
+if [ -f ~/.bashfiles/plugin/shell_kawaii.sh ] ; then
 	source ~/.bashfiles/plugin/shell_kawaii.sh
 fi
 

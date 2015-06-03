@@ -8,7 +8,7 @@
 export PATH=`cygpath -p 'C:\Program Files (x86)\Ruby21-x64\bin'`:$PATH
 
 # shell_kawaii prefs
-export ENABLE_SHELL_KAWAII=1
+export PROMPT_SHELL_KAWAII=1
 export FAKE_USER_NAME='aiya_000'
 export FAKE_HOST_NAME='Ubuntu'
 export VIEW_HOST=1
