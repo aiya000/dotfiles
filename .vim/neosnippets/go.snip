@@ -1,5 +1,5 @@
 snippet func
-    func ${1:fname}(${2})${3:#:int} {
+    func ${1:#:funcName}(${2})${3:#:int} {
         ${0:#:return}
     }
 
@@ -13,3 +13,9 @@ alias   imp
         ${2}
     )
     ${0}
+
+snippet else
+alias   el
+    else {
+        ${0}
+    }

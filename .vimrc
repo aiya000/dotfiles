@@ -82,6 +82,8 @@
 
 "-- operator i%
 
+"-- foldmethod for C# methods
+
 " }}}
 
 
