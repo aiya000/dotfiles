@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Initialize variables
-
 DOT_DIR=$HOME/.dotfiles
-BASE_DIR=$DOT_DIR/Scripts
+BASE_DIR=$DOT_DIR/bin
+BACKUP_DIR=$DOT_DIR/.backup/`date +'%Y-%m-%d'`
 
-backupdir=$DOT_DIR/.backup/`date +'%Y-%m-%d'`
-
+# include
 source $BASE_DIR/utils.sh
+unset BASE_DIR
 
 ignorefiles=`grepformat_ignorefiles`
 dotfiles=`ls -A $DOT_DIR | grep -v -E "^($ignorefiles)$"`
@@ -46,8 +46,8 @@ echo 'Linking some files.'
 echo '-------------------'
 
 # Check directroy for shunt existing file
-if [ ! -d $backupdir ] ; then
-	mkdir $backupdir
+if [ ! -d $BACKUP_DIR ] ; then
+	mkdir $BACKUP_DIR
 fi
 
 
@@ -60,8 +60,8 @@ for fileName in $dotfiles ; do
 	# if dofiles already exists, avoid overwrite
 	if [ -f $toFile ] ; then
 		echo "  >> [${toFile}] is already exist ."
-		mv $toFile $backupdir
-		echo "    >> moved [${toFile}] to [${backupdir}/${file}] ."
+		mv $toFile $BACKUP_DIR
+		echo "    >> moved [${toFile}] to [${BACKUP_DIR}/${file}] ."
 	fi
 	ln -s $fromFile $HOME &&
 		echo ">> succeed ."

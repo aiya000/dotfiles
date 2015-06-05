@@ -1,42 +1,40 @@
-#!/bin/sh
+#!/bin/bash
+
+# include
+DOT_DIR=$HOME/.dotfiles
+BASE_DIR=$DOT_DIR/bin
+source $BASE_DIR/utils.sh
+unset DOT_DIR BASE_DIR
+
 
 DIFF_DIR1=~/.dotfiles
 DIFF_DIR2=~/.tmp/.dotfiles
 
-files=`find $DIFF_DIR2 -type f | awk -F'.dotfiles/' '{print $2}' | grep -v '\.git'`
+files=`find $DIFF_DIR2 -type f | awk -F'.dotfiles/' '{print $2}'`
 
+#TODO: Don't implement by hard coding
+#TODO: implement by the array type
+IGNORE_FILES='.git/ vim/.netrwhist'
 
-#@Incomplete('funny function diff')
-# View difference
-echo '- - - Difference List - - -'
-tmp_file1=`mktemp`
-tmp_file2=`mktemp`
-
-find $DIFF_DIR1 | awk -F'.dotfiles/' '{print $2}' | grep -v '\.git' > $tmp_file1
-find $DIFF_DIR2 | awk -F'.dotfiles/' '{print $2}' | grep -v '\.git' > $tmp_file2
-
-diff $tmp_file1 $tmp_file2
-
-rm $tmp_file1
-rm $tmp_file2
-echo '- - - - - - - - - - - - - -'
-
+#TODO: view all the different files
 
 # Execute diff files
 for file in $files ; do
-	file1=$DIFF_DIR1/$file
-	file2=$DIFF_DIR2/$file
+	ignore_file=`words_contains "$IGNORE_FILES" $file`
+	if [ $ignore_file -eq 1 ] ; then
+		continue
+	fi
 
 	# detected difference
+	file1=$DIFF_DIR1/$file
+	file2=$DIFF_DIR2/$file
 	if [ -f $file2 -a -n "`diff $file1 $file2`" ] ; then
-
 		# confirm edit
-		read -p "Edit >> ${file} ? (y/n) (y): " confirm
+		read -p "Edit >> ${file} ? (y/n) (n): " confirm
 
-		if [ "$confirm" = "yes" -o "$confirm" = "y" -o "$confirm" = "" ] ; then
+		if [ "$confirm" = "yes" -o "$confirm" = "y" ] ; then
 			vimdiff $file1 $file2
 		fi
-
 		echo
 	fi
 done

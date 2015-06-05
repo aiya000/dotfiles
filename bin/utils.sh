@@ -1,20 +1,19 @@
-#!/bin/sh
-
+#!/bin/bash
 
 # Return Formatted of Regex ignore linking files list
 DOT_DIR=$HOME/.dotfiles
-ignoreListFile=$DOT_DIR/Scripts/link_exclude.txt
+IGNORE_LIST_FILE=$DOT_DIR/bin/link_exclude.txt
 
-grepformat_ignorefiles () {
+function grepformat_ignorefiles () {
 	ignoreFormat=''
 
-	if [ -f $ignoreListFile ] ; then
+	if [ -f $IGNORE_LIST_FILE ] ; then
 		# First one, append "^(" to $ignoreFormat
-		ignoreFormat="^(`cat $ignoreListFile | head -1`"
+		ignoreFormat="^(`cat $IGNORE_LIST_FILE | head -1`"
 
 		# Ignored first one
-		tailNum=`cat $ignoreListFile | wc -l | xargs -I ? expr ? - 1`
-		files=`cat $ignoreListFile | tail -$tailNum`
+		tailNum=`cat $IGNORE_LIST_FILE | wc -l | xargs -I ? expr ? - 1`
+		files=`cat $IGNORE_LIST_FILE | tail -$tailNum`
 
 		# Build format
 		for file in $files ; do
@@ -24,6 +23,20 @@ grepformat_ignorefiles () {
 		# Close format
 		ignoreFormat="${ignoreFormat})$"
 	fi
-	
+
 	echo $ignoreFormat
+}
+
+#TODO: implement by the array type
+function words_contains () {
+	words=$1
+	elem=$2
+
+	for word in $words ; do
+		if [ -n "`echo $elem | grep $word`" ] ; then
+			echo 1
+			return
+		fi
+	done
+	echo 0
 }

@@ -1,7 +1,13 @@
 #!/bin/bash
-source ./utils.sh
 
+
+# define var
 DOT_DIR=$HOME/.dotfiles
+BASE_DIR=$DOT_DIR/bin
+
+# include
+source $BASE_DIR/utils.sh
+unset BASE_DIR
 
 # Confirm
 echo 'Realy remove some links in $HOME ?(y/n)'

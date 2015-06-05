@@ -1878,6 +1878,7 @@ function! s:toggle_onehand_mode()
 		nunmap o
 		nunmap i
 		nunmap u
+		nunmap /
 
 		" restore normal keymapping
 		doautocmd User MyVimRc
@@ -1889,6 +1890,7 @@ function! s:toggle_onehand_mode()
 		nnoremap o <C-o>
 		nnoremap i <C-i>
 		nnoremap u <C-w><C-w>
+		nnoremap / *
 	endif
 
 	let s:onehand_enabled = !s:onehand_enabled
