@@ -32,12 +32,6 @@
 
 "-- separetaro.vim -> operator between separetor (long|short) and separator (long|short)
 
-"-- create ftdetect {ipmsg.log : 'ipmsg-log'} and ftplugin syntax ipmsg-log
-
-"-- textobj-function add support C# and PR it
-
-"-- C# foldmethod #region~~#endregion
-
 "-- Buffer Memo of Marks
 
 " }}}
@@ -52,8 +46,6 @@
 
 "-- conflicted? vim-ruby and rspec.vim when those was set NeoBundleLazy
 "  -- does not loaded syntax of rspec.vim
-
-"-- couldn't run quickrun java on kaoriya gvim
 
 "-- echo warning message by netobundle when reloading this
 
@@ -75,12 +67,6 @@
 "-- read help 'cino'
 
 "-- reference to help 'ftplugin' L2159
-
-"-- <leader>e to toggle Explore
-
-"-- fix dot-merge script diff function
-
-"-- operator i%
 
 "-- foldmethod for C# methods
 
@@ -381,15 +367,15 @@ NeoBundle      'Shougo/vimshell.vim'
 NeoBundle      'thinca/vim-quickrun'
 NeoBundleLazy  'basyura/J6uil.vim'
 NeoBundle      'osyo-manga/vim-gyazo'
-NeoBundle      'yuratomo/w3m.vim'
+NeoBundleLazy  'yuratomo/w3m.vim'
 NeoBundle      'supermomonga/vimshell-kawaii.vim'
 NeoBundle      'mattn/excitetranslate-vim'
 NeoBundleLazy  'thinca/vim-splash'
-NeoBundle      'supermomonga/jazzradio.vim'
+NeoBundleLazy  'supermomonga/jazzradio.vim'
 NeoBundle      'mattn/favstar-vim'
-NeoBundle      'ujihisa/unite-colorscheme'
-NeoBundle      'Shougo/vinarise.vim'
-NeoBundle      'mattn/gist-vim'
+NeoBundleLazy  'ujihisa/unite-colorscheme'
+NeoBundleLazy  'Shougo/vinarise.vim'
+NeoBundleLazy  'mattn/gist-vim'
 NeoBundle      'thinca/vim-ref'
 NeoBundle      'ujihisa/ref-hoogle'
 NeoBundleLazy  'vim-jp/vital.vim'
@@ -441,7 +427,6 @@ NeoBundleLazy  'fatih/vim-go'
 NeoBundle      'tpope/vim-surround'
 NeoBundle      'kana/vim-textobj-user'
 NeoBundleLazy  'osyo-manga/vim-itunes-bgm'
-NeoBundle      'kana/vim-textobj-function'
 NeoBundle      'kana/vim-textobj-indent'
 NeoBundle      'Lokaltog/vim-easymotion'
 
@@ -503,6 +488,20 @@ if neobundle#tap('vim-gyazo')
 	\})
 	call neobundle#untap()
 endif
+if neobundle#tap('w3m.vim')
+	call neobundle#config('w3m.vim', {
+	\	'autoload' : {'commands' : [
+	\		'W3m',
+	\		'W3mHistory',
+	\		'W3mHistoryClear',
+	\		'W3mLocal',
+	\		'W3mSplit',
+	\		'W3mTab',
+	\		'W3mVSplit'
+	\	]}
+	\})
+	call neobundle#untap()
+endif
 if neobundle#tap('vimshell-kawaii.vim')
 	call neobundle#config('vimshell-kawaii.vim', {
 	\	'depends'  : 'Shougo/vimshell.vim'
@@ -521,16 +520,37 @@ if neobundle#tap('jazzradio.vim')
 	\	'depends' : 'Shougo/unite.vim',
 	\	'external_commands' : 'mplayer',
 	\	'autoload' : {
-	\		'unite_sources' : ['jazzradio'],
-	\		'commands'      : [
+	\		'unite_sources'   : 'jazzradio',
+	\		'function_prefix' : 'Jazzradio',
+	\		'commands'        : [
 	\			'JazzradioUpdateChannels',
 	\			'JazzradioStop', {
 	\				'name'     : 'JazzradioPlay',
 	\				'complete' : 'customlist,jazzradio#channel_id_comlete'
 	\			}
-	\		],
-	\		'function_prefix' : 'Jazzradio'
+	\		]
 	\	}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('unite-colorscheme')
+	call neobundle#config('unite-colorscheme', {
+	\	'autoload' : {'unite_sources' : 'colorscheme'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vinarise.vim')
+	call neobundle#config('vinarise.vim', {
+	\	'autoload' : {'commands' : [
+	\		'Vinarise',
+	\		'VinariseDump'
+	\	]}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('gist-vim')
+	call neobundle#config('gist-vim', {
+	\	'autoload' : {'commands' : 'Gist'}
 	\})
 	call neobundle#untap()
 endif
@@ -748,20 +768,8 @@ if neobundle#tap('vim-itunes-bgm')
 	\})
 	call neobundle#untap()
 endif
-if neobundle#tap('vim-textobj-function')
-	call neobundle#config('vim-textobj-function', {
-	\	'depends' : 'vim-textobj-user'
-	\})
-	call neobundle#untap()
-endif
 if neobundle#tap('vim-textobj-indent')
 	call neobundle#config('vim-textobj-indent', {
-	\	'depends' : 'vim-textobj-user'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-textobj-function')
-	call neobundle#config('vim-textobj-function', {
 	\	'depends' : 'vim-textobj-user'
 	\})
 	call neobundle#untap()
