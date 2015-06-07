@@ -19,3 +19,9 @@ alias   el
     else {
         ${0}
     }
+
+snippet fprint
+    fmt.Fprint(${1:os.Stderr}, ${2:err})
+
+snippet fprintln
+    fmt.Fprintln(${1:os.Stderr}, ${2:err})
