@@ -2132,8 +2132,9 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <Space><Space>   :<C-u>call <SID>compress_spaces()<CR>
 	autocmd User MyVimRc nnoremap <silent> <Space><S-Space> :<C-u>call <SID>clear_ends_space()<CR>
 
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>b        :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>B        :<C-u>NewOverridden \| resize 5<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=scratch<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| resize 5<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>b        :<C-u>call <SID>bufclose_filetype('scratch')<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>h        :<C-u>helpclose<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>k        :<C-u>call <SID>cursor_up_to_lid()<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>j        :<C-u>call <SID>cursor_down_to_ground()<CR>
