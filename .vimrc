@@ -428,7 +428,6 @@ NeoBundle      'tpope/vim-surround'
 NeoBundle      'kana/vim-textobj-user'
 NeoBundleLazy  'osyo-manga/vim-itunes-bgm'
 NeoBundle      'kana/vim-textobj-indent'
-NeoBundle      'Lokaltog/vim-easymotion'
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
@@ -1099,9 +1098,11 @@ let g:vimconsole#auto_redraw = 1
 "}}}
 "--- vim-go ---"{{{
 
-" Disable defaults
-"let g:go_fmt_autosave        = 0
-"let g:go_def_mapping_enabled = 0
+" Avoid a bug
+if s:is_cygwin
+	let g:go_fmt_autosave        = 0
+	let g:go_def_mapping_enabled = 0
+endif
 
 "}}}
 "--- vim-textobj-function ---"{{{
@@ -1112,12 +1113,6 @@ let g:textobj_function_no_default_key_mappings = 1
 "--- vim-textobj-indent ---"{{{
 
 let g:textobj_indent_no_default_key_mappings = 1
-
-"}}}
-"--- vim-easymotion ---"{{{
-
-" View hitchars on current column line
-let g:EasyMotion_startofline = 0
 
 "}}}
 "--- For Debug ---"{{{
@@ -2096,16 +2091,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap <leader>Ps <Plug>(separetoro_put_short_over)
 	autocmd User MyVimRc nmap <leader>pl <Plug>(separetoro_put_long_under)
 	autocmd User MyVimRc nmap <leader>Pl <Plug>(separetoro_put_long_over)
-
-	" vim-easymotion
-	autocmd User MyVimRc nmap <leader>j  <Plug>(easymotion-j)
-	autocmd User MyVimRc nmap <leader>k  <Plug>(easymotion-k)
-	autocmd User MyVimRc nmap <leader>s  <Plug>(easymotion-s)
-	autocmd User MyVimRc nmap <leader>S  <Plug>(easymotion-S)
-	autocmd User MyVimRc vmap <leader>j  <Plug>(easymotion-j)
-	autocmd User MyVimRc vmap <leader>k  <Plug>(easymotion-k)
-	autocmd User MyVimRc vmap <leader>s  <Plug>(easymotion-s)
-	autocmd User MyVimRc vmap <leader>S  <Plug>(easymotion-S)
 augroup END
 
 " }}}
