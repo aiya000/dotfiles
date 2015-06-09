@@ -28,7 +28,15 @@ for file in $files ; do
 	# detected difference
 	file1=$DIFF_DIR1/$file
 	file2=$DIFF_DIR2/$file
-	if [ -f $file2 -a -n "`diff $file1 $file2`" ] ; then
+	if [ ! -f $file1 ] ; then
+		# confirm copy
+		echo "'${file1}' not found"
+		read -p "Copy >> ${file2} to ${file1} ? (y/n) (n): " confirm
+
+		if [ "$confirm" = "yes" -o "$confirm" = "y" ] ; then
+			cp -r "$file2" "$file1"
+		fi
+	elif [ -f $file2 -a -n "`diff $file1 $file2`" ] ; then
 		# confirm edit
 		read -p "Edit >> ${file} ? (y/n) (n): " confirm
 
