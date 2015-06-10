@@ -70,6 +70,8 @@
 
 "-- foldmethod for C# methods
 
+"-- change color cursorline when opened tweetvim
+
 " }}}
 
 
@@ -934,8 +936,8 @@ if neobundle#tap('vim-submode')
 
 		" Fold Mover
 		autocmd User MyVimRc call submode#enter_with('fold_move', 'n', '', '<C-s>z')
-		autocmd User MyVimRc call submode#map('fold_move', 'n', 'e', 'j', 'foldlevel('.') > 0 ? "zczjzozz"   : "zjzozz"')
-		autocmd User MyVimRc call submode#map('fold_move', 'n', 'e', 'k', 'foldlevel('.') > 0 ? "zczkzo[zzz" : "zkzo[zzz"')
+		autocmd User MyVimRc call submode#map('fold_move', 'n', 'e', 'j', 'foldlevel(".") > 0 ? "zczjzozz"   : "zjzozz"')
+		autocmd User MyVimRc call submode#map('fold_move', 'n', 'e', 'k', 'foldlevel(".") > 0 ? "zczkzo[zzz" : "zkzo[zzz"')
 		autocmd User MyVimRc call submode#map('fold_move', 'n', '',  'h', '[z')
 		autocmd User MyVimRc call submode#map('fold_move', 'n', '',  'l', ']z')
 
@@ -1867,6 +1869,21 @@ function! s:cursor_down_to_ground() "{{{
 endfunction "}}}
 
 
+" Toggle foldmethod marker or syntax
+function! s:toggle_foldmethod() "{{{
+	if &foldmethod !=# 'syntax'
+		setl foldmethod=syntax
+	else
+		setl foldmethod=marker
+	endif
+	setl foldmethod?
+
+	if foldlevel('.') > 0 && foldclosed('.') isnot -1
+		normal! zO
+	endif
+endfunction "}}}
+
+
 " Optimize key operation to one hand
 " function! s:toggle_onehand_mode() "{{{
 
@@ -1974,9 +1991,9 @@ augroup END
 " Toggle options {{{
 
 augroup KeyMapping
+	autocmd User MyVimRc nnoremap <silent>       <C-h><C-f> :<C-u>call <SID>toggle_foldmethod()<CR>
 	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-d> (&diff ? ':diffoff' : ':diffthis') . '\|set diff?<CR>'
-	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# ''       ? 'all'    : '')       . ' virtualedit?<CR>'
-	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-f> ':setl foldmethod='  . (&foldmethod  ==# 'marker' ? 'syntax' : 'marker') . ' foldmethod?<CR>'
+	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
 
 	autocmd User MyVimRc nnoremap <silent> <C-h>jk    :<C-u>call <SID>toggle_onehand_mode()<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
@@ -2119,10 +2136,10 @@ augroup KeyMapping
 
 	autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=scratch<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| resize 5<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>k                :<C-u>call <SID>cursor_up_to_lid()<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>j                :<C-u>call <SID>cursor_down_to_ground()<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>b        :<C-u>call <SID>bufclose_filetype('scratch')<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>h        :<C-u>helpclose<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>k        :<C-u>call <SID>cursor_up_to_lid()<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>j        :<C-u>call <SID>cursor_down_to_ground()<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader><leader> :<C-u>echohl ErrorMsg \| echo "Don't rush it, keep cool." \| echohl None<CR>
 
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
