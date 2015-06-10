@@ -99,7 +99,8 @@ alias docker-rm-archives='sudo docker rm `sudo docker ps -a -q`'
 # Environment Conditions {{{
 
 if [ $IS_UBUNTU -eq 1 ] ; then
-	alias ssleep='dbus-send --print-reply --system --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend'
+	#alias ssleep='dbus-send --print-reply --system --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend'
+	alias ssleep='sudo pm-suspend'
 elif [ $IS_CYGWIN -eq 1 ] ; then
 	alias cygrunsrv='cocot cygrunsrv'
 	alias csc='cocot csc'
