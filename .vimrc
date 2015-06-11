@@ -430,6 +430,7 @@ NeoBundle      'tpope/vim-surround'
 NeoBundle      'kana/vim-textobj-user'
 NeoBundleLazy  'osyo-manga/vim-itunes-bgm'
 NeoBundle      'kana/vim-textobj-indent'
+NeoBundle      'Shougo/neocomplete.vim'
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
@@ -1107,14 +1108,21 @@ if s:is_cygwin
 endif
 
 "}}}
-"--- vim-textobj-function ---"{{{
-
-let g:textobj_function_no_default_key_mappings = 1
-
-"}}}
 "--- vim-textobj-indent ---"{{{
 
 let g:textobj_indent_no_default_key_mappings = 1
+
+"}}}
+"--- neocomplete.vim ---"{{{
+
+" auto start neocomplete
+let g:neocomplete#enable_at_startup = 1
+
+"@Incomplete('the config of vimshell history was not set')
+let g:neocomplete#sources#dictionary#dictionaries = {
+\	'default'  : '',
+\	'vimshell' : expand('~/vimshell_history')
+\}
 
 "}}}
 "--- For Debug ---"{{{
@@ -2108,6 +2116,14 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap <leader>Ps <Plug>(separetoro_put_short_over)
 	autocmd User MyVimRc nmap <leader>pl <Plug>(separetoro_put_long_under)
 	autocmd User MyVimRc nmap <leader>Pl <Plug>(separetoro_put_long_over)
+
+
+	" neocomplete.vim
+	autocmd User MyVimRc inoremap <expr> <CR>  neocomplete#close_popup()  . '<CR>'
+	autocmd User MyVimRc inoremap <expr> <Tab> neocomplete#close_popup()  . '<Tab>'
+	autocmd User MyVimRc inoremap <expr> <C-y> neocomplete#cancel_popup() . '<C-y>'
+	autocmd User MyVimRc inoremap <expr> <C-e> neocomplete#cancel_popup() . '<C-e>'
+	"autocmd User MyVimRc inoremap <expr> <C-l> neocomplete#cancel_popup()
 augroup END
 
 " }}}
