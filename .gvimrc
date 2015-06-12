@@ -16,8 +16,7 @@
 " }}}
 " Issues {{{
 
-"-- filetype cs lost highlight keyword 'var'
-"  -- when vertical split maybe
+
 
 "}}}
 " Todo {{{
@@ -25,9 +24,15 @@
 
 
 " }}}
-" Note {{{
 
 
+"-------------------------"
+"       Initialize        "
+"-------------------------"
+" file encoding {{{
+
+" Encoding for this script
+scriptencoding utf8
 
 " }}}
 
@@ -48,17 +53,6 @@ let g:gvimrc['guifont'].font = get(g:gvimrc, 'font', s:is_windows ? 'MS_Gothic' 
 let g:gvimrc['guifont'].size = get(g:gvimrc, 'size', s:is_windows ? ':h10' : ' 10')
 
 "}}}
-
-
-"-------------------------"
-"       Initialize        "
-"-------------------------"
-" file encoding {{{
-
-" Encoding for this script
-scriptencoding utf8
-
-" }}}
 
 
 "-------------------------"
@@ -118,7 +112,7 @@ command! DressUpColorSolarized
 \|	endif
 
 
-" Don't use this
+" Sorry, I Don't use this
 if exists(':Revert') is 2
 	delcommand Revert
 endif
@@ -146,8 +140,8 @@ augroup HighlightPrefs
 	"autocmd ColorScheme * highlight LineNr                     guifg=Blue
 	autocmd ColorScheme * highlight CursorLine gui=underline guifg=cyan guibg=NONE
 
-	autocmd ColorScheme       * highlight GrcEmSpace guibg=White
-	autocmd VimEnter,WinEnter * call matchadd('GrcEmSpace', '　')
+	autocmd ColorScheme       * highlight GuiRcEmSpace guibg=White
+	autocmd VimEnter,WinEnter * call matchadd('GuiRcEmSpace', '　')
 augroup END
 
 
@@ -181,13 +175,13 @@ let g:J6uil_display_icon = 1
 "--- vim-submode ---{{{
 
 if s:is_windows
-	augroup keymappings
-		autocmd User * call submode#enter_with('trans_changer', 'n', '', '<C-s>*')
-		autocmd User * call submode#map('trans_changer', 'n', '', 'j', ':let &transparency = <C-r>=&transparency<CR> + 10<CR>')
-		autocmd User * call submode#map('trans_changer', 'n', '', 'k', ':let &transparency = <C-r>=&transparency<CR> - 10<CR>')
-		autocmd User * call submode#map('trans_changer', 'n', '', 'H', ':set transparency=1<CR>')
-		autocmd User * call submode#map('trans_changer', 'n', '', 'M', ':set transparency=127<CR>')
-		autocmd User * call submode#map('trans_changer', 'n', '', 'L', ':set transparency=255<CR>')
+	augroup KeyMapping
+		autocmd User MyGVimRc call submode#enter_with('trans_changer', 'n', '', '<C-s>*')
+		autocmd User MyGVimRc call submode#map('trans_changer', 'n', '', 'j', ':let &transparency = <C-r>=&transparency<CR> + 10<CR>')
+		autocmd User MyGVimRc call submode#map('trans_changer', 'n', '', 'k', ':let &transparency = <C-r>=&transparency<CR> - 10<CR>')
+		autocmd User MyGVimRc call submode#map('trans_changer', 'n', '', 'H', ':set transparency=1<CR>')
+		autocmd User MyGVimRc call submode#map('trans_changer', 'n', '', 'M', ':set transparency=127<CR>')
+		autocmd User MyGVimRc call submode#map('trans_changer', 'n', '', 'L', ':set transparency=255<CR>')
 	augroup END
 endif
 
@@ -195,5 +189,5 @@ endif
 
 
 syntax enable
-doautocmd User
+doautocmd User MyGVimRc
 let g:gvimrc['loaded'] = 1

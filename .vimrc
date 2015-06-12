@@ -72,6 +72,8 @@
 
 "-- change color cursorline when opened tweetvim
 
+"-- auto-ctags.vim lazy load
+
 " }}}
 
 
@@ -431,6 +433,9 @@ NeoBundle      'kana/vim-textobj-user'
 NeoBundleLazy  'osyo-manga/vim-itunes-bgm'
 NeoBundle      'kana/vim-textobj-indent'
 NeoBundle      'Shougo/neocomplete.vim'
+NeoBundle      'soramugi/auto-ctags.vim'
+NeoBundleLazy  'tsukkee/unite-tag'
+
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
@@ -782,7 +787,16 @@ if neobundle#tap('vim-textobj-indent')
 	\})
 	call neobundle#untap()
 endif
-
+if neobundle#tap('unite-tags')
+	call neobundle#config('unite-tags', {
+	\	'depends'  : [
+	\		'Shougo/unite.vim',
+	\		'Shougo/neocomplete.vim'
+	\	],
+	\	'autoload' : {'unite_sources' : 'tag'}
+	\})
+	call neobundle#untap()
+endif
 
 call neobundle#end()
 
@@ -1125,6 +1139,18 @@ let g:neocomplete#sources#dictionary#dictionaries = {
 \}
 
 "}}}
+"--- auto-ctags.vim ---"{{{
+
+" Auto generate tags when :write
+let g:auto_ctags = 1
+
+" Specific the ctags generated directory ( must be sync 'tags' )
+let g:auto_ctags_directory_list = ['.git', '../.git', '../../.git', '../../../.git', '../../../../.git']
+
+" ctags command options
+let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
+
+"}}}
 "--- For Debug ---"{{{
 
 " Local my plugins
@@ -1374,7 +1400,7 @@ set shellslash
 set matchpairs+=<:>
 
 " Load Target for ctags
-set tags=./tags,~/tags
+set tags=./tags,~/tags,.git/tags,../.git/tags,../../.git/tags
 
 " Explore wake up default dir
 set browsedir=buffer
