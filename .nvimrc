@@ -24,6 +24,11 @@ augroup NeoKeyMapping
 augroup END
 
 " }}}
+" unset some plugins {{{
+
+"NeoBundleDisable 'Shougo/neocomplete.vim'
+
+" }}}
 
 
 "-------------------------"

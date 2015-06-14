@@ -54,7 +54,12 @@ export EDITOR=vim
 ###################
 # ReConfig PATHes #
 ###################
-#{{{
+# set GOROOT {{{
+
+export GOPATH=~/.GoPath
+
+# }}}
+# make $PATH {{{
 # set PATH with priority
 new_path=$HOME/bin:$HOME/sbin
 new_path=$new_path:$HOME/.dotfiles/bin
@@ -83,6 +88,7 @@ new_path=$new_path:$HOME/.dotfiles/bin
 new_path=$new_path:/bin:/sbin
 new_path=$new_path:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 new_path=$new_path:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
+new_path=$new_path:$GOPATH/bin
 
 # With OS
 if [ $IS_CYGWIN -eq 1 ] ; then

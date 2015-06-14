@@ -1,4 +1,3 @@
-
 ###########################
 # Shunted Develop aliases #
 ###########################
@@ -25,6 +24,15 @@ elif [ $IS_CYGWIN -eq 1 ] ; then
 	alias jdb='cocot jdb'
 	alias jar='cocot jar'
 	#alias g++='g++ -std=c++11'
+fi
+
+# }}}
+
+# Setting Go env {{{
+
+# We needs $GOROOT
+if [ ! -d $GOPATH ] ; then
+	mkdir $GOPATH
 fi
 
 # }}}
