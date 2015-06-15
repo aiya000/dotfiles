@@ -1147,9 +1147,6 @@ let g:auto_ctags = 1
 " Specific the ctags generated directory ( must be sync 'tags' )
 let g:auto_ctags_directory_list = ['.git', '../.git', '../../.git', '../../../.git', '../../../../.git']
 
-" ctags command options
-let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
-
 "}}}
 "--- For Debug ---"{{{
 
@@ -1454,6 +1451,16 @@ autocmd FileEvent VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 
 "" Foooooo!!!!!!! I hope get this omoshiro event!!
 "autocmd KeyEvent UserGettingBored * echo 'oooooiiiii!!!!!'
+
+
+" Change method view line num
+autocmd KeyEvent CursorMoved *
+\	if strchars(line('.')) > 2
+\|		setl relativenumber
+\|	else
+\|		setl norelativenumber
+\|	endif
+
 
 "}}}
 
