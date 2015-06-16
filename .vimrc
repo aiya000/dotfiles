@@ -871,8 +871,8 @@ elseif s:is_cygwin
 	let g:quickrun_config.java['tempfile']                    = printf('%s/{tempname()}.java', $TMP)
 	"@Marked('temporary (vimproc bug)')
 	let g:quickrun_config._['runner']     = 'system'
-	let g:quickrun_config.haskell         = {}
-	let g:quickrun_config.haskell['exec'] = "%c %o `cygpath -w '%s:p'` | tr -d \"\\r\""
+	let g:quickrun_config.haskell             = {}
+	let g:quickrun_config.haskell['exec']     = "%c %o `cygpath -w '%s:p'` | tr -d \"\\r\""
 endif
 
 " }}}
