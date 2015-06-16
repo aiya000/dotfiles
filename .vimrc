@@ -869,6 +869,10 @@ elseif s:is_cygwin
 	let g:quickrun_config.java['exec']                        = ['%c %o `echo %s | sed s:\:/:g | cygpath -w -f -`', '%c %s:t:r %a']
 	let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
 	let g:quickrun_config.java['tempfile']                    = printf('%s/{tempname()}.java', $TMP)
+	"@Marked('temporary (vimproc bug)')
+	let g:quickrun_config._['runner']     = 'system'
+	let g:quickrun_config.haskell         = {}
+	let g:quickrun_config.haskell['exec'] = "%c %o `cygpath -w '%s:p'` | tr -d \"\\r\""
 endif
 
 " }}}
@@ -1142,9 +1146,12 @@ let g:neocomplete#sources#dictionary#dictionaries = {
 "--- auto-ctags.vim ---"{{{
 
 " Auto generate tags when :write
-let g:auto_ctags = 1
+if !s:is_windows
+	"@Marked('Windows cannot use auto-ctags.vim now')
+	let g:auto_ctags = 1
+endif
 
-" Specific the ctags generated directory ( must be sync 'tags' )
+" Specific the ctags generated directory ( We must be sync 'tags' )
 let g:auto_ctags_directory_list = ['.git', '../.git', '../../.git', '../../../.git', '../../../../.git']
 
 "}}}
@@ -1455,7 +1462,7 @@ autocmd FileEvent VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 
 " Change method view line num
 autocmd KeyEvent CursorMoved *
-\	if strchars(line('.')) > 2
+\	if strchars(line('.')) > 2 && &number
 \|		setl relativenumber
 \|	else
 \|		setl norelativenumber
