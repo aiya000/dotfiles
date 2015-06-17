@@ -142,7 +142,7 @@ export HEREIS_PLACES_FILE=~/.bashrc_places
 
 # loads {{{
 
-#TODO: rid DRY
+#TODO: rid DRY or implement the Vundle like autoloader
 
 if [ -f ~/.bashfiles/plugin/hereis.sh ] ; then
 	source ~/.bashfiles/plugin/hereis.sh
