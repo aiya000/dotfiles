@@ -133,21 +133,27 @@ alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 #}}}
 # plugins {{{
 
-# shell_kawaii {{{
-
-if [ -f ~/.bashfiles/plugin/shell_kawaii.sh ] ; then
-	source ~/.bashfiles/plugin/shell_kawaii.sh
-fi
-
-# }}}
-
 # hereis {{{
 
 # value for hereis plugin
 export HEREIS_PLACES_FILE=~/.bashrc_places
 
+# }}}
+
+# loads {{{
+
+#TODO: rid DRY
+
 if [ -f ~/.bashfiles/plugin/hereis.sh ] ; then
 	source ~/.bashfiles/plugin/hereis.sh
+fi
+
+if [ -f ~/.bashfiles/plugin/shell_kawaii.sh ] ; then
+	source ~/.bashfiles/plugin/shell_kawaii.sh
+fi
+
+if [ $IS_UBUNTU -eq 1 -a -f ~/.bashfiles/plugin/ezoe_command_not_found_handle.sh ] ; then
+	source ~/.bashfiles/plugin/ezoe_command_not_found_handle.sh
 fi
 
 # }}}
