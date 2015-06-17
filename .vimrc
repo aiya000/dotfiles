@@ -2163,7 +2163,6 @@ augroup KeyMapping
 	autocmd User MyVimRc inoremap <expr> <Tab> neocomplete#close_popup()  . '<Tab>'
 	autocmd User MyVimRc inoremap <expr> <C-y> neocomplete#cancel_popup() . '<C-y>'
 	autocmd User MyVimRc inoremap <expr> <C-e> neocomplete#cancel_popup() . '<C-e>'
-	"autocmd User MyVimRc inoremap <expr> <C-l> neocomplete#cancel_popup()
 augroup END
 
 " }}}
