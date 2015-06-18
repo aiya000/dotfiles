@@ -138,19 +138,18 @@ export HEREIS_PLACES_FILE=~/.bashrc_places
 
 # loads {{{
 
-#TODO: rid DRY or implement the Vundle like autoloader
+plugin_dir=~/.bashfiles/plugin
+local_plugins=( \
+	hereis.sh \
+	shell_kawaii.sh \
+	ezoe_command_not_found_handle.sh \
+)
 
-if [ -f ~/.bashfiles/plugin/hereis.sh ] ; then
-	source ~/.bashfiles/plugin/hereis.sh
-fi
+for (( i = 0; i < ${#local_plugins[@]}; ++i )) ; do
+	source "${plugin_dir}/${local_plugins[$i]}"
+done
 
-if [ -f ~/.bashfiles/plugin/shell_kawaii.sh ] ; then
-	source ~/.bashfiles/plugin/shell_kawaii.sh
-fi
-
-if [ $IS_UBUNTU -eq 1 -a -f ~/.bashfiles/plugin/ezoe_command_not_found_handle.sh ] ; then
-	source ~/.bashfiles/plugin/ezoe_command_not_found_handle.sh
-fi
+unset local_plugins plugin_dir
 
 # }}}
 
