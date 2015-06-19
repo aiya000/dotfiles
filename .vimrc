@@ -191,7 +191,7 @@ augroup KeyMapping
 	autocmd!
 augroup END
 
-augroup KeyEvent
+augroup UserEvent
 	autocmd!
 augroup END
 
@@ -1199,7 +1199,7 @@ endif
 "{{{
 
 " Set Basic Preferences
-set number nowrap hlsearch list scrolloff=16
+set number relativenumber nowrap hlsearch list scrolloff=16
 
 " Status Bar always displayed
 set laststatus=2
@@ -1369,7 +1369,7 @@ function! s:visual_fold_all()
 endfunction
 
 "}}}
-autocmd KeyEvent CursorMoved * call s:visual_fold_all()
+autocmd UserEvent CursorMoved * call s:visual_fold_all()
 
 " no put two space on join (J)
 set nojoinspaces
@@ -1457,16 +1457,14 @@ autocmd FileEvent VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 \|	endif
 
 "" Foooooo!!!!!!! I hope get this omoshiro event!!
-"autocmd KeyEvent UserGettingBored * echo 'oooooiiiii!!!!!'
+"autocmd UserEvent UserGettingBored * echo 'oooooiiiii!!!!!'
 
 
-" Change method view line num
-autocmd KeyEvent CursorMoved *
-\	if strchars(line('.')) > 2 && &number
-\|		setl relativenumber
-\|	else
-\|		setl norelativenumber
-\|	endif
+" RelativeNumber is used current window only
+augroup UserEvent
+	autocmd WinEnter * setl relativenumber
+	autocmd Winleave * setl norelativenumber
+augroup END
 
 
 "}}}
@@ -2159,10 +2157,12 @@ augroup KeyMapping
 
 
 	" neocomplete.vim
-	autocmd User MyVimRc inoremap <expr> <CR>  neocomplete#close_popup()  . '<CR>'
-	autocmd User MyVimRc inoremap <expr> <Tab> neocomplete#close_popup()  . '<Tab>'
-	autocmd User MyVimRc inoremap <expr> <C-y> neocomplete#cancel_popup() . '<C-y>'
-	autocmd User MyVimRc inoremap <expr> <C-e> neocomplete#cancel_popup() . '<C-e>'
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-q> :<C-u>NeoCompleteToggle<CR>
+	autocmd User MyVimRc inoremap <silent> <C-k><C-q> <C-o>:NeoCompleteToggle<CR>
+	autocmd User MyVimRc inoremap <expr>   <CR>  neocomplete#close_popup()  . '<CR>'
+	autocmd User MyVimRc inoremap <expr>   <Tab> neocomplete#close_popup()  . '<Tab>'
+	autocmd User MyVimRc inoremap <expr>   <C-y> neocomplete#cancel_popup() . '<C-y>'
+	autocmd User MyVimRc inoremap <expr>   <C-e> neocomplete#cancel_popup() . '<C-e>'
 augroup END
 
 " }}}
@@ -2173,8 +2173,8 @@ augroup KeyMapping
 
 	autocmd User MyVimRc nmap <C-j> <CR>
 
-	" † Ex Improved
 	autocmd User MyVimRc nnoremap Q  gQ
+	autocmd User MyVimRc nnoremap zs zszh
 
 	autocmd User MyVimRc nnoremap <C-n> gt
 	autocmd User MyVimRc nnoremap <C-p> gT
