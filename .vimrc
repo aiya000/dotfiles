@@ -107,10 +107,12 @@
 "---------------------"
 "{{{
 
-let g:vimrc = get(g:, 'vimrc', {'loaded' : 0})
+let g:vimrc = get(g:, 'vimrc', {
+\	'loaded'   : 0,
+\	'vim_home' : expand('~/.vim')
+\})
 
 let s:vimrc_env = expand('~/.vimrc_env')
-let s:vim_home  = expand('~/.vim')
 
 let s:is_windows = has('win32')
 let s:is_cygwin  = has('win32unix')
@@ -200,9 +202,9 @@ augroup END
 
 if s:is_kaoriya && s:is_windows
 	" Set Environment
-	let $HOME        = $VIM
-	let s:vim_home   = $VIM . '/vimfiles'  " Reset with $HOME
-	let &runtimepath = &runtimepath . ',' . s:vim_home
+	let $HOME               = $VIM
+	let g:vimrc['vim_home'] = $VIM . '/vimfiles' " Reset with $HOME
+	let &runtimepath = &runtimepath . ',' . g:vimrc['vim_home']
 
 	if s:has_cygwin
 		let $PATH = '/cygwin/bin;/cygwin/usr/bin;/cygwin/usr/sbin;' . $PATH
@@ -211,8 +213,8 @@ if s:is_kaoriya && s:is_windows
 
 
 	" Build Base Directories
-	if !isdirectory(s:vim_home)
-		call mkdir(s:vim_home)
+	if !isdirectory(g:vimrc['vim_home'])
+		call mkdir(g:vimrc['vim_home'])
 	endif
 
 
@@ -249,7 +251,7 @@ endif
 
 "}}}
 " Check NeoBundle exists {{{
-let s:bundledir    = s:vim_home . '/bundle'
+let s:bundledir    = g:vimrc['vim_home'] . '/bundle'
 let s:neobundledir = s:bundledir . '/neobundle.vim'
 
 if !isdirectory(s:bundledir)
@@ -288,7 +290,7 @@ endfunction " }}}
 
 if has('vim_starting')
 	try
-		let &runtimepath = &runtimepath . ',' . s:vim_home . '/bundle/neobundle.vim'
+		let &runtimepath = &runtimepath . ',' . g:vimrc['vim_home'] . '/bundle/neobundle.vim'
 
 		call neobundle#begin()
 	catch /E117/
@@ -342,7 +344,7 @@ if !exists('loaded_matchit')
 	"@See('dokka matchit.txt...dokoitta?')
 	" If I don't have matchit document, I get it
 	let s:matchit_doc_from = expand('$VIMRUNTIME/macros/matchit.txt')
-	let s:matchit_doc_to   = s:vim_home . '/doc/matchit.txt'
+	let s:matchit_doc_to   = g:vimrc['vim_home'] . '/doc/matchit.txt'
 
 	if !filereadable(s:matchit_doc_to)
 		call writefile(readfile(s:matchit_doc_from), s:matchit_doc_to)
@@ -812,7 +814,7 @@ call neobundle#end()
 let g:netrw_preview = 1
 
 " Place for .netwhist and .netrwbook
-let g:netrw_home = s:vim_home
+let g:netrw_home = g:vimrc['vim_home']
 
 " }}}
 "--- matchit.vim ---" {{{
@@ -1095,7 +1097,7 @@ let g:bakaup_auto_backup = 1
 "--- neosnippet.vim ---"{{{
 
 " for :NeoSnippetEdit
-let g:neosnippet#snippets_directory = s:vim_home . '/neosnippets'
+let g:neosnippet#snippets_directory = g:vimrc['vim_home'] . '/neosnippets'
 
 "}}}
 "--- separetaro.vim ---"{{{
@@ -1392,7 +1394,7 @@ set history=500
 set runtimepath+=~/.vim/vimball
 
 " Set Vimball Install place
-let g:vimball_home = s:vim_home . '/vimball'
+let g:vimball_home = g:vimrc['vim_home'] . '/vimball'
 
 " Display Command Complement
 set wildmenu
@@ -1416,8 +1418,8 @@ set spelllang=en_US,cjk
 set path=.,,./**
 
 " Manually generate my help tags
-if isdirectory(s:vim_home . '/doc')
-	execute 'helptags' (s:vim_home . '/doc')
+if isdirectory(g:vimrc['vim_home'] . '/doc')
+	execute 'helptags' (g:vimrc['vim_home'] . '/doc')
 endif
 
 "}}}
@@ -1442,8 +1444,8 @@ augroup FileEvent
 
 	" Auto load filetype dictionary
 	autocmd FileType *
-	\	if filereadable(printf('%s/dict/filetype/%s.dict', s:vim_home, &filetype))
-	\|		execute 'setl dict+=' . printf('%s/dict/filetype/%s.dict', s:vim_home, &filetype)
+	\	if filereadable(printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype))
+	\|		execute 'setl dict+=' . printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype)
 	\|	endif
 augroup END
 
@@ -1608,10 +1610,10 @@ command!  CdBufDir NOP
 command! -bar ColorPreview Unite colorscheme -auto-preview
 
 command! -bar -nargs=? -complete=filetype FtpluginEditAfter
-\	execute ':edit' printf('%s/after/ftplugin/%s.vim', s:vim_home, (empty(<q-args>) ? &filetype : <q-args>))
+\	execute ':edit' printf('%s/after/ftplugin/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
 
 command! -bar -nargs=? -complete=filetype FtDictionaryEdit
-\	execute ':edit' printf('%s/dict/filetype/%s.dict', s:vim_home, (empty(<q-args>) ? &filetype : <q-args>))
+\	execute ':edit' printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
 
 " }}}
 " Twitter {{{
