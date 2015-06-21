@@ -1462,7 +1462,7 @@ autocmd FileEvent VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 
 " RelativeNumber is used current window only
 augroup UserEvent
-	autocmd WinEnter * setl relativenumber
+	autocmd WinEnter * if &number | setl relativenumber | end
 	autocmd Winleave * setl norelativenumber
 augroup END
 
