@@ -88,7 +88,6 @@ fi
 # }}}
 # Others {{{
 
-alias mysql='mysql -E --pager="less -r -S -n -i -F -X"'
 alias docker-rm-archives='sudo docker rm `sudo docker ps -a -q`'
 
 # }}}
@@ -106,7 +105,7 @@ elif [ $IS_CYGWIN -eq 1 ] ; then
 	alias route='cocot route'
 	alias netstat='cocot netstat'
 	alias updatedb='updatedb --localpaths="/bin /dev /etc /home /lib /usr /var /opt" --prunepaths="/usr/tmp /var/tmp"'
-	alias mysql="mysql -E --pager='less -r -S -n -i -F -X' --protocol=TCP"
+	alias mysql="mysql --protocol=TCP"
 fi
 
 # }}}
