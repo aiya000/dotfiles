@@ -1,5 +1,5 @@
 "-- set --"
-set number nowrap
+set number relativenumber nowrap
 set textwidth=0 tabstop=4 shiftwidth=4
 set cindent autoindent
 set incsearch hlsearch
@@ -9,6 +9,7 @@ set list listchars=tab:>_,trail:_
 set scrolloff=8
 set fileencoding=utf-8 encoding=utf-8
 set fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
+set backspace=indent,eol,start
 
 
 "-- colorscheme --"
@@ -39,6 +40,12 @@ let &directory = &backupdir
 augroup Backup
 	autocmd!
 	autocmd BufWritePre,FileWritePre,FileAppendPre * call s:update_backup_file()
+augroup END
+
+augroup UserEvent
+	autocmd!
+	autocmd WinEnter * if &number | setl relativenumber | end
+	autocmd Winleave * setl norelativenumber
 augroup END
 
 function! s:update_backup_file()
