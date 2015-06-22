@@ -23,7 +23,7 @@ elif [ $IS_CYGWIN -eq 1 ] ; then
 	alias java='cocot java'
 	alias jdb='cocot jdb'
 	alias jar='cocot jar'
-	#alias g++='g++ -std=c++11'
+	alias g++='g++ -std=c++1y'
 fi
 
 # }}}
