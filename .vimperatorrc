@@ -87,6 +87,10 @@ cnoremap <C-d> <Del>
 cnoremap <C-i> <Tab>
 cnoremap <C-l> <Esc>
 
+" Previews
+nnoremap <silent> g: :<C-u>tabs<CR>
+nnoremap <silent> m: :<C-u>marks<CR>
+
 
 " Movement on the insert mode
 inoremap <C-p> <Up>
