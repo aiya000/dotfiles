@@ -1,7 +1,7 @@
 # Vim Config
-alias vis='vim --split=sp $$args'
-alias viv='vim --split=vsp $$args'
-alias vim='vim --split=tabedit $$args'
+alias vis='vim --split=sp'
+alias viv='vim --split=vsp'
+alias vim='vim --split=tabedit'
 alias vimconfig='vim --split=tabedit ~/.vimrc'
 alias gvimconfig='vim --split=tabedit ~/.gvimrc'
 alias vimshconfig='vim --split=tabedit ~/.vimshrc'
@@ -14,21 +14,18 @@ alias sp=':VimShellCreate -split-command=sp'
 alias tabnew=':VimShellCreate -split-command=tabnew'
 alias lcd='cd .'
 
-
 # Shell Config
 alias reload='vimsh ~/.vimshrc'
 alias mv='mv -i'
 alias cp='cp -i'
+alias ctags-r='ctags --tag-relative --recurse --sort=yes'
 
+# Develop Config
+alias g++='g++ -I/usr/include/c++/4.9 -I/usr/include/c++/4.9/x86_64-linux-gnu -std=c++1y'
 
-# for VimShell Plugins
+# for My Command
 alias reload-places='reload_places'
 alias edit-places='edit_places'
 
-# Load places
-vimsh ~/.bashrc_places
-
-
 # Other Alias
 alias thanks='echo "(*^o^)< You are welcome!"'
-alias gyazo='ruby ~/.vim/bundle/vim-gyazo/gyazo/gyazo.rb'
