@@ -55,6 +55,8 @@
 
 "-- int-git does not loaded ftplugin int-git.vim (by hyphenate ?)
 
+"-- lost filetype highlight when running quickrun vim script (reason is 'shabadou.vim' ?)
+
 "}}}
 " Todo {{{
 
@@ -437,6 +439,7 @@ NeoBundle      'kana/vim-textobj-indent'
 NeoBundle      'Shougo/neocomplete.vim'
 NeoBundle      'soramugi/auto-ctags.vim'
 NeoBundleLazy  'tsukkee/unite-tag'
+NeoBundleLazy  'osyo-manga/shabadou.vim'
 
 
 "}}}
@@ -799,6 +802,12 @@ if neobundle#tap('unite-tags')
 	\})
 	call neobundle#untap()
 endif
+if neobundle#tap('shabadou.vim')
+	call neobundle#config('shabadou.vim', {
+	\	'autoload' : {'on_source' : 'vim-quickrun'}
+	\})
+	call neobundle#untap()
+endif
 
 call neobundle#end()
 
@@ -844,7 +853,9 @@ let g:quickrun_config = {
 \		'split'  : '',
 \		'runner' : 'vimproc',
 \		'runner/vimproc/updatetime' : 10,
-\		'hook/time/enable' : 1
+\		'hook/time/enable' : 1,
+\		'hook/shabadoubi_touch_henshin/enable' : 1,
+\		'hook/shabadoubi_touch_henshin/wait'   : 20
 \	},
 \	'cpp' : {
 \		'cmdopt' : '-std=c++14'
@@ -2159,8 +2170,7 @@ augroup KeyMapping
 
 
 	" neocomplete.vim
-	autocmd User MyVimRc nnoremap <silent> <C-h><C-q> :<C-u>NeoCompleteToggle<CR>
-	autocmd User MyVimRc inoremap <silent> <C-k><C-q> <C-o>:NeoCompleteToggle<CR>
+	autocmd User MyVimRc inoremap <silent> <C-k><C-i> <C-o>:NeoCompleteToggle<CR>
 	autocmd User MyVimRc inoremap <expr>   <CR>  neocomplete#close_popup()  . '<CR>'
 	autocmd User MyVimRc inoremap <expr>   <Tab> neocomplete#close_popup()  . '<Tab>'
 	autocmd User MyVimRc inoremap <expr>   <C-y> neocomplete#cancel_popup() . '<C-y>'
