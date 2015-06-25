@@ -1246,6 +1246,9 @@ augroup END
 augroup HighlightPref
 	autocmd ColorScheme       * highlight RcEmSpace ctermbg=LightBlue
 	autocmd VimEnter,WinEnter * call matchadd('RcEmSpace', '　')
+
+	" Highlight VCS conflict markers
+	autocmd ColorScheme * call matchadd('ErrorMsg', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
 augroup END
 
 
