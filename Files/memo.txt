@@ -20,7 +20,6 @@ NeoBundle 'sorah/unite-ghq'
 
 
 
-NeoBundle "osyo-manga/shabadou.vim"
 NeoBundle "osyo-manga/vim-watchdogs"
 NeoBundle "motemen/vim-guess-abbrev"
 NeoBundle 'kana/vim-fakeclip'
@@ -31,51 +30,11 @@ NeoBundle 'motemen/vim-help-random'
 NeoBundle 'sgur/unite-qf'
 NeoBundle 'thinca/vim-unite-history'
 NeoBundle 'sgur/unite-git_grep'
-
-
 NeoBundle 'thinca/vim-showtime'
-                L288 visualstar.vim 案件  12/27 23:24
-vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
-
-
-
 " 行末の半角スペースを可視化(うまく動かない？)
 NeoBundle 'bronson/vim-trailing-whitespace'
 " less用のsyntaxハイライト
 NeoBundle 'KohPoll/vim-less'
-
-
-------------------------------------------------------------------------------------------------------------------------------------------------
-deris0126     : L105 80文字への執念を感じると思ったら…  01/17 23:05
-------------------------------------------------------------------------------------------------------------------------------------------------
-"set cpo+=a " :read  command with a file name arg will modify the window's alternate file name
-( {{{
-" Settings for Vi-compatible behavior (Vim default: aABceFs)
-" Note: this list is not exhaustive. See :h 'cpo'
- set cpoptions=
-"set cpo+=a " :read  command with a file name arg will modify the window's alternate file name
-"set cpo+=A " :write command with a file name arg will modify the window's alternate file name
- set cpo+=B " Give backslash no special meaning in mappings, abbreviations and the 'to' part of the menu commands
- set cpo+=c " Searching continues at the end of any match at the cursor position, but not further than the start of the next line
- set cpo+=e " When executing a register with ':@r', always add a <CR> to the last line even when the register is not linewise
- set cpo+=F " :write with a file name argument will set the file name for the current buffer if it doesn't have one already
-"set cpo+=i " Interrupting the reading of a file will leave it modified.
- set cpo+=K " Don't wait for a key code to complete
-"set cpo+=m " 'Showmatch' will always wait half a second, even if a character is typed within that time period
- set cpo+=q " Joining multiple lines leaves the cursor where it would be when joining two lines
-"set cpo+=s " Set buffer options when first entering the buffer instead of when it's created
-"set cpo+=t " Search pattern for the tag command is remembered for 'n' command
- set cpo+={ " The |{| and |}| commands also stop at a '{' character at the start of a line.
-) }}}
-------------------------------------------------------------------------------------------------------------------------------------------------
-deris0126     : 人生諦めが肝心というのがわかる  01/17 23:05
-thinca        : 何を諦めたんです?  01/17 23:06
-deris0126     : 1行80文字で揃えるのを… > 何を諦めたんです?  01/17 23:07
-------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-" Highlight VCS conflict markers
-match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------
@@ -91,10 +50,6 @@ set comments+=fb:*                                    "  */
 ------------------------------------------------------------------------------------------------------------------------------------------------
 haya14busa    : L236 なるほどそんな手があるのか...すごい  01/18 00:08
 ------------------------------------------------------------------------------------------------------------------------------------------------
-
-https://github.com/kana/vim-niceblock
-set nrformats=hex,alpha                     " Accepted bases for <C-A> and <C-X>
-
 
 " --- --- --- "
 2015年01月24日 23時01分41秒

@@ -76,6 +76,8 @@
 
 "-- auto-ctags.vim lazy load
 
+"-- read help syntax.txt
+
 " }}}
 
 
@@ -1086,7 +1088,7 @@ augroup END
 " If matched file extension pattern, indent-guides is enabled
 augroup FileEvent
 	autocmd WinEnter,BufWinEnter * IndentGuidesDisable
-	autocmd WinEnter,BufWinEnter *.xml,*.html,*css,*scss,*.erb IndentGuidesEnable
+	autocmd WinEnter,BufWinEnter *.{xml,html,css,scss,erb} IndentGuidesEnable
 augroup END
 
 "}}}
@@ -2210,6 +2212,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <leader>j                :<C-u>call <SID>cursor_down_to_ground()<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>b        :<C-u>call <SID>bufclose_filetype('scratch')<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>h        :<C-u>helpclose<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>q        :<C-u>call <SID>bufclose_filetype('qf')<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader><leader> :<C-u>echohl ErrorMsg \| echo "Don't rush it, keep cool." \| echohl None<CR>
 
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
