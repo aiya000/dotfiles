@@ -1,0 +1,8 @@
+set number
+set scrolloff=8
+
+inoremap <C-[> <Esc>
+inoremap <C-l> <Esc>
+
+cnoremap <C-j> <CR>
+cnoremap <C-l> <Esc>
