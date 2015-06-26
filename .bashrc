@@ -106,7 +106,7 @@ elif [ $IS_CYGWIN -eq 1 ] ; then
 	alias route='cocot route'
 	alias netstat='cocot netstat'
 	alias updatedb='updatedb --localpaths="/bin /dev /etc /home /lib /usr /var /opt" --prunepaths="/usr/tmp /var/tmp"'
-	alias mysql="mysql --pager='less -r -S -n -i -F -X' --protocol=TCP"
+	alias mysql='mysql --pager="less -r -S -n -i -F -X" --protocol=TCP'
 fi
 
 # }}}

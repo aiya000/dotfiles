@@ -1862,14 +1862,12 @@ augroup END
 " Compress continuous space
 function! s:compress_spaces() "{{{
 	let l:recent_pattern = @/
-
 	try
 		substitute/\s\+/ /g
 		normal! ==
 	finally
 		let @/ = l:recent_pattern
 	endtry
-
 	nohlsearch
 endfunction "}}}
 
@@ -1878,14 +1876,12 @@ endfunction "}}}
 function! s:clear_ends_space() "{{{
 	let l:recent_pattern = @/
 	let l:curpos = getcurpos()
-
 	try
 		%substitute/\s*\?$//g
 	catch /E486/
 		echo 'nothing todo'
 	finally
 		let @/ = l:recent_pattern
-
 		call setpos('.', l:curpos)
 	endtry
 endfunction "}}}
@@ -1893,13 +1889,12 @@ endfunction "}}}
 
 " Move cursor to topmost of this indent
 function! s:cursor_up_to_lid() "{{{
-	let l:first_line = 1
 	while 1
 		let l:p = virtcol('.')
 		normal! k
 
 		let l:indent_changed = l:p isnot virtcol('.')
-		if l:indent_changed || line('.') is l:first_line
+		if l:indent_changed || line('.') is 1  " top line
 			if l:indent_changed
 				normal! j
 			endif
@@ -1981,18 +1976,14 @@ endfunction
 " If you has nofile buffer, close it.
 function! s:bufclose_filetype(filetype) "{{{
 	let l:closed = 0
-
 	for l:w in range(1, winnr('$'))
 		let l:buf_ft = getwinvar(l:w, '&filetype')
-
 		if l:buf_ft ==# a:filetype
 			execute ':' . l:w . 'wincmd w'
 			execute ':quit'
-
 			let l:closed = 1
 		endif
 	endfor
-
 	return l:closed
 endfunction "}}}
 
@@ -2000,7 +1991,6 @@ endfunction "}}}
 " Toggle open netrw explorer ( vertical split )
 function! s:toggle_netrw_vexplorer() "{{{
 	let l:closed = s:bufclose_filetype('netrw')
-
 	if !l:closed
 		Vexplore
 	endif
@@ -2247,9 +2237,9 @@ augroup KeyMapping
 	" visual mode "{{{
 
 	autocmd User MyVimRc vnoremap <C-l> <Esc>
-	"autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
-	"autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
-	autocmd User MyVimRc vnoremap <silent> i= :Align =<CR>
+	autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
+	autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
+	autocmd User MyVimRc vnoremap <silent> i= :Alignta =/1<CR>
 	autocmd User MyVimRc vnoremap a% V%
 	autocmd User MyVimRc vnoremap A% V$%
 
