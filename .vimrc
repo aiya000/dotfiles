@@ -1894,18 +1894,15 @@ endfunction "}}}
 " Move cursor to topmost of this indent
 function! s:cursor_up_to_lid() "{{{
 	let l:first_line = 1
-
 	while 1
-		let l:p = getcurpos()[2]
+		let l:p = virtcol('.')
 		normal! k
 
-		let l:indent_changed = l:p isnot getcurpos()[2]
-
+		let l:indent_changed = l:p isnot virtcol('.')
 		if l:indent_changed || line('.') is l:first_line
 			if l:indent_changed
 				normal! j
 			endif
-
 			break
 		endif
 	endwhile
@@ -1915,18 +1912,15 @@ endfunction "}}}
 " Move cursor to bottommost of this indent
 function! s:cursor_down_to_ground() "{{{
 	let l:last_line = line('$')
-
 	while 1
-		let l:p = getcurpos()[2]
+		let l:p = virtcol('.')
 		execute 'normal! j'
 
-		let l:indent_changed = l:p isnot getcurpos()[2]
-
+		let l:indent_changed = l:p isnot virtcol('.')
 		if l:indent_changed || line('.') is l:last_line
 			if l:indent_changed
 				execute 'normal! k'
 			endif
-
 			break
 		endif
 	endwhile
