@@ -73,9 +73,7 @@
 "-- foldmethod for C# methods
 
 "-- change color cursorline when opened tweetvim
-
-"-- auto-ctags.vim lazy load
-
+"
 "-- read help syntax.txt
 
 " }}}
@@ -1241,7 +1239,7 @@ augroup HighlightPref
 	autocmd ColorScheme * highlight StatusLine                   ctermfg=Cyan  ctermbg=Black
 	autocmd ColorScheme * highlight StatusLineNC                 ctermfg=Blue
 	autocmd ColorScheme * highlight LineNr                       ctermfg=Blue
-	autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
+	"autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 augroup END
 
 
