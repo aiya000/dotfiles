@@ -49,6 +49,7 @@ export HISTTIMEFORMAT='%Y/%m/%d %H:%M '
 export HISTIGNORE='ls:jobs:history*:*hibernate:twitter*:tweet*:lingr*'
 export HISTIGNORE="${HISTIGNORE}:*.bash_history*:*mount*-o*password=*"
 export EDITOR=vim
+export PAGER=less
 
 
 ###################
