@@ -879,13 +879,13 @@ let g:quickrun_config['cs'] = s:is_unix    ? {'command' : 'gmcs'}
 if s:is_windows
 	let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
 elseif s:is_cygwin
-	let g:quickrun_config.java['exec']                        = ['%c %o `echo %s | sed s:\:/:g | cygpath -w -f -`', '%c %s:t:r %a']
-	let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
-	let g:quickrun_config.java['tempfile']                    = printf('%s/{tempname()}.java', $TMP)
 	"@Marked('temporary (vimproc bug)')
-	let g:quickrun_config._['runner']     = 'system'
-	let g:quickrun_config.haskell             = {}
-	let g:quickrun_config.haskell['exec']     = "%c %o `cygpath -w '%s:p'` | tr -d \"\\r\""
+	let g:quickrun_config._['runner']      = 'system'
+	let g:quickrun_config.java['exec']     = ['%c %o `echo %s | sed s:\:/:g | cygpath -w -f -`', '%c %s:t:r %a']
+	let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
+	let g:quickrun_config.java['tempfile'] = printf('%s/{tempname()}.java', $TMP)
+	let g:quickrun_config.haskell          = {}
+	let g:quickrun_config.haskell['exec']  = "%c %o `cygpath -w '%s:p'` | tr -d \"\\r\""
 endif
 
 " }}}

@@ -43,26 +43,8 @@ NeoBundle 'KohPoll/vim-less'
 
 
 " --- --- --- "
-2015年01月24日 23時01分41秒
+" 2015年01月24日 23時01分41秒
 " --- --- --- "
-
-" Insert four spaces when Tab is pressed
-set softtabstop=4
-" Indent intelligently to 'shiftwidth' at the starts of lines with Tab, but
-" use 'tabstop' everywhere else
-set smarttab
-" When indenting lines with < or >, round the indent to a multiple of
-" 'shiftwidth', so even if the line is indented by one space it will indent
-" up to 4 and down to 0, for example
-set shiftround
-
-
-st formatoptions+=j
-
-" Preserve the flags for a pattern when repeating a substitution with &; I don't
-" really understand why this isn't a default, but there it is
-nnoremap & :&&<CR>
-vnoremap & :&&<CR>
 
 " Don't use modelines at all, they're apparently potential security problems
 " and I've never used them anyway
