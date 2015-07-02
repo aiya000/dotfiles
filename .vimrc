@@ -691,7 +691,7 @@ endif
 if neobundle#tap('adrone.vim')
 	call neobundle#config('adrone.vim', {
 	\	'autoload' : {'commands' : [
-	\		'AdroneOpen',
+	\		'AdroneHome',
 	\		'AdroneSay',
 	\		'AdroneVersion'
 	\	]}
