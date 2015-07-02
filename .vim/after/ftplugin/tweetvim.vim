@@ -20,4 +20,4 @@ nunmap           <buffer> ff
 nunmap           <buffer> bb
 
 "@Incomplete('? reset when execute :colorscheme')
-highlight CursorLine term=underline cterm=underline guibg=Grey40
+highlight CursorLine term=standout cterm=standout ctermbg=Black guibg=Grey40
