@@ -1478,8 +1478,8 @@ autocmd FileEvent VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 
 " RelativeNumber is used current window only
 augroup UserEvent
-	autocmd WinEnter * if &number | setl relativenumber | end
-	autocmd Winleave * setl norelativenumber
+	autocmd BufEnter,WinEnter * if &number | setl relativenumber | end
+	autocmd BufLeave,Winleave * setl norelativenumber
 augroup END
 
 
@@ -2019,6 +2019,8 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <Space>k <C-w>k
 	autocmd User MyVimRc nnoremap <Space>l <C-w>l
 
+	autocmd User MyVimRc nnoremap <C-w><C-r> <C-w>r<C-w>p
+
 	autocmd User MyVimRc nnoremap <silent> <C-w>t :<C-u>TabnewOverridden<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>T :<C-u>tabclose<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>c :<C-u>bdelete<CR>
@@ -2026,8 +2028,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-w>N :<C-u>EnewOverridden!<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>Q :<C-u>quitall<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>" :<C-u>resize 5<CR>
-
-	autocmd User MyVimRc nnoremap <C-w><C-r> <C-w>r<C-w>p
 
 	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bt 'mZ:tabnew<CR>`Zzz'          . (foldlevel('.') > 0 ? 'zo' : '')
 	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bT 'mZ:hide<CR>:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : '')
