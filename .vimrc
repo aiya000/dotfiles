@@ -2028,6 +2028,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-w>N :<C-u>EnewOverridden!<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>Q :<C-u>quitall<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>" :<C-u>resize 5<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>~ :<C-u>vertical resize 0<CR>
 
 	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bt 'mZ:tabnew<CR>`Zzz'          . (foldlevel('.') > 0 ? 'zo' : '')
 	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bT 'mZ:hide<CR>:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : '')
