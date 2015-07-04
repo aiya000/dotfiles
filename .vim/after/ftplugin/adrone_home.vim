@@ -1,9 +1,13 @@
 let b:undo_ftplugin = 'setl ' . join([
 \	'wrap<',
-\	'cursorline<'
+\	'cursorline<',
+\	'number<',
+\	'relativenumber<'
 \])
 setl wrap
 setl cursorline
+setl nonumber
+setl norelativenumber
 
 nnoremap <silent><buffer> Q :<C-u>bdelete<CR>
 
