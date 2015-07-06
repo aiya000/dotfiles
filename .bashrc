@@ -95,6 +95,7 @@ alias docker-rm-archives='sudo docker rm `sudo docker ps -a -q`'
 # Environment Conditions {{{
 
 if [ $IS_UBUNTU -eq 1 ] ; then
+	#NOTE: Ubuntu 15.04 removed this
 	#alias ssleep='dbus-send --print-reply --system --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend'
 	alias ssleep='sudo pm-suspend'
 elif [ $IS_CYGWIN -eq 1 ] ; then
@@ -105,6 +106,7 @@ elif [ $IS_CYGWIN -eq 1 ] ; then
 	alias traceroute='cocot tracert'
 	alias route='cocot route'
 	alias netstat='cocot netstat'
+	alias nslookup='cocot nslookup'
 	alias updatedb='updatedb --localpaths="/bin /dev /etc /home /lib /usr /var /opt" --prunepaths="/usr/tmp /var/tmp"'
 	alias mysql='mysql --pager="less -r -S -n -i -F -X" --protocol=TCP'
 fi
