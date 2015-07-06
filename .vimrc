@@ -825,6 +825,9 @@ let g:netrw_preview = 1
 " Place for .netwhist and .netrwbook
 let g:netrw_home = g:vimrc['vim_home']
 
+" Default options for opening netrw
+let g:netrw_bufsettings = 'relativenumber readonly nomodifiable nomodified nowrap nobuflisted'
+
 " }}}
 "--- matchit.vim ---" {{{
 
