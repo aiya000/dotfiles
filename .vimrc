@@ -1008,21 +1008,21 @@ if neobundle#tap('vim-submode')
 		autocmd User MyVimRc call submode#map('tab_move', 'n', 's', 'n', ':call LoopableTabMoveNext()<CR>')
 		autocmd User MyVimRc call submode#map('tab_move', 'n', 's', 'p', ':call LoopableTabMovePrev()<CR>')
 
-		" WinTab Mover
+		" Window Mover
 		" Current buffer move to next tab "{{{
 
 		command! -bar BufTabMovePrev execute 'normal! mZ:hide<CR>gT:vsp<CR>`Z'
 		command! -bar BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? ':hide<CR>' : ':hide<CR>gt') . ':vsp<CR>`Z'
 
 		"}}}
-		autocmd User MyVimRc call submode#enter_with('wintab_move', 'n', '', '<C-s>N', ':BufTabMoveNext<CR>')
-		autocmd User MyVimRc call submode#enter_with('wintab_move', 'n', '', '<C-s>P', ':BufTabMovePrev<CR>')
-		autocmd User MyVimRc call submode#map('wintab_move', 'n', '', 'N', ':BufTabMoveNext<CR>')
-		autocmd User MyVimRc call submode#map('wintab_move', 'n', '', 'P', ':BufTabMovePrev<CR>')
-		autocmd User MyVimRc call submode#map('wintab_move', 'n', '', 'H', '<C-w>H')
-		autocmd User MyVimRc call submode#map('wintab_move', 'n', '', 'J', '<C-w>J')
-		autocmd User MyVimRc call submode#map('wintab_move', 'n', '', 'K', '<C-w>K')
-		autocmd User MyVimRc call submode#map('wintab_move', 'n', '', 'L', '<C-w>L')
+		autocmd User MyVimRc call submode#enter_with('window_move', 'n', '', '<C-s>N', ':BufTabMoveNext<CR>zOzz')
+		autocmd User MyVimRc call submode#enter_with('window_move', 'n', '', '<C-s>P', ':BufTabMovePrev<CR>zOzz')
+		autocmd User MyVimRc call submode#map('window_move', 'n', '', 'N', ':BufTabMoveNext<CR>zOzz')
+		autocmd User MyVimRc call submode#map('window_move', 'n', '', 'P', ':BufTabMovePrev<CR>zOzz')
+		autocmd User MyVimRc call submode#map('window_move', 'n', '', 'H', '<C-w>HzOzz')
+		autocmd User MyVimRc call submode#map('window_move', 'n', '', 'J', '<C-w>JzOzz')
+		autocmd User MyVimRc call submode#map('window_move', 'n', '', 'K', '<C-w>KzOzz')
+		autocmd User MyVimRc call submode#map('window_move', 'n', '', 'L', '<C-w>LzOzz')
 	augroup END
 endif
 
@@ -1169,6 +1169,14 @@ endif
 
 " Specific the ctags generated directory ( We must be sync 'tags' )
 let g:auto_ctags_directory_list = ['.git', '../.git', '../../.git', '../../../.git', '../../../../.git']
+
+"}}}
+"--- unite-tag ---"{{{
+
+"@Incomplete('do not fully shown')
+" Fully showing name
+let g:unite_source_tag_max_name_length  = 100
+let g:unite_source_tag_max_fname_length = 100
 
 "}}}
 "--- For Debug ---"{{{
@@ -2031,6 +2039,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-w>N :<C-u>EnewOverridden!<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>Q :<C-u>quitall<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>" :<C-u>resize 5<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-w>\ :<C-u>resize 0<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>~ :<C-u>vertical resize 0<CR>
 
 	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bt 'mZ:tabnew<CR>`Zzz'          . (foldlevel('.') > 0 ? 'zo' : '')
