@@ -2124,16 +2124,10 @@ augroup KeyMapping
 	autocmd User MyVimRc vnoremap <silent>       :s/        :<C-u>OverCommandLine '<,'>s/<CR>
 	autocmd User MyVimRc cnoremap <silent>       <C-k>:     :<C-u>OverCommandLine<CR>
 	"@Marked('this is temporary keymapping, because vim-over do not imported cnoremap maybe')
-	" please delete this when fixed it
+	"@Marked('please delete this when fixed it')
 	autocmd FileType * OverCommandLineNoremap <C-b>      <Left>
 	autocmd FileType * OverCommandLineNoremap <C-f>      <Right>
-	autocmd FileType * OverCommandLineNoremap <C-a>      <Home>
-	autocmd FileType * OverCommandLineNoremap <C-h>      <BS>
-	autocmd FileType * OverCommandLineNoremap <C-d>      <Del>
-	autocmd FileType * OverCommandLineNoremap <C-e>      <End>
 	"autocmd FileType * OverCommandLineNoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
-	autocmd FileType * OverCommandLineNoremap <C-l>      <Esc>
-	autocmd FileType * OverCommandLineNoremap <C-]>      '<,'>
 
 
 	" anzu-chan
@@ -2252,7 +2246,8 @@ augroup KeyMapping
 	autocmd User MyVimRc cnoremap <C-e>      <End>
 	autocmd User MyVimRc cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[ : getcmdpos() - 2]<CR>
 	autocmd User MyVimRc cnoremap <C-l>      <Esc>
-	autocmd User MyVimRc cnoremap <C-]>      '<,'>
+	autocmd User MyVimRc cnoremap <C-]>      \<\>
+	autocmd User MyVimRc cnoremap <C-g>      '<,'>
 	autocmd User MyVimRc cnoremap <C-k><C-p> <Up>
 	autocmd User MyVimRc cnoremap <C-k><C-n> <Down>
 
