@@ -1,3 +1,5 @@
+# Syntax
+
 snippet template
 abbr    template <T>
     template <typename ${1:T}>
@@ -14,3 +16,9 @@ abbr    for (auto x : xs) {}
     for (${1:auto} ${2:#:x} : ${3:#:xs}) {
         ${0:TARGET}
     }
+
+# Functions
+
+snippet demangle
+abbr    abi::__cxa_demangle(mangled_name, 0, 0, nullptr)
+    abi::__cxa_demangle(${1:#:var}.name(), 0, 0, nullptr)
