@@ -1018,14 +1018,14 @@ if neobundle#tap('vim-submode')
 		command! -bar BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? ':hide<CR>' : ':hide<CR>gt') . ':vsp<CR>`Z'
 
 		"}}}
-		autocmd User MyVimRc call submode#enter_with('window_move', 'n', '', '<C-s>N', ':BufTabMoveNext<CR>zOzz')
-		autocmd User MyVimRc call submode#enter_with('window_move', 'n', '', '<C-s>P', ':BufTabMovePrev<CR>zOzz')
-		autocmd User MyVimRc call submode#map('window_move', 'n', '', 'N', ':BufTabMoveNext<CR>zOzz')
-		autocmd User MyVimRc call submode#map('window_move', 'n', '', 'P', ':BufTabMovePrev<CR>zOzz')
-		autocmd User MyVimRc call submode#map('window_move', 'n', '', 'H', '<C-w>HzOzz')
-		autocmd User MyVimRc call submode#map('window_move', 'n', '', 'J', '<C-w>JzOzz')
-		autocmd User MyVimRc call submode#map('window_move', 'n', '', 'K', '<C-w>KzOzz')
-		autocmd User MyVimRc call submode#map('window_move', 'n', '', 'L', '<C-w>LzOzz')
+		autocmd User MyVimRc call submode#enter_with('window_move', 'n', 'e', '<C-s>N', '":BufTabMoveNext<CR>" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
+		autocmd User MyVimRc call submode#enter_with('window_move', 'n', 'e', '<C-s>P', '":BufTabMovePrev<CR>" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
+		autocmd User MyVimRc call submode#map('window_move', 'n', 'e', 'N', '":BufTabMoveNext<CR>" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
+		autocmd User MyVimRc call submode#map('window_move', 'n', 'e', 'P', '":BufTabMovePrev<CR>" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
+		autocmd User MyVimRc call submode#map('window_move', 'n', 'e', 'H', '"<C-w>H" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
+		autocmd User MyVimRc call submode#map('window_move', 'n', 'e', 'J', '"<C-w>J" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
+		autocmd User MyVimRc call submode#map('window_move', 'n', 'e', 'K', '"<C-w>K" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
+		autocmd User MyVimRc call submode#map('window_move', 'n', 'e', 'L', '"<C-w>L" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
 	augroup END
 endif
 
