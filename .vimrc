@@ -2238,6 +2238,7 @@ augroup KeyMapping
 	"}}}
 	" command line mode "{{{
 
+	autocmd User MyVimRc cmap     <C-]>      \<\>[Left][Left]
 	autocmd User MyVimRc cnoremap <C-b>      <Left>
 	autocmd User MyVimRc cnoremap <C-f>      <Right>
 	autocmd User MyVimRc cnoremap <C-a>      <Home>
@@ -2246,7 +2247,6 @@ augroup KeyMapping
 	autocmd User MyVimRc cnoremap <C-e>      <End>
 	autocmd User MyVimRc cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[ : getcmdpos() - 2]<CR>
 	autocmd User MyVimRc cnoremap <C-l>      <Esc>
-	autocmd User MyVimRc cnoremap <C-]>      \<\>
 	autocmd User MyVimRc cnoremap <C-g>      '<,'>
 	autocmd User MyVimRc cnoremap <C-k><C-p> <Up>
 	autocmd User MyVimRc cnoremap <C-k><C-n> <Down>
