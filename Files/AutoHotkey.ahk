@@ -65,3 +65,12 @@
 	^h::SendInput {BS}
 	^d::SendInput {Del}
 #IfWinActive
+
+; Adobe Reader
+#IfWinActive, ahk_class AcrobatSDIWindow
+	; Easily vimnize
+	h::SendInput {Left}
+	j::SendInput {Down}
+	k::SendInput {Up}
+	l::SendInput {Right}
+#IfWinActive
