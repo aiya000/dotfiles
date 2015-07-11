@@ -1,2 +1,1 @@
-" avoid <C-j> to say
-nnoremap <buffer> <C-j> <NOP>
+execute 'source' (g:vimrc['vim_home'] . '/after/ftplugin/tweetvim_say.vim')

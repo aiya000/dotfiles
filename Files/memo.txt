@@ -503,5 +503,27 @@ augroup END
 
 
 
+"-----------
+" 2015-07-11
+"-----------
+
+" Dont show preview scratch buffers
+set completeopt-=preview
+
+if !has("gui_running")
+  " Color scheme based on time
+  if strftime("%H") < 15
+    let g:rehash256 = 1
+    let g:airline_theme='tomorrow'
+    colorscheme molokai
+  elseif strftime("%H") < 20
+    let g:airline_theme='tomorrow'
+    colorscheme hybrid
+  else
+    let g:airline_theme='gotham'
+    colorscheme gotham
+  endif
+endif
+
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
 vim:ft=vim:
