@@ -67,7 +67,8 @@ new_path=$new_path:$HOME/.dotfiles/bin
 
 # cabal
 [ -d ~/.cabal ] \
-	&& new_path=$new_path:$HOME/.cabal/bin
+	&& new_path=$new_path:$HOME/.cabal/bin \
+	&& new_path=$new_path:./.cabal-sandbox/bin:../.cabal-sandbox/bin:../../.cabal-sandbox/bin
 # pkgsrc
 [ -d ~/pkg ] \
 	&& new_path=$new_path:$HOME/pkg/bin:$HOME/pkg/sbin
