@@ -128,6 +128,9 @@ fi
 # Generate items for autotools
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
+# pull stackage's cabal.config
+alias stackage-kurekure='wget https://www.stackage.org/lts/cabal.config'
+
 #}}}
 # plugins {{{
 
