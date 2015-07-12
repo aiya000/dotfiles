@@ -443,6 +443,7 @@ NeoBundle      'Shougo/neocomplete.vim'
 NeoBundle      'soramugi/auto-ctags.vim'
 NeoBundleLazy  'tsukkee/unite-tag'
 NeoBundleLazy  'osyo-manga/shabadou.vim'
+NeoBundle      'aiya000/vimshell-command-dehanai.vim'
 
 
 "}}}
@@ -1191,6 +1192,7 @@ let s:repos = [ 'arot13.vim'
 \             , 'adrone.vim'
 \             , 'aho-bakaup.vim'
 \             , 'separetaro.vim'
+\             , 'vimshell-command-dehanai.vim'
 \             ]
 
 let s:repos_dir = '~/Repository/'

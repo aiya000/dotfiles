@@ -37,6 +37,7 @@ alias twitter='vim +TweetVimHomeTimeline'
 alias tweet='vim +TweetVimSay'
 alias twitter-public='vim +TwitterPublic'
 alias tweet-public='vim +TweetPublic'
+alias adrone='vim +AdroneHome'
 
 alias vimconfig='vim ~/.vimrc'
 alias gvimconfig='vim ~/.gvimrc'
