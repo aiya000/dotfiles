@@ -2091,15 +2091,12 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <leader>E         :<C-u>Explore<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>E :<C-u>Texplore<CR>
 
-
 	" open-browser.vim
 	autocmd User MyVimRc nmap <leader>w <Plug>(openbrowser-open)
-
 
 	" vim-quickrun
 	autocmd User MyVimRc nnoremap <silent> <leader>R         :<C-u>QuickRun -runner shell<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>r :<C-u>call <SID>bufclose_filetype('quickrun')<CR>
-
 
 	" vimshell
 	autocmd User MyVimRc nnoremap <silent> <leader>v         :<C-u>VimShell -split-command=vsp -toggle<CR>
@@ -2107,16 +2104,13 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <leader>V         :<C-u>VimShellBufferDir -create<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>V :<C-u>VimShell -split-command=tabnew -create<CR>
 
-
 	" Unite
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-h>        :<C-u>Unite -ignorecase neomru/file<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Unite -ignorecase outline<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>u :<C-u>call <SID>bufclose_filetype('unite')<CR>
 
-
 	" excitetranslate-vim
 	autocmd User MyVimRc nnoremap <silent> <leader>T :ExciteTranslate<CR>
-
 
 	" vim-over
 	autocmd User MyVimRc nnoremap <silent>       :%s/       :<C-u>OverCommandLine %s/<CR>
@@ -2131,7 +2125,6 @@ augroup KeyMapping
 	autocmd FileType * OverCommandLineNoremap <C-f>      <Right>
 	"autocmd FileType * OverCommandLineNoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
 
-
 	" anzu-chan
 	autocmd User MyVimRc nmap n      <Plug>(anzu-n-with-echo)zv
 	autocmd User MyVimRc nmap N      <Plug>(anzu-N-with-echo)zv
@@ -2139,7 +2132,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap #      <Plug>(anzu-sharp-with-echo)zv
 	autocmd User MyVimRc nmap <C-w>* <C-w>v<Plug>(anzu-star-with-echo)zv
 	autocmd User MyVimRc nmap <C-w># <C-w>v<Plug>(anzu-sharp-with-echo)zv
-
 
 	" incsearch.vim
 	autocmd User MyVimRc nmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
@@ -2156,26 +2148,21 @@ augroup KeyMapping
 	autocmd FileType * IncSearchNoreMap <C-j> <CR>
 	autocmd FileType * IncSearchNoreMap <C-l> <Esc>
 
-
 	" TaskList.vim
 	autocmd User MyVimRc nmap <silent> <leader>t <Plug>TaskListToggle
-
 
 	" undotree
 	autocmd User MyVimRc nnoremap <silent> <leader>u :<C-u>UndotreeToggle<CR>
 
-
 	" neosnippet.vim
 	autocmd User MyVimRc imap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
 	autocmd User MyVimRc smap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
-
 
 	" separetaro.vim
 	autocmd User MyVimRc nmap <leader>ps <Plug>(separetoro_put_short_under)
 	autocmd User MyVimRc nmap <leader>Ps <Plug>(separetoro_put_short_over)
 	autocmd User MyVimRc nmap <leader>pl <Plug>(separetoro_put_long_under)
 	autocmd User MyVimRc nmap <leader>Pl <Plug>(separetoro_put_long_over)
-
 
 	" neocomplete.vim
 	autocmd User MyVimRc inoremap <silent> <C-k><C-i> <C-o>:NeoCompleteToggle<CR>
