@@ -2015,9 +2015,9 @@ endfunction "}}}
 " Alternate default "{{{
 
 augroup KeyMapping
-	" Default select if duplicated same tag + Open foldings
-	autocmd User MyVimRc nnoremap <C-]>  g<C-]>zO
-	autocmd User MyVimRc nnoremap g<C-]> <C-]>zO
+	" Default select if duplicated same tag
+	autocmd User MyVimRc nnoremap <C-]>  g<C-]>
+	autocmd User MyVimRc nnoremap g<C-]> <C-]>
 augroup END
 
 " "}}}
