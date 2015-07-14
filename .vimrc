@@ -2015,9 +2015,10 @@ endfunction "}}}
 " Alternate default "{{{
 
 augroup KeyMapping
-	" Default select myself if duplicated same tag
-	autocmd User MyVimRc nnoremap <C-]>  g<C-]>
-	autocmd User MyVimRc nnoremap g<C-]> <C-]>
+	"@Bugs('if do not exists fold')
+	" Exchange tagjump keys + Open foldings
+	autocmd User MyVimRc nnoremap <C-]>  g<C-]>zOzz
+	autocmd User MyVimRc nnoremap g<C-]> <C-]>zOzz
 augroup END
 
 " "}}}
