@@ -25,3 +25,14 @@ alias   internals asmInternalsVisibleTo
     #pragma warning disable 0657
     [assembly: InternalsVisibleTo("${1:#:FriendName}")]
     #pragma warning restore 0657${0}
+
+snippet debugger_display_attr
+alias   ddisp
+    [DebuggerDisplayAttribute("${1:#:Name} = {${2:#:Member}}")]${0}
+
+
+# Append
+snippet else
+    else {
+        ${0:TARGET}
+    }

@@ -2015,7 +2015,7 @@ endfunction "}}}
 " Alternate default "{{{
 
 augroup KeyMapping
-	" Default select if duplicated same tag
+	" Default select myself if duplicated same tag
 	autocmd User MyVimRc nnoremap <C-]>  g<C-]>
 	autocmd User MyVimRc nnoremap g<C-]> <C-]>
 augroup END
