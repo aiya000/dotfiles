@@ -20,7 +20,6 @@
 ; Firefox ( and Thunderbird )
 #IfWinActive, ahk_class MozillaWindowClass
 	; Support vimperator
-	^a::SendInput {Home}
 	^e::SendInput {End}
 	^j::SendInput {Enter}
 	^h::SendInput {BS}
