@@ -1460,16 +1460,15 @@ endif
 "-------------------------"
 "{{{
 
-" Save Cursor Position when file closed
-function! s:visit_past_position() "{{{
+augroup FileEvent
+	" Save Cursor Position when file closed
+	function! s:visit_past_position() "{{{
 		let l:past_posit = line("'\"")
 
 		if l:past_posit > 0 && l:past_posit <= line('$')
 			execute 'normal! g`"'
 		endif
 	endfunction "}}}
-
-augroup FileEvent
 	autocmd BufReadPost * call s:visit_past_position()
 
 	" Auto load filetype dictionary
@@ -1496,6 +1495,13 @@ autocmd FileEvent VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 augroup UserEvent
 	autocmd BufEnter,WinEnter * if &number | setl relativenumber | end
 	autocmd BufLeave,Winleave * setl norelativenumber
+augroup END
+
+
+" Hide relativenumber on OverCommandLine Enter
+augroup UserEvent
+	autocmd User OverCmdLineEnter setl norelativenumber
+	autocmd User OverCmdLineLeave if &number | setl relativenumber | end
 augroup END
 
 
