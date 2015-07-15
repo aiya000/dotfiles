@@ -93,6 +93,8 @@ nnoremap <silent> m: :<C-u>marks<CR>
 
 
 " Movement on the insert mode
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
 inoremap <C-p> <Up>
 inoremap <C-n> <Down>
 inoremap <C-b> <Left>
@@ -104,7 +106,6 @@ inoremap <C-.> <S-Right>
 inoremap <C-[> <S-Up>
 inoremap <C-]> <S-Down>
 
-inoremap <C-a>      <NOP>
 inoremap <C-x>      <NOP>
 inoremap <C-c>      <NOP>
 inoremap <C-v>      <NOP>
