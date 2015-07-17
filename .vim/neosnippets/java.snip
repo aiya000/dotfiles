@@ -1,0 +1,19 @@
+snippet try_finally
+alias   try_f
+abbr    try {} finally {}
+    try {
+        ${0:TARGET}
+    } finally {
+        ${1}
+    }
+
+snippet try_catch_finally
+alias   try_cf
+abbr    try {} catch () {} finally {}
+    try {
+        ${0:TARGET}
+    } catch (${1:#:Exception} ${2:#:e}) {
+        ${3}
+    } finally {
+        ${4}
+    }
