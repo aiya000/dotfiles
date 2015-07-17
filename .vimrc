@@ -1595,32 +1595,33 @@ command! -range=% ReverseLine :<line1>, <line2>call s:reverse_line()
 
 
 " Rename current buffer file
-function! s:rename_to(to_file) abort "{{{
-	let l:this_file    = fnameescape(expand('%:t'))
-	let l:to_file      = fnameescape(a:to_file)
+function! s:rename_to(new_name) abort "{{{
+	let l:this_file = fnameescape(expand('%'))
+	let l:new_name  = fnameescape(a:new_name)
 
-	if fnamemodify(l:this_file, '%h') ==# fnamemodify(l:to_file, '%h')
+	if fnamemodify(l:this_file, ':t') ==# l:new_name
 		call s:echo_error('New name is same old name, operation abort')
 		return
 	endif
 
-	let l:editing_file = &modified
-	if l:editing_file
+	let l:file_editing = &modified
+	if l:file_editing
 		call s:echo_error('Please :write this file')
 		return
 	endif
 
-	let l:failed = rename(l:this_file, l:to_file)
+	let l:new_file = fnamemodify(l:this_file, ':h') . '/' . l:new_name
+	let l:failed   = rename(l:this_file, l:new_file)
 	if l:failed
-		call s:echo_error(printf('Rename %s to %s is failed', l:this_file, a:to_file))
+		call s:echo_error(printf('Rename %s to %s is failed', l:this_file, l:new_file))
 		return
 	endif
 
-	execute ':edit' l:to_file
+	execute ':edit' l:new_file
 	silent write
-	silent execute ':bdelete' fnamemodify(l:this_file, '%h')
+	silent execute ':bdelete' l:this_file
 
-	echo printf('Renamed %s to %s', l:this_file, l:to_file)
+	echo printf('Renamed %s to %s', l:this_file, l:new_file)
 endfunction "}}}
 command! -bar -nargs=1 -complete=file Rename call s:rename_to(<q-args>)
 
