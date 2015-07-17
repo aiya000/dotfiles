@@ -284,7 +284,7 @@ function! s:fetch_neobundle() " {{{
 		echo 'NeoBundle was not installed...'
 		echo 'Installing NeoBundle.'
 
-		execute '!git clone http://github.com/Shougo/neobundle.vim' s:neobundledir
+		execute '!git clone https://github.com/Shougo/neobundle.vim' s:neobundledir
 	else
 		call s:echo_error('Sorry, You do not have git command.')
 		call s:echo_error('Cannot introduce NeoBundle.')
