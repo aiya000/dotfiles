@@ -1957,6 +1957,21 @@ function! s:toggle_foldmethod() "{{{
 endfunction "}}}
 
 
+" Toggle diffthis - diffoff
+function! s:toggle_diff() "{{{
+	if &diff
+		diffoff
+		nunmap <buffer> {
+		nunmap <buffer> }
+	else
+		diffthis
+		nnoremap <buffer> { [c
+		nnoremap <buffer> } ]c
+	endif
+	set diff?
+endfunction "}}}
+
+
 " Optimize key operation to one hand
 " function! s:toggle_onehand_mode() "{{{
 
@@ -2072,7 +2087,7 @@ augroup END
 
 augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent>       <C-h><C-f> :<C-u>call <SID>toggle_foldmethod()<CR>
-	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-d> (&diff ? ':diffoff' : ':diffthis') . '\|set diff?<CR>'
+	autocmd User MyVimRc nnoremap <silent>       <C-h><C-d> :<C-u>call <SID>toggle_diff()<CR>
 	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
 
 	autocmd User MyVimRc nnoremap <silent> <C-h>jk    :<C-u>call <SID>toggle_onehand_mode()<CR>
