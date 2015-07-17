@@ -1594,7 +1594,7 @@ endfunction " }}}
 command! -range=% ReverseLine :<line1>, <line2>call s:reverse_line()
 
 
-" Rename current buffer file
+" Rename file of current buffer
 function! s:rename_to(new_name) abort "{{{
 	let l:this_file = fnameescape(expand('%'))
 	let l:new_name  = fnameescape(a:new_name)

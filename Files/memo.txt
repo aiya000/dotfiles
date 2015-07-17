@@ -41,34 +41,16 @@ NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'KohPoll/vim-less'
 
 
-
-" --- --- --- "
-" 2015年01月24日 23時01分41秒
-" --- --- --- "
-
-" Don't assume a number with a leading zero is octal; it's far more likely a
-" zero-padded decimal, so increment and decrement with ^A and ^X on that basis
-set nrformats-=octal
-
-" Allow jumping between windows and tabs to find an open instance of a given
-" buffer with :sbuffer.
-if v:version >= 701
-  set switchbuf=useopen,usetab
-else
-  set switchbuf=useopen
-endif
-
-
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
 " mtth
 
 
 set diffopt=filler,vertical
-set eadirection=hor                                                         " only resize automatically horizontally (cf. ``equalalways`` option)
-set nostartofline                                                           " keeps cursor on current column for movements like H, M, ...
-set shellredir=>%s\ 2>&1                                                    " otherwise syntastic isn't able to pick up checker versions
-set comments-=:%                                                            " these shouldn't be considered comments by default
+set eadirection=hor " only resize automatically horizontally (cf. ``equalalways`` option)
+set nostartofline " keeps cursor on current column for movements like H, M, ...
+set shellredir=>%s\ 2>&1 " otherwise syntastic isn't able to pick up checker versions
+set comments-=:% " these shouldn't be considered comments by default
 set formatlistpat=^\\s*\\(\\d\\(\\d\\ze\\d*[\\]:.)}]\\\|[\\]:.)}]\\ze\\)\\\|:[^:]\\ze[^:]*:\\\|[*+-]\\)\\s
 if v:version >=# 704
   set formatoptions=rqnlj                                                   " only manual formatting by default
