@@ -45,6 +45,8 @@ alias vimshconfig='vim ~/.vimshrc'
 alias vim-bashrc='vim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
 alias vim-bashpr='vim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
 
+alias ubuntu-vim-build-configure='./configure --with-features=huge --enable-gui=gnome2 --enable-perlinterp --enable-rubyinterp --enable-luainterp --enable-fail-if-missing'
+
 # with conditions {{{
 
 # .bash_profile specified environment
