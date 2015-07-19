@@ -1,13 +1,16 @@
 snippet func
+abbr    func () {}
     func ${1:#:funcName}(${2})${3:#:int} {
         ${0:#:return}
     }
 
 snippet print
+abbr    fmt.Print()
     fmt.Print(${0})
 
 snippet import
 alias   imp
+abbr    import ()
     import (
         "${1:fmt}"
         ${2}
@@ -15,13 +18,15 @@ alias   imp
     ${0}
 
 snippet else
-alias   el
+abbr    else {}
     else {
         ${0}
     }
 
 snippet fprint
+abbr    fmt.Fprint()
     fmt.Fprint(${1:os.Stderr}, ${2:err})
 
 snippet fprintln
+abbr    fmt.Fprintln()
     fmt.Fprintln(${1:os.Stderr}, ${2:err})
