@@ -942,6 +942,8 @@ let g:w3m#homepage = 'http://www.google.co.jp/'
 " Auto output debug log to console
 let g:vimconsole#auto_redraw = 1
 
+let g:vimconsole#no_default_key_mappings = 1
+
 "}}}
 "--- foldCC ---"{{{
 
