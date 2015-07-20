@@ -1,37 +1,44 @@
 snippet Describe
 alias   desc describe
+abbr    Describe ~ End
     Describe ${1:#:subject}
         ${0:TARGET}
     End
 
 snippet Before
 alias   bef before
+abbr    Before ~ End
     Before${1: all}
         ${0:TARGET}
     End
 
 snippet After
 alias   af after
+abbr    After ~ End
     After${1: all}
         ${0:TARGET}
     End
 
 snippet Context
 alias   con cont context
+abbr    Context ~ End
     Context ${1:#:subject}
         ${0:TARGET}
     End
 
 snippet It
 alias   it
+abbr    It ~ End
     It ${1:#:sentence}
         ${0:TARGET}
     End
 
 snippet Assert
 alias   ass assert
+abbr    Assert ()
     Assert (${0:#:condition})
 
 snippet AssertEquals
 alias   asseq asserteq assertequals
+abbr    Assert Equals()
     Assert Equals(${1:#:val1}, ${2:#:val2})
