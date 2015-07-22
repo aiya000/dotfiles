@@ -1236,7 +1236,7 @@ set laststatus=2
 
 "@See('http://sourceforge.jp/magazine/07/11/06/0151231')
 " Status Bar format
-set statusline=%F%m\%=\ \ [FileType=%y][Format=%{&fileencoding}][Encode=%{&encoding}][%4l,%4v]
+set statusline=%F%m\%=\ \ [FileType=%y][Format=%{&fileencoding}][Encode=%{&encoding}]
 
 " ☆ Fix View 2byte Code (Not support gnome-terminal)
 set ambiwidth=double
