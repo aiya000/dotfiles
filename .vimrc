@@ -30,8 +30,6 @@
 
 "-- Unite outline ? -> view C-Sharp <summary>~</summary> with method name
 
-"-- separetaro.vim -> operator between separetor (long|short) and separator (long|short)
-
 "-- Buffer Memo of Marks
 
 "-- Easily yank current line in function
@@ -1016,6 +1014,7 @@ if neobundle#tap('vim-submode')
 		" Window Mover
 		" Current buffer move to next tab "{{{
 
+		"Incomplete('if winnum in tab is 1')
 		command! -bar BufTabMovePrev execute 'normal! mZ:hide<CR>gT:vsp<CR>`Z'
 		command! -bar BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? ':hide<CR>' : ':hide<CR>gt') . ':vsp<CR>`Z'
 
