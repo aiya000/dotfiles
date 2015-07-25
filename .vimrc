@@ -58,6 +58,8 @@
 
 "-- lost filetype highlight when running quickrun vim script (reason is 'shabadou.vim' ?)
 
+"-- neovim prefs exclude from here
+
 "}}}
 " Todo {{{
 
@@ -436,7 +438,7 @@ NeoBundle      'tpope/vim-surround'
 NeoBundle      'kana/vim-textobj-user'
 NeoBundleLazy  'osyo-manga/vim-itunes-bgm'
 NeoBundle      'kana/vim-textobj-indent'
-NeoBundle      'Shougo/neocomplete.vim'
+NeoBundle      (has('nvim') ? 'Shougo/deoplete.nvim' : 'Shougo/neocomplete.vim')
 NeoBundle      'soramugi/auto-ctags.vim'
 NeoBundleLazy  'tsukkee/unite-tag'
 NeoBundleLazy  'osyo-manga/shabadou.vim'
@@ -1161,6 +1163,13 @@ let g:neocomplete#sources#dictionary#dictionaries = {
 \	'default'  : '',
 \	'vimshell' : expand('~/vimshell_history')
 \}
+
+"}}}
+"--- deoplete.nvim ---"{{{
+
+if has('nvim')
+	let g:deoplete#enable_at_startup = 1
+endif
 
 "}}}
 "--- auto-ctags.vim ---"{{{
@@ -2187,12 +2196,17 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap <leader>pl <Plug>(separetoro_put_long_under)
 	autocmd User MyVimRc nmap <leader>Pl <Plug>(separetoro_put_long_over)
 
-	" neocomplete.vim
-	autocmd User MyVimRc inoremap <silent> <C-k><C-i> <C-o>:NeoCompleteToggle<CR>
-	autocmd User MyVimRc inoremap <expr>   <CR>  neocomplete#close_popup()  . '<CR>'
-	autocmd User MyVimRc inoremap <expr>   <Tab> neocomplete#close_popup()  . '<Tab>'
-	autocmd User MyVimRc inoremap <expr>   <C-y> neocomplete#cancel_popup() . '<C-y>'
-	autocmd User MyVimRc inoremap <expr>   <C-e> neocomplete#cancel_popup() . '<C-e>'
+	" neocomplete.vim or deoplete.nvim
+	if has('nvim')
+		autocmd User MyVimRc inoremap <expr>   <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
+		autocmd User MyVimRc inoremap <expr>   <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
+	else
+		autocmd User MyVimRc inoremap <silent> <C-k><C-i> <C-o>:NeoCompleteToggle<CR>
+		autocmd User MyVimRc inoremap <expr>   <CR>  neocomplete#close_popup()  . '<CR>'
+		autocmd User MyVimRc inoremap <expr>   <Tab> neocomplete#close_popup()  . '<Tab>'
+		autocmd User MyVimRc inoremap <expr>   <C-y> neocomplete#cancel_popup() . '<C-y>'
+		autocmd User MyVimRc inoremap <expr>   <C-e> neocomplete#cancel_popup() . '<C-e>'
+	endif
 augroup END
 
 " }}}
