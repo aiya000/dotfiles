@@ -65,6 +65,9 @@ export GOPATH=~/.GoPath
 new_path=$HOME/bin:$HOME/sbin
 new_path=$new_path:$HOME/.dotfiles/bin
 
+# stack
+[ -d ~/.stack ] \
+	&& new_path=$new_path:$HOME/.stack/programs/x86_64-linux/ghc-7.8.4/bin
 # cabal
 [ -d ~/.cabal ] \
 	&& new_path=$new_path:$HOME/.cabal/bin \
@@ -85,6 +88,9 @@ new_path=$new_path:$HOME/.dotfiles/bin
 	&& export PYENV_ROOT=~/.pyenv \
 	&& new_path=$new_path:$PYENV_ROOT/bin \
 	&& eval "$($HOME/.pyenv/bin/pyenv init -)"
+# some binaries from some languages
+[ -d ~/.local ] \
+	&& new_path=$new_path:$HOME/.local/bin
 
 # and basics
 new_path=$new_path:/bin:/sbin
