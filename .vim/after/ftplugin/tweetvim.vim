@@ -18,6 +18,3 @@ nmap             <buffer> <              <Plug>(tweetvim_action_page_previous)
 
 nunmap           <buffer> ff
 nunmap           <buffer> bb
-
-"@Incomplete('? reset when execute :colorscheme')
-highlight CursorLine term=standout cterm=standout ctermbg=Blue guibg=Grey40
