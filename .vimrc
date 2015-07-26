@@ -1888,7 +1888,6 @@ augroup END
 
 " Prepare functions {{{
 
-
 " Compress continuous space
 function! s:compress_spaces() "{{{
 	let l:recent_pattern = @/
@@ -2040,7 +2039,6 @@ function! s:toggle_netrw_vexplorer() "{{{
 		Vexplore
 	endif
 endfunction "}}}
-
 
 " }}}
 " Alternate default "{{{

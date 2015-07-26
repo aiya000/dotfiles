@@ -48,20 +48,47 @@ augroup END
 "-------------------------"
 " Global {{{
 
+" Prepare functions {{{
+
+" Toggle keymapping <leader>V (and etc) to :terminal or vimshell
+function! s:toggle_start_shell_mode() "{{{
+	let s:start_shell_mode = get(s:, 'start_shell_mode', ':VimShell')
+	\                        ==# ':VimShell' ? ':terminal'
+	\                                        : ':VimShell'
+	if s:start_shell_mode ==# ':terminal'
+		nnoremap <silent> <leader>v         :<C-u>VimShell -split-command=vsp -toggle<CR>
+		nnoremap <silent> <leader><leader>v :<C-u>VimShell -split-command=sp  -toggle<CR>
+		nnoremap <silent> <leader>V         :<C-u>VimShellBufferDir -create<CR>
+		nnoremap <silent> <leader><leader>V :<C-u>VimShell -split-command=tabnew -create<CR>
+		echo 'shell mode :VimShell'
+	elseif s:start_shell_mode ==# ':VimShell'
+		nnoremap <silent> <leader>v         :<C-u>vsp    \| terminal<CR>
+		nnoremap <silent> <leader><leader>v :<C-u>sp     \| terminal<CR>
+		nnoremap <silent> <leader>V         :<C-u>terminal<CR>
+		nnoremap <silent> <leader><leader>V :<C-u>tabnew \| terminal<CR>
+		echo 'shell mode :terminal'
+	endif
+endfunction "}}}
+
+" }}}
+
 augroup NeoKeyMapping
 	" terminal mode "{{{
 
-	autocmd User MyNVimRc tnoremap <C-l> <C-\><C-n>
+	" <C-l> is default Escape
+	autocmd User MyNVimRc tnoremap <C-l>      <C-\><C-n>
 	autocmd User MyNVimRc tnoremap <C-\><C-n> <Esc>
 	autocmd User MyNVimRc tnoremap <C-]>      <C-l>
 
 	"}}}
 	" normal mode "{{{
 
+	" Start shell
 	autocmd User MyNVimRc nnoremap <silent> <leader>v         :<C-u>vsp    \| terminal<CR>
 	autocmd User MyNVimRc nnoremap <silent> <leader><leader>v :<C-u>sp     \| terminal<CR>
 	autocmd User MyNVimRc nnoremap <silent> <leader>V         :<C-u>terminal<CR>
 	autocmd User MyNVimRc nnoremap <silent> <leader><leader>V :<C-u>tabnew \| terminal<CR>
+	autocmd User MyNVimRc nnoremap <silent> <C-\><C-v>        :<C-u>call <SID>toggle_start_shell_mode()<CR>
 
 	"}}}
 augroup END
