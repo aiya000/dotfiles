@@ -79,6 +79,8 @@
 "
 "-- read help syntax.txt
 
+"-- quickrun pref of stack project
+
 " }}}
 
 
@@ -1794,6 +1796,18 @@ command!  Sghci    NOP
 command!  Vghci    NOP
 command!  GhciTab  NOP
 command!  Hoogle   NOP
+
+
+" stack GHCi
+cnoreabbr GhciSt     VimShellInteractive stack ghci
+cnoreabbr SghciSt    VimShellInteractive --split='sp' stack ghci
+cnoreabbr VghciSt    VimShellInteractive --split='vsp' stack ghci
+cnoreabbr GhciStTab  VimShellInteractive --split='tabnew' stack ghci
+
+command!  GhciSt     NOP
+command!  SghciSt    NOP
+command!  VghciSt    NOP
+command!  GhciStTab  NOP
 
 
 " js

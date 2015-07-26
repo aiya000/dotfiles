@@ -107,6 +107,12 @@ cnoreabbr Sghci   sp     \| terminal ghci
 cnoreabbr Vghci   vsp    \| terminal ghci
 cnoreabbr GhciTab tabnew \| terminal ghci
 
+" stack GHCi
+cnoreabbr GhciSt    terminal stack ghci
+cnoreabbr SghciSt   sp     \| terminal stack ghci
+cnoreabbr VghciSt   vsp    \| terminal stack ghci
+cnoreabbr GhciStTab tabnew \| terminal stack ghci
+
 
 " js
 cnoreabbr Js      terminal js
