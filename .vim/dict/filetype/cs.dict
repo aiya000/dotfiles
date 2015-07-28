@@ -1,4 +1,9 @@
 ArgumentException
+CellContentClick
+DataGridView
+DataGridViewCellEventArgs
+DataGridViewRow
+DataGridViewRowCollection
 IWorkbook
 IWorksheet
 InvalidOperationException
