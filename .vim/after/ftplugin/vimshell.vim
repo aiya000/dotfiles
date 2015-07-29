@@ -19,6 +19,7 @@ nnoremap <buffer> q          <NOP>
 nnoremap <buffer> <C-l>      <NOP>
 
 
+nmap     <buffer> <C-w><C-c> <Plug>(vimshell_exit)
 nmap     <buffer> <C-]>      <Plug>(vimshell_clear)
 nmap     <buffer> gj         <Plug>(vimshell_next_prompt)
 nmap     <buffer> gk         <Plug>(vimshell_previous_prompt)
