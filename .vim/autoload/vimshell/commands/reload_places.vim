@@ -15,10 +15,11 @@ endfunction
 
 
 function! s:command.execute(args, context)
-	let l:file = g:vimshell_hereis_file
-	if !filereadable(l:file)
-		echoerr 'no such places file'
+	if !filereadable(g:vimshell_hereis_file)
+		call vimshell#interactive#send('echo "!!!>> no such places file!!!"')
+		call vimshell#interactive#send('echo "!!!>> please check value of g:vimshell_hereis_file!!!"')
 	else
-		call vimshell#interactive#send('vimsh ' . l:file)
+		call vimshell#interactive#send('vimsh ' . g:vimshell_hereis_file)
+		call vimshell#interactive#send('echo "place file reloaded"')
 	endif
 endfunction

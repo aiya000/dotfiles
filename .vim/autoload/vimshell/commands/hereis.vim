@@ -15,9 +15,10 @@ endfunction
 
 
 function! s:command.execute(args, context)
-	let l:name = substitute(a:args[0], '\s', '', 'g')
+	let l:name      = substitute(a:args[0], '\s', '', 'g')
 	let l:new_alias = printf("alias %s='cd \"%s\"'\<CR>", l:name, getcwd())
 
 	call writefile([l:new_alias], g:vimshell_hereis_file, 'a')
 	call vimshell#interactive#send('vimsh ' . g:vimshell_hereis_file)
+	call vimshell#interactive#send('echo "place file reloaded"')
 endfunction
