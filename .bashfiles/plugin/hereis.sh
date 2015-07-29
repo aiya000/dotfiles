@@ -1,11 +1,9 @@
 #!/bin/bash
 
-
 # Export default environment values
 if [ -z "$HEREIS_PLACES_FILE" ]; then
 	export $HEREIS_PLACES_FILE=~/.bashrc_hereis_places
 fi
-
 
 # Register directory path to file, and Easily cd there
 if [ -f "$HEREIS_PLACES_FILE" ] ; then
@@ -24,9 +22,11 @@ alias edit-places="vim ${HEREIS_PLACES_FILE} && reload-places"
 # Define register command
 function hereis () {
 	place_name=$1
-	alias_body="${place_name}='cd \"`pwd`\"'"
+	place_path="\"`pwd`\""
+	alias_body="${place_name}='cd ${place_path}'"
 
-	echo "alias ${alias_body}" >> "$HEREIS_PLACES_FILE"
+	echo "alias ${alias_body}"         >> "$HEREIS_PLACES_FILE"
+	echo "${place_name}=${place_path}" >> "$HEREIS_PLACES_FILE"
 	echo "here is '${1}'"
 
 	reload-places

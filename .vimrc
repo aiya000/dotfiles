@@ -920,8 +920,9 @@ let g:vimshell_max_command_history          = 10000
 let g:vimshell_scrollback_limit             = 10000
 let g:vimshell_split_command                = 'split'
 
+"@See('autoload/vimshell/commands/{hereis,edit_places,places,reload_places}.vim')
 " The cd aliases reference to here
-let g:vimshell_hereis_file = expand('~/.bashrc_places')
+let g:vimshell_hereis_file = expand('~/.vimshrc_places.vimsh')
 
 "}}}
 "--- vimshell-kawaii.vim ---"{{{
