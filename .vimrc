@@ -449,6 +449,7 @@ NeoBundle      'soramugi/auto-ctags.vim'
 NeoBundleLazy  'tsukkee/unite-tag'
 NeoBundleLazy  'osyo-manga/shabadou.vim'
 NeoBundle      'aiya000/vimshell-command-dehanai.vim'
+NeoBundle      'osyo-manga/vim-textobj-from_regexp'
 
 
 "}}}
@@ -2317,6 +2318,9 @@ augroup KeyMapping
 	autocmd User MyVimRc vmap ai <Plug>(textobj-indent-a)
 	autocmd User MyVimRc vmap ii <Plug>(textobj-indent-i)
 
+	" textobj-from_regexp
+	autocmd User MyVimRc vmap <expr> i_ textobj#from_regexp#mapexpr('[A-z0-9]\+')
+
 	"}}}
 	" select mode "{{{
 
@@ -2340,6 +2344,9 @@ augroup KeyMapping
 	" textobj-indent
 	autocmd User MyVimRc omap ai <Plug>(textobj-indent-a)
 	autocmd User MyVimRc omap ii <Plug>(textobj-indent-i)
+
+	" textobj-from_regexp
+	autocmd User MyVimRc omap <expr> i_ textobj#from_regexp#mapexpr('[A-z0-9]\+')
 
 	"}}}
 	" digraph "{{{
