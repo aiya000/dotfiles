@@ -818,6 +818,12 @@ if neobundle#tap('shabadou.vim')
 	\})
 	call neobundle#untap()
 endif
+if neobundle#tap('vim-textobj-from_regexp')
+	call neobundle#config('vim-textobj-from_regexp', {
+	\	'depends' : 'vim-textobj-user'
+	\})
+	call neobundle#untap()
+endif
 
 call neobundle#end()
 
@@ -2290,25 +2296,13 @@ augroup KeyMapping
 	autocmd User MyVimRc cnoremap <C-d>      <Del>
 	autocmd User MyVimRc cnoremap <C-e>      <End>
 	autocmd User MyVimRc cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[ : getcmdpos() - 2]<CR>
-	autocmd User MyVimRc cnoremap <C-l>      <Esc>
+	autocmd User MyVimRc cnoremap <C-l>      <C-c>
 	autocmd User MyVimRc cnoremap <C-g>      '<,'>
 	autocmd User MyVimRc cnoremap <C-k><C-p> <Up>
 	autocmd User MyVimRc cnoremap <C-k><C-n> <Down>
 
 	"}}}
 	" visual mode "{{{
-
-	autocmd User MyVimRc vnoremap <C-l> <Esc>
-	autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
-	autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
-	autocmd User MyVimRc vnoremap <silent> i= :Alignta =/1<CR>
-	autocmd User MyVimRc vnoremap a% V%
-	autocmd User MyVimRc vnoremap A% V$%
-
-	" Don't select blank
-	autocmd User MyVimRc vnoremap a" 2i"
-	autocmd User MyVimRc vnoremap a' 2i'
-	autocmd User MyVimRc vnoremap a` 2i`
 
 	" textobj-function
 	autocmd User MyVimRc vmap af <Plug>(textobj-function-a)
@@ -2320,6 +2314,18 @@ augroup KeyMapping
 
 	" textobj-from_regexp
 	autocmd User MyVimRc vmap <expr> i_ textobj#from_regexp#mapexpr('[A-z0-9]\+')
+	autocmd User MyVimRc vmap <expr> il textobj#from_regexp#mapexpr('^.*$')
+	autocmd User MyVimRc vmap <expr> iu textobj#from_regexp#mapexpr('https\?\/\/\S\+')
+
+	autocmd User MyVimRc vnoremap <C-l> <Esc>
+	autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
+	autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
+	autocmd User MyVimRc vnoremap <silent> i=        :Alignta =/1<CR>
+
+	" Don't select blank
+	autocmd User MyVimRc vnoremap a" 2i"
+	autocmd User MyVimRc vnoremap a' 2i'
+	autocmd User MyVimRc vnoremap a` 2i`
 
 	"}}}
 	" select mode "{{{
@@ -2328,14 +2334,6 @@ augroup KeyMapping
 
 	"}}}
 	" operator "{{{
-
-	autocmd User MyVimRc onoremap a% V%
-	autocmd User MyVimRc onoremap A% V$%
-
-	" Don't select blank
-	autocmd User MyVimRc onoremap a" 2i"
-	autocmd User MyVimRc onoremap a' 2i'
-	autocmd User MyVimRc onoremap a` 2i`
 
 	" textobj-function
 	autocmd User MyVimRc omap af <Plug>(textobj-function-a)
@@ -2347,6 +2345,13 @@ augroup KeyMapping
 
 	" textobj-from_regexp
 	autocmd User MyVimRc omap <expr> i_ textobj#from_regexp#mapexpr('[A-z0-9]\+')
+	autocmd User MyVimRc omap <expr> il textobj#from_regexp#mapexpr('^.*$')
+	autocmd User MyVimRc omap <expr> iu textobj#from_regexp#mapexpr('https\?\/\/\S\+')
+
+	" Don't select blank
+	autocmd User MyVimRc onoremap a" 2i"
+	autocmd User MyVimRc onoremap a' 2i'
+	autocmd User MyVimRc onoremap a` 2i`
 
 	"}}}
 	" digraph "{{{
