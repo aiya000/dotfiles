@@ -14,6 +14,9 @@ alias sp=':VimShellCreate -split-command=sp'
 alias tabnew=':VimShellCreate -split-command=tabnew'
 alias lcd='cd .'
 
+# NeoVim? Config
+alias nvim="vim"
+
 # Shell Config
 alias reload='vimsh ~/.vimshrc'
 alias mv='mv -i'
