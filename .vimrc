@@ -2174,7 +2174,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine %s/\<' . expand('<cword>') . '\>/<CR>'
 	autocmd User MyVimRc nnoremap <silent><expr> <C-k>s     ':OverCommandLine %s/\<' . expand('<cword>') . '\>/' . expand('<cword>') . '<CR>'
 	autocmd User MyVimRc vnoremap <silent>       :s/        :<C-u>OverCommandLine '<,'>s/<CR>
-	autocmd User MyVimRc cnoremap <silent>       <C-k>:     :<Home>OverCommandLine <CR>
+	autocmd User MyVimRc cnoremap <silent>       <C-k>:     <Home>OverCommandLine <CR>
 	"@Marked('this is temporary keymapping, because vim-over do not imported cnoremap maybe')
 	"@Marked('please delete this when fixed it')
 	autocmd FileType * OverCommandLineNoremap <C-b>      <Left>
