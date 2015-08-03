@@ -73,3 +73,42 @@
 	k::SendInput {Up}
 	l::SendInput {Right}
 #IfWinActive
+
+; Slack
+#IfWinActive, ahk_class Chrome_WidgetWin_1
+	^p::SendInput {Up}
+	^n::SendInput {Down}
+	^f::SendInput {Right}
+	^b::SendInput {Left}
+	^a::SendInput {Home}
+	^e::SendInput {End}
+	^j::SendInput {Enter}
+	^u::SendInput +{Home}{BS}
+	^k::SendInput +{End}{BS}
+	^h::SendInput {BS}
+	^d::SendInput {Del}
+	^,::SendInput +{Left}
+	^.::SendInput +{Right}
+	^[::SendInput +{Up}
+	^]::SendInput +{Down}
+#IfWinActive
+
+; Notepad
+#IfWinActive, ahk_class Notepad
+	^p::SendInput {Up}
+	^n::SendInput {Down}
+	^f::SendInput {Right}
+	^b::SendInput {Left}
+	^a::SendInput {Home}
+	^e::SendInput {End}
+	^j::SendInput {Enter}
+	^u::SendInput +{Home}{BS}
+	^k::SendInput +{End}{BS}
+	^h::SendInput {BS}
+	^d::SendInput {Del}
+	Ctrl & Enter::SendInput {Tab}{Enter}
+	^,::SendInput +{Left}
+	^.::SendInput +{Right}
+	^[::SendInput +{Up}
+	^]::SendInput +{Down}
+#IfWinActive
