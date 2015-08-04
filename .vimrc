@@ -2250,8 +2250,8 @@ augroup KeyMapping
 
 	autocmd User MyVimRc nnoremap <silent> m: :<C-u>marks<CR>
 	autocmd User MyVimRc nnoremap <silent> q: :<C-u>register<CR>
-	autocmd User MyVimRc nnoremap <silent> g: :<C-u>tabs<CR>
-	autocmd User MyVimRc nnoremap <silent> z: :<C-u>buffers<CR>
+	autocmd User MyVimRc nnoremap <silent> g: :<C-u>buffers<CR>
+	autocmd User MyVimRc nnoremap <silent> z: :<C-u>tabs<CR>
 	autocmd User MyVimRc nnoremap <silent> g> :<C-u>messages<CR>
 	autocmd User MyVimRc nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
 	autocmd User MyVimRc nnoremap <silent> <Space><Space>   :<C-u>call <SID>compress_spaces()<CR>
