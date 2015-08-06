@@ -91,6 +91,7 @@
 	^.::SendInput +{Right}
 	^[::SendInput +{Up}
 	^]::SendInput +{Down}
+	!j::SendInput ^{Enter}
 #IfWinActive
 
 ; Notepad
@@ -106,7 +107,6 @@
 	^k::SendInput +{End}{BS}
 	^h::SendInput {BS}
 	^d::SendInput {Del}
-	Ctrl & Enter::SendInput {Tab}{Enter}
 	^,::SendInput +{Left}
 	^.::SendInput +{Right}
 	^[::SendInput +{Up}
