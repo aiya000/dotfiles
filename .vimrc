@@ -2313,7 +2313,7 @@ augroup KeyMapping
 	autocmd User MyVimRc vmap ii <Plug>(textobj-indent-i)
 
 	" textobj-from_regexp
-	autocmd User MyVimRc vmap <expr> i_ textobj#from_regexp#mapexpr('[A-z0-9]\+')
+	autocmd User MyVimRc vmap <expr> i_ textobj#from_regexp#mapexpr('[A-Za-z0-9]\+')
 	autocmd User MyVimRc vmap <expr> il textobj#from_regexp#mapexpr('^.*$')
 	autocmd User MyVimRc vmap <expr> iu textobj#from_regexp#mapexpr('https\?\/\/\S\+')
 
@@ -2344,7 +2344,7 @@ augroup KeyMapping
 	autocmd User MyVimRc omap ii <Plug>(textobj-indent-i)
 
 	" textobj-from_regexp
-	autocmd User MyVimRc omap <expr> i_ textobj#from_regexp#mapexpr('[A-z0-9]\+')
+	autocmd User MyVimRc omap <expr> i_ textobj#from_regexp#mapexpr('[A-Za-z0-9]\+')
 	autocmd User MyVimRc omap <expr> il textobj#from_regexp#mapexpr('^.*$')
 	autocmd User MyVimRc omap <expr> iu textobj#from_regexp#mapexpr('https\?\/\/\S\+')
 
