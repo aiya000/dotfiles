@@ -865,7 +865,6 @@ let g:unite_source_alias_aliases = {
 "}}}
 "--- vim-quickrun ---" {{{
 "@Unchecked('java'){Ubuntu}
-"@Unchecked('cs'){Ubuntu}
 
 let g:quickrun_config = {
 \	'_' : {
@@ -891,7 +890,7 @@ let g:quickrun_config = {
 \}
 
 " Branch with env
-let g:quickrun_config['cs'] = s:is_unix    ? {'command' : 'gmcs'}
+let g:quickrun_config['cs'] = s:is_unix    ? {'command' : 'mcs'}
 \                           : s:is_windows ? {'command' : 'csc.exe', 'hook/output_encode/encoding' : 'cp932:utf-8'}
 \                                          : {}
 
@@ -1137,13 +1136,15 @@ let g:neosnippet#snippets_directory = g:vimrc['vim_home'] . '/neosnippets'
 "--- separetaro.vim ---"{{{
 
 let g:separetaro_short_separator_of = {
-\	'php' : '/* -=-=-=-=-=-=-=-=- */',
-\	'go'  : '/* -=-=-=-=-=-=-=-=- */'
+\	'java' : '/* -=-=-=-=-=-=-=-=- */',
+\	'php'  : '/* -=-=-=-=-=-=-=-=- */',
+\	'go'   : '/* -=-=-=-=-=-=-=-=- */'
 \}
 
 let g:separetaro_long_separator_of = {
-\	'php' : '/* ---===---===---===---===---===---===--- */',
-\	'go'  : '/* ---===---===---===---===---===---===--- */'
+\	'java' : '/* --- --- --- <`0`> --- --- --- */',
+\	'php'  : '/* ---===---===---===---===---===---===--- */',
+\	'go'   : '/* ---===---===---===---===---===---===--- */'
 \}
 
 "}}}
