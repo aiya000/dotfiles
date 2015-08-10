@@ -450,6 +450,7 @@ NeoBundleLazy  'tsukkee/unite-tag'
 NeoBundleLazy  'osyo-manga/shabadou.vim'
 NeoBundle      'aiya000/vimshell-command-dehanai.vim'
 NeoBundle      'osyo-manga/vim-textobj-from_regexp'
+NeoBundle      'rhysd/vim-color-splatoon'
 
 
 "}}}
@@ -2103,7 +2104,6 @@ augroup KeyMapping
 
 	autocmd User MyVimRc nnoremap <C-w><C-r> <C-w>r<C-w>p
 
-	autocmd User MyVimRc nnoremap <silent> <C-w>t :<C-u>TabnewOverridden<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>T :<C-u>tabclose<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>c :<C-u>bdelete<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>C :<C-u>bdelete!<CR>
@@ -2113,8 +2113,8 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-w>\ :<C-u>resize 0<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>~ :<C-u>vertical resize 0<CR>
 
-	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bt 'mZ:tabnew<CR>`Zzz'          . (foldlevel('.') > 0 ? 'zo' : '')
-	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bT 'mZ:hide<CR>:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : '')
+	autocmd User MyVimRc nnoremap <silent><expr> <C-w>t  'mZ:tabnew<CR>`Zzz'          . (foldlevel('.') > 0 ? 'zo' : '')
+	autocmd User MyVimRc nnoremap <silent><expr> g<C-w>t 'mZ:hide<CR>:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : '')
 augroup END
 
 " }}}
