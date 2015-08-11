@@ -450,7 +450,6 @@ NeoBundleLazy  'tsukkee/unite-tag'
 NeoBundleLazy  'osyo-manga/shabadou.vim'
 NeoBundle      'aiya000/vimshell-command-dehanai.vim'
 NeoBundle      'osyo-manga/vim-textobj-from_regexp'
-NeoBundle      'rhysd/vim-color-splatoon'
 
 
 "}}}
@@ -1183,6 +1182,7 @@ let g:neocomplete#sources#dictionary#dictionaries = {
 "}}}
 "--- deoplete.nvim ---"{{{
 
+"TODO: this section decomposite to nvimrc
 if has('nvim')
 	let g:deoplete#enable_at_startup = 1
 endif
@@ -2221,6 +2221,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap <leader>pl <Plug>(separetoro_put_long_under)
 	autocmd User MyVimRc nmap <leader>Pl <Plug>(separetoro_put_long_over)
 
+	"TODO: this section decomposite to vimrc and nvimrc
 	" neocomplete.vim or deoplete.nvim
 	if has('nvim')
 		autocmd User MyVimRc inoremap <expr>   <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
