@@ -171,7 +171,7 @@ endfunction
 "-------------------------"
 "       Initialize        "
 "-------------------------"
-" file encoding {{{
+" Set default file encoding {{{
 
 " Default file encoding
 if g:vimrc['loaded']
@@ -182,7 +182,7 @@ endif
 scriptencoding utf-8
 
 " }}}
-" autocmd Groups {{{
+" Declare autocmd groups {{{
 
 augroup PluginPrefs
 	autocmd!
@@ -209,39 +209,36 @@ augroup UserEvent
 augroup END
 
 "}}}
-" For Support Kaoriya Vim {{{
+" Build environment for Kaoriya Vim {{{
 
 if s:is_kaoriya && s:is_windows
-	" Set Environment
+	" Set environments
 	let $HOME               = $VIM
-	let g:vimrc['vim_home'] = $VIM . '/vimfiles' " Reset with $HOME
-	let &runtimepath = &runtimepath . ',' . g:vimrc['vim_home']
+	let $PATH               = $HOME . '/bin;' . $PATH
+	let g:vimrc['vim_home'] = substitute($VIM, '\', '/', 'g') . '/vimfiles' " Reset with $HOME
+	let &runtimepath        = &runtimepath . ',' . g:vimrc['vim_home']
 
+	" Use cygwin's executable commands
 	if s:has_cygwin
 		let $PATH = '/cygwin/bin;/cygwin/usr/bin;/cygwin/usr/sbin;' . $PATH
-		let $PATH = $HOME . '/bin;' . $PATH
 	endif
-
 
 	" Build Base Directories
 	if !isdirectory(g:vimrc['vim_home'])
 		call mkdir(g:vimrc['vim_home'])
 	endif
 
-
 	" For Using No Default vimproc
 	let s:switch_dir       = $VIM . '/switches/enabled'
 	let s:suppress_vimproc = s:switch_dir . '/disable-vimproc.vim'
 
-	" If you has mingw, your vim built bundled vimproc.vim...maybe
+	" If you has mingw, use neobundle's vimproc
 	if !s:has_mingw && filereadable(s:suppress_vimproc)
 		call delete(s:suppress_vimproc)
 	elseif s:has_mingw && !filereadable(s:suppress_vimproc)
 		call writefile([], s:suppress_vimproc)
 	endif
-
 	unlet s:suppress_vimproc
-
 
 	" Enable kaoriya plugins
 	for s:disf in map(['/utf-8.vim', '/vimdoc-ja.vim'], 's:switch_dir . v:val')
@@ -249,14 +246,12 @@ if s:is_kaoriya && s:is_windows
 			call writefile([], s:disf)
 		endif
 	endfor
-
 	unlet s:switch_dir s:disf
 
-
-	" Unset Kaoriya Preference
+	" Unset kaoriya default preference
 	set noignorecase nosmartcase
 
-	" I said 'you must be open vimrc with utf-8...'
+	" You must open the vimrc by the utf-8
 	autocmd FileEvent BufRead $MYVIMRC setl enc=utf8 fenc=utf8
 endif
 
@@ -328,7 +323,7 @@ endif
 unlet s:neobundledir
 unlet s:bundledir
 "}}}
-" Check Backup, Swap and Undo directory exists {{{
+" Check backup directories {{{
 
 if !isdirectory(s:backupdir)
 	call mkdir(s:backupdir, 'p', 0700)
@@ -352,15 +347,12 @@ if !exists('loaded_matchit')
 	" Load it
 	runtime macros/matchit.vim
 
-	"@See('dokka matchit.txt...dokoitta?')
-	" If I don't have matchit document, I get it
+	" Get help of matchit.vim
 	let s:matchit_doc_from = expand('$VIMRUNTIME/macros/matchit.txt')
 	let s:matchit_doc_to   = g:vimrc['vim_home'] . '/doc/matchit.txt'
-
 	if !filereadable(s:matchit_doc_to)
 		call writefile(readfile(s:matchit_doc_from), s:matchit_doc_to)
 	endif
-
 	unlet s:matchit_doc_to s:matchit_doc_from
 endif
 
@@ -835,13 +827,13 @@ call neobundle#end()
 "------------------------"
 "--- netrw ---" {{{
 
-" Enable netrw preview
+" Enable netrw previewing
 let g:netrw_preview = 1
 
-" Place for .netwhist and .netrwbook
+" Set directory for .netwhist and .netrwbook
 let g:netrw_home = g:vimrc['vim_home']
 
-" Default options for opening netrw
+" Set default options for opening netrw
 let g:netrw_bufsettings = 'relativenumber readonly nomodifiable nomodified nowrap nobuflisted'
 
 " }}}
@@ -889,7 +881,7 @@ let g:quickrun_config = {
 \	}
 \}
 
-" Branch with env
+" Branch by the environment
 let g:quickrun_config['cs'] = s:is_unix    ? {'command' : 'mcs'}
 \                           : s:is_windows ? {'command' : 'csc.exe', 'hook/output_encode/encoding' : 'cp932:utf-8'}
 \                                          : {}
@@ -899,6 +891,7 @@ if s:is_windows
 elseif s:is_cygwin
 	"@Marked('temporary (vimproc bug)')
 	let g:quickrun_config._['runner']      = 'system'
+	"
 	let g:quickrun_config.java['exec']     = ['%c %o `echo %s | sed s:\:/:g | cygpath -w -f -`', '%c %s:t:r %a']
 	let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
 	let g:quickrun_config.java['tempfile'] = printf('%s/{tempname()}.java', $TMP)
@@ -909,7 +902,7 @@ endif
 " }}}
 "--- TweetVim ---"{{{
 
-" Smooth post tweet
+" Do smooth posting tweet
 let g:tweetvim_async_post = 1
 
 "}}}
@@ -927,7 +920,7 @@ let g:vimshell_scrollback_limit             = 10000
 let g:vimshell_split_command                = 'split'
 
 "@See('autoload/vimshell/commands/{hereis,edit_places,places,reload_places}.vim')
-" The cd aliases reference to here
+" Set hereis's result file
 let g:vimshell_hereis_file = expand('~/.vimshrc_places.vimsh')
 
 "}}}
@@ -952,7 +945,7 @@ let g:w3m#homepage = 'http://www.google.co.jp/'
 "}}}
 "--- vimconsole.vim ---"{{{
 
-" Auto output debug log to console
+" Do auto output debug log to console
 let g:vimconsole#auto_redraw = 1
 
 let g:vimconsole#no_default_key_mappings = 1
