@@ -60,6 +60,9 @@
 
 "-- neovim prefs exclude from here
 
+"-- Windows choice ~/neosnippets as neosnippet_directory
+"  -- I hope Windows choice ~/vimfiles/neosnippets
+
 "}}}
 " Todo {{{
 
