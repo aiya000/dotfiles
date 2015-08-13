@@ -4,6 +4,9 @@ DataGridView
 DataGridViewCellEventArgs
 DataGridViewRow
 DataGridViewRowCollection
+ExecuteNonQuery
+ExecuteReader
+ExecuteScalar
 IWorkbook
 IWorksheet
 InvalidOperationException
