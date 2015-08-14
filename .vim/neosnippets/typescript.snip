@@ -1,0 +1,25 @@
+snippet for
+abbr    for () {}
+    for (${1:#:var}; ${2:#:condition}; ${3:#:effect}) {
+        ${0:TARGET}
+    }
+
+snippet foreach
+alias   fore
+abbr    foreach (var x in xs) {}
+    foreach (${1:var} ${2:#:x} in ${3:#:xs}) {
+        ${0:TARGET}
+    }
+
+snippet else
+abbr    else {}
+    else {
+        ${0:TARGET}
+    }
+
+snippet function
+alias   func
+abbr    func () {}
+    function ${1:#:funcName}(${2:#:arguments})${3:#:funcType} {
+        ${0:TARGET}
+    }
