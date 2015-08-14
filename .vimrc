@@ -445,6 +445,7 @@ NeoBundleLazy  'tsukkee/unite-tag'
 NeoBundleLazy  'osyo-manga/shabadou.vim'
 NeoBundle      'aiya000/vimshell-command-dehanai.vim'
 NeoBundle      'osyo-manga/vim-textobj-from_regexp'
+NeoBundleLazy  'leafgarland/typescript-vim'
 
 
 "}}}
@@ -816,6 +817,12 @@ endif
 if neobundle#tap('vim-textobj-from_regexp')
 	call neobundle#config('vim-textobj-from_regexp', {
 	\	'depends' : 'vim-textobj-user'
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('typescript-vim')
+	call neobundle#config('typescript-vim', {
+	\	'autoload' : {'filetypes' : 'typescript'}
 	\})
 	call neobundle#untap()
 endif
