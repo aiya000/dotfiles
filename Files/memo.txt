@@ -550,6 +550,15 @@ endif
 \ } "}}}
 NeoBundleLazy 'kien/rainbow_parentheses.vim'
 
+"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
+"-----------
+" 2015-08-15
+"-----------
+call unite#custom#substitute('files', '[^~.* ]\ze/', '\0', -100)
+call unite#custom#substitute('files', '/\ze[^~.* ]', '/', -100)
+
+https://github.com/t9md/vim-textmanip
+http://qiita.com/knt45/items/6472fc5d9f4eafff8c51
 
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
 
