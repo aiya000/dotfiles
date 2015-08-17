@@ -6,8 +6,8 @@ abbr    for () {}
 
 snippet foreach
 alias   fore
-abbr    foreach (var x in xs) {}
-    foreach (${1:var} ${2:#:x} in ${3:#:xs}) {
+abbr    for (var x in xs) {}
+    for (${1:var} ${2:x} in ${3:xs}) {
         ${0:TARGET}
     }
 
@@ -20,6 +20,11 @@ abbr    else {}
 snippet function
 alias   func
 abbr    func () {}
-    function ${1:#:funcName}(${2:#:arguments})${3:#:funcType} {
+    function ${1:#:name}(${2:#:arguments}) : ${3:#:type} {
         ${0:TARGET}
     }
+
+snippet reference
+alias   include
+abbr    /// <reference path=""/>
+    /// <reference path="${0}"/>

@@ -88,6 +88,9 @@
 
 "-- correspond msys2 (mintty) environment
 
+"-- Delete undo
+"  -- current file or all file
+
 " }}}
 
 
