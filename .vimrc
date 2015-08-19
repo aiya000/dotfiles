@@ -90,6 +90,7 @@
 
 "-- Delete undo
 "  -- current file or all file
+"  -- refer to 'clear-undo', maybe
 
 " }}}
 
