@@ -32,6 +32,9 @@ abbr    [assembly: InternalsVisibleTo()]
     [assembly: InternalsVisibleTo("${1:#:FriendName}")]
     #pragma warning restore 0657${0}
 
+snippet pragma_restore
+    #pragma warning restore ${1:#:errno}
+
 snippet debugger_display_attr
 alias   ddisp
 abbr    [DebuggerDisplayAttribute()]
