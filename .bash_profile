@@ -50,6 +50,8 @@ export HISTIGNORE='ls:jobs:history*:*hibernate:twitter*:tweet*:lingr*'
 export HISTIGNORE="${HISTIGNORE}:*.bash_history*:*mount*-o*password=*"
 export EDITOR=vim
 export PAGER=less
+#@Incomplete('muri in cygwin')
+export MANPAGER='col -b -x | vim - -R -c "set filetype=man"'
 
 
 ###################
