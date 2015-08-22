@@ -561,5 +561,149 @@ https://github.com/t9md/vim-textmanip
 http://qiita.com/knt45/items/6472fc5d9f4eafff8c51
 
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
+"-----------
+" 2015-08-22
+"-----------
+set title
+set titlestring=Vim:\ %f\ %h%r%m
+if exists('$TMUX')
+  " Fix window title on tmux.
+  let &t_fs = "\<C-g>"
+  let &t_ts = "\<Esc>]2;"
+endif
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+aiya000       : L113 iminsert、僕も0にしよう。 (Windows Kaoriya GVimなどで有効になってそう)  08/22 23:32
+------------------------------------------------------------------------------------------------------------------------------------------------
+thinca        : Vim では eskk.vim を使っているから IME 基本使ってないのだよなぁ  08/22 23:33
+                特殊な記号とか出すときに使うくらいか  08/22 23:33
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+function! s:SID_PREFIX()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_')
+endfunction
+let &tabline = '%!' . s:SID_PREFIX() . 'my_tabline()'
+
+" aiya) metarwとは？
+call metarw#define_wrapper_commands(0)
+
+" my complete 作成用資料
+command! -nargs=? -complete=customlist,s:complete_fileencoding SetFileEncoding
+\ setlocal fileencoding=<args>
+command! -nargs=? -complete=customlist,s:complete_fileformats SetFileFormat
+\ setlocal fileformat=<args>
+
+function! s:complete_fileencoding(arglead, cmdline, cursorpos)
+  " {encoding: 0} see :help encoding-values.  "{{{
+  let _ = {
+  \  'ansi': 0,
+  \  'big5': 0,
+  \  'chinese': 0,
+  \  'cp1250': 0,
+  \  'cp1251': 0,
+  \  'cp1253': 0,
+  \  'cp1254': 0,
+  \  'cp1255': 0,
+  \  'cp1256': 0,
+  \  'cp1257': 0,
+  \  'cp1258': 0,
+  \  'cp437': 0,
+  \  'cp737': 0,
+  \  'cp775': 0,
+  \  'cp850': 0,
+  \  'cp852': 0,
+  \  'cp855': 0,
+  \  'cp857': 0,
+  \  'cp860': 0,
+  \  'cp861': 0,
+  \  'cp862': 0,
+  \  'cp863': 0,
+  \  'cp865': 0,
+  \  'cp866': 0,
+  \  'cp869': 0,
+  \  'cp874': 0,
+  \  'cp932': 0,
+  \  'cp936': 0,
+  \  'cp949': 0,
+  \  'cp950': 0,
+  \  'default': 0,
+  \  'euc-cn': 0,
+  \  'euc-jp': 0,
+  \  'euc-kr': 0,
+  \  'euc-tw': 0,
+  \  'iso-8859-10': 0,
+  \  'iso-8859-11': 0,
+  \  'iso-8859-12': 0,
+  \  'iso-8859-13': 0,
+  \  'iso-8859-14': 0,
+  \  'iso-8859-15': 0,
+  \  'iso-8859-16': 0,
+  \  'iso-8859-1': 0,
+  \  'iso-8859-2': 0,
+  \  'iso-8859-3': 0,
+  \  'iso-8859-4': 0,
+  \  'iso-8859-5': 0,
+  \  'iso-8859-6': 0,
+  \  'iso-8859-7': 0,
+  \  'iso-8859-8': 0,
+  \  'iso-8859-9': 0,
+  \  'japan': 0,
+  \  'koi8-r': 0,
+  \  'koi8-u': 0,
+  \  'korea': 0,
+  \  'latin1': 0,
+  \  'macroman': 0,
+  \  'prc': 0,
+  \  'sjis': 0,
+  \  'taiwan': 0,
+  \  'ucs-2': 0,
+  \  'ucs-2be': 0,
+  \  'ucs-2le': 0,
+  \  'ucs-4': 0,
+  \  'ucs-4be': 0,
+  \  'ucs-4le': 0,
+  \  'ucs2be': 0,
+  \  'unicode': 0,
+  \  'utf-16': 0,
+  \  'utf-16le': 0,
+  \  'utf-32': 0,
+  \  'utf-32le': 0,
+  \  'utf-8': 0,
+  \  'utf8': 0,
+  \ }  " }}}
+  for encoding in split(&fileencodings, ',')
+    let _[encoding] = 0
+  endfor
+  return sort(filter(keys(_), 's:prefix_of_p(a:arglead, v:val)'))
+endfunction
+function! s:complete_fileformats(arglead, cmdline, cursorpos)
+  return sort(filter(split(&fileformats, ','), 's:prefix_of_p(a:arglead, v:val)'))
+endfunction
+
+" aiya) I wanna get this and modified this for a buffer
+command! -complete=dir -nargs=* CD
+\   execute 'cd' fnameescape(<q-args>)
+\ | let t:cwd = getcwd()
+\ | echo t:cwd
+AlterCommand cd  CD
+autocmd MyAutoCmd TabEnter *
+\   if !exists('t:cwd')
+\ |   let t:cwd = getcwd()
+\ | endif
+\ | if isdirectory(t:cwd)
+\ |   cd `=t:cwd`
+\ | endif
+
+" aiya) koremo hosii
+command! -bar -nargs=* TabpageTitle
+\   if <q-args> == ''
+\ |   let t:title = input("Set tabpage's title to: ", '')
+\ | else
+\ |   let t:title = <q-args>
+\ | endif
+\ | redraw!
+
+
+"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
 
 vim:ft=vim:

@@ -1145,6 +1145,7 @@ let g:neosnippet#snippets_directory = g:vimrc['vim_home'] . '/neosnippets'
 let g:separetaro_short_separator_of = {
 \	'java'       : '/* -=-=-=-=-=-=-=-=- */',
 \	'javascript' : '/* -=-=-=-=-=-=-=-=- */',
+\	'typescript' : '/* -=-=-=-=-=-=-=-=- */',
 \	'css'        : '/* -=-=-=-=-=-=-=-=- */',
 \	'php'        : '/* -=-=-=-=-=-=-=-=- */',
 \	'go'         : '/* -=-=-=-=-=-=-=-=- */',
@@ -1155,6 +1156,7 @@ let g:separetaro_short_separator_of = {
 let g:separetaro_long_separator_of = {
 \	'java'       : '/* --- --- --- <`0`> --- --- --- */',
 \	'javascript' : '/* --- --- --- <`0`> --- --- --- */',
+\	'typescript' : '/* --- --- --- <`0`> --- --- --- */',
 \	'css'        : '/* --- --- --- <`0`> --- --- --- */',
 \	'php'        : '/* --- --- --- <`0`> --- --- --- */',
 \	'go'         : '/* --- --- --- <`0`> --- --- --- */',
@@ -1444,6 +1446,12 @@ autocmd UserEvent CursorMoved * call s:visual_fold_all()
 
 " no put two space on join (J)
 set nojoinspaces
+
+" control by myself in all environment
+set iminsert=0
+
+"@Experiment('')
+set noequalalways
 
 "}}}
 
