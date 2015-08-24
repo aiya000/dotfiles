@@ -21,12 +21,14 @@ alias edit-places="vim ${HEREIS_PLACES_FILE} && reload-places"
 
 # Define register command
 function hereis () {
-	place_name="`echo $1 | sed s/-/_/g`"
+	place_name="`echo $1`"
 	place_path="\"`pwd`\""
-	alias_body="${place_name}='cd ${place_path}'"
+	alias_body="place-${place_name}='cd ${place_path}'"
+	var_name="`echo place_${place_name} | sed s/-/_/g`"
+	var_body="${var_name}=${place_path}"
 
-	echo "alias ${alias_body}"               >> "$HEREIS_PLACES_FILE"
-	echo "place_${place_name}=${place_path}" >> "$HEREIS_PLACES_FILE"
+	echo "alias ${alias_body}" >> "$HEREIS_PLACES_FILE"
+	echo "${var_body}"         >> "$HEREIS_PLACES_FILE"
 	echo "here is '${1}'"
 	reload-places
 }
