@@ -450,6 +450,7 @@ NeoBundleLazy  'osyo-manga/shabadou.vim'
 NeoBundle      'aiya000/vimshell-command-dehanai.vim'
 NeoBundle      'osyo-manga/vim-textobj-from_regexp'
 NeoBundleLazy  'leafgarland/typescript-vim'
+NeoBundle      'tpope/vim-repeat'
 
 
 "}}}
