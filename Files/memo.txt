@@ -680,20 +680,6 @@ function! s:complete_fileformats(arglead, cmdline, cursorpos)
   return sort(filter(split(&fileformats, ','), 's:prefix_of_p(a:arglead, v:val)'))
 endfunction
 
-" aiya) I wanna get this and modified this for a buffer
-command! -complete=dir -nargs=* CD
-\   execute 'cd' fnameescape(<q-args>)
-\ | let t:cwd = getcwd()
-\ | echo t:cwd
-AlterCommand cd  CD
-autocmd MyAutoCmd TabEnter *
-\   if !exists('t:cwd')
-\ |   let t:cwd = getcwd()
-\ | endif
-\ | if isdirectory(t:cwd)
-\ |   cd `=t:cwd`
-\ | endif
-
 " aiya) koremo hosii
 command! -bar -nargs=* TabpageTitle
 \   if <q-args> == ''
