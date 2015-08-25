@@ -1520,6 +1520,7 @@ augroup FileEvent
 	autocmd BufReadPost * call s:visit_past_position()
 
 	" Auto change directory to where Tab kept
+	"@See('CdOverridden')
 	autocmd TabEnter *
 	\	if !exists('t:pwd_keeper') || !isdirectory(t:pwd_keeper)
 	\|		let t:pwd_keeper = getcwd()
@@ -1583,6 +1584,7 @@ AlterCommand enew EnewOverridden
 command! -bar -bang -complete=file -nargs=? TabnewOverridden tabnew<bang> <args> | if empty(&ft) | setf none | endif
 AlterCommand tabnew TabnewOverridden
 
+"@See('Event_Method')
 command! -bar -bang -complete=dir -nargs=? CdOverridden
 \	execute 'cd' fnameescape(<q-args>)
 \|	let t:pwd_keeper = getcwd()
@@ -1593,39 +1595,6 @@ AlterCommand cd CdOverridden
 
 " Grep and Open current buffer
 command! -bar -nargs=1 GrepNow vimgrep <args> % | cwindow
-
-
-" Save a Temporary Directory
-" {{{
-
-autocmd FileEvent BufNew * let b:tdir_dir = get(b:, 'tdir_dir', 'Not set tdir')
-
-command! -bar TDirPwd           echo b:tdir_dir
-
-function! s:set_temporary_dir(path) "{{{
-	if isdirectory(a:path)
-		let b:tdir_dir = a:path ==# '.' ? expand('%:p:h')
-		\                               : a:path
-		echo b:tdir_dir
-	else
-		call s:echo_error('No such temporary root dir')
-	endif
-endfunction "}}}
-command! -bar -nargs=1  TDirSet call s:set_temporary_dir(<q-args>)
-
-command! -bar TDirSetCurrentDir call s:set_temporary_dir('.')
-
-function! s:cd_temporary_dir() "{{{
-	if b:tdir_dir ==# 'Not set tdir'
-		call s:echo_error('Not set temporary root dir')
-	else
-		execute 'cd' b:tdir_dir
-		echo b:tdir_dir
-	endif
-endfunction "}}}
-command! -bar TDirCd            call s:cd_temporary_dir()
-
-" }}}
 
 
 " Reverse ranged lines
