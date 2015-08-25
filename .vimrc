@@ -256,6 +256,10 @@ if s:is_kaoriya && s:is_windows
 	" Unset kaoriya default preference
 	set noignorecase nosmartcase
 
+	" Disable plugins/kaoriya/plugin/{cmdex,scrnmode}.vim
+	let g:plugin_cmdex_disable    = 1
+	let g:plugin_scrnmode_disable = 1
+
 	" You must open the vimrc by the utf-8
 	autocmd FileEvent BufRead $MYVIMRC setl enc=utf8 fenc=utf8
 endif
@@ -1440,9 +1444,6 @@ set nojoinspaces
 " control by myself in all environment
 set iminsert=0
 
-"@Experiment('')
-set noequalalways
-
 "}}}
 
 
@@ -1645,7 +1646,7 @@ command! -bar Reload so $MYVIMRC
 
 cnoreabbr w!! w !sudo tee % > /dev/null
 
-cnoreabbr CdBufDir CdOverridden %:p:h
+cnoreabbr CdBufDir cd %:p:h
 command!  CdBufDir NOP
 
 command! -bar ColorPreview Unite colorscheme -auto-preview
@@ -1878,6 +1879,9 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <Down>  <NOP>
 	autocmd User MyVimRc nnoremap <Left>  <NOP>
 	autocmd User MyVimRc nnoremap <Right> <NOP>
+
+	" Cancel <C-w>foo
+	autocmd User MyVimRc nnoremap <C-w><C-l> <NOP>
 
 	autocmd User MyVimRc inoremap <Up>    <NOP>
 	autocmd User MyVimRc inoremap <Down>  <NOP>
