@@ -1519,14 +1519,6 @@ augroup FileEvent
 	endfunction "}}}
 	autocmd BufReadPost * call s:visit_past_position()
 
-	" Auto change directory to where Tab kept
-	"@See('CdOverridden')
-	autocmd TabEnter *
-	\	if !exists('t:pwd_keeper') || !isdirectory(t:pwd_keeper)
-	\|		let t:pwd_keeper = getcwd()
-	\|	endif
-	\|	cd `=t:pwd_keeper`
-
 	" Auto load filetype dictionary
 	autocmd FileType *
 	\	if filereadable(printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype))
@@ -1583,12 +1575,6 @@ AlterCommand enew EnewOverridden
 
 command! -bar -bang -complete=file -nargs=? TabnewOverridden tabnew<bang> <args> | if empty(&ft) | setf none | endif
 AlterCommand tabnew TabnewOverridden
-
-"@See('Event_Method')
-command! -bar -bang -complete=dir -nargs=? CdOverridden
-\	execute 'cd' fnameescape(<q-args>)
-\|	let t:pwd_keeper = getcwd()
-AlterCommand cd CdOverridden
 
 " }}}
 " Our Usefull {{{
