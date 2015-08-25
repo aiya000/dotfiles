@@ -56,8 +56,6 @@
 
 "-- int-git does not loaded ftplugin int-git.vim (by hyphenate ?)
 
-"-- lost filetype highlight when running quickrun vim script (reason is 'shabadou.vim' ?)
-
 "-- neovim prefs exclude from here
 
 "-- Windows choice ~/neosnippets as neosnippet_directory
@@ -446,7 +444,6 @@ NeoBundle      'kana/vim-textobj-indent'
 NeoBundle      (has('nvim') ? 'Shougo/deoplete.nvim' : 'Shougo/neocomplete.vim')
 NeoBundle      'soramugi/auto-ctags.vim'
 NeoBundleLazy  'tsukkee/unite-tag'
-NeoBundleLazy  'osyo-manga/shabadou.vim'
 NeoBundle      'aiya000/vimshell-command-dehanai.vim'
 NeoBundle      'osyo-manga/vim-textobj-from_regexp'
 NeoBundleLazy  'leafgarland/typescript-vim'
@@ -813,12 +810,6 @@ if neobundle#tap('unite-tags')
 	\})
 	call neobundle#untap()
 endif
-if neobundle#tap('shabadou.vim')
-	call neobundle#config('shabadou.vim', {
-	\	'autoload' : {'on_source' : 'vim-quickrun'}
-	\})
-	call neobundle#untap()
-endif
 if neobundle#tap('vim-textobj-from_regexp')
 	call neobundle#config('vim-textobj-from_regexp', {
 	\	'depends' : 'vim-textobj-user'
@@ -878,9 +869,7 @@ let g:quickrun_config = {
 \		'split'  : '',
 \		'runner' : 'vimproc',
 \		'runner/vimproc/updatetime' : 10,
-\		'hook/time/enable' : 1,
-\		'hook/shabadoubi_touch_henshin/enable' : 1,
-\		'hook/shabadoubi_touch_henshin/wait'   : 20
+\		'hook/time/enable' : 1
 \	},
 \	'cpp' : {
 \		'cmdopt' : '-std=c++14'
@@ -1580,7 +1569,7 @@ AlterCommand tabnew TabnewOverridden
 " Our Usefull {{{
 
 " Grep and Open current buffer
-command! -bar -nargs=1 GrepNow vimgrep <args> % | cwindow
+command! -bar -nargs=1 GrepInThis vimgrep <args> % | cwindow
 
 
 " Reverse ranged lines
@@ -1881,7 +1870,7 @@ command! -bar GitAdd !git add %
 " Disable keys {{{
 
 augroup KeyMapping
-	" I can use some mapping to hoge<C-c>
+	" Enable some hoge<C-c> mappings
 	autocmd User MyVimRc nnoremap <C-c>      <NOP>
 	autocmd User MyVimRc nnoremap <C-c><C-c> <C-c>
 
@@ -1999,42 +1988,6 @@ function! s:toggle_diff() "{{{
 endfunction "}}}
 
 
-" Optimize key operation to one hand
-" function! s:toggle_onehand_mode() "{{{
-
-let s:onehand_enabled = get(s:, 'onehand_enabled', 0)
-
-function! s:toggle_onehand_mode()
-	if s:onehand_enabled
-		nunmap n
-		nunmap p
-		nunmap f
-		nunmap b
-		nunmap o
-		nunmap i
-		nunmap u
-		nunmap /
-
-		" restore normal keymapping
-		doautocmd User MyVimRc
-	else
-		nnoremap n gt
-		nnoremap p gT
-		nnoremap f <C-f>
-		nnoremap b <C-b>
-		nnoremap o <C-o>
-		nnoremap i <C-i>
-		nnoremap u <C-w><C-w>
-		nnoremap / *
-	endif
-
-	let s:onehand_enabled = !s:onehand_enabled
-	echo (s:onehand_enabled ? '' : 'no') . 'onehand'
-endfunction
-
-"}}}
-
-
 " If you has nofile buffer, close it.
 function! s:bufclose_filetype(filetype) "{{{
 	let l:closed = 0
@@ -2115,7 +2068,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent>       <C-h><C-d> :<C-u>call <SID>toggle_diff()<CR>
 	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
 
-	autocmd User MyVimRc nnoremap <silent> <C-h>jk    :<C-u>call <SID>toggle_onehand_mode()<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline!     cursorline?    <CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-e> :<C-u>setl expandtab!      expandtab?     <CR>
