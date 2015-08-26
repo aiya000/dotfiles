@@ -108,11 +108,9 @@ inoremap <C-]> <S-Down>
 
 inoremap <C-x>      <NOP>
 inoremap <C-c>      <NOP>
-inoremap <C-v>      <NOP>
 inoremap <C-x><C-a> <C-a>
 inoremap <C-x><C-t> <C-x>
 inoremap <C-x><C-c> <C-c>
-inoremap <C-x><C-v> <C-v>
 
 inoremap <C-i> <Tab>
 inoremap <C-g> <C-i>
