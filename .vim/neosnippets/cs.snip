@@ -12,16 +12,16 @@ abbr    Microsoft.VisualBasic
 snippet messagebox
 alias   msgbox
 abbr    MessageBox.Show(text, caption, Buttons, Icon);
-    MessageBox.Show("${1:#:text}", "${2:#:caption}", MessageBoxButtons.${3:OK}, MessageBoxIcon.${4:Information});${0}
+    MessageBox.Show(${1:#:text}, ${2:#:caption}, MessageBoxButtons.${3:OK}, MessageBoxIcon.${4:Information});${0}
 
 snippet messageboxyesno
 alias   msgboxq msgboxyesno
 abbr    MessageBox.Show(text, caption, Buttons.YesNo, Icon.Question);
-    MessageBox.Show("${1:#:text}", "${2:#:caption}", MessageBoxButtons.YesNo, MessageBoxIcon.Question);${0}
+    MessageBox.Show(${1:#:text}, ${2:#:caption}, MessageBoxButtons.YesNo, MessageBoxIcon.Question);${0}
 
 snippet inputbox
 abbr    Interaction.InputBox(prompt, title, defaultResponce);
-    Interaction.InputBox("${1:#:Prompt}", "${2:#:Title}", "${3:#:DefaultResponse}");${0}
+    Interaction.InputBox(${1:#:Prompt}, ${2:#:Title}, "${3:#:DefaultResponse}");${0}
 
 
 # Attribute
