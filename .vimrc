@@ -56,8 +56,6 @@
 
 "-- int-git does not loaded ftplugin int-git.vim (by hyphenate ?)
 
-"-- lost filetype highlight when running quickrun vim script (reason is 'shabadou.vim' ?)
-
 "-- neovim prefs exclude from here
 
 "-- Windows choice ~/neosnippets as neosnippet_directory
@@ -258,6 +256,10 @@ if s:is_kaoriya && s:is_windows
 	" Unset kaoriya default preference
 	set noignorecase nosmartcase
 
+	" Disable plugins/kaoriya/plugin/{cmdex,scrnmode}.vim
+	let g:plugin_cmdex_disable    = 1
+	let g:plugin_scrnmode_disable = 1
+
 	" You must open the vimrc by the utf-8
 	autocmd FileEvent BufRead $MYVIMRC setl enc=utf8 fenc=utf8
 endif
@@ -446,7 +448,6 @@ NeoBundle      'kana/vim-textobj-indent'
 NeoBundle      (has('nvim') ? 'Shougo/deoplete.nvim' : 'Shougo/neocomplete.vim')
 NeoBundle      'soramugi/auto-ctags.vim'
 NeoBundleLazy  'tsukkee/unite-tag'
-NeoBundleLazy  'osyo-manga/shabadou.vim'
 NeoBundle      'aiya000/vimshell-command-dehanai.vim'
 NeoBundle      'osyo-manga/vim-textobj-from_regexp'
 NeoBundleLazy  'leafgarland/typescript-vim'
@@ -813,12 +814,6 @@ if neobundle#tap('unite-tags')
 	\})
 	call neobundle#untap()
 endif
-if neobundle#tap('shabadou.vim')
-	call neobundle#config('shabadou.vim', {
-	\	'autoload' : {'on_source' : 'vim-quickrun'}
-	\})
-	call neobundle#untap()
-endif
 if neobundle#tap('vim-textobj-from_regexp')
 	call neobundle#config('vim-textobj-from_regexp', {
 	\	'depends' : 'vim-textobj-user'
@@ -878,9 +873,7 @@ let g:quickrun_config = {
 \		'split'  : '',
 \		'runner' : 'vimproc',
 \		'runner/vimproc/updatetime' : 10,
-\		'hook/time/enable' : 1,
-\		'hook/shabadoubi_touch_henshin/enable' : 1,
-\		'hook/shabadoubi_touch_henshin/wait'   : 20
+\		'hook/time/enable' : 1
 \	},
 \	'cpp' : {
 \		'cmdopt' : '-std=c++14'
@@ -1451,9 +1444,6 @@ set nojoinspaces
 " control by myself in all environment
 set iminsert=0
 
-"@Experiment('')
-set noequalalways
-
 "}}}
 
 
@@ -1519,13 +1509,6 @@ augroup FileEvent
 	endfunction "}}}
 	autocmd BufReadPost * call s:visit_past_position()
 
-	" Auto change directory to where Tab kept
-	autocmd TabEnter *
-	\	if !exists('t:pwd_keeper') || !isdirectory(t:pwd_keeper)
-	\|		let t:pwd_keeper = getcwd()
-	\|	endif
-	\|	cd `=t:pwd_keeper`
-
 	" Auto load filetype dictionary
 	autocmd FileType *
 	\	if filereadable(printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype))
@@ -1583,49 +1566,11 @@ AlterCommand enew EnewOverridden
 command! -bar -bang -complete=file -nargs=? TabnewOverridden tabnew<bang> <args> | if empty(&ft) | setf none | endif
 AlterCommand tabnew TabnewOverridden
 
-command! -bar -bang -complete=dir -nargs=? CdOverridden
-\	execute 'cd' fnameescape(<q-args>)
-\|	let t:pwd_keeper = getcwd()
-AlterCommand cd CdOverridden
-
 " }}}
 " Our Usefull {{{
 
 " Grep and Open current buffer
-command! -bar -nargs=1 GrepNow vimgrep <args> % | cwindow
-
-
-" Save a Temporary Directory
-" {{{
-
-autocmd FileEvent BufNew * let b:tdir_dir = get(b:, 'tdir_dir', 'Not set tdir')
-
-command! -bar TDirPwd           echo b:tdir_dir
-
-function! s:set_temporary_dir(path) "{{{
-	if isdirectory(a:path)
-		let b:tdir_dir = a:path ==# '.' ? expand('%:p:h')
-		\                               : a:path
-		echo b:tdir_dir
-	else
-		call s:echo_error('No such temporary root dir')
-	endif
-endfunction "}}}
-command! -bar -nargs=1  TDirSet call s:set_temporary_dir(<q-args>)
-
-command! -bar TDirSetCurrentDir call s:set_temporary_dir('.')
-
-function! s:cd_temporary_dir() "{{{
-	if b:tdir_dir ==# 'Not set tdir'
-		call s:echo_error('Not set temporary root dir')
-	else
-		execute 'cd' b:tdir_dir
-		echo b:tdir_dir
-	endif
-endfunction "}}}
-command! -bar TDirCd            call s:cd_temporary_dir()
-
-" }}}
+command! -bar -nargs=1 GrepInThis vimgrep <args> % | cwindow
 
 
 " Reverse ranged lines
@@ -1701,7 +1646,7 @@ command! -bar Reload so $MYVIMRC
 
 cnoreabbr w!! w !sudo tee % > /dev/null
 
-cnoreabbr CdBufDir CdOverridden %:p:h
+cnoreabbr CdBufDir cd %:p:h
 command!  CdBufDir NOP
 
 command! -bar ColorPreview Unite colorscheme -auto-preview
@@ -1926,7 +1871,7 @@ command! -bar GitAdd !git add %
 " Disable keys {{{
 
 augroup KeyMapping
-	" I can use some mapping to hoge<C-c>
+	" Enable some hoge<C-c> mappings
 	autocmd User MyVimRc nnoremap <C-c>      <NOP>
 	autocmd User MyVimRc nnoremap <C-c><C-c> <C-c>
 
@@ -1934,6 +1879,9 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <Down>  <NOP>
 	autocmd User MyVimRc nnoremap <Left>  <NOP>
 	autocmd User MyVimRc nnoremap <Right> <NOP>
+
+	" Cancel <C-w>foo
+	autocmd User MyVimRc nnoremap <C-w><C-l> <NOP>
 
 	autocmd User MyVimRc inoremap <Up>    <NOP>
 	autocmd User MyVimRc inoremap <Down>  <NOP>
@@ -2044,42 +1992,6 @@ function! s:toggle_diff() "{{{
 endfunction "}}}
 
 
-" Optimize key operation to one hand
-" function! s:toggle_onehand_mode() "{{{
-
-let s:onehand_enabled = get(s:, 'onehand_enabled', 0)
-
-function! s:toggle_onehand_mode()
-	if s:onehand_enabled
-		nunmap n
-		nunmap p
-		nunmap f
-		nunmap b
-		nunmap o
-		nunmap i
-		nunmap u
-		nunmap /
-
-		" restore normal keymapping
-		doautocmd User MyVimRc
-	else
-		nnoremap n gt
-		nnoremap p gT
-		nnoremap f <C-f>
-		nnoremap b <C-b>
-		nnoremap o <C-o>
-		nnoremap i <C-i>
-		nnoremap u <C-w><C-w>
-		nnoremap / *
-	endif
-
-	let s:onehand_enabled = !s:onehand_enabled
-	echo (s:onehand_enabled ? '' : 'no') . 'onehand'
-endfunction
-
-"}}}
-
-
 " If you has nofile buffer, close it.
 function! s:bufclose_filetype(filetype) "{{{
 	let l:closed = 0
@@ -2160,7 +2072,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent>       <C-h><C-d> :<C-u>call <SID>toggle_diff()<CR>
 	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
 
-	autocmd User MyVimRc nnoremap <silent> <C-h>jk    :<C-u>call <SID>toggle_onehand_mode()<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline!     cursorline?    <CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-e> :<C-u>setl expandtab!      expandtab?     <CR>
