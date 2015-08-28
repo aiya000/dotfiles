@@ -49,9 +49,10 @@ export HISTTIMEFORMAT='%Y/%m/%d %H:%M '
 export HISTIGNORE='ls:jobs:history*:*hibernate:twitter*:tweet*:lingr*'
 export HISTIGNORE="${HISTIGNORE}:*.bash_history*:*mount*-o*password=*"
 export EDITOR=vim
-export PAGER=less
-#export MANPAGER='col -bx | vim - -R -c "set filetype=man"'
-export MANPAGER=less
+
+# depends 'vim-pager' and 'vim-manpager'
+export PAGER='vim - -c PAGER'
+export MANPAGER='vim - -c MANPAGER'
 
 
 ###################

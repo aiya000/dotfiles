@@ -452,6 +452,8 @@ NeoBundle      'aiya000/vimshell-command-dehanai.vim'
 NeoBundle      'osyo-manga/vim-textobj-from_regexp'
 NeoBundleLazy  'leafgarland/typescript-vim'
 NeoBundle      'tpope/vim-repeat'
+NeoBundleLazy  'lambdalisue/vim-pager'
+NeoBundleLazy  'lambdalisue/vim-manpager'
 
 
 "}}}
@@ -823,6 +825,21 @@ endif
 if neobundle#tap('typescript-vim')
 	call neobundle#config('typescript-vim', {
 	\	'autoload' : {'filetypes' : 'typescript'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-pager')
+	call neobundle#config('vim-pager', {
+	\	'autoload' : {'commands' : 'PAGER'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-manpager')
+	call neobundle#config('vim-manpager', {
+	\	'autoload' : {'commands' : [
+	\		'Man',
+	\		'MANPAGER'
+	\	]}
 	\})
 	call neobundle#untap()
 endif
@@ -2110,7 +2127,7 @@ augroup KeyMapping
 	" Unite
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-h>        :<C-u>Unite -ignorecase neomru/file<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Unite -ignorecase outline<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>u :<C-u>call <SID>bufclose_filetype('unite')<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>u :<C-u>UniteClose<CR>
 
 	" excitetranslate-vim
 	autocmd User MyVimRc nnoremap <silent> <leader>T :ExciteTranslate<CR>
