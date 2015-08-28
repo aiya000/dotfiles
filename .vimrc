@@ -454,6 +454,7 @@ NeoBundleLazy  'leafgarland/typescript-vim'
 NeoBundle      'tpope/vim-repeat'
 NeoBundleLazy  'lambdalisue/vim-pager'
 NeoBundleLazy  'lambdalisue/vim-manpager'
+NeoBundle      'thinca/vim-visualstar'
 
 
 "}}}
