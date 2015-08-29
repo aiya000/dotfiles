@@ -51,8 +51,8 @@ export HISTIGNORE="${HISTIGNORE}:*.bash_history*:*mount*-o*password=*"
 export EDITOR=vim
 
 # depends 'vim-pager' and 'vim-manpager'
-export PAGER='vim - -c PAGER'
-export MANPAGER='vim - -c MANPAGER'
+export PAGER='vim - +PAGER -c "setl nonu nornu"'
+export MANPAGER='vim - +MANPAGER -c "setl nonu nornu"'
 
 
 ###################

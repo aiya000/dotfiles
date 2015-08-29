@@ -912,7 +912,15 @@ let g:quickrun_config['cs'] = s:is_unix    ? {'command' : 'mcs'}
 \                           : s:is_windows ? {'command' : 'csc.exe', 'hook/output_encode/encoding' : 'cp932:utf-8'}
 \                                          : {}
 
-if s:is_windows
+if s:is_unix
+	"@Unsupported('except Ubuntu')
+	" Open expected browser
+	let g:quickrun_config['html'] = {
+	\	'command'        : 'xdg-open',
+	\	'exec'           : '%c %s:p',
+	\	'outputter/null' : 1
+	\}
+elseif s:is_windows
 	let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
 elseif s:is_cygwin
 	"@Marked('temporary (vimproc bug)')
