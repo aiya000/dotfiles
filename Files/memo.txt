@@ -691,5 +691,20 @@ command! -bar -nargs=* TabpageTitle
 
 
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
+"-----------
+" 2015-08-30
+"-----------
+nnoremap <silent> <C-t><Space>  :<C-u>TabpageTitle<CR>
+
+call accelerate#map('nv', 'e', '<C-u>', 'repeat("\<C-u>", v:count1)')
+call accelerate#map('nv', 'e', '<C-d>', 'repeat("\<C-d>", v:count1)')
+
+call accelerate#map('nv', '', 'j', 'gj')
+call accelerate#map('nv', '', 'k', 'gk')
+call accelerate#map('nv', '', 'h', 'h')
+call accelerate#map('nv', 'e', 'l', 'foldclosed(line(".")) != -1 ? "zo" : "l"')
+
+
+"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
 
 vim:ft=vim:

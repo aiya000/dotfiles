@@ -35,6 +35,9 @@
 "-- Easily yank current line in function
 "  -- ex) FileName.cs> FooMethod() : 128L
 
+"-- bash
+"  -- hereis prefix
+
 " }}}
 " Issues {{{
 
@@ -916,9 +919,9 @@ if s:is_unix
 	"@Unsupported('except Ubuntu')
 	" Open expected browser
 	let g:quickrun_config['html'] = {
-	\	'command'        : 'xdg-open',
-	\	'exec'           : '%c %s:p',
-	\	'outputter/null' : 1
+	\	'command'   : 'xdg-open',
+	\	'exec'      : '%c %s:p',
+	\	'outputter' : 'null'
 	\}
 elseif s:is_windows
 	let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
