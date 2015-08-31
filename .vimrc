@@ -158,6 +158,7 @@ let s:groupname = $GROUP !=# '' ? $GROUP : $USER
 "---------------------"
 "{{{
 
+" Run system command by vimproc or vim default
 function! s:system(cmd)
 	"@Incomplete('vimproc#system was not executed in this script, refer to vital.vim')
 	if exists('*vimproc#system')
@@ -171,6 +172,10 @@ function! s:echo_error(msg)
 	echohl Error
 	echo a:msg
 	echohl None
+endfunction
+
+function! s:sid()
+	return matchstr(expand('<sfile>'), '<SNR>\d\+_')
 endfunction
 
 "}}}
@@ -1030,31 +1035,23 @@ if neobundle#tap('vim-submode')
 		autocmd User MyVimRc call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
 
 		" Tab Mover
-	" s:loopable_tab_move_prev() "{{{
-
-	function! LoopableTabMovePrev()
-		if tabpagenr() is 1
-			execute ':tabmove' tabpagenr('$')
-		else
-			execute ':tabmove -1'
-		endif
-	endfunction
-
-	"}}}
-	" s:loopable_tab_move_next() "{{{
-
-	function! LoopableTabMoveNext()
-		if tabpagenr() is tabpagenr('$')
-			execute ':tabmove 0'
-		else
-			execute ':tabmove +1'
-		endif
-	endfunction
-
-	"}}}
+		function! s:loopable_tab_move_prev() "{{{
+			if tabpagenr() is 1
+				execute ':tabmove' tabpagenr('$')
+			else
+				execute ':tabmove -1'
+			endif
+		endfunction "}}}
+		function! s:loopable_tab_move_next() "{{{
+			if tabpagenr() is tabpagenr('$')
+				execute ':tabmove 0'
+			else
+				execute ':tabmove +1'
+			endif
+		endfunction "}}}
 		autocmd User MyVimRc call submode#enter_with('tab_move', 'n', '', '<C-s>t')
-		autocmd User MyVimRc call submode#map('tab_move', 'n', 's', 'n', ':call LoopableTabMoveNext()<CR>')
-		autocmd User MyVimRc call submode#map('tab_move', 'n', 's', 'p', ':call LoopableTabMovePrev()<CR>')
+		autocmd User MyVimRc call submode#map('tab_move', 'n', 's', 'n', printf(':call %sloopable_tab_move_next()<CR>', s:sid()))
+		autocmd User MyVimRc call submode#map('tab_move', 'n', 's', 'p', printf(':call %sloopable_tab_move_prev()<CR>', s:sid()))
 
 		" Window Mover
 		" Current buffer move to next tab "{{{
@@ -1089,7 +1086,6 @@ let g:ref_source_webdict_sites['default'] = 'weblio'
 
 function! s:weblio_filter(output) "{{{
 	let l:lines = split(a:output, "\n")
-
 	return join(l:lines[60 : ], "\n")
 endfunction "}}}
 let g:ref_source_webdict_sites['weblio'].filter = function('s:weblio_filter')
@@ -1351,6 +1347,9 @@ set breakindent linebreak
 " View more info on <C-g>
 set noruler
 
+" Always show tabline
+set showtabline=2
+
 "@See('http://d.hatena.ne.jp/thinca/20111204/1322932585')
 " Sugoi view tabline
 function! s:tabpage_label(n) "{{{
@@ -1379,13 +1378,13 @@ function! s:tabpage_label(n) "{{{
 	let l:label = l:no . l:mod . l:sp . l:fname
 	return '%' . a:n . 'T' . l:hi . l:label . '%T%#TabLineFill#'
 endfunction "}}}
-function! WithDelimitterTabLine() "{{{
+function! s:with_delimitter_tab_line() "{{{
 	let l:titles     = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
 	let l:delimitter = ' | '
 	let l:tabpages   = l:delimitter . join(l:titles, l:delimitter) . l:delimitter . '%#TabLineFill#%T'
 	return l:tabpages
 endfunction "}}}
-set tabline=%!WithDelimitterTabLine() showtabline=2
+execute 'set tabline=%!' . printf('%swith_delimitter_tab_line()', s:sid())
 
 " Turn off highlight
 nohlsearch
@@ -1531,7 +1530,6 @@ augroup FileEvent
 	" Save Cursor Position when file closed
 	function! s:visit_past_position() "{{{
 		let l:past_posit = line("'\"")
-
 		if l:past_posit > 0 && l:past_posit <= line('$')
 			execute 'normal! g`"'
 		endif
@@ -1659,6 +1657,10 @@ function! s:rename_to(new_name) abort "{{{
 endfunction "}}}
 command! -bar -nargs=1 -complete=file Rename call s:rename_to(<q-args>)
 
+
+" Yank file name and line num
+command! -bar YankLineInfo let @" = printf('%s L%s', expand('%:p'), line('.'))
+
 "}}}
 " Life Helper {{{
 
@@ -1700,7 +1702,7 @@ command! -bar Tweet              TweetVimSay
 
 
 "-- Private Account --"
-function! TwitterPrivateFunc() "{{{
+function! s:twitter_private() "{{{
 	if !exists('g:vimrc.private["twitter"]["priv_ac"]')
 		call s:echo_error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
 		return
@@ -1711,9 +1713,9 @@ function! TwitterPrivateFunc() "{{{
 
 	TweetVimHomeTimeline
 endfunction "}}}
-command! -bar TwitterPrivate     call TwitterPrivateFunc()
+command! -bar TwitterPrivate     execute printf('call %stwitter_private()', s:sid())
 command! -bar TwitterPrivateTab  tabnew | TwitterPrivate
-function! TweetPrivateFunc() "{{{
+function! s:tweet_private() "{{{
 	if !exists('g:vimrc.private["twitter"]["priv_ac"]')
 		call s:echo_error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
 		return
@@ -1725,11 +1727,11 @@ function! TweetPrivateFunc() "{{{
 	"@Incomplete('wait sync here')
 	"execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
-command! -bar TweetPrivate       call TweetPrivateFunc()
+command! -bar TweetPrivate       execute printf('call %stweet_private()', s:sid())
 
 
 "-- Public Account --"
-function! TwitterPublicFunc() "{{{
+function! s:twitter_public() "{{{
 	if !exists("g:vimrc.private['twitter']['publ_ac']")
 		call s:echo_error("Not set env variable => g:vimrc.private['twitter']['publ_ac']")
 		return
@@ -1740,9 +1742,9 @@ function! TwitterPublicFunc() "{{{
 
 	TweetVimHomeTimeline
 endfunction "}}}
-command! -bar TwitterPublic      call TwitterPublicFunc()
+command! -bar TwitterPublic      execute printf('call %stwitter_public()', s:sid())
 command! -bar TwitterPublicTab   tabnew | TwitterPublic
-function! TweetPublicFunc() "{{{
+function! s:tweet_public() "{{{
 	if !exists('g:vimrc.private["twitter"]["publ_ac"]')
 		call s:echo_error('Not set env variable => g:vimrc.private["twitter"]["publ_ac"]')
 		return
@@ -1754,10 +1756,12 @@ function! TweetPublicFunc() "{{{
 	"@Incomplete('wait here')
 	"execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
-command! -bar TweetPublic        call TweetPublicFunc()
+command! -bar TweetPublic        execute printf('call %stweet_public()', s:sid())
 
 
-command! -bar Bitly TweetVimBitly
+cnoreabbr Bitly TweetVimBitly
+command!  Bitly NOP
+
 cnoreabbr tvs TweetVimSwitchAccount
 
 " }}}
@@ -1766,6 +1770,8 @@ cnoreabbr tvs TweetVimSwitchAccount
 " To Service Name
 cnoreabbr Lingr J6uil
 command!  Lingr NOP
+cnoreabbr LingrTab tabnew \| J6uil
+command!  LingrTab NOP
 
 
 " Beautifull Life

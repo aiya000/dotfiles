@@ -579,11 +579,6 @@ thinca        : Vim では eskk.vim を使っているから IME 基本使って
                 特殊な記号とか出すときに使うくらいか  08/22 23:33
 ------------------------------------------------------------------------------------------------------------------------------------------------
 
-function! s:SID_PREFIX()
-  return matchstr(expand('<sfile>'), '<SNR>\d\+_')
-endfunction
-let &tabline = '%!' . s:SID_PREFIX() . 'my_tabline()'
-
 " aiya) metarwとは？
 call metarw#define_wrapper_commands(0)
 
