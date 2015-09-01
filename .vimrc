@@ -1661,6 +1661,30 @@ command! -bar -nargs=1 -complete=file Rename call s:rename_to(<q-args>)
 " Yank file name and line num
 command! -bar YankLineInfo let @" = printf('%s L%s', expand('%:p'), line('.'))
 
+"@Bugs(':RedirToVar @" highlight  " happend exception')
+" Substitute result to a variable easily
+function! s:redir_to_var(bang, args_str) abort "{{{
+	let l:args        = split(a:args_str, '\s')
+	let l:var_name    = escape(l:args[0], '"')  " bug, boooon.
+	let l:expr        = join(l:args[1:], ' ')
+	" redir to register or variable
+	let l:is_register = stridx(l:var_name, '@') > -1
+	let l:direction   = l:is_register ? l:var_name : ('=> g:' . l:var_name)
+
+	if a:bang && !l:is_register
+		execute 'unlet! g:' . l:var_name
+	endif
+	if exists('g:' . l:var_name)
+		call s:echo_error('That variable exists.')
+		call s:echo_error('If you want to overwrite variable, call with bang.')
+		return
+	endif
+
+	execute printf('redir %s | silent %s | redir END', l:direction, l:expr)
+	VimConsoleLog printf('redir %s | silent %s | redir END', l:direction, l:expr)
+endfunction "}}}
+command! -bar -nargs=1 -bang -complete=command RedirToVar call s:redir_to_var(<bang>0, <q-args>)
+
 "}}}
 " Life Helper {{{
 
