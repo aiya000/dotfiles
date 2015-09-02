@@ -388,9 +388,9 @@ NeoBundleLazy  'basyura/bitly.vim'
 NeoBundle      'Shougo/unite.vim'
 NeoBundle      'Shougo/vimproc.vim'
 NeoBundleLazy  'basyura/TweetVim'
-NeoBundle      'mattn/webapi-vim'
+NeoBundleLazy  'mattn/webapi-vim'
 NeoBundle      'Shougo/vimshell.vim'
-NeoBundle      'thinca/vim-quickrun'
+NeoBundleLazy  'thinca/vim-quickrun'
 NeoBundleLazy  'basyura/J6uil.vim'
 NeoBundle      'osyo-manga/vim-gyazo'
 NeoBundleLazy  'yuratomo/w3m.vim'
@@ -398,7 +398,7 @@ NeoBundle      'supermomonga/vimshell-kawaii.vim'
 NeoBundle      'mattn/excitetranslate-vim'
 NeoBundleLazy  'thinca/vim-splash'
 NeoBundleLazy  'supermomonga/jazzradio.vim'
-NeoBundle      'mattn/favstar-vim'
+NeoBundleLazy  'mattn/favstar-vim'
 NeoBundleLazy  'ujihisa/unite-colorscheme'
 NeoBundleLazy  'Shougo/vinarise.vim'
 NeoBundleLazy  'mattn/gist-vim'
@@ -411,7 +411,6 @@ NeoBundleLazy  'mattn/benchvimrc-vim'
 NeoBundleLazy  'mattn/yamada-vim'
 NeoBundleLazy  'jvoorhis/coq.vim'
 NeoBundleLazy  'eagletmt/coqtop-vim'
-NeoBundle      'rhysd/vim-grammarous'
 NeoBundleLazy  'thinca/vim-themis'
 NeoBundle      'tomasr/molokai'
 NeoBundleLazy  'kannokanno/previm'
@@ -463,6 +462,7 @@ NeoBundle      'tpope/vim-repeat'
 NeoBundleLazy  'lambdalisue/vim-pager'
 NeoBundleLazy  'lambdalisue/vim-manpager'
 NeoBundle      'thinca/vim-visualstar'
+NeoBundle      'tpope/vim-fugitive'
 
 
 "}}}
@@ -499,6 +499,22 @@ endif
 if neobundle#tap('vimshell.vim')
 	call neobundle#config('vimshell.vim', {
 	\	'depends'  : 'Shougo/vimproc.vim'
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-quickrun')
+	call neobundle#config('vim-quickrun', {
+	\	'depends'  : 'Shougo/vimproc.vim',
+	\	'autoload' : {
+	\		'commands' : {
+	\			'name'     : 'QuickRun',
+	\			'complete' : 'filetype'
+	\		},
+	\		'mappings' : [
+	\			'<Plug>(quickrun)',
+	\			'<Plug>(quickrun-op)'
+	\		]
+	\	}
 	\})
 	call neobundle#untap()
 endif
@@ -565,6 +581,12 @@ if neobundle#tap('jazzradio.vim')
 	\			}
 	\		]
 	\	}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('favstart-vim')
+	call neobundle#config('favstart-vim', {
+	\	'autoload' : {'commands' : 'FavStar'}
 	\})
 	call neobundle#untap()
 endif
@@ -852,6 +874,12 @@ if neobundle#tap('vim-manpager')
 	\})
 	call neobundle#untap()
 endif
+if neobundle#tap('vim-fugitive')
+	call neobundle#config('vim-fugitive', {
+	\	'augroup' : 'fugitive'
+	\})
+	call neobundle#untap()
+endif
 
 call neobundle#end()
 
@@ -893,6 +921,9 @@ let g:unite_source_alias_aliases = {
 "}}}
 "--- vim-quickrun ---" {{{
 "@Unchecked('java'){Ubuntu}
+
+" Define myself, for lazy load
+let g:quickrun_no_default_key_mappings = 0
 
 let g:quickrun_config = {
 \	'_' : {
@@ -2157,6 +2188,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap <leader>w <Plug>(openbrowser-open)
 
 	" vim-quickrun
+	autocmd User MyVimRc nmap              <leader>r         <Plug>(quickrun)
 	autocmd User MyVimRc nnoremap <silent> <leader>R         :<C-u>QuickRun -runner shell<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>r :<C-u>call <SID>bufclose_filetype('quickrun')<CR>
 
