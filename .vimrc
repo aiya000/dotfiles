@@ -30,14 +30,6 @@
 
 "-- Unite outline ? -> view C-Sharp <summary>~</summary> with method name
 
-"-- Buffer Memo of Marks
-
-"-- Easily yank current line in function
-"  -- ex) FileName.cs> FooMethod() : 128L
-
-"-- bash
-"  -- hereis prefix
-
 " }}}
 " Issues {{{
 
@@ -77,17 +69,11 @@
 
 "-- reference to help 'ftplugin' L2159
 
-"-- foldmethod for C# methods
-
-"-- change color cursorline when opened tweetvim
-"
 "-- read help syntax.txt
 
 "-- quickrun pref of stack project
 
 "-- view somewhere its notification when tags loaded
-
-"-- correspond msys2 (mintty) environment
 
 "-- Delete undo
 "  -- current file or all file
@@ -236,12 +222,12 @@ if s:is_kaoriya && s:is_windows
 		let $PATH = '/cygwin/bin;/cygwin/usr/bin;/cygwin/usr/sbin;' . $PATH
 	endif
 
-	" Build Base Directories
+	" Make base directories
 	if !isdirectory(g:vimrc['vim_home'])
 		call mkdir(g:vimrc['vim_home'])
 	endif
 
-	" For Using No Default vimproc
+	" Use kaoriya's vimproc
 	let s:switch_dir       = $VIM . '/switches/enabled'
 	let s:suppress_vimproc = s:switch_dir . '/disable-vimproc.vim'
 
@@ -288,9 +274,7 @@ function! s:remove_empty_bundledir()  "{{{
 
 	for l:dir_name in l:dir_names
 		let l:plugin_dir   = s:bundledir . '/' . l:dir_name
-
 		let l:is_empty_dir = glob('autoload/*') ==# ''
-
 		if l:is_empty_dir
 			"@Deprecated('should not be use unix command')
 			call s:system('rmdir ' . l:plugin_dir)
@@ -301,12 +285,10 @@ function! s:fetch_neobundle() " {{{
 	if executable('git')
 		echo 'NeoBundle was not installed...'
 		echo 'Installing NeoBundle.'
-
 		execute '!git clone https://github.com/Shougo/neobundle.vim' s:neobundledir
 	else
 		call s:echo_error('Sorry, You do not have git command.')
 		call s:echo_error('Cannot introduce NeoBundle.')
-
 		throw 'FALIED: cloning neobundle.vim failed.'
 	endif
 endfunction " }}}
@@ -314,7 +296,6 @@ endfunction " }}}
 if has('vim_starting')
 	try
 		let &runtimepath = &runtimepath . ',' . g:vimrc['vim_home'] . '/bundle/neobundle.vim'
-
 		call neobundle#begin()
 	catch /E117/
 		if isdirectory(s:neobundledir) && exists(':NeoBundle') isnot 2
@@ -326,7 +307,6 @@ if has('vim_starting')
 		try
 			call s:fetch_neobundle()
 			call neobundle#begin()
-
 			echo 'NeoBundle installed.'
 			echo 'Please closing vim and reopening vim once,'
 			echo 'and executing :NeoBundleInstall .'
@@ -463,6 +443,7 @@ NeoBundleLazy  'lambdalisue/vim-pager'
 NeoBundleLazy  'lambdalisue/vim-manpager'
 NeoBundle      'thinca/vim-visualstar'
 NeoBundle      'tpope/vim-fugitive'
+NeoBundleLazy  'rhysd/try-colorscheme.vim'
 
 
 "}}}
@@ -880,6 +861,12 @@ if neobundle#tap('vim-fugitive')
 	\})
 	call neobundle#untap()
 endif
+if neobundle#tap('try-colorscheme.vim')
+	call neobundle#config('try-colorscheme.vim', {
+	\	'autoload' : {'commands' : 'TryColorscheme'}
+	\})
+	call neobundle#untap()
+endif
 
 call neobundle#end()
 
@@ -993,7 +980,7 @@ let g:vimshell_scrollback_limit             = 10000
 let g:vimshell_split_command                = 'split'
 
 "@See('autoload/vimshell/commands/{hereis,edit_places,places,reload_places}.vim')
-" Set hereis's result file
+" This file was referenced by hereis.vim
 let g:vimshell_hereis_file = expand('~/.vimshrc_places.vimsh')
 
 "}}}
@@ -1014,14 +1001,6 @@ let g:excitetranslate_options = ["buffer"]
 let g:w3m#external_browser = 'firefox'
 
 let g:w3m#homepage = 'http://www.google.co.jp/'
-
-"}}}
-"--- vimconsole.vim ---"{{{
-
-" Do auto output debug log to console
-let g:vimconsole#auto_redraw = 1
-
-let g:vimconsole#no_default_key_mappings = 1
 
 "}}}
 "--- foldCC ---"{{{
@@ -1136,7 +1115,7 @@ set helplang=en,ja
 "--- TaskList.vim ---"{{{
 
 " TaskList search these
-let g:tlTokenList = ["FIXME", "TODO", "XXX", "NOTE"]
+let g:tlTokenList = ["NOTE", "TODO", "FIXME", "XXX"]
 
 " Open window at bottom
 let g:tlWindowPosition = 1
@@ -1176,10 +1155,10 @@ let g:solarized_contrast = "high"
 "}}}
 "--- aho-bakaup.vim ---"{{{
 
-" Devolute to Bakaup
+" Devolute to bakaup
 set nobackup
 
-" Powered Up Auto File Backup when written
+" The file was backed up automatically when you written that file
 let g:bakaup_backup_dir  = s:backupdir
 let g:bakaup_auto_backup = 1
 
@@ -1216,13 +1195,15 @@ let g:separetaro_long_separator_of = {
 "}}}
 "--- vimconsole.vim ---"{{{
 
-" auto output log to debug console
+" Output debug log to console automatically
 let g:vimconsole#auto_redraw = 1
+
+let g:vimconsole#no_default_key_mappings = 1
 
 "}}}
 "--- vim-go ---"{{{
 
-" Avoid a bug
+" Avoid a bug on cygwin environment
 if s:is_cygwin
 	let g:go_fmt_autosave        = 0
 	let g:go_def_mapping_enabled = 0
@@ -1231,12 +1212,13 @@ endif
 "}}}
 "--- vim-textobj-indent ---"{{{
 
+" Define myself
 let g:textobj_indent_no_default_key_mappings = 1
 
 "}}}
 "--- neocomplete.vim ---"{{{
 
-" auto start neocomplete
+" Start neocomplete automatically
 let g:neocomplete#enable_at_startup = 1
 
 "@Incomplete('the config of vimshell history was not set')
@@ -1292,7 +1274,6 @@ let s:repos_dir = '~/Repository/'
 " If valid local plugin, disable bundled same plugin
 for s:plug in s:repos
 	let s:plug_dir = s:repos_dir . s:plug
-
 	if isdirectory(expand(s:plug_dir))
 		execute ':set runtimepath+=' . s:plug_dir
 		execute ':NeoBundleDisable'    s:plug
@@ -1305,7 +1286,7 @@ unlet s:plug_dir s:plug s:repos_dir s:repos
 "}}}
 "--- For Private ---"{{{
 
-" Read Privacy Config
+" Load private configure
 if filereadable(expand('~/.vimrc_private'))
 	source ~/.vimrc_private
 endif
@@ -1318,20 +1299,20 @@ endif
 "-------------------------"
 "{{{
 
-" Set Basic Preferences
+" Set basic preferences
 set number relativenumber nowrap hlsearch list scrolloff=16
 
-" Status Bar always displayed
+" Status bar was always displayed
 set laststatus=2
 
 "@See('http://sourceforge.jp/magazine/07/11/06/0151231')
-" Status Bar format
+" Set status bar format
 set statusline=%F%m\ %{fugitive#statusline()}%=\ \ [FileType=%y][Format=%{&fileencoding}][Encode=%{&encoding}]
 
-" ☆ Fix View 2byte Code (Not support gnome-terminal)
+" ☆ Fix 2byte code viewing, but this option don't support gnome-terminal
 set ambiwidth=double
 
-" Powered Up Syntax Highlight
+" Define powered up syntax highlights
 " {{{
 
 augroup HighlightPref
@@ -1366,13 +1347,13 @@ augroup END
 
 " }}}
 
-" Set for Color Scheme
+" Set for color scheme only once
 if !g:vimrc['loaded']
 	set background=dark
 	colorscheme desert
 endif
 
-" Indent Wrapped Text
+" Wrapped text was appended indent on the window
 set breakindent linebreak
 
 " View more info on <C-g>
@@ -1428,19 +1409,19 @@ nohlsearch
 "-------------------------"
 "{{{
 
-" Backspace can delete it
+" Backspace can delete carriage returns
 set backspace=indent,eol,start
 
-" No auto Carriage Return and Set tab style
+" Don't insert carriage return automatically, and set tab styles
 set textwidth=0 tabstop=4 shiftwidth=4
 
-" C type auto indent on
+" Set c type auto indent
 set autoindent cindent
 
-" Don't jump bottom to top and top to bottom when searching
+" Searcher don't jump to top or bottom
 set nowrapscan
 
-" Fold Text with foldmarker and fold sets
+" Set fold options
 set foldmethod=marker
 set foldtext=FoldCCtext()
 set foldcolumn=1
@@ -1448,20 +1429,21 @@ let &fillchars = 'vert:|,fold: '
 set foldopen=search,jump,mark,percent,insert,tag,undo
 set foldclose=all
 
-" Collection Swap File
+" Collection swap file to here
 let &directory = s:directory
 
-" Save View Position when execute ':mkview'
+" Save view position when execute ':mkview'
 let &viewdir = s:viewdir
 
-" Hold Undo Archive when file closed
+" Hold undo archive when file closed
 set undofile
 let &undodir = s:undodir
 
-" Bell Sound is instead of Screen flash.
+" Bell sound is instead of screen flash.
 set visualbell
 
-" Disable Auto Commentalize New Line
+"@Bugs("This option has not functioned (?)")
+" Disable auto commentalize new line
 set formatoptions-=ro
 
 " Ignore case on NormalMode searching and InsertMode completion
@@ -1497,7 +1479,7 @@ endfunction
 "}}}
 autocmd UserEvent CursorMoved * call s:visual_fold_all()
 
-" no put two space on join (J)
+" Don't put two space on join (normal J)
 set nojoinspaces
 
 " control by myself in all environment
@@ -1511,31 +1493,25 @@ set iminsert=0
 "-------------------------"
 "{{{
 
-" Auto Judge file encode
+" Set order of judging file encode
 set fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
 
 " Leaving a history and it limit is a 500 pieces
 set history=500
 
-" Adding Runtime Path
-set runtimepath+=~/.vim/vimball
-
-" Set Vimball Install place
-let g:vimball_home = g:vimrc['vim_home'] . '/vimball'
-
-" Display Command Complement
+" Display command complement
 set wildmenu
 
-" Path Delimiter is Slash
+" Path delimiter is slash
 set shellslash
 
-" Add Match Pairs
+" Add correspond pairs
 set matchpairs+=<:>
 
-" Load Target for ctags
+" Reference tags of ctags
 set tags=./tags,~/tags,.git/tags,../.git/tags,../../.git/tags
 
-" Explore wake up default dir
+" Netrw wake up default dir
 set browsedir=buffer
 
 " Set spell lang
@@ -1544,7 +1520,7 @@ set spelllang=en_US,cjk
 " Set reference path, using by :find, gf and more
 set path=.,,./**
 
-" Manually generate my help tags
+" Auto generate my help tags
 if isdirectory(g:vimrc['vim_home'] . '/doc')
 	execute 'helptags' (g:vimrc['vim_home'] . '/doc')
 endif
@@ -1558,7 +1534,7 @@ endif
 "{{{
 
 augroup FileEvent
-	" Save Cursor Position when file closed
+	" Auto set cursor position in the file
 	function! s:visit_past_position() "{{{
 		let l:past_posit = line("'\"")
 		if l:past_posit > 0 && l:past_posit <= line('$')
@@ -1583,6 +1559,7 @@ autocmd FileEvent VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
 \|		let &listchars = 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
 \|	endif
 
+
 "" Foooooo!!!!!!! I hope get this omoshiro event!!
 "autocmd UserEvent UserGettingBored * echo 'oooooiiiii!!!!!'
 
@@ -1594,7 +1571,7 @@ augroup UserEvent
 augroup END
 
 
-" Hide relativenumber on OverCommandLine Enter
+" Hide relativenumber when OverCommandLine entered
 augroup UserEvent
 	autocmd User OverCmdLineEnter setl norelativenumber
 	autocmd User OverCmdLineLeave if &number | setl relativenumber | end
@@ -1627,7 +1604,7 @@ AlterCommand tabnew TabnewOverridden
 " }}}
 " Our Usefull {{{
 
-" Grep and Open current buffer
+" Grep current buffer, and open quickfix window
 command! -bar -nargs=1 GrepInThis vimgrep <args> % | cwindow
 
 
@@ -1657,7 +1634,7 @@ endfunction " }}}
 command! -range=% ReverseLine :<line1>, <line2>call s:reverse_line()
 
 
-" Rename file of current buffer
+" Rename the file of current buffer
 function! s:rename_to(new_name) abort "{{{
 	let l:this_file = fnameescape(expand('%'))
 	let l:new_name  = fnameescape(a:new_name)
@@ -1688,9 +1665,6 @@ function! s:rename_to(new_name) abort "{{{
 endfunction "}}}
 command! -bar -nargs=1 -complete=file Rename call s:rename_to(<q-args>)
 
-
-" Yank file name and line num
-command! -bar YankLineInfo let @" = printf('%s L%s', expand('%:p'), line('.'))
 
 "@Bugs(':RedirToVar @" highlight  " happend exception')
 " Substitute result to a variable easily
@@ -1726,9 +1700,9 @@ command! -bar VimConfig e $MYVIMRC
 command! -bar VimConfigTab tabnew $MYVIMRC
 
 command! -bar Reload so $MYVIMRC
-	\|	if has('gui_running') && filereadable($MYGVIMRC)
-	\|		so $MYGVIMRC
-	\|	endif
+\|	if has('gui_running') && filereadable($MYGVIMRC)
+\|		so $MYGVIMRC
+\|	endif
 
 cnoreabbr w!! w !sudo tee % > /dev/null
 

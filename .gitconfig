@@ -14,3 +14,14 @@
 	default = matching
 [alias]
 	sl = log --oneline --name-only
+	c = commit
+	s = status
+	b = branch
+	l = log
+	co = checkout
+	cm = commit -m
+	A = add -A
+	d = diff
+	ca = commit -a
+	cam = commit -am
+	ba = branch -a
