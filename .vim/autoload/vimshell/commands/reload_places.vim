@@ -1,9 +1,9 @@
 let g:vimshell_hereis_file = get(g:, 'vimshell_hereis_file', expand('~/.vimsh_places.vim'))
 
 let s:command = {
-\	'name' : 'reload_places',
-\	'kind' : 'internal',
-\	'description' : 'reload paths that was defined by hereis - g:vimshell_hereis_file'
+\	'name'        : 'reload_places',
+\	'kind'        : 'internal',
+\	'description' : 'reload paths in g:vimshell_hereis_file that was defined by hereis.vim'
 \}
 
 function! vimshell#commands#reload_places#define()

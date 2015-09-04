@@ -1,9 +1,9 @@
 let g:vimshell_hereis_file = get(g:, 'vimshell_hereis_file', expand('~/.vimsh_places.vim'))
 
 let s:command = {
-\	'name' : 'places',
-\	'kind' : 'internal',
-\	'description' : 'view define hereis paths - g:vimshell_hereis_file'
+\	'name'        : 'places',
+\	'kind'        : 'internal',
+\	'description' : 'view defined hereis paths'
 \}
 
 function! vimshell#commands#places#define()

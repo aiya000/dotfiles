@@ -1275,8 +1275,8 @@ let s:repos_dir = '~/Repository/'
 for s:plug in s:repos
 	let s:plug_dir = s:repos_dir . s:plug
 	if isdirectory(expand(s:plug_dir))
-		execute ':set runtimepath+=' . s:plug_dir
-		execute ':NeoBundleDisable'    s:plug
+		execute 'set runtimepath+=' . s:plug_dir
+		execute 'NeoBundleDisable'    s:plug
 	end
 endfor
 
@@ -2165,6 +2165,8 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap              <leader>r         <Plug>(quickrun)
 	autocmd User MyVimRc nnoremap <silent> <leader>R         :<C-u>QuickRun -runner shell<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>r :<C-u>call <SID>bufclose_filetype('quickrun')<CR>
+	autocmd User MyVimRc vmap              <leader>r         <Plug>(quickrun)
+	autocmd User MyVimRc vnoremap <silent> <leader>R         :QuickRun -runner shell<CR>
 
 	" vimshell
 	autocmd User MyVimRc nnoremap <silent> <leader>v         :<C-u>VimShell -split-command=vsp -toggle<CR>
@@ -2188,7 +2190,6 @@ augroup KeyMapping
 	autocmd User MyVimRc vnoremap <silent>       :s/        :<C-u>OverCommandLine '<,'>s/<CR>
 	autocmd User MyVimRc cnoremap <silent>       <C-k>:     <Home>OverCommandLine <CR>
 	"@Marked('this is temporary keymapping, because vim-over do not imported cnoremap maybe')
-	"@Marked('please delete this when fixed it')
 	autocmd FileType * OverCommandLineNoremap <C-b>      <Left>
 	autocmd FileType * OverCommandLineNoremap <C-f>      <Right>
 	"autocmd FileType * OverCommandLineNoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
@@ -2211,7 +2212,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap <silent>    <leader>?         ?\m\C
 	autocmd User MyVimRc nmap <silent>    <leader><leader>? ?\m\C\<\>[Left][Left]
 	autocmd User MyVimRc nmap             q?                ?\<<C-r>"\><CR>
-	autocmd User MyVimRc nmap             g?                <Plug>(incsearch-stay)
 	autocmd User MyVimRc vmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
 	autocmd User MyVimRc vmap <expr>      ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
 	"@Marked('Set event FileType *, because avoid error. please suitable event')
@@ -2230,9 +2230,9 @@ augroup KeyMapping
 
 	" separetaro.vim
 	autocmd User MyVimRc nmap <leader>ps <Plug>(separetoro_put_short_under)
-	autocmd User MyVimRc nmap <leader>Ps <Plug>(separetoro_put_short_over)
+	autocmd User MyVimRc nmap <leader>pS <Plug>(separetoro_put_short_over)
 	autocmd User MyVimRc nmap <leader>pl <Plug>(separetoro_put_long_under)
-	autocmd User MyVimRc nmap <leader>Pl <Plug>(separetoro_put_long_over)
+	autocmd User MyVimRc nmap <leader>pL <Plug>(separetoro_put_long_over)
 
 	"TODO: this section decomposite to vimrc and nvimrc
 	" neocomplete.vim or deoplete.nvim
@@ -2405,7 +2405,6 @@ augroup PluginPrefs
 	autocmd FileType int-* imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
 	autocmd FileType int-* imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
 
-
 	autocmd FileType ref-* nnoremap <silent><buffer> Q :<C-u>quit<CR>
 augroup END
 
@@ -2418,7 +2417,7 @@ augroup END
 "{{{
 
 " If buffer does not has filetype, set filetype 'none'
-autocmd ExtensionType VimEnter,BufNew * if &ft ==# '' | setf none | endif
+autocmd ExtensionType VimEnter,BufNew * if empty(&ft) | setf none | endif
 
 "}}}
 

@@ -13,8 +13,6 @@ set indentexpr&  " &...?
 " Note
 
 
-NeoBundle 'sorah/unite-ghq'
-
 set comments-=s1:/*,mb:*,ex:*/ " /* Make C-style comments
 set comments+=s:/*,mb:\ *,ex:\ */ " * wrap like this
 set comments+=fb:*  " */
@@ -24,21 +22,15 @@ set comments+=fb:*  " */
 
 
 
-NeoBundle "osyo-manga/vim-watchdogs"
 NeoBundle "motemen/vim-guess-abbrev"
 NeoBundle 'kana/vim-fakeclip'
 NeoBundle 'gcmt/wildfire.vim'
 NeoBundle "syui/airsave.vim"
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'motemen/vim-help-random'
-NeoBundle 'sgur/unite-qf'
 NeoBundle 'thinca/vim-unite-history'
 NeoBundle 'sgur/unite-git_grep'
 NeoBundle 'thinca/vim-showtime'
-" 行末の半角スペースを可視化(うまく動かない？)
-NeoBundle 'bronson/vim-trailing-whitespace'
-" less用のsyntaxハイライト
-NeoBundle 'KohPoll/vim-less'
 
 
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
@@ -60,19 +52,6 @@ endif
 let &dictionary = '/usr/share/dict/words,'                                  " files where to load word for dictionary
 let &dictionary .= g:runtimepath . '/spell/custom.utf-8.add'                " completion for use with <c-x><c-k>
 
-
-haya14busa   : visual-star案件だ  03/08 00:10
-" enable search for selected text, forwards (*) or backwards (#)
-xnoremap <silent> * :<c-u>
-  \let old_reg=getreg('"')<bar>let old_regtype=getregtype('"')<cr>
-  \gvy/<c-r>=substitute(
-  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<cr><cr>
-  \:call setreg('"', old_reg, old_regtype)<cr>
-xnoremap <silent> # :<c-u>
-  \let old_reg=getreg('"')<bar>let old_regtype=getregtype('"')<cr>
-  \gvy?<c-r>=substitute(
-  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<cr><cr>
-  \:call setreg('"', old_reg, old_regtype)<cr>
 
 " open .vimrc (following potential symbolic link)
 nnoremap <leader>ve :tabnew <c-r>=resolve(expand($MYVIMRC))<cr><cr>:help<cr><c-w>L:vertical resize 80<cr>:set winfixwidth<cr><c-w>h
@@ -564,24 +543,6 @@ http://qiita.com/knt45/items/6472fc5d9f4eafff8c51
 "-----------
 " 2015-08-22
 "-----------
-set title
-set titlestring=Vim:\ %f\ %h%r%m
-if exists('$TMUX')
-  " Fix window title on tmux.
-  let &t_fs = "\<C-g>"
-  let &t_ts = "\<Esc>]2;"
-endif
-
-------------------------------------------------------------------------------------------------------------------------------------------------
-aiya000       : L113 iminsert、僕も0にしよう。 (Windows Kaoriya GVimなどで有効になってそう)  08/22 23:32
-------------------------------------------------------------------------------------------------------------------------------------------------
-thinca        : Vim では eskk.vim を使っているから IME 基本使ってないのだよなぁ  08/22 23:33
-                特殊な記号とか出すときに使うくらいか  08/22 23:33
-------------------------------------------------------------------------------------------------------------------------------------------------
-
-" aiya) metarwとは？
-call metarw#define_wrapper_commands(0)
-
 " my complete 作成用資料
 command! -nargs=? -complete=customlist,s:complete_fileencoding SetFileEncoding
 \ setlocal fileencoding=<args>
@@ -674,16 +635,6 @@ endfunction
 function! s:complete_fileformats(arglead, cmdline, cursorpos)
   return sort(filter(split(&fileformats, ','), 's:prefix_of_p(a:arglead, v:val)'))
 endfunction
-
-" aiya) koremo hosii
-command! -bar -nargs=* TabpageTitle
-\   if <q-args> == ''
-\ |   let t:title = input("Set tabpage's title to: ", '')
-\ | else
-\ |   let t:title = <q-args>
-\ | endif
-\ | redraw!
-
 
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
 "-----------

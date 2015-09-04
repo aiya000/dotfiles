@@ -1,9 +1,9 @@
 let g:vimshell_hereis_file = get(g:, 'vimshell_hereis_file', expand('~/.vimsh_places.vim'))
 
 let s:command = {
-\	'name' : 'edit_places',
-\	'kind' : 'internal',
-\	'description' : 'simply open places file - g:vimshell_hereis_file'
+\	'name'        : 'edit_places',
+\	'kind'        : 'internal',
+\	'description' : 'simply open places file ( g:vimshell_hereis_file )'
 \}
 
 function! vimshell#commands#edit_places#define()

@@ -25,3 +25,4 @@
 	ca = commit -a
 	cam = commit -am
 	ba = branch -a
+	cob = checkout -b
