@@ -20,7 +20,7 @@
 	l = log
 	co = checkout
 	cm = commit -m
-	A = add -A
+	a = add
 	d = diff
 	ca = commit -a
 	cam = commit -am

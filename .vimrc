@@ -588,7 +588,8 @@ if neobundle#tap('vinarise.vim')
 endif
 if neobundle#tap('gist-vim')
 	call neobundle#config('gist-vim', {
-	\	'autoload' : {'commands' : 'Gist'}
+	\	'autoload' : {'commands' : 'Gist'},
+	\	'depends'  : 'mattn/webapi-vim'
 	\})
 	call neobundle#untap()
 endif

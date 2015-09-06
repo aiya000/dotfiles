@@ -1,13 +1,24 @@
+# Meta
+snippet reference
+alias   include
+abbr    /// <reference path=""/>
+    /// <reference path="${0}"/>
+
+snippet classdesc
+abbr    @classdesc message
+    @classdesc
+
+# Syntax
 snippet for
 abbr    for () {}
-    for (${1:#:var}; ${2:#:condition}; ${3:#:effect}) {
+    for (${1:#:let}; ${2:#:condition}; ${3:#:effect}) {
         ${0:TARGET}
     }
 
 snippet foreach
 alias   fore
-abbr    for (var x in xs) {}
-    for (${1:var} ${2:x} in ${3:xs}) {
+abbr    for (let x in xs) {}
+    for (${1:let} ${2:x} in ${3:xs}) {
         ${0:TARGET}
     }
 
@@ -23,8 +34,3 @@ abbr    func () {}
     function ${1:#:name}(${2:#:arguments}) : ${3:#:type} {
         ${0:TARGET}
     }
-
-snippet reference
-alias   include
-abbr    /// <reference path=""/>
-    /// <reference path="${0}"/>
