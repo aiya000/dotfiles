@@ -85,38 +85,6 @@ endif
 command! -bar GVimConfig    e $MYGVIMRC
 command! -bar GVimConfigTab tabnew $MYGVIMRC
 
-
-" DressUp kawaii-vim
-command! DressUpColorDesert
-\	colorscheme desert
-\|	if s:is_windows
-\|		set transparency=245
-\|	endif
-
-command! DressUpColorEvening
-\	colorscheme evening
-\|	if s:is_windows
-\|		set transparency=220
-\|	endif
-
-command! DressUpColorMolokai
-\	colorscheme molokai
-\|	if s:is_windows
-\|		set transparency=255
-\|	endif
-
-command! DressUpColorSolarized
-\	colorscheme solarized
-\|	if s:is_windows
-\|		set transparency=220
-\|	endif
-
-
-" Sorry, I Don't use this
-if exists(':Revert') is 2
-	delcommand Revert
-endif
-
 "}}}
 
 
@@ -151,7 +119,7 @@ if !g:gvimrc['loaded']
 	if s:is_unix
 		colorscheme molokai
 	elseif s:is_windows
-		colorscheme solarized
+		colorscheme lucius
 	endif
 endif
 

@@ -134,7 +134,7 @@ let s:undodir   = s:backupdir . '/undo'
 let s:viewdir   = s:backupdir . '/view'
 
 let s:username  = $USER
-let s:groupname = $GROUP !=# '' ? $GROUP : $USER
+let s:groupname = empty($GROUP) ? $GROUP : $USER
 
 "}}}
 
@@ -154,12 +154,14 @@ function! s:system(cmd)
 	endif
 endfunction
 
+" Show error message
 function! s:echo_error(msg)
 	echohl Error
 	echo a:msg
 	echohl None
 endfunction
 
+" Get script local ID
 function! s:sid()
 	return matchstr(expand('<sfile>'), '<SNR>\d\+_')
 endfunction
@@ -444,6 +446,7 @@ NeoBundleLazy  'lambdalisue/vim-manpager'
 NeoBundle      'thinca/vim-visualstar'
 NeoBundle      'tpope/vim-fugitive'
 NeoBundleLazy  'rhysd/try-colorscheme.vim'
+NeoBundle      'jonathanfilip/vim-lucius'
 
 
 "}}}
@@ -931,33 +934,41 @@ let g:quickrun_config = {
 \		'cmdopt'   : '--runtimepath ".."',
 \		'exec'     : '%c %o %s:p | tr -d "\r"',
 \		'tempfile' :  printf('%s/{tempname()}.vimspec', $TMP)
-\	}
+\	},
+\	'html': {
+\		'outputter' : 'null'
+\	},
+\	'cs' : {}
 \}
 
-" Branch by the environment
-let g:quickrun_config['cs'] = s:is_unix    ? {'command' : 'mcs'}
-\                           : s:is_windows ? {'command' : 'csc.exe', 'hook/output_encode/encoding' : 'cp932:utf-8'}
-\                                          : {}
-
-if s:is_unix
+" Set by each environment
+if s:is_unix && !s:is_cygwin
+	" C#
+	let g:quickrun_config.cs['command'] = 'mcs'
+	" HTML
 	"@Unsupported('except Ubuntu')
-	" Open expected browser
-	let g:quickrun_config['html'] = {
-	\	'command'   : 'xdg-open',
-	\	'exec'      : '%c %s:p',
-	\	'outputter' : 'null'
-	\}
+	let g:quickrun_config.html['command'] = 'xdg-open'
+	let g:quickrun_config.html['exec']    = '%c %s:p'
 elseif s:is_windows
+	" C#
+	let g:quickrun_config.cs['command']                     = 'csc.exe'
+	let g:quickrun_config.cs['hook/output_encode/encoding'] = 'cp932:utf-8'
+	" Java
 	let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
 elseif s:is_cygwin
-	"@Marked('temporary (vimproc bug)')
-	let g:quickrun_config._['runner']      = 'system'
-	"
-	let g:quickrun_config.java['exec']     = ['%c %o `echo %s | sed s:\:/:g | cygpath -w -f -`', '%c %s:t:r %a']
+	" C#
+	let g:quickrun_config.cs['command']                     = 'csc.exe'
+	let g:quickrun_config.cs['hook/output_encode/encoding'] = 'cp932:utf-8'
+	" Java
+	let g:quickrun_config.java['exec']                        = ['%c %o `cygpath -w %s:p`', '%c %s:t:r %a']
 	let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
-	let g:quickrun_config.java['tempfile'] = printf('%s/{tempname()}.java', $TMP)
-	let g:quickrun_config.haskell          = {}
-	let g:quickrun_config.haskell['exec']  = "%c %o `cygpath -w '%s:p'` | tr -d \"\\r\""
+	let g:quickrun_config.java['tempfile']                    = printf('%s/{tempname()}.java', $TMP)
+	" Haskell
+	let g:quickrun_config['haskell']      = {}
+	let g:quickrun_config.haskell['exec'] = "%c %o `cygpath -w '%s:p'` | tr -d \"\\r\""
+	" TypeScript
+	let g:quickrun_config['typescript']        = {}
+	let g:quickrun_config.typescript['exec']   = ['%c %o "`cygpath -w %s:p`"', 'node "`cygpath -w %s:p:r`.js"']
 endif
 
 " }}}
@@ -1687,7 +1698,6 @@ function! s:redir_to_var(bang, args_str) abort "{{{
 	endif
 
 	execute printf('redir %s | silent %s | redir END', l:direction, l:expr)
-	VimConsoleLog printf('redir %s | silent %s | redir END', l:direction, l:expr)
 endfunction "}}}
 command! -bar -nargs=1 -bang -complete=command RedirToVar call s:redir_to_var(<bang>0, <q-args>)
 
