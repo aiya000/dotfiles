@@ -10,7 +10,8 @@ function! s:GitLogViewer()
 
 	new
 	setl buftype=nofile
-	VimProcRead git log -u 'ORIG_HEAD..HEAD'
+	"VimProcRead git log -u 'ORIG_HEAD..HEAD'
+	VimProcRead git log
 	execute 'normal! gg"_dd'
 	set filetype=gitlogviewer-diff
 	setlocal syntax=diff
