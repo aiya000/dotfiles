@@ -936,7 +936,8 @@ let g:quickrun_config = {
 \		'tempfile' :  printf('%s/{tempname()}.vimspec', $TMP)
 \	},
 \	'html': {
-\		'outputter' : 'null'
+\		'outputter' : 'null',
+\		'exec'      : '%c %s:p'
 \	},
 \	'cs' : {}
 \}
@@ -948,13 +949,16 @@ if s:is_unix && !s:is_cygwin
 	" HTML
 	"@Unsupported('except Ubuntu')
 	let g:quickrun_config.html['command'] = 'xdg-open'
-	let g:quickrun_config.html['exec']    = '%c %s:p'
 elseif s:is_windows
 	" C#
 	let g:quickrun_config.cs['command']                     = 'csc.exe'
 	let g:quickrun_config.cs['hook/output_encode/encoding'] = 'cp932:utf-8'
 	" Java
 	let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
+	"TODO: don't depends firefox.exe
+	" HTML
+	let g:quickrun_config.html['command'] = 'firefox.exe'
+	let g:quickrun_config.html['exec']    = '%c file://%s:p'
 elseif s:is_cygwin
 	" C#
 	let g:quickrun_config.cs['command']                     = 'csc.exe'
@@ -969,6 +973,8 @@ elseif s:is_cygwin
 	" TypeScript
 	let g:quickrun_config['typescript']        = {}
 	let g:quickrun_config.typescript['exec']   = ['%c %o "`cygpath -w %s:p`"', 'node "`cygpath -w %s:p:r`.js"']
+	" HTML
+	let g:quickrun_config.html['command'] = 'cygstart'
 endif
 
 " }}}
