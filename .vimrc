@@ -2218,6 +2218,8 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap #      <Plug>(anzu-sharp-with-echo)zv
 	autocmd User MyVimRc nmap <C-w>* <C-w>v<Plug>(anzu-star-with-echo)zv
 	autocmd User MyVimRc nmap <C-w># <C-w>v<Plug>(anzu-sharp-with-echo)zv
+	autocmd User MyVimRc nmap <leader><leader>* g*/<Up><Home>\m\C<CR>
+	autocmd User MyVimRc nmap <leader><leader># g#?<Up><Home>\m\C<CR>
 
 	" incsearch.vim
 	autocmd User MyVimRc nmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
