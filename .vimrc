@@ -1610,11 +1610,14 @@ call altercmd#load()
 command! -bar -bang NewOverridden new<bang> | setf none
 AlterCommand new NewOverridden
 
+command! -bar -bang -complete=file -nargs=? EditOverridden e<bang> <args> | if empty(&ft) | setf none | endif
+AlterCommand e[dit] EditOverridden
+
 command! -bar -bang -complete=file -nargs=? VnewOverridden vnew<bang> <args> | if empty(&ft) | setf none | endif
-AlterCommand vnew VnewOverridden
+AlterCommand vne[w] VnewOverridden
 
 command! -bar -bang -complete=file -nargs=? EnewOverridden enew<bang> <args> | if empty(&ft) | setf none | endif
-AlterCommand enew EnewOverridden
+AlterCommand ene[w] EnewOverridden
 
 command! -bar -bang -complete=file -nargs=? TabnewOverridden tabnew<bang> <args> | if empty(&ft) | setf none | endif
 AlterCommand tabnew TabnewOverridden
