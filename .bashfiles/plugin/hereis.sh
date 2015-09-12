@@ -2,12 +2,17 @@
 
 # Export default environment values
 if [ -z "$HEREIS_PLACES_FILE" ]; then
-	export $HEREIS_PLACES_FILE=~/.bashrc_hereis_places
+	export HEREIS_PLACES_FILE=~/.bashrc_hereis_places
 fi
 
 # Register directory path to file, and Easily cd there
 if [ -f "$HEREIS_PLACES_FILE" ] ; then
 	source "$HEREIS_PLACES_FILE"
+fi
+
+# Check alias prefix
+if [ -z "$HEREIS_ALIAS_PREFIX" ]; then
+	export HEREIS_ALIAS_PREFIX='place'
 fi
 
 # Reload registered names and paths
@@ -23,8 +28,9 @@ alias edit-places="vim ${HEREIS_PLACES_FILE} && reload-places"
 function hereis () {
 	place_name="`echo $1`"
 	place_path="\"`pwd`\""
-	alias_body="place-${place_name}='cd ${place_path}'"
-	var_name="`echo place_${place_name} | sed s/-/_/g`"
+	alias_name="${HEREIS_ALIAS_PREFIX}-${place_name}"
+	alias_body="${alias_name}='cd ${place_path}'"
+	var_name="`echo ${HEREIS_ALIAS_PREFIX}_${place_name} | sed s/-/_/g`"
 	var_body="${var_name}=${place_path}"
 
 	echo "alias ${alias_body}" >> "$HEREIS_PLACES_FILE"

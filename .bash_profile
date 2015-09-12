@@ -54,6 +54,9 @@ export EDITOR=vim
 export PAGER='vim - +PAGER -c "setl nonu nornu"'
 export MANPAGER='vim - +MANPAGER -c "setl nonu nornu"'
 
+# Plugin prefs
+export HEREIS_ALIAS_PREFIX='p'
+
 
 ###################
 # ReConfig PATHes #
