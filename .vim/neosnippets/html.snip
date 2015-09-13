@@ -1,12 +1,13 @@
 snippet new-template
+alias   template
 abbr    <html><head>...</head></html>
     <!DOCTYPE html>
     <html lang="ja">
         <head>
             <meta charset="UTF-8">
             <title></title>
-            <link rel="stylesheet" type="text/css" href="${1:#:css_path}"/>
-            <script type="text/javascript" src="${2:#:js_path}"></script>
+            <link rel="stylesheet" href="${1:#:css_path}"/>
+            <script src="${2:#:js_path}"></script>
         </head>
         <body>
             ${0:TARGET}
