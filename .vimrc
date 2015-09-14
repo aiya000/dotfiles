@@ -1001,6 +1001,9 @@ let g:vimshell_split_command                = 'split'
 " This file was referenced by hereis.vim
 let g:vimshell_hereis_file = expand('~/.vimshrc_places.vimsh')
 
+" Example$ hereis foo && cd && p-foo
+let g:vimshell_hereis_alias_prefix = 'p'
+
 "}}}
 "--- vimshell-kawaii.vim ---"{{{
 
