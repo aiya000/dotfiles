@@ -1,0 +1,125 @@
+# Tags
+## TopLevel
+snippet WindowSurround
+alias   Window
+abbr    <Window></Window>
+    <Window x:Class="${1:#:ClassPath}" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="${2:Window}" Width="${3:525}" Height="${4:350}">
+        ${0:TARGET}
+    </Window>
+
+## Panel Types
+snippet WrapPanelSurround
+alias   WrapPanel
+abbr    <WrapPanel></WrapPanel>
+    <WrapPanel>
+        ${0:TARGET}
+    </WrapPanel>
+
+snippet StackPanelSurround
+alias   StackPanel
+abbr    <StackPanel></StackPanel>
+    <StackPanel>
+        ${0:TARGET}
+    </StackPanel>
+
+snippet GridSurround
+alias   Grid
+abbr    <Grid></Grid>
+    <Grid>
+        ${0:TARGET}
+    </Grid>
+
+## DataGrid
+snippet DataGrid
+abbr    <DataGrid x:Name=""/>
+    <DataGrid x:Name="${1:#:Name}"${0:TARGET}/>
+
+snippet DataGridSuround
+abbr    <DataGrid x:Name=""></DataGrid>
+    <DataGrid x:Name="${1:#:Name}">
+        ${0:TARGET}
+    </DataGrid>
+
+snippet DataGridColumns
+abbr <DataGrid.Columns></DataGrid.Columns>
+    <DataGrid.Columns>
+        ${0:TARGET}
+    </DataGrid.Columns>
+
+snippet DataGridTextColumn
+abbr <DataGridTextColumn/>
+    <DataGridTextColumn${0:TARGET}/>
+
+## Unit Types
+snippet ComboBox
+abbr <ComboBox/>
+    <ComboBox${0:TARGET}/>
+
+snippet TextBox
+abbr <TextBox/>
+    <TextBox${0:TARGET}/>
+
+snippet TextBlock
+abbr <TextBlock/>
+    <TextBlock${0:TARGET}/>
+
+snippet Button
+abbr <Button/>
+    <Button${0:TARGET}/>
+
+snippet Run
+abbr <Run/>
+    <Run${0:TARGET}/>
+
+# Attributes
+snippet Name
+abbr    x:Name=""
+    x:Name="${1}"${0:TARGET}
+
+snippet Binding
+abbr    Binding="{}"
+    Binding="{Binding ${1:#:Property}}"${0:TARGET}
+
+snippet Width
+abbr    Width=""
+    Width="${1:#:Auto}"${0:TARGET}
+
+snippet Height
+abbr    Height=""
+    Height="${1:#:Auto}"${0:TARGET}
+
+snippet Margin
+abbr    Margin="0,0,0,0"
+    Margin="${1:#:0},${2:#:0},${3:#:0},${4:#:0}"${0:TARGET}
+
+snippet HorizontalAlignment
+abbr    HorizontalAlignment=""
+    HorizontalAlignment="${1:#:Stretch}"${0:TARGET}
+
+snippet VerticalAlignment
+abbr    VerticalAlignment=""
+    VerticalAlignment="${1:#:Stretch}"${0:TARGET}
+
+snippet Header
+abbr    Header=""
+    Header="${1:Name}"${0:TARGET}
+
+snippet Content
+abbr    Content=""
+    Content="${1:Value}"${0:TARGET}
+
+snippet Text
+abbr    Text=""
+    Text="${1:Value}"${0:TARGET}
+
+snippet TextWrapping
+abbr    TextWrapping=""
+    TextWrapping="${1:#:Wrap}"${0:TARGET}
+
+snippet IsHitTestVisible
+abbr    IsHitTestVisible=""
+    IsHitTestVisible="${1:#:True}"${0:TARGET}
+
+snippet Background
+abbr    Background=""
+    Background="${1:#:White}"${0:TARGET}

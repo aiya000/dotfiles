@@ -47,11 +47,9 @@
 
 "-- submode wintab-move over 1 previous tab
 
-"-- bashrc or bash_profile lead up burden of load
-
 "-- int-git does not loaded ftplugin int-git.vim (by hyphenate ?)
 
-"-- neovim prefs exclude from here
+"-- neovim prefs exclude from this file
 
 "-- Windows choice ~/neosnippets as neosnippet_directory
 "  -- I hope Windows choice ~/vimfiles/neosnippets
@@ -78,6 +76,8 @@
 "-- Delete undo
 "  -- current file or all file
 "  -- refer to 'clear-undo', maybe
+
+"-- four width tabs replace to four spaces
 
 " }}}
 
@@ -1266,7 +1266,13 @@ if !s:is_windows
 endif
 
 " Specific the ctags generated directory ( We must be sync 'tags' )
-let g:auto_ctags_directory_list = ['.git', '../.git', '../../.git', '../../../.git', '../../../../.git']
+let g:auto_ctags_directory_list = [
+\	'.git',             '.tags',
+\	'../.git',          '../.tags',
+\	'../../.git',       '../../.tags',
+\	'../../../.git',    '../../../.tags',
+\	'../../../../.git', '../../.../../.tags'
+\]
 
 "}}}
 "--- unite-tag ---"{{{
