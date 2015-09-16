@@ -264,25 +264,6 @@ endif
 " Check NeoBundle exists {{{
 let s:bundledir    = g:vimrc['vim_home'] . '/bundle'
 let s:neobundledir = s:bundledir . '/neobundle.vim'
-
-if !isdirectory(s:bundledir)
-	call mkdir(s:bundledir)
-endif
-
-function! s:remove_empty_bundledir()  "{{{
-	" get bundled plugin directory names
-	let l:dirs = split(glob('~/vimfiles/bundle/*'), '\n')
-	let l:dir_names = map(l:dirs, 'fnamemodify(v:val, ":t")')
-
-	for l:dir_name in l:dir_names
-		let l:plugin_dir   = s:bundledir . '/' . l:dir_name
-		let l:is_empty_dir = glob('autoload/*') ==# ''
-		if l:is_empty_dir
-			"@Deprecated('should not be use unix command')
-			call s:system('rmdir ' . l:plugin_dir)
-		endif
-	endfor
-endfunction  "}}}
 function! s:fetch_neobundle() " {{{
 	if executable('git')
 		echo 'NeoBundle was not installed...'
@@ -295,17 +276,16 @@ function! s:fetch_neobundle() " {{{
 	endif
 endfunction " }}}
 
+if !isdirectory(s:bundledir)
+	call mkdir(s:bundledir)
+endif
+
+
 if has('vim_starting')
 	try
 		let &runtimepath = &runtimepath . ',' . g:vimrc['vim_home'] . '/bundle/neobundle.vim'
 		call neobundle#begin()
-	catch /E117/
-		if isdirectory(s:neobundledir) && exists(':NeoBundle') isnot 2
-			" Plugin Directories may be empty when git cloned new.
-			call s:remove_empty_bundledir()
-			echo 'bundle directories initialized.'
-		endif
-
+	catch /E117/  " neobundle.vim not found
 		try
 			call s:fetch_neobundle()
 			call neobundle#begin()
@@ -447,7 +427,7 @@ NeoBundle      'thinca/vim-visualstar'
 NeoBundle      'tpope/vim-fugitive'
 NeoBundleLazy  'rhysd/try-colorscheme.vim'
 NeoBundle      'jonathanfilip/vim-lucius'
-
+NeoBundleLazy  'aiya000/unite-syntax'
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
@@ -825,8 +805,7 @@ endif
 if neobundle#tap('unite-tags')
 	call neobundle#config('unite-tags', {
 	\	'depends'  : [
-	\		'Shougo/unite.vim',
-	\		'Shougo/neocomplete.vim'
+	\		'Shougo/unite.vim'
 	\	],
 	\	'autoload' : {'unite_sources' : 'tag'}
 	\})
@@ -871,8 +850,18 @@ if neobundle#tap('try-colorscheme.vim')
 	\})
 	call neobundle#untap()
 endif
+if neobundle#tap('unite-syntax')
+	call neobundle#config('unite-syntax', {
+	\	'depends'  : [
+	\		'Shougo/unite.vim'
+	\	],
+	\	'autoload' : {'unite_sources' : 'syntax'}
+	\})
+	call neobundle#untap()
+endif
 
-call neobundle#end()
+" Suppress a caution of several loading (:silent)
+silent call neobundle#end()
 
 " }}}
 
@@ -1293,6 +1282,7 @@ let s:repos = [ 'arot13.vim'
 \             , 'aho-bakaup.vim'
 \             , 'separetaro.vim'
 \             , 'vimshell-command-dehanai.vim'
+\             , 'unite-syntax'
 \             ]
 
 let s:repos_dir = '~/Repository/'
@@ -1303,7 +1293,7 @@ for s:plug in s:repos
 	let s:plug_dir = s:repos_dir . s:plug
 	if isdirectory(expand(s:plug_dir))
 		execute 'set runtimepath+=' . s:plug_dir
-		execute 'NeoBundleDisable'    s:plug
+		silent execute 'NeoBundleDisable' s:plug
 	end
 endfor
 
@@ -2206,6 +2196,7 @@ augroup KeyMapping
 	" Unite
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-h>        :<C-u>Unite -ignorecase neomru/file<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Unite -ignorecase outline<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>f            :<C-u>Unite -ignorecase syntax<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>u :<C-u>UniteClose<CR>
 
 	" excitetranslate-vim
@@ -2219,8 +2210,8 @@ augroup KeyMapping
 	autocmd User MyVimRc vnoremap <silent>       :s/        :<C-u>OverCommandLine '<,'>s/<CR>
 	autocmd User MyVimRc cnoremap <silent>       <C-k>:     <Home>OverCommandLine <CR>
 	"@Marked('this is temporary keymapping, because vim-over do not imported cnoremap maybe')
-	autocmd FileType * OverCommandLineNoremap <C-b>      <Left>
-	autocmd FileType * OverCommandLineNoremap <C-f>      <Right>
+	autocmd FileType * OverCommandLineNoremap <C-b> <Left>
+	autocmd FileType * OverCommandLineNoremap <C-f> <Right>
 	"autocmd FileType * OverCommandLineNoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
 
 	" anzu-chan
