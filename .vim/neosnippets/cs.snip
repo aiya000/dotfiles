@@ -1,7 +1,7 @@
 # ImportPath
 snippet s.r.c
 abbr    System.Runtie.CompilerServices
-    System.Runtie.CompilerServices
+    System.Runtime.CompilerServices
 
 snippet m.v
 abbr    Microsoft.VisualBasic
@@ -22,6 +22,10 @@ abbr    MessageBox.Show(text, caption, Buttons.YesNo, Icon.Question);
 snippet inputbox
 abbr    Interaction.InputBox(prompt, title, defaultResponce);
     Interaction.InputBox(${1:#:Prompt}, ${2:#:Title}, "${3:#:DefaultResponse}");${0}
+
+snippet DebugPrint
+abbr    System.Diagnostics.Debug.Print();
+    System.Diagnostics.Debug.Print(${0});
 
 
 # Attribute

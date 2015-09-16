@@ -1,5 +1,7 @@
 ArgumentException
 CellContentClick
+ComponentModel
+DataGrid
 DataGridView
 DataGridViewCellEventArgs
 DataGridViewRow
@@ -7,10 +9,14 @@ DataGridViewRowCollection
 ExecuteNonQuery
 ExecuteReader
 ExecuteScalar
+INotifyPropertyChanged
 IWorkbook
 IWorksheet
 InvalidOperationException
 NotImplementedException
+OnPropertyChanged
+PropertyChangedEventArgs
+PropertyChangedEventHandler
 SpreadsheetGear
 StringBuilder
 ToShortDateString
