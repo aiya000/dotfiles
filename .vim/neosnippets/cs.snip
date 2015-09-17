@@ -28,24 +28,40 @@ abbr    System.Diagnostics.Debug.Print();
     System.Diagnostics.Debug.Print(${0});
 
 
+# Preprocess
+snippet pragma_restore
+    #pragma warning restore ${1:#:errno}
+
+
 # Attribute
-snippet asm_internals_visible_to
-alias   internals asmInternalsVisibleTo
+snippet InternalsVisibleToAttribute
 abbr    [assembly: InternalsVisibleTo()]
     #pragma warning disable 0657
     [assembly: InternalsVisibleTo("${1:#:FriendName}")]
     #pragma warning restore 0657${0}
 
-snippet pragma_restore
-    #pragma warning restore ${1:#:errno}
-
-snippet debugger_display_attr
-alias   ddisp
+snippet DebuggerDisplayAttribute
 abbr    [DebuggerDisplayAttribute()]
     [DebuggerDisplayAttribute("${1:#:Name} = {${2:#:Member}}")]${0}
 
+snippet TestClassAttribute
+abbr    [TestClass]
+    [TestClass]${0}
 
-# Append
+snippet TestMethodAttribute
+abbr    [TestMethod]
+    [TestMethod]${0}
+
+snippet TestInitializeAttribute
+abbr    [TestInitialize]
+    [TestInitialize]${0}
+
+snippet TestCleanupAttribute
+abbr    [TestCleanup]
+    [TestCleanup]${0}
+
+
+# Syntax
 snippet else
 abbr    else {}
     else {

@@ -106,7 +106,7 @@ abbr    x:Name=""
 
 snippet Binding
 abbr    Binding="{}"
-    Binding="{Binding ${1:#:Property}}"${0:TARGET}
+    Binding="{Binding ${1:Property}}"${0:TARGET}
 
 snippet Header
 abbr    Header=""
@@ -180,3 +180,11 @@ abbr    Loaded=""
 snippet Click
 abbr    Click=""
     Click="${1:Component_Clicked}"${0:TARGET}
+
+snippet SelectionChanged
+abbr    SelectionChanged=""
+    SelectionChanged="${1:Component_SelectionChanged}"${0:TARGET}
+
+snippet Navigated
+abbr    Navigated=""
+    Navigated="${1:Component_Navigated}"${0:TARGET}
