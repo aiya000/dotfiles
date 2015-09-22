@@ -1003,7 +1003,7 @@ let g:vimshell_kawaii_smiley = 1
 "--- excitetraslate-vim ---"{{{
 
 " Don't yank result to @" register
-let g:excitetranslate_options = ["buffer"]
+let g:excitetranslate_options = ['buffer']
 
 "}}}
 "--- w3m.vim ---"{{{
@@ -1125,7 +1125,7 @@ set helplang=en,ja
 "--- TaskList.vim ---"{{{
 
 " TaskList search these
-let g:tlTokenList = ["NOTE", "TODO", "FIXME", "XXX"]
+let g:tlTokenList = ['NOTE', 'TODO', 'FIXME', 'XXX']
 
 " Open window at bottom
 let g:tlWindowPosition = 1
@@ -1160,7 +1160,7 @@ augroup END
 "}}}
 "--- vim-colors-solarized ---"{{{
 
-let g:solarized_contrast = "high"
+let g:solarized_contrast = 'high'
 
 "}}}
 "--- aho-bakaup.vim ---"{{{
@@ -1398,7 +1398,7 @@ function! s:tabpage_label(n) "{{{
 	let l:mod = len(filter(copy(l:bufnrs), 'getbufvar(v:val, "&modified")')) ? '+' : ''
 	let l:sp = (l:no . l:mod) ==# '' ? '' : ' '
 
-	let l:curbufnr = bufnrs[tabpagewinnr(a:n) - 1]
+	let l:curbufnr = l:bufnrs[tabpagewinnr(a:n) - 1]
 	let l:fname = pathshorten(bufname(l:curbufnr))
 	if l:fname ==# ''
 		let l:fname = '[ NoName ]'
