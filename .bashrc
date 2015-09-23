@@ -26,6 +26,7 @@ alias cp='cp -i'
 
 alias vi='vim -u NONE --noplugin'
 alias gvi='gvim -u NONE -U NONE --noplugin'
+alias vimless='vim - -R'
 alias vimshell='vim +VimShell'
 alias vimconsole='vim +VimConsoleOpen'
 alias vim-record-startup="f=`mktemp` ; vim --startuptime vim_startup_time -- $f && rm $f"

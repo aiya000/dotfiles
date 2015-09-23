@@ -133,9 +133,6 @@ let s:directory = s:backupdir . '/swp'
 let s:undodir   = s:backupdir . '/undo'
 let s:viewdir   = s:backupdir . '/view'
 
-let s:username  = $USER
-let s:groupname = empty($GROUP) ? $GROUP : $USER
-
 "}}}
 
 
@@ -306,17 +303,17 @@ unlet s:bundledir
 
 if !isdirectory(s:backupdir)
 	call mkdir(s:backupdir, 'p', 0700)
-	call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, s:backupdir))
+	call s:system(printf('chown -R %s:%s %s', $USER, $GROUP, s:backupdir))
 endif
 
 if !isdirectory(s:directory)
 	call mkdir(s:directory, 'p', 0700)
-	call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, s:directory))
+	call s:system(printf('chown -R %s:%s %s', $USER, $GROUP, s:directory))
 endif
 
 if !isdirectory(s:undodir)
 	call mkdir(s:undodir, 'p', 0700)
-	call s:system(printf('chown -R %s:%s %s', s:username, s:groupname, s:undodir))
+	call s:system(printf('chown -R %s:%s %s', $USER, $GROUP, s:undodir))
 endif
 
 "}}}
@@ -860,7 +857,7 @@ if neobundle#tap('unite-syntax')
 	call neobundle#untap()
 endif
 
-" Suppress a caution of several loading (:silent)
+" Suppress a caution of vimrc several loading (:silent)
 silent call neobundle#end()
 
 " }}}
@@ -1417,6 +1414,9 @@ execute 'set tabline=%!' . printf('%swith_delimitter_tab_line()', s:sid())
 
 " Turn off highlight
 nohlsearch
+
+" Show two line
+set cmdheight=2
 
 "}}}
 
@@ -2196,7 +2196,7 @@ augroup KeyMapping
 	" Unite
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-h>        :<C-u>Unite -ignorecase neomru/file<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Unite -ignorecase outline<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k>f            :<C-u>Unite -ignorecase syntax<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>f            :<C-u>Unite -ignorecase -start-insert syntax<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>u :<C-u>UniteClose<CR>
 
 	" excitetranslate-vim

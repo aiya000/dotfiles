@@ -134,7 +134,8 @@ command! -bar VimConfig     e ~/.vimrc
 command! -bar VimConfigTab  tabnew ~/.vimrc
 command! -bar NVimConfig    e $MYVIMRC
 command! -bar NVimConfigTab tabnew $MYVIMRC
-command! -bar -nargs=* -complete=file Vim terminal vim <args>
+command! -bar -nargs=* -complete=file Vim    terminal vim <args>
+command! -bar -nargs=* -complete=file VimTab tabnew | terminal vim <args>
 
 " }}}
 
