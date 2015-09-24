@@ -141,6 +141,7 @@ let s:viewdir   = s:backupdir . '/view'
 "---------------------"
 "{{{
 
+"TODO: correspond multi arguments
 " Run system command by vimproc or vim default
 function! s:system(cmd)
 	"@Incomplete('vimproc#system was not executed in this script, refer to vital.vim')
@@ -1848,8 +1849,7 @@ command! -bar MarkdownHelpOnline W3mTab http://qiita.com/Qiita/items/c686397e4a0
 " Development {{{
 
 
-" VimShellInteractive executors
-" Open Develop Buffer {{{
+" Open Development Buffer {{{
 
 " vimconsole.vim
 cnoreabbr Log      VimConsoleLog
@@ -1913,36 +1913,24 @@ command!  IrbTab   NOP
 " }}}
 
 
-" View highlight statuses
-" command! HighlightListTab {{{
-
-function! s:highlight_list_tab()
-	" open new tab that doesn't need :write
-	tabnew
-	setl buftype=nofile
-
-	" read highlight list to z register
-	let l:z = @z
-	redir @z
-		" execute no wait key
-		silent! highlight
-	redir END
-
-	" read detail apply to buffer
-	execute 'normal! "zp'
-	execute 'normal! "_dd'
-
-	" Restore past z register
-	let @z = l:z
-endfunction
-
-command! -bar HighlightListTab call s:highlight_list_tab()
-
-" }}}
-
-
 " Staging current file to git
-command! -bar GitAdd !git add %
+function! s:git_add() abort "{{{
+	let l:result = s:system('git add ' . expand('%:p'))
+	if l:result != ''
+		NewOverridden
+		resize 5
+		setl buftype=nofile
+		setl filetype=scratch
+		execute 'normal! i' l:result
+		" Delete empty line
+		normal! dd
+	elseif !v:shell_error
+		echo expand('%:p') . ' was added to git repository'
+	else
+		throw 'unknowned pattern: ' . v:shell_error
+	endif
+endfunction "}}}
+command! -bar GitAdd call s:git_add()
 
 
 " }}}
@@ -2098,6 +2086,15 @@ function! s:toggle_netrw_vexplorer() "{{{
 	endif
 endfunction "}}}
 
+
+" Do :bufdo without changing current buffer
+function! s:motionless_bufdo(cmd) abort "{{{
+	NewOverridden
+	setl buftype=nofile
+	execute 'bufdo' a:cmd
+	quit
+endfunction "}}}
+
 " }}}
 " Alternate default "{{{
 
@@ -2151,19 +2148,22 @@ augroup END
 " Toggle options {{{
 
 augroup KeyMapping
+	" All
+	autocmd User MyVimRc nnoremap <C-h><C-e> :<C-u>call <SID>motionless_bufdo('set expandtab!')<CR>:set expandtab?<CR>
+	autocmd User MyVimRc inoremap <C-k><C-e> <C-o>:call <SID>motionless_bufdo('set expandtab!')<CR><C-o>:set expandtab?<CR>
+
+	" Local
 	autocmd User MyVimRc nnoremap <silent>       <C-h><C-f> :<C-u>call <SID>toggle_foldmethod()<CR>
 	autocmd User MyVimRc nnoremap <silent>       <C-h><C-d> :<C-u>call <SID>toggle_diff()<CR>
 	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
 
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline!     cursorline?    <CR>
-	autocmd User MyVimRc nnoremap <silent> <C-h><C-e> :<C-u>setl expandtab!      expandtab?     <CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-l> :<C-u>setl list!           list?          <CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-n> :<C-u>setl number!         number?        <CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
 
-	autocmd User MyVimRc inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
 	autocmd User MyVimRc inoremap <silent> <C-k><C-w> <C-o>:setl wrap!      wrap?<CR>
 augroup END
 
