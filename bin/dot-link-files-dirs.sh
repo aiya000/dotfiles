@@ -1,18 +1,18 @@
-#!/bin/bash
+#!/bin/sh -eu
 
 # Initialize variables
-DOT_DIR="$HOME/.dotfiles"
-BASE_DIR="$DOT_DIR/bin"
-BACKUP_DIR="$DOT_DIR/.backup/`date +'%Y-%m-%d'`"
+DOT_DIR="${HOME}/.dotfiles"
+BASE_DIR="${DOT_DIR}/bin"
+BACKUP_DIR="${DOT_DIR}/.backup/`date +'%Y-%m-%d'`"
 
 # include
-source "$BASE_DIR/utils.sh"
+source "${BASE_DIR}/utils.sh"
 unset BASE_DIR
 
-ignorefiles=`grepformat_ignorefiles`
+ignorefiles="`grepformat_ignorefiles`"
 dotfiles=`ls -A $DOT_DIR | grep -v -E "^($ignorefiles)$"`
 
-yes_flag=`[ "$1" == "-y" ] && echo 1 || echo 0`
+yes_flag=`[ "$1" == '-y' ] && echo 1 || echo 0`
 
 
 # Define usage
@@ -30,10 +30,10 @@ if [ $yes_flag -eq 0 ] ; then
 	echo 'Realy link some links in $HOME ?(y/n)'
 	while true ; do
 		read confirm
-		if [ "$confirm" = "n" ] ; then
+		if [ "$confirm" = 'n' ] ; then
 			echo 'Abort.'
 			exit 0
-		elif [ "$confirm" = "y" ] ; then
+		elif [ "$confirm" = 'y' ] ; then
 			break
 		fi
 		echo '(y) or (n).'
@@ -53,8 +53,8 @@ fi
 
 # Linking dotfiles
 for fileName in "$dotfiles" ; do
-	fromFile="$DOT_DIR/$fileName"
-	toFile="$HOME/$fileName"
+	fromFile="${DOT_DIR}/${fileName}"
+	toFile="${HOME}/${fileName}"
 	echo ">> linking [${fromFile}] -> [${toFile}]"
 
 	# if dofiles already exists, avoid overwrite

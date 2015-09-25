@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -eu
 
 #
 # If you want to execute this,
@@ -15,17 +15,17 @@
 
 ## Script Parameters
 # path of dropbox_upload command
-DROPBOX_COMMAND=`which dropbox_uploader.sh`
+DROPBOX_COMMAND="`which dropbox_uploader.sh`"
 
 # remote upload directory path ( ~cloud_app_dir/$DROPBOX_DOTFILES_DIR )
 DROPBOX_DOTFILES_DIR=Room
 
 # target directory
 DOT_DIR_NAME=.dotfiles
-DOT_DIR_PATH=$HOME/$DOT_DIR_NAME
+DOT_DIR_PATH="${HOME}/${DOT_DIR_NAME}"
 
 # path of temporary file output location
-TMP_DIR=$HOME/.tmp
+TMP_DIR="${HOME}/.tmp"
 
 # exclude files by tar
 TAR_OPT='--exclude .vim/bundle --exclude .backup'
@@ -35,7 +35,7 @@ no_remove_archive=0
 
 
 # Checking an argument
-if [ "$1" = "-n" -o "$1" = "--no-remove-archive" ] ; then
+if [ "$1" = '-n' -o "$1" = '--no-remove-archive' ] ; then
 	no_remove_archive=1
 	echo 'option: no remove archive ... Enabled'
 	echo
@@ -49,8 +49,8 @@ echo
 
 
 # temporary directory auto create
-if [ ! -d $TMP_DIR ] ; then
-	mkdir -p $TMP_DIR
+if [ ! -d "$TMP_DIR" ] ; then
+	mkdir -p "$TMP_DIR"
 	echo ">> auto created ${TMP_DIR}"
 	echo
 fi
@@ -60,8 +60,8 @@ fi
 echo '>> archiving start...'
 upload_file="${TMP_DIR}/dotfiles-`date +'%Y-%m-%d'`.tar.gz"
 
-cd $DOT_DIR_PATH/..
-tar zcvf $upload_file $DOT_DIR_NAME $TAR_OPT > /dev/null \
+cd "${DOT_DIR_PATH}/.."
+tar zcvf "$upload_file" "$DOT_DIR_NAME" "$TAR_OPT" > /dev/null \
 	&& echo '>> done' \
 	|| (
 		echo '>> happened problems'
@@ -73,7 +73,7 @@ echo
 
 ## Uploading archived file
 echo '>> uploading start...'
-$DROPBOX_COMMAND upload $upload_file $DROPBOX_DOTFILES_DIR \
+"$DROPBOX_COMMAND" upload "$upload_file" "$DROPBOX_DOTFILES_DIR" \
 	&& echo '>> upload finished' \
 	|| (
 		echo '>> upload failed'
@@ -85,7 +85,7 @@ echo
 ## Removing temporary file
 if [ $no_remove_archive -eq 0 ] ; then
 	echo '>> removing archived file...'
-	rm $upload_file \
+	rm "$upload_file" \
 		&& echo '>> removing succeed' \
 		|| (
 			echo '>> removing failed'

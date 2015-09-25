@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/sh -eu
 
 # include
-DOT_DIR=$HOME/.dotfiles
-BASE_DIR=$DOT_DIR/bin
-source $BASE_DIR/utils.sh
+DOT_DIR="${HOME}/.dotfiles"
+BASE_DIR="${DOT_DIR}/bin"
+source "${BASE_DIR}/utils.sh"
 unset DOT_DIR BASE_DIR
 
 
@@ -26,22 +26,22 @@ for file in $files ; do
 	fi
 
 	# detected difference
-	file1=$DIFF_DIR1/$file
-	file2=$DIFF_DIR2/$file
-	if [ ! -f $file1 ] ; then
+	file1="${DIFF_DIR1}/${file}"
+	file2="${DIFF_DIR2}/${file}"
+	if [ ! -f "$file1" ] ; then
 		# confirm copy
 		echo "'${file1}' not found"
 		read -p "Copy >> ${file2} to ${file1} ? (y/n) (n): " confirm
 
-		if [ "$confirm" = "yes" -o "$confirm" = "y" ] ; then
+		if [ "$confirm" = 'yes' -o "$confirm" = 'y' ] ; then
 			cp -r "$file2" "$file1"
 		fi
-	elif [ -f $file2 -a -n "`diff $file1 $file2`" ] ; then
+	elif [ -f "$file2" -a -n "`diff \"${file1}\" \"${file2}\"`" ] ; then
 		# confirm edit
 		read -p "Edit >> ${file} ? (y/n) (n): " confirm
 
-		if [ "$confirm" = "yes" -o "$confirm" = "y" ] ; then
-			vimdiff $file1 $file2
+		if [ "$confirm" = 'yes' -o "$confirm" = 'y' ] ; then
+			vimdiff "$file1" "$file2"
 		fi
 		echo
 	fi
