@@ -1710,8 +1710,10 @@ function! s:redir_to_var(bang, args_str) abort "{{{
 endfunction "}}}
 command! -bar -nargs=1 -bang -complete=command RedirToVar call s:redir_to_var(<bang>0, <q-args>)
 
+
 "}}}
 " Life Helper {{{
+" NOP (Fake command)
 
 " Vim Utils {{{
 
@@ -1837,9 +1839,11 @@ cnoreabbr Weblio    Ref webdict weblio
 command!  Weblio    NOP
 
 
-" NeoBundle redirect alias
-cnoreabbr NeoBundleInstallsLog NeoBundleLog
-command!  NeoBundleInstallsLog NOP
+" NeoBundle install with showing log
+cnoreabbr NeoBundleInstallAfterShow NeoBundleInstall \| NeoBundleLog
+command!  NeoBundleInstallAfterShow NOP
+cnoreabbr NeoBundleUpgrade          NeoBundleUpdate \| NeoBundleUpdatesLog
+command!  NeoBundleUpgrade          NOP
 
 
 " Markdown help on online (maru nage)
@@ -2096,16 +2100,6 @@ function! s:motionless_bufdo(cmd) abort "{{{
 endfunction "}}}
 
 " }}}
-" Alternate default "{{{
-
-augroup KeyMapping
-	"@Bugs('if do not exists fold')
-	" Exchange tagjump keys + Open foldings
-	autocmd User MyVimRc nnoremap <C-]>  g<C-]>zOzz
-	autocmd User MyVimRc nnoremap g<C-]> <C-]>zOzz
-augroup END
-
-" "}}}
 " Foldings {{{
 
 augroup KeyMapping

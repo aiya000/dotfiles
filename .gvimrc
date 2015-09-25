@@ -105,8 +105,9 @@ augroup HighlightPrefs
 	"autocmd ColorScheme * highlight VertSplit    gui=NONE      guifg=Cyan  guibg=Blue
 	"autocmd ColorScheme * highlight StatusLine                 guifg=Cyan  guibg=Black
 	"autocmd ColorScheme * highlight StatusLineNC               guifg=Blue
-	"autocmd ColorScheme * highlight LineNr                     guifg=Blue
-	autocmd ColorScheme * highlight CursorLine gui=underline guifg=cyan guibg=NONE
+	autocmd ColorScheme * highlight LineNr                     guifg=Orange
+	autocmd ColorScheme * highlight CursorLineNr               guifg=Yellow
+	autocmd ColorScheme * highlight CursorLine   gui=underline guifg=Cyan guibg=NONE
 
 	autocmd ColorScheme       * highlight GuiRcEmSpace guibg=White
 	autocmd VimEnter,WinEnter * call matchadd('GuiRcEmSpace', '　')
