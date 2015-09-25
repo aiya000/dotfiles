@@ -8,7 +8,8 @@ if [ -z "`alias | grep pr_loaded`" ] ; then
 fi
 
 # Bourne Shell Configure
-set -o ignoreeof
+set -o ignoreeof  # Disable logoff by Ctrl + D
+set -u            # Detect and warn the error that you use undefined variable
 stty stop  undef  # unbind C-s that is stop viewing inputs to screen
 stty start undef  # unbind C-q that is start viewing inputs to screen
 
@@ -29,7 +30,7 @@ alias gvi='gvim -u NONE -U NONE --noplugin'
 alias vimless='vim - -R'
 alias vimshell='vim +VimShell'
 alias vimconsole='vim +VimConsoleOpen'
-alias vim-record-startup="f=`mktemp` ; vim --startuptime vim_startup_time -- $f && rm $f"
+alias vim-record-startup='f="`mktemp`" && vim --startuptime vim_startup_time -- $f && rm $f'
 alias vimclearview='rm ~/.backup/vim_backup/view/*'
 alias vimclearswp='rm ~/.backup/vim_backup/swp/*'
 alias vimclearundo='rm ~/.backup/vim_backup/undo/*'
