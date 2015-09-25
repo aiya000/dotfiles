@@ -102,8 +102,8 @@
 " @Hoge!{Mac}        : This Hint for other than Mac.
 "----------------------------------------
 " {- Booked something -}
-" mark     Z => comand[BufMoveNewTab]
-" register z => inoremap[<C-k>Y]
+" Mark Z was used by :BufMoveNewTab
+" Register "z was used by vnoremap <leader>T
 "----------------------------------------
 
 
@@ -2194,7 +2194,10 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>u :<C-u>UniteClose<CR>
 
 	" excitetranslate-vim
-	autocmd User MyVimRc nnoremap <silent> <leader>T :ExciteTranslate<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>T :<C-u>ExciteTranslate<CR>
+
+	" ref-dicts-en
+	autocmd User MyVimRc vnoremap <silent> <leader>T "zy
 
 	" vim-over
 	autocmd User MyVimRc nnoremap <silent>       :%s/       :<C-u>OverCommandLine %s/<CR>
