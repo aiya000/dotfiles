@@ -30,7 +30,7 @@ alias gvi='gvim -u NONE -U NONE --noplugin'
 alias vimless='vim - -R'
 alias vimshell='vim +VimShell'
 alias vimconsole='vim +VimConsoleOpen'
-alias vim-record-startup='f="`mktemp`" && vim --startuptime vim_startup_time -- $f && rm $f'
+alias vim-record-startup='vim --startuptime vim_startup_time +q && vim -c "set bt=nofile ft=vim | r vim_startup_time | call system(\"rm vim_startup_time\") | normal! gg3dd"'
 alias vimclearview='rm ~/.backup/vim_backup/view/*'
 alias vimclearswp='rm ~/.backup/vim_backup/swp/*'
 alias vimclearundo='rm ~/.backup/vim_backup/undo/*'
@@ -66,7 +66,7 @@ alias nvimconfig='nvim ~/.nvimrc'
 alias nvim-bashrc='nvim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
 alias nvim-bashpr='nvim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
 
-alias nvi='nvim -u NONE --noplugin'  # (not a original nvi, hahaha)
+alias nvi='nvim -u NONE --noplugin'  # is not 'new vi', HaHaHa
 alias nvim-terminal='nvim +terminal'
 alias nvimconsole='nvim +VimConsoleOpen'
 alias ntwitter='nvim +TweetVimHomeTimeline'
