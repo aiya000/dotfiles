@@ -24,11 +24,6 @@ augroup NeoKeyMapping
 augroup END
 
 " }}}
-" unset some plugins {{{
-
-"NeoBundleDisable 'Shougo/neocomplete.vim'
-
-" }}}
 
 
 "-------------------------"
@@ -52,22 +47,30 @@ augroup END
 
 " Toggle keymapping <leader>V (and etc) to :terminal or vimshell
 function! s:toggle_start_shell_mode() "{{{
-	let s:start_shell_mode = get(s:, 'start_shell_mode', ':VimShell')
-	\                        ==# ':VimShell' ? ':terminal'
-	\                                        : ':VimShell'
-	if s:start_shell_mode ==# ':terminal'
-		nnoremap <silent> <leader>v         :<C-u>VimShell -split-command=vsp -toggle<CR>
-		nnoremap <silent> <leader><leader>v :<C-u>VimShell -split-command=sp  -toggle<CR>
-		nnoremap <silent> <leader>V         :<C-u>VimShellBufferDir -create<CR>
-		nnoremap <silent> <leader><leader>V :<C-u>VimShell -split-command=tabnew -create<CR>
-		echo 'shell mode :VimShell'
-	elseif s:start_shell_mode ==# ':VimShell'
+	" Property based
+	let s:SHELL_MODE = get(s:, 'SHELL_MODE', {
+	\	'vimshell' : ':VimShell',
+	\	'terminal' : ':terminal'
+	\}) | lockvar! s:SHELL_MODE
+
+	let s:start_shell_mode = get(s:, 'start_shell_mode', s:SHELL_MODE.terminal)
+	\                        ==# s:SHELL_MODE.terminal ? s:SHELL_MODE.vimshell
+	\                                                  : s:SHELL_MODE.terminal
+	if s:start_shell_mode ==# s:SHELL_MODE.vimshell
 		nnoremap <silent> <leader>v         :<C-u>vsp    \| terminal<CR>
 		nnoremap <silent> <leader><leader>v :<C-u>sp     \| terminal<CR>
 		nnoremap <silent> <leader>V         :<C-u>terminal<CR>
 		nnoremap <silent> <leader><leader>V :<C-u>tabnew \| terminal<CR>
-		echo 'shell mode :terminal'
+		echo 'shell mode ' . s:SHELL_MODE.terminal
+	elseif s:start_shell_mode ==# s:SHELL_MODE.terminal
+		nnoremap <silent> <leader>v         :<C-u>VimShell -split-command=vsp -toggle<CR>
+		nnoremap <silent> <leader><leader>v :<C-u>VimShell -split-command=sp  -toggle<CR>
+		nnoremap <silent> <leader>V         :<C-u>VimShellBufferDir -create<CR>
+		nnoremap <silent> <leader><leader>V :<C-u>VimShell -split-command=tabnew -create<CR>
+		echo 'shell mode ' . s:SHELL_MODE.vimshell
 	endif
+
+	unlockvar! s:SHELL_MODE
 endfunction "}}}
 
 " }}}
@@ -83,12 +86,9 @@ augroup NeoKeyMapping
 	"}}}
 	" normal mode "{{{
 
-	" Start shell
-	autocmd User MyNVimRc nnoremap <silent> <leader>v         :<C-u>vsp    \| terminal<CR>
-	autocmd User MyNVimRc nnoremap <silent> <leader><leader>v :<C-u>sp     \| terminal<CR>
-	autocmd User MyNVimRc nnoremap <silent> <leader>V         :<C-u>terminal<CR>
-	autocmd User MyNVimRc nnoremap <silent> <leader><leader>V :<C-u>tabnew \| terminal<CR>
-	autocmd User MyNVimRc nnoremap <silent> <C-\><C-v>        :<C-u>call <SID>toggle_start_shell_mode()<CR>
+	" Open new shell
+	autocmd User MyNVimRc silent call s:toggle_start_shell_mode()
+	autocmd User MyNVimRc nnoremap <silent> <C-\><C-v> :<C-u>call <SID>toggle_start_shell_mode()<CR>
 
 	"}}}
 augroup END

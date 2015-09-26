@@ -426,6 +426,7 @@ NeoBundle      'tpope/vim-fugitive'
 NeoBundleLazy  'rhysd/try-colorscheme.vim'
 NeoBundle      'jonathanfilip/vim-lucius'
 NeoBundleLazy  'aiya000/unite-syntax'
+NeoBundleLazy  'Shougo/unite-help'
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
@@ -854,6 +855,15 @@ if neobundle#tap('unite-syntax')
 	\		'Shougo/unite.vim'
 	\	],
 	\	'autoload' : {'unite_sources' : 'syntax'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('unite-help')
+	call neobundle#config('unite-help', {
+	\	'depends'  : [
+	\		'Shougo/unite.vim'
+	\	],
+	\	'autoload' : {'unite_sources' : 'help'}
 	\})
 	call neobundle#untap()
 endif
@@ -1833,17 +1843,16 @@ command!  JazzList NOP
 " Translates Languages
 cnoreabbr Translate ExciteTranslate
 command!  Translate NOP
-
 cnoreabbr weblio    Ref webdict weblio
 cnoreabbr Weblio    Ref webdict weblio
 command!  Weblio    NOP
 
 
 " NeoBundle install with showing log
-cnoreabbr NeoBundleInstallAfterShow NeoBundleInstall \| NeoBundleLog
-command!  NeoBundleInstallAfterShow NOP
-cnoreabbr NeoBundleUpgrade          NeoBundleUpdate \| NeoBundleUpdatesLog
-command!  NeoBundleUpgrade          NOP
+cnoreabbr NeoBundleInstallL NeoBundleInstall \| NeoBundleLog
+command!  NeoBundleInstallL NOP
+cnoreabbr NeoBundleUpdateL  NeoBundleUpdate \| NeoBundleUpdatesLog
+command!  NeoBundleUpdateL  NOP
 
 
 " Markdown help on online (maru nage)
