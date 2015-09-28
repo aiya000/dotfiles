@@ -1,19 +1,19 @@
-#!/bin/bash
+#!/bin/sh -eu
 
 # Set default environment values
-if [ -z "$PROMPT_SHELL_KAWAII" ] ; then
+if [ ! -v PROMPT_SHELL_KAWAII ] ; then
 	# Kawaii visit on the prompt
 	export PROMPT_SHELL_KAWAII=0
 fi
-if [ -z "$FAKE_USER_NAME" ] ; then
+if [ ! -v FAKE_USER_NAME ] ; then
 	# No Fake UserName
 	export FAKE_USER_NAME=$USER
 fi
-if [ -z "$FAKE_HOST_NAME" ] ; then
+if [ ! -v FAKE_HOST_NAME ] ; then
 	# No Fake HostName
 	export FAKE_HOST_NAME=$HOSTNAME
 fi
-if [ -z "$VIEW_HOST" ] ; then
+if [ ! -v VIEW_HOST ] ; then
 	export VIEW_HOST=1
 fi
 
