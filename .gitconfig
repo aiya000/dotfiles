@@ -26,3 +26,4 @@
 	cam = commit -am
 	ba = branch -a
 	cob = checkout -b
+	aa = add -A

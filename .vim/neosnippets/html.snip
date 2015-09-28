@@ -14,6 +14,22 @@ abbr    <html><head>...</head></html>
         </body>
     </html>
 
+snippet new-template-angular
+alias   template-angular
+abbr    <html ng-app><head>...</head></html>
+    <!DOCTYPE html>
+    <html lang="ja" ng-app="${1:#:appName}">
+        <head>
+            <meta charset="UTF-8">
+            <title></title>
+            <link rel="stylesheet" href="${2:#:css_path}"/>
+            <script src="${3:#:js_path}"></script>
+        </head>
+        <body>
+            ${0:TARGET}
+        </body>
+    </html>
+
 snippet code
 abbr    <code><pre></pre></code>
     <code><pre>
