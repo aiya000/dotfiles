@@ -7,4 +7,7 @@ let b:undo_ftplugin = 'setl ' . join([
 
 setl nonumber norelativenumber
 
-nnoremap <silent><buffer> Q :<C-u>bdelete!<CR>
+nmap <buffer> Q <Plug>(manpager-close)
+" Forget vim-manpager specified nmaps
+nnoremap <C-n> gt
+nnoremap <C-p> gT

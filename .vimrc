@@ -2329,7 +2329,7 @@ augroup KeyMapping
 	autocmd User MyVimRc inoremap <silent> <C-k>J     <Esc>:wall \| echo 'written all !'<CR>
 
 	"}}}
-	" command line mode "{{{
+	" command-line mode "{{{
 
 	autocmd User MyVimRc cmap     <C-]>      \<\>[Left][Left]
 	autocmd User MyVimRc cnoremap <C-b>      <Left>
@@ -2356,9 +2356,12 @@ augroup KeyMapping
 	autocmd User MyVimRc vmap ii <Plug>(textobj-indent-i)
 
 	" textobj-from_regexp
+	" Select alphabet glob
 	autocmd User MyVimRc vmap <expr> i_ textobj#from_regexp#mapexpr('[A-Za-z0-9]\+')
-	autocmd User MyVimRc vmap <expr> il textobj#from_regexp#mapexpr('^.*$')
-	autocmd User MyVimRc vmap <expr> iu textobj#from_regexp#mapexpr('https\?\/\/\S\+')
+	" Select line ignore newline code
+	autocmd User MyVimRc vmap <expr> al textobj#from_regexp#mapexpr('^.*$')
+	" Select line ignore head spaces
+	autocmd User MyVimRc vmap <expr> il textobj#from_regexp#mapexpr('^\s\+\zs.*\ze.*$')
 
 	autocmd User MyVimRc vnoremap <C-l> <Esc>
 	autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
@@ -2387,9 +2390,12 @@ augroup KeyMapping
 	autocmd User MyVimRc omap ii <Plug>(textobj-indent-i)
 
 	" textobj-from_regexp
+	" Select alphabet glob
 	autocmd User MyVimRc omap <expr> i_ textobj#from_regexp#mapexpr('[A-Za-z0-9]\+')
-	autocmd User MyVimRc omap <expr> il textobj#from_regexp#mapexpr('^.*$')
-	autocmd User MyVimRc omap <expr> iu textobj#from_regexp#mapexpr('https\?\/\/\S\+')
+	" Select line ignore newline code
+	autocmd User MyVimRc omap <expr> al textobj#from_regexp#mapexpr('^.*$')
+	" Select line ignore head spaces
+	autocmd User MyVimRc vmap <expr> il textobj#from_regexp#mapexpr('^\s\+\zs.*\ze.*$')
 
 	" Don't select blank
 	autocmd User MyVimRc onoremap a" 2i"
