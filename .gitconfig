@@ -27,3 +27,4 @@
 	ba = branch -a
 	cob = checkout -b
 	aa = add -A
+	bd = branch -d

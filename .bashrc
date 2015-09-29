@@ -26,7 +26,7 @@ alias cp='cp -i'
 
 alias vi='vim -u NONE --noplugin'
 alias gvi='gvim -u NONE -U NONE --noplugin'
-alias vimless='vim - -R'
+alias vimless='vim - -R -c "setl nolist | nnoremap <buffer> Q :<C-u>q<CR>"'
 alias vimshell='vim +VimShell'
 alias vimconsole='vim +VimConsoleOpen'
 alias vim-record-startup='vim --startuptime vim_startup_time +q && vim -c "set bt=nofile ft=vim | r vim_startup_time | call system(\"rm vim_startup_time\") | normal! gg3dd"'
