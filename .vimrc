@@ -145,7 +145,9 @@ let s:viewdir   = s:backupdir . '/view'
 " Run system command by vimproc or vim default
 function! s:system(cmd)
 	"@Incomplete('vimproc#system was not executed in this script, refer to vital.vim')
-	if exists('*vimproc#system')
+	if s:is_windows
+		silent execute '!start' a:cmd
+	elseif exists('*vimproc#system')
 		return vimproc#system(a:cmd)
 	else
 		return system(a:cmd)
@@ -427,6 +429,7 @@ NeoBundleLazy  'rhysd/try-colorscheme.vim'
 NeoBundle      'jonathanfilip/vim-lucius'
 NeoBundleLazy  'aiya000/unite-syntax'
 NeoBundleLazy  'Shougo/unite-help'
+NeoBundleLazy  'osyo-manga/unite-filetype'
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
@@ -867,6 +870,15 @@ if neobundle#tap('unite-help')
 	\})
 	call neobundle#untap()
 endif
+if neobundle#tap('unite-filetype')
+	call neobundle#config('unite-filetype', {
+	\	'depends'  : [
+	\		'Shougo/unite.vim'
+	\	],
+	\	'autoload' : {'unite_sources' : 'filetype'}
+	\})
+	call neobundle#untap()
+endif
 
 " Suppress a caution of vimrc several loading (:silent)
 silent call neobundle#end()
@@ -1280,6 +1292,12 @@ let g:unite_source_tag_max_name_length  = 100
 let g:unite_source_tag_max_fname_length = 100
 
 "}}}
+"--- vim-visualstar ---"{{{
+
+" Do zzzv after execute visualstar
+let g:visualstar_extra_commands = 'zzzv'
+
+"}}}
 "--- For Debug ---"{{{
 
 " Local my plugins
@@ -1612,7 +1630,7 @@ augroup END
 "-------------------------"
 "      Command_Util       "
 "-------------------------"
-" For Override {{{
+" Alternate {{{
 
 call altercmd#load()
 
@@ -1633,7 +1651,7 @@ command! -bar -bang -complete=file -nargs=? TabnewOverridden tabnew<bang> <args>
 AlterCommand tabnew TabnewOverridden
 
 " }}}
-" Our Usefull {{{
+" Util {{{
 
 " Grep current buffer, and open quickfix window
 command! -bar -nargs=1 GrepInThis vimgrep <args> % | cwindow
@@ -1721,8 +1739,18 @@ endfunction "}}}
 command! -bar -nargs=1 -bang -complete=command RedirToVar call s:redir_to_var(<bang>0, <q-args>)
 
 
+"@Unchecked('in Ubuntu')
+"NOTE: You must add 'gvim' command to $PATH
+" Open current buffer in new gvim window
+command! -bar OpenInNewWindow
+\	let s:target_filepath = expand('%:p')
+\|	bdelete!
+\|	call s:system('gvim ' . s:target_filepath)
+\|	unlet s:target_filepath
+
+
 "}}}
-" Life Helper {{{
+" Helper {{{
 " NOP (Fake command)
 
 " Vim Utils {{{
@@ -2152,8 +2180,9 @@ augroup END
 
 augroup KeyMapping
 	" All
-	autocmd User MyVimRc nnoremap <C-h><C-e> :<C-u>call <SID>motionless_bufdo('set expandtab!')<CR>:set expandtab?<CR>
-	autocmd User MyVimRc inoremap <C-k><C-e> <C-o>:call <SID>motionless_bufdo('set expandtab!')<CR><C-o>:set expandtab?<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h>E     :<C-u>call <SID>motionless_bufdo('set expandtab')<CR>:echo 'set expandtab all buffer!'<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-e> :<C-u>call <SID>motionless_bufdo('set expandtab!')<CR>:set expandtab?<CR>
+	autocmd User MyVimRc inoremap <silent> <C-k><C-e> <C-o>:call <SID>motionless_bufdo('set expandtab!')<CR><C-o>:set expandtab?<CR>
 
 	" Local
 	autocmd User MyVimRc nnoremap <silent>       <C-h><C-f> :<C-u>call <SID>toggle_foldmethod()<CR>
@@ -2171,7 +2200,7 @@ augroup KeyMapping
 augroup END
 
 " }}}
-" for Plugins {{{
+" By plugins {{{
 
 augroup KeyMapping
 	" netrw
@@ -2199,7 +2228,8 @@ augroup KeyMapping
 	" Unite
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-h>        :<C-u>Unite -ignorecase neomru/file<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Unite -ignorecase outline<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k>f            :<C-u>Unite -ignorecase -start-insert syntax<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-g>        :<C-u>Unite -ignorecase -start-insert syntax<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>f            :<C-u>Unite -ignorecase -start-insert filetype<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>u :<C-u>UniteClose<CR>
 
 	" excitetranslate-vim
@@ -2274,6 +2304,9 @@ augroup KeyMapping
 		autocmd User MyVimRc inoremap <expr>   <C-y> neocomplete#cancel_popup() . '<C-y>'
 		autocmd User MyVimRc inoremap <expr>   <C-e> neocomplete#cancel_popup() . '<C-e>'
 	endif
+
+	" vim-visualstar
+	autocmd User MyVimRc vmap g* <Plug>(visualstar-*)N
 augroup END
 
 " }}}
