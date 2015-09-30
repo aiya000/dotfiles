@@ -64,6 +64,52 @@ abbr    [TestCleanup]
 # Syntax
 snippet else
 abbr    else {}
+options indent
     else {
         ${0:TARGET}
     }
+
+
+# Template
+snippet ViewModelTemplate
+alias   VMTemplate
+options indent
+    #region public field
+    
+    public event PropertyChangedEventHandler PropertyChanged;
+    
+    public string ${1:#:PropertyName} {
+       get {
+        return this.${2:#:propertSubName};
+       }
+       set {
+        this.$2 = value;
+        this.OnPropertyChanged("$1");
+       }
+      }
+    
+    #endregion
+    
+    #region private field
+    
+    private string $2;
+    
+    #endregion
+    
+    #region public constructor
+    
+    public ManagerRegisterWindowViewModel() {
+       this.$1 = string.Empty;
+      }
+    
+    #endregion
+    
+    #region private method
+    
+    private void OnPropertyChanged(string name) {
+       if (this.PropertyChanged != null) {
+        this.PropertyChanged(this, new PropertyChangedEventArgs(name));
+       }
+      }
+    
+    #endregion
