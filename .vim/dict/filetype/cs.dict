@@ -3,6 +3,7 @@ CellContentClick
 CloseMainWindow
 Codeer
 ComponentModel
+DataGridCellEditEndingEventArgs
 DataGridView
 DataGridViewCellEventArgs
 DataGridViewRow
@@ -24,6 +25,7 @@ NotImplementedException
 OnPropertyChanged
 PropertyChangedEventArgs
 PropertyChangedEventHandler
+RoutedEventArgs
 SpreadsheetGear
 StringBuilder
 TestTools
