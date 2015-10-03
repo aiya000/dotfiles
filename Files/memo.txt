@@ -652,5 +652,60 @@ call accelerate#map('nv', 'e', 'l', 'foldclosed(line(".")) != -1 ? "zo" : "l"')
 
 
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
+"-----------
+" 2015-10-03
+"-----------
+if executable('ag')
+    let &grepprg= 'ag -n $*'
+elseif executable('jvgrep')
+    let &grepprg= 'jvgrep $*'
+elseif executable('pt')
+    let &grepprg= 'pt'
+endif
+if executable('ag')
+	let g:unite_source_grep_command=       'ag'
+	let g:unite_source_grep_default_opts=  '--nogroup --nocolor'
+	let g:unite_source_grep_recursive_opt= ''
+endif
+
+let g:openbrowser_browser_commands= [
+\   {
+\       'name': 'firefox',
+\       'args': ['{browser}', '{uri}'],
+\   },
+\]
+
+inoremap <Leader><Leader> <Leader>
+inoremap <Leader>H        <Home>
+inoremap <Leader>e        <End>
+inoremap <Leader>h        <Esc>I
+
+" Only :w! updates a gist.
+let g:gist_update_on_write = 2
+let g:tweetvim_tweet_per_page= 200
+
+" http://d.hatena.ne.jp/thinca/20100614/1276448745
+omap iF <Plug>(textobj-between-i)
+omap aF <Plug>(textobj-between-a)
+vmap iF <Plug>(textobj-between-i)
+vmap aF <Plug>(textobj-between-a)
+
+let g:J6uil_updatetime=    500
+let g:J6uil_display_icon=  1
+let g:J6uil_echo_presence= 0
+
+" aiya: What's this plugin ?
+let g:GeeknoteFormat= 'markdown'
+let g:GeeknoteExplorerWidth= float2nr(&columns * 0.2)
+
+let g:previm_enable_realtime= 1
+
+command! -nargs=+ -complete=command Capture call s:cmd_capture(<q-args>)
+function! s:cmd_capture(q_args)
+	call unite#start([['output', a:q_args]])
+endfunction
+
+
+"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
 
 vim:ft=vim:
