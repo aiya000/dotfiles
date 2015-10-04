@@ -804,8 +804,8 @@ if neobundle#tap('vim-textobj-indent')
 	\})
 	call neobundle#untap()
 endif
-if neobundle#tap('unite-tags')
-	call neobundle#config('unite-tags', {
+if neobundle#tap('unite-tag')
+	call neobundle#config('unite-tag', {
 	\	'depends'  : [
 	\		'Shougo/unite.vim'
 	\	],
