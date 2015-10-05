@@ -10,8 +10,20 @@ options indent
         ${0}
     </Window>
 
+snippet UserControlSurround
+alias   UserControl
+abbr    <UserControl></UserControl>
+options indent
+    <UserControl x:Class="${1:#:ClassPath}"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 mc:Ignorable="d"
+                 d:DesignHeight="${2:300}" d:DesignWidth="${3:300}">
+        ${0}
+    </UserControl>
 
-## Panel Types
 snippet WrapPanelSurround
 alias   WrapPanel
 abbr    <WrapPanel></WrapPanel>
@@ -36,14 +48,10 @@ options indent
         ${0}
     </Grid>
 
-
-## DataGrid
-snippet DataGrid
-abbr    <DataGrid/>
-    <DataGrid${0}/>
-
 snippet DataGridSuround
+alias   DataGrid
 abbr    <DataGrid></DataGrid>
+options indent
     <DataGrid>
         ${0}
     </DataGrid>
@@ -56,23 +64,40 @@ options indent
         ${0}
     </DataGrid.Columns>
 
-snippet DataGridTextColumnSurrond
-alias   DataGridTextColumn
-abbr <DataGridTextColumn/>
+snippet DataGridTextColumn
+abbr    <DataGridTextColumn/>
     <DataGridTextColumn${0}/>
 
+snippet DataGridCheckBoxColumn
+abbr    <DataGridCheckBoxColumn/>
+    <DataGridCheckBoxColumn${0}/>
 
-## Other Controls
+snippet TabControlSurrond
+alias   TabControl
+abbr    <TabControl></TabControl>
+options indent
+    <TabControl>
+        ${0}
+    </TabControl>
+
+snippet TabItemSurrond
+alias   TabItem
+abbr    <TabItem></TabItem>
+options indent
+    <TabItem>
+        ${0}
+    </TabItem>
+
 snippet ComboBox
 abbr <ComboBox/>
     <ComboBox${0}/>
 
 snippet ComboBoxSurrond
-abbr    <ComboBox><ComboBox/>
+abbr    <ComboBox></ComboBox>
 options indent
     <ComboBox>
         ${0}
-    <ComboBox/>
+    </ComboBox>
 
 snippet ComboBoxItem
 abbr    <ComboBoxItem/>
@@ -183,6 +208,10 @@ snippet SelectedIndex
 abbr    SelectedIndex=""
     SelectedIndex="${1:0}"${0}
 
+snippet Stroke
+abbr    Stroke=""
+    Stroke="${1:Black}"${0}
+
 
 ## EventHandlers
 snippet Loaded
@@ -234,6 +263,10 @@ snippet fit_to_parent
 abbr    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="Auto" Height="Auto"${0}
     VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="Auto" Height="Auto"${0}
 
-snippet data_grid_default_backcolor
+snippet default_data_grid_backcolor
 abbr    Background="#FFA4A4A4"
     Background="#FFA4A4A4"${0}
+
+snippet default_grid_backcolor
+abbr    Background="#FFE5E5E5"
+    Background="#FFE5E5E5"${0}

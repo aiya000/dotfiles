@@ -54,6 +54,8 @@
 "-- Windows choice ~/neosnippets as neosnippet_directory
 "  -- I hope Windows choice ~/vimfiles/neosnippets
 
+"-- ftplugin 'xaml' should find xaml#complete
+
 "}}}
 " Todo {{{
 
@@ -78,6 +80,8 @@
 "  -- refer to 'clear-undo', maybe
 
 "-- four width tabs replace to four spaces
+
+"-- register normal <C-h> as <leader>
 
 " }}}
 
@@ -1213,7 +1217,7 @@ let g:separetaro_short_separator_of = {
 
 " Combinate neosnippet.vim
 let g:separetaro_long_separator_of = {
-\	'java'       : '/* --- --- --- <`0`> --- --- --- */',
+\	'java'       : '/* --- --- ---  --- --- --- */',
 \	'javascript' : '/* --- --- --- <`0`> --- --- --- */',
 \	'typescript' : '/* --- --- --- <`0`> --- --- --- */',
 \	'css'        : '/* --- --- --- <`0`> --- --- --- */',
@@ -1298,7 +1302,7 @@ let g:unite_source_tag_max_fname_length = 100
 let g:visualstar_extra_commands = 'zzzv'
 
 "}}}
-"--- For Debug ---"{{{
+"--- For Develop ---"{{{
 
 " Local my plugins
 let s:repos = [ 'arot13.vim'
@@ -1379,7 +1383,7 @@ augroup HighlightPref
 	autocmd VimEnter,WinEnter * call matchadd('RcEmSpace', '　')
 
 	" Highlight VCS conflict markers
-	autocmd ColorScheme * call matchadd('ErrorMsg', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
+	autocmd ColorScheme * call matchadd('Error', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
 augroup END
 
 
@@ -2187,7 +2191,7 @@ augroup KeyMapping
 	" Local
 	autocmd User MyVimRc nnoremap <silent>       <C-h><C-f> :<C-u>call <SID>toggle_foldmethod()<CR>
 	autocmd User MyVimRc nnoremap <silent>       <C-h><C-d> :<C-u>call <SID>toggle_diff()<CR>
-	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
+	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'block' : '') . ' virtualedit?<CR>'
 
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline!     cursorline?    <CR>

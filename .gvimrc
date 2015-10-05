@@ -102,21 +102,26 @@ augroup HighlightPrefs
 	"autocmd ColorScheme * highlight TabLine      gui=standout  guifg=Blue
 	"autocmd ColorScheme * highlight TabLineSel   gui=NONE      guifg=Cyan
 	"autocmd ColorScheme * highlight TabLineFill  gui=standout  guifg=Blue
-	"autocmd ColorScheme * highlight VertSplit    gui=NONE      guifg=Cyan  guibg=Blue
-	"autocmd ColorScheme * highlight StatusLine                 guifg=Cyan  guibg=Black
-	"autocmd ColorScheme * highlight StatusLineNC               guifg=Blue
+	autocmd ColorScheme * highlight VertSplit    gui=bold      guifg=#606060 guibg=DarkGray
+	autocmd ColorScheme * highlight StatusLine                 guifg=Black   guibg=LightGray
+	autocmd ColorScheme * highlight StatusLineNC               guifg=Black   guibg=DarkGray
 	autocmd ColorScheme * highlight LineNr                     guifg=Orange
 	autocmd ColorScheme * highlight CursorLineNr               guifg=Yellow
-	autocmd ColorScheme * highlight CursorLine   gui=underline guifg=Cyan guibg=NONE
+	autocmd ColorScheme * highlight CursorLine   gui=underline guifg=Cyan    guibg=NONE
 
 	autocmd ColorScheme       * highlight GuiRcEmSpace guibg=White
 	autocmd VimEnter,WinEnter * call matchadd('GuiRcEmSpace', '　')
 augroup END
 
 
+augroup HighlightPref
+	autocmd InsertEnter * highlight StatusLine guifg=LightGray guibg=Black
+	autocmd InsertLeave * highlight StatusLine guifg=Black     guibg=LightGray
+augroup END
+
+
 if !g:gvimrc['loaded']
 	set background=dark
-
 	if s:is_unix
 		colorscheme molokai
 	elseif s:is_windows

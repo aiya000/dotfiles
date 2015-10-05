@@ -6,6 +6,7 @@ let b:undo_ftplugin = 'setl ' . join([
 let &commentstring = ' /*%s*/'
 setl cinkeys-=0#
 
+
 highlight default link ftCsTypeSpecial Identifier
 syntax keyword ftCsTypeSpecial var dynamic
 

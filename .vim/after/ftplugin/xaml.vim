@@ -1,6 +1,2 @@
-let b:undo_ftplugin = 'setl ' . join([
-\	'syntax<'
-\])
-
-"NOTE: working, please
-setl syntax=xml
+" Extend ftplugin 'xml'
+execute 'source' (g:vimrc['vim_home'] . '/after/ftplugin/xml.vim')
