@@ -14,14 +14,24 @@ alias   msgbox
 abbr    MessageBox.Show(text, caption, Buttons, Icon);
     MessageBox.Show(${1:#:text}, ${2:#:caption}, MessageBoxButtons.${3:OK}, MessageBoxIcon.${4:Information});${0}
 
-snippet messageboxyesno
-alias   msgboxq msgboxyesno
+snippet messagebox_yesno
+alias   msgbox_yesno
 abbr    MessageBox.Show(text, caption, Buttons.YesNo, Icon.Question);
     MessageBox.Show(${1:#:text}, ${2:#:caption}, MessageBoxButtons.YesNo, MessageBoxIcon.Question);${0}
 
 snippet inputbox
 abbr    Interaction.InputBox(prompt, title, defaultResponce);
     Interaction.InputBox(${1:#:Prompt}, ${2:#:Title}, "${3:#:DefaultResponse}");${0}
+
+snippet messagebox_wpf
+alias   msgbox_wpf
+abbr    MessageBox.Show(text, caption, Button, Icon);
+    MessageBox.Show(${1:#:text}, ${2:#:caption}, MessageBoxButton.${3:OK}, MessageBoxImage.${4:Information});${0}
+
+snippet messagebox_yesno_wpf
+alias   msgbox_yesno_wpf
+abbr    MessageBox.Show(text, caption, Button.YesNo, Icon.Question);
+    MessageBox.Show(${1:#:text}, ${2:#:caption}, MessageBoxButton.YesNo, MessageBoxImage.Question);${0}
 
 snippet DebugPrint
 abbr    System.Diagnostics.Debug.Print();

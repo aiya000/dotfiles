@@ -129,6 +129,10 @@ snippet Binding
 abbr    Binding="{}"
     Binding="{Binding ${1:#:Property}}"${0}
 
+snippet TextBinding
+abbr    TextBinding="{}"
+    TextBinding="{Binding ${1:#:Property}}"${0}
+
 snippet Header
 abbr    Header=""
     Header="${1:#:Name}"${0}
@@ -212,6 +216,10 @@ snippet Stroke
 abbr    Stroke=""
     Stroke="${1:Black}"${0}
 
+snippet ClipToBounds
+abbr    ClipToBounds=""
+    ClipToBounds="${1:True}"${0}
+
 
 ## EventHandlers
 snippet Loaded
@@ -236,8 +244,8 @@ abbr     CellEditEnding=""
 
 
 ## User's Definition
-snippet DataGridTepmplateColumnSurrond
-alias   DataGridTepmplateColumn
+snippet DataGridTemplateColumnSurrond
+alias   DataGridTemplateColumn
 abbr    <DataGridTemplateColumn>...</DataGridTemplateColumn>
 options indent
     <DataGridTemplateColumn>

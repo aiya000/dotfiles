@@ -51,8 +51,8 @@ export HISTIGNORE="${HISTIGNORE}:*.bash_history*:*mount*-o*password=*"
 export EDITOR=vim
 
 # depends 'vim-pager' and 'vim-manpager'
-export PAGER='vim - +PAGER -c "setl nonu nornu"'
-export MANPAGER='vim - +MANPAGER -c "setl nonu nornu"'
+export PAGER='vim - +PAGER -c "setl nonu nornu | setf vim-pager"'
+export MANPAGER='vim - +MANPAGER -c "setl nonu nornu | setf vim-pager"'
 
 # Plugin prefs
 export HEREIS_ALIAS_PREFIX='p'

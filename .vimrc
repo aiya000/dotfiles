@@ -81,8 +81,6 @@
 
 "-- four width tabs replace to four spaces
 
-"-- register normal <C-h> as <leader>
-
 " }}}
 
 
@@ -1178,7 +1176,7 @@ augroup END
 " If matched file extension pattern, indent-guides is enabled
 augroup FileEvent
 	autocmd WinEnter,BufWinEnter * IndentGuidesDisable
-	autocmd WinEnter,BufWinEnter *.{xml,html,css,scss,erb} IndentGuidesEnable
+	autocmd WinEnter,BufWinEnter *.{xml,html,css,scss,erb,xaml} IndentGuidesEnable
 augroup END
 
 "}}}
@@ -1887,8 +1885,14 @@ cnoreabbr NeoBundleUpdateL  NeoBundleUpdate \| NeoBundleUpdatesLog
 command!  NeoBundleUpdateL  NOP
 
 
-" Markdown help on online (maru nage)
-command! -bar MarkdownHelpOnline W3mTab http://qiita.com/Qiita/items/c686397e4a0f4f11683d
+" Use unite's neobundle source
+cnoreabbr NeoBundleInstallU Unite neobundle/install
+command!  NeoBundleInstallU NOP
+cnoreabbr NeoBundleUpdateU  Unite neobundle/update
+command!  NeoBundleUpdateU  NOP
+cnoreabbr NeoBundleLogU     Unite neobundle/log
+command!  NeoBundleLogU     NOP
+
 
 " }}}
 " Development {{{
@@ -2231,6 +2235,7 @@ augroup KeyMapping
 
 	" Unite
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-h>        :<C-u>Unite -ignorecase neomru/file<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>h            :<C-u>Unite -ignorecase file_rec<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Unite -ignorecase outline<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-g>        :<C-u>Unite -ignorecase -start-insert syntax<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>f            :<C-u>Unite -ignorecase -start-insert filetype<CR>
@@ -2404,6 +2409,7 @@ augroup KeyMapping
 	autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
 	autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
 	autocmd User MyVimRc vnoremap <silent> i=        :Alignta =/1<CR>
+	autocmd User MyVimRc vnoremap <silent> i:        :Alignta :/1<CR>
 
 	" Don't select blank
 	autocmd User MyVimRc vnoremap a" 2i"
