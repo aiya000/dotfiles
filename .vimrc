@@ -59,8 +59,6 @@
 "}}}
 " Todo {{{
 
-"-- Eigo translate to English in this file
-
 "-- read help options.jax
 
 "-- read help windows.txt
@@ -78,8 +76,6 @@
 "-- Delete undo
 "  -- current file or all file
 "  -- refer to 'clear-undo', maybe
-
-"-- four width tabs replace to four spaces
 
 " }}}
 
