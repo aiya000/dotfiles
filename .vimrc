@@ -218,10 +218,10 @@ if s:is_kaoriya && s:is_windows
 	" Set environments
 	let $HOME               = $VIM
 	let $PATH               = $HOME . '/bin;' . $PATH
-	let g:vimrc['vim_home'] = substitute($VIM, '\', '/', 'g') . '/vimfiles' " Reset with $HOME
+	let g:vimrc['vim_home'] = substitute($VIM, '\', '/', 'g') . '/vimfiles'
 	let &runtimepath        = &runtimepath . ',' . g:vimrc['vim_home']
 
-	" Use cygwin's executable commands
+	" Use cygwin's commands
 	if s:has_cygwin
 		let $PATH = '/cygwin/bin;/cygwin/usr/bin;/cygwin/usr/sbin;' . $PATH
 	endif
@@ -285,18 +285,18 @@ endif
 
 if has('vim_starting')
 	try
-		let &runtimepath = &runtimepath . ',' . g:vimrc['vim_home'] . '/bundle/neobundle.vim'
+		let &runtimepath = &runtimepath . ',' . (g:vimrc['vim_home'] . '/bundle/neobundle.vim')
 		call neobundle#begin()
 	catch /E117/  " neobundle.vim not found
 		try
 			call s:fetch_neobundle()
 			call neobundle#begin()
-			echo 'NeoBundle installed.'
-			echo 'Please closing vim and reopening vim once,'
-			echo 'and executing :NeoBundleInstall .'
+			echo 'NeoBundle was installed .'
+			echo 'Please execute :NeoBundleInstall ,'
+			echo 'and restart Vim .'
 		catch /FALIED/
 			call s:echo_error('cloning neobundle.vim failed.')
-			call s:echo_error('>> Vim Config Error <<')
+			call s:echo_error('>> Error build vim environment <<')
 		endtry
 	endtry
 endif
@@ -901,13 +901,6 @@ let g:netrw_home = g:vimrc['vim_home']
 
 " Set default options for opening netrw
 let g:netrw_bufsettings = 'relativenumber readonly nomodifiable nomodified nowrap nobuflisted'
-
-" }}}
-"--- matchit.vim ---" {{{
-
-"" uooooooooooooo... oh, my triple operator !!!!!!!!!!!
-"" Why if set you, happend an error when doing match it...
-"autocmd PluginPrefs User MyVimRc let b:match_words = &matchpairs . ',?::'
 
 " }}}
 "--- unite.vim ---"{{{
@@ -2403,6 +2396,7 @@ augroup KeyMapping
 	" Select line ignore newline code
 	autocmd User MyVimRc vmap <expr> al textobj#from_regexp#mapexpr('^.*$')
 	" Select line ignore head spaces
+	"@Bugs('if currentline has not head space, failure visual select currentline')
 	autocmd User MyVimRc vmap <expr> il textobj#from_regexp#mapexpr('^\s\+\zs.*\ze.*$')
 
 	autocmd User MyVimRc vnoremap <C-l> <Esc>
