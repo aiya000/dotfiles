@@ -164,7 +164,7 @@ function! s:echo_error(msg)
 endfunction
 
 " Get script local ID
-function! s:sid()
+function! s:SID()
 	return matchstr(expand('<sfile>'), '<SNR>\d\+_')
 endfunction
 
@@ -1085,8 +1085,8 @@ if neobundle#tap('vim-submode')
 			endif
 		endfunction "}}}
 		autocmd User MyVimRc call submode#enter_with('tab_move', 'n', '', '<C-s>t')
-		autocmd User MyVimRc call submode#map('tab_move', 'n', 's', 'n', printf(':call %sloopable_tab_move_next()<CR>', s:sid()))
-		autocmd User MyVimRc call submode#map('tab_move', 'n', 's', 'p', printf(':call %sloopable_tab_move_prev()<CR>', s:sid()))
+		autocmd User MyVimRc call submode#map('tab_move', 'n', 's', 'n', printf(':call %sloopable_tab_move_next()<CR>', s:SID()))
+		autocmd User MyVimRc call submode#map('tab_move', 'n', 's', 'p', printf(':call %sloopable_tab_move_prev()<CR>', s:SID()))
 
 		" Window Mover
 		" Current buffer move to next tab "{{{
@@ -1167,9 +1167,13 @@ augroup HighlightPref
 augroup END
 
 " If matched file extension pattern, indent-guides is enabled
+"@See('nnoremap <C-k>i')
 augroup FileEvent
 	autocmd WinEnter,BufWinEnter * IndentGuidesDisable
-	autocmd WinEnter,BufWinEnter *.{xml,html,css,scss,erb,xaml} IndentGuidesEnable
+	autocmd WinEnter,BufWinEnter *.{xml,html,css,scss,erb,xaml}
+	\	if s:indent_guides_enable
+	\|		IndentGuidesEnable
+	\|	endif
 augroup END
 
 "}}}
@@ -1434,7 +1438,7 @@ function! s:with_delimitter_tab_line() "{{{
 	let l:tabpages   = l:delimitter . join(l:titles, l:delimitter) . l:delimitter . '%#TabLineFill#%T'
 	return l:tabpages
 endfunction "}}}
-execute 'set tabline=%!' . printf('%swith_delimitter_tab_line()', s:sid())
+execute 'set tabline=%!' . printf('%swith_delimitter_tab_line()', s:SID())
 
 " Turn off highlight
 nohlsearch
@@ -1797,7 +1801,7 @@ function! s:twitter_private() "{{{
 
 	TweetVimHomeTimeline
 endfunction "}}}
-command! -bar TwitterPrivate     execute printf('call %stwitter_private()', s:sid())
+command! -bar TwitterPrivate     execute printf('call %stwitter_private()', s:SID())
 command! -bar TwitterPrivateTab  tabnew | TwitterPrivate
 function! s:tweet_private() "{{{
 	if !exists('g:vimrc.private["twitter"]["priv_ac"]')
@@ -1811,7 +1815,7 @@ function! s:tweet_private() "{{{
 	"@Incomplete('wait sync here')
 	"execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
-command! -bar TweetPrivate       execute printf('call %stweet_private()', s:sid())
+command! -bar TweetPrivate       execute printf('call %stweet_private()', s:SID())
 
 
 "-- Public Account --"
@@ -1826,7 +1830,7 @@ function! s:twitter_public() "{{{
 
 	TweetVimHomeTimeline
 endfunction "}}}
-command! -bar TwitterPublic      execute printf('call %stwitter_public()', s:sid())
+command! -bar TwitterPublic      execute printf('call %stwitter_public()', s:SID())
 command! -bar TwitterPublicTab   tabnew | TwitterPublic
 function! s:tweet_public() "{{{
 	if !exists('g:vimrc.private["twitter"]["publ_ac"]')
@@ -1840,7 +1844,7 @@ function! s:tweet_public() "{{{
 	"@Incomplete('wait here')
 	"execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
-command! -bar TweetPublic        execute printf('call %stweet_public()', s:sid())
+command! -bar TweetPublic        execute printf('call %stweet_public()', s:SID())
 
 
 cnoreabbr Bitly TweetVimBitly
@@ -2137,6 +2141,16 @@ function! s:motionless_bufdo(cmd) abort "{{{
 	quit
 endfunction "}}}
 
+
+" Toggle showing indent-guides with variable
+" function! s:toggle_indent_guides() "{{{
+
+let s:indent_guides_enable = get(s:, 'indent_guides_enable', 1)
+function! s:toggle_indent_guides()
+	let s:indent_guides_enable = !s:indent_guides_enable
+	IndentGuidesToggle
+endfunction "}}}
+
 " }}}
 " Foldings {{{
 
@@ -2284,6 +2298,9 @@ augroup KeyMapping
 	" undotree
 	autocmd User MyVimRc nnoremap <silent> <leader>u :<C-u>UndotreeToggle<CR>
 
+	" vim-indent-guides
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-i> :<C-u>call <SID>toggle_indent_guides()<CR>
+
 	" neosnippet.vim
 	autocmd User MyVimRc imap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
 	autocmd User MyVimRc smap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
@@ -2308,7 +2325,7 @@ augroup KeyMapping
 	endif
 
 	" vim-visualstar
-	autocmd User MyVimRc vmap g* <Plug>(visualstar-*)N
+	autocmd User MyVimRc vmap g* <Plug>(visualstar-*)Nzz
 augroup END
 
 " }}}
