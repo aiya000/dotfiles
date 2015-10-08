@@ -1,17 +1,37 @@
-###########################
-#  Shell support aliases  #
-###########################
+####################
+#  bash configure  #
+####################
+# Load scripts {{{
 
-# Counterolan of do not loading
+# Counterplan for didn't loading .bash_profile
 if [ -z "`alias | grep pr_loaded`" ] ; then
 	source ~/.bash_profile
 fi
 
-# Bourne Shell Configure
+# Obey how to use git-completion.bash
+if [ -f /etc/bash_completion.d/git ] ; then
+	cp /etc/bash_completion.d/git ~/.bash_completion_git
+fi
+
+# Use git-completion
+if [ -f ~/.bash_completion_git ] ; then
+	source ~/.bash_completion_git
+fi
+
+# }}}
+# Set options {{{
+
 set -o ignoreeof  # Disable logoff by Ctrl + D
 stty stop  undef  # unbind C-s that is stop viewing inputs to screen
 stty start undef  # unbind C-q that is start viewing inputs to screen
 
+# }}}
+
+
+#############
+#  aliases  #
+#############
+# Shell support {{{
 
 # Bash Short Cuts
 alias reload='source ~/.bash_profile && source ~/.bashrc && echo "bash source reloaded"'
@@ -118,10 +138,9 @@ fi
 
 # }}}
 
+# }}}
+# Development support {{{
 
-#############################
-#  Develop support aliases  #
-#############################
 # develop environment {{{
 
 # The aliases shunted to other file
@@ -178,9 +197,8 @@ unset local_plugins plugin_dir
 
 #}}}
 
-#############################################
-#                                           #
-#############################################
+# }}}
+
 
 # Export Loaded Archive
 alias rc_loaded='echo "rc_loaded"'
