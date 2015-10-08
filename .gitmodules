@@ -1,3 +1,6 @@
 [submodule ".private"]
 	path = .private
 	url = https://aiya000@git.codebreak.com/aiya000/dotfiles-private.git
+[submodule "bin/test/shunit2"]
+	path = bin/test/shunit2
+	url = https://github.com/kward/shunit2.git
