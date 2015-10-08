@@ -949,6 +949,13 @@ if s:is_unix && !s:is_cygwin
 	" HTML
 	"@Unsupported('except Ubuntu')
 	let g:quickrun_config.html['command'] = 'xdg-open'
+	" Haskell
+	if executable('stack')
+		let g:quickrun_config['haskell']      = {}
+		"NOTE: this specific is invalid
+		"let g:quickrun_config.haskell['command'] = 'stack runghc'
+		let g:quickrun_config.haskell['exec'] = 'stack runghc -- %s'
+	endif
 elseif s:is_windows
 	" C#
 	let g:quickrun_config.cs['command']                     = 'csc.exe'
