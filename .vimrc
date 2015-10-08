@@ -2248,7 +2248,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <leader>T :<C-u>ExciteTranslate<CR>
 
 	" ref-dicts-en
-	autocmd User MyVimRc vnoremap <silent> <leader>T "zy
+	autocmd User MyVimRc nnoremap <silent> <leader>K :<C-u>Ref webdict weblio <C-r>=expand('<cword>')<CR><CR>
 
 	" vim-over
 	autocmd User MyVimRc nnoremap <silent>       :%s/       :<C-u>OverCommandLine %s/<CR>

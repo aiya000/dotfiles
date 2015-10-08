@@ -7,13 +7,11 @@
 [github]
 	user = aiya000
 
-# git config --global credential.helper 'cache --timeout=10800'
 [credential]
 	helper = cache --timeout=36000
 [push]
 	default = matching
 [alias]
-	sl = log --oneline --name-only
 	c = commit
 	s = status
 	b = branch
@@ -28,3 +26,4 @@
 	cob = checkout -b
 	aa = add -A
 	bd = branch -d
+	tree = log --graph --decorate --oneline
