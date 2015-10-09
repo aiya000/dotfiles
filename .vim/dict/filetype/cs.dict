@@ -33,6 +33,7 @@ ToShortDateString
 UnitTesting
 WPFTextBlock
 WPFTextBox
+WPFButtonBase
 WaitForCompletion
 WindowControl
 WindowsAppFriend

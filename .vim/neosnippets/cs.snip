@@ -7,6 +7,30 @@ snippet m.v
 abbr    Microsoft.VisualBasic
     Microsoft.VisualBasic
 
+snippet UnitTesting
+abbr    Microsoft.VisualStudio.TestTools.UnitTesting;
+    Microsoft.VisualStudio.TestTools.UnitTesting;
+
+snippet Friendly
+abbr    Codeer.Friendly;
+    Codeer.Friendly;
+
+snippet FriendlyWindows;
+abbr    Codeer.Friendly.Windows;
+    Codeer.Friendly.Windows;
+
+snippet FriendlyDynamic;
+abbr    Codeer.Friendly.Dynamic;
+    Codeer.Friendly.Dynamic;
+
+snippet FriendlyWindowsGrasp;
+abbr    Codeer.Friendly.Windows.Grasp;
+    Codeer.Friendly.Windows.Grasp;
+
+snippet FriendlyWPFStandardControls;
+abbr    RM.Friendly.WPFStandardControls;
+    RM.Friendly.WPFStandardControls;
+
 
 # Method
 snippet messagebox
@@ -123,3 +147,50 @@ options indent
       }
     
     #endregion
+
+#TODO: expand target in quote
+snippet FriendlyTestClassTemplate
+options indent
+    using System;
+    using System.Windows;
+    using System.Diagnostics;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Codeer.Friendly;
+    using Codeer.Friendly.Windows;
+    using Codeer.Friendly.Dynamic;
+    using Codeer.Friendly.Windows.Grasp;
+    using RM.Friendly.WPFStandardControls;
+    
+    [TestClass]
+    public class ${1:#:TargetClass}Test {
+    
+        #region field
+    
+        WindowsAppFriend app;
+    
+        #endregion
+    
+        #region public method
+    
+        [TestInitialize]
+        public void TestInitialize() {
+            this.app = new WindowsAppFriend(Process.Start(@"..\..\..\
+            ${2:#:TargetProjectName}\bin\
+            ${3:Debug}\
+            $2.exe
+            "));
+        }
+    
+        [TestCleanup]
+        public void TestCleanup() {
+            Process.GetProcessById(this.app.ProcessId).CloseMainWindow();
+        }
+    
+        [TestMethod]
+        public void ShouldBe${4:#:Context}() {
+            var mainCore = this.app.Type<Application>().Current.MainWindow;
+        }
+    
+        #endregion
+    
+    }
