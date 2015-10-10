@@ -31,6 +31,17 @@ stty start undef  # unbind C-q that is start viewing inputs to screen
 #############
 #  aliases  #
 #############
+# Prepare function {{{
+
+dotfile_config () {
+	if [ -f "${HOME}/.dotfiles/${1}" ] ; then
+		"$EDITOR" "${HOME}/.dotfiles/${1}"
+	else
+		"$EDITOR" "${HOME}/${1}"
+	fi
+}
+
+# }}}
 # Shell support {{{
 
 # Bash Short Cuts
@@ -60,11 +71,11 @@ alias twitter-public='vim +TwitterPublic'
 alias tweet-public='vim +TweetPublic'
 alias adrone='vim +AdroneHome'
 
-alias vimconfig='vim ~/.vimrc'
-alias gvimconfig='vim ~/.gvimrc'
-alias vimshconfig='vim ~/.vimshrc'
-alias vim-bashrc='vim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
-alias vim-bashpr='vim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
+alias vimconfig='dotfile_config .vimrc'
+alias gvimconfig='dotfile_config .gvimrc'
+alias vimshconfig='dotfile_config .vimshrc'
+alias vim-bashrc='dotfile_config .bashrc && [ -f ~/.bashrc ] && ( source ~/.bashrc && echo ">> .bashrc loaded" )'
+alias vim-bashpr='dotfile_config .bash_profile && [ -f ~/.bashrc ] && ( source ~/.bash_profile && echo ">> .bash_profile loaded" )'
 
 alias vim-build-configure-ubuntu='./configure --with-features=huge --enable-gui=gnome2 --enable-perlinterp --enable-rubyinterp --enable-luainterp --enable-fail-if-missing'
 alias vim-build-make-mingw32='cd src && mingw32-make.exe -f Make_ming.mak GUI=yes IME=yes MBYTE=yes ICONV=yes DEBUG=no'

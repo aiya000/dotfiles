@@ -100,7 +100,7 @@
 " @Hoge!{Mac}        : This Hint for other than Mac.
 "----------------------------------------
 " {- Booked something -}
-" Mark Z was used by :BufMoveNewTab
+" Mark Z was used by :BufTabMovePrev, :BufTabMoveNext
 " Register "z was used by vnoremap <leader>T
 "----------------------------------------
 
@@ -1094,7 +1094,7 @@ if neobundle#tap('vim-submode')
 		" Window Mover
 		" Current buffer move to next tab "{{{
 
-		"Incomplete('if winnum in tab is 1')
+		"@Incomplete('if winnum in tab is 1')
 		command! -bar BufTabMovePrev execute 'normal! mZ:hide<CR>gT:vsp<CR>`Z'
 		command! -bar BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? ':hide<CR>' : ':hide<CR>gt') . ':vsp<CR>`Z'
 
