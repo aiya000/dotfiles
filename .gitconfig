@@ -27,3 +27,5 @@
 	aa = add -A
 	bd = branch -d
 	tree = log --graph --decorate --oneline
+[core]
+	pager = vim - -R +PAGER -c 'setf vim-pager | set syn=git'
