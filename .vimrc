@@ -1911,29 +1911,19 @@ command!  LogOpen  NOP
 
 
 " GHCi
-cnoreabbr Ghci     VimShellInteractive ghci
-cnoreabbr Sghci    VimShellInteractive --split='sp' ghci
-cnoreabbr Vghci    VimShellInteractive --split='vsp' ghci
-cnoreabbr GhciTab  VimShellInteractive --split='tabnew' ghci
-cnoreabbr Hoogle   Ref hoogle
+let s:ghci_command = executable('stack') ? 'stack ghci' : 'ghci'
+execute 'cnoreabbr Ghci'    'VimShellInteractive'                    s:ghci_command
+execute 'cnoreabbr Sghci'   'VimShellInteractive' '--split="sp"'     s:ghci_command
+execute 'cnoreabbr Vghci'   'VimShellInteractive' '--split="vsp"'    s:ghci_command
+execute 'cnoreabbr GhciTab' 'VimShellInteractive' '--split="kabnew"' s:ghci_command
+cnoreabbr Hoogle  Ref hoogle
 
-command!  Ghci     NOP
-command!  Sghci    NOP
-command!  Vghci    NOP
-command!  GhciTab  NOP
-command!  Hoogle   NOP
-
-
-" stack GHCi
-cnoreabbr GhciSt     VimShellInteractive stack ghci
-cnoreabbr SghciSt    VimShellInteractive --split='sp' stack ghci
-cnoreabbr VghciSt    VimShellInteractive --split='vsp' stack ghci
-cnoreabbr GhciStTab  VimShellInteractive --split='tabnew' stack ghci
-
-command!  GhciSt     NOP
-command!  SghciSt    NOP
-command!  VghciSt    NOP
-command!  GhciStTab  NOP
+command!  Ghci    NOP
+command!  Sghci   NOP
+command!  Vghci   NOP
+command!  GhciTab NOP
+command!  Hoogle  NOP
+unlet s:ghci_command
 
 
 " js
