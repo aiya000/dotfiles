@@ -110,6 +110,14 @@
 "---------------------"
 "{{{
 
+let $MYVIMRC = filereadable(expand('~/.dotfiles/.vimrc'))
+\	? expand('~/.dotfiles/.vimrc')
+\	: $MYVIMRC
+
+let $MYGVIMRC = filereadable(expand('~/.dotfiles/.gvimrc'))
+\	? expand('~/.dotfiles/.gvimrc')
+\	: $MYGVIMRC
+
 let g:vimrc = get(g:, 'vimrc', {
 \	'loaded'   : 0,
 \	'vim_home' : expand('~/.vim')
@@ -1311,10 +1319,9 @@ let s:repos = [ 'arot13.vim'
 \             , 'separetaro.vim'
 \             , 'vimshell-command-dehanai.vim'
 \             , 'unite-syntax'
+\             , 'ref-hoogle'
 \             ]
-
 let s:repos_dir = '~/Repository/'
-
 
 " If valid local plugin, disable bundled same plugin
 for s:plug in s:repos
@@ -1324,8 +1331,6 @@ for s:plug in s:repos
 		silent execute 'NeoBundleDisable' s:plug
 	end
 endfor
-
-
 unlet s:plug_dir s:plug s:repos_dir s:repos
 
 "}}}
@@ -1753,7 +1758,6 @@ command! -bar OpenInNewWindow
 
 "}}}
 " Helper {{{
-" NOP (Fake command)
 
 " Vim Utils {{{
 
