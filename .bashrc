@@ -9,7 +9,7 @@ if [ -z "`alias | grep pr_loaded`" ] ; then
 fi
 
 # Obey how to use git-completion.bash
-if [ -f /etc/bash_completion.d/git ] ; then
+if [ -f /etc/bash_completion.d/git -a ! -f ~/.bash_completion_git ] ; then
 	cp /etc/bash_completion.d/git ~/.bash_completion_git
 fi
 
