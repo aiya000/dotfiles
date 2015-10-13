@@ -2202,7 +2202,7 @@ augroup KeyMapping
 	" Local
 	autocmd User MyVimRc nnoremap <silent>       <C-h><C-f> :<C-u>call <SID>toggle_foldmethod()<CR>
 	autocmd User MyVimRc nnoremap <silent>       <C-h><C-d> :<C-u>call <SID>toggle_diff()<CR>
-	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'block' : '') . ' virtualedit?<CR>'
+	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
 
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline!     cursorline?    <CR>
