@@ -639,7 +639,10 @@ if neobundle#tap('vim-themis')
 endif
 if neobundle#tap('previm')
 	call neobundle#config('previm', {
-	\	'autoload' : {'commands' : 'PrevimOpen'}
+	\	'autoload' : {
+	\		'filetypes' : 'markdown',
+	\		'commands'  : 'PrevimOpen'
+	\	}
 	\})
 	call neobundle#untap()
 endif
