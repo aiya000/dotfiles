@@ -436,6 +436,7 @@ NeoBundle      'jonathanfilip/vim-lucius'
 NeoBundleLazy  'aiya000/unite-syntax'
 NeoBundleLazy  'Shougo/unite-help'
 NeoBundleLazy  'osyo-manga/unite-filetype'
+NeoBundleLazy  'cohama/agit.vim'
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
@@ -885,6 +886,17 @@ if neobundle#tap('unite-filetype')
 	\		'Shougo/unite.vim'
 	\	],
 	\	'autoload' : {'unite_sources' : 'filetype'}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('agit.vim')
+	call neobundle#config('agit.vim', {
+	\	'autoload' : { 'commands' : [
+	\		'Agit',
+	\		'AgitFile',
+	\		'AgitGit',
+	\		'AgitDiff'
+	\	]}
 	\})
 	call neobundle#untap()
 endif
