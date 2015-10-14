@@ -31,5 +31,9 @@ alias tsc="tsc --target es5"
 alias reload-places='reload_places'
 alias edit-places='edit_places'
 
+# Windows
+#@Deprecated('exec on no windows')
+alias open-cygwin='start bash.exe --login -c "cd \"`pwd`\" ; exec /bin/bash -rcfile ~/.bashrc"'
+
 # Other Alias
 alias thanks='echo "(*^o^)< You are welcome!"'
