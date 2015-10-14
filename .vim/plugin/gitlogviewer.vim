@@ -13,7 +13,6 @@ function! s:git_log_viewer()
 	VimProcRead git log
 	execute 'normal! gg"_dd'
 	set filetype=gitlogviewer
-	setl syntax=git
 	setl foldmethod=expr
 	setl foldexpr=getline(v:lnum)=~'^commit'?'>1':getline(v:lnum+1)=~'^commit'?'<1':'='
 	setl foldtext=FoldTextOfGitLog()
