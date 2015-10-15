@@ -1283,14 +1283,6 @@ let g:neocomplete#sources#dictionary#dictionaries = {
 \}
 
 "}}}
-"--- deoplete.nvim ---"{{{
-
-"TODO: this section decomposite to nvimrc
-if has('nvim')
-	let g:deoplete#enable_at_startup = 1
-endif
-
-"}}}
 "--- auto-ctags.vim ---"{{{
 
 " Auto generate tags when :write
@@ -1790,7 +1782,8 @@ cnoreabbr w!! w !sudo tee % > /dev/null
 cnoreabbr CdBufDir cd %:p:h
 command!  CdBufDir NOP
 
-command! -bar ColorPreview Unite colorscheme -auto-preview
+cnoreabbr ColorPreview Unite colorscheme -auto-preview
+command!  ColorPreview NOP
 
 command! -bar -nargs=? -complete=filetype FtpluginEditAfter
 \	execute ':edit' printf('%s/after/ftplugin/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
@@ -1997,7 +1990,7 @@ command! -bar GitAdd call s:git_add()
 "-------------------------"
 "       Key_Mapping       "
 "-------------------------"
-" Disable keys {{{
+" Disable {{{
 
 augroup KeyMapping
 	" Enable some hoge<C-c> mappings
@@ -2024,7 +2017,7 @@ augroup KeyMapping
 augroup END
 
 " }}}
-" Global keyMaps {{{
+" Global {{{
 
 " Prepare functions {{{
 
@@ -2323,18 +2316,12 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap <leader>pl <Plug>(separetoro_put_long_under)
 	autocmd User MyVimRc nmap <leader>pL <Plug>(separetoro_put_long_over)
 
-	"TODO: this section decomposite to vimrc and nvimrc
-	" neocomplete.vim or deoplete.nvim
-	if has('nvim')
-		autocmd User MyVimRc inoremap <expr>   <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
-		autocmd User MyVimRc inoremap <expr>   <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
-	else
-		autocmd User MyVimRc inoremap <silent> <C-k><C-i> <C-o>:NeoCompleteToggle<CR>
-		autocmd User MyVimRc inoremap <expr>   <CR>  neocomplete#close_popup()  . '<CR>'
-		autocmd User MyVimRc inoremap <expr>   <Tab> neocomplete#close_popup()  . '<Tab>'
-		autocmd User MyVimRc inoremap <expr>   <C-y> neocomplete#cancel_popup() . '<C-y>'
-		autocmd User MyVimRc inoremap <expr>   <C-e> neocomplete#cancel_popup() . '<C-e>'
-	endif
+	" neocomplete.vim
+	autocmd User MyVimRc inoremap <silent> <C-k><C-i> <C-o>:NeoCompleteToggle<CR>
+	autocmd User MyVimRc inoremap <expr>   <CR>  neocomplete#close_popup()  . '<CR>'
+	autocmd User MyVimRc inoremap <expr>   <Tab> neocomplete#close_popup()  . '<Tab>'
+	autocmd User MyVimRc inoremap <expr>   <C-y> neocomplete#cancel_popup() . '<C-y>'
+	autocmd User MyVimRc inoremap <expr>   <C-e> neocomplete#cancel_popup() . '<C-e>'
 
 	" vim-visualstar
 	autocmd User MyVimRc vmap g* <Plug>(visualstar-*)Nzz
@@ -2480,7 +2467,7 @@ augroup END
 " }}}
 
 " }}}
-" Buffer local keyMaps {{{
+" Buffer local {{{
 
 augroup PluginPrefs
 	autocmd FileType int-* nnoremap <buffer> q          <NOP>

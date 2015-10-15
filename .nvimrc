@@ -26,6 +26,16 @@ augroup END
 " }}}
 
 
+"------------------------"
+"*** Plugin_Configure ***"
+"------------------------"
+"--- deoplete.nvim ---"{{{
+
+let g:deoplete#enable_at_startup = 1
+
+"}}}
+
+
 "-------------------------"
 "      Event_Method       "
 "-------------------------"
@@ -74,6 +84,21 @@ function! s:toggle_start_shell_mode() "{{{
 endfunction "}}}
 
 " }}}
+" By plugins {{{
+
+"@Unchecked('')
+augroup NeoKeyMapping
+	" deoplete.nvim
+	autocmd User MyVimRc inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
+	autocmd User MyVimRc inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
+	" Disable loaded neocomplete keymappings
+	autocmd User MyVimRc inoremap <C-k><C-i> <NOP>
+	autocmd User MyVimRc inoremap <CR>       <CR>
+	autocmd User MyVimRc inoremap <Tab>      <Tab>
+augroup END
+
+" }}}
+" Others {{{
 
 augroup NeoKeyMapping
 	" terminal mode "{{{
@@ -92,6 +117,8 @@ augroup NeoKeyMapping
 
 	"}}}
 augroup END
+
+" }}}
 
 " }}}
 
