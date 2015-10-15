@@ -89,12 +89,12 @@ endfunction "}}}
 "@Unchecked('')
 augroup NeoKeyMapping
 	" deoplete.nvim
-	autocmd User MyVimRc inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
-	autocmd User MyVimRc inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
+	autocmd User MyNVimRc inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
+	autocmd User MyNVimRc inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
 	" Disable loaded neocomplete keymappings
-	autocmd User MyVimRc inoremap <C-k><C-i> <NOP>
-	autocmd User MyVimRc inoremap <CR>       <CR>
-	autocmd User MyVimRc inoremap <Tab>      <Tab>
+	autocmd User MyNVimRc inoremap <C-k><C-i> <NOP>
+	autocmd User MyNVimRc inoremap <CR>       <CR>
+	autocmd User MyNVimRc inoremap <Tab>      <Tab>
 augroup END
 
 " }}}
