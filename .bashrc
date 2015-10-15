@@ -135,8 +135,6 @@ alias docker-rm-archives='sudo docker rm `sudo docker ps -a -q`'
 # Environment Conditions {{{
 
 if [ $IS_UBUNTU -eq 1 ] ; then
-	#NOTE: Ubuntu 15.04 removed this
-	#alias ssleep='dbus-send --print-reply --system --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend'
 	alias ssleep='sudo pm-suspend'
 elif [ $IS_CYGWIN -eq 1 ] ; then
 	alias cygrunsrv='cocot cygrunsrv'
@@ -186,20 +184,20 @@ function git-fully-change-author-and-email() {
 #}}}
 # plugins {{{
 
-# hereis {{{
+# config {{{
 
 # value for hereis plugin
 export HEREIS_PLACES_FILE=~/.bashrc_places
 
 # }}}
-
-# loads {{{
+# load {{{
 
 plugin_dir=~/.bashfiles/plugin
 local_plugins=( \
 	hereis.sh \
 	shell_kawaii.sh \
 	ezoe_command_not_found_handle.sh \
+	tovim.sh \
 )
 
 for (( i = 0; i < ${#local_plugins[@]}; ++i )) ; do
