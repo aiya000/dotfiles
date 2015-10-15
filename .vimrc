@@ -444,11 +444,8 @@ NeoBundleLazy  'cohama/agit.vim'
 if neobundle#tap('vimproc.vim')
 	call neobundle#config('vimproc.vim', {
 	\	'build' : {
-	\		'linux'   : 'make -f make_unix.mak',
-	\		'unix'    : 'make -f make_unix.mak',
-	\		'mac'     : 'make -f make_mac.mak',
-	\		'cygwin'  : 'make -f make_cygwin.mak',
-	\		'windows' : 'make -f make_mingw32.mak'
+	\		'linux'  : 'make -f make_unix.mak',
+	\		'cygwin' : 'make -f make_cygwin.mak'
 	\	},
 	\	'disabled' : s:is_kaoriya && s:is_windows && !s:has_mingw
 	\})
