@@ -1,5 +1,10 @@
-.backup/**
 .private/**
+
+# managed by locals
+.backup/**
 .vim/.netrwhist
 .vim/bundle/**
 .vim/doc/tags
+
+# deoplete.nvim
+..vimrc-rplugin~

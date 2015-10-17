@@ -420,7 +420,8 @@ NeoBundle      'tpope/vim-surround'
 NeoBundle      'kana/vim-textobj-user'
 NeoBundleLazy  'osyo-manga/vim-itunes-bgm'
 NeoBundle      'kana/vim-textobj-indent'
-NeoBundle      (has('nvim') ? 'Shougo/deoplete.nvim' : 'Shougo/neocomplete.vim')
+NeoBundle      'Shougo/neocomplete.vim'
+NeoBundle      'Shougo/deoplete.nvim'
 NeoBundle      'soramugi/auto-ctags.vim'
 NeoBundleLazy  'tsukkee/unite-tag'
 NeoBundle      'aiya000/vimshell-command-dehanai.vim'
@@ -805,9 +806,15 @@ if neobundle#tap('vim-textobj-indent')
 	\})
 	call neobundle#untap()
 endif
-if neobundle#tap('vim-textobj-indent')
-	call neobundle#config('vim-textobj-indent', {
-	\	'depends' : 'vim-textobj-user'
+if neobundle#tap('neocomplete.vim')
+	call neobundle#config('neocomplete.vim', {
+	\	'disabled' : has('nvim')
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('deoplete.nvim')
+	call neobundle#config('deoplete.nvim', {
+	\	'disabled' : !has('nvim')
 	\})
 	call neobundle#untap()
 endif
