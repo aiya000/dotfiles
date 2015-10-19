@@ -422,7 +422,6 @@ NeoBundleLazy  'osyo-manga/vim-itunes-bgm'
 NeoBundle      'kana/vim-textobj-indent'
 NeoBundle      'Shougo/neocomplete.vim'
 NeoBundle      'Shougo/deoplete.nvim'
-NeoBundle      'soramugi/auto-ctags.vim'
 NeoBundleLazy  'tsukkee/unite-tag'
 NeoBundle      'aiya000/vimshell-command-dehanai.vim'
 NeoBundle      'osyo-manga/vim-textobj-from_regexp'
@@ -1288,12 +1287,6 @@ let g:neocomplete#sources#dictionary#dictionaries = {
 
 "}}}
 "--- auto-ctags.vim ---"{{{
-
-" Auto generate tags when :write
-if !s:is_windows
-	"@Marked('Windows cannot use auto-ctags.vim now')
-	let g:auto_ctags = 1
-endif
 
 " Specific the ctags generated directory ( We must be sync 'tags' )
 let g:auto_ctags_directory_list = [
