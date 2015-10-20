@@ -437,6 +437,7 @@ NeoBundleLazy  'aiya000/unite-syntax'
 NeoBundleLazy  'Shougo/unite-help'
 NeoBundleLazy  'osyo-manga/unite-filetype'
 NeoBundleLazy  'cohama/agit.vim'
+NeoBundleLazy  'Shougo/unite-session'
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
@@ -903,8 +904,25 @@ if neobundle#tap('agit.vim')
 	\})
 	call neobundle#untap()
 endif
+if neobundle#tap('unite-session')
+	call neobundle#config('unite-session', {
+	\	'depends'  : [
+	\		'Shougo/unite.vim'
+	\	],
+	\	'autoload' : {
+	\		'commands' : [
+	\			{
+	\				'name'     : ['UniteSessionSave', 'UniteSessionLoad'],
+	\				'complete' : 'customlist,unite#sources#session#_complete'
+	\			}
+	\		],
+	\		'unite_sources' : 'filetype'
+	\	}
+	\})
+	call neobundle#untap()
+endif
 
-" Suppress a caution of vimrc several loading (:silent)
+" call neobundle#end without caution
 silent call neobundle#end()
 
 " }}}
