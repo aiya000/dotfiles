@@ -360,11 +360,9 @@ NeoBundleLazy  'mattn/webapi-vim'
 NeoBundle      'Shougo/vimshell.vim'
 NeoBundleLazy  'thinca/vim-quickrun'
 NeoBundleLazy  'basyura/J6uil.vim'
-NeoBundle      'osyo-manga/vim-gyazo'
 NeoBundleLazy  'yuratomo/w3m.vim'
 NeoBundle      'supermomonga/vimshell-kawaii.vim'
-NeoBundle      'mattn/excitetranslate-vim'
-NeoBundleLazy  'thinca/vim-splash'
+NeoBundleLazy  'mattn/excitetranslate-vim'
 NeoBundleLazy  'supermomonga/jazzradio.vim'
 NeoBundleLazy  'mattn/favstar-vim'
 NeoBundleLazy  'ujihisa/unite-colorscheme'
@@ -374,25 +372,19 @@ NeoBundle      'thinca/vim-ref'
 NeoBundle      'ujihisa/ref-hoogle'
 NeoBundleLazy  'vim-jp/vital.vim'
 NeoBundle      'Shougo/unite-outline'
-NeoBundleLazy  'rbtnn/puyo.vim'
 NeoBundleLazy  'mattn/benchvimrc-vim'
-NeoBundleLazy  'mattn/yamada-vim'
 NeoBundleLazy  'jvoorhis/coq.vim'
 NeoBundleLazy  'eagletmt/coqtop-vim'
 NeoBundleLazy  'thinca/vim-themis'
 NeoBundle      'tomasr/molokai'
 NeoBundleLazy  'kannokanno/previm'
 NeoBundle      'LeafCage/foldCC'
-NeoBundleLazy  'katono/rogue.vim'
-NeoBundleLazy  'kamichidu/vim-benchmark'
 NeoBundle      'kana/vim-submode'
 NeoBundle      'mfumi/ref-dicts-en'
-NeoBundleLazy  'thinca/vim-painter'
 NeoBundle      'osyo-manga/vim-anzu'
 NeoBundle      'osyo-manga/vim-over'
 NeoBundleLazy  'tyru/restart.vim'
 NeoBundle      'vim-jp/vimdoc-ja'
-NeoBundleLazy  'rbtnn/game_engine.vim'
 NeoBundle      'h1mesuke/vim-alignta'
 NeoBundle      'haya14busa/incsearch.vim'
 NeoBundleLazy  'thinca/vim-scouter'
@@ -405,7 +397,6 @@ NeoBundleLazy  'aiya000/adrone.vim'
 NeoBundleFetch 'Shougo/fakecygpty'
 NeoBundle      'nathanaelkane/vim-indent-guides'
 NeoBundleLazy  'LeafCage/vimhelpgenerator'
-NeoBundleLazy  'thinca/vim-threes'
 NeoBundleLazy  'vim-ruby/vim-ruby'
 NeoBundleLazy  'Keithbsmiley/rspec.vim'
 NeoBundle      'altercation/vim-colors-solarized'
@@ -418,7 +409,6 @@ NeoBundleLazy  'rbtnn/vimconsole.vim'
 NeoBundleLazy  'fatih/vim-go'
 NeoBundle      'tpope/vim-surround'
 NeoBundle      'kana/vim-textobj-user'
-NeoBundleLazy  'osyo-manga/vim-itunes-bgm'
 NeoBundle      'kana/vim-textobj-indent'
 NeoBundle      'Shougo/neocomplete.vim'
 NeoBundle      'Shougo/deoplete.nvim'
@@ -501,15 +491,6 @@ if neobundle#tap('J6uil.vim')
 	\})
 	call neobundle#untap()
 endif
-if neobundle#tap('vim-gyazo')
-	call neobundle#config('vim-gyazo', {
-	\	'depends' : [
-	\		'tyru/open-browser.vim',
-	\		'basyura/TweetVim'
-	\	]
-	\})
-	call neobundle#untap()
-endif
 if neobundle#tap('w3m.vim')
 	call neobundle#config('w3m.vim', {
 	\	'autoload' : {'commands' : [
@@ -530,9 +511,9 @@ if neobundle#tap('vimshell-kawaii.vim')
 	\})
 	call neobundle#untap()
 endif
-if neobundle#tap('vim-splash')
-	call neobundle#config('vim-splash', {
-	\	'autoload' : {'commands' : 'Splash'}
+if neobundle#tap('excitetranslate-vim')
+	call neobundle#config('excitetranslate-vim', {
+	\	'autoload' : {'command' : 'ExciteTranslate'}
 	\})
 	call neobundle#untap()
 endif
@@ -595,22 +576,9 @@ if neobundle#tap('vital.vim')
 	\})
 	call neobundle#untap()
 endif
-if neobundle#tap('puyo.vim')
-	call neobundle#config('puyo.vim', {
-	\	'depends'  : 'rbtnn/game_engine.vim',
-	\	'autoload' : {'commands' : 'Puyo'}
-	\})
-	call neobundle#untap()
-endif
 if neobundle#tap('benchvimrc-vim')
 	call neobundle#config('benchvimrc-vim', {
 	\	'autoload' : {'commands' : 'BenchVimrc'}
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('yamada-vim')
-	call neobundle#config('yamada-vim', {
-	\	'autoload' : {'commands' : 'Yamada'}
 	\})
 	call neobundle#untap()
 endif
@@ -645,27 +613,9 @@ if neobundle#tap('previm')
 	\})
 	call neobundle#untap()
 endif
-if neobundle#tap('rogue.vim')
-	call neobundle#config('rogue.vim', {
-	\	'autoload' : {'commands' : [
-	\		'Rogue',
-	\		'RogueRestore',
-	\		'RogueResume',
-	\		'RogueScores'
-	\	]}
-	\})
-	call neobundle#untap()
-endif
 if neobundle#tap('ref-dicts-en')
 	call neobundle#config('ref-dicts-en', {
 	\	'depends' : 'thinca/vim-ref'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-painter')
-	call neobundle#config('vim-painter', {
-	\	'gui'      : 1,
-	\	'autoload' : {'commands' : 'PainterStart'}
 	\})
 	call neobundle#untap()
 endif
@@ -736,15 +686,6 @@ if neobundle#tap('vimhelpgenerator')
 	\})
 	call neobundle#untap()
 endif
-if neobundle#tap('vim-threes')
-	call neobundle#config('vim-threes', {
-	\	'autoload' : {'commands' : [
-	\		'ThreesShowRecord',
-	\		'ThreesStart'
-	\	]}
-	\})
-	call neobundle#untap()
-endif
 if neobundle#tap('vim-ruby')
 	"@Bugs('rspec.vim do not highlight syntax before loading vim-ruby')
 	"@Marked(' -> was fixed by commit a516 ?')
@@ -788,15 +729,6 @@ endif
 if neobundle#tap('vim-go')
 	call neobundle#config('vim-go', {
 	\	'autoload' : {'filetypes' : 'go'}
-	\})
-	call neobundle#untap()
-endif
-"@Incomplete('add hook set updatetime shortly')
-if neobundle#tap('vim-itunes-bgm')
-	call neobundle#config('vim-itunes-bgm', {
-	\	'depends'           : 'vimproc.vim',
-	\	'external_commands' : 'mplayer',
-	\	'autoload'          : {'commands' : 'ITunesBGMStart'}
 	\})
 	call neobundle#untap()
 endif
