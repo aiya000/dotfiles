@@ -12,7 +12,6 @@ alias new=':VimShellCreate'
 alias vsp=':VimShellCreate -split-command=vsp'
 alias sp=':VimShellCreate -split-command=sp'
 alias tabnew=':VimShellCreate -split-command=tabnew'
-alias lcd='cd .'
 
 # NeoVim? Config
 alias nvim="vim"
@@ -26,6 +25,7 @@ alias ctags-r='ctags --tag-relative --recurse --sort=yes'
 # Develop Config
 alias g++='g++ -I/usr/include/c++/4.9 -I/usr/include/c++/4.9/x86_64-linux-gnu -std=c++1y'
 alias tsc="tsc --target es5"
+alias mysql='mysql --pager="less -r -S -n -i -F -X" --protocol=TCP'
 
 # for My Command
 alias reload-places='reload_places'

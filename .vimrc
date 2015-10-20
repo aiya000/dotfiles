@@ -2332,12 +2332,13 @@ augroup KeyMapping
 
 	autocmd User MyVimRc nmap <C-j> <CR>
 
-	autocmd User MyVimRc nnoremap Q  gQ
-	autocmd User MyVimRc nnoremap zs zszh
-
-	autocmd User MyVimRc nnoremap <C-n> gt
-	autocmd User MyVimRc nnoremap <C-p> gT
-	autocmd User MyVimRc nnoremap <C-m> o<Esc>
+	autocmd User MyVimRc nnoremap Q      gQ
+	autocmd User MyVimRc nnoremap zs     zszh
+	autocmd User MyVimRc nnoremap <C-n>  gt
+	autocmd User MyVimRc nnoremap <C-p>  gT
+	autocmd User MyVimRc nnoremap <C-m>  o<Esc>
+	autocmd User MyVimRc nnoremap <C-]>  g<C-]>
+	autocmd User MyVimRc nnoremap g<C-]> <C-]>
 
 	autocmd User MyVimRc nnoremap <silent> m: :<C-u>marks<CR>
 	autocmd User MyVimRc nnoremap <silent> q: :<C-u>register<CR>
