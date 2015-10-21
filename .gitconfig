@@ -32,3 +32,5 @@
 	ra = rebase --abort
 [core]
 	pager = vim - -R +PAGER -c 'setf vim-pager | set syn=git'
+[init]
+	templatedir = ~/.git_templates
