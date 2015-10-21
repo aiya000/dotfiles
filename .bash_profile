@@ -55,7 +55,8 @@ export PAGER='vim - +PAGER -c "setl nonu nornu | setf vim-pager"'
 export MANPAGER='vim - +MANPAGER -c "setl nonu nornu | setf vim-pager"'
 
 # Plugin prefs
-export HEREIS_ALIAS_PREFIX='p'
+export HEREIS_ALIAS_PREFIX='p_'
+export HEREIS_PLACES_FILE=~/.bashrc_places
 
 
 ###################

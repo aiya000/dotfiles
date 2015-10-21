@@ -168,28 +168,19 @@ alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 # pull stackage's cabal.config
 alias stackage-kurekure='wget https://www.stackage.org/lts/cabal.config'
 
-#TODO: Test this
 # <Warn> fully change git commit author and email
-# git-fully-change-author-and-email {{{
-function git-fully-change-author-and-email() {
+function git-fully-change-author-and-email() { #{{{
 	git_user_name=$1
 	git_email=$2
 	git filter-branch -f --env-filter \
 		"GIT_AUTHOR_NAME='${git_user_name}'; GIT_AUTHOR_EMAIL='${git_email}'; GIT_COMMITTER_NAME='${git_user_name}'; GIT_COMMITTER_EMAIL='${git_email}';" \
 		HEAD
 	unset git_user_name git_email
-}
-# }}}
+} #}}}
 
 #}}}
 # plugins {{{
 
-# config {{{
-
-# value for hereis plugin
-export HEREIS_PLACES_FILE=~/.bashrc_places
-
-# }}}
 # load {{{
 
 plugin_dir=~/.bashfiles/plugin
