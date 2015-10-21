@@ -1,5 +1,5 @@
 let g:vimshell_hereis_file         = get(g:, 'vimshell_hereis_file', expand('~/.vimsh_places.vimsh'))
-let g:vimshell_hereis_alias_prefix = get(g:, 'vimshell_hereis_alias_prefix', 'place-')
+let g:vimshell_hereis_alias_prefix = get(g:, 'vimshell_hereis_alias_prefix', 'place_')
 
 let s:command = {
 \	'name'        : 'hereis',
@@ -14,9 +14,9 @@ endfunction
 " --- --- --- "
 
 function! s:command.execute(args, context)
-	let l:name      = substitute(a:args[0], '\s', '', 'g')
-	let l:new_alias = printf( "alias %s%s='cd \"%s\"'\<CR>"
-	\                       , g:vimshell_hereis_alias_prefix, l:name, getcwd())
+	let l:place_name = substitute(a:args[0], '\s', '', 'g')
+	let l:alias_name = g:vimshell_hereis_alias_prefix . l:place_name
+	let l:new_alias  = printf("alias %s='cd \"%s\"'\<CR>", l:alias_name, getcwd())
 
 	call writefile([l:new_alias], g:vimshell_hereis_file, 'a')
 	call vimshell#interactive#send('vimsh ' . g:vimshell_hereis_file)
