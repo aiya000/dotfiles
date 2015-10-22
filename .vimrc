@@ -110,6 +110,7 @@
 "---------------------"
 "{{{
 
+" Open in preference to an entity
 let $MYVIMRC = filereadable(expand('~/.dotfiles/.vimrc'))
 \	? expand('~/.dotfiles/.vimrc')
 \	: $MYVIMRC
@@ -147,7 +148,7 @@ let s:viewdir   = s:backupdir . '/view'
 "---------------------"
 "{{{
 
-"TODO: correspond multi arguments
+"TODO: Implement with multi arguments
 " Run system command by vimproc or vim default
 function! s:system(cmd)
 	"@Incomplete('vimproc#system was not executed in this script, refer to vital.vim')
@@ -181,7 +182,7 @@ endfunction
 " Set default file encoding {{{
 
 " Default file encoding
-if g:vimrc['loaded']
+if !g:vimrc['loaded']
 	set fileencoding=utf-8 encoding=utf-8
 endif
 
@@ -286,7 +287,6 @@ if !isdirectory(s:bundledir)
 	call mkdir(s:bundledir)
 endif
 
-
 if has('vim_starting')
 	try
 		let &runtimepath = &runtimepath . ',' . (g:vimrc['vim_home'] . '/bundle/neobundle.vim')
@@ -331,7 +331,6 @@ endif
 if !exists('loaded_matchit')
 	" Load it
 	runtime macros/matchit.vim
-
 	" Get help of matchit.vim
 	let s:matchit_doc_from = expand('$VIMRUNTIME/macros/matchit.txt')
 	let s:matchit_doc_to   = g:vimrc['vim_home'] . '/doc/matchit.txt'
@@ -895,7 +894,6 @@ let g:unite_source_alias_aliases = {
 
 "}}}
 "--- vim-quickrun ---" {{{
-"@Unchecked('java'){Ubuntu}
 
 " Define myself, for lazy load
 let g:quickrun_no_default_key_mappings = 0
@@ -989,13 +987,12 @@ let g:vimshell_scrollback_limit             = 10000
 let g:vimshell_split_command                = 'split'
 
 "@See('autoload/vimshell/commands/{hereis,edit_places,places,reload_places}.vim')
-" Example$ hereis foo && cd && p-foo
 let g:vimshell_hereis_alias_prefix = 'p_'
 
 "}}}
 "--- vimshell-kawaii.vim ---"{{{
 
-" Prompt is kawaii
+" vimshell is kawaii
 let g:vimshell_kawaii_smiley = 1
 
 "}}}
@@ -1015,15 +1012,6 @@ let g:w3m#homepage = 'http://www.google.co.jp/'
 "--- foldCC ---"{{{
 
 let g:foldCCtext_maxchars = 120
-
-"}}}
-"--- rogue.vim ---"{{{
-
-let g:rogue#directory = expand('~/.rogue_vim')
-
-if !isdirectory(g:rogue#directory)
-	call mkdir(g:rogue#directory)
-endif
 
 "}}}
 "--- vim-submode ---"{{{
@@ -1151,7 +1139,7 @@ augroup HighlightPref
 augroup END
 
 " If matched file extension pattern, indent-guides is enabled
-"@See('nnoremap <C-k>i')
+"@See('nnoremap <C-h>i')
 augroup FileEvent
 	autocmd WinEnter,BufWinEnter * IndentGuidesDisable
 	autocmd WinEnter,BufWinEnter *.{xml,html,css,scss,erb,xaml}
@@ -1208,24 +1196,22 @@ let g:separetaro_long_separator_of = {
 "}}}
 "--- vimconsole.vim ---"{{{
 
-" Output debug log to console automatically
-let g:vimconsole#auto_redraw = 1
-
+let g:vimconsole#auto_redraw             = 1
 let g:vimconsole#no_default_key_mappings = 1
 
 "}}}
 "--- vim-go ---"{{{
 
-" Avoid a bug on cygwin environment
-if s:is_cygwin
-	let g:go_fmt_autosave        = 0
-	let g:go_def_mapping_enabled = 0
-endif
+"@Experimental('commented out for eab9c63cb876f8cd77e45bd165a246684c58b898')
+"" Avoid a bug on cygwin environment
+"if s:is_cygwin
+"	let g:go_fmt_autosave        = 0
+"	let g:go_def_mapping_enabled = 0
+"endif
 
 "}}}
 "--- vim-textobj-indent ---"{{{
 
-" Define myself
 let g:textobj_indent_no_default_key_mappings = 1
 
 "}}}
@@ -1252,6 +1238,7 @@ let g:auto_ctags_directory_list = [
 \	'../../../../.git', '../../.../../.tags'
 \]
 
+" Avoid hyper gravity
 let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
 \.	' --exclude=node_modules'
 \.	' --exclude=bower_components'
@@ -1315,6 +1302,7 @@ endif
 
 " Set basic preferences
 set number relativenumber nowrap hlsearch list scrolloff=16
+set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
 
 " Status bar was always displayed
 set laststatus=2
@@ -1344,11 +1332,9 @@ augroup HighlightPref
 	"autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 augroup END
 
-
 augroup HighlightPref
 	autocmd ColorScheme       * highlight RcEmSpace ctermbg=LightBlue
 	autocmd VimEnter,WinEnter * call matchadd('RcEmSpace', '　')
-
 	" Highlight VCS conflict markers
 	autocmd ColorScheme * call matchadd('Error', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
 augroup END
@@ -1499,7 +1485,7 @@ autocmd UserEvent CursorMoved * call s:visual_fold_all()
 " Don't put two space on join (normal J)
 set nojoinspaces
 
-" control by myself in all environment
+" Control by myself
 set iminsert=0
 
 "}}}
@@ -1526,7 +1512,9 @@ set shellslash
 set matchpairs+=<:>
 
 " Reference tags of ctags
-set tags=./tags,~/tags,.git/tags,../.git/tags,../../.git/tags
+let s:pre_tags = map(g:auto_ctags_directory_list, 'v:val . "/tags"')
+let &tags      = join(s:pre_tags + ['./tags', '~/tags'], ',')
+unlet s:pre_tags
 
 " Netrw wake up default dir
 set browsedir=buffer
@@ -1567,19 +1555,8 @@ augroup FileEvent
 	\|	endif
 augroup END
 
-
-" If you using windows cmd prompt, listchars using safe chars
-autocmd FileEvent VimEnter,WinEnter,BufWinEnter,BufRead,EncodingChanged *
-\	if s:is_doswin
-\|		let &listchars = 'tab:>_,trail:_,extends:>,precedes:<,nbsp:%'
-\|	else
-\|		let &listchars = 'tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲'
-\|	endif
-
-
 "" Foooooo!!!!!!! I hope get this omoshiro event!!
 "autocmd UserEvent UserGettingBored * echo 'oooooiiiii!!!!!'
-
 
 " RelativeNumber is used current window only
 augroup UserEvent
@@ -1587,13 +1564,11 @@ augroup UserEvent
 	autocmd BufLeave,Winleave * setl norelativenumber
 augroup END
 
-
 " Hide relativenumber when OverCommandLine entered
 augroup UserEvent
 	autocmd User OverCmdLineEnter setl norelativenumber
 	autocmd User OverCmdLineLeave if &number | setl relativenumber | end
 augroup END
-
 
 "}}}
 
@@ -1627,7 +1602,6 @@ AlterCommand tabnew TabnewOverridden
 " Grep current buffer, and open quickfix window
 command! -bar -nargs=1 GrepInThis vimgrep <args> % | cwindow
 
-
 " Reverse ranged lines
 function! s:reverse_line() range " {{{
 	if a:firstline is a:lastline
@@ -1652,7 +1626,6 @@ function! s:reverse_line() range " {{{
 	call setpos('.', l:posit)
 endfunction " }}}
 command! -range=% ReverseLine :<line1>, <line2>call s:reverse_line()
-
 
 " Rename the file of current buffer
 function! s:rename_to(new_name) abort "{{{
@@ -1685,7 +1658,6 @@ function! s:rename_to(new_name) abort "{{{
 endfunction "}}}
 command! -bar -nargs=1 -complete=file Rename call s:rename_to(<q-args>)
 
-
 "@Bugs(':RedirToVar @" highlight  " happend exception')
 " Substitute result to a variable easily
 function! s:redir_to_var(bang, args_str) abort "{{{
@@ -1709,24 +1681,21 @@ function! s:redir_to_var(bang, args_str) abort "{{{
 endfunction "}}}
 command! -bar -nargs=1 -bang -complete=command RedirToVar call s:redir_to_var(<bang>0, <q-args>)
 
-
-"@Unchecked('in Ubuntu')
-"NOTE: You must add 'gvim' command to $PATH
+"@Unsupported('support Windows Kaoriya GVim only {now}')
 " Open current buffer in new gvim window
+" - You must add 'gvim' command to $PATH
 command! -bar OpenInNewWindow
 \	let s:target_filepath = expand('%:p')
 \|	bdelete!
 \|	call s:system('gvim ' . s:target_filepath)
 \|	unlet s:target_filepath
 
-
 "}}}
 " Helper {{{
 
 " Vim Utils {{{
 
-command! -bar VimConfig e $MYVIMRC
-
+command! -bar VimConfig    e $MYVIMRC
 command! -bar VimConfigTab tabnew $MYVIMRC
 
 command! -bar Reload so $MYVIMRC
@@ -1760,7 +1729,6 @@ command! -bar Twitter            TweetVimHomeTimeline
 command! -bar TwitterTab         tabnew | Twitter
 command! -bar Tweet              TweetVimSay
 
-
 "-- Private Account --"
 function! s:twitter_private() "{{{
 	if !exists('g:vimrc.private["twitter"]["priv_ac"]')
@@ -1788,7 +1756,6 @@ function! s:tweet_private() "{{{
 	"execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['curr_ac']
 endfunction "}}}
 command! -bar TweetPrivate       execute printf('call %stweet_private()', s:SID())
-
 
 "-- Public Account --"
 function! s:twitter_public() "{{{
@@ -1818,14 +1785,11 @@ function! s:tweet_public() "{{{
 endfunction "}}}
 command! -bar TweetPublic        execute printf('call %stweet_public()', s:SID())
 
-
 cnoreabbr Bitly TweetVimBitly
 command!  Bitly NOP
-
-cnoreabbr tvs TweetVimSwitchAccount
+cnoreabbr tvs   TweetVimSwitchAccount
 
 " }}}
-
 
 " To Service Name
 cnoreabbr Lingr J6uil
@@ -1833,11 +1797,9 @@ command!  Lingr NOP
 cnoreabbr LingrTab tabnew \| J6uil
 command!  LingrTab NOP
 
-
 " Beautifull Life
 cnoreabbr JazzList Unite jazzradio
 command!  JazzList NOP
-
 
 " Translates Languages
 cnoreabbr Translate ExciteTranslate
@@ -1846,13 +1808,11 @@ cnoreabbr weblio    Ref webdict weblio
 cnoreabbr Weblio    Ref webdict weblio
 command!  Weblio    NOP
 
-
 " NeoBundle install with showing log
 cnoreabbr NeoBundleInstallL NeoBundleInstall \| NeoBundleLog
 command!  NeoBundleInstallL NOP
 cnoreabbr NeoBundleUpdateL  NeoBundleUpdate \| NeoBundleUpdatesLog
 command!  NeoBundleUpdateL  NOP
-
 
 " Use unite's neobundle source
 cnoreabbr NeoBundleInstallU Unite neobundle/install
@@ -1862,29 +1822,24 @@ command!  NeoBundleUpdateU  NOP
 cnoreabbr NeoBundleLogU     Unite neobundle/log
 command!  NeoBundleLogU     NOP
 
-
 " Remove prefix
 cnoreabbr SessionSave UniteSessionSave
 command!  SessionSave NOP
 cnoreabbr SessionLoad UniteSessionLoad
 command!  SessionLoad NOP
 
-
 " }}}
 " Development {{{
-
 
 " Open Development Buffer {{{
 
 " vimconsole.vim
 cnoreabbr Log      VimConsoleLog
-cnoreabbr LogClear VimConsoleClear
-cnoreabbr LogOpen  VimConsoleOpen
-
 command!  Log      NOP
+cnoreabbr LogClear VimConsoleClear
 command!  LogClear NOP
+cnoreabbr LogOpen  VimConsoleOpen
 command!  LogOpen  NOP
-
 
 " GHCi
 let s:ghci_command = executable('stack') ? 'stack ghci' : 'ghci'
@@ -1893,7 +1848,6 @@ execute 'cnoreabbr Sghci'   'VimShellInteractive' '--split="sp"'     s:ghci_comm
 execute 'cnoreabbr Vghci'   'VimShellInteractive' '--split="vsp"'    s:ghci_command
 execute 'cnoreabbr GhciTab' 'VimShellInteractive' '--split="tabnew"' s:ghci_command
 cnoreabbr Hoogle  Ref hoogle
-
 command!  Ghci    NOP
 command!  Sghci   NOP
 command!  Vghci   NOP
@@ -1901,32 +1855,27 @@ command!  GhciTab NOP
 command!  Hoogle  NOP
 unlet s:ghci_command
 
-
 " js
 cnoreabbr Js       VimShellInteractive js
-cnoreabbr Sjs      VimShellInteractive --split='sp' js
-cnoreabbr Vjs      VimShellInteractive --split='vsp' js
-cnoreabbr JsTab    VimShellInteractive --split='tabnew' js
-
 command!  Js       NOP
+cnoreabbr Sjs      VimShellInteractive --split='sp' js
 command!  Sjs      NOP
+cnoreabbr Vjs      VimShellInteractive --split='vsp' js
 command!  Vjs      NOP
+cnoreabbr JsTab    VimShellInteractive --split='tabnew' js
 command!  JsTab    NOP
-
 
 " irb
 cnoreabbr Irb      VimShellInteractive irb
-cnoreabbr Sirb     VimShellInteractive --split='sp' irb
-cnoreabbr Virb     VimShellInteractive --split='vsp' irb
-cnoreabbr IrbTab   VimShellInteractive --split='tabnew' irb
-
 command!  Irb      NOP
+cnoreabbr Sirb     VimShellInteractive --split='sp' irb
 command!  Sirb     NOP
+cnoreabbr Virb     VimShellInteractive --split='vsp' irb
 command!  Virb     NOP
+cnoreabbr IrbTab   VimShellInteractive --split='tabnew' irb
 command!  IrbTab   NOP
 
 " }}}
-
 
 " Staging current file to git
 function! s:git_add() abort "{{{
@@ -1946,7 +1895,6 @@ function! s:git_add() abort "{{{
 	endif
 endfunction "}}}
 command! -bar GitAdd call s:git_add()
-
 
 " }}}
 
@@ -1997,7 +1945,6 @@ function! s:compress_spaces() "{{{
 	nohlsearch
 endfunction "}}}
 
-
 " Clear all lines end space
 function! s:clear_ends_space() "{{{
 	let l:recent_pattern = @/
@@ -2011,7 +1958,6 @@ function! s:clear_ends_space() "{{{
 		call setpos('.', l:curpos)
 	endtry
 endfunction "}}}
-
 
 " Move cursor to topmost of this indent
 function! s:cursor_up_to_lid() "{{{
@@ -2028,7 +1974,6 @@ function! s:cursor_up_to_lid() "{{{
 		endif
 	endwhile
 endfunction "}}}
-
 
 " Move cursor to bottommost of this indent
 function! s:cursor_down_to_ground() "{{{
@@ -2047,7 +1992,6 @@ function! s:cursor_down_to_ground() "{{{
 	endwhile
 endfunction "}}}
 
-
 " Toggle foldmethod marker or syntax
 function! s:toggle_foldmethod() "{{{
 	if &foldmethod !=# 'syntax'
@@ -2061,7 +2005,6 @@ function! s:toggle_foldmethod() "{{{
 		normal! zO
 	endif
 endfunction "}}}
-
 
 " Toggle diffthis - diffoff
 function! s:toggle_diff() "{{{
@@ -2077,7 +2020,6 @@ function! s:toggle_diff() "{{{
 	set diff?
 endfunction "}}}
 
-
 " If you has nofile buffer, close it.
 function! s:bufclose_filetype(filetype) "{{{
 	let l:closed = 0
@@ -2092,7 +2034,6 @@ function! s:bufclose_filetype(filetype) "{{{
 	return l:closed
 endfunction "}}}
 
-
 " Toggle open netrw explorer ( vertical split )
 function! s:toggle_netrw_vexplorer() "{{{
 	let l:closed = s:bufclose_filetype('netrw')
@@ -2101,7 +2042,6 @@ function! s:toggle_netrw_vexplorer() "{{{
 	endif
 endfunction "}}}
 
-
 " Do :bufdo without changing current buffer
 function! s:motionless_bufdo(cmd) abort "{{{
 	NewOverridden
@@ -2109,7 +2049,6 @@ function! s:motionless_bufdo(cmd) abort "{{{
 	execute 'bufdo' a:cmd
 	quit
 endfunction "}}}
-
 
 " Toggle showing indent-guides with variable
 " function! s:toggle_indent_guides() "{{{
