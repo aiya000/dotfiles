@@ -412,6 +412,7 @@ NeoBundle      'kana/vim-textobj-user'
 NeoBundle      'kana/vim-textobj-indent'
 NeoBundle      'Shougo/neocomplete.vim'
 NeoBundle      'Shougo/deoplete.nvim'
+NeoBundleLazy  'soramugi/auto-ctags.vim'
 NeoBundleLazy  'tsukkee/unite-tag'
 NeoBundle      'aiya000/vimshell-command-dehanai.vim'
 NeoBundle      'osyo-manga/vim-textobj-from_regexp'
@@ -750,6 +751,13 @@ if neobundle#tap('deoplete.nvim')
 	\})
 	call neobundle#untap()
 endif
+if neobundle#tap('auto-ctags.vim')
+	call neobundle#config('auto-ctags.vim', {
+	\	'autoload'          : {'commands' : 'Ctags'},
+	\	'external_commands' : 'ctags'
+	\})
+	call neobundle#untap()
+endif
 if neobundle#tap('unite-tag')
 	call neobundle#config('unite-tag', {
 	\	'depends'  : [
@@ -981,11 +989,8 @@ let g:vimshell_scrollback_limit             = 10000
 let g:vimshell_split_command                = 'split'
 
 "@See('autoload/vimshell/commands/{hereis,edit_places,places,reload_places}.vim')
-" This file was referenced by hereis.vim
-let g:vimshell_hereis_file = expand('~/.vimshrc_places.vimsh')
-
 " Example$ hereis foo && cd && p-foo
-let g:vimshell_hereis_alias_prefix = 'p'
+let g:vimshell_hereis_alias_prefix = 'p_'
 
 "}}}
 "--- vimshell-kawaii.vim ---"{{{
@@ -1238,7 +1243,7 @@ let g:neocomplete#sources#dictionary#dictionaries = {
 "}}}
 "--- auto-ctags.vim ---"{{{
 
-" Specific the ctags generated directory ( We must be sync 'tags' )
+" Specific the ctags generated directory ( Must sync 'tags' )
 let g:auto_ctags_directory_list = [
 \	'.git',             '.tags',
 \	'../.git',          '../.tags',
@@ -1246,6 +1251,10 @@ let g:auto_ctags_directory_list = [
 \	'../../../.git',    '../../../.tags',
 \	'../../../../.git', '../../.../../.tags'
 \]
+
+let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
+\.	' --exclude=node_modules'
+\.	' --exclude=bower_components'
 
 "}}}
 "--- unite-tag ---"{{{
@@ -1274,6 +1283,7 @@ let s:repos = [ 'arot13.vim'
 \             , 'vimshell-command-dehanai.vim'
 \             , 'unite-syntax'
 \             , 'ref-hoogle'
+\             , 'auto-ctags.vim'
 \             ]
 let s:repos_dir = '~/Repository/'
 
@@ -1853,6 +1863,13 @@ cnoreabbr NeoBundleLogU     Unite neobundle/log
 command!  NeoBundleLogU     NOP
 
 
+" Remove prefix
+cnoreabbr SessionSave UniteSessionSave
+command!  SessionSave NOP
+cnoreabbr SessionLoad UniteSessionLoad
+command!  SessionLoad NOP
+
+
 " }}}
 " Development {{{
 
@@ -1874,7 +1891,7 @@ let s:ghci_command = executable('stack') ? 'stack ghci' : 'ghci'
 execute 'cnoreabbr Ghci'    'VimShellInteractive'                    s:ghci_command
 execute 'cnoreabbr Sghci'   'VimShellInteractive' '--split="sp"'     s:ghci_command
 execute 'cnoreabbr Vghci'   'VimShellInteractive' '--split="vsp"'    s:ghci_command
-execute 'cnoreabbr GhciTab' 'VimShellInteractive' '--split="kabnew"' s:ghci_command
+execute 'cnoreabbr GhciTab' 'VimShellInteractive' '--split="tabnew"' s:ghci_command
 cnoreabbr Hoogle  Ref hoogle
 
 command!  Ghci    NOP
