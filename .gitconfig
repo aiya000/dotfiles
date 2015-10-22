@@ -30,6 +30,7 @@
 	r = rebase
 	rc = rebase --continue
 	ra = rebase --abort
+	dc = diff --cached
 [core]
 	pager = vim - -R +PAGER -c 'setf vim-pager | set syn=git'
 [init]
