@@ -31,7 +31,7 @@ endfunction
 
 " String -> Void
 function! s:angry(msg)
-	call vimshell#interactive#send(printf('echo "!!!>> %s!!!"', a:msg))
+	execute 'normal! o' . printf('!!!>> %s!!!', a:msg)
 endfunction
 
 " String -> Void
@@ -49,7 +49,7 @@ function! s:execute_cmd(tybel_mode, cmds) abort
 
 	for l:cmd in a:cmds
 		let l:result = s:system_func(l:cmd)
-		if v:shell_error  "NOTE: ignored this ?
+		if v:shell_error  "NOTE: Did ignored this ?
 			call s:angry(l:result)
 			return
 		else
@@ -65,19 +65,19 @@ function! s:execute_cmd(tybel_mode, cmds) abort
 		endif
 	endfor
 
-	" Delete blank line & flatten result
+	" Delete empty line & flatten result
 	if l:scratch_opened
 		normal! ddgg=G
+		stopinsert
 	endif
 endfunction
 
-"@Incomplete("don't escaped from insert mode when execution succeed")
 function! s:command.execute(args, context)
 	let l:tybel_mode = a:args[0] ==# 'run'     ? s:TybelMode.run
 	\                : a:args[0] ==# 'compile' ? s:TybelMode.compile
 	\                                          : s:TybelMode.undefined
 	if l:tybel_mode is s:TybelMode.undefined
-		call s:angry(printf('tybel sub command "%s" is unknowned', a:args[0]))
+		call s:angry(printf('sub command "%s" is unknowned', a:args[0]))
 		return
 	endif
 
@@ -89,6 +89,7 @@ function! s:command.execute(args, context)
 
 	let l:sources        = join(a:args[1:], ' ')
 	let l:tempfile       = tempname()
+	"FIXME: happend error of 'file already exists'
 	let l:tsc_cmd        = printf('tsc --target es6 --out %s %s', l:tempfile, l:sources)
 	let l:babel_cmd      = (l:tybel_mode is s:TybelMode.run) ? printf('babel-node %s', l:tempfile)
 	\                                                        : printf('babel --out-file a.out.js %s', l:tempfile)
@@ -98,6 +99,6 @@ function! s:command.execute(args, context)
 	call s:execute_cmd(l:tybel_mode, [l:tsc_cmd, l:babel_cmd, l:rm_cmd])
 
 	" Append empty cmd line
-	"TODO: this didn't append, but blanking current line
+	"TODO: this didn't append line, but replaced current line to empty line
 	call vimshell#interactive#send('')
 endfunction
