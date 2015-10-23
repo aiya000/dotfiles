@@ -1261,15 +1261,8 @@ let g:visualstar_extra_commands = 'zzzv'
 "--- For Develop ---"{{{
 
 " Local my plugins
-let s:repos = [ 'arot13.vim'
-\             , 'ahoge-put.vim'
-\             , 'asql.vim'
-\             , 'adrone.vim'
+let s:repos = [ 'adrone.vim'
 \             , 'aho-bakaup.vim'
-\             , 'separetaro.vim'
-\             , 'vimshell-command-dehanai.vim'
-\             , 'unite-syntax'
-\             , 'ref-hoogle'
 \             , 'auto-ctags.vim'
 \             ]
 let s:repos_dir = '~/Repository/'
