@@ -1,60 +1,22 @@
 # Tags
-snippet WindowSurround
-alias   Window
-abbr    <Window></Window>
-options indent
-    <Window x:Class="${1:#:ClassPath}"
-            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            Title="${2:Window}" Width="${3:525}" Height="${4:350}">
-        ${0}
-    </Window>
+snippet Button
+abbr <Button/>
+    <Button${0}/>
 
-snippet UserControlSurround
-alias   UserControl
-abbr    <UserControl></UserControl>
-options indent
-    <UserControl x:Class="${1:#:ClassPath}"
-                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                 mc:Ignorable="d"
-                 d:DesignHeight="${2:300}" d:DesignWidth="${3:300}">
-        ${0}
-    </UserControl>
+snippet ComboBox
+abbr <ComboBox/>
+    <ComboBox${0}/>
 
-snippet WrapPanelSurround
-alias   WrapPanel
-abbr    <WrapPanel></WrapPanel>
+snippet ComboBoxSurrond
+abbr    <ComboBox></ComboBox>
 options indent
-    <WrapPanel>
+    <ComboBox>
         ${0}
-    </WrapPanel>
+    </ComboBox>
 
-snippet StackPanelSurround
-alias   StackPanel
-abbr    <StackPanel></StackPanel>
-options indent
-    <StackPanel>
-        ${0}
-    </StackPanel>
-
-snippet GridSurround
-alias   Grid
-abbr    <Grid></Grid>
-options indent
-    <Grid>
-        ${0}
-    </Grid>
-
-snippet DataGridSuround
-alias   DataGrid
-abbr    <DataGrid></DataGrid>
-options indent
-    <DataGrid>
-        ${0}
-    </DataGrid>
+snippet ComboBoxItem
+abbr    <ComboBoxItem/>
+    <ComboBoxItem${0}/>
 
 snippet DataGridColumnsSurround
 alias   DataGridColumns
@@ -64,13 +26,126 @@ options indent
         ${0}
     </DataGrid.Columns>
 
+snippet DataGridCheckBoxColumn
+abbr    <DataGridCheckBoxColumn/>
+    <DataGridCheckBoxColumn${0}/>
+
+snippet DataGridSuround
+alias   DataGrid
+abbr    <DataGrid></DataGrid>
+options indent
+    <DataGrid>
+        ${0}
+    </DataGrid>
+
 snippet DataGridTextColumn
 abbr    <DataGridTextColumn/>
     <DataGridTextColumn${0}/>
 
-snippet DataGridCheckBoxColumn
-abbr    <DataGridCheckBoxColumn/>
-    <DataGridCheckBoxColumn${0}/>
+snippet DockPanelSurround
+alias   DockPanel
+abbr    <DockPanel></DockPanel>
+    <DockPanel>
+        ${0}
+    </DockPanel>
+
+snippet ColumnDefinition
+abbr    <ColumnDefinition/>
+    <ColumnDefinition${0}/>
+
+snippet CommandBinding
+abbr    <CommandBinding/>
+    <CommandBinding${0}/>
+
+snippet GridColumnDefinitionsSurrond
+alias   GridColumnDefinitions
+abbr    <Grid.ColumnDefinitions></Grid.ColumnDefinitions>
+    <Grid.ColumnDefinitions>
+        ${0}
+    </Grid.ColumnDefinitions>
+
+snippet GridRowDefinitionsSurrond
+alias   GridRowDefinitions
+abbr    <Grid.RowDefinitions></Grid.RowDefinitions>
+    <Grid.RowDefinitions>
+        ${0}
+    </Grid.RowDefinitions>
+
+snippet GridSurround
+alias   Grid
+abbr    <Grid></Grid>
+options indent
+    <Grid>
+        ${0}
+    </Grid>
+
+snippet GridViewSurrond
+alias   GridView
+abbr    <GridView></GridView>
+options indent
+    <GridView>
+        ${0}
+    </GridView>
+
+snippet GridViewColumn
+abbr    <GridViewColumn/>
+    <GridViewColumn${0}/>
+
+snippet ListBoxSurrond
+alias   ListBox
+abbr    <ListBox></ListBox>
+options indent
+    <ListBox>
+        ${0}
+    </ListBox>
+
+snippet ListBoxItem
+abbr    <ListBoxItem/>
+    <ListBoxItem${0}/>
+
+snippet ListViewSurrond
+alias   ListView
+abbr    <ListView></ListView>
+options indent
+    <ListView>
+        ${0}
+    </ListView>
+
+snippet ListViewViewSurrond
+alias   ListViewView
+abbr    <ListView.View></ListView.View>
+options indent
+    <ListView.View>
+        ${0}
+    </ListView.View>
+
+snippet ListViewItemSurrond
+alias   ListViewItem
+abbr    <ListViewItem></ListViewItem>
+options indent
+    <ListViewItem>
+        ${0}
+    </ListViewItem>
+
+snippet RowDefinition
+abbr    <RowDefinition/>
+    <RowDefinition${0}/>
+
+snippet Run
+abbr <Run/>
+    <Run${0}/>
+
+snippet SolidColorBrush
+abbr <SolidColorBrush/>
+    <SolidColorBrush${0}/>
+
+snippet StackPanelSurround
+alias   StackPanel
+abbr    <StackPanel></StackPanel>
+options indent
+    <StackPanel>
+        ${0}
+    </StackPanel>
 
 snippet TabControlSurrond
 alias   TabControl
@@ -88,21 +163,6 @@ options indent
         ${0}
     </TabItem>
 
-snippet ComboBox
-abbr <ComboBox/>
-    <ComboBox${0}/>
-
-snippet ComboBoxSurrond
-abbr    <ComboBox></ComboBox>
-options indent
-    <ComboBox>
-        ${0}
-    </ComboBox>
-
-snippet ComboBoxItem
-abbr    <ComboBoxItem/>
-    <ComboBoxItem${0}/>
-
 snippet TextBox
 abbr <TextBox/>
     <TextBox${0}/>
@@ -111,94 +171,75 @@ snippet TextBlock
 abbr <TextBlock/>
     <TextBlock${0}/>
 
-snippet Button
-abbr <Button/>
-    <Button${0}/>
+snippet UserControlSurround
+alias   UserControl
+abbr    <UserControl></UserControl>
+options indent
+    <UserControl x:Class="${1:#:ClassPath}"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 mc:Ignorable="d"
+                 d:DesignHeight="${2:300}" d:DesignWidth="${3:300}">
+        ${0}
+    </UserControl>
 
-snippet Run
-abbr <Run/>
-    <Run${0}/>
+snippet WindowCommandBindingsSurrond
+alias   WindowCommandBindings
+options indent
+    <Window.CommandBindings>
+        ${0}
+    </Window.CommandBindings>
+
+snippet WindowSurround
+alias   Window
+abbr    <Window></Window>
+options indent
+    <Window x:Class="${1:#:ClassPath}"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            Title="${2:Window}" Width="${3:525}" Height="${4:350}">
+        ${0}
+    </Window>
+
+snippet WrapPanelOpacityMaskSurround
+alias   WrapPanelOpacityMask
+abbr    <WrapPanelOpacityMask></WrapPanelOpacityMask>
+options indent
+    <WrapPanel.OpacityMask>
+        ${0}
+    </WrapPanel.OpacityMask>
+
+snippet WrapPanelSurround
+alias   WrapPanel
+abbr    <WrapPanel></WrapPanel>
+options indent
+    <WrapPanel>
+        ${0}
+    </WrapPanel>
 
 
 # Attributes
-snippet Name
-abbr    x:Name=""
-    x:Name="${1:#:ControlName}"${0}
+snippet AutoGenerateColumns
+abbr    AutoGenerateColumns=""
+    AutoGenerateColumns="${1:False}"${0}
 
-snippet Binding
-abbr    Binding="{}"
-    Binding="{Binding ${1:#:Property}}"${0}
-
-snippet TextBinding
-abbr    TextBinding="{}"
-    TextBinding="{Binding ${1:#:Property}}"${0}
-
-snippet Header
-abbr    Header=""
-    Header="${1:#:Name}"${0}
-
-snippet Content
-abbr    Content=""
-    Content="${1:#:Value}"${0}
-
-snippet Text
-abbr    Text=""
-    Text="${1:#:Value}"${0}
-
-snippet ItemsSource
-abbr    ItemsSource=""
-    ItemsSource="${1:#:DataSource}"${0}
-
-
-## Has default values
-
-snippet Width
-abbr    Width=""
-    Width="${1:Auto}"${0}
-
-snippet Height
-abbr    Height=""
-    Height="${1:Auto}"${0}
-
-snippet Margin
-abbr    Margin="0,0,0,0"
-    Margin="${1:0},${2:0},${3:0},${4:0}"${0}
-
-snippet RenderTransformOrigin
-abbr    RenderTransformOrigin=""
-    RenderTransformOrigin="${1:90.0},${2:90.0}"
-
-snippet HorizontalAlignment
-abbr    HorizontalAlignment=""
-    HorizontalAlignment="${1:Stretch}"${0}
-
-snippet VerticalAlignment
-abbr    VerticalAlignment=""
-    VerticalAlignment="${1:Stretch}"${0}
-
-snippet TextWrapping
-abbr    TextWrapping=""
-    TextWrapping="${1:Wrap}"${0}
-
-snippet IsHitTestVisible
-abbr    IsHitTestVisible=""
-    IsHitTestVisible="${1:True}"${0}
+snippet AllowDrop
+abbr AllowDrop=""
+    AllowDrop="${1:True}"${0}
 
 snippet Background
 abbr    Background=""
     Background="${1:White}"${0}
 
-snippet IsReadOnly
-abbr    IsReadOnly=""
-    IsReadOnly="${1:True}"${0}
+snippet Binding
+abbr    Binding="{}"
+    Binding="{Binding ${1:#:Property}}"${0}
 
-snippet WindowState
-abbr    WindowState=""
-    WindowState="${1:Maximized}"${0}
-
-snippet AutoGenerateColumns
-abbr    AutoGenerateColumns=""
-    AutoGenerateColumns="${1:False}"${0}
+snippet BorderThickness
+abbr    BorderThickness=""
+    BorderThickness="${1:1}"${0}
 
 snippet CanUserAddRows
 abbr    CanUserAddRows=""
@@ -208,39 +249,153 @@ snippet CanUserDeleteRows
 abbr    CanUserDeleteRows=""
     CanUserDeleteRows="${1:False}"${0}
 
-snippet SelectedIndex
-abbr    SelectedIndex=""
-    SelectedIndex="${1:0}"${0}
-
-snippet Stroke
-abbr    Stroke=""
-    Stroke="${1:Black}"${0}
-
-snippet ClipToBounds
-abbr    ClipToBounds=""
-    ClipToBounds="${1:True}"${0}
-
-
-## EventHandlers
-snippet Loaded
-abbr    Loaded=""
-    Loaded="${1:Component_Loaded}"${0}
+snippet CellEditEnding
+abbr     CellEditEnding=""
+    CellEditEnding="${1:DataGrid_CellEditEnding}"${0}
 
 snippet Click
 abbr    Click=""
     Click="${1:Component_Click}"${0}
 
-snippet SelectionChanged
-abbr    SelectionChanged=""
-    SelectionChanged="${1:Component_SelectionChanged}"${0}
+snippet ClipToBounds
+abbr    ClipToBounds=""
+    ClipToBounds="${1:True}"${0}
+
+snippet Color
+abbr    Color=""
+    Color="${1:White}"${0}
+
+snippet Command
+abbr    Command=""
+    Command="${1:#:Name}"${0}
+
+snippet Content
+abbr    Content=""
+    Content="${1:#:Value}"${0}
+
+snippet DockPanelDock
+abbr    DockPanelDock=""
+    DockPanelDock="${1:Left}"${0}
+
+snippet Executed
+abbr    Executed=""
+    Executed="${1:#:HandlerName}"${0}
+
+snippet GridColumn
+abbr    Grid.Column=""
+    Grid.Column="${1:0}"${0}
+
+snippet GridRow
+abbr    Grid.Row=""
+    Grid.Row="${1:0}"${0}
+
+snippet Header
+abbr    Header=""
+    Header="${1:#:Name}"${0}
+
+snippet Height
+abbr    Height=""
+    Height="${1:Auto}"${0}
+
+snippet HorizontalAlignment
+abbr    HorizontalAlignment=""
+    HorizontalAlignment="${1:Stretch}"${0}
+
+snippet HorizontalContentAlignment
+abbr    HorizontalContentAlignment=""
+    HorizontalContentAlignment="${1:Center}"${0}
+
+snippet IsHitTestVisible
+abbr    IsHitTestVisible=""
+    IsHitTestVisible="${1:True}"${0}
+
+snippet IsManipulationEnabled
+abbr    IsManipulationEnabled=""
+    IsManipulationEnabled="${1:True}"${0}
+
+snippet IsReadOnly
+abbr    IsReadOnly=""
+    IsReadOnly="${1:True}"${0}
+
+snippet ItemsSource
+abbr    ItemsSource=""
+    ItemsSource="${1:#:DataSource}"${0}
+
+snippet Loaded
+abbr    Loaded=""
+    Loaded="${1:Component_Loaded}"${0}
+
+snippet Name
+abbr    x:Name=""
+    x:Name="${1:#:ControlName}"${0}
 
 snippet Navigated
 abbr    Navigated=""
     Navigated="${1:Component_Navigated}"${0}
 
-snippet CellEditEnding
-abbr     CellEditEnding=""
-    CellEditEnding="${1:DataGrid_CellEditEnding}"${0}
+snippet Margin
+abbr    Margin=""
+    Margin="${1:0}"${0}
+
+snippet Opacity
+abbr    Opacity=""
+    Opacity="${1:0.5}"${0}
+
+snippet Padding
+abbr    Padding=""
+    Padding="${1:0}"${0}
+
+snippet RenderTransformOrigin
+abbr    RenderTransformOrigin=""
+    RenderTransformOrigin="${1:90.0},${2:90.0}"
+
+snippet SelectedIndex
+abbr    SelectedIndex=""
+    SelectedIndex="${1:0}"${0}
+
+snippet SelectionChanged
+abbr    SelectionChanged=""
+    SelectionChanged="${1:Component_SelectionChanged}"${0}
+
+snippet ShowGridLines
+abbr    ShowGridLines=""
+    ShowGridLines="${1:True}"${0}
+
+snippet Stroke
+abbr    Stroke=""
+    Stroke="${1:Black}"${0}
+
+snippet Text
+abbr    Text=""
+    Text="${1:#:Value}"${0}
+
+snippet TextAlignment
+abbr    TextAlignment=""
+    TextAlignment="${1:Center}"${0}
+
+snippet TextBinding
+abbr    TextBinding="{}"
+    TextBinding="{Binding ${1:#:Property}}"${0}
+
+snippet TextWrapping
+abbr    TextWrapping=""
+    TextWrapping="${1:Wrap}"${0}
+
+snippet VerticalAlignment
+abbr    VerticalAlignment=""
+    VerticalAlignment="${1:Stretch}"${0}
+
+snippet VerticalContentAlignment
+abbr    VerticalContentAlignment=""
+    VerticalContentAlignment="${1:Center}"${0}
+
+snippet Width
+abbr    Width=""
+    Width="${1:Auto}"${0}
+
+snippet WindowState
+abbr    WindowState=""
+    WindowState="${1:Maximized}"${0}
 
 
 ## User's Definition

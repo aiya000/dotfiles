@@ -14,11 +14,15 @@ endfunction
 " --- --- --- "
 
 function! s:command.execute(args, context)
-	let l:place_name = substitute(a:args[0], '\s', '', 'g')
+	let l:prefix     = substitute(g:vimshell_hereis_alias_prefix, '\.', '_', 'g')
+	let l:place_name = substitute(
+	\                  substitute(a:args[0],
+	\                             '\s', '_', 'g'),
+	\                             '\.', '_', 'g')
 	let l:place_path = getcwd()
-	let l:alias_name = g:vimshell_hereis_alias_prefix . l:place_name
-	let l:new_alias  = printf("alias %s='cd \"%s\"'\<CR>", l:alias_name, l:place_path)
-	let l:var_name   = substitute(g:vimshell_hereis_alias_prefix . l:place_name, '-', '_', 'g')
+	let l:alias_name = l:prefix . l:place_name
+	let l:new_alias  = printf("alias %s = 'cd \"%s\"'\<CR>", l:alias_name, l:place_path)
+	let l:var_name   = substitute(l:prefix . l:place_name, '-', '_', 'g')
 	let l:new_var    = printf('let $%s = "%s"', l:var_name, l:place_path)
 	let l:new_lines  = [l:new_alias, l:new_var]
 

@@ -428,6 +428,7 @@ NeoBundleLazy  'Shougo/unite-help'
 NeoBundleLazy  'osyo-manga/unite-filetype'
 NeoBundleLazy  'cohama/agit.vim'
 NeoBundleLazy  'Shougo/unite-session'
+NeoBundle      'whatyouhide/vim-textobj-xmlattr'
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
@@ -857,6 +858,12 @@ if neobundle#tap('unite-session')
 	\		],
 	\		'unite_sources' : 'filetype'
 	\	}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-textobj-xmlattr')
+	call neobundle#config('vim-textobj-xmlattr', {
+	\	'depends' : 'vim-textobj-user'
 	\})
 	call neobundle#untap()
 endif
@@ -1300,9 +1307,9 @@ set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
 " Status bar was always displayed
 set laststatus=2
 
-"@See('http://sourceforge.jp/magazine/07/11/06/0151231')
+"@See(' http://sourceforge.jp/magazine/07/11/06/0151231 ')
 " Set status bar format
-set statusline=%F%m\ %{fugitive#statusline()}%=\ \ [FileType=%y][Format=%{&fileencoding}][Encode=%{&encoding}]
+set statusline=%F%m\ %{fugitive#statusline()}%=\ \ [FileType=%y][Format=%{&fileencoding}][Encode=%{&encoding}][%03v]
 
 " ☆ Fix 2byte code viewing, but this option don't support gnome-terminal
 set ambiwidth=double
@@ -1686,6 +1693,19 @@ command! -bar OpenInNewWindow
 "}}}
 " Helper {{{
 
+" Prepare functions & commands {{{
+
+" Define cnoreabbr with cmd completion
+function! s:cmd_cnoreabbr(...) "{{{
+	let l:UNUSED_VALUE = 'NOP'
+	let l:cmd_name     = a:1
+	let l:cmd_detail   = join(a:000[1:], ' ')
+	execute 'cnoreabbr' l:cmd_name l:cmd_detail
+	execute 'command!'  l:cmd_name l:UNUSED_VALUE
+endfunction "}}}
+command! -nargs=+ CmdCnoreabbr call s:cmd_cnoreabbr(<f-args>)
+
+" }}}
 " Vim Utils {{{
 
 command! -bar VimConfig    e $MYVIMRC
@@ -1696,13 +1716,9 @@ command! -bar Reload so $MYVIMRC
 \|		so $MYGVIMRC
 \|	endif
 
-cnoreabbr w!! w !sudo tee % > /dev/null
-
-cnoreabbr CdBufDir cd %:p:h
-command!  CdBufDir NOP
-
-cnoreabbr ColorPreview Unite colorscheme -auto-preview
-command!  ColorPreview NOP
+cnoreabbr    w!! w !sudo tee % > /dev/null
+CmdCnoreabbr CdBufDir     cd %:p:h
+CmdCnoreabbr ColorPreview Unite colorscheme -auto-preview
 
 command! -bar -nargs=? -complete=filetype FtpluginEditAfter
 \	execute ':edit' printf('%s/after/ftplugin/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
@@ -1778,48 +1794,30 @@ function! s:tweet_public() "{{{
 endfunction "}}}
 command! -bar TweetPublic        execute printf('call %stweet_public()', s:SID())
 
-cnoreabbr Bitly TweetVimBitly
-command!  Bitly NOP
-cnoreabbr tvs   TweetVimSwitchAccount
+CmdCnoreabbr Bitly TweetVimBitly
+cnoreabbr    tvs   TweetVimSwitchAccount
 
 " }}}
 
 " To Service Name
-cnoreabbr Lingr J6uil
-command!  Lingr NOP
-cnoreabbr LingrTab tabnew \| J6uil
-command!  LingrTab NOP
+CmdCnoreabbr Lingr J6uil
+CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
 
 " Beautifull Life
-cnoreabbr JazzList Unite jazzradio
-command!  JazzList NOP
+CmdCnoreabbr JazzList Unite jazzradio
 
 " Translates Languages
-cnoreabbr Translate ExciteTranslate
-command!  Translate NOP
-cnoreabbr weblio    Ref webdict weblio
-cnoreabbr Weblio    Ref webdict weblio
-command!  Weblio    NOP
+CmdCnoreabbr Translate ExciteTranslate
+CmdCnoreabbr Weblio    Ref webdict weblio
+cnoreabbr    weblio    Ref webdict weblio
 
 " NeoBundle install with showing log
-cnoreabbr NeoBundleInstallL NeoBundleInstall \| NeoBundleLog
-command!  NeoBundleInstallL NOP
-cnoreabbr NeoBundleUpdateL  NeoBundleUpdate \| NeoBundleUpdatesLog
-command!  NeoBundleUpdateL  NOP
-
-" Use unite's neobundle source
-cnoreabbr NeoBundleInstallU Unite neobundle/install
-command!  NeoBundleInstallU NOP
-cnoreabbr NeoBundleUpdateU  Unite neobundle/update
-command!  NeoBundleUpdateU  NOP
-cnoreabbr NeoBundleLogU     Unite neobundle/log
-command!  NeoBundleLogU     NOP
+CmdCnoreabbr NeoBundleInstallL NeoBundleInstall \| NeoBundleLog
+CmdCnoreabbr NeoBundleUpdateL  NeoBundleUpdate \| NeoBundleUpdatesLog
 
 " Remove prefix
-cnoreabbr SessionSave UniteSessionSave
-command!  SessionSave NOP
-cnoreabbr SessionLoad UniteSessionLoad
-command!  SessionLoad NOP
+CmdCnoreabbr SessionSave UniteSessionSave
+CmdCnoreabbr SessionLoad UniteSessionLoad
 
 " }}}
 " Development {{{
@@ -1827,46 +1825,30 @@ command!  SessionLoad NOP
 " Open Development Buffer {{{
 
 " vimconsole.vim
-cnoreabbr Log      VimConsoleLog
-command!  Log      NOP
-cnoreabbr LogClear VimConsoleClear
-command!  LogClear NOP
-cnoreabbr LogOpen  VimConsoleOpen
-command!  LogOpen  NOP
+CmdCnoreabbr Log      VimConsoleLog
+CmdCnoreabbr LogClear VimConsoleClear
+CmdCnoreabbr LogOpen  VimConsoleOpen
 
 " GHCi
 let s:ghci_command = executable('stack') ? 'stack ghci' : 'ghci'
-execute 'cnoreabbr Ghci'    'VimShellInteractive'                    s:ghci_command
-execute 'cnoreabbr Sghci'   'VimShellInteractive' '--split="sp"'     s:ghci_command
-execute 'cnoreabbr Vghci'   'VimShellInteractive' '--split="vsp"'    s:ghci_command
-execute 'cnoreabbr GhciTab' 'VimShellInteractive' '--split="tabnew"' s:ghci_command
-cnoreabbr Hoogle  Ref hoogle
-command!  Ghci    NOP
-command!  Sghci   NOP
-command!  Vghci   NOP
-command!  GhciTab NOP
-command!  Hoogle  NOP
+execute 'CmdCnoreabbr Ghci'    'VimShellInteractive'                    s:ghci_command
+execute 'CmdCnoreabbr Sghci'   'VimShellInteractive' '--split="sp"'     s:ghci_command
+execute 'CmdCnoreabbr Vghci'   'VimShellInteractive' '--split="vsp"'    s:ghci_command
+execute 'CmdCnoreabbr GhciTab' 'VimShellInteractive' '--split="tabnew"' s:ghci_command
+CmdCnoreabbr Hoogle  Ref hoogle
 unlet s:ghci_command
 
 " js
-cnoreabbr Js       VimShellInteractive js
-command!  Js       NOP
-cnoreabbr Sjs      VimShellInteractive --split='sp' js
-command!  Sjs      NOP
-cnoreabbr Vjs      VimShellInteractive --split='vsp' js
-command!  Vjs      NOP
-cnoreabbr JsTab    VimShellInteractive --split='tabnew' js
-command!  JsTab    NOP
+CmdCnoreabbr Js    VimShellInteractive js
+CmdCnoreabbr Sjs   VimShellInteractive --split='sp' js
+CmdCnoreabbr Vjs   VimShellInteractive --split='vsp' js
+CmdCnoreabbr JsTab VimShellInteractive --split='tabnew' js
 
 " irb
-cnoreabbr Irb      VimShellInteractive irb
-command!  Irb      NOP
-cnoreabbr Sirb     VimShellInteractive --split='sp' irb
-command!  Sirb     NOP
-cnoreabbr Virb     VimShellInteractive --split='vsp' irb
-command!  Virb     NOP
-cnoreabbr IrbTab   VimShellInteractive --split='tabnew' irb
-command!  IrbTab   NOP
+CmdCnoreabbr Irb    VimShellInteractive irb
+CmdCnoreabbr Sirb   VimShellInteractive --split='sp' irb
+CmdCnoreabbr Virb   VimShellInteractive --split='vsp' irb
+CmdCnoreabbr IrbTab VimShellInteractive --split='tabnew' irb
 
 " }}}
 
@@ -2245,8 +2227,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> z: :<C-u>tabs<CR>
 	autocmd User MyVimRc nnoremap <silent> g> :<C-u>messages<CR>
 	autocmd User MyVimRc nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
-	autocmd User MyVimRc nnoremap <silent> <Space><Space>   :<C-u>call <SID>compress_spaces()<CR>
-	autocmd User MyVimRc nnoremap <silent> <Space><S-Space> :<C-u>call <SID>clear_ends_space()<CR>
 
 	autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=scratch<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| resize 5<CR>
@@ -2257,12 +2237,12 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>q        :<C-u>call <SID>bufclose_filetype('qf')<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader><leader> :<C-u>echohl ErrorMsg \| echo "Don't rush it, keep cool." \| echohl None<CR>
 
-	autocmd User MyVimRc nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k>J     :<C-u>wall \| echo 'written all !'<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k>r     :<C-u>let &filetype = &filetype<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k>R     :<C-u>doautocmd User MyVimRc<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-r>     :<C-u>Reload<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-l>     :<C-u>nohlsearch<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-j>     :<C-u>write<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>J         :<C-u>wall \| echo 'written all !'<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><Space>   :<C-u>call <SID>clear_ends_space()<CR>
+	autocmd User MyVimRc nnoremap <silent> <Space><Space> :<C-u>call <SID>compress_spaces()<CR>
 
 	"}}}
 	" insert mode "{{{

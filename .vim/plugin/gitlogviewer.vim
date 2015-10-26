@@ -1,23 +1,19 @@
 " Inspired by ujihisa's vimrc
 " And deris's code (http://deris.hatenablog.jp/entry/2013/05/10/003430)
-function! s:git_log_viewer()
-	if !exists(':VimProcRead')
-		echohl ERROR
-		echo   "You don't have vimproc.vim or Your vimproc.vim is invalid ."
-		echo   "This plugin required vimproc.vim ."
-		echohl NONE
-	endif
-
+function! s:git_log_viewer(args)
 	new
 	setl buftype=nofile
-	VimProcRead git log
+	let l:regz = @z
+	let @z = system('git log ' . a:args)
+	normal! "zP
+	let @z = l:regz
 	execute 'normal! gg"_dd'
 	set filetype=gitlogviewer
 	setl foldmethod=expr
 	setl foldexpr=getline(v:lnum)=~'^commit'?'>1':getline(v:lnum+1)=~'^commit'?'<1':'='
 	setl foldtext=FoldTextOfGitLog()
 endfunction
-command! GitLogViewer call s:git_log_viewer()
+command! -bar -nargs=* GitLogViewer call s:git_log_viewer(<q-args>)
 
 function! FoldTextOfGitLog() "{{{
 	let month_map = {
