@@ -1,5 +1,10 @@
 source ~/.vimrc
 
+"--------------------"
+"   NeoVim RC file   "
+"--------------------"
+" Please read :help nvim-from-vim
+
 "-------------------
 "--  Recipe Menu  --
 "-------------------
