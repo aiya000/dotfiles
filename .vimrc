@@ -956,6 +956,8 @@ elseif s:is_windows
 	let g:quickrun_config.html['command'] = 'firefox.exe'
 	let g:quickrun_config.html['exec']    = '%c file://%s:p'
 elseif s:is_cygwin
+	"@Marked('if fixed this, remove this')
+	let g:quickrun_config._['runner'] = 'system'
 	" C#
 	let g:quickrun_config.cs['command']                     = 'csc.exe'
 	let g:quickrun_config.cs['hook/output_encode/encoding'] = 'cp932:utf-8'
