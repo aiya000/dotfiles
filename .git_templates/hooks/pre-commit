@@ -1,14 +1,23 @@
 #!/bin/sh
 # Thanks http://qiita.com/uasi/items/a340bb487ec07caac799
-
+f
 # Must set user.name at local
-if [ -z "`git config --local user.name`" ]; then
+if [ -z "`git config --local user.name`" ] ; then
 	echo 'fatal: user.name is not set locally'
+	echo '       You must set user.name at local'
 	exit 1
 fi
 
 # Must set user.email at local
-if [ -z "`git config --local user.email`" ]; then
+if [ -z "`git config --local user.email`" ] ; then
 	echo 'fatal: user.email is not set locally'
+	echo '       You must set user.email at local'
+	exit 1
+fi
+
+# Must set merge.ff at local or global
+if [ -z "`git config merge.ff`" ] ; then
+	echo 'fatal: merge.ff is not set'
+	echo '       You must set merge.ff at local or global'
 	exit 1
 fi
