@@ -7,7 +7,7 @@ function! s:git_log_viewer(args)
 	let @z = system('git log ' . a:args)
 	normal! "zP
 	let @z = l:regz
-	execute 'normal! gg"_dd'
+	execute 'normal! gg'
 	set filetype=gitlogviewer
 	setl foldmethod=expr
 	setl foldexpr=getline(v:lnum)=~'^commit'?'>1':getline(v:lnum+1)=~'^commit'?'<1':'='
