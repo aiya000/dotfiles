@@ -3,17 +3,23 @@
 function! s:git_log_viewer(args)
 	new
 	setl buftype=nofile
-	let l:regz = @z
-	let @z = system('git log ' . a:args)
-	normal! "zP
-	let @z = l:regz
-	execute 'normal! gg'
+	call s:read_git_log(a:args)
 	set filetype=gitlogviewer
 	setl foldmethod=expr
 	setl foldexpr=getline(v:lnum)=~'^commit'?'>1':getline(v:lnum+1)=~'^commit'?'<1':'='
 	setl foldtext=FoldTextOfGitLog()
 endfunction
 command! -bar -nargs=* GitLogViewer call s:git_log_viewer(<q-args>)
+
+function! s:read_git_log(args)
+	let s:system = exists('*vimproc#system') ? function('vimproc#system')
+	\                                        : function('system')
+	let l:z = @z
+	let @z  = s:system('git log ' . a:args)
+	normal! "zP
+	let @z  = l:z
+	normal! gg
+endfunction
 
 function! FoldTextOfGitLog() "{{{
 	let month_map = {
