@@ -9,5 +9,5 @@ setl nonumber norelativenumber
 
 nmap <buffer> Q <Plug>(manpager-close)
 " Forget vim-manpager specified nmaps
-nnoremap <C-n> gt
-nnoremap <C-p> gT
+nnoremap <buffer> <C-n> gt
+nnoremap <buffer> <C-p> gT
