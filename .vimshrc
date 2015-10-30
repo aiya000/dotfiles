@@ -12,28 +12,21 @@ alias new=':VimShellCreate'
 alias vsp=':VimShellCreate -split-command=vsp'
 alias sp=':VimShellCreate -split-command=sp'
 alias tabnew=':VimShellCreate -split-command=tabnew'
-
-# NeoVim? Config
-alias nvim="vim"
+alias nvim='vim'
 
 # Shell Config
-alias reload='vimsh ~/.vimshrc'
 alias mv='mv -i'
 alias cp='cp -i'
-alias ctags-r='ctags --tag-relative --recurse --sort=yes'
 
 # Develop Config
-alias g++='g++ -I/usr/include/c++/4.9 -I/usr/include/c++/4.9/x86_64-linux-gnu -std=c++1y'
-alias tsc="tsc --target es5"
+alias g++='g++ -std=c++1y'
 alias mysql='mysql --pager="less -r -S -n -i -F -X" --protocol=TCP'
+
+# Utils
+alias reload='vimsh ~/.vimshrc'
+alias ctags-r='ctags --tag-relative --recurse --sort=yes'
+alias thanks='echo "(*^o^)< You are welcome!"'
 
 # for My Command
 alias reload-places='reload_places'
 alias edit-places='edit_places'
-
-# Windows
-#@Deprecated('exec on no windows')
-alias open-cygwin='start bash.exe --login -c "cd \"`pwd`\" ; exec /bin/bash -rcfile ~/.bashrc"'
-
-# Other Alias
-alias thanks='echo "(*^o^)< You are welcome!"'
