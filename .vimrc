@@ -361,7 +361,6 @@ NeoBundleLazy  'thinca/vim-quickrun'
 NeoBundleLazy  'basyura/J6uil.vim'
 NeoBundleLazy  'yuratomo/w3m.vim'
 NeoBundle      'supermomonga/vimshell-kawaii.vim'
-NeoBundleLazy  'mattn/excitetranslate-vim'
 NeoBundleLazy  'supermomonga/jazzradio.vim'
 NeoBundleLazy  'mattn/favstar-vim'
 NeoBundleLazy  'ujihisa/unite-colorscheme'
@@ -428,7 +427,7 @@ NeoBundleLazy  'Shougo/unite-help'
 NeoBundleLazy  'osyo-manga/unite-filetype'
 NeoBundleLazy  'cohama/agit.vim'
 NeoBundleLazy  'Shougo/unite-session'
-NeoBundle      'whatyouhide/vim-textobj-xmlattr'
+NeoBundleLazy  'whatyouhide/vim-textobj-xmlattr'
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
@@ -509,12 +508,6 @@ endif
 if neobundle#tap('vimshell-kawaii.vim')
 	call neobundle#config('vimshell-kawaii.vim', {
 	\	'depends'  : 'Shougo/vimshell.vim'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('excitetranslate-vim')
-	call neobundle#config('excitetranslate-vim', {
-	\	'autoload' : {'command' : 'ExciteTranslate'}
 	\})
 	call neobundle#untap()
 endif
@@ -856,14 +849,19 @@ if neobundle#tap('unite-session')
 	\				'complete' : 'customlist,unite#sources#session#_complete'
 	\			}
 	\		],
-	\		'unite_sources' : 'filetype'
+	\		'unite_sources' : 'session'
 	\	}
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('vim-textobj-xmlattr')
 	call neobundle#config('vim-textobj-xmlattr', {
-	\	'depends' : 'vim-textobj-user'
+	\	'depends'  : 'vim-textobj-user',
+	\	'autoload' : { 'filetype' : [
+	\		'html',
+	\		'xml',
+	\		'xaml'
+	\	]}
 	\})
 	call neobundle#untap()
 endif
@@ -1003,12 +1001,6 @@ let g:vimshell_hereis_alias_prefix = 'p_'
 
 " vimshell is kawaii
 let g:vimshell_kawaii_smiley = 1
-
-"}}}
-"--- excitetraslate-vim ---"{{{
-
-" Don't yank result to @" register
-let g:excitetranslate_options = ['buffer']
 
 "}}}
 "--- w3m.vim ---"{{{
@@ -1809,9 +1801,8 @@ CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
 CmdCnoreabbr JazzList Unite jazzradio
 
 " Translates Languages
-CmdCnoreabbr Translate ExciteTranslate
-CmdCnoreabbr Weblio    Ref webdict weblio
-cnoreabbr    weblio    Ref webdict weblio
+CmdCnoreabbr Weblio Ref webdict weblio
+cnoreabbr    weblio Ref webdict weblio
 
 " NeoBundle install with showing log
 CmdCnoreabbr NeoBundleInstallL NeoBundleInstall \| NeoBundleLog
@@ -2132,9 +2123,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-g>        :<C-u>Unite -ignorecase -start-insert syntax<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>f            :<C-u>Unite -ignorecase -start-insert filetype<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>u :<C-u>UniteClose<CR>
-
-	" excitetranslate-vim
-	autocmd User MyVimRc nnoremap <silent> <leader>T :<C-u>ExciteTranslate<CR>
 
 	" ref-dicts-en
 	autocmd User MyVimRc nnoremap <silent> <leader>K :<C-u>Ref webdict weblio <C-r>=expand('<cword>')<CR><CR>
