@@ -428,6 +428,8 @@ NeoBundleLazy  'osyo-manga/unite-filetype'
 NeoBundleLazy  'cohama/agit.vim'
 NeoBundleLazy  'Shougo/unite-session'
 NeoBundleLazy  'whatyouhide/vim-textobj-xmlattr'
+NeoBundleLazy  'yomi322/neco-tweetvim'
+NeoBundleLazy  'yomi322/unite-tweetvim'
 
 "}}}
 "*** Plugin Depends and Auto Config ***" {{{
@@ -862,6 +864,18 @@ if neobundle#tap('vim-textobj-xmlattr')
 	\		'xml',
 	\		'xaml'
 	\	]}
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('neco-tweetvim')
+	call neobundle#config('neco-tweetvim', {
+	\	'autoload' : { 'on_source' : 'TweetVim' }
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('unite-tweetvim')
+	call neobundle#config('unite-tweetvim', {
+	\	'autoload' : { 'on_source' : 'TweetVim' }
 	\})
 	call neobundle#untap()
 endif
