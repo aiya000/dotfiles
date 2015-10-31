@@ -1,9 +1,8 @@
-
+" Example for cooperate Vim and Cygwin
 let $CYGGVIMRC = '/cygwin/home/username/.dotfiles/.gvimrc'
-let $WINVIMRC = $MYVIMRC
-let $MYVIMRC =  $CYGGVIMRC
+let $WINVIMRC  = $MYVIMRC
+let $MYVIMRC   = $CYGGVIMRC
 
 command! WinGVimConfig e $WINVIMRC
 
 so $CYGGVIMRC
-

@@ -1,3 +1,2 @@
-
 :set prompt "GHCi> "
 :set editor vim

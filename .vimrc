@@ -2387,6 +2387,11 @@ augroup END
 " If buffer does not has filetype, set filetype 'none'
 autocmd ExtensionType VimEnter,BufNew * if empty(&ft) | setf none | endif
 
+"@Marked('if fixed bug of auto indent, remove this')
+augroup UserEvent
+	autocmd FileType int-* set indentkeys-=:
+augroup END
+
 "}}}
 
 

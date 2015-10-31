@@ -1,2 +1,5 @@
 " Enable Editing
 set memmove
+
+
+" vim:ft=vim

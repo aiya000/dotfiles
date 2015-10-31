@@ -8,3 +8,4 @@
 
 # deoplete.nvim
 ..vimrc-rplugin~
+.vim/.log/**

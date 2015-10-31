@@ -9,6 +9,7 @@ setl tabstop=8
 setl nolist
 setl wrap
 setl foldmethod=marker
+set  indentkeys-=:
 
 " Override defaut keymappings
 nnoremap <buffer> Q          gQ

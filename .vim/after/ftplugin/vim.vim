@@ -4,7 +4,7 @@ let b:undo_ftplugin = 'setl ' . join([
 \	'commentstring<'
 \])
 
-let &commentstring = ' "%s'
+let &commentstring = ' " %s'
 
 highlight ftVimMyHint cterm=standout ctermfg=DarkYellow gui=bold guifg=#ef5939
 call matchadd('ftVimMyHint', '\s*"\zs@\w\+(.*)\ze')

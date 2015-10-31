@@ -18,6 +18,12 @@ source ~/.vimrc
 "-------------------------"
 "       Initialize        "
 "-------------------------"
+" Environment {{{
+
+" For the exceptions
+let $NVIM_PYTHON_LOG_FILE = g:vimrc['vim_home'] . '/.log/nvim_python.log'
+
+" }}}
 " autocmd Groups {{{
 
 augroup NeoEvent
