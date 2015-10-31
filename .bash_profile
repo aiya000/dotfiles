@@ -46,7 +46,7 @@ IFS=$backIFS ; unset backIFS
 # Environment Variables
 export HISTSIZE=10000
 export HISTTIMEFORMAT='%Y/%m/%d %H:%M '
-export HISTIGNORE='ls:jobs:history*:*hibernate:twitter*:tweet*:lingr*'
+export HISTIGNORE='ls:jobs:history*:*hibernate'
 export HISTIGNORE="${HISTIGNORE}:*.bash_history*:*mount*-o*password=*"
 export EDITOR=vim
 
