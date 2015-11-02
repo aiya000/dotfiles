@@ -56,7 +56,7 @@
 
 "-- ftplugin 'xaml' should find xaml#complete
 
-"}}}
+" }}}
 " Todo {{{
 
 "-- read help options.jax
@@ -108,7 +108,7 @@
 "---------------------"
 "      Parameter      "
 "---------------------"
-"{{{
+" {{{
 
 " Open in preference to an entity
 let $MYVIMRC = filereadable(expand('~/.dotfiles/.vimrc'))
@@ -140,13 +140,13 @@ let s:directory = s:backupdir . '/swp'
 let s:undodir   = s:backupdir . '/undo'
 let s:viewdir   = s:backupdir . '/view'
 
-"}}}
+" }}}
 
 
 "---------------------"
 "    Local_Function   "
 "---------------------"
-"{{{
+" {{{
 
 "TODO: Implement with multi arguments
 " Run system command by vimproc or vim default
@@ -173,7 +173,7 @@ function! s:SID()
 	return matchstr(expand('<sfile>'), '<SNR>\d\+_')
 endfunction
 
-"}}}
+" }}}
 
 
 "-------------------------"
@@ -216,7 +216,7 @@ augroup UserEvent
 	autocmd!
 augroup END
 
-"}}}
+" }}}
 " Build environment for Kaoriya Vim {{{
 
 if s:is_kaoriya && s:is_windows
@@ -267,7 +267,7 @@ if s:is_kaoriya && s:is_windows
 	autocmd FileEvent BufRead $MYVIMRC setl enc=utf8 fenc=utf8
 endif
 
-"}}}
+" }}}
 " Check NeoBundle exists {{{
 let s:bundledir    = g:vimrc['vim_home'] . '/bundle'
 let s:neobundledir = s:bundledir . '/neobundle.vim'
@@ -307,7 +307,7 @@ endif
 
 unlet s:neobundledir
 unlet s:bundledir
-"}}}
+" }}}
 " Check backup directories {{{
 
 if !isdirectory(s:backupdir)
@@ -325,7 +325,7 @@ if !isdirectory(s:undodir)
 	call s:system(printf('chown -R %s:%s %s', $USER, $GROUP, s:undodir))
 endif
 
-"}}}
+" }}}
 " Enable matchit.vim {{{
 
 if !exists('loaded_matchit')
@@ -340,13 +340,13 @@ if !exists('loaded_matchit')
 	unlet s:matchit_doc_to s:matchit_doc_from
 endif
 
-"}}}
+" }}}
 
 
 "-------------------------"
 "     Plugin_Manage       "
 "-------------------------"
-"*** Plugin List ***"{{{
+"*** Plugin List *** {{{
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundleLazy  'basyura/twibill.vim'
@@ -431,8 +431,8 @@ NeoBundleLazy  'whatyouhide/vim-textobj-xmlattr'
 NeoBundleLazy  'yomi322/neco-tweetvim'
 NeoBundleLazy  'yomi322/unite-tweetvim'
 
-"}}}
-"*** Plugin Depends and Auto Config ***" {{{
+" }}}
+"*** Plugin Depends and Auto Config *** {{{
 
 if neobundle#tap('vimproc.vim')
 	call neobundle#config('vimproc.vim', {
@@ -889,7 +889,7 @@ silent call neobundle#end()
 "------------------------"
 "*** Plugin_Configure ***"
 "------------------------"
-"--- netrw ---" {{{
+"--- netrw --- {{{
 
 " Enable netrw previewing
 let g:netrw_preview = 1
@@ -901,7 +901,7 @@ let g:netrw_home = g:vimrc['vim_home']
 let g:netrw_bufsettings = 'relativenumber readonly nomodifiable nomodified nowrap nobuflisted'
 
 " }}}
-"--- unite.vim ---"{{{
+"--- unite.vim --- {{{
 
 "@Code(':Unite javasrc')
 let g:unite_source_alias_aliases = {
@@ -911,8 +911,8 @@ let g:unite_source_alias_aliases = {
 \	}
 \}
 
-"}}}
-"--- vim-quickrun ---" {{{
+" }}}
+"--- vim-quickrun --- {{{
 
 " Define myself, for lazy load
 let g:quickrun_no_default_key_mappings = 0
@@ -988,13 +988,13 @@ elseif s:is_cygwin
 endif
 
 " }}}
-"--- TweetVim ---"{{{
+"--- TweetVim --- {{{
 
 " Do smooth posting tweet
 let g:tweetvim_async_post = 1
 
-"}}}
-"--- vimshell.vim ---"{{{
+" }}}
+"--- vimshell.vim --- {{{
 
 let g:vimshell_no_save_history_commands = {
 \	'history': 1,
@@ -1010,26 +1010,26 @@ let g:vimshell_split_command                = 'split'
 "@See('autoload/vimshell/commands/{hereis,edit_places,places,reload_places}.vim')
 let g:vimshell_hereis_alias_prefix = 'p_'
 
-"}}}
-"--- vimshell-kawaii.vim ---"{{{
+" }}}
+"--- vimshell-kawaii.vim --- {{{
 
 " vimshell is kawaii
 let g:vimshell_kawaii_smiley = 1
 
-"}}}
-"--- w3m.vim ---"{{{
+" }}}
+"--- w3m.vim --- {{{
 
 let g:w3m#external_browser = 'firefox'
 
 let g:w3m#homepage = 'http://www.google.co.jp/'
 
-"}}}
-"--- foldCC ---"{{{
+" }}}
+"--- foldCC --- {{{
 
 let g:foldCCtext_maxchars = 120
 
-"}}}
-"--- vim-submode ---"{{{
+" }}}
+"--- vim-submode --- {{{
 
 " Prepare function and command {{{
 
@@ -1098,8 +1098,8 @@ if neobundle#tap('vim-submode')
 	augroup END
 endif
 
-"}}}
-"--- ref-dicts-en ---" {{{
+" }}}
+"--- ref-dicts-en --- {{{
 "@See('http://d.hatena.ne.jp/akishin999/20131024/1382569289')
 
 let g:ref_source_webdict_sites = {
@@ -1110,25 +1110,25 @@ let g:ref_source_webdict_sites = {
 
 let g:ref_source_webdict_sites['default'] = 'weblio'
 
-function! s:weblio_filter(output) "{{{
+function! s:weblio_filter(output) " {{{
 	let l:lines = split(a:output, "\n")
 	return join(l:lines[60 : ], "\n")
-endfunction "}}}
+endfunction " }}}
 let g:ref_source_webdict_sites['weblio'].filter = function('s:weblio_filter')
 
 " }}}
-"--- restart.vim ---" {{{
+"--- restart.vim --- {{{
 
 let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
 
 " }}}
-"--- vimdoc-ja ---"{{{
+"--- vimdoc-ja --- {{{
 
 " vimdoc-ja is secondary order
 set helplang=en,ja
 
-"}}}
-"--- TaskList.vim ---"{{{
+" }}}
+"--- TaskList.vim --- {{{
 
 " TaskList search these
 let g:tlTokenList = ['NOTE', 'TODO', 'FIXME', 'XXX']
@@ -1139,13 +1139,13 @@ let g:tlWindowPosition = 1
 " Restore opened position when closed TaskList
 let g:tlRememberPosition = 1
 
-"}}}
-"--- adrone.vim ---"{{{
+" }}}
+"--- adrone.vim --- {{{
 
 let g:adrone_home_default_keymappings = 0
 
-"}}}
-"--- vim-indent-guides ---"{{{
+" }}}
+"--- vim-indent-guides --- {{{
 
 let g:indent_guides_default_mapping = 0
 let g:indent_guides_guide_size      = 1
@@ -1167,13 +1167,13 @@ augroup FileEvent
 	\|	endif
 augroup END
 
-"}}}
-"--- vim-colors-solarized ---"{{{
+" }}}
+"--- vim-colors-solarized --- {{{
 
 let g:solarized_contrast = 'high'
 
-"}}}
-"--- aho-bakaup.vim ---"{{{
+" }}}
+"--- aho-bakaup.vim --- {{{
 
 " Devolute to bakaup
 set nobackup
@@ -1182,14 +1182,14 @@ set nobackup
 let g:bakaup_backup_dir  = s:backupdir
 let g:bakaup_auto_backup = 1
 
-"}}}
-"--- neosnippet.vim ---"{{{
+" }}}
+"--- neosnippet.vim --- {{{
 
 " for :NeoSnippetEdit
 let g:neosnippet#snippets_directory = g:vimrc['vim_home'] . '/neosnippets'
 
-"}}}
-"--- separetaro.vim ---"{{{
+" }}}
+"--- separetaro.vim --- {{{
 
 let g:separetaro_short_separator_of = {
 \	'java'       : '/* -=-=-=-=-=-=-=-=- */',
@@ -1212,14 +1212,14 @@ let g:separetaro_long_separator_of = {
 \	'html'       : '<!-- -- -- -- <`0`> -- -- -- -->'
 \}
 
-"}}}
-"--- vimconsole.vim ---"{{{
+" }}}
+"--- vimconsole.vim --- {{{
 
 let g:vimconsole#auto_redraw             = 1
 let g:vimconsole#no_default_key_mappings = 1
 
-"}}}
-"--- vim-go ---"{{{
+" }}}
+"--- vim-go --- {{{
 
 "@Experimental('commented out for eab9c63cb876f8cd77e45bd165a246684c58b898')
 "" Avoid a bug on cygwin environment
@@ -1228,13 +1228,13 @@ let g:vimconsole#no_default_key_mappings = 1
 "	let g:go_def_mapping_enabled = 0
 "endif
 
-"}}}
-"--- vim-textobj-indent ---"{{{
+" }}}
+"--- vim-textobj-indent --- {{{
 
 let g:textobj_indent_no_default_key_mappings = 1
 
-"}}}
-"--- neocomplete.vim ---"{{{
+" }}}
+"--- neocomplete.vim --- {{{
 
 " Start neocomplete automatically
 let g:neocomplete#enable_at_startup = 1
@@ -1245,8 +1245,8 @@ let g:neocomplete#sources#dictionary#dictionaries = {
 \	'vimshell' : expand('~/vimshell_history')
 \}
 
-"}}}
-"--- auto-ctags.vim ---"{{{
+" }}}
+"--- auto-ctags.vim --- {{{
 
 " Specific the ctags generated directory ( Must sync 'tags' )
 let g:auto_ctags_directory_list = [
@@ -1262,22 +1262,22 @@ let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
 \.	' --exclude=node_modules'
 \.	' --exclude=bower_components'
 
-"}}}
-"--- unite-tag ---"{{{
+" }}}
+"--- unite-tag --- {{{
 
 "@Incomplete('do not fully shown')
 " Fully showing name
 let g:unite_source_tag_max_name_length  = 100
 let g:unite_source_tag_max_fname_length = 100
 
-"}}}
-"--- vim-visualstar ---"{{{
+" }}}
+"--- vim-visualstar --- {{{
 
 " Do zzzv after execute visualstar
 let g:visualstar_extra_commands = 'zzzv'
 
-"}}}
-"--- For Develop ---"{{{
+" }}}
+"--- For Develop --- {{{
 
 " Local my plugins
 let s:repos = [ 'adrone.vim'
@@ -1296,21 +1296,21 @@ for s:plug in s:repos
 endfor
 unlet s:plug_dir s:plug s:repos_dir s:repos
 
-"}}}
-"--- For Private ---"{{{
+" }}}
+"--- For Private --- {{{
 
 " Load private configure
 if filereadable(expand('~/.vimrc_private'))
 	source ~/.vimrc_private
 endif
 
-"}}}
+" }}}
 
 
 "-------------------------"
 "      View_Setting       "
 "-------------------------"
-"{{{
+" {{{
 
 " Set basic preferences
 set number relativenumber nowrap hlsearch list scrolloff=16
@@ -1376,7 +1376,7 @@ set showtabline=2
 
 "@See('http://d.hatena.ne.jp/thinca/20111204/1322932585')
 " Sugoi view tabline
-function! s:tabpage_label(n) "{{{
+function! s:tabpage_label(n) " {{{
 	let l:title = gettabvar(a:n, 'title')
 	if l:title !=# ''
 		return l:title
@@ -1401,13 +1401,13 @@ function! s:tabpage_label(n) "{{{
 
 	let l:label = l:no . l:mod . l:sp . l:fname
 	return '%' . a:n . 'T' . l:hi . l:label . '%T%#TabLineFill#'
-endfunction "}}}
-function! s:with_delimitter_tab_line() "{{{
+endfunction " }}}
+function! s:with_delimitter_tab_line() " {{{
 	let l:titles     = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
 	let l:delimitter = ' | '
 	let l:tabpages   = l:delimitter . join(l:titles, l:delimitter) . l:delimitter . '%#TabLineFill#%T'
 	return l:tabpages
-endfunction "}}}
+endfunction " }}}
 execute 'set tabline=%!' . printf('%swith_delimitter_tab_line()', s:SID())
 
 " Turn off highlight
@@ -1416,13 +1416,13 @@ nohlsearch
 " Show two line
 set cmdheight=2
 
-"}}}
+" }}}
 
 
 "-------------------------"
 "     Action_Setting      "
 "-------------------------"
-"{{{
+" {{{
 
 " Backspace can delete carriage returns
 set backspace=indent,eol,start
@@ -1471,7 +1471,7 @@ set notimeout
 set suffixes=
 
 " Do foldopen all when visual_mode cursor_move
-" s:visual_fold_all() "{{{
+" s:visual_fold_all() {{{
 
 let s:visual_fold_toggle = get(s:, 'visual_fold_toggle', 0)
 
@@ -1491,7 +1491,7 @@ function! s:visual_fold_all()
 	endif
 endfunction
 
-"}}}
+" }}}
 autocmd UserEvent CursorMoved * call s:visual_fold_all()
 
 " Don't put two space on join (normal J)
@@ -1500,13 +1500,13 @@ set nojoinspaces
 " Control by myself
 set iminsert=0
 
-"}}}
+" }}}
 
 
 "-------------------------"
 "     Inner_Setting       "
 "-------------------------"
-"{{{
+" {{{
 
 " Set order of judging file encode
 set fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
@@ -1542,22 +1542,22 @@ if isdirectory(g:vimrc['vim_home'] . '/doc')
 	execute 'helptags' (g:vimrc['vim_home'] . '/doc')
 endif
 
-"}}}
+" }}}
 
 
 "-------------------------"
 "      Event_Method       "
 "-------------------------"
-"{{{
+" {{{
 
 augroup FileEvent
 	" Auto set cursor position in the file
-	function! s:visit_past_position() "{{{
+	function! s:visit_past_position() " {{{
 		let l:past_posit = line("'\"")
 		if l:past_posit > 0 && l:past_posit <= line('$')
 			execute 'normal! g`"'
 		endif
-	endfunction "}}}
+	endfunction " }}}
 	autocmd BufReadPost * call s:visit_past_position()
 
 	" Auto load filetype dictionary
@@ -1582,7 +1582,7 @@ augroup UserEvent
 	autocmd User OverCmdLineLeave if &number | setl relativenumber | end
 augroup END
 
-"}}}
+" }}}
 
 
 "-------------------------"
@@ -1640,7 +1640,7 @@ endfunction " }}}
 command! -range=% ReverseLine :<line1>, <line2>call s:reverse_line()
 
 " Rename the file of current buffer
-function! s:rename_to(new_name) abort "{{{
+function! s:rename_to(new_name) abort " {{{
 	let l:this_file = fnameescape(expand('%'))
 	let l:new_name  = fnameescape(a:new_name)
 
@@ -1667,12 +1667,12 @@ function! s:rename_to(new_name) abort "{{{
 	silent execute ':bdelete' l:this_file
 
 	echo printf('Renamed %s to %s', l:this_file, l:new_file)
-endfunction "}}}
+endfunction " }}}
 command! -bar -nargs=1 -complete=file Rename call s:rename_to(<q-args>)
 
 "@Bugs(':RedirToVar @" highlight  " happend exception')
 " Substitute result to a variable easily
-function! s:redir_to_var(bang, args_str) abort "{{{
+function! s:redir_to_var(bang, args_str) abort " {{{
 	let l:args        = split(a:args_str, '\s')
 	let l:var_name    = escape(l:args[0], '"')  " bug, boooon.
 	let l:expr        = join(l:args[1:], ' ')
@@ -1690,7 +1690,7 @@ function! s:redir_to_var(bang, args_str) abort "{{{
 	endif
 
 	execute printf('redir %s | silent %s | redir END', l:direction, l:expr)
-endfunction "}}}
+endfunction " }}}
 command! -bar -nargs=1 -bang -complete=command RedirToVar call s:redir_to_var(<bang>0, <q-args>)
 
 "@Unsupported('support Windows Kaoriya GVim only {now}')
@@ -1702,19 +1702,19 @@ command! -bar OpenInNewWindow
 \|	call s:system('gvim ' . s:target_filepath)
 \|	unlet s:target_filepath
 
-"}}}
+" }}}
 " Helper {{{
 
 " Prepare functions & commands {{{
 
 " Define cnoreabbr with cmd completion
-function! s:cmd_cnoreabbr(...) "{{{
+function! s:cmd_cnoreabbr(...) " {{{
 	let l:UNUSED_VALUE = 'NOP'
 	let l:cmd_name     = a:1
 	let l:cmd_detail   = join(a:000[1:], ' ')
 	execute 'cnoreabbr' l:cmd_name l:cmd_detail
 	execute 'command!'  l:cmd_name l:UNUSED_VALUE
-endfunction "}}}
+endfunction " }}}
 command! -nargs=+ CmdCnoreabbr call s:cmd_cnoreabbr(<f-args>)
 
 " }}}
@@ -1751,7 +1751,7 @@ command! -bar TwitterTab         tabnew | Twitter
 command! -bar Tweet              TweetVimSay
 
 "-- Private Account --"
-function! s:twitter_private() "{{{
+function! s:twitter_private() " {{{
 	if !exists('g:vimrc.private["twitter"]["priv_ac"]')
 		call s:echo_error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
 		return
@@ -1761,10 +1761,10 @@ function! s:twitter_private() "{{{
 	let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['priv_ac']
 
 	TweetVimHomeTimeline
-endfunction "}}}
+endfunction " }}}
 command! -bar TwitterPrivate     execute printf('call %stwitter_private()', s:SID())
 command! -bar TwitterPrivateTab  tabnew | TwitterPrivate
-function! s:tweet_private() "{{{
+function! s:tweet_private() " {{{
 	if !exists('g:vimrc.private["twitter"]["priv_ac"]')
 		call s:echo_error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
 		return
@@ -1775,11 +1775,11 @@ function! s:tweet_private() "{{{
 
 	"@Incomplete('wait sync here')
 	"execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['curr_ac']
-endfunction "}}}
+endfunction " }}}
 command! -bar TweetPrivate       execute printf('call %stweet_private()', s:SID())
 
 "-- Public Account --"
-function! s:twitter_public() "{{{
+function! s:twitter_public() " {{{
 	if !exists("g:vimrc.private['twitter']['publ_ac']")
 		call s:echo_error("Not set env variable => g:vimrc.private['twitter']['publ_ac']")
 		return
@@ -1789,10 +1789,10 @@ function! s:twitter_public() "{{{
 	let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['publ_ac']
 
 	TweetVimHomeTimeline
-endfunction "}}}
+endfunction " }}}
 command! -bar TwitterPublic      execute printf('call %stwitter_public()', s:SID())
 command! -bar TwitterPublicTab   tabnew | TwitterPublic
-function! s:tweet_public() "{{{
+function! s:tweet_public() " {{{
 	if !exists('g:vimrc.private["twitter"]["publ_ac"]')
 		call s:echo_error('Not set env variable => g:vimrc.private["twitter"]["publ_ac"]')
 		return
@@ -1803,7 +1803,7 @@ function! s:tweet_public() "{{{
 
 	"@Incomplete('wait here')
 	"execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
-endfunction "}}}
+endfunction " }}}
 command! -bar TweetPublic        execute printf('call %stweet_public()', s:SID())
 
 CmdCnoreabbr Bitly TweetVimBitly
@@ -1864,7 +1864,7 @@ CmdCnoreabbr IrbTab VimShellInteractive --split='tabnew' irb
 " }}}
 
 " Staging current file to git
-function! s:git_add() abort "{{{
+function! s:git_add() abort " {{{
 	let l:result = s:system('git add ' . expand('%:p'))
 	if l:result != ''
 		NewOverridden
@@ -1879,7 +1879,7 @@ function! s:git_add() abort "{{{
 	else
 		throw 'unknowned pattern: ' . v:shell_error
 	endif
-endfunction "}}}
+endfunction " }}}
 command! -bar GitAdd call s:git_add()
 
 " }}}
@@ -1920,7 +1920,7 @@ augroup END
 " Prepare functions {{{
 
 " Compress continuous space
-function! s:compress_spaces() "{{{
+function! s:compress_spaces() " {{{
 	let l:recent_pattern = @/
 	try
 		substitute/\s\+/ /g
@@ -1929,10 +1929,10 @@ function! s:compress_spaces() "{{{
 		let @/ = l:recent_pattern
 	endtry
 	nohlsearch
-endfunction "}}}
+endfunction " }}}
 
 " Clear all lines end space
-function! s:clear_ends_space() "{{{
+function! s:clear_ends_space() " {{{
 	let l:recent_pattern = @/
 	let l:curpos = getcurpos()
 	try
@@ -1943,10 +1943,10 @@ function! s:clear_ends_space() "{{{
 		let @/ = l:recent_pattern
 		call setpos('.', l:curpos)
 	endtry
-endfunction "}}}
+endfunction " }}}
 
 " Move cursor to topmost of this indent
-function! s:cursor_up_to_lid() "{{{
+function! s:cursor_up_to_lid() " {{{
 	while 1
 		let l:p = virtcol('.')
 		normal! k
@@ -1959,10 +1959,10 @@ function! s:cursor_up_to_lid() "{{{
 			break
 		endif
 	endwhile
-endfunction "}}}
+endfunction " }}}
 
 " Move cursor to bottommost of this indent
-function! s:cursor_down_to_ground() "{{{
+function! s:cursor_down_to_ground() " {{{
 	let l:last_line = line('$')
 	while 1
 		let l:p = virtcol('.')
@@ -1976,10 +1976,10 @@ function! s:cursor_down_to_ground() "{{{
 			break
 		endif
 	endwhile
-endfunction "}}}
+endfunction " }}}
 
 " Toggle foldmethod marker or syntax
-function! s:toggle_foldmethod() "{{{
+function! s:toggle_foldmethod() " {{{
 	if &foldmethod !=# 'syntax'
 		setl foldmethod=syntax
 	else
@@ -1990,10 +1990,10 @@ function! s:toggle_foldmethod() "{{{
 	if foldlevel('.') > 0 && foldclosed('.') isnot -1
 		normal! zO
 	endif
-endfunction "}}}
+endfunction " }}}
 
 " Toggle diffthis - diffoff
-function! s:toggle_diff() "{{{
+function! s:toggle_diff() " {{{
 	if &diff
 		diffoff
 		nunmap <buffer> {
@@ -2004,10 +2004,10 @@ function! s:toggle_diff() "{{{
 		nnoremap <buffer> } ]c
 	endif
 	set diff?
-endfunction "}}}
+endfunction " }}}
 
 " If you has nofile buffer, close it.
-function! s:bufclose_filetype(filetype) "{{{
+function! s:bufclose_filetype(filetype) " {{{
 	let l:closed = 0
 	for l:w in range(1, winnr('$'))
 		let l:buf_ft = getwinvar(l:w, '&filetype')
@@ -2018,32 +2018,32 @@ function! s:bufclose_filetype(filetype) "{{{
 		endif
 	endfor
 	return l:closed
-endfunction "}}}
+endfunction " }}}
 
 " Toggle open netrw explorer ( vertical split )
-function! s:toggle_netrw_vexplorer() "{{{
+function! s:toggle_netrw_vexplorer() " {{{
 	let l:closed = s:bufclose_filetype('netrw')
 	if !l:closed
 		Vexplore
 	endif
-endfunction "}}}
+endfunction " }}}
 
 " Do :bufdo without changing current buffer
-function! s:motionless_bufdo(cmd) abort "{{{
+function! s:motionless_bufdo(cmd) abort " {{{
 	NewOverridden
 	setl buftype=nofile
 	execute 'bufdo' a:cmd
 	quit
-endfunction "}}}
+endfunction " }}}
 
 " Toggle showing indent-guides with variable
-" function! s:toggle_indent_guides() "{{{
+" function! s:toggle_indent_guides() " {{{
 
 let s:indent_guides_enable = get(s:, 'indent_guides_enable', 1)
 function! s:toggle_indent_guides()
 	let s:indent_guides_enable = !s:indent_guides_enable
 	IndentGuidesToggle
-endfunction "}}}
+endfunction " }}}
 
 " }}}
 " Foldings {{{
@@ -2217,7 +2217,7 @@ augroup END
 " Others {{{
 
 augroup KeyMapping
-	" normal mode "{{{
+	" normal mode {{{
 
 	autocmd User MyVimRc nmap <C-j> <CR>
 
@@ -2252,8 +2252,8 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-k><Space>   :<C-u>call <SID>clear_ends_space()<CR>
 	autocmd User MyVimRc nnoremap <silent> <Space><Space> :<C-u>call <SID>compress_spaces()<CR>
 
-	"}}}
-	" insert mode "{{{
+	" }}}
+	" insert mode {{{
 
 	autocmd User MyVimRc imap <C-j> <CR>
 
@@ -2264,8 +2264,8 @@ augroup KeyMapping
 	autocmd User MyVimRc inoremap <silent> <C-k><C-j> <Esc>:write<CR>
 	autocmd User MyVimRc inoremap <silent> <C-k>J     <Esc>:wall \| echo 'written all !'<CR>
 
-	"}}}
-	" command-line mode "{{{
+	" }}}
+	" command-line mode {{{
 
 	autocmd User MyVimRc cmap     <C-]>      \<\>[Left][Left]
 	autocmd User MyVimRc cnoremap <C-b>      <Left>
@@ -2280,8 +2280,8 @@ augroup KeyMapping
 	autocmd User MyVimRc cnoremap <C-k><C-p> <Up>
 	autocmd User MyVimRc cnoremap <C-k><C-n> <Down>
 
-	"}}}
-	" visual mode "{{{
+	" }}}
+	" visual mode {{{
 
 	" textobj-function
 	autocmd User MyVimRc vmap af <Plug>(textobj-function-a)
@@ -2311,13 +2311,13 @@ augroup KeyMapping
 	autocmd User MyVimRc vnoremap a' 2i'
 	autocmd User MyVimRc vnoremap a` 2i`
 
-	"}}}
-	" select mode "{{{
+	" }}}
+	" select mode {{{
 
 	autocmd User MyVimRc snoremap <C-l> <Esc>
 
-	"}}}
-	" operator "{{{
+	" }}}
+	" operator {{{
 
 	" textobj-function
 	autocmd User MyVimRc omap af <Plug>(textobj-function-a)
@@ -2340,13 +2340,13 @@ augroup KeyMapping
 	autocmd User MyVimRc onoremap a' 2i'
 	autocmd User MyVimRc onoremap a` 2i`
 
-	"}}}
-	" digraph "{{{
+	" }}}
+	" digraph {{{
 
 	digraph %% 8984
 	digraph 8: 9731
 
-	"}}}
+	" }}}
 augroup END
 
 " }}}
@@ -2386,7 +2386,7 @@ augroup END
 "-------------------------"
 "        File_Type        "
 "-------------------------"
-"{{{
+" {{{
 
 " If buffer does not has filetype, set filetype 'none'
 autocmd ExtensionType VimEnter,BufNew * if empty(&ft) | setf none | endif
@@ -2396,19 +2396,19 @@ augroup UserEvent
 	autocmd FileType int-* set indentkeys-=:
 augroup END
 
-"}}}
+" }}}
 
 
 "-------------------------"
 "    Environment_Pref     "
 "-------------------------"
-"{{{
+" {{{
 
 if filereadable(s:vimrc_env)
 	source ~/.vimrc_env
 endif
 
-"}}}
+" }}}
 
 
 filetype plugin indent on
