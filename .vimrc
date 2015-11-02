@@ -430,6 +430,7 @@ NeoBundleLazy  'Shougo/unite-session'
 NeoBundleLazy  'whatyouhide/vim-textobj-xmlattr'
 NeoBundleLazy  'yomi322/neco-tweetvim'
 NeoBundleLazy  'yomi322/unite-tweetvim'
+NeoBundleLazy  'itchyny/vim-haskell-indent'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
@@ -876,6 +877,12 @@ endif
 if neobundle#tap('unite-tweetvim')
 	call neobundle#config('unite-tweetvim', {
 	\	'autoload' : { 'on_source' : 'TweetVim' }
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-haskell-indent')
+	call neobundle#config('vim-haskell-indent', {
+	\	'autoload' : { 'filetype' : 'haskell' }
 	\})
 	call neobundle#untap()
 endif
