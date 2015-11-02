@@ -1031,6 +1031,31 @@ let g:foldCCtext_maxchars = 120
 "}}}
 "--- vim-submode ---"{{{
 
+" Prepare function and command {{{
+
+function! s:loopable_tab_move_prev()
+	if tabpagenr() is 1
+		execute ':tabmove' tabpagenr('$')
+	else
+		execute ':tabmove -1'
+	endif
+endfunction
+
+function! s:loopable_tab_move_next()
+	if tabpagenr() is tabpagenr('$')
+		execute ':tabmove 0'
+	else
+		execute ':tabmove +1'
+	endif
+endfunction
+
+" Current buffer move to next tab
+"@Incomplete('if winnum in tab is 1')
+command! -bar BufTabMovePrev execute 'normal! mZ:hide<CR>gT:vsp<CR>`Z'
+command! -bar BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? ':hide<CR>' : ':hide<CR>gt') . ':vsp<CR>`Z'
+
+" }}}
+
 let g:submode_timeout = 0
 
 if neobundle#tap('vim-submode')
@@ -1041,8 +1066,6 @@ if neobundle#tap('vim-submode')
 		autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'k', '<C-w>-')
 		autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'h', '<C-w><')
 		autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'l', '<C-w>>')
-		autocmd User MyVimRc call submode#map('window_resize', 'n', '', '=', '<C-w>=')
-		autocmd User MyVimRc call submode#map('window_resize', 'n', '', '_', '<C-w>_')
 
 		" Fold Mover
 		autocmd User MyVimRc call submode#enter_with('fold_move', 'n', '', '<C-s>z')
@@ -1057,32 +1080,11 @@ if neobundle#tap('vim-submode')
 		autocmd User MyVimRc call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
 
 		" Tab Mover
-		function! s:loopable_tab_move_prev() "{{{
-			if tabpagenr() is 1
-				execute ':tabmove' tabpagenr('$')
-			else
-				execute ':tabmove -1'
-			endif
-		endfunction "}}}
-		function! s:loopable_tab_move_next() "{{{
-			if tabpagenr() is tabpagenr('$')
-				execute ':tabmove 0'
-			else
-				execute ':tabmove +1'
-			endif
-		endfunction "}}}
 		autocmd User MyVimRc call submode#enter_with('tab_move', 'n', '', '<C-s>t')
 		autocmd User MyVimRc call submode#map('tab_move', 'n', 's', 'n', printf(':call %sloopable_tab_move_next()<CR>', s:SID()))
 		autocmd User MyVimRc call submode#map('tab_move', 'n', 's', 'p', printf(':call %sloopable_tab_move_prev()<CR>', s:SID()))
 
 		" Window Mover
-		" Current buffer move to next tab "{{{
-
-		"@Incomplete('if winnum in tab is 1')
-		command! -bar BufTabMovePrev execute 'normal! mZ:hide<CR>gT:vsp<CR>`Z'
-		command! -bar BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? ':hide<CR>' : ':hide<CR>gt') . ':vsp<CR>`Z'
-
-		"}}}
 		autocmd User MyVimRc call submode#enter_with('window_move', 'n', 'e', '<C-s>N', '":BufTabMoveNext<CR>" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
 		autocmd User MyVimRc call submode#enter_with('window_move', 'n', 'e', '<C-s>P', '":BufTabMovePrev<CR>" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
 		autocmd User MyVimRc call submode#map('window_move', 'n', 'e', 'N', '":BufTabMoveNext<CR>" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
@@ -1091,6 +1093,8 @@ if neobundle#tap('vim-submode')
 		autocmd User MyVimRc call submode#map('window_move', 'n', 'e', 'J', '"<C-w>J" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
 		autocmd User MyVimRc call submode#map('window_move', 'n', 'e', 'K', '"<C-w>K" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
 		autocmd User MyVimRc call submode#map('window_move', 'n', 'e', 'L', '"<C-w>L" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
+		autocmd User MyVimRc call submode#map('window_move', 'n', 's', '_', '<C-w>_')
+		autocmd User MyVimRc call submode#map('window_move', 'n', 's', '"', ':resize 5<CR>')
 	augroup END
 endif
 
