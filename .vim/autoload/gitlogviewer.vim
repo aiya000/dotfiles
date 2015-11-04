@@ -4,7 +4,7 @@ function! gitlogviewer#git_log_viewer(args)
 	new
 	setl buftype=nofile
 	call s:read_git_log(a:args)
-	set filetype=gitlogviewer
+	set  filetype=gitlogviewer
 	setl foldmethod=expr
 	setl foldexpr=getline(v:lnum)=~'^commit'?'>1':getline(v:lnum+1)=~'^commit'?'<1':'='
 	setl foldtext=FoldTextOfGitLog()

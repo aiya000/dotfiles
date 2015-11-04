@@ -179,14 +179,14 @@ endfunction
 "-------------------------"
 "       Initialize        "
 "-------------------------"
-" Set default file encoding {{{
+" Set encodings {{{
 
-" Default file encoding
+" Set default file encoding
 if !g:vimrc['loaded']
 	set fileencoding=utf-8 encoding=utf-8
 endif
 
-" Encoding for this script
+" Specify encoding for this file
 scriptencoding utf-8
 
 " }}}
@@ -268,7 +268,8 @@ if s:is_kaoriya && s:is_windows
 endif
 
 " }}}
-" Check NeoBundle exists {{{
+" Startup NeoBundle {{{
+
 let s:bundledir    = g:vimrc['vim_home'] . '/bundle'
 let s:neobundledir = s:bundledir . '/neobundle.vim'
 function! s:fetch_neobundle() " {{{
@@ -288,25 +289,26 @@ if !isdirectory(s:bundledir)
 endif
 
 if has('vim_starting')
-	try
-		let &runtimepath = &runtimepath . ',' . (g:vimrc['vim_home'] . '/bundle/neobundle.vim')
-		call neobundle#begin()
-	catch /E117/  " neobundle.vim not found
-		try
-			call s:fetch_neobundle()
-			call neobundle#begin()
-			echo 'NeoBundle was installed .'
-			echo 'Please execute :NeoBundleInstall ,'
-			echo 'and restart Vim .'
-		catch /FALIED/
-			call s:echo_error('cloning neobundle.vim failed.')
-			call s:echo_error('>> Error build vim environment <<')
-		endtry
-	endtry
+	let &runtimepath = &runtimepath . ',' . (g:vimrc['vim_home'] . '/bundle/neobundle.vim')
 endif
 
-unlet s:neobundledir
-unlet s:bundledir
+try
+	call neobundle#begin()
+catch /E117/  " neobundle.vim not found
+	try
+		call s:fetch_neobundle()
+		call neobundle#begin()
+		echo 'NeoBundle install completed.'
+		echo 'Please execute :NeoBundleInstall,'
+		echo 'and restart Vim.'
+	catch /FALIED/
+		call s:echo_error('cloning or starting neobundle.vim failed.')
+		call s:echo_error('>> Error build vim environment <<')
+	endtry
+endtry
+
+unlet s:neobundledir s:bundledir
+
 " }}}
 " Check backup directories {{{
 
@@ -326,10 +328,10 @@ if !isdirectory(s:undodir)
 endif
 
 " }}}
-" Enable matchit.vim {{{
+" Enable embedded plugins {{{
 
 if !exists('loaded_matchit')
-	" Load it
+	" Load matchit.vim
 	runtime macros/matchit.vim
 	" Get help of matchit.vim
 	let s:matchit_doc_from = expand('$VIMRUNTIME/macros/matchit.txt')
@@ -887,8 +889,7 @@ if neobundle#tap('vim-haskell-indent')
 	call neobundle#untap()
 endif
 
-" call neobundle#end without caution
-silent call neobundle#end()
+call neobundle#end()
 
 " }}}
 
