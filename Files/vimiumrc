@@ -1,0 +1,10 @@
+map <C-f> scrollFullPageDown
+map <C-b> scrollFullPageUp
+map <C-n> nextTab
+map <C-p> previousTab
+map d     removeTab
+map u     restoreTab
+map gH    createTab
+map gf    toggleViewSource
+
+# vim:ft=vim
