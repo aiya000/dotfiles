@@ -20,7 +20,7 @@ alias cp='cp -i'
 
 # Develop Config
 alias g++='g++ -std=c++1y'
-alias mysql='mysql --pager="less -r -S -n -i -F -X" --protocol=TCP'
+alias mysql='mysql --protocol=TCP'
 
 # Utils
 alias reload='vimsh ~/.vimshrc'
