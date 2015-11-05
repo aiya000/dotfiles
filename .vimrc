@@ -862,7 +862,7 @@ endif
 if neobundle#tap('vim-textobj-xmlattr')
 	call neobundle#config('vim-textobj-xmlattr', {
 	\	'depends'  : 'vim-textobj-user',
-	\	'autoload' : { 'filetype' : [
+	\	'autoload' : { 'filetypes' : [
 	\		'html',
 	\		'xml',
 	\		'xaml'
