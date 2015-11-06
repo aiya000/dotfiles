@@ -13,6 +13,7 @@ alias vsp=':VimShellCreate -split-command=vsp'
 alias sp=':VimShellCreate -split-command=sp'
 alias tabnew=':VimShellCreate -split-command=tabnew'
 alias nvim='vim'
+alias reload='vimsh ~/.vimshrc'
 
 # Shell Config
 alias mv='mv -i'
@@ -23,9 +24,8 @@ alias g++='g++ -std=c++1y'
 alias mysql='mysql --protocol=TCP'
 
 # Utils
-alias reload='vimsh ~/.vimshrc'
-alias ctags-r='ctags --tag-relative --recurse --sort=yes'
 alias thanks='echo "(*^o^)< You are welcome!"'
+alias ctags-r='ctags --tag-relative --recurse --sort=yes'
 
 # for My Command
 alias reload-places='reload_places'

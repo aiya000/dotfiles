@@ -26,11 +26,33 @@ fi
 # Set options {{{
 
 set -o ignoreeof  # Disable logoff by Ctrl + D
+set -o vi         # Set vi style keymapping mode
 stty stop  undef  # unbind C-s that is stop viewing inputs to screen
 stty start undef  # unbind C-q that is start viewing inputs to screen
 
 # }}}
+# Key mappings {{{
 
+# Vim nize
+bind -m vi-command '"_": beginning-of-line'
+bind -m vi-insert  '"\C-\\\C-n": "\e"'
+
+# Emacs nize
+bind -m vi-insert  '"\C-n": next-history'
+bind -m vi-insert  '"\C-p": previous-history'
+bind -m vi-insert  '"\C-a": beginning-of-line'
+bind -m vi-insert  '"\C-e": end-of-line'
+bind -m vi-insert  '"\C-b": backward-char'
+bind -m vi-insert  '"\C-f": forward-char'
+bind -m vi-insert  '"\C-k": kill-line'
+bind -m vi-insert  '"\C-d": delete-char'
+
+# My taste
+bind -m vi-insert  '"\C-l": "\e"'
+bind -m vi-insert  '"\C-]": clear-screen'
+bind -m vi-command -x '"\C-k\C-r": . ~/.bashrc && echo ">> bash source reloaded"'
+
+# }}}
 
 #############
 #  aliases  #
@@ -49,7 +71,7 @@ dotfile_config () {
 # Shell support {{{
 
 # Bash Short Cuts
-alias reload='source ~/.bash_profile && source ~/.bashrc && echo "bash source reloaded"'
+alias reload='. ~/.bashrc && echo ">> bash source reloaded"'
 
 # I'm a coward {{{
 

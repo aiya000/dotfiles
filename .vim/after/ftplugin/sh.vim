@@ -1,1 +1,1 @@
-let &commentstring = ' #%s'
+let &commentstring = ' # %s'
