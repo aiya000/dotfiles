@@ -35,6 +35,7 @@ stty start undef  # unbind C-q that is start viewing inputs to screen
 
 # Vim nize
 bind -m vi-command '"_": beginning-of-line'
+bind -m vi-insert  '"\C-\\\C-n": "\e"'
 
 # Emacs nize
 bind -m vi-insert  '"\C-n": next-history'
@@ -70,7 +71,7 @@ dotfile_config () {
 # Shell support {{{
 
 # Bash Short Cuts
-alias reload='. ~/.bashrc && echo ">> bash source reloaded"'
+alias reload='. ~/.bashrc && echo ">> .bashrc reloaded"'
 
 # I'm a coward {{{
 
