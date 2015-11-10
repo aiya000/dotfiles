@@ -912,12 +912,15 @@ let g:netrw_bufsettings = 'relativenumber readonly nomodifiable nomodified nowra
 "--- unite.vim --- {{{
 
 "@Code(':Unite javasrc')
-let g:unite_source_alias_aliases = {
-\	'javasrc' : {
-\		'source' : 'file_rec',
-\		'args'   : '~/Documents/workspace/Java/src'
-\	}
-\}
+" If you want to use this, you must extract JDK's src.zip here
+let s:java_src = printf('%s/resource/Java/src', g:vimrc['vim_home'])
+if filereadable(s:java_src)
+	let g:unite_source_alias_aliases.javasrc = {
+	\	'source' : 'file_rec',
+	\	'args'   : s:java_src
+	\}
+endif
+unlet s:java_src
 
 " }}}
 "--- vim-quickrun --- {{{
@@ -1211,7 +1214,7 @@ let g:separetaro_short_separator_of = {
 
 " Combinate neosnippet.vim
 let g:separetaro_long_separator_of = {
-\	'java'       : '/* --- --- ---  --- --- --- */',
+\	'java'       : '/* --- --- --- <`0`> --- --- --- */',
 \	'javascript' : '/* --- --- --- <`0`> --- --- --- */',
 \	'typescript' : '/* --- --- --- <`0`> --- --- --- */',
 \	'css'        : '/* --- --- --- <`0`> --- --- --- */',
@@ -2144,11 +2147,12 @@ augroup KeyMapping
 
 	" Unite
 	autocmd User MyVimRc nnoremap          <leader>U         :<C-u>Unite<Space>
-	autocmd User MyVimRc nnoremap <silent> <C-k><C-h>        :<C-u>Unite -ignorecase neomru/file<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>h            :<C-u>Unite -ignorecase file_rec<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-h>        :<C-u>Unite -ignorecase neomru/file<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Unite -ignorecase outline<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k><C-g>        :<C-u>Unite -ignorecase -start-insert syntax<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>f            :<C-u>Unite -ignorecase -start-insert filetype<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-g>        :<C-u>Unite -ignorecase -start-insert syntax<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-i>        :<C-u>Unite -ignorecase -start-insert line<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>u :<C-u>UniteClose<CR>
 
 	" ref-dicts-en

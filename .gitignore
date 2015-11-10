@@ -1,10 +1,11 @@
 .private/**
 
-# managed by locals
+# local managed
 .backup/**
 .vim/.netrwhist
 .vim/bundle/**
 .vim/doc/tags
+.vim/resource/Java  # :Unite javasrc
 
 # deoplete.nvim
 ..vimrc-rplugin~
