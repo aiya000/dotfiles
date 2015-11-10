@@ -2117,7 +2117,7 @@ augroup KeyMapping
 augroup END
 
 " }}}
-" By plugins {{{
+" Plugins {{{
 
 augroup KeyMapping
 	" netrw
@@ -2143,6 +2143,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>V :<C-u>VimShell -split-command=tabnew -create<CR>
 
 	" Unite
+	autocmd User MyVimRc nnoremap          <leader>U         :<C-u>Unite<Space>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-h>        :<C-u>Unite -ignorecase neomru/file<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>h            :<C-u>Unite -ignorecase file_rec<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Unite -ignorecase outline<CR>
@@ -2301,12 +2302,11 @@ augroup KeyMapping
 
 	" textobj-from_regexp
 	" Select alphabet glob
+	autocmd User MyVimRc vmap <expr> a_ textobj#from_regexp#mapexpr('[^A-Za-z0-9][A-Za-z0-9]\+[^A-Za-z0-9]')
 	autocmd User MyVimRc vmap <expr> i_ textobj#from_regexp#mapexpr('[A-Za-z0-9]\+')
-	" Select line ignore newline code
+	" Select line ignore newline code (and ignore head spaces)
 	autocmd User MyVimRc vmap <expr> al textobj#from_regexp#mapexpr('^.*$')
-	" Select line ignore head spaces
-	"@Bugs('if currentline has not head space, failure visual select currentline')
-	autocmd User MyVimRc vmap <expr> il textobj#from_regexp#mapexpr('^\s\+\zs.*\ze.*$')
+	autocmd User MyVimRc vmap <expr> il textobj#from_regexp#mapexpr('^\s*\zs.*\ze.*$')
 
 	autocmd User MyVimRc vnoremap <C-l> <Esc>
 	autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
@@ -2337,11 +2337,11 @@ augroup KeyMapping
 
 	" textobj-from_regexp
 	" Select alphabet glob
+	autocmd User MyVimRc omap <expr> a_ textobj#from_regexp#mapexpr('[^A-Za-z0-9][A-Za-z0-9]\+[^A-Za-z0-9]')
 	autocmd User MyVimRc omap <expr> i_ textobj#from_regexp#mapexpr('[A-Za-z0-9]\+')
-	" Select line ignore newline code
+	" Select line ignore newline code (and ignore head spaces)
 	autocmd User MyVimRc omap <expr> al textobj#from_regexp#mapexpr('^.*$')
-	" Select line ignore head spaces
-	autocmd User MyVimRc vmap <expr> il textobj#from_regexp#mapexpr('^\s\+\zs.*\ze.*$')
+	autocmd User MyVimRc omap <expr> il textobj#from_regexp#mapexpr('^\s*\zs.*\ze.*$')
 
 	" Don't select blank
 	autocmd User MyVimRc onoremap a" 2i"
