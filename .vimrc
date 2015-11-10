@@ -440,8 +440,8 @@ NeoBundleLazy  'itchyny/vim-haskell-indent'
 if neobundle#tap('vimproc.vim')
 	call neobundle#config('vimproc.vim', {
 	\	'build' : {
-	\		'linux'  : 'make -f make_unix.mak',
-	\		'cygwin' : 'make -f make_cygwin.mak'
+	\		'linux'  : 'make',
+	\		'cygwin' : 'make'
 	\	},
 	\	'disabled' : s:is_kaoriya && s:is_windows && !s:has_mingw
 	\})
