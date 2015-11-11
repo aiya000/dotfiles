@@ -58,8 +58,12 @@ abbr    MessageBox.Show(text, caption, Button.YesNo, Icon.Question);
     MessageBox.Show(${1:#:text}, ${2:#:caption}, MessageBoxButton.YesNo, MessageBoxImage.Question);${0}
 
 snippet DebugPrint
-abbr    System.Diagnostics.Debug.Print();
-    System.Diagnostics.Debug.Print(${0});
+abbr    System.Diagnostics.Debug.WriteLine();
+    System.Diagnostics.Debug.WriteLine(${0});
+
+snippet Stopwatch
+abbr    System.Diagnostics.Stopwatch
+    System.Diagnostics.Stopwatch
 
 
 # Preprocess

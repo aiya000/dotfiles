@@ -1089,6 +1089,19 @@ if neobundle#tap('vim-submode')
 		autocmd User MyVimRc call submode#map('window_move', 'n', 'e', 'L', '"<C-w>L" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
 		autocmd User MyVimRc call submode#map('window_move', 'n', 's', '_', '<C-w>_')
 		autocmd User MyVimRc call submode#map('window_move', 'n', 's', '"', ':resize 5<CR>')
+
+		" Linewise Mover
+		autocmd User MyVimRc call submode#enter_with('linewise_move', 'n', '', 'gk', 'gk')
+		autocmd User MyVimRc call submode#enter_with('linewise_move', 'n', '', 'gj', 'gj')
+		autocmd User MyVimRc call submode#enter_with('linewise_move', 'n', '', 'g0', 'g0')
+		autocmd User MyVimRc call submode#enter_with('linewise_move', 'n', '', 'g^', 'g^')
+		autocmd User MyVimRc call submode#enter_with('linewise_move', 'n', '', 'g$', 'g$')
+		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'k', 'gk')
+		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'j', 'gj')
+		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', '0', 'g0')
+		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', '^', 'g^')
+		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'h', 'h')
+		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'l', 'l')
 	augroup END
 endif
 

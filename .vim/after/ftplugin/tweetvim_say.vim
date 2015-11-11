@@ -12,6 +12,6 @@ setl tabstop=2
 setl shiftwidth=2
 setl expandtab
 
-" avoid <C-j> to say
-nnoremap <buffer> <C-j> <C-o>o
+" Avoid <C-j> to say
+nnoremap <buffer> <C-j> o<Esc>
 inoremap <buffer> <C-i> <Tab>
