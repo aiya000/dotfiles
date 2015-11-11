@@ -33,8 +33,6 @@
 " }}}
 " Issues {{{
 
-"-- C-o hard use on vimshell
-
 "-- automatic mkdir './C:' when execute NeoBundleInstall in windows kaoriya
 "  -- does neobundle think that is repository...?
 
@@ -46,15 +44,6 @@
 "-- echo warning message by netobundle when reloading this
 
 "-- submode wintab-move over 1 previous tab
-
-"-- int-git does not loaded ftplugin int-git.vim (by hyphenate ?)
-
-"-- neovim prefs exclude from this file
-
-"-- Windows choice ~/neosnippets as neosnippet_directory
-"  -- I hope Windows choice ~/vimfiles/neosnippets
-
-"-- ftplugin 'xaml' should find xaml#complete
 
 " }}}
 " Todo {{{
@@ -70,12 +59,6 @@
 "-- read help syntax.txt
 
 "-- quickrun pref of stack project
-
-"-- view somewhere its notification when tags loaded
-
-"-- Delete undo
-"  -- current file or all file
-"  -- refer to 'clear-undo', maybe
 
 " }}}
 
@@ -1332,7 +1315,15 @@ set laststatus=2
 
 "@See(' http://sourceforge.jp/magazine/07/11/06/0151231 ')
 " Set status bar format
-set statusline=%F%m\ %{fugitive#statusline()}%=\ \ [FileType=%y][Format=%{&fileencoding}][Encode=%{&encoding}][%03v]
+function! TagLoadStatus() " {{{
+	let l:status_format = '[Tag(%s)]'
+	let l:tags_shorten  = map(tagfiles(), 'pathshorten(v:val)')
+	let l:tags_flatten  = join(l:tags_shorten, ',')
+	let l:tags_status   = (l:tags_flatten ==# '') ? '(never)'
+	\                                             : l:tags_flatten
+	return printf(l:status_format, l:tags_status)
+endfunction " }}}
+set statusline=%F%m\ %{fugitive#statusline()}%=\ \ %{TagLoadStatus()}[FileType=%y][Format=%{&fileencoding}][Encode=%{&encoding}][%03v]
 
 " ☆ Fix 2byte code viewing, but this option don't support gnome-terminal
 set ambiwidth=double
