@@ -19,8 +19,8 @@
 
 
 "----------------------------"
-"  Target of this config     "
-"    - UNIX Type             "
+"  This file supported       "
+"    - *NIX (exclude MacOSX) "
 "    - Cygwin                "
 "    - Windows Kaoriya GVim  "
 "----------------------------"
@@ -60,23 +60,25 @@
 
 "-- quickrun pref of stack project
 
+"-- implement unite-gitlog for async load
+
 " }}}
 
 
 "----------------------------------------
 " {- Hints -} "
-" @Bugs         => This hoge has the bugs.
-" @Incomplete   => This is not completed making.
-" @Unchecked    => This was not unchecked that is operate right
-" @Unsupported  => Do not supported functions when now.
-" @Unknown      => I don't know why this functioned.
+" @Bugs         => That has the bugs
+" @Incomplete   => I don't completed making that
+" @Unchecked    => That wasn't unchecked that is right
+" @Unsupported  => Don't support that function now
+" @Unknown      => I don't know why this functioned
 "     ／人◕ ‿‿ ◕人＼ <  Wakega wakaranaiyo!
-" @Unused       => Not used this yet now, needs inquires deleting this.
-" @Deprecated   => Deprecated This vimrc Version.
-" @Experiment   => This is experimental implementation.
-" @Marked       => I have eye on this.
-" @See          => Referred URL, Saw Document, and etc...
-" @Code         => A sample code using it
+" @Unused       => Never used this yet. if you don't needs, please delete this
+" @Deprecated   => Deprecated use that
+" @Experiment   => That is experimental implementation
+" @Marked       => I have eye on that
+" @See          => Please see that
+" @Code         => The sample code of how to use
 "-------------------
 " Designating the target platform.
 " @Hoge{Win,Ubuntu}  : This Hint for Win and Ubuntu.
@@ -1096,12 +1098,15 @@ if neobundle#tap('vim-submode')
 		autocmd User MyVimRc call submode#enter_with('linewise_move', 'n', '', 'g0', 'g0')
 		autocmd User MyVimRc call submode#enter_with('linewise_move', 'n', '', 'g^', 'g^')
 		autocmd User MyVimRc call submode#enter_with('linewise_move', 'n', '', 'g$', 'g$')
-		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'k', 'gk')
-		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'j', 'gj')
-		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', '0', 'g0')
-		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', '^', 'g^')
-		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'h', 'h')
-		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'l', 'l')
+		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'k',  'gk')
+		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'j',  'gj')
+		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', '0',  'g0')
+		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', '^',  'g^')
+		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', '$',  'g$')
+		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', '_',  'g^')
+		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'g_', 'g$')
+		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'h',  'h')
+		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'l',  'l')
 	augroup END
 endif
 
@@ -1332,7 +1337,7 @@ function! TagLoadStatus() " {{{
 	let l:status_format = '[Tag(%s)]'
 	let l:tags_shorten  = map(tagfiles(), 'pathshorten(v:val)')
 	let l:tags_flatten  = join(l:tags_shorten, ',')
-	let l:tags_status   = (l:tags_flatten ==# '') ? '(never)'
+	let l:tags_status   = (l:tags_flatten ==# '') ? '{never}'
 	\                                             : l:tags_flatten
 	return printf(l:status_format, l:tags_status)
 endfunction " }}}
