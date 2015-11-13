@@ -1,6 +1,6 @@
 #!/bin/sh
 # Thanks http://qiita.com/uasi/items/a340bb487ec07caac799
-f
+
 # Must set user.name at local
 if [ -z "`git config --local user.name`" ] ; then
 	echo 'fatal: user.name is not set locally'
