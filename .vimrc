@@ -41,8 +41,6 @@
 "-- conflicted? vim-ruby and rspec.vim when those was set NeoBundleLazy
 "  -- does not loaded syntax of rspec.vim
 
-"-- echo warning message by netobundle when reloading this
-
 "-- submode wintab-move over 1 previous tab
 
 " }}}
@@ -418,6 +416,7 @@ NeoBundleLazy  'whatyouhide/vim-textobj-xmlattr'
 NeoBundleLazy  'yomi322/neco-tweetvim'
 NeoBundleLazy  'yomi322/unite-tweetvim'
 NeoBundleLazy  'itchyny/vim-haskell-indent'
+NeoBundle      'aiya000/submode-window_move.vim'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
@@ -1027,31 +1026,6 @@ let g:foldCCtext_maxchars = 120
 " }}}
 "--- vim-submode --- {{{
 
-" Prepare function and command {{{
-
-function! s:loopable_tab_move_prev()
-	if tabpagenr() is 1
-		execute ':tabmove' tabpagenr('$')
-	else
-		execute ':tabmove -1'
-	endif
-endfunction
-
-function! s:loopable_tab_move_next()
-	if tabpagenr() is tabpagenr('$')
-		execute ':tabmove 0'
-	else
-		execute ':tabmove +1'
-	endif
-endfunction
-
-" Current buffer move to next tab
-"@Incomplete('if winnum in tab is 1')
-command! -bar BufTabMovePrev execute 'normal! mZ:hide<CR>gT:vsp<CR>`Z'
-command! -bar BufTabMoveNext execute 'normal! mZ' . (winnr('$') <= 1 ? ':hide<CR>' : ':hide<CR>gt') . ':vsp<CR>`Z'
-
-" }}}
-
 let g:submode_timeout = 0
 
 if neobundle#tap('vim-submode')
@@ -1074,23 +1048,6 @@ if neobundle#tap('vim-submode')
 		autocmd User MyVimRc call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
 		autocmd User MyVimRc call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
 		autocmd User MyVimRc call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
-
-		" Tab Mover
-		autocmd User MyVimRc call submode#enter_with('tab_move', 'n', '', '<C-s>t')
-		autocmd User MyVimRc call submode#map('tab_move', 'n', 's', 'n', printf(':call %sloopable_tab_move_next()<CR>', s:SID()))
-		autocmd User MyVimRc call submode#map('tab_move', 'n', 's', 'p', printf(':call %sloopable_tab_move_prev()<CR>', s:SID()))
-
-		" Window Mover
-		autocmd User MyVimRc call submode#enter_with('window_move', 'n', 'e', '<C-s>N', '":BufTabMoveNext<CR>" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
-		autocmd User MyVimRc call submode#enter_with('window_move', 'n', 'e', '<C-s>P', '":BufTabMovePrev<CR>" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
-		autocmd User MyVimRc call submode#map('window_move', 'n', 'e', 'N', '":BufTabMoveNext<CR>" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
-		autocmd User MyVimRc call submode#map('window_move', 'n', 'e', 'P', '":BufTabMovePrev<CR>" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
-		autocmd User MyVimRc call submode#map('window_move', 'n', 'e', 'H', '"<C-w>H" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
-		autocmd User MyVimRc call submode#map('window_move', 'n', 'e', 'J', '"<C-w>J" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
-		autocmd User MyVimRc call submode#map('window_move', 'n', 'e', 'K', '"<C-w>K" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
-		autocmd User MyVimRc call submode#map('window_move', 'n', 'e', 'L', '"<C-w>L" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
-		autocmd User MyVimRc call submode#map('window_move', 'n', 's', '_', '<C-w>_')
-		autocmd User MyVimRc call submode#map('window_move', 'n', 's', '"', ':resize 5<CR>')
 
 		" Linewise Mover
 		autocmd User MyVimRc call submode#enter_with('linewise_move', 'n', '', 'gk', 'gk')
@@ -1289,12 +1246,22 @@ let g:unite_source_tag_max_fname_length = 100
 let g:visualstar_extra_commands = 'zzzv'
 
 " }}}
+"--- submode-window_move.vim --- {{{
+
+" Register mode starting keymapping
+let g:submode_window_move = {}
+let g:submode_window_move['start_tab_move']                   = '<C-s>t'
+let g:submode_window_move['start_window_move_with_move_next'] = '<C-s>N'
+let g:submode_window_move['start_window_move_with_move_prev'] = '<C-s>P'
+
+" }}}
 "--- For Develop --- {{{
 
 " Local my plugins
 let s:repos = [ 'adrone.vim'
 \             , 'aho-bakaup.vim'
 \             , 'auto-ctags.vim'
+\             , 'submode-window_move.vim'
 \             ]
 let s:repos_dir = '~/Repository/'
 
@@ -2100,8 +2067,8 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-w>\ :<C-u>resize 0<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>~ :<C-u>vertical resize 0<CR>
 
-	autocmd User MyVimRc nnoremap <silent><expr> <C-w>t  'mZ:tabnew<CR>`Zzz'          . (foldlevel('.') > 0 ? 'zo' : '')
-	autocmd User MyVimRc nnoremap <silent><expr> g<C-w>t 'mZ:hide<CR>:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : '')
+	autocmd User MyVimRc nnoremap <silent><expr> <C-w>t  ('mZ:tabnew<CR>`Zzz'          . (foldlevel('.') > 0 ? 'zo' : ''))
+	autocmd User MyVimRc nnoremap <silent><expr> g<C-w>t ('mZ:hide<CR>:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : ''))
 augroup END
 
 " }}}
