@@ -15,3 +15,4 @@ setl expandtab
 " Avoid <C-j> to say
 nnoremap <buffer> <C-j> o<Esc>
 inoremap <buffer> <C-i> <Tab>
+inoremap <buffer> <C-b> <C-o>:TweetVimBitly<CR>

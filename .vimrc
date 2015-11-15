@@ -60,6 +60,8 @@
 
 "-- implement unite-gitlog for async load
 
+"-- read g:neocomplete#sources#dictionary#dictionaries
+
 " }}}
 
 
@@ -1214,6 +1216,12 @@ let g:neocomplete#sources#dictionary#dictionaries = {
 \	'vimshell' : expand('~/vimshell_history')
 \}
 
+" Disable on
+let g:neocomplete#sources = {
+\	'int-ghci'  : [],
+\	'int-stack' : []
+\}
+
 " }}}
 "--- auto-ctags.vim --- {{{
 
@@ -1806,8 +1814,9 @@ CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
 CmdCnoreabbr JazzList Unite jazzradio
 
 " Translates Languages
-CmdCnoreabbr Weblio Ref webdict weblio
-cnoreabbr    weblio Ref webdict weblio
+CmdCnoreabbr Weblio    Ref webdict weblio
+cnoreabbr    weblio    Ref webdict weblio
+CmdCnoreabbr WeblioTab TabnewOverridden \| Ref webdict weblio
 
 " NeoBundle install with showing log
 CmdCnoreabbr NeoBundleInstallL NeoBundleInstall \| NeoBundleLog
@@ -2358,9 +2367,9 @@ augroup PluginPrefs
 	autocmd FileType int-* inoremap <buffer> <C-f>      <Right>
 	autocmd FileType int-* inoremap <buffer> <C-e>      <End>
 	autocmd FileType int-* inoremap <buffer> <C-d>      <Del>
+	autocmd FileType int-* inoremap <buffer> <C-n>      <Tab>
 
-	autocmd FileType int-* imap     <buffer> <C-n>      <C-o><Plug>(vimshell_int_next_prompt)<End>
-	autocmd FileType int-* imap     <buffer> <C-p>      <C-o><Plug>(vimshell_int_previous_prompt)<End>
+	autocmd FileType int-* imap     <buffer> <C-p>      <Plug>(vimshell_int_history_unite)
 	autocmd FileType int-* imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
 	autocmd FileType int-* imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
 	autocmd FileType int-* imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
