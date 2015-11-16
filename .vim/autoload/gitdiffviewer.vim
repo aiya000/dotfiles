@@ -3,6 +3,8 @@ function! gitdiffviewer#git_diff_viewer(args)
 	setl buftype=nofile
 	call s:read_git_diff(a:args)
 	set  filetype=gitdiffviewer
+	set  foldmethod=expr
+	set  foldexpr=FoldExprOfGitDiff(v:lnum)
 endfunction
 
 function! s:read_git_diff(args)
@@ -14,4 +16,10 @@ function! s:read_git_diff(args)
 	normal! "zP
 	let @z  = l:z
 	normal! gg
+endfunction
+
+function! FoldExprOfGitDiff(lnum)
+	return getline(a:lnum)     =~# '^@@' ? '>1'
+	\    : getline(a:lnum + 1) =~# '^@@' ? '<1'
+	\                                    : '='
 endfunction

@@ -5,9 +5,9 @@ function! gitlogviewer#git_log_viewer(args)
 	setl buftype=nofile
 	call s:read_git_log(a:args)
 	set  filetype=gitlogviewer
-	setl foldmethod=expr
-	setl foldexpr=getline(v:lnum)=~'^commit'?'>1':getline(v:lnum+1)=~'^commit'?'<1':'='
-	setl foldtext=FoldTextOfGitLog()
+	set  foldmethod=expr
+	set  foldexpr=FoldExprOfGitLog(v:lnum)
+	set  foldtext=FoldTextOfGitLog()
 endfunction
 
 function! s:read_git_log(args)
@@ -18,6 +18,12 @@ function! s:read_git_log(args)
 	normal! "zP
 	let @z  = l:z
 	normal! gg
+endfunction
+
+function! FoldExprOfGitLog(lnum)
+	return getline(a:lnum)     =~# '^commit' ? '>1'
+	\    : getline(a:lnum + 1) =~# '^commit' ? '<1'
+	\                                        : '='
 endfunction
 
 function! FoldTextOfGitLog()
