@@ -1810,9 +1810,6 @@ cnoreabbr    tvs   TweetVimSwitchAccount
 CmdCnoreabbr Lingr J6uil
 CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
 
-" Beautifull Life
-CmdCnoreabbr JazzList Unite jazzradio
-
 " Translates Languages
 CmdCnoreabbr Weblio    Ref webdict weblio
 cnoreabbr    weblio    Ref webdict weblio
@@ -1825,6 +1822,10 @@ CmdCnoreabbr NeoBundleUpdateL  NeoBundleUpdate \| NeoBundleUpdatesLog
 " Remove prefix
 CmdCnoreabbr SessionSave UniteSessionSave
 CmdCnoreabbr SessionLoad UniteSessionLoad
+
+" Aliases
+CmdCnoreabbr JazzradioList Unite jazzradio
+CmdCnoreabbr ManTab        TabnewOverridden \| Man
 
 " }}}
 " Development {{{
@@ -2244,6 +2245,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <leader><leader><leader> :<C-u>echohl ErrorMsg \| echo "Don't rush it, keep cool." \| echohl None<CR>
 
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-r>     :<C-u>Reload<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>r         :<C-u>set filetype=&filetype<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-l>     :<C-u>nohlsearch<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-j>     :<C-u>write<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>J         :<C-u>wall \| echo 'written all !'<CR>
