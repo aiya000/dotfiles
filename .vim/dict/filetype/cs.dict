@@ -21,7 +21,10 @@ INotifyPropertyChanged
 IWorkbook
 IWorksheet
 InvalidOperationException
+Invariant
+MessageBoxResult
 NotImplementedException
+ObservableCollection
 OnPropertyChanged
 PropertyChangedEventArgs
 PropertyChangedEventHandler
@@ -31,12 +34,10 @@ StringBuilder
 TestTools
 ToShortDateString
 UnitTesting
+WPFButtonBase
 WPFTextBlock
 WPFTextBox
-WPFButtonBase
 WaitForCompletion
 WindowControl
 WindowsAppFriend
 WorkbookView
-MessageBoxResult
-ObservableCollection

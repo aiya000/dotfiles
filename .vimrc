@@ -1192,12 +1192,11 @@ let g:vimconsole#no_default_key_mappings = 1
 " }}}
 "--- vim-go --- {{{
 
-"@Experimental('commented out for eab9c63cb876f8cd77e45bd165a246684c58b898')
-"" Avoid a bug on cygwin environment
-"if s:is_cygwin
-"	let g:go_fmt_autosave        = 0
-"	let g:go_def_mapping_enabled = 0
-"endif
+" Avoid a bug on cygwin environment
+if s:is_cygwin
+	let g:go_fmt_autosave        = 0
+	let g:go_def_mapping_enabled = 0
+endif
 
 " }}}
 "--- vim-textobj-indent --- {{{
@@ -1230,13 +1229,12 @@ let g:auto_ctags_directory_list = [
 
 " Avoid hyper gravity
 let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
-\.	' --exclude=node_modules'
-\.	' --exclude=bower_components'
+\                          . ' --exclude=node_modules'
+\                          . ' --exclude=bower_components'
 
 " }}}
 "--- unite-tag --- {{{
 
-"@Incomplete('do not fully shown')
 " Fully showing name
 let g:unite_source_tag_max_name_length  = 100
 let g:unite_source_tag_max_fname_length = 100
