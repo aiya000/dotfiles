@@ -1210,12 +1210,6 @@ let g:textobj_indent_no_default_key_mappings = 1
 " Start neocomplete automatically
 let g:neocomplete#enable_at_startup = 1
 
-"@Incomplete('the config of vimshell history was not set')
-let g:neocomplete#sources#dictionary#dictionaries = {
-\	'default'  : '',
-\	'vimshell' : expand('~/vimshell_history')
-\}
-
 " Disable on
 let g:neocomplete#sources = {
 \	'int-ghci'  : [],
