@@ -1,0 +1,45 @@
+# Block
+snippet template-base
+alias   base
+abbr    \documentclass{...} \begin{document} ... \end{document}
+options head
+    \documentclass{jsarticle}
+    \begin{document}
+    ${0}
+    \end{document}
+
+snippet equation
+abbr    \begin{equation} ... \end{equation}
+options head indent
+    \begin{equation}
+        ${0}
+    \end{equation}
+
+# Symbol
+snippet expr
+abbr    \[ \]
+options head indent
+    \[${0}\]
+
+snippet mathrm
+abbr    \mathrm{m/s}
+    \mathrm{m/s}
+
+#
+snippet set
+abbr    \{ \}
+    \{${0}\}
+
+snippet comma
+alias   com
+abbr    ,
+    {,}${0}
+
+snippet bracket
+abbr    \left( \right)
+    \left(${0}\right)
+
+snippet fraction
+alias   frac
+abbr    \frac{n}{m}
+    \frac{${1:#:numerator}}{${2:#:denominator}}${3}

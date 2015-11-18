@@ -914,6 +914,7 @@ unlet s:java_src
 " Define myself, for lazy load
 let g:quickrun_no_default_key_mappings = 0
 
+"@Unchecked('tex on Ubuntu')
 let g:quickrun_config = {
 \	'_' : {
 \		'split'  : '',
@@ -937,7 +938,12 @@ let g:quickrun_config = {
 \		'outputter' : 'null',
 \		'exec'      : '%c %s:p'
 \	},
-\	'cs' : {}
+\	'cs'  : {},
+\	'tex' : {
+\		'command' : 'ptex2pdf',
+\		'cmdopt'  : '-l',
+\		'exec'    : '%c %o %s:r'
+\	}
 \}
 
 " Set by each environment
@@ -960,7 +966,7 @@ elseif s:is_windows
 	let g:quickrun_config.cs['hook/output_encode/encoding'] = 'cp932:utf-8'
 	" Java
 	let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
-	"TODO: don't depends firefox.exe
+	"TODO: Don't depends firefox.exe
 	" HTML
 	let g:quickrun_config.html['command'] = 'firefox.exe'
 	let g:quickrun_config.html['exec']    = '%c file://%s:p'
