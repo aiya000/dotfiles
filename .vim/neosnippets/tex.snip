@@ -1,4 +1,3 @@
-# Block
 snippet template-base
 alias   base
 abbr    \documentclass{...} \begin{document} ... \end{document}
@@ -15,7 +14,6 @@ options head indent
         ${0}
     \end{equation}
 
-# Symbol
 snippet expr
 abbr    \[ \]
 options head indent
@@ -43,3 +41,15 @@ snippet fraction
 alias   frac
 abbr    \frac{n}{m}
     \frac{${1:#:numerator}}{${2:#:denominator}}${3}
+
+snippet mid
+abbr    |
+    \mid${0}
+
+snippet in
+abbr    ∈
+    \in${0}
+
+snippet usepackage
+abbr    \usepackage{...}
+    \usepackage{${0:#:package_name}}
