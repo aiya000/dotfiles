@@ -40,7 +40,7 @@ abbr    \left( \right)
 snippet fraction
 alias   frac
 abbr    \frac{n}{m}
-    \frac{${1:#:numerator}}{${2:#:denominator}}${3}
+    \frac{${1:#:numerator}}{${2:#:denominator}}${0}
 
 snippet mid
 abbr    |
@@ -50,6 +50,32 @@ snippet in
 abbr    ∈
     \in${0}
 
+snippet ni
+abbr    ∋
+    \ni${0}
+
 snippet usepackage
 abbr    \usepackage{...}
     \usepackage{${0:#:package_name}}
+
+snippet sum
+abbr    \sum_{..}^{..}
+    \sum_{${1:#:under}}^{${2:#:over}}${0}
+
+snippet multicols
+abbr    \begin{multicols}{..} ... \end{multicols}
+options head indent
+    \begin{multicols}{${1:#:cols_num}}
+        ${0}
+    \end{multicols}
+
+snippet title
+abbr    \title{..} \author{..} \maketitle
+options head
+    \title{${1:title}}
+    \author{${2:name}}}
+    \maketitle
+
+snippet section
+abbr    \section{..}
+    \section{${1:subject}}${0}
