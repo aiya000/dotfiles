@@ -1799,8 +1799,9 @@ function! s:tweet_public() " {{{
 endfunction " }}}
 command! -bar TweetPublic        execute printf('call %stweet_public()', s:SID())
 
-CmdCnoreabbr Bitly TweetVimBitly
-cnoreabbr    tvs   TweetVimSwitchAccount
+CmdCnoreabbr Bitly         TweetVimBitly
+CmdCnoreabbr SwitchAccount TweetVimSwitchAccount
+CmdCnoreabbr UserTimeline  TweetVimUserTimeline
 
 " }}}
 
