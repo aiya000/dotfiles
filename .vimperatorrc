@@ -32,7 +32,7 @@ highlight CompResult         font-family: monospace; width: 35%; overflow: hidde
 highlight CompTitle          color: DeepPink; font-size: 11pt;
 highlight ErrorMsg           background-color: DarkRed;
 highlight Function           color: RoyalBlue;
-highlight Hint               font-family: monospace; font-size: 16px; font-weight: bold; color: Blue; background-color: rgba(135, 206, 250, 0.7); border: solid 1px Blue;
+highlight Hint               font-family: monospace; font-size: 16px; font-weight: bold; color: Blue; background-color: rgba(135, 206, 250, 0.5); border: solid 1px Blue;
 highlight HintActive         background-color: Orange; color: White;
 highlight HintElem           background-color: Khaki; color: Black;
 highlight InfoMsg            background-color: #333;
