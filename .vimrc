@@ -128,39 +128,6 @@ let s:viewdir   = s:backupdir . '/view'
 " }}}
 
 
-"---------------------"
-"    Local_Function   "
-"---------------------"
-" {{{
-
-"TODO: Implement with multi arguments
-" Run system command by vimproc or vim default
-function! s:system(cmd)
-	"@Incomplete('vimproc#system was not executed in this script, refer to vital.vim')
-	if s:is_windows
-		silent execute '!start' a:cmd
-	elseif exists('*vimproc#system')
-		return vimproc#system(a:cmd)
-	else
-		return system(a:cmd)
-	endif
-endfunction
-
-" Show error message
-function! s:echo_error(msg)
-	echohl Error
-	echo a:msg
-	echohl None
-endfunction
-
-" Get script local ID
-function! s:SID()
-	return matchstr(expand('<sfile>'), '<SNR>\d\+_')
-endfunction
-
-" }}}
-
-
 "-------------------------"
 "       Initialize        "
 "-------------------------"
@@ -255,19 +222,7 @@ endif
 " }}}
 " Startup NeoBundle {{{
 
-let s:bundledir    = g:vimrc['vim_home'] . '/bundle'
-let s:neobundledir = s:bundledir . '/neobundle.vim'
-function! s:fetch_neobundle() " {{{
-	if executable('git')
-		echo 'NeoBundle was not installed...'
-		echo 'Installing NeoBundle.'
-		execute '!git clone https://github.com/Shougo/neobundle.vim' s:neobundledir
-	else
-		call s:echo_error('Sorry, You do not have git command.')
-		call s:echo_error('Cannot introduce NeoBundle.')
-		throw 'FALIED: cloning neobundle.vim failed.'
-	endif
-endfunction " }}}
+let s:bundledir = g:vimrc['vim_home'] . '/bundle'
 
 if !isdirectory(s:bundledir)
 	call mkdir(s:bundledir)
@@ -281,18 +236,18 @@ try
 	call neobundle#begin()
 catch /E117/  " neobundle.vim not found
 	try
-		call s:fetch_neobundle()
+		call vimrc#fetch_neobundle(s:bundledir)
 		call neobundle#begin()
 		echo 'NeoBundle install completed.'
 		echo 'Please execute :NeoBundleInstall,'
 		echo 'and restart Vim.'
 	catch /FALIED/
-		call s:echo_error('cloning or starting neobundle.vim failed.')
-		call s:echo_error('>> Error build vim environment <<')
+		call vimrc#echo_error('cloning or starting neobundle.vim failed.')
+		call vimrc#echo_error('>> Error build vim environment <<')
 	endtry
 endtry
 
-unlet s:neobundledir s:bundledir
+unlet s:bundledir
 
 " }}}
 " Check backup directories {{{
@@ -1087,11 +1042,7 @@ let g:ref_source_webdict_sites = {
 
 let g:ref_source_webdict_sites['default'] = 'weblio'
 
-function! s:weblio_filter(output) " {{{
-	let l:lines = split(a:output, "\n")
-	return join(l:lines[60 : ], "\n")
-endfunction " }}}
-let g:ref_source_webdict_sites['weblio'].filter = function('s:weblio_filter')
+let g:ref_source_webdict_sites['weblio'].filter = function('vimrc#plugins#weblio_filter')
 
 " }}}
 "--- restart.vim --- {{{
@@ -1304,17 +1255,8 @@ set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
 " Status bar was always displayed
 set laststatus=2
 
-"@See(' http://sourceforge.jp/magazine/07/11/06/0151231 ')
 " Set status bar format
-function! TagLoadStatus() " {{{
-	let l:status_format = '[Tag(%s)]'
-	let l:tags_shorten  = map(tagfiles(), 'pathshorten(v:val)')
-	let l:tags_flatten  = join(l:tags_shorten, ',')
-	let l:tags_status   = (l:tags_flatten ==# '') ? '{never}'
-	\                                             : l:tags_flatten
-	return printf(l:status_format, l:tags_status)
-endfunction " }}}
-set statusline=%F%m\ %{fugitive#statusline()}%=\ \ %{TagLoadStatus()}[FileType=%y][Format=%{&fileencoding}][Encode=%{&encoding}][%03v]
+set statusline=%F%m\ %{fugitive#statusline()}%=\ \ %{vimrc#set#tag_load_status()}[FileType=%y][Format=%{&fileencoding}][Encode=%{&encoding}][%03v]
 
 " ☆ Fix 2byte code viewing, but this option don't support gnome-terminal
 set ambiwidth=double
@@ -1367,41 +1309,8 @@ set noruler
 " Always show tabline
 set showtabline=2
 
-"@See('http://d.hatena.ne.jp/thinca/20111204/1322932585')
 " Sugoi view tabline
-function! s:tabpage_label(n) " {{{
-	let l:title = gettabvar(a:n, 'title')
-	if l:title !=# ''
-		return l:title
-	endif
-
-	let l:bufnrs = tabpagebuflist(a:n)
-	let l:hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
-
-	let l:no = len(l:bufnrs)
-	if l:no is 1
-		let l:no = ''
-	endif
-
-	let l:mod = len(filter(copy(l:bufnrs), 'getbufvar(v:val, "&modified")')) ? '+' : ''
-	let l:sp = (l:no . l:mod) ==# '' ? '' : ' '
-
-	let l:curbufnr = l:bufnrs[tabpagewinnr(a:n) - 1]
-	let l:fname = pathshorten(bufname(l:curbufnr))
-	if l:fname ==# ''
-		let l:fname = '[ NoName ]'
-	endif
-
-	let l:label = l:no . l:mod . l:sp . l:fname
-	return '%' . a:n . 'T' . l:hi . l:label . '%T%#TabLineFill#'
-endfunction " }}}
-function! s:with_delimitter_tab_line() " {{{
-	let l:titles     = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
-	let l:delimitter = ' | '
-	let l:tabpages   = l:delimitter . join(l:titles, l:delimitter) . l:delimitter . '%#TabLineFill#%T'
-	return l:tabpages
-endfunction " }}}
-execute 'set tabline=%!' . printf('%swith_delimitter_tab_line()', s:SID())
+set tabline=%!vimrc#set#with_delimitter_tab_line()
 
 " Turn off highlight
 nohlsearch
@@ -1464,28 +1373,7 @@ set notimeout
 set suffixes=
 
 " Do foldopen all when visual_mode cursor_move
-" s:visual_fold_all() {{{
-
-let s:visual_fold_toggle = get(s:, 'visual_fold_toggle', 0)
-
-function! s:visual_fold_all()
-	if mode() =~# "^[vV\<C-v>]"
-		if !s:visual_fold_toggle && &foldenable
-			set nofoldenable
-			normal! zz
-			let s:visual_fold_toggle = 1
-		endif
-	else
-		if s:visual_fold_toggle
-			set foldenable
-			normal! zz
-			let s:visual_fold_toggle = 0
-		endif
-	endif
-endfunction
-
-" }}}
-autocmd UserEvent CursorMoved * call s:visual_fold_all()
+autocmd UserEvent CursorMoved * call vimrc#events#visual_fold_all()
 
 " Don't put two space on join (normal J)
 set nojoinspaces
@@ -1545,13 +1433,7 @@ endif
 
 augroup FileEvent
 	" Auto set cursor position in the file
-	function! s:visit_past_position() " {{{
-		let l:past_posit = line("'\"")
-		if l:past_posit > 0 && l:past_posit <= line('$')
-			execute 'normal! g`"'
-		endif
-	endfunction " }}}
-	autocmd BufReadPost * call s:visit_past_position()
+	autocmd BufReadPost * call vimrc#set#visit_past_position()
 
 	" Auto load filetype dictionary
 	autocmd FileType *
@@ -1608,83 +1490,14 @@ AlterCommand tabnew TabnewOverridden
 command! -bar -nargs=1 GrepInThis vimgrep <args> % | cwindow
 
 " Reverse ranged lines
-function! s:reverse_line() range " {{{
-	if a:firstline is a:lastline
-		return
-	endif
-
-	let l:lines = []
-	let l:posit = getpos('.')
-
-	let l:z = @z
-	for l:line in range(a:firstline, a:lastline)
-		execute 'normal! "zdd'
-		call add(l:lines, @z)
-	endfor
-
-	for l:r in l:lines
-		let @z = l:r
-		execute 'normal! "zP'
-	endfor
-	let @z = l:z
-
-	call setpos('.', l:posit)
-endfunction " }}}
-command! -range=% ReverseLine :<line1>, <line2>call s:reverse_line()
+command! -range=% ReverseLine :<line1>, <line2>call vimrc#cmd#reverse_line()
 
 " Rename the file of current buffer
-function! s:rename_to(new_name) abort " {{{
-	let l:this_file = fnameescape(expand('%'))
-	let l:new_name  = fnameescape(a:new_name)
-
-	if fnamemodify(l:this_file, ':t') ==# l:new_name
-		call s:echo_error('New name is same old name, operation abort')
-		return
-	endif
-
-	let l:file_editing = &modified
-	if l:file_editing
-		call s:echo_error('Please :write this file')
-		return
-	endif
-
-	let l:new_file = fnamemodify(l:this_file, ':h') . '/' . l:new_name
-	let l:failed   = rename(l:this_file, l:new_file)
-	if l:failed
-		call s:echo_error(printf('Rename %s to %s is failed', l:this_file, l:new_file))
-		return
-	endif
-
-	execute ':edit' l:new_file
-	silent write
-	silent execute ':bdelete' l:this_file
-
-	echo printf('Renamed %s to %s', l:this_file, l:new_file)
-endfunction " }}}
-command! -bar -nargs=1 -complete=file Rename call s:rename_to(<q-args>)
+command! -bar -nargs=1 -complete=file Rename call vimrc#cmd#rename_to(<q-args>)
 
 "@Bugs(':RedirToVar @" highlight  " happend exception')
 " Substitute result to a variable easily
-function! s:redir_to_var(bang, args_str) abort " {{{
-	let l:args        = split(a:args_str, '\s')
-	let l:var_name    = escape(l:args[0], '"')  " bug, boooon.
-	let l:expr        = join(l:args[1:], ' ')
-	" redir to register or variable
-	let l:is_register = stridx(l:var_name, '@') > -1
-	let l:direction   = l:is_register ? l:var_name : ('=> g:' . l:var_name)
-
-	if a:bang && !l:is_register
-		execute 'unlet! g:' . l:var_name
-	endif
-	if exists('g:' . l:var_name)
-		call s:echo_error('That variable exists.')
-		call s:echo_error('If you want to overwrite variable, call with bang.')
-		return
-	endif
-
-	execute printf('redir %s | silent %s | redir END', l:direction, l:expr)
-endfunction " }}}
-command! -bar -nargs=1 -bang -complete=command RedirToVar call s:redir_to_var(<bang>0, <q-args>)
+command! -bar -nargs=1 -bang -complete=command RedirToVar call vimrc#cmd#redir_to_var(<bang>0, <q-args>)
 
 "@Unsupported('support Windows Kaoriya GVim only {now}')
 " Open current buffer in new gvim window
@@ -1701,14 +1514,7 @@ command! -bar OpenInNewWindow
 " Prepare functions & commands {{{
 
 " Define cnoreabbr with cmd completion
-function! s:cmd_cnoreabbr(...) " {{{
-	let l:UNUSED_VALUE = 'NOP'
-	let l:cmd_name     = a:1
-	let l:cmd_detail   = join(a:000[1:], ' ')
-	execute 'cnoreabbr' l:cmd_name l:cmd_detail
-	execute 'command!'  l:cmd_name l:UNUSED_VALUE
-endfunction " }}}
-command! -nargs=+ CmdCnoreabbr call s:cmd_cnoreabbr(<f-args>)
+command! -nargs=+ CmdCnoreabbr call vimrc#cmd#cmd_cnoreabbr(<f-args>)
 
 " }}}
 " Vim Utils {{{
@@ -1744,60 +1550,14 @@ command! -bar TwitterTab         tabnew | Twitter
 command! -bar Tweet              TweetVimSay
 
 "-- Private Account --"
-function! s:twitter_private() " {{{
-	if !exists('g:vimrc.private["twitter"]["priv_ac"]')
-		call s:echo_error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
-		return
-	endif
-
-	execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['priv_ac']
-	let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['priv_ac']
-
-	TweetVimHomeTimeline
-endfunction " }}}
-command! -bar TwitterPrivate     execute printf('call %stwitter_private()', s:SID())
+command! -bar TwitterPrivate     call vimrc#plugins#twitter_private()
 command! -bar TwitterPrivateTab  tabnew | TwitterPrivate
-function! s:tweet_private() " {{{
-	if !exists('g:vimrc.private["twitter"]["priv_ac"]')
-		call s:echo_error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
-		return
-	endif
-
-	execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['priv_ac']
-	TweetVimSay
-
-	"@Incomplete('wait sync here')
-	"execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['curr_ac']
-endfunction " }}}
-command! -bar TweetPrivate       execute printf('call %stweet_private()', s:SID())
+command! -bar TweetPrivate       call vimrc#plugins#tweet_private()
 
 "-- Public Account --"
-function! s:twitter_public() " {{{
-	if !exists("g:vimrc.private['twitter']['publ_ac']")
-		call s:echo_error("Not set env variable => g:vimrc.private['twitter']['publ_ac']")
-		return
-	endif
-
-	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['publ_ac']
-	let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['publ_ac']
-
-	TweetVimHomeTimeline
-endfunction " }}}
-command! -bar TwitterPublic      execute printf('call %stwitter_public()', s:SID())
+command! -bar TwitterPublic      call vimrc#plugins#twitter_public()
 command! -bar TwitterPublicTab   tabnew | TwitterPublic
-function! s:tweet_public() " {{{
-	if !exists('g:vimrc.private["twitter"]["publ_ac"]')
-		call s:echo_error('Not set env variable => g:vimrc.private["twitter"]["publ_ac"]')
-		return
-	endif
-
-	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['publ_ac']
-	TweetVimSay
-
-	"@Incomplete('wait here')
-	"execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
-endfunction " }}}
-command! -bar TweetPublic        execute printf('call %stweet_public()', s:SID())
+command! -bar TweetPublic        call vimrc#plugins#tweet_public()
 
 CmdCnoreabbr Bitly         TweetVimBitly
 CmdCnoreabbr SwitchAccount TweetVimSwitchAccount
@@ -1860,23 +1620,7 @@ CmdCnoreabbr IrbTab VimShellInteractive --split='tabnew' irb
 " }}}
 
 " Staging current file to git
-function! s:git_add() abort " {{{
-	let l:result = s:system('git add ' . expand('%:p'))
-	if l:result != ''
-		NewOverridden
-		resize 5
-		setl buftype=nofile
-		setl filetype=scratch
-		execute 'normal! i' l:result
-		" Delete empty line
-		normal! dd
-	elseif !v:shell_error
-		echo expand('%:p') . ' was added to git repository'
-	else
-		throw 'unknowned pattern: ' . v:shell_error
-	endif
-endfunction " }}}
-command! -bar GitAdd call s:git_add()
+command! -bar GitAdd call vimrc#cmd#git_add()
 
 " }}}
 
@@ -1913,135 +1657,6 @@ augroup END
 " }}}
 " Global {{{
 
-" Prepare functions {{{
-
-" Compress continuous space
-function! s:compress_spaces() " {{{
-	let l:recent_pattern = @/
-	try
-		substitute/\s\+/ /g
-		normal! ==
-	finally
-		let @/ = l:recent_pattern
-	endtry
-	nohlsearch
-endfunction " }}}
-
-" Clear all lines end space
-function! s:clear_ends_space() " {{{
-	let l:recent_pattern = @/
-	let l:curpos = getcurpos()
-	try
-		%substitute/\s*\?$//g
-	catch /E486/
-		echo 'nothing todo'
-	finally
-		let @/ = l:recent_pattern
-		call setpos('.', l:curpos)
-	endtry
-endfunction " }}}
-
-" Move cursor to topmost of this indent
-function! s:cursor_up_to_lid() " {{{
-	while 1
-		let l:p = virtcol('.')
-		normal! k
-
-		let l:indent_changed = l:p isnot virtcol('.')
-		if l:indent_changed || line('.') is 1  " top line
-			if l:indent_changed
-				normal! j
-			endif
-			break
-		endif
-	endwhile
-endfunction " }}}
-
-" Move cursor to bottommost of this indent
-function! s:cursor_down_to_ground() " {{{
-	let l:last_line = line('$')
-	while 1
-		let l:p = virtcol('.')
-		execute 'normal! j'
-
-		let l:indent_changed = l:p isnot virtcol('.')
-		if l:indent_changed || line('.') is l:last_line
-			if l:indent_changed
-				execute 'normal! k'
-			endif
-			break
-		endif
-	endwhile
-endfunction " }}}
-
-" Toggle foldmethod marker or syntax
-function! s:toggle_foldmethod() " {{{
-	if &foldmethod !=# 'syntax'
-		setl foldmethod=syntax
-	else
-		setl foldmethod=marker
-	endif
-	setl foldmethod?
-
-	if foldlevel('.') > 0 && foldclosed('.') isnot -1
-		normal! zO
-	endif
-endfunction " }}}
-
-" Toggle diffthis - diffoff
-function! s:toggle_diff() " {{{
-	if &diff
-		diffoff
-		nunmap <buffer> {
-		nunmap <buffer> }
-	else
-		diffthis
-		nnoremap <buffer> { [c
-		nnoremap <buffer> } ]c
-	endif
-	set diff?
-endfunction " }}}
-
-" If you has nofile buffer, close it.
-function! s:bufclose_filetype(filetype) " {{{
-	let l:closed = 0
-	for l:w in range(1, winnr('$'))
-		let l:buf_ft = getwinvar(l:w, '&filetype')
-		if l:buf_ft ==# a:filetype
-			execute ':' . l:w . 'wincmd w'
-			execute ':quit'
-			let l:closed = 1
-		endif
-	endfor
-	return l:closed
-endfunction " }}}
-
-" Toggle open netrw explorer ( vertical split )
-function! s:toggle_netrw_vexplorer() " {{{
-	let l:closed = s:bufclose_filetype('netrw')
-	if !l:closed
-		Vexplore
-	endif
-endfunction " }}}
-
-" Do :bufdo without changing current buffer
-function! s:motionless_bufdo(cmd) abort " {{{
-	NewOverridden
-	setl buftype=nofile
-	execute 'bufdo' a:cmd
-	quit
-endfunction " }}}
-
-" Toggle showing indent-guides with variable
-" function! s:toggle_indent_guides() " {{{
-
-let s:indent_guides_enable = get(s:, 'indent_guides_enable', 1)
-function! s:toggle_indent_guides()
-	let s:indent_guides_enable = !s:indent_guides_enable
-	IndentGuidesToggle
-endfunction " }}}
-
-" }}}
 " Foldings {{{
 
 augroup KeyMapping
@@ -2085,13 +1700,13 @@ augroup END
 
 augroup KeyMapping
 	" All
-	autocmd User MyVimRc nnoremap <silent> <C-h>E     :<C-u>call <SID>motionless_bufdo('set expandtab')<CR>:echo 'set expandtab all buffer!'<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-h><C-e> :<C-u>call <SID>motionless_bufdo('set expandtab!')<CR>:set expandtab?<CR>
-	autocmd User MyVimRc inoremap <silent> <C-k><C-e> <C-o>:call <SID>motionless_bufdo('set expandtab!')<CR><C-o>:set expandtab?<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h>E     :<C-u>call vimrc#keys#motionless_bufdo('set expandtab')<CR>:echo 'set expandtab all buffer!'<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-e> :<C-u>call vimrc#keys#motionless_bufdo('set expandtab!')<CR>:set expandtab?<CR>
+	autocmd User MyVimRc inoremap <silent> <C-k><C-e> <C-o>:call vimrc#keys#motionless_bufdo('set expandtab!')<CR><C-o>:set expandtab?<CR>
 
 	" Local
-	autocmd User MyVimRc nnoremap <silent>       <C-h><C-f> :<C-u>call <SID>toggle_foldmethod()<CR>
-	autocmd User MyVimRc nnoremap <silent>       <C-h><C-d> :<C-u>call <SID>toggle_diff()<CR>
+	autocmd User MyVimRc nnoremap <silent>       <C-h><C-f> :<C-u>call vimrc#keys#toggle_foldmethod()<CR>
+	autocmd User MyVimRc nnoremap <silent>       <C-h><C-d> :<C-u>call vimrc#keys#toggle_diff()<CR>
 	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
 
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
@@ -2109,7 +1724,7 @@ augroup END
 
 augroup KeyMapping
 	" netrw
-	autocmd User MyVimRc nnoremap <silent> <leader>e         :<C-u>call <SID>toggle_netrw_vexplorer()<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>e         :<C-u>call vimrc#keys#toggle_netrw_vexplorer()<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>e :<C-u>Sexplore<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>E         :<C-u>Explore<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>E :<C-u>Texplore<CR>
@@ -2120,7 +1735,7 @@ augroup KeyMapping
 	" vim-quickrun
 	autocmd User MyVimRc nmap              <leader>r         <Plug>(quickrun)
 	autocmd User MyVimRc nnoremap <silent> <leader>R         :<C-u>QuickRun -runner shell<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>r :<C-u>call <SID>bufclose_filetype('quickrun')<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>r :<C-u>call vimrc#keys#bufclose_filetype('quickrun')<CR>
 	autocmd User MyVimRc vmap              <leader>r         <Plug>(quickrun)
 	autocmd User MyVimRc vnoremap <silent> <leader>R         :QuickRun -runner shell<CR>
 
@@ -2188,7 +1803,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <leader>u :<C-u>UndotreeToggle<CR>
 
 	" vim-indent-guides
-	autocmd User MyVimRc nnoremap <silent> <C-h><C-i> :<C-u>call <SID>toggle_indent_guides()<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-h><C-i> :<C-u>call vimrc#keys#toggle_indent_guides()<CR>
 
 	" neosnippet.vim
 	autocmd User MyVimRc imap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
@@ -2236,11 +1851,11 @@ augroup KeyMapping
 
 	autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=scratch<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| resize 5<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>k                :<C-u>call <SID>cursor_up_to_lid()<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>j                :<C-u>call <SID>cursor_down_to_ground()<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>b        :<C-u>call <SID>bufclose_filetype('scratch')<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>k                :<C-u>call vimrc#keys#cursor_up_to_lid()<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>j                :<C-u>call vimrc#keys#cursor_down_to_ground()<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>b        :<C-u>call vimrc#keys#bufclose_filetype('scratch')<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>h        :<C-u>helpclose<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>q        :<C-u>call <SID>bufclose_filetype('qf')<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>q        :<C-u>call vimrc#keys#bufclose_filetype('qf')<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader><leader> :<C-u>echohl ErrorMsg \| echo "Don't rush it, keep cool." \| echohl None<CR>
 
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-r>     :<C-u>Reload<CR>
@@ -2248,8 +1863,8 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-l>     :<C-u>nohlsearch<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-j>     :<C-u>write<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>J         :<C-u>wall \| echo 'written all !'<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k><Space>   :<C-u>call <SID>clear_ends_space()<CR>
-	autocmd User MyVimRc nnoremap <silent> <Space><Space> :<C-u>call <SID>compress_spaces()<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><Space>   :<C-u>call vimrc#keys#clear_ends_space()<CR>
+	autocmd User MyVimRc nnoremap <silent> <Space><Space> :<C-u>call vimrc#keys#compress_spaces()<CR>
 
 	" }}}
 	" insert mode {{{
