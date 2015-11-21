@@ -361,7 +361,6 @@ NeoBundle      'tpope/vim-repeat'
 NeoBundleLazy  'lambdalisue/vim-pager'
 NeoBundleLazy  'lambdalisue/vim-manpager'
 NeoBundle      'thinca/vim-visualstar'
-NeoBundle      'tpope/vim-fugitive'
 NeoBundleLazy  'rhysd/try-colorscheme.vim'
 NeoBundle      'jonathanfilip/vim-lucius'
 NeoBundleLazy  'aiya000/unite-syntax'
@@ -374,6 +373,7 @@ NeoBundleLazy  'yomi322/neco-tweetvim'
 NeoBundleLazy  'yomi322/unite-tweetvim'
 NeoBundleLazy  'itchyny/vim-haskell-indent'
 NeoBundle      'aiya000/submode-window_move.vim'
+NeoBundleLazy  'lambdalisue/vim-gita'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
@@ -733,12 +733,6 @@ if neobundle#tap('vim-manpager')
 	\})
 	call neobundle#untap()
 endif
-if neobundle#tap('vim-fugitive')
-	call neobundle#config('vim-fugitive', {
-	\	'augroup' : 'fugitive'
-	\})
-	call neobundle#untap()
-endif
 if neobundle#tap('try-colorscheme.vim')
 	call neobundle#config('try-colorscheme.vim', {
 	\	'autoload' : {'commands' : 'TryColorscheme'}
@@ -826,6 +820,12 @@ endif
 if neobundle#tap('vim-haskell-indent')
 	call neobundle#config('vim-haskell-indent', {
 	\	'autoload' : { 'filetype' : 'haskell' }
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-gita')
+	call neobundle#config('vim-gita', {
+	\	'autoload': { 'commands': 'Gita' }
 	\})
 	call neobundle#untap()
 endif
@@ -1256,7 +1256,7 @@ set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
 set laststatus=2
 
 " Set status bar format
-set statusline=%F%m\ %{fugitive#statusline()}%=\ \ %{vimrc#set#tag_load_status()}[FileType=%y][Format=%{&fileencoding}][Encode=%{&encoding}][%03v]
+set statusline=%F%m\ [%{gita#statusline#format('%lb')}]%=\ \ %{vimrc#set#tag_load_status()}[FileType=%y][Format=%{&fileencoding}][Encode=%{&encoding}][%03v]
 
 " ☆ Fix 2byte code viewing, but this option don't support gnome-terminal
 set ambiwidth=double
