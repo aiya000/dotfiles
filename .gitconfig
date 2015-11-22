@@ -37,3 +37,6 @@
 	pager = vim - -R +PAGER -c 'setf vim-pager | set syn=git'
 [init]
 	templatedir = ~/.git_templates
+[status]
+	short = true
+	branch = true

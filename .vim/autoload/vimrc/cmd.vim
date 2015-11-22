@@ -82,21 +82,3 @@ function! vimrc#cmd#redir_to_var(bang, args_str) abort " {{{
 
 	execute printf('redir %s | silent %s | redir END', l:direction, l:expr)
 endfunction " }}}
-
-" Add git stage current file
-function! vimrc#cmd#git_add() abort " {{{
-	let l:result = s:system('git add ' . expand('%:p'))
-	if l:result != ''
-		NewOverridden
-		resize 5
-		setl buftype=nofile
-		setl filetype=scratch
-		execute 'normal! i' l:result
-		" Delete empty line
-		normal! dd
-	elseif !v:shell_error
-		echo expand('%:p') . ' was added to git repository'
-	else
-		throw 'unknowned pattern: ' . v:shell_error
-	endif
-endfunction " }}}

@@ -1086,11 +1086,12 @@ augroup HighlightPref
 augroup END
 
 " If matched file extension pattern, indent-guides is enabled
-"@See('nnoremap <C-h>i')
+"@See('nnoremap <C-h><C-i>')
+let g:vimrc#keys#indent_guides_enable = get(g:, 'vimrc#keys#indent_guides_enable', 1)
 augroup FileEvent
 	autocmd WinEnter,BufWinEnter * IndentGuidesDisable
 	autocmd WinEnter,BufWinEnter *.{xml,html,css,scss,erb,xaml}
-	\	if s:indent_guides_enable
+	\	if g:vimrc#keys#indent_guides_enable
 	\|		IndentGuidesEnable
 	\|	endif
 augroup END
@@ -1589,8 +1590,6 @@ CmdCnoreabbr ManTab        TabnewOverridden \| Man
 " }}}
 " Development {{{
 
-" Open Development Buffer {{{
-
 " vimconsole.vim
 CmdCnoreabbr Log      VimConsoleLog
 CmdCnoreabbr LogClear VimConsoleClear
@@ -1616,11 +1615,6 @@ CmdCnoreabbr Irb    VimShellInteractive irb
 CmdCnoreabbr Sirb   VimShellInteractive --split='sp' irb
 CmdCnoreabbr Virb   VimShellInteractive --split='vsp' irb
 CmdCnoreabbr IrbTab VimShellInteractive --split='tabnew' irb
-
-" }}}
-
-" Staging current file to git
-command! -bar GitAdd call vimrc#cmd#git_add()
 
 " }}}
 

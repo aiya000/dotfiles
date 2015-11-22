@@ -116,8 +116,7 @@ function! vimrc#keys#motionless_bufdo(cmd) abort " {{{
 endfunction " }}}
 
 " Toggle showing indent-guides with variable
-let s:indent_guides_enable = get(s:, 'indent_guides_enable', 1)
 function! vimrc#keys#toggle_indent_guides() " {{{
-	let s:indent_guides_enable = !s:indent_guides_enable
+	let g:vimrc#keys#indent_guides_enable = !g:vimrc#keys#indent_guides_enable
 	IndentGuidesToggle
 endfunction " }}}

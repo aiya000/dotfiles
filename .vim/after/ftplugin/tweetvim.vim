@@ -15,6 +15,7 @@ nmap             <buffer> <localleader>R <Plug>(tweetvim_action_remove_status)
 nmap             <buffer> <C-r>          <Plug>(tweetvim_action_reload)
 nmap             <buffer> >              <Plug>(tweetvim_action_page_next)
 nmap             <buffer> <              <Plug>(tweetvim_action_page_previous)
+nmap             <buffer> O              <Plug>(tweetvim_action_favstar_browser)
 
 nunmap           <buffer> ff
 nunmap           <buffer> bb

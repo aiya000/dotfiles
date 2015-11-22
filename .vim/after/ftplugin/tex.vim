@@ -5,3 +5,4 @@ let b:undo_ftplugin = 'setl ' . join([
 \])
 
 set ts=4 sw=4 et
+set conceallevel=0
