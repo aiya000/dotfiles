@@ -56,11 +56,9 @@
 
 "-- read help syntax.txt
 
-"-- quickrun pref of stack project
+"-- read help clear-undo.txt
 
-"-- implement unite-gitlog for async load
-
-"-- read g:neocomplete#sources#dictionary#dictionaries
+"-- gita config
 
 " }}}
 
@@ -869,7 +867,6 @@ unlet s:java_src
 " Define myself, for lazy load
 let g:quickrun_no_default_key_mappings = 0
 
-"@Unchecked('tex on Ubuntu')
 let g:quickrun_config = {
 \	'_' : {
 \		'split'  : '',
@@ -1257,7 +1254,15 @@ set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
 set laststatus=2
 
 " Set status bar format
-set statusline=%F%m\ [%{gita#statusline#format('%lb')}]%=\ \ %{vimrc#set#tag_load_status()}[FileType=%y][Format=%{&fileencoding}][Encode=%{&encoding}][%03v]
+let s:statusline_left  = '[Fenc=%{&fileencoding}]'
+\                      . '[Enc=%{&encoding}]'
+\                      . '[FT=%y]'
+\                      . '%{vimrc#set#tag_load_status()}'
+let s:statusline_right = ':%n %F%m %r'
+\                      . '[%{gita#statusline#format("%lb")}]'
+\                      . '[%03v]'
+let &statusline        = s:statusline_left . '%=' . s:statusline_right
+unlet s:statusline_left s:statusline_right
 
 " ☆ Fix 2byte code viewing, but this option don't support gnome-terminal
 set ambiwidth=double
@@ -1586,6 +1591,11 @@ CmdCnoreabbr SessionLoad UniteSessionLoad
 " Aliases
 CmdCnoreabbr JazzradioList Unite jazzradio
 CmdCnoreabbr ManTab        TabnewOverridden \| Man
+
+" Shortcut
+CmdCnoreabbr Gstatus Gita status
+CmdCnoreabbr Gcommit Gita commit
+cnoreabbr    gita    Gita
 
 " }}}
 " Development {{{

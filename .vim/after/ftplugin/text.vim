@@ -6,7 +6,7 @@ let b:undo_ftplugin = 'setl ' . join([
 \	'shiftwidth<',
 \	'expandtab<',
 \	'indentkeys<',
-\	'commandstring<'
+\	'commentstring<'
 \])
 
 setl textwidth=0
