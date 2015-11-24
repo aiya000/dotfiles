@@ -109,14 +109,14 @@ let g:vimrc = get(g:, 'vimrc', {
 
 let s:vimrc_env = expand('~/.vimrc_env')
 
-let s:is_windows = has('win32')
-let s:is_cygwin  = has('win32unix')
-let s:is_kaoriya = has('kaoriya')
-let s:is_doswin  = s:is_windows && !s:is_cygwin && !has('gui')
-let s:is_unix    = has('unix')
+" Global values for local plugins
+let g:vimrc['is_windows'] = get(g:vimrc, 'is_windows', has('win32')    )
+let g:vimrc['is_cygwin']  = get(g:vimrc, 'is_cygwin',  has('win32unix'))
+let g:vimrc['is_kaoriya'] = get(g:vimrc, 'is_kaoriya', has('kaoriya')  )
+let g:vimrc['is_unix']    = get(g:vimrc, 'is_unix',    has('unix')     )
 
-let s:has_cygwin = executable('cygstart')
-let s:has_mingw  = 0  "NOTE: ('dummy')
+let g:vimrc['has_cygwin'] = executable('cygstart')
+let g:vimrc['has_mingw']  = 0  "NOTE: ('dummy')
 
 let s:backupdir = expand('~/.backup/vim_backup')
 let s:directory = s:backupdir . '/swp'
@@ -169,7 +169,7 @@ augroup END
 " }}}
 " Build environment for Kaoriya Vim {{{
 
-if s:is_kaoriya && s:is_windows
+if g:vimrc['is_kaoriya'] && g:vimrc['is_windows']
 	" Set environments
 	let $HOME               = $VIM
 	let $PATH               = $HOME . '/bin;' . $PATH
@@ -177,7 +177,7 @@ if s:is_kaoriya && s:is_windows
 	let &runtimepath        = &runtimepath . ',' . g:vimrc['vim_home']
 
 	" Use cygwin's commands
-	if s:has_cygwin
+	if g:vimrc['has_cygwin']
 		let $PATH = '/cygwin/bin;/cygwin/usr/bin;/cygwin/usr/sbin;' . $PATH
 	endif
 
@@ -191,9 +191,9 @@ if s:is_kaoriya && s:is_windows
 	let s:suppress_vimproc = s:switch_dir . '/disable-vimproc.vim'
 
 	" If you has mingw, use neobundle's vimproc
-	if !s:has_mingw && filereadable(s:suppress_vimproc)
+	if !g:vimrc['has_mingw'] && filereadable(s:suppress_vimproc)
 		call delete(s:suppress_vimproc)
-	elseif s:has_mingw && !filereadable(s:suppress_vimproc)
+	elseif g:vimrc['has_mingw'] && !filereadable(s:suppress_vimproc)
 		call writefile([], s:suppress_vimproc)
 	endif
 	unlet s:suppress_vimproc
@@ -382,7 +382,7 @@ if neobundle#tap('vimproc.vim')
 	\		'linux'  : 'make',
 	\		'cygwin' : 'make'
 	\	},
-	\	'disabled' : s:is_kaoriya && s:is_windows && !s:has_mingw
+	\	'disabled' : g:vimrc['is_kaoriya'] && g:vimrc['is_windows'] && !g:vimrc['has_mingw']
 	\})
 	call neobundle#untap()
 endif
@@ -899,7 +899,7 @@ let g:quickrun_config = {
 \}
 
 " Set by each environment
-if s:is_unix && !s:is_cygwin
+if g:vimrc['is_unix'] && !g:vimrc['is_cygwin']
 	" C#
 	let g:quickrun_config.cs['command'] = 'mcs'
 	" HTML
@@ -912,7 +912,7 @@ if s:is_unix && !s:is_cygwin
 		"let g:quickrun_config.haskell['command'] = 'stack runghc'
 		let g:quickrun_config.haskell['exec'] = 'stack runghc -- %s'
 	endif
-elseif s:is_windows
+elseif g:vimrc['is_windows']
 	" C#
 	let g:quickrun_config.cs['command']                     = 'csc.exe'
 	let g:quickrun_config.cs['hook/output_encode/encoding'] = 'cp932:utf-8'
@@ -922,7 +922,7 @@ elseif s:is_windows
 	" HTML
 	let g:quickrun_config.html['command'] = 'firefox.exe'
 	let g:quickrun_config.html['exec']    = '%c file://%s:p'
-elseif s:is_cygwin
+elseif g:vimrc['is_cygwin']
 	"@Marked('if fixed this, remove this')
 	let g:quickrun_config._['runner'] = 'system'
 	" C#
@@ -1153,7 +1153,7 @@ let g:vimconsole#no_default_key_mappings = 1
 "--- vim-go --- {{{
 
 " Avoid a bug on cygwin environment
-if s:is_cygwin
+if g:vimrc['is_cygwin']
 	let g:go_fmt_autosave        = 0
 	let g:go_def_mapping_enabled = 0
 endif
@@ -1509,15 +1509,6 @@ command! -bar -nargs=1 -complete=file Rename call vimrc#cmd#rename_to(<q-args>)
 "@Bugs(':RedirToVar @" highlight  " happend exception')
 " Substitute result to a variable easily
 command! -bar -nargs=1 -bang -complete=command RedirToVar call vimrc#cmd#redir_to_var(<bang>0, <q-args>)
-
-"@Unsupported('support Windows Kaoriya GVim only {now}')
-" Open current buffer in new gvim window
-" - You must add 'gvim' command to $PATH
-command! -bar OpenInNewWindow
-\	let s:target_filepath = expand('%:p')
-\|	bdelete!
-\|	call s:system('gvim ' . s:target_filepath)
-\|	unlet s:target_filepath
 
 " }}}
 " Helper {{{

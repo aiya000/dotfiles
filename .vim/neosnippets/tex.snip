@@ -23,10 +23,6 @@ snippet mathrm
 abbr    \mathrm{m/s}
     \mathrm{m/s}
 
-snippet mathbb
-abbr    \mathbb{..}
-    \mathbb{${1:#:object}}${0}
-
 #
 snippet set
 abbr    \{ \}
@@ -58,9 +54,13 @@ snippet ni
 abbr    ∋
     \ni${0}
 
+snippet use
+abbr    \usepackage{..}
+    \usepackage{${0:#:name}}
+
 snippet usepackage
-abbr    \usepackage{...}
-    \usepackage{${0:#:package_name}}
+abbr    \usepackage[..]{..}
+    \usepackage[${1:#:package_name}]{${2:#:name}}
 
 snippet sum
 abbr    \sum_{..}^{..}
@@ -83,3 +83,19 @@ options head
 snippet section
 abbr    \section{..}
     \section{${1:subject}}${0}
+
+snippet forall
+abbr    ∀
+    \forall${0}
+
+snippet exists
+abbr    ∃
+    \exists${0}
+
+snippet subset
+abbr    ⊂
+    \subset${0}
+
+snippet Longrightarrow
+abbr    ==⇒
+    \Longrightarrow

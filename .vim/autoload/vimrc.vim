@@ -4,7 +4,7 @@
 " Run system command by vimproc or vim default
 function! vimrc#system(cmd)
 	"@Incomplete('vimproc#system was not executed in this script, refer to vital.vim')
-	if s:is_windows
+	if g:vimrc['is_windows']
 		silent execute '!start' a:cmd
 	elseif exists('*vimproc#system')
 		return vimproc#system(a:cmd)
