@@ -957,10 +957,13 @@ let g:vimshell_no_save_history_commands = {
 \	'clear'  : 1
 \}
 let g:vimshell_enable_transient_user_prompt = 1
-let g:vimshell_force_overwrite_statusline   = 1
 let g:vimshell_max_command_history          = 10000
 let g:vimshell_scrollback_limit             = 10000
 let g:vimshell_split_command                = 'split'
+
+" Use current directory as vimshell prompt
+let g:vimshell_prompt_expr    = 'escape(fnamemodify(getcwd(), ":~") . "%", "\\[]()?! ") . " "'
+let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+% '
 
 "@See('autoload/vimshell/commands/{hereis,edit_places,places,reload_places}.vim')
 let g:vimshell_hereis_alias_prefix = 'p_'
@@ -1124,7 +1127,8 @@ let g:separetaro_short_separator_of = {
 \	'css'        : '/* -=-=-=-=-=-=-=-=- */',
 \	'php'        : '/* -=-=-=-=-=-=-=-=- */',
 \	'go'         : '/* -=-=-=-=-=-=-=-=- */',
-\	'html'       : '<!-- -=-=-=-=-=-=-=-=- -->'
+\	'html'       : '<!-- -=-=-=-=-=-=-=-=- -->',
+\	'markdown'   : '- - -'
 \}
 
 " Combinate neosnippet.vim
@@ -1135,7 +1139,8 @@ let g:separetaro_long_separator_of = {
 \	'css'        : '/* --- --- --- <`0`> --- --- --- */',
 \	'php'        : '/* --- --- --- <`0`> --- --- --- */',
 \	'go'         : '/* --- --- --- <`0`> --- --- --- */',
-\	'html'       : '<!-- -- -- -- <`0`> -- -- -- -->'
+\	'html'       : '<!-- -- -- -- <`0`> -- -- -- -->',
+\	'markdown'   : '- - - - -'
 \}
 
 " }}}
