@@ -359,6 +359,7 @@ NeoBundle      'tpope/vim-repeat'
 NeoBundleLazy  'lambdalisue/vim-pager'
 NeoBundleLazy  'lambdalisue/vim-manpager'
 NeoBundle      'thinca/vim-visualstar'
+NeoBundle      'tpope/vim-fugitive'
 NeoBundleLazy  'rhysd/try-colorscheme.vim'
 NeoBundle      'jonathanfilip/vim-lucius'
 NeoBundleLazy  'aiya000/unite-syntax'
@@ -371,7 +372,6 @@ NeoBundleLazy  'yomi322/neco-tweetvim'
 NeoBundleLazy  'yomi322/unite-tweetvim'
 NeoBundleLazy  'itchyny/vim-haskell-indent'
 NeoBundle      'aiya000/submode-window_move.vim'
-NeoBundleLazy  'lambdalisue/vim-gita'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
@@ -731,6 +731,12 @@ if neobundle#tap('vim-manpager')
 	\})
 	call neobundle#untap()
 endif
+if neobundle#tap('vim-fugitive')
+	call neobundle#config('vim-fugitive', {
+	\	'augroup' : 'fugitive'
+	\})
+	call neobundle#untap()
+endif
 if neobundle#tap('try-colorscheme.vim')
 	call neobundle#config('try-colorscheme.vim', {
 	\	'autoload' : {'commands' : 'TryColorscheme'}
@@ -818,12 +824,6 @@ endif
 if neobundle#tap('vim-haskell-indent')
 	call neobundle#config('vim-haskell-indent', {
 	\	'autoload' : { 'filetype' : 'haskell' }
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-gita')
-	call neobundle#config('vim-gita', {
-	\	'autoload': { 'commands': 'Gita' }
 	\})
 	call neobundle#untap()
 endif
@@ -1264,7 +1264,7 @@ let s:statusline_left  = '[Fenc=%{&fileencoding}]'
 \                      . '[FT=%y]'
 \                      . '%{vimrc#set#tag_load_status()}'
 let s:statusline_right = ':%n %F%m %r'
-\                      . '[%{gita#statusline#format("%lb")}]'
+\                      . '%{fugitive#statusline()}'
 \                      . '[%03v]'
 let &statusline        = s:statusline_left . '%=' . s:statusline_right
 unlet s:statusline_left s:statusline_right
@@ -1587,11 +1587,6 @@ CmdCnoreabbr SessionLoad UniteSessionLoad
 " Aliases
 CmdCnoreabbr JazzradioList Unite jazzradio
 CmdCnoreabbr ManTab        TabnewOverridden \| Man
-
-" Shortcut
-CmdCnoreabbr Gstatus Gita status
-CmdCnoreabbr Gcommit Gita commit
-cnoreabbr    gita    Gita
 
 " }}}
 " Development {{{
