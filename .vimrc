@@ -1230,7 +1230,7 @@ for s:plug in s:repos
 	let s:plug_dir = s:repos_dir . s:plug
 	if isdirectory(expand(s:plug_dir))
 		execute 'set runtimepath+=' . s:plug_dir
-		silent execute 'NeoBundleDisable' s:plug
+		silent! execute 'NeoBundleDisable' s:plug
 	end
 endfor
 unlet s:plug_dir s:plug s:repos_dir s:repos
