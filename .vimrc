@@ -1383,9 +1383,6 @@ set notimeout
 " Do not set file name order priority on c-mode completion
 set suffixes=
 
-" Do foldopen all when visual_mode cursor_move
-autocmd UserEvent CursorMoved * call vimrc#events#visual_fold_all()
-
 " Don't put two space on join (normal J)
 set nojoinspaces
 
