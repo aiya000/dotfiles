@@ -1,3 +1,9 @@
+snippet method
+abbr    void method() {}
+    ${1:void} ${2:#:methodName}(${3:#:args}) {
+        ${0:TARGET}
+    }
+
 snippet try_finally
 alias   try_f
 abbr    try {} finally {}
@@ -16,4 +22,10 @@ abbr    try {} catch () {} finally {}
         ${3}
     } finally {
         ${4}
+    }
+
+snippet try_with_resource
+abbr    try () {}
+    try (${1:#:resource}) {
+        ${0:TARGET}
     }
