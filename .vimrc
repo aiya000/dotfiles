@@ -58,7 +58,7 @@
 
 "-- read help clear-undo.txt
 
-"-- gita config
+"-- read help usr_41
 
 " }}}
 
@@ -1506,6 +1506,9 @@ command! -bar -nargs=1 -complete=file Rename call vimrc#cmd#rename_to(<q-args>)
 "@Bugs(':RedirToVar @" highlight  " happend exception')
 " Substitute result to a variable easily
 command! -bar -nargs=1 -bang -complete=command RedirToVar call vimrc#cmd#redir_to_var(<bang>0, <q-args>)
+
+" Count selected line num
+command! -bar -range Count :echomsg (<line2> - <line1> + 1)
 
 " }}}
 " Helper {{{
