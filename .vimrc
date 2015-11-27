@@ -1694,7 +1694,7 @@ augroup KeyMapping
 augroup END
 
 " }}}
-" Toggle options {{{
+" Options Toggling  {{{
 
 augroup KeyMapping
 	" All
@@ -1715,6 +1715,8 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
 
 	autocmd User MyVimRc inoremap <silent> <C-k><C-w> <C-o>:setl wrap!      wrap?<CR>
+
+	autocmd User MyVimRc vnoremap <silent><expr> <C-h><C-v> '<Esc>:setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>gv'
 augroup END
 
 " }}}
