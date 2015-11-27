@@ -1386,8 +1386,11 @@ set suffixes=
 " Don't put two space on join (normal J)
 set nojoinspaces
 
-" Control by myself
+" Control IME by myself
 set iminsert=0
+
+" Open .tex as LaTex
+let g:tex_flavor = 'latex'
 
 " }}}
 
