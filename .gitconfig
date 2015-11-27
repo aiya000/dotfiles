@@ -33,6 +33,7 @@
 	dc = diff --cached
 	return = reset --hard HEAD
 	tree-all = log --graph --decorate --all --oneline
+	ri = rebase -i
 [core]
 	pager = vim - -R +PAGER -c 'setf vim-pager | set syn=git'
 [init]
