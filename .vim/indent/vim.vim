@@ -3,48 +3,47 @@ if exists('b:did_indent')
 endif
 
 source $VIMRUNTIME/indent/vim.vim
-setlocal indentexpr=GetVimIndentOverwrite()
+set indentexpr=GetVimIndentOverwrite()
 
 function! GetVimIndentOverwrite()
-	let lnum = prevnonblank(v:lnum - 1)
+	let l:lnum = prevnonblank(v:lnum - 1)
 
-	if getline(v:lnum) !~ '^\s*\\'
-		while lnum > 0 && getline(lnum) =~ '^\s*\\'
-			let lnum = lnum - 1
+	if getline(v:lnum) !~# '^\s*\\'
+		while (l:lnum > 0) && (getline(l:lnum) =~# '^\s*\\')
+			let l:lnum = l:lnum - 1
 		endwhile
 	endif
 
-	if lnum == 0
+	if l:lnum is 0
 		return 0
 	endif
 
-	let ind = indent(lnum)
-	if getline(v:lnum) =~ '^\s*\\' && v:lnum > 1 && getline(lnum) !~ '^\s*\\'
-		if exists("g:vim_indent_cont")
-			let ind = ind + g:vim_indent_cont
+	let l:ind = indent(l:lnum)
+	if (getline(v:lnum) =~# '^\s*\\') && (v:lnum > 1) && (getline(l:lnum) !~# '^\s*\\')
+		if exists('g:vim_indent_cont')
+			let l:ind = l:ind + g:vim_indent_cont
 		else
-			"let ind = ind + &sw * 3
+			"let l:ind = l:ind + &sw * 3
 		endif
-	elseif getline(lnum) =~ '\(^\||\)\s*\(if\|wh\%[ile]\|for\|try\|cat\%[ch]\|fina\%[lly]\|fu\%[nction]\|el\%[seif]\)\>'
-		let ind = ind + &sw
-	elseif getline(lnum) =~ '^\s*aug\%[roup]' && getline(lnum) !~ '^\s*aug\%[roup]\s*!\=\s\+END'
-		let ind = ind + &sw
+	elseif getline(l:lnum) =~# '\(^\||\)\s*\(if\|wh\%[ile]\|for\|try\|cat\%[ch]\|fina\%[lly]\|fu\%[nction]\|el\%[seif]\)\>'
+		let l:ind = l:ind + &sw
+	elseif (getline(l:lnum) =~# '^\s*aug\%[roup]') && (getline(l:lnum) !~# '^\s*aug\%[roup]\s*!\=\s\+END')
+		let l:ind = l:ind + &sw
 	endif
 
-	let line = getline(lnum)
-	let i = match(line, '[^\\]|\s*\(ene\@!\)')
-	if i > 0 && line !~ '^\s*au\%[tocmd]'
-		if !has('syntax_items') || synIDattr(synID(lnum, i + 2, 1), "name") !~ '\(Comment\|String\)$'
-			let ind = ind - &sw
+	let l:line = getline(l:lnum)
+	let l:i    = match(l:line, '[^\\]|\s*\(ene\@!\)')
+	if (l:i > 0) && (l:line !~# '^\s*au\%[tocmd]')
+		if !has('syntax_items') || synIDattr(synID(l:lnum, l:i + 2, 1), 'name') !~# '\(Comment\|String\)$'
+			let l:ind = l:ind - &sw
 		endif
 	endif
-
 
 	if getline(v:lnum) =~ '^\s*\(ene\@!\|cat\|fina\|el\|aug\%[roup]\s*!\=\s\+END\)'
-		let ind = ind - &sw
+		let l:ind = l:ind - &sw
 	endif
 
-	return ind
+	return l:ind
 endfunction
 
 let b:did_indent = 1
