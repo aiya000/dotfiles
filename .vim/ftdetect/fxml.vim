@@ -1,1 +1,1 @@
-autocmd! BufNewFile,BufRead *.fxml setf fxml
+autocmd! BufNewFile,BufRead *.fxml setl ft=fxml

@@ -1,3 +1,3 @@
-autocmd! BufNewFile,BufRead .vimperatorrc setf vim
-autocmd! BufNewFile,BufRead .vrapperrc    setf vim
-autocmd! BufNewFile,BufRead .vsvimrc      setf vim
+autocmd! BufNewFile,BufRead .vimperatorrc setl ft=vim
+autocmd! BufNewFile,BufRead .vrapperrc    setl ft=vim
+autocmd! BufNewFile,BufRead .vsvimrc      setl ft=vim

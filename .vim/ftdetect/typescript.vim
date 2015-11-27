@@ -1,1 +1,1 @@
-autocmd! BufNewFile,BufRead *.ts setf typescript
+autocmd! BufNewFile,BufRead *.ts setl ft=typescript

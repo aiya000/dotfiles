@@ -1,1 +1,1 @@
-autocmd! BufNewFile,BufRead *.xaml setf xaml
+autocmd! BufNewFile,BufRead *.xaml setl ft=xaml
