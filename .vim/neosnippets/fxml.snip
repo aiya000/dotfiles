@@ -1,3 +1,12 @@
+snippet import
+abbr    <?import ..?>
+options head
+    <?import ${1:#:class_path}?>
+
+snippet fx_controller
+abbr    fx:controller="ctrl"
+    fx:controller="${1:#:controller_class}"${0}
+
 snippet alignment
 abbr    alignment="CENTER"
     alignment="${1:CENTER}"${0}
@@ -10,9 +19,46 @@ snippet vgap
 abbr    vgap="10.0"
     vgap="${1:10.0}"${0}
 
+snippet top
+abbr    top="10.0"
+    top="${1:10.0}"${0}
+
+snippet bottom
+abbr    bottom="10.0"
+    bottom="${1:10.0}"${0}
+
+snippet left
+abbr    left="10.0"
+    left="${1:10.0}"${0}
+
+snippet right
+abbr    right="10.0"
+    right="${1:10.0}"${0}
+
+snippet text
+abbr     text=""
+    text="${1:#:hello}"${0}
+
 snippet padding
 abbr    <padding></padding>
 options head indent
     <padding>
         ${0:TARGET}
     </padding>
+
+snippet GridPane
+abbr    <GridPane xmln:fx=..>...</GridPane>
+options head indent
+    <GridPane xmlns:fx="http://javafx.com/fxml/1">
+        ${0:TARGET}
+    </GridPane>
+
+snippet Insets
+abbr    <Insets/>
+options head
+    <Insets${0}/>
+
+snippet Label
+abbr    <Label/>
+options head
+    <Label${0}/>

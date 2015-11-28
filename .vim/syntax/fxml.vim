@@ -1,1 +1,1 @@
-runtime! syntax/xml.vim
+runtime syntax/xml.vim
