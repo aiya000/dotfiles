@@ -1,0 +1,28 @@
+snippet import
+abbr    <?import ..?>
+options head
+    <?import ${1:#:class_path}?>
+
+snippet padding
+abbr    <padding></padding>
+options head indent
+    <padding>
+        ${0:TARGET}
+    </padding>
+
+snippet GridPane
+abbr    <GridPane xmln:fx=..>...</GridPane>
+options head indent
+    <GridPane xmlns:fx="http://javafx.com/fxml/1">
+        ${0:TARGET}
+    </GridPane>
+
+snippet Insets
+abbr    <Insets/>
+options head
+    <Insets${0}/>
+
+snippet Label
+abbr    <Label/>
+options head
+    <Label${0}/>

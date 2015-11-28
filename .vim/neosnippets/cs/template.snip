@@ -1,0 +1,109 @@
+snippet ViewModelTemplate
+alias   VMTemplate
+options indent
+    #region public field
+    
+    public event PropertyChangedEventHandler PropertyChanged;
+    
+    public string ${1:#:PropertyName} {
+        get {
+            return this.${2:#:propertSubName};
+        }
+        set {
+            this.$2 = value;
+            this.OnPropertyChanged("$1");
+        }
+    }
+    
+    #endregion
+    
+    #region private field
+    
+    private string $2;
+    
+    #endregion
+    
+    #region public constructor
+    
+    public ${3:Constructor}() {
+        this.$1 = string.Empty;
+    }
+    
+    #endregion
+    
+    #region private method
+    
+    private void OnPropertyChanged(string name) {
+        if (this.PropertyChanged != null) {
+            this.PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
+    }
+    
+    #endregion
+
+snippet CommandTemplate
+options indent
+    #region public field
+    
+    public event EventHandler CanExecuteChanged;
+    
+    #endregion
+    
+    #region public method
+    
+    public bool CanExecute(object parameter) {
+        return true;
+    }
+    
+    public void Execute(object parameter) {
+        ${0}
+    }
+    
+    #endregion
+
+#TODO: expand target in quote
+snippet FriendlyTestClassTemplate
+options indent
+    using System;
+    using System.Windows;
+    using System.Diagnostics;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Codeer.Friendly;
+    using Codeer.Friendly.Windows;
+    using Codeer.Friendly.Dynamic;
+    using Codeer.Friendly.Windows.Grasp;
+    using RM.Friendly.WPFStandardControls;
+    
+    [TestClass]
+    public class ${1:#:TargetClass}Test {
+    
+        #region field
+    
+        WindowsAppFriend app;
+    
+        #endregion
+    
+        #region public method
+    
+        [TestInitialize]
+        public void TestInitialize() {
+            this.app = new WindowsAppFriend(Process.Start(@"..\..\..\
+            ${2:#:TargetProjectName}\bin\
+            ${3:Debug}\
+            $2.exe
+            "));
+        }
+    
+        [TestCleanup]
+        public void TestCleanup() {
+            Process.GetProcessById(this.app.ProcessId).CloseMainWindow();
+        }
+    
+        [TestMethod]
+        public void ShouldBe${4:#:Context}() {
+            var mainCore = this.app.Type<Application>().Current.MainWindow;
+        }
+    
+        #endregion
+    
+    }
