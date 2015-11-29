@@ -1,15 +1,3 @@
-snippet import
-abbr    <?import ..?>
-options head
-    <?import ${1:#:class_path}?>
-
-snippet padding
-abbr    <padding></padding>
-options head
-    <padding>
-        ${0:TARGET}
-    </padding>
-
 snippet GridPaneSurround
 alias   GridPane
 abbr    <GridPane xmln:fx=".."></GridPane>
@@ -35,3 +23,8 @@ options head
     <TableView>
         ${0:TARGET}
     </TableView>
+
+snippet TableColumn
+abbr    <TableColumn/>
+options head
+    <TableColumn${0}/>
