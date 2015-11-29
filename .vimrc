@@ -1085,12 +1085,12 @@ augroup HighlightPref
 	autocmd VimEnter,ColorScheme * highlight default link IndentGuidesEven Pmenu
 augroup END
 
-" If matched file extension pattern, indent-guides is enabled
+" Unify indent-guides available
 "@See('nnoremap <C-h><C-i>')
 let g:vimrc#keys#indent_guides_enable = get(g:, 'vimrc#keys#indent_guides_enable', 1)
 augroup FileEvent
 	autocmd WinEnter,BufWinEnter * IndentGuidesDisable
-	autocmd WinEnter,BufWinEnter *.{xml,html,css,scss,erb,xaml}
+	autocmd WinEnter,BufWinEnter *.{xml,html,css,scss,erb,xaml,fxml}
 	\	if g:vimrc#keys#indent_guides_enable
 	\|		IndentGuidesEnable
 	\|	endif

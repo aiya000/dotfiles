@@ -1,6 +1,10 @@
 snippet fx_controller
-abbr    fx:controller="ctrl"
+abbr    fx:controller=""
     fx:controller="${1:#:controller_class}"${0}
+
+snippet fx_id
+abbr    fx:id=""
+    fx:id="${1:#:name}"${0}
 
 snippet alignment
 abbr    alignment="CENTER"
@@ -32,4 +36,12 @@ abbr    right="10.0"
 
 snippet text
 abbr     text=""
-    text="${1:#:hello}"${0}
+    text="${1:#:foo}"${0}
+
+snippet GridPane.columnIndex
+abbr     GridPane.columnIndex="0"
+    GridPane.columnIndex="${1:0}"${0}
+
+snippet GridPane.rowIndex
+abbr     GridPane.rowIndex="0"
+    GridPane.rowIndex="${1:0}"${0}

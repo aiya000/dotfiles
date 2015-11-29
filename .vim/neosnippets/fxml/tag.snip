@@ -5,14 +5,15 @@ options head
 
 snippet padding
 abbr    <padding></padding>
-options head indent
+options head
     <padding>
         ${0:TARGET}
     </padding>
 
-snippet GridPane
-abbr    <GridPane xmln:fx=..>...</GridPane>
-options head indent
+snippet GridPaneSurround
+alias   GridPane
+abbr    <GridPane xmln:fx=".."></GridPane>
+options head
     <GridPane xmlns:fx="http://javafx.com/fxml/1">
         ${0:TARGET}
     </GridPane>
@@ -26,3 +27,11 @@ snippet Label
 abbr    <Label/>
 options head
     <Label${0}/>
+
+snippet TableViewSurround
+alias   TableView
+abbr    <TableView></TableView>
+options head
+    <TableView>
+        ${0:TARGET}
+    </TableView>
