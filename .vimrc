@@ -1081,6 +1081,9 @@ let g:bakaup_auto_backup = 1
 " for :NeoSnippetEdit
 let g:neosnippet#snippets_directory = g:vimrc['vim_home'] . '/neosnippets'
 
+" Disable default select-mode mapping
+let g:neosnippet#disable_select_select_mappings = 1
+
 " }}}
 "--- separetaro.vim --- {{{
 
