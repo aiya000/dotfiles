@@ -890,7 +890,6 @@ let g:quickrun_config = {
 \		'outputter' : 'null',
 \		'exec'      : '%c %s:p'
 \	},
-\	'cs'  : {},
 \	'tex' : {
 \		'command' : 'ptex2pdf',
 \		'cmdopt'  : '-l',
@@ -900,46 +899,11 @@ let g:quickrun_config = {
 
 " Set by each environment
 if g:vimrc['is_unix'] && !g:vimrc['is_cygwin']
-	" C#
-	let g:quickrun_config.cs['command'] = 'mcs'
-	" HTML
-	"@Unsupported('except Ubuntu')
-	let g:quickrun_config.html['command'] = 'xdg-open'
-	" Haskell
-	if executable('stack')
-		let g:quickrun_config['haskell']      = {}
-		"NOTE: this specific is invalid
-		"let g:quickrun_config.haskell['command'] = 'stack runghc'
-		let g:quickrun_config.haskell['exec'] = 'stack runghc -- %s'
-	endif
+	call vimrc#plugins#append_config_quickrun_unix()
 elseif g:vimrc['is_windows']
-	" C#
-	let g:quickrun_config.cs['command']                     = 'csc.exe'
-	let g:quickrun_config.cs['hook/output_encode/encoding'] = 'cp932:utf-8'
-	" Java
-	let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
-	"TODO: Don't depends firefox.exe
-	" HTML
-	let g:quickrun_config.html['command'] = 'firefox.exe'
-	let g:quickrun_config.html['exec']    = '%c file://%s:p'
+	call vimrc#plugins#append_config_quickrun_windows()
 elseif g:vimrc['is_cygwin']
-	"@Marked('if fixed this, remove this')
-	let g:quickrun_config._['runner'] = 'system'
-	" C#
-	let g:quickrun_config.cs['command']                     = 'csc.exe'
-	let g:quickrun_config.cs['hook/output_encode/encoding'] = 'cp932:utf-8'
-	" Java
-	let g:quickrun_config.java['exec']                        = ['%c %o `cygpath -w %s:p`', '%c %s:t:r %a']
-	let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
-	let g:quickrun_config.java['tempfile']                    = printf('%s/{tempname()}.java', $TMP)
-	" Haskell
-	let g:quickrun_config['haskell']      = {}
-	let g:quickrun_config.haskell['exec'] = "%c %o `cygpath -w '%s:p'` | tr -d \"\\r\""
-	" TypeScript
-	let g:quickrun_config['typescript']        = {}
-	let g:quickrun_config.typescript['exec']   = ['%c %o "`cygpath -w %s:p`"', 'node "`cygpath -w %s:p:r`.js"']
-	" HTML
-	let g:quickrun_config.html['command'] = 'cygstart'
+	call vimrc#plugins#append_config_quickrun_cygwin()
 endif
 
 " }}}
