@@ -1,0 +1,57 @@
+snippet template-base
+alias   base
+abbr    \documentclass{...} \begin{document} ... \end{document}
+options head
+    \documentclass{jsarticle}
+    \begin{document}
+    ${0}
+    \end{document}
+
+snippet title
+abbr    \title{..} \author{..} \maketitle
+options head
+    \title{${1:title}}
+    \author{${2:name}}}
+    \maketitle
+
+snippet use
+abbr    \usepackage{..}
+    \usepackage{${0:#:name}}
+
+snippet usepackage
+abbr    \usepackage[..]{..}
+    \usepackage[${1:#:package_name}]{${2:#:name}}
+
+snippet section
+abbr    \section{..}
+    \section{${1:subject}}${0}
+
+snippet equation
+abbr    \begin{equation} ... \end{equation}
+options head indent
+    \begin{equation}
+        ${0}
+    \end{equation}
+
+snippet eqnarray
+abbr    \begin{eqnarray} ... \end{eqnarray}
+options head indent
+    \begin{eqnarray}
+        ${0}
+    \end{eqnarray}
+
+snippet multicols
+abbr    \begin{multicols}{..} ... \end{multicols}
+options head indent
+    \begin{multicols}{${1:#:cols_num}}
+        ${0}
+    \end{multicols}
+
+snippet expr
+abbr    \[ \]
+options head indent
+    \[${0}\]
+
+snippet position
+abbr    & .. &
+    &${1}&${0}
