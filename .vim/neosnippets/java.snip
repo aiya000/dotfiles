@@ -29,3 +29,10 @@ abbr    try () {}
     try (${1:#:resource}) {
         ${0:TARGET}
     }
+
+snippet main
+abbr    public static void main(String[] args) {}
+options head indent
+    public static void main(String[] args) {
+        ${0:TARGET}
+    }
