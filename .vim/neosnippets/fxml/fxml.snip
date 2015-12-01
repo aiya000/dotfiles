@@ -1,8 +1,16 @@
-# Syntax
+# Control
 snippet import
 abbr    <?import ..?>
 options head
     <?import ${1:#:class_path}?>
+
+snippet GridPaneSurround
+alias   GridPane
+abbr    <GridPane xmln:fx=".."></GridPane>
+options head
+    <GridPane xmlns:fx="http://javafx.com/fxml/1">
+        ${0:TARGET}
+    </GridPane>
 
 snippet padding
 abbr    <padding></padding>
@@ -11,9 +19,65 @@ options head indent
         ${0:TARGET}
     </padding>
 
+snippet Insets
+abbr    <Insets/>
+options head
+    <Insets${0}/>
+
+snippet Label
+abbr    <Label/>
+options head
+    <Label${0}/>
+
+snippet TableViewSurround
+alias   TableView
+abbr    <TableView></TableView>
+options head
+    <TableView>
+        ${0:TARGET}
+    </TableView>
+
+snippet items
+abbr    <items></items>
+options head indent
+    <items>
+        ${0:TARGET}
+    </items>
+
 snippet columns
 abbr    <columns></columns>
 options head indent
     <columns>
         ${0:TARGET}
     </columns>
+
+snippet cellValueFactory
+abbr    <cellValueFactory></cellValueFactory>
+options head indent
+    <cellValueFactory>
+        ${0:TARGET}
+    </cellValueFactory>
+
+snippet TableColumn
+abbr    <TableColumn/>
+options head
+    <TableColumn${0}/>
+
+snippet TableColumnSurround
+abbr    <TableColumn></TableColumn>
+options head indent
+    <TableColumn>
+        ${0:TARGET}
+    </TableColumn>
+
+snippet FXCollectionsSurround
+alias   FXCollections
+abbr    <FXCollections></FXCollections>
+options head
+    <FXCollections>
+        ${0:TARGET}
+    </FXCollections>
+
+snippet PropertyValueFactory
+abbr    <PropertyValueFactory property=".."/>
+    <PropertyValueFactory property="${1:#:fieldName}"/>
