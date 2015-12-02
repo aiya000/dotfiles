@@ -1554,6 +1554,9 @@ CmdCnoreabbr NeoBundleUpdateL  NeoBundleUpdate \| NeoBundleUpdatesLog
 CmdCnoreabbr SessionSave UniteSessionSave
 CmdCnoreabbr SessionLoad UniteSessionLoad
 
+" Save session and specify session name automatically
+command! SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
+
 " Aliases
 CmdCnoreabbr JazzradioList Unite jazzradio
 CmdCnoreabbr ManTab        TabnewOverridden \| Man

@@ -82,3 +82,27 @@ function! vimrc#cmd#redir_to_var(bang, args_str) abort " {{{
 
 	execute printf('redir %s | silent %s | redir END', l:direction, l:expr)
 endfunction " }}}
+
+" Make session_name from git repository
+" and Save current session by :UniteSessionSave
+function! vimrc#cmd#git_branch_session_save() " {{{
+	let l:repository_name = s:find_git_repository_name('.', 0)
+	let l:branch_name     = matchstr(fugitive#statusline(), '(\zs.*\ze)')
+	let l:branch_name0    = substitute(l:branch_name, '/', '-', 'g')
+	let l:session_name    = l:repository_name . '-' . l:branch_name0
+	execute 'UniteSessionSave' l:session_name
+endfunction " }}}
+
+"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
+" script local
+
+function! s:find_git_repository_name(current_dir, depth) " {{{
+	if a:depth is 10
+		throw new '>> not found git repository'
+	endif
+	let l:found_git_dir = strlen(finddir(a:current_dir, '.git')) isnot 0
+	if l:found_git_dir
+		return fnamemodify(a:current_dir, ':p:h:t')
+	endif
+	return s:find_git_repository_name(a:current_dir . '/..', a:depth + 1)
+endfunction " }}}
