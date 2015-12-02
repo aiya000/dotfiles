@@ -190,17 +190,23 @@ alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 # pull stackage's cabal.config
 alias stackage-kurekure='wget https://www.stackage.org/lts/cabal.config'
 
+# }}}
+# Git {{{
+
 # <Warn> fully change git commit author and email
 function git-fully-change-author-and-email() { #{{{
-	git_user_name=$1
-	git_email=$2
+	git_user_name="$1"
+	git_email="$2"
 	git filter-branch -f --env-filter \
 		"GIT_AUTHOR_NAME='${git_user_name}'; GIT_AUTHOR_EMAIL='${git_email}'; GIT_COMMITTER_NAME='${git_user_name}'; GIT_COMMITTER_EMAIL='${git_email}';" \
 		HEAD
 	unset git_user_name git_email
 } #}}}
 
-#}}}
+# Set casual user.name and user.email at local
+alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
+
+# }}}
 # plugins {{{
 
 # load {{{

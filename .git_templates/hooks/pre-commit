@@ -14,10 +14,3 @@ if [ -z "`git config --local user.email`" ] ; then
 	echo '       You must set user.email at local'
 	exit 1
 fi
-
-# Must set merge.ff at local or global
-if [ -z "`git config merge.ff`" ] ; then
-	echo 'fatal: merge.ff is not set'
-	echo '       You must set merge.ff at local or global'
-	exit 1
-fi

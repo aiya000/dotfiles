@@ -22,6 +22,7 @@ alias cp='cp -i'
 # Develop Config
 alias g++='g++ -std=c++1y'
 alias mysql='mysql --protocol=TCP'
+alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
 
 # Utils
 alias thanks='echo "(*^o^)< You are welcome!"'
