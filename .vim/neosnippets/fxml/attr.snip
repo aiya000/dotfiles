@@ -10,6 +10,10 @@ snippet fx_factory
 abbr    fx:factory=""
     fx:factory="${1:#:class}"${0}
 
+snippet fx_reference
+abbr    fx:reference=""
+    fx:reference="${1:#:fxId}"${0}
+
 snippet alignment
 abbr    alignment="CENTER"
     alignment="${1:CENTER}"${0}
@@ -41,6 +45,14 @@ abbr    right="10.0"
 snippet text
 abbr     text=""
     text="${1:#:foo}"${0}
+
+snippet prefWidth
+abbr    prefWidth="200"
+    prefWidth="${1:200}"${0}
+
+snippet prefHeight
+abbr    prefHeight="600"
+    prefHeight="${1:600}"${0}
 
 snippet GridPane.columnIndex
 abbr     GridPane.columnIndex="0"

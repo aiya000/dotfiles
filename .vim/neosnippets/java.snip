@@ -30,9 +30,22 @@ abbr    try () {}
         ${0:TARGET}
     }
 
+snippet else
+abbr    else {}
+options indent
+    else {
+        ${0:TARGET}
+    }
+
 snippet main
 abbr    public static void main(String[] args) {}
 options head indent
     public static void main(String[] args) {
         ${0:TARGET}
     }
+
+snippet override_annotation
+alias   override
+abbr    @Override
+options head
+    @Override
