@@ -1861,8 +1861,7 @@ augroup KeyMapping
 	autocmd User MyVimRc cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[ : getcmdpos() - 2]<CR>
 	autocmd User MyVimRc cnoremap <C-l>      <C-c>
 	autocmd User MyVimRc cnoremap <C-g>      '<,'>
-	autocmd User MyVimRc cnoremap <C-k><C-p> <Up>
-	autocmd User MyVimRc cnoremap <C-k><C-n> <Down>
+	autocmd User MyVimRc cnoremap <C-o>      <Up>
 
 	" }}}
 	" visual mode {{{
