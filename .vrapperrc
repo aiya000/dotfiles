@@ -36,17 +36,17 @@ inoremap <C-j><C-k> <Esc>:w<CR>
 
 vnoremap <C-l> <Esc>
 
-cnoremap <Left>  <NOP>
-cnoremap <Right> <NOP>
-cnoremap <C-b>   <Left>
-cnoremap <C-f>   <Right>
-cnoremap <C-a>   <Home>
-cnoremap <C-h>   <Backspace>
-cnoremap <C-d>   <Del>
-cnoremap <C-e>   <End>
-cnoremap <C-p>   <Up>
-cnoremap <C-n>   <Down>
-cnoremap <C-l>   <Esc>
+"cnoremap <Left>  <NOP>
+"cnoremap <Right> <NOP>
+"cnoremap <C-b>   <Left>
+"cnoremap <C-f>   <Right>
+"cnoremap <C-a>   <Home>
+"cnoremap <C-h>   <Backspace>
+"cnoremap <C-d>   <Del>
+"cnoremap <C-e>   <End>
+"cnoremap <C-p>   <Up>
+"cnoremap <C-n>   <Down>
+"cnoremap <C-l>   <Esc>
 
 "}}}
 
