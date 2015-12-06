@@ -87,7 +87,7 @@ options head indent
 snippet FXCollectionsSurround
 alias   FXCollections
 abbr    <FXCollections></FXCollections>
-options head
+options head indent
     <FXCollections>
         ${0:TARGET}
     </FXCollections>
@@ -95,3 +95,21 @@ options head
 snippet PropertyValueFactory
 abbr    <PropertyValueFactory property=".."/>
     <PropertyValueFactory property="${1:#:fieldName}"/>
+
+snippet HBoxSurround
+alias   HBox
+abbr    <HBox></HBox>
+options head indent
+    <HBox>
+        ${0:TARGET}
+    </HBox>
+
+snippet TextField
+abbr    <TextField/>
+options head
+    <TextField${0}/>
+
+snippet Button
+abbr    <Button/>
+options head
+    <Button${0}/>
