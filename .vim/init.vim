@@ -1,10 +1,5 @@
 source ~/.vimrc
 
-"--------------------"
-"   NeoVim RC file   "
-"--------------------"
-" Please read :help nvim-from-vim
-
 "-------------------
 "--  Recipe Menu  --
 "-------------------
@@ -170,10 +165,14 @@ cnoreabbr IrbTab  tabnew \| terminal irb
 
 command! -bar VimConfig     e ~/.vimrc
 command! -bar VimConfigTab  tabnew ~/.vimrc
-command! -bar NVimConfig    e $MYVIMRC
-command! -bar NVimConfigTab tabnew $MYVIMRC
+"TODO: use $XDG_CONFIG_HOME (?)
+command! -bar NVimConfig    e ~/.config/nvim/init.vim
+command! -bar NVimConfigTab tabnew ~/.config/nvim/init.vim
 command! -bar -nargs=* -complete=file Vim    terminal vim <args>
 command! -bar -nargs=* -complete=file VimTab tabnew | terminal vim <args>
+
+" Override definition :Reload from .vimrc
+command! -bar Reload so ~/.config/nvim/init.vim
 
 " }}}
 
