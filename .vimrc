@@ -1865,6 +1865,7 @@ augroup KeyMapping
 	autocmd User MyVimRc cnoremap <C-l>      <C-c>
 	autocmd User MyVimRc cnoremap <C-g>      '<,'>
 	autocmd User MyVimRc cnoremap <C-o>      <Up>
+	autocmd User MyVimRc cnoremap <C-y>      <Down>
 
 	" }}}
 	" visual mode {{{
