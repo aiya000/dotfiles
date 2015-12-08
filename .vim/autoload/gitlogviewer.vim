@@ -56,18 +56,25 @@ function! FoldTextOfGitLog()
 		return getline(v:foldstart)
 	endif
 
+	if getline(author_lnum - 1) =~# '^commit'
+		let commit_lnum = author_lnum - 1
+	else
+		" commitの次の行がMerge:の場合があるので
+		let commit_lnum = author_lnum - 2
+	endif
 	let date_lnum    = author_lnum + 1
 	let message_lnum = date_lnum + 2
 
+	let commit  = matchstr(getline(commit_lnum), '^commit \zs.*\ze')[0 : 6]  " reflogと同じ文字数で表示
 	let author  = matchstr(getline(author_lnum), '^Author: \zs.*\ze <.\{-}>')
 	let date    = matchlist(getline(date_lnum), ' \(\a\{3}\) \(\d\{1,2}\) \(\d\{2}:\d\{2}:\d\{2}\) \(\d\{4}\)')
-	let message = getline(message_lnum)
+	let message = getline(message_lnum)[3 : ]
 
 	let month = date[1]
 	let day   = printf('%02s', date[2])
-	let time  = date[3]
+	let time  = join(split(date[3], ':')[0 : 1], ':')  " 秒を非表示
 	let year  = date[4]
 
 	let datestr = join([year, month_map[month], day], '-')
-	return join([datestr, time, author, message], ' ')
+	return join([commit, datestr, time, author, message], ' ')
 endfunction
