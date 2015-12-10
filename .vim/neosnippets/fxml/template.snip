@@ -1,0 +1,14 @@
+snippet base_template
+options head indent
+    <?xml version="1.0" encoding="UTF-8"?>
+    <?import javafx.scene.layout.*?>
+    <?import javafx.scene.control.*?>
+    <?import javafx.scene.control.cell.*?>
+    <?import javafx.geometry.*?>
+    <?import javafx.collections.*?>
+
+    <GridPane alignment="CENTER" hgap="10.0" vgap="10.0"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="controller.TableViewController">
+        ${0:TARGET}
+    </GridPane>
