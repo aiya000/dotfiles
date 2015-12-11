@@ -372,6 +372,7 @@ NeoBundleLazy  'yomi322/neco-tweetvim'
 NeoBundleLazy  'yomi322/unite-tweetvim'
 NeoBundleLazy  'itchyny/vim-haskell-indent'
 NeoBundle      'aiya000/submode-window_move.vim'
+NeoBundleLazy  'aiya000/quick_repl.vim'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
@@ -827,6 +828,19 @@ if neobundle#tap('vim-haskell-indent')
 	\})
 	call neobundle#untap()
 endif
+if neobundle#tap('quick_repl.vim')
+	call neobundle#config('quick_repl.vim', {
+	\	'depends' : 'Shougo/vimshell.vim',
+	\	'autoload' : {
+	\		'commands' : {
+	\			'name'     : 'QuickRepl',
+	\			'complete' : 'filetype'
+	\		},
+	\		'mappings' : '<Plug>(quick_repl-run)'
+	\	}
+	\})
+	call neobundle#untap()
+endif
 
 call neobundle#end()
 
@@ -1182,6 +1196,11 @@ let g:submode_window_move['start_window_move_with_move_next'] = '<C-s>N'
 let g:submode_window_move['start_window_move_with_move_prev'] = '<C-s>P'
 
 " }}}
+"--- quick_repl.vim --- {{{
+
+let g:quick_repl = {'split' : 'vertical split'}
+
+"}}}
 "--- For Develop --- {{{
 
 " Local my plugins
@@ -1189,6 +1208,7 @@ let s:repos = [ 'adrone.vim'
 \             , 'aho-bakaup.vim'
 \             , 'auto-ctags.vim'
 \             , 'submode-window_move.vim'
+\             , 'quick_repl.vim'
 \             ]
 let s:repos_dir = '~/Repository/'
 
@@ -1704,6 +1724,7 @@ augroup KeyMapping
 
 	" open-browser.vim
 	autocmd User MyVimRc nmap <leader>w <Plug>(openbrowser-open)
+	autocmd User MyVimRc vmap <leader>w <Plug>(openbrowser-open)
 
 	" vim-quickrun
 	autocmd User MyVimRc nmap              <leader>r         <Plug>(quickrun)
@@ -1797,6 +1818,9 @@ augroup KeyMapping
 
 	" vim-visualstar
 	autocmd User MyVimRc vmap g* <Plug>(visualstar-*)Nzz
+
+	" quick_repl.vim
+	autocmd User MyVimRc nmap <leader>o <Plug>(quick_repl-run)
 augroup END
 
 " }}}
