@@ -372,7 +372,7 @@ NeoBundleLazy  'yomi322/neco-tweetvim'
 NeoBundleLazy  'yomi322/unite-tweetvim'
 NeoBundleLazy  'itchyny/vim-haskell-indent'
 NeoBundle      'aiya000/submode-window_move.vim'
-NeoBundleLazy  'aiya000/quick_repl.vim'
+NeoBundleLazy  'ujihisa/repl.vim'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
@@ -828,15 +828,17 @@ if neobundle#tap('vim-haskell-indent')
 	\})
 	call neobundle#untap()
 endif
-if neobundle#tap('quick_repl.vim')
-	call neobundle#config('quick_repl.vim', {
-	\	'depends' : 'Shougo/vimshell.vim',
+if neobundle#tap('repl.vim')
+	call neobundle#config('repl.vim', {
+	\	'depends' : [
+	\		'Shougo/vimshell.vim',
+	\		'Shougo/vimproc.vim'
+	\	],
 	\	'autoload' : {
 	\		'commands' : {
-	\			'name'     : 'QuickRepl',
-	\			'complete' : 'filetype'
+	\			'name' : 'Repl'
 	\		},
-	\		'mappings' : '<Plug>(quick_repl-run)'
+	\		'mappings' : '<Plug>(repl-run)'
 	\	}
 	\})
 	call neobundle#untap()
@@ -1196,11 +1198,6 @@ let g:submode_window_move['start_window_move_with_move_next'] = '<C-s>N'
 let g:submode_window_move['start_window_move_with_move_prev'] = '<C-s>P'
 
 " }}}
-"--- quick_repl.vim --- {{{
-
-let g:quick_repl = {'split' : 'vertical split'}
-
-"}}}
 "--- For Develop --- {{{
 
 " Local my plugins
@@ -1209,6 +1206,7 @@ let s:repos = [ 'adrone.vim'
 \             , 'auto-ctags.vim'
 \             , 'submode-window_move.vim'
 \             , 'quick_repl.vim'
+\             , 'repl.vim'
 \             ]
 let s:repos_dir = '~/Repository/'
 
@@ -1819,8 +1817,8 @@ augroup KeyMapping
 	" vim-visualstar
 	autocmd User MyVimRc vmap g* <Plug>(visualstar-*)Nzz
 
-	" quick_repl.vim
-	autocmd User MyVimRc nmap <leader>o <Plug>(quick_repl-run)
+	" repl.vim
+	autocmd User MyVimRc nmap <leader>o <Plug>(repl-run)
 augroup END
 
 " }}}
