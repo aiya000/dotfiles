@@ -124,7 +124,7 @@ alias nvim-bashrc='nvim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded
 alias nvim-bashpr='nvim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
 
 alias nvi='nvim -u NONE --noplugin'  # is not 'new vi', HaHaHa
-alias nvim-terminal='nvim +terminal'
+alias nterminal='nvim +terminal'
 alias nvimconsole='nvim +VimConsoleOpen'
 alias ntwitter='nvim +TweetVimHomeTimeline'
 alias ntweet='nvim +TweetVimSay'
