@@ -135,10 +135,10 @@ alias ntweet-public='nvim +TweetPublic'
 # Shell Utils {{{
 
 # Console output pipe to clipboard
-if [ $IS_UBUNTU -eq 1 ] ; then
-	alias pbcopy='xsel --clipboard --input'
-elif [ $IS_CYGWIN -eq 1 ] ; then
+if [ $IS_CYGWIN -eq 1 ] ; then
 	alias pbcopy='tee /dev/clipboard > /dev/null'
+else
+	alias pbcopy='xsel --clipboard --input'
 fi
 
 # }}}
