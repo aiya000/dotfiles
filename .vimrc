@@ -1246,10 +1246,10 @@ set laststatus=2
 " Set status bar format
 let s:statusline_left  = '[Fenc=%{&fileencoding}]'
 \                      . '[Enc=%{&encoding}]'
-\                      . '[FT=%y]'
-\                      . '%{vimrc#set#tag_load_status()}'
-let s:statusline_right = ':%n %F%m %r'
 \                      . '%{fugitive#statusline()}'
+\                      . '%{vimrc#set#tag_load_status()}'
+\                      . '[FT=%y]'
+let s:statusline_right = ':%n %F%m %r'
 \                      . '[%03v]'
 let &statusline        = s:statusline_left . '%=' . s:statusline_right
 unlet s:statusline_left s:statusline_right
