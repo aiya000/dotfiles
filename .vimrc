@@ -285,11 +285,11 @@ NeoBundle      'Shougo/unite.vim'
 NeoBundle      'Shougo/vimproc.vim'
 NeoBundleLazy  'basyura/TweetVim'
 NeoBundleLazy  'mattn/webapi-vim'
-NeoBundle      'Shougo/vimshell.vim'
+NeoBundleLazy  'Shougo/vimshell.vim'
 NeoBundleLazy  'thinca/vim-quickrun'
 NeoBundleLazy  'basyura/J6uil.vim'
 NeoBundleLazy  'yuratomo/w3m.vim'
-NeoBundle      'supermomonga/vimshell-kawaii.vim'
+NeoBundleLazy  'supermomonga/vimshell-kawaii.vim'
 NeoBundleLazy  'supermomonga/jazzradio.vim'
 NeoBundleLazy  'mattn/favstar-vim'
 NeoBundleLazy  'ujihisa/unite-colorscheme'
@@ -391,9 +391,87 @@ if neobundle#tap('TweetVim')
 	\})
 	call neobundle#untap()
 endif
+"NOTE: Why vimshell was loaded on called vimshell function automatically ?
 if neobundle#tap('vimshell.vim')
 	call neobundle#config('vimshell.vim', {
-	\	'depends'  : 'Shougo/vimproc.vim'
+	\	'depends'  : 'Shougo/vimproc.vim',
+	\	'autoload' : {
+	\		'commands' : [
+	\			'VimShell',
+	\			'VimShellCreate',
+	\			'VimShellTab',
+	\			'VimShellPop',
+	\			'VimShellCurrentDir',
+	\			'VimShellBufferDir',
+	\			'VimShellExecute',
+	\			'VimShellInteractive',
+	\			'VimShellSendBuffer',
+	\			'VimShellClose',
+	\			'VimShellSendString'
+	\		],
+	\		'mappings' : [
+	\			'<Plug>(vimshell_split_switch)',
+	\			'<Plug>(vimshell_split_create)',
+	\			'<Plug>(vimshell_switch)',
+	\			'<Plug>(vimshell_create)',
+	\			'<Plug>(vimshell_enter)',
+	\			'<Plug>(vimshell_previous_prompt)',
+	\			'<Plug>(vimshell_next_prompt)',
+	\			'<Plug>(vimshell_delete_previous_output)',
+	\			'<Plug>(vimshell_paste_prompt)',
+	\			'<Plug>(vimshell_move_end_argument)',
+	\			'<Plug>(vimshell_hide)',
+	\			'<Plug>(vimshell_exit)',
+	\			'<Plug>(vimshell_change_line)',
+	\			'<Plug>(vimshell_delete_line)',
+	\			'<Plug>(vimshell_hangup)',
+	\			'<Plug>(vimshell_interrupt)',
+	\			'<Plug>(vimshell_insert_head)',
+	\			'<Plug>(vimshell_insert_enter)',
+	\			'<Plug>(vimshell_append_enter)',
+	\			'<Plug>(vimshell_append_end)',
+	\			'<Plug>(vimshell_clear)',
+	\			'<Plug>(vimshell_move_head)',
+	\			'<Plug>(vimshell_execute_by_background)',
+	\			'<Plug>(vimshell_command_complete)',
+	\			'<Plug>(vimshell_zsh_complete)',
+	\			'<Plug>(vimshell_push_current_line)',
+	\			'<Plug>(vimshell_insert_last_word)',
+	\			'<Plug>(vimshell_move_head)',
+	\			'<Plug>(vimshell_delete_backward_line)',
+	\			'<Plug>(vimshell_delete_backward_word)',
+	\			'<Plug>(vimshell_move_previous_window)',
+	\			'<Plug>(vimshell_delete_backward_char)',
+	\			'<Plug>(vimshell_another_delete_backward_char)',
+	\			'<Plug>(vimshell_delete_forward_line)',
+	\			'<Plug>(vimshell_history_unite)',
+	\			'<Plug>(vimshell_history_neocomplete)',
+	\			'<Plug>(vimshell_int_execute_line)',
+	\			'<Plug>(vimshell_int_previous_prompt)',
+	\			'<Plug>(vimshell_int_next_prompt)',
+	\			'<Plug>(vimshell_int_paste_prompt)',
+	\			'<Plug>(vimshell_int_hangup)',
+	\			'<Plug>(vimshell_int_exit)',
+	\			'<Plug>(vimshell_int_restart_command)',
+	\			'<Plug>(vimshell_int_change_line)',
+	\			'<Plug>(vimshell_int_delete_line)',
+	\			'<Plug>(vimshell_int_insert_enter)',
+	\			'<Plug>(vimshell_int_insert_head)',
+	\			'<Plug>(vimshell_int_append_enter)',
+	\			'<Plug>(vimshell_int_append_end)',
+	\			'<Plug>(vimshell_int_clear)',
+	\			'<Plug>(vimshell_int_move_head)',
+	\			'<Plug>(vimshell_int_delete_backward_line)',
+	\			'<Plug>(vimshell_int_delete_backward_word)',
+	\			'<Plug>(vimshell_int_delete_backward_char)',
+	\			'<Plug>(vimshell_int_another_delete_backward_char)',
+	\			'<Plug>(vimshell_int_send_input)',
+	\			'<Plug>(vimshell_int_interrupt)',
+	\			'<Plug>(vimshell_int_command_complete)',
+	\			'<Plug>(vimshell_int_delete_forward_line)',
+	\			'<Plug>(vimshell_int_history_unite)'
+	\		]
+	\	}
 	\})
 	call neobundle#untap()
 endif
@@ -441,7 +519,8 @@ if neobundle#tap('w3m.vim')
 endif
 if neobundle#tap('vimshell-kawaii.vim')
 	call neobundle#config('vimshell-kawaii.vim', {
-	\	'depends'  : 'Shougo/vimshell.vim'
+	\	'depends'  : 'Shougo/vimshell.vim',
+	\	'autoload' : {'on_source' : 'vimshell.vim'}
 	\})
 	call neobundle#untap()
 endif
