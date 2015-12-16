@@ -41,6 +41,7 @@ function! vimrc#plugins#append_config_quickrun_cygwin() " {{{
 	let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
 	let g:quickrun_config.java['tempfile']                    = printf('%s/{tempname()}.java', $TMP)
 	" Haskell
+	"@Bugs('cannot run rightly')
 	let g:quickrun_config['haskell'] = {
 	\	'exec' : '%c %o `cygpath -w "%s:p"` | tr -d "\\r"'
 	\}

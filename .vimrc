@@ -1103,15 +1103,14 @@ let g:separetaro_short_separator_of = {
 \	'markdown'   : '- - -'
 \}
 
-" Combinate neosnippet.vim
 let g:separetaro_long_separator_of = {
-\	'java'       : '/* --- --- --- <`0`> --- --- --- */',
-\	'javascript' : '/* --- --- --- <`0`> --- --- --- */',
-\	'typescript' : '/* --- --- --- <`0`> --- --- --- */',
-\	'css'        : '/* --- --- --- <`0`> --- --- --- */',
-\	'php'        : '/* --- --- --- <`0`> --- --- --- */',
-\	'go'         : '/* --- --- --- <`0`> --- --- --- */',
-\	'html'       : '<!-- -- -- -- <`0`> -- -- -- -->',
+\	'java'       : '/* --- --- ---  --- --- --- */',
+\	'javascript' : '/* --- --- ---  --- --- --- */',
+\	'typescript' : '/* --- --- ---  --- --- --- */',
+\	'css'        : '/* --- --- ---  --- --- --- */',
+\	'php'        : '/* --- --- ---  --- --- --- */',
+\	'go'         : '/* --- --- ---  --- --- --- */',
+\	'html'       : '<!-- -- -- --  -- -- -- -->',
 \	'markdown'   : '- - - - -'
 \}
 
@@ -1194,7 +1193,6 @@ let s:repos = [ 'adrone.vim'
 \             , 'aho-bakaup.vim'
 \             , 'auto-ctags.vim'
 \             , 'submode-window_move.vim'
-\             , 'quick_repl.vim'
 \             , 'repl.vim'
 \             ]
 let s:repos_dir = '~/Repository/'
@@ -1647,6 +1645,9 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap }  }zv
 	autocmd User MyVimRc nnoremap (  (zv
 	autocmd User MyVimRc nnoremap )  )zv
+
+    autocmd User MyVimRc vnoremap zo zogv
+    autocmd User MyVimRc vnoremap zO zOgv
 augroup END
 
 " }}}
