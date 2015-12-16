@@ -64,28 +64,17 @@
 
 
 "----------------------------------------
-" {- Hints -} "
-" @Bugs         => That has the bugs
-" @Incomplete   => I don't completed making that
-" @Unchecked    => That wasn't unchecked that is right
-" @Unsupported  => Don't support that function now
-" @Unknown      => I don't know why this functioned
-"     ／人◕ ‿‿ ◕人＼ <  Wakega wakaranaiyo!
-" @Unused       => Never used this yet. if you don't needs, please delete this
-" @Deprecated   => Deprecated use that
+" {- Message -} "
+" @Bugs         => It has some bug
+" @Incomplete   => It is incompleted implementation
+" @Unchecked    => I implemented without check
+" @Unsupported  => I don't support some environment
+" @Deprecated   => Deprecated
 " @Experiment   => That is experimental implementation
-" @Marked       => I have eye on that
-" @See          => Please see that
-" @Code         => The sample code of how to use
+" @Marked       => I have eye on it
+" @See          => Please see it
+" @Code         => The sample code for how to use
 "-------------------
-" Designating the target platform.
-" @Hoge{Win,Ubuntu}  : This Hint for Win and Ubuntu.
-" @Hoge!{Mac}        : This Hint for other than Mac.
-"----------------------------------------
-" {- Booked something -}
-" Mark Z was used by :BufTabMovePrev, :BufTabMoveNext
-" Register "z was used by vnoremap <leader>T
-"----------------------------------------
 
 
 "---------------------"
