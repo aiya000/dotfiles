@@ -2082,7 +2082,7 @@ augroup END
 " {{{
 
 if filereadable(s:vimrc_env)
-	source ~/.vimrc_env
+	execute 'source' s:vimrc_env
 endif
 
 " }}}
