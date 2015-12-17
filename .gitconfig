@@ -35,6 +35,7 @@
 	tree-all = log --graph --decorate --all --oneline
 	ri = rebase -i
 	ma = merge --abort
+	br = branch -r
 [core]
 	pager = vim - -R +PAGER -c 'setf vim-pager | set syn=git'
 [init]
