@@ -1,0 +1,11 @@
+snippet module
+abbr    -module(__).
+    -module(${1:`expand('%:t:r')`}).${0}
+
+snippet export
+abbr    -export(__).
+    -export([${1:#:funcName}]).${0}
+
+snippet compile
+abbr    -compile(__).
+    -compile(export_all).
