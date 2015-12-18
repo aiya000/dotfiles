@@ -9,3 +9,11 @@ abbr    -export(__).
 snippet compile
 abbr    -compile(__).
     -compile(export_all).
+
+snippet iowrite
+abbr    io:write(__)
+    io:write(${1:#:foo})
+
+snippet ionl
+abbr    io:nl(__)
+    io:nl()

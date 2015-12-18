@@ -2039,8 +2039,8 @@ augroup PluginPrefs
 
 	autocmd FileType int-* nmap     <buffer> <C-]>      <Plug>(vimshell_int_clear)
 	autocmd FileType int-* nmap     <buffer> Q          <Plug>(vimshell_int_exit)
-	autocmd FileType int-* nmap     <buffer> gj         <Plug>(vimshell_int_next_prompt)
-	autocmd FileType int-* nmap     <buffer> gk         <Plug>(vimshell_int_previous_prompt)
+	autocmd FileType int-* nmap     <buffer> gJ         <Plug>(vimshell_int_next_prompt)
+	autocmd FileType int-* nmap     <buffer> gK         <Plug>(vimshell_int_previous_prompt)
 
 	autocmd FileType int-* inoremap <buffer> <C-l>      <Esc>
 	autocmd FileType int-* inoremap <buffer> <C-b>      <Left>
