@@ -1265,6 +1265,29 @@ let g:submode_window_move['start_window_move_with_move_next'] = '<C-s>N'
 let g:submode_window_move['start_window_move_with_move_prev'] = '<C-s>P'
 
 " }}}
+"--- repl.vim --- {{{
+
+"" For Debug
+"let g:repl_filetype_repl = {
+"\	'ruby' : {
+"\		'repl' : 'repl',
+"\		'opt'  : ''
+"\	},
+"\	'haskell' : {
+"\		'repl' : 'repl',
+"\		'opt'  : ''
+"\	},
+"\	'python' : {
+"\		'repl' : 'repl',
+"\		'opt'  : ''
+"\	},
+"\	'erlang' : {
+"\		'repl' : 'repl',
+"\		'opt'  : ''
+"\	},
+"\}
+
+" }}}
 "--- For Develop --- {{{
 
 " Local my plugins
