@@ -5,6 +5,6 @@
 .vim/doc/tags
 .vim/resource/Java  # :Unite javasrc
 
-# deoplete.nvim
+# NeoVim
 ..vimrc-rplugin~
-.vim/.log/**
+.vim/.log/nvim_python.log_*

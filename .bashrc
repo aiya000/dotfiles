@@ -159,6 +159,7 @@ alias docker-rm-archives='sudo docker rm `sudo docker ps -a -q`'
 
 if [ $IS_UBUNTU -eq 1 ] ; then
 	alias ssleep='sudo pm-suspend'
+	alias hibernate='sudo pm-hibernate'
 elif [ $IS_CYGWIN -eq 1 ] ; then
 	alias cygrunsrv='cocot cygrunsrv'
 	alias csc='cocot csc'
@@ -170,6 +171,9 @@ elif [ $IS_CYGWIN -eq 1 ] ; then
 	alias nslookup='cocot nslookup'
 	alias updatedb='updatedb --localpaths="/bin /dev /etc /home /lib /usr /var /opt" --prunepaths="/usr/tmp /var/tmp"'
 	alias mysql='mysql --pager="less -r -S -n -i -F -X" --protocol=TCP'
+else
+	alias ssleep='sudo pm-suspend'
+	alias hibernate='sudo pm-hibernate'
 fi
 
 # }}}
