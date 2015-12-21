@@ -22,10 +22,6 @@ options head
         </DataGridTemplateColumn.CellTemplate>
     </DataGridTemplateColumn>
 
-snippet fit_to_parent
-abbr    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="Auto" Height="Auto"
-    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="Auto" Height="Auto"${0}
-
 snippet default_data_grid_backcolor
 abbr    Background="#FFA4A4A4"
     Background="#FFA4A4A4"${0}
@@ -33,3 +29,15 @@ abbr    Background="#FFA4A4A4"
 snippet default_grid_backcolor
 abbr    Background="#FFE5E5E5"
     Background="#FFE5E5E5"${0}
+
+snippet declare_xml_clr_namespace
+abbr xmlns:___="clr-namespace:___;assembly=___"
+    xmlns:${1:#:NameSpaceName}="clr-namespace:${2:#:NameSpacePath};assembly=${3:#:AssemblyNameSpace}"
+
+snippet interactivity_interaction
+options head indent
+    <Interactivity:Interaction.Triggers>
+        <Interactivity:EventTrigger EventName="${1:Click}">
+            <Core:CallMethodAction TargetObject="{Binding .}" MethodName="${2:#:VMMethodName}"/>
+        </Interactivity:EventTrigger>
+    </Interactivity:Interaction.Triggers>
