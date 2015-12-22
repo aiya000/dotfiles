@@ -1,12 +1,13 @@
-"@See(' http://sourceforge.jp/magazine/07/11/06/0151231 ')
+"@See('http://sourceforge.jp/magazine/07/11/06/0151231')
 " View loaded tags path
 function! vimrc#set#tag_load_status() " {{{
-	let l:status_format = '[Tag(%s)]'
+	let l:STATUS_FORMAT = '[Tag(%s)]' | lockvar l:STATUS_FORMAT
 	let l:tags_shorten  = map(tagfiles(), 'pathshorten(v:val)')
+	let l:tags_shorten  = map(l:tags_shorten, 'strpart(v:val, strchars(v:val) - 10, 10)')
 	let l:tags_flatten  = join(l:tags_shorten, ',')
 	let l:tags_status   = (l:tags_flatten ==# '') ? '{never}'
 	\                                             : l:tags_flatten
-	return printf(l:status_format, l:tags_status)
+	return printf(l:STATUS_FORMAT, l:tags_status)
 endfunction " }}}
 
 "@See('http://d.hatena.ne.jp/thinca/20111204/1322932585')
