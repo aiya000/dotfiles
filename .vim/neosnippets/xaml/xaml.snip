@@ -46,6 +46,10 @@ snippet Command
 abbr    Command=""
     Command="${1:#:Name}"${0}
 
+snippet CommandParameter
+abbr    CommandParameter="{Binding ___}"
+    CommandParameter="{Binding ${1:#:Property}}"
+
 snippet Content
 abbr    Content=""
     Content="${1:#:Value}"${0}

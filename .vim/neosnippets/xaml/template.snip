@@ -41,3 +41,7 @@ options head indent
             <Core:CallMethodAction TargetObject="{Binding .}" MethodName="${2:#:VMMethodName}"/>
         </Interactivity:EventTrigger>
     </Interactivity:Interaction.Triggers>
+
+snippet command_relativesource_binding
+abbr Command="{Binding RelativeSource={RelativeSource AncestorType=___}, Path=DataContext.___}"
+    Command="{Binding RelativeSource={RelativeSource AncestorType=${1:DataGrid}}, Path=DataContext.${1:#:Method}}"${0}
