@@ -1172,6 +1172,7 @@ let g:neosnippet#disable_select_select_mappings = 1
 "--- separetaro.vim --- {{{
 
 let g:separetaro_short_separator_of = {
+\	'vim'        : '"----------"',
 \	'java'       : '/* -=-=-=-=-=-=-=-=- */',
 \	'javascript' : '/* -=-=-=-=-=-=-=-=- */',
 \	'typescript' : '/* -=-=-=-=-=-=-=-=- */',
@@ -1183,6 +1184,7 @@ let g:separetaro_short_separator_of = {
 \}
 
 let g:separetaro_long_separator_of = {
+\	'vim'        : '"-------------------"',
 \	'java'       : '/* --- --- ---  --- --- --- */',
 \	'javascript' : '/* --- --- ---  --- --- --- */',
 \	'typescript' : '/* --- --- ---  --- --- --- */',
@@ -1267,25 +1269,16 @@ let g:submode_window_move['start_window_move_with_move_prev'] = '<C-s>P'
 " }}}
 "--- repl.vim --- {{{
 
-"" For Debug
-"let g:repl_filetype_repl = {
-"\	'ruby' : {
-"\		'repl' : 'repl',
-"\		'opt'  : ''
-"\	},
-"\	'haskell' : {
-"\		'repl' : 'repl',
-"\		'opt'  : ''
-"\	},
-"\	'python' : {
-"\		'repl' : 'repl',
-"\		'opt'  : ''
-"\	},
-"\	'erlang' : {
-"\		'repl' : 'repl',
-"\		'opt'  : ''
-"\	},
-"\}
+" Use this repl
+let g:repl_filetype_repl = {
+\	'python' : {
+\		'repl' : 'python2',
+\		'opt'  : '-i'
+\	}
+\}
+
+let g:repl_no_default_keymappings = 1
+let g:repl_split_command          = 'vertical split'
 
 " }}}
 "--- For Develop --- {{{
