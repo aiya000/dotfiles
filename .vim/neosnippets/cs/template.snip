@@ -5,13 +5,13 @@ options indent
     
     public event PropertyChangedEventHandler PropertyChanged;
     
-    public string ${1:#:PropertyName} {
+    public ${1:string} ${2:#:PropertyName} {
         get {
-            return this.${2:#:propertSubName};
+            return this.${3:#:propertSubName};
         }
         set {
-            this.$2 = value;
-            this.OnPropertyChanged("$1");
+            this.$3 = value;
+            this.OnPropertyChanged("$2");
         }
     }
     
@@ -19,14 +19,14 @@ options indent
     
     #region private field
     
-    private string $2;
+    private $1 $3;
     
     #endregion
     
     #region public constructor
     
-    public ${3:Constructor}() {
-        this.$1 = string.Empty;
+    public ${4:Constructor}() {
+        this.$1 = ${5:string.Empty};
     }
     
     #endregion
@@ -41,11 +41,28 @@ options indent
     
     #endregion
 
-snippet CommandTemplate
+snippet ViewModelProperty
+alias   VMProperty
+    public ${1:string} ${2:#:PropertyName} {
+        get {
+            return this.${3:#:propertSubName};
+        }
+        set {
+            this.$3 = value;
+            this.OnPropertyChanged("$2");
+        }
+    }
+    private $1 $3;
+    this.$2 = ${4:string.Empty};
+
+snippet ICommandTemplate
 options indent
     #region public field
     
+    // Suppress unuse
+    #pragma warning disable 0067
     public event EventHandler CanExecuteChanged;
+    #pragma warning restore 0067
     
     #endregion
     

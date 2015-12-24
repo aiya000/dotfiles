@@ -3,3 +3,13 @@ options head indent
     snippet ${1:#:snippetName}
     abbr    $1=""
         $1="${0}"
+
+snippet template_xml_tag
+    snippet ${1:#:snippetName}
+    abbr    <$1/>
+        <$1/>
+
+snippet template_xml_tag_surround
+    snippet ${1:#:snippetName}
+    abbr    <$1></$1>
+        <$1>${0}</$1>

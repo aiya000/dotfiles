@@ -133,6 +133,12 @@ options indent
         ${0}
     </ListViewItem>
 
+snippet MultiBinding
+abbr    <MultiBinding Converter="___"></MultiBinding>
+    <MultiBinding Converter="{StaticResource ${1}}">
+        ${0}
+    </MultiBinding>
+
 snippet RowDefinition
 abbr    <RowDefinition/>
     <RowDefinition${0}/>

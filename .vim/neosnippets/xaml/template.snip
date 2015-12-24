@@ -1,4 +1,12 @@
 ## User's Definition
+snippet template_tag
+abbr    <___/>
+    <${1:#:ControlName}/>
+
+snippet template_tag_surround
+abbr    <___></___>
+    <${1:#:ControlName}>${0}</$1>
+
 snippet data_grid_template_column_surrond
 alias   data_grid_template_column
 abbr    <DataGridTemplateColumn>...</DataGridTemplateColumn>
@@ -45,3 +53,10 @@ options head indent
 snippet command_relativesource_binding
 abbr Command="{Binding RelativeSource={RelativeSource AncestorType=___}, Path=DataContext.___}"
     Command="{Binding RelativeSource={RelativeSource AncestorType=${1:DataGrid}}, Path=DataContext.${1:#:Method}}"${0}
+
+snippet multi_command_parameter
+    <${1:#:BaseControl}.CommandParameter>
+        <MultiBinding Converter="{StaticResource ${2:converterKey}}">
+            <Binding Path="${0}"/>
+        </MultiBinding>
+    </$1.CommandParameter>
