@@ -362,6 +362,7 @@ NeoBundleLazy  'yomi322/unite-tweetvim'
 NeoBundleLazy  'itchyny/vim-haskell-indent'
 NeoBundle      'aiya000/submode-window_move.vim'
 NeoBundleLazy  'ujihisa/repl.vim'
+NeoBundle      'mattn/emmet-vim'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
@@ -911,6 +912,14 @@ if neobundle#tap('repl.vim')
 	\})
 	call neobundle#untap()
 endif
+if neobundle#tap('emment-vim')
+	call neobundle#config('emmet-vim', {
+	\	'autoload' : {
+	\		'mappings' : get(g:, 'user_emmet_leader_key', '\\')
+	\	}
+	\})
+	call neobundle#untap()
+endif
 
 call neobundle#end()
 
@@ -1279,6 +1288,16 @@ let g:repl_filetype_repl = {
 
 let g:repl_no_default_keymappings = 1
 let g:repl_split_command          = 'vertical split'
+
+" }}}
+"--- emmet-vim --- {{{
+
+" Set prefix key
+let g:user_emmet_leader_key = '\\'
+
+" Enable these filetype
+autocmd UserEvent FileType html,xml,fxml EmmetInstall
+
 
 " }}}
 "--- For Develop --- {{{
