@@ -7,10 +7,10 @@ abbr    <html><head>...</head></html>
             <meta charset="UTF-8">
             <title></title>
             <link rel="stylesheet" href="${1:#:css_path}"/>
-            <script src="${2:#:js_path}"></script>
         </head>
         <body>
             ${0:TARGET}
+            <script src="${2:#:js_path}"></script>
         </body>
     </html>
 
@@ -44,6 +44,9 @@ abbr    <ul></ul>
 snippet script_load
 abbr   <script src=""></script>
     <script src="${0:TARGET}"></script>
+snippet css_load
+abbr    <link rel="stylesheet" href="__"/>
+    <link rel="stylesheet" href="${1:#:css_path}"/>
 
 snippet br
 abbr    <br>

@@ -1,0 +1,25 @@
+snippet template_electron_main_js
+    'use strict';
+
+    var app           = require('app');
+    var BrowserWindow = require('browser-window');
+
+    require('crash-reporter').start({
+        companyName: '${1:aiya000}',
+        submitURL:   '${2:dummy}'
+    });
+
+    var mainWindow = null;
+
+    app.on('window-all-closed', function () {
+        if (process.platform != 'darwin')
+            app.quit();
+    });
+
+    app.on('ready', function () {
+        mainWindow = new BrowserWindow({width: ${3:800}, height: ${4:600}});
+        mainWindow.loadURL('file://' + __dirname + '/index.html');
+        mainWindow.on('closed', function () {
+            mainWindow = null;
+        });
+    });

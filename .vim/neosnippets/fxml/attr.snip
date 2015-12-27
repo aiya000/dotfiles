@@ -1,4 +1,5 @@
 snippet fx_controller
+alias   controller
 abbr    fx:controller=""
     fx:controller="${1:#:controller_class}"${0}
 
@@ -58,9 +59,17 @@ snippet GridPane.columnIndex
 abbr     GridPane.columnIndex="0"
     GridPane.columnIndex="${1:0}"${0}
 
+snippet GridPane.columnSpan
+abbr    GridPane.columnSpan="1"
+    GridPane.columnSpan="${1:1}"${0}
+
 snippet GridPane.rowIndex
 abbr     GridPane.rowIndex="0"
     GridPane.rowIndex="${1:0}"${0}
+
+snippet GridPane.rowSpan
+abbr    GridPane.rowSpan="1"
+    GridPane.rowSpan="${1:1}"${0}
 
 snippet spacing
 abbr    spacing="10"

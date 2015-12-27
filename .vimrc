@@ -362,7 +362,7 @@ NeoBundleLazy  'yomi322/unite-tweetvim'
 NeoBundleLazy  'itchyny/vim-haskell-indent'
 NeoBundle      'aiya000/submode-window_move.vim'
 NeoBundleLazy  'ujihisa/repl.vim'
-NeoBundle      'mattn/emmet-vim'
+NeoBundleLazy  'mattn/emmet-vim'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
@@ -912,9 +912,10 @@ if neobundle#tap('repl.vim')
 	\})
 	call neobundle#untap()
 endif
-if neobundle#tap('emment-vim')
+if neobundle#tap('emmet-vim')
 	call neobundle#config('emmet-vim', {
 	\	'autoload' : {
+	\		'commands' : 'EmmetInstall',
 	\		'mappings' : get(g:, 'user_emmet_leader_key', '\\')
 	\	}
 	\})
@@ -1188,8 +1189,9 @@ let g:separetaro_short_separator_of = {
 \	'css'        : '/* -=-=-=-=-=-=-=-=- */',
 \	'php'        : '/* -=-=-=-=-=-=-=-=- */',
 \	'go'         : '/* -=-=-=-=-=-=-=-=- */',
-\	'html'       : '<!-- -=-=-=-=-=-=-=-=- -->',
-\	'markdown'   : '- - -'
+\	'html'       : '<!-- _ -->',
+\	'markdown'   : '- - -',
+\	'fxml'       : '<!-- _ -->'
 \}
 
 let g:separetaro_long_separator_of = {
@@ -1200,8 +1202,9 @@ let g:separetaro_long_separator_of = {
 \	'css'        : '/* --- --- ---  --- --- --- */',
 \	'php'        : '/* --- --- ---  --- --- --- */',
 \	'go'         : '/* --- --- ---  --- --- --- */',
-\	'html'       : '<!-- -- -- --  -- -- -- -->',
-\	'markdown'   : '- - - - -'
+\	'html'       : '<!-- - - - _ - - - -->',
+\	'markdown'   : '- - - - -',
+\	'fxml'       : '<!-- - - - _ - - - -->'
 \}
 
 " }}}
