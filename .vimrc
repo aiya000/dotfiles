@@ -289,7 +289,7 @@ NeoBundle      'Shougo/vimshell.vim'
 NeoBundleLazy  'thinca/vim-quickrun'
 NeoBundleLazy  'basyura/J6uil.vim'
 NeoBundleLazy  'yuratomo/w3m.vim'
-NeoBundleLazy  'supermomonga/vimshell-kawaii.vim'
+NeoBundle      'supermomonga/vimshell-kawaii.vim'
 NeoBundleLazy  'supermomonga/jazzradio.vim'
 NeoBundleLazy  'mattn/favstar-vim'
 NeoBundleLazy  'ujihisa/unite-colorscheme'
@@ -429,13 +429,6 @@ if neobundle#tap('w3m.vim')
 	\		'W3mTab',
 	\		'W3mVSplit'
 	\	]
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vimshell-kawaii.vim')
-	call neobundle#config('vimshell-kawaii.vim', {
-	\	'depends'   : 'Shougo/vimshell.vim',
-	\	'on_source' : 'vimshell.vim'
 	\})
 	call neobundle#untap()
 endif
