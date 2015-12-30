@@ -43,3 +43,5 @@
 [status]
 	short = true
 	branch = true
+[mergetool]
+	keepBackup = false
