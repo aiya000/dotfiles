@@ -285,7 +285,7 @@ NeoBundle      'Shougo/unite.vim'
 NeoBundle      'Shougo/vimproc.vim'
 NeoBundleLazy  'basyura/TweetVim'
 NeoBundleLazy  'mattn/webapi-vim'
-NeoBundleLazy  'Shougo/vimshell.vim'
+NeoBundle      'Shougo/vimshell.vim'
 NeoBundleLazy  'thinca/vim-quickrun'
 NeoBundleLazy  'basyura/J6uil.vim'
 NeoBundleLazy  'yuratomo/w3m.vim'
@@ -388,107 +388,21 @@ if neobundle#tap('TweetVim')
 	\		'Shougo/vimproc.vim',
 	\		'mattn/favstar-vim'
 	\	],
-	\	'autoload' : {'commands' : 'TweetVim'}
-	\})
-	call neobundle#untap()
-endif
-"NOTE: Why vimshell was loaded on called vimshell function automatically ?
-if neobundle#tap('vimshell.vim')
-	call neobundle#config('vimshell.vim', {
-	\	'depends'  : 'Shougo/vimproc.vim',
-	\	'autoload' : {
-	\		'commands' : [
-	\			'VimShell',
-	\			'VimShellCreate',
-	\			'VimShellTab',
-	\			'VimShellPop',
-	\			'VimShellCurrentDir',
-	\			'VimShellBufferDir',
-	\			'VimShellExecute',
-	\			'VimShellInteractive',
-	\			'VimShellSendBuffer',
-	\			'VimShellClose',
-	\			'VimShellSendString'
-	\		],
-	\		'mappings' : [
-	\			'<Plug>(vimshell_split_switch)',
-	\			'<Plug>(vimshell_split_create)',
-	\			'<Plug>(vimshell_switch)',
-	\			'<Plug>(vimshell_create)',
-	\			'<Plug>(vimshell_enter)',
-	\			'<Plug>(vimshell_previous_prompt)',
-	\			'<Plug>(vimshell_next_prompt)',
-	\			'<Plug>(vimshell_delete_previous_output)',
-	\			'<Plug>(vimshell_paste_prompt)',
-	\			'<Plug>(vimshell_move_end_argument)',
-	\			'<Plug>(vimshell_hide)',
-	\			'<Plug>(vimshell_exit)',
-	\			'<Plug>(vimshell_change_line)',
-	\			'<Plug>(vimshell_delete_line)',
-	\			'<Plug>(vimshell_hangup)',
-	\			'<Plug>(vimshell_interrupt)',
-	\			'<Plug>(vimshell_insert_head)',
-	\			'<Plug>(vimshell_insert_enter)',
-	\			'<Plug>(vimshell_append_enter)',
-	\			'<Plug>(vimshell_append_end)',
-	\			'<Plug>(vimshell_clear)',
-	\			'<Plug>(vimshell_move_head)',
-	\			'<Plug>(vimshell_execute_by_background)',
-	\			'<Plug>(vimshell_command_complete)',
-	\			'<Plug>(vimshell_zsh_complete)',
-	\			'<Plug>(vimshell_push_current_line)',
-	\			'<Plug>(vimshell_insert_last_word)',
-	\			'<Plug>(vimshell_move_head)',
-	\			'<Plug>(vimshell_delete_backward_line)',
-	\			'<Plug>(vimshell_delete_backward_word)',
-	\			'<Plug>(vimshell_move_previous_window)',
-	\			'<Plug>(vimshell_delete_backward_char)',
-	\			'<Plug>(vimshell_another_delete_backward_char)',
-	\			'<Plug>(vimshell_delete_forward_line)',
-	\			'<Plug>(vimshell_history_unite)',
-	\			'<Plug>(vimshell_history_neocomplete)',
-	\			'<Plug>(vimshell_int_execute_line)',
-	\			'<Plug>(vimshell_int_previous_prompt)',
-	\			'<Plug>(vimshell_int_next_prompt)',
-	\			'<Plug>(vimshell_int_paste_prompt)',
-	\			'<Plug>(vimshell_int_hangup)',
-	\			'<Plug>(vimshell_int_exit)',
-	\			'<Plug>(vimshell_int_restart_command)',
-	\			'<Plug>(vimshell_int_change_line)',
-	\			'<Plug>(vimshell_int_delete_line)',
-	\			'<Plug>(vimshell_int_insert_enter)',
-	\			'<Plug>(vimshell_int_insert_head)',
-	\			'<Plug>(vimshell_int_append_enter)',
-	\			'<Plug>(vimshell_int_append_end)',
-	\			'<Plug>(vimshell_int_clear)',
-	\			'<Plug>(vimshell_int_move_head)',
-	\			'<Plug>(vimshell_int_delete_backward_line)',
-	\			'<Plug>(vimshell_int_delete_backward_word)',
-	\			'<Plug>(vimshell_int_delete_backward_char)',
-	\			'<Plug>(vimshell_int_another_delete_backward_char)',
-	\			'<Plug>(vimshell_int_send_input)',
-	\			'<Plug>(vimshell_int_interrupt)',
-	\			'<Plug>(vimshell_int_command_complete)',
-	\			'<Plug>(vimshell_int_delete_forward_line)',
-	\			'<Plug>(vimshell_int_history_unite)'
-	\		]
-	\	}
+	\	'on_cmd' : 'TweetVim'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('vim-quickrun')
 	call neobundle#config('vim-quickrun', {
 	\	'depends'  : 'Shougo/vimproc.vim',
-	\	'autoload' : {
-	\		'commands' : {
-	\			'name'     : 'QuickRun',
-	\			'complete' : 'filetype'
-	\		},
-	\		'mappings' : [
-	\			'<Plug>(quickrun)',
-	\			'<Plug>(quickrun-op)'
-	\		]
-	\	}
+	\	'on_cmd' : {
+	\		'name'     : 'QuickRun',
+	\		'complete' : 'filetype'
+	\	},
+	\	'on_map' : [
+	\		'<Plug>(quickrun)',
+	\		'<Plug>(quickrun-op)'
+	\	]
 	\})
 	call neobundle#untap()
 endif
@@ -500,13 +414,13 @@ if neobundle#tap('J6uil.vim')
 	\		'tyru/open-browser.vim',
 	\		'Shougo/unite.vim'
 	\	],
-	\	'autoload' : {'commands' : 'J6uil'}
+	\	'on_cmd' : 'J6uil'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('w3m.vim')
 	call neobundle#config('w3m.vim', {
-	\	'autoload' : {'commands' : [
+	\	'on_cmd' : [
 	\		'W3m',
 	\		'W3mHistory',
 	\		'W3mHistoryClear',
@@ -514,61 +428,51 @@ if neobundle#tap('w3m.vim')
 	\		'W3mSplit',
 	\		'W3mTab',
 	\		'W3mVSplit'
-	\	]}
+	\	]
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('vimshell-kawaii.vim')
 	call neobundle#config('vimshell-kawaii.vim', {
-	\	'depends'  : 'Shougo/vimshell.vim',
-	\	'autoload' : {'on_source' : 'vimshell.vim'}
+	\	'depends'   : 'Shougo/vimshell.vim',
+	\	'on_source' : 'vimshell.vim'
 	\})
 	call neobundle#untap()
 endif
 "@Bugs('not fuond jazzradio#channel_id_comlete')
 if neobundle#tap('jazzradio.vim')
 	call neobundle#config('jazzradio.vim', {
-	\	'depends' : 'Shougo/unite.vim',
-	\	'external_commands' : 'mplayer',
-	\	'autoload' : {
-	\		'unite_sources'   : 'jazzradio',
-	\		'function_prefix' : 'Jazzradio',
-	\		'commands'        : [
-	\			'JazzradioUpdateChannels',
-	\			'JazzradioStop', {
-	\				'name'     : 'JazzradioPlay',
-	\				'complete' : 'customlist,jazzradio#channel_id_comlete'
-	\			}
-	\		]
-	\	}
+	\	'depends'  : 'Shougo/unite.vim',
+	\	'on_unite' : 'jazzradio',
+	\	'on_cmd'   : [
+	\		'JazzradioUpdateChannels',
+	\		'JazzradioStop', {
+	\			'name'     : 'JazzradioPlay',
+	\			'complete' : 'customlist,jazzradio#channel_id_comlete'
+	\		}
+	\	]
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('favstart-vim')
 	call neobundle#config('favstart-vim', {
-	\	'autoload' : {'commands' : 'FavStar'}
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('unite-colorscheme')
-	call neobundle#config('unite-colorscheme', {
-	\	'autoload' : {'unite_sources' : 'colorscheme'}
+	\	'on_cmd' : 'FavStar'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('vinarise.vim')
 	call neobundle#config('vinarise.vim', {
-	\	'autoload' : {'commands' : [
+	\	'on_cmd' : [
 	\		'Vinarise',
 	\		'VinariseDump'
-	\	]}
+	\	]
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('gist-vim')
 	call neobundle#config('gist-vim', {
-	\	'autoload' : {'commands' : 'Gist'},
-	\	'depends'  : 'mattn/webapi-vim'
+	\	'depends' : 'mattn/webapi-vim',
+	\	'on_cmd'  : 'Gist'
 	\})
 	call neobundle#untap()
 endif
@@ -578,46 +482,38 @@ if neobundle#tap('ref-hoogle')
 	\})
 	call neobundle#untap()
 endif
-if neobundle#tap('vital.vim')
-	call neobundle#config('vital.vim', {
-	\	'autoload' : {'filetypes' : 'vim'}
-	\})
-	call neobundle#untap()
-endif
 if neobundle#tap('benchvimrc-vim')
 	call neobundle#config('benchvimrc-vim', {
-	\	'autoload' : {'commands' : 'BenchVimrc'}
+	\	'on_cmd' : 'BenchVimrc'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('coq.vim')
 	call neobundle#config('coq.vim', {
-	\	'autoload' : {'filetypes' : 'coq'}
+	\	'on_ft' : 'coq'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('coqtop-vim')
 	call neobundle#config('coqtop-vim', {
-	\	'depends'  : 'Shougo/vimproc.vim',
-	\	'autoload' : {'filetypes' : 'coq'}
+	\	'depends' : 'Shougo/vimproc.vim',
+	\	'on_ft'   : 'coq'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('vim-themis')
 	call neobundle#config('vim-themis', {
-	\	'autoload' : {'filetypes' : [
+	\	'on_ft' : [
 	\		'vim',
 	\		'vimspec'
-	\	]}
+	\	]
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('previm')
 	call neobundle#config('previm', {
-	\	'autoload' : {
-	\		'filetypes' : 'markdown',
-	\		'commands'  : 'PrevimOpen'
-	\	}
+	\	'on_ft'  : 'markdown',
+	\	'on_cmd' : 'PrevimOpen'
 	\})
 	call neobundle#untap()
 endif
@@ -629,50 +525,48 @@ if neobundle#tap('ref-dicts-en')
 endif
 if neobundle#tap('restart.vim')
 	call neobundle#config('restart.vim', {
-	\	'gui'      : 1,
-	\	'autoload' : {'commands' : 'Restart'}
+	\	'gui'    : 1,
+	\	'on_cmd' : 'Restart'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('vim-scouter')
 	call neobundle#config('vim-scouter', {
-	\	'autoload' : {'commands' : {
+	\	'on_cmd' : {
 	\		'name'     : 'Scouter',
 	\		'complete' : 'file'
-	\	}}
+	\	}
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('TaskList.vim')
 	call neobundle#config('TaskList.vim', {
-	\	'autoload' : {
-	\		'commands' : [
-	\			'TaskList',
-	\			'TaskListToggle'
-	\		],
-	\		'mappings' : '<Plug>TaskListToggle'
-	\	}
+	\	'on_cmd' : [
+	\		'TaskList',
+	\		'TaskListToggle'
+	\	],
+	\	'on_map' : '<Plug>TaskListToggle'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('undotree')
 	call neobundle#config('undotree', {
-	\	'autoload' : {'commands' : [
+	\	'on_cmd' : [
 	\		'UndotreeToggle',
 	\		'UndotreeFocus',
 	\		'UndotreeShow',
 	\		'UndotreeHide'
-	\	]}
+	\	]
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('adrone.vim')
 	call neobundle#config('adrone.vim', {
-	\	'autoload' : {'commands' : [
+	\	'on_cmd' : [
 	\		'AdroneHome',
 	\		'AdroneSay',
 	\		'AdroneVersion'
-	\	]}
+	\	]
 	\})
 	call neobundle#untap()
 endif
@@ -686,11 +580,11 @@ if neobundle#tap('fakecygpty')
 endif
 if neobundle#tap('vimhelpgenerator')
 	call neobundle#config('vimhelpgenerator', {
-	\	'autoload' : {'commands' : [
+	\	'on_cmd' : [
 	\		'VimHelpGenerator',
 	\		'VimHelpGeneratorVirtual',
 	\		'HelpIntoMarkdown'
-	\	]}
+	\	]
 	\})
 	call neobundle#untap()
 endif
@@ -698,45 +592,45 @@ if neobundle#tap('vim-ruby')
 	"@Bugs('rspec.vim do not highlight syntax before loading vim-ruby')
 	"@Marked(' -> was fixed by commit a516 ?')
 	call neobundle#config('vim-ruby', {
-	\	'autoload' : {'filetype' : 'ruby'}
+	\	'on_ft' : 'ruby'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('rspec.vim')
 	call neobundle#config('rspec.vim', {
-	\	'autoload' : {'filetype' : 'ruby'}
+	\	'on_ft' : 'ruby'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('mdforvim')
 	call neobundle#config('mdforvim', {
-	\	'autoload' : {'commands' : [
+	\	'on_cmd' : [
 	\		'MdConvert',
 	\		'MdPreview',
 	\		'MdStopPreview', {
 	\			'name'     : 'MdSaveAs',
 	\			'complete' : 'file'
 	\		}
-	\	]}
+	\	]
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('vimconsole.vim')
 	call neobundle#config('vimconsole.vim', {
-	\	'autoload' : {'commands' : [
+	\	'on_cmd' : [
 	\		'VimConsoleLog',
 	\		'VimConsoleOpen',
 	\		'VimConsoleClose',
 	\		'VimConsoleToggle',
 	\		'VimConsoleClear',
 	\		'VimConsoleRedraw'
-	\	]}
+	\	]
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('vim-go')
 	call neobundle#config('vim-go', {
-	\	'autoload' : {'filetypes' : 'go'}
+	\	'on_ft' : 'go'
 	\})
 	call neobundle#untap()
 endif
@@ -760,17 +654,14 @@ if neobundle#tap('deoplete.nvim')
 endif
 if neobundle#tap('auto-ctags.vim')
 	call neobundle#config('auto-ctags.vim', {
-	\	'autoload'          : {'commands' : 'Ctags'},
+	\	'on_cmd'            : 'Ctags',
 	\	'external_commands' : 'ctags'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('unite-tag')
 	call neobundle#config('unite-tag', {
-	\	'depends'  : [
-	\		'Shougo/unite.vim'
-	\	],
-	\	'autoload' : {'unite_sources' : 'tag'}
+	\	'depends' : 'Shougo/unite.vim'
 	\})
 	call neobundle#untap()
 endif
@@ -782,22 +673,22 @@ if neobundle#tap('vim-textobj-from_regexp')
 endif
 if neobundle#tap('typescript-vim')
 	call neobundle#config('typescript-vim', {
-	\	'autoload' : {'filetypes' : 'typescript'}
+	\	'on_ft' : 'typescript'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('vim-pager')
 	call neobundle#config('vim-pager', {
-	\	'autoload' : {'commands' : 'PAGER'}
+	\	'on_cmd' : 'PAGER'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('vim-manpager')
 	call neobundle#config('vim-manpager', {
-	\	'autoload' : {'commands' : [
+	\	'on_cmd' : [
 	\		'Man',
 	\		'MANPAGER'
-	\	]}
+	\	]
 	\})
 	call neobundle#untap()
 endif
@@ -809,91 +700,76 @@ if neobundle#tap('vim-fugitive')
 endif
 if neobundle#tap('try-colorscheme.vim')
 	call neobundle#config('try-colorscheme.vim', {
-	\	'autoload' : {'commands' : 'TryColorscheme'}
+	\	'on_cmd' : 'TryColorscheme'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('unite-syntax')
 	call neobundle#config('unite-syntax', {
-	\	'depends'  : [
-	\		'Shougo/unite.vim'
-	\	],
-	\	'autoload' : {'unite_sources' : 'syntax'}
+	\	'depends'  : 'Shougo/unite.vim'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('unite-help')
 	call neobundle#config('unite-help', {
-	\	'depends'  : [
-	\		'Shougo/unite.vim'
-	\	],
-	\	'autoload' : {'unite_sources' : 'help'}
+	\	'depends' : 'Shougo/unite.vim',
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('unite-filetype')
 	call neobundle#config('unite-filetype', {
-	\	'depends'  : [
-	\		'Shougo/unite.vim'
-	\	],
-	\	'autoload' : {'unite_sources' : 'filetype'}
+	\	'depends' : 'Shougo/unite.vim'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('agit.vim')
 	call neobundle#config('agit.vim', {
-	\	'autoload' : { 'commands' : [
+	\	'on_cmd' : [
 	\		'Agit',
 	\		'AgitFile',
 	\		'AgitGit',
 	\		'AgitDiff'
-	\	]}
+	\	]
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('unite-session')
 	call neobundle#config('unite-session', {
-	\	'depends'  : [
-	\		'Shougo/unite.vim'
-	\	],
-	\	'autoload' : {
-	\		'commands' : [
-	\			{
-	\				'name'     : ['UniteSessionSave', 'UniteSessionLoad'],
-	\				'complete' : 'customlist,unite#sources#session#_complete'
-	\			}
-	\		],
-	\		'unite_sources' : 'session'
+	\	'depends'  : 'Shougo/unite.vim',
+	\	'on_cmd' : {
+	\		'name'     : ['UniteSessionSave', 'UniteSessionLoad'],
+	\		'complete' : 'customlist,unite#sources#session#_complete'
 	\	}
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('vim-textobj-xmlattr')
 	call neobundle#config('vim-textobj-xmlattr', {
-	\	'depends'  : 'vim-textobj-user',
-	\	'autoload' : { 'filetypes' : [
+	\	'depends' : 'vim-textobj-user',
+	\	'on_ft'   : [
 	\		'html',
 	\		'xml',
-	\		'xaml'
-	\	]}
+	\		'xaml',
+	\		'fxml'
+	\	]
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('neco-tweetvim')
 	call neobundle#config('neco-tweetvim', {
-	\	'autoload' : { 'on_source' : 'TweetVim' }
+	\	'on_source' : 'TweetVim'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('unite-tweetvim')
 	call neobundle#config('unite-tweetvim', {
-	\	'autoload' : { 'on_source' : 'TweetVim' }
+	\	'on_source' : 'TweetVim'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('vim-haskell-indent')
 	call neobundle#config('vim-haskell-indent', {
-	\	'autoload' : { 'filetype' : 'haskell' }
+	\	'on_ft' : 'haskell'
 	\})
 	call neobundle#untap()
 endif
@@ -903,21 +779,15 @@ if neobundle#tap('repl.vim')
 	\		'Shougo/vimshell.vim',
 	\		'Shougo/vimproc.vim'
 	\	],
-	\	'autoload' : {
-	\		'commands' : {
-	\			'name' : 'Repl'
-	\		},
-	\		'mappings' : '<Plug>(repl-run)'
-	\	}
+	\	'on_cmd' : 'Repl',
+	\	'on_map' : '<Plug>(repl-run)'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('emmet-vim')
 	call neobundle#config('emmet-vim', {
-	\	'autoload' : {
-	\		'commands' : 'EmmetInstall',
-	\		'mappings' : get(g:, 'user_emmet_leader_key', '\\')
-	\	}
+	\	'on_cmd' : 'EmmetInstall',
+	\	'on_map' : get(g:, 'user_emmet_leader_key', '\\')
 	\})
 	call neobundle#untap()
 endif
