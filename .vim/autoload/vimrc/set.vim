@@ -2,11 +2,8 @@
 " View loaded tags path
 function! vimrc#set#tag_load_status() " {{{
 	let l:STATUS_FORMAT = '[Tag(%s)]' | lockvar l:STATUS_FORMAT
-	let l:tags_shorten  = map(tagfiles(), 'pathshorten(v:val)')
-	let l:tags_shorten  = map(l:tags_shorten, 'strpart(v:val, strchars(v:val) - 10, 10)')
-	let l:tags_flatten  = join(l:tags_shorten, ',')
-	let l:tags_status   = (l:tags_flatten ==# '') ? '{never}'
-	\                                             : l:tags_flatten
+	let l:tags_status   = empty(tagfiles()) ? 'none'
+	\                                       : 'loaded'
 	return printf(l:STATUS_FORMAT, l:tags_status)
 endfunction " }}}
 

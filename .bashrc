@@ -142,17 +142,11 @@ else
 fi
 
 # }}}
-# Media Utils {{{
-
-# Capture size optimized for Ubuntu Unity Desktop on My-bluemc PC
-[ -n "`which byzanz-record 2> /dev/null`" ] && \
-	alias byzanz-optimized-mini-record='byzanz-record --delay=0 -d 600 -x 55 -y 25 -w 720 -h 465'
-
-# }}}
 # Others {{{
 
 alias mysql='mysql --pager="less -r -S -n -i -F -X"'
 alias docker-rm-archives='sudo docker rm `sudo docker ps -a -q`'
+alias ctags-r='ctags --tag-relative --recurse --sort=yes'
 
 # }}}
 # Environment Conditions {{{

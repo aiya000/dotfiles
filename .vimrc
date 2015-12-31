@@ -1220,14 +1220,16 @@ set laststatus=2
 let s:statusline_left  = '[Fenc=%{&fileencoding}]'
 \                      . '[Enc=%{&encoding}]'
 \                      . '%{vimrc#set#tag_load_status()}'
-\                      . '[FT=%y]'
-let s:statusline_right = ':%n %F%m %r'
-\                      . '%{fugitive#statusline()}'
+let s:statusline_right = '%1*%F(%n)%*'
+\                      . '%2*%m%*'
+\                      . '%3*%r%*'
+\                      . '%4*[FT=%y]%*'
 \                      . '[%03v]'
 let &statusline        = s:statusline_left . '%=' . s:statusline_right
 unlet s:statusline_left s:statusline_right
 
-" ☆ Fix 2byte code viewing, but this option don't support gnome-terminal
+" ☆ Fix 2byte code viewin
+" (Not support gnome-terminal)
 set ambiwidth=double
 
 " Define powered up syntax highlights
@@ -1246,6 +1248,12 @@ augroup HighlightPref
 	autocmd ColorScheme * highlight StatusLineNC                 ctermfg=Blue
 	autocmd ColorScheme * highlight LineNr                       ctermfg=Blue
 	"autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
+
+	" StatusLine specified highlight
+	autocmd ColorScheme * highlight User1 cterm=standout ctermfg=Black  ctermbg=White
+	autocmd ColorScheme * highlight User2 cterm=standout ctermfg=Yellow     ctermbg=Black
+	autocmd ColorScheme * highlight User3 cterm=standout ctermfg=DarkYellow ctermbg=Black
+	autocmd ColorScheme * highlight User4 cterm=standout ctermfg=Gray      ctermbg=Black
 augroup END
 
 augroup HighlightPref
