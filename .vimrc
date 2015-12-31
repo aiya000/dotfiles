@@ -363,6 +363,8 @@ NeoBundleLazy  'itchyny/vim-haskell-indent'
 NeoBundle      'aiya000/submode-window_move.vim'
 NeoBundleLazy  'ujihisa/repl.vim'
 NeoBundleLazy  'mattn/emmet-vim'
+NeoBundle      'kana/vim-operator-user'
+NeoBundle      'haya14busa/vim-operator-flashy'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
@@ -781,6 +783,12 @@ if neobundle#tap('emmet-vim')
 	call neobundle#config('emmet-vim', {
 	\	'on_cmd' : 'EmmetInstall',
 	\	'on_map' : get(g:, 'user_emmet_leader_key', '\\')
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-operator-flashy')
+	call neobundle#config('vim-operator-flashy', {
+	\	'depends' : 'vim-operator-user'
 	\})
 	call neobundle#untap()
 endif
@@ -1804,6 +1812,10 @@ augroup KeyMapping
 
 	" repl.vim
 	autocmd User MyVimRc nmap <leader>o <Plug>(repl-run)
+
+	" vim-operator-flashy
+	autocmd User MyVimRc map  y <Plug>(operator-flashy)
+	autocmd User MyVimRc nmap Y <Plug>(operator-flashy)$
 augroup END
 
 " }}}
