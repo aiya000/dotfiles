@@ -122,11 +122,7 @@ augroup END
 
 if !g:gvimrc['loaded']
 	set background=dark
-	if s:is_unix
-		colorscheme molokai
-	elseif s:is_windows
-		colorscheme lucius
-	endif
+	colorscheme apprentice
 endif
 
 "}}}

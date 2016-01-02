@@ -10,6 +10,7 @@
 " -- Action_Setting
 " -- Inner_Setting
 " -- Event_Method
+"
 " -- Command_Util
 " -- Key_Mapping
 " -- File_Type
@@ -365,6 +366,7 @@ NeoBundleLazy  'ujihisa/repl.vim'
 NeoBundleLazy  'mattn/emmet-vim'
 NeoBundle      'kana/vim-operator-user'
 NeoBundle      'haya14busa/vim-operator-flashy'
+NeoBundle      'romainl/Apprentice'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
