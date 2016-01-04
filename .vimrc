@@ -1054,7 +1054,8 @@ let g:separetaro_short_separator_of = {
 \	'go'         : '/* -=-=-=-=-=-=-=-=- */',
 \	'html'       : '<!-- - - - -->',
 \	'markdown'   : '- - -',
-\	'fxml'       : '<!-- - - - -->'
+\	'fxml'       : '<!-- - - - -->',
+\	'xaml'       : '<!-- - - - -->'
 \}
 
 let g:separetaro_long_separator_of = {
@@ -1067,7 +1068,8 @@ let g:separetaro_long_separator_of = {
 \	'go'         : '/* --- --- --- _ --- --- --- */',
 \	'html'       : '<!-- - - - _ - - - -->',
 \	'markdown'   : '- - - - -',
-\	'fxml'       : '<!-- - - - _ - - - -->'
+\	'fxml'       : '<!-- - - - _ - - - -->',
+\	'xaml'       : '<!-- - - - _ - - - -->'
 \}
 
 " }}}
