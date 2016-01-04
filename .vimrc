@@ -1158,7 +1158,7 @@ let g:submode_window_move['start_window_move_with_move_prev'] = '<C-s>P'
 
 " Use this repl
 let g:repl_filetype_repl = {
-\	'haskel' : {
+\	'haskell' : {
 \		'repl' : 'stack exec -- ghci',
 \		'opt'  : ''
 \	},
