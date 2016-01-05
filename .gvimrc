@@ -109,10 +109,19 @@ augroup HighlightPrefs
 	autocmd ColorScheme * highlight CursorLineNr               guifg=Yellow
 	autocmd ColorScheme * highlight CursorLine   gui=underline guifg=Cyan    guibg=NONE
 
-	autocmd ColorScheme       * highlight GuiRcEmSpace guibg=White
-	autocmd VimEnter,WinEnter * call matchadd('GuiRcEmSpace', '　')
+	" StatusLine specified highlight
+	autocmd ColorScheme * highlight User1 cterm=standout guifg=White guibg=Black
+	autocmd ColorScheme * highlight User2 cterm=standout guifg=Black guibg=Yellow
+	autocmd ColorScheme * highlight User3 cterm=standout guifg=Black guibg=DarkYellow
+	autocmd ColorScheme * highlight User4 cterm=standout guifg=Black guibg=Gray
 augroup END
 
+augroup HighlightPref
+	autocmd ColorScheme       * highlight GuiRcEmSpace guibg=White
+	autocmd VimEnter,WinEnter * call matchadd('GuiRcEmSpace', '　')
+	" Highlight VCS conflict markers
+	autocmd ColorScheme * call matchadd('Error', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
+augroup END
 
 augroup HighlightPref
 	autocmd InsertEnter * highlight StatusLine guifg=LightGray guibg=Black
