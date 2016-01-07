@@ -935,7 +935,7 @@ if neobundle#tap('vim-submode')
 		autocmd User MyVimRc call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
 		autocmd User MyVimRc call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
 
-		" Linewise Mover
+		" BrokeLinewise Mover
 		autocmd User MyVimRc call submode#enter_with('linewise_move', 'n', '', 'gk', 'gk')
 		autocmd User MyVimRc call submode#enter_with('linewise_move', 'n', '', 'gj', 'gj')
 		autocmd User MyVimRc call submode#enter_with('linewise_move', 'n', '', 'g0', 'g0')
@@ -950,6 +950,10 @@ if neobundle#tap('vim-submode')
 		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'g_', 'g$')
 		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'h',  'h')
 		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'l',  'l')
+
+		" Continuous Buffer Deleter
+		autocmd User MyVimRc call submode#enter_with('cont_bdelete', 'n', '', '<C-s><C-w>c')
+		autocmd User MyVimRc call submode#map('cont_bdelete', 'n', 's', 'c', ':bdelete<CR>')
 	augroup END
 endif
 
