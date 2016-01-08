@@ -935,24 +935,24 @@ if neobundle#tap('vim-submode')
 		autocmd User MyVimRc call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
 		autocmd User MyVimRc call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
 
-		" BrokeLinewise Mover
-		autocmd User MyVimRc call submode#enter_with('linewise_move', 'n', '', 'gk', 'gk')
-		autocmd User MyVimRc call submode#enter_with('linewise_move', 'n', '', 'gj', 'gj')
-		autocmd User MyVimRc call submode#enter_with('linewise_move', 'n', '', 'g0', 'g0')
-		autocmd User MyVimRc call submode#enter_with('linewise_move', 'n', '', 'g^', 'g^')
-		autocmd User MyVimRc call submode#enter_with('linewise_move', 'n', '', 'g$', 'g$')
-		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'k',  'gk')
-		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'j',  'gj')
-		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', '0',  'g0')
-		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', '^',  'g^')
-		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', '$',  'g$')
-		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', '_',  'g^')
-		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'g_', 'g$')
-		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'h',  'h')
-		autocmd User MyVimRc call submode#map('linewise_move', 'n', '', 'l',  'l')
+		" Broked Line Mover
+		autocmd User MyVimRc call submode#enter_with('b_line_move', 'n', '', 'gk', 'gk')
+		autocmd User MyVimRc call submode#enter_with('b_line_move', 'n', '', 'gj', 'gj')
+		autocmd User MyVimRc call submode#enter_with('b_line_move', 'n', '', 'g0', 'g0')
+		autocmd User MyVimRc call submode#enter_with('b_line_move', 'n', '', 'g^', 'g^')
+		autocmd User MyVimRc call submode#enter_with('b_line_move', 'n', '', 'g$', 'g$')
+		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'k',  'gk')
+		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'j',  'gj')
+		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', '0',  'g0')
+		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', '^',  'g^')
+		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', '$',  'g$')
+		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', '_',  'g^')
+		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'g_', 'g$')
+		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'h',  'h')
+		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'l',  'l')
 
 		" Continuous Buffer Deleter
-		autocmd User MyVimRc call submode#enter_with('cont_bdelete', 'n', '', '<C-s><C-w>c')
+		autocmd User MyVimRc call submode#enter_with('cont_bdelete', 'n', '', '<C-s><C-w>c', ':bdelete<CR>')
 		autocmd User MyVimRc call submode#map('cont_bdelete', 'n', 's', 'c', ':bdelete<CR>')
 	augroup END
 endif
@@ -967,8 +967,8 @@ let g:ref_source_webdict_sites = {
 \	}
 \}
 
-let g:ref_source_webdict_sites['default'] = 'weblio'
-
+" Default dictionary is 'weblio'
+let g:ref_source_webdict_sites['default']       = 'weblio'
 let g:ref_source_webdict_sites['weblio'].filter = function('vimrc#plugins#weblio_filter')
 
 " }}}
@@ -1026,6 +1026,7 @@ augroup END
 " }}}
 "--- vim-colors-solarized --- {{{
 
+" Use dark color
 let g:solarized_contrast = 'high'
 
 " }}}
@@ -1087,7 +1088,7 @@ let g:vimconsole#no_default_key_mappings = 1
 " }}}
 "--- vim-go --- {{{
 
-" Avoid a bug on cygwin environment
+" Avoid a bug of cygwin environment
 if g:vimrc['is_cygwin']
 	let g:go_fmt_autosave        = 0
 	let g:go_def_mapping_enabled = 0
@@ -1096,6 +1097,7 @@ endif
 " }}}
 "--- vim-textobj-indent --- {{{
 
+" Set myself
 let g:textobj_indent_no_default_key_mappings = 1
 
 " }}}
