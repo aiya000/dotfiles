@@ -25,6 +25,10 @@ abbr    else {}
         ${0:TARGET}
     }
 
-snippet print
-abbr    print();
-    print(${0});
+snippet Array#map
+    Array.prototype.map = function (f) {
+        for (var i = 0; i < this.length; ++i) {
+            this[i] = f(i);
+        }
+        return this;
+    };

@@ -1811,7 +1811,9 @@ augroup KeyMapping
 	autocmd User MyVimRc vmap g* <Plug>(visualstar-*)Nzz
 
 	" repl.vim
-	autocmd User MyVimRc nmap <leader>o <Plug>(repl-run)
+	"@Bugs('I cannot run second')
+	"autocmd User MyVimRc nmap <leader>o <Plug>(repl-run)
+	autocmd User MyVimRc nnoremap <silent> <leader>o :<C-u>Repl<CR>
 augroup END
 
 " }}}
