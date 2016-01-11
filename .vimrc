@@ -1159,15 +1159,13 @@ let g:repl_filetype_repl = {
 \	'haskell' : {
 \		'repl' : 'stack exec -- ghci',
 \		'opt'  : ''
-\	},
-\	'python' : {
-\		'repl' : 'python2',
-\		'opt'  : '-i'
 \	}
 \}
 
+" Set myself
 let g:repl_no_default_keymappings = 1
-let g:repl_split_command          = 'vertical split'
+" Open by vertical split
+let g:repl_split_command = 'vertical split'
 
 " }}}
 "--- emmet-vim --- {{{
