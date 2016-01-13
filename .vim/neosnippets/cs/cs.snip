@@ -5,3 +5,7 @@ options indent
     else {
         ${0:TARGET}
     }
+
+snippet constructor
+abbr    ClassName(__) {__}
+    `expand('%:t:r')`(${1:#:Parameter}) {${0}}

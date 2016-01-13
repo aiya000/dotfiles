@@ -54,6 +54,10 @@ snippet Content
 abbr    Content=""
     Content="${1:#:Value}"${0}
 
+snippet DisplayMemberPath
+abbr    DisplayMemberPath=""
+    DisplayMemberPath="${1:#:MemberName}"
+
 snippet DockPanelDock
 abbr    DockPanelDock=""
     DockPanelDock="${1:Left}"${0}
@@ -110,6 +114,10 @@ snippet IsReadOnly
 abbr    IsReadOnly=""
     IsReadOnly="${1:True}"${0}
 
+snippet IsEnabled
+abbr    IsEnabled=""
+    IsEnabled="${1:False}"${0}
+
 snippet ItemsSource
 abbr    ItemsSource=""
     ItemsSource="${1:#:DataSource}"${0}
@@ -156,7 +164,11 @@ abbr    SelectedIndex=""
 
 snippet SelectionChanged
 abbr    SelectionChanged=""
-    SelectionChanged="${1:Component_SelectionChanged}"${0}
+    SelectionChanged="${1:EventHandler}"${0}
+
+snippet SelectedValuePath
+abbr    SelectedValuePath=""
+    SelectedValuePath="${1:#:MemberName}"
 
 snippet ShowGridLines
 abbr    ShowGridLines=""

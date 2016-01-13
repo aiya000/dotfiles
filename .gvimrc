@@ -85,6 +85,16 @@ endif
 command! -bar GVimConfig    e $MYGVIMRC
 command! -bar GVimConfigTab tabnew $MYGVIMRC
 
+"@Incomplete('windows support only')
+"@Bugs('Loading sume plugin')
+function! s:open_this_file_in_new_window()
+	let l:filepath = expand('%')
+	execute ':bd' l:filepath
+	execute ':!start gvim' printf('"%s"', fnameescape(l:filepath))
+endfunction
+
+command! OpenThisFileInNewWindow call s:open_this_file_in_new_window()
+
 "}}}
 
 

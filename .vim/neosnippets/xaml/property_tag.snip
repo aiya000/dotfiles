@@ -1,0 +1,13 @@
+snippet xArray
+abbr    <x:Array Type="__">__</x:Array>
+    <x:Array Type="{x:Type System:${1:String}}">
+        <System:$1>${2:#:Value}</System:$1>
+    </x:Array>
+
+snippet system_value
+abbr    <System:__>__</System:__>
+    <System:${1:String}>${2:#:Value}</System:$1>
+
+snippet foo_itemssource
+abbr    <__.ItemsSource>__</__.ItemsSource>
+    <${1:Foo}.ItemsSource>${0}</$1.ItemsSource>
