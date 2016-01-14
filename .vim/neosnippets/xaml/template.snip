@@ -13,7 +13,7 @@ snippet xmlns_system
 snippet data_grid_template_column_surrond
 alias   data_grid_template_column
 abbr    <DataGridTemplateColumn>...</DataGridTemplateColumn>
-options head
+options head indent
     <DataGridTemplateColumn>
         <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
@@ -24,11 +24,11 @@ options head
 
 snippet data_grid_button_column
 abbr    <DataGridTemplateColumn>...</DataGridTemplateColumn>
-options head
+options head indent
     <DataGridTemplateColumn>
         <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
-                <Button Width="Auto" Height="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                <Button/>
             </DataTemplate>
         </DataGridTemplateColumn.CellTemplate>
     </DataGridTemplateColumn>
@@ -58,6 +58,7 @@ abbr Command="{Binding RelativeSource={RelativeSource AncestorType=___}, Path=Da
     Command="{Binding RelativeSource={RelativeSource AncestorType=${1:DataGrid}}, Path=DataContext.${1:#:Method}}"${0}
 
 snippet multi_command_parameter
+options head indent
     <${1:#:BaseControl}.CommandParameter>
         <MultiBinding Converter="{StaticResource ${2:converterKey}}">
             <Binding Path="${0}"/>
