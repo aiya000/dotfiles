@@ -47,8 +47,8 @@ abbr    Command=""
     Command="${1:#:Name}"${0}
 
 snippet CommandParameter
-abbr    CommandParameter="{Binding ___}"
-    CommandParameter="{Binding ${1:#:Property}}"
+abbr    CommandParameter="__"
+    CommandParameter="${1:#:Value}"${0}
 
 snippet Content
 abbr    Content=""
@@ -56,7 +56,7 @@ abbr    Content=""
 
 snippet DisplayMemberPath
 abbr    DisplayMemberPath=""
-    DisplayMemberPath="${1:#:MemberName}"
+    DisplayMemberPath="${1:#:MemberName}"${0}
 
 snippet DockPanelDock
 abbr    DockPanelDock=""
@@ -72,7 +72,7 @@ abbr    Executed=""
 
 snippet FontSize
 abbr    FontSize=""
-    FontSize="${1:16}"
+    FontSize="${1:16}"${0}
 
 snippet GridColumn
 abbr    Grid.Column=""
@@ -100,7 +100,7 @@ abbr    HorizontalContentAlignment=""
 
 snippet Initialized
 abbr    Initialized=""
-    Initialized="${1:#:Control_Initialized}"
+    Initialized="${1:#:Control_Initialized}"${0}
 
 snippet IsHitTestVisible
 abbr    IsHitTestVisible=""
@@ -144,7 +144,7 @@ abbr    Margin=""
 
 snippet MaxLength
 abbr    MaxLength=""
-    MaxLength="${1:16}"
+    MaxLength="${1:16}"${0}
 
 snippet Opacity
 abbr    Opacity=""
@@ -156,11 +156,11 @@ abbr    Padding=""
 
 snippet RenderTransformOrigin
 abbr    RenderTransformOrigin=""
-    RenderTransformOrigin="${1:90.0},${2:90.0}"
+    RenderTransformOrigin="${1:90.0},${2:90.0}"${0}
 
 snippet SelectedDateChanged
 abbr    SelectedDateChanged=""
-    SelectedDateChanged="${1:#:EventHandler}"
+    SelectedDateChanged="${1:#:EventHandler}"${0}
 
 snippet SelectedIndex
 abbr    SelectedIndex=""
@@ -172,7 +172,7 @@ abbr    SelectionChanged=""
 
 snippet SelectedValuePath
 abbr    SelectedValuePath=""
-    SelectedValuePath="${1:#:MemberName}"
+    SelectedValuePath="${1:#:MemberName}"${0}
 
 snippet ShowGridLines
 abbr    ShowGridLines=""
@@ -200,7 +200,7 @@ abbr    TextWrapping=""
 
 snippet Unloaded
 abbr    Unloaded=""
-    Unloaded="${1:#:Control_Unloaded}"
+    Unloaded="${1:#:Control_Unloaded}"${0}
 
 snippet VerticalAlignment
 abbr    VerticalAlignment=""
