@@ -45,6 +45,10 @@ snippet declare_xml_clr_namespace
 abbr xmlns:___="clr-namespace:___;assembly=___"
     xmlns:${1:#:NameSpaceName}="clr-namespace:${2:#:NameSpacePath};assembly=${3:#:AssemblyNameSpace}"
 
+snippet declare_xml_ewpf_namespace
+abbr    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:${1:xctk}="http://schemas.xceed.com/wpf/xaml/toolkit"
+
 snippet interactivity_interaction
 options head indent
     <Interactivity:Interaction.Triggers>

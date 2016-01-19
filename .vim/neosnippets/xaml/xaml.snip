@@ -78,9 +78,17 @@ snippet GridColumn
 abbr    Grid.Column=""
     Grid.Column="${1:0}"${0}
 
+snippet GridColumnSpan
+abbr    Grid.ColumnSpan=""
+    Grid.ColumnSpan="${1:1}"${0}
+
 snippet GridRow
 abbr    Grid.Row=""
     Grid.Row="${1:0}"${0}
+
+snippet GridRowSpan
+abbr    Grid.RowSpan=""
+    Grid.RowSpan="${1:1}"${0}
 
 snippet Header
 abbr    Header=""
@@ -166,9 +174,21 @@ snippet SelectedIndex
 abbr    SelectedIndex=""
     SelectedIndex="${1:0}"${0}
 
+snippet SelectedItem
+abbr    SelectedItem=""
+    SelectedItem="${1:#:Foo}"${0}
+
+snippet SelectedItemBinding
+abbr    SelectedItemBinding=""
+    SelectedItemBinding="{Binding ${1:#:Member}}"${0}
+
 snippet SelectionChanged
 abbr    SelectionChanged=""
     SelectionChanged="${1:EventHandler}"${0}
+
+snippet SelectedValueBinding
+abbr    SelectedValueBinding=""
+    SelectedValueBinding="{Binding ${1:#:Member}}"${0}
 
 snippet SelectedValuePath
 abbr    SelectedValuePath=""
