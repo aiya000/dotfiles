@@ -375,7 +375,6 @@ if neobundle#tap('vimproc.vim')
 	\		'linux'  : 'make',
 	\		'cygwin' : 'make'
 	\	},
-	\	'disabled' : g:vimrc['is_kaoriya'] && g:vimrc['is_windows'] && !g:vimrc['has_mingw']
 	\})
 	call neobundle#untap()
 endif
@@ -1185,8 +1184,8 @@ let s:repos = [ 'adrone.vim'
 \             , 'aho-bakaup.vim'
 \             , 'auto-ctags.vim'
 \             , 'submode-window_move.vim'
-\             , 'repl.vim'
 \             ]
+"\             , 'repl.vim'
 let s:repos_dir = '~/Repository/'
 
 " If valid local plugin, disable bundled same plugin
