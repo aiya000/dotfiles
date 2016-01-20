@@ -375,6 +375,7 @@ if neobundle#tap('vimproc.vim')
 	\		'linux'  : 'make',
 	\		'cygwin' : 'make'
 	\	},
+	\	'disabled' : g:vimrc['is_kaoriya'] && g:vimrc['is_windows'] && !g:vimrc['has_mingw']
 	\})
 	call neobundle#untap()
 endif
