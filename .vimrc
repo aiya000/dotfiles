@@ -1729,7 +1729,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>V :<C-u>VimShell -split-command=tabnew -create<CR>
 
 	" Unite
-	autocmd User MyVimRc nnoremap          <leader>U         :<C-u>Unite<Space>
+	autocmd User MyVimRc nnoremap          <leader>u         :<C-u>Unite<Space>
 	autocmd User MyVimRc nnoremap <silent> <C-k>h            :<C-u>Unite -ignorecase file_rec<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-h>        :<C-u>Unite -ignorecase neomru/file<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Unite -ignorecase outline<CR>
@@ -1783,7 +1783,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap <silent> <leader>t <Plug>TaskListToggle
 
 	" undotree
-	autocmd User MyVimRc nnoremap <silent> <leader>u :<C-u>UndotreeToggle<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>U :<C-u>UndotreeToggle<CR>
 
 	" vim-indent-guides
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-i> :<C-u>call vimrc#keys#toggle_indent_guides()<CR>
