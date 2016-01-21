@@ -1671,8 +1671,8 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-w>\ :<C-u>resize 0<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>~ :<C-u>vertical resize 0<CR>
 
-	autocmd User MyVimRc nnoremap <silent><expr> <C-w>t  ('mZ:tabnew<CR>`Zzz'          . (foldlevel('.') > 0 ? 'zo' : ''))
-	autocmd User MyVimRc nnoremap <silent><expr> g<C-w>t ('mZ:hide<CR>:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : ''))
+	autocmd User MyVimRc nnoremap <silent><expr> gH  ('mZ:tabnew<CR>`Zzz'          . (foldlevel('.') > 0 ? 'zo' : ''))
+	autocmd User MyVimRc nnoremap <silent><expr> ghh ('mZ:hide<CR>:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : ''))
 augroup END
 
 " }}}

@@ -132,7 +132,7 @@ abbr    ItemsSource=""
 
 snippet Loaded
 abbr    Loaded=""
-    Loaded="${1:Component_Loaded}"${0}
+    Loaded="${1:#:EventHandler}"${0}
 
 snippet Closed
 abbr    Closed=""
@@ -221,6 +221,10 @@ abbr    TextWrapping=""
 snippet Unloaded
 abbr    Unloaded=""
     Unloaded="${1:#:Control_Unloaded}"${0}
+
+snippet ValueChanged
+abbr    ValueChanged=""
+    ValueChanged="${1:#:EventHandler}"
 
 snippet VerticalAlignment
 abbr    VerticalAlignment=""
