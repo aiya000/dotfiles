@@ -1666,7 +1666,8 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-w>c :<C-u>bdelete<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>C :<C-u>bdelete!<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>N :<C-u>EnewOverridden!<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>Q :<C-u>quitall<CR>
+	autocmd User MyVimRc nnoremap <silent> ghQ    :<C-u>quitall<CR>
+	autocmd User MyVimRc nnoremap <silent> ghq    :<C-u>quit<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>" :<C-u>resize 5<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>\ :<C-u>resize 0<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-w>~ :<C-u>vertical resize 0<CR>
