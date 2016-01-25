@@ -1660,18 +1660,41 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <Space>k <C-w>k
 	autocmd User MyVimRc nnoremap <Space>l <C-w>l
 
-	autocmd User MyVimRc nnoremap <C-w><C-r> <C-w>r<C-w>p
-
-	autocmd User MyVimRc nnoremap <silent> <C-w>T :<C-u>tabclose<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>c :<C-u>bdelete<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>C :<C-u>bdelete!<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>N :<C-u>EnewOverridden!<CR>
-	autocmd User MyVimRc nnoremap <silent> ghQ    :<C-u>quitall<CR>
-	autocmd User MyVimRc nnoremap <silent> ghq    :<C-u>quit<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>" :<C-u>resize 5<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>\ :<C-u>resize 0<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>~ :<C-u>vertical resize 0<CR>
-
+	" Window key <C-w> to gh (save filger epoint)
+	"" Disable default
+	autocmd User MyVimRc nnoremap gh       <NOP>
+	autocmd User MyVimRc nnoremap <C-w>q   <NOP>
+	autocmd User MyVimRc nnoremap <C-w>c   <NOP>
+	autocmd User MyVimRc nnoremap <C-w>r   <NOP>
+	autocmd User MyVimRc nnoremap <C-w>_   <NOP>
+	autocmd User MyVimRc nnoremap <C-w>=   <NOP>
+	autocmd User MyVimRc nnoremap <C-w>o   <NOP>
+	autocmd User MyVimRc nnoremap <C-w>H   <NOP>
+	autocmd User MyVimRc nnoremap <C-w>J   <NOP>
+	autocmd User MyVimRc nnoremap <C-w>K   <NOP>
+	autocmd User MyVimRc nnoremap <C-w>L   <NOP>
+	autocmd User MyVimRc nnoremap <C-w>s   <NOP>
+	autocmd User MyVimRc nnoremap <C-w>v   <NOP>
+	autocmd User MyVimRc nnoremap ghR      <C-w>r
+	" Enable custom
+	autocmd User MyVimRc nnoremap <silent> ghq :<C-u>quit<CR>
+	autocmd User MyVimRc nnoremap <silent> ghQ :<C-u>quitall<CR>
+	autocmd User MyVimRc nnoremap <silent> ghT :<C-u>tabclose<CR>
+	autocmd User MyVimRc nnoremap <silent> ghc :<C-u>bdelete<CR>
+	autocmd User MyVimRc nnoremap <silent> ghC :<C-u>bdelete!<CR>
+	autocmd User MyVimRc nnoremap <silent> ghN :<C-u>EnewOverridden!<CR>
+	autocmd User MyVimRc nnoremap <silent> gho :<C-u>only<CR>
+	autocmd User MyVimRc nnoremap <silent> ghr_ :<C-u>resize<CR>
+	autocmd User MyVimRc nnoremap          ghr= <C-w>=
+	autocmd User MyVimRc nnoremap <silent> ghr" :<C-u>resize 5<CR>
+	autocmd User MyVimRc nnoremap <silent> ghr\ :<C-u>resize 0<CR>
+	autocmd User MyVimRc nnoremap <silent> ghr~ :<C-u>vertical resize 0<CR>
+	autocmd User MyVimRc nnoremap          ghH  <C-w>H
+	autocmd User MyVimRc nnoremap          ghJ  <C-w>J
+	autocmd User MyVimRc nnoremap          ghK  <C-w>K
+	autocmd User MyVimRc nnoremap          ghL  <C-w>L
+	autocmd User MyVimRc nnoremap          ghs  :<C-u>split<CR>
+	autocmd User MyVimRc nnoremap          ghv  :<C-u>vsplit<CR>
 	autocmd User MyVimRc nnoremap <silent><expr> gH  ('mZ:tabnew<CR>`Zzz'          . (foldlevel('.') > 0 ? 'zo' : ''))
 	autocmd User MyVimRc nnoremap <silent><expr> ghh ('mZ:hide<CR>:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : ''))
 augroup END
