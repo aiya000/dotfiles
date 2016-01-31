@@ -16,13 +16,9 @@ nnoremap <silent><buffer> V              :<C-u>vertical split<CR>
 nnoremap         <buffer> v              <NOP>
 nnoremap <silent><buffer> S              :<C-u>split<CR>
 nnoremap         <buffer> s              <NOP>
-
-"@Incomplete('do not functioned')
-highlight default link CursorLine Visual
+nnoremap         <buffer> gh             <NOP>
 
 augroup MyFtpluginNetrw
 	autocmd!
 	autocmd BufLeave    * if &ft ==# 'netrw' | setl nowrapscan | endif
-	"@Incomplete('do not functioned')
-	autocmd ColorScheme * highlight default link CursorLine Visual
 augroup END
