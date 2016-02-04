@@ -36,6 +36,8 @@
 	ri = rebase -i
 	ma = merge --abort
 	br = branch -r
+	ta = log --all --graph --oneline --decorate
+	t = log --graph --oneline --decorate
 [core]
 	pager = vim - -R +PAGER -c 'setf vim-pager | set syn=git'
 [init]
