@@ -14,6 +14,10 @@ snippet pragma_exteded_default_rules
 abbr    {-# LANGUAGE ExtendedDefaultRules #-}
     {-# LANGUAGE ExtendedDefaultRules #-}
 
-snippet option_ghc
+snippet pragma_option_ghc
 abbr    {-# OPTION_GHC ... #-}
     {-# OPTION_GHC ${1} #-}
+
+snippet deriving
+abbr    deriving (__)
+    deriving (${0})

@@ -365,6 +365,7 @@ NeoBundle      'aiya000/submode-window_move.vim'
 NeoBundleLazy  'ujihisa/repl.vim'
 NeoBundleLazy  'mattn/emmet-vim'
 NeoBundle      'romainl/Apprentice'
+NeoBundleLazy  'pbrisbin/vim-syntax-shakespeare'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
@@ -783,6 +784,17 @@ if neobundle#tap('emmet-vim')
 	call neobundle#config('emmet-vim', {
 	\	'on_cmd' : 'EmmetInstall',
 	\	'on_map' : get(g:, 'user_emmet_leader_key', '\\')
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-syntax-shakespeare')
+	call neobundle#config('vim-syntax-shakespeare', {
+	\	'on_ft' : [
+	\		'hamlet',
+	\		'cassius',
+	\		'lucius',
+	\		'julius'
+	\	]
 	\})
 	call neobundle#untap()
 endif
