@@ -158,12 +158,22 @@ snippet Run
 abbr <Run/>
     <Run${0}/>
 
+snippet Setter
+abbr    <Setter/>
+    <Setter${0}/>
+
 snippet SolidColorBrush
 abbr <SolidColorBrush/>
     <SolidColorBrush${0}/>
 
+snippet StyleSurround
+abbr    <Style></Style>
+options indent
+    <Style>
+        ${0}
+    </Style>
+
 snippet StackPanelSurround
-alias   StackPanel
 abbr    <StackPanel></StackPanel>
 options indent
     <StackPanel>
@@ -171,7 +181,6 @@ options indent
     </StackPanel>
 
 snippet TabControlSurrond
-alias   TabControl
 abbr    <TabControl></TabControl>
 options indent
     <TabControl>
@@ -179,7 +188,6 @@ options indent
     </TabControl>
 
 snippet TabItemSurrond
-alias   TabItem
 abbr    <TabItem></TabItem>
 options indent
     <TabItem>
@@ -195,7 +203,6 @@ abbr <TextBlock/>
     <TextBlock${0}/>
 
 snippet UserControlSurround
-alias   UserControl
 abbr    <UserControl></UserControl>
 options indent
     <UserControl x:Class="${1:#:ClassPath}"
@@ -209,14 +216,12 @@ options indent
     </UserControl>
 
 snippet WindowCommandBindingsSurrond
-alias   WindowCommandBindings
 options indent
     <Window.CommandBindings>
         ${0}
     </Window.CommandBindings>
 
 snippet WindowSurround
-alias   Window
 abbr    <Window></Window>
 options indent
     <Window x:Class="${1:#:ClassPath}"
@@ -227,7 +232,6 @@ options indent
     </Window>
 
 snippet WrapPanelOpacityMaskSurround
-alias   WrapPanelOpacityMask
 abbr    <WrapPanelOpacityMask></WrapPanelOpacityMask>
 options indent
     <WrapPanel.OpacityMask>
@@ -235,7 +239,6 @@ options indent
     </WrapPanel.OpacityMask>
 
 snippet WrapPanelSurround
-alias   WrapPanel
 abbr    <WrapPanel></WrapPanel>
 options indent
     <WrapPanel>

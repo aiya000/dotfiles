@@ -57,9 +57,9 @@ options head indent
         </Interactivity:EventTrigger>
     </Interactivity:Interaction.Triggers>
 
-snippet command_relativesource_binding
-abbr Command="{Binding RelativeSource={RelativeSource AncestorType=___}, Path=DataContext.___}"
-    Command="{Binding RelativeSource={RelativeSource AncestorType=${1:DataGrid}}, Path=DataContext.${1:#:Method}}"${0}
+snippet relativesource_binding
+abbr {Binding RelativeSource={RelativeSource AncestorType=___}, Path=DataContext.___}
+    {Binding RelativeSource={RelativeSource AncestorType=${1:DataGrid}}, Path=DataContext.${1:#:Method}}${0}
 
 snippet multi_command_parameter
 options head indent
@@ -68,3 +68,9 @@ options head indent
             <Binding Path="${0}"/>
         </MultiBinding>
     </$1.CommandParameter>
+
+snippet foo_tag_surround
+alias   <__.__></__.__>
+    <${1}.${2}>
+        ${0}
+    </$1.$2>
