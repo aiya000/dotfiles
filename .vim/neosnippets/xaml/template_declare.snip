@@ -1,0 +1,16 @@
+snippet declare_xml_clr_namespace
+abbr xmlns:__="clr-namespace:__"
+    xmlns:${1:#:nameSpaceName}="clr-namespace:${2:#:NameSpacePath}"
+
+snippet declare_xml_clr_namespace_with_assembly
+abbr xmlns:__="clr-namespace:__;assembly=__"
+    xmlns:${1:#:nameSpaceName}="clr-namespace:${2:#:NameSpacePath};assembly=${3:#:AssemblyNameSpace}"
+
+snippet declare_xmlns_system
+abbr    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+
+snippet declare_xml_ewpf_namespace
+abbr    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:${1:xctk}="http://schemas.xceed.com/wpf/xaml/toolkit"
+

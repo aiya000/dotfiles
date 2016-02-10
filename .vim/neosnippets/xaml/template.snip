@@ -1,14 +1,21 @@
 ## User's Definition
-snippet template_tag
+snippet foo_tag
 abbr    <___/>
     <${1:#:ControlName}/>
 
-snippet template_tag_surround
+snippet foo_tag_surround
 abbr    <___></___>
     <${1:#:ControlName}>${0}</$1>
 
-snippet xmlns_system
-    xmlns:System="clr-namespace:System;assembly=mscorlib"
+snippet foo_property_tag_surround
+alias   <__.__></__.__>
+    <${1}.${2}>
+        ${0}
+    </$1.$2>
+
+snippet foo_tag_in_bar
+abbr    <__:__>__</__:__>
+    <${1}:${2}>${3:#:Value}</$1:$2>
 
 snippet data_grid_template_column_surrond
 alias   data_grid_template_column
@@ -33,22 +40,6 @@ options head indent
         </DataGridTemplateColumn.CellTemplate>
     </DataGridTemplateColumn>
 
-snippet default_data_grid_backcolor
-abbr    Background="#FFA4A4A4"
-    Background="#FFA4A4A4"${0}
-
-snippet default_grid_backcolor
-abbr    Background="#FFE5E5E5"
-    Background="#FFE5E5E5"${0}
-
-snippet declare_xml_clr_namespace
-abbr xmlns:___="clr-namespace:___;assembly=___"
-    xmlns:${1:#:NameSpaceName}="clr-namespace:${2:#:NameSpacePath};assembly=${3:#:AssemblyNameSpace}"
-
-snippet declare_xml_ewpf_namespace
-abbr    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-    xmlns:${1:xctk}="http://schemas.xceed.com/wpf/xaml/toolkit"
-
 snippet interactivity_interaction
 options head indent
     <Interactivity:Interaction.Triggers>
@@ -56,10 +47,6 @@ options head indent
             <Core:CallMethodAction TargetObject="{Binding .}" MethodName="${2:#:VMMethodName}"/>
         </Interactivity:EventTrigger>
     </Interactivity:Interaction.Triggers>
-
-snippet relativesource_binding
-abbr {Binding RelativeSource={RelativeSource AncestorType=___}, Path=DataContext.___}
-    {Binding RelativeSource={RelativeSource AncestorType=${1:DataGrid}}, Path=DataContext.${1:#:Method}}${0}
 
 snippet multi_command_parameter
 options head indent
@@ -69,8 +56,8 @@ options head indent
         </MultiBinding>
     </$1.CommandParameter>
 
-snippet foo_tag_surround
-alias   <__.__></__.__>
-    <${1}.${2}>
-        ${0}
-    </$1.$2>
+snippet xArray
+abbr    <x:Array Type="__">__</x:Array>
+    <x:Array Type="{x:Type System:${1:String}}">
+        <system:$1>${2:#:Value}</system:$1>
+    </x:Array>

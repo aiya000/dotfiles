@@ -206,7 +206,7 @@ function git-fully-change-author-and-email() { #{{{
 alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
 
 # Do merge, branch -d and delete remote branch
-function git-sequence-merge-bd-remotebd() { #{{{
+function git-seq-merge-bd-push_bd() { #{{{
 	target_remote="$1"
 	target_branch="$2"
 	git merge "$target_branch" && \
