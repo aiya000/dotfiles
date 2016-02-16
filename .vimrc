@@ -746,7 +746,8 @@ if neobundle#tap('vim-textobj-xmlattr')
 	\		'html',
 	\		'xml',
 	\		'xaml',
-	\		'fxml'
+	\		'fxml',
+	\		'hamlet'
 	\	]
 	\})
 	call neobundle#untap()
