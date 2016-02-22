@@ -293,7 +293,7 @@ NeoBundleLazy  'yuratomo/w3m.vim'
 NeoBundle      'supermomonga/vimshell-kawaii.vim'
 NeoBundleLazy  'supermomonga/jazzradio.vim'
 NeoBundleLazy  'mattn/favstar-vim'
-NeoBundleLazy  'ujihisa/unite-colorscheme'
+NeoBundle      'ujihisa/unite-colorscheme'
 NeoBundleLazy  'Shougo/vinarise.vim'
 NeoBundleLazy  'mattn/gist-vim'
 NeoBundle      'thinca/vim-ref'
@@ -341,7 +341,7 @@ NeoBundle      'kana/vim-textobj-indent'
 NeoBundle      'Shougo/neocomplete.vim'
 NeoBundle      'Shougo/deoplete.nvim'
 NeoBundleLazy  'soramugi/auto-ctags.vim'
-NeoBundleLazy  'tsukkee/unite-tag'
+NeoBundle      'tsukkee/unite-tag'
 NeoBundle      'aiya000/vimshell-command-dehanai.vim'
 NeoBundle      'osyo-manga/vim-textobj-from_regexp'
 NeoBundleLazy  'leafgarland/typescript-vim'
@@ -352,14 +352,14 @@ NeoBundle      'thinca/vim-visualstar'
 NeoBundle      'tpope/vim-fugitive'
 NeoBundleLazy  'rhysd/try-colorscheme.vim'
 NeoBundle      'jonathanfilip/vim-lucius'
-NeoBundleLazy  'aiya000/unite-syntax'
-NeoBundleLazy  'Shougo/unite-help'
-NeoBundleLazy  'osyo-manga/unite-filetype'
+NeoBundle      'aiya000/unite-syntax'
+NeoBundle      'Shougo/unite-help'
+NeoBundle      'osyo-manga/unite-filetype'
 NeoBundleLazy  'cohama/agit.vim'
-NeoBundleLazy  'Shougo/unite-session'
+NeoBundle      'Shougo/unite-session'
 NeoBundleLazy  'whatyouhide/vim-textobj-xmlattr'
 NeoBundleLazy  'yomi322/neco-tweetvim'
-NeoBundleLazy  'yomi322/unite-tweetvim'
+NeoBundle      'yomi322/unite-tweetvim'
 NeoBundleLazy  'itchyny/vim-haskell-indent'
 NeoBundle      'aiya000/submode-window_move.vim'
 NeoBundleLazy  'ujihisa/repl.vim'
@@ -438,9 +438,8 @@ endif
 "@Bugs('not fuond jazzradio#channel_id_comlete')
 if neobundle#tap('jazzradio.vim')
 	call neobundle#config('jazzradio.vim', {
-	\	'depends'  : 'Shougo/unite.vim',
-	\	'on_unite' : 'jazzradio',
-	\	'on_cmd'   : [
+	\	'depends' : 'Shougo/unite.vim',
+	\	'on_cmd' : [
 	\		'JazzradioUpdateChannels',
 	\		'JazzradioStop', {
 	\			'name'     : 'JazzradioPlay',
@@ -475,6 +474,13 @@ endif
 if neobundle#tap('ref-hoogle')
 	call neobundle#config('ref-hoogle', {
 	\	'depends'  : 'thinca/vim-ref'
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('unite-outline')
+	call neobundle#config('unite-outline', {
+	\	'lazy'    : 0,
+	\	'depends' : 'Shougo/unite.vim'
 	\})
 	call neobundle#untap()
 endif
@@ -657,6 +663,7 @@ if neobundle#tap('auto-ctags.vim')
 endif
 if neobundle#tap('unite-tag')
 	call neobundle#config('unite-tag', {
+	\	'lazy'    : 0,
 	\	'depends' : 'Shougo/unite.vim'
 	\})
 	call neobundle#untap()
@@ -702,18 +709,21 @@ if neobundle#tap('try-colorscheme.vim')
 endif
 if neobundle#tap('unite-syntax')
 	call neobundle#config('unite-syntax', {
-	\	'depends'  : 'Shougo/unite.vim'
+	\	'lazy'    : 0,
+	\	'depends' : 'Shougo/unite.vim'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('unite-help')
 	call neobundle#config('unite-help', {
-	\	'depends' : 'Shougo/unite.vim',
+	\	'lazy'    : 0,
+	\	'depends' : 'Shougo/unite.vim'
 	\})
 	call neobundle#untap()
 endif
 if neobundle#tap('unite-filetype')
 	call neobundle#config('unite-filetype', {
+	\	'lazy'    : 0,
 	\	'depends' : 'Shougo/unite.vim'
 	\})
 	call neobundle#untap()
@@ -731,11 +741,8 @@ if neobundle#tap('agit.vim')
 endif
 if neobundle#tap('unite-session')
 	call neobundle#config('unite-session', {
-	\	'depends'  : 'Shougo/unite.vim',
-	\	'on_cmd' : {
-	\		'name'     : ['UniteSessionSave', 'UniteSessionLoad'],
-	\		'complete' : 'customlist,unite#sources#session#_complete'
-	\	}
+	\	'lazy'    : 0,
+	\	'depends' : 'Shougo/unite.vim'
 	\})
 	call neobundle#untap()
 endif
@@ -760,7 +767,7 @@ if neobundle#tap('neco-tweetvim')
 endif
 if neobundle#tap('unite-tweetvim')
 	call neobundle#config('unite-tweetvim', {
-	\	'on_source' : 'TweetVim'
+	\	'lazy' : 0,
 	\})
 	call neobundle#untap()
 endif
