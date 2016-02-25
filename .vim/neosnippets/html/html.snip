@@ -1,5 +1,4 @@
-snippet new-template
-alias   template
+snippet template
 abbr    <html><head>...</head></html>
     <!DOCTYPE html>
     <html lang="ja">
@@ -12,8 +11,7 @@ abbr    <html><head>...</head></html>
         </body>
     </html>
 
-snippet new-template-angular
-alias   template-angular
+snippet template-angular
 abbr    <html ng-app><head>...</head></html>
     <!DOCTYPE html>
     <html lang="ja" ng-app="${1:#:appName}">
@@ -23,6 +21,22 @@ abbr    <html ng-app><head>...</head></html>
         </head>
         <body>
             ${0:TARGET}
+        </body>
+    </html>
+
+snippet template-bootstrap
+    <!DOCTYPE html>
+    <html lang="ja">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title></title>
+            <link href="${1:#:css/bootstrap.min.css}" rel="stylesheet">
+        </head>
+        <body>
+            ${0}
+            <script src="${2:#:js/jquery.min.js}"></script>
+            <script src="${3:#:js/bootstrap.min.js}"></script>
         </body>
     </html>
 
