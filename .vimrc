@@ -366,6 +366,7 @@ NeoBundleLazy  'ujihisa/repl.vim'
 NeoBundleLazy  'mattn/emmet-vim'
 NeoBundle      'romainl/Apprentice'
 NeoBundleLazy  'pbrisbin/vim-syntax-shakespeare'
+NeoBundleLazy  'kana/vim-altr'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
@@ -806,6 +807,12 @@ if neobundle#tap('vim-syntax-shakespeare')
 	\})
 	call neobundle#untap()
 endif
+if neobundle#tap('vim-altr')
+	call neobundle#config('vim-altr', {
+	\	'on_cmd' : 'AltrAlt'
+	\})
+	call neobundle#untap()
+endif
 
 call neobundle#end()
 
@@ -1198,6 +1205,11 @@ autocmd UserEvent FileType html,xml,fxml EmmetInstall
 
 
 " }}}
+"--- vim-altr --- {{{
+
+call altr#define('%.xaml.cs', '%.xaml')
+
+" }}}
 "--- For Develop --- {{{
 
 " Local my plugins
@@ -1504,6 +1516,9 @@ command! -bar -nargs=1 -bang -complete=command RedirToVar call vimrc#cmd#redir_t
 
 " Count selected line num
 command! -bar -range Count :echomsg (<line2> - <line1> + 1)
+
+" Open corresponded file
+command! -bar AltrForward call altr#forward()
 
 " }}}
 " Helper {{{
