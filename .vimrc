@@ -809,7 +809,7 @@ if neobundle#tap('vim-syntax-shakespeare')
 endif
 if neobundle#tap('vim-altr')
 	call neobundle#config('vim-altr', {
-	\	'on_cmd' : 'AltrAlt'
+	\	'on_cmd' : ['AltrForward', 'AltrBack']
 	\})
 	call neobundle#untap()
 endif
@@ -1207,7 +1207,11 @@ autocmd UserEvent FileType html,xml,fxml EmmetInstall
 " }}}
 "--- vim-altr --- {{{
 
-call altr#define('%.xaml.cs', '%.xaml')
+let s:bundle = neobundle#get('vim-altr')
+function! s:bundle.hooks.on_source(bundle)
+	call altr#define('%.xaml.cs', '%.xaml')
+endfunction
+unlet s:bundle
 
 " }}}
 "--- For Develop --- {{{
@@ -1519,6 +1523,7 @@ command! -bar -range Count :echomsg (<line2> - <line1> + 1)
 
 " Open corresponded file
 command! -bar AltrForward call altr#forward()
+command! -bar AltrBack    call altr#back()
 
 " }}}
 " Helper {{{
