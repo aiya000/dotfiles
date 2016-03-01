@@ -982,6 +982,7 @@ if neobundle#tap('vim-submode')
 		autocmd User MyVimRc call submode#enter_with('cont_bdelete', 'n', '', '<C-s><C-w>c', ':bdelete<CR>')
 		autocmd User MyVimRc call submode#map('cont_bdelete', 'n', 's', 'c', ':bdelete<CR>')
 	augroup END
+	call neobundle#untap()
 endif
 
 " }}}
@@ -996,7 +997,7 @@ let g:ref_source_webdict_sites = {
 
 " Default dictionary is 'weblio'
 let g:ref_source_webdict_sites['default']       = 'weblio'
-let g:ref_source_webdict_sites['weblio'].filter = function('vimrc#plugins#weblio_filter')
+"let g:ref_source_webdict_sites['weblio'].filter = function('vimrc#plugins#weblio_filter')
 
 " }}}
 "--- restart.vim --- {{{
@@ -1058,9 +1059,6 @@ let g:solarized_contrast = 'high'
 
 " }}}
 "--- aho-bakaup.vim --- {{{
-
-" Devolute to bakaup
-set nobackup
 
 " The file was backed up automatically when you written that file
 let g:bakaup_backup_dir  = s:backupdir
@@ -1399,6 +1397,9 @@ set iminsert=0
 
 " Open .tex as LaTex
 let g:tex_flavor = 'latex'
+
+" Use aho-bakaup.vim's backup
+set nobackup
 
 " }}}
 
