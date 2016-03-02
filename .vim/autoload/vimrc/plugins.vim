@@ -53,6 +53,8 @@ function! vimrc#plugins#append_config_quickrun_cygwin() " {{{
 	let g:quickrun_config.html['command'] = 'cygstart'
 	" LaTex
 	let g:quickrun_config.tex['exec'] = '%c %o "`cygpath -w %s:r`" | tr -d "\r"'
+	" Clojure
+	let g:quickrun_config.clojure['exec'] = '%c %o "`cygpath -w %s`" | tr -d "\r"'
 endfunction " }}}
 
 " Delete otiose lines

@@ -880,6 +880,10 @@ let g:quickrun_config = {
 \		'command' : 'ptex2pdf',
 \		'cmdopt'  : '-l',
 \		'exec'    : '%c %o %s:r'
+\	},
+\	'clojure' : {
+\		'command' : 'lein',
+\		'cmdopt'  : 'exec'
 \	}
 \}
 
