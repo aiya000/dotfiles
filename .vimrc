@@ -1730,12 +1730,12 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> ghC   :<C-u>bdelete!<CR>
 	autocmd User MyVimRc nnoremap <silent> ghN   :<C-u>EnewOverridden!<CR>
 	autocmd User MyVimRc nnoremap <silent> gho   :<C-u>only<CR>
-	autocmd User MyVimRc nnoremap <silent> ghr_  :<C-u>resize<CR>
-	autocmd User MyVimRc nnoremap          ghr\| <C-w>\|
-	autocmd User MyVimRc nnoremap          ghr=  <C-w>=
-	autocmd User MyVimRc nnoremap <silent> ghr"  :<C-u>resize 5<CR>
-	autocmd User MyVimRc nnoremap <silent> ghr\  :<C-u>resize 0<CR>
-	autocmd User MyVimRc nnoremap <silent> ghr~  :<C-u>vertical resize 0<CR>
+	autocmd User MyVimRc nnoremap <silent> gh_   :<C-u>resize<CR>
+	autocmd User MyVimRc nnoremap          gh\|  <C-w>\|
+	autocmd User MyVimRc nnoremap          gh=   <C-w>=
+	autocmd User MyVimRc nnoremap <silent> gh"   :<C-u>resize 5<CR>
+	autocmd User MyVimRc nnoremap <silent> gh\   :<C-u>resize 0<CR>
+	autocmd User MyVimRc nnoremap <silent> gh~   :<C-u>vertical resize 0<CR>
 	autocmd User MyVimRc nnoremap          ghH   <C-w>H
 	autocmd User MyVimRc nnoremap          ghJ   <C-w>J
 	autocmd User MyVimRc nnoremap          ghK   <C-w>K
