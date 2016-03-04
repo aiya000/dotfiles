@@ -25,13 +25,6 @@ command! -bar Reload so $MYVIMRC
 	\|	endif
 
 
-"-- function --"
-function! s:reset_filetype()
-	let l:filetype = &filetype !=# '' ? &filetype : 'none'
-	let &filetype  = l:filetype
-endfunction
-
-
 "-- Specifics --"
 set backup
 set backupdir=~/backup/.vim_backup
@@ -112,75 +105,6 @@ function! s:compress_spaces() "{{{
 endfunction "}}}
 
 
-" Move cursor to topmost of this indent
-function! s:cursor_up_to_lid() "{{{
-	while 1
-		let l:p = virtcol('.')
-		normal! k
-
-		let l:indent_changed = l:p isnot virtcol('.')
-		if l:indent_changed || line('.') is 1  " top line
-			if l:indent_changed
-				normal! j
-			endif
-			break
-		endif
-	endwhile
-endfunction "}}}
-
-
-" Move cursor to bottommost of this indent
-function! s:cursor_down_to_ground() "{{{
-	let l:last_line = line('$')
-	while 1
-		let l:p = virtcol('.')
-		execute 'normal! j'
-
-		let l:indent_changed = l:p isnot virtcol('.')
-		if l:indent_changed || line('.') is l:last_line
-			if l:indent_changed
-				execute 'normal! k'
-			endif
-			break
-		endif
-	endwhile
-endfunction "}}}
-
-
-" Optimize key operation to one hand
-" function! s:toggle_onehand_mode() "{{{
-
-let s:onehand_enabled = get(s:, 'onehand_enabled', 0)
-
-function! s:toggle_onehand_mode()
-	if s:onehand_enabled
-		nunmap n
-		nunmap p
-		nunmap f
-		nunmap b
-		nunmap o
-		nunmap i
-		nunmap u
-
-		" doautocmd for normally keymappings
-		let &filetype = &filetype
-	else
-		nnoremap n gt
-		nnoremap p gT
-		nnoremap f <C-f>
-		nnoremap b <C-b>
-		nnoremap o <C-o>
-		nnoremap i <C-i>
-		nnoremap u <C-w><C-w>
-	endif
-
-	let s:onehand_enabled = !s:onehand_enabled
-	echo (s:onehand_enabled ? '' : 'no') . 'onehand'
-endfunction
-
-"}}}
-
-
 " text-object current indent lines
 function! s:visual_current_indent(type) abort "{{{
 	if a:type != 'i' && a:type != 'a'
@@ -240,7 +164,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap }  }zv
 	autocmd User MyVimRc nnoremap (  (zv
 	autocmd User MyVimRc nnoremap )  )zv
-	autocmd User MyVimRc nnoremap z< V$%zf
 augroup END
 
 " }}}
@@ -251,17 +174,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <Space>j <C-w>j
 	autocmd User MyVimRc nnoremap <Space>k <C-w>k
 	autocmd User MyVimRc nnoremap <Space>l <C-w>l
-
-	autocmd User MyVimRc nnoremap <silent> <C-w>t :<C-u>tabnew<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>T :<C-u>tabclose<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>c :<C-u>bdelete<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>C :<C-u>bdelete!<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>N :<C-u>enew!<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>Q :<C-u>quitall<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-w>" :<C-u>resize 5<CR>
-
-	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bt 'mZ:tabnew<CR>`Zzz'       . (foldlevel('.') > 0 ? 'zo' : '')
-	autocmd User MyVimRc nnoremap <silent><expr> <C-w>bT 'mZ<C-w>c:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : '')
 augroup END
 
 " }}}
@@ -278,7 +190,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-l> :<C-u>setl list!           list?          <CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-n> :<C-u>setl number!         number?        <CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
-	autocmd User MyVimRc nnoremap <silent> <C-h>jk    :<C-u>call <SID>toggle_onehand_mode()<CR>
 
 	autocmd User MyVimRc inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
 augroup END
@@ -322,19 +233,13 @@ augroup KeyMapping
 
 	autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| resize 5<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>pd               :<C-u>execute 'normal! a' . strftime('%c')<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>h        :<C-u>helpclose<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>k                :<C-u>call <SID>cursor_up_to_lid()<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>j                :<C-u>call <SID>cursor_down_to_ground()<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader><leader> :<C-u>echohl ErrorMsg \| echo "Don't rush it, keep cool." \| echohl None<CR>
 
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>J     :<C-u>wall \| echo 'written all !'<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k>r     :<C-u>let &filetype = &filetype<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k>R     :<C-u>doautocmd User MyVimRc<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k>l     :<C-u>source %<CR>
 
 	autocmd User MyVimRc nnoremap <expr>      /                 foldclosed('.') > -1 ? 'zv/' : '/'
 	autocmd User MyVimRc nnoremap <silent>    <leader>/         /\m\C
@@ -376,9 +281,6 @@ augroup KeyMapping
 	" visual mode "{{{
 
 	autocmd User MyVimRc vnoremap <C-l> <Esc>
-	"autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
-	"autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
-
 	autocmd User MyVimRc vnoremap <expr> / foldclosed('.') > -1 ? 'zv/' : '/'
 	autocmd User MyVimRc vnoremap <expr> ? foldclosed('.') > -1 ? 'zv?' : '?'
 
