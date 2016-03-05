@@ -367,6 +367,7 @@ NeoBundleLazy  'mattn/emmet-vim'
 NeoBundle      'romainl/Apprentice'
 NeoBundleLazy  'pbrisbin/vim-syntax-shakespeare'
 NeoBundleLazy  'kana/vim-altr'
+NeoBundleLazy  'derekwyatt/vim-scala'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
@@ -810,6 +811,12 @@ endif
 if neobundle#tap('vim-altr')
 	call neobundle#config('vim-altr', {
 	\	'on_cmd' : ['AltrForward', 'AltrBack']
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-scala')
+	call neobundle#config('vim-scala', {
+	\	'on_ft' : 'scala'
 	\})
 	call neobundle#untap()
 endif
