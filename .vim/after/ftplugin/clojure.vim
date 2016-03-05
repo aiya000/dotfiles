@@ -5,3 +5,6 @@ let b:undo_ftplugin = 'setl ' . join([
 \])
 
 setl ts=2 sw=2 noet
+
+" Avoid clojurecomplete#Complete() error
+setl omnifunc=
