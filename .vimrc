@@ -1499,7 +1499,7 @@ augroup END
 call altercmd#load()
 
 " buffer open commands with filetype 'none'
-command! -bar -bang NewOverridden new<bang> | setf none
+command! -bar -bang NewOverridden new<bang> | if empty(&ft) | setf none | endif
 AlterCommand new NewOverridden
 
 command! -bar -bang -complete=file -nargs=? EditOverridden e<bang> <args> | if empty(&ft) | setf none | endif
