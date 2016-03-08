@@ -1651,6 +1651,12 @@ CmdCnoreabbr Sirb   VimShellInteractive --split='sp' irb
 CmdCnoreabbr Virb   VimShellInteractive --split='vsp' irb
 CmdCnoreabbr IrbTab VimShellInteractive --split='tabnew' irb
 
+" lein
+CmdCnoreabbr LeinRepl    VimShellInteractive lein repl
+CmdCnoreabbr SLeinRepl   VimShellInteractive --split='sp' lein repl
+CmdCnoreabbr VLeinRepl   VimShellInteractive --split='vsp' lein repl
+CmdCnoreabbr LeinReplTab VimShellInteractive --split='tabnew' lein repl
+
 " }}}
 
 
