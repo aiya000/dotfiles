@@ -6,5 +6,5 @@ let b:undo_ftplugin = 'setl ' . join([
 
 setl ts=2 sw=2 noet
 
-" Avoid clojurecomplete#Complete() error
-setl omnifunc=
+" Use neoclojure.vim completion
+setl omnifunc=neoclojure#complete#omni_auto

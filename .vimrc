@@ -368,6 +368,8 @@ NeoBundle      'romainl/Apprentice'
 NeoBundleLazy  'pbrisbin/vim-syntax-shakespeare'
 NeoBundleLazy  'kana/vim-altr'
 NeoBundleLazy  'derekwyatt/vim-scala'
+NeoBundleLazy  'thinca/vim-ft-clojure'
+NeoBundleLazy  'ujihisa/neoclojure.vim'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
@@ -817,6 +819,18 @@ endif
 if neobundle#tap('vim-scala')
 	call neobundle#config('vim-scala', {
 	\	'on_ft' : 'scala'
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-ft-clojure')
+	call neobundle#config('vim-ft-clojure', {
+	\	'on_ft' : 'clojure'
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('neoclojure.vim')
+	call neobundle#config('neoclojure.vim', {
+	\	'on_ft' : 'clojure'
 	\})
 	call neobundle#untap()
 endif
