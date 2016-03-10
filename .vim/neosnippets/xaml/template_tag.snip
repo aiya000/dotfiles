@@ -9,9 +9,7 @@ abbr    <___></___>
 
 snippet foo_property_tag_surround
 alias   <__.__></__.__>
-    <${1}.${2}>
-        ${0}
-    </$1.$2>
+    <${1}.${2}>${0}</$1.$2>
 
 snippet foo_tag_in_bar
 abbr    <__:__>__</__:__>
@@ -58,6 +56,7 @@ options head indent
 
 snippet xArray
 abbr    <x:Array Type="__">__</x:Array>
+options head indent
     <x:Array Type="{x:Type System:${1:String}}">
         <system:$1>${2:#:Value}</system:$1>
     </x:Array>
