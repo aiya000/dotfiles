@@ -771,7 +771,8 @@ if neobundle#tap('neco-tweetvim')
 endif
 if neobundle#tap('unite-tweetvim')
 	call neobundle#config('unite-tweetvim', {
-	\	'lazy' : 0,
+	\	'lazy'    : 0,
+	\	'depends' : 'Shougo/unite.vim'
 	\})
 	call neobundle#untap()
 endif
