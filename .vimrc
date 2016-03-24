@@ -924,6 +924,9 @@ endif
 " Do smooth posting tweet
 let g:tweetvim_async_post = 1
 
+" Set default value (Avoid unite-tweetvim lazy loading error)
+let g:tweetvim_config_dir = expand('~/.tweetvim')
+
 " }}}
 "--- vimshell.vim --- {{{
 
@@ -1206,7 +1209,7 @@ let g:visualstar_extra_commands = 'zzzv'
 
 " Register mode starting keymapping
 let g:submode_window_move = {}
-let g:submode_window_move['start_tab_move']                   = '<C-s>t'
+let g:submode_window_move['start_tab_move']                   = '<C-s><C-t>'
 let g:submode_window_move['start_window_move_with_move_next'] = '<C-s>N'
 let g:submode_window_move['start_window_move_with_move_prev'] = '<C-s>P'
 
