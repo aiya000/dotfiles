@@ -97,6 +97,7 @@ alias tweet='vim +TweetVimSay'
 alias twitter-public='vim +TwitterPublic'
 alias tweet-public='vim +TweetPublic'
 alias adrone='vim +AdroneHome'
+alias gstatus='vim -c "Gita status"'
 
 alias vimconfig='dotfile_config .vimrc'
 alias gvimconfig='dotfile_config .gvimrc'

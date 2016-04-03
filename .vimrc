@@ -349,7 +349,6 @@ NeoBundle      'tpope/vim-repeat'
 NeoBundleLazy  'lambdalisue/vim-pager'
 NeoBundleLazy  'lambdalisue/vim-manpager'
 NeoBundle      'thinca/vim-visualstar'
-NeoBundle      'tpope/vim-fugitive'
 NeoBundleLazy  'rhysd/try-colorscheme.vim'
 NeoBundle      'jonathanfilip/vim-lucius'
 NeoBundle      'aiya000/unite-syntax'
@@ -370,6 +369,7 @@ NeoBundleLazy  'kana/vim-altr'
 NeoBundleLazy  'derekwyatt/vim-scala'
 NeoBundleLazy  'thinca/vim-ft-clojure'
 NeoBundleLazy  'ujihisa/neoclojure.vim'
+NeoBundleLazy  'lambdalisue/vim-gita'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
@@ -699,12 +699,6 @@ if neobundle#tap('vim-manpager')
 	\})
 	call neobundle#untap()
 endif
-if neobundle#tap('vim-fugitive')
-	call neobundle#config('vim-fugitive', {
-	\	'augroup' : 'fugitive'
-	\})
-	call neobundle#untap()
-endif
 if neobundle#tap('try-colorscheme.vim')
 	call neobundle#config('try-colorscheme.vim', {
 	\	'on_cmd' : 'TryColorscheme'
@@ -832,6 +826,13 @@ endif
 if neobundle#tap('neoclojure.vim')
 	call neobundle#config('neoclojure.vim', {
 	\	'on_ft' : 'clojure'
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-gita')
+	"TODO: temporary disable lazy loading
+	call neobundle#config('vim-gita', {
+	\	'lazy' : 0
 	\})
 	call neobundle#untap()
 endif
@@ -1646,7 +1647,7 @@ command! SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
 
 " Aliases
 CmdCnoreabbr JazzradioList Unite jazzradio
-CmdCnoreabbr ManTab        TabnewOverridden \| Man
+CmdCnoreabbr Gstatus Gita status
 
 " }}}
 " Development {{{
