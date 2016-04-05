@@ -87,7 +87,7 @@ endfunction " }}}
 " and Save current session by :UniteSessionSave
 function! vimrc#cmd#git_branch_session_save() " {{{
 	let l:repository_name = s:find_git_repository_name('.', 0)
-	let l:branch_name     = matchstr(fugitive#statusline(), '(\zs.*\ze)')
+	let l:branch_name     = matchstr(gita#statusline#format('%lb'), '(\zs.*\ze)')
 	let l:branch_name0    = substitute(l:branch_name, '/', '-', 'g')
 	let l:session_name    = l:repository_name . '-' . l:branch_name0
 	execute 'UniteSessionSave' l:session_name
