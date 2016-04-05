@@ -368,7 +368,6 @@ NeoBundleLazy  'pbrisbin/vim-syntax-shakespeare'
 NeoBundleLazy  'kana/vim-altr'
 NeoBundleLazy  'derekwyatt/vim-scala'
 NeoBundleLazy  'thinca/vim-ft-clojure'
-NeoBundleLazy  'ujihisa/neoclojure.vim'
 NeoBundleLazy  'lambdalisue/vim-gita'
 
 " }}}
@@ -823,16 +822,9 @@ if neobundle#tap('vim-ft-clojure')
 	\})
 	call neobundle#untap()
 endif
-if neobundle#tap('neoclojure.vim')
-	call neobundle#config('neoclojure.vim', {
-	\	'on_ft' : 'clojure'
-	\})
-	call neobundle#untap()
-endif
 if neobundle#tap('vim-gita')
-	"TODO: temporary disable lazy loading
 	call neobundle#config('vim-gita', {
-	\	'lazy' : 0
+	\	'on_cmd' : 'Gita'
 	\})
 	call neobundle#untap()
 endif
@@ -1210,7 +1202,7 @@ let g:visualstar_extra_commands = 'zzzv'
 
 " Register mode starting keymapping
 let g:submode_window_move = {}
-let g:submode_window_move['start_tab_move']                   = '<C-s><C-t>'
+let g:submode_window_move['start_tab_move']                   = '<C-s><C-g>'
 let g:submode_window_move['start_window_move_with_move_next'] = '<C-s>N'
 let g:submode_window_move['start_window_move_with_move_prev'] = '<C-s>P'
 
@@ -1352,7 +1344,7 @@ augroup END
 " Set for color scheme only once
 if !g:vimrc['loaded']
 	set background=dark
-	colorscheme desert
+	colorscheme elflord
 endif
 
 " Wrapped text was appended indent on the window

@@ -5,6 +5,3 @@ let b:undo_ftplugin = 'setl ' . join([
 \])
 
 setl ts=2 sw=2 et
-
-" Use neoclojure.vim completion
-setl omnifunc=neoclojure#complete#omni_auto
