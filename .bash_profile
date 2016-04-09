@@ -49,6 +49,7 @@ export HISTTIMEFORMAT='%Y/%m/%d %H:%M '
 export HISTIGNORE='ls:jobs:history*:*hibernate'
 export HISTIGNORE="${HISTIGNORE}:*.bash_history*:*mount*-o*password=*"
 export EDITOR=vim
+export VTE_CJK_WIDTH=1
 
 # depends 'vim-pager' and 'vim-manpager'
 export PAGER='vim - +PAGER -c "setl nonu nornu | setf vim-pager"'
