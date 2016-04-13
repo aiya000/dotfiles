@@ -1,0 +1,17 @@
+.bashfiles
+.vim
+.tmux.conf
+.vimperatorrc
+.vimrc
+.bash_profile
+.bashrc
+.bashrc_develop
+.bvirc
+.gemrc
+.ghci
+.gitconfig
+.gvimrc
+.vimshrc
+.vrapperrc
+.vsvimrc
+.zshrc
