@@ -172,7 +172,8 @@ if g:vimrc['is_kaoriya'] && g:vimrc['is_windows']
 	endif
 
 	" Make base directories
-	if !isdirectory(g:vimrc['vim_home'])
+	"TODO: tmp for windows 10 env (over symlink)
+	if !filereadable(g:vimrc['vim_home'] . '/init.vim')  "!isdirectory(g:vimrc['vim_home'])
 		call mkdir(g:vimrc['vim_home'])
 	endif
 
