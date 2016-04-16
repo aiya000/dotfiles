@@ -395,7 +395,21 @@ if neobundle#tap('TweetVim')
 	\		'Shougo/vimproc.vim',
 	\		'mattn/favstar-vim'
 	\	],
-	\	'on_cmd' : 'TweetVim'
+	\	'on_cmd' : [
+	\		'TweetVimVersion',
+	\		'TweetVimAddAccount',
+	\		'TweetVimSwitchAccount',
+	\		'TweetVimHomeTimeline',
+	\		'TweetVimMentions',
+	\		'TweetVimUserTimeline',
+	\		'TweetVimListStatuses',
+	\		'TweetVimSearch',
+	\		'TweetVimSay',
+	\		'TweetVimUserStream',
+	\		'TweetVimCommandSay',
+	\		'TweetVimCurrentLineSay',
+	\		'TweetVimClearIcon'
+	\	]
 	\})
 	call neobundle#untap()
 endif
@@ -1028,7 +1042,7 @@ let g:ref_source_webdict_sites = {
 
 " Default dictionary is 'weblio'
 let g:ref_source_webdict_sites['default']       = 'weblio'
-"let g:ref_source_webdict_sites['weblio'].filter = function('vimrc#plugins#weblio_filter')
+let g:ref_source_webdict_sites['weblio'].filter = function('vimrc#plugins#weblio_filter')
 
 " }}}
 "--- restart.vim --- {{{
