@@ -9,3 +9,14 @@ options indent
 snippet constructor
 abbr    ClassName(__) {__}
     `expand('%:t:r')`(${1:#:Parameter}) {${0}}
+
+delete println
+snippet println
+abbr    Console.WriteLine(__)
+options word
+    Console.WriteLine(${0})
+
+snippet readln
+abbr    Console.ReadLine()
+options word
+    Console.ReadLine()

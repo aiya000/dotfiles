@@ -296,7 +296,6 @@ NeoBundleLazy  'supermomonga/jazzradio.vim'
 NeoBundleLazy  'mattn/favstar-vim'
 NeoBundle      'ujihisa/unite-colorscheme'
 NeoBundleLazy  'Shougo/vinarise.vim'
-NeoBundleLazy  'mattn/gist-vim'
 NeoBundle      'thinca/vim-ref'
 NeoBundle      'ujihisa/ref-hoogle'
 NeoBundleLazy  'vim-jp/vital.vim'
@@ -370,6 +369,7 @@ NeoBundleLazy  'kana/vim-altr'
 NeoBundleLazy  'derekwyatt/vim-scala'
 NeoBundleLazy  'thinca/vim-ft-clojure'
 NeoBundleLazy  'lambdalisue/vim-gita'
+NeoBundleLazy  'lambdalisue/vim-gista'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
@@ -479,13 +479,6 @@ if neobundle#tap('vinarise.vim')
 	\		'Vinarise',
 	\		'VinariseDump'
 	\	]
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('gist-vim')
-	call neobundle#config('gist-vim', {
-	\	'depends' : 'mattn/webapi-vim',
-	\	'on_cmd'  : 'Gist'
 	\})
 	call neobundle#untap()
 endif
@@ -840,6 +833,12 @@ endif
 if neobundle#tap('vim-gita')
 	call neobundle#config('vim-gita', {
 	\	'on_cmd' : 'Gita'
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('vim-gista')
+	call neobundle#config('vim-gista', {
+	\	'on_cmd' : 'Gist'
 	\})
 	call neobundle#untap()
 endif
@@ -1655,6 +1654,7 @@ command! SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
 " Aliases
 CmdCnoreabbr JazzradioList Unite jazzradio
 CmdCnoreabbr Gstatus Gita status
+CmdCnoreabbr Gist Gista post
 
 " }}}
 " Development {{{
