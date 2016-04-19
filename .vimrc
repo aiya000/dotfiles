@@ -354,7 +354,6 @@ NeoBundle      'jonathanfilip/vim-lucius'
 NeoBundle      'aiya000/unite-syntax'
 NeoBundle      'Shougo/unite-help'
 NeoBundle      'osyo-manga/unite-filetype'
-NeoBundleLazy  'cohama/agit.vim'
 NeoBundle      'Shougo/unite-session'
 NeoBundleLazy  'whatyouhide/vim-textobj-xmlattr'
 NeoBundleLazy  'yomi322/neco-tweetvim'
@@ -730,17 +729,6 @@ if neobundle#tap('unite-filetype')
 	call neobundle#config('unite-filetype', {
 	\	'lazy'    : 0,
 	\	'depends' : 'Shougo/unite.vim'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('agit.vim')
-	call neobundle#config('agit.vim', {
-	\	'on_cmd' : [
-	\		'Agit',
-	\		'AgitFile',
-	\		'AgitGit',
-	\		'AgitDiff'
-	\	]
 	\})
 	call neobundle#untap()
 endif
@@ -1256,28 +1244,23 @@ endfunction
 unlet s:bundle
 
 " }}}
-"--- For Develop --- {{{
+"--- vim-gista --- {{{
 
-" Local my plugins
-let s:repos = [ 'adrone.vim'
-\             , 'aho-bakaup.vim'
-\             , 'auto-ctags.vim'
-\             , 'submode-window_move.vim'
-\             ]
-"\             , 'repl.vim'
-let s:repos_dir = '~/Repository/'
+" Don't ask description for :Gista post
+let g:gista#command#post#interactive_description = 0
+let g:gista#command#post#allow_empty_description = 1
 
-" If valid local plugin, disable bundled same plugin
-for s:plug in s:repos
-	let s:plug_dir = s:repos_dir . s:plug
-	if isdirectory(expand(s:plug_dir))
-		execute 'set runtimepath+=' . s:plug_dir
-		silent! execute 'NeoBundleDisable' s:plug
-	end
-endfor
-unlet s:plug_dir s:plug s:repos_dir s:repos
+" Yank posted gist to clipboard
+function! s:yank_gista_posted_url()
+	let l:gistid = g:gista#avars.gistid
+	execute printf('Gista browse --yank --gistid=%s', l:gistid)
+	let @+ = @"
+endfunction
+augroup PluginPrefs
+	autocmd User GistaPost call s:yank_gista_posted_url()
+augroup END
 
-" }}}
+"}}}
 "--- For Private --- {{{
 
 " Load private configure
