@@ -60,7 +60,7 @@ endfunction " }}}
 " Delete otiose lines
 function! vimrc#plugins#weblio_filter(output) " {{{
 	let l:lines = split(a:output, "\n")
-	return join(l:lines[60 : ], "\n")
+	return join(l:lines[17 : ], "\n")
 endfunction " }}}
 
 " Open tweetvim by private account
