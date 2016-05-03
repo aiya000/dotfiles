@@ -292,12 +292,10 @@ NeoBundleLazy  'thinca/vim-quickrun'
 NeoBundleLazy  'basyura/J6uil.vim'
 NeoBundleLazy  'yuratomo/w3m.vim'
 NeoBundle      'supermomonga/vimshell-kawaii.vim'
-NeoBundleLazy  'supermomonga/jazzradio.vim'
 NeoBundleLazy  'mattn/favstar-vim'
 NeoBundle      'ujihisa/unite-colorscheme'
 NeoBundleLazy  'Shougo/vinarise.vim'
 NeoBundle      'thinca/vim-ref'
-NeoBundle      'ujihisa/ref-hoogle'
 NeoBundleLazy  'vim-jp/vital.vim'
 NeoBundle      'Shougo/unite-outline'
 NeoBundleLazy  'mattn/benchvimrc-vim'
@@ -308,7 +306,6 @@ NeoBundle      'tomasr/molokai'
 NeoBundleLazy  'kannokanno/previm'
 NeoBundle      'LeafCage/foldCC'
 NeoBundle      'kana/vim-submode'
-NeoBundle      'mfumi/ref-dicts-en'
 NeoBundle      'osyo-manga/vim-anzu'
 NeoBundle      'osyo-manga/vim-over'
 NeoBundleLazy  'tyru/restart.vim'
@@ -452,20 +449,6 @@ if neobundle#tap('w3m.vim')
 	\})
 	call neobundle#untap()
 endif
-"@Bugs('not fuond jazzradio#channel_id_comlete')
-if neobundle#tap('jazzradio.vim')
-	call neobundle#config('jazzradio.vim', {
-	\	'depends' : 'Shougo/unite.vim',
-	\	'on_cmd' : [
-	\		'JazzradioUpdateChannels',
-	\		'JazzradioStop', {
-	\			'name'     : 'JazzradioPlay',
-	\			'complete' : 'customlist,jazzradio#channel_id_comlete'
-	\		}
-	\	]
-	\})
-	call neobundle#untap()
-endif
 if neobundle#tap('favstart-vim')
 	call neobundle#config('favstart-vim', {
 	\	'on_cmd' : 'FavStar'
@@ -478,12 +461,6 @@ if neobundle#tap('vinarise.vim')
 	\		'Vinarise',
 	\		'VinariseDump'
 	\	]
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('ref-hoogle')
-	call neobundle#config('ref-hoogle', {
-	\	'depends'  : 'thinca/vim-ref'
 	\})
 	call neobundle#untap()
 endif
@@ -526,12 +503,6 @@ if neobundle#tap('previm')
 	call neobundle#config('previm', {
 	\	'on_ft'  : 'markdown',
 	\	'on_cmd' : 'PrevimOpen'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('ref-dicts-en')
-	call neobundle#config('ref-dicts-en', {
-	\	'depends' : 'thinca/vim-ref'
 	\})
 	call neobundle#untap()
 endif
@@ -1018,12 +989,14 @@ if neobundle#tap('vim-submode')
 endif
 
 " }}}
-"--- ref-dicts-en --- {{{
-"@See('http://d.hatena.ne.jp/akishin999/20131024/1382569289')
+"--- vim-ref --- {{{
 
 let g:ref_source_webdict_sites = {
 \	'weblio' : {
 \		'url' : 'http://ejje.weblio.jp/content/%s'
+\	},
+\	'stackage' : {
+\		'url' : 'https://www.stackage.org/lts-5.15/hoogle?q=%s'
 \	}
 \}
 
@@ -1619,9 +1592,12 @@ CmdCnoreabbr Lingr J6uil
 CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
 
 " Translates Languages
-CmdCnoreabbr Weblio    Ref webdict weblio
-cnoreabbr    weblio    Ref webdict weblio
-CmdCnoreabbr WeblioTab TabnewOverridden \| Ref webdict weblio
+cnoreabbr    weblio       Ref webdict weblio
+cnoreabbr    webliotab    TabnewOverridden \| Ref webdict weblio
+CmdCnoreabbr RefWeblio    Ref webdict weblio
+CmdCnoreabbr RefWeblioTab TabnewOverridden \| Ref webdict weblio
+CmdCnoreabbr RefStackage    Ref webdict stackage
+CmdCnoreabbr RefStackageTab TabnewOverridden \| Ref webdict stackage
 
 " NeoBundle install with showing log
 CmdCnoreabbr NeoBundleInstallL NeoBundleInstall \| NeoBundleLog
@@ -1635,7 +1611,6 @@ CmdCnoreabbr SessionLoad UniteSessionLoad
 command! SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
 
 " Aliases
-CmdCnoreabbr JazzradioList Unite jazzradio
 CmdCnoreabbr Gstatus Gita status
 CmdCnoreabbr Gist Gista post
 
@@ -1653,7 +1628,6 @@ execute 'CmdCnoreabbr Ghci'    'VimShellInteractive'                    s:ghci_c
 execute 'CmdCnoreabbr Sghci'   'VimShellInteractive' '--split="sp"'     s:ghci_command
 execute 'CmdCnoreabbr Vghci'   'VimShellInteractive' '--split="vsp"'    s:ghci_command
 execute 'CmdCnoreabbr GhciTab' 'VimShellInteractive' '--split="tabnew"' s:ghci_command
-CmdCnoreabbr Hoogle  Ref hoogle
 unlet s:ghci_command
 
 " js
