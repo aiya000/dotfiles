@@ -295,7 +295,6 @@ NeoBundle      'supermomonga/vimshell-kawaii.vim'
 NeoBundleLazy  'mattn/favstar-vim'
 NeoBundle      'ujihisa/unite-colorscheme'
 NeoBundleLazy  'Shougo/vinarise.vim'
-NeoBundle      'thinca/vim-ref'
 NeoBundleLazy  'vim-jp/vital.vim'
 NeoBundle      'Shougo/unite-outline'
 NeoBundleLazy  'mattn/benchvimrc-vim'
@@ -366,6 +365,7 @@ NeoBundleLazy  'derekwyatt/vim-scala'
 NeoBundleLazy  'thinca/vim-ft-clojure'
 NeoBundleLazy  'lambdalisue/vim-gita'
 NeoBundleLazy  'lambdalisue/vim-gista'
+NeoBundleLazy  'aiya000/aref-web.vim'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
@@ -801,6 +801,12 @@ if neobundle#tap('vim-gista')
 	\})
 	call neobundle#untap()
 endif
+if neobundle#tap('aref-web.vim')
+	call neobundle#config('aref-web.vim', {
+	\	'on_cmd' : 'Aref'
+	\})
+	call neobundle#untap()
+endif
 
 call neobundle#end()
 
@@ -987,22 +993,6 @@ if neobundle#tap('vim-submode')
 	augroup END
 	call neobundle#untap()
 endif
-
-" }}}
-"--- vim-ref --- {{{
-
-let g:ref_source_webdict_sites = {
-\	'weblio' : {
-\		'url' : 'http://ejje.weblio.jp/content/%s'
-\	},
-\	'stackage' : {
-\		'url' : 'https://www.stackage.org/lts-5.15/hoogle?q=%s'
-\	}
-\}
-
-" Default dictionary is 'weblio'
-let g:ref_source_webdict_sites['default']       = 'weblio'
-let g:ref_source_webdict_sites['weblio'].filter = function('vimrc#plugins#weblio_filter')
 
 " }}}
 "--- restart.vim --- {{{
@@ -1232,6 +1222,20 @@ endfunction
 augroup PluginPrefs
 	autocmd User GistaPost call s:yank_gista_posted_url()
 augroup END
+
+"}}}
+"--- aref-web.vim --- {{{
+
+let g:aref_web_source = get(g:, 'aref_web_source', {
+\	'weblio' : {
+\		'url' : 'http://ejje.weblio.jp/content/%s'
+\	},
+\	'stackage' : {
+\		'url' : 'https://www.stackage.org/lts-5.15/hoogle?q=%s'
+\	}
+\})
+
+"let g:ref_source_webdict_sites['weblio'].filter = function('vimrc#plugins#weblio_filter')
 
 "}}}
 "--- For Private --- {{{
@@ -1590,14 +1594,6 @@ CmdCnoreabbr TweetVimNote  TabnewOverridden ~/.tmp/tweetvim_note.md \| set synta
 " To Service Name
 CmdCnoreabbr Lingr J6uil
 CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
-
-" Translates Languages
-cnoreabbr    weblio       Ref webdict weblio
-cnoreabbr    webliotab    TabnewOverridden \| Ref webdict weblio
-CmdCnoreabbr RefWeblio    Ref webdict weblio
-CmdCnoreabbr RefWeblioTab TabnewOverridden \| Ref webdict weblio
-CmdCnoreabbr RefStackage    Ref webdict stackage
-CmdCnoreabbr RefStackageTab TabnewOverridden \| Ref webdict stackage
 
 " NeoBundle install with showing log
 CmdCnoreabbr NeoBundleInstallL NeoBundleInstall \| NeoBundleLog
