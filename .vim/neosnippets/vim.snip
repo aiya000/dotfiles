@@ -1,6 +1,6 @@
 snippet function
 alias   func
-abbr    function! ()
-    function! ${1:#:name}(${2:#:args})
+abbr    function! () abort
+    function! ${1:#:name}(${2:#:args}) abort
         ${0:TARGET}
     endfunction

@@ -1613,11 +1613,6 @@ CmdCnoreabbr Gist Gista post
 " }}}
 " Development {{{
 
-" vimconsole.vim
-CmdCnoreabbr Log      VimConsoleLog
-CmdCnoreabbr LogClear VimConsoleClear
-CmdCnoreabbr LogOpen  VimConsoleOpen
-
 " GHCi
 let s:ghci_command = executable('stack') ? 'stack ghci' : 'ghci'
 execute 'CmdCnoreabbr Ghci'    'VimShellInteractive'                    s:ghci_command
@@ -1626,23 +1621,8 @@ execute 'CmdCnoreabbr Vghci'   'VimShellInteractive' '--split="vsp"'    s:ghci_c
 execute 'CmdCnoreabbr GhciTab' 'VimShellInteractive' '--split="tabnew"' s:ghci_command
 unlet s:ghci_command
 
-" js
-CmdCnoreabbr Js    VimShellInteractive js
-CmdCnoreabbr Sjs   VimShellInteractive --split='sp' js
-CmdCnoreabbr Vjs   VimShellInteractive --split='vsp' js
-CmdCnoreabbr JsTab VimShellInteractive --split='tabnew' js
-
-" irb
-CmdCnoreabbr Irb    VimShellInteractive irb
-CmdCnoreabbr Sirb   VimShellInteractive --split='sp' irb
-CmdCnoreabbr Virb   VimShellInteractive --split='vsp' irb
-CmdCnoreabbr IrbTab VimShellInteractive --split='tabnew' irb
-
-" lein
-CmdCnoreabbr LeinRepl    VimShellInteractive lein repl
-CmdCnoreabbr SLeinRepl   VimShellInteractive --split='sp' lein repl
-CmdCnoreabbr VLeinRepl   VimShellInteractive --split='vsp' lein repl
-CmdCnoreabbr LeinReplTab VimShellInteractive --split='tabnew' lein repl
+" aref-web.vim
+cnoreabbr weblio Aref weblio
 
 " }}}
 
