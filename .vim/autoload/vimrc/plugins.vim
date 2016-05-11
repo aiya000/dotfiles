@@ -1,5 +1,5 @@
 " Append quickrun config for unix
-function! vimrc#plugins#append_config_quickrun_unix() " {{{
+function! vimrc#plugins#append_config_quickrun_unix() abort " {{{
 	" C#
 	let g:quickrun_config['cs'] = {'command' : 'mcs'}
 	" HTML
@@ -13,7 +13,7 @@ function! vimrc#plugins#append_config_quickrun_unix() " {{{
 endfunction " }}}
 
 " Append quickrun config for windows
-function! vimrc#plugins#append_config_quickrun_windows() " {{{
+function! vimrc#plugins#append_config_quickrun_windows() abort " {{{
 	" C#
 	let g:quickrun_config['cs'] = {
 	\	'command' : 'csc.exe',
@@ -28,7 +28,7 @@ function! vimrc#plugins#append_config_quickrun_windows() " {{{
 endfunction " }}}
 
 " Append quickrun config for cygwin
-function! vimrc#plugins#append_config_quickrun_cygwin() " {{{
+function! vimrc#plugins#append_config_quickrun_cygwin() abort " {{{
 	"NOTE: for vimproc runner problem
 	let g:quickrun_config._['runner'] = 'system'
 	" C#
@@ -58,13 +58,13 @@ function! vimrc#plugins#append_config_quickrun_cygwin() " {{{
 endfunction " }}}
 
 " Delete otiose lines
-function! vimrc#plugins#weblio_filter(output) " {{{
+function! vimrc#plugins#weblio_filter(output) abort " {{{
 	let l:lines = split(a:output, "\n")
 	return join(l:lines[17 : ], "\n")
 endfunction " }}}
 
 " Open tweetvim by private account
-function! vimrc#plugins#twitter_private() " {{{
+function! vimrc#plugins#twitter_private() abort " {{{
 	if !exists('g:vimrc.private["twitter"]["priv_ac"]')
 		call vimrc#echo_error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
 		return
@@ -77,7 +77,7 @@ function! vimrc#plugins#twitter_private() " {{{
 endfunction " }}}
 
 " Open tweetvim_say by private account
-function! vimrc#plugins#tweet_private() " {{{
+function! vimrc#plugins#tweet_private() abort " {{{
 	if !exists('g:vimrc.private["twitter"]["priv_ac"]')
 		call vimrc#echo_error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
 		return
@@ -91,7 +91,7 @@ function! vimrc#plugins#tweet_private() " {{{
 endfunction " }}}
 
 " Open tweetvim by public account
-function! vimrc#plugins#twitter_public() " {{{
+function! vimrc#plugins#twitter_public() abort " {{{
 	if !exists("g:vimrc.private['twitter']['publ_ac']")
 		call vimrc#echo_error("Not set env variable => g:vimrc.private['twitter']['publ_ac']")
 		return
@@ -104,7 +104,7 @@ function! vimrc#plugins#twitter_public() " {{{
 endfunction " }}}
 
 " Open tweetvim_say by public account
-function! vimrc#plugins#tweet_public() " {{{
+function! vimrc#plugins#tweet_public() abort " {{{
 	if !exists('g:vimrc.private["twitter"]["publ_ac"]')
 		call vimrc#echo_error('Not set env variable => g:vimrc.private["twitter"]["publ_ac"]')
 		return

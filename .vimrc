@@ -366,6 +366,7 @@ NeoBundleLazy  'thinca/vim-ft-clojure'
 NeoBundleLazy  'lambdalisue/vim-gita'
 NeoBundleLazy  'lambdalisue/vim-gista'
 NeoBundleLazy  'aiya000/aref-web.vim'
+NeoBundleLazy  'yaasita/slack.vim'
 
 " }}}
 "*** Plugin Depends and Auto Config *** {{{
@@ -804,6 +805,13 @@ endif
 if neobundle#tap('aref-web.vim')
 	call neobundle#config('aref-web.vim', {
 	\	'on_cmd' : 'Aref'
+	\})
+	call neobundle#untap()
+endif
+if neobundle#tap('slack.vim')
+	"TODO: lazy loading
+	call neobundle#config('slack.vim', {
+	\	'lazy' : 0
 	\})
 	call neobundle#untap()
 endif
@@ -1590,6 +1598,10 @@ CmdCnoreabbr UserTimeline  TweetVimUserTimeline
 CmdCnoreabbr TweetVimNote  TabnewOverridden ~/.tmp/tweetvim_note.md \| set syntax=tweetvim_say
 
 " }}}
+
+" Open channel by slack.vim
+"-- Used by neobundle lazy loading hook
+command! -bar -nargs=1 Slack execute ':e slack://ch/' . <q-args>
 
 " To Service Name
 CmdCnoreabbr Lingr J6uil
