@@ -34,13 +34,7 @@
 " }}}
 " Issues {{{
 
-"-- automatic mkdir './C:' when execute NeoBundleInstall in windows kaoriya
-"  -- does neobundle think that is repository...?
-
 "-- shot-f doesn't functioned in i_<C-o> temporary normal mode
-
-"-- conflicted? vim-ruby and rspec.vim when those was set NeoBundleLazy
-"  -- does not loaded syntax of rspec.vim
 
 "-- submode wintab-move over 1 previous tab
 
@@ -181,7 +175,7 @@ if g:vimrc['is_kaoriya'] && g:vimrc['is_windows']
 	let s:switch_dir       = $VIM . '/switches/enabled'
 	let s:suppress_vimproc = s:switch_dir . '/disable-vimproc.vim'
 
-	" If you has mingw, use neobundle's vimproc
+	" If you has mingw, use dein.vim's vimproc
 	if !g:vimrc['has_mingw'] && filereadable(s:suppress_vimproc)
 		call delete(s:suppress_vimproc)
 	elseif g:vimrc['has_mingw'] && !filereadable(s:suppress_vimproc)
@@ -209,34 +203,30 @@ if g:vimrc['is_kaoriya'] && g:vimrc['is_windows']
 endif
 
 " }}}
-" Startup NeoBundle {{{
+" Startup dein.vim {{{
 
-let s:bundledir = g:vimrc['vim_home'] . '/bundle'
-
-if !isdirectory(s:bundledir)
-	call mkdir(s:bundledir)
-endif
+let s:dein_dirname = g:vimrc['vim_home'] . '/bundle/repos/github.com/Shougo/dein.vim'
 
 if has('vim_starting')
-	let &runtimepath = &runtimepath . ',' . (g:vimrc['vim_home'] . '/bundle/neobundle.vim')
+	let &runtimepath = &runtimepath . ',' . s:dein_dirname
 endif
 
 try
-	call neobundle#begin()
-catch /E117/  " neobundle.vim not found
+	call dein#begin(expand('~/.vim/bundle'))
+catch /E117/  " dein.vim not found
 	try
-		call vimrc#fetch_neobundle(s:bundledir)
-		call neobundle#begin()
-		echo 'NeoBundle install completed.'
-		echo 'Please execute :NeoBundleInstall,'
-		echo 'and restart Vim.'
+		call vimrc#fetch_dein(s:dein_dirname)
+		call dein#begin()
+		echo 'dein.vim installation was completed.'
+		echo 'Please execute :call dein#install(),'
+		echo 'and restart your vim.'
 	catch /FALIED/
-		call vimrc#echo_error('cloning or starting neobundle.vim failed.')
+		call vimrc#echo_error('cloning or starting dein.vim failed.')
 		call vimrc#echo_error('>> Error build vim environment <<')
 	endtry
 endtry
 
-unlet s:bundledir
+unlet s:dein_dirname
 
 " }}}
 " Check backup directories {{{
@@ -277,548 +267,15 @@ endif
 "-------------------------"
 "     Plugin_Manage       "
 "-------------------------"
-"*** Plugin List *** {{{
+"*** Preparing plugins *** {{{
 
-NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundleLazy  'basyura/twibill.vim'
-NeoBundle      'tyru/open-browser.vim'
-NeoBundleLazy  'basyura/bitly.vim'
-NeoBundle      'Shougo/unite.vim'
-NeoBundle      'Shougo/vimproc.vim'
-NeoBundleLazy  'basyura/TweetVim'
-NeoBundleLazy  'mattn/webapi-vim'
-NeoBundle      'Shougo/vimshell.vim'
-NeoBundleLazy  'thinca/vim-quickrun'
-NeoBundleLazy  'basyura/J6uil.vim'
-NeoBundleLazy  'yuratomo/w3m.vim'
-NeoBundle      'supermomonga/vimshell-kawaii.vim'
-NeoBundleLazy  'mattn/favstar-vim'
-NeoBundle      'ujihisa/unite-colorscheme'
-NeoBundleLazy  'Shougo/vinarise.vim'
-NeoBundleLazy  'vim-jp/vital.vim'
-NeoBundle      'Shougo/unite-outline'
-NeoBundleLazy  'mattn/benchvimrc-vim'
-NeoBundleLazy  'jvoorhis/coq.vim'
-NeoBundleLazy  'eagletmt/coqtop-vim'
-NeoBundleLazy  'thinca/vim-themis'
-NeoBundle      'tomasr/molokai'
-NeoBundleLazy  'kannokanno/previm'
-NeoBundle      'LeafCage/foldCC'
-NeoBundle      'kana/vim-submode'
-NeoBundle      'osyo-manga/vim-anzu'
-NeoBundle      'osyo-manga/vim-over'
-NeoBundleLazy  'tyru/restart.vim'
-NeoBundle      'vim-jp/vimdoc-ja'
-NeoBundle      'h1mesuke/vim-alignta'
-NeoBundle      'haya14busa/incsearch.vim'
-NeoBundleLazy  'thinca/vim-scouter'
-NeoBundle      'deris/vim-shot-f'
-NeoBundleLazy  'sgelb/TaskList.vim'
-NeoBundle      'tyru/vim-altercmd'
-NeoBundleLazy  'mbbill/undotree'
-NeoBundle      'Shougo/neomru.vim'
-NeoBundleLazy  'aiya000/adrone.vim'
-NeoBundleFetch 'Shougo/fakecygpty'
-NeoBundle      'nathanaelkane/vim-indent-guides'
-NeoBundleLazy  'LeafCage/vimhelpgenerator'
-NeoBundleLazy  'vim-ruby/vim-ruby'
-NeoBundleLazy  'Keithbsmiley/rspec.vim'
-NeoBundle      'altercation/vim-colors-solarized'
-NeoBundle      'aiya000/aho-bakaup.vim'
-NeoBundle      'Shougo/neosnippet.vim'
-NeoBundle      'Shougo/neosnippet-snippets'
-NeoBundle      'aiya000/separetaro.vim'
-NeoBundleLazy  'kurocode25/mdforvim'
-NeoBundleLazy  'rbtnn/vimconsole.vim'
-NeoBundleLazy  'fatih/vim-go'
-NeoBundle      'tpope/vim-surround'
-NeoBundle      'kana/vim-textobj-user'
-NeoBundle      'kana/vim-textobj-indent'
-NeoBundle      'Shougo/neocomplete.vim'
-NeoBundle      'Shougo/deoplete.nvim'
-NeoBundleLazy  'soramugi/auto-ctags.vim'
-NeoBundle      'tsukkee/unite-tag'
-NeoBundle      'aiya000/vimshell-command-dehanai.vim'
-NeoBundle      'osyo-manga/vim-textobj-from_regexp'
-NeoBundleLazy  'leafgarland/typescript-vim'
-NeoBundle      'tpope/vim-repeat'
-NeoBundleLazy  'lambdalisue/vim-pager'
-NeoBundleLazy  'lambdalisue/vim-manpager'
-NeoBundle      'thinca/vim-visualstar'
-NeoBundleLazy  'rhysd/try-colorscheme.vim'
-NeoBundle      'jonathanfilip/vim-lucius'
-NeoBundle      'aiya000/unite-syntax'
-NeoBundle      'Shougo/unite-help'
-NeoBundle      'osyo-manga/unite-filetype'
-NeoBundle      'Shougo/unite-session'
-NeoBundleLazy  'whatyouhide/vim-textobj-xmlattr'
-NeoBundleLazy  'yomi322/neco-tweetvim'
-NeoBundle      'yomi322/unite-tweetvim'
-NeoBundleLazy  'itchyny/vim-haskell-indent'
-NeoBundle      'aiya000/submode-window_move.vim'
-NeoBundleLazy  'ujihisa/repl.vim'
-NeoBundleLazy  'mattn/emmet-vim'
-NeoBundle      'romainl/Apprentice'
-NeoBundleLazy  'pbrisbin/vim-syntax-shakespeare'
-NeoBundleLazy  'kana/vim-altr'
-NeoBundleLazy  'derekwyatt/vim-scala'
-NeoBundleLazy  'thinca/vim-ft-clojure'
-NeoBundleLazy  'lambdalisue/vim-gita'
-NeoBundleLazy  'lambdalisue/vim-gista'
-NeoBundleLazy  'aiya000/aref-web.vim'
-NeoBundleLazy  'yaasita/slack.vim'
+call dein#load_toml('~/.vim/dein.toml',      {'lazy': 0})
+call dein#load_toml('~/.vim/dein_lazy.toml', {'lazy': 1})
+call dein#add('Shougo/dein.vim', {'rtp': ''})
 
 " }}}
-"*** Plugin Depends and Auto Config *** {{{
 
-if neobundle#tap('vimproc.vim')
-	call neobundle#config('vimproc.vim', {
-	\	'build' : {
-	\		'linux'  : 'make',
-	\		'cygwin' : 'make'
-	\	},
-	\	'disabled' : g:vimrc['is_kaoriya'] && g:vimrc['is_windows'] && !g:vimrc['has_mingw']
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('TweetVim')
-	call neobundle#config('TweetVim', {
-	\	'depends' : [
-	\		'basyura/twibill.vim',
-	\		'tyru/open-browser.vim',
-	\		'h1mesuke/unite-outline',
-	\		'basyura/bitly.vim',
-	\		'Shougo/unite.vim',
-	\		'Shougo/vimproc.vim',
-	\		'mattn/favstar-vim'
-	\	],
-	\	'on_cmd' : [
-	\		'TweetVimVersion',
-	\		'TweetVimAddAccount',
-	\		'TweetVimSwitchAccount',
-	\		'TweetVimHomeTimeline',
-	\		'TweetVimMentions',
-	\		'TweetVimUserTimeline',
-	\		'TweetVimListStatuses',
-	\		'TweetVimSearch',
-	\		'TweetVimSay',
-	\		'TweetVimUserStream',
-	\		'TweetVimCommandSay',
-	\		'TweetVimCurrentLineSay',
-	\		'TweetVimClearIcon'
-	\	]
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-quickrun')
-	call neobundle#config('vim-quickrun', {
-	\	'depends'  : 'Shougo/vimproc.vim',
-	\	'on_cmd' : {
-	\		'name'     : 'QuickRun',
-	\		'complete' : 'filetype'
-	\	},
-	\	'on_map' : [
-	\		'<Plug>(quickrun)',
-	\		'<Plug>(quickrun-op)'
-	\	]
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('J6uil.vim')
-	call neobundle#config('J6uil.vim', {
-	\	'depends' : [
-	\		'mattn/webapi-vim',
-	\		'Shougo/vimproc.vim',
-	\		'tyru/open-browser.vim',
-	\		'Shougo/unite.vim'
-	\	],
-	\	'on_cmd' : 'J6uil'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('w3m.vim')
-	call neobundle#config('w3m.vim', {
-	\	'on_cmd' : [
-	\		'W3m',
-	\		'W3mHistory',
-	\		'W3mHistoryClear',
-	\		'W3mLocal',
-	\		'W3mSplit',
-	\		'W3mTab',
-	\		'W3mVSplit'
-	\	]
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('favstart-vim')
-	call neobundle#config('favstart-vim', {
-	\	'on_cmd' : 'FavStar'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vinarise.vim')
-	call neobundle#config('vinarise.vim', {
-	\	'on_cmd' : [
-	\		'Vinarise',
-	\		'VinariseDump'
-	\	]
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('unite-outline')
-	call neobundle#config('unite-outline', {
-	\	'lazy'    : 0,
-	\	'depends' : 'Shougo/unite.vim'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('benchvimrc-vim')
-	call neobundle#config('benchvimrc-vim', {
-	\	'on_cmd' : 'BenchVimrc'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('coq.vim')
-	call neobundle#config('coq.vim', {
-	\	'on_ft' : 'coq'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('coqtop-vim')
-	call neobundle#config('coqtop-vim', {
-	\	'depends' : 'Shougo/vimproc.vim',
-	\	'on_ft'   : 'coq'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-themis')
-	call neobundle#config('vim-themis', {
-	\	'on_ft' : [
-	\		'vim',
-	\		'vimspec'
-	\	]
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('previm')
-	call neobundle#config('previm', {
-	\	'on_ft'  : 'markdown',
-	\	'on_cmd' : 'PrevimOpen'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('restart.vim')
-	call neobundle#config('restart.vim', {
-	\	'gui'    : 1,
-	\	'on_cmd' : 'Restart'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-scouter')
-	call neobundle#config('vim-scouter', {
-	\	'on_cmd' : {
-	\		'name'     : 'Scouter',
-	\		'complete' : 'file'
-	\	}
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('TaskList.vim')
-	call neobundle#config('TaskList.vim', {
-	\	'on_cmd' : [
-	\		'TaskList',
-	\		'TaskListToggle'
-	\	],
-	\	'on_map' : '<Plug>TaskListToggle'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('undotree')
-	call neobundle#config('undotree', {
-	\	'on_cmd' : [
-	\		'UndotreeToggle',
-	\		'UndotreeFocus',
-	\		'UndotreeShow',
-	\		'UndotreeHide'
-	\	]
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('adrone.vim')
-	call neobundle#config('adrone.vim', {
-	\	'on_cmd' : [
-	\		'AdroneHome',
-	\		'AdroneSay',
-	\		'AdroneVersion'
-	\	]
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('fakecygpty')
-	call neobundle#config('fakecygpty', {
-	\	'build' : {
-	\		'windows' : expand((executable('clang') ? 'clang' : 'gcc') . ' fakecygpty.c -o ~/bin/fakecygpty.exe')
-	\	}
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vimhelpgenerator')
-	call neobundle#config('vimhelpgenerator', {
-	\	'on_cmd' : [
-	\		'VimHelpGenerator',
-	\		'VimHelpGeneratorVirtual',
-	\		'HelpIntoMarkdown'
-	\	]
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-ruby')
-	"@Bugs('rspec.vim do not highlight syntax before loading vim-ruby')
-	"@Marked(' -> was fixed by commit a516 ?')
-	call neobundle#config('vim-ruby', {
-	\	'on_ft' : 'ruby'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('rspec.vim')
-	call neobundle#config('rspec.vim', {
-	\	'on_ft' : 'ruby'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('mdforvim')
-	call neobundle#config('mdforvim', {
-	\	'on_cmd' : [
-	\		'MdConvert',
-	\		'MdPreview',
-	\		'MdStopPreview', {
-	\			'name'     : 'MdSaveAs',
-	\			'complete' : 'file'
-	\		}
-	\	]
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vimconsole.vim')
-	call neobundle#config('vimconsole.vim', {
-	\	'on_cmd' : [
-	\		'VimConsoleLog',
-	\		'VimConsoleOpen',
-	\		'VimConsoleClose',
-	\		'VimConsoleToggle',
-	\		'VimConsoleClear',
-	\		'VimConsoleRedraw'
-	\	]
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-go')
-	call neobundle#config('vim-go', {
-	\	'on_ft' : 'go'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-textobj-indent')
-	call neobundle#config('vim-textobj-indent', {
-	\	'depends' : 'vim-textobj-user'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('neocomplete.vim')
-	call neobundle#config('neocomplete.vim', {
-	\	'disabled' : has('nvim')
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('deoplete.nvim')
-	call neobundle#config('deoplete.nvim', {
-	\	'disabled' : !has('nvim')
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('auto-ctags.vim')
-	call neobundle#config('auto-ctags.vim', {
-	\	'on_cmd'            : 'Ctags',
-	\	'external_commands' : 'ctags'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('unite-tag')
-	call neobundle#config('unite-tag', {
-	\	'lazy'    : 0,
-	\	'depends' : 'Shougo/unite.vim'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-textobj-from_regexp')
-	call neobundle#config('vim-textobj-from_regexp', {
-	\	'depends' : 'vim-textobj-user'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('typescript-vim')
-	call neobundle#config('typescript-vim', {
-	\	'on_ft' : 'typescript'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-pager')
-	call neobundle#config('vim-pager', {
-	\	'on_cmd' : 'PAGER'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-manpager')
-	call neobundle#config('vim-manpager', {
-	\	'on_cmd' : [
-	\		'Man',
-	\		'MANPAGER'
-	\	]
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('try-colorscheme.vim')
-	call neobundle#config('try-colorscheme.vim', {
-	\	'on_cmd' : 'TryColorscheme'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('unite-syntax')
-	call neobundle#config('unite-syntax', {
-	\	'lazy'    : 0,
-	\	'depends' : 'Shougo/unite.vim'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('unite-help')
-	call neobundle#config('unite-help', {
-	\	'lazy'    : 0,
-	\	'depends' : 'Shougo/unite.vim'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('unite-filetype')
-	call neobundle#config('unite-filetype', {
-	\	'lazy'    : 0,
-	\	'depends' : 'Shougo/unite.vim'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('unite-session')
-	call neobundle#config('unite-session', {
-	\	'lazy'    : 0,
-	\	'depends' : 'Shougo/unite.vim'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-textobj-xmlattr')
-	call neobundle#config('vim-textobj-xmlattr', {
-	\	'depends' : 'vim-textobj-user',
-	\	'on_ft'   : [
-	\		'html',
-	\		'xml',
-	\		'xaml',
-	\		'fxml',
-	\		'hamlet'
-	\	]
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('neco-tweetvim')
-	call neobundle#config('neco-tweetvim', {
-	\	'on_source' : 'TweetVim'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('unite-tweetvim')
-	call neobundle#config('unite-tweetvim', {
-	\	'lazy'    : 0,
-	\	'depends' : 'Shougo/unite.vim'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-haskell-indent')
-	call neobundle#config('vim-haskell-indent', {
-	\	'on_ft' : 'haskell'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('repl.vim')
-	call neobundle#config('repl.vim', {
-	\	'depends' : [
-	\		'Shougo/vimshell.vim',
-	\		'Shougo/vimproc.vim'
-	\	],
-	\	'on_cmd' : 'Repl',
-	\	'on_map' : '<Plug>(repl-run)'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('emmet-vim')
-	call neobundle#config('emmet-vim', {
-	\	'on_cmd' : 'EmmetInstall',
-	\	'on_map' : get(g:, 'user_emmet_leader_key', '\\')
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-syntax-shakespeare')
-	call neobundle#config('vim-syntax-shakespeare', {
-	\	'on_ft' : [
-	\		'hamlet',
-	\		'cassius',
-	\		'lucius',
-	\		'julius'
-	\	]
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-altr')
-	call neobundle#config('vim-altr', {
-	\	'on_cmd' : ['AltrForward', 'AltrBack']
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-scala')
-	call neobundle#config('vim-scala', {
-	\	'on_ft' : 'scala'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-ft-clojure')
-	call neobundle#config('vim-ft-clojure', {
-	\	'on_ft' : 'clojure'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-gita')
-	call neobundle#config('vim-gita', {
-	\	'on_cmd' : 'Gita'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('vim-gista')
-	call neobundle#config('vim-gista', {
-	\	'on_cmd' : 'Gist'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('aref-web.vim')
-	call neobundle#config('aref-web.vim', {
-	\	'on_cmd' : 'Aref'
-	\})
-	call neobundle#untap()
-endif
-if neobundle#tap('slack.vim')
-	"TODO: lazy loading
-	call neobundle#config('slack.vim', {
-	\	'lazy' : 0
-	\})
-	call neobundle#untap()
-endif
-
-call neobundle#end()
-
-" }}}
+call dein#end()
 
 
 "------------------------"
@@ -950,7 +407,7 @@ let g:foldCCtext_maxchars = 120
 
 let g:submode_timeout = 0
 
-if neobundle#tap('vim-submode')
+function! s:vim_submode_on_source()
 	augroup PluginPrefs
 		" Window Resizer
 		autocmd User MyVimRc call submode#enter_with('window_resize', 'n', '', '<C-s>w')
@@ -999,8 +456,8 @@ if neobundle#tap('vim-submode')
 		autocmd User MyVimRc call submode#enter_with('cont_bdelete', 'n', '', '<C-s><C-w>c', ':bdelete<CR>')
 		autocmd User MyVimRc call submode#map('cont_bdelete', 'n', 's', 'c', ':bdelete<CR>')
 	augroup END
-	call neobundle#untap()
-endif
+endfunction
+call dein#set_hook('vim-submode', 'hook_source', function('s:vim_submode_on_source'))
 
 " }}}
 "--- restart.vim --- {{{
@@ -1208,11 +665,11 @@ autocmd UserEvent FileType html,xml,fxml EmmetInstall
 " }}}
 "--- vim-altr --- {{{
 
-let s:bundle = neobundle#get('vim-altr')
-function! s:bundle.hooks.on_source(bundle)
+"@Unchecked('this function is right ?')
+function! s:vim_altr_on_source()
 	call altr#define('%.xaml.cs', '%.xaml')
 endfunction
-unlet s:bundle
+call dein#set_hook('vim-altr', 'hook_source', function('s:vim_altr_on_source'))
 
 " }}}
 "--- vim-gista --- {{{
@@ -1600,16 +1057,12 @@ CmdCnoreabbr TweetVimNote  TabnewOverridden ~/.tmp/tweetvim_note.md \| set synta
 " }}}
 
 " Open channel by slack.vim
-"-- Used by neobundle lazy loading hook
+"-- Used by dein.vim lazy loading hook
 command! -bar -nargs=1 Slack execute ':e slack://ch/' . <q-args>
 
 " To Service Name
 CmdCnoreabbr Lingr J6uil
 CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
-
-" NeoBundle install with showing log
-CmdCnoreabbr NeoBundleInstallL NeoBundleInstall \| NeoBundleLog
-CmdCnoreabbr NeoBundleUpdateL  NeoBundleUpdate \| NeoBundleUpdatesLog
 
 " Remove prefix
 CmdCnoreabbr SessionSave UniteSessionSave

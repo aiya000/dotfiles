@@ -1,0 +1,221 @@
+[[plugins]]
+repo = 'basyura/TweetVim'
+depends = [
+    'tyru/open-browser.vim',
+    'Shougo/unite.vim',
+    'Shougo/vimproc.vim',
+    'h1mesuke/unite-outline',
+    'basyura/twibill.vim',
+    'basyura/bitly.vim',
+    'mattn/favstar-vim'
+]
+on_cmd = [
+    'TweetVimVersion',
+    'TweetVimAddAccount',
+    'TweetVimSwitchAccount',
+    'TweetVimHomeTimeline',
+    'TweetVimMentions',
+    'TweetVimUserTimeline',
+    'TweetVimListStatuses',
+    'TweetVimSearch',
+    'TweetVimSay',
+    'TweetVimUserStream',
+    'TweetVimCommandSay',
+    'TweetVimCurrentLineSay',
+    'TweetVimClearIcon'
+]
+
+[[plugins]]
+repo   = 'mattn/favstar-vim'
+on_cmd = 'FavStar'
+
+[[plugins]]
+repo = 'basyura/twibill.vim'
+
+[[plugins]]
+repo = 'basyura/bitly.vim'
+
+[[plugins]]
+repo    = 'Shougo/vimshell.vim'
+depends = 'Shougo/vimproc.vim'
+on_cmd  = 'QuickRun'
+on_map  = [
+    '<Plug>(quickrun)',
+    '<Plug>(quickrun-op)'
+]
+
+[[plugins]]
+repo    = 'basyura/J6uil.vim'
+depends = [
+    'mattn/webapi-vim',
+    'Shougo/vimproc.vim',
+    'tyru/open-browser.vim',
+    'Shougo/unite.vim'
+]
+on_cmd  = 'J6uil'
+
+[[plugins]]
+repo = 'mattn/webapi-vim'
+
+[[plugins]]
+repo   = 'Shougo/vinarise.vim'
+on_cmd = [
+    'Vinarise',
+    'VinariseDump'
+]
+
+[[plugins]]
+repo   = 'vim-jp/vital.vim'
+on_cmd = 'Vitalize'
+
+[[plugins]]
+repo  = 'thinca/vim-themis'
+on_ft = [
+    'vim',
+    'vimspec'
+]
+
+[[plugins]]
+repo   = 'Shougo/vinarise.vim'
+on_ft  = 'markdown',
+on_cmd = 'PrevimOpen'
+
+[[plugins]]
+repo   = 'thinca/vim-scouter'
+on_cmd = 'Scouter'
+
+[[plugins]]
+repo   = 'sgelb/TaskList.vim'
+on_cmd = [
+    'TaskList',
+    'TaskListToggle'
+]
+on_map = '<Plug>TaskListToggle'
+
+[[plugins]]
+repo   = 'mbbill/undotree'
+on_cmd = [
+    'UndotreeToggle',
+    'UndotreeFocus',
+    'UndotreeShow',
+    'UndotreeHide'
+]
+
+[[plugins]]
+repo   = 'aiya000/adrone.vim'
+on_cmd = [
+	'AdroneHome',
+	'AdroneSay',
+	'AdroneVersion'
+]
+
+[[plugins]]
+repo   = 'LeafCage/vimhelpgenerator'
+on_cmd = [
+    'VimHelpGenerator',
+    'VimHelpGeneratorVirtual',
+    'HelpIntoMarkdown'
+]
+
+[[plugins]]
+repo = 'kurocode25/mdforvim'
+on_cmd = [
+	'MdConvert',
+	'MdPreview',
+	'MdStopPreview',
+	'MdSaveAs'
+]
+
+[[plugins]]
+repo   = 'rbtnn/vimconsole.vim'
+on_cmd = [
+    'VimConsoleLog',
+    'VimConsoleOpen',
+    'VimConsoleClose',
+    'VimConsoleToggle',
+    'VimConsoleClear',
+    'VimConsoleRedraw'
+]
+
+[[plugins]]
+repo  = 'leafgarland/typescript-vim'
+on_ft = 'typescript'
+
+[[plugins]]
+repo   = 'lambdalisue/vim-pager'
+on_cmd = 'PAGER'
+
+[[plugins]]
+repo   = 'lambdalisue/vim-manpager'
+on_cmd = [
+    'Man',
+    'MANPAGER'
+]
+
+[[plugins]]
+repo   = 'rhysd/try-colorscheme.vim'
+on_cmd = 'TryColorscheme'
+
+[[plugins]]
+repo    = 'whatyouhide/vim-textobj-xmlattr'
+depends = 'vim-textobj-user',
+'on_ft' = [
+    'html',
+    'xml',
+    'xaml',
+    'fxml',
+    'hamlet'
+]
+
+[[plugins]]
+repo  = 'itchyny/vim-haskell-indent'
+on_ft = 'haskell'
+
+[[plugins]]
+repo    = 'ujihisa/repl.vim'
+depends = [
+    'Shougo/vimshell.vim',
+    'Shougo/vimproc.vim'
+]
+on_cmd  = 'Repl'
+on_map  = '<Plug>(repl-run)'
+
+[[plugins]]
+repo   = 'mattn/emmet-vim'
+on_cmd = 'EmmetInstall',
+on_map = "get(g:, 'user_emmet_leader_key', '\\')"
+
+[[plugins]]
+repo  = 'pbrisbin/vim-syntax-shakespeare'
+on_ft = [
+    'hamlet',
+    'cassius',
+    'lucius',
+    'julius'
+]
+
+[[plugins]]
+repo   = 'kana/vim-altr'
+on_cmd = [
+    'AltrForward',
+    'AltrBack'
+]
+
+[[plugins]]
+repo  = 'thinca/vim-ft-clojure'
+on_ft = 'clojure'
+
+[[plugins]]
+repo   = 'lambdalisue/vim-gita'
+on_cmd = 'Gita'
+
+[[plugins]]
+repo   = 'lambdalisue/vim-gista'
+on_cmd = 'Gist'
+
+[[plugins]]
+repo   = 'aiya000/aref-web.vim'
+on_cmd = [
+    'Aref',
+    'ArefOpenBrowser'
+]
