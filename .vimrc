@@ -1634,7 +1634,8 @@ execute 'CmdCnoreabbr GhciTab' 'VimShellInteractive' '--split="tabnew"' s:ghci_c
 unlet s:ghci_command
 
 " aref-web.vim
-cnoreabbr weblio Aref weblio
+CmdCnoreabbr Weblio   Aref weblio
+CmdCnoreabbr Stackage Aref stackage
 
 " }}}
 
