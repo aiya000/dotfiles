@@ -1,5 +1,5 @@
 [[plugins]]
-repo = 'basyura/TweetVim'
+repo    = 'basyura/TweetVim'
 depends = [
     'open-browser.vim',
     'unite.vim',
@@ -9,7 +9,7 @@ depends = [
     'bitly.vim',
     'favstar-vim'
 ]
-on_cmd = [
+on_cmd  = [
     'TweetVimVersion',
     'TweetVimAddAccount',
     'TweetVimSwitchAccount',

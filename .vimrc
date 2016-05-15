@@ -206,17 +206,14 @@ endif
 " Startup dein.vim {{{
 
 let s:dein_dirname = g:vimrc['vim_home'] . '/bundle/repos/github.com/Shougo/dein.vim'
-
-if has('vim_starting')
-	let &runtimepath = &runtimepath . ',' . s:dein_dirname
-endif
+let &runtimepath   = &runtimepath . ',' . s:dein_dirname
 
 try
 	call dein#begin(expand('~/.vim/bundle'))
 catch /E117/  " dein.vim not found
 	try
 		call vimrc#fetch_dein(s:dein_dirname)
-		call dein#begin()
+		call dein#begin(expand('~/.vim/bundle'))
 		echo 'dein.vim installation was completed.'
 		echo 'Please execute :call dein#install(),'
 		echo 'and restart your vim.'
@@ -389,13 +386,6 @@ let g:vimshell_hereis_alias_prefix = 'p_'
 let g:vimshell_kawaii_smiley = 1
 
 " }}}
-"--- w3m.vim --- {{{
-
-let g:w3m#external_browser = 'firefox'
-
-let g:w3m#homepage = 'http://www.google.co.jp/'
-
-" }}}
 "--- foldCC --- {{{
 
 let g:foldCCtext_maxchars = 120
@@ -456,11 +446,6 @@ function! s:vim_submode_on_source()
 	augroup END
 endfunction
 call dein#set_hook('vim-submode', 'hook_source', function('s:vim_submode_on_source'))
-
-" }}}
-"--- restart.vim --- {{{
-
-let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
 
 " }}}
 "--- vimdoc-ja --- {{{
@@ -569,15 +554,6 @@ let g:vimconsole#auto_redraw             = 1
 let g:vimconsole#no_default_key_mappings = 1
 
 " }}}
-"--- vim-go --- {{{
-
-" Avoid a bug of cygwin environment
-if g:vimrc['is_cygwin']
-	let g:go_fmt_autosave        = 0
-	let g:go_def_mapping_enabled = 0
-endif
-
-" }}}
 "--- vim-textobj-indent --- {{{
 
 " Set myself
@@ -594,23 +570,6 @@ let g:neocomplete#sources = {
 \	'int-ghci'  : [],
 \	'int-stack' : []
 \}
-
-" }}}
-"--- auto-ctags.vim --- {{{
-
-" Specific the ctags generated directory ( Must sync 'tags' )
-let g:auto_ctags_directory_list = [
-\	'.git',             '.tags',
-\	'../.git',          '../.tags',
-\	'../../.git',       '../../.tags',
-\	'../../../.git',    '../../../.tags',
-\	'../../../../.git', '../../.../../.tags'
-\]
-
-" Avoid hyper gravity
-let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
-\                          . ' --exclude=node_modules'
-\                          . ' --exclude=bower_components'
 
 " }}}
 "--- unite-tag --- {{{
@@ -709,7 +668,7 @@ if filereadable(expand('~/.vimrc_private'))
 endif
 
 " }}}
-"
+
 call dein#end()
 
 
@@ -894,9 +853,13 @@ set shellslash
 set matchpairs+=<:>
 
 " Reference tags of ctags
-let s:pre_tags = map(g:auto_ctags_directory_list, 'v:val . "/tags"')
-let &tags      = join(s:pre_tags + ['./tags', '~/tags'], ',')
-unlet s:pre_tags
+let &tags = join([
+\	'.git/tags',
+\	'../.git/tags',
+\	'../../.git/tags',
+\	'../../../.git/tags',
+\	'../../../../.git/tags'
+\], ',')
 
 " Netrw wake up default dir
 set browsedir=buffer
@@ -1074,6 +1037,12 @@ command! SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
 " Aliases
 CmdCnoreabbr Gstatus Gita status
 CmdCnoreabbr Gist Gista post
+
+" dein.vim
+CmdCnoreabbr DeinInstall   call dein#install()
+CmdCnoreabbr DeinUpdate    call dein#update()
+CmdCnoreabbr DeinLog       echo dein#get_log()
+CmdCnoreabbr DeinUpdateLog echo dein#get_updates_log()
 
 " }}}
 " Development {{{
