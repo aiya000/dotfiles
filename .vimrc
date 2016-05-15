@@ -275,8 +275,6 @@ call dein#add('Shougo/dein.vim', {'rtp': ''})
 
 " }}}
 
-call dein#end()
-
 
 "------------------------"
 "*** Plugin_Configure ***"
@@ -711,6 +709,8 @@ if filereadable(expand('~/.vimrc_private'))
 endif
 
 " }}}
+"
+call dein#end()
 
 
 "-------------------------"

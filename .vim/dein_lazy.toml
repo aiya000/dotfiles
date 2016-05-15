@@ -1,13 +1,13 @@
 [[plugins]]
 repo = 'basyura/TweetVim'
 depends = [
-    'tyru/open-browser.vim',
-    'Shougo/unite.vim',
-    'Shougo/vimproc.vim',
-    'h1mesuke/unite-outline',
-    'basyura/twibill.vim',
-    'basyura/bitly.vim',
-    'mattn/favstar-vim'
+    'open-browser.vim',
+    'unite.vim',
+    'vimproc.vim',
+    'unite-outline',
+    'twibill.vim',
+    'bitly.vim',
+    'favstar-vim'
 ]
 on_cmd = [
     'TweetVimVersion',
@@ -36,8 +36,8 @@ repo = 'basyura/twibill.vim'
 repo = 'basyura/bitly.vim'
 
 [[plugins]]
-repo    = 'Shougo/vimshell.vim'
-depends = 'Shougo/vimproc.vim'
+repo    = 'thinca/vim-quickrun'
+depends = 'vimproc.vim'
 on_cmd  = 'QuickRun'
 on_map  = [
     '<Plug>(quickrun)',
@@ -47,10 +47,10 @@ on_map  = [
 [[plugins]]
 repo    = 'basyura/J6uil.vim'
 depends = [
-    'mattn/webapi-vim',
-    'Shougo/vimproc.vim',
-    'tyru/open-browser.vim',
-    'Shougo/unite.vim'
+    'webapi-vim',
+    'vimproc.vim',
+    'open-browser.vim',
+    'unite.vim'
 ]
 on_cmd  = 'J6uil'
 
@@ -174,8 +174,8 @@ on_ft = 'haskell'
 [[plugins]]
 repo    = 'ujihisa/repl.vim'
 depends = [
-    'Shougo/vimshell.vim',
-    'Shougo/vimproc.vim'
+    'vimshell.vim',
+    'vimproc.vim'
 ]
 on_cmd  = 'Repl'
 on_map  = '<Plug>(repl-run)'
@@ -214,8 +214,13 @@ repo   = 'lambdalisue/vim-gista'
 on_cmd = 'Gist'
 
 [[plugins]]
-repo   = 'aiya000/aref-web.vim'
-on_cmd = [
+repo    = 'aiya000/aref-web.vim'
+depends = 'open-browser.vim'
+on_cmd  = [
     'Aref',
     'ArefOpenBrowser'
 ]
+
+[[plugins]]
+repo  = 'cespare/vim-toml'
+on_ft = 'toml'

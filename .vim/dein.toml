@@ -8,7 +8,7 @@ repo = 'Shougo/unite.vim'
 [[plugins]]
 repo  = 'Shougo/vimproc.vim'
 build = 'make'
-if    = "!(g:vimrc['is_kaoriya'] && g:vimrc['is_windows'] && !g:vimrc['has_mingw'])"
+if    = '!(g:vimrc["is_kaoriya"] && g:vimrc["is_windows"] && !g:vimrc["has_mingw"])'
 
 [[plugins]]
 repo = 'Shougo/vimshell.vim'
@@ -21,7 +21,7 @@ repo = 'ujihisa/unite-colorscheme'
 
 [[plugins]]
 repo    = 'Shougo/unite-outline'
-depends = 'Shougo/unite.vim'
+depends = 'unite.vim'
 
 [[plugins]]
 repo = 'Shougo/vinarise.vim'
@@ -86,15 +86,15 @@ repo = 'kana/vim-textobj-user'
 
 [[plugins]]
 repo = 'Shougo/neocomplete.vim'
-if   = "!has('nvim')"
+if   = '!has("nvim")'
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-if   = "has('nvim')"
+if   = 'has("nvim")'
 
 [[plugins]]
 repo    = 'tsukkee/unite-tag'
-depends = 'Shougo/unite.vim'
+depends = 'unite.vim'
 
 [[plugins]]
 repo = 'aiya000/vimshell-command-dehanai.vim'
@@ -114,11 +114,11 @@ repo = 'jonathanfilip/vim-lucius'
 
 [[plugins]]
 repo    = 'aiya000/unite-syntax'
-depends = 'Shougo/unite.vim'
+depends = 'unite.vim'
 
 [[plugins]]
 repo    = 'Shougo/unite-session'
-depends = 'Shougo/unite.vim'
+depends = 'unite.vim'
 
 [[plugins]]
 repo = 'aiya000/submode-window_move.vim'
