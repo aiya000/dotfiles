@@ -1,21 +1,31 @@
 snippet pragma_template_haskell
 abbr    {-# LANGUAGE TemplateHaskell #-}
+options head
     {-# LANGUAGE TemplateHaskell #-}
 
 snippet pragma_derive_typeable
 abbr    {-# LANGUAGE DeriveDataTypeable #-}
+options head
     {-# LANGUAGE DeriveDataTypeable #-}
 
 snippet pragma_overloaded_strings
 abbr    {-# LANGUAGE OverloadedStrings #-}
+options head
     {-# LANGUAGE OverloadedStrings #-}
 
 snippet pragma_exteded_default_rules
 abbr    {-# LANGUAGE ExtendedDefaultRules #-}
+options head
     {-# LANGUAGE ExtendedDefaultRules #-}
+
+snippet     pragma_derive_generic
+abbr        {-# LANGUAGE DeriveGeneric #-}
+options     head
+    {-# LANGUAGE DeriveGeneric #-}
 
 snippet pragma_option_ghc
 abbr    {-# OPTION_GHC ... #-}
+options head
     {-# OPTION_GHC ${1} #-}
 
 snippet deriving

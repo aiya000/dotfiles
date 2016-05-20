@@ -1225,7 +1225,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>u :<C-u>UniteClose<CR>
 
 	" ref-dicts-en
-	autocmd User MyVimRc nnoremap <silent> <leader>K :<C-u>Ref webdict weblio <C-r>=expand('<cword>')<CR><CR>
+	autocmd User MyVimRc nnoremap <leader>K :<C-u>Aref weblio <C-r>=expand('<cword>')<CR><CR>
 
 	" vim-over
 	autocmd User MyVimRc nnoremap <silent>       :%s/       :<C-u>OverCommandLine %s/<CR>

@@ -76,7 +76,7 @@ on_ft = [
 ]
 
 [[plugins]]
-repo   = 'Shougo/vinarise.vim'
+repo   = 'kannokanno/previm'
 on_ft  = 'markdown',
 on_cmd = 'PrevimOpen'
 
