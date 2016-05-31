@@ -224,3 +224,7 @@ on_cmd  = [
 [[plugins]]
 repo  = 'cespare/vim-toml'
 on_ft = 'toml'
+
+[[plugins]]
+repo      = 'yomi322/neco-tweetvim'
+on_source = 'TweetVim'
