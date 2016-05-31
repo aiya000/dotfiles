@@ -1224,8 +1224,9 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-i>        :<C-u>Unite -ignorecase -start-insert line<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>u :<C-u>UniteClose<CR>
 
-	" ref-dicts-en
+	" aref-web.vim
 	autocmd User MyVimRc nnoremap <leader>K :<C-u>Aref weblio <C-r>=expand('<cword>')<CR><CR>
+	autocmd User MyVimRc nnoremap <leader>S :<C-u>Aref stackage <C-r>=expand('<cword>')<CR><CR>
 
 	" vim-over
 	autocmd User MyVimRc nnoremap <silent>       :%s/       :<C-u>OverCommandLine %s/<CR>

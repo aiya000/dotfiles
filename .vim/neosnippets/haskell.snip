@@ -18,9 +18,9 @@ abbr    {-# LANGUAGE ExtendedDefaultRules #-}
 options head
     {-# LANGUAGE ExtendedDefaultRules #-}
 
-snippet     pragma_derive_generic
-abbr        {-# LANGUAGE DeriveGeneric #-}
-options     head
+snippet pragma_derive_generic
+abbr    {-# LANGUAGE DeriveGeneric #-}
+options head
     {-# LANGUAGE DeriveGeneric #-}
 
 snippet pragma_option_ghc
@@ -31,3 +31,15 @@ options head
 snippet deriving
 abbr    deriving (__)
     deriving (${0})
+
+snippet hiding
+abbr    hiding (__)
+    hiding (${0})
+
+snippet import
+abbr    import (__)
+    import ${1} (${2})
+
+snippet import_qualified
+abbr    import qualified __ as __
+    import qualified ${1} as ${2}
