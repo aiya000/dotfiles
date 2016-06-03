@@ -14,3 +14,6 @@ colors
 setopt inc_append_history
 setopt share_history
 
+
+# added by travis gem
+[ -f /home/aiya000/.travis/travis.sh ] && source /home/aiya000/.travis/travis.sh

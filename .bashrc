@@ -22,6 +22,11 @@ if [ -f ~/.bash_completion_git ] ; then
 	source ~/.bash_completion_git
 fi
 
+# Use travis-completion
+if [ -f ~/.travis/travis.sh ] ; then
+	source ~/.travis/travis.sh
+fi
+
 # }}}
 # Set options {{{
 
@@ -119,21 +124,6 @@ fi
 # }}}
 
 # }}}
-# NeoVim Utils {{{
-
-alias nvimconfig='nvim ~/.nvimrc'
-alias nvim-bashrc='nvim ~/.bashrc && source ~/.bashrc && echo ">> .bashrc loaded"'
-alias nvim-bashpr='nvim ~/.bash_profile && source ~/.bash_profile && echo ">> .bash_profile loaded"'
-
-alias nvi='nvim -u NONE --noplugin'  # is not 'new vi', HaHaHa
-alias nterminal='nvim +terminal'
-alias nvimconsole='nvim +VimConsoleOpen'
-alias ntwitter='nvim +TweetVimHomeTimeline'
-alias ntweet='nvim +TweetVimSay'
-alias ntwitter-public='nvim +TwitterPublic'
-alias ntweet-public='nvim +TweetPublic'
-
-# }}}
 # Shell Utils {{{
 
 # Console output pipe to clipboard
@@ -142,6 +132,25 @@ if [ $IS_CYGWIN -eq 1 ] ; then
 else
 	alias pbcopy='xsel --clipboard --input'
 fi
+
+# Basic backup method
+function bak() {
+	if [ -z "$1" ] ; then
+		echo 'error: require 1 argument' 1>&2
+		return 1
+	fi
+	if [ ! -f "$1" ] ; then
+		echo "error: not found file '${1}'" 1>&2
+		return 1
+	fi
+	if [ -n "`echo \"${1}\" | grep 'bak$'`" ] ; then
+		# Remove extension '.bak'
+		mv "$1" "${1%.*}"
+	else
+		# Append extension '.bak'
+		mv "$1" "${1}.bak"
+	fi
+}
 
 # }}}
 # Others {{{

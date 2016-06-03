@@ -39,6 +39,7 @@
 	ta = log --all --graph --oneline --decorate
 	t = log --graph --oneline --decorate
 	bm = branch -m
+	rh = reset --hard
 [core]
 	pager = vim - -R +PAGER -c 'setf vim-pager | set syn=git'
 [init]
