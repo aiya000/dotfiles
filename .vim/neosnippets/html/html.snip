@@ -46,18 +46,46 @@ abbr    <code><pre></pre></code>
     ${0:TARGET}
     </pre></code>
 
-# Override 'neosnippet-snippets'
 snippet ul
 abbr    <ul></ul>
     <ul>${0:TARGET}</ul>
 
+snippet ol
+abbr    <ol></ol>
+    <ol>${0:TARGET}</ol>
+
+snippet li
+abbr    <li></li>
+    <li>${0:TARGET}</li>
+
 snippet script_load
 abbr   <script src=""></script>
     <script src="${0:TARGET}"></script>
+
 snippet css_load
 abbr    <link rel="stylesheet" href="__"/>
     <link rel="stylesheet" href="${1:#:css_path}"/>
 
 snippet br
-abbr    <br>
-    <br>${0}
+abbr    <br/>
+    <br/>${0}
+
+snippet hr
+abbr    <hr/>
+    <hr/>${0}
+
+snippet img
+abbr    <img src="__" alt="__"/>
+    <img src="${1:path}" alt="${2:text}"/>
+
+snippet a
+abbr    <a href="__">__</a>
+    <a href="${1:url}">${2}</a>
+
+snippet p
+abbr    <p></p>
+    <p>${1}</p>
+
+snippet div
+abbr    <div></div>
+    <div>${1}</div>

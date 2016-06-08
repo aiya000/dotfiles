@@ -157,17 +157,6 @@ repo   = 'rhysd/try-colorscheme.vim'
 on_cmd = 'TryColorscheme'
 
 [[plugins]]
-repo    = 'whatyouhide/vim-textobj-xmlattr'
-depends = 'vim-textobj-user',
-'on_ft' = [
-    'html',
-    'xml',
-    'xaml',
-    'fxml',
-    'hamlet'
-]
-
-[[plugins]]
 repo  = 'itchyny/vim-haskell-indent'
 on_ft = 'haskell'
 

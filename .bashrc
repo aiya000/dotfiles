@@ -139,7 +139,7 @@ function bak() {
 		echo 'error: require 1 argument' 1>&2
 		return 1
 	fi
-	if [ ! -f "$1" ] ; then
+	if [ ! -e "$1" ] ; then
 		echo "error: not found file '${1}'" 1>&2
 		return 1
 	fi

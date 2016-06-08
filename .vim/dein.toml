@@ -101,6 +101,10 @@ repo    = 'osyo-manga/vim-textobj-from_regexp'
 depends = 'vim-textobj-user'
 
 [[plugins]]
+repo    = 'whatyouhide/vim-textobj-xmlattr'
+depends = 'vim-textobj-user'
+
+[[plugins]]
 repo = 'tpope/vim-repeat'
 
 [[plugins]]

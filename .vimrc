@@ -1323,6 +1323,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> z: :<C-u>tabs<CR>
 	autocmd User MyVimRc nnoremap <silent> g> :<C-u>messages<CR>
 	autocmd User MyVimRc nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
+	autocmd User MyVimRc nnoremap <silent> !  :!<CR>
 
 	autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=scratch<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| resize 5<CR>
