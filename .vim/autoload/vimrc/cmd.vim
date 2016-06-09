@@ -1,5 +1,21 @@
+" script local functions
+
+function! s:find_git_repository_name(current_dir, depth) abort " {{{
+	if a:depth is 10
+		throw new '>> not found git repository'
+	endif
+	let l:found_git_dir = strlen(finddir(a:current_dir, '.git')) isnot 0
+	if l:found_git_dir
+		return fnamemodify(a:current_dir, ':p:h:t')
+	endif
+	return s:find_git_repository_name(a:current_dir . '/..', a:depth + 1)
+endfunction " }}}
+
+"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
+
+
 " Define cnoreabbr with cmd completion
-function! vimrc#cmd#cmd_cnoreabbr(...) " {{{
+function! vimrc#cmd#cmd_cnoreabbr(...) abort " {{{
 	let l:UNUSED_VALUE = 'NOP'
 	let l:cmd_name     = a:1
 	let l:cmd_detail   = join(a:000[1:], ' ')
@@ -8,7 +24,7 @@ function! vimrc#cmd#cmd_cnoreabbr(...) " {{{
 endfunction " }}}
 
 " Reverse ranged lines
-function! vimrc#cmd#reverse_line() range " {{{
+function! vimrc#cmd#reverse_line() abort range " {{{
 	if a:firstline is a:lastline
 		return
 	endif
@@ -85,7 +101,7 @@ endfunction " }}}
 
 " Make session_name from git repository
 " and Save current session by :UniteSessionSave
-function! vimrc#cmd#git_branch_session_save() " {{{
+function! vimrc#cmd#git_branch_session_save() abort " {{{
 	let l:repository_name = s:find_git_repository_name('.', 0)
 	let l:branch_name     = matchstr(gita#statusline#format('%lb'), '(\zs.*\ze)')
 	let l:branch_name0    = substitute(l:branch_name, '/', '-', 'g')
@@ -93,16 +109,24 @@ function! vimrc#cmd#git_branch_session_save() " {{{
 	execute 'UniteSessionSave' l:session_name
 endfunction " }}}
 
-"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
-" script local
-
-function! s:find_git_repository_name(current_dir, depth) " {{{
-	if a:depth is 10
-		throw new '>> not found git repository'
-	endif
-	let l:found_git_dir = strlen(finddir(a:current_dir, '.git')) isnot 0
-	if l:found_git_dir
-		return fnamemodify(a:current_dir, ':p:h:t')
-	endif
-	return s:find_git_repository_name(a:current_dir . '/..', a:depth + 1)
+" Generate decompress css from compressed css to temporary buffer
+function! vimrc#cmd#decompress_to_buffer() abort " {{{
+	" Yank detail
+	let l:lines = getline('^', '$')
+	" Output detail as pretty style css to new buffer
+	new
+	for l:line in reverse(l:lines)
+		1put!=l:line
+	endfor
+	%s/}/\r}\r\r/g
+	%s/{/ {\r/g
+	%s/@/\r@/g
+	%s/;/;\r/g
+	%s/,/,\r/g
+	execute 'normal! gg=Ggg'
+	" Set options
+	setl noswapfile
+	\	nomodifiable
+	\	buftype=nofile
+	\	filetype=css
 endfunction " }}}

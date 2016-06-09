@@ -1,5 +1,6 @@
 "-------------------
 "--  Recipe Menu  --
+"
 "-------------------
 " -- Parameter
 " -- Local_Function
@@ -452,6 +453,15 @@ call dein#set_hook('vim-submode', 'hook_source', function('s:vim_submode_on_sour
 
 " vimdoc-ja is secondary order
 set helplang=en,ja
+
+" }}}
+"--- incsearch.vim --- {{{
+
+" Set nmap for incsearch.vim
+let g:incsearch_cli_key_mappings = {
+\	"\<C-j>": "\<CR>",
+\	"\<C-l>": "\<Esc>"
+\}
 
 " }}}
 "--- TaskList.vim --- {{{
@@ -1059,6 +1069,9 @@ unlet s:ghci_command
 CmdCnoreabbr Weblio   Aref weblio
 CmdCnoreabbr Stackage Aref stackage
 
+" CSS
+command! -bar CssShowDecompressed call vimrc#cmd#decompress_to_buffer()
+
 " }}}
 
 
@@ -1072,21 +1085,8 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <C-c>      <NOP>
 	autocmd User MyVimRc nnoremap <C-c><C-c> <C-c>
 
-	autocmd User MyVimRc nnoremap <Up>    <NOP>
-	autocmd User MyVimRc nnoremap <Down>  <NOP>
-	autocmd User MyVimRc nnoremap <Left>  <NOP>
-	autocmd User MyVimRc nnoremap <Right> <NOP>
-
 	" Cancel <C-w>foo
 	autocmd User MyVimRc nnoremap <C-w><C-l> <NOP>
-
-	autocmd User MyVimRc inoremap <Up>    <NOP>
-	autocmd User MyVimRc inoremap <Down>  <NOP>
-	autocmd User MyVimRc inoremap <Left>  <NOP>
-	autocmd User MyVimRc inoremap <Right> <NOP>
-
-	autocmd User MyVimRc cnoremap <Left>  <NOP>
-	autocmd User MyVimRc cnoremap <Right> <NOP>
 
 	autocmd User MyVimRc cnoremap [Left] <Left>
 augroup END
@@ -1251,20 +1251,17 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap <leader><leader># g#?<Up><Home>\m\C<CR>
 
 	" incsearch.vim
-	autocmd User MyVimRc nmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
-	autocmd User MyVimRc nmap <silent>    <leader>/         /\m\C
-	autocmd User MyVimRc nmap <silent>    <leader><leader>/ /\m\C\<\>[Left][Left]
-	autocmd User MyVimRc nmap             q/                /\<<C-r>"\><CR>
-	autocmd User MyVimRc nmap             g/                <Plug>(incsearch-stay)
-	autocmd User MyVimRc nmap <expr>      ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
-	autocmd User MyVimRc nmap <silent>    <leader>?         ?\m\C
-	autocmd User MyVimRc nmap <silent>    <leader><leader>? ?\m\C\<\>[Left][Left]
-	autocmd User MyVimRc nmap             q?                ?\<<C-r>"\><CR>
-	autocmd User MyVimRc vmap <expr>      /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
-	autocmd User MyVimRc vmap <expr>      ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
-	"@Marked('Set event FileType *, because avoid error. please suitable event')
-	autocmd FileType * IncSearchNoreMap <C-j> <CR>
-	autocmd FileType * IncSearchNoreMap <C-l> <Esc>
+	autocmd User MyVimRc nmap <expr>   /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)' : '<Plug>(incsearch-forward)'
+	autocmd User MyVimRc nmap          <leader>/         /\m\C
+	autocmd User MyVimRc nmap          <leader><leader>/ /\m\C\<\>[Left][Left]
+	autocmd User MyVimRc nmap          q/                /\<<C-r>"\><CR>
+	autocmd User MyVimRc nmap          g/                <Plug>(incsearch-stay)
+	autocmd User MyVimRc nmap <expr>   ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
+	autocmd User MyVimRc nmap          <leader>?         ?\m\C
+	autocmd User MyVimRc nmap          <leader><leader>? ?\m\C\<\>[Left][Left]
+	autocmd User MyVimRc nmap          q?                ?\<<C-r>"\><CR>
+	autocmd User MyVimRc vmap <expr>   /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
+	autocmd User MyVimRc vmap <expr>   ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
 
 	" TaskList.vim
 	autocmd User MyVimRc nmap <silent> <leader>t <Plug>TaskListToggle

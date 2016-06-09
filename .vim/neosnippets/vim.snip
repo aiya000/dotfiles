@@ -5,3 +5,15 @@ options head
     function! ${1:#:name}(${2:#:args}) abort
         ${0:TARGET}
     endfunction
+
+snippet if
+options head
+    if ${1:#:condition}
+        ${0:TARGET}
+    endif
+
+snippet for
+options head
+    for ${1:#:var} in ${2:iter}
+        ${0:TARGET}
+    endfor
