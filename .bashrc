@@ -27,6 +27,11 @@ if [ -f ~/.travis/travis.sh ] ; then
 	source ~/.travis/travis.sh
 fi
 
+# Use stack-compleetion
+if [ -s "`which stack`" ] ; then
+	eval "$(stack --bash-completion-script stack)"
+fi
+
 # }}}
 # Set options {{{
 
