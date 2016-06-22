@@ -27,6 +27,11 @@ if [ -f ~/.travis/travis.sh ] ; then
 	source ~/.travis/travis.sh
 fi
 
+# Use fzf-completion
+if [ -f /usr/share/fzf/key-bindings.bash ] ; then
+	source /usr/share/fzf/key-bindings.bash
+fi
+
 # Use stack-compleetion
 if [ -s "`which stack`" ] ; then
 	eval "$(stack --bash-completion-script stack)"
@@ -95,6 +100,7 @@ alias vi='vim -u NONE --noplugin'
 alias gvi='gvim -u NONE -U NONE --noplugin'
 alias vimless='vim - -R -c "setl nolist | nnoremap <buffer> Q :<C-u>q<CR>"'
 alias runvim='vim -N -c :quitall! -u'
+alias vime='vim -c ":bufdo tab split"'
 alias vim-record-startup='vim --startuptime vim_startup_time +q && vim -c "set bt=nofile ft=vim | r vim_startup_time | call system(\"rm vim_startup_time\") | normal! gg3dd"'
 alias vimclearview='rm ~/.backup/vim_backup/view/*'
 alias vimclearswp='rm ~/.backup/vim_backup/swp/*'
@@ -163,6 +169,7 @@ function bak() {
 alias mysql='mysql --pager="less -r -S -n -i -F -X"'
 alias docker-rm-archives='sudo docker rm `sudo docker ps -a -q`'
 alias ctags-r='ctags --tag-relative --recurse --sort=yes'
+alias date-simple='date +"%Y-%m-%d"'
 
 # }}}
 # Environment Conditions {{{
