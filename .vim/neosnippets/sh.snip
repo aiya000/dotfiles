@@ -1,3 +1,5 @@
+# This file was copied from https://raw.githubusercontent.com/Shougo/neosnippet-snippets/master/neosnippets/sh.snip
+
 alias   if
 abbr    if [ __ ] ; then __ fi
 options head
@@ -5,12 +7,45 @@ options head
         ${0}
     fi
 
+snippet else
+options head
+    else
+        ${0:TARGET}
+
+snippet elif
+options head
+    elif [ ${1:#:condition} ] ; then
+        ${0:TARGET}
+
 alias   for
 abbr    for __ in __ ; do __ done
 options head
     for ${1:i} in ${2:#:var} ; do
         ${0}
     done
+
+snippet while
+options head
+    while ${1:#:condition} ; do
+        ${0:TARGET}
+    done
+
+snippet function
+alias   func
+options head
+    ${1:#:name} () {
+        ${0:TARGET}
+    }
+
+snippet case
+options head
+    case "$${1:{name\}}" in
+    ${2:pattern*})
+        ${0}
+    ;;
+    *)
+        ${3:echo "$$1 Didn't match anything"}
+    esac
 
 alias   for_bash
 abbr    for (( __; __; __ )) ; do __ done
