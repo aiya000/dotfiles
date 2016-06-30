@@ -1,11 +1,19 @@
-################
-#  Parameters  #
-################
-#{{{
+#!/bin/zsh
 
-function find_name_by_uname() { #{{{
+# Set zsh variables {{{
+
+# Environment Variables
+export ZDOTDIR=~/.zsh
+export HISTSIZE=10000
+export HISTTIMEFORMAT='%Y/%m/%d %H:%M '
+export HISTIGNORE='ls:jobs:history*:*hibernate'
+export HISTIGNORE="${HISTIGNORE}:*.bash_history*:*mount*-o*password=*"
+
+# }}}
+# Prepare const parameters {{{
+
+function find_name_by_uname () { #{{{
 	uname=`uname -a`
-
 	if [ -n "`echo $uname | grep ${1}`" ] ; then
 		echo 1
 	else
@@ -16,36 +24,10 @@ function find_name_by_uname() { #{{{
 export IS_UBUNTU=`find_name_by_uname Ubuntu`
 export IS_CYGWIN=`find_name_by_uname Cygwin`
 
-#}}}
-
-
-# Environment Variables
-export HISTSIZE=10000
-export HISTTIMEFORMAT='%Y/%m/%d %H:%M '
-export HISTIGNORE='ls:jobs:history*:*hibernate'
-export HISTIGNORE="${HISTIGNORE}:*.bash_history*:*mount*-o*password=*"
-export EDITOR=vim
-export VTE_CJK_WIDTH=1
-
-# depends 'vim-pager' and 'vim-manpager'
-export PAGER='vim - +PAGER -c "setl nonu nornu | setf vim-pager"'
-export MANPAGER='vim - +MANPAGER -c "setl nonu nornu | setf vim-pager"'
-
-# Plugin prefs
-export HEREIS_ALIAS_PREFIX='p_'
-export HEREIS_PLACES_FILE=~/.bashrc_places
-
-
-###################
-# ReConfig PATHes #
-###################
-# set GOPATH {{{
-
-export GOPATH=~/.GoPath
-
 # }}}
-# make $PATH {{{
-# set PATH with priority
+# Reset $PATH {{{
+
+# Set PATH with priority
 new_path=$HOME/bin:$HOME/sbin
 new_path=$new_path:$HOME/.dotfiles/bin
 
@@ -93,23 +75,34 @@ export PATH=$new_path:$PATH
 unset new_path
 
 #}}}
+# Set plugins configuration {{{
 
+# Plugin prefs
+export HEREIS_ALIAS_PREFIX='p_'
+export HEREIS_PLACES_FILE=~/.zshrc_places
 
-#############################################
-#                                           #
-#############################################
+# }}}
+# Others {{{
 
-# Load Env Config
-if [ -f ~/.bash_profile_env ] ; then
-	# if you want that define plugin prefs in this file
-	# see ~/.bashfiles/plugin/*.sh
-	source ~/.bash_profile_env
-fi
+export EDITOR=vim
+export VTE_CJK_WIDTH=1
 
+# Use 'vim-pager' and 'vim-manpager'
+export PAGER='vim - +PAGER -c "setl nonu nornu | setf vim-pager"'
+export MANPAGER='vim - +MANPAGER -c "setl nonu nornu | setf vim-pager"'
+
+# Languages
+export GOPATH=~/.GoPath
+
+# }}}
+
+################################
+# Mark end of loading zsh conf #
+################################
 # Export Loaded Archive
-alias pr_loaded='echo "pr_loaded"'
+alias zsh_pr_loaded='echo "pr_loaded"'
 
 # Counterolan of do not loading
-if [ -z "`alias | grep rc_loaded`" ] ; then
-	source ~/.bashrc
+if [ -z "`alias | grep zsh_rc_loaded`" ] ; then
+	source $ZDOTDIR/.zshrc
 fi

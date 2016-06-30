@@ -28,9 +28,9 @@ if [ -f ~/.travis/travis.sh ] ; then
 fi
 
 # Use fzf-completion
-if [ -f /usr/share/fzf/key-bindings.bash ] ; then
-	source /usr/share/fzf/key-bindings.bash
-fi
+#if [ -f /usr/share/fzf/key-bindings.bash ] ; then
+#	source /usr/share/fzf/key-bindings.bash
+#fi
 
 # Use stack-compleetion
 if [ -s "`which stack`" ] ; then

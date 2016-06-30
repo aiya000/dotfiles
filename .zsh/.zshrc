@@ -1,40 +1,40 @@
-####################
-#  zsh configure   #
-####################
-# Load scripts {{{
+#!/bin/zsh
 
+##################################
+# Check .zprofile load condition #
+##################################
 # Counterplan for didn't loading .zprofile
 if [ -z "`alias | grep zsh_pr_loaded`" ] ; then
 	source $ZDOTDIR/.zprofile
 fi
 
-# Obey how to use git-completion.bash
-if [ -f /usr/share/git/completion/git-completion.zsh -a ! -f $ZDOTDIR/_git ] ; then
-	cp /usr/share/git/completion/git-completion.zsh $ZDOTDIR/_git
+# Load zsh plugins {{{
+
+plugin_dir=$ZDOTDIR/plugin
+
+if [ ! -d "$plugin_dir" ] ; then
+	mkdir "$plugin_dir"
 fi
 
-## Use git-completion
-#if [ -f ~/.zsh_completion_git ] ; then
-#	source ~/.zsh_completion_git
-#fi
+local_plugins=( \
+	hereis.sh \
+	shell_kawaii.sh \
+	ezoe_command_not_found_handle.sh \
+	tovim.sh \
+)
 
-# Use travis-completion
-if [ -f ~/.travis/travis.sh ] ; then
-	source ~/.travis/travis.sh
-fi
+for (( i = 0; i < ${#local_plugins[@]}; ++i )) ; do
+	source "${plugin_dir}/${local_plugins[$i]}"
+done
 
-# Use fzf-completion
-if [ -f /usr/share/fzf/key-bindings.zsh ] ; then
-	source /usr/share/fzf/key-bindings.zsh
-fi
+unset local_plugins plugin_dir
 
-# Use stack-completion
-if [ -s "`which stack`" ] ; then
-	eval "$(stack --bash-completion-script stack)"
-fi
+#}}}
+# Set zsh options {{{
 
-# }}}
-# Set options {{{
+# Show colors
+autoload colors
+colors
 
 #set -o ignoreeof  # Disable logoff by Ctrl + D
 #set -o vi         # Set vi style keymapping mode
@@ -42,7 +42,7 @@ fi
 #stty start undef  # unbind C-q that is start viewing inputs to screen
 
 # }}}
-# Key mappings {{{
+# Set zsh key-mappings {{{
 
 ## Vim nize
 #bind -m vi-command '"_": beginning-of-line'
@@ -64,13 +64,11 @@ fi
 #bind -m vi-command -x '"\C-k\C-r": . ~/.bashrc && echo ">> bash source reloaded"'
 
 # }}}
+# Define aliases and functions {{{
 
-#############
-#  aliases  #
-#############
-# Prepare function {{{
+# Prepare {{{
 
-dotfile_config () {
+function dotfile_config () {
 	if [ -f "${HOME}/.dotfiles/${1}" ] ; then
 		"$EDITOR" "${HOME}/.dotfiles/${1}"
 	else
@@ -79,11 +77,6 @@ dotfile_config () {
 }
 
 # }}}
-# Shell support {{{
-
-# Bash Short Cuts
-alias reload='. ~/.bashrc && echo ">> .bashrc reloaded"'
-
 # I'm a coward {{{
 
 alias mv='mv -i'
@@ -108,6 +101,8 @@ alias gvimconfig='dotfile_config .gvimrc'
 alias vimshconfig='dotfile_config .vimshrc'
 alias vim-bashrc='dotfile_config .bashrc && [ -f ~/.bashrc ] && ( source ~/.bashrc && echo ">> .bashrc loaded" )'
 alias vim-bashpr='dotfile_config .bash_profile && [ -f ~/.bashrc ] && ( source ~/.bash_profile && echo ">> .bash_profile loaded" )'
+alias vim-zshrc="dotfile_config .zshrc && [ -f $ZDOTDIR/.zshrc ] && ( source $ZDOTDIR/.zshrc && echo '>> .zshrc loaded' )"
+alias vim-zshpr="dotfile_config .zprofile && [ -f $ZDOTDIR/.zshrc ] && ( source $ZDOTDIR/.zprofile && echo '>> .zprofile loaded' )"
 
 alias vimshell='vim +VimShell'
 alias vimconsole='vim +VimConsoleOpen'
@@ -123,6 +118,9 @@ alias vim-build-make-mingw32='cd src && mingw32-make.exe -f Make_ming.mak GUI=ye
 
 # }}}
 # Shell Utils {{{
+
+# Reload zsh configrations
+alias reload=". $ZDOTDIR/.zshrc && . $ZDOTDIR/.zprofile && echo '>> zsh configrations reloaded'"
 
 # Console output pipe to clipboard
 if [ $IS_CYGWIN -eq 1 ] ; then
@@ -151,14 +149,6 @@ function bak() {
 }
 
 # }}}
-# Others {{{
-
-alias mysql='mysql --pager="less -r -S -n -i -F -X"'
-alias docker-rm-archives='sudo docker rm `sudo docker ps -a -q`'
-alias ctags-r='ctags --tag-relative --recurse --sort=yes'
-alias date-simple='date +"%Y-%m-%d"'
-
-# }}}
 # Environment Conditions {{{
 
 if [ $IS_UBUNTU -eq 1 ] ; then
@@ -181,18 +171,12 @@ else
 fi
 
 # }}}
-
-# }}}
-# Development support {{{
-
-# develop environment {{{
+# Development supports {{{
 
 # Generate items for autotools
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
-# }}}
-# Git {{{
-
+# git
 # <Warn> fully change git commit author and email
 function git-fully-change-author-and-email() { #{{{
 	git_user_name="$1"
@@ -216,9 +200,41 @@ function git-seq-merge-bd-push_bd() { #{{{
 } #}}}
 
 # }}}
+# Another aliases {{{
+
+alias mysql='mysql --pager="less -r -S -n -i -F -X"'
+alias docker-rm-archives='sudo docker rm `sudo docker ps -a -q`'
+alias ctags-r='ctags --tag-relative --recurse --sort=yes'
+alias date-simple='date +"%Y-%m-%d"'
 
 # }}}
 
+# }}}
+# Use each completions {{{
+
+# Use git-completion
+if [ -f /usr/share/git/completion/git-completion.zsh -a ! -f $ZDOTDIR/_git ] ; then
+	cp /usr/share/git/completion/git-completion.zsh $ZDOTDIR/_git
+fi
+
+# Use travis-completion
+if [ -f ~/.travis/travis.sh ] ; then
+	source ~/.travis/travis.sh
+fi
+
+# Use fzf-completion
+#if [ -f /usr/share/fzf/key-bindings.zsh ] ; then
+#	source /usr/share/fzf/key-bindings.zsh
+#fi
+
+# Use stack-completion
+if [ -s "`which stack`" ] ; then
+	autoload -U +X compinit && compinit
+	autoload -U +X bashcompinit && bashcompinit
+	eval "$(stack --bash-completion-script stack)"
+fi
+
+# }}}
 
 # Export Loaded Archive
 alias zsh_rc_loaded='echo "rc_loaded"'

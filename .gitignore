@@ -1,5 +1,4 @@
-# local managed
-.backup/**
+# Vim
 .vim/.netrwhist
 .vim/bundle/**
 .vim/doc/tags
@@ -8,3 +7,9 @@
 # NeoVim
 ..vimrc-rplugin~
 .vim/.log/nvim_python.log_*
+
+# ZSH
+.zsh/_git
+
+# Others
+.backup/**
