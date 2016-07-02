@@ -10,6 +10,8 @@
 
 # ZSH
 .zsh/_git
+.zsh/.zcompdump
+.zsh/zplug
 
 # Others
 .backup/**

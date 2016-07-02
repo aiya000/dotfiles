@@ -1,50 +1,33 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
-##################################
-# Check .zprofile load condition #
-##################################
-# Counterplan for didn't loading .zprofile
+###################
+# Check .zprofile #
+###################
+# The counterplan for if .zprofile never loaded
 if [ -z "`alias | grep zsh_pr_loaded`" ] ; then
 	source $ZDOTDIR/.zprofile
 fi
 
-# Load zsh plugins {{{
 
-plugin_dir=$ZDOTDIR/plugin
-
-if [ ! -d "$plugin_dir" ] ; then
-	mkdir "$plugin_dir"
-fi
-
-local_plugins=( \
-	hereis.sh \
-	shell_kawaii.sh \
-	ezoe_command_not_found_handle.sh \
-	tovim.sh \
-)
-
-for (( i = 0; i < ${#local_plugins[@]}; ++i )) ; do
-	source "${plugin_dir}/${local_plugins[$i]}"
-done
-
-unset local_plugins plugin_dir
-
-#}}}
+##############
+# Config zsh #
+##############
 # Set zsh options {{{
 
 # Show colors
 autoload colors
 colors
 
-#set -o ignoreeof  # Disable logoff by Ctrl + D
-#set -o vi         # Set vi style keymapping mode
-#stty stop  undef  # unbind C-s that is stop viewing inputs to screen
-#stty start undef  # unbind C-q that is start viewing inputs to screen
+set -o ignoreeof  # Disable logoff by Ctrl + D
+set -o vi         # Set vi style keymapping mode
+stty stop  undef  # unbind C-s that is stop viewing inputs to screen
+stty start undef  # unbind C-q that is start viewing inputs to screen
 
 # }}}
 # Set zsh key-mappings {{{
 
 ## Vim nize
+#
 #bind -m vi-command '"_": beginning-of-line'
 #bind -m vi-insert  '"\C-\\\C-n": "\e"'
 #
@@ -64,6 +47,11 @@ colors
 #bind -m vi-command -x '"\C-k\C-r": . ~/.bashrc && echo ">> bash source reloaded"'
 
 # }}}
+
+
+###################
+# Define Commands #
+###################
 # Define aliases and functions {{{
 
 # Prepare {{{
@@ -235,6 +223,49 @@ if [ -s "`which stack`" ] ; then
 fi
 
 # }}}
+
+
+##################
+# Manage Plugins #
+##################
+# Prepare zplug {{{
+
+if [ ! -d $ZPLUG_HOME ] ; then
+	git clone https://github.com/zplug/zplug $ZPLUG_HOME
+fi
+source $ZPLUG_HOME/zplug
+
+# }}}
+# Load zsh plugins {{{
+
+# Start zplug
+source $ZPLUG_HOME/init.zsh
+
+zplug 'aiya000/sh-hereis', use:'{init.sh,hereis.sh,place.sh,edit-places.sh,reload-places.sh}'
+zplug 'aiya000/zsh-shell-kawaii', use:'{init.zsh,shell-kawaii.zsh}'
+
+# Load plugins
+zplug load --verbose
+
+#plugin_dir=$ZDOTDIR/plugin
+#
+#if [ ! -d "$plugin_dir" ] ; then
+#	mkdir "$plugin_dir"
+#fi
+#
+#local_plugins=( \
+#	shell_kawaii.sh \
+#	ezoe_command_not_found_handle.sh \
+#	tovim.sh \
+#)
+#
+#for (( i = 0; i < ${#local_plugins[@]}; ++i )) ; do
+#	source "${plugin_dir}/${local_plugins[$i]}"
+#done
+#
+#unset local_plugins plugin_dir
+
+#}}}
 
 # Export Loaded Archive
 alias zsh_rc_loaded='echo "rc_loaded"'

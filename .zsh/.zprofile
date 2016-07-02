@@ -1,5 +1,8 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
+###############
+# Config envs #
+###############
 # Set zsh variables {{{
 
 # Environment Variables
@@ -75,13 +78,6 @@ export PATH=$new_path:$PATH
 unset new_path
 
 #}}}
-# Set plugins configuration {{{
-
-# Plugin prefs
-export HEREIS_ALIAS_PREFIX='p_'
-export HEREIS_PLACES_FILE=~/.zshrc_places
-
-# }}}
 # Others {{{
 
 export EDITOR=vim
@@ -96,9 +92,30 @@ export GOPATH=~/.GoPath
 
 # }}}
 
-################################
-# Mark end of loading zsh conf #
-################################
+
+##################
+# Manage Plugins #
+##################
+# Set plugins configuration {{{
+
+# zplug
+export ZPLUG_HOME=$ZDOTDIR/zplug
+
+# sh-hereis
+export HEREIS_ALIAS_PREFIX='p_'
+
+# zsh-shell-kawaii
+export SHELL_KAWAII_HER_VISIBILITY=1
+export SHELL_KAWAII_HOST_VISIBILITY=1
+export SHELL_KAWAII_FAKE_USERNAME='aiya_000'
+export SHELL_KAWAII_FAKE_HOSTNAME='Arch'
+
+# }}}
+
+
+###########################
+# Mark the end of loading #
+###########################
 # Export Loaded Archive
 alias zsh_pr_loaded='echo "pr_loaded"'
 
