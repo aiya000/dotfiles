@@ -116,10 +116,4 @@ export SHELL_KAWAII_FAKE_HOSTNAME='Arch'
 ###########################
 # Mark the end of loading #
 ###########################
-# Export Loaded Archive
 alias zsh_pr_loaded='echo "pr_loaded"'
-
-# Counterolan of do not loading
-if [ -z "`alias | grep zsh_rc_loaded`" ] ; then
-	source $ZDOTDIR/.zshrc
-fi

@@ -15,36 +15,31 @@ fi
 # Set zsh options {{{
 
 # Show colors
-autoload colors
-colors
-
 set -o ignoreeof  # Disable logoff by Ctrl + D
-set -o vi         # Set vi style keymapping mode
+bindkey -v        # use vi style keymapping mode
 stty stop  undef  # unbind C-s that is stop viewing inputs to screen
 stty start undef  # unbind C-q that is start viewing inputs to screen
 
 # }}}
 # Set zsh key-mappings {{{
 
-## Vim nize
-#
-#bind -m vi-command '"_": beginning-of-line'
-#bind -m vi-insert  '"\C-\\\C-n": "\e"'
-#
-## Emacs nize
-#bind -m vi-insert  '"\C-n": next-history'
-#bind -m vi-insert  '"\C-p": previous-history'
-#bind -m vi-insert  '"\C-a": beginning-of-line'
-#bind -m vi-insert  '"\C-e": end-of-line'
-#bind -m vi-insert  '"\C-b": backward-char'
-#bind -m vi-insert  '"\C-f": forward-char'
-#bind -m vi-insert  '"\C-k": kill-line'
-#bind -m vi-insert  '"\C-d": delete-char'
-#
-## My taste
-#bind -m vi-insert  '"\C-l": "\e"'
-#bind -m vi-insert  '"\C-]": clear-screen'
-#bind -m vi-command -x '"\C-k\C-r": . ~/.bashrc && echo ">> bash source reloaded"'
+# Vim nize
+#bindkey '_' vi-digit-or-beginning-of-line
+
+# Emacs nize
+bindkey '^n' down-history
+bindkey '^p' up-history
+bindkey '^a' beginning-of-line
+bindkey '^e' end-of-line
+bindkey '^b' backward-char
+bindkey '^f' forward-char
+bindkey '^k' kill-line
+bindkey '^u' backward-kill-line
+bindkey '^d' delete-char
+
+# My taste
+bindkey '^l' vi-cmd-mode
+bindkey '^]' clear-screen
 
 # }}}
 
@@ -242,7 +237,7 @@ source $ZPLUG_HOME/zplug
 source $ZPLUG_HOME/init.zsh
 
 zplug 'aiya000/sh-hereis', use:'{init.sh,hereis.sh,place.sh,edit-places.sh,reload-places.sh}'
-zplug 'aiya000/zsh-shell-kawaii', use:'{init.zsh,shell-kawaii.zsh}'
+zplug 'aiya000/zsh-shell-kawaii'
 
 # Load plugins
 zplug load --verbose
