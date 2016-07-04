@@ -7,7 +7,9 @@
 
 # Environment Variables
 export ZDOTDIR=~/.zsh
+export HISTFILE=$ZDOTDIR/.zsh_history
 export HISTSIZE=10000
+export SAVEHIST=10000
 export HISTTIMEFORMAT='%Y/%m/%d %H:%M '
 export HISTIGNORE='ls:jobs:history*:*hibernate'
 export HISTIGNORE="${HISTIGNORE}:*.bash_history*:*mount*-o*password=*"
