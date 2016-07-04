@@ -262,6 +262,7 @@ source $ZPLUG_HOME/init.zsh
 
 zplug 'aiya000/sh-hereis', use:'{init.sh,hereis.sh,place.sh,edit-places.sh,reload-places.sh}'
 zplug 'aiya000/zsh-shell-kawaii'
+zplug 'zsh-users/zsh-syntax-highlighting'
 
 # Load plugins
 zplug load --verbose
@@ -285,6 +286,7 @@ zplug load --verbose
 #unset local_plugins plugin_dir
 
 #}}}
+
 
 # Export Loaded Archive
 alias zsh_rc_loaded='echo "rc_loaded"'
