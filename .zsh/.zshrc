@@ -14,32 +14,52 @@ fi
 ##############
 # Set zsh options {{{
 
-# Show colors
-set -o ignoreeof  # Disable logoff by Ctrl + D
-bindkey -v        # use vi style keymapping mode
-stty stop  undef  # unbind C-s that is stop viewing inputs to screen
-stty start undef  # unbind C-q that is start viewing inputs to screen
+# Use history
+setopt HIST_IGNORE_DUPS
+setopt EXTENDED_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_REDUCE_BLANKS
+
+# Don't use screen stopping
+stty stop  undef
+stty start undef
+
+# Prompt visual
+VIM_NORMAL="%{$bg[red]%}[NORMAL]%{$reset_color%}"
+VIM_INSERT="%{$bg[blue]%}[INSERT]%{$reset_color%}"
+function zle-line-init zle-keymap-select {
+	RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
+	RPS2=$RPS1
+	zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
 
 # }}}
 # Set zsh key-mappings {{{
 
+# Use viins
+bindkey -v
+
 # Vim nize
-#bindkey '_' vi-digit-or-beginning-of-line
+bindkey -M vicmd '_' vi-first-non-blank
 
 # Emacs nize
-bindkey '^n' down-history
-bindkey '^p' up-history
-bindkey '^a' beginning-of-line
-bindkey '^e' end-of-line
-bindkey '^b' backward-char
-bindkey '^f' forward-char
-bindkey '^k' kill-line
-bindkey '^u' backward-kill-line
-bindkey '^d' delete-char
+bindkey -M viins '^r' history-incremental-search-backward
+bindkey -M viins '^s' history-incremental-search-forward
+bindkey -M viins '^n' down-history
+bindkey -M viins '^p' up-history
+bindkey -M viins '^a' beginning-of-line
+bindkey -M viins '^e' end-of-line
+bindkey -M viins '^b' backward-char
+bindkey -M viins '^f' forward-char
+bindkey -M viins '^k' kill-line
+bindkey -M viins '^u' backward-kill-line
+bindkey -M viins '^d' delete-char
 
 # My taste
-bindkey '^l' vi-cmd-mode
-bindkey '^]' clear-screen
+bindkey -M viins '^l' vi-cmd-mode
+bindkey -M viins '^]' clear-screen
 
 # }}}
 
