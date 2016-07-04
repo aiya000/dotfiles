@@ -41,6 +41,7 @@
 	bm = branch -m
 	rh = reset --hard
 	ds = diff --staged
+	ap = add -p
 [core]
 	pager = vim - -R +PAGER -c 'setf vim-pager | set syn=git'
 [init]
