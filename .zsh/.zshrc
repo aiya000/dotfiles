@@ -25,8 +25,8 @@ stty stop  undef
 stty start undef
 
 # Prompt visual
-VIM_NORMAL="%{$fg[red]%}[NORMAL]%{$reset_color%}"
-VIM_INSERT="%{$fg[blue]%}[INSERT]%{$reset_color%}"
+VIM_NORMAL="%{$bg[red]%}[NORMAL]%{$reset_color%}"
+VIM_INSERT="%{$bg[blue]%}[INSERT]%{$reset_color%}"
 function zle-line-init zle-keymap-select {
 	RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
 	RPS2=$RPS1
