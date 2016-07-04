@@ -13,3 +13,6 @@ abbr    width=""
 snippet li
 abbr    <li></li>
     <li>${1}</li>
+
+snippet title_from_filename
+    `matchstr(expand('%:t'), '\w\{4\}-\w\{2\}-\w\{2\}-\zs.*\ze\.md')`

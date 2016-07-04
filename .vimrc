@@ -1,6 +1,5 @@
 "-------------------
 "--  Recipe Menu  --
-"
 "-------------------
 " -- Parameter
 " -- Local_Function

@@ -1,91 +1,287 @@
-snippet template
-abbr    <html><head>...</head></html>
-    <!DOCTYPE html>
-    <html lang="ja">
-        <head>
-            <meta charset="UTF-8">
-            <title></title>
-        </head>
-        <body>
-            ${0:TARGET}
-        </body>
-    </html>
+# This file was copied from https://raw.githubusercontent.com/Shougo/neosnippet-snippets/master/neosnippets/html.snip
+# and it was modified by me.
 
-snippet template-angular
-abbr    <html ng-app><head>...</head></html>
-    <!DOCTYPE html>
-    <html lang="ja" ng-app="${1:#:appName}">
-        <head>
-            <meta charset="UTF-8">
-            <title></title>
-        </head>
-        <body>
-            ${0:TARGET}
-        </body>
-    </html>
+snippet script
+    <script type="text/javascript">
+    ${1:TARGET}
+    </script>
 
-snippet template-bootstrap
-    <!DOCTYPE html>
-    <html lang="ja">
-        <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title></title>
-            <link href="${1:#:css/bootstrap.min.css}" rel="stylesheet">
-        </head>
-        <body>
-            ${0}
-            <script src="${2:#:js/jquery.min.js}"></script>
-            <script src="${3:#:js/bootstrap.min.js}"></script>
-        </body>
-    </html>
+snippet body
+    <body>
+       ${1:TARGET}
+    </body>
 
-snippet code
-abbr    <code><pre></pre></code>
-    <code><pre>
-    ${0:TARGET}
-    </pre></code>
+snippet h
+options word
+    <h${1:1}>${2}</h$1>
 
-snippet ul
-abbr    <ul></ul>
-    <ul>${0:TARGET}</ul>
-
-snippet ol
-abbr    <ol></ol>
-    <ol>${0:TARGET}</ol>
-
-snippet li
-abbr    <li></li>
-    <li>${0:TARGET}</li>
-
-snippet script_load
-abbr   <script src=""></script>
-    <script src="${0:TARGET}"></script>
-
-snippet css_load
-abbr    <link rel="stylesheet" href="__"/>
-    <link rel="stylesheet" href="${1:#:css_path}"/>
+snippet p
+options word
+    <p>${1}</p>
 
 snippet br
-abbr    <br/>
+options word
     <br/>
 
 snippet hr
-abbr    <hr/>
+options word
     <hr/>
 
+snippet comment
+options word
+    <!--${0:TARGET}-->
+
+snippet b
+options word
+    <b>${0:TARGET}</b>
+
+snippet small
+options word
+    <small>${0:TARGET}</small>
+
+snippet strong
+options word
+    <strong>${0:TARGET}</strong>
+
+snippet sub
+options word
+    <sub>${0:TARGET}</sub>
+
+snippet sup
+options word
+    <sup>${1:TARGET}</sup>
+
+snippet ins
+options word
+    <ins>${1:TARGET}</ins>
+
+snippet del
+options word
+    <del>${1:TARGET}</del>
+
+snippet em
+options word
+    <em>${1:TARGET}</em>
+
+snippet bdo
+options word
+    <bdo dir="${1:rtl}">${2:TARGET}</bdo>
+
+snippet pre
+    <pre>
+    ${1:TARGET}
+    </pre>
+
+snippet blockquote
+    <blockquote>
+    ${1}
+    </blockquote>
+    ${2}
+
+snippet link
+abbr    link stylesheet css
+    <link rel="${1:stylesheet}" href="${2}.css" type="text/css" media="${3:screen}" charset="utf-8">
+
+snippet alignl
+    text-align="left"
+snippet alignr
+    text-align="right"
+snippet alignc
+    text-align="center"
+
+snippet bgcolor
+    bgcolor="${1}"${2}
+
+snippet ahref
+options word
+    <a href="${1}">${2:TARGET}</a>
+snippet ahref_blank
+options word
+    <a href="${1}" target="_blank">${2:TARGET}</a>
+snippet ahref_parent
+options word
+    <a href="${1}" target="_parent">${2:TARGET}</a>
+snippet ahref_top
+options word
+    <a href="${1}" target="_top">${2:TARGET}</a>
+snippet aname
+options word
+    <a name="${1}">${2:TARGET}</a>
+
+snippet framesetcols
+    <frameset cols="${1}">
+    ${2:TARGET}
+    </frameset>
+snippet framesetrows
+    <frameset rows="${1}"
+    ${2:TARGET}
+    </frameset>
+
+snippet iframe
+options word
+    <iframe src="${1}"></iframe>
+snippet table
+    <table border="${1}">
+    ${2:TARGET}
+    </table>
+
+snippet th
+options word
+    <th>${1:TARGET}</th>
+
+snippet ulsquare
+options word
+    <ul type="square">${1:TARGET}</ul>
+snippet ulcircle
+options word
+    <ul type="circle">${1:TARGET}</ul>
+snippet uldisc
+options word
+    <ul type="disc">${1:TARGET}</ul>
+
+snippet ol
+options word
+    <ol>${1:TARGET}</ol>
+snippet olA
+options word
+    <ol type="A">${1:TARGET}</ol>
+snippet ola
+options word
+    <ol type="a">${1:TARGET}</ol>
+snippet olI
+options word
+    <ol type="I">${1:TARGET}</ol>
+snippet oli
+options word
+    <ol type="i">${1:TARGET}</ol>
+
+snippet li
+options word
+    <li>${1:TARGET}</li>
+
+snippet dl
+options word
+    <dl>${1:TARGET}</dl>
+snippet dt
+options word
+ 100  6032  100  6032    0     0   8560      0 --:--:-- --:--:-- --:--:--  8556
+   <dt>${1:TARGET}</dt>
+snippet dd
+options word
+    <dd>${1:TARGET}</dd>
+
+snippet form
+    <form>
+    ${1:TARGET}
+    </form>
+
+snippet inputtext
+options word
+    <input type="text" name="${1:user}">
+snippet inputpassword
+options word
+    <input type="password" name="${1:password}">
+snippet inputradio
+options word
+    <input type="radio" name="${1}" value="value">
+snippet inputcheckbox
+options word
+    <input type="checkbox" name="${1}">
+
+snippet textarea
+    <textarea rows="${1}" cols="${2}">
+    ${3:TARGET}
+    </textarea>
+    ${4}
+
+snippet button
+options word
+    <button>${1:TARGET}</button>
+
+snippet select
+options word
+    <select>${1:TARGET}</select>
+
+snippet optgroup
+    <optgroup label="${1}">
+    ${2:TARGET}
+    <optgroup>
+snippet option
+options word
+    <option value="${1}">${2:TARGET}</option>
+
+snippet label
+options word
+    <label>${1}: <input type="${2:TARGET}" /></label>
+
+snippet labelfor
+options word
+    <label for="${1}:id">${2:TARGET}</label>
+
+snippet fieldset
+options word
+    <fieldset>${1:TARGET}</fieldset>
+
+snippet legend
+options word
+    <legend>${1:TARGET}</legend>
+
+snippet id
+options word
+    id="${1}"${2}
+
+snippet class
+options word
+    class="${1}"${2}
+
+snippet pclass
+options word
+    <p class="${1}">${2:TARGET}</p>
+
+snippet pid
+options word
+    <p id="${1}">${2:TARGET}</p>
+
+snippet divid
+options word
+    <div id="${1}">${2:TARGET}</div>
+
+snippet divclass
+options word
+    <div class="${1}">${2:TARGET}</div>
+
 snippet img
-abbr    <img src="__" alt="__"/>
-    <img src="${1:path}" alt="${2:text}"/>
-
-snippet a
-abbr    <a href="__">__</a>
-    <a href="${1:url}">${0}</a>
-
-snippet p
-abbr    <p></p>
-    <p>${0}</p>
+options word
+    <img src="${1}">
 
 snippet div
-abbr    <div></div>
-    <div>${0}</div>
+options word
+    <div>${0:TARGET}</div>
+
+snippet header
+options word
+    <div class="header" role="header">
+        ${1}
+    </div>
+
+snippet main
+options word
+    <div class="main" role="main">
+        ${1}
+    </div>
+
+snippet footer
+options word
+    <div class="footer" role="contentinfo">
+        ${1}
+    </div>
+
+# end copied area
+
+snippet span
+abbr    <span></span>
+    <span>${0}</span>
+
+snippet ul
+abbr    <ul></ul>
+    <ul>${0}</ul>
