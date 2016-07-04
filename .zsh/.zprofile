@@ -3,19 +3,7 @@
 ###############
 # Config envs #
 ###############
-# Set zsh variables {{{
-
-# Environment Variables
-export ZDOTDIR=~/.zsh
-export HISTFILE=$ZDOTDIR/.zsh_history
-export HISTSIZE=10000
-export SAVEHIST=10000
-export HISTTIMEFORMAT='%Y/%m/%d %H:%M '
-export HISTIGNORE='ls:jobs:history*:*hibernate'
-export HISTIGNORE="${HISTIGNORE}:*.bash_history*:*mount*-o*password=*"
-
-# }}}
-# Prepare const parameters {{{
+# Prepare constant {{{
 
 function find_name_by_uname () { #{{{
 	uname=`uname -a`
@@ -26,8 +14,27 @@ function find_name_by_uname () { #{{{
 	fi
 } #}}}
 
-export IS_UBUNTU=`find_name_by_uname Ubuntu`
-export IS_CYGWIN=`find_name_by_uname Cygwin`
+#export IS_UBUNTU=`find_name_by_uname Ubuntu`
+#export IS_CYGWIN=`find_name_by_uname Cygwin`
+
+# for RPS[12]
+VIM_NORMAL="%{$bg[red]%}[NORMAL]%{$reset_color%}"
+VIM_INSERT="%{$bg[blue]%}[INSERT]%{$reset_color%}"
+
+# }}}
+# Set zsh variables {{{
+
+# Environment Variables
+export ZDOTDIR=~/.zsh
+export HISTFILE=$ZDOTDIR/.zsh_history
+export HISTSIZE=10000
+export SAVEHIST=10000
+export HISTTIMEFORMAT='%Y/%m/%d %H:%M '
+export HISTIGNORE='ls:jobs:history*:*hibernate'
+export HISTIGNORE="${HISTIGNORE}:*.bash_history*:*mount*-o*password=*"
+export RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
+export RPS2=$RPS1
+
 
 # }}}
 # Reset $PATH {{{

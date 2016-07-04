@@ -14,6 +14,10 @@ fi
 ##############
 # Set zsh options {{{
 
+# Use color
+autoload colors
+colors
+
 # Use history
 setopt HIST_IGNORE_DUPS
 setopt EXTENDED_HISTORY
@@ -25,9 +29,9 @@ stty stop  undef
 stty start undef
 
 # Prompt visual
-VIM_NORMAL="%{$bg[red]%}[NORMAL]%{$reset_color%}"
-VIM_INSERT="%{$bg[blue]%}[INSERT]%{$reset_color%}"
 function zle-line-init zle-keymap-select {
+	VIM_NORMAL="%{$bg[red]%}[NORMAL]%{$reset_color%}"
+	VIM_INSERT="%{$bg[blue]%}[INSERT]%{$reset_color%}"
 	RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
 	RPS2=$RPS1
 	zle reset-prompt
