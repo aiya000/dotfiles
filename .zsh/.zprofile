@@ -5,19 +5,19 @@
 ###############
 # Prepare constant {{{
 
-function find_name_by_uname () { #{{{
-	uname=`uname -a`
-	if [ -n "`echo $uname | grep ${1}`" ] ; then
-		echo 1
-	else
-		echo 0
-	fi
-} #}}}
-
+#function find_name_by_uname () { #{{{
+#	uname=`uname -a`
+#	if [ -n "`echo $uname | grep ${1}`" ] ; then
+#		echo 1
+#	else
+#		echo 0
+#	fi
+#} #}}}
+#
 #export IS_UBUNTU=`find_name_by_uname Ubuntu`
 #export IS_CYGWIN=`find_name_by_uname Cygwin`
 
-# for RPS[12]
+# for $RPS[12]
 VIM_NORMAL="%{$bg[red]%}[NORMAL]%{$reset_color%}"
 VIM_INSERT="%{$bg[blue]%}[INSERT]%{$reset_color%}"
 

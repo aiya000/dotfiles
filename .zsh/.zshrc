@@ -14,9 +14,11 @@ fi
 ##############
 # Set zsh options {{{
 
-# Use color
-autoload colors
-colors
+# Use modules
+autoload -U colors && colors
+
+# Use select menu in the completion
+zstyle ':completion:*' menu select
 
 # Use history
 setopt HIST_IGNORE_DUPS
@@ -260,30 +262,14 @@ source $ZPLUG_HOME/zplug
 # Start zplug
 source $ZPLUG_HOME/init.zsh
 
+# Plugin list
 zplug 'aiya000/sh-hereis', use:'{init.sh,hereis.sh,place.sh,edit-places.sh,reload-places.sh}'
 zplug 'aiya000/zsh-shell-kawaii'
+zplug 'aiya000/sh-tovim', as:command, use:tovim
 zplug 'zsh-users/zsh-syntax-highlighting'
 
 # Load plugins
-zplug load --verbose
-
-#plugin_dir=$ZDOTDIR/plugin
-#
-#if [ ! -d "$plugin_dir" ] ; then
-#	mkdir "$plugin_dir"
-#fi
-#
-#local_plugins=( \
-#	shell_kawaii.sh \
-#	ezoe_command_not_found_handle.sh \
-#	tovim.sh \
-#)
-#
-#for (( i = 0; i < ${#local_plugins[@]}; ++i )) ; do
-#	source "${plugin_dir}/${local_plugins[$i]}"
-#done
-#
-#unset local_plugins plugin_dir
+zplug load
 
 #}}}
 
