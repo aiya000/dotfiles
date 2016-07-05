@@ -44,6 +44,21 @@ zle -N zle-keymap-select
 # }}}
 # Set zsh key-mappings {{{
 
+# Prepare {{{
+
+# Bash vi-command mode's v like
+function line-edit-by-editor () {
+	tmpfile=$(mktemp)
+	trap "rm '$tmpfile'" EXIT
+	exec < /dev/tty
+	"$EDITOR" "$tmpfile" \
+		&& BUFFER=$(cat "$tmpfile") \
+		&& zle accept-line
+}
+zle -N line-edit-by-editor
+
+# }}}
+
 # Use viins
 bindkey -v
 
@@ -64,6 +79,7 @@ bindkey -M viins '^u' backward-kill-line
 bindkey -M viins '^d' delete-char
 
 # My taste
+bindkey -M vicmd '^v' line-edit-by-editor
 bindkey -M viins '^l' vi-cmd-mode
 bindkey -M viins '^]' clear-screen
 
