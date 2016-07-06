@@ -75,7 +75,7 @@ zle -N fzf-history-incremental-search-backward
 bindkey -v
 
 # Vim nize
-bindkey -M vicmd '_' vi-first-non-blank
+bindkey -M vicmd '_'  vi-first-non-blank
 bindkey -M vicmd 'g_' vi-end-of-line
 
 # Emacs nize
