@@ -26,14 +26,12 @@ VIM_INSERT="%{$bg[blue]%}[INSERT]%{$reset_color%}"
 
 # Environment Variables
 export ZDOTDIR=~/.zsh
+export RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
 export HISTFILE=$ZDOTDIR/.zsh_history
 export HISTSIZE=10000
 export SAVEHIST=10000
 export HISTTIMEFORMAT='%Y/%m/%d %H:%M '
-export HISTIGNORE='ls:jobs:history*:*hibernate'
-export HISTIGNORE="${HISTIGNORE}:*.bash_history*:*mount*-o*password=*"
-export RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
-export RPS2=$RPS1
+export HISTIGNORE="*.zsh_history*:*mount*-o*password=*"
 
 
 # }}}

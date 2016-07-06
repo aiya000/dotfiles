@@ -35,7 +35,6 @@ function zle-line-init zle-keymap-select {
 	VIM_NORMAL="%{$bg[red]%}[NORMAL]%{$reset_color%}"
 	VIM_INSERT="%{$bg[blue]%}[INSERT]%{$reset_color%}"
 	RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
-	RPS2=$RPS1
 	zle reset-prompt
 }
 zle -N zle-line-init
@@ -50,6 +49,7 @@ zle -N zle-keymap-select
 function line-edit-by-editor () {
 	tmpfile=$(mktemp)
 	trap "rm '$tmpfile'" EXIT
+	echo "$BUFFER" > $tmpfile
 	exec < /dev/tty
 	"$EDITOR" "$tmpfile" \
 		&& BUFFER=$(cat "$tmpfile") \
