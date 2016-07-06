@@ -44,37 +44,43 @@ new_path=$new_path:$HOME/.dotfiles/bin
 # stack
 [ -d ~/.stack ] \
 	&& new_path=$new_path:$HOME/.stack/programs/x86_64-linux/ghc-7.8.4/bin
+
 # cabal
 [ -d ~/.cabal ] \
 	&& new_path=$new_path:$HOME/.cabal/bin \
 	&& new_path=$new_path:./.cabal-sandbox/bin
+
 # pkgsrc
 [ -d ~/pkg ] \
 	&& new_path=$new_path:$HOME/pkg/bin:$HOME/pkg/sbin
+
 # rbenv
 [ -d ~/.rbenv ] \
 	&& new_path=$new_path:$HOME/.rbenv/bin \
 	&& new_path=$new_path:$HOME/.rbenv/versions/`cat ~/.rbenv/version`/bin \
 	&& eval "$($HOME/.rbenv/bin/rbenv init -)"  # Oh, my cygwin... why I cannot use shims...
+
 # ruby-build
 [ -d ~/.rbenv/plugins/ruby-build/bin ] \
 	&& new_path=$new_path:$HOME/.rbenv/plugins/ruby-build/bin
+
 # pyenv
 [ -d ~/.pyenv ] \
 	&& export PYENV_ROOT=~/.pyenv \
 	&& new_path=$new_path:$PYENV_ROOT/bin \
 	&& eval "$($HOME/.pyenv/bin/pyenv init -)"
-# some binaries from some languages
+
+# some languages binary
 [ -d ~/.local ] \
 	&& new_path=$new_path:$HOME/.local/bin
 
-# and basics
+# Basic paths
 new_path=$new_path:/bin:/sbin
 new_path=$new_path:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 new_path=$new_path:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
 new_path=$new_path:$GOPATH/bin
 
-# With OS
+# Using windows's command
 if [ $IS_CYGWIN -eq 1 ] ; then
 	export HOME=/home/$USER
 	new_path=$new_path:/cygdrive/c/Windows/system32:/cygdrive/c/Windows
@@ -87,10 +93,13 @@ unset new_path
 #}}}
 # Others {{{
 
+# Favorite editor
 export EDITOR=vim
+
+# For 2byte chars
 export VTE_CJK_WIDTH=1
 
-# Use 'vim-pager' and 'vim-manpager'
+# Using 'vim-pager' and 'vim-manpager'
 export PAGER='vim - +PAGER -c "setl nonu nornu | setf vim-pager"'
 export MANPAGER='vim - +MANPAGER -c "setl nonu nornu | setf vim-pager"'
 

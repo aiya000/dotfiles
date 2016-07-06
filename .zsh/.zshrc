@@ -51,11 +51,23 @@ function line-edit-by-editor () {
 	trap "rm '$tmpfile'" EXIT
 	echo "$BUFFER" > $tmpfile
 	exec < /dev/tty
-	"$EDITOR" "$tmpfile" \
-		&& BUFFER=$(cat "$tmpfile") \
-		&& zle accept-line
+	"$EDITOR" "$tmpfile" &&
+		BUFFER=$(cat "$tmpfile") &&
+		zle accept-line
 }
 zle -N line-edit-by-editor
+
+# history-incremental-search-backward uses fzf
+function fzf-history-incremental-search-backward () {
+	selected=$(
+		fc -ln 1 | fzf-tmux \
+			--no-sort --tac \
+			--bind=ctrl-j:accept,ctrl-k:kill-line
+	) &&
+		BUFFER="$selected" &&
+		CURSOR=${#selected}
+}
+zle -N fzf-history-incremental-search-backward
 
 # }}}
 
@@ -66,8 +78,7 @@ bindkey -v
 bindkey -M vicmd '_' vi-first-non-blank
 
 # Emacs nize
-bindkey -M viins '^r' history-incremental-search-backward
-bindkey -M viins '^s' history-incremental-search-forward
+bindkey -M viins '^r' fzf-history-incremental-search-backward
 bindkey -M viins '^n' down-history
 bindkey -M viins '^p' up-history
 bindkey -M viins '^a' beginning-of-line
