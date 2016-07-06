@@ -45,8 +45,8 @@ zle -N zle-keymap-select
 
 # Prepare {{{
 
-# Bash vi-command mode's v like
-function line-edit-by-editor () {
+# Appending accept-line to edit-command-line
+function edit-command-line-_-accept-line () {
 	tmpfile=$(mktemp)
 	trap "rm '$tmpfile'" EXIT
 	echo "$BUFFER" > $tmpfile
@@ -55,7 +55,7 @@ function line-edit-by-editor () {
 		BUFFER=$(cat "$tmpfile") &&
 		zle accept-line
 }
-zle -N line-edit-by-editor
+zle -N edit-command-line-_-accept-line
 
 # history-incremental-search-backward uses fzf
 function fzf-history-incremental-search-backward () {
@@ -91,7 +91,7 @@ bindkey -M viins '^u' backward-kill-line
 bindkey -M viins '^d' delete-char
 
 # My taste
-bindkey -M vicmd '^v' line-edit-by-editor
+bindkey -M vicmd '^v' edit-command-line-_-accept-line
 bindkey -M viins '^l' vi-cmd-mode
 bindkey -M viins '^]' clear-screen
 
