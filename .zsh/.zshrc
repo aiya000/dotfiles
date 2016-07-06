@@ -15,12 +15,14 @@ fi
 # Set zsh options {{{
 
 # Use modules
-autoload -U colors && colors
+autoload -U colors       && colors
+autoload -U compinit     && compinit
+autoload -U bashcompinit && bashcompinit
 
 # Use select menu in the completion
 zstyle ':completion:*' menu select
 
-# Use history
+# Use standard style history
 setopt HIST_IGNORE_DUPS
 setopt EXTENDED_HISTORY
 setopt SHARE_HISTORY
@@ -45,8 +47,9 @@ zle -N zle-keymap-select
 
 # Prepare {{{
 
-# Appending accept-line to edit-command-line
+# Append accept-line to edit-command-line
 function edit-command-line-_-accept-line () {
+	# Define edit-command-line myself
 	tmpfile=$(mktemp)
 	trap "rm '$tmpfile'" EXIT
 	echo "$BUFFER" > $tmpfile
@@ -259,15 +262,9 @@ if [ -f ~/.travis/travis.sh ] ; then
 	source ~/.travis/travis.sh
 fi
 
-# Use fzf-completion
-#if [ -f /usr/share/fzf/key-bindings.zsh ] ; then
-#	source /usr/share/fzf/key-bindings.zsh
-#fi
-
 # Use stack-completion
 if [ -s "`which stack`" ] ; then
-	autoload -U +X compinit && compinit
-	autoload -U +X bashcompinit && bashcompinit
+	# This completion needs compinit and bashcompinit function
 	eval "$(stack --bash-completion-script stack)"
 fi
 
