@@ -21,6 +21,8 @@ autoload -U bashcompinit && bashcompinit
 
 # Use select menu in the completion
 zstyle ':completion:*' menu select
+# Case insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 # Use standard style history
 setopt HIST_IGNORE_DUPS
