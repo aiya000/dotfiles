@@ -28,15 +28,26 @@ setopt EXTENDED_HISTORY
 setopt SHARE_HISTORY
 setopt HIST_REDUCE_BLANKS
 
+# Other opts
+setopt TRANSIENT_RPROMPT
+
 # Don't use screen stopping
 stty stop  undef
 stty start undef
 
 # Prompt visual
 function zle-line-init zle-keymap-select {
-	VIM_NORMAL="%{$bg[red]%}[NORMAL]%{$reset_color%}"
-	VIM_INSERT="%{$bg[blue]%}[INSERT]%{$reset_color%}"
-	RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
+	# Detect vi-mode
+	local vi_normal="%{$bg[red]%}[NORMAL]%{$reset_color%}"
+	local vi_insert="%{$bg[blue]%}[INSERT]%{$reset_color%}"
+	local vi_status="${${KEYMAP/vicmd/$vi_normal}/(main|viins)/$vi_insert}"
+
+	# Detect git repository
+	local branch=$({git branch 2> /dev/null || echo ' NO REPO'} | cut -d' ' -f2- | xargs -I x echo \[x\])
+	local git_branch="%{${${branch/\[NO REPO\]/}/${branch}/$bg[green]}%}${branch}%{$reset_color%}"
+
+	# Result
+	RPROMPT="${git_branch}${vi_status}"
 	zle reset-prompt
 }
 zle -N zle-line-init
@@ -170,7 +181,7 @@ else
 fi
 
 # Toggle file extensions
-function bak() {
+function bak () {
 	if [ -z "$1" ] ; then
 		echo 'error: require 1 argument' 1>&2
 		return 1
@@ -239,6 +250,7 @@ function git-seq-merge-bd-push_bd() { #{{{
 		git push -u "$target_remote" ":${target_branch}"
 } #}}}
 
+# Useful aliases
 alias gs='git status'
 alias gl='git log'
 

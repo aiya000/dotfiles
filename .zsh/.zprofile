@@ -20,13 +20,13 @@ export IS_CYGWIN=`find_name_by_uname Cygwin`
 # }}}
 # Set zsh variables {{{
 
-# for $RPS[12]
-VIM_NORMAL="%{$bg[red]%}[NORMAL]%{$reset_color%}"
-VIM_INSERT="%{$bg[blue]%}[INSERT]%{$reset_color%}"
+# For $RPROMPT
+vi_normal="%{$bg[red]%}[NORMAL]%{$reset_color%}"
+vi_insert="%{$bg[blue]%}[INSERT]%{$reset_color%}"
 
 # Environment Variables
 export ZDOTDIR=~/.zsh
-export RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
+export RPROMPT="${${KEYMAP/vicmd/$vi_normal}/(main|viins)/$vi_insert}"
 export HISTFILE=$ZDOTDIR/.zsh_history
 export HISTSIZE=10000
 export SAVEHIST=10000
