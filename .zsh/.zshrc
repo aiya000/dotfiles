@@ -169,7 +169,7 @@ else
 	alias pbcopy='xsel --clipboard --input'
 fi
 
-# Basic backup method
+# Toggle file extensions
 function bak() {
 	if [ -z "$1" ] ; then
 		echo 'error: require 1 argument' 1>&2
@@ -238,6 +238,9 @@ function git-seq-merge-bd-push_bd() { #{{{
 		git branch -d "$target_branch" && \
 		git push -u "$target_remote" ":${target_branch}"
 } #}}}
+
+alias gs='git status'
+alias gl='git log'
 
 # }}}
 # Another aliases {{{
