@@ -25,13 +25,14 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 # Use standard style history
-setopt HIST_IGNORE_DUPS
-setopt EXTENDED_HISTORY
-setopt SHARE_HISTORY
-setopt HIST_REDUCE_BLANKS
+setopt hist_ignore_dups
+setopt extended_history
+setopt share_history
+setopt hist_reduce_blanks
 
 # Other opts
-setopt TRANSIENT_RPROMPT
+setopt transient_rprompt
+setopt ignore_eof
 
 # Don't use screen stopping
 stty stop  undef
@@ -60,6 +61,10 @@ zle -N zle-keymap-select
 
 # Prepare {{{
 
+alias __fzf_tmux_cmd='fzf-tmux --no-sort --tac --cycle --bind=ctrl-j:accept,ctrl-k:kill-line'
+alias __fzf_cmd='fzf --no-sort --tac --cycle --bind=ctrl-j:accept,ctrl-k:kill-line'
+
+
 # Append accept-line to edit-command-line
 function edit-command-line-_-accept-line () {
 	# Define edit-command-line myself
@@ -75,15 +80,20 @@ zle -N edit-command-line-_-accept-line
 
 # history-incremental-search-backward uses fzf
 function fzf-history-incremental-search-backward () {
-	selected=$(
-		fc -ln 1 | fzf-tmux \
-			--no-sort --tac \
-			--bind=ctrl-j:accept,ctrl-k:kill-line
-	) &&
-		BUFFER="$selected" &&
-		CURSOR=${#selected}
+	selected=$(fc -ln 1 | __fzf_tmux_cmd)
+	BUFFER="$selected"
+	CURSOR=${#BUFFER}
 }
 zle -N fzf-history-incremental-search-backward
+
+# Select file on the fzf
+function fzf-file-finder-expand () {
+	selected=$(find . -type f | __fzf_cmd)
+	zle redisplay
+	BUFFER="${BUFFER}${selected}"
+	CURSOR=${#BUFFER}
+}
+zle -N fzf-file-finder-expand
 
 # }}}
 
@@ -107,9 +117,10 @@ bindkey -M viins '^u' backward-kill-line
 bindkey -M viins '^d' delete-char
 
 # My taste
-bindkey -M vicmd '^v' edit-command-line-_-accept-line
-bindkey -M viins '^l' vi-cmd-mode
-bindkey -M viins '^]' clear-screen
+bindkey -M vicmd '^v'   edit-command-line-_-accept-line
+bindkey -M viins '^l'   vi-cmd-mode
+bindkey -M viins '^]'   clear-screen
+bindkey -M viins '^x^f' fzf-file-finder-expand
 
 # }}}
 
