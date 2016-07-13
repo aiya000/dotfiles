@@ -662,7 +662,7 @@ let g:aref_web_source = get(g:, 'aref_web_source', {
 \		'url' : 'http://ejje.weblio.jp/content/%s'
 \	},
 \	'stackage' : {
-\		'url' : 'https://www.stackage.org/lts-6.6/hoogle?q=%s'
+\		'url' : 'https://www.stackage.org/lts-6.6/hoogle?q=%s&page=1'
 \	}
 \})
 

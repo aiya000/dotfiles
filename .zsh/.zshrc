@@ -27,7 +27,6 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 # Use standard style history
 setopt hist_ignore_dups
 setopt extended_history
-setopt share_history
 setopt hist_reduce_blanks
 
 # Other opts
@@ -88,7 +87,7 @@ zle -N fzf-history-incremental-search-backward
 
 # Select file on the fzf
 function fzf-file-finder-expand () {
-	selected=$(find . -type f | __fzf_cmd)
+	selected=$(find . | __fzf_cmd --multi)
 	zle redisplay
 	BUFFER="${BUFFER}${selected}"
 	CURSOR=${#BUFFER}
@@ -165,8 +164,8 @@ alias gvimconfig='dotfile_config .gvimrc'
 alias vimshconfig='dotfile_config .vimshrc'
 alias vim-bashrc='dotfile_config .bashrc && [ -f ~/.bashrc ] && ( source ~/.bashrc && echo ">> .bashrc loaded" )'
 alias vim-bashpr='dotfile_config .bash_profile && [ -f ~/.bashrc ] && ( source ~/.bash_profile && echo ">> .bash_profile loaded" )'
-alias vim-zshrc="dotfile_config .zshrc && [ -f $ZDOTDIR/.zshrc ] && ( source $ZDOTDIR/.zshrc && echo '>> .zshrc loaded' )"
-alias vim-zshpr="dotfile_config .zprofile && [ -f $ZDOTDIR/.zshrc ] && ( source $ZDOTDIR/.zprofile && echo '>> .zprofile loaded' )"
+alias vim-zshrc="dotfile_config .zsh/.zshrc && [ -f $ZDOTDIR/.zshrc ] && ( source $ZDOTDIR/.zshrc && echo '>> .zshrc loaded' )"
+alias vim-zshpr="dotfile_config .zsh/.zprofile && [ -f $ZDOTDIR/.zshrc ] && ( source $ZDOTDIR/.zprofile && echo '>> .zprofile loaded' )"
 
 alias vimshell='vim +VimShell'
 alias vimconsole='vim +VimConsoleOpen'
@@ -261,9 +260,16 @@ function git-seq-merge-bd-push_bd() { #{{{
 		git push -u "$target_remote" ":${target_branch}"
 } #}}}
 
-# Useful aliases
-alias gs='git status'
+# I'm lazy
+alias g='git'
+alias ga='git add'
+alias gaa='git add -A'
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gd='git diff'
 alias gl='git log'
+alias gs='git status'
+alias gsta='git stash'
 
 # }}}
 # Another aliases {{{
