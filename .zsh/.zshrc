@@ -269,7 +269,7 @@ alias gcm='git commit -m'
 alias gd='git diff'
 alias gl='git log'
 alias gs='git status'
-alias gsta='git stash'
+alias gss='git stash'
 
 # }}}
 # Another aliases {{{
