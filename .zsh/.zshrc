@@ -334,5 +334,10 @@ zplug load
 #}}}
 
 
+# If it exists, load environment config
+if [ -f ~/.zshrc_env ] ; then
+	source ~/.zshrc_env
+fi
+
 # Export Loaded Archive
 alias zsh_rc_loaded='echo "rc_loaded"'
