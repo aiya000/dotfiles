@@ -278,6 +278,7 @@ alias mysql='mysql --pager="less -r -S -n -i -F -X"'
 alias docker-rm-archives='sudo docker rm `sudo docker ps -a -q`'
 alias ctags-r='ctags --tag-relative --recurse --sort=yes'
 alias date-simple='date +"%Y-%m-%d"'
+alias history='fc -l 1'
 
 # }}}
 
