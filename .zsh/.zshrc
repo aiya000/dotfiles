@@ -140,10 +140,35 @@ function dotfile_config () {
 }
 
 # }}}
+# Overrides {{{
+
+alias ls='ls --color=auto --group-directories-first'
+alias history='fc -l 1'
+
+# }}}
 # I'm a coward {{{
 
 alias mv='mv -i'
 alias cp='cp -i'
+
+# }}}
+# Lazy keymapping {{{
+
+## git
+alias g='git'
+alias ga='git add'
+alias gaa='git add -A'
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gd='git diff'
+alias gl='git log'
+alias gs='git status'
+alias gss='git stash'
+
+## shell
+alias la='ls -a --color=auto --group-directories-first'
+alias ll='ls -l --color=auto --group-directories-first'
+alias llh='ls -lh --color=auto --group-directories-first'
 
 # }}}
 # Vim Utils {{{
@@ -260,17 +285,6 @@ function git-seq-merge-bd-push_bd() { #{{{
 		git push -u "$target_remote" ":${target_branch}"
 } #}}}
 
-# I'm lazy
-alias g='git'
-alias ga='git add'
-alias gaa='git add -A'
-alias gc='git commit'
-alias gcm='git commit -m'
-alias gd='git diff'
-alias gl='git log'
-alias gs='git status'
-alias gss='git stash'
-
 # }}}
 # Another aliases {{{
 
@@ -278,7 +292,6 @@ alias mysql='mysql --pager="less -r -S -n -i -F -X"'
 alias docker-rm-archives='sudo docker rm `sudo docker ps -a -q`'
 alias ctags-r='ctags --tag-relative --recurse --sort=yes'
 alias date-simple='date +"%Y-%m-%d"'
-alias history='fc -l 1'
 
 # }}}
 
