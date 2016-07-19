@@ -23,6 +23,8 @@ autoload -U bashcompinit && bashcompinit
 zstyle ':completion:*' menu select
 # Case insensitive completion
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+# list-colors uses $LS_COLORS's colors
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # Use standard style history
 setopt hist_ignore_dups
@@ -341,11 +343,22 @@ zplug 'aiya000/sh-hereis', use:'{init.sh,hereis.sh,place.sh,edit-places.sh,reloa
 zplug 'aiya000/zsh-shell-kawaii'
 zplug 'aiya000/sh-tovim', as:command, use:tovim
 zplug 'zsh-users/zsh-syntax-highlighting'
+zplug 'joel-porquet/zsh-dircolors-solarized'
 
 # Load plugins
 zplug load
 
 #}}}
+# Plugin settings {{{
+
+# zsh-dircolors-solarized {{{
+
+# Use dircolors.ansi-light thema
+setupsolarized dircolors.ansi-light
+
+# }}}
+
+# }}}
 
 
 # If it exists, load environment config
