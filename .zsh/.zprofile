@@ -28,8 +28,8 @@ vi_insert="%{$bg[blue]%}[INSERT]%{$reset_color%}"
 export ZDOTDIR=~/.zsh
 export RPROMPT="${${KEYMAP/vicmd/$vi_normal}/(main|viins)/$vi_insert}"
 export HISTFILE=$ZDOTDIR/.zsh_history
-export HISTSIZE=10000
-export SAVEHIST=10000
+export HISTSIZE=1000000
+export SAVEHIST=1000000
 export HISTTIMEFORMAT='%Y/%m/%d %H:%M '
 export HISTIGNORE="*.zsh_history*:*mount*-o*password=*"
 
@@ -96,7 +96,7 @@ unset new_path
 # Favorite editor
 export EDITOR=vim
 
-# For 2byte chars
+# Show 2byte chars rightly for terminal-emulators
 export VTE_CJK_WIDTH=1
 
 # Using 'vim-pager' and 'vim-manpager'
