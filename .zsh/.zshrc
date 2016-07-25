@@ -202,6 +202,7 @@ alias twitter-public='vim +TwitterPublic'
 alias tweet-public='vim +TweetPublic'
 alias adrone='vim +AdroneHome'
 alias gstatus='vim -c "Gita status"'
+function vim-session () { vim -c "UniteSessionLoad ${1}" }
 
 alias vim-build-configure-ubuntu='./configure --with-features=huge --enable-gui=gnome2 --enable-perlinterp --enable-rubyinterp --enable-luainterp --enable-fail-if-missing'
 alias vim-build-make-mingw32='cd src && mingw32-make.exe -f Make_ming.mak GUI=yes IME=yes MBYTE=yes ICONV=yes DEBUG=no'
