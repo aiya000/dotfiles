@@ -15,9 +15,10 @@ fi
 # Set zsh options {{{
 
 # Use modules
-autoload -U colors       && colors
-autoload -U compinit     && compinit
-autoload -U bashcompinit && bashcompinit
+autoload -U colors            && colors
+autoload -U compinit          && compinit
+autoload -U bashcompinit      && bashcompinit
+autoload -U edit-command-line && zle -N edit-command-line
 
 # Use select menu in the completion
 zstyle ':completion:*' menu select
@@ -65,20 +66,6 @@ zle -N zle-keymap-select
 alias __fzf_tmux_cmd='fzf-tmux --no-sort --tac --cycle --bind=ctrl-j:accept,ctrl-k:kill-line'
 alias __fzf_cmd='fzf --no-sort --tac --cycle --bind=ctrl-j:accept,ctrl-k:kill-line'
 
-
-# Append accept-line to edit-command-line
-function edit-command-line-_-accept-line () {
-	# Define edit-command-line myself
-	tmpfile=$(mktemp)
-	trap "rm '$tmpfile'" EXIT
-	echo "$BUFFER" > $tmpfile
-	exec < /dev/tty
-	"$EDITOR" "$tmpfile" &&
-		BUFFER=$(cat "$tmpfile") &&
-		zle accept-line
-}
-zle -N edit-command-line-_-accept-line
-
 # history-incremental-search-backward uses fzf
 function fzf-history-incremental-search-backward () {
 	selected=$(fc -ln 1 | __fzf_tmux_cmd)
@@ -118,7 +105,7 @@ bindkey -M viins '^u' backward-kill-line
 bindkey -M viins '^d' delete-char
 
 # My taste
-bindkey -M vicmd '^v'   edit-command-line-_-accept-line
+bindkey -M vicmd '^v'   edit-command-line
 bindkey -M viins '^l'   vi-cmd-mode
 bindkey -M viins '^]'   clear-screen
 bindkey -M viins '^x^f' fzf-file-finder-expand
