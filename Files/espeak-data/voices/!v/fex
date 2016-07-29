@@ -1,0 +1,25 @@
+// Made by user
+// If you want to use this, please copy this to {espeak-dir}/espeak-data/voices/!v
+// and Specify -v option to fex
+//     For Example)
+//     $ espeak "6 new wireless networks found" -s 150 -v +fex
+
+language variant
+name female-ex
+gender female
+
+pitch 210 310
+formant 0 145  80 140
+formant 1 160  75 140 -50
+formant 2 175  70 140 -250
+formant 3 165  80 140
+formant 4 165  80 140
+formant 5 165  80 140
+formant 6 160  70 140
+formant 7 150  70 140
+formant 8 150  70 140
+
+stressAmp 18 18 20 20 20 20 20 20
+breath 0 2 3 3 3 3 3 2
+echo 140 10
+roughness 20
