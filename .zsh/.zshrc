@@ -141,7 +141,7 @@ alias mv='mv -i'
 alias cp='cp -i'
 
 # }}}
-# Lazy keymapping {{{
+# Laziness {{{
 
 ## git
 alias g='git'
@@ -172,6 +172,7 @@ alias vimclearview='rm ~/.backup/vim_backup/view/*'
 alias vimclearswp='rm ~/.backup/vim_backup/swp/*'
 alias vimclearundo='rm ~/.backup/vim_backup/undo/*'
 alias vimclearcache='vimclearview ; vimclearundo ; vimclearswp'
+function vimls () { ls "$1" | vim - -R -c "setl nolist | nnoremap <buffer> Q :<C-u>q<CR>" }
 
 alias vimconfig='dotfile_config .vimrc'
 alias gvimconfig='dotfile_config .gvimrc'
@@ -282,6 +283,16 @@ alias mysql='mysql --pager="less -r -S -n -i -F -X"'
 alias docker-rm-archives='sudo docker rm `sudo docker ps -a -q`'
 alias ctags-r='ctags --tag-relative --recurse --sort=yes'
 alias date-simple='date +"%Y-%m-%d"'
+
+# Notify end of cli task
+# example$ somecommand ; enotify
+function enotify () {
+	if [ $? -eq 0 ] ; then
+		espeak 'Succeed!' 2> /dev/null
+	else
+		espeak 'Done with the error' 2> /dev/null
+	fi
+}
 
 # }}}
 

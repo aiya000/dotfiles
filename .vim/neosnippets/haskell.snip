@@ -24,9 +24,14 @@ options head
     {-# LANGUAGE DeriveGeneric #-}
 
 snippet pragma_scoped_type_variables
-abbr    {-# ScopedTypeVariables #-}
+abbr    {-# LANGUAGE ScopedTypeVariables #-}
 options head
     {-# LANGUAGE ScopedTypeVariables #-}
+
+snippet pragma_arrows
+abbr    {-# LANGUAGE Arrows #-}
+options head
+    {-# LANGUAGE Arrows #-}
 
 snippet pragma_option_ghc
 abbr    {-# OPTION_GHC ... #-}

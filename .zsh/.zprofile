@@ -95,6 +95,7 @@ unset new_path
 
 # Favorite editor
 export EDITOR=vim
+export VISUAL=vim
 
 # Show 2byte chars rightly for terminal-emulators
 export VTE_CJK_WIDTH=1
