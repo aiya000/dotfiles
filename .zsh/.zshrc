@@ -286,11 +286,15 @@ alias date-simple='date +"%Y-%m-%d"'
 
 # Notify end of cli task
 # example$ somecommand ; enotify
+function _espeak () {
+	espeak "$1" -s 150 -v +fex 2> /dev/null || \
+	espeak "$1" -s 150 2> /dev/null
+}
 function enotify () {
 	if [ $? -eq 0 ] ; then
-		espeak 'Succeed!' 2> /dev/null
+		_espeak 'Succeed!'
 	else
-		espeak 'Done with the error' 2> /dev/null
+		_espeak 'Exit with the error'
 	fi
 }
 
