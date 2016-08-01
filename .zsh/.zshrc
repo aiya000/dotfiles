@@ -158,6 +158,7 @@ alias gss='git stash'
 alias la='ls -a --color=auto --group-directories-first'
 alias ll='ls -l --color=auto --group-directories-first'
 alias llh='ls -lh --color=auto --group-directories-first'
+alias lla='ls -la --color=auto --group-directories-first'
 
 # }}}
 # Vim Utils {{{
@@ -291,11 +292,13 @@ function _espeak () {
 	espeak "$1" -s 150 2> /dev/null
 }
 function enotify () {
-	if [ $? -eq 0 ] ; then
+	local exit_code=$?
+	if [ $exit_code -eq 0 ] ; then
 		_espeak 'Succeed!'
 	else
 		_espeak 'Exit with the error'
 	fi
+	return $exit_code
 }
 
 # }}}

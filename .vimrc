@@ -967,6 +967,9 @@ command! -bar -range Count :echomsg (<line2> - <line1> + 1)
 command! -bar AltrForward call altr#forward()
 command! -bar AltrBack    call altr#back()
 
+" Clear tail spaces
+command! -bar ClearTailSpacecs call vimrc#keys#clear_ends_space()
+
 " }}}
 " Helper {{{
 

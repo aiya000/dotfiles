@@ -13,3 +13,9 @@ snippet template_xml_tag_surround
     snippet ${1:#:snippetName}
     abbr    <$1></$1>
         <$1>${0}</$1>
+
+snippet template_haskell_pragma
+    snippet pragma_${1:#:name}
+    abbr    {-# LANGUAGE ${2:#:word} #-}
+    options head
+        {-# LANGUAGE $2 #-}
