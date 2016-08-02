@@ -970,6 +970,9 @@ command! -bar AltrBack    call altr#back()
 " Clear tail spaces
 command! -bar ClearTailSpacecs call vimrc#keys#clear_ends_space()
 
+" Pull and Insert <title>\(.*\)</title>
+command! -bar -nargs=1 InsertWebPageTitle execute 'normal! i' . vimrc#cmd#pull_webpage_title(<q-args>)
+
 " }}}
 " Helper {{{
 

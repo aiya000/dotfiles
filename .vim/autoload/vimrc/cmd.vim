@@ -130,3 +130,14 @@ function! vimrc#cmd#decompress_to_buffer() abort " {{{
 	\	buftype=nofile
 	\	filetype=css
 endfunction " }}}
+
+" Return <title>\(.*\)</title> from web
+function! vimrc#cmd#pull_webpage_title(target_url) abort " {{{
+	let l:precmd = 'curl -sS %s'
+	\            . '| grep "<title>.*</title>"'
+	\            . '| head'
+	\            . '| sed "s;<title>\(.*\)</title>;\1;g"'
+	let l:cmd    = printf(l:precmd, a:target_url)
+	let l:result = vimrc#system(l:cmd)
+	return substitute(l:result, "\r\n", '', 'g')
+endfunction " }}}
