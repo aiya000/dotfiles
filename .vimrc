@@ -230,17 +230,17 @@ unlet s:dein_dirname
 
 if !isdirectory(s:backupdir)
 	call mkdir(s:backupdir, 'p', 0700)
-	call s:system(printf('chown -R %s:%s %s', $USER, $GROUP, s:backupdir))
+	call vimrc#system(printf('chown -R %s:%s %s', $USER, $GROUP, s:backupdir))
 endif
 
 if !isdirectory(s:directory)
 	call mkdir(s:directory, 'p', 0700)
-	call s:system(printf('chown -R %s:%s %s', $USER, $GROUP, s:directory))
+	call vimrc#system(printf('chown -R %s:%s %s', $USER, $GROUP, s:directory))
 endif
 
 if !isdirectory(s:undodir)
 	call mkdir(s:undodir, 'p', 0700)
-	call s:system(printf('chown -R %s:%s %s', $USER, $GROUP, s:undodir))
+	call vimrc#system(printf('chown -R %s:%s %s', $USER, $GROUP, s:undodir))
 endif
 
 " }}}
