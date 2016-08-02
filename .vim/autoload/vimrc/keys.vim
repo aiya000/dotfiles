@@ -120,3 +120,9 @@ function! vimrc#keys#toggle_indent_guides() " {{{
 	let g:vimrc#keys#indent_guides_enable = !g:vimrc#keys#indent_guides_enable
 	IndentGuidesToggle
 endfunction " }}}
+
+" Wrap vimrc#cmd#pull_webpage_title() for insertion
+function! vimrc#keys#insert_webpage_title() abort " {{{
+	let l:result = vimrc#cmd#pull_webpage_title(@+)
+	return l:result
+endfunction " }}}
