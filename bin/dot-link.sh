@@ -12,10 +12,9 @@ fi
 dotfiles_dir="${HOME}/.dotfiles"
 
 echo "starting removing $HOME's dotfiles"
-cat "${dotfiles_dir}/bin/target.txt" | xargs -I {} ln -s "${dotfiles_dir}/{}" "${HOME}/{}" \
+cat "${dotfiles_dir}/bin/target.txt" | xargs -I {} rm -rf "${HOME}/{}" \
 	&& echo 'removing suceed.' \
-	|| echo 'removing failed.'
-echo
+	|| (echo 'removing failed, exiting.' ; exit)
 
 echo 'starting linkning'
 cat "${dotfiles_dir}/bin/target.txt" | xargs -I {} ln -s "${dotfiles_dir}/{}" "${HOME}/{}" \
