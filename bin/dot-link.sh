@@ -10,6 +10,14 @@ if [ "$confirm" != "y" ] ; then
 fi
 
 dotfiles_dir="${HOME}/.dotfiles"
+
+echo "starting removing $HOME's dotfiles"
 cat "${dotfiles_dir}/bin/target.txt" | xargs -I {} ln -s "${dotfiles_dir}/{}" "${HOME}/{}" \
-	&& echo 'suceed.' \
-	|| echo 'failed.'
+	&& echo 'removing suceed.' \
+	|| echo 'removing failed.'
+echo
+
+echo 'starting linkning'
+cat "${dotfiles_dir}/bin/target.txt" | xargs -I {} ln -s "${dotfiles_dir}/{}" "${HOME}/{}" \
+	&& echo 'linking suceed.' \
+	|| echo 'linking failed.'
