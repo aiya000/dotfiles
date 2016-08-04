@@ -254,7 +254,8 @@ fi
 # Generate items for autotools
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
-# git
+# git {{{
+#
 # <Warn> fully change git commit author and email
 function git-fully-change-author-and-email() { #{{{
 	git_user_name="$1"
@@ -276,6 +277,23 @@ function git-seq-merge-bd-push_bd() { #{{{
 		git branch -d "$target_branch" && \
 		git push -u "$target_remote" ":${target_branch}"
 } #}}}
+
+# Push current state local repository temporary
+function git-push-temporary () {
+	if [ $(git status --short | wc -l) -ne 1 ] ; then
+		git add -A
+		git stash save
+		git checkout -b hogehoge-temporary
+		git stash pop
+		git add -A
+		git commit
+	else
+		git checkout -b hogehoge-temporary
+	fi
+	git push -uf origin hogehoge-temporary
+}
+
+# }}}
 
 # }}}
 # Another aliases {{{
