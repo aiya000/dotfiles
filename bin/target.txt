@@ -10,6 +10,7 @@
 .gitconfig
 .gvimrc
 .screenrc
+.sh_generic
 .tmux.conf
 .vim
 .vimperatorrc

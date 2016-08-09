@@ -2,9 +2,9 @@ snippet use_strict
 abbr     'use strict';
     'use strict';
 
-snippet println
-abbr    document.write(__);
-    document.write(${1:#:hello});
+snippet print
+abbr    console.log(__);
+    console.log(${1:#:hello});
 
 snippet for
 abbr    for () {}
@@ -32,3 +32,7 @@ snippet Array#map
         }
         return this;
     };
+
+snippet function
+abbr    function () {}
+    function ${1} (${2}) {${3}}

@@ -69,178 +69,27 @@ bind -m vi-command -x '"\C-k\C-r": . ~/.bashrc && echo ">> bash source reloaded"
 
 # }}}
 
+
 #############
 #  aliases  #
 #############
-# Prepare function {{{
+# Load general aliases {{{
 
-dotfile_config () {
-	if [ -f "${HOME}/.dotfiles/${1}" ] ; then
-		"$EDITOR" "${HOME}/.dotfiles/${1}"
-	else
-		"$EDITOR" "${HOME}/${1}"
-	fi
-}
+source ~/.sh_generic/aliases.sh
 
 # }}}
-# Shell support {{{
+# Define specified aliases for bash {{{
 
 # Bash Short Cuts
 alias reload='. ~/.bashrc && echo ">> .bashrc reloaded"'
 
-# I'm a coward {{{
-
-alias mv='mv -i'
-alias cp='cp -i'
-
-# }}}
-# Vim Utils {{{
-
-alias vi='vim -u NONE --noplugin'
-alias gvi='gvim -u NONE -U NONE --noplugin'
-alias vimless='vim - -R -c "setl nolist | nnoremap <buffer> Q :<C-u>q<CR>"'
-alias runvim='vim -N -c :quitall! -u'
-alias vime='vim -c ":bufdo tab split"'
-alias vim-record-startup='vim --startuptime vim_startup_time +q && vim -c "set bt=nofile ft=vim | r vim_startup_time | call system(\"rm vim_startup_time\") | normal! gg3dd"'
-alias vimclearview='rm ~/.backup/vim_backup/view/*'
-alias vimclearswp='rm ~/.backup/vim_backup/swp/*'
-alias vimclearundo='rm ~/.backup/vim_backup/undo/*'
-alias vimclearcache='vimclearview ; vimclearundo ; vimclearswp'
-
-alias vimconfig='dotfile_config .vimrc'
-alias gvimconfig='dotfile_config .gvimrc'
-alias vimshconfig='dotfile_config .vimshrc'
-alias vim-bashrc='dotfile_config .bashrc && [ -f ~/.bashrc ] && ( source ~/.bashrc && echo ">> .bashrc loaded" )'
-alias vim-bashpr='dotfile_config .bash_profile && [ -f ~/.bashrc ] && ( source ~/.bash_profile && echo ">> .bash_profile loaded" )'
-
-alias vimshell='vim +VimShell'
-alias vimconsole='vim +VimConsoleOpen'
-alias twitter='vim +TweetVimHomeTimeline'
-alias tweet='vim +TweetVimSay'
-alias twitter-public='vim +TwitterPublic'
-alias tweet-public='vim +TweetPublic'
-alias adrone='vim +AdroneHome'
-alias gstatus='vim -c "Gita status"'
-
-alias vim-build-configure-ubuntu='./configure --with-features=huge --enable-gui=gnome2 --enable-perlinterp --enable-rubyinterp --enable-luainterp --enable-fail-if-missing'
-alias vim-build-make-mingw32='cd src && mingw32-make.exe -f Make_ming.mak GUI=yes IME=yes MBYTE=yes ICONV=yes DEBUG=no'
-
-# with conditions {{{
-
-# .bash_profile specified environment
-if [ -f ~/.bash_profile_env ] ; then
-	alias vim-bashpr-env='vim ~/.bash_profile_env && source ~/.bash_profile_env && echo ">> .bash_profile_env loaded"'
-fi
-
 # }}}
 
-# }}}
-# Shell Utils {{{
 
-# Console output pipe to clipboard
-if [ $IS_CYGWIN -eq 1 ] ; then
-	alias pbcopy='tee /dev/clipboard > /dev/null'
-else
-	alias pbcopy='xsel --clipboard --input'
-fi
-
-# Basic backup method
-function bak() {
-	if [ -z "$1" ] ; then
-		echo 'error: require 1 argument' 1>&2
-		return 1
-	fi
-	if [ ! -e "$1" ] ; then
-		echo "error: not found file '${1}'" 1>&2
-		return 1
-	fi
-	if [ -n "`echo \"${1}\" | grep 'bak$'`" ] ; then
-		# Remove extension '.bak'
-		mv "$1" "${1%.*}"
-	else
-		# Append extension '.bak'
-		mv "$1" "${1}.bak"
-	fi
-}
-
-# }}}
-# Others {{{
-
-alias mysql='mysql --pager="less -r -S -n -i -F -X"'
-alias docker-rm-archives='sudo docker rm `sudo docker ps -a -q`'
-alias ctags-r='ctags --tag-relative --recurse --sort=yes'
-alias date-simple='date +"%Y-%m-%d"'
-
-# }}}
-# Environment Conditions {{{
-
-if [ $IS_UBUNTU -eq 1 ] ; then
-	alias ssleep='sudo pm-suspend'
-	alias hibernate='sudo pm-hibernate'
-elif [ $IS_CYGWIN -eq 1 ] ; then
-	alias cygrunsrv='cocot cygrunsrv'
-	alias csc='cocot csc'
-	alias ifconfig='cocot ipconfig'
-	alias ping='cocot ping'
-	alias traceroute='cocot tracert'
-	alias route='cocot route'
-	alias netstat='cocot netstat'
-	alias nslookup='cocot nslookup'
-	alias updatedb='updatedb --localpaths="/bin /dev /etc /home /lib /usr /var /opt" --prunepaths="/usr/tmp /var/tmp"'
-	alias mysql='mysql --pager="less -r -S -n -i -F -X" --protocol=TCP'
-else
-	alias ssleep='sudo pm-suspend'
-	alias hibernate='sudo pm-hibernate'
-fi
-
-# }}}
-
-# }}}
-# Development support {{{
-
-# develop environment {{{
-
-# The aliases shunted to other file
-if [ -f ~/.bashrc_develop ] ; then
-	source ~/.bashrc_develop
-	alias vim-bashrc-dev='vim ~/.bashrc_develop && source ~/.bashrc && echo ">> .bashrc_develop loaded"'
-fi
-
-# Generate items for autotools
-alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
-
-# pull stackage's cabal.config
-alias stackage-kurekure='wget https://www.stackage.org/lts/cabal.config'
-
-# }}}
-# Git {{{
-
-# <Warn> fully change git commit author and email
-function git-fully-change-author-and-email() { #{{{
-	git_user_name="$1"
-	git_email="$2"
-	git filter-branch -f --env-filter \
-		"GIT_AUTHOR_NAME='${git_user_name}'; GIT_AUTHOR_EMAIL='${git_email}'; GIT_COMMITTER_NAME='${git_user_name}'; GIT_COMMITTER_EMAIL='${git_email}';" \
-		HEAD
-	unset git_user_name git_email
-} #}}}
-
-# Set casual user.name and user.email at local
-alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
-
-# Do merge, branch -d and delete remote branch
-function git-seq-merge-bd-push_bd() { #{{{
-	target_remote="$1"
-	target_branch="$2"
-	git merge "$target_branch" && \
-		git branch -d "$target_branch" && \
-		git push -u "$target_remote" ":${target_branch}"
-} #}}}
-
-# }}}
-# plugins {{{
-
-# load {{{
+###########
+# plugins #
+###########
+# Load {{{
 
 plugin_dir=~/.bashfiles/plugin
 local_plugins=( \
@@ -258,10 +107,17 @@ unset local_plugins plugin_dir
 
 # }}}
 
-#}}}
 
-# }}}
+# .bash_profile specified environment
+if [ -f ~/.bash_profile_env ] ; then
+	alias vim-bashpr-env='vim ~/.bash_profile_env && source ~/.bash_profile_env && echo ">> .bash_profile_env loaded"'
+fi
 
+# The aliases shunted to other file
+if [ -f ~/.bashrc_develop ] ; then
+	source ~/.bashrc_develop
+	alias vim-bashrc-dev='vim ~/.bashrc_develop && source ~/.bashrc && echo ">> .bashrc_develop loaded"'
+fi
 
 # Export Loaded Archive
 alias rc_loaded='echo "rc_loaded"'
