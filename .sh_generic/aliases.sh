@@ -169,17 +169,18 @@ function git-seq-merge-bd-push_bd() { #{{{
 
 # Push current state local repository temporary
 function git-push-temporary () {
+	local temp_branch=deprecated_unsafe_temporary_branch
 	if [ $(git status --short | wc -l) -ne 1 ] ; then
 		git add -A
 		git stash save
-		git checkout -b hogehoge-temporary
+		git checkout -b $temp_branch
 		git stash pop
 		git add -A
 		git commit
 	else
-		git checkout -b hogehoge-temporary
+		git checkout -b $temp_branch
 	fi
-	git push -uf origin hogehoge-temporary
+	git push -uf origin $temp_branch
 }
 
 # }}}
