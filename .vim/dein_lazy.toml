@@ -217,3 +217,16 @@ on_ft = 'toml'
 [[plugins]]
 repo      = 'yomi322/neco-tweetvim'
 on_source = 'TweetVim'
+
+[[plugins]]
+repo = 'rbtnn/game_engine.vim'
+
+[[plugins]]
+repo    = 'rbtnn/puyo.vim'
+depends = 'game_engine.vim'
+on_cmd  = 'Puyo'
+
+[[plugins]]
+repo    = 'rbtnn/reversi.vim'
+depends = 'game_engine.vim'
+on_cmd  = 'Reversi'
