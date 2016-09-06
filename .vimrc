@@ -338,6 +338,9 @@ let g:quickrun_config = {
 \	'clojure' : {
 \		'command' : 'lein',
 \		'cmdopt'  : 'exec'
+\	},
+\	'swift' : {
+\		'command' : 'swift'
 \	}
 \}
 
@@ -603,12 +606,17 @@ let g:submode_window_move['start_window_move_with_move_next'] = '<C-s>N'
 let g:submode_window_move['start_window_move_with_move_prev'] = '<C-s>P'
 
 " }}}
+"--- vim-haskell-indent " {{{
+
+let g:haskell_indent_disable_case = 1
+
+ " }}}
 "--- repl.vim --- {{{
 
 " Use this repl
 let g:repl_filetype_repl = {
 \	'haskell' : {
-\		'repl' : 'stack exec -- ghci',
+\		'repl' : 'stack ghci',
 \		'opt'  : ''
 \	}
 \}
@@ -662,7 +670,7 @@ let g:aref_web_source = get(g:, 'aref_web_source', {
 \		'url' : 'http://ejje.weblio.jp/content/%s'
 \	},
 \	'stackage' : {
-\		'url' : 'https://www.stackage.org/lts-6.6/hoogle?q=%s&page=1'
+\		'url' : 'https://www.stackage.org/lts-6.12/hoogle?q=%s&page=1'
 \	}
 \})
 

@@ -5,7 +5,7 @@
 "{{{
 
 " Restore default firefox title
-set titlestring=FireFox
+set titlestring=
 
 " Follow Hint ([Ff] key) using Alpha
 set hintchars=yjuiopqwertklhgfdsabnmvcxz
