@@ -1,0 +1,27 @@
+-- Link to ~/.xmonad/xmobarrc
+Config
+  { commands =
+    [ Run Network "wlp1s0"
+      [ "-L"       , "40"
+      , "-H"       , "200"
+      , "-m"       , "3"
+      , "--normal" , "#ffffff"
+      , "--high"   , "#a5d6a7"
+      ] 10
+    , Run Battery  -- See https://github.com/jaor/xmobar/issues/271
+      [ "--template" , "Batt: <acstatus>"
+      , "--Low"      , "10"  -- units: %
+      , "--High"     , "80"  -- units: %
+      , "--low"      , "red"
+      , "--normal"   , "orange"
+      , "--high"     , "green"
+      , "--" -- battery specific options
+      , "-o"   , "<left>% (<timeleft>)"     -- discharging status
+      , "-O"   , "<fc=orange>Charging</fc>" -- AC "on" status
+      , "-i"   , "<fc=green>Charged</fc>"   -- charged status
+      ] 50
+    , Run Date "%a %m/%d %H:%M" "date" 10
+    ]
+  , sepChar  = "%"
+  , template = "%wlp1s0% %battery% <fc=#ece391>%date%</fc> "
+  }
