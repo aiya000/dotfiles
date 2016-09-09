@@ -1,12 +1,34 @@
 -- Link to ~/.xmonad/xmobarrc
+-- - Target platforms:
+--   - arch
 Config
-  { commands =
-    [ Run Network "wlp1s0"
+  { bgColor     = "black"
+  , fgColor     = "grey"
+  , position    = Top
+  , border      = FullB
+  , borderColor = "#3579a8"
+  , commands    =
+    [ Run Wireless "wlp1s0"
+      [ "-L"     , "30"
+      , "-H"     , "70"
+      , "--low"  , "red"
+      , "--high" , "green"
+    ] 10
+    , Run Network "wlp1s0"
       [ "-L"       , "40"
       , "-H"       , "200"
       , "-m"       , "3"
-      , "--normal" , "#ffffff"
-      , "--high"   , "#a5d6a7"
+      , "--normal" , "green"
+      , "--high"   , "red"
+      ] 10
+    , Run Cpu
+      [ "-L"       , "3"
+      , "-H"       , "50"
+      , "--normal" , "green"
+      , "--high"   , "red"
+    ] 10
+    , Run Memory
+      [ "-t" , "Mem: <fc=green><usedratio>%</fc>"
       ] 10
     , Run Battery  -- See https://github.com/jaor/xmobar/issues/271
       [ "--template" , "Batt: <acstatus>"
@@ -20,8 +42,11 @@ Config
       , "-O"   , "<fc=orange>Charging</fc>" -- AC "on" status
       , "-i"   , "<fc=green>Charged</fc>"   -- charged status
       ] 50
+    , Run Com "/home/aiya000/.dotfiles/bin/volume.sh" [] "volume" 10
     , Run Date "%a %m/%d %H:%M" "date" 10
+    , Run StdinReader
     ]
   , sepChar  = "%"
-  , template = "%wlp1s0% %battery% <fc=#ece391>%date%</fc> "
+  , alignSep = "}{"
+  , template = " %StdinReader% }{ [%wlp1s0wi%] [%wlp1s0%] [%cpu%] [%memory%] [%battery%] [Vol:<fc=green>%volume%</fc>] [<fc=orange>%date%</fc>] "
   }

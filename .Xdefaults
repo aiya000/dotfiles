@@ -1,0 +1,15 @@
+! See http://d.hatena.ne.jp/sasaplus1/20130624/1372077257
+urxvt.font: xft:Ricty:size=10:antialias=true
+urxvt.scrollBar: false
+urxvt.termName: rxvt
+urxvt.transparent: true
+urxvt.shading: 20
+
+! color
+urxvt.foreground: rgba:ffff/ffff/ffff/ffff
+urxvt.background: rgba:0000/0000/0000/cccc
+
+! blue
+! from http://blog.asial.co.jp/262
+urxvt.color4: #5566ff
+urxvt.color12: #7799ff
