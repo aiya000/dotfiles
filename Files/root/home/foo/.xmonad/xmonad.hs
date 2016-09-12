@@ -13,6 +13,7 @@ import XMonad
 import XMonad.Actions.CycleWS (nextScreen)
 import XMonad.Actions.Volume (toggleMute, lowerVolume, raiseVolume)
 import XMonad.Config.Desktop (desktopConfig)
+import XMonad.Hooks.Place (placeHook, fixed)
 import XMonad.Hooks.DynamicLog (xmobar)
 import XMonad.Hooks.ManageDocks (avoidStruts)
 import XMonad.Hooks.UrgencyHook (UrgencyHook(..), withUrgencyHook)
@@ -29,28 +30,16 @@ import XMonad.Util.SpawnOnce (spawnOnce)
 
 
 main :: IO ()
-main = (xmobar >=> xmonad) $ withUrgencyHook LibNotifyHook $ desktopConfig
+main = (xmobar >=> xmonad) $ desktopConfig
   { terminal    = "xterm"
   , modMask     = superMask
   , borderWidth = 2
-  , layoutHook  = avoidStruts $ simpleTabbed ||| layoutHook desktopConfig
+  , layoutHook  = myLayoutHook
   , startupHook = myStartupHook
+  , manageHook  = myManageHook
   , workspaces  = myWorkspaces
   }
   `additionalKeys` myKeymappings
-
-
--- Data types
-
--- See https://pbrisbin.com/posts/using_notify_osd_for_xmonad_notifications/
-data LibNotifyHook = LibNotifyHook deriving (Read, Show)
-instance UrgencyHook LibNotifyHook where
-  urgencyHook LibNotifyHook w = do
-    name       <- getName w
-    maybeIndex <- findTag w <$> gets windowset
-    case maybeIndex of
-      Nothing    -> notifySend [">> Fatal error on the urgencyHook"]
-      Just index -> notifySend [show name, "workspace '" ++ index ++ "'"]
 
 
 -- The functions and the values
@@ -66,19 +55,28 @@ superMask = mod4Mask
 espeak :: String -> X ()
 espeak msg = spawn $ "espeak -s 150 -v +fex \"" ++ msg ++ "\""
 
-notifySend :: [String] -> X ()
-notifySend xs = spawn $ "notify-send " ++ foldr1 catWithStyles xs
-  where
-    catWithStyles = printf "'%s' '%s'"
+notifySend :: String -> String -> X ()
+notifySend title msg = spawn $ printf "notify-send '%s' '%s'" title msg
 
 
 -- My configurations
+
+myLayoutHook = avoidStruts $ simpleTabbed ||| layoutHook desktopConfig
+
 
 myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "fcitx"
   spawnOnce "xfce4-clipman"
   spawnOnce "xfce4-terminal -e tmux"
+
+
+myManageHook :: ManageHook
+myManageHook = placeHook (fixed (0.5, 0.5)) <+> manageFloat <+> manageHook desktopConfig
+  where
+    manageFloat = composeAll
+      [ className =? "Gimp" --> doFloat
+      ]
 
 
 myWorkspaces :: [String]
@@ -103,7 +101,7 @@ myKeymappings =
   , ((superMask, xK_f), spawn "firefox")
   , ((superMask, xK_r), spawn "dmenu_run")
   , ((superMask, xK_m), spawn "xfce4-mixer")
-  , ((noModMask, xK_Print), takeScreenShotFull)  --TODO: notify to xmobar
+  , ((noModMask, xK_Print), takeScreenShotFull)
   , ((shiftMask, xK_Print), takeScreenShotWindow)
   ]
   where
@@ -114,6 +112,8 @@ myKeymappings =
     takeScreenShotFull   = do
       spawn "import -window root ~/Picture/ScreenShot-$(date +'%Y-%m-%d-%H-%M-%S').png"
       espeak "shot the area"
+      notifySend "ImageMagick" "shot the area"
     takeScreenShotWindow = do
       spawn "import -window $(xdotool getwindowfocus -f) ~/Picture/ScreenShot-$(date +'%Y-%m-%d-%H-%M-%S').png"
       espeak "shot the window"
+      notifySend "ImageMagick" "shot the window"

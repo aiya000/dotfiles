@@ -1,0 +1,35 @@
+[global]
+    font                 = Ricty 12
+    format               = "<b>%s</b>\n%b"
+    alignment            = left
+    word_wrap            = yes
+    geometry             = "300x5-30+20"
+    separator_height     = 2
+    padding              = 8
+    horizontal_padding   = 8
+    separator_color      = frame
+
+[frame]
+    width = 3
+    color = "#aaaaaa"
+
+[shortcuts]
+    close     = ctrl+period
+    close_all = ctrl+shift+period
+
+[urgency_low]
+    background = "#222222"
+    foreground = "#888888"
+    timeout    = 10
+
+[urgency_normal]
+    background = "#285577"
+    foreground = "#ffffff"
+    timeout    = 10
+
+[urgency_critical]
+    background = "#900000"
+    foreground = "#ffffff"
+    timeout    = 0
+
+# vim: ft=cfg
