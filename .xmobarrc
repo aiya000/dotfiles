@@ -42,12 +42,12 @@ Config
       , "-O"   , "<fc=orange>Charging</fc>" -- AC "on" status
       , "-i"   , "<fc=green>Charged</fc>"   -- charged status
       ] 50
-    , Run Com "/home/aiya000/.dotfiles/bin/volume.sh" [] "volume" 10
-    , Run Com "dropbox-cli" ["status"] "dropbox" 10
+    , Run Com "/home/aiya000/.dotfiles/bin/xmobar/volume.sh"  [] "volume" 10
+    , Run Com "/home/aiya000/.dotfiles/bin/xmobar/dropbox.sh" [] "dropbox" 10
     , Run Date "%a %m/%d %H:%M" "date" 10
     , Run StdinReader
     ]
   , sepChar  = "%"
   , alignSep = "}{"
-  , template = " %StdinReader% }{ [%wlp1s0wi%] [%wlp1s0%] [%cpu%] [%memory%] [%battery%] [Vol:<fc=green>%volume%</fc>] [%dropbox%] [<fc=orange>%date%</fc>] "
+  , template = " %StdinReader% }{ [%wlp1s0wi%] [%wlp1s0%] [%cpu%] [%memory%] [%battery%] [Vol:<fc=green>%volume%</fc>] %dropbox%[<fc=orange>%date%</fc>] "
   }

@@ -3,8 +3,12 @@
 
 snippet script
     <script type="text/javascript">
-    ${1:TARGET}
+        ${1:TARGET}
     </script>
+
+snippet script_load
+abbr    <script src="__"></script>
+    <script src="${1:TARGET}"></script>
 
 snippet body
     <body>
@@ -79,8 +83,9 @@ snippet blockquote
     ${2}
 
 snippet link
+alias css_load
 abbr    link stylesheet css
-    <link rel="${1:stylesheet}" href="${2}.css" type="text/css" media="${3:screen}" charset="utf-8">
+    <link rel="${1:stylesheet}" href="${2}.css">
 
 snippet alignl
     text-align="left"
