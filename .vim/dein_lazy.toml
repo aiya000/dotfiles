@@ -234,3 +234,7 @@ on_cmd  = 'Reversi'
 [[plugins]]
 repo  = 'keith/swift.vim'
 on_ft = 'swift'
+
+[[plugins]]
+repo  = 'derekwyatt/vim-scala'
+on_ft = 'scala'
