@@ -12,6 +12,7 @@ import Text.Printf (printf)
 import XMonad
 import XMonad.Actions.CycleWS (nextScreen)
 import XMonad.Actions.Volume (toggleMute, lowerVolume, raiseVolume)
+import XMonad.Actions.Workscreen (shiftToWorkscreen)
 import XMonad.Config.Desktop (desktopConfig)
 import XMonad.Hooks.DynamicLog (xmobar)
 import XMonad.Hooks.ManageDocks (avoidStruts)
@@ -83,31 +84,39 @@ myManageHook = placeHook (fixed (0.5, 0.5)) <+> manageFloat <+> manageHook deskt
       ]
 
 
+-- myWorkspaces must be made by myWorkspaces'
+myWorkspaces' :: [Int]
+myWorkspaces' = [1 .. 4]
 myWorkspaces :: [String]
-myWorkspaces = map show [1..4]
+myWorkspaces = map show myWorkspaces'
 
 
 type KeyComb = (KeyMask, KeySym)
 myKeymappings :: [(KeyComb, X ())]
 myKeymappings =
-  [ ((altMask, xK_l), cycleWindowsForward)
-  , ((altMask, xK_h), cycleWindowsBackward)
-  , ((altMask .|. shiftMask, xK_l), swapNextWindow)
-  , ((altMask .|. shiftMask, xK_h), swapPrevWindow)
-  , ((altMask, xK_Tab), nextScreen)
-  , ((altMask, xK_F4), kill)
-  , ((superMask, xK_F6), toggleMute    >> return ())
-  , ((superMask, xK_F7), lowerVolume 5 >> return ())
-  , ((superMask, xK_F8), raiseVolume 5 >> return ())
-  -- Applications
-  , ((altMask .|. controlMask, xK_t), spawn firstTerminal)
-  , ((superMask, xK_e), spawn "thunar")
-  , ((superMask, xK_f), spawn "firefox")
-  , ((superMask, xK_r), spawn "dmenu_run")
-  , ((superMask, xK_m), spawn "xfce4-mixer")
-  , ((noModMask, xK_Print), takeScreenShotFull)
-  , ((shiftMask, xK_Print), takeScreenShotWindow)
-  ]
+  -- movements Just for myWorkspaces
+  let numKeys            = [xK_1 .. xK_9] ++ [xK_0]
+      workspaceNum       = length myWorkspaces'
+      makeMovement key n = ((altMask .|. shiftMask, key), moveWindowTo n)
+      movements          = zipWith makeMovement numKeys $ map S myWorkspaces'
+  in [ ((altMask, xK_l), cycleWindowsForward)
+     , ((altMask, xK_h), cycleWindowsBackward)
+     , ((altMask .|. shiftMask, xK_l), swapNextWindow)
+     , ((altMask .|. shiftMask, xK_h), swapPrevWindow)
+     , ((altMask, xK_Tab), nextScreen)
+     , ((altMask, xK_F4), kill)
+     , ((superMask, xK_F6), toggleMute    >> return ())
+     , ((superMask, xK_F7), lowerVolume 5 >> return ())
+     , ((superMask, xK_F8), raiseVolume 5 >> return ())
+     -- Applications
+     , ((altMask .|. controlMask, xK_t), spawn firstTerminal)
+     , ((superMask, xK_e), spawn "thunar")
+     , ((superMask, xK_f), spawn "firefox")
+     , ((superMask, xK_r), spawn "dmenu_run")
+     , ((superMask, xK_m), spawn "xfce4-mixer")
+     , ((noModMask, xK_Print), takeScreenShotFull)
+     , ((shiftMask, xK_Print), takeScreenShotWindow)
+     ] ++ movements
   where
     cycleWindowsForward  = windows focusDown
     cycleWindowsBackward = windows focusUp
@@ -121,3 +130,7 @@ myKeymappings =
       spawn "import -window $(xdotool getwindowfocus -f) ~/Picture/ScreenShot-$(date +'%Y-%m-%d-%H-%M-%S').png"
       espeak "shot the window"
       notifySend "ImageMagick" "shot the window"
+    moveWindowTo :: ScreenId -> X ()
+    moveWindowTo (S n) = do
+      let workscreenId = (n - 1) `mod` length myWorkspaces'
+      shiftToWorkscreen workscreenId
