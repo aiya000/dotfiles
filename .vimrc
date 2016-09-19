@@ -341,6 +341,9 @@ let g:quickrun_config = {
 \	},
 \	'swift' : {
 \		'command' : 'swift'
+\	},
+\	'scala' : {
+\		'cmdopt' : '-feature'
 \	}
 \}
 
@@ -361,6 +364,9 @@ let g:tweetvim_async_post = 1
 
 " Set default value (Avoid unite-tweetvim lazy loading error)
 let g:tweetvim_config_dir = expand('~/.tweetvim')
+
+" Tweet num of one page
+let g:tweetvim_tweet_per_page = 100
 
 " }}}
 "--- vimshell.vim --- {{{
@@ -500,7 +506,7 @@ augroup END
 let g:vimrc#keys#indent_guides_enable = get(g:, 'vimrc#keys#indent_guides_enable', 1)
 augroup FileEvent
 	autocmd WinEnter,BufWinEnter * IndentGuidesDisable
-	autocmd WinEnter,BufWinEnter *.{xml,html,css,scss,erb,xaml,fxml}
+	autocmd WinEnter,BufWinEnter *.{xml,html,css,scss,erb,xaml,fxml,scala}
 	\	if g:vimrc#keys#indent_guides_enable
 	\|		IndentGuidesEnable
 	\|	endif
@@ -670,7 +676,7 @@ let g:aref_web_source = get(g:, 'aref_web_source', {
 \		'url' : 'http://ejje.weblio.jp/content/%s'
 \	},
 \	'stackage' : {
-\		'url' : 'https://www.stackage.org/lts-6.12/hoogle?q=%s&page=1'
+\		'url' : 'https://www.stackage.org/lts-7.0/hoogle?q=%s&page=1'
 \	}
 \})
 

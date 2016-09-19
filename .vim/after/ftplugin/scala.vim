@@ -1,8 +1,8 @@
 let b:undo_ftplugin = 'setl ' . join([
 \	'tabstop<',
 \	'shiftwidth<',
-\	'noexpandtab<',
+\	'expandtab<',
 \	'commentstring<'
 \])
 let &commentstring = ' /*%s*/'
-setl tabstop=4 shiftwidth=4 noexpandtab
+setl tabstop=4 shiftwidth=4 expandtab

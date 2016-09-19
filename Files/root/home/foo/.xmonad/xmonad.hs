@@ -13,9 +13,10 @@ import XMonad
 import XMonad.Actions.CycleWS (nextScreen)
 import XMonad.Actions.Volume (toggleMute, lowerVolume, raiseVolume)
 import XMonad.Config.Desktop (desktopConfig)
-import XMonad.Hooks.Place (placeHook, fixed)
 import XMonad.Hooks.DynamicLog (xmobar)
 import XMonad.Hooks.ManageDocks (avoidStruts)
+import XMonad.Hooks.Place (placeHook, fixed)
+import XMonad.Hooks.SetWMName (setWMName)
 import XMonad.Hooks.UrgencyHook (UrgencyHook(..), withUrgencyHook)
 import XMonad.Layout.Gaps (GapMessage(..))
 import XMonad.Layout.MultiToggle (Toggle(..))
@@ -61,7 +62,9 @@ notifySend title msg = spawn $ printf "notify-send '%s' '%s'" title msg
 
 -- My configurations
 
-myLayoutHook = avoidStruts $ simpleTabbed ||| layoutHook desktopConfig
+myLayoutHook = avoidStruts $ simpleTabbed ||| marginForXmobar ||| layoutHook desktopConfig
+  where
+    marginForXmobar = Tall 1 (3/100) (1/2)
 
 
 myStartupHook :: X ()
@@ -69,6 +72,7 @@ myStartupHook = do
   spawnOnce "fcitx"
   spawnOnce "xfce4-clipman"
   spawnOnce "xfce4-terminal -e tmux"
+  setWMName "LG3D"  -- For Java Swing apps
 
 
 myManageHook :: ManageHook
@@ -80,7 +84,7 @@ myManageHook = placeHook (fixed (0.5, 0.5)) <+> manageFloat <+> manageHook deskt
 
 
 myWorkspaces :: [String]
-myWorkspaces = "1:main" : map show [2..4]
+myWorkspaces = map show [1..4]
 
 
 type KeyComb = (KeyMask, KeySym)
@@ -92,9 +96,9 @@ myKeymappings =
   , ((altMask .|. shiftMask, xK_h), swapPrevWindow)
   , ((altMask, xK_Tab), nextScreen)
   , ((altMask, xK_F4), kill)
-  , ((superMask, xK_F6), toggleMute     >> return ())
-  , ((superMask, xK_F7), lowerVolume 10 >> return ())
-  , ((superMask, xK_F8), raiseVolume 10 >> return ())
+  , ((superMask, xK_F6), toggleMute    >> return ())
+  , ((superMask, xK_F7), lowerVolume 5 >> return ())
+  , ((superMask, xK_F8), raiseVolume 5 >> return ())
   -- Applications
   , ((altMask .|. controlMask, xK_t), spawn firstTerminal)
   , ((superMask, xK_e), spawn "thunar")
