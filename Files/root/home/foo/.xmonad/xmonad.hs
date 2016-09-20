@@ -15,19 +15,11 @@ import XMonad.Actions.Volume (toggleMute, lowerVolume, raiseVolume)
 import XMonad.Actions.Workscreen (shiftToWorkscreen)
 import XMonad.Config.Desktop (desktopConfig)
 import XMonad.Hooks.DynamicLog (xmobar)
-import XMonad.Hooks.ManageDocks (avoidStruts)
 import XMonad.Hooks.Place (placeHook, fixed)
 import XMonad.Hooks.SetWMName (setWMName)
-import XMonad.Hooks.UrgencyHook (UrgencyHook(..), withUrgencyHook)
-import XMonad.Layout.Gaps (GapMessage(..))
-import XMonad.Layout.MultiToggle (Toggle(..))
-import XMonad.Layout.MultiToggle.Instances (StdTransformers(..))
-import XMonad.Layout.ResizableTile (MirrorResize(..))
 import XMonad.Layout.Tabbed (simpleTabbed)
 import XMonad.StackSet (focusUp, focusDown, swapUp, swapDown, findTag)
-import XMonad.Util.Dzen (DzenConfig, dzenConfig, onCurr, center, addArgs)
 import XMonad.Util.EZConfig (additionalKeys)
-import XMonad.Util.NamedWindows (getName)
 import XMonad.Util.SpawnOnce (spawnOnce)
 
 
@@ -63,9 +55,7 @@ notifySend title msg = spawn $ printf "notify-send '%s' '%s'" title msg
 
 -- My configurations
 
-myLayoutHook = avoidStruts $ simpleTabbed ||| marginForXmobar ||| layoutHook desktopConfig
-  where
-    marginForXmobar = Tall 1 (3/100) (1/2)
+myLayoutHook = simpleTabbed ||| layoutHook desktopConfig
 
 
 myStartupHook :: X ()
@@ -77,9 +67,9 @@ myStartupHook = do
 
 
 myManageHook :: ManageHook
-myManageHook = placeHook (fixed (0.5, 0.5)) <+> manageFloat <+> manageHook desktopConfig
+myManageHook = placeHook (fixed (0.5, 0.5)) <+> manageFloatForTargets <+> manageHook desktopConfig
   where
-    manageFloat = composeAll
+    manageFloatForTargets = composeAll
       [ className =? "Gimp" --> doFloat
       ]
 
