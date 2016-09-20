@@ -7,6 +7,8 @@
 --     - xmonad-contrib
 --     - xmonad-extras-darcs
 
+-- imports -- {{{
+
 import Control.Monad ((>=>))
 import Text.Printf (printf)
 import XMonad
@@ -22,6 +24,8 @@ import XMonad.StackSet (focusUp, focusDown, swapUp, swapDown, findTag)
 import XMonad.Util.EZConfig (additionalKeys)
 import XMonad.Util.SpawnOnce (spawnOnce)
 
+-- }}}
+
 
 main :: IO ()
 main = (xmobar >=> xmonad) $ desktopConfig
@@ -36,7 +40,13 @@ main = (xmobar >=> xmonad) $ desktopConfig
   `additionalKeys` myKeymappings
 
 
--- The functions and the values
+-- Data Types {{{
+
+type KeyComb = (KeyMask, KeySym)
+
+-- }}}
+-- Functions and Values {{{
+
 firstTerminal :: String
 firstTerminal = "xfce4-terminal"
 
@@ -52,8 +62,8 @@ espeak msg = spawn $ "espeak -s 150 -v +fex \"" ++ msg ++ "\""
 notifySend :: String -> String -> X ()
 notifySend title msg = spawn $ printf "notify-send '%s' '%s'" title msg
 
-
--- My configurations
+-- }}}
+-- My configurations {{{
 
 myLayoutHook = simpleTabbed ||| layoutHook desktopConfig
 
@@ -81,7 +91,6 @@ myWorkspaces :: [String]
 myWorkspaces = map show myWorkspaces'
 
 
-type KeyComb = (KeyMask, KeySym)
 myKeymappings :: [(KeyComb, X ())]
 myKeymappings =
   -- movements Just for myWorkspaces
@@ -124,3 +133,5 @@ myKeymappings =
     moveWindowTo (S n) = do
       let workscreenId = (n - 1) `mod` length myWorkspaces'
       shiftToWorkscreen workscreenId
+
+-- }}}
