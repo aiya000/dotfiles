@@ -10,6 +10,8 @@
 -- imports -- {{{
 
 import Control.Monad ((>=>))
+import Control.Monad.Catch (Exception, MonadThrow, throwM)
+import System.Directory (doesFileExist)
 import Text.Printf (printf)
 import XMonad
 import XMonad.Actions.CycleWS (nextScreen)
@@ -44,6 +46,8 @@ main = (xmobar >=> xmonad) $ desktopConfig
 
 type KeyComb = (KeyMask, KeySym)
 
+data ScreenShotType = FullScreen | ActiveWindow deriving (Eq)
+
 -- }}}
 -- Functions and Values {{{
 
@@ -55,6 +59,11 @@ altMask = mod1Mask
 
 superMask :: KeyMask
 superMask = mod4Mask
+
+-- This depends ImageMagick and xdotool
+screenshot :: ScreenShotType -> FilePath -> X ()
+screenshot FullScreen   path = spawn $ printf "import -window root %s" path
+screenshot ActiveWindow path = spawn $ printf "import -window $(xdotool getwindowfocus -f) %s" path
 
 espeak :: String -> X ()
 espeak msg = spawn $ "espeak -s 150 -v +fex \"" ++ msg ++ "\""
@@ -113,25 +122,28 @@ myKeymappings =
      , ((superMask, xK_f), spawn "firefox")
      , ((superMask, xK_r), spawn "dmenu_run")
      , ((superMask, xK_m), spawn "xfce4-mixer")
-     , ((noModMask, xK_Print), takeScreenShotFull)
-     , ((shiftMask, xK_Print), takeScreenShotWindow)
+     , ((noModMask, xK_Print), takeScreenShot FullScreen   >> return ())
+     , ((shiftMask, xK_Print), takeScreenShot ActiveWindow >> return ())
      ] ++ movements
   where
     cycleWindowsForward  = windows focusDown
     cycleWindowsBackward = windows focusUp
     swapNextWindow       = windows swapDown
     swapPrevWindow       = windows swapUp
-    takeScreenShotFull   = do
-      spawn "import -window root ~/Picture/ScreenShot-$(date +'%Y-%m-%d-%H-%M-%S').png"
-      espeak "shot the area"
-      notifySend "ImageMagick" "shot the area"
-    takeScreenShotWindow = do
-      spawn "import -window $(xdotool getwindowfocus -f) ~/Picture/ScreenShot-$(date +'%Y-%m-%d-%H-%M-%S').png"
-      espeak "shot the window"
-      notifySend "ImageMagick" "shot the window"
+
+    takeScreenShot :: ScreenShotType -> X ()
+    takeScreenShot ssType = do
+      let msg = messageOf ssType
+      screenshot ssType dateSSPath
+      notifySend "ScreenShot" msg
+      espeak msg
+      where
+        dateSSPath             = "~/Picture/ScreenShot-$(date +'%Y-%m-%d-%H-%M-%S').png"
+        messageOf FullScreen   = "shot the full screen"
+        messageOf ActiveWindow = "shot the active window"
+
     moveWindowTo :: ScreenId -> X ()
-    moveWindowTo (S n) = do
-      let workscreenId = (n - 1) `mod` length myWorkspaces'
-      shiftToWorkscreen workscreenId
+    moveWindowTo (S n) = let workscreenId = (n - 1) `mod` length myWorkspaces'
+                         in shiftToWorkscreen workscreenId
 
 -- }}}
