@@ -1221,11 +1221,10 @@ augroup KeyMapping
 	autocmd User MyVimRc vmap <leader>w <Plug>(openbrowser-open)
 
 	" vim-quickrun
-	autocmd User MyVimRc nmap              <leader>r         <Plug>(quickrun)
-	autocmd User MyVimRc nnoremap <silent> <leader>R         :<C-u>QuickRun -runner shell<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>r :<C-u>call vimrc#keys#bufclose_filetype('quickrun')<CR>
-	autocmd User MyVimRc vmap              <leader>r         <Plug>(quickrun)
-	autocmd User MyVimRc vnoremap <silent> <leader>R         :QuickRun -runner shell<CR>
+	autocmd User MyVimRc nmap              <leader>r <Plug>(quickrun)
+	autocmd User MyVimRc nnoremap <silent> <leader>R :<C-u>QuickRun -runner shell<CR>
+	autocmd User MyVimRc vmap              <leader>r <Plug>(quickrun)
+	autocmd User MyVimRc vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
 
 	" vimshell
 	autocmd User MyVimRc nnoremap <silent> <leader>v         :<C-u>VimShell -split-command=vsp -toggle<CR>
@@ -1347,9 +1346,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| resize 5<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>k                :<C-u>call vimrc#keys#cursor_up_to_lid()<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>j                :<C-u>call vimrc#keys#cursor_down_to_ground()<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>b        :<C-u>call vimrc#keys#bufclose_filetype('scratch')<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>h        :<C-u>helpclose<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>q        :<C-u>call vimrc#keys#bufclose_filetype('qf')<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>q        :<C-u>call vimrc#keys#bufclose_filetype(['quickrun', 'help', 'scratch', 'qf', 'aref_web'])<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader><leader> :<C-u>echohl ErrorMsg \| echo "Don't rush it, keep cool." \| echohl None<CR>
 
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-r>     :<C-u>Reload<CR>

@@ -1,3 +1,16 @@
+" If list has elem, return v:true
+" otherwise return v:false
+function! s:contains(list, elem) abort " {{{
+	for l:x in a:list
+		if l:x ==# a:elem
+			return v:true
+		endif
+	endfor
+	return v:false
+endfunction " }}}
+
+"-------------------"
+
 " Compress continuous space
 function! vimrc#keys#compress_spaces() " {{{
 	let l:recent_pattern = @/
@@ -86,11 +99,11 @@ function! vimrc#keys#toggle_diff() " {{{
 endfunction " }}}
 
 " If you has nofile buffer, close it.
-function! vimrc#keys#bufclose_filetype(filetype) " {{{
+function! vimrc#keys#bufclose_filetype(filetypes) " {{{
 	let l:closed = 0
 	for l:w in range(1, winnr('$'))
 		let l:buf_ft = getwinvar(l:w, '&filetype')
-		if l:buf_ft ==# a:filetype
+		if s:contains(a:filetypes, l:buf_ft)
 			execute ':' . l:w . 'wincmd w'
 			execute ':quit'
 			let l:closed = 1
