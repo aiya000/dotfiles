@@ -24,9 +24,6 @@ repo    = 'Shougo/unite-outline'
 depends = 'unite.vim'
 
 [[plugins]]
-repo = 'Shougo/vinarise.vim'
-
-[[plugins]]
 repo = 'LeafCage/foldCC'
 
 [[plugins]]
@@ -112,10 +109,6 @@ repo = 'thinca/vim-visualstar'
 
 [[plugins]]
 repo = 'jonathanfilip/vim-lucius'
-
-[[plugins]]
-repo    = 'aiya000/unite-syntax'
-depends = 'unite.vim'
 
 [[plugins]]
 repo    = 'Shougo/unite-session'

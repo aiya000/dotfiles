@@ -82,6 +82,9 @@ alias twitter='vim +TweetVimHomeTimeline'
 alias tweet='vim +TweetVimSay'
 alias twitter-public='vim +TwitterPublic'
 alias tweet-public='vim +TweetPublic'
+function twitter-usertimeline() {
+	vim -c "TweetVimUserTimeline ${1}"
+}
 alias adrone='vim +AdroneHome'
 alias gstatus='vim -c "Gita status"'
 function vim-session () {
