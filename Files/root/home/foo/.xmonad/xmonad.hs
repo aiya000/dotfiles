@@ -14,14 +14,19 @@ import Control.Monad.Catch (Exception, MonadThrow, throwM)
 import System.Directory (doesFileExist)
 import Text.Printf (printf)
 import XMonad
-import XMonad.Actions.CycleWS (nextScreen)
+import XMonad.Actions.CycleWS (prevScreen, nextScreen)
 import XMonad.Actions.Volume (toggleMute, lowerVolume, raiseVolume)
 import XMonad.Actions.Workscreen (shiftToWorkscreen)
 import XMonad.Config.Desktop (desktopConfig)
 import XMonad.Hooks.DynamicLog (xmobar)
+import XMonad.Hooks.ManageDocks (avoidStruts)
 import XMonad.Hooks.Place (placeHook, fixed)
 import XMonad.Hooks.SetWMName (setWMName)
+import XMonad.Layout (ChangeLayout(FirstLayout,NextLayout))
+import XMonad.Layout.Grid (Grid(Grid))
 import XMonad.Layout.Tabbed (simpleTabbed)
+import XMonad.Layout.TwoPane (TwoPane(TwoPane))
+import XMonad.Operations (sendMessage)
 import XMonad.StackSet (focusUp, focusDown, swapUp, swapDown, findTag)
 import XMonad.Util.EZConfig (additionalKeys)
 import XMonad.Util.SpawnOnce (spawnOnce)
@@ -31,13 +36,14 @@ import XMonad.Util.SpawnOnce (spawnOnce)
 
 main :: IO ()
 main = (xmobar >=> xmonad) $ desktopConfig
-  { terminal    = "xterm"
-  , modMask     = superMask
-  , borderWidth = 2
-  , layoutHook  = myLayoutHook
-  , startupHook = myStartupHook
-  , manageHook  = myManageHook
-  , workspaces  = myWorkspaces
+  { terminal           = "xterm"
+  , modMask            = superMask
+  , borderWidth        = 2
+  , layoutHook         = myLayoutHook
+  , startupHook        = myStartupHook
+  , manageHook         = myManageHook
+  , workspaces         = myWorkspaces
+  , focusedBorderColor = "#0000ff"
   }
   `additionalKeys` myKeymappings
 
@@ -52,7 +58,7 @@ data ScreenShotType = FullScreen | ActiveWindow deriving (Eq)
 -- Functions and Values {{{
 
 firstTerminal :: String
-firstTerminal = "xfce4-terminal"
+firstTerminal = "xfce4-terminal -e tmux"
 
 altMask :: KeyMask
 altMask = mod1Mask
@@ -74,14 +80,13 @@ notifySend title msg = spawn $ printf "notify-send '%s' '%s'" title msg
 -- }}}
 -- My configurations {{{
 
-myLayoutHook = simpleTabbed ||| layoutHook desktopConfig
-
+myLayoutHook = simpleTabbed ||| Grid ||| TwoPane (1/55) (1/2)
 
 myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "fcitx"
   spawnOnce "xfce4-clipman"
-  spawnOnce "xfce4-terminal -e tmux"
+  spawnOnce firstTerminal
   setWMName "LG3D"  -- For Java Swing apps
 
 
@@ -109,21 +114,22 @@ myKeymappings =
       movements          = zipWith makeMovement numKeys $ map S myWorkspaces'
   in [ ((altMask, xK_l), cycleWindowsForward)
      , ((altMask, xK_h), cycleWindowsBackward)
-     , ((altMask .|. shiftMask, xK_l), swapNextWindow)
-     , ((altMask .|. shiftMask, xK_h), swapPrevWindow)
-     , ((altMask, xK_Tab), nextScreen)
-     , ((altMask, xK_F4), kill)
+     , ((altMask .|. shiftMask, xK_i), nextScreen)
+     , ((superMask, xK_l), swapNextWindow)
+     , ((superMask, xK_h), swapPrevWindow)
      , ((superMask, xK_F6), toggleMute    >> return ())
      , ((superMask, xK_F7), lowerVolume 5 >> return ())
      , ((superMask, xK_F8), raiseVolume 5 >> return ())
+     , ((superMask .|. shiftMask, xK_h), sendMessage FirstLayout)
+     , ((superMask .|. shiftMask, xK_l), sendMessage NextLayout)
      -- Applications
      , ((altMask .|. controlMask, xK_t), spawn firstTerminal)
      , ((superMask, xK_e), spawn "thunar")
      , ((superMask, xK_f), spawn "firefox")
      , ((superMask, xK_r), spawn "dmenu_run")
      , ((superMask, xK_m), spawn "xfce4-mixer")
-     , ((noModMask, xK_Print), takeScreenShot FullScreen   >> return ())
-     , ((shiftMask, xK_Print), takeScreenShot ActiveWindow >> return ())
+     , ((noModMask, xK_Print), takeScreenShot FullScreen)
+     , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
      ] ++ movements
   where
     cycleWindowsForward  = windows focusDown
