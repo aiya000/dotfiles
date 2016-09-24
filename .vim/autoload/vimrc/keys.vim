@@ -114,7 +114,7 @@ endfunction " }}}
 
 " Toggle open netrw explorer ( vertical split )
 function! vimrc#keys#toggle_netrw_vexplorer() " {{{
-	let l:closed = vimrc#keys#bufclose_filetype('netrw')
+	let l:closed = vimrc#keys#bufclose_filetype(['netrw'])
 	if !l:closed
 		Vexplore
 	endif

@@ -365,9 +365,6 @@ let g:tweetvim_async_post = 1
 " Set default value (Avoid unite-tweetvim lazy loading error)
 let g:tweetvim_config_dir = expand('~/.tweetvim')
 
-" Tweet num of one page
-let g:tweetvim_tweet_per_page = 100
-
 " }}}
 "--- vimshell.vim --- {{{
 
