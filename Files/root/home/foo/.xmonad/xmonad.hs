@@ -26,10 +26,11 @@ import XMonad.Hooks.Place (placeHook, fixed)
 import XMonad.Hooks.SetWMName (setWMName)
 import XMonad.Layout (ChangeLayout(FirstLayout,NextLayout))
 import XMonad.Layout.Grid (Grid(Grid))
+import XMonad.Layout.SubLayouts (subTabbed, onGroup, GroupMsg(MergeAll,UnMerge))
 import XMonad.Layout.Tabbed (simpleTabbed)
 import XMonad.Layout.TwoPane (TwoPane(TwoPane))
 import XMonad.Operations (sendMessage, withFocused)
-import XMonad.StackSet (focusUp, focusDown, swapUp, swapDown, findTag)
+import XMonad.StackSet (focusUp, focusDown, swapUp, swapDown)
 import XMonad.Util.EZConfig (additionalKeys)
 import XMonad.Util.SpawnOnce (spawnOnce)
 
@@ -82,7 +83,7 @@ notifySend title msg = spawn $ printf "notify-send '%s' '%s'" title msg
 -- }}}
 -- My configurations {{{
 
-myLayoutHook = simpleTabbed ||| Grid ||| TwoPane (1/55) (1/2)
+myLayoutHook = subTabbed $ Grid ||| TwoPane (1/55) (1/2)
 
 myStartupHook :: X ()
 myStartupHook = do
@@ -114,9 +115,11 @@ myKeymappings =
       workspaceNum       = length myWorkspaces'
       makeMovement key n = ((altMask .|. shiftMask, key), moveWindowTo n)
       movements          = zipWith makeMovement numKeys $ map S myWorkspaces'
-  in [ ((altMask, xK_l), cycleWindowsForward)
-     , ((altMask, xK_h), cycleWindowsBackward)
-     --NOTE: add keymap keysMoveWindow and swap(Next|Prev)Window to [hjkl] with branching by current layout state
+  in [ ((altMask, xK_h), cycleWindowsBackward)
+     , ((altMask, xK_l), cycleWindowsForward)
+     , ((altMask, xK_j), withFocused (sendMessage . MergeAll))
+     , ((altMask, xK_k), withFocused (sendMessage . UnMerge))
+     --NOTE: add keymap keysMoveWindow and swap(Next|Prev)Window to some keys with branching by current layout state
      --((altMask, xK_l), withFocused $ keysMoveWindow (2,0))
      --, ((altMask, xK_h), withFocused $ keysMoveWindow (-2,0))
      --, ((altMask, xK_j), withFocused $ keysMoveWindow (0,2))
