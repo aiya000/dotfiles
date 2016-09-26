@@ -15,6 +15,8 @@ import System.Directory (doesFileExist)
 import Text.Printf (printf)
 import XMonad
 import XMonad.Actions.CycleWS (prevScreen, nextScreen)
+import XMonad.Actions.FloatKeys (keysMoveWindow)
+import XMonad.Actions.SinkAll (sinkAll)
 import XMonad.Actions.Volume (toggleMute, lowerVolume, raiseVolume)
 import XMonad.Actions.Workscreen (shiftToWorkscreen)
 import XMonad.Config.Desktop (desktopConfig)
@@ -26,7 +28,7 @@ import XMonad.Layout (ChangeLayout(FirstLayout,NextLayout))
 import XMonad.Layout.Grid (Grid(Grid))
 import XMonad.Layout.Tabbed (simpleTabbed)
 import XMonad.Layout.TwoPane (TwoPane(TwoPane))
-import XMonad.Operations (sendMessage)
+import XMonad.Operations (sendMessage, withFocused)
 import XMonad.StackSet (focusUp, focusDown, swapUp, swapDown, findTag)
 import XMonad.Util.EZConfig (additionalKeys)
 import XMonad.Util.SpawnOnce (spawnOnce)
@@ -86,15 +88,15 @@ myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "fcitx"
   spawnOnce "xfce4-clipman"
-  spawnOnce firstTerminal
-  setWMName "LG3D"  -- For Java Swing apps
+  spawn firstTerminal
+  setWMName "LG3D"  -- For Java Swing apps starting
 
 
 myManageHook :: ManageHook
 myManageHook = placeHook (fixed (0.5, 0.5)) <+> manageFloatForTargets <+> manageHook desktopConfig
   where
     manageFloatForTargets = composeAll
-      [ className =? "Gimp" --> doFloat
+      [ --className =? "Gimp" --> doFloat
       ]
 
 
@@ -114,6 +116,12 @@ myKeymappings =
       movements          = zipWith makeMovement numKeys $ map S myWorkspaces'
   in [ ((altMask, xK_l), cycleWindowsForward)
      , ((altMask, xK_h), cycleWindowsBackward)
+     --NOTE: add keymap keysMoveWindow and swap(Next|Prev)Window to [hjkl] with branching by current layout state
+     --((altMask, xK_l), withFocused $ keysMoveWindow (2,0))
+     --, ((altMask, xK_h), withFocused $ keysMoveWindow (-2,0))
+     --, ((altMask, xK_j), withFocused $ keysMoveWindow (0,2))
+     --, ((altMask, xK_k), withFocused $ keysMoveWindow (0,-2))
+     , ((altMask, xK_Tab), nextScreen)
      , ((altMask .|. shiftMask, xK_i), nextScreen)
      , ((superMask, xK_l), swapNextWindow)
      , ((superMask, xK_h), swapPrevWindow)
@@ -122,12 +130,13 @@ myKeymappings =
      , ((superMask, xK_F8), raiseVolume 5 >> return ())
      , ((superMask .|. shiftMask, xK_h), sendMessage FirstLayout)
      , ((superMask .|. shiftMask, xK_l), sendMessage NextLayout)
+     , ((superMask .|. shiftMask, xK_a), sinkAll)
      -- Applications
      , ((altMask .|. controlMask, xK_t), spawn firstTerminal)
      , ((superMask, xK_e), spawn "thunar")
-     , ((superMask, xK_f), spawn "firefox")
      , ((superMask, xK_r), spawn "dmenu_run")
-     , ((superMask, xK_m), spawn "xfce4-mixer")
+     , ((superMask, xK_f), spawnOnce "firefox")
+     , ((superMask, xK_m), spawnOnce "xfce4-mixer")
      , ((noModMask, xK_Print), takeScreenShot FullScreen)
      , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
      ] ++ movements
