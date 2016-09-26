@@ -138,6 +138,7 @@ myKeymappings =
      , ((altMask .|. controlMask, xK_t), spawn firstTerminal)
      , ((superMask, xK_e), spawn "thunar")
      , ((superMask, xK_r), spawn "dmenu_run")
+     , ((superMask, xK_l), spawn "xscreensaver-command -lock")
      , ((superMask, xK_f), spawnOnce "firefox")
      , ((superMask, xK_m), spawnOnce "xfce4-mixer")
      , ((noModMask, xK_Print), takeScreenShot FullScreen)
