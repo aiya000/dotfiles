@@ -27,12 +27,11 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 # list-colors uses $LS_COLORS's colors
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
-# Use standard style history
+# Set opts
 setopt hist_ignore_dups
 setopt extended_history
 setopt hist_reduce_blanks
-
-# Other opts
+setopt share_history
 setopt transient_rprompt
 setopt ignore_eof
 
