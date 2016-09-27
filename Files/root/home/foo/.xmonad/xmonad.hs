@@ -9,6 +9,7 @@
 
 -- imports -- {{{
 
+import Control.Concurrent (threadDelay)
 import Control.Monad ((>=>))
 import Control.Monad.Catch (Exception, MonadThrow, throwM)
 import System.Directory (doesFileExist)
@@ -80,6 +81,10 @@ espeak msg = spawn $ "espeak -s 150 -v +fex \"" ++ msg ++ "\""
 notifySend :: String -> String -> X ()
 notifySend title msg = spawn $ printf "notify-send '%s' '%s'" title msg
 
+sleep :: Int -> X ()
+sleep n | n < 0     = io $ error "argument must be over 0"
+        | otherwise = io $ threadDelay (n * 1000000)
+
 -- }}}
 -- My configurations {{{
 
@@ -89,7 +94,7 @@ myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "fcitx"
   spawnOnce "xfce4-clipman"
-  spawn firstTerminal
+  spawnOnce firstTerminal
   setWMName "LG3D"  -- For Java Swing apps starting
 
 
@@ -154,8 +159,9 @@ myKeymappings =
     takeScreenShot ssType = do
       let msg = messageOf ssType
       screenshot ssType dateSSPath
-      notifySend "ScreenShot" msg
       espeak msg
+      sleep 1
+      notifySend "ScreenShot" msg
       where
         dateSSPath             = "~/Picture/ScreenShot-$(date +'%Y-%m-%d-%H-%M-%S').png"
         messageOf FullScreen   = "shot the full screen"
