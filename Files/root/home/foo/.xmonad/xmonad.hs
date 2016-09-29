@@ -11,36 +11,34 @@
 
 import Control.Concurrent (threadDelay)
 import Control.Monad ((>=>))
-import Control.Monad.Catch (Exception, MonadThrow, throwM)
-import System.Directory (doesFileExist)
 import Text.Printf (printf)
 import XMonad
-import XMonad.Actions.CycleWS (prevScreen, nextScreen)
+import XMonad.Actions.CycleWS (nextScreen)
 import XMonad.Actions.FloatKeys (keysMoveWindow)
 import XMonad.Actions.SinkAll (sinkAll)
 import XMonad.Actions.Volume (toggleMute, lowerVolume, raiseVolume)
 import XMonad.Actions.Workscreen (shiftToWorkscreen)
 import XMonad.Config.Desktop (desktopConfig)
 import XMonad.Hooks.DynamicLog (xmobar)
-import XMonad.Hooks.ManageDocks (avoidStruts)
 import XMonad.Hooks.Place (placeHook, fixed)
 import XMonad.Hooks.SetWMName (setWMName)
 import XMonad.Layout (ChangeLayout(FirstLayout,NextLayout))
 import XMonad.Layout.Grid (Grid(Grid))
-import XMonad.Layout.SubLayouts (subTabbed, onGroup, GroupMsg(MergeAll,UnMerge))
+import XMonad.Layout.SubLayouts (subTabbed, GroupMsg(MergeAll,UnMerge))
 import XMonad.Layout.Tabbed (simpleTabbed)
 import XMonad.Layout.TwoPane (TwoPane(TwoPane))
-import XMonad.Operations (sendMessage, withFocused)
+import XMonad.Operations (sendMessage, withFocused, mouseResizeWindow)
 import XMonad.StackSet (focusUp, focusDown, swapUp, swapDown)
-import XMonad.Util.EZConfig (additionalKeys)
+import XMonad.Util.EZConfig (additionalKeys, additionalMouseBindings)
 import XMonad.Util.SpawnOnce (spawnOnce)
+import XMonad.Layout.Gaps (gaps, Direction2D(U))
 
 -- }}}
 
 
 main :: IO ()
 main = (xmobar >=> xmonad) $ desktopConfig
-  { terminal           = "xterm"
+  { terminal           = "xfce4-terminal"
   , modMask            = superMask
   , borderWidth        = 2
   , layoutHook         = myLayoutHook
@@ -49,12 +47,11 @@ main = (xmobar >=> xmonad) $ desktopConfig
   , workspaces         = myWorkspaces
   , focusedBorderColor = "#0000ff"
   }
-  `additionalKeys` myKeymappings
+  `additionalKeys` myKeys
+  `additionalMouseBindings` myMouseBindings
 
 
 -- Data Types {{{
-
-type KeyComb = (KeyMask, KeySym)
 
 data ScreenShotType = FullScreen | ActiveWindow deriving (Eq)
 
@@ -62,7 +59,7 @@ data ScreenShotType = FullScreen | ActiveWindow deriving (Eq)
 -- Functions and Values {{{
 
 firstTerminal :: String
-firstTerminal = "xfce4-terminal -e tmux"
+firstTerminal = "xfce4-terminal"
 
 altMask :: KeyMask
 altMask = mod1Mask
@@ -88,13 +85,15 @@ sleep n | n < 0     = io $ error "argument must be over 0"
 -- }}}
 -- My configurations {{{
 
-myLayoutHook = subTabbed $ Grid ||| TwoPane (1/55) (1/2)
+myLayoutHook = xmobarMargin . subTabbed $ TwoPane (1/55) (1/2) ||| Grid
+  where
+    xmobarMargin = gaps [(U, 13)]
 
 myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "fcitx"
   spawnOnce "xfce4-clipman"
-  spawnOnce firstTerminal
+  spawnOnce "xfce4-terminal -e tmux"
   setWMName "LG3D"  -- For Java Swing apps starting
 
 
@@ -113,8 +112,8 @@ myWorkspaces :: [String]
 myWorkspaces = map show myWorkspaces'
 
 
-myKeymappings :: [(KeyComb, X ())]
-myKeymappings =
+myKeys :: [((KeyMask, KeySym), X ())]
+myKeys =
   -- movements Just for myWorkspaces
   let numKeys            = [xK_1 .. xK_9] ++ [xK_0]
       workspaceNum       = length myWorkspaces'
@@ -124,12 +123,11 @@ myKeymappings =
      , ((altMask, xK_l), cycleWindowsForward)
      , ((altMask, xK_j), withFocused (sendMessage . MergeAll))
      , ((altMask, xK_k), withFocused (sendMessage . UnMerge))
-     --NOTE: add keymap keysMoveWindow and swap(Next|Prev)Window to some keys with branching by current layout state
-     --((altMask, xK_l), withFocused $ keysMoveWindow (2,0))
-     --, ((altMask, xK_h), withFocused $ keysMoveWindow (-2,0))
-     --, ((altMask, xK_j), withFocused $ keysMoveWindow (0,2))
-     --, ((altMask, xK_k), withFocused $ keysMoveWindow (0,-2))
-     , ((altMask, xK_Tab), nextScreen)
+     , ((altMask .|. shiftMask, xK_l), withFocused $ keysMoveWindow (2,0))
+     , ((altMask .|. shiftMask, xK_h), withFocused $ keysMoveWindow (-2,0))
+     , ((altMask .|. shiftMask, xK_j), withFocused $ keysMoveWindow (0,2))
+     , ((altMask .|. shiftMask, xK_k), withFocused $ keysMoveWindow (0,-2))
+     , ((altMask .|. shiftMask, xK_Tab), nextScreen)
      , ((altMask .|. shiftMask, xK_i), nextScreen)
      , ((superMask, xK_l), swapNextWindow)
      , ((superMask, xK_h), swapPrevWindow)
@@ -170,5 +168,11 @@ myKeymappings =
     moveWindowTo :: ScreenId -> X ()
     moveWindowTo (S n) = let workscreenId = (n - 1) `mod` length myWorkspaces'
                          in shiftToWorkscreen workscreenId
+
+
+myMouseBindings :: [((ButtonMask, Button), Window -> X ())]
+myMouseBindings =
+  [ ((altMask, button1), mouseResizeWindow)
+  ]
 
 -- }}}
