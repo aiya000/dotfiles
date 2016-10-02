@@ -41,6 +41,7 @@ alias gcam='git commit --amend'
 alias gcm='git commit -m'
 alias gco='git checkout'
 alias gd='git diff'
+alias gds='git diff --staged'
 alias gl='git log'
 alias gs='git status'
 alias gss='git stash'
@@ -196,6 +197,12 @@ function git-push-temporary () {
 	fi
 	git push -uf origin $temp_branch
 }
+
+# }}}
+
+# haskell-stack {{{
+
+alias stack-build='stack build --ghc-options="-W"'
 
 # }}}
 
