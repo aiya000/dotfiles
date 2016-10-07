@@ -45,6 +45,7 @@ alias gds='git diff --staged'
 alias gl='git log'
 alias gs='git status'
 alias gss='git stash'
+alias gdh='git diff HEAD~..HEAD'
 
 ## shell
 alias la='ls -a --color=auto --group-directories-first'
@@ -65,9 +66,7 @@ alias vimclearview='rm ~/.backup/vim_backup/view/*'
 alias vimclearswp='rm ~/.backup/vim_backup/swp/*'
 alias vimclearundo='rm ~/.backup/vim_backup/undo/*'
 alias vimclearcache='vimclearview ; vimclearundo ; vimclearswp'
-function vimls () {
-	ls "$1" | vim - -R -c "setl nolist | nnoremap <buffer> Q :<C-u>q<CR>"
-}
+alias vimls='vim -c "read! ls" -c "nnoremap <buffer> Q :<C-u>q<CR> | setl nolist buftype=nofile | normal! Gddgg"'
 
 alias vimconfig='dotfile_config .vimrc'
 alias gvimconfig='dotfile_config .gvimrc'
