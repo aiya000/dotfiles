@@ -1446,8 +1446,21 @@ augroup KeyMapping
 	" }}}
 	" digraph {{{
 
-	digraph %% 8984
-	digraph 8: 9731
+	digraph (( 8834  " right includes left
+	digraph )) 8835  " left includes right
+	digraph /= 8800  " not equal
+
+	digraph \A 8704  " forall
+	digraph \E 8707  " exists
+	digraph \a 8743  " and
+	digraph \o 8744  " or
+	digraph \= 8803  " equivalence relation
+	digraph \< 8804  " right more than left or equals
+	digraph \> 8805  " left mode than right or equals
+	digraph \. 9675  " compose
+	digraph \*  215  " cartesian product
+	digraph \U 8745  " intersect
+	digraph \u 8746  " union
 
 	" }}}
 augroup END
