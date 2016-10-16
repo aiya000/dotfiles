@@ -27,7 +27,7 @@ function dotfile_config () {
 alias ls='ls --color=auto --group-directories-first'
 alias mv='mv -i'
 alias cp='cp -i'
-alias yi='yi --as=vim'
+alias yi='stack exec yi'
 
 # }}}
 # Laziness {{{
