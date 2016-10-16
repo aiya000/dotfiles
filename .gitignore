@@ -16,3 +16,6 @@
 
 # Others
 .backup/**
+
+# Yi
+.config/yi/.stack-work
