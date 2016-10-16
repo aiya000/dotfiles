@@ -37,9 +37,12 @@ export HISTIGNORE="*.zsh_history*:*mount*-o*password=*"
 # }}}
 # Reset $PATH {{{
 
-# Set PATH with priority
+# Mine
 new_path=$HOME/bin:$HOME/sbin
 new_path=$new_path:$HOME/.dotfiles/bin
+
+# zsh completions
+new_path=$new_path:$ZDOTDIR/zsh_completions
 
 # stack
 [ -d ~/.stack ] \
