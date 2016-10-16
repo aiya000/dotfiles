@@ -101,8 +101,8 @@ export VISUAL=vim
 export VTE_CJK_WIDTH=1
 
 # Using 'vim-pager' and 'vim-manpager'
-export PAGER='vim - +PAGER -c "setl nonu nornu | setf vim-pager"'
-export MANPAGER='vim - +MANPAGER -c "setl nonu nornu | setf vim-pager"'
+export PAGER='vim - +PAGER -c "setl nonu nornu ft=vim-pager | only"'
+export MANPAGER='vim - +MANPAGER -c "setl nonu nornu ft=vim-pager | only"'
 
 # Languages
 export GOPATH=~/.GoPath
