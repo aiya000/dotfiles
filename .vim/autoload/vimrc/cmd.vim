@@ -141,3 +141,11 @@ function! vimrc#cmd#pull_webpage_title(target_url) abort " {{{
 	let l:result = vimrc#system(l:cmd)
 	return substitute(l:result, "\r\n", '', 'g')
 endfunction " }}}
+
+" read! to scratch buffer
+function! vimrc#cmd#read_bang_to_buf(cmd) abort " {{{
+	new
+	setl buftype=nofile
+	setl filetype=scratch
+	silent! execute 'read!' a:cmd
+endfunction " }}}

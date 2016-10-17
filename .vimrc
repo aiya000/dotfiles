@@ -978,11 +978,11 @@ command! -bar -range Count :echomsg (<line2> - <line1> + 1)
 command! -bar AltrForward call altr#forward()
 command! -bar AltrBack    call altr#back()
 
-" Clear tail spaces
-command! -bar ClearTailSpacecs call vimrc#keys#clear_ends_space()
-
 " Pull and Insert <title>\(.*\)</title>
 command! -bar -nargs=1 InsertWebPageTitle execute 'normal! i' . vimrc#cmd#pull_webpage_title(<q-args>)
+
+" r! to scratch buffer
+command! -bar -nargs=* ReadBangBuf call vimrc#cmd#read_bang_to_buf(<q-args>)
 
 " }}}
 " Helper {{{
