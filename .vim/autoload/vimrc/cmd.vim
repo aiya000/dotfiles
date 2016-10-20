@@ -11,6 +11,23 @@ function! s:find_git_repository_name(current_dir, depth) abort " {{{
 	return s:find_git_repository_name(a:current_dir . '/..', a:depth + 1)
 endfunction " }}}
 
+" Do a:cmd to a:bufnr without changing the buffer of current window
+function! s:buffer_do(bufnr, cmd) abort " {{{
+	let l:current_buf = winbufnr('.')
+	silent! execute 'buffer' s:created_buf
+	silent! execute a:cmd
+	silent! execute 'buffer' l:current_buf
+endfunction " }}}
+
+" Create scratch buffer
+" Return its buffer number
+function! s:create_scratch_buf() abort " {{{
+	new
+	setl buftype=nofile
+	setl filetype=scratch
+	return winbufnr('.')
+endfunction " }}}
+
 "#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
 
 
@@ -142,10 +159,13 @@ function! vimrc#cmd#pull_webpage_title(target_url) abort " {{{
 	return substitute(l:result, "\r\n", '', 'g')
 endfunction " }}}
 
-" read! to scratch buffer
+" read! to created buffer or new buffer
 function! vimrc#cmd#read_bang_to_buf(cmd) abort " {{{
-	new
-	setl buftype=nofile
-	setl filetype=scratch
-	silent! execute 'read!' a:cmd
+	let s:created_buf = get(s:, 'created_buf', v:null)
+	let l:read_cmd    = 'read!' . a:cmd
+
+	if !buflisted(s:created_buf)
+		let s:created_buf = s:create_scratch_buf()
+	endif
+	call s:buffer_do(s:created_buf, l:read_cmd)
 endfunction " }}}
