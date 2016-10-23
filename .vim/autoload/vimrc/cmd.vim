@@ -22,10 +22,10 @@ endfunction " }}}
 " Create scratch buffer
 " Return its buffer number
 " not like :bufdo
-function! s:create_scratch_buf() abort " {{{
+function! s:create_scratch_buf(filetype) abort " {{{
 	new
 	setl buftype=nofile
-	setl filetype=scratch
+	execute 'setl filetype=' . a:filetype
 	return winbufnr('.')
 endfunction " }}}
 
@@ -166,7 +166,7 @@ function! vimrc#cmd#read_bang_to_buf(cmd) abort " {{{
 	let l:read_cmd    = 'read!' . a:cmd
 
 	if !buflisted(s:created_buf)
-		let s:created_buf = s:create_scratch_buf()
+		let s:created_buf = s:create_scratch_buf('read-bang')
 	endif
 	call s:buffer_do(s:created_buf, 'normal! ggdG')
 	call s:buffer_do(s:created_buf, l:read_cmd)
