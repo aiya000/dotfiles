@@ -1446,10 +1446,10 @@ augroup KeyMapping
 	" }}}
 	" digraph {{{
 
-	digraph (( 8834  " right includes left
-	digraph )) 8835  " left includes right
 	digraph /= 8800  " not equal
 
+	digraph \( 8834  " right includes left
+	digraph \) 8835  " left includes right
 	digraph \A 8704  " forall
 	digraph \E 8707  " exists
 	digraph \a 8743  " and
