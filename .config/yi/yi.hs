@@ -2,17 +2,17 @@
 
 import Data.Monoid ((<>))
 import Data.Prototype (override)
-import Yi.Boot (yi)
+import Yi.Boot (yi, reload)
 import Yi.Config (Config(defaultKm))
 import Yi.Config.Default (defaultVimConfig)
 import Yi.Config.Simple (EditorM)
 import Yi.Event (Event(Event), Key(KASCII), Modifier(MCtrl))
-import Yi.Keymap (KeymapSet)
+import Yi.Keymap (YiM, KeymapSet)
 import Yi.Keymap.Vim (mkKeymapSet, defVimConfig, vimBindings, VimBinding)
-import Yi.Keymap.Vim.Common (VimMode(Normal,Insert), VimBinding(VimBindingE), RepeatToken(Drop,Continue), EventString, vsMode, matchesString, MatchResult(NoMatch))
+import Yi.Keymap.Vim.Common (VimMode(Normal,Insert,Ex), VimBinding(VimBindingE), RepeatToken(Drop,Continue,Finish), EventString, vsMode, matchesString, MatchResult(NoMatch))
 import Yi.Keymap.Vim.EventUtils (eventToEventString)
 import Yi.Keymap.Vim.StateUtils (switchModeE)
-import Yi.Keymap.Vim.Utils (mkStringBindingE)
+import Yi.Keymap.Vim.Utils (mkStringBindingE, mkStringBindingY)
 import qualified Yi.Config.Simple as S
 
 
@@ -37,43 +37,46 @@ myBindings = normalBindings ++ insertBindings ++ visualBindings ++ exBindings
 keyC :: Char -> Event
 keyC x = Event (KASCII x) [MCtrl]
 
+-- Keymappings for VimMode Normal
 normalBindings :: [VimBinding]
 normalBindings =
-  [ nmap (keyC 'p')  S.previousTabE
-  , nmap (keyC 'n')  S.nextTabE
-  , nmap' " h"  S.prevWinE  -- temporary
-  , nmap' " j"  S.nextWinE  -- temporary
-  , nmap' " k"  S.prevWinE  -- temporary
-  , nmap' " l"  S.nextWinE  -- temporary
-  , nmap' "gH"  S.newTabE
-  , nmap' "ghh" S.newTabE  -- temporary
-  , nmap' "ghq" S.tryCloseE
-  , nmap' "ghc" (S.closeBufferE "")
-  , nmap' "gh\"" (S.setDividerPosE 1 0.3)
-  , nmap' "<C-k><C-r>" S.nextWinE
+  [ nmapE (keyC 'p')  S.previousTabE
+  , nmapE (keyC 'n')  S.nextTabE
+  , nmapE' " h"  S.prevWinE  -- temporary
+  , nmapE' " j"  S.nextWinE  -- temporary
+  , nmapE' " k"  S.prevWinE  -- temporary
+  , nmapE' " l"  S.nextWinE  -- temporary
+  , nmapE' "gH"  S.newTabE
+  , nmapE' "ghh" S.newTabE  -- temporary
+  , nmapE' "ghq" S.tryCloseE
+  , nmapE' "ghc" (S.closeBufferE "")  -- Close current buffer and current window
+  --, nmap' "gh\"" (S.setDividerPosE 0 0.3)
+  , nmapY' "<C-k><C-r>" reload
   -- Complete official lost things
-  , nmap' "<C-w>w" S.nextWinE
-  --, nmap "<Home>" (withCurrentBuffer moveToSol)
-  --, nmap "<End>" (withCurrentBuffer moveToEol)
-  --, nmap " " (eval ":nohlsearch<CR>")
+  , nmapE' "<C-w>w" S.nextWinE
   ]
   where
-    -- like nnoremap command of Vim
-    nmap :: Event -> EditorM () -> VimBinding
-    nmap key x = nmap' (eventToEventString key) x
-    -- like nnoremap command of Vim from EventString
-    nmap' :: EventString -> EditorM () -> VimBinding
-    nmap' key x = mkStringBindingE Normal Drop (key, x, id)
+    -- like nnoremap of Vim for EditorM
+    nmapE :: Event -> EditorM () -> VimBinding
+    nmapE key x = nmapE' (eventToEventString key) x
+    -- like nnoremap of Vim for EditorM from EventString
+    nmapE' :: EventString -> EditorM () -> VimBinding
+    nmapE' key x = mkStringBindingE Normal Drop (key, x, id)
+    -- for YiM
+    nmapY' :: EventString -> YiM () -> VimBinding
+    nmapY' key x = mkStringBindingY Normal (key, x, id)
 
+-- Keymappings for VimMode (∀a. Insert a)
 insertBindings :: [VimBinding]
 insertBindings =
   [ imap (keyC 'l') (switchModeE Normal)
+  --, imap' "<C-k><C-j>"
   ]
   where
-    -- like inoremap command of Vim
+    -- like inoremap of Vim
     imap :: Event -> EditorM () -> VimBinding
     imap key x = imap' (eventToEventString key) x
-    -- like inoremap command of Vim from EventString
+    -- like inoremap of Vim from EventString
     -- for ∀a. Insert a
     imap' :: EventString -> EditorM () -> VimBinding
     imap' key x = VimBindingE $ \evs state ->
@@ -84,5 +87,15 @@ insertBindings =
 visualBindings :: [VimBinding]
 visualBindings = []
 
+-- Keymappings for VimMode Ex
 exBindings :: [VimBinding]
-exBindings = []
+exBindings =
+  [ --cmap (keyC 'l') (switchModeE Normal) -- !?
+  ]
+  where
+    -- like cnoremap of Vim
+    cmap :: Event -> EditorM () -> VimBinding
+    cmap key x = cmap' (eventToEventString key) x
+    -- like cnoremap of Vim from EventString
+    cmap' :: EventString -> EditorM () -> VimBinding
+    cmap' key x = mkStringBindingE Ex Finish (key, x, id)
