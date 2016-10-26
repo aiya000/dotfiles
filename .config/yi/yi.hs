@@ -40,46 +40,46 @@ keyC x = Event (KASCII x) [MCtrl]
 -- Keymappings for VimMode Normal
 normalBindings :: [VimBinding]
 normalBindings =
-  [ nmapE (keyC 'p')  S.previousTabE
-  , nmapE (keyC 'n')  S.nextTabE
-  , nmapE' " h"  S.prevWinE  -- temporary
-  , nmapE' " j"  S.nextWinE  -- temporary
-  , nmapE' " k"  S.prevWinE  -- temporary
-  , nmapE' " l"  S.nextWinE  -- temporary
-  , nmapE' "gH"  S.newTabE
-  , nmapE' "ghh" S.newTabE  -- temporary
-  , nmapE' "ghq" S.tryCloseE
-  , nmapE' "ghc" (S.closeBufferE "")  -- Close current buffer and current window
+  [ nnoremapE (keyC 'p')  S.previousTabE
+  , nnoremapE (keyC 'n')  S.nextTabE
+  , nnoremapE' " h"  S.prevWinE  -- temporary
+  , nnoremapE' " j"  S.nextWinE  -- temporary
+  , nnoremapE' " k"  S.prevWinE  -- temporary
+  , nnoremapE' " l"  S.nextWinE  -- temporary
+  , nnoremapE' "gH"  S.newTabE
+  , nnoremapE' "ghh" S.newTabE  -- temporary
+  , nnoremapE' "ghq" S.tryCloseE
+  , nnoremapE' "ghc" (S.closeBufferE "")  -- Close current buffer and current window
   --, nmap' "gh\"" (S.setDividerPosE 0 0.3)
-  , nmapY' "<C-k><C-r>" reload
+  , nnoremapY' "<C-k><C-r>" reload
   -- Complete official lost things
-  , nmapE' "<C-w>w" S.nextWinE
+  , nnoremapE' "<C-w>w" S.nextWinE
   ]
   where
     -- like nnoremap of Vim for EditorM
-    nmapE :: Event -> EditorM () -> VimBinding
-    nmapE key x = nmapE' (eventToEventString key) x
+    nnoremapE :: Event -> EditorM () -> VimBinding
+    nnoremapE key x = nnoremapE' (eventToEventString key) x
     -- like nnoremap of Vim for EditorM from EventString
-    nmapE' :: EventString -> EditorM () -> VimBinding
-    nmapE' key x = mkStringBindingE Normal Drop (key, x, id)
+    nnoremapE' :: EventString -> EditorM () -> VimBinding
+    nnoremapE' key x = mkStringBindingE Normal Drop (key, x, id)
     -- for YiM
-    nmapY' :: EventString -> YiM () -> VimBinding
-    nmapY' key x = mkStringBindingY Normal (key, x, id)
+    nnoremapY' :: EventString -> YiM () -> VimBinding
+    nnoremapY' key x = mkStringBindingY Normal (key, x, id)
 
 -- Keymappings for VimMode (∀a. Insert a)
 insertBindings :: [VimBinding]
 insertBindings =
-  [ imap (keyC 'l') (switchModeE Normal)
-  --, imap' "<C-k><C-j>"
+  [ inoremap (keyC 'l') (switchModeE Normal)
+  --, inoremap' "<C-k><C-j>"
   ]
   where
     -- like inoremap of Vim
-    imap :: Event -> EditorM () -> VimBinding
-    imap key x = imap' (eventToEventString key) x
+    inoremap :: Event -> EditorM () -> VimBinding
+    inoremap key x = inoremap' (eventToEventString key) x
     -- like inoremap of Vim from EventString
     -- for ∀a. Insert a
-    imap' :: EventString -> EditorM () -> VimBinding
-    imap' key x = VimBindingE $ \evs state ->
+    inoremap' :: EventString -> EditorM () -> VimBinding
+    inoremap' key x = VimBindingE $ \evs state ->
       case vsMode state of
         Insert _ -> fmap (const $ x >> return Continue) (evs `matchesString` key)
         _        -> NoMatch
