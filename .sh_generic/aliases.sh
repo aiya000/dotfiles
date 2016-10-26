@@ -108,6 +108,11 @@ alias vim-build-make-mingw32='cd src && mingw32-make.exe -f Make_ming.mak GUI=ye
 # }}}
 # Shell Utils {{{
 
+# Start cmd without stdout and stderr in background
+function startbg () {
+	$@ > /dev/null 2>&1 &
+}
+
 # Console output pipe to clipboard
 if [ $IS_CYGWIN -eq 1 ] ; then
 	alias pbcopy='tee /dev/clipboard > /dev/null'
