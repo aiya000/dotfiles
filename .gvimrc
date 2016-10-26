@@ -141,7 +141,7 @@ augroup END
 
 if !g:gvimrc['loaded']
 	set background=dark
-	colorscheme apprentice
+	colorscheme solarized
 endif
 
 "}}}
