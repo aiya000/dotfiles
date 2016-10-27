@@ -3,7 +3,6 @@
 import Data.Monoid ((<>))
 import Data.Prototype (override)
 import Yi.Boot (yi, reload)
-import Yi.Config (Config(defaultKm))
 import Yi.Config.Default (defaultVimConfig)
 import Yi.Config.Simple (EditorM)
 import Yi.Event (Event(Event), Key(KASCII), Modifier(MCtrl))
@@ -12,6 +11,7 @@ import Yi.Keymap.Vim (mkKeymapSet, defVimConfig, vimBindings)
 import Yi.Keymap.Vim.EventUtils (eventToEventString)
 import Yi.Keymap.Vim.StateUtils (switchModeE)
 import Yi.Keymap.Vim.Utils (mkStringBindingE, mkStringBindingY)
+import Yi.Config (defaultKm, configUI, configWindowFill)
 import qualified Yi.Config.Simple as S
 import qualified Yi.Keymap.Vim.Common as V
 
@@ -19,6 +19,7 @@ import qualified Yi.Keymap.Vim.Common as V
 main :: IO ()
 main = yi defaultVimConfig
   { defaultKm = myDefaultKm
+  , configUI = (configUI defaultVimConfig) { configWindowFill = '~' }
   }
 
 
