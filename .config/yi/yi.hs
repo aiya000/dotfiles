@@ -50,7 +50,9 @@ normalBindings =
   , nnoremapE' "gH"  S.newTabE
   , nnoremapE' "ghh" S.newTabE  -- temporary
   , nnoremapE' "ghq" S.tryCloseE
+  --, nnoremapE' "ghQ"
   , nnoremapE' "ghc" (S.closeBufferE "")  -- Close current buffer and current window
+  , nnoremapE' "ghv" (S.splitE >> S.prevWinE)  -- Clone win to right
   --, nmap' "gh\"" (S.setDividerPosE 0 0.3)
   , nnoremapY' "<C-k><C-r>" reload
   -- Complete official lost things
