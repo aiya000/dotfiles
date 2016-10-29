@@ -3,6 +3,7 @@
 import Data.Monoid ((<>))
 import Data.Prototype (override)
 import Yi.Boot (yi, reload)
+import Yi.Config (defaultKm, configUI, configWindowFill)
 import Yi.Config.Default (defaultVimConfig)
 import Yi.Config.Simple (EditorM)
 import Yi.Event (Event(Event), Key(KASCII), Modifier(MCtrl))
@@ -11,7 +12,6 @@ import Yi.Keymap.Vim (mkKeymapSet, defVimConfig, vimBindings)
 import Yi.Keymap.Vim.EventUtils (eventToEventString)
 import Yi.Keymap.Vim.StateUtils (switchModeE)
 import Yi.Keymap.Vim.Utils (mkStringBindingE, mkStringBindingY)
-import Yi.Config (defaultKm, configUI, configWindowFill)
 import qualified Yi.Config.Simple as S
 import qualified Yi.Keymap.Vim.Common as V
 
@@ -82,18 +82,31 @@ insertBindings =
     -- like inoremap of Vim from V.EventString
     -- for ∀a. V.Insert a
     inoremap' :: V.EventString -> EditorM () -> V.VimBinding
-    inoremap' key x = V.VimBindingE $ \evs state ->
+    inoremap' key x = V.VimBindingE $ \key' state ->
       case V.vsMode state of
-        V.Insert _ -> fmap (const $ x >> return V.Continue) (evs `V.matchesString` key)
+        V.Insert _ -> (const $ x >> return V.Continue) <$> key' `V.matchesString` key
         _          -> V.NoMatch
 
+-- Keymapping for V.VimMode (∀a V.Visual a)
 visualBindings :: [V.VimBinding]
-visualBindings = []
+visualBindings =
+  [ vnoremapE (keyC 'l') (switchModeE V.Normal)  --FIXME: visual drawing is too later
+  ]
+  where
+    -- like vnoremap of Vim for EditorM
+    vnoremapE :: Event -> EditorM () -> V.VimBinding
+    vnoremapE key x = vnoremapE' (eventToEventString key) x
+    -- like vnoremap of Vim for EditorM from V.EventString
+    vnoremapE' :: V.EventString -> EditorM () -> V.VimBinding
+    vnoremapE' key x = V.VimBindingE $ \key' state ->
+      case V.vsMode state of
+        V.Visual _ -> (const $ x >> return V.Continue) <$> key' `V.matchesString` key
+        _          -> V.NoMatch
 
 -- Keymappings for V.VimMode V.Ex
 exBindings :: [V.VimBinding]
 exBindings =
-  [ cnoremap (keyC 'l') (switchModeE V.Normal) --FIXME
+  [ cnoremap (keyC 'l') (switchModeE V.Normal) --FIXME: cannot escape from ex area
   ]
   where
     -- like cnoremap of Vim
