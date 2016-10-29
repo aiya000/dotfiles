@@ -5,8 +5,9 @@ import Data.Prototype (override)
 import Yi.Boot (yi, reload)
 import Yi.Config (defaultKm, configUI, configWindowFill)
 import Yi.Config.Default (defaultVimConfig)
-import Yi.Config.Simple (EditorM)
+import Yi.Editor (EditorM, MonadEditor, getEditorDyn, putEditorDyn)
 import Yi.Event (Event(Event), Key(KASCII), Modifier(MCtrl))
+import Yi.File (viWrite)
 import Yi.Keymap (YiM, KeymapSet)
 import Yi.Keymap.Vim (mkKeymapSet, defVimConfig, vimBindings)
 import Yi.Keymap.Vim.EventUtils (eventToEventString)
@@ -34,7 +35,7 @@ myDefaultKm = mkKeymapSet $ defVimConfig `override` \super _ -> super
 myBindings :: [V.VimBinding]
 myBindings = normalBindings ++ insertBindings ++ visualBindings ++ exBindings
 
--- like <C-{x}> key of Vim
+-- Like <C-{x}> key of Vim
 keyC :: Char -> Event
 keyC x = Event (KASCII x) [MCtrl]
 
@@ -55,14 +56,15 @@ normalBindings =
   , nnoremapE' "ghv" (S.splitE >> S.prevWinE)  -- Clone win to right
   --, nmap' "gh\"" (S.setDividerPosE 0 0.3)
   , nnoremapY' "<C-k><C-r>" reload
+  , nnoremapY' "<C-k><CR>" viWrite  -- Yi interpret <C-j> as <CR>
   -- Complete official lost things
   , nnoremapE' "<C-w>w" S.nextWinE
   ]
   where
-    -- like nnoremap of Vim for EditorM
+    -- Like nnoremap of Vim for EditorM
     nnoremapE :: Event -> EditorM () -> V.VimBinding
     nnoremapE key x = nnoremapE' (eventToEventString key) x
-    -- like nnoremap of Vim for EditorM from V.EventString
+    -- Like nnoremap of Vim for EditorM from V.EventString
     nnoremapE' :: V.EventString -> EditorM () -> V.VimBinding
     nnoremapE' key x = mkStringBindingE V.Normal V.Drop (key, x, id)
     -- for YiM
@@ -72,20 +74,28 @@ normalBindings =
 -- Keymappings for V.VimMode (∀a. V.Insert a)
 insertBindings :: [V.VimBinding]
 insertBindings =
-  [ inoremap (keyC 'l') (switchModeE V.Normal)
-  --, inoremap' "<C-k><C-j>"
+  [ inoremapE (keyC 'l') (switchModeE V.Normal)
+  , inoremapY' "<C-k><CR>" (viWrite >> switchModeY V.Normal)  -- Yi interpret <C-j> as <CR>
   ]
   where
-    -- like inoremap of Vim
-    inoremap :: Event -> EditorM () -> V.VimBinding
-    inoremap key x = inoremap' (eventToEventString key) x
-    -- like inoremap of Vim from V.EventString
+    switchModeY :: V.VimMode -> YiM ()
+    switchModeY mode = getEditorDyn >>= \s -> putEditorDyn s { V.vsMode = mode }
+    -- The keymapping implementor for both of V.VimBindingY and V.VimBindingE
+    implBinding :: MonadEditor m => V.EventString -> m () -> V.EventString -> V.VimState -> V.MatchResult (m V.RepeatToken)
+    implBinding key context = \key' state -> case V.vsMode state of
+                                                  V.Insert _ -> (const $ context >> return V.Continue) <$> key' `V.matchesString` key
+                                                  _          -> V.NoMatch
+    -- Like inoremap of Vim from Event for EditorM
+    inoremapE :: Event -> EditorM () -> V.VimBinding
+    inoremapE key x = inoremapE' (eventToEventString key) x
+    -- Like inoremap of Vim from V.EventString for EditorM
     -- for ∀a. V.Insert a
-    inoremap' :: V.EventString -> EditorM () -> V.VimBinding
-    inoremap' key x = V.VimBindingE $ \key' state ->
-      case V.vsMode state of
-        V.Insert _ -> (const $ x >> return V.Continue) <$> key' `V.matchesString` key
-        _          -> V.NoMatch
+    inoremapE' :: V.EventString -> EditorM () -> V.VimBinding
+    inoremapE' key x = V.VimBindingE $ implBinding key x
+    -- Like inoremap of Vim from V.EventString for YiM
+    -- for ∀a. V.Insert a
+    inoremapY' :: V.EventString -> YiM () -> V.VimBinding
+    inoremapY' key x = V.VimBindingY $ implBinding key x
 
 -- Keymapping for V.VimMode (∀a V.Visual a)
 visualBindings :: [V.VimBinding]
@@ -93,15 +103,17 @@ visualBindings =
   [ vnoremapE (keyC 'l') (switchModeE V.Normal)  --FIXME: visual drawing is too later
   ]
   where
-    -- like vnoremap of Vim for EditorM
+    -- The keymappings implementor for both of V.VimBindingY and V.VimBindingE
+    implBinding :: MonadEditor m => V.EventString -> m () -> V.EventString -> V.VimState -> V.MatchResult (m V.RepeatToken)
+    implBinding key context = \key' state -> case V.vsMode state of
+                                                  V.Visual _ -> (const $ context >> return V.Continue) <$> key' `V.matchesString` key
+                                                  _          -> V.NoMatch
+    -- Like vnoremap of Vim for EditorM
     vnoremapE :: Event -> EditorM () -> V.VimBinding
     vnoremapE key x = vnoremapE' (eventToEventString key) x
-    -- like vnoremap of Vim for EditorM from V.EventString
+    -- Like vnoremap of Vim for EditorM from V.EventString
     vnoremapE' :: V.EventString -> EditorM () -> V.VimBinding
-    vnoremapE' key x = V.VimBindingE $ \key' state ->
-      case V.vsMode state of
-        V.Visual _ -> (const $ x >> return V.Continue) <$> key' `V.matchesString` key
-        _          -> V.NoMatch
+    vnoremapE' key x = V.VimBindingE $ implBinding key x
 
 -- Keymappings for V.VimMode V.Ex
 exBindings :: [V.VimBinding]
@@ -109,9 +121,9 @@ exBindings =
   [ cnoremap (keyC 'l') (switchModeE V.Normal) --FIXME: cannot escape from ex area
   ]
   where
-    -- like cnoremap of Vim
+    -- Like cnoremap of Vim
     cnoremap :: Event -> EditorM () -> V.VimBinding
     cnoremap key x = cnoremap' (eventToEventString key) x
-    -- like cnoremap of Vim from V.EventString
+    -- Like cnoremap of Vim from V.EventString
     cnoremap' :: V.EventString -> EditorM () -> V.VimBinding
     cnoremap' key x = mkStringBindingE V.Ex V.Finish (key, x, id)
