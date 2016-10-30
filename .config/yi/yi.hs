@@ -103,7 +103,7 @@ insertBindings =
 -- Keymapping for V.VimMode (∀a V.Visual a)
 visualBindings :: [V.VimBinding]
 visualBindings =
-  [ vnoremapE (keyC 'l') (switchModeE V.Normal)  --FIXME: visual drawing is too later
+  [ vnoremapE (keyC 'l') exitVisual
   ]
   where
     -- The keymappings implementor for both of V.VimBindingY and V.VimBindingE
@@ -119,22 +119,28 @@ visualBindings =
     vnoremapE' :: V.EventString -> EditorM () -> V.VimBinding
     vnoremapE' key x = V.VimBindingE $ implBinding key x
 
+    -- See https://www.stackage.org/haddock/lts-7.4/yi-0.12.6/src/Yi.Keymap.Vim.ExMap.html#exitEx
+    exitVisual = do
+      resetCountE
+      switchModeE V.Normal
+      withCurrentBuffer $ setVisibleSelection False
+
 -- Keymappings for V.VimMode V.Ex
 exBindings :: [V.VimBinding]
 exBindings =
   [ cnoremap (keyC 'l') exitEx'
   ]
   where
-    -- See https://www.stackage.org/haddock/lts-7.4/yi-0.12.6/src/Yi.Keymap.Vim.ExMap.html#exitEx
-    exitEx' :: EditorM ()
-    exitEx' = do
-      resetCountE
-      switchModeE V.Normal
-      closeBufferAndWindowE
-      withCurrentBuffer $ setVisibleSelection False
     -- Like cnoremap of Vim
     cnoremap :: Event -> EditorM () -> V.VimBinding
     cnoremap key x = cnoremap' (eventToEventString key) x
     -- Like cnoremap of Vim from V.EventString
     cnoremap' :: V.EventString -> EditorM () -> V.VimBinding
     cnoremap' key x = mkStringBindingE V.Ex V.Finish (key, x, id)
+
+    -- See https://www.stackage.org/haddock/lts-7.4/yi-0.12.6/src/Yi.Keymap.Vim.ExMap.html#exitEx
+    exitEx' = do
+      resetCountE
+      switchModeE V.Normal
+      closeBufferAndWindowE
+      withCurrentBuffer $ setVisibleSelection False
