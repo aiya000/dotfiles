@@ -14,7 +14,7 @@ import Yi.Keymap.Vim (mkKeymapSet, defVimConfig, vimBindings)
 import Yi.Keymap.Vim.EventUtils (eventToEventString)
 import Yi.Keymap.Vim.StateUtils (switchModeE, resetCountE)
 import Yi.Keymap.Vim.Utils (mkStringBindingE, mkStringBindingY)
-import qualified Yi.Config.Simple as S
+import qualified Yi.Editor as E
 import qualified Yi.Keymap.Vim.Common as V
 
 
@@ -43,23 +43,24 @@ keyC x = Event (KASCII x) [MCtrl]
 -- Keymappings for V.VimMode V.Normal
 normalBindings :: [V.VimBinding]
 normalBindings =
-  [ nnoremapE (keyC 'p')  S.previousTabE
-  , nnoremapE (keyC 'n')  S.nextTabE
-  , nnoremapE' " h"  S.prevWinE  -- temporary
-  , nnoremapE' " j"  S.nextWinE  -- temporary
-  , nnoremapE' " k"  S.prevWinE  -- temporary
-  , nnoremapE' " l"  S.nextWinE  -- temporary
-  , nnoremapE' "gH"  S.newTabE
-  , nnoremapE' "ghh" S.newTabE  -- temporary
-  , nnoremapE' "ghq" S.tryCloseE
+  [ nnoremapE (keyC 'p')  E.previousTabE
+  , nnoremapE (keyC 'n')  E.nextTabE
+  , nnoremapE' " h"  E.prevWinE  -- temporary
+  , nnoremapE' " j"  E.nextWinE  -- temporary
+  , nnoremapE' " k"  E.prevWinE  -- temporary
+  , nnoremapE' " l"  E.nextWinE  -- temporary
+  , nnoremapE' "gH"  E.newTabE
+  , nnoremapE' "ghh" E.newTabE  -- temporary
+  , nnoremapE' "ghq" E.tryCloseE  --TODO
   --, nnoremapE' "ghQ"
-  , nnoremapE' "ghc" (S.closeBufferE "")  -- Close current buffer and current window
-  , nnoremapE' "ghv" (S.splitE >> S.prevWinE)  -- Clone win to right
-  --, nmap' "gh\"" (S.setDividerPosE 0 0.3)
+  , nnoremapE' "ghc" (E.closeBufferE "")  -- Close current buffer and current window
+  , nnoremapE' "ghv" (E.splitE >> E.prevWinE)  -- Clone win to right
+  --, nmap' "gh\"" (E.setDividerPosE 0 0.3)
   , nnoremapY' "<C-k><C-r>" reload
   , nnoremapY' "<C-k><CR>" viWrite  -- Yi interpret <C-j> as <CR>
+  --, nnoremap? "<C-k><C-l>" nohlsearch
   -- Complete official lost things
-  , nnoremapE' "<C-w>w" S.nextWinE
+  , nnoremapE' "<C-w>w" E.nextWinE
   ]
   where
     -- Like nnoremap of Vim for EditorM
