@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# The first line of commit-msg must not be over 50 chars
+if [ $(cat "$1" | head -1 | wc -l) -gt 50 ] ; then
+	echo 'Detected invalid commit message:'
+	echo '  The commit message must not be over 50 chars'
+	exit 1
+fi
+
+#TODO: The detail of commit-msg must not be over 70 chars
+# 'The detail of commit-msg' means the lines after the second
