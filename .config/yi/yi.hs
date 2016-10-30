@@ -1,6 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-import Data.Monoid ((<>))
 import Data.Prototype (override)
 import Yi.Boot (yi, reload)
 import Yi.Buffer.Misc (setVisibleSelection)
@@ -10,12 +9,20 @@ import Yi.Editor (EditorM, MonadEditor, getEditorDyn, putEditorDyn, closeBufferA
 import Yi.Event (Event(Event), Key(KASCII), Modifier(MCtrl))
 import Yi.File (viWrite)
 import Yi.Keymap (YiM, KeymapSet)
-import Yi.Keymap.Vim (mkKeymapSet, defVimConfig, vimBindings)
+import Yi.Keymap.Vim (mkKeymapSet, defVimConfig, vimBindings, pureEval)
 import Yi.Keymap.Vim.EventUtils (eventToEventString)
 import Yi.Keymap.Vim.StateUtils (switchModeE, resetCountE)
 import Yi.Keymap.Vim.Utils (mkStringBindingE, mkStringBindingY)
 import qualified Yi.Editor as E
 import qualified Yi.Keymap.Vim.Common as V
+
+-- VimEvaluator generate the action from EventString
+type VimEvaluator = V.EventString -> EditorM ()
+
+
+-- Like <C-{x}> key of Vim
+keyC :: Char -> Event
+keyC x = Event (KASCII x) [MCtrl]
 
 
 main :: IO ()
@@ -27,24 +34,22 @@ main = yi defaultVimConfig
 
 -- Compose yi's vim keymapping and my keymapping
 myDefaultKm :: KeymapSet
-myDefaultKm = mkKeymapSet $ defVimConfig `override` \super _ -> super
-  { vimBindings = myBindings <> vimBindings super
-  }
+myDefaultKm = mkKeymapSet $ defVimConfig `override` \super this ->
+  let eval = pureEval this
+  in super
+    { vimBindings = myBindings eval ++ vimBindings super
+    }
 
 
 -- My keymapping
-myBindings :: [V.VimBinding]
-myBindings = normalBindings ++ insertBindings ++ visualBindings ++ exBindings
-
--- Like <C-{x}> key of Vim
-keyC :: Char -> Event
-keyC x = Event (KASCII x) [MCtrl]
+myBindings :: VimEvaluator -> [V.VimBinding]
+myBindings eval = normalBindings eval ++ insertBindings ++ visualBindings ++ exBindings
 
 -- Keymappings for V.VimMode V.Normal
-normalBindings :: [V.VimBinding]
-normalBindings =
-  [ nnoremapE (keyC 'p')  E.previousTabE
-  , nnoremapE (keyC 'n')  E.nextTabE
+normalBindings :: VimEvaluator -> [V.VimBinding]
+normalBindings _ =
+  [ nnoremapE (keyC 'p') E.previousTabE
+  , nnoremapE (keyC 'n') E.nextTabE
   , nnoremapE' " h"  E.prevWinE  -- temporary
   , nnoremapE' " j"  E.nextWinE  -- temporary
   , nnoremapE' " k"  E.prevWinE  -- temporary
@@ -53,12 +58,14 @@ normalBindings =
   , nnoremapE' "ghh" E.newTabE  -- temporary
   , nnoremapE' "ghq" E.tryCloseE  --TODO
   --, nnoremapE' "ghQ"
-  , nnoremapE' "ghc" (E.closeBufferE "")  -- Close current buffer and current window
+  , nnoremapE' "ghc" E.closeBufferAndWindowE
   , nnoremapE' "ghv" (E.splitE >> E.prevWinE)  -- Clone win to right
-  --, nmap' "gh\"" (E.setDividerPosE 0 0.3)
+  , nnoremapE' "gho" E.closeOtherE  -- Do :only
+  --, nnoremapE' "g:"  (eval ":buffers<CR>")  --FIXME: doesn't works
+  --, nnoremapE' "gh\"" (E.setDividerPosE 0 0.3)
   , nnoremapY' "<C-k><C-r>" reload
   , nnoremapY' "<C-k><CR>" viWrite  -- Yi interpret <C-j> as <CR>
-  --, nnoremap? "<C-k><C-l>" nohlsearch
+  --, nnoremapE' "<C-k><C-l>" (eval ":nohlsearch<CR>")  --FIXME: doesn't works correctly
   -- Complete official lost things
   , nnoremapE' "<C-w>w" E.nextWinE
   ]
