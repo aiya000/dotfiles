@@ -37,6 +37,33 @@ keyC :: Char -> Event
 keyC x = Event (KASCII x) [MCtrl]
 
 
+-- Like quitEditor but checking unsaved buffers
+quitEditorWithBufferCheck :: YiM ()
+quitEditorWithBufferCheck = do
+  bufStack        <- gets E.bufferStack
+  buffers         <- gets E.buffers
+  unsavedBufStack <- forM bufStack $ \buf ->
+    ifM (needsSaving buf)
+      (return . Just . identString . fromJust $ M.lookup buf buffers)
+      (return Nothing)
+  let findJusts xs (Just x) = x : xs
+      findJusts xs Nothing  = xs
+      unsavedBufferNames    = foldl' findJusts [] unsavedBufStack
+  if null unsavedBufferNames
+     then quitEditor
+     else errorEditor $ "No write since last change for buffer " <> showT unsavedBufferNames
+
+
+--modifyEditorDyn :: (MonadEditor m, YiVariable a, Functor m) => (a -> a) -> m ()
+modifyEditorDyn :: (MonadEditor m, YiVariable a) => (a -> a) -> m ()
+modifyEditorDyn f = getEditorDyn >>= \s -> putEditorDyn (f s)
+
+
+-- Like switchModeE, for YiM
+switchModeY :: V.VimMode -> YiM ()
+switchModeY mode = modifyEditorDyn $ \s -> s { V.vsMode = mode }
+
+
 -- Entry point
 main :: IO ()
 main = yi defaultVimConfig
@@ -95,22 +122,6 @@ normalBindings _ =
     nnoremapY' :: V.EventString -> YiM () -> V.VimBinding
     nnoremapY' key x = mkStringBindingY V.Normal (key, x, id)
 
-    --quitEditorWithBufferCheck :: EditorM ()
-    quitEditorWithBufferCheck :: YiM ()
-    quitEditorWithBufferCheck = do
-      bufStack        <- gets E.bufferStack
-      buffers         <- gets E.buffers
-      unsavedBufStack <- forM bufStack $ \buf ->
-        ifM (needsSaving buf)
-          (return . Just . identString . fromJust $ M.lookup buf buffers)
-          (return Nothing)
-      let findJusts xs (Just x) = x : xs
-          findJusts xs Nothing  = xs
-          unsavedBufferNames    = foldl' findJusts [] unsavedBufStack
-      if null unsavedBufferNames
-         then quitEditor
-         else errorEditor $ "No write since last change for buffer " <> showT unsavedBufferNames
-
 
 -- Keymappings for V.VimMode (∀a. V.Insert a)
 insertBindings :: [V.VimBinding]
@@ -137,13 +148,6 @@ insertBindings =
     -- for ∀a. V.Insert a
     inoremapY' :: V.EventString -> YiM () -> V.VimBinding
     inoremapY' key x = V.VimBindingY $ implBinding key x
-
-    --modifyEditorDyn :: (MonadEditor m, YiVariable a, Functor m) => (a -> a) -> m ()
-    modifyEditorDyn :: (MonadEditor m, YiVariable a) => (a -> a) -> m ()
-    modifyEditorDyn f = getEditorDyn >>= \s -> putEditorDyn (f s)
-
-    switchModeY :: V.VimMode -> YiM ()
-    switchModeY mode = modifyEditorDyn $ \s -> s { V.vsMode = mode }
 
 -- Keymapping for V.VimMode (∀a V.Visual a)
 visualBindings :: [V.VimBinding]
