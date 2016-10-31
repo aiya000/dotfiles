@@ -11,7 +11,7 @@ import Yi.Boot (yi, reload)
 import Yi.Buffer.Misc (setVisibleSelection, identString)
 import Yi.Config (defaultKm, configUI, configWindowFill)
 import Yi.Config.Default (defaultVimConfig)
-import Yi.Core (quitEditor, errorEditor)
+import Yi.Core (quitEditor, errorEditor, refreshEditor)
 import Yi.Editor (EditorM, MonadEditor, getEditorDyn, putEditorDyn, closeBufferAndWindowE, withCurrentBuffer)
 import Yi.Event (Event(Event), Key(KASCII), Modifier(MCtrl))
 import Yi.File (viWrite, fwriteAllY)
@@ -90,6 +90,7 @@ normalBindings :: VimEvaluator -> [V.VimBinding]
 normalBindings _ =
   [ nnoremapE (keyC 'p') E.previousTabE
   , nnoremapE (keyC 'n') E.nextTabE
+  , nnoremapY (keyC 'l') refreshEditor
   , nnoremapE' " h"  E.prevWinE  -- temporary
   , nnoremapE' " j"  E.nextWinE  -- temporary
   , nnoremapE' " k"  E.prevWinE  -- temporary
@@ -119,6 +120,8 @@ normalBindings _ =
     nnoremapE' :: V.EventString -> EditorM () -> V.VimBinding
     nnoremapE' key x = mkStringBindingE V.Normal V.Drop (key, x, id)
     -- for YiM
+    nnoremapY  :: Event -> YiM () -> V.VimBinding
+    nnoremapY  key x = nnoremapY' (eventToEventString key) x
     nnoremapY' :: V.EventString -> YiM () -> V.VimBinding
     nnoremapY' key x = mkStringBindingY V.Normal (key, x, id)
 
