@@ -1074,7 +1074,7 @@ CmdCnoreabbr DeinUpdateLog echo dein#get_updates_log()
 " Development {{{
 
 " GHCi
-let s:ghci_command = executable('stack') ? 'stack ghci' : 'ghci'
+let s:ghci_command = executable('stack') ? 'stack exec ghci -- ' : 'ghci'
 execute 'CmdCnoreabbr Ghci'    'VimShellInteractive'                    s:ghci_command
 execute 'CmdCnoreabbr Sghci'   'VimShellInteractive' '--split="sp"'     s:ghci_command
 execute 'CmdCnoreabbr Vghci'   'VimShellInteractive' '--split="vsp"'    s:ghci_command
