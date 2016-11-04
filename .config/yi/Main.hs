@@ -107,7 +107,7 @@ configureMyVim :: ConfigM ()
 configureMyVim = do
   configureVim
   defaultKmA .= myDefaultKm
-  --configUIA  .= (configUI defaultVimConfig) { configWindowFill = '~' }
+  configUIA  .= (configUI defaultConfig) { configWindowFill = '~' }
 
 
 -- Compose yi's vim keymapping and my keymapping
