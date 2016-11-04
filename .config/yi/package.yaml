@@ -58,4 +58,4 @@ executables:
         main: Main.hs
         source-dirs: .
         other-modules:
-          CmdOptions
+          Yi.MyConfig.CmdOptions

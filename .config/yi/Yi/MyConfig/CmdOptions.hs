@@ -1,6 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 -- Re define cmd option by cmdargs, just for me !!
-module CmdOptions
+module Yi.MyConfig.CmdOptions
  ( CommandLineOptions (..)
  , clOptions
  ) where
@@ -9,7 +9,7 @@ import System.Console.CmdArgs
 
 data CommandLineOptions = CommandLineOptions
   { frontend    :: String
-  , startonline :: Maybe Int
+  , startOnLine :: Maybe Int
   , files       :: [String]
   } deriving (Show, Data, Typeable)
 

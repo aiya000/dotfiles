@@ -1,6 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-import CmdOptions
 import Control.Monad (forM)
 import Control.Monad.Extra (ifM)
 import Control.Monad.State.Lazy (execStateT)
@@ -38,6 +37,7 @@ import Yi.Keymap.Vim.Ex.Commands.Common (needsSaving)
 import Yi.Keymap.Vim.StateUtils (switchModeE, resetCountE)
 import Yi.Keymap.Vim.Utils (mkStringBindingE, mkStringBindingY)
 import Yi.Monad (gets)
+import Yi.MyConfig.CmdOptions (CommandLineOptions(CommandLineOptions,frontend,startOnLine,files),clOptions)
 import Yi.String (showT)
 import Yi.Types (Action(YiA,EditorA,BufferA), YiVariable, IndentSettings(IndentSettings,expandTabs,tabSize,shiftWidth))
 import qualified Data.List.NonEmpty as NE
