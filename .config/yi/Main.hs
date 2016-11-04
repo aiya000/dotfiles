@@ -1,5 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
+import CmdOptions
 import Control.Monad (forM)
 import Control.Monad.Extra (ifM)
 import Control.Monad.State.Lazy (execStateT)
@@ -10,6 +11,7 @@ import Data.Monoid ((<>))
 import Data.Prototype (override)
 import Lens.Micro.Platform ((.=))
 import Prelude hiding (foldl)
+import System.Console.CmdArgs (cmdArgs)
 import System.Environment (getArgs)
 import Yi.Boot (yi, reload)
 import Yi.Buffer.Indent (modifyIndentB)
@@ -86,12 +88,13 @@ switchModeY mode = getEditorDyn >>= \s -> putEditorDyn s { V.vsMode = mode }
 -- Entry point
 main :: IO ()
 main = do
-    files  <- getArgs
-    let openFileActions = intersperse (EditorA E.newTabE) $ map (YiA . openNewFile) files
-    config <- flip execStateT defaultConfig . runConfigM $ do
-      startActionsA .= openFileActions
-      myConfig
-    startEditor config Nothing
+  --TODO: Implement --frontend and --startonline
+  args   <- cmdArgs clOptions
+  let openFileActions = intersperse (EditorA E.newTabE) $ map (YiA . openNewFile) (files args)
+  config <- flip execStateT defaultConfig . runConfigM $ do
+    startActionsA .= openFileActions
+    myConfig
+  startEditor config Nothing
 
 
 myConfig :: ConfigM ()
@@ -174,6 +177,7 @@ normalBindings _ =
 insertBindings :: [V.VimBinding]
 insertBindings =
   [ inoremapE (keyC 'l') (switchModeE V.Normal >> withCurrentBuffer B.leftB)  -- <Esc> behavior of Vim
+  --FIXME: cannot unset modified flag
   , inoremapY' "<C-k><CR>" (viWrite >> switchModeY V.Normal)  -- Yi interprets <C-j> as <CR>
   , inoremapY' "<C-k><C-k>" (killLine Nothing)
   , inoremapY' "<Tab>" (withCurrentBuffer $ B.insertN "  ")  --NOTE: Does Yi has :set ts=n like stateful function ?

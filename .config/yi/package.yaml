@@ -27,6 +27,7 @@ flags:
 
 dependencies:
     - base >= 4.8 && < 5
+    - cmdargs
     - containers
     - extra
     - microlens-platform
@@ -56,3 +57,5 @@ executables:
     yi:
         main: Main.hs
         source-dirs: .
+        other-modules:
+          CmdOptions
