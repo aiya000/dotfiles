@@ -12,18 +12,20 @@ import Lens.Micro.Platform ((.=))
 import Prelude hiding (foldl)
 import System.Environment (getArgs)
 import Yi.Boot (yi, reload)
-import Yi.Buffer.Misc (setVisibleSelection, identString)
-import Yi.Config (defaultKm, configUI, configWindowFill)
+import Yi.Buffer.Indent (modifyIndentB)
+import Yi.Buffer.Misc (setVisibleSelection, identString, leftB)
+import Yi.Config (configUI, configWindowFill)
 import Yi.Config.Default (defaultConfig)
 import Yi.Config.Default.HaskellMode (configureHaskellMode)
 import Yi.Config.Default.MiscModes (configureMiscModes)
 import Yi.Config.Default.Vim (configureVim)
 import Yi.Config.Default.Vty (configureVty)
-import Yi.Config.Lens (defaultKmA, configUIA, startActionsA)
-import Yi.Config.Simple (configMain)
+import Yi.Config.Lens (defaultKmA, configUIA, startActionsA, initialActionsA)
+import Yi.Config.Simple (configMain, runAfterStartup)
 import Yi.Config.Simple.Types (ConfigM, runConfigM)
 import Yi.Core (startEditor, quitEditor, errorEditor, refreshEditor)
-import Yi.Editor (EditorM, MonadEditor, withEditor, getEditorDyn, putEditorDyn, closeBufferAndWindowE, withCurrentBuffer)
+import Yi.Dired (dired)
+import Yi.Editor (EditorM, MonadEditor, withEditor, getEditorDyn, putEditorDyn, closeBufferAndWindowE, withCurrentBuffer, printMsg)
 import Yi.Event (Event(Event), Key(KASCII), Modifier(MCtrl))
 import Yi.File (openNewFile)
 import Yi.File (viWrite, fwriteAllY)
@@ -36,7 +38,7 @@ import Yi.Keymap.Vim.StateUtils (switchModeE, resetCountE)
 import Yi.Keymap.Vim.Utils (mkStringBindingE, mkStringBindingY)
 import Yi.Monad (gets)
 import Yi.String (showT)
-import Yi.Types (Action(YiA,EditorA), YiVariable)
+import Yi.Types (Action(YiA,EditorA,BufferA), YiVariable, IndentSettings(IndentSettings,expandTabs,tabSize,shiftWidth))
 import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as M
 import qualified Yi.Editor as E
@@ -96,12 +98,14 @@ main = do
       startActionsA .= openFileActions
     startEditor config Nothing
 
+
 myConfig :: ConfigM ()
 myConfig = do
   configureVty
-  configureMyVim
   configureHaskellMode
   configureMiscModes
+  configureMyVim
+  --initialActionsA .= [BufferA $ modifyIndentB (+2)]  --TODO
 
 configureMyVim :: ConfigM ()
 configureMyVim = do
@@ -128,7 +132,7 @@ normalBindings :: VimEvaluator -> [V.VimBinding]
 normalBindings _ =
   [ nnoremapE (keyC 'p') E.previousTabE
   , nnoremapE (keyC 'n') E.nextTabE
-  , nnoremapY (keyC 'l') refreshEditor
+  , nnoremapY (keyC 'l') (refreshEditor >> printMsg "refreshed")
   , nnoremapE' " h"  E.prevWinE  -- temporary
   , nnoremapE' " j"  E.nextWinE  -- temporary
   , nnoremapE' " k"  E.prevWinE  -- temporary
@@ -138,7 +142,7 @@ normalBindings _ =
   , nnoremapY' "ghq" closeWinOrQuitEditor
   , nnoremapY' "ghQ" quitEditorWithBufferCheck
   , nnoremapE' "ghc" E.closeBufferAndWindowE
-  , nnoremapE' "ghv" (E.splitE >> E.prevWinE)  -- Clone win to right
+  , nnoremapE' "ghv" vsplit  -- Clone win to right
   --, nnoremapE' "ghs" (E.splitE >> ?)  -- Clone win to under
   , nnoremapE' "gho" E.closeOtherE  -- Do :only
   --, nnoremapE' "g:"  (eval ":buffers<CR>")  --FIXME: doesn't works
@@ -146,6 +150,8 @@ normalBindings _ =
   , nnoremapY' "<C-k><C-r>" reload
   , nnoremapY' "<C-k><CR>"  viWrite  -- Yi interpret <C-j> as <CR>
   , nnoremapY' "<C-k>J"     (fwriteAllY >> return ())
+  , nnoremapY' "\\e"        (withEditor vsplit    >> dired)
+  , nnoremapY' "\\\\E"      (withEditor E.newTabE >> dired)
   --, nnoremapE' "<C-k><C-l>" (eval ":nohlsearch<CR>")  --FIXME: doesn't works correctly
   -- Complete official lost things
   , nnoremapE' "<C-w>w" E.nextWinE
@@ -166,11 +172,13 @@ normalBindings _ =
     resizeCurrentWin :: Int -> EditorM ()
     resizeCurrentWin lineNum = undefined
 
+    vsplit = E.splitE >> E.prevWinE
+
 
 -- Keymappings for V.VimMode (∀a. V.Insert a)
 insertBindings :: [V.VimBinding]
 insertBindings =
-  [ inoremapE (keyC 'l') (switchModeE V.Normal)
+  [ inoremapE (keyC 'l') (switchModeE V.Normal >> withCurrentBuffer leftB)  -- <Esc> of Vim
   , inoremapY' "<C-k><CR>" (viWrite >> switchModeY V.Normal)  -- Yi interpret <C-j> as <CR>
   , inoremapY' "<C-k><C-k>" (killLine Nothing)
   ]
