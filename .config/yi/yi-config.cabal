@@ -42,7 +42,7 @@ executable yi
   hs-source-dirs:
       .
   other-modules:
-      Yi.MyConfig.CmdOptions
+      Yi.MyConfig.CmdOptions , Yi.MyConfig.Helper
   ghc-options: -Wall -ferror-spans -threaded
   build-depends:
       base >= 4.8 && < 5

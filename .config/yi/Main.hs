@@ -1,88 +1,38 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-import Control.Monad (forM)
-import Control.Monad.Extra (ifM)
 import Control.Monad.State.Lazy (execStateT)
-import Data.List (foldl')
 import Data.List (intersperse)
-import Data.Maybe (fromJust)
-import Data.Monoid ((<>))
 import Data.Prototype (override)
 import Lens.Micro.Platform ((.=))
 import Prelude hiding (foldl)
 import System.Console.CmdArgs (cmdArgs)
-import System.Environment (getArgs)
-import Yi.Boot (yi, reload)
-import Yi.Buffer.Indent (modifyIndentB)
-import Yi.Buffer.Misc (setVisibleSelection, identString)
+import Yi.Boot (reload)
+import Yi.Buffer.Misc (setVisibleSelection)
 import Yi.Config (configUI, configWindowFill)
 import Yi.Config.Default (defaultConfig)
 import Yi.Config.Default.HaskellMode (configureHaskellMode)
 import Yi.Config.Default.MiscModes (configureMiscModes)
 import Yi.Config.Default.Vim (configureVim)
 import Yi.Config.Default.Vty (configureVty)
-import Yi.Config.Lens (defaultKmA, configUIA, startActionsA, initialActionsA)
-import Yi.Config.Simple (configMain, runAfterStartup)
+import Yi.Config.Lens (defaultKmA, configUIA, startActionsA)
 import Yi.Config.Simple.Types (ConfigM, runConfigM)
-import Yi.Core (startEditor, quitEditor, errorEditor, refreshEditor)
+import Yi.Core (startEditor, refreshEditor)
 import Yi.Dired (dired)
-import Yi.Editor (EditorM, MonadEditor, withEditor, getEditorDyn, putEditorDyn, closeBufferAndWindowE, withCurrentBuffer, printMsg)
-import Yi.Event (Event(Event), Key(KASCII), Modifier(MCtrl))
+import Yi.Editor (EditorM, MonadEditor, withEditor, closeBufferAndWindowE, withCurrentBuffer, printMsg)
+import Yi.Event (Event)
 import Yi.File (viWrite, fwriteAllY, openNewFile)
 import Yi.Keymap (YiM, KeymapSet)
 import Yi.Keymap.Emacs.KillRing (killLine)
 import Yi.Keymap.Vim (mkKeymapSet, defVimConfig, vimBindings, pureEval)
 import Yi.Keymap.Vim.EventUtils (eventToEventString)
-import Yi.Keymap.Vim.Ex.Commands.Common (needsSaving)
 import Yi.Keymap.Vim.StateUtils (switchModeE, resetCountE)
 import Yi.Keymap.Vim.Utils (mkStringBindingE, mkStringBindingY)
-import Yi.Monad (gets)
 import Yi.MyConfig.CmdOptions (CommandLineOptions(CommandLineOptions,frontend,startOnLine,files),clOptions)
-import Yi.String (showT)
-import Yi.Types (Action(YiA,EditorA,BufferA), YiVariable, IndentSettings(IndentSettings,expandTabs,tabSize,shiftWidth))
-import qualified Data.List.NonEmpty as NE
-import qualified Data.Map.Strict as M
+import Yi.MyConfig.Helper (VimEvaluator, keyC, quitEditorWithBufferCheck, closeWinOrQuitEditor, switchModeY)
+import Yi.Types (Action(YiA,EditorA))
 import qualified Yi.Buffer.Misc as B
 import qualified Yi.Editor as E
 import qualified Yi.Keymap.Vim.Common as V
-
--- VimEvaluator generate the action from EventString
-type VimEvaluator = V.EventString -> EditorM ()
-
-
--- Like <C-{x}> key of Vim
-keyC :: Char -> Event
-keyC x = Event (KASCII x) [MCtrl]
-
-
--- Like quitEditor but checking unsaved buffers
-quitEditorWithBufferCheck :: YiM ()
-quitEditorWithBufferCheck = do
-  bufStack        <- gets E.bufferStack
-  buffers         <- gets E.buffers
-  unsavedBufStack <- forM bufStack $ \buf ->
-    ifM (needsSaving buf)
-      (return . Just . identString . fromJust $ M.lookup buf buffers)
-      (return Nothing)
-  let findJusts xs (Just x) = x : xs
-      findJusts xs Nothing  = xs
-      unsavedBufferNames    = foldl' findJusts [] unsavedBufStack
-  if null unsavedBufferNames
-     then quitEditor
-     else errorEditor $ "No write since last change for buffer " <> showT unsavedBufferNames
-
--- If win num greater than 1, do tryCloseE.
--- else, do quitEditorWithBufferCheck
-closeWinOrQuitEditor :: YiM ()
-closeWinOrQuitEditor =
-  ifM (gets $ (2<=) . NE.length . E.bufferStack)
-    (withEditor E.tryCloseE)
-    quitEditorWithBufferCheck
-
-
--- Like switchModeE, for YiM
-switchModeY :: V.VimMode -> YiM ()
-switchModeY mode = getEditorDyn >>= \s -> putEditorDyn s { V.vsMode = mode }
 
 
 -- Entry point
