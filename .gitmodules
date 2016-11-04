@@ -1,6 +1,3 @@
 [submodule "dotfiles-private"]
 	path = .private
 	url = https://aiya000@bitbucket.org/aiya000/dotfiles-private.git
-[submodule ".config/yi/yi"]
-	path = .config/yi/yi
-	url = https://github.com/yi-editor/yi.git
