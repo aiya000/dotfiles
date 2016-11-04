@@ -13,7 +13,7 @@ import Prelude hiding (foldl)
 import System.Environment (getArgs)
 import Yi.Boot (yi, reload)
 import Yi.Buffer.Indent (modifyIndentB)
-import Yi.Buffer.Misc (setVisibleSelection, identString, leftB)
+import Yi.Buffer.Misc (setVisibleSelection, identString)
 import Yi.Config (configUI, configWindowFill)
 import Yi.Config.Default (defaultConfig)
 import Yi.Config.Default.HaskellMode (configureHaskellMode)
@@ -27,8 +27,7 @@ import Yi.Core (startEditor, quitEditor, errorEditor, refreshEditor)
 import Yi.Dired (dired)
 import Yi.Editor (EditorM, MonadEditor, withEditor, getEditorDyn, putEditorDyn, closeBufferAndWindowE, withCurrentBuffer, printMsg)
 import Yi.Event (Event(Event), Key(KASCII), Modifier(MCtrl))
-import Yi.File (openNewFile)
-import Yi.File (viWrite, fwriteAllY)
+import Yi.File (viWrite, fwriteAllY, openNewFile)
 import Yi.Keymap (YiM, KeymapSet)
 import Yi.Keymap.Emacs.KillRing (killLine)
 import Yi.Keymap.Vim (mkKeymapSet, defVimConfig, vimBindings, pureEval)
@@ -41,6 +40,7 @@ import Yi.String (showT)
 import Yi.Types (Action(YiA,EditorA,BufferA), YiVariable, IndentSettings(IndentSettings,expandTabs,tabSize,shiftWidth))
 import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as M
+import qualified Yi.Buffer.Misc as B
 import qualified Yi.Editor as E
 import qualified Yi.Keymap.Vim.Common as V
 
@@ -78,14 +78,9 @@ closeWinOrQuitEditor =
     quitEditorWithBufferCheck
 
 
---modifyEditorDyn :: (MonadEditor m, YiVariable a, Functor m) => (a -> a) -> m ()
-modifyEditorDyn :: (MonadEditor m, YiVariable a) => (a -> a) -> m ()
-modifyEditorDyn f = getEditorDyn >>= \s -> putEditorDyn (f s)
-
-
 -- Like switchModeE, for YiM
 switchModeY :: V.VimMode -> YiM ()
-switchModeY mode = modifyEditorDyn $ \s -> s { V.vsMode = mode }
+switchModeY mode = getEditorDyn >>= \s -> putEditorDyn s { V.vsMode = mode }
 
 
 -- Entry point
@@ -94,8 +89,8 @@ main = do
     files  <- getArgs
     let openFileActions = intersperse (EditorA E.newTabE) $ map (YiA . openNewFile) files
     config <- flip execStateT defaultConfig . runConfigM $ do
-      myConfig
       startActionsA .= openFileActions
+      myConfig
     startEditor config Nothing
 
 
@@ -105,7 +100,6 @@ myConfig = do
   configureHaskellMode
   configureMiscModes
   configureMyVim
-  --initialActionsA .= [BufferA $ modifyIndentB (+2)]  --TODO
 
 configureMyVim :: ConfigM ()
 configureMyVim = do
@@ -142,17 +136,18 @@ normalBindings _ =
   , nnoremapY' "ghq" closeWinOrQuitEditor
   , nnoremapY' "ghQ" quitEditorWithBufferCheck
   , nnoremapE' "ghc" E.closeBufferAndWindowE
-  , nnoremapE' "ghv" vsplit  -- Clone win to right
+  , nnoremapE' "ghv" vsplit
   --, nnoremapE' "ghs" (E.splitE >> ?)  -- Clone win to under
   , nnoremapE' "gho" E.closeOtherE  -- Do :only
   --, nnoremapE' "g:"  (eval ":buffers<CR>")  --FIXME: doesn't works
   , nnoremapE' "gh\"" (resizeCurrentWin 3)
   , nnoremapY' "<C-k><C-r>" reload
-  , nnoremapY' "<C-k><CR>"  viWrite  -- Yi interpret <C-j> as <CR>
+  , nnoremapY' "<C-k><CR>"  viWrite  -- Yi interprets <C-j> as <CR>
   , nnoremapY' "<C-k>J"     (fwriteAllY >> return ())
   , nnoremapY' "\\e"        (withEditor vsplit    >> dired)
   , nnoremapY' "\\\\E"      (withEditor E.newTabE >> dired)
   --, nnoremapE' "<C-k><C-l>" (eval ":nohlsearch<CR>")  --FIXME: doesn't works correctly
+  , nnoremapY' "<CR>" (withCurrentBuffer $ B.lineDown >> B.newlineB >> B.lineUp)  -- insert newline to under
   -- Complete official lost things
   , nnoremapE' "<C-w>w" E.nextWinE
   ]
@@ -171,16 +166,17 @@ normalBindings _ =
 
     resizeCurrentWin :: Int -> EditorM ()
     resizeCurrentWin lineNum = undefined
-
+    -- Clone a window to right, this means default behavior of Vim :vsplit
     vsplit = E.splitE >> E.prevWinE
 
 
 -- Keymappings for V.VimMode (∀a. V.Insert a)
 insertBindings :: [V.VimBinding]
 insertBindings =
-  [ inoremapE (keyC 'l') (switchModeE V.Normal >> withCurrentBuffer leftB)  -- <Esc> of Vim
-  , inoremapY' "<C-k><CR>" (viWrite >> switchModeY V.Normal)  -- Yi interpret <C-j> as <CR>
+  [ inoremapE (keyC 'l') (switchModeE V.Normal >> withCurrentBuffer B.leftB)  -- <Esc> behavior of Vim
+  , inoremapY' "<C-k><CR>" (viWrite >> switchModeY V.Normal)  -- Yi interprets <C-j> as <CR>
   , inoremapY' "<C-k><C-k>" (killLine Nothing)
+  , inoremapY' "<Tab>" (withCurrentBuffer $ B.insertN "  ")  --NOTE: Does Yi has :set ts=n like stateful function ?
   ]
   where
     -- The keymapping implementor for both of V.VimBindingY and V.VimBindingE
