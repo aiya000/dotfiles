@@ -874,6 +874,7 @@ set matchpairs+=<:>
 
 " Reference tags of ctags
 let &tags = join([
+\	'tags',
 \	'.git/tags',
 \	'../.git/tags',
 \	'../../.git/tags',
