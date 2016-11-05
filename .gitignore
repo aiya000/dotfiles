@@ -19,4 +19,4 @@
 
 # Yi
 .config/yi/.stack-work
-.config/yi/yi-config.cabal  # auto generated from package.yaml
+.config/yi/yi-config.cabal
