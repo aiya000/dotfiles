@@ -1,5 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
+import Control.Monad.Base (liftBase)
 import Control.Monad.State.Lazy (execStateT)
 import Data.List (intersperse)
 import Data.Prototype (override)
@@ -20,21 +21,21 @@ import Yi.Config.Lens (defaultKmA, configUIA, startActionsA)
 import Yi.Config.Simple.Types (ConfigM, runConfigM)
 import Yi.Core (startEditor, refreshEditor)
 import Yi.Dired (dired)
-import Yi.Editor (EditorM, MonadEditor, withEditor, closeBufferAndWindowE, withCurrentBuffer, printMsg)
+import Yi.Editor (EditorM, MonadEditor, withEditor, closeBufferAndWindowE, withCurrentBuffer, printMsg, getEditorDyn)
 import Yi.Event (Event)
 import Yi.File (viWrite, fwriteAllY, openNewFile)
 import Yi.Keymap (YiM, KeymapSet)
 import Yi.Keymap.Emacs.KillRing (killLine)
 import Yi.Keymap.Vim (mkKeymapSet, defVimConfig, vimBindings, pureEval)
+import Yi.Keymap.Vim.Common (regContent)
 import Yi.Keymap.Vim.EventUtils (eventToEventString)
-import Yi.Keymap.Vim.StateUtils (switchModeE, resetCountE)
+import Yi.Keymap.Vim.StateUtils (switchModeE, resetCountE, getRegisterE)
 import Yi.Keymap.Vim.Utils (mkStringBindingE, mkStringBindingY)
-import Yi.MyConfig.CmdOptions (CommandLineOptions(CommandLineOptions,frontend,startOnLine,files),clOptions)
+import Yi.MyConfig.CmdOptions (CommandLineOptions(CommandLineOptions,frontend,startOnLine,files), clOptions)
 import Yi.MyConfig.Helper (VimEvaluator, keyC, quitEditorWithBufferCheck, closeWinOrQuitEditor, switchModeY)
 import Yi.Rope (YiString, fromString, toString)
 import Yi.Search (doSearch, SearchOption(IgnoreCase))
 import Yi.Types (Action(YiA,EditorA))
-
 import qualified Yi.Buffer.Misc as B
 import qualified Yi.Editor as E
 import qualified Yi.Keymap.Vim.Common as V
@@ -145,6 +146,7 @@ normalBindings _ =
 -- Keymappings for V.VimMode (∀a. V.Insert a)
 insertBindings :: [V.VimBinding]
 insertBindings =
+  --FIXME: yi has gone when block inserted
   [ inoremapE "<C-l>" (switchModeE V.Normal >> withCurrentBuffer B.leftB)  -- <Esc> behavior of Vim
   --FIXME: cannot unset modified flag
   , inoremapY "<C-k><CR>" (viWrite >> switchModeY V.Normal)  -- Yi interprets <C-j> as <CR>
@@ -172,6 +174,8 @@ insertBindings =
 visualBindings :: [V.VimBinding]
 visualBindings =
   [ vnoremapE "<C-l>" exitVisual
+  -- Complete official lost things
+  --TODO: , vnoremapE "p" 
   ]
   where
     -- The keymappings implementor for both of V.VimBindingY and V.VimBindingE
@@ -185,6 +189,7 @@ visualBindings =
     vnoremapE key x = V.VimBindingE $ implBinding key x
 
     -- See https://www.stackage.org/haddock/lts-7.4/yi-0.12.6/src/Yi.Keymap.Vim.ExMap.html#exitEx
+    exitVisual :: EditorM ()
     exitVisual = do
       resetCountE
       switchModeE V.Normal
@@ -194,15 +199,31 @@ visualBindings =
 exBindings :: [V.VimBinding]
 exBindings =
   [ cnoremapE "<C-l>" exitEx'
+  -- Complete official lost things
+  , cnoremapY "<C-r>" putRegister
   ]
   where
-    -- Like cnoremap of Vim
+    -- Like cnoremap of Vim for EditorM ()
     cnoremapE :: V.EventString -> EditorM () -> V.VimBinding
     cnoremapE key x = mkStringBindingE V.Ex V.Finish (key, x, id)
+    -- Like cnoremap of Vim for YiM ()
+    cnoremapY :: V.EventString -> YiM () -> V.VimBinding
+    cnoremapY key x = mkStringBindingY V.Ex (key, x, id)
 
     -- See https://www.stackage.org/haddock/lts-7.4/yi-0.12.6/src/Yi.Keymap.Vim.ExMap.html#exitEx
+    exitEx' :: EditorM ()
     exitEx' = do
       resetCountE
       switchModeE V.Normal
       closeBufferAndWindowE
       withCurrentBuffer $ setVisibleSelection False
+    putRegister :: YiM ()
+    putRegister = do
+      registerName   <- liftBase getChar
+      -- Replace " to NUL, because yi's default register is '\NUL'
+      let registerName' = if registerName == '"' then '\NUL' else registerName
+      --TODO: Remove tail "\n" if val contained it
+      mayRegisterVal <- withEditor $ fmap regContent <$> getRegisterE registerName'
+      case mayRegisterVal of
+        Nothing   -> return ()
+        Just val  -> withEditor . withCurrentBuffer $ B.insertN val
