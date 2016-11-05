@@ -15,6 +15,7 @@ import Yi.Config (configUI, configWindowFill)
 import Yi.Config.Default (defaultConfig)
 import Yi.Config.Default.HaskellMode (configureHaskellMode)
 import Yi.Config.Default.MiscModes (configureMiscModes)
+import Yi.Config.Default.Pango (configurePango)
 import Yi.Config.Default.Vim (configureVim)
 import Yi.Config.Default.Vty (configureVty)
 import Yi.Config.Lens (defaultKmA, configUIA, startActionsA)
@@ -48,18 +49,21 @@ tabspaceNum = 2
 -- Entry point
 main :: IO ()
 main = do
-  --TODO: Implement --frontend and --startonline
+  --TODO: Implement --startonline
   args   <- cmdArgs clOptions
   let openFileActions = intersperse (EditorA E.newTabE) $ map (YiA . openNewFile) (files args)
-  config <- flip execStateT defaultConfig . runConfigM $ do
-    startActionsA .= openFileActions
-    myConfig
+  config <- flip execStateT defaultConfig . runConfigM $ myConfig args >> startActionsA .= openFileActions
   startEditor config Nothing
 
 
-myConfig :: ConfigM ()
-myConfig = do
-  configureVty
+myConfig :: CommandLineOptions -> ConfigM ()
+myConfig clo = do
+  --NOTE: If you like stricted programming,
+  --      use MonadThrow or another exception type instead of error
+  case frontend clo of
+    "vty"   -> configureVty
+    "pango" -> configurePango
+    x       -> error $ "unknown frontend: " ++ x
   configureHaskellMode
   configureMiscModes
   configureMyVim
