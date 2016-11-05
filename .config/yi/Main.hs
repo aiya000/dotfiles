@@ -7,6 +7,8 @@ import Lens.Micro.Platform ((.=))
 import Prelude hiding (foldl)
 import System.Console.CmdArgs (cmdArgs)
 import Yi.Boot (reload)
+import Yi.Buffer.Basic (Direction(Forward))
+import Yi.Buffer.HighLevel (readCurrentWordB)
 import Yi.Buffer.Misc (setVisibleSelection)
 import Yi.Config (configUI, configWindowFill)
 import Yi.Config.Default (defaultConfig)
@@ -29,8 +31,10 @@ import Yi.Keymap.Vim.StateUtils (switchModeE, resetCountE)
 import Yi.Keymap.Vim.Utils (mkStringBindingE, mkStringBindingY)
 import Yi.MyConfig.CmdOptions (CommandLineOptions(CommandLineOptions,frontend,startOnLine,files),clOptions)
 import Yi.MyConfig.Helper (VimEvaluator, keyC, quitEditorWithBufferCheck, closeWinOrQuitEditor, switchModeY)
-import Yi.Rope (YiString, fromString)
+import Yi.Rope (YiString, fromString, toString)
+import Yi.Search (doSearch, SearchOption(IgnoreCase))
 import Yi.Types (Action(YiA,EditorA))
+
 import qualified Yi.Buffer.Misc as B
 import qualified Yi.Editor as E
 import qualified Yi.Keymap.Vim.Common as V
@@ -106,8 +110,13 @@ normalBindings _ =
   , nnoremapY' "\\\\E"      (withEditor E.newTabE >> dired)
   --, nnoremapE' "<C-k><C-l>" (eval ":nohlsearch<CR>")  --FIXME: doesn't works correctly
   , nnoremapY' "<CR>" (withCurrentBuffer $ B.lineDown >> B.newlineB >> B.lineUp)  -- insert newline to under
+  -- Override default
+  --TODO: implement
+  --, nnoremapE' ">>" tabspaceNum
+  --, nnoremapE' "<<" tabspaceNum
   -- Complete official lost things
   , nnoremapE' "<C-w>w" E.nextWinE
+  , nnoremapE' "gd"     searchFromHead
   ]
   where
     -- Like nnoremap of Vim for EditorM
@@ -126,6 +135,12 @@ normalBindings _ =
     resizeCurrentWin lineNum = undefined
     -- Clone a window to right, this means default behavior of Vim :vsplit
     vsplit = E.splitE >> E.prevWinE
+    -- normal gd of Vim
+    searchFromHead = do
+      word <- toString <$> withCurrentBuffer readCurrentWordB
+      withCurrentBuffer $  B.moveToLineColB 0 0
+      doSearch (Just word) [IgnoreCase] Forward
+      return ()
 
 
 -- Keymappings for V.VimMode (∀a. V.Insert a)
@@ -135,6 +150,7 @@ insertBindings =
   --FIXME: cannot unset modified flag
   , inoremapY' "<C-k><CR>" (viWrite >> switchModeY V.Normal)  -- Yi interprets <C-j> as <CR>
   , inoremapY' "<C-k><C-k>" (killLine Nothing)
+  -- Override default
   , inoremapY' "<Tab>" (withCurrentBuffer $ B.insertN . fromString $ replicate tabspaceNum ' ')  --NOTE: Does Yi has :set ts=n like stateful function ?
   ]
   where
