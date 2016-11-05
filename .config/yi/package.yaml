@@ -38,6 +38,7 @@ dependencies:
     - yi-keymap-vim
     - yi-misc-modes
     - yi-mode-haskell
+    - yi-rope
 
 when:
   - condition: flag(vty)

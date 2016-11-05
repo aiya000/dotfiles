@@ -29,11 +29,16 @@ import Yi.Keymap.Vim.StateUtils (switchModeE, resetCountE)
 import Yi.Keymap.Vim.Utils (mkStringBindingE, mkStringBindingY)
 import Yi.MyConfig.CmdOptions (CommandLineOptions(CommandLineOptions,frontend,startOnLine,files),clOptions)
 import Yi.MyConfig.Helper (VimEvaluator, keyC, quitEditorWithBufferCheck, closeWinOrQuitEditor, switchModeY)
+import Yi.Rope (YiString, fromString)
 import Yi.Types (Action(YiA,EditorA))
 import qualified Yi.Buffer.Misc as B
 import qualified Yi.Editor as E
 import qualified Yi.Keymap.Vim.Common as V
 
+
+-- tabspace num 
+tabspaceNum :: Int
+tabspaceNum = 2
 
 -- Entry point
 main :: IO ()
@@ -130,7 +135,7 @@ insertBindings =
   --FIXME: cannot unset modified flag
   , inoremapY' "<C-k><CR>" (viWrite >> switchModeY V.Normal)  -- Yi interprets <C-j> as <CR>
   , inoremapY' "<C-k><C-k>" (killLine Nothing)
-  , inoremapY' "<Tab>" (withCurrentBuffer $ B.insertN "  ")  --NOTE: Does Yi has :set ts=n like stateful function ?
+  , inoremapY' "<Tab>" (withCurrentBuffer $ B.insertN . fromString $ replicate tabspaceNum ' ')  --NOTE: Does Yi has :set ts=n like stateful function ?
   ]
   where
     -- The keymapping implementor for both of V.VimBindingY and V.VimBindingE
