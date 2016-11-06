@@ -33,7 +33,7 @@ import Yi.Keymap.Vim.EventUtils (eventToEventString)
 import Yi.Keymap.Vim.StateUtils (switchModeE, resetCountE, getRegisterE)
 import Yi.Keymap.Vim.Utils (mkStringBindingE, mkStringBindingY)
 import Yi.MyConfig.CmdOptions (CommandLineOptions(CommandLineOptions,frontend,startOnLine,files), clOptions)
-import Yi.MyConfig.Helper (VimEvaluator, keyC, quitEditorWithBufferCheck, closeWinOrQuitEditor, switchModeY)
+import Yi.MyConfig.Helper (VimEvaluator, keyC, quitEditorWithBufferCheck, closeWinOrQuitEditor, switchModeY, viewRegister)
 import Yi.Rope (YiString, fromString, toString)
 import Yi.Search (doSearch, SearchOption(IgnoreCase))
 import Yi.Types (Action(YiA,EditorA))
@@ -94,10 +94,11 @@ normalBindings _ =
   [ nnoremapE "<C-p>" E.previousTabE
   , nnoremapE "<C-n>" E.nextTabE
   , nnoremapY "<C-l>" (refreshEditor >> printMsg "refreshed")
-  , nnoremapE " h"  E.prevWinE  -- temporary
-  , nnoremapE " j"  E.nextWinE  -- temporary
-  , nnoremapE " k"  E.prevWinE  -- temporary
-  , nnoremapE " l"  E.nextWinE  -- temporary
+  , nnoremapE " h"    E.prevWinE  -- temporary
+  , nnoremapE " j"    E.nextWinE  -- temporary
+  , nnoremapE " k"    E.prevWinE  -- temporary
+  , nnoremapE " l"    E.nextWinE  -- temporary
+  , nnoremapE "q:"    viewRegister
   --, nnoremapE "g:"  (eval ":buffers<CR>")  --FIXME: doesn't works
   --, nnoremapE "g*"  staySearch -- TODO
   , nnoremapE "gH"  E.newTabE
@@ -123,6 +124,8 @@ normalBindings _ =
   -- Complete official lost things
   , nnoremapE "<C-w>w" E.nextWinE
   , nnoremapE "gd"     searchFromHead
+  --TODO: implement suspend
+  --, nnoremapY "<C-z>"
   ]
   where
     -- Like nnoremap of Vim for EditorM

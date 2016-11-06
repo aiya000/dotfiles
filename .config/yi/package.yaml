@@ -41,6 +41,8 @@ dependencies:
     - yi-mode-haskell
     - yi-rope
     - transformers-base
+    - unordered-containers
+    - text
 
 when:
   - condition: flag(vty)
