@@ -74,18 +74,18 @@ viewRegister :: EditorM ()
 viewRegister = do
   xs <- HM.toList . V.vsRegisterMap <$> getEditorDyn
   let xs'       = visualizeConvert xs
-      registers = flip map xs' $ \(name, content) -> "\"" <> R.singleton name <> " | " <> content <> "\n"
+      registers = flip map xs' $ \(nameWithSep, content) -> nameWithSep <> content <> "\n"
       bufDetail = "--- Register ---\n" <> R.concat registers
   void $ newBufferE (MemBuffer "Register list") bufDetail
   where
-    replaceName n | n == '\NUL' = '"'
-                  | otherwise   = n
+    replaceName n | n == '\NUL' = "\\NUL | "
+                  | otherwise   = ['"', n] ++ "   | "  -- Straighten diff of \NUL
     replaceContent = let replaceContentChar c | c == '\n' = "^J"
                                               | otherwise = [c]
                      in concatMap replaceContentChar
-    visualizeConvert :: [(V.RegisterName, V.Register)] -> [(V.RegisterName, YiString)]
+    visualizeConvert :: [(V.RegisterName, V.Register)] -> [(YiString, YiString)]
     visualizeConvert = map $ \(name, reg) ->
       let content = R.toString . V.regContent $ reg
-      in ( replaceName name
+      in ( R.fromString . replaceName $ name
          , R.fromString . replaceContent $ content
          )
