@@ -30,7 +30,7 @@ import Yi.Keymap.Emacs.KillRing (killLine)
 import Yi.Keymap.Vim (mkKeymapSet, defVimConfig, vimBindings, pureEval)
 import Yi.Keymap.Vim.Common (regContent)
 import Yi.Keymap.Vim.EventUtils (eventToEventString)
-import Yi.Keymap.Vim.StateUtils (switchModeE, resetCountE, getRegisterE)
+import Yi.Keymap.Vim.StateUtils (switchModeE, resetCountE, getRegisterE, modifyStateE)
 import Yi.Keymap.Vim.Utils (mkStringBindingE, mkStringBindingY)
 import Yi.MyConfig.CmdOptions (CommandLineOptions(CommandLineOptions,frontend,startOnLine,files), clOptions)
 import Yi.MyConfig.Helper (VimEvaluator, keyC, quitEditorWithBufferCheck, closeWinOrQuitEditor, switchModeY, viewRegister)
@@ -161,7 +161,7 @@ normalBindings _ =
 insertBindings :: [V.VimBinding]
 insertBindings =
   --FIXME: yi has gone when block inserted
-  [ inoremapE "<C-l>" (switchModeE V.Normal >> withCurrentBuffer B.leftB)  -- <Esc> behavior of Vim
+  [ inoremapE "<C-l>"      (exitInsert >> withCurrentBuffer B.leftB) -- <Esc> behavior of Vim
   --FIXME: cannot unset modified flag
   , inoremapY "<C-k><C-j>" (viWrite >> switchModeY V.Normal)
   , inoremapY "<C-k><CR>"  (viWrite >> switchModeY V.Normal)  -- Vty-Yi interprets <C-j> as <CR>
@@ -195,6 +195,16 @@ insertBindings =
     -- for ∀a. V.Insert a
     inoremapY :: V.EventString -> YiM () -> V.VimBinding
     inoremapY key x = V.VimBindingY $ implBinding key x
+
+    -- See https://www.stackage.org/haddock/lts-7.4/yi-0.12.6/src/Yi.Keymap.Vim.InsertMap.html#exitBinding
+    exitInsert :: EditorM ()
+    exitInsert = do
+      modifyStateE $ \s -> s
+        { V.vsOngoingInsertEvents = mempty
+        , V.vsSecondaryCursors    = mempty
+        }
+      switchModeE V.Normal
+
 
 -- Keymapping for V.VimMode (∀a V.Visual a)
 visualBindings :: [V.VimBinding]
