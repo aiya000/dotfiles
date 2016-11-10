@@ -10,7 +10,7 @@
 -- imports -- {{{
 
 import Control.Concurrent (threadDelay)
-import Control.Monad ((>=>))
+import Control.Monad ((>=>), void)
 import Text.Printf (printf)
 import XMonad
 import XMonad.Actions.CycleWS (nextScreen)
@@ -131,12 +131,15 @@ myKeys =
      , ((superMask, xK_h), withFocused $ keysMoveWindow (-2,0))
      , ((superMask, xK_j), withFocused $ keysMoveWindow (0,2))
      , ((superMask, xK_k), withFocused $ keysMoveWindow (0,-2))
-     , ((superMask, xK_F6), toggleMute    >> return ())
-     , ((superMask, xK_F7), lowerVolume 5 >> return ())
-     , ((superMask, xK_F8), raiseVolume 5 >> return ())
      , ((superMask .|. shiftMask, xK_h), sendMessage FirstLayout)
      , ((superMask .|. shiftMask, xK_l), sendMessage NextLayout)
      , ((superMask .|. shiftMask, xK_a), sinkAll)
+     -- Hardware keys
+     , ((superMask, xK_F4), spawn "light -U 10")
+     , ((superMask, xK_F5), spawn "light -A 10")
+     , ((superMask, xK_F6), void $ toggleMute)
+     , ((superMask, xK_F7), void $ lowerVolume 5)
+     , ((superMask, xK_F8), void $ raiseVolume 5)
      -- Applications
      , ((altMask .|. controlMask, xK_t), spawn firstTerminal)
      , ((superMask, xK_e), spawn "thunar")
