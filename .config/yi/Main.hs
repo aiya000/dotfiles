@@ -8,7 +8,7 @@ import Lens.Micro.Platform ((.=))
 import Prelude hiding (foldl)
 import System.Console.CmdArgs (cmdArgs)
 import Yi.Boot (reload)
-import Yi.Buffer.Basic (Direction(Forward), Point(Point))
+import Yi.Buffer.Basic (Direction(Forward))
 import Yi.Buffer.HighLevel (readCurrentWordB)
 import Yi.Buffer.Misc (setVisibleSelection)
 import Yi.Config (configUI, configWindowFill)
@@ -22,19 +22,17 @@ import Yi.Config.Lens (defaultKmA, configUIA, startActionsA)
 import Yi.Config.Simple.Types (ConfigM, runConfigM)
 import Yi.Core (startEditor, refreshEditor)
 import Yi.Dired (dired)
-import Yi.Editor (EditorM, MonadEditor, withEditor, closeBufferAndWindowE, withCurrentBuffer, printMsg, getEditorDyn)
-import Yi.Event (Event)
+import Yi.Editor (EditorM, MonadEditor, withEditor, closeBufferAndWindowE, withCurrentBuffer, printMsg)
 import Yi.File (viWrite, fwriteAllY, openNewFile)
 import Yi.Keymap (YiM, KeymapSet)
 import Yi.Keymap.Emacs.KillRing (killLine)
 import Yi.Keymap.Vim (mkKeymapSet, defVimConfig, vimBindings, pureEval)
 import Yi.Keymap.Vim.Common (regContent)
-import Yi.Keymap.Vim.EventUtils (eventToEventString)
 import Yi.Keymap.Vim.StateUtils (switchModeE, resetCountE, getRegisterE, modifyStateE)
 import Yi.Keymap.Vim.Utils (mkStringBindingE, mkStringBindingY)
 import Yi.MyConfig.CmdOptions (CommandLineOptions(CommandLineOptions,frontend,startOnLine,files), clOptions)
-import Yi.MyConfig.Helper (VimEvaluator, keyC, quitEditorWithBufferCheck, closeWinOrQuitEditor, switchModeY, viewRegister)
-import Yi.Rope (YiString, fromString, toString)
+import Yi.MyConfig.Helper (VimEvaluator, quitEditorWithBufferCheck, closeWinOrQuitEditor, switchModeY, viewRegister)
+import Yi.Rope (fromString, toString)
 import Yi.Search (doSearch, SearchOption(IgnoreCase))
 import Yi.Types (Action(YiA,EditorA))
 import qualified Yi.Buffer.HighLevel as BH
@@ -149,7 +147,7 @@ normalBindings _ =
     searchFromHead = do
       word <- toString <$> withCurrentBuffer readCurrentWordB
       withCurrentBuffer $  B.moveToLineColB 0 0
-      doSearch (Just word) [IgnoreCase] Forward
+      _    <- doSearch (Just word) [IgnoreCase] Forward
       return ()
     --
     staySearch = undefined

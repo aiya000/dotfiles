@@ -3,7 +3,6 @@
 -- The module for yi helpers
 module Yi.MyConfig.Helper
  ( VimEvaluator
- , keyC
  , quitEditorWithBufferCheck
  , closeWinOrQuitEditor
  , switchModeY
@@ -35,10 +34,6 @@ import qualified Yi.Rope as R
 -- VimEvaluator generate the action from EventString
 type VimEvaluator = V.EventString -> EditorM ()
 
-
--- Like <C-{x}> key of Vim
-keyC :: Char -> Event
-keyC x = Event (KASCII x) [MCtrl]
 
 -- Like quitEditor but checking unsaved buffers
 quitEditorWithBufferCheck :: YiM ()
