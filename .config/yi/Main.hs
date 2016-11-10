@@ -8,7 +8,7 @@ import Lens.Micro.Platform ((.=))
 import Prelude hiding (foldl)
 import System.Console.CmdArgs (cmdArgs)
 import Yi.Boot (reload)
-import Yi.Buffer.Basic (Direction(Forward))
+import Yi.Buffer.Basic (Direction(Forward), Point(Point))
 import Yi.Buffer.HighLevel (readCurrentWordB)
 import Yi.Buffer.Misc (setVisibleSelection)
 import Yi.Config (configUI, configWindowFill)
@@ -37,9 +37,14 @@ import Yi.MyConfig.Helper (VimEvaluator, keyC, quitEditorWithBufferCheck, closeW
 import Yi.Rope (YiString, fromString, toString)
 import Yi.Search (doSearch, SearchOption(IgnoreCase))
 import Yi.Types (Action(YiA,EditorA))
+import qualified Yi.Buffer.HighLevel as BH
 import qualified Yi.Buffer.Misc as B
 import qualified Yi.Editor as E
 import qualified Yi.Keymap.Vim.Common as V
+
+-- For debug
+import Yi.String (showT)
+import Data.Monoid ((<>))
 
 
 -- tabspace num 
@@ -111,12 +116,14 @@ normalBindings _ =
   , nnoremapE "gho" E.closeOtherE  -- Do :only
   , nnoremapE "gh\"" (resizeCurrentWin 3)
   , nnoremapY "<C-k><C-r>" reload
-  , nnoremapY "<C-k><CR>"  viWrite  -- Yi interprets <C-j> as <CR>
+  , nnoremapY "<C-k><C=j>" viWrite
+  , nnoremapY "<C-k><CR>"  viWrite  -- Vty-Yi interprets <C-j> as <CR>
   , nnoremapY "<C-k>J"     (fwriteAllY >> return ())
   , nnoremapY "\\e"        (withEditor vsplit    >> dired)
   , nnoremapY "\\\\E"      (withEditor E.newTabE >> dired)
   --, nnoremapE "<C-k><C-l>" (eval ":nohlsearch<CR>")  --FIXME: doesn't works correctly
-  , nnoremapY "<CR>" (withCurrentBuffer $ B.lineDown >> B.newlineB >> B.lineUp)  -- insert newline to under
+  , nnoremapY "<C-j>" (withCurrentBuffer $ B.lineDown >> B.newlineB >> B.lineUp)  -- insert newline to under
+  , nnoremapY "<CR>"  (withCurrentBuffer $ B.lineDown >> B.newlineB >> B.lineUp)  -- insert newline to under
   -- Override default
   --TODO: implement
   --, nnoremapE ">>" tabspaceNum
@@ -146,7 +153,7 @@ normalBindings _ =
       return ()
     --
     staySearch = undefined
-    -- Clone a window to right, this means default behavior of Vim :vsplit
+    -- Clone a window to right, this means default behavior of Vim's :vsplit
     vsplit = E.splitE >> E.prevWinE
 
 
@@ -156,10 +163,22 @@ insertBindings =
   --FIXME: yi has gone when block inserted
   [ inoremapE "<C-l>" (switchModeE V.Normal >> withCurrentBuffer B.leftB)  -- <Esc> behavior of Vim
   --FIXME: cannot unset modified flag
-  , inoremapY "<C-k><CR>" (viWrite >> switchModeY V.Normal)  -- Yi interprets <C-j> as <CR>
+  , inoremapY "<C-k><C-j>" (viWrite >> switchModeY V.Normal)
+  , inoremapY "<C-k><CR>"  (viWrite >> switchModeY V.Normal)  -- Vty-Yi interprets <C-j> as <CR>
   , inoremapY "<C-k><C-k>" (killLine Nothing)
   -- Override default
   , inoremapY "<Tab>" (withCurrentBuffer $ B.insertN . fromString $ replicate tabspaceNum ' ')  --NOTE: Does Yi has :set ts=n like stateful function ?
+  -- Complete official lost things
+  , inoremapY "<C-o>O" $ withCurrentBuffer $ do
+      (currentLine, _) <- BH.getLineAndCol
+      if currentLine == 1
+        then BH.moveToSol >> B.newlineB >> B.lineUp
+        else B.lineUp >> BH.moveToEol >> B.newlineB
+  , inoremapY "<C-o>o" (withCurrentBuffer $ BH.moveToEol >> B.newlineB)
+  , inoremapY "<C-o>I" (withCurrentBuffer BH.firstNonSpaceB)
+  , inoremapY "<C-o>A" (withCurrentBuffer BH.lastNonSpaceB)
+  , inoremapY "<C-o>h" (withCurrentBuffer B.leftB)
+  , inoremapY "<C-o>l" (withCurrentBuffer B.rightB)
   ]
   where
     -- The keymapping implementor for both of V.VimBindingY and V.VimBindingE
