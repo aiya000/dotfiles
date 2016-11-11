@@ -6,30 +6,24 @@ module Yi.MyConfig.Helper
  , quitEditorWithBufferCheck
  , closeWinOrQuitEditor
  , switchModeY
- , viewRegister
  ) where
 
-import Control.Monad (forM, void)
+import Control.Monad (forM)
 import Control.Monad.Extra (ifM)
 import Data.List (foldl')
 import Data.Maybe (fromJust)
 import Data.Monoid ((<>))
 import Yi.Buffer.Misc (identString)
 import Yi.Core (quitEditor, errorEditor)
-import Yi.Editor (EditorM, withEditor, getEditorDyn, putEditorDyn, newBufferE)
-import Yi.Event (Event(Event), Key(KASCII), Modifier(MCtrl))
+import Yi.Editor (EditorM, withEditor, getEditorDyn, putEditorDyn)
 import Yi.Keymap (YiM)
 import Yi.Keymap.Vim.Ex.Commands.Common (needsSaving)
 import Yi.Monad (gets)
-import Yi.Rope (YiString)
 import Yi.String (showT)
-import Yi.Types (BufferId(MemBuffer))
-import qualified Data.HashMap.Strict as HM
 import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as M
 import qualified Yi.Editor as E
 import qualified Yi.Keymap.Vim.Common as V
-import qualified Yi.Rope as R
 
 -- VimEvaluator generate the action from EventString
 type VimEvaluator = V.EventString -> EditorM ()
@@ -63,24 +57,3 @@ closeWinOrQuitEditor =
 -- Like switchModeE, for YiM
 switchModeY :: V.VimMode -> YiM ()
 switchModeY mode = getEditorDyn >>= \s -> putEditorDyn s { V.vsMode = mode }
-
--- Show registered register and content in new buffer
-viewRegister :: EditorM ()
-viewRegister = do
-  xs <- HM.toList . V.vsRegisterMap <$> getEditorDyn
-  let xs'       = visualizeConvert xs
-      registers = flip map xs' $ \(nameWithSep, content) -> nameWithSep <> content <> "\n"
-      bufDetail = "--- Register ---\n" <> R.concat registers
-  void $ newBufferE (MemBuffer "Register list") bufDetail
-  where
-    replaceName n | n == '\NUL' = "\\NUL | "
-                  | otherwise   = ['"', n] ++ "   | "  -- Straighten diff of \NUL
-    replaceContent = let replaceContentChar c | c == '\n' = "^J"
-                                              | otherwise = [c]
-                     in concatMap replaceContentChar
-    visualizeConvert :: [(V.RegisterName, V.Register)] -> [(YiString, YiString)]
-    visualizeConvert = map $ \(name, reg) ->
-      let content = R.toString . V.regContent $ reg
-      in ( R.fromString . replaceName $ name
-         , R.fromString . replaceContent $ content
-         )

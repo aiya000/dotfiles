@@ -22,7 +22,7 @@ import Yi.Config.Lens (defaultKmA, configUIA, startActionsA)
 import Yi.Config.Simple.Types (ConfigM, runConfigM)
 import Yi.Core (startEditor, refreshEditor)
 import Yi.Dired (dired)
-import Yi.Editor (EditorM, MonadEditor, withEditor, closeBufferAndWindowE, withCurrentBuffer, printMsg)
+import Yi.Editor (EditorM, MonadEditor, withEditor, closeBufferAndWindowE, withCurrentBuffer)
 import Yi.File (viWrite, fwriteAllY, openNewFile)
 import Yi.Keymap (YiM, KeymapSet)
 import Yi.Keymap.Emacs.KillRing (killLine)
@@ -30,8 +30,9 @@ import Yi.Keymap.Vim (mkKeymapSet, defVimConfig, vimBindings, pureEval)
 import Yi.Keymap.Vim.Common (regContent)
 import Yi.Keymap.Vim.StateUtils (switchModeE, resetCountE, getRegisterE, modifyStateE)
 import Yi.Keymap.Vim.Utils (mkStringBindingE, mkStringBindingY)
+import Yi.Keymap.Vim.Ex.Commands.Registers (printRegisters)
 import Yi.MyConfig.CmdOptions (CommandLineOptions(CommandLineOptions,frontend,startOnLine,files), clOptions)
-import Yi.MyConfig.Helper (VimEvaluator, quitEditorWithBufferCheck, closeWinOrQuitEditor, switchModeY, viewRegister)
+import Yi.MyConfig.Helper (VimEvaluator, quitEditorWithBufferCheck, closeWinOrQuitEditor, switchModeY)
 import Yi.Rope (fromString, toString)
 import Yi.Search (doSearch, SearchOption(IgnoreCase))
 import Yi.Types (Action(YiA,EditorA))
@@ -41,8 +42,11 @@ import qualified Yi.Editor as E
 import qualified Yi.Keymap.Vim.Common as V
 
 -- For debug
+-- Ignore warnings is about this
+import Yi.Editor (printMsg)
 import Yi.String (showT)
 import Data.Monoid ((<>))
+
 
 
 -- tabspace num 
@@ -53,9 +57,10 @@ tabspaceNum = 2
 main :: IO ()
 main = do
   --TODO: Implement --startonline
-  args   <- cmdArgs clOptions
+  args     <- cmdArgs clOptions
+  --tagTable <- findTagFile
   let openFileActions = intersperse (EditorA E.newTabE) $ map (YiA . openNewFile) (files args)
-  config <- flip execStateT defaultConfig . runConfigM $ myConfig args >> startActionsA .= openFileActions
+  config   <- flip execStateT defaultConfig . runConfigM $ myConfig args >> startActionsA .= openFileActions
   startEditor config Nothing
 
 
@@ -96,12 +101,12 @@ normalBindings :: VimEvaluator -> [V.VimBinding]
 normalBindings _ =
   [ nnoremapE "<C-p>" E.previousTabE
   , nnoremapE "<C-n>" E.nextTabE
-  , nnoremapY "<C-l>" (refreshEditor >> printMsg "refreshed")
+  , nnoremapY "<C-l>" refreshEditor
   , nnoremapE " h"    E.prevWinE  -- temporary
   , nnoremapE " j"    E.nextWinE  -- temporary
   , nnoremapE " k"    E.prevWinE  -- temporary
   , nnoremapE " l"    E.nextWinE  -- temporary
-  , nnoremapE "q:"    viewRegister
+  , nnoremapE "q:"    printRegisters
   --, nnoremapE "g:"  (eval ":buffers<CR>")  --FIXME: doesn't works
   --, nnoremapE "g*"  staySearch -- TODO
   , nnoremapE "gH"  E.newTabE
