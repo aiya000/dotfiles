@@ -2,5 +2,5 @@
 	path = .private
 	url = https://aiya000@bitbucket.org/aiya000/dotfiles-private.git
 [submodule ".config/yi/yi"]
-	path = .config/yi/yi
+	path = .config/yi/yi-origin
 	url = https://github.com/aiya000/yi.git
