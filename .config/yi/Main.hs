@@ -48,7 +48,6 @@ import Yi.String (showT)
 import Data.Monoid ((<>))
 
 
-
 -- tabspace num 
 tabspaceNum :: Int
 tabspaceNum = 2
