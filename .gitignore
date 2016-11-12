@@ -20,3 +20,4 @@
 # Yi
 .config/yi/.stack-work
 .config/yi/yi-config.cabal
+.config/yi/tags
