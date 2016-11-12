@@ -107,6 +107,9 @@ export VTE_CJK_WIDTH=1
 export PAGER='vim - +PAGER -c "setl nonu nornu ft=vim-pager | only"'
 export MANPAGER='vim - +MANPAGER -c "setl nonu nornu ft=vim-pager | only"'
 
+# Lice copylight user
+export LICE_USER=aiya000
+
 # Languages
 export GOPATH=~/.GoPath
 
