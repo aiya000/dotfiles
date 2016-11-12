@@ -31,8 +31,8 @@ import Yi.Keymap.Vim.Common (regContent)
 import Yi.Keymap.Vim.StateUtils (switchModeE, resetCountE, getRegisterE, modifyStateE)
 import Yi.Keymap.Vim.Utils (mkStringBindingE, mkStringBindingY)
 import Yi.Keymap.Vim.Ex.Commands.Registers (printRegisters)
-import Yi.MyConfig.CmdOptions (CommandLineOptions(CommandLineOptions,frontend,startOnLine,files), clOptions)
-import Yi.MyConfig.Helper (VimEvaluator, quitEditorWithBufferCheck, closeWinOrQuitEditor, switchModeY)
+import Yi.MyConfig.CmdOptions
+import Yi.MyConfig.Helper
 import Yi.Rope (fromString, toString)
 import Yi.Search (doSearch, SearchOption(IgnoreCase))
 import Yi.Types (Action(YiA,EditorA))
@@ -118,7 +118,7 @@ normalBindings _ =
   , nnoremapE "gho" E.closeOtherE  -- Do :only
   , nnoremapE "gh\"" (resizeCurrentWin 3)
   , nnoremapY "<C-k><C-r>" reload
-  , nnoremapY "<C-k><C=j>" viWrite
+  , nnoremapY "<C-k><C-j>" viWrite
   , nnoremapY "<C-k><CR>"  viWrite  -- Vty-Yi interprets <C-j> as <CR>
   , nnoremapY "<C-k>J"     (fwriteAllY >> return ())
   , nnoremapY "\\e"        (withEditor vsplit    >> dired)
@@ -165,8 +165,8 @@ insertBindings =
   --FIXME: yi has gone when block inserted
   [ inoremapE "<C-l>"      (exitInsert >> withCurrentBuffer B.leftB) -- <Esc> behavior of Vim
   --FIXME: cannot unset modified flag
-  , inoremapY "<C-k><C-j>" (viWrite >> switchModeY V.Normal)
-  , inoremapY "<C-k><CR>"  (viWrite >> switchModeY V.Normal)  -- Vty-Yi interprets <C-j> as <CR>
+  , inoremapY "<C-k><C-j>" (withEditor exitInsert >> viWrite)
+  , inoremapY "<C-k><CR>"  (withEditor exitInsert >> viWrite)  -- Vty-Yi interprets <C-j> as <CR>
   , inoremapY "<C-k><C-k>" (killLine Nothing)
   -- Override default
   , inoremapY "<Tab>" (withCurrentBuffer $ B.insertN . fromString $ replicate tabspaceNum ' ')  --NOTE: Does Yi has :set ts=n like stateful function ?
@@ -181,6 +181,8 @@ insertBindings =
   , inoremapY "<C-o>A" (withCurrentBuffer BH.lastNonSpaceB)
   , inoremapY "<C-o>h" (withCurrentBuffer B.leftB)
   , inoremapY "<C-o>l" (withCurrentBuffer B.rightB)
+  --TODO
+  --, inoremapE "<C-f>"  
   ]
   where
     -- The keymapping implementor for both of V.VimBindingY and V.VimBindingE

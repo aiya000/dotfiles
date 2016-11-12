@@ -1,7 +1,7 @@
 resolver: lts-7.1
 packages:
 - '.'
-- location: './yi'
+- location: './yi-origin'
   subdirs:
     - 'yi-core'
     - 'yi-frontend-vty'

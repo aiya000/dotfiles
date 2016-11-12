@@ -2,24 +2,26 @@
 
 -- The module for yi helpers
 module Yi.MyConfig.Helper
- ( VimEvaluator
- , quitEditorWithBufferCheck
- , closeWinOrQuitEditor
- , switchModeY
- ) where
+  ( VimEvaluator
+  , quitEditorWithBufferCheck
+  , closeWinOrQuitEditor
+  --, findTagTable
+  ) where
 
 import Control.Monad (forM)
 import Control.Monad.Extra (ifM)
-import Data.List (foldl')
+import Data.List (foldl', foldl1')
 import Data.Maybe (fromJust)
 import Data.Monoid ((<>))
+import System.EasyFile (getCurrentDirectory, getDirectoryContents)
 import Yi.Buffer.Misc (identString)
 import Yi.Core (quitEditor, errorEditor)
-import Yi.Editor (EditorM, withEditor, getEditorDyn, putEditorDyn)
+import Yi.Editor (EditorM, withEditor)
 import Yi.Keymap (YiM)
 import Yi.Keymap.Vim.Ex.Commands.Common (needsSaving)
 import Yi.Monad (gets)
 import Yi.String (showT)
+import Yi.Tag (TagTable)
 import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as M
 import qualified Yi.Editor as E
@@ -54,6 +56,3 @@ closeWinOrQuitEditor =
     quitEditorWithBufferCheck
 
 
--- Like switchModeE, for YiM
-switchModeY :: V.VimMode -> YiM ()
-switchModeY mode = getEditorDyn >>= \s -> putEditorDyn s { V.vsMode = mode }
