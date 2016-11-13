@@ -8,7 +8,6 @@ import Data.Prototype (override)
 import Lens.Micro.Platform ((.=))
 import Prelude hiding (foldl)
 import System.Console.CmdArgs (cmdArgs)
-import Yi.Boot (reload)
 import Yi.Buffer.Basic (Direction(Forward))
 import Yi.Buffer.HighLevel (readCurrentWordB)
 import Yi.Buffer.Misc (setVisibleSelection)
@@ -119,16 +118,13 @@ normalBindings _ =
   , nnoremapE "ghc" E.closeBufferAndWindowE
   , nnoremapE "ghv" vsplit
   --, nnoremapE "ghs" (E.splitE >> ?)  -- Clone win to under
-  , nnoremapE "gho" E.closeOtherE  -- Do :only
-  , nnoremapE "gh\"" (resizeCurrentWin 3)
-  , nnoremapY "<C-k><C-r>" reload
-  , nnoremapY "<C-k><C-j>" viWrite
+  , nnoremapE "gho"        E.closeOtherE  -- Do :only
+  , nnoremapE "gh\""       (resizeCurrentWin 3)
   , nnoremapY "<C-k><CR>"  viWrite  -- Vty-Yi interprets <C-j> as <CR>
-  , nnoremapY "<C-k>J"     (fwriteAllY >> return ())
+  , nnoremapY "<C-k>J"     (void fwriteAllY)
   , nnoremapY "\\e"        (withEditor vsplit    >> dired)
   , nnoremapY "\\\\E"      (withEditor E.newTabE >> dired)
   --, nnoremapE "<C-k><C-l>" (eval ":nohlsearch<CR>")  --FIXME: doesn't works correctly
-  , nnoremapY "<C-j>" (withCurrentBuffer $ B.lineDown >> B.newlineB >> B.lineUp)  -- insert newline to under
   , nnoremapY "<CR>"  (withCurrentBuffer $ B.lineDown >> B.newlineB >> B.lineUp)  -- insert newline to under
   -- Override default
   --TODO: implement
@@ -174,7 +170,6 @@ insertBindings =
   --FIXME: yi has gone when block inserted
   [ inoremapE "<C-l>"      (exitInsert >> withCurrentBuffer B.leftB) -- <Esc> behavior of Vim
   --FIXME: cannot unset modified flag
-  , inoremapY "<C-k><C-j>" (withEditor exitInsert >> viWrite)
   , inoremapY "<C-k><CR>"  (withEditor exitInsert >> viWrite)  -- Vty-Yi interprets <C-j> as <CR>
   , inoremapY "<C-k><C-k>" (killLine Nothing)
   -- Override default
