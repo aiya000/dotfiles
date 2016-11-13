@@ -1,5 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
+import Control.Monad (void)
 import Control.Monad.Base (liftBase)
 import Control.Monad.State.Lazy (execStateT)
 import Data.List (intersperse)
@@ -110,7 +111,7 @@ normalBindings _ =
   , nnoremapE " l"    E.nextWinE  -- temporary
   , nnoremapE "q:"    printRegisters
   --, nnoremapE "g:"  (eval ":buffers<CR>")  --FIXME: doesn't works
-  --, nnoremapE "g*"  staySearch -- TODO
+  , nnoremapE "g*"  staySearch
   , nnoremapE "gH"  E.newTabE
   , nnoremapE "ghh" E.newTabE  -- temporary
   , nnoremapY "ghq" closeWinOrQuitEditor
@@ -149,15 +150,20 @@ normalBindings _ =
 
     resizeCurrentWin :: Int -> EditorM ()
     resizeCurrentWin lineNum = undefined
+    searchCurrentWord = do
+      word <- toString <$> withCurrentBuffer readCurrentWordB
+      void $ doSearch (Just word) [IgnoreCase] Forward
     -- normal gd of Vim
     searchFromHead :: EditorM ()
     searchFromHead = do
-      word <- toString <$> withCurrentBuffer readCurrentWordB
       withCurrentBuffer $  B.moveToLineColB 0 0
-      _    <- doSearch (Just word) [IgnoreCase] Forward
+      searchCurrentWord
       return ()
-    --
-    staySearch = undefined
+    -- Highlight word
+    staySearch = do
+      (x,y) <- withCurrentBuffer BH.getLineAndCol
+      searchCurrentWord
+      withCurrentBuffer $ B.moveToLineColB x y
     -- Clone a window to right, this means default behavior of Vim's :vsplit
     vsplit = E.splitE >> E.prevWinE
 
