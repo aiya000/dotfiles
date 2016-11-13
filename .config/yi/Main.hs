@@ -18,7 +18,7 @@ import Yi.Config.Default.MiscModes (configureMiscModes)
 import Yi.Config.Default.Pango (configurePango)
 import Yi.Config.Default.Vim (configureVim)
 import Yi.Config.Default.Vty (configureVty)
-import Yi.Config.Lens (defaultKmA, configUIA, startActionsA)
+import Yi.Config.Lens (defaultKmA, configUIA, startActionsA, initialActionsA)
 import Yi.Config.Simple.Types (ConfigM, runConfigM)
 import Yi.Core (startEditor, refreshEditor)
 import Yi.Dired (dired)
@@ -35,6 +35,7 @@ import Yi.MyConfig.CmdOptions
 import Yi.MyConfig.Helper
 import Yi.Rope (fromString, toString)
 import Yi.Search (doSearch, SearchOption(IgnoreCase))
+import Yi.Tag (TagTable, setTags)
 import Yi.Types (Action(YiA,EditorA))
 import qualified Yi.Buffer.HighLevel as BH
 import qualified Yi.Buffer.Misc as B
@@ -42,10 +43,10 @@ import qualified Yi.Editor as E
 import qualified Yi.Keymap.Vim.Common as V
 
 -- For debug
--- Ignore warnings is about this
-import Yi.Editor (printMsg)
-import Yi.String (showT)
-import Data.Monoid ((<>))
+--import Yi.Debug (initDebug, logPutStrLn)
+--import Yi.Editor (printMsg)
+--import Yi.String (showT)
+--import Data.Monoid ((<>))
 
 
 -- tabspace num 
@@ -55,18 +56,17 @@ tabspaceNum = 2
 -- Entry point
 main :: IO ()
 main = do
+  --initDebug "/home/aiya000/.tmp/yi.log"
   --TODO: Implement --startonline
-  args     <- cmdArgs clOptions
-  --tagTable <- findTagFile
+  args        <- cmdArgs clOptions
+  mayTagTable <- findTagTable
   let openFileActions = intersperse (EditorA E.newTabE) $ map (YiA . openNewFile) (files args)
-  config   <- flip execStateT defaultConfig . runConfigM $ myConfig args >> startActionsA .= openFileActions
+  config   <- flip execStateT defaultConfig . runConfigM $ myConfig args mayTagTable >> startActionsA .= openFileActions
   startEditor config Nothing
 
 
-myConfig :: CommandLineOptions -> ConfigM ()
-myConfig clo = do
-  --NOTE: If you like stricted programming,
-  --      use MonadThrow or another exception type instead of error
+myConfig :: CommandLineOptions -> Maybe TagTable -> ConfigM ()
+myConfig clo mayTagTable = do
   case frontend clo of
     "vty"   -> configureVty
     "pango" -> configurePango
@@ -74,6 +74,9 @@ myConfig clo = do
   configureHaskellMode
   configureMiscModes
   configureMyVim
+  case mayTagTable of
+    Nothing       -> return ()
+    Just tagTable -> initialActionsA .= [EditorA $ setTags tagTable]
 
 configureMyVim :: ConfigM ()
 configureMyVim = do
@@ -178,7 +181,7 @@ insertBindings =
         else B.lineUp >> BH.moveToEol >> B.newlineB
   , inoremapY "<C-o>o" (withCurrentBuffer $ BH.moveToEol >> B.newlineB)
   , inoremapY "<C-o>I" (withCurrentBuffer BH.firstNonSpaceB)
-  , inoremapY "<C-o>A" (withCurrentBuffer BH.lastNonSpaceB)
+  , inoremapY "<C-o>A" (withCurrentBuffer $ BH.lastNonSpaceB >> B.rightB)
   , inoremapY "<C-o>h" (withCurrentBuffer B.leftB)
   , inoremapY "<C-o>l" (withCurrentBuffer B.rightB)
   --TODO

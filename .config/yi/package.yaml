@@ -43,6 +43,7 @@ dependencies:
     - transformers-base
     - unordered-containers
     - text
+    - easy-file
 
 when:
   - condition: flag(vty)

@@ -5,15 +5,15 @@ module Yi.MyConfig.Helper
   ( VimEvaluator
   , quitEditorWithBufferCheck
   , closeWinOrQuitEditor
-  --, findTagTable
+  , findTagTable
   ) where
 
 import Control.Monad (forM)
 import Control.Monad.Extra (ifM)
-import Data.List (foldl', foldl1')
+import Data.List (foldl')
 import Data.Maybe (fromJust)
 import Data.Monoid ((<>))
-import System.EasyFile (getCurrentDirectory, getDirectoryContents)
+import System.EasyFile (getCurrentDirectory, doesFileExist)
 import Yi.Buffer.Misc (identString)
 import Yi.Core (quitEditor, errorEditor)
 import Yi.Editor (EditorM, withEditor)
@@ -21,11 +21,15 @@ import Yi.Keymap (YiM)
 import Yi.Keymap.Vim.Ex.Commands.Common (needsSaving)
 import Yi.Monad (gets)
 import Yi.String (showT)
-import Yi.Tag (TagTable)
+import Yi.Tag (TagTable, importTagTable)
 import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as M
 import qualified Yi.Editor as E
 import qualified Yi.Keymap.Vim.Common as V
+
+-- For debug
+--import Yi.Debug (initDebug, logPutStrLn)
+--import Yi.String (showT)
 
 -- VimEvaluator generate the action from EventString
 type VimEvaluator = V.EventString -> EditorM ()
@@ -56,3 +60,24 @@ closeWinOrQuitEditor =
     quitEditorWithBufferCheck
 
 
+-- Find ctag file and Load it
+findTagTable :: IO (Maybe TagTable)
+findTagTable = do
+  mayTagFile <- findTagFile maxDepth
+  case mayTagFile of
+    Nothing      -> return Nothing
+    Just tagFile -> Just <$> importTagTable tagFile
+  where
+    -- findTagTable should search tag file {maxDepth} times
+    maxDepth = 5
+    findTagFile :: Int -> IO (Maybe FilePath)
+    findTagFile 0     = return Nothing
+    findTagFile depth = do
+      let parentsSuffix = foldl' (++) "" . replicate (maxDepth - depth) $ "/.."
+      currentDir <- (++) <$> getCurrentDirectory <*> pure parentsSuffix
+      --TODO: Implement for windows path
+      ifM (doesFileExist $ currentDir ++ "/tags")
+        (return . Just $ currentDir ++ "/tags") $
+        ifM (doesFileExist $ currentDir ++ "/.git/tags")
+          (return . Just $ currentDir ++ "/.git/tags")
+          (findTagFile $ depth - 1)
