@@ -146,19 +146,17 @@ normalBindings _ =
 
     resizeCurrentWin :: Int -> EditorM ()
     resizeCurrentWin lineNum = undefined
-    searchCurrentWord = do
-      word <- toString <$> withCurrentBuffer readCurrentWordB
-      void $ doSearch (Just word) [IgnoreCase] Forward
     -- normal gd of Vim
     searchFromHead :: EditorM ()
     searchFromHead = do
+      word <- toString <$> withCurrentBuffer readCurrentWordB
       withCurrentBuffer $  B.moveToLineColB 0 0
-      searchCurrentWord
-      return ()
+      void $ doSearch (Just word) [IgnoreCase] Forward
     -- Highlight word
     staySearch = do
       (x,y) <- withCurrentBuffer BH.getLineAndCol
-      searchCurrentWord
+      word <- toString <$> withCurrentBuffer readCurrentWordB
+      void $ doSearch (Just word) [IgnoreCase] Forward
       withCurrentBuffer $ B.moveToLineColB x y
     -- Clone a window to right, this means default behavior of Vim's :vsplit
     vsplit = E.splitE >> E.prevWinE
@@ -185,8 +183,6 @@ insertBindings =
   , inoremapY "<C-o>A" (withCurrentBuffer $ BH.lastNonSpaceB >> B.rightB)
   , inoremapY "<C-o>h" (withCurrentBuffer B.leftB)
   , inoremapY "<C-o>l" (withCurrentBuffer B.rightB)
-  --TODO
-  --, inoremapE "<C-f>"  
   ]
   where
     -- The keymapping implementor for both of V.VimBindingY and V.VimBindingE
