@@ -94,10 +94,11 @@ function twitter-usertimeline() {
 	vim -c "TweetVimUserTimeline ${1}"
 }
 function tweet-say() {
-	vim -c "TweetVimCommandSay ${1}" +q
+	yes | vim -c "TweetVimCommandSay ${1}" +q
 }
 function tweet-public-say() {
-	vim -c "TweetVimSwitchAccount public_ai000ya" \
+	yes | vim \
+		-c "TweetVimSwitchAccount public_ai000ya" \
 		-c "TweetVimCommandSay ${1}" \
 		+q
 }
