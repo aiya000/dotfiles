@@ -30,9 +30,11 @@ dependencies:
     - cmdargs
     - containers
     - extra
+    - microlens
     - microlens-platform
     - mtl
     - oo-prototypes
+    - pointedlist
     - yi-core
     - yi-keymap-emacs
     - yi-keymap-vim

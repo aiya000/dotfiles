@@ -44,10 +44,10 @@ import qualified Yi.Editor as E
 import qualified Yi.Keymap.Vim.Common as V
 
 -- For debug
---import Yi.Debug (initDebug, logPutStrLn)
---import Yi.Editor (printMsg)
---import Yi.String (showT)
---import Data.Monoid ((<>))
+import Yi.Debug (initDebug, logPutStrLn)
+import Yi.Editor (printMsg)
+import Yi.String (showT)
+import Data.Monoid ((<>))
 
 
 -- tabspace num 
@@ -57,7 +57,7 @@ tabspaceNum = 2
 -- Entry point
 main :: IO ()
 main = do
-  --initDebug "/home/aiya000/.tmp/yi.log"
+  initDebug "/home/aiya000/.tmp/yi.log"
   --TODO: Implement --startonline
   args        <- cmdArgs clOptions
   mayTagTable <- findTagTable
@@ -117,7 +117,7 @@ normalBindings _ =
   , nnoremapE "gH"  E.newTabE
   , nnoremapE "ghh" E.newTabE  -- temporary
   , nnoremapY "ghq" closeWinOrQuitEditor
-  , nnoremapY "ghQ" quitEditorWithBufferCheck
+  , nnoremapY "ghQ" quitEditorIfModifiedNothing
   , nnoremapE "ghc" E.closeBufferAndWindowE
   , nnoremapE "ghv" vsplit
   --, nnoremapE "ghs" (E.splitE >> ?)  -- Clone win to under

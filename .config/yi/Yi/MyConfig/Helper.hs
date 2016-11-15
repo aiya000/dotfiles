@@ -3,18 +3,21 @@
 -- The module for yi helpers
 module Yi.MyConfig.Helper
   ( VimEvaluator
-  , quitEditorWithBufferCheck
+  , quitEditorIfModifiedNothing
   , closeWinOrQuitEditor
   , findTagTable
   ) where
 
 import Control.Monad (forM)
 import Control.Monad.Extra (ifM)
+import Data.Foldable (toList)
 import Data.List (foldl')
+import Data.List.PointedList (PointedList)
 import Data.Maybe (fromJust)
 import Data.Monoid ((<>))
+import Lens.Micro.Extras (view)
 import System.EasyFile (getCurrentDirectory, doesFileExist)
-import Yi.Buffer.Misc (identString)
+import Yi.Buffer.Misc (BufferId(FileBuffer), identA)
 import Yi.Core (quitEditor, errorEditor)
 import Yi.Editor (EditorM, withEditor)
 import Yi.Keymap (YiM)
@@ -26,6 +29,8 @@ import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as M
 import qualified Yi.Editor as E
 import qualified Yi.Keymap.Vim.Common as V
+import qualified Yi.Tab as T
+import qualified Yi.Window as W
 
 -- For debug
 import Yi.Debug (initDebug, logPutStrLn)
@@ -53,12 +58,22 @@ quitEditorIfModifiedNothing = do
      else errorEditor $ "No write since last change for buffer " <> showT unsavedBufferNames
 
 -- If win num greater than 1, do tryCloseE.
--- else, do quitEditorWithBufferCheck
+-- else, do quitEditorIfModifiedNothing
 closeWinOrQuitEditor :: YiM ()
-closeWinOrQuitEditor =
-  ifM (gets $ (2<=) . NE.length . E.bufferStack)
-    (withEditor E.tryCloseE)
-    quitEditorWithBufferCheck
+closeWinOrQuitEditor = do
+  --myBuffers <- gets $ map W.bufkey . concat . map toList . map (view T.tabWindowsA) . toList . E.tabs_
+  myBuffers <- gets $ map W.bufkey . forgot . fmap (view T.tabWindowsA) . E.tabs_
+  bufMap    <- gets E.buffers
+  let fBuffers    = flip map myBuffers $ \buf -> fromJust (M.lookup buf bufMap)  -- M.lookup get Just absolutely
+      fileBuffers = filter isFileBuffer . map (view identA) $ fBuffers
+  if length fileBuffers == 1
+    then quitEditorIfModifiedNothing
+    else withEditor E.tryCloseE
+  where
+    forgot :: PointedList (PointedList a) -> [a]
+    forgot = concat . map toList . toList
+    isFileBuffer (FileBuffer _) = True
+    isFileBuffer _              = False
 
 
 -- Find ctag file and Load it
