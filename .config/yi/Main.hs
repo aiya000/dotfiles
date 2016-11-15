@@ -2,6 +2,7 @@
 
 import Control.Monad (void)
 import Control.Monad.Base (liftBase)
+import Control.Monad.Extra (ifM)
 import Control.Monad.State.Lazy (execStateT)
 import Data.List (intersperse)
 import Data.Prototype (override)
@@ -125,7 +126,7 @@ normalBindings _ =
   , nnoremapY "\\e"        (withEditor vsplit    >> dired)
   , nnoremapY "\\\\E"      (withEditor E.newTabE >> dired)
   --, nnoremapE "<C-k><C-l>" (eval ":nohlsearch<CR>")  --FIXME: doesn't works correctly
-  , nnoremapY "<CR>"  (withCurrentBuffer $ B.lineDown >> B.newlineB >> B.lineUp)  -- insert newline to under
+  , nnoremapE "<CR>" putNewLineB
   -- Override default
   --TODO: implement
   --, nnoremapE ">>" tabspaceNum
@@ -160,6 +161,11 @@ normalBindings _ =
       withCurrentBuffer $ B.moveToLineColB x y
     -- Clone a window to right, this means default behavior of Vim's :vsplit
     vsplit = E.splitE >> E.prevWinE
+    -- Insert newline to under
+    putNewLineB = withCurrentBuffer $
+      ifM ((==) <$> (fst <$> BH.getLineAndCol) <*> B.lineCountB)
+        (BH.moveToEol >> B.newlineB)
+        (B.lineDown >> B.newlineB >> B.lineUp)
 
 
 -- Keymappings for V.VimMode (∀a. V.Insert a)
