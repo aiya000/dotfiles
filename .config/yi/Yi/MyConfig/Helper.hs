@@ -28,21 +28,22 @@ import qualified Yi.Editor as E
 import qualified Yi.Keymap.Vim.Common as V
 
 -- For debug
---import Yi.Debug (initDebug, logPutStrLn)
---import Yi.String (showT)
+import Yi.Debug (initDebug, logPutStrLn)
+import Yi.Editor (printMsg)
+import qualified Yi.Debug as Debug
 
 -- VimEvaluator generate the action from EventString
 type VimEvaluator = V.EventString -> EditorM ()
 
 
 -- Like quitEditor but checking unsaved buffers
-quitEditorWithBufferCheck :: YiM ()
-quitEditorWithBufferCheck = do
+quitEditorIfModifiedNothing :: YiM ()
+quitEditorIfModifiedNothing = do
   bufStack        <- gets E.bufferStack
   buffers         <- gets E.buffers
   unsavedBufStack <- forM bufStack $ \buf ->
     ifM (needsSaving buf)
-      (return . Just . identString . fromJust $ M.lookup buf buffers)
+      (return $ M.lookup buf buffers)  -- M.lookup get Just absolutely
       (return Nothing)
   let findJusts xs (Just x) = x : xs
       findJusts xs Nothing  = xs
@@ -70,14 +71,16 @@ findTagTable = do
   where
     -- findTagTable should search tag file {maxDepth} times
     maxDepth = 5
+
     findTagFile :: Int -> IO (Maybe FilePath)
     findTagFile 0     = return Nothing
     findTagFile depth = do
       let parentsSuffix = foldl' (++) "" . replicate (maxDepth - depth) $ "/.."
       currentDir <- (++) <$> getCurrentDirectory <*> pure parentsSuffix
       --TODO: Implement for windows path
-      ifM (doesFileExist $ currentDir ++ "/tags")
-        (return . Just $ currentDir ++ "/tags") $
-        ifM (doesFileExist $ currentDir ++ "/.git/tags")
-          (return . Just $ currentDir ++ "/.git/tags")
-          (findTagFile $ depth - 1)
+      x <- sequence [ doesFileExist $ currentDir ++ "/tags"
+                    , doesFileExist $ currentDir ++ "/.git/tags" ]
+      case x of
+        [True, _] -> return . Just $ currentDir ++ "/tags"
+        [_, True] -> return . Just $ currentDir ++ "/.git/tags"
+        _         -> findTagFile $ depth - 1

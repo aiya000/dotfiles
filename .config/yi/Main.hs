@@ -77,7 +77,9 @@ myConfig clo mayTagTable = do
   configureMyVim
   case mayTagTable of
     Nothing       -> return ()
-    Just tagTable -> initialActionsA .= [EditorA $ setTags tagTable]
+    Just tagTable -> do
+      let actions = [ EditorA $ setTags tagTable ]
+      initialActionsA .= actions
 
 configureMyVim :: ConfigM ()
 configureMyVim = do
@@ -126,7 +128,7 @@ normalBindings _ =
   , nnoremapY "\\e"        (withEditor vsplit    >> dired)
   , nnoremapY "\\\\E"      (withEditor E.newTabE >> dired)
   --, nnoremapE "<C-k><C-l>" (eval ":nohlsearch<CR>")  --FIXME: doesn't works correctly
-  , nnoremapE "<CR>" putNewLineB
+  , nnoremapE "<CR>" (withCurrentBuffer $ BH.moveToEol >> B.newlineB)
   -- Override default
   --TODO: implement
   --, nnoremapE ">>" tabspaceNum
@@ -161,11 +163,6 @@ normalBindings _ =
       withCurrentBuffer $ B.moveToLineColB x y
     -- Clone a window to right, this means default behavior of Vim's :vsplit
     vsplit = E.splitE >> E.prevWinE
-    -- Insert newline to under
-    putNewLineB = withCurrentBuffer $
-      ifM ((==) <$> (fst <$> BH.getLineAndCol) <*> B.lineCountB)
-        (BH.moveToEol >> B.newlineB)
-        (B.lineDown >> B.newlineB >> B.lineUp)
 
 
 -- Keymappings for V.VimMode (∀a. V.Insert a)
@@ -179,11 +176,10 @@ insertBindings =
   -- Override default
   , inoremapY "<Tab>" (withCurrentBuffer $ B.insertN . fromString $ replicate tabspaceNum ' ')  --NOTE: Does Yi has :set ts=n like stateful function ?
   -- Complete official lost things
-  , inoremapY "<C-o>O" $ withCurrentBuffer $ do
-      (currentLine, _) <- BH.getLineAndCol
-      if currentLine == 1
-        then BH.moveToSol >> B.newlineB >> B.lineUp
-        else B.lineUp >> BH.moveToEol >> B.newlineB
+  , inoremapY "<C-o>O" $ withCurrentBuffer $
+      ifM ((==1) . fst <$> BH.getLineAndCol)
+        (BH.moveToSol >> B.newlineB >> B.lineUp)
+        (B.lineUp >> BH.moveToEol >> B.newlineB)
   , inoremapY "<C-o>o" (withCurrentBuffer $ BH.moveToEol >> B.newlineB)
   , inoremapY "<C-o>I" (withCurrentBuffer BH.firstNonSpaceB)
   , inoremapY "<C-o>A" (withCurrentBuffer $ BH.lastNonSpaceB >> B.rightB)
