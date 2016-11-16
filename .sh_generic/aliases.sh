@@ -75,6 +75,9 @@ alias vimclearswp='rm ~/.backup/vim_backup/swp/*'
 alias vimclearundo='rm ~/.backup/vim_backup/undo/*'
 alias vimclearcache='vimclearview ; vimclearundo ; vimclearswp'
 alias vimls='vim -c "read! ls" -c "nnoremap <buffer> Q :<C-u>q<CR> | setl nolist buftype=nofile | normal! Gddgg"'
+function vimman () {
+	vim -c "Man ${1}" +only
+}
 
 alias vimconfig='dotfile_config .vimrc'
 alias gvimconfig='dotfile_config .gvimrc'
