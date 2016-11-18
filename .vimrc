@@ -1235,9 +1235,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-k>h            :<C-u>Unite -ignorecase file_rec<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-h>        :<C-u>Unite -ignorecase neomru/file<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Unite -ignorecase outline<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k>f            :<C-u>Unite -ignorecase -start-insert filetype<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k><C-g>        :<C-u>Unite -ignorecase -start-insert syntax<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-k><C-i>        :<C-u>Unite -ignorecase -start-insert line<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-t>        :<C-u>Unite -ignorecase -start-insert tag<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>u :<C-u>UniteClose<CR>
 
 	" aref-web.vim
