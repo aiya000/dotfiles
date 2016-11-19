@@ -135,7 +135,7 @@ myKeys =
      , ((superMask .|. shiftMask, xK_l), sendMessage NextLayout)
      , ((superMask .|. shiftMask, xK_a), sinkAll)
      -- Hardware keys
-     , ((superMask, xK_F1), spawn "sudo pm-suspend")
+     , ((superMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-suspend")
      , ((superMask, xK_F4), spawn "light -U 10")
      , ((superMask, xK_F5), spawn "light -A 10")
      , ((superMask, xK_F6), void $ toggleMute)

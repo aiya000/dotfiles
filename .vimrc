@@ -738,10 +738,10 @@ augroup HighlightPref
 	"autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 
 	" StatusLine specified highlight
-	autocmd ColorScheme * highlight User1 cterm=standout ctermfg=Black  ctermbg=White
+	autocmd ColorScheme * highlight User1 cterm=standout ctermfg=Black      ctermbg=White
 	autocmd ColorScheme * highlight User2 cterm=standout ctermfg=Yellow     ctermbg=Black
 	autocmd ColorScheme * highlight User3 cterm=standout ctermfg=DarkYellow ctermbg=Black
-	autocmd ColorScheme * highlight User4 cterm=standout ctermfg=Gray      ctermbg=Black
+	autocmd ColorScheme * highlight User4 cterm=standout ctermfg=Gray       ctermbg=Black
 augroup END
 
 augroup HighlightPref
@@ -750,7 +750,6 @@ augroup HighlightPref
 	" Highlight VCS conflict markers
 	autocmd ColorScheme * call matchadd('Error', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
 augroup END
-
 
 augroup HighlightPref
 	autocmd InsertEnter * highlight StatusLine ctermfg=Black ctermbg=Cyan
