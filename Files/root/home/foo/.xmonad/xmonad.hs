@@ -59,7 +59,7 @@ data ScreenShotType = FullScreen | ActiveWindow deriving (Eq)
 -- Functions and Values {{{
 
 firstTerminal :: String
-firstTerminal = "xfce4-terminal"
+firstTerminal = "termite"
 
 altMask :: KeyMask
 altMask = mod1Mask
@@ -93,7 +93,7 @@ myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "fcitx"
   spawnOnce "xfce4-clipman"
-  spawnOnce "xfce4-terminal -e tmux"
+  spawnOnce "termite -e tmux"
   setWMName "LG3D"  -- For Java Swing apps starting
 
 
