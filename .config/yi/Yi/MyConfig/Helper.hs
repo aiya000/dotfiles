@@ -61,7 +61,6 @@ quitEditorIfModifiedNothing = do
 -- else, do quitEditorIfModifiedNothing
 closeWinOrQuitEditor :: YiM ()
 closeWinOrQuitEditor = do
-  --myBuffers <- gets $ map W.bufkey . concat . map toList . map (view T.tabWindowsA) . toList . E.tabs_
   myBuffers <- gets $ map W.bufkey . forgot . fmap (view T.tabWindowsA) . E.tabs_
   bufMap    <- gets E.buffers
   let fBuffers    = flip map myBuffers $ \buf -> fromJust (M.lookup buf bufMap)  -- M.lookup get Just absolutely

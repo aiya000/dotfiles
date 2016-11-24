@@ -11,5 +11,8 @@ packages:
     - 'yi-misc-modes'
     - 'yi-mode-haskell'
     - 'yi-mode-javascript'
+- location: '../../../Repository'
+  subdirs:
+    - 'yi-aref-web'
 extra-deps:
 - optparse-applicative-0.13.0.0

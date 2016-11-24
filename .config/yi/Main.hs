@@ -62,7 +62,7 @@ main = do
   args        <- cmdArgs clOptions
   mayTagTable <- findTagTable
   let openFileActions = intersperse (EditorA E.newTabE) $ map (YiA . openNewFile) (files args)
-  config   <- flip execStateT defaultConfig . runConfigM $ myConfig args mayTagTable >> startActionsA .= openFileActions
+  config      <- flip execStateT defaultConfig . runConfigM $ myConfig args mayTagTable >> startActionsA .= openFileActions
   startEditor config Nothing
 
 
