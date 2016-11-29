@@ -4,3 +4,6 @@
 [submodule ".config/yi/yi"]
 	path = .config/yi/yi-origin
 	url = https://github.com/aiya000/yi.git
+[submodule ".config/yi/yi-rope"]
+	path = .config/yi/yi-rope
+	url = https://github.com/yi-editor/yi-rope

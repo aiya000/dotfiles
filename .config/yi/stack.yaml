@@ -11,6 +11,9 @@ packages:
     - 'yi-misc-modes'
     - 'yi-mode-haskell'
     - 'yi-mode-javascript'
+- location: '.'
+  subdirs:
+    - 'yi-rope'
 - location: '../../../Repository'
   subdirs:
     - 'yi-aref-web'
