@@ -119,28 +119,28 @@ myKeys =
       workspaceNum       = length myWorkspaces'
       makeMovement key n = ((altMask .|. shiftMask, key), moveWindowTo n)
       movements          = zipWith makeMovement numKeys $ map S myWorkspaces'
-  in [ ((altMask, xK_h), cycleWindowsBackward)
-     , ((altMask, xK_l), cycleWindowsForward)
+  in [ ((altMask, xK_h), windows focusUp)
+     , ((altMask, xK_l), windows focusDown)
      , ((altMask, xK_j), withFocused (sendMessage . MergeAll))
      , ((altMask, xK_k), withFocused (sendMessage . UnMerge))
-     , ((altMask .|. shiftMask, xK_l), swapNextWindow)
-     , ((altMask .|. shiftMask, xK_h), swapPrevWindow)
-     , ((altMask .|. shiftMask, xK_Tab), nextScreen)
-     , ((altMask .|. shiftMask, xK_i),   nextScreen)
-     , ((superMask, xK_l), withFocused $ keysMoveWindow (2,0))
-     , ((superMask, xK_h), withFocused $ keysMoveWindow (-2,0))
-     , ((superMask, xK_j), withFocused $ keysMoveWindow (0,2))
-     , ((superMask, xK_k), withFocused $ keysMoveWindow (0,-2))
+     , ((altMask .|. shiftMask, xK_l), windows swapDown)
+     , ((altMask .|. shiftMask, xK_h), windows swapUp)
+     , ((altMask .|. shiftMask, xK_i), nextScreen)
+     , ((superMask, xK_l), withFocused $ keysMoveWindow (5,0))
+     , ((superMask, xK_h), withFocused $ keysMoveWindow (-5,0))
+     , ((superMask, xK_j), withFocused $ keysMoveWindow (0,5))
+     , ((superMask, xK_k), withFocused $ keysMoveWindow (0,-5))
      , ((superMask .|. shiftMask, xK_h), sendMessage FirstLayout)
      , ((superMask .|. shiftMask, xK_l), sendMessage NextLayout)
      , ((superMask .|. shiftMask, xK_a), sinkAll)
      -- Hardware keys
-     , ((superMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-suspend")
+     , ((superMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-suspend") -- ^ must add pm-suspend to sudoers without inputting password
      , ((superMask, xK_F4), spawn "light -U 10")
      , ((superMask, xK_F5), spawn "light -A 10")
      , ((superMask, xK_F6), void $ toggleMute)
      , ((superMask, xK_F7), void $ lowerVolume 5)
      , ((superMask, xK_F8), void $ raiseVolume 5)
+     , ((superMask .|. shiftMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-hibernate") -- ^ must add pm-hibernate to sudoers without inputting password
      -- Applications
      , ((altMask .|. controlMask, xK_t), spawn firstTerminal)
      , ((superMask, xK_e), spawn "thunar")
@@ -152,11 +152,6 @@ myKeys =
      , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
      ] ++ movements
   where
-    cycleWindowsForward  = windows focusDown
-    cycleWindowsBackward = windows focusUp
-    swapNextWindow       = windows swapDown
-    swapPrevWindow       = windows swapUp
-
     takeScreenShot :: ScreenShotType -> X ()
     takeScreenShot ssType = do
       let msg = messageOf ssType
