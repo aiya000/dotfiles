@@ -1,7 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 import Control.Monad (void)
-import Control.Monad.Base (liftBase)
 import Control.Monad.Extra (ifM)
 import Control.Monad.State.Lazy (execStateT)
 import Data.List (intersperse)
@@ -28,8 +27,7 @@ import Yi.File (viWrite, fwriteAllY, openNewFile)
 import Yi.Keymap (YiM, KeymapSet)
 import Yi.Keymap.Emacs.KillRing (killLine)
 import Yi.Keymap.Vim (mkKeymapSet, defVimConfig, vimBindings, pureEval)
-import Yi.Keymap.Vim.Common (regContent)
-import Yi.Keymap.Vim.StateUtils (switchModeE, resetCountE, getRegisterE, modifyStateE)
+import Yi.Keymap.Vim.StateUtils (switchModeE, resetCountE, modifyStateE)
 import Yi.Keymap.Vim.Utils (mkStringBindingE, mkStringBindingY)
 import Yi.Keymap.Vim.Ex.Commands.Registers (printRegisters)
 import Yi.MyConfig.CmdOptions
@@ -72,14 +70,14 @@ myConfig clo mayTagTable = do
     "vty"   -> configureVty
     "pango" -> configurePango
     x       -> error $ "unknown frontend: " ++ x
-  configureHaskellMode
-  configureMiscModes
-  configureMyVim
   case mayTagTable of
     Nothing       -> return ()
     Just tagTable -> do
       let actions = [ EditorA $ setTags tagTable ]
       initialActionsA .= actions
+  configureHaskellMode
+  configureMiscModes
+  configureMyVim
 
 configureMyVim :: ConfigM ()
 configureMyVim = do
@@ -241,16 +239,11 @@ visualBindings =
 exBindings :: [V.VimBinding]
 exBindings =
   [ cnoremapE "<C-l>" exitEx'
-  -- Complete official lost things
-  , cnoremapY "<C-r>" putRegister
   ]
   where
     -- Like cnoremap of Vim for EditorM ()
     cnoremapE :: V.EventString -> EditorM () -> V.VimBinding
     cnoremapE key x = mkStringBindingE V.Ex V.Finish (key, x, id)
-    -- Like cnoremap of Vim for YiM ()
-    cnoremapY :: V.EventString -> YiM () -> V.VimBinding
-    cnoremapY key x = mkStringBindingY V.Ex (key, x, id)
 
     -- See https://www.stackage.org/haddock/lts-7.4/yi-0.12.6/src/Yi.Keymap.Vim.ExMap.html#exitEx
     exitEx' :: EditorM ()
@@ -259,13 +252,3 @@ exBindings =
       switchModeE V.Normal
       closeBufferAndWindowE
       withCurrentBuffer $ setVisibleSelection False
-    putRegister :: YiM ()
-    putRegister = do
-      registerName   <- liftBase getChar
-      -- Replace " to NUL, because yi's default register is '\NUL'
-      let registerName' = if registerName == '"' then '\NUL' else registerName
-      --TODO: Remove tail "\n" if val contained it
-      mayRegisterVal <- withEditor $ fmap regContent <$> getRegisterE registerName'
-      case mayRegisterVal of
-        Nothing   -> return ()
-        Just val  -> withEditor . withCurrentBuffer $ B.insertN val
