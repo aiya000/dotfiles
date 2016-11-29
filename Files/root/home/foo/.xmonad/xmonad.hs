@@ -1,13 +1,15 @@
--- Link to ~/.xmonad/xmonad.hs
--- - Target platforms:
---   - arch
--- - This config depends:
---   - arch:
---     - xmonad
---     - xmonad-contrib
---     - xmonad-extras-darcs
+{-
+* Link to ~/.xmonad/xmonad.hs
 
--- imports -- {{{
+- Target platforms:
+  - arch
+
+- This config depends:
+  - arch:
+    - xmonad
+    - xmonad-contrib
+    - xmonad-extras-darcs
+-}
 
 import Control.Concurrent (threadDelay)
 import Control.Monad ((>=>), void)
@@ -32,8 +34,6 @@ import XMonad.StackSet (focusUp, focusDown, swapUp, swapDown)
 import XMonad.Util.EZConfig (additionalKeys, additionalMouseBindings)
 import XMonad.Util.SpawnOnce (spawnOnce)
 import XMonad.Layout.Gaps (gaps, Direction2D(U))
-
--- }}}
 
 
 main :: IO ()
@@ -105,7 +105,7 @@ myManageHook = placeHook (fixed (0.5, 0.5)) <+> manageFloatForTargets <+> manage
       ]
 
 
--- myWorkspaces must be made by myWorkspaces'
+-- myWorkspaces must be made by myWorkspaces' for local each dependencies
 myWorkspaces' :: [Int]
 myWorkspaces' = [1 .. 4]
 myWorkspaces :: [String]
