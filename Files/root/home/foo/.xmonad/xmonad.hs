@@ -91,8 +91,6 @@ myLayoutHook = xmobarMargin . subTabbed $ TwoPane (1/55) (1/2) ||| Grid
 
 myStartupHook :: X ()
 myStartupHook = do
-  spawnOnce "fcitx"
-  spawnOnce "xfce4-clipman"
   spawnOnce "termite -e tmux"
   setWMName "LG3D"  -- For Java Swing apps starting
 
