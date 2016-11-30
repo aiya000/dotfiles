@@ -9,6 +9,9 @@ export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 export DefaultIMModule=fcitx
 
+# Show 2byte chars correctly in libvte
+export VTE_CJK_WIDTH=1
+
 # xfce4
 #exec startxfce4
 

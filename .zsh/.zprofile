@@ -100,9 +100,6 @@ unset new_path
 export EDITOR=vim
 export VISUAL=vim
 
-# Show 2byte chars rightly for terminal-emulators
-export VTE_CJK_WIDTH=1
-
 # Using 'vim-pager' and 'vim-manpager'
 export PAGER='vim - +PAGER -c "setl nonu nornu ft=vim-pager | only"'
 export MANPAGER='vim - +MANPAGER -c "setl nonu nornu ft=vim-pager | only"'
