@@ -123,3 +123,6 @@ repo = 'romainl/Apprentice'
 #TODO: set lazy loading
 [[plugins]]
 repo = 'yaasita/slack.vim'
+
+[[plugins]]
+repo = 'vim-jp/autofmt'

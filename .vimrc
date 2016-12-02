@@ -680,6 +680,12 @@ let g:aref_web_source = get(g:, 'aref_web_source', {
 "let g:ref_source_webdict_sites['weblio'].filter = function('vimrc#plugins#weblio_filter')
 
 "}}}
+"--- autofmt ---" {{{
+
+set formatexpr=autofmt#japanese#formatexpr()
+let autofmt_allow_over_tw=1
+
+"}}}
 "--- For Private --- {{{
 
 " Load private configure
