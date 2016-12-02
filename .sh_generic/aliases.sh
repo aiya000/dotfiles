@@ -230,6 +230,7 @@ alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
 alias ctags-r='ctags --tag-relative --recurse --sort=yes'
 alias date-simple='date +"%Y-%m-%d"'
 alias cp-with-progress='rsync --partial --progress'
+alias wifi-switch-watch='watch -n1 rfkill list all'
 
 # Notify end of cli task
 # example$ somecommand ; enotify
