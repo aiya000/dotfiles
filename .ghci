@@ -1,2 +1,2 @@
-:set prompt "GHCi> "
+:set prompt "\001\ESC[93m\002%s\001\ESC[34;1m\002>\001\ESC[0;48;05;233m\002 "
 :set editor vim
