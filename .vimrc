@@ -674,6 +674,9 @@ let g:aref_web_source = get(g:, 'aref_web_source', {
 \	},
 \	'stackage' : {
 \		'url' : 'https://www.stackage.org/lts-7.7/hoogle?q=%s&page=1'
+\	},
+\	'hoogle' : {
+\		'url' : 'https://www.haskell.org/hoogle/?hoogle=%s'
 \	}
 \})
 
@@ -1090,6 +1093,7 @@ unlet s:ghci_command
 " aref-web.vim
 CmdCnoreabbr Weblio   Aref weblio
 CmdCnoreabbr Stackage Aref stackage
+CmdCnoreabbr Hoogle   Aref hoogle
 
 " CSS
 command! -bar CssShowDecompressed call vimrc#cmd#decompress_to_buffer()
