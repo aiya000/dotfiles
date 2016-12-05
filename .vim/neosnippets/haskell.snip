@@ -1,3 +1,24 @@
+snippet deriving
+abbr    deriving (__)
+    deriving (${0})
+
+snippet hiding
+abbr    hiding (__)
+    hiding (${0})
+
+snippet import
+abbr    import (__)
+    import ${1} (${2})
+
+snippet import_qualified
+abbr    import qualified __ as __
+    import qualified ${1} as ${2}
+
+snippet pragma_option_ghc
+abbr    {-# OPTION_GHC ... #-}
+options head
+    {-# OPTION_GHC ${1} #-}
+
 snippet pragma_template_haskell
 abbr    {-# LANGUAGE TemplateHaskell #-}
 options head
@@ -63,23 +84,7 @@ abbr    {-# LANGUAGE FlexibleContexts #-}
 options head
     {-# LANGUAGE FlexibleContexts #-}
 
-snippet pragma_option_ghc
-abbr    {-# OPTION_GHC ... #-}
+snippet pragma_existential_quantification
+abbr    {-# LANGUAGE ExistentialQuantification #-}
 options head
-    {-# OPTION_GHC ${1} #-}
-
-snippet deriving
-abbr    deriving (__)
-    deriving (${0})
-
-snippet hiding
-abbr    hiding (__)
-    hiding (${0})
-
-snippet import
-abbr    import (__)
-    import ${1} (${2})
-
-snippet import_qualified
-abbr    import qualified __ as __
-    import qualified ${1} as ${2}
+    {-# LANGUAGE ExistentialQuantification #-}
