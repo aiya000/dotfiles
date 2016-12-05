@@ -53,7 +53,7 @@ main = (xmobar >=> xmonad) $ desktopConfig
 
 -- Data Types {{{
 
-data ScreenShotType = FullScreen | ActiveWindow deriving (Eq)
+data ScreenShotType = FullScreen | ActiveWindow
 
 -- }}}
 -- Functions and Values {{{
@@ -128,8 +128,11 @@ myKeys =
      , ((superMask, xK_h), withFocused $ keysMoveWindow (-5,0))
      , ((superMask, xK_j), withFocused $ keysMoveWindow (0,5))
      , ((superMask, xK_k), withFocused $ keysMoveWindow (0,-5))
-     , ((superMask .|. shiftMask, xK_h), sendMessage FirstLayout)
-     , ((superMask .|. shiftMask, xK_l), sendMessage NextLayout)
+     --, ((superMask .|. shiftMask, xK_l), )
+     --, ((superMask .|. shiftMask, xK_h), )
+     --, ((superMask .|. shiftMask, xK_j), )
+     --, ((superMask .|. shiftMask, xK_k), )
+     , ((superMask .|. shiftMask, xK_i), sendMessage NextLayout)
      , ((superMask .|. shiftMask, xK_a), sinkAll)
      -- Hardware keys
      , ((superMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-suspend") -- ^ must add pm-suspend to sudoers without inputting password
