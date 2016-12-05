@@ -113,11 +113,5 @@ if [ -f ~/.bash_profile_env ] ; then
 	alias vim-bashpr-env='vim ~/.bash_profile_env && source ~/.bash_profile_env && echo ">> .bash_profile_env loaded"'
 fi
 
-# The aliases shunted to other file
-if [ -f ~/.bashrc_develop ] ; then
-	source ~/.bashrc_develop
-	alias vim-bashrc-dev='vim ~/.bashrc_develop && source ~/.bashrc && echo ">> .bashrc_develop loaded"'
-fi
-
 # Export Loaded Archive
 alias rc_loaded='echo "rc_loaded"'
