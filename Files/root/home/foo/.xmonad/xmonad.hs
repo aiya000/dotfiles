@@ -38,7 +38,7 @@ import XMonad.Layout.Gaps (gaps, Direction2D(U))
 
 main :: IO ()
 main = (xmobar >=> xmonad) $ desktopConfig
-  { terminal           = "xfce4-terminal"
+  { terminal           = "termite"
   , modMask            = superMask
   , borderWidth        = 2
   , layoutHook         = myLayoutHook
@@ -128,7 +128,7 @@ myKeys =
      , ((superMask, xK_h), withFocused $ keysMoveWindow (-5,0))
      , ((superMask, xK_j), withFocused $ keysMoveWindow (0,5))
      , ((superMask, xK_k), withFocused $ keysMoveWindow (0,-5))
-     --, ((superMask .|. shiftMask, xK_l), )
+     --, ((superMask .|. shiftMask, xK_l), tileWindow $ Rectangle x y w h)
      --, ((superMask .|. shiftMask, xK_h), )
      --, ((superMask .|. shiftMask, xK_j), )
      --, ((superMask .|. shiftMask, xK_k), )
