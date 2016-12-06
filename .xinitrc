@@ -12,9 +12,6 @@ export DefaultIMModule=fcitx
 # Show 2byte chars correctly in libvte
 export VTE_CJK_WIDTH=1
 
-# xfce4
-#exec startxfce4
-
 # xmonad
 xsetroot -cursor_name left_ptr
 setxkbmap -layout jp
@@ -24,3 +21,4 @@ dunst &
 pulseaudio --daemonize=true --start &
 xscreensaver &
 exec xmonad
+#exec startxfce4
