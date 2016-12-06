@@ -1047,10 +1047,8 @@ command! -bar TwitterPublic      call vimrc#plugins#twitter_public()
 command! -bar TwitterPublicTab   tabnew | TwitterPublic
 command! -bar TweetPublic        call vimrc#plugins#tweet_public()
 
-CmdCnoreabbr Bitly         TweetVimBitly
 CmdCnoreabbr SwitchAccount TweetVimSwitchAccount
 CmdCnoreabbr UserTimeline  TweetVimUserTimeline
-CmdCnoreabbr TweetVimNote  TabnewOverridden ~/.tmp/tweetvim_note.md \| set syntax=tweetvim_say
 
 " }}}
 
