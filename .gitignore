@@ -21,3 +21,6 @@
 .config/yi/.stack-work
 .config/yi/yi-config.cabal
 .config/yi/tags
+
+# For each environment
+.zsh/history_archive
