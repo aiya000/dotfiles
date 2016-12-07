@@ -7,3 +7,6 @@
 [submodule ".config/yi/yi-rope"]
 	path = .config/yi/yi-rope
 	url = https://github.com/yi-editor/yi-rope
+[submodule "aacceessoorryy"]
+	path = aacceessoorryy
+	url = https://github.com/aiya000/aacceessoorryy
