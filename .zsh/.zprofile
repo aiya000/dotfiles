@@ -40,6 +40,7 @@ export HISTIGNORE="*.zsh_history*:*mount*-o*password=*"
 # Mine
 new_path=$HOME/bin:$HOME/sbin
 new_path=$new_path:$HOME/.dotfiles/bin
+new_path=$new_path:$HOME/.dotfiles/aacceessoorryy/bin
 
 # zsh completions
 new_path=$new_path:$ZDOTDIR/zsh_completions
