@@ -11,28 +11,15 @@
 ###################
 # Define aliases and functions {{{
 
-# Prepare {{{
-
-function dotfile_config () {
-	if [ -f "${HOME}/.dotfiles/${1}" ] ; then
-		"$EDITOR" "${HOME}/.dotfiles/${1}"
-	else
-		"$EDITOR" "${HOME}/${1}"
-	fi
-}
-
-# }}}
 # Overrides {{{
 
 alias ls='ls --color=auto --group-directories-first'
 alias mv='mv -i'
 alias cp='cp -i'
-function gyi () {
-	stack exec yi -- -f pango $@
-}
+alias mysql='mysql --pager="less -r -S -n -i -F -X"'
 
 # }}}
-# Laziness {{{
+# Utililty {{{
 
 ## git
 alias g='git'
@@ -60,62 +47,6 @@ alias la='ls -a --color=auto --group-directories-first'
 alias ll='ls -l --color=auto --group-directories-first'
 alias llh='ls -lh --color=auto --group-directories-first'
 alias lla='ls -la --color=auto --group-directories-first'
-
-# }}}
-# Vim Utils {{{
-
-alias vi='vim -u NONE --noplugin'
-alias gvi='gvim -u NONE -U NONE --noplugin'
-alias vimless='vim - -R -c "setl nolist | nnoremap <buffer> Q :<C-u>q<CR>"'
-alias runvim='vim -N -c :quitall! -u'
-alias vime='vim -c ":bufdo tab split"'
-alias vim-record-startup='vim --startuptime vim_startup_time +q && vim -c "set bt=nofile ft=vim | r vim_startup_time | call system(\"rm vim_startup_time\") | normal! gg3dd"'
-alias vimclearview='rm ~/.backup/vim_backup/view/*'
-alias vimclearswp='rm ~/.backup/vim_backup/swp/*'
-alias vimclearundo='rm ~/.backup/vim_backup/undo/*'
-alias vimclearcache='vimclearview ; vimclearundo ; vimclearswp'
-alias vimls='vim -c "read! ls" -c "nnoremap <buffer> Q :<C-u>q<CR> | setl nolist buftype=nofile | normal! Gddgg"'
-function vimman () {
-	vim -c "Man ${1}" +only
-}
-
-alias vimconfig='dotfile_config .vimrc'
-alias gvimconfig='dotfile_config .gvimrc'
-alias vimshconfig='dotfile_config .vimshrc'
-alias vim-bashrc='dotfile_config .bashrc && [ -f ~/.bashrc ] && ( source ~/.bashrc && echo ">> .bashrc loaded" )'
-alias vim-bashpr='dotfile_config .bash_profile && [ -f ~/.bashrc ] && ( source ~/.bash_profile && echo ">> .bash_profile loaded" )'
-alias vim-zshrc="dotfile_config .zsh/.zshrc && [ -f $ZDOTDIR/.zshrc ] && ( source $ZDOTDIR/.zshrc && echo '>> .zshrc loaded' )"
-alias vim-zshpr="dotfile_config .zsh/.zprofile && [ -f $ZDOTDIR/.zshrc ] && ( source $ZDOTDIR/.zprofile && echo '>> .zprofile loaded' )"
-
-alias vimshell='vim +VimShell'
-alias vimconsole='vim +VimConsoleOpen'
-alias twitter='vim +TweetVimHomeTimeline'
-alias tweet='vim +TweetVimSay'
-alias twitter-public='vim +TwitterPublic'
-alias tweet-public='vim +TweetPublic'
-function twitter-usertimeline() {
-	vim -c "TweetVimUserTimeline ${1}"
-}
-function tweet-say() {
-	yes | vim -c "TweetVimCommandSay ${1}" +q
-}
-function tweet-public-say() {
-	yes | vim \
-		-c "TweetVimSwitchAccount public_ai000ya" \
-		-c "TweetVimCommandSay ${1}" \
-		+q
-}
-alias adrone='vim +AdroneHome'
-alias gstatus='vim -c "Gita status"'
-function vim-session () {
-	vim -c "UniteSessionLoad ${1}"
-}
-
-alias vim-build-configure-ubuntu='./configure --with-features=huge --enable-gui=gnome2 --enable-perlinterp --enable-rubyinterp --enable-luainterp --enable-fail-if-missing'
-alias vim-build-make-mingw32='cd src && mingw32-make.exe -f Make_ming.mak GUI=yes IME=yes MBYTE=yes ICONV=yes DEBUG=no'
-
-# }}}
-# Shell Utils {{{
 
 # Start cmd without stdout and stderr in background
 function startbg () {
@@ -165,7 +96,6 @@ if  [ $IS_CYGWIN -eq 1 ] ; then
 else
 	# $IS_UBUNTU or others
 	alias ssleep='sudo pm-suspend'
-	alias hibernate='sudo pm-hibernate'
 fi
 
 # }}}
@@ -175,28 +105,19 @@ fi
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
 # git {{{
-#
+
+# Set casual user.name and user.email at local
+alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
+
 # <Warn> fully change git commit author and email
-function git-fully-change-author-and-email() { #{{{
+function git-unsafe-commiter-changer () {
 	git_user_name="$1"
 	git_email="$2"
 	git filter-branch -f --env-filter \
 		"GIT_AUTHOR_NAME='${git_user_name}'; GIT_AUTHOR_EMAIL='${git_email}'; GIT_COMMITTER_NAME='${git_user_name}'; GIT_COMMITTER_EMAIL='${git_email}';" \
 		HEAD
 	unset git_user_name git_email
-} #}}}
-
-# Set casual user.name and user.email at local
-alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
-
-# Do merge, branch -d and delete remote branch
-function git-seq-merge-bd-push_bd() { #{{{
-	target_remote="$1"
-	target_branch="$2"
-	git merge "$target_branch" && \
-		git branch -d "$target_branch" && \
-		git push -u "$target_remote" ":${target_branch}"
-} #}}}
+}
 
 # Push current state local repository temporary
 function git-push-temporary () {
@@ -216,24 +137,18 @@ function git-push-temporary () {
 
 # }}}
 
-# haskell-stack {{{
-
-alias stack-build='stack build --ghc-options="-W"'
-
-# }}}
-
 # }}}
 # Another aliases {{{
 
-alias mysql='mysql --pager="less -r -S -n -i -F -X"'
 alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
 alias ctags-r='ctags --tag-relative --recurse --sort=yes'
 alias date-simple='date +"%Y-%m-%d"'
 alias cp-with-progress='rsync --partial --progress'
-alias wifi-switch-watch='watch -n1 rfkill list all'
+alias wifi-hardware-check='watch -n1 rfkill list all'
 
 # Notify end of cli task
-# example$ somecommand ; enotify
+# Example)
+#     prompt$ cp -r foo bar ; enotify
 function _espeak () {
 	espeak "$1" -s 150 -v +fex 2> /dev/null || \
 	espeak "$1" -s 150 2> /dev/null
@@ -247,6 +162,12 @@ function enotify () {
 	fi
 	return $exit_code
 }
+
+# }}}
+# Vim {{{
+
+basedir=$(dirname $0)
+source $basedir/vim_utils.sh
 
 # }}}
 
