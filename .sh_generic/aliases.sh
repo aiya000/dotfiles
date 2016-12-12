@@ -145,6 +145,7 @@ alias ctags-r='ctags --tag-relative --recurse --sort=yes'
 alias date-simple='date +"%Y-%m-%d"'
 alias cp-with-progress='rsync --partial --progress'
 alias wifi-hardware-check='watch -n1 rfkill list all'
+alias mount-4U="sudo mount -o user=$(whoami),uid=1000,gid=1000,iocharset=utf8"
 
 # Notify end of cli task
 # Example)
