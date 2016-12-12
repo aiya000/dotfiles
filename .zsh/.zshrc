@@ -46,8 +46,8 @@ function zle-line-init zle-keymap-select {
 	local vi_insert="%{$bg[blue]%}[INSERT]%{$reset_color%}"
 	local vi_status="${${KEYMAP/vicmd/$vi_normal}/(main|viins)/$vi_insert}"
 
-	# Detect git repository
-	local branch=$({git branch 2> /dev/null || echo ' NO REPO'} | cut -d' ' -f2- | xargs -I x echo \[x\])
+	# Detect git branch
+	local branch=$({git branch --contains 2> /dev/null || echo ' NO REPO'} | cut -d' ' -f2- | xargs -I x echo \[x\])
 	local git_branch="%{${${branch/\[NO REPO\]/}/${branch}/$bg[green]}%}${branch}%{$reset_color%}"
 
 	# Result
