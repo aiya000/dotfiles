@@ -483,6 +483,7 @@ let g:tlRememberPosition = 1
 " }}}
 "--- adrone.vim --- {{{
 
+let g:adrone_say_buffer_size          = 8
 let g:adrone_home_default_keymappings = 0
 
 " }}}
