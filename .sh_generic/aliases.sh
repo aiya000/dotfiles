@@ -165,10 +165,11 @@ function enotify () {
 }
 
 # }}}
-# Vim {{{
+# Vim and NeoVim {{{
 
 basedir=$(dirname $0)
 source $basedir/vim_utils.sh
+source $basedir/neovim_utils.sh
 
 # }}}
 
