@@ -63,30 +63,52 @@ augroup END
 
 " Toggle keymapping <leader>V (and etc) to :terminal or vimshell
 function! s:toggle_start_shell_mode() "{{{
-	" Property based
-	let s:SHELL_MODE = get(s:, 'SHELL_MODE', {
+	" Base properties
+	let l:SHELL_MODE = {
 	\	'vimshell' : ':VimShell',
 	\	'terminal' : ':terminal'
-	\}) | lockvar! s:SHELL_MODE
+	\} | lockvar! l:SHELL_MODE
 
-	let s:start_shell_mode = get(s:, 'start_shell_mode', s:SHELL_MODE.terminal)
-	\                        ==# s:SHELL_MODE.terminal ? s:SHELL_MODE.vimshell
-	\                                                  : s:SHELL_MODE.terminal
-	if s:start_shell_mode ==# s:SHELL_MODE.vimshell
+	" Toggle values
+	let s:start_shell_mode = get(s:, 'start_shell_mode', l:SHELL_MODE.terminal)
+	\                        ==# l:SHELL_MODE.terminal ? l:SHELL_MODE.vimshell
+	\                                                  : l:SHELL_MODE.terminal
+
+	" Toggle keymappings
+	if s:start_shell_mode ==# l:SHELL_MODE.vimshell
 		nnoremap <silent> <leader>v         :<C-u>vsp    \| terminal<CR>
 		nnoremap <silent> <leader><leader>v :<C-u>sp     \| terminal<CR>
 		nnoremap <silent> <leader>V         :<C-u>terminal<CR>
 		nnoremap <silent> <leader><leader>V :<C-u>tabnew \| terminal<CR>
-		echo 'shell mode ' . s:SHELL_MODE.terminal
-	elseif s:start_shell_mode ==# s:SHELL_MODE.terminal
+		echo 'shell mode ' . l:SHELL_MODE.terminal
+	elseif s:start_shell_mode ==# l:SHELL_MODE.terminal
 		nnoremap <silent> <leader>v         :<C-u>VimShell -split-command=vsp -toggle<CR>
 		nnoremap <silent> <leader><leader>v :<C-u>VimShell -split-command=sp  -toggle<CR>
 		nnoremap <silent> <leader>V         :<C-u>VimShellBufferDir -create<CR>
 		nnoremap <silent> <leader><leader>V :<C-u>VimShell -split-command=tabnew -create<CR>
-		echo 'shell mode ' . s:SHELL_MODE.vimshell
+		echo 'shell mode ' . l:SHELL_MODE.vimshell
 	endif
+endfunction "}}}
 
-	unlockvar! s:SHELL_MODE
+" Toggle target of <Esc> and <C-\><C-n>. The targets are NeoVim or Inner program
+function! s:toggle_esc_keys_target() "{{{
+	" 'That' is meaning <C-\><C-n>
+	let s:that_send_esc_signal_to_neovim = get(s:, 'that_send_esc_signal_to_neovim', 1)
+
+	" Toggle value state
+	let s:that_send_esc_signal_to_neovim = !s:that_send_esc_signal_to_neovim
+
+	" <C-l> is my favorite Esc key
+	" See NeoKeyMapping augroup on Key_Mapping
+	if s:that_send_esc_signal_to_neovim
+		tnoremap <C-l>      <C-\><C-n>
+		tnoremap <C-\><C-n> <Esc>
+		echo '<C-\><C-n> will send Esc to NeoVim'
+	else
+		tnoremap <C-l>      <Esc>
+		tnoremap <C-\><C-n> <C-\><C-n>
+		echo '<C-\><C-n> will send Esc to inner program'
+	endif
 endfunction "}}}
 
 " }}}
@@ -109,7 +131,9 @@ augroup END
 augroup NeoKeyMapping
 	" terminal mode "{{{
 
-	" <C-l> is default Escape
+	" Default,
+	" <C-\><C-n> is sending Esc signal to NeoVim,
+	" and <Esc> is sending Esc signal to innert program
 	autocmd User MyNVimRc tnoremap <C-l>      <C-\><C-n>
 	autocmd User MyNVimRc tnoremap <C-\><C-n> <Esc>
 	autocmd User MyNVimRc tnoremap <C-]>      <C-l>
@@ -120,6 +144,7 @@ augroup NeoKeyMapping
 	" Open new shell
 	autocmd User MyNVimRc silent call s:toggle_start_shell_mode()
 	autocmd User MyNVimRc nnoremap <silent> <C-\><C-v> :<C-u>call <SID>toggle_start_shell_mode()<CR>
+	autocmd User MyNVimRc nnoremap <silent> <C-\><C-l> :<C-u>call <SID>toggle_esc_keys_target()<CR>
 
 	"}}}
 augroup END
