@@ -1249,6 +1249,8 @@ augroup KeyMapping
 	" aref-web.vim
 	autocmd User MyVimRc nnoremap <leader>K :<C-u>Aref weblio <C-r>=expand('<cword>')<CR><CR>
 	autocmd User MyVimRc nnoremap <leader>S :<C-u>Aref stackage <C-r>=expand('<cword>')<CR><CR>
+	autocmd User MyVimRc vnoremap <leader>K "zy:<C-u>Aref weblio <C-r>z<CR>
+	autocmd User MyVimRc vnoremap <leader>S "zy:<C-u>Aref stackage <C-r>z<CR>
 
 	" vim-over
 	autocmd User MyVimRc nnoremap <silent>       :%s/       :<C-u>OverCommandLine %s/<CR>
