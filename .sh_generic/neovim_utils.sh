@@ -11,10 +11,9 @@ function ndotfile_config () {
 # Startup
 alias nvi='nvim -u NONE --noplugin'
 alias nvime='nvim -c ":bufdo tab split"'
-
-# Pipe
 alias nvimless='nvim - -R -c "setl nolist | nnoremap <buffer> Q :<C-u>q<CR>"'
 alias nvimls='nvim -c "read! ls" -c "nnoremap <buffer> Q :<C-u>q<CR> | setl nolist buftype=nofile | normal! Gddgg"'
+alias nvim-terminal='nvim -c :terminal'
 function vimman () {
 	nvim -c "Man ${1}" +only
 }
