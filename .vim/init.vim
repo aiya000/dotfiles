@@ -195,6 +195,7 @@ command! -bar NVimConfig    e ~/.config/nvim/init.vim
 command! -bar NVimConfigTab tabnew ~/.config/nvim/init.vim
 command! -bar -nargs=* -complete=file Vim    terminal vim <args>
 command! -bar -nargs=* -complete=file VimTab tabnew | terminal vim <args>
+command! -bar -nargs=* -complete=file VimDo  terminal vim -c <q-args>
 
 " Override definition :Reload from .vimrc
 command! -bar Reload so ~/.config/nvim/init.vim
