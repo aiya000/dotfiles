@@ -68,12 +68,6 @@ new_path=$new_path:$ZDOTDIR/zsh_completions
 [ -d ~/.rbenv/plugins/ruby-build/bin ] \
 	&& new_path=$new_path:$HOME/.rbenv/plugins/ruby-build/bin
 
-# pyenv
-[ -d ~/.pyenv ] \
-	&& export PYENV_ROOT=~/.pyenv \
-	&& new_path=$new_path:$PYENV_ROOT/bin \
-	&& eval "$($HOME/.pyenv/bin/pyenv init -)"
-
 # some languages binary
 [ -d ~/.local ] \
 	&& new_path=$new_path:$HOME/.local/bin
