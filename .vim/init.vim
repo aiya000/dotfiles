@@ -112,17 +112,23 @@ function! s:toggle_esc_keys_target() "{{{
 endfunction "}}}
 
 " }}}
-" By plugins {{{
+" Override vimrc {{{
 
-"@Unchecked('')
 augroup NeoKeyMapping
-	" deoplete.nvim
-	autocmd User MyNVimRc inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
-	autocmd User MyNVimRc inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
 	" Disable loaded neocomplete keymappings
 	autocmd User MyNVimRc inoremap <C-k><C-i> <NOP>
 	autocmd User MyNVimRc inoremap <CR>       <CR>
 	autocmd User MyNVimRc inoremap <Tab>      <Tab>
+
+	" deoplete.nvim
+	autocmd User MyNVimRc inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
+	autocmd User MyNVimRc inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
+
+	" aref-web.vim
+	autocmd User MyNVimRc nnoremap <leader>K :<C-u>vsp \| VimDo Aref weblio <C-r>=expand('<cword>')<CR><CR>
+	autocmd User MyNVimRc nnoremap <leader>S :<C-u>vsp \| VimDo Aref stackage <C-r>=expand('<cword>')<CR><CR>
+	autocmd User MyNVimRc vnoremap <leader>K "zy:<C-u>vsp \| VimDo Aref weblio <C-r>z<CR>
+	autocmd User MyNVimRc vnoremap <leader>S "zy:<C-u>vsp \| VimDo Aref stackage <C-r>z<CR>
 augroup END
 
 " }}}
