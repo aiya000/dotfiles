@@ -45,6 +45,7 @@ main = (xmobar >=> xmonad) $ desktopConfig
   , startupHook        = myStartupHook
   , manageHook         = myManageHook
   , workspaces         = myWorkspaces
+  , focusFollowsMouse  = False
   , focusedBorderColor = "#0000ff"
   }
   `additionalKeys` myKeys
@@ -135,12 +136,13 @@ myKeys =
      , ((superMask .|. shiftMask, xK_i), sendMessage NextLayout)
      , ((superMask .|. shiftMask, xK_a), sinkAll)
      -- Hardware keys
-     , ((superMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-suspend") -- ^ must add pm-suspend to sudoers without inputting password
-     , ((superMask, xK_F4), spawn "light -U 10")
-     , ((superMask, xK_F5), spawn "light -A 10")
-     , ((superMask, xK_F6), void $ toggleMute)
-     , ((superMask, xK_F7), void $ lowerVolume 5)
-     , ((superMask, xK_F8), void $ raiseVolume 5)
+     , ((superMask, xK_F1),  spawn "xscreensaver-command -lock; sudo pm-suspend") -- ^ must add pm-suspend to sudoers without inputting password
+     , ((superMask, xK_F4),  spawn "light -U 10")
+     , ((superMask, xK_F5),  spawn "light -A 10")
+     , ((superMask, xK_F6),  void $ toggleMute)
+     , ((superMask, xK_F7),  void $ lowerVolume 5)
+     , ((superMask, xK_F8),  void $ raiseVolume 5)
+     , ((superMask, xK_F12), spawn "xscreensaver-command -lock")
      , ((superMask .|. shiftMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-hibernate") -- ^ must add pm-hibernate to sudoers without inputting password
      -- Applications
      , ((altMask .|. controlMask, xK_t), spawn firstTerminal)
