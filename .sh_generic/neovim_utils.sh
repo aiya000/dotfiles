@@ -28,6 +28,10 @@ function nvim-session () {
 	nvim -c "UniteSessionLoad ${1}"
 }
 
+function nlingr () {
+	nvim -c "J6uil ${1}"
+}
+
 
 ## Twitter
 alias ntwitter='nvim +TweetVimHomeTimeline'

@@ -32,6 +32,10 @@ function vim-session () {
 	vim -c "UniteSessionLoad ${1}"
 }
 
+function lingr () {
+	vim -c "J6uil ${1}"
+}
+
 ## Twitter
 alias twitter='vim +TweetVimHomeTimeline'
 alias tweet='vim +TweetVimSay'
