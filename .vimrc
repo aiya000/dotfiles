@@ -690,6 +690,11 @@ set formatexpr=autofmt#japanese#formatexpr()
 let autofmt_allow_over_tw=1
 
 "}}}
+"--- github-complete.vim --- {{{
+
+let g:github_complete_emoji_japanese_workaround = 1
+
+" }}}
 "--- For Private --- {{{
 
 " Load private configure

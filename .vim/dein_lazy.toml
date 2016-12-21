@@ -238,3 +238,10 @@ on_ft = 'swift'
 [[plugins]]
 repo  = 'derekwyatt/vim-scala'
 on_ft = 'scala'
+
+[[plugins]]
+repo  = 'rhysd/github-complete.vim'
+on_ft = [
+    'markdown',
+    'gitcommit'
+]
