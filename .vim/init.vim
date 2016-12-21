@@ -192,7 +192,7 @@ cnoreabbr Virb    vsp    \| terminal irb
 cnoreabbr IrbTab  tabnew \| terminal irb
 
 " }}}
-" Vim Utils {{{
+" NeoVim Utils {{{
 
 command! -bar VimConfig     e ~/.vimrc
 command! -bar VimConfigTab  tabnew ~/.vimrc
@@ -207,6 +207,13 @@ command! -bar -nargs=* -complete=file VimDo  terminal vim -c <q-args>
 command! -bar Reload so ~/.config/nvim/init.vim
 
 " }}}
+" Override vimrc {{{
 
+" aref-web.vim
+CmdCnoreabbr Weblio   VimDo Aref weblio
+CmdCnoreabbr Stackage VimDo Aref stackage
+CmdCnoreabbr Hoogle   VimDo Aref hoogle
+
+" }}}
 
 doautocmd User MyNVimRc
