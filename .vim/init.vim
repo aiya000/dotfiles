@@ -125,10 +125,10 @@ augroup NeoKeyMapping
 	autocmd User MyNVimRc inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
 
 	" aref-web.vim
-	autocmd User MyNVimRc nnoremap <leader>K :<C-u>vsp \| VimDo Aref weblio <C-r>=expand('<cword>')<CR><CR>
-	autocmd User MyNVimRc nnoremap <leader>S :<C-u>vsp \| VimDo Aref stackage <C-r>=expand('<cword>')<CR><CR>
-	autocmd User MyNVimRc vnoremap <leader>K "zy:<C-u>vsp \| VimDo Aref weblio <C-r>z<CR>
-	autocmd User MyNVimRc vnoremap <leader>S "zy:<C-u>vsp \| VimDo Aref stackage <C-r>z<CR>
+	autocmd User MyNVimRc nnoremap <leader>K :<C-u>vsp \| VimRunDo Aref weblio <C-r>=expand('<cword>')<CR><CR>
+	autocmd User MyNVimRc nnoremap <leader>S :<C-u>vsp \| VimRunDo Aref stackage <C-r>=expand('<cword>')<CR><CR>
+	autocmd User MyNVimRc vnoremap <leader>K "zy:<C-u>vsp \| VimRunDo Aref weblio <C-r>z<CR>
+	autocmd User MyNVimRc vnoremap <leader>S "zy:<C-u>vsp \| VimRunDo Aref stackage <C-r>z<CR>
 augroup END
 
 " }}}
@@ -163,33 +163,9 @@ augroup END
 "-------------------------"
 "      Command_Util       "
 "-------------------------"
-" Development "{{{
+" :terminal shortcut "{{{
 
-" GHCi
-cnoreabbr Ghci    terminal ghci
-cnoreabbr Sghci   sp     \| terminal ghci
-cnoreabbr Vghci   vsp    \| terminal ghci
-cnoreabbr GhciTab tabnew \| terminal ghci
-
-" stack GHCi
-cnoreabbr GhciSt    terminal stack ghci
-cnoreabbr SghciSt   sp     \| terminal stack ghci
-cnoreabbr VghciSt   vsp    \| terminal stack ghci
-cnoreabbr GhciStTab tabnew \| terminal stack ghci
-
-
-" js
-cnoreabbr Js      terminal js
-cnoreabbr Sjs     sp     \| terminal js
-cnoreabbr Vjs     vsp    \| terminal js
-cnoreabbr JsTab   tabnew \| terminal js
-
-
-" irb
-cnoreabbr Irb     terminal irb
-cnoreabbr Sirb    sp     \| terminal irb
-cnoreabbr Virb    vsp    \| terminal irb
-cnoreabbr IrbTab  tabnew \| terminal irb
+CmdCnoreabbr Weechat terminal weechat
 
 " }}}
 " NeoVim Utils {{{
@@ -199,9 +175,6 @@ command! -bar VimConfigTab  tabnew ~/.vimrc
 "TODO: use $XDG_CONFIG_HOME (?)
 command! -bar NVimConfig    e ~/.config/nvim/init.vim
 command! -bar NVimConfigTab tabnew ~/.config/nvim/init.vim
-command! -bar -nargs=* -complete=file Vim    terminal vim <args>
-command! -bar -nargs=* -complete=file VimTab tabnew | terminal vim <args>
-command! -bar -nargs=* -complete=file VimDo  terminal vim -c <q-args>
 
 " Override definition :Reload from .vimrc
 command! -bar Reload so ~/.config/nvim/init.vim
@@ -210,9 +183,9 @@ command! -bar Reload so ~/.config/nvim/init.vim
 " Override vimrc {{{
 
 " aref-web.vim
-CmdCnoreabbr Weblio   VimDo Aref weblio
-CmdCnoreabbr Stackage VimDo Aref stackage
-CmdCnoreabbr Hoogle   VimDo Aref hoogle
+CmdCnoreabbr Weblio   VimRunDo Aref weblio
+CmdCnoreabbr Stackage VimRunDo Aref stackage
+CmdCnoreabbr Hoogle   VimRunDo Aref hoogle
 
 " }}}
 

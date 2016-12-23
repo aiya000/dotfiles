@@ -245,3 +245,11 @@ on_ft = [
     'markdown',
     'gitcommit'
 ]
+
+[[plugins]]
+repo   = 'aiya000/nvim-vim-runner'
+on_cmd = [
+    'VimRun',
+    'VimRunTab',
+    'VimRunDo'
+]
