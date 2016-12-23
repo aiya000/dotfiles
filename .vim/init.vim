@@ -90,27 +90,6 @@ function! s:toggle_start_shell_mode() "{{{
 	endif
 endfunction "}}}
 
-" Toggle target of <Esc> and <C-\><C-n>. The targets are NeoVim or Inner program
-function! s:toggle_esc_keys_target() "{{{
-	" 'That' is meaning <C-\><C-n>
-	let s:that_send_esc_signal_to_neovim = get(s:, 'that_send_esc_signal_to_neovim', 1)
-
-	" Toggle value state
-	let s:that_send_esc_signal_to_neovim = !s:that_send_esc_signal_to_neovim
-
-	" <C-l> is my favorite Esc key
-	" See NeoKeyMapping augroup on Key_Mapping
-	if s:that_send_esc_signal_to_neovim
-		tnoremap <C-l>      <C-\><C-n>
-		tnoremap <C-\><C-n> <Esc>
-		echo '<C-\><C-n> will send Esc to NeoVim'
-	else
-		tnoremap <C-l>      <Esc>
-		tnoremap <C-\><C-n> <C-\><C-n>
-		echo '<C-\><C-n> will send Esc to inner program'
-	endif
-endfunction "}}}
-
 " }}}
 " Override vimrc {{{
 
@@ -142,6 +121,7 @@ augroup NeoKeyMapping
 	" and <Esc> is sending Esc signal to innert program
 	autocmd User MyNVimRc tnoremap <C-l>      <C-\><C-n>
 	autocmd User MyNVimRc tnoremap <C-\><C-n> <Esc>
+	autocmd User MyNVimRc tnoremap <C-[>      <Esc>
 	autocmd User MyNVimRc tnoremap <C-]>      <C-l>
 
 	"}}}
