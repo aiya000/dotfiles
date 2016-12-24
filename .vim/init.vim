@@ -163,9 +163,9 @@ command! -bar Reload so ~/.config/nvim/init.vim
 " Override vimrc {{{
 
 " aref-web.vim
-CmdCnoreabbr Weblio   VimRunDo Aref weblio
-CmdCnoreabbr Stackage VimRunDo Aref stackage
-CmdCnoreabbr Hoogle   VimRunDo Aref hoogle
+CmdCnoreabbr Weblio   vsp \| VimRunDo Aref weblio
+CmdCnoreabbr Stackage vsp \| VimRunDo Aref stackage
+CmdCnoreabbr Hoogle   vsp \| VimRunDo Aref hoogle
 
 " }}}
 
