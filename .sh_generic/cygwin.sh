@@ -1,4 +1,5 @@
 #!/bin/sh
+alias pbcopy='tee /dev/clipboard > /dev/null'
 alias traceroute='cocot tracert'
 alias_of cygrunsrv='cocot cygrunsrv'
 alias_of csc='cocot csc'

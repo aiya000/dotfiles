@@ -15,15 +15,12 @@ fi
 #############
 # Define global variables {{{
 
+in_linux=$(is_your_os_name Linux)
 in_cygwin=$(is_your_os_name Cygwin)
 
 # }}}
 # Reconfigure the variables {{{
 
-if [ $in_cygwin -eq 1 ] ; then
-	HOME=/home/$USER
-	PATH=$PATH:/cygdrive/c/Windows/system32:/cygdrive/c/Windows
-fi
 
 
 # }}}
@@ -170,10 +167,6 @@ bindkey -M viins '^x^f' fzf-file-finder-expand
 
 source ~/.sh_generic/aliases.sh
 
-if [ $in_cygwin -eq 1 ] ; then
-	source ~/.sh_generic/cygwin.sh
-fi
-
 # }}}
 # Define special aliases for zsh {{{
 
@@ -226,6 +219,15 @@ setupsolarized dircolors.ansi-light
 
 # }}}
 
+
+# For each environment
+if [ $in_linux -eq 1 ] ; then
+	source ~/.sh_generic/linux.sh
+elif [ $in_cygwin -eq 1 ] ; then
+	source ~/.sh_generic/cygwin.sh
+	HOME=/home/$USER
+	PATH=$PATH:/cygdrive/c/Windows/system32:/cygdrive/c/Windows
+fi
 
 # If it exists, load environment config
 if [ -f ~/.zshrc_env ] ; then

@@ -6,7 +6,7 @@
 # and you can load .bashrc or another shell rc file, maybe
 #
 
-# Overrides {{{
+# Override existed name {{{
 
 alias ls='ls --color=auto --group-directories-first'
 alias mv='mv -i'
@@ -14,10 +14,17 @@ alias cp='cp -i'
 alias_of mysql='mysql --pager="less -r -S -n -i -F -X"'
 
 # }}}
-# Utililty {{{
+# Vim and NeoVim {{{
 
-## git
+basedir=$(dirname $0)
+source $basedir/vim_utils.sh
+source $basedir/neovim_utils.sh
+
+# }}}
+# Git {{{
+
 if i_have git ; then
+	# Short hands
 	alias g='git'
 	alias ga='git add'
 	alias gaa='git add -A'
@@ -37,25 +44,71 @@ if i_have git ; then
 	alias gri='git rebase --interactive'
 	alias gs='git status'
 	alias gss='git stash'
+
+	# Set casual user.name and user.email at local
+	alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
 fi
 
-## shell
+# }}}
+# The completions {{{
+
+# Use git-completion
+if [ -f /usr/share/git/completion/git-completion.zsh -a ! -f $ZDOTDIR/_git ] ; then
+	cp /usr/share/git/completion/git-completion.zsh $ZDOTDIR/_git
+fi
+
+# Use travis-completion
+if [ -f ~/.travis/travis.sh ] ; then
+	source ~/.travis/travis.sh
+fi
+
+# Use stack-completion
+if [ -s $(which stack) ] ; then
+	# This completion needs compinit and bashcompinit function
+	# > autoload -U compinit     && compinit
+	# > autoload -U bashcompinit && bashcompinit
+	eval "$(stack --bash-completion-script stack)"
+fi
+
+# }}}
+# Others {{{
+
+# Short hands
 alias la='ls -a --color=auto --group-directories-first'
 alias ll='ls -l --color=auto --group-directories-first'
 alias llh='ls -lh --color=auto --group-directories-first'
 alias lla='ls -la --color=auto --group-directories-first'
+
+alias date-simple='date +"%Y-%m-%d"'
+alias mount4u="sudo mount -o user=$(whoami),uid=1000,gid=1000,iocharset=utf8"
+
+i_have docker && alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
+i_have rsync  && alias cp-with-progress='rsync --partial --progress'
+i_have watch  && alias wifi-hardware-check='watch -n1 rfkill list all'
+i_have ctags  && alias ctags-r='ctags --tag-relative --recurse --sort=yes'
+
+# Generate items for autotools
+alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
 # Start cmd without stdout and stderr in background
 function startbg () {
 	$@ > /dev/null 2>&1 &
 }
 
-# Console output pipe to clipboard
-if [ $IS_CYGWIN -eq 1 ] ; then
-	alias pbcopy='tee /dev/clipboard > /dev/null'
-else
-	alias pbcopy='xsel --clipboard --input'
-fi
+# Notify the result by espeak
+function _espeak () {
+	espeak "$1" -s 150 -v +fex 2> /dev/null \
+		|| espeak "$1" -s 150 2> /dev/null
+}
+function enotify () {
+	local exit_code=$?
+	if [ $exit_code -eq 0 ] ; then
+		_espeak 'Succeed!'
+	else
+		_espeak 'Exit with the error'
+	fi
+	return $exit_code
+}
 
 # Toggle file extensions
 function bak () {
@@ -75,109 +128,5 @@ function bak () {
 		mv "$1" "${1}.bak"
 	fi
 }
-
-# }}}
-# Environment Conditions {{{
-
-if  [ $IS_CYGWIN -eq 1 ] ; then
-else
-	# $IS_UBUNTU or others
-	alias ssleep='sudo pm-suspend'
-fi
-
-# }}}
-# Development supports {{{
-
-# Generate items for autotools
-alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
-
-# git {{{
-
-# Set casual user.name and user.email at local
-alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
-
-# <Warn> fully change git commit author and email
-function git-unsafe-commiter-changer () {
-	git_user_name="$1"
-	git_email="$2"
-	git filter-branch -f --env-filter \
-		"GIT_AUTHOR_NAME='${git_user_name}'; GIT_AUTHOR_EMAIL='${git_email}'; GIT_COMMITTER_NAME='${git_user_name}'; GIT_COMMITTER_EMAIL='${git_email}';" \
-		HEAD
-	unset git_user_name git_email
-}
-
-# Push current state local repository temporary
-function git-push-temporary () {
-	local temp_branch=deprecated_unsafe_temporary_branch
-	if [ $(git status --short | wc -l) -ne 1 ] ; then
-		git add -A
-		git stash save
-		git checkout -b $temp_branch
-		git stash pop
-		git add -A
-		git commit
-	else
-		git checkout -b $temp_branch
-	fi
-	git push -uf origin $temp_branch
-}
-
-# }}}
-
-# }}}
-# Another aliases {{{
-
-alias date-simple='date +"%Y-%m-%d"'
-alias mount4u="sudo mount -o user=$(whoami),uid=1000,gid=1000,iocharset=utf8"
-i_have docker && alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
-i_have rsync  && alias cp-with-progress='rsync --partial --progress'
-i_have watch  && alias wifi-hardware-check='watch -n1 rfkill list all'
-i_have ctags  && alias ctags-r='ctags --tag-relative --recurse --sort=yes'
-
-# Notify end of cli task
-# Example)
-#     prompt$ cp -r foo bar ; enotify
-function _espeak () {
-	espeak "$1" -s 150 -v +fex 2> /dev/null || \
-	espeak "$1" -s 150 2> /dev/null
-}
-function enotify () {
-	local exit_code=$?
-	if [ $exit_code -eq 0 ] ; then
-		_espeak 'Succeed!'
-	else
-		_espeak 'Exit with the error'
-	fi
-	return $exit_code
-}
-
-# }}}
-# Vim and NeoVim {{{
-
-basedir=$(dirname $0)
-source $basedir/vim_utils.sh
-source $basedir/neovim_utils.sh
-
-# }}}
-# Use each completions {{{
-
-#TODO: Branch zsh env and bash env
-# Use git-completion
-if [ -f /usr/share/git/completion/git-completion.zsh -a ! -f $ZDOTDIR/_git ] ; then
-	cp /usr/share/git/completion/git-completion.zsh $ZDOTDIR/_git
-fi
-
-# Use travis-completion
-if [ -f ~/.travis/travis.sh ] ; then
-	source ~/.travis/travis.sh
-fi
-
-# Use stack-completion
-if [ -s $(which stack) ] ; then
-	# This completion needs compinit and bashcompinit function
-	# > autoload -U compinit     && compinit
-	# > autoload -U bashcompinit && bashcompinit
-	eval "$(stack --bash-completion-script stack)"
-fi
 
 # }}}
