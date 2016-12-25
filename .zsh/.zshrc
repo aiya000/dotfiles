@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+source ~/.sh_generic/helper.sh
 
 ###################
 # Check .zprofile #
@@ -12,6 +13,20 @@ fi
 #############
 # Configure #
 #############
+# Define global variables {{{
+
+in_cygwin=$(is_your_os_name Cygwin)
+
+# }}}
+# Reconfigure the variables {{{
+
+if [ $in_cygwin -eq 1 ] ; then
+	HOME=/home/$USER
+	PATH=$PATH:/cygdrive/c/Windows/system32:/cygdrive/c/Windows
+fi
+
+
+# }}}
 # Set zsh options {{{
 
 # Use modules
@@ -153,8 +168,11 @@ bindkey -M viins '^x^f' fzf-file-finder-expand
 ###################
 # Load general aliases {{{
 
-source ~/.sh_generic/helper.sh
 source ~/.sh_generic/aliases.sh
+
+if [ $in_cygwin -eq 1 ] ; then
+	source ~/.sh_generic/cygwin.sh
+fi
 
 # }}}
 # Define special aliases for zsh {{{

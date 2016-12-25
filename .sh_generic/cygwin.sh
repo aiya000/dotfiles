@@ -1,0 +1,11 @@
+#!/bin/sh
+alias traceroute='cocot tracert'
+alias_of cygrunsrv='cocot cygrunsrv'
+alias_of csc='cocot csc'
+alias_of ifconfig='cocot ipconfig'
+alias_of ping='cocot ping'
+alias_of route='cocot route'
+alias_of netstat='cocot netstat'
+alias_of nslookup='cocot nslookup'
+alias_of updatedb='updatedb --localpaths="/bin /dev /etc /home /lib /usr /var /opt" --prunepaths="/usr/tmp /var/tmp"'
+alias_of mysql='mysql --pager="less -r -S -n -i -F -X" --protocol=TCP'

@@ -2,8 +2,8 @@
 
 #
 # This file define the aliases and functions
-# You can sourcing this from .zshrc
-# and you can sourcing .bashrc or another shell rc file, maybe
+# You can load this from .zshrc
+# and you can load .bashrc or another shell rc file, maybe
 #
 
 # Overrides {{{
@@ -80,16 +80,6 @@ function bak () {
 # Environment Conditions {{{
 
 if  [ $IS_CYGWIN -eq 1 ] ; then
-	alias traceroute='cocot tracert'
-	alias_of cygrunsrv='cocot cygrunsrv'
-	alias_of csc='cocot csc'
-	alias_of ifconfig='cocot ipconfig'
-	alias_of ping='cocot ping'
-	alias_of route='cocot route'
-	alias_of netstat='cocot netstat'
-	alias_of nslookup='cocot nslookup'
-	alias_of updatedb='updatedb --localpaths="/bin /dev /etc /home /lib /usr /var /opt" --prunepaths="/usr/tmp /var/tmp"'
-	alias_of mysql='mysql --pager="less -r -S -n -i -F -X" --protocol=TCP'
 else
 	# $IS_UBUNTU or others
 	alias ssleep='sudo pm-suspend'
@@ -138,7 +128,7 @@ function git-push-temporary () {
 # Another aliases {{{
 
 alias date-simple='date +"%Y-%m-%d"'
-alias mount-4U="sudo mount -o user=$(whoami),uid=1000,gid=1000,iocharset=utf8"
+alias mount4u="sudo mount -o user=$(whoami),uid=1000,gid=1000,iocharset=utf8"
 i_have docker && alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
 i_have rsync  && alias cp-with-progress='rsync --partial --progress'
 i_have watch  && alias wifi-hardware-check='watch -n1 rfkill list all'

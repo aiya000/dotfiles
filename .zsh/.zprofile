@@ -3,21 +3,6 @@
 ###############
 # Config envs #
 ###############
-# Prepare constant {{{
-
-function find_name_by_uname () { #{{{
-	uname=`uname -a`
-	if [ -n "`echo $uname | grep ${1}`" ] ; then
-		echo 1
-	else
-		echo 0
-	fi
-} #}}}
-
-export IS_UBUNTU=`find_name_by_uname Ubuntu`
-export IS_CYGWIN=`find_name_by_uname Cygwin`
-
-# }}}
 # Set zsh variables {{{
 
 # For $RPROMPT
@@ -51,19 +36,8 @@ PATH=$PATH:$GOPATH/bin
 # zsh completions
 PATH=$PATH:$ZDOTDIR/zsh_completions
 
-# Use windows's command
-if [ $IS_CYGWIN -eq 1 ] ; then
-	PATH=$PATH:/cygdrive/c/Windows/system32:/cygdrive/c/Windows
-fi
-
-
 #}}}
 # Others {{{
-
-# Reset HOME
-if [ $IS_CYGWIN -eq 1 ] ; then
-	export HOME=/home/$USER
-fi
 
 # Favorite editor
 export EDITOR=vim
