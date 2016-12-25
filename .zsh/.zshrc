@@ -153,6 +153,7 @@ bindkey -M viins '^x^f' fzf-file-finder-expand
 ###################
 # Load general aliases {{{
 
+source ~/.sh_generic/helper.sh
 source ~/.sh_generic/aliases.sh
 
 # }}}

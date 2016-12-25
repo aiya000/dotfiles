@@ -6,32 +6,6 @@
 # and you can sourcing .bashrc or another shell rc file, maybe
 #
 
-####################
-# Helper Functions #
-####################
-# {{{
-
-# If I have it command, return 0. otherwise return 1.
-function i_have () {
-	which "$1" > /dev/null 2>&1
-}
-
-# If I have a command what it is specified same as alias name,
-# define the alias.
-# otherwise don't define it.
-function alias_of () {
-	alias_detail=$1
-	name=$(echo $alias_detail | awk -F = '{print $1}')
-	i_have "$name" && alias $alias_detail
-}
-
-# }}}
-
-###################
-# Define Commands #
-###################
-# Define aliases and functions {{{
-
 # Overrides {{{
 
 alias ls='ls --color=auto --group-directories-first'
@@ -193,8 +167,6 @@ function enotify () {
 basedir=$(dirname $0)
 source $basedir/vim_utils.sh
 source $basedir/neovim_utils.sh
-
-# }}}
 
 # }}}
 # Use each completions {{{
