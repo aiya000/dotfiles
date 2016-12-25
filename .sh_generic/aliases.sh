@@ -6,6 +6,27 @@
 # and you can sourcing .bashrc or another shell rc file, maybe
 #
 
+####################
+# Helper Functions #
+####################
+# {{{
+
+# If I have it command, return 0. otherwise return 1.
+function i_have () {
+	which "$1" > /dev/null 2>&1
+}
+
+# If I have a command what it is specified same as alias name,
+# define the alias.
+# otherwise don't define it.
+function alias_of () {
+	alias_detail=$1
+	name=$(echo $alias_detail | awk -F = '{print $1}')
+	i_have "$name" && alias $alias_detail
+}
+
+# }}}
+
 ###################
 # Define Commands #
 ###################
@@ -16,31 +37,33 @@
 alias ls='ls --color=auto --group-directories-first'
 alias mv='mv -i'
 alias cp='cp -i'
-alias mysql='mysql --pager="less -r -S -n -i -F -X"'
+alias_of mysql='mysql --pager="less -r -S -n -i -F -X"'
 
 # }}}
 # Utililty {{{
 
 ## git
-alias g='git'
-alias ga='git add'
-alias gaa='git add -A'
-alias gap='git add -p'
-alias gb='git branch'
-alias gbd='git branch --delete'
-alias gc='git commit'
-alias gcam='git commit --amend'
-alias gcm='git commit -m'
-alias gco='git checkout'
-alias gd='git diff'
-alias gdh='git diff HEAD~..HEAD'
-alias gds='git diff --staged'
-alias gl='git log'
-alias gr='git rebase'
-alias grc='git rebase --continue'
-alias gri='git rebase --interactive'
-alias gs='git status'
-alias gss='git stash'
+if i_have git ; then
+	alias g='git'
+	alias ga='git add'
+	alias gaa='git add -A'
+	alias gap='git add -p'
+	alias gb='git branch'
+	alias gbd='git branch --delete'
+	alias gc='git commit'
+	alias gcam='git commit --amend'
+	alias gcm='git commit -m'
+	alias gco='git checkout'
+	alias gd='git diff'
+	alias gdh='git diff HEAD~..HEAD'
+	alias gds='git diff --staged'
+	alias gl='git log'
+	alias gr='git rebase'
+	alias grc='git rebase --continue'
+	alias gri='git rebase --interactive'
+	alias gs='git status'
+	alias gss='git stash'
+fi
 
 ## shell
 alias la='ls -a --color=auto --group-directories-first'
@@ -83,16 +106,16 @@ function bak () {
 # Environment Conditions {{{
 
 if  [ $IS_CYGWIN -eq 1 ] ; then
-	alias cygrunsrv='cocot cygrunsrv'
-	alias csc='cocot csc'
-	alias ifconfig='cocot ipconfig'
-	alias ping='cocot ping'
 	alias traceroute='cocot tracert'
-	alias route='cocot route'
-	alias netstat='cocot netstat'
-	alias nslookup='cocot nslookup'
-	alias updatedb='updatedb --localpaths="/bin /dev /etc /home /lib /usr /var /opt" --prunepaths="/usr/tmp /var/tmp"'
-	alias mysql='mysql --pager="less -r -S -n -i -F -X" --protocol=TCP'
+	alias_of cygrunsrv='cocot cygrunsrv'
+	alias_of csc='cocot csc'
+	alias_of ifconfig='cocot ipconfig'
+	alias_of ping='cocot ping'
+	alias_of route='cocot route'
+	alias_of netstat='cocot netstat'
+	alias_of nslookup='cocot nslookup'
+	alias_of updatedb='updatedb --localpaths="/bin /dev /etc /home /lib /usr /var /opt" --prunepaths="/usr/tmp /var/tmp"'
+	alias_of mysql='mysql --pager="less -r -S -n -i -F -X" --protocol=TCP'
 else
 	# $IS_UBUNTU or others
 	alias ssleep='sudo pm-suspend'
@@ -140,12 +163,12 @@ function git-push-temporary () {
 # }}}
 # Another aliases {{{
 
-alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
-alias ctags-r='ctags --tag-relative --recurse --sort=yes'
 alias date-simple='date +"%Y-%m-%d"'
-alias cp-with-progress='rsync --partial --progress'
-alias wifi-hardware-check='watch -n1 rfkill list all'
 alias mount-4U="sudo mount -o user=$(whoami),uid=1000,gid=1000,iocharset=utf8"
+i_have docker && alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
+i_have rsync  && alias cp-with-progress='rsync --partial --progress'
+i_have watch  && alias wifi-hardware-check='watch -n1 rfkill list all'
+i_have ctags  && alias ctags-r='ctags --tag-relative --recurse --sort=yes'
 
 # Notify end of cli task
 # Example)
