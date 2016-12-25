@@ -150,6 +150,7 @@ myKeys =
      , ((superMask, xK_r), spawn "dmenu_run")
      , ((superMask, xK_f), spawn "firefox")
      , ((superMask, xK_m), spawn "xfce4-mixer")
+     , ((superMask .|. shiftMask, xK_x), xmonadRestart)
      , ((noModMask, xK_Print), takeScreenShot FullScreen)
      , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
      ] ++ movements
@@ -165,10 +166,14 @@ myKeys =
         dateSSPath             = "~/Picture/ScreenShot-$(date +'%Y-%m-%d-%H-%M-%S').png"
         messageOf FullScreen   = "shot the full screen"
         messageOf ActiveWindow = "shot the active window"
-
     moveWindowTo :: ScreenId -> X ()
     moveWindowTo (S n) = let workscreenId = (n - 1) `mod` length myWorkspaces'
                          in shiftToWorkscreen workscreenId
+    xmonadRestart :: X ()
+    xmonadRestart = spawn $ "xmonad --recompile && " ++
+                            "xmonad --restart && " ++
+                            "sleep 1 && " ++
+                            "notify-send 'XMonad' 'Restarted'"
 
 
 myMouseBindings :: [((ButtonMask, Button), Window -> X ())]
