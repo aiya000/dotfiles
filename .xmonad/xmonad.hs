@@ -125,6 +125,7 @@ myKeys =
      , ((controlMask .|. shiftMask .|. altMask, xK_l), windows swapDown)
      , ((controlMask .|. shiftMask .|. altMask, xK_h), windows swapUp)
      , ((controlMask .|. shiftMask, xK_i), nextScreen)
+     , ((controlMask .|. shiftMask, xK_c), kill)
      , ((superMask, xK_l), withFocused $ keysMoveWindow (5,0))
      , ((superMask, xK_h), withFocused $ keysMoveWindow (-5,0))
      , ((superMask, xK_j), withFocused $ keysMoveWindow (0,5))
