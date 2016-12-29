@@ -52,12 +52,7 @@ main = (xmobar >=> xmonad) $ desktopConfig
   `additionalMouseBindings` myMouseBindings
 
 
--- Data Types {{{
-
 data ScreenShotType = FullScreen | ActiveWindow
-
--- }}}
--- Functions and Values {{{
 
 firstTerminal :: String
 firstTerminal = "termite"
@@ -83,8 +78,6 @@ sleep :: Int -> X ()
 sleep n | n < 0     = io $ error "argument must be over 0"
         | otherwise = io $ threadDelay (n * 1000000)
 
--- }}}
--- My configurations {{{
 
 myLayoutHook = xmobarMargin . subTabbed $ TwoPane (1/55) (1/2) ||| Grid
   where
@@ -181,5 +174,3 @@ myMouseBindings :: [((ButtonMask, Button), Window -> X ())]
 myMouseBindings =
   [ ((altMask, button1), mouseResizeWindow)
   ]
-
--- }}}
