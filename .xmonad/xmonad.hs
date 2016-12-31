@@ -30,7 +30,7 @@ import XMonad.Layout.SubLayouts (subTabbed, GroupMsg(MergeAll,UnMerge))
 import XMonad.Layout.Tabbed (simpleTabbed)
 import XMonad.Layout.TwoPane (TwoPane(TwoPane))
 import XMonad.Operations (sendMessage, withFocused, mouseResizeWindow)
-import XMonad.StackSet (focusUp, focusDown, swapUp, swapDown)
+import XMonad.StackSet (focusUp, focusDown, swapUp, swapDown, greedyView)
 import XMonad.Util.EZConfig (additionalKeys, additionalMouseBindings)
 import XMonad.Util.SpawnOnce (spawnOnce)
 import XMonad.Layout.Gaps (gaps, Direction2D(U))
@@ -100,6 +100,7 @@ myManageHook = placeHook (fixed (0.5, 0.5)) <+> manageFloatForTargets <+> manage
       ]
 
 
+--TODO: Use `workspaces conf` instead of myWorkspaces
 -- myWorkspaces must be made by myWorkspaces' for local each dependencies
 myWorkspaces' :: [Int]
 myWorkspaces' = [1 .. 4]
@@ -109,9 +110,9 @@ myWorkspaces = map show myWorkspaces'
 myKeys :: [((KeyMask, KeySym), X ())]
 myKeys =
   -- movements Just for myWorkspaces
-  let numKeys            = [xK_1 .. xK_9] ++ [xK_0]
+  let numKeys            = [xK_F1 .. xK_F10]
       workspaceNum       = length myWorkspaces'
-      makeMovement key n = ((altMask .|. shiftMask, key), moveWindowTo n)
+      makeMovement key n = ((noModMask, key), moveWindowTo n)
       movements          = zipWith makeMovement numKeys $ map S myWorkspaces'
   in [ ((hhkbCasualMask, xK_h), windows focusUp)
      , ((hhkbCasualMask, xK_l), windows focusDown)
@@ -149,7 +150,10 @@ myKeys =
      , ((hhkbCasualMask, xK_x), xmonadRestart)
      , ((noModMask, xK_Print), takeScreenShot FullScreen)
      , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
-     ] ++ movements
+     ]
+     ++ movements
+     ++ [((hhkbCasualMask, numKey), windows . greedyView $ workspace)
+          | (workspace, numKey) <- zip myWorkspaces [xK_1 .. xK_9]]
   where
     takeScreenShot :: ScreenShotType -> X ()
     takeScreenShot ssType = do
