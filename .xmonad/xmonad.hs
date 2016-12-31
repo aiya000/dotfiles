@@ -63,6 +63,9 @@ altMask = mod1Mask
 superMask :: KeyMask
 superMask = mod4Mask
 
+hhkbCasualMask :: KeyMask
+hhkbCasualMask = controlMask .|. shiftMask
+
 -- This depends ImageMagick and xdotool
 screenshot :: ScreenShotType -> FilePath -> X ()
 screenshot FullScreen   path = spawn $ printf "import -window root %s" path
@@ -103,7 +106,6 @@ myWorkspaces' = [1 .. 4]
 myWorkspaces :: [String]
 myWorkspaces = map show myWorkspaces'
 
-
 myKeys :: [((KeyMask, KeySym), X ())]
 myKeys =
   -- movements Just for myWorkspaces
@@ -111,14 +113,14 @@ myKeys =
       workspaceNum       = length myWorkspaces'
       makeMovement key n = ((altMask .|. shiftMask, key), moveWindowTo n)
       movements          = zipWith makeMovement numKeys $ map S myWorkspaces'
-  in [ ((controlMask .|. shiftMask, xK_h), windows focusUp)
-     , ((controlMask .|. shiftMask, xK_l), windows focusDown)
-     , ((controlMask .|. shiftMask, xK_j), withFocused (sendMessage . MergeAll))
-     , ((controlMask .|. shiftMask, xK_k), withFocused (sendMessage . UnMerge))
-     , ((controlMask .|. shiftMask .|. altMask, xK_l), windows swapDown)
-     , ((controlMask .|. shiftMask .|. altMask, xK_h), windows swapUp)
-     , ((controlMask .|. shiftMask, xK_i), nextScreen)
-     , ((controlMask .|. shiftMask, xK_c), kill)
+  in [ ((hhkbCasualMask, xK_h), windows focusUp)
+     , ((hhkbCasualMask, xK_l), windows focusDown)
+     , ((hhkbCasualMask, xK_j), withFocused (sendMessage . MergeAll))
+     , ((hhkbCasualMask, xK_k), withFocused (sendMessage . UnMerge))
+     , ((hhkbCasualMask .|. altMask, xK_l), windows swapDown)
+     , ((hhkbCasualMask .|. altMask, xK_h), windows swapUp)
+     , ((hhkbCasualMask, xK_i), nextScreen)
+     , ((hhkbCasualMask, xK_c), kill)
      , ((superMask, xK_l), withFocused $ keysMoveWindow (5,0))
      , ((superMask, xK_h), withFocused $ keysMoveWindow (-5,0))
      , ((superMask, xK_j), withFocused $ keysMoveWindow (0,5))
@@ -128,7 +130,7 @@ myKeys =
      --, ((superMask .|. shiftMask, xK_j), )
      --, ((superMask .|. shiftMask, xK_k), )
      , ((superMask .|. shiftMask, xK_i), sendMessage NextLayout)
-     , ((superMask .|. shiftMask, xK_a), sinkAll)
+     , ((hhkbCasualMask, xK_a), sinkAll)
      -- Hardware keys
      , ((superMask, xK_F1),  spawn "xscreensaver-command -lock; sudo pm-suspend") -- ^ must add pm-suspend to sudoers without inputting password
      , ((superMask, xK_F4),  spawn "light -U 10")
@@ -140,11 +142,11 @@ myKeys =
      , ((superMask .|. shiftMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-hibernate") -- ^ must add pm-hibernate to sudoers without inputting password
      -- Applications
      , ((altMask .|. controlMask, xK_t), spawn firstTerminal)
-     , ((superMask, xK_e), spawn "thunar")
-     , ((superMask, xK_r), spawn "dmenu_run")
-     , ((superMask, xK_f), spawn "firefox")
-     , ((superMask, xK_m), spawn "xfce4-mixer")
-     , ((superMask .|. shiftMask, xK_x), xmonadRestart)
+     , ((hhkbCasualMask, xK_e), spawn "thunar")
+     , ((hhkbCasualMask, xK_r), spawn "dmenu_run")
+     , ((hhkbCasualMask, xK_f), spawn "firefox")
+     , ((hhkbCasualMask, xK_m), spawn "xfce4-mixer")
+     , ((hhkbCasualMask, xK_x), xmonadRestart)
      , ((noModMask, xK_Print), takeScreenShot FullScreen)
      , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
      ] ++ movements
