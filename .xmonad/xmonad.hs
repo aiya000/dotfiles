@@ -69,21 +69,27 @@ xmonadRestartWithMessage =
           "sleep 1 && " ++
           "notify-send 'XMonad' 'Restarted'"
 
+-- Move current window to target workspace
+moveWindowTo :: ScreenId -> X ()
+moveWindowTo (S n) = let workscreenId = (n - 1) `mod` length myWorkspaces'
+                     in shiftToWorkscreen workscreenId
 
--- This depends ImageMagick and xdotool
-screenshot :: ScreenShotType -> FilePath -> X ()
-screenshot FullScreen   path = spawn $ printf "import -window root %s" path
-screenshot ActiveWindow path = spawn $ printf "import -window $(xdotool getwindowfocus -f) %s" path
+takeScreenShot :: ScreenShotType -> X ()
+takeScreenShot ssType = do
+  let msg = messageOf ssType
+  screenshot ssType dateSSPath
+  spawn  $ printf "espeak -s 150 -v +fex '%s'" msg
+  liftIO $ threadDelay 1000000  -- Wait 1 sec
+  spawn  $ printf "notify-send 'ScreenShot' '%s'" msg
+  where
+    -- Take screenshot with ImageMagick and xdotool
+    screenshot :: ScreenShotType -> FilePath -> X ()
+    screenshot FullScreen   path = spawn $ printf "import -window root %s" path
+    screenshot ActiveWindow path = spawn $ printf "import -window $(xdotool getwindowfocus -f) %s" path
 
-espeak :: String -> X ()
-espeak msg = spawn $ "espeak -s 150 -v +fex \"" ++ msg ++ "\""
-
-notifySend :: String -> String -> X ()
-notifySend title msg = spawn $ printf "notify-send '%s' '%s'" title msg
-
-sleep :: Int -> X ()
-sleep n | n < 0     = io $ error "argument must be over 0"
-        | otherwise = io $ threadDelay (n * 1000000)
+    dateSSPath             = "~/Picture/ScreenShot-$(date +'%Y-%m-%d-%H-%M-%S').png"
+    messageOf FullScreen   = "shot the full screen"
+    messageOf ActiveWindow = "shot the active window"
 
 touch :: FilePath -> X ()
 touch = liftIO . flip writeFile ""
@@ -115,130 +121,72 @@ myWorkspaces :: [String]
 myWorkspaces = map show myWorkspaces'
 
 
+baseKeys :: KeyMask -> [((KeyMask, KeySym), X ())]
+baseKeys casualMask =
+  [ ((casualMask, xK_h), windows focusUp)
+  , ((casualMask, xK_l), windows focusDown)
+  , ((casualMask, xK_j), withFocused (sendMessage . MergeAll))
+  , ((casualMask, xK_k), withFocused (sendMessage . UnMerge))
+  , ((superMask, xK_l), withFocused $ keysMoveWindow (5,0))
+  , ((superMask, xK_h), withFocused $ keysMoveWindow (-5,0))
+  , ((superMask, xK_j), withFocused $ keysMoveWindow (0,5))
+  , ((superMask, xK_k), withFocused $ keysMoveWindow (0,-5))
+  , ((superMask .|. shiftMask, xK_i), sendMessage NextLayout)
+  , ((superMask, xK_F1),  spawn "xscreensaver-command -lock; sudo pm-suspend") -- ^ must add pm-suspend to sudoers without inputting password
+  , ((superMask, xK_F4),  spawn "light -U 10")
+  , ((superMask, xK_F5),  spawn "light -A 10")
+  , ((superMask, xK_F6),  void $ toggleMute)
+  , ((superMask, xK_F7),  void $ lowerVolume 5)
+  , ((superMask, xK_F8),  void $ raiseVolume 5)
+  , ((superMask, xK_F12), spawn "xscreensaver-command -lock")
+  , ((superMask .|. shiftMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-hibernate") -- ^ must add pm-hibernate to sudoers without inputting password
+  ]
+
 myNormalKeys :: [((KeyMask, KeySym), X ())]
 myNormalKeys =
-  -- movements Just for myWorkspaces
-  let numKeys            = [xK_1 .. xK_9] ++ [xK_0]
-      workspaceNum       = length myWorkspaces'
-      makeMovement key n = ((altMask .|. shiftMask, key), moveWindowTo n)
-      movements          = zipWith makeMovement numKeys $ map S myWorkspaces'
-  in [ ((altMask, xK_h), windows focusUp)
-     , ((altMask, xK_l), windows focusDown)
-     , ((altMask, xK_j), withFocused (sendMessage . MergeAll))
-     , ((altMask, xK_k), withFocused (sendMessage . UnMerge))
-     , ((altMask .|. shiftMask, xK_l), windows swapDown)
-     , ((altMask .|. shiftMask, xK_h), windows swapUp)
-     , ((altMask .|. shiftMask, xK_i), nextScreen)
-     , ((superMask, xK_l), withFocused $ keysMoveWindow (5,0))
-     , ((superMask, xK_h), withFocused $ keysMoveWindow (-5,0))
-     , ((superMask, xK_j), withFocused $ keysMoveWindow (0,5))
-     , ((superMask, xK_k), withFocused $ keysMoveWindow (0,-5))
-     --, ((superMask .|. shiftMask, xK_l), tileWindow $ Rectangle x y w h)
-     --, ((superMask .|. shiftMask, xK_h), )
-     --, ((superMask .|. shiftMask, xK_j), )
-     --, ((superMask .|. shiftMask, xK_k), )
-     , ((superMask .|. shiftMask, xK_i), sendMessage NextLayout)
-     , ((superMask .|. shiftMask, xK_a), sinkAll)
-     -- Hardware keys
-     , ((superMask, xK_F1),  spawn "xscreensaver-command -lock; sudo pm-suspend") -- ^ must add pm-suspend to sudoers without inputting password
-     , ((superMask, xK_F4),  spawn "light -U 10")
-     , ((superMask, xK_F5),  spawn "light -A 10")
-     , ((superMask, xK_F6),  void $ toggleMute)
-     , ((superMask, xK_F7),  void $ lowerVolume 5)
-     , ((superMask, xK_F8),  void $ raiseVolume 5)
-     , ((superMask, xK_F12), spawn "xscreensaver-command -lock")
-     , ((superMask .|. shiftMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-hibernate") -- ^ must add pm-hibernate to sudoers without inputting password
-     -- Applications
-     , ((altMask .|. controlMask, xK_t), spawn firstTerminal)
-     , ((superMask, xK_e), spawn "thunar")
-     , ((superMask, xK_r), spawn "dmenu_run")
-     , ((superMask, xK_f), spawn "firefox")
-     , ((superMask, xK_m), spawn "xfce4-mixer")
-     , ((noModMask, xK_Print), takeScreenShot FullScreen)
-     , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
-     , ((hhkbCasualMask, xK_x), xmonadSwitchKeyModeToHHKB)
-     ] ++ movements
+  [ ((altMask .|. shiftMask, xK_l), windows swapDown)
+  , ((altMask .|. shiftMask, xK_h), windows swapUp)
+  , ((altMask .|. shiftMask, xK_i), nextScreen)
+  , ((superMask .|. shiftMask, xK_a), sinkAll)
+  , ((altMask .|. controlMask, xK_t), spawn firstTerminal)
+  , ((superMask, xK_e), spawn "thunar")
+  , ((superMask, xK_r), spawn "dmenu_run")
+  , ((superMask, xK_f), spawn "firefox")
+  , ((superMask, xK_m), spawn "xfce4-mixer")
+  , ((noModMask, xK_Print), takeScreenShot FullScreen)
+  , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
+  , ((hhkbCasualMask, xK_x), xmonadSwitchKeyModeToHHKB)
+  ]
+  ++ [ ((altMask .|. shiftMask, numKey), moveWindowTo workspace)
+      | (numKey, workspace) <- zip [xK_1 .. xK_9] $ map S myWorkspaces' ]
+  ++ baseKeys altMask
   where
-    takeScreenShot :: ScreenShotType -> X ()
-    takeScreenShot ssType = do
-      let msg = messageOf ssType
-      screenshot ssType dateSSPath
-      espeak msg
-      sleep 1
-      notifySend "ScreenShot" msg
-      where
-        dateSSPath             = "~/Picture/ScreenShot-$(date +'%Y-%m-%d-%H-%M-%S').png"
-        messageOf FullScreen   = "shot the full screen"
-        messageOf ActiveWindow = "shot the active window"
-    moveWindowTo :: ScreenId -> X ()
-    moveWindowTo (S n) = let workscreenId = (n - 1) `mod` length myWorkspaces'
-                         in shiftToWorkscreen workscreenId
     xmonadSwitchKeyModeToHHKB :: X ()
     xmonadSwitchKeyModeToHHKB = touch hhkbKeyModeFlagFile >> xmonadRestartWithMessage
 
 
 myHHKBKeys :: [((KeyMask, KeySym), X ())]
 myHHKBKeys =
-  -- movements Just for myWorkspaces
-  let numKeys            = [xK_1 .. xK_9] ++ [xK_0]
-      workspaceNum       = length myWorkspaces'
-      makeMovement key n = ((altMask .|. shiftMask, key), moveWindowTo n)
-      movements          = zipWith makeMovement numKeys $ map S myWorkspaces'
-  in [ ((hhkbCasualMask, xK_h), windows focusUp)
-     , ((hhkbCasualMask, xK_l), windows focusDown)
-     , ((hhkbCasualMask, xK_j), withFocused (sendMessage . MergeAll))
-     , ((hhkbCasualMask, xK_k), withFocused (sendMessage . UnMerge))
-     , ((hhkbCasualMask .|. altMask, xK_l), windows swapDown)
-     , ((hhkbCasualMask .|. altMask, xK_h), windows swapUp)
-     , ((hhkbCasualMask, xK_i), nextScreen)
-     , ((hhkbCasualMask, xK_c), kill)
-     , ((superMask, xK_l), withFocused $ keysMoveWindow (5,0))
-     , ((superMask, xK_h), withFocused $ keysMoveWindow (-5,0))
-     , ((superMask, xK_j), withFocused $ keysMoveWindow (0,5))
-     , ((superMask, xK_k), withFocused $ keysMoveWindow (0,-5))
-     --, ((superMask .|. shiftMask, xK_l), tileWindow $ Rectangle x y w h)
-     --, ((superMask .|. shiftMask, xK_h), )
-     --, ((superMask .|. shiftMask, xK_j), )
-     --, ((superMask .|. shiftMask, xK_k), )
-     , ((superMask .|. shiftMask, xK_i), sendMessage NextLayout)
-     , ((hhkbCasualMask, xK_a), sinkAll)
-     -- Hardware keys
-     , ((superMask, xK_F1),  spawn "xscreensaver-command -lock; sudo pm-suspend") -- ^ must add pm-suspend to sudoers without inputting password
-     , ((superMask, xK_F4),  spawn "light -U 10")
-     , ((superMask, xK_F5),  spawn "light -A 10")
-     , ((superMask, xK_F6),  void $ toggleMute)
-     , ((superMask, xK_F7),  void $ lowerVolume 5)
-     , ((superMask, xK_F8),  void $ raiseVolume 5)
-     , ((superMask, xK_F12), spawn "xscreensaver-command -lock")
-     , ((superMask .|. shiftMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-hibernate") -- ^ must add pm-hibernate to sudoers without inputting password
-     -- Applications
-     , ((altMask .|. controlMask, xK_t), spawn firstTerminal)
-     , ((hhkbCasualMask, xK_e), spawn "thunar")
-     , ((hhkbCasualMask, xK_r), spawn "dmenu_run")
-     , ((hhkbCasualMask, xK_f), spawn "firefox")
-     , ((hhkbCasualMask, xK_m), spawn "xfce4-mixer")
-     , ((hhkbCasualMask, xK_x), xmonadSwitchKeyModeToNormal)
-     , ((noModMask, xK_Print), takeScreenShot FullScreen)
-     , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
-     ]
-     ++ movements
-     ++ [((hhkbCasualMask, numKey), windows . greedyView $ workspace)
-          | (workspace, numKey) <- zip myWorkspaces [xK_1 .. xK_9]]
+  [ ((hhkbCasualMask .|. altMask, xK_l), windows swapDown)
+  , ((hhkbCasualMask .|. altMask, xK_h), windows swapUp)
+  , ((hhkbCasualMask, xK_i), nextScreen)
+  , ((hhkbCasualMask, xK_c), kill)
+  , ((hhkbCasualMask, xK_a), sinkAll)
+  , ((hhkbCasualMask, xK_t), spawn firstTerminal)
+  , ((hhkbCasualMask, xK_e), spawn "thunar")
+  , ((hhkbCasualMask, xK_r), spawn "dmenu_run")
+  , ((hhkbCasualMask, xK_f), spawn "firefox")
+  , ((hhkbCasualMask, xK_m), spawn "xfce4-mixer")
+  , ((hhkbCasualMask, xK_x), xmonadSwitchKeyModeToNormal)
+  , ((noModMask, xK_Print), takeScreenShot FullScreen)
+  , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
+  ]
+  ++ [ ((hhkbCasualMask, numKey), moveWindowTo workspace)
+      | (numKey, workspace) <- zip [xK_1 .. xK_9] $ map S myWorkspaces' ]
+  ++ [ ((hhkbCasualMask, numKey), windows . greedyView $ workspace)
+       | (numKey, workspace) <- zip [xK_1 .. xK_9] myWorkspaces ]
+  ++ baseKeys hhkbCasualMask
   where
-    takeScreenShot :: ScreenShotType -> X ()
-    takeScreenShot ssType = do
-      let msg = messageOf ssType
-      screenshot ssType dateSSPath
-      espeak msg
-      sleep 1
-      notifySend "ScreenShot" msg
-      where
-        dateSSPath             = "~/Picture/ScreenShot-$(date +'%Y-%m-%d-%H-%M-%S').png"
-        messageOf FullScreen   = "shot the full screen"
-        messageOf ActiveWindow = "shot the active window"
-    moveWindowTo :: ScreenId -> X ()
-    moveWindowTo (S n) = let workscreenId = (n - 1) `mod` length myWorkspaces'
-                         in shiftToWorkscreen workscreenId
     xmonadSwitchKeyModeToNormal :: X ()
     xmonadSwitchKeyModeToNormal = (liftIO $ removeFile hhkbKeyModeFlagFile) >> xmonadRestartWithMessage
 
