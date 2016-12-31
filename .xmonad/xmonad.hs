@@ -1,5 +1,7 @@
 import Control.Concurrent (threadDelay)
 import Control.Monad ((>=>), void)
+import Control.Monad.Extra (ifM)
+import System.EasyFile (doesFileExist, removeFile)
 import Text.Printf (printf)
 import XMonad
 import XMonad.Actions.CycleWS (nextScreen)
@@ -12,6 +14,7 @@ import XMonad.Hooks.DynamicLog (xmobar)
 import XMonad.Hooks.Place (placeHook, fixed)
 import XMonad.Hooks.SetWMName (setWMName)
 import XMonad.Layout (ChangeLayout(FirstLayout,NextLayout))
+import XMonad.Layout.Gaps (gaps, Direction2D(U))
 import XMonad.Layout.Grid (Grid(Grid))
 import XMonad.Layout.SubLayouts (subTabbed, GroupMsg(MergeAll,UnMerge))
 import XMonad.Layout.Tabbed (simpleTabbed)
@@ -20,23 +23,29 @@ import XMonad.Operations (sendMessage, withFocused, mouseResizeWindow)
 import XMonad.StackSet (focusUp, focusDown, swapUp, swapDown, greedyView)
 import XMonad.Util.EZConfig (additionalKeys, additionalMouseBindings)
 import XMonad.Util.SpawnOnce (spawnOnce)
-import XMonad.Layout.Gaps (gaps, Direction2D(U))
 
+
+hhkbKeyModeFlagFile :: FilePath
+hhkbKeyModeFlagFile = "/tmp/xmonad-keymode-hhkb"
 
 main :: IO ()
-main = (xmobar >=> xmonad) $ desktopConfig
-  { terminal           = "termite"
-  , modMask            = superMask
-  , borderWidth        = 2
-  , layoutHook         = myLayoutHook
-  , startupHook        = myStartupHook
-  , manageHook         = myManageHook
-  , workspaces         = myWorkspaces
-  , focusFollowsMouse  = False
-  , focusedBorderColor = "#0000ff"
-  }
-  `additionalKeys` myKeys
-  `additionalMouseBindings` myMouseBindings
+main = do
+  myKeys <- ifM (doesFileExist hhkbKeyModeFlagFile)
+              (return myHHKBKeys)
+              (return myNormalKeys)
+  (xmobar >=> xmonad) $ desktopConfig
+    { terminal           = "termite"
+    , modMask            = superMask
+    , borderWidth        = 2
+    , layoutHook         = myLayoutHook
+    , startupHook        = myStartupHook
+    , manageHook         = myManageHook
+    , workspaces         = myWorkspaces
+    , focusFollowsMouse  = False
+    , focusedBorderColor = "#0000ff"
+    }
+    `additionalKeys` myKeys
+    `additionalMouseBindings` myMouseBindings
 
 
 data ScreenShotType = FullScreen | ActiveWindow
@@ -53,6 +62,14 @@ superMask = mod4Mask
 hhkbCasualMask :: KeyMask
 hhkbCasualMask = controlMask .|. shiftMask
 
+xmonadRestartWithMessage :: X ()
+xmonadRestartWithMessage =
+  spawn $ "stack exec -- xmonad --recompile && " ++
+          "stack exec -- xmonad --restart && " ++
+          "sleep 1 && " ++
+          "notify-send 'XMonad' 'Restarted'"
+
+
 -- This depends ImageMagick and xdotool
 screenshot :: ScreenShotType -> FilePath -> X ()
 screenshot FullScreen   path = spawn $ printf "import -window root %s" path
@@ -67,6 +84,9 @@ notifySend title msg = spawn $ printf "notify-send '%s' '%s'" title msg
 sleep :: Int -> X ()
 sleep n | n < 0     = io $ error "argument must be over 0"
         | otherwise = io $ threadDelay (n * 1000000)
+
+touch :: FilePath -> X ()
+touch = liftIO . flip writeFile ""
 
 
 myLayoutHook = xmobarMargin . subTabbed $ TwoPane (1/55) (1/2) ||| Grid
@@ -94,9 +114,6 @@ myWorkspaces' = [1 .. 4]
 myWorkspaces :: [String]
 myWorkspaces = map show myWorkspaces'
 
-
-myKeys :: [((KeyMask, KeySym), X ())]
-myKeys = myNormalKeys
 
 myNormalKeys :: [((KeyMask, KeySym), X ())]
 myNormalKeys =
@@ -137,9 +154,9 @@ myNormalKeys =
      , ((superMask, xK_r), spawn "dmenu_run")
      , ((superMask, xK_f), spawn "firefox")
      , ((superMask, xK_m), spawn "xfce4-mixer")
-     , ((superMask .|. shiftMask, xK_x), xmonadRestart)
      , ((noModMask, xK_Print), takeScreenShot FullScreen)
      , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
+     , ((hhkbCasualMask, xK_x), xmonadSwitchKeyModeToHHKB)
      ] ++ movements
   where
     takeScreenShot :: ScreenShotType -> X ()
@@ -156,11 +173,9 @@ myNormalKeys =
     moveWindowTo :: ScreenId -> X ()
     moveWindowTo (S n) = let workscreenId = (n - 1) `mod` length myWorkspaces'
                          in shiftToWorkscreen workscreenId
-    xmonadRestart :: X ()
-    xmonadRestart = spawn $ "xmonad --recompile && " ++
-                            "xmonad --restart && " ++
-                            "sleep 1 && " ++
-                            "notify-send 'XMonad' 'Restarted'"
+    xmonadSwitchKeyModeToHHKB :: X ()
+    xmonadSwitchKeyModeToHHKB = touch hhkbKeyModeFlagFile >> xmonadRestartWithMessage
+
 
 myHHKBKeys :: [((KeyMask, KeySym), X ())]
 myHHKBKeys =
@@ -202,7 +217,7 @@ myHHKBKeys =
      , ((hhkbCasualMask, xK_r), spawn "dmenu_run")
      , ((hhkbCasualMask, xK_f), spawn "firefox")
      , ((hhkbCasualMask, xK_m), spawn "xfce4-mixer")
-     , ((hhkbCasualMask, xK_x), xmonadRestart)
+     , ((hhkbCasualMask, xK_x), xmonadSwitchKeyModeToNormal)
      , ((noModMask, xK_Print), takeScreenShot FullScreen)
      , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
      ]
@@ -224,11 +239,8 @@ myHHKBKeys =
     moveWindowTo :: ScreenId -> X ()
     moveWindowTo (S n) = let workscreenId = (n - 1) `mod` length myWorkspaces'
                          in shiftToWorkscreen workscreenId
-    xmonadRestart :: X ()
-    xmonadRestart = spawn $ "xmonad --recompile && " ++
-                            "xmonad --restart && " ++
-                            "sleep 1 && " ++
-                            "notify-send 'XMonad' 'Restarted'"
+    xmonadSwitchKeyModeToNormal :: X ()
+    xmonadSwitchKeyModeToNormal = (liftIO $ removeFile hhkbKeyModeFlagFile) >> xmonadRestartWithMessage
 
 
 myMouseBindings :: [((ButtonMask, Button), Window -> X ())]
