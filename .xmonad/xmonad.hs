@@ -87,8 +87,7 @@ sleep n | n < 0     = io $ error "argument must be over 0"
 -- My configurations {{{
 
 myLayoutHook = xmobarMargin . subTabbed $ TwoPane (1/55) (1/2) ||| Grid
-  where
-    xmobarMargin = gaps [(U, 13)]
+  where xmobarMargin = gaps [(U, 13)]
 
 myStartupHook :: X ()
 myStartupHook = do
@@ -182,3 +181,4 @@ myMouseBindings =
   ]
 
 -- }}}
+-- Don't auto merge
