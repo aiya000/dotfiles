@@ -344,6 +344,9 @@ let g:quickrun_config = {
 \	},
 \	'scala' : {
 \		'cmdopt' : '-feature'
+\	},
+\	'brainfuck' : {
+\		'command' : 'brainfuck'
 \	}
 \}
 
