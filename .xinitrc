@@ -20,5 +20,5 @@ xfce4-clipman &
 dunst &
 pulseaudio --daemonize=true --start &
 xscreensaver &
-exec xmonad
+exec ~/.local/bin/xmonad-config
 #exec startxfce4
