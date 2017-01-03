@@ -71,7 +71,7 @@ xmonadRestartWithMessage =
 
 -- Move current window to target workspace
 moveWindowTo :: ScreenId -> X ()
-moveWindowTo (S n) = let workscreenId = (n - 1) `mod` length myWorkspaces'
+moveWindowTo (S n) = let workscreenId = (n - 1) `mod` length myWorkspaces
                      in shiftToWorkscreen workscreenId
 
 takeScreenShot :: ScreenShotType -> X ()
@@ -113,12 +113,8 @@ myManageHook = placeHook (fixed (0.5, 0.5)) <+> manageFloatForTargets <+> manage
       ]
 
 
---TODO: Use `workspaces conf` instead of myWorkspaces
--- myWorkspaces must be made by myWorkspaces' for local each dependencies
-myWorkspaces' :: [Int]
-myWorkspaces' = [1 .. 4]
 myWorkspaces :: [String]
-myWorkspaces = map show myWorkspaces'
+myWorkspaces = map show [1 .. 4]'
 
 
 baseKeys :: KeyMask -> [((KeyMask, KeySym), X ())]
@@ -158,7 +154,7 @@ myNormalKeys =
   , ((hhkbCasualMask, xK_x), xmonadSwitchKeyModeToHHKB)
   ]
   ++ [ ((altMask .|. shiftMask, numKey), moveWindowTo workspace)
-      | (numKey, workspace) <- zip [xK_1 .. xK_9] $ map S myWorkspaces' ]
+      | (numKey, workspace) <- zip [xK_1 .. xK_9] . map S $ [1 .. length myWorkspaces] ]
   ++ baseKeys altMask
   where
     xmonadSwitchKeyModeToHHKB :: X ()
@@ -182,7 +178,7 @@ myHHKBKeys =
   , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
   ]
   ++ [ ((hhkbCasualMask, numKey), moveWindowTo workspace)
-      | (numKey, workspace) <- zip [xK_1 .. xK_9] $ map S myWorkspaces' ]
+      | (numKey, workspace) <- zip [xK_1 .. xK_9] . map S $ [1 .. length myWorkspaces] ]
   ++ [ ((hhkbCasualMask, numKey), windows . greedyView $ workspace)
        | (numKey, workspace) <- zip [xK_1 .. xK_9] myWorkspaces ]
   ++ baseKeys hhkbCasualMask
