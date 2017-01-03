@@ -1,14 +1,11 @@
-import Control.Concurrent (threadDelay)
 import Control.Monad ((>=>), void)
 import Control.Monad.Extra (ifM)
 import System.EasyFile (doesFileExist, removeFile)
-import Text.Printf (printf)
 import XMonad
 import XMonad.Actions.CycleWS (nextScreen)
 import XMonad.Actions.FloatKeys (keysMoveWindow)
 import XMonad.Actions.SinkAll (sinkAll)
 import XMonad.Actions.Volume (toggleMute, lowerVolume, raiseVolume)
-import XMonad.Actions.Workscreen (shiftToWorkscreen)
 import XMonad.Config.Desktop (desktopConfig)
 import XMonad.Hooks.DynamicLog (xmobar)
 import XMonad.Hooks.Place (placeHook, fixed)
@@ -23,6 +20,9 @@ import XMonad.Operations (sendMessage, withFocused, mouseResizeWindow)
 import XMonad.StackSet (focusUp, focusDown, swapUp, swapDown, greedyView)
 import XMonad.Util.EZConfig (additionalKeys, additionalMouseBindings)
 import XMonad.Util.SpawnOnce (spawnOnce)
+import XMonadConfig.Actions (moveWindowTo)
+import XMonadConfig.CommandWrapper (takeScreenShot, touch, xmonadRestartWithMessage)
+import XMonadConfig.Types (ScreenShotType (FullScreen, ActiveWindow))
 
 
 hhkbKeyModeFlagFile :: FilePath
@@ -48,8 +48,6 @@ main = do
     `additionalMouseBindings` myMouseBindings
 
 
-data ScreenShotType = FullScreen | ActiveWindow
-
 firstTerminal :: String
 firstTerminal = "termite"
 
@@ -62,38 +60,6 @@ superMask = mod4Mask
 hhkbCasualMask :: KeyMask
 hhkbCasualMask = controlMask .|. shiftMask
 
-xmonadRestartWithMessage :: X ()
-xmonadRestartWithMessage =
-  spawn $ "stack exec -- xmonad --recompile && " ++
-          "stack exec -- xmonad --restart && " ++
-          "sleep 1 && " ++
-          "notify-send 'XMonad' 'Restarted'"
-
--- Move current window to target workspace
-moveWindowTo :: ScreenId -> X ()
-moveWindowTo (S n) = let workscreenId = (n - 1) `mod` length myWorkspaces
-                     in shiftToWorkscreen workscreenId
-
-takeScreenShot :: ScreenShotType -> X ()
-takeScreenShot ssType = do
-  let msg = messageOf ssType
-  screenshot ssType dateSSPath
-  spawn  $ printf "espeak -s 150 -v +fex '%s'" msg
-  liftIO $ threadDelay 1000000  -- Wait 1 sec
-  spawn  $ printf "notify-send 'ScreenShot' '%s'" msg
-  where
-    -- Take screenshot with ImageMagick and xdotool
-    screenshot :: ScreenShotType -> FilePath -> X ()
-    screenshot FullScreen   path = spawn $ printf "import -window root %s" path
-    screenshot ActiveWindow path = spawn $ printf "import -window $(xdotool getwindowfocus -f) %s" path
-
-    dateSSPath             = "~/Picture/ScreenShot-$(date +'%Y-%m-%d-%H-%M-%S').png"
-    messageOf FullScreen   = "shot the full screen"
-    messageOf ActiveWindow = "shot the active window"
-
-touch :: FilePath -> X ()
-touch = liftIO . flip writeFile ""
-
 
 myLayoutHook = xmobarMargin . subTabbed $ TwoPane (1/55) (1/2) ||| Grid
   where
@@ -104,7 +70,6 @@ myStartupHook = do
   spawnOnce "termite -e tmux"
   setWMName "LG3D"  -- For Java Swing apps starting
 
-
 myManageHook :: ManageHook
 myManageHook = placeHook (fixed (0.5, 0.5)) <+> manageFloatForTargets <+> manageHook desktopConfig
   where
@@ -112,9 +77,8 @@ myManageHook = placeHook (fixed (0.5, 0.5)) <+> manageFloatForTargets <+> manage
       [ --className =? "Gimp" --> doFloat
       ]
 
-
 myWorkspaces :: [String]
-myWorkspaces = map show [1 .. 4]'
+myWorkspaces = map show [1..4]
 
 
 baseKeys :: KeyMask -> [((KeyMask, KeySym), X ())]
@@ -153,7 +117,7 @@ myNormalKeys =
   , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
   , ((hhkbCasualMask, xK_x), xmonadSwitchKeyModeToHHKB)
   ]
-  ++ [ ((altMask .|. shiftMask, numKey), moveWindowTo workspace)
+  ++ [ ((altMask .|. shiftMask, numKey), moveWindowTo myWorkspaces workspace)
       | (numKey, workspace) <- zip [xK_1 .. xK_9] . map S $ [1 .. length myWorkspaces] ]
   ++ baseKeys altMask
   where
@@ -177,7 +141,7 @@ myHHKBKeys =
   , ((noModMask, xK_Print), takeScreenShot FullScreen)
   , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
   ]
-  ++ [ ((hhkbCasualMask, numKey), moveWindowTo workspace)
+  ++ [ ((hhkbCasualMask, numKey), moveWindowTo myWorkspaces workspace)
       | (numKey, workspace) <- zip [xK_1 .. xK_9] . map S $ [1 .. length myWorkspaces] ]
   ++ [ ((hhkbCasualMask, numKey), windows . greedyView $ workspace)
        | (numKey, workspace) <- zip [xK_1 .. xK_9] myWorkspaces ]
