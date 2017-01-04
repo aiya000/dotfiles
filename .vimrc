@@ -1077,7 +1077,7 @@ CmdCnoreabbr SessionLoad UniteSessionLoad
 command! SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
 
 " Aliases
-CmdCnoreabbr Gstatus Gita status
+CmdCnoreabbr Gstatus Gina status
 CmdCnoreabbr Gist Gista post
 
 " dein.vim

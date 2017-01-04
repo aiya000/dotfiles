@@ -195,10 +195,6 @@ repo  = 'thinca/vim-ft-clojure'
 on_ft = 'clojure'
 
 [[plugins]]
-repo   = 'lambdalisue/vim-gita'
-on_cmd = 'Gita'
-
-[[plugins]]
 repo   = 'lambdalisue/vim-gista'
 on_cmd = 'Gist'
 
@@ -253,3 +249,7 @@ on_cmd = [
     'VimRunTab',
     'VimRunDo'
 ]
+
+[[plugins]]
+repo   = 'lambdalisue/gina.vim'
+on_cmd = 'Gina'
