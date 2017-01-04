@@ -19,11 +19,6 @@ in_linux=$(is_your_os_name Linux)
 in_cygwin=$(is_your_os_name Cygwin)
 
 # }}}
-# Reconfigure the variables {{{
-
-
-
-# }}}
 # Set zsh options {{{
 
 # Use modules
