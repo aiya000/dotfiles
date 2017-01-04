@@ -48,9 +48,6 @@ main = do
     `additionalMouseBindings` myMouseBindings
 
 
-firstTerminal :: String
-firstTerminal = "termite"
-
 altMask :: KeyMask
 altMask = mod1Mask
 
@@ -108,7 +105,7 @@ myNormalKeys =
   , ((altMask .|. shiftMask, xK_h), windows swapUp)
   , ((altMask .|. shiftMask, xK_i), nextScreen)
   , ((superMask .|. shiftMask, xK_a), sinkAll)
-  , ((altMask .|. controlMask, xK_t), spawn firstTerminal)
+  , ((altMask .|. controlMask, xK_t), spawn "termite")
   , ((superMask, xK_e), spawn "thunar")
   , ((superMask, xK_r), spawn "dmenu_run")
   , ((superMask, xK_f), spawn "firefox")
@@ -132,7 +129,7 @@ myHHKBKeys =
   , ((hhkbCasualMask, xK_i), nextScreen)
   , ((hhkbCasualMask, xK_c), kill)
   , ((hhkbCasualMask, xK_a), sinkAll)
-  , ((hhkbCasualMask, xK_t), spawn firstTerminal)
+  , ((hhkbCasualMask, xK_t), spawn "termite")
   , ((hhkbCasualMask, xK_e), spawn "thunar")
   , ((hhkbCasualMask, xK_r), spawn "dmenu_run")
   , ((hhkbCasualMask, xK_f), spawn "firefox")
