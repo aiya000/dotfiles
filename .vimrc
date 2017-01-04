@@ -1061,30 +1061,23 @@ CmdCnoreabbr UserTimeline  TweetVimUserTimeline
 
 " }}}
 
-" Open channel by slack.vim
-"-- Used by dein.vim lazy loading hook
-command! -bar -nargs=1 Slack execute ':e slack://ch/' . <q-args>
-
-" To Service Name
-CmdCnoreabbr Lingr J6uil
-CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
-
-" Remove prefix
-CmdCnoreabbr SessionSave UniteSessionSave
-CmdCnoreabbr SessionLoad UniteSessionLoad
-
 " Save session and specify session name automatically
 command! SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
-
-" Aliases
-CmdCnoreabbr Gstatus Gina status
-CmdCnoreabbr Gist Gista post
 
 " dein.vim
 CmdCnoreabbr DeinInstall   call dein#install()
 CmdCnoreabbr DeinUpdate    call dein#update()
 CmdCnoreabbr DeinLog       echo dein#get_log()
 CmdCnoreabbr DeinUpdateLog echo dein#get_updates_log()
+
+" Alias
+CmdCnoreabbr Gist Gista post
+CmdCnoreabbr Gstatus Gina status
+CmdCnoreabbr Glog GitLogViewer
+CmdCnoreabbr Lingr J6uil
+CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
+CmdCnoreabbr SessionLoad UniteSessionLoad
+CmdCnoreabbr SessionSave UniteSessionSave
 
 " }}}
 " Development {{{
