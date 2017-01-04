@@ -536,37 +536,6 @@ let g:neosnippet#snippets_directory = g:vimrc['vim_home'] . '/neosnippets'
 let g:neosnippet#disable_select_select_mappings = 1
 
 " }}}
-"--- separetaro.vim --- {{{
-
-let g:separetaro_short_separator_of = {
-\	'vim'        : '"----------"',
-\	'java'       : '/* -=-=-=-=-=-=-=-=- */',
-\	'javascript' : '/* -=-=-=-=-=-=-=-=- */',
-\	'typescript' : '/* -=-=-=-=-=-=-=-=- */',
-\	'css'        : '/* -=-=-=-=-=-=-=-=- */',
-\	'php'        : '/* -=-=-=-=-=-=-=-=- */',
-\	'go'         : '/* -=-=-=-=-=-=-=-=- */',
-\	'html'       : '<!-- - - - -->',
-\	'markdown'   : '- - -',
-\	'fxml'       : '<!-- - - - -->',
-\	'xaml'       : '<!-- - - - -->'
-\}
-
-let g:separetaro_long_separator_of = {
-\	'vim'        : '"-------------------"',
-\	'java'       : '/* --- --- --- _ --- --- --- */',
-\	'javascript' : '/* --- --- --- _ --- --- --- */',
-\	'typescript' : '/* --- --- --- _ --- --- --- */',
-\	'css'        : '/* --- --- --- _ --- --- --- */',
-\	'php'        : '/* --- --- --- _ --- --- --- */',
-\	'go'         : '/* --- --- --- _ --- --- --- */',
-\	'html'       : '<!-- - - - _ - - - -->',
-\	'markdown'   : '- - - - -',
-\	'fxml'       : '<!-- - - - _ - - - -->',
-\	'xaml'       : '<!-- - - - _ - - - -->'
-\}
-
-" }}}
 "--- vimconsole.vim --- {{{
 
 let g:vimconsole#auto_redraw             = 1
@@ -613,11 +582,6 @@ let g:submode_window_move['start_window_move_with_move_next'] = '<C-s>N'
 let g:submode_window_move['start_window_move_with_move_prev'] = '<C-s>P'
 
 " }}}
-"--- vim-haskell-indent " {{{
-
-let g:haskell_indent_disable_case = 1
-
- " }}}
 "--- repl.vim --- {{{
 
 " Use this repl
@@ -632,25 +596,6 @@ let g:repl_filetype_repl = {
 let g:repl_no_default_keymappings = 1
 " Open by vertical split
 let g:repl_split_command = 'vertical split'
-
-" }}}
-"--- emmet-vim --- {{{
-
-" Set prefix key
-let g:user_emmet_leader_key = '\\'
-
-" Enable these filetype
-autocmd UserEvent FileType html,xml,fxml EmmetInstall
-
-
-" }}}
-"--- vim-altr --- {{{
-
-"@Unchecked('this function is right ?')
-function! s:vim_altr_on_source()
-	call altr#define('%.xaml.cs', '%.xaml')
-endfunction
-call dein#set_hook('vim-altr', 'hook_source', function('s:vim_altr_on_source'))
 
 " }}}
 "--- vim-gista --- {{{
@@ -976,25 +921,8 @@ AlterCommand tabnew TabnewOverridden
 " }}}
 " Util {{{
 
-" Grep current buffer, and open quickfix window
-command! -bar -nargs=1 GrepInThis vimgrep <args> % | cwindow
-
-" Reverse ranged lines
-command! -range=% ReverseLine :<line1>, <line2>call vimrc#cmd#reverse_line()
-
 " Rename the file of current buffer
 command! -bar -nargs=1 -complete=file Rename call vimrc#cmd#rename_to(<q-args>)
-
-"@Bugs(':RedirToVar @" highlight  " happend exception')
-" Substitute result to a variable easily
-command! -bar -nargs=1 -bang -complete=command RedirToVar call vimrc#cmd#redir_to_var(<bang>0, <q-args>)
-
-" Count selected line num
-command! -bar -range Count :echomsg (<line2> - <line1> + 1)
-
-" Open corresponded file
-command! -bar AltrForward call altr#forward()
-command! -bar AltrBack    call altr#back()
 
 " Pull and Insert <title>\(.*\)</title>
 command! -bar -nargs=1 InsertWebPageTitle execute 'normal! i' . vimrc#cmd#pull_webpage_title(<q-args>)
@@ -1021,9 +949,7 @@ command! -bar Reload so $MYVIMRC
 \|		so $MYGVIMRC
 \|	endif
 
-cnoreabbr    w!! w !sudo tee % > /dev/null
-CmdCnoreabbr CdBufDir     cd %:p:h
-CmdCnoreabbr ColorPreview Unite colorscheme -auto-preview
+CmdCnoreabbr CdBufDir cd %:p:h
 
 command! -bar -nargs=? -complete=filetype FtpluginEditAfter
 \	execute ':edit' printf('%s/after/ftplugin/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
@@ -1208,7 +1134,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-n> :<C-u>setl number!         number?        <CR>
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
 
-	autocmd User MyVimRc inoremap <silent> <C-k><C-w> <C-o>:setl wrap!      wrap?<CR>
+	autocmd User MyVimRc inoremap <silent> <C-k><C-w> <C-o>:setl wrap! wrap?<CR>
 
 	autocmd User MyVimRc vnoremap <silent><expr> <C-h><C-v> '<Esc>:setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>gv'
 augroup END
@@ -1300,12 +1226,6 @@ augroup KeyMapping
 	" neosnippet.vim
 	autocmd User MyVimRc imap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
 	autocmd User MyVimRc smap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
-
-	" separetaro.vim
-	autocmd User MyVimRc nmap <leader>ps <Plug>(separetoro_put_short_under)
-	autocmd User MyVimRc nmap <leader>pS <Plug>(separetoro_put_short_over)
-	autocmd User MyVimRc nmap <leader>pl <Plug>(separetoro_put_long_under)
-	autocmd User MyVimRc nmap <leader>pL <Plug>(separetoro_put_long_over)
 
 	" neocomplete.vim
 	autocmd User MyVimRc inoremap <silent> <C-k><C-i> <C-o>:NeoCompleteToggle<CR>

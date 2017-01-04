@@ -81,10 +81,6 @@ on_ft  = 'markdown',
 on_cmd = 'PrevimOpen'
 
 [[plugins]]
-repo   = 'thinca/vim-scouter'
-on_cmd = 'Scouter'
-
-[[plugins]]
 repo   = 'sgelb/TaskList.vim'
 on_cmd = [
     'TaskList',
@@ -118,15 +114,6 @@ on_cmd = [
 ]
 
 [[plugins]]
-repo = 'kurocode25/mdforvim'
-on_cmd = [
-	'MdConvert',
-	'MdPreview',
-	'MdStopPreview',
-	'MdSaveAs'
-]
-
-[[plugins]]
 repo   = 'rbtnn/vimconsole.vim'
 on_cmd = [
     'VimConsoleLog',
@@ -157,10 +144,6 @@ repo   = 'rhysd/try-colorscheme.vim'
 on_cmd = 'TryColorscheme'
 
 [[plugins]]
-repo  = 'itchyny/vim-haskell-indent'
-on_ft = 'haskell'
-
-[[plugins]]
 repo    = 'ujihisa/repl.vim'
 depends = [
     'vimshell.vim',
@@ -170,24 +153,12 @@ on_cmd  = 'Repl'
 on_map  = '<Plug>(repl-run)'
 
 [[plugins]]
-repo   = 'mattn/emmet-vim'
-on_cmd = 'EmmetInstall',
-on_map = "get(g:, 'user_emmet_leader_key', '\\')"
-
-[[plugins]]
 repo  = 'pbrisbin/vim-syntax-shakespeare'
 on_ft = [
     'hamlet',
     'cassius',
     'lucius',
     'julius'
-]
-
-[[plugins]]
-repo   = 'kana/vim-altr'
-on_cmd = [
-    'AltrForward',
-    'AltrBack'
 ]
 
 [[plugins]]

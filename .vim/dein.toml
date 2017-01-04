@@ -4,7 +4,7 @@ repo = 'tyru/open-browser.vim'
 [[plugins]]
 repo = 'Shougo/unite.vim'
 
-#TODO: readability to 'if'
+#TODO: Fix readability for 'if'
 [[plugins]]
 repo  = 'Shougo/vimproc.vim'
 build = 'make'
@@ -66,9 +66,6 @@ repo = 'aiya000/aho-bakaup.vim'
 repo = 'Shougo/neosnippet.vim'
 
 [[plugins]]
-repo = 'aiya000/separetaro.vim'
-
-[[plugins]]
 repo = 'tpope/vim-surround'
 
 [[plugins]]
@@ -119,10 +116,6 @@ repo = 'aiya000/submode-window_move.vim'
 
 [[plugins]]
 repo = 'romainl/Apprentice'
-
-#TODO: set lazy loading
-[[plugins]]
-repo = 'yaasita/slack.vim'
 
 [[plugins]]
 repo = 'vim-jp/autofmt'
