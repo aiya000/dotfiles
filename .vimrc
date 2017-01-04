@@ -664,6 +664,7 @@ call dein#end()
 set number relativenumber nowrap hlsearch list scrolloff=16
 set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
 
+
 " Status bar was always displayed
 set laststatus=2
 
@@ -1117,13 +1118,7 @@ augroup END
 " Options Toggling  {{{
 
 augroup KeyMapping
-	" All
-	autocmd User MyVimRc nnoremap <silent> <C-h>E     :<C-u>call vimrc#keys#motionless_bufdo('set expandtab')<CR>:echo 'set expandtab all buffer!'<CR>
-	autocmd User MyVimRc nnoremap <silent> <C-h><C-e> :<C-u>call vimrc#keys#motionless_bufdo('set expandtab!')<CR>:set expandtab?<CR>
-	autocmd User MyVimRc inoremap <silent> <C-k><C-e> <C-o>:call vimrc#keys#motionless_bufdo('set expandtab!')<CR><C-o>:set expandtab?<CR>
-
 	" Local
-	autocmd User MyVimRc nnoremap <silent>       <C-h><C-f> :<C-u>call vimrc#keys#toggle_foldmethod()<CR>
 	autocmd User MyVimRc nnoremap <silent>       <C-h><C-d> :<C-u>call vimrc#keys#toggle_diff()<CR>
 	autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
 
@@ -1135,8 +1130,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
 
 	autocmd User MyVimRc inoremap <silent> <C-k><C-w> <C-o>:setl wrap! wrap?<CR>
-
-	autocmd User MyVimRc vnoremap <silent><expr> <C-h><C-v> '<Esc>:setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>gv'
 augroup END
 
 " }}}
@@ -1204,11 +1197,13 @@ augroup KeyMapping
 	" incsearch.vim
 	autocmd User MyVimRc nmap <expr>   /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)' : '<Plug>(incsearch-forward)'
 	autocmd User MyVimRc nmap          <leader>/         /\m\C
+	"FIXME: [Left] doesn't work
 	autocmd User MyVimRc nmap          <leader><leader>/ /\m\C\<\>[Left][Left]
 	autocmd User MyVimRc nmap          q/                /\<<C-r>"\><CR>
 	autocmd User MyVimRc nmap          g/                <Plug>(incsearch-stay)
 	autocmd User MyVimRc nmap <expr>   ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
 	autocmd User MyVimRc nmap          <leader>?         ?\m\C
+	"FIXME: [Left] doesn't work
 	autocmd User MyVimRc nmap          <leader><leader>? ?\m\C\<\>[Left][Left]
 	autocmd User MyVimRc nmap          q?                ?\<<C-r>"\><CR>
 	autocmd User MyVimRc vmap <expr>   /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
@@ -1271,8 +1266,6 @@ augroup KeyMapping
 
 	autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=scratch<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| resize 5<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>k                :<C-u>call vimrc#keys#cursor_up_to_lid()<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>j                :<C-u>call vimrc#keys#cursor_down_to_ground()<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader>q        :<C-u>call vimrc#keys#bufclose_filetype(['quickrun', 'help', 'scratch', 'qf', 'aref_web'])<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader><leader> :<C-u>echohl ErrorMsg \| echo "Don't rush it, keep cool." \| echohl None<CR>
 

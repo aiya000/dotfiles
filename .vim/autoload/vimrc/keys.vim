@@ -37,53 +37,6 @@ function! vimrc#keys#clear_ends_space() " {{{
 	endtry
 endfunction " }}}
 
-" Move cursor to topmost of this indent
-function! vimrc#keys#cursor_up_to_lid() " {{{
-	while 1
-		let l:p = virtcol('.')
-		normal! k
-
-		let l:indent_changed = l:p isnot virtcol('.')
-		if l:indent_changed || line('.') is 1  " top line
-			if l:indent_changed
-				normal! j
-			endif
-			break
-		endif
-	endwhile
-endfunction " }}}
-
-" Move cursor to bottommost of this indent
-function! vimrc#keys#cursor_down_to_ground() " {{{
-	let l:last_line = line('$')
-	while 1
-		let l:p = virtcol('.')
-		execute 'normal! j'
-
-		let l:indent_changed = l:p isnot virtcol('.')
-		if l:indent_changed || line('.') is l:last_line
-			if l:indent_changed
-				execute 'normal! k'
-			endif
-			break
-		endif
-	endwhile
-endfunction " }}}
-
-" Toggle foldmethod marker or syntax
-function! vimrc#keys#toggle_foldmethod() " {{{
-	if &foldmethod !=# 'syntax'
-		setl foldmethod=syntax
-	else
-		setl foldmethod=marker
-	endif
-	setl foldmethod?
-
-	if foldlevel('.') > 0 && foldclosed('.') isnot -1
-		normal! zO
-	endif
-endfunction " }}}
-
 " Toggle diffthis - diffoff
 function! vimrc#keys#toggle_diff() " {{{
 	if &diff
@@ -118,14 +71,6 @@ function! vimrc#keys#toggle_netrw_vexplorer() " {{{
 	if !l:closed
 		Vexplore
 	endif
-endfunction " }}}
-
-" Do :bufdo without changing current buffer
-function! vimrc#keys#motionless_bufdo(cmd) abort " {{{
-	NewOverridden
-	setl buftype=nofile
-	execute 'bufdo' a:cmd
-	quit
 endfunction " }}}
 
 " Toggle showing indent-guides with variable
