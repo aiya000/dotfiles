@@ -12,6 +12,10 @@ export DefaultIMModule=fcitx
 # Show 2byte chars correctly in libvte
 export VTE_CJK_WIDTH=1
 
+if [ -s ~/.Xmodmap ] ; then
+	xmodmap ~/.Xmodmap
+fi
+
 # xmonad
 xsetroot -cursor_name left_ptr
 setxkbmap -layout jp
