@@ -90,7 +90,7 @@ myNormalKeys =
   , ((altMask, xK_j), withFocused (sendMessage . MergeAll))
   , ((altMask, xK_k), withFocused (sendMessage . UnMerge))
   , ((altMask, xK_l), windows focusDown)
-  , ((altMask, xK_x), xmonadSwitchKeyModeToHHKB)
+  , ((hhkbCasualMask, xK_x), xmonadSwitchKeyModeToHHKB)
   , ((noModMask, xK_Print), takeScreenShot FullScreen)
   , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
   , ((superMask .|. shiftMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-hibernate") -- ^ must add pm-hibernate to sudoers without inputting password
