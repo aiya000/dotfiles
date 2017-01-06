@@ -60,9 +60,9 @@ hhkbCasualMask :: KeyMask
 hhkbCasualMask = controlMask .|. shiftMask
 
 
-myLayoutHook = xmobarMargin . subTabbed $ TwoPane (1/55) (1/2) ||| Grid
+myLayoutHook = twoTabbedPane ||| Grid
   where
-    xmobarMargin = gaps [(U, 13)]
+    twoTabbedPane = subTabbed $ TwoPane (1/55) (1/2)
 
 myStartupHook :: X ()
 myStartupHook = do
