@@ -43,7 +43,4 @@ touch = liftIO . flip writeFile ""
 -- xmonadRestartWithMessage depends haskell-stack, sleep and notify-send
 xmonadRestartWithMessage :: X ()
 xmonadRestartWithMessage =
-  spawn $ "xmonad --recompile && " ++
-          "xmonad --restart && " ++
-          "sleep 1 && " ++
-          "notify-send 'XMonad' 'Restarted'"
+  spawn $ "xmonad-config --restart && notify-send 'XMonad' 'Restarted'"
