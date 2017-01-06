@@ -33,9 +33,12 @@ main = do
   myKeys <- ifM (doesFileExist hhkbKeyModeFlagFile)
               (return myHHKBKeys)
               (return myNormalKeys)
+  myModMask <- ifM (doesFileExist hhkbKeyModeFlagFile)
+              (return hhkbCasualMask)
+              (return superMask)
   (xmobar >=> xmonad) $ desktopConfig
     { terminal           = "termite"
-    , modMask            = superMask
+    , modMask            = myModMask
     , borderWidth        = 2
     , layoutHook         = myLayoutHook
     , startupHook        = myStartupHook
@@ -94,13 +97,13 @@ myNormalKeys =
   , ((superMask .|. shiftMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-hibernate") -- ^ must add pm-hibernate to sudoers without inputting password
   , ((superMask .|. shiftMask, xK_a), sinkAll)
   , ((superMask .|. shiftMask, xK_i), sendMessage NextLayout)
-  , ((superMask, xK_F1),  spawn "xscreensaver-command -lock; sudo pm-suspend") -- ^ must add pm-suspend to sudoers without inputting password
+  , ((superMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-suspend") -- ^ must add pm-suspend to sudoers without inputting password
   , ((superMask, xK_F12), spawn "xscreensaver-command -lock")
-  , ((superMask, xK_F4),  spawn "light -U 10")
-  , ((superMask, xK_F5),  spawn "light -A 10")
-  , ((superMask, xK_F6),  void $ toggleMute)
-  , ((superMask, xK_F7),  void $ lowerVolume 5)
-  , ((superMask, xK_F8),  void $ raiseVolume 5)
+  , ((superMask, xK_F4), spawn "light -U 10")
+  , ((superMask, xK_F5), spawn "light -A 10")
+  , ((superMask, xK_F6), void $ toggleMute)
+  , ((superMask, xK_F7), void $ lowerVolume 5)
+  , ((superMask, xK_F8), void $ raiseVolume 5)
   , ((superMask, xK_e), spawn "thunar")
   , ((superMask, xK_f), spawn "firefox")
   , ((superMask, xK_h), withFocused $ keysMoveWindow (-5,0))
@@ -110,8 +113,6 @@ myNormalKeys =
   , ((superMask, xK_m), spawn "xfce4-mixer")
   , ((superMask, xK_r), spawn "dmenu_run")
   ]
-  ++ [ ((altMask .|. shiftMask, numKey), moveWindowTo myWorkspaces workspace)
-      | (numKey, workspace) <- zip [xK_1 .. xK_9] . map S $ [1 .. length myWorkspaces] ]
   where
     xmonadSwitchKeyModeToHHKB :: X ()
     xmonadSwitchKeyModeToHHKB = touch hhkbKeyModeFlagFile >> xmonadRestartWithMessage
@@ -125,6 +126,7 @@ myHHKBKeys =
   , ((hhkbCasualMask, xK_c), kill)
   , ((hhkbCasualMask, xK_e), spawn "thunar")
   , ((hhkbCasualMask, xK_f), spawn "firefox")
+  , ((hhkbCasualMask, xK_g), sendMessage NextLayout)
   , ((hhkbCasualMask, xK_h), windows focusUp)
   , ((hhkbCasualMask, xK_i), nextScreen)
   , ((hhkbCasualMask, xK_j), withFocused (sendMessage . MergeAll))
@@ -134,14 +136,21 @@ myHHKBKeys =
   , ((hhkbCasualMask, xK_r), spawn "dmenu_run")
   , ((hhkbCasualMask, xK_t), spawn "termite")
   , ((hhkbCasualMask, xK_x), xmonadSwitchKeyModeToNormal)
+  , ((noModMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-hibernate") -- ^ must add pm-hibernate to sudoers without inputting password
+  , ((noModMask, xK_F12), spawn "xscreensaver-command -lock")
+  , ((noModMask, xK_F2), spawn "xscreensaver-command -lock; sudo pm-suspend")   -- ^ must add pm-suspend to sudoers without inputting password
+  , ((noModMask, xK_F3), spawn "light -U 10")
+  , ((noModMask, xK_F4), spawn "light -A 10")
+  , ((noModMask, xK_F5), void $ lowerVolume 5)
+  , ((noModMask, xK_F6), void $ raiseVolume 5)
   , ((noModMask, xK_Print), takeScreenShot FullScreen)
   , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
-  , ((superMask .|. shiftMask, xK_i), sendMessage NextLayout)
   ]
-  ++ [ ((hhkbCasualMask, numKey), moveWindowTo myWorkspaces workspace)
-      | (numKey, workspace) <- zip [xK_1 .. xK_9] . map S $ [1 .. length myWorkspaces] ]
+  -- alt + shift + [1-9] to move the current window to the target worskpace
+  ++ [ ((controlMask, numKey), moveWindowTo myWorkspaces workspace)
+     | (numKey, workspace) <- zip [xK_1 .. xK_9] . map S $ [1 .. length myWorkspaces] ]
   ++ [ ((hhkbCasualMask, numKey), windows . greedyView $ workspace)
-       | (numKey, workspace) <- zip [xK_1 .. xK_9] myWorkspaces ]
+     | (numKey, workspace) <- zip [xK_1 .. xK_9] myWorkspaces ]
   where
     xmonadSwitchKeyModeToNormal :: X ()
     xmonadSwitchKeyModeToNormal = (liftIO $ removeFile hhkbKeyModeFlagFile) >> xmonadRestartWithMessage
@@ -151,10 +160,3 @@ myMouseBindings :: [((ButtonMask, Button), Window -> X ())]
 myMouseBindings =
   [ ((altMask, button1), mouseResizeWindow)
   ]
-  , ((noModMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-hibernate") -- ^ must add pm-hibernate to sudoers without inputting password
-  , ((noModMask, xK_F12), spawn "xscreensaver-command -lock")
-  , ((noModMask, xK_F2), spawn "xscreensaver-command -lock; sudo pm-suspend")   -- ^ must add pm-suspend to sudoers without inputting password
-  , ((noModMask, xK_F3), spawn "light -U 10")
-  , ((noModMask, xK_F4), spawn "light -A 10")
-  , ((noModMask, xK_F5), void $ lowerVolume 5)
-  , ((noModMask, xK_F6), void $ raiseVolume 5)
