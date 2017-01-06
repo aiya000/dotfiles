@@ -135,15 +135,15 @@ myHHKBKeys =
   , ((hhkbCasualMask, xK_r), spawn "dmenu_run")
   , ((hhkbCasualMask, xK_t), spawn "termite")
   , ((hhkbCasualMask, xK_x), xmonadSwitchKeyModeToNormal)
-  , ((noModMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-hibernate") -- ^ must add pm-hibernate to sudoers without inputting password
-  , ((noModMask, xK_F12), spawn "xscreensaver-command -lock")
-  , ((noModMask, xK_F2), spawn "xscreensaver-command -lock; sudo pm-suspend")   -- ^ must add pm-suspend to sudoers without inputting password
-  , ((noModMask, xK_F3), spawn "light -U 10")
-  , ((noModMask, xK_F4), spawn "light -A 10")
-  , ((noModMask, xK_F5), void $ lowerVolume 5)
-  , ((noModMask, xK_F6), void $ raiseVolume 5)
-  , ((noModMask, xK_Print), takeScreenShot FullScreen)
   , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
+  , ((superMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-hibernate") -- ^ must add pm-hibernate to sudoers without inputting password
+  , ((superMask, xK_F12), spawn "xscreensaver-command -lock")
+  , ((superMask, xK_F2), spawn "xscreensaver-command -lock; sudo pm-suspend")   -- ^ must add pm-suspend to sudoers without inputting password
+  , ((superMask, xK_F3), spawn "light -U 10")
+  , ((superMask, xK_F4), spawn "light -A 10")
+  , ((superMask, xK_F5), void $ lowerVolume 5)
+  , ((superMask, xK_F6), void $ raiseVolume 5)
+  , ((superMask, xK_Print), takeScreenShot FullScreen)
   ]
   -- alt + shift + [1-9] to move the current window to the target worskpace
   ++ [((altMask, numKey), windows . shift $ workspace)
