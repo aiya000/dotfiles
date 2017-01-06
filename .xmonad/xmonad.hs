@@ -17,10 +17,9 @@ import XMonad.Layout.SubLayouts (subTabbed, GroupMsg(MergeAll,UnMerge))
 import XMonad.Layout.Tabbed (simpleTabbed)
 import XMonad.Layout.TwoPane (TwoPane(TwoPane))
 import XMonad.Operations (sendMessage, withFocused, mouseResizeWindow)
-import XMonad.StackSet (focusUp, focusDown, swapUp, swapDown, greedyView)
+import XMonad.StackSet (focusUp, focusDown, swapUp, swapDown, greedyView, shift)
 import XMonad.Util.EZConfig (additionalKeys, additionalMouseBindings)
 import XMonad.Util.SpawnOnce (spawnOnce)
-import XMonadConfig.Actions (moveWindowTo)
 import XMonadConfig.CommandWrapper (takeScreenShot, touch, xmonadRestartWithMessage)
 import XMonadConfig.Types (ScreenShotType (FullScreen, ActiveWindow))
 
@@ -147,8 +146,8 @@ myHHKBKeys =
   , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
   ]
   -- alt + shift + [1-9] to move the current window to the target worskpace
-  ++ [ ((controlMask, numKey), moveWindowTo myWorkspaces workspace)
-     | (numKey, workspace) <- zip [xK_1 .. xK_9] . map S $ [1 .. length myWorkspaces] ]
+  ++ [((altMask, numKey), windows . shift $ workspace)
+     | (numKey, workspace) <- zip [xK_1 .. xK_9] myWorkspaces ]
   ++ [ ((hhkbCasualMask, numKey), windows . greedyView $ workspace)
      | (numKey, workspace) <- zip [xK_1 .. xK_9] myWorkspaces ]
   where
