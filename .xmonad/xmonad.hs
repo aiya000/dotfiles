@@ -151,3 +151,10 @@ myMouseBindings :: [((ButtonMask, Button), Window -> X ())]
 myMouseBindings =
   [ ((altMask, button1), mouseResizeWindow)
   ]
+  , ((noModMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-hibernate") -- ^ must add pm-hibernate to sudoers without inputting password
+  , ((noModMask, xK_F12), spawn "xscreensaver-command -lock")
+  , ((noModMask, xK_F2), spawn "xscreensaver-command -lock; sudo pm-suspend")   -- ^ must add pm-suspend to sudoers without inputting password
+  , ((noModMask, xK_F3), spawn "light -U 10")
+  , ((noModMask, xK_F4), spawn "light -A 10")
+  , ((noModMask, xK_F5), void $ lowerVolume 5)
+  , ((noModMask, xK_F6), void $ raiseVolume 5)
