@@ -1,14 +1,14 @@
 " script local functions
 
-function! s:find_git_repository_name(current_dir, depth) abort " {{{
+function! s:find_git_repository_path(current_dir, depth) abort " {{{
 	if a:depth is 10
 		throw new '>> not found git repository'
 	endif
 	let l:found_git_dir = strlen(finddir(a:current_dir, '.git')) isnot 0
 	if l:found_git_dir
-		return fnamemodify(a:current_dir, ':p:h:t')
+		return a:current_dir
 	endif
-	return s:find_git_repository_name(a:current_dir . '/..', a:depth + 1)
+	return s:find_git_repository_path(a:current_dir . '/..', a:depth + 1)
 endfunction " }}}
 
 " Do a:cmd to a:bufnr without changing the buffer of current window
@@ -120,10 +120,12 @@ endfunction " }}}
 " Make session_name from git repository
 " and Save current session by :UniteSessionSave
 function! vimrc#cmd#git_branch_session_save() abort " {{{
-	let l:repository_name = s:find_git_repository_name('.', 0)
-	let l:branch_name     = matchstr(gita#statusline#format('%lb'), '(\zs.*\ze)')
-	let l:branch_name0    = substitute(l:branch_name, '/', '-', 'g')
-	let l:session_name    = l:repository_name . '-' . l:branch_name0
+	let l:repository_path = s:find_git_repository_path('.', 0)
+	let l:repository_name = fnamemodify(l:repository_path, ':p:h:t')
+	let l:branch_name     = system(printf("cd %s; git branch | sort | tail -1 | awk '{print $2}'", l:repository_path))
+	let l:branch_name_    = substitute(l:branch_name, '/', '-', 'g')
+	let l:branch_name__   = substitute(l:branch_name_, '\n', '', '')  " Remove tail line break
+	let l:session_name    = l:repository_name . '-' . l:branch_name__
 	execute 'UniteSessionSave' l:session_name
 endfunction " }}}
 
