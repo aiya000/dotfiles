@@ -91,8 +91,6 @@ let g:vimrc = get(g:, 'vimrc', {
 \	'vim_home' : expand('~/.vim')
 \})
 
-let s:vimrc_env = expand('~/.vimrc_env')
-
 " Global values for local plugins
 let g:vimrc['is_windows'] = get(g:vimrc, 'is_windows', has('win32')    )
 let g:vimrc['is_cygwin']  = get(g:vimrc, 'is_cygwin',  has('win32unix'))
@@ -648,14 +646,6 @@ let g:github_complete_include_issue_title     = 0
 
 let g:github_complete_enable_neocomplete        = 1
 let g:github_complete_emoji_japanese_workaround = 1
-
-" }}}
-"--- For Private --- {{{
-
-" Load private configure
-if filereadable(expand('~/.vimrc_private'))
-	source ~/.vimrc_private
-endif
 
 " }}}
 
@@ -1454,8 +1444,12 @@ augroup END
 "-------------------------"
 " {{{
 
-if filereadable(s:vimrc_env)
-	execute 'source' s:vimrc_env
+if filereadable(expand('~/.vimrc_private'))
+	source ~/.vimrc_private
+endif
+
+if filereadable(expand('~/.vimrc_env'))
+	source ~/.vimrc_env
 endif
 
 " }}}
