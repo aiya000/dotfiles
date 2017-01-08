@@ -6,11 +6,12 @@ set indentexpr=MyHaskellIndent()
 
 function! MyHaskellIndent() abort
 	let l:TOKENS = [
+	\	'->',
 	\	'=',
-	\	'if',
 	\	'case',
 	\	'do',
-	\	'->'
+	\	'if',
+	\	'where',
 	\] | lockvar! l:TOKENS
 
 	let l:prev_valid_lnum = prevnonblank(v:lnum - 1)
