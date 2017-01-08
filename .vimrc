@@ -640,6 +640,13 @@ let autofmt_allow_over_tw=1
 "}}}
 "--- github-complete.vim --- {{{
 
+" Use as emoji completer
+let g:github_complete_enable_issue_completion = 0
+let g:github_complete_enable_user_completion  = 0
+let g:github_complete_enable_repo_completion  = 0
+let g:github_complete_include_issue_title     = 0
+
+let g:github_complete_enable_neocomplete        = 1
 let g:github_complete_emoji_japanese_workaround = 1
 
 " }}}
