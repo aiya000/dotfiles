@@ -1010,7 +1010,7 @@ CmdCnoreabbr DeinUpdateLog echo dein#get_updates_log()
 " Alias
 CmdCnoreabbr Gist Gista post
 CmdCnoreabbr GStatus Gina status
-CmdCnoreabbr GLog GitLogViewer
+CmdCnoreabbr GLog GitLogViewer -10
 CmdCnoreabbr GDiff GitDiffViewer
 CmdCnoreabbr Lingr J6uil
 CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
