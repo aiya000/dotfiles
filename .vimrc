@@ -968,6 +968,9 @@ command! -bar -nargs=? -complete=filetype FtDictionaryEdit
 command! -bar -nargs=? -complete=filetype SyntaxEdit
 \	execute ':edit' printf('%s/syntax/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
 
+command! -bar -nargs=? -complete=filetype IndentEdit
+\	execute ':edit' printf('%s/indent/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+
 " }}}
 " Twitter {{{
 
