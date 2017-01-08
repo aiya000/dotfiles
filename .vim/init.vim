@@ -102,12 +102,6 @@ augroup NeoKeyMapping
 	" deoplete.nvim
 	autocmd User MyNVimRc inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
 	autocmd User MyNVimRc inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
-
-	" aref-web.vim
-	autocmd User MyNVimRc nnoremap <leader>K :<C-u>vsp \| VimRunDo Aref weblio <C-r>=expand('<cword>')<CR><CR>
-	autocmd User MyNVimRc nnoremap <leader>S :<C-u>vsp \| VimRunDo Aref stackage <C-r>=expand('<cword>')<CR><CR>
-	autocmd User MyNVimRc vnoremap <leader>K "zy:<C-u>vsp \| VimRunDo Aref weblio <C-r>z<CR>
-	autocmd User MyNVimRc vnoremap <leader>S "zy:<C-u>vsp \| VimRunDo Aref stackage <C-r>z<CR>
 augroup END
 
 " }}}
@@ -158,14 +152,6 @@ command! -bar NVimConfigTab tabnew ~/.config/nvim/init.vim
 
 " Override definition :Reload from .vimrc
 command! -bar Reload so ~/.config/nvim/init.vim
-
-" }}}
-" Override vimrc {{{
-
-" aref-web.vim
-CmdCnoreabbr Weblio   vsp \| VimRunDo Aref weblio
-CmdCnoreabbr Stackage vsp \| VimRunDo Aref stackage
-CmdCnoreabbr Hoogle   vsp \| VimRunDo Aref hoogle
 
 " }}}
 
