@@ -11,7 +11,7 @@ function dotfile_config () {
 # Startup
 alias vi='vim -u NONE --noplugin'
 alias gvi='gvim -u NONE -U NONE --noplugin'
-alias vime='vim -c ":bufdo tab split"'
+alias vime='vim -c ":bufdo tab split" +q'
 
 # Pipe
 alias vimless='vim - -R -c "setl nolist | nnoremap <buffer> Q :<C-u>q<CR>"'
