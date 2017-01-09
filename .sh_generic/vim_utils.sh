@@ -14,7 +14,7 @@ alias gvi='gvim -u NONE -U NONE --noplugin'
 alias vime='vim -c ":bufdo tab split" +q'
 
 # Pipe
-alias vimless='vim - -R -c "setl nolist | nnoremap <buffer> Q :<C-u>q<CR>"'
+alias vimless='vim - -c "setl buftype=nofile nolist | nnoremap <buffer> Q :<C-u>q<CR>"'
 alias vimls='vim -c "read! ls" -c "nnoremap <buffer> Q :<C-u>q<CR> | setl nolist buftype=nofile | normal! Gddgg"'
 function vimman () {
 	vim -c "Man ${1}" +only
