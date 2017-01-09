@@ -40,12 +40,12 @@ PATH=$PATH:$ZDOTDIR/zsh_completions
 # Others {{{
 
 # Favorite editor
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR=nvim
+export VISUAL=nvim
 
 # Using 'vim-pager' and 'vim-manpager'
-export PAGER='vim - +PAGER -c "setl nonu nornu ft=vim-pager | only"'
-export MANPAGER='vim - +MANPAGER -c "setl nonu nornu ft=vim-pager | only"'
+export PAGER='nvim - +PAGER -c "setl nonu nornu ft=vim-pager | only"'
+export MANPAGER='nvim - +MANPAGER -c "setl nonu nornu ft=vim-pager | only"'
 
 # Lice copylight user
 export LICE_USER=aiya000
