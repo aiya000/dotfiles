@@ -40,6 +40,13 @@ augroup END
 let g:deoplete#enable_at_startup = 1
 
 "}}}
+"--- vimdoc-ja ---" {{{
+
+"@Bug("Didn't work")
+" vimdoc-ja for vim only (not for neovim)
+call dein#disable('vimdoc-ja')
+
+"}}}
 
 
 "-------------------------"
