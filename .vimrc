@@ -262,11 +262,29 @@ endif
 "-------------------------"
 "     Plugin_Manage       "
 "-------------------------"
-"*** Preparing plugins *** {{{
+" Load the plugins {{{
 
 call dein#load_toml('~/.vim/dein.toml',      {'lazy': 0})
 call dein#load_toml('~/.vim/dein_lazy.toml', {'lazy': 1})
 call dein#add('Shougo/dein.vim', {'rtp': ''})
+
+" }}}
+
+
+"-------------------------"
+"    Environment_Pref     "
+"-------------------------"
+" {{{
+"NOTE: Why this section is put here ?
+"    : It's for dein#{begin,end} :D
+
+if filereadable(expand('~/.vimrc_private'))
+	source ~/.vimrc_private
+endif
+
+if filereadable(expand('~/.vimrc_env'))
+	source ~/.vimrc_env
+endif
 
 " }}}
 
@@ -1435,22 +1453,6 @@ autocmd ExtensionType VimEnter,BufNew * if empty(&ft) | setf none | endif
 augroup UserEvent
 	autocmd FileType int-* set indentkeys-=:
 augroup END
-
-" }}}
-
-
-"-------------------------"
-"    Environment_Pref     "
-"-------------------------"
-" {{{
-
-if filereadable(expand('~/.vimrc_private'))
-	source ~/.vimrc_private
-endif
-
-if filereadable(expand('~/.vimrc_env'))
-	source ~/.vimrc_env
-endif
 
 " }}}
 
