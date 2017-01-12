@@ -109,10 +109,6 @@ augroup NeoKeyMapping
 	" deoplete.nvim
 	autocmd User MyNVimRc inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
 	autocmd User MyNVimRc inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
-
-	" open-browser.vim
-	autocmd User MyNVimRc nnoremap <silent> <leader>w :<C-u>VimRunDoSilently OpenBrowser <cWORD><CR>
-	autocmd User MyNVimRc vnoremap <silent> <leader>w "zy:VimRunDoSilently OpenBrowser <C-r>z<CR>
 augroup END
 
 " }}}
