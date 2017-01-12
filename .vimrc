@@ -1,43 +1,12 @@
 "----------------------------"
-"  This file supported       "
+"  This file supports        "
 "    - *NIX (exclude MacOSX) "
 "    - Cygwin                "
 "    - Windows Kaoriya GVim  "
+"    - NeoVim                "
 "----------------------------"
-"     Eigo - Ingulisshu      "
-"----------------------------"
-" Ideas {{{
 
-"-- Unite outline ? -> view C-Sharp <summary>~</summary> with method name
-
-" }}}
-" Issues {{{
-
-"-- shot-f doesn't functioned in i_<C-o> temporary normal mode
-
-"-- submode wintab-move over 1 previous tab
-
-" }}}
-" Todo {{{
-
-"-- read help options.jax
-
-"-- read help windows.txt
-
-"-- read help 'cino'
-
-"-- reference to help 'ftplugin' L2159
-
-"-- read help syntax.txt
-
-"-- read help clear-undo.txt
-
-"-- read help usr_41
-
-" }}}
-
-
-"----------------------------------------
+"-------------------
 " {- Message -} "
 " @Bugs         => It has some bug
 " @Incomplete   => It is incompleted implementation
