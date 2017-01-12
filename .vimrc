@@ -14,15 +14,14 @@
 " @Unsupported  => I don't support some environment
 " @Deprecated   => Deprecated
 " @Experiment   => That is experimental implementation
-" @Marked       => I have eye on it
 " @See          => Please see it
 " @Code         => The sample code for how to use
 "-------------------
 
 
-"---------------------"
-"      Parameter      "
-"---------------------"
+"--------------------------"
+" Define the global values "
+"--------------------------"
 " {{{
 
 " Open in preference to an entity
@@ -56,9 +55,9 @@ let s:viewdir   = s:backupdir . '/view'
 " }}}
 
 
-"-------------------------"
-"       Initialize        "
-"-------------------------"
+"--------------------------"
+"   The startup scripts    "
+"--------------------------"
 " Set encodings {{{
 
 " Set default file encoding
@@ -207,10 +206,10 @@ endif
 " }}}
 
 
-"-------------------------"
-"     Plugin_Manage       "
-"-------------------------"
-" Load the plugins {{{
+"--------------------------"
+"     Load the plugins     "
+"--------------------------"
+" {{{
 
 call dein#load_toml('~/.vim/dein.toml',      {'lazy': 0})
 call dein#load_toml('~/.vim/dein_lazy.toml', {'lazy': 1})
@@ -219,9 +218,9 @@ call dein#add('Shougo/dein.vim', {'rtp': ''})
 " }}}
 
 
-"-------------------------"
-"    Environment_Pref     "
-"-------------------------"
+"--------------------------"
+"  Load the local scripts  "
+"--------------------------"
 " {{{
 "NOTE: Why this section is put here ?
 "    : It's for dein#{begin,end} :D
@@ -237,9 +236,9 @@ endif
 " }}}
 
 
-"------------------------"
-"*** Plugin_Configure ***"
-"------------------------"
+"--------------------------"
+"  Configurate the plugins "
+"--------------------------"
 "--- netrw --- {{{
 
 " Enable netrw previewing
@@ -618,20 +617,38 @@ let g:github_complete_emoji_japanese_workaround = 1
 call dein#end()
 
 
-"-------------------------"
-"      View_Setting       "
-"-------------------------"
+"--------------------------"
+"    Set the vim options   "
+"--------------------------"
 " {{{
 
-" Set basic preferences
 set number relativenumber nowrap hlsearch list scrolloff=16
+set textwidth=0 tabstop=4 shiftwidth=4
 set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
+set breakindent linebreak
+set noruler
+set tabline=%!vimrc#set#with_delimitter_tab_line()
+set backspace=indent,eol,start
+set cmdheight=2
+set autoindent cindent
+set nowrapscan
+set visualbell
+set notimeout
+set suffixes=
+set nojoinspaces
+set fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
+set history=500
+set wildmenu
+set shellslash
+set matchpairs+=<:>
+set browsedir=buffer
+set spelllang=en_US,cjk
+set path=.,,./**
 
-
-" Status bar was always displayed
+" The status bar is always displayed
 set laststatus=2
 
-" Set status bar format
+" Set the status bar format
 let s:statusline_left  = '[Fenc=%{&fileencoding}]'
 \                      . '[Enc=%{&encoding}]'
 \                      . '%{vimrc#set#tag_load_status()}'
@@ -643,11 +660,10 @@ let s:statusline_right = '%1*%F(%n)%*'
 let &statusline        = s:statusline_left . '%=' . s:statusline_right
 unlet s:statusline_left s:statusline_right
 
-" ☆ Fix 2byte code viewin
-" (Not support gnome-terminal)
+" ☆
 set ambiwidth=double
 
-" Define powered up syntax highlights
+" Define my highlight colors
 " {{{
 
 augroup HighlightPref
@@ -685,51 +701,16 @@ augroup END
 
 " }}}
 
-" Set for color scheme only once
+" Set the colorscheme, but it is set only once
 if !g:vimrc['loaded']
 	set background=dark
 	colorscheme elflord
 endif
 
-" Wrapped text was appended indent on the window
-set breakindent linebreak
-
-" View more info on <C-g>
-set noruler
-
-" Always show tabline
+" Tabline is always shown
 set showtabline=2
 
-" Sugoi view tabline
-set tabline=%!vimrc#set#with_delimitter_tab_line()
-
-" Turn off highlight
-nohlsearch
-
-" Show two line
-set cmdheight=2
-
-" }}}
-
-
-"-------------------------"
-"     Action_Setting      "
-"-------------------------"
-" {{{
-
-" Backspace can delete carriage returns
-set backspace=indent,eol,start
-
-" Don't insert carriage return automatically, and set tab styles
-set textwidth=0 tabstop=4 shiftwidth=4
-
-" Set c type auto indent
-set autoindent cindent
-
-" Searcher don't jump to top or bottom
-set nowrapscan
-
-" Set fold options
+" Set the fold options
 set foldmethod=marker
 set foldtext=FoldCCtext()
 set foldcolumn=1
@@ -737,66 +718,27 @@ let &fillchars = 'vert:|,fold: '
 set foldopen=search,jump,mark,percent,insert,tag,undo
 set foldclose=all
 
-" Collection swap file to here
+" The backup options
 let &directory = s:directory
-
-" Save view position when execute ':mkview'
 let &viewdir = s:viewdir
-
-" Hold undo archive when file closed
 set undofile
 let &undodir = s:undodir
 
-" Bell sound is instead of screen flash.
-set visualbell
+" Use aho-bakaup.vim's the backup functions
+set nobackup
 
 "@Bugs("This option has not functioned (?)")
 " Disable auto commentalize new line
 set formatoptions-=ro
 
-" Ignore case on NormalMode searching and InsertMode completion
+" Always I use the ignorecase
 set ignorecase noinfercase
 
-" No timeout key maps
-set notimeout
-
-" Do not set file name order priority on c-mode completion
-set suffixes=
-
-" Don't put two space on join (normal J)
-set nojoinspaces
-
-" Control IME by myself
+" I control the IME state by myself
 set iminsert=0
 
 " Open .tex as LaTex
 let g:tex_flavor = 'latex'
-
-" Use aho-bakaup.vim's backup
-set nobackup
-
-" }}}
-
-
-"-------------------------"
-"     Inner_Setting       "
-"-------------------------"
-" {{{
-
-" Set order of judging file encode
-set fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
-
-" Leaving a history and it limit is a 500 pieces
-set history=500
-
-" Display command complement
-set wildmenu
-
-" Path delimiter is slash
-set shellslash
-
-" Add correspond pairs
-set matchpairs+=<:>
 
 " Reference tags of ctags
 let &tags = join([
@@ -808,26 +750,12 @@ let &tags = join([
 \	'../../../../.git/tags'
 \], ',')
 
-" Netrw wake up default dir
-set browsedir=buffer
-
-" Set spell lang
-set spelllang=en_US,cjk
-
-" Set reference path, using by :find, gf and more
-set path=.,,./**
-
-" Auto generate my help tags
-if isdirectory(g:vimrc['vim_home'] . '/doc')
-	execute 'helptags' (g:vimrc['vim_home'] . '/doc')
-endif
-
 " }}}
 
 
-"-------------------------"
-"      Event_Method       "
-"-------------------------"
+"--------------------------"
+"  Set the augroup details "
+"--------------------------"
 " {{{
 
 augroup FileEvent
@@ -856,12 +784,22 @@ augroup UserEvent
 	autocmd User OverCmdLineLeave if &number | setl relativenumber | end
 augroup END
 
+" Set the 'none' filetype to the empty filetype
+augroup ExtensionType
+	autocmd VimEnter,BufNew * if empty(&ft) | setf none | endif
+augroup END
+
+"NOTE: Remove this when I fixed the auto indent bug
+augroup UserEvent
+	autocmd FileType int-* set indentkeys-=:
+augroup END
+
 " }}}
 
 
-"-------------------------"
-"      Command_Util       "
-"-------------------------"
+"--------------------------"
+"   Define the commands    "
+"--------------------------"
 " Alternate {{{
 
 call altercmd#load()
@@ -995,9 +933,9 @@ command! -bar CssShowDecompressed call vimrc#cmd#decompress_to_buffer()
 " }}}
 
 
-"-------------------------"
-"       Key_Mapping       "
-"-------------------------"
+"--------------------------"
+"   Define my keymappings  "
+"--------------------------"
 " Disable {{{
 
 augroup KeyMapping
@@ -1146,7 +1084,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent><expr> <C-k>s     ':OverCommandLine %s/\<' . expand('<cword>') . '\>/' . expand('<cword>') . '<CR>'
 	autocmd User MyVimRc vnoremap <silent>       :s/        :<C-u>OverCommandLine '<,'>s/<CR>
 	autocmd User MyVimRc cnoremap <silent>       <C-k>:     <Home>OverCommandLine <CR>
-	"@Marked('this is temporary keymapping, because vim-over do not imported cnoremap maybe')
+	"NOTE: this is temporary keymapping, because vim-over do not imported cnoremap maybe
 	autocmd FileType * OverCommandLineNoremap <C-b> <Left>
 	autocmd FileType * OverCommandLineNoremap <C-f> <Right>
 	"autocmd FileType * OverCommandLineNoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
@@ -1389,23 +1327,21 @@ augroup END
 " }}}
 
 
-"-------------------------"
-"        File_Type        "
-"-------------------------"
+"--------------------------"
+"   The final proceduces   "
+"--------------------------"
 " {{{
 
-" If buffer does not has filetype, set filetype 'none'
-autocmd ExtensionType VimEnter,BufNew * if empty(&ft) | setf none | endif
+" Generate the help tags
+if isdirectory(g:vimrc['vim_home'] . '/doc')
+	execute 'helptags' (g:vimrc['vim_home'] . '/doc')
+endif
 
-"@Marked('if fixed bug of auto indent, remove this')
-augroup UserEvent
-	autocmd FileType int-* set indentkeys-=:
-augroup END
-
-" }}}
-
-
+nohlsearch
 filetype plugin indent on
 syntax enable
 doautocmd User MyVimRc
+
+" }}}
+
 let g:vimrc['loaded'] = 1
