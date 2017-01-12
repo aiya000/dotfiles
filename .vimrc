@@ -1,24 +1,3 @@
-"-------------------
-"--  Recipe Menu  --
-"-------------------
-" -- Parameter
-" -- Local_Function
-" -- Initialize
-" -- Plugin_Manage
-" -- Plugin_Configure
-" -- View_Setting
-" -- Action_Setting
-" -- Inner_Setting
-" -- Event_Method
-"
-" -- Command_Util
-" -- Key_Mapping
-" -- File_Type
-" -- Environment_Pref
-" ---
-
-
-
 "----------------------------"
 "  This file supported       "
 "    - *NIX (exclude MacOSX) "
