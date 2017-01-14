@@ -5,9 +5,10 @@ endif
 set indentexpr=MyHaskellIndent()
 
 function! MyHaskellIndent() abort
-	let l:IGNORED_TOKENS = [
+	let l:RETAINED_TOKENS = [
+	\	',',
 	\	'import',
-	\] | lockvar! l:IGNORED_TOKENS
+	\] | lockvar! l:RETAINED_TOKENS
 
 	let l:INSERTED_TOKENS = [
 	\	'->',
@@ -22,8 +23,8 @@ function! MyHaskellIndent() abort
 	let l:prev_indent     = indent(l:prev_valid_lnum)
 	let l:next_indent     = l:prev_indent
 
-	let l:ignored_tokens_regex = printf('\(%s\)', join(l:IGNORED_TOKENS, '\|'))
-	if getline(l:prev_valid_lnum) =~# l:ignored_tokens_regex
+	let l:retained_tokens_regex = printf('\(%s\)', join(l:RETAINED_TOKENS, '\|'))
+	if getline(l:prev_valid_lnum) =~# l:retained_tokens_regex
 		return l:next_indent
 	endif
 
