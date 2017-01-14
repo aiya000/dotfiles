@@ -906,6 +906,7 @@ CmdCnoreabbr Gist Gista post
 CmdCnoreabbr GStatus Gina status
 CmdCnoreabbr GLog GitLogViewer -10
 CmdCnoreabbr GDiff GitDiffViewer
+CmdCnoreabbr GDS GitDiffViewer --staged
 CmdCnoreabbr Lingr J6uil
 CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
 CmdCnoreabbr SessionLoad UniteSessionLoad
