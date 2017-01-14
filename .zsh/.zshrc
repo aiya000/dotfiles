@@ -163,14 +163,19 @@ bindkey -M viins '^x^f' fzf-file-finder-expand
 source ~/.sh_generic/aliases.sh
 
 # }}}
-# Define special aliases for zsh {{{
+# Override default {{{
+
+alias vim=vime
+alias nvim=nvime
+
+# }}}
+# Others {{{
 
 # bash like history
 alias history='fc -l 1'
 
 # Reload zsh configrations
 alias reload=". $ZDOTDIR/.zshrc && . $ZDOTDIR/.zprofile && echo '>> zsh configrations reloaded'"
-
 
 # }}}
 
