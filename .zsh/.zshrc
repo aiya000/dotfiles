@@ -10,16 +10,16 @@ if [ -z "`alias | grep zsh_pr_loaded`" ] ; then
 fi
 
 
-#############
-# Configure #
-#############
+###########################################
+# Configure zsh with the local conditions #
+###########################################
 # Define global variables {{{
 
 in_linux=$(is_your_os_name Linux)
 in_cygwin=$(is_your_os_name Cygwin)
 
 # }}}
-# Set zsh options {{{
+# Set the zsh options {{{
 
 # Use modules
 autoload -U colors            && colors
@@ -65,7 +65,7 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 
 # }}}
-# Set zsh key-mappings {{{
+# Set the zsh key-mappings {{{
 
 # Prepare {{{
 
@@ -171,11 +171,11 @@ alias nvim=nvime
 # }}}
 # Others {{{
 
-# bash like history
+# The bash like history
 alias history='fc -l 1'
 
-# Reload zsh configrations
-alias reload=". $ZDOTDIR/.zshrc && . $ZDOTDIR/.zprofile && echo '>> zsh configrations reloaded'"
+# Reload the zsh configrations
+alias reload=". $ZDOTDIR/.zshrc && . $ZDOTDIR/.zprofile && echo '>> the zsh configrations are reloaded'"
 
 # }}}
 
