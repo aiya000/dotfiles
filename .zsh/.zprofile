@@ -1,15 +1,10 @@
 #!/usr/bin/env zsh
 
-###############
-# Config envs #
-###############
-# Set zsh variables {{{
+##########################
+# Config the environment #
+##########################
+# Set the zsh variables {{{
 
-# For $RPROMPT
-vi_normal="%{$bg[red]%}[NORMAL]%{$reset_color%}"
-vi_insert="%{$bg[blue]%}[INSERT]%{$reset_color%}"
-
-# Environment Variables
 export ZDOTDIR=~/.zsh
 export RPROMPT="${${KEYMAP/vicmd/$vi_normal}/(main|viins)/$vi_insert}"
 export HISTFILE=$ZDOTDIR/.zsh_history
@@ -18,6 +13,9 @@ export SAVEHIST=1000000
 export HISTTIMEFORMAT='%Y/%m/%d %H:%M '
 export HISTIGNORE="*.zsh_history*:*mount*-o*password=*"
 
+# Set $RPROMPT
+vi_normal="%{$bg[red]%}[NORMAL]%{$reset_color%}"
+vi_insert="%{$bg[blue]%}[INSERT]%{$reset_color%}"
 
 # }}}
 # Reset $PATH {{{
@@ -59,7 +57,7 @@ export GOPATH=~/.GoPath
 ##################
 # Manage Plugins #
 ##################
-# Set plugins configuration {{{
+# Configurate the plugin variables {{{
 
 # zplug
 export ZPLUG_HOME=$ZDOTDIR/zplug
