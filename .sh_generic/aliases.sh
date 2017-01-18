@@ -44,6 +44,7 @@ if i_have git ; then
 	alias gra='git rebase --abort'
 	alias grc='git rebase --continue'
 	alias gri='git rebase --interactive'
+	alias grm='git rm'
 	alias gs='git status'
 	alias gss='git stash'
 
