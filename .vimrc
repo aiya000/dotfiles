@@ -580,7 +580,7 @@ augroup END
 "}}}
 "--- aref-web.vim --- {{{
 
-let g:aref_web_source = get(g:, 'aref_web_source', {
+let g:aref_web_source = {
 \	'weblio' : {
 \		'url' : 'http://ejje.weblio.jp/content/%s'
 \	},
@@ -590,7 +590,9 @@ let g:aref_web_source = get(g:, 'aref_web_source', {
 \	'hoogle' : {
 \		'url' : 'https://www.haskell.org/hoogle/?hoogle=%s'
 \	}
-\})
+\}
+
+let g:aref_web_split_vertically = v:true
 
 "let g:ref_source_webdict_sites['weblio'].filter = function('vimrc#plugins#weblio_filter')
 
