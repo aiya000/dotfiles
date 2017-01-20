@@ -62,10 +62,14 @@ function zle-line-init zle-keymap-select {
 		git stash list > /dev/null 2>&1
 		if [ "$?" -ne 0 ] ; then
 			echo ''
-		else
-			local num=$(git stash list | wc -l)
-			echo "[stash:${num}]"
+			exit
 		fi
+		local num=$(git stash list | wc -l)
+		if [ "$num" -lt 1 ] ; then
+			echo ''
+			exit
+		fi
+		echo "[stash:${num}]"
 	}
 	local stash_prompt="%{$bg[cyan]$fg[black]%}$(get_stash_item_message)%{$reset_color%}"
 
