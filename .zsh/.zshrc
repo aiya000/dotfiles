@@ -51,14 +51,26 @@ function zle-line-init zle-keymap-select {
 	# Detect vi-mode
 	local vi_normal="%{$bg[red]%}[NORMAL]%{$reset_color%}"
 	local vi_insert="%{$bg[blue]%}[INSERT]%{$reset_color%}"
-	local vi_status="${${KEYMAP/vicmd/$vi_normal}/(main|viins)/$vi_insert}"
+	local vi_prompt="${${KEYMAP/vicmd/$vi_normal}/(main|viins)/$vi_insert}"
 
 	# Detect git branch
 	local branch=$({git branch --contains 2> /dev/null || echo ' NO REPO'} | cut -d' ' -f2- | xargs -I x echo \[x\])
-	local git_branch="%{${${branch/\[NO REPO\]/}/${branch}/$bg[green]}%}${branch}%{$reset_color%}"
+	local branch_prompt="%{${${branch/\[NO REPO\]/}/${branch}/$bg[green]}%}${branch}%{$reset_color%}"
+
+	# Detect items num in git stash
+	function get_stash_item_message () {
+		git stash list > /dev/null 2>&1
+		if [ "$?" -ne 0 ] ; then
+			echo ''
+		else
+			local num=$(git stash list | wc -l)
+			echo "[stash:${num}]"
+		fi
+	}
+	local stash_prompt="%{$bg[cyan]$fg[black]%}$(get_stash_item_message)%{$reset_color%}"
 
 	# Result
-	RPROMPT="${git_branch}${vi_status}"
+	RPROMPT="${stash_prompt}${branch_prompt}${vi_prompt}"
 	zle reset-prompt
 }
 zle -N zle-line-init
