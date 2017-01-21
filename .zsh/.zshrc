@@ -48,33 +48,34 @@ stty start undef
 
 # Prompt visual
 function zle-line-init zle-keymap-select {
-	# Detect vi-mode
-	local vi_normal="%{$bg[red]%}[NORMAL]%{$reset_color%}"
-	local vi_insert="%{$bg[blue]%}[INSERT]%{$reset_color%}"
-	local vi_prompt="${${KEYMAP/vicmd/$vi_normal}/(main|viins)/$vi_insert}"
-
-	# Detect git branch
-	local branch=$({git branch --contains 2> /dev/null || echo ' NO REPO'} | cut -d' ' -f2- | xargs -I x echo \[x\])
-	local branch_prompt="%{${${branch/\[NO REPO\]/}/${branch}/$bg[green]}%}${branch}%{$reset_color%}"
-
-	# Detect items num in git stash
-	function get_stash_item_message () {
-		git stash list > /dev/null 2>&1
-		if [ "$?" -ne 0 ] ; then
-			echo ''
+	function get_stash_status () {
+		local item_num=$({git stash list 2> /dev/null || echo -n ''} | wc -l)
+		if [ "$item_num" -lt 1 ] ; then
 			exit
 		fi
-		local num=$(git stash list | wc -l)
-		if [ "$num" -lt 1 ] ; then
-			echo ''
-			exit
-		fi
-		echo "[stash:${num}]"
+		echo "%{$bg[cyan]$fg[black]%}[stash:${item_num}]%{$reset_color%}"
 	}
-	local stash_prompt="%{$bg[cyan]$fg[black]%}$(get_stash_item_message)%{$reset_color%}"
+
+	function get_branch_name () {
+		branches=$(git branch --contains 2> /dev/null)
+		if [ "$?" -ne 0 ] ; then
+			echo '[NO REPO]'
+			exit
+		fi
+		local branch_name=$(echo $branches | cut -d' ' -f2-)
+		echo "%{$bg[green]%}[${branch_name}]%{$reset_color%}"
+	}
+
+	function get_vi_mode () {
+		if [ "$KEYMAP" = 'vicmd' ] ; then
+			echo "%{$bg[red]%}[NORMAL]%{$reset_color%}"
+		else
+			echo "%{$bg[blue]%}[INSERT]%{$reset_color%}"
+		fi
+	}
 
 	# Result
-	RPROMPT="${stash_prompt}${branch_prompt}${vi_prompt}"
+	RPROMPT="$(get_stash_status)$(get_branch_name)$(get_vi_mode)"
 	zle reset-prompt
 }
 zle -N zle-line-init
