@@ -131,7 +131,6 @@ augroup NeoKeyMapping
 	" Open new shell
 	autocmd User MyNVimRc silent call s:toggle_start_shell_mode()
 	autocmd User MyNVimRc nnoremap <silent> <C-\><C-v> :<C-u>call <SID>toggle_start_shell_mode()<CR>
-	autocmd User MyNVimRc nnoremap <silent> <C-\><C-l> :<C-u>call <SID>toggle_esc_keys_target()<CR>
 
 	"}}}
 augroup END
