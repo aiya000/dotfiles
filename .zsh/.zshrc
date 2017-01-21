@@ -50,10 +50,17 @@ stty start undef
 function zle-line-init zle-keymap-select {
 	function get_stash_status () {
 		local item_num=$({git stash list 2> /dev/null || echo -n ''} | wc -l)
-		if [ "$item_num" -lt 1 ] ; then
-			exit
+		if [ "$item_num" -ge 1 ] ; then
+			echo "%{$bg[cyan]$fg[black]%}[stash:${item_num}]%{$reset_color%}"
 		fi
-		echo "%{$bg[cyan]$fg[black]%}[stash:${item_num}]%{$reset_color%}"
+	}
+
+	function get_git_changes () {
+		# Subtract a head line minute
+		local changes=$(( $(git status --short 2> /dev/null | wc -l) - 1 ))
+		if [ "$changes" -ge 1 ] ; then
+			echo "%{$bg[white]$fg[black]%}[change:${changes}]%{$reset_color%}"
+		fi
 	}
 
 	function get_branch_name () {
@@ -75,7 +82,7 @@ function zle-line-init zle-keymap-select {
 	}
 
 	# Result
-	RPROMPT="$(get_stash_status)$(get_branch_name)$(get_vi_mode)"
+	RPROMPT="$(get_git_changes)$(get_stash_status)$(get_branch_name)$(get_vi_mode)"
 	zle reset-prompt
 }
 zle -N zle-line-init
