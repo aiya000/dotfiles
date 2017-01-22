@@ -16,6 +16,8 @@ command! -bar -nargs=? -complete=filetype SyntaxEdit
 \	execute ':edit' printf('%s/syntax/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
 command! -bar -nargs=? -complete=filetype IndentEdit
 \	execute ':edit' printf('%s/indent/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+command! -bar -nargs=? -complete=filetype FtDetectEdit
+\	execute ':edit' printf('%s/ftdetect/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
 
 " buffer open commands with filetype 'none'
 command! -bar -bang NewOverridden new<bang> | if empty(&ft) | setf none | endif
