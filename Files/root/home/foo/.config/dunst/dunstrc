@@ -15,7 +15,7 @@
 
 [shortcuts]
     close     = ctrl+period
-    close_all = ctrl+shift+period
+    close_all = ctrl+comma
 
 [urgency_low]
     background = "#222222"
