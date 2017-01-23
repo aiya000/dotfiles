@@ -19,9 +19,9 @@
 "-------------------
 
 
-"--------------------------"
-" Define the global values "
-"--------------------------"
+"----------------------"
+" Define global values "
+"----------------------"
 " {{{
 
 " Open in preference to an entity
@@ -55,9 +55,9 @@ let s:viewdir   = s:backupdir . '/view'
 " }}}
 
 
-"--------------------------"
-"   The startup scripts    "
-"--------------------------"
+"-----------------"
+" Startup scripts "
+"-----------------"
 " Set encodings {{{
 
 " Set default file encoding
@@ -206,9 +206,9 @@ endif
 " }}}
 
 
-"--------------------------"
-"     Load the plugins     "
-"--------------------------"
+"--------------"
+" Load plugins "
+"--------------"
 " {{{
 
 call dein#load_toml('~/.vim/dein.toml',      {'lazy': 0})
@@ -218,9 +218,9 @@ call dein#add('Shougo/dein.vim', {'rtp': ''})
 " }}}
 
 
-"--------------------------"
-"  Load the local scripts  "
-"--------------------------"
+"--------------------"
+" Load local scripts "
+"--------------------"
 " {{{
 "NOTE: Why this section is put here ?
 "    : It's for dein#{begin,end} :D
@@ -236,9 +236,9 @@ endif
 " }}}
 
 
-"--------------------------"
-"  Configurate the plugins "
-"--------------------------"
+"---------------------"
+" Configurate plugins "
+"---------------------"
 "--- netrw --- {{{
 
 " Enable netrw previewing
@@ -619,36 +619,22 @@ let g:github_complete_emoji_japanese_workaround = 1
 call dein#end()
 
 
-"--------------------------"
-"    Set the vim options   "
-"--------------------------"
+"-----------------"
+" Set vim options "
+"-----------------"
 " {{{
 
 set number relativenumber nowrap hlsearch list scrolloff=16
 set textwidth=0 tabstop=4 shiftwidth=4
 set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
-set breakindent linebreak
-set noruler
+set breakindent linebreak autoindent cindent nojoinspaces
+set laststatus=2 wildmenu noruler cmdheight=2 history=500
 set tabline=%!vimrc#set#with_delimitter_tab_line()
 set backspace=indent,eol,start
-set cmdheight=2
-set autoindent cindent
-set nowrapscan
-set visualbell
-set notimeout
-set suffixes=
-set nojoinspaces
+set nowrapscan visualbell notimeout
 set fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
-set history=500
-set wildmenu
-set shellslash
-set matchpairs+=<:>
-set browsedir=buffer
-set spelllang=en_US,cjk
-set path=.,,./**
-
-" The status bar is always displayed
-set laststatus=2
+set path=.,,./** shellslash matchpairs+=<:>
+set browsedir=buffer spelllang=en_US,cjk suffixes=
 
 " Set the status bar format
 let s:statusline_left  = '[Fenc=%{&fileencoding}]'
@@ -755,9 +741,9 @@ let &tags = join([
 " }}}
 
 
-"--------------------------"
-"  Set the augroup details "
-"--------------------------"
+"---------------------"
+" Set augroup details "
+"---------------------"
 " {{{
 
 augroup FileEvent
@@ -799,9 +785,9 @@ augroup END
 " }}}
 
 
-"------------------"
-"  Define aliases  "
-"------------------"
+"----------------"
+" Define aliases "
+"----------------"
 " Prepare {{{
 
 call altercmd#load()
@@ -861,9 +847,9 @@ CmdCnoreabbr SessionSave UniteSessionSave
 " }}}
 
 
-"--------------------------"
-"   Define my keymappings  "
-"--------------------------"
+"--------------------"
+" Define keymappings "
+"--------------------"
 " Disable {{{
 
 augroup KeyMapping
@@ -1256,9 +1242,9 @@ augroup END
 " }}}
 
 
-"--------------------------"
-"   The final proceduces   "
-"--------------------------"
+"------------------"
+" Final proceduces "
+"------------------"
 " {{{
 
 " Generate the help tags
