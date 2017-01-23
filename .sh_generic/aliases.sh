@@ -20,6 +20,8 @@ basedir=$(dirname $0)
 source $basedir/vim_utils.sh
 source $basedir/neovim_utils.sh
 
+alias e=nvim
+
 # }}}
 # Git {{{
 
