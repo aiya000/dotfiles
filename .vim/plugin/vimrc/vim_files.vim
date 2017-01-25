@@ -21,3 +21,9 @@ command! -bar -nargs=? -complete=filetype IndentEdit
 
 command! -bar -nargs=? -complete=filetype FtDetectEdit
 \	execute ':edit' printf('%s/ftdetect/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+
+command! -bar -nargs=? -complete=filetype PluginEdit
+\	execute ':edit' printf('%s/plugin/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+
+command! -bar -nargs=? -complete=filetype AutoloadEdit
+\	execute ':edit' printf('%s/autoload/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
