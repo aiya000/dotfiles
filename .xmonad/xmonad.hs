@@ -1,6 +1,5 @@
 import Control.Monad ((>=>), void)
 import Control.Monad.Extra (ifM)
-import System.EasyFile (doesFileExist, removeFile)
 import XMonad
 import XMonad.Actions.CycleWS (nextScreen)
 import XMonad.Actions.FloatKeys (keysMoveWindow)
@@ -20,21 +19,17 @@ import XMonad.Operations (sendMessage, withFocused, mouseResizeWindow)
 import XMonad.StackSet (focusUp, focusDown, swapUp, swapDown, greedyView, shift)
 import XMonad.Util.EZConfig (additionalKeys, additionalMouseBindings)
 import XMonad.Util.SpawnOnce (spawnOnce)
-import XMonadConfig.CommandWrapper (takeScreenShot, touch, xmonadRestartWithMessage)
-import XMonadConfig.Types (ScreenShotType (FullScreen, ActiveWindow))
+import XMonadConfig.CommandWrapper (takeScreenShot)
+import XMonadConfig.Shelly (switchKeyModeTo, currentKeyModeIs)
+import qualified XMonadConfig.CommandWrapper as CW
+import qualified XMonadConfig.Shelly as SH
 
-
-hhkbKeyModeFlagFile :: FilePath
-hhkbKeyModeFlagFile = "/tmp/xmonad-keymode-hhkb"
 
 main :: IO ()
 main = do
-  myKeys <- ifM (doesFileExist hhkbKeyModeFlagFile)
-              (return myHHKBKeys)
-              (return myNormalKeys)
-  myModMask <- ifM (doesFileExist hhkbKeyModeFlagFile)
-              (return hhkbCasualMask)
-              (return superMask)
+  inHhkbMode <- currentKeyModeIs SH.HHKB
+  let (myModMask, myKeys) = if inHhkbMode then (hhkbCasualMask, myHHKBKeys)
+                                          else (superMask, myNormalKeys)
   (xmobar >=> xmonad) $ desktopConfig
     { terminal           = "termite"
     , modMask            = myModMask
@@ -90,9 +85,9 @@ myNormalKeys =
   , ((altMask, xK_j), withFocused (sendMessage . MergeAll))
   , ((altMask, xK_k), withFocused (sendMessage . UnMerge))
   , ((altMask, xK_l), windows focusDown)
-  , ((hhkbCasualMask, xK_x), xmonadSwitchKeyModeToHHKB)
-  , ((noModMask, xK_Print), takeScreenShot FullScreen)
-  , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
+  , ((hhkbCasualMask, xK_x), switchKeyModeTo SH.HHKB)
+  , ((noModMask, xK_Print), takeScreenShot CW.FullScreen)
+  , ((shiftMask, xK_Print), takeScreenShot CW.ActiveWindow)
   , ((superMask .|. shiftMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-hibernate") -- ^ must add pm-hibernate to sudoers without inputting password
   , ((superMask .|. shiftMask, xK_a), sinkAll)
   , ((superMask .|. shiftMask, xK_i), sendMessage NextLayout)
@@ -112,10 +107,6 @@ myNormalKeys =
   , ((superMask, xK_m), spawn "xfce4-mixer")
   , ((superMask, xK_r), spawn "dmenu_run")
   ]
-  where
-    xmonadSwitchKeyModeToHHKB :: X ()
-    xmonadSwitchKeyModeToHHKB = touch hhkbKeyModeFlagFile >> xmonadRestartWithMessage
-
 
 myHHKBKeys :: [((KeyMask, KeySym), X ())]
 myHHKBKeys =
@@ -134,8 +125,9 @@ myHHKBKeys =
   , ((hhkbCasualMask, xK_m), spawn "xfce4-mixer")
   , ((hhkbCasualMask, xK_r), spawn "dmenu_run")
   , ((hhkbCasualMask, xK_t), spawn "termite")
-  , ((hhkbCasualMask, xK_x), xmonadSwitchKeyModeToNormal)
-  , ((shiftMask, xK_Print), takeScreenShot ActiveWindow)
+  , ((hhkbCasualMask, xK_x), switchKeyModeTo SH.Common)
+  , ((noModMask, xK_Print), takeScreenShot CW.ActiveWindow)
+  , ((shiftMask, xK_Print), takeScreenShot CW.ActiveWindow)
   , ((superMask, xK_F10), spawn "xscreensaver-command -lock")
   , ((superMask, xK_F11), spawn "xscreensaver-command -lock; sudo pm-suspend")  -- ^ must add pm-suspend to sudoers without inputting password
   , ((superMask, xK_F12), spawn "xscreensaver-command -lock; sudo pm-hibernate")  -- ^ must add pm-hibernate to sudoers without inputting password
@@ -143,16 +135,13 @@ myHHKBKeys =
   , ((superMask, xK_F2), spawn "light -A 10")
   , ((superMask, xK_F3), void $ lowerVolume 5)
   , ((superMask, xK_F4), void $ raiseVolume 5)
-  , ((superMask, xK_Print), takeScreenShot FullScreen)
+  , ((superMask, xK_Print), takeScreenShot CW.FullScreen)
   ]
   -- alt + shift + [1-9] to move the current window to the target worskpace
   ++ [((altMask, numKey), windows . shift $ workspace)
      | (numKey, workspace) <- zip [xK_1 .. xK_9] myWorkspaces ]
   ++ [ ((hhkbCasualMask, numKey), windows . greedyView $ workspace)
      | (numKey, workspace) <- zip [xK_1 .. xK_9] myWorkspaces ]
-  where
-    xmonadSwitchKeyModeToNormal :: X ()
-    xmonadSwitchKeyModeToNormal = (liftIO $ removeFile hhkbKeyModeFlagFile) >> xmonadRestartWithMessage
 
 
 myMouseBindings :: [((ButtonMask, Button), Window -> X ())]

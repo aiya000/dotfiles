@@ -21,6 +21,8 @@ executable xmonad-config
   build-depends:       base >= 4.7 && < 5
                      , easy-file
                      , extra
+                     , shelly
+                     , text
                      , xmonad
                      , xmonad-contrib
                      , xmonad-extras

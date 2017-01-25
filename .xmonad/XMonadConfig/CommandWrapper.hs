@@ -1,16 +1,13 @@
 -- | The cli command wrappers of X
 module XMonadConfig.CommandWrapper
   ( takeScreenShot
-  , touch
-  , xmonadRestartWithMessage
-  , ScreenShotType
+  , ScreenShotType (..)
   ) where
 
 import Control.Concurrent (threadDelay)
 import Control.Monad.IO.Class (liftIO)
 import Text.Printf (printf)
 import XMonad.Core (X, spawn)
-import XMonadConfig.Types (ScreenShotType (FullScreen, ActiveWindow))
 
 data ScreenShotType = FullScreen | ActiveWindow
 
@@ -34,16 +31,3 @@ takeScreenShot ssType = do
     dateSSPath             = "~/Picture/ScreenShot-$(date +'%Y-%m-%d-%H-%M-%S').png"
     messageOf FullScreen   = "shot the full screen"
     messageOf ActiveWindow = "shot the active window"
-
-
--- | Create a file
-touch :: FilePath -> X ()
-touch = liftIO . flip writeFile ""
-
--- |
--- Restart xmonad after running xmonad was killed,
--- and Show the message of xmonad restarted.
--- xmonadRestartWithMessage depends haskell-stack, sleep and notify-send
-xmonadRestartWithMessage :: X ()
-xmonadRestartWithMessage =
-  spawn $ "xmonad-config --restart && notify-send 'XMonad' 'Restarted' || notify-send 'XMonad' 'xmonad restarting is failure"
