@@ -3,6 +3,7 @@ module XMonadConfig.CommandWrapper
   ( takeScreenShot
   , touch
   , xmonadRestartWithMessage
+  , ScreenShotType
   ) where
 
 import Control.Concurrent (threadDelay)
@@ -10,6 +11,8 @@ import Control.Monad.IO.Class (liftIO)
 import Text.Printf (printf)
 import XMonad.Core (X, spawn)
 import XMonadConfig.Types (ScreenShotType (FullScreen, ActiveWindow))
+
+data ScreenShotType = FullScreen | ActiveWindow
 
 
 -- |
@@ -43,4 +46,4 @@ touch = liftIO . flip writeFile ""
 -- xmonadRestartWithMessage depends haskell-stack, sleep and notify-send
 xmonadRestartWithMessage :: X ()
 xmonadRestartWithMessage =
-  spawn $ "xmonad-config --restart && notify-send 'XMonad' 'Restarted'"
+  spawn $ "xmonad-config --restart && notify-send 'XMonad' 'Restarted' || notify-send 'XMonad' 'xmonad restarting is failure"
