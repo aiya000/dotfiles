@@ -137,4 +137,13 @@ function bak () {
 	fi
 }
 
+# Thanks @NomadBlacky
+function cdp () {
+	depth=$([ -n "$1" ] && echo "$1" || echo 3)
+	find -maxdepth $depth -type d | fzf | read dir
+	if [ "$?" -eq 0 ] ; then
+		cd $dir
+	fi
+}
+
 # }}}
