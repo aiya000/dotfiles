@@ -93,12 +93,9 @@ zle -N zle-keymap-select
 
 # Prepare {{{
 
-alias __fzf_tmux_cmd='fzf-tmux --no-sort --tac --cycle --bind=ctrl-j:accept,ctrl-k:kill-line'
-alias __fzf_cmd='fzf --no-sort --tac --cycle --bind=ctrl-j:accept,ctrl-k:kill-line'
-
 # history-incremental-search-backward uses fzf
 function fzf-history-incremental-search-backward () {
-	selected=$(fc -ln 1 | __fzf_tmux_cmd)
+	selected=$(fc -ln 1 | fzf-tmux)
 	BUFFER="$selected"
 	CURSOR=${#BUFFER}
 }
@@ -106,7 +103,7 @@ zle -N fzf-history-incremental-search-backward
 
 # Select file on the fzf
 function fzf-file-finder-expand () {
-	selected=$(find . | __fzf_cmd --multi)
+	selected=$(find . | fzf --multi)
 	zle redisplay
 	BUFFER="${BUFFER}${selected}"
 	CURSOR=${#BUFFER}
