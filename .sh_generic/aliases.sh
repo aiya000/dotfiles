@@ -146,4 +146,18 @@ function cdp () {
 	fi
 }
 
+# ＜ キリングアート！
+function killing-art () {
+	signal="$1"
+	# Show columns of the PID, COMMAND and TTY
+	#FIXME: Don't show current grep process in the fzf
+	ps aux | awk '{print $2 " " $11 " " $7}' | sed 's/\?//g' | grep -vE '(ps|awk|sed)' | fzf | awk '{print $1}' | read target_pid
+	if [ "$?" -eq 0 ] ; then
+		kill $signal $target_pid
+	fi
+	[ "$?" -eq 0 ]
+		\ && echo 'やったわ'
+		\ || echo 'くふん！' > /dev/stderr
+}
+
 # }}}
