@@ -174,6 +174,11 @@ bindkey -M viins '^x^f' fzf-file-finder-expand
 
 
 # }}}
+# Load completion scripts {{{
+
+source ~/.sh_generic/completion.sh
+
+# }}}
 
 
 ###################
