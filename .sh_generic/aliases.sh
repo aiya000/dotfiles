@@ -41,7 +41,7 @@ if i_have git ; then
 	alias gd='git diff'
 	alias gdh='git diff HEAD~..HEAD'
 	alias gds='git diff --staged'
-	alias gl='git log -20'
+	alias gl='git log -2000'
 	alias gmv='git mv'
 	alias gr='git rebase'
 	alias gra='git rebase --abort'
