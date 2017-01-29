@@ -22,8 +22,6 @@ basedir=$(dirname $0)
 source $basedir/aliases/vim.sh
 source $basedir/aliases/neovim.sh
 
-alias e=nvim
-
 # }}}
 # Git {{{
 
