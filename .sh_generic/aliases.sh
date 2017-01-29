@@ -19,8 +19,8 @@ alias_of fzf-tmux='fzf-tmux --no-sort --tac --cycle --bind=ctrl-j:accept,ctrl-k:
 # Vim and NeoVim {{{
 
 basedir=$(dirname $0)
-source $basedir/vim_utils.sh
-source $basedir/neovim_utils.sh
+source $basedir/aliases/vim.sh
+source $basedir/aliases/neovim.sh
 
 alias e=nvim
 
