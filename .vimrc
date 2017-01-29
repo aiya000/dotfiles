@@ -836,7 +836,7 @@ unlet s:ghci_command
 " Others
 CmdCnoreabbr Gist Gista post
 CmdCnoreabbr GStatus Gina status
-CmdCnoreabbr GLog GitLogViewer -10
+CmdCnoreabbr GLog GitLogViewer -2000
 CmdCnoreabbr GDiff GitDiffViewer
 CmdCnoreabbr GDS GitDiffViewer --staged
 CmdCnoreabbr Lingr J6uil
