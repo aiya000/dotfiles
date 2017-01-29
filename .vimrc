@@ -1090,6 +1090,7 @@ augroup KeyMapping
 
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-r>     :<C-u>Reload<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>r         :<C-u>let &filetype=&filetype<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>e         :<C-u>EditOverridden %<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-l>     :<C-u>nohlsearch<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-j>     :<C-u>write<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>J         :<C-u>wall \| echo 'written all !'<CR>
