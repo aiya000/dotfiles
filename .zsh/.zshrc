@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-source ~/.sh_generic/helper.sh
+source ~/.sh_generic/premise.sh
 
 ###################
 # Check .zprofile #
