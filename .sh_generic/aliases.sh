@@ -6,6 +6,7 @@
 # and you can load .bashrc or another shell rc file, maybe
 #
 
+basedir=$(dirname $0)
 # Override existed name {{{
 
 alias ls='ls --color=auto --group-directories-first'
@@ -16,9 +17,9 @@ alias_of fzf="fzf $FZF_CASUAL_OPTIONS"
 alias_of fzf-tmux="fzf-tmux $FZF_CASUAL_OPTIONS"
 
 # }}}
-# Vim and NeoVim {{{
+# Load ./aliases/** {{{
 
-basedir=$(dirname $0)
+source $basedir/aliases/functions/*.sh
 source $basedir/aliases/vim.sh
 source $basedir/aliases/neovim.sh
 
