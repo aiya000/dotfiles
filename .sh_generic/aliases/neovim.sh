@@ -21,7 +21,7 @@ function vimman () {
 alias nvimconfig='ndotfile_config .vim/init.vim'
 
 # Plugin
-alias nvimshell='vim +VimShell'
+alias nvimshell='nvim +VimShell'
 alias nvimconsole='nvim +VimConsoleOpen'
 alias nadrone='nvim +AdroneHome'
 
