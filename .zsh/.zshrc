@@ -48,13 +48,6 @@ stty start undef
 
 # Prompt visual
 function zle-line-init zle-keymap-select {
-	function get_stash_status () {
-		local item_num=$({git stash list 2> /dev/null || echo -n ''} | wc -l)
-		if [ "$item_num" -ge 1 ] ; then
-			echo "%{$bg[cyan]$fg[black]%}[stash:${item_num}]%{$reset_color%}"
-		fi
-	}
-
 	function get_git_changes () {
 		# Subtract a head line minute
 		local changes=$(( $(git status --short 2> /dev/null | wc -l) - 1 ))
@@ -63,7 +56,23 @@ function zle-line-init zle-keymap-select {
 		fi
 	}
 
+	function get_git_commits () {
+		local commits
+		commits=$(git status --short 2> /dev/null | head -1 | grep -o '\[.*\]')
+		if [ "$?" -eq 0 ] ; then
+			echo "%{$bg[red]$fg[black]%}${commits}%{$reset_color%}"
+		fi
+	}
+
+	function get_stash_status () {
+		local item_num=$({git stash list 2> /dev/null || echo -n ''} | wc -l)
+		if [ "$item_num" -ge 1 ] ; then
+			echo "%{$bg[cyan]$fg[black]%}[stash:${item_num}]%{$reset_color%}"
+		fi
+	}
+
 	function get_branch_name () {
+		local branches
 		branches=$(git branch --contains 2> /dev/null)
 		if [ "$?" -ne 0 ] ; then
 			echo '[NO REPO]'
@@ -82,7 +91,7 @@ function zle-line-init zle-keymap-select {
 	}
 
 	# Result
-	RPROMPT="$(get_git_changes)$(get_stash_status)$(get_branch_name)$(get_vi_mode)"
+	RPROMPT="$(get_git_changes)$(get_git_commits)$(get_stash_status)$(get_branch_name)$(get_vi_mode)"
 	zle reset-prompt
 }
 zle -N zle-line-init
