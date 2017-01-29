@@ -22,6 +22,7 @@ vi_insert="%{$bg[blue]%}[INSERT]%{$reset_color%}"
 
 # Mine
 PATH=$HOME/bin:$HOME/sbin
+PATH=$PATH:$HOME/.dotfiles/.sh_generic/bin
 PATH=$PATH:$HOME/.dotfiles/bin
 PATH=$PATH:$HOME/.dotfiles/aacceessoorryy/bin
 
