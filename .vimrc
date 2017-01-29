@@ -850,7 +850,9 @@ CmdCnoreabbr SessionSave UniteSessionSave
 "--------------------"
 " Define keymappings "
 "--------------------"
-" Disable {{{
+" Global {{{
+
+" Disabling {{{
 
 augroup KeyMapping
 	" Enable some hoge<C-c> mappings
@@ -864,9 +866,7 @@ augroup KeyMapping
 augroup END
 
 " }}}
-" Global {{{
-
-" Foldings {{{
+" Folding {{{
 
 augroup KeyMapping
 	autocmd User MyVimRc nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
@@ -934,7 +934,7 @@ augroup KeyMapping
 augroup END
 
 " }}}
-" Options Toggling  {{{
+" Toggling Option {{{
 
 augroup KeyMapping
 	" Local
@@ -952,7 +952,7 @@ augroup KeyMapping
 augroup END
 
 " }}}
-" Plugins {{{
+" With plugins {{{
 
 augroup KeyMapping
 	" netrw
@@ -1058,7 +1058,7 @@ augroup KeyMapping
 augroup END
 
 " }}}
-" Others {{{
+" Basics {{{
 
 augroup KeyMapping
 	" normal mode {{{
