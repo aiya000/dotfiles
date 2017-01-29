@@ -52,6 +52,9 @@ export LICE_USER=aiya000
 # Languages
 export GOPATH=~/.GoPath
 
+# Inject to fzf in .sh_generic/*
+export FZF_CASUAL_OPTIONS='--tac --cycle --bind=ctrl-j:accept,ctrl-k:kill-line'
+
 # }}}
 
 
