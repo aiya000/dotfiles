@@ -785,9 +785,9 @@ augroup END
 " }}}
 
 
-"----------------"
-" Define aliases "
-"----------------"
+"-----------------"
+" Manage commands "
+"-----------------"
 " Prepare {{{
 
 call altercmd#load()
@@ -843,6 +843,12 @@ CmdCnoreabbr Lingr J6uil
 CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
 CmdCnoreabbr SessionLoad UniteSessionLoad
 CmdCnoreabbr SessionSave UniteSessionSave
+
+" }}}
+" Remove existed commands {{{
+
+" :GLog should be shown first
+silent! delcommand GLVS
 
 " }}}
 
