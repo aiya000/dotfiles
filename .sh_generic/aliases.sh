@@ -12,8 +12,8 @@ alias ls='ls --color=auto --group-directories-first'
 alias mv='mv -i'
 alias cp='cp -i'
 alias_of mysql='mysql --pager="less -r -S -n -i -F -X"'
-alias_of fzf='fzf --no-sort --tac --cycle --bind=ctrl-j:accept,ctrl-k:kill-line'
-alias_of fzf-tmux='fzf-tmux --no-sort --tac --cycle --bind=ctrl-j:accept,ctrl-k:kill-line'
+alias_of fzf="fzf $FZF_CASUAL_OPTIONS"
+alias_of fzf-tmux="fzf-tmux $FZF_CASUAL_OPTIONS"
 
 # }}}
 # Vim and NeoVim {{{
