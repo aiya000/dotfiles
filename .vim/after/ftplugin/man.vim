@@ -2,10 +2,11 @@
 
 let b:undo_ftplugin = 'setl ' . join([
 \	'number<',
-\	'relativenumber<'
+\	'relativenumber<',
+\	'wrap<'
 \])
 
-setl nonumber norelativenumber
+setl nonumber norelativenumber wrap
 
 nnoremap <buffer> Q :<C-u>q<CR>
 " Forget the vim-manpager specified nmaps
