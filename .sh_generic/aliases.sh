@@ -17,6 +17,11 @@ alias_of fzf="fzf $FZF_CASUAL_OPTIONS"
 alias_of fzf-tmux="fzf-tmux $FZF_CASUAL_OPTIONS"
 
 # }}}
+# Add some to $PATH {{{
+
+export PATH=$PATH:~/.dotfiles/.sh_generic/bin
+
+# }}}
 # Load ./aliases/** {{{
 
 source $basedir/aliases/functions/*.sh
