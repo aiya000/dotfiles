@@ -20,3 +20,6 @@ command! -bar SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
 
 " CSS
 command! -bar CssShowDecompressed call vimrc#cmd#decompress_to_buffer()
+
+" Dev
+command! -bar -nargs=1 EditTestFile TabnewOverridden ~/.tmp/Test.<args>
