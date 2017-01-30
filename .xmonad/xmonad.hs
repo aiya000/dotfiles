@@ -126,7 +126,7 @@ myHHKBKeys =
   , ((hhkbCasualMask, xK_r), spawn "dmenu_run")
   , ((hhkbCasualMask, xK_t), spawn "termite")
   , ((hhkbCasualMask, xK_x), switchKeyModeTo SH.Common)
-  , ((noModMask, xK_Print), takeScreenShot CW.ActiveWindow)
+  , ((noModMask, xK_Print), takeScreenShot CW.FullScreen)
   , ((shiftMask, xK_Print), takeScreenShot CW.ActiveWindow)
   , ((superMask, xK_F10), spawn "xscreensaver-command -lock")
   , ((superMask, xK_F11), spawn "xscreensaver-command -lock; sudo pm-suspend")  -- ^ must add pm-suspend to sudoers without inputting password
