@@ -310,6 +310,9 @@ let g:quickrun_config = {
 \	},
 \	'brainfuck' : {
 \		'command' : 'brainfuck'
+\	},
+\	'nico' : {
+\		'command' : 'nicorun'
 \	}
 \}
 
