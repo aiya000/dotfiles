@@ -7,6 +7,7 @@
 #
 
 basedir=$(dirname $0)
+
 # Override existed name {{{
 
 alias ls='ls --color=auto --group-directories-first'
@@ -15,11 +16,6 @@ alias cp='cp -i'
 alias_of mysql='mysql --pager="less -r -S -n -i -F -X"'
 alias_of fzf="fzf $FZF_CASUAL_OPTIONS"
 alias_of fzf-tmux="fzf-tmux $FZF_CASUAL_OPTIONS"
-
-# }}}
-# Add some to $PATH {{{
-
-export PATH=$PATH:~/.dotfiles/.sh_generic/bin
 
 # }}}
 # Load ./aliases/** {{{
@@ -82,3 +78,5 @@ i_have ctags  && alias ctags-r='ctags --tag-relative --recurse --sort=yes'
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
 # }}}
+
+export PATH=$PATH:~/.dotfiles/.sh_generic/bin
