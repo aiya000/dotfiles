@@ -848,12 +848,6 @@ CmdCnoreabbr SessionLoad UniteSessionLoad
 CmdCnoreabbr SessionSave UniteSessionSave
 
 " }}}
-" Remove existed commands {{{
-
-" :GLog should be shown first
-silent! delcommand GLVS
-
-" }}}
 
 
 "--------------------"
