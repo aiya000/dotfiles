@@ -133,21 +133,19 @@ augroup END
 "-----------------"
 " Manage commands "
 "-----------------"
-" :terminal shortcut "{{{
+" Overwrite defined commands {{{
 
-CmdCnoreabbr Weechat terminal weechat
+command! -bar VimConfig    e ~/.vimrc
+command! -bar VimConfigTab tabnew ~/.vimrc
+command! -bar Reload       so ~/.config/nvim/init.vim
 
 " }}}
-" NeoVim Utils {{{
+" Others {{{
 
-command! -bar VimConfig     e ~/.vimrc
-command! -bar VimConfigTab  tabnew ~/.vimrc
-"TODO: use $XDG_CONFIG_HOME (?)
 command! -bar NVimConfig    e ~/.config/nvim/init.vim
 command! -bar NVimConfigTab tabnew ~/.config/nvim/init.vim
 
-" Override definition :Reload from .vimrc
-command! -bar Reload so ~/.config/nvim/init.vim
+CmdCnoreabbr Weechat terminal weechat
 
 " }}}
 
