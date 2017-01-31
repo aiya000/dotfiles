@@ -1,25 +1,15 @@
 source ~/.vimrc
 
-"-------------------
-"--  Recipe Menu  --
-"-------------------
-" -- Initialize
-" -- Event_Method
-" -- Key_Mapping
-" ---
-
-
-
-"-------------------------"
-"       Initialize        "
-"-------------------------"
-" Environment {{{
+"--------------"
+" Starting up "
+"--------------"
+" Define global values {{{
 
 " For the exceptions
 let $NVIM_PYTHON_LOG_FILE = g:vimrc['vim_home'] . '/.log/nvim_python.log'
 
 " }}}
-" autocmd Groups {{{
+" Declare autocmd groups {{{
 
 augroup NeoEvent
 	autocmd!
@@ -32,9 +22,9 @@ augroup END
 " }}}
 
 
-"------------------------"
-"*** Plugin_Configure ***"
-"------------------------"
+"---------------------"
+" Configurate plugins "
+"---------------------"
 "--- deoplete.nvim ---"{{{
 
 let g:deoplete#enable_at_startup = 1
@@ -49,9 +39,9 @@ call dein#disable('vimdoc-ja')
 "}}}
 
 
-"-------------------------"
-"      Event_Method       "
-"-------------------------"
+"---------------------"
+" Set augroup details "
+"---------------------"
 " :terminal {{{
 
 augroup NeoEvent
@@ -61,9 +51,9 @@ augroup END
 " }}}
 
 
-"-------------------------"
-"       Key_Mapping       "
-"-------------------------"
+"--------------------"
+" Define keymappings "
+"--------------------"
 " Global {{{
 
 " Prepare functions {{{
@@ -140,9 +130,9 @@ augroup END
 " }}}
 
 
-"-------------------------"
-"      Command_Util       "
-"-------------------------"
+"-----------------"
+" Manage commands "
+"-----------------"
 " :terminal shortcut "{{{
 
 CmdCnoreabbr Weechat terminal weechat
