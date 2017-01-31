@@ -829,12 +829,10 @@ CmdCnoreabbr DeinLog       echo dein#get_log()
 CmdCnoreabbr DeinUpdateLog echo dein#get_updates_log()
 
 " GHCi
-let s:ghci_command = executable('stack') ? 'stack exec ghci -- ' : 'ghci'
-execute 'CmdCnoreabbr Ghci'    'VimShellInteractive'                    s:ghci_command
-execute 'CmdCnoreabbr Sghci'   'VimShellInteractive' '--split="sp"'     s:ghci_command
-execute 'CmdCnoreabbr Vghci'   'VimShellInteractive' '--split="vsp"'    s:ghci_command
-execute 'CmdCnoreabbr GhciTab' 'VimShellInteractive' '--split="tabnew"' s:ghci_command
-unlet s:ghci_command
+CmdCnoreabbr Ghci    VimShellInteractive                  stack exec ghci
+CmdCnoreabbr Sghci   VimShellInteractive --split="sp"     stack exec ghci
+CmdCnoreabbr Vghci   VimShellInteractive --split="vsp"    stack exec ghci
+CmdCnoreabbr GhciTab VimShellInteractive --split="tabnew" stack exec ghci
 
 " Others
 CmdCnoreabbr Gist Gista post
