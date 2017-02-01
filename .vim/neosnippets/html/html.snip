@@ -10,19 +10,6 @@ snippet script_load
 abbr    <script src="__"></script>
     <script src="${1:TARGET}"></script>
 
-snippet body
-    <body>
-       ${1:TARGET}
-    </body>
-
-snippet h
-options word
-    <h${1:1}>${2}</h$1>
-
-snippet p
-options word
-    <p>${1}</p>
-
 snippet br
 options word
     <br/>
@@ -31,204 +18,26 @@ snippet hr
 options word
     <hr/>
 
-snippet comment
-options word
-    <!--${0:TARGET}-->
-
-snippet b
-options word
-    <b>${0:TARGET}</b>
-
-snippet small
-options word
-    <small>${0:TARGET}</small>
-
-snippet strong
-options word
-    <strong>${0:TARGET}</strong>
-
-snippet sub
-options word
-    <sub>${0:TARGET}</sub>
-
-snippet sup
-options word
-    <sup>${1:TARGET}</sup>
-
-snippet ins
-options word
-    <ins>${1:TARGET}</ins>
-
-snippet del
-options word
-    <del>${1:TARGET}</del>
-
-snippet em
-options word
-    <em>${1:TARGET}</em>
-
-snippet bdo
-options word
-    <bdo dir="${1:rtl}">${2:TARGET}</bdo>
-
-snippet pre
-    <pre>
-    ${1:TARGET}
-    </pre>
-
-snippet blockquote
-    <blockquote>
-    ${1}
-    </blockquote>
-    ${2}
-
 snippet link
 alias css_load
 abbr    link stylesheet css
     <link rel="${1:stylesheet}" href="${2}.css">
 
-snippet alignl
-    text-align="left"
-snippet alignr
-    text-align="right"
-snippet alignc
-    text-align="center"
-
-snippet bgcolor
-    bgcolor="${1}"${2}
-
 snippet ahref
 options word
     <a href="${1}">${2:TARGET}</a>
-snippet ahref_blank
-options word
-    <a href="${1}" target="_blank">${2:TARGET}</a>
-snippet ahref_parent
-options word
-    <a href="${1}" target="_parent">${2:TARGET}</a>
-snippet ahref_top
-options word
-    <a href="${1}" target="_top">${2:TARGET}</a>
+
 snippet aname
 options word
     <a name="${1}">${2:TARGET}</a>
 
-snippet framesetcols
-    <frameset cols="${1}">
-    ${2:TARGET}
-    </frameset>
-snippet framesetrows
-    <frameset rows="${1}"
-    ${2:TARGET}
-    </frameset>
-
-snippet iframe
-options word
-    <iframe src="${1}"></iframe>
-snippet table
-    <table border="${1}">
-    ${2:TARGET}
-    </table>
-
-snippet th
-options word
-    <th>${1:TARGET}</th>
-
-snippet ulsquare
-options word
-    <ul type="square">${1:TARGET}</ul>
-snippet ulcircle
-options word
-    <ul type="circle">${1:TARGET}</ul>
-snippet uldisc
-options word
-    <ul type="disc">${1:TARGET}</ul>
-
 snippet ol
 options word
     <ol>${1:TARGET}</ol>
-snippet olA
-options word
-    <ol type="A">${1:TARGET}</ol>
-snippet ola
-options word
-    <ol type="a">${1:TARGET}</ol>
-snippet olI
-options word
-    <ol type="I">${1:TARGET}</ol>
-snippet oli
-options word
-    <ol type="i">${1:TARGET}</ol>
 
 snippet li
 options word
     <li>${1:TARGET}</li>
-
-snippet dl
-options word
-    <dl>${1:TARGET}</dl>
-snippet dt
-options word
-   <dt>${1:TARGET}</dt>
-snippet dd
-options word
-    <dd>${1:TARGET}</dd>
-
-snippet form
-    <form>
-    ${1:TARGET}
-    </form>
-
-snippet inputtext
-options word
-    <input type="text" name="${1:user}">
-snippet inputpassword
-options word
-    <input type="password" name="${1:password}">
-snippet inputradio
-options word
-    <input type="radio" name="${1}" value="value">
-snippet inputcheckbox
-options word
-    <input type="checkbox" name="${1}">
-
-snippet textarea
-    <textarea rows="${1}" cols="${2}">
-    ${3:TARGET}
-    </textarea>
-    ${4}
-
-snippet button
-options word
-    <button>${1:TARGET}</button>
-
-snippet select
-options word
-    <select>${1:TARGET}</select>
-
-snippet optgroup
-    <optgroup label="${1}">
-    ${2:TARGET}
-    <optgroup>
-snippet option
-options word
-    <option value="${1}">${2:TARGET}</option>
-
-snippet label
-options word
-    <label>${1}: <input type="${2:TARGET}" /></label>
-
-snippet labelfor
-options word
-    <label for="${1}:id">${2:TARGET}</label>
-
-snippet fieldset
-options word
-    <fieldset>${1:TARGET}</fieldset>
-
-snippet legend
-options word
-    <legend>${1:TARGET}</legend>
 
 snippet id
 options word
@@ -238,21 +47,9 @@ snippet class
 options word
     class="${1}"${2}
 
-snippet pclass
+snippet name
 options word
-    <p class="${1}">${2:TARGET}</p>
-
-snippet pid
-options word
-    <p id="${1}">${2:TARGET}</p>
-
-snippet divid
-options word
-    <div id="${1}">${2:TARGET}</div>
-
-snippet divclass
-options word
-    <div class="${1}">${2:TARGET}</div>
+    name="${1}"${2}
 
 snippet img
 options word
@@ -261,26 +58,6 @@ options word
 snippet div
 options word
     <div>${0:TARGET}</div>
-
-snippet header
-options word
-    <div class="header" role="header">
-        ${1}
-    </div>
-
-snippet main
-options word
-    <div class="main" role="main">
-        ${1}
-    </div>
-
-snippet footer
-options word
-    <div class="footer" role="contentinfo">
-        ${1}
-    </div>
-
-# end copied area
 
 snippet span
 abbr    <span></span>
