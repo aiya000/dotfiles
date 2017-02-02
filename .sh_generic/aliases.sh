@@ -16,7 +16,7 @@ alias cp='cp -i'
 alias_of mysql='mysql --pager="less -r -S -n -i -F -X"'
 alias_of fzf="fzf $FZF_CASUAL_OPTIONS"
 alias_of fzf-tmux="fzf-tmux $FZF_CASUAL_OPTIONS"
-alias_of hoe='stack exec --silent hoe'
+alias_of hoe='stack exec --silent -- hoe'
 
 # }}}
 # Load ./aliases/** {{{
@@ -36,8 +36,8 @@ if i_have git ; then
 	alias gap='git add -p'
 	alias gb='git branch'
 	alias gbd='git branch --delete'
-	alias gc='git commit'
-	alias gcam='git commit --amend'
+	alias gc='git commit --verbose'
+	alias gcam='git commit --verbose --amend'
 	alias gcm='git commit -m'
 	alias gco='git checkout'
 	alias gcob='git checkout -b'
