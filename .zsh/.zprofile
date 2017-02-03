@@ -71,9 +71,10 @@ export HEREIS_ALIAS_PREFIX='p_'
 # zsh-shell-kawaii
 export SHELL_KAWAII_HER_VISIBILITY=1
 export SHELL_KAWAII_HOST_VISIBILITY=1
-export SHELL_KAWAII_FAKE_USERNAME='☆ミ'
-export SHELL_KAWAII_FAKE_HOSTNAME='aiya000'
-
+export SHELL_KAWAII_FAKE_USERNAME='☆ミ'    # Dancing stars
+export SHELL_KAWAII_FAKE_HOSTNAME='aiya000' # ミ☆   on me!
+export SHELL_KAWAII_CLI_TO_LOW=1
+export SHELL_KAWAII_USER_DELIMITER='>>>'
 # }}}
 
 
