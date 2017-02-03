@@ -1,6 +1,6 @@
 #!/bin/sh
 function cdp () {
-	local depth=$([ -n "$1" ] && echo "$1" || echo 3)
+	local depth=$([ -n "$1" ] && echo "$1" || echo 5)
 
 	# 0. Show the directories of under the `pwd`
 	# 1. Ignore the files
