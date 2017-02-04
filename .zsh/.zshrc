@@ -234,7 +234,9 @@ source $ZPLUG_HOME/init.zsh
 
 # Plugin list
 zplug 'aiya000/sh-hereis', use:'{init.sh,hereis.sh,place.sh,edit-places.sh,reload-places.sh}'
-zplug 'aiya000/zsh-shell-kawaii'
+#zplug 'aiya000/zsh-shell-kawaii'
+source ~/Repository/zsh-shell-kawaii/init.zsh
+source ~/Repository/zsh-shell-kawaii/zsh-shell-kawaii.zsh
 zplug 'aiya000/sh-tovim', as:command, use:tovim
 zplug 'zsh-users/zsh-syntax-highlighting'
 zplug 'joel-porquet/zsh-dircolors-solarized'
