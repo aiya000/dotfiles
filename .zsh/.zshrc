@@ -173,7 +173,7 @@ alias reload=". $ZDOTDIR/.zshrc && . $ZDOTDIR/.zprofile && echo '>> the zsh conf
 if [ ! -d $ZPLUG_HOME ] ; then
 	git clone https://github.com/zplug/zplug $ZPLUG_HOME
 fi
-source $ZPLUG_HOME/zplug
+source $ZPLUG_HOME/init.zsh
 
 # }}}
 # Before settings {{{
