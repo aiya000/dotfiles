@@ -46,57 +46,6 @@ setopt ignore_eof
 stty stop  undef
 stty start undef
 
-# Prompt visual
-function zle-line-init zle-keymap-select {
-	function get_git_changes () {
-		# Subtract a head line minute
-		local changes=$(( $(git status --short 2> /dev/null | wc -l) - 1 ))
-		if [ "$changes" -ge 1 ] ; then
-			echo "%{$bg[white]$fg[black]%}[change:${changes}]%{$reset_color%}"
-		fi
-	}
-
-	function get_git_commits () {
-		local commits
-		commits=$(git status --short 2> /dev/null | head -1 | grep -o '\[.*\]')
-		if [ "$?" -eq 0 ] ; then
-			echo "%{$bg[red]$fg[black]%}${commits}%{$reset_color%}"
-		fi
-	}
-
-	function get_stash_status () {
-		local item_num=$({git stash list 2> /dev/null || echo -n ''} | wc -l)
-		if [ "$item_num" -ge 1 ] ; then
-			echo "%{$bg[cyan]$fg[black]%}[stash:${item_num}]%{$reset_color%}"
-		fi
-	}
-
-	function get_branch_name () {
-		local branches
-		branches=$(git branch --contains 2> /dev/null)
-		if [ "$?" -ne 0 ] ; then
-			echo '[NO REPO]'
-			exit
-		fi
-		local branch_name=$(echo $branches | cut -d' ' -f2-)
-		echo "%{$bg[green]%}[${branch_name}]%{$reset_color%}"
-	}
-
-	function get_vi_mode () {
-		if [ "$KEYMAP" = 'vicmd' ] ; then
-			echo "%{$bg[red]%}[NORMAL]%{$reset_color%}"
-		else
-			echo "%{$bg[blue]%}[INSERT]%{$reset_color%}"
-		fi
-	}
-
-	# Result
-	RPROMPT="$(get_git_changes)$(get_git_commits)$(get_stash_status)$(get_branch_name)$(get_vi_mode)"
-	zle reset-prompt
-}
-zle -N zle-line-init
-zle -N zle-keymap-select
-
 # }}}
 # Set the zsh key-mappings {{{
 
@@ -227,6 +176,61 @@ fi
 source $ZPLUG_HOME/zplug
 
 # }}}
+# Before settings {{{
+
+# zsh-shell-kawaii {{{
+
+# for $SHELL_KAWAII_MORE_PROMPT_COMMAND
+function echo_statuses () {
+	function get_git_changes () {
+		# Subtract a head line minute
+		local changes=$(( $(git status --short 2> /dev/null | wc -l) - 1 ))
+		if [ "$changes" -ge 1 ] ; then
+			echo "%{$bg[white]$fg[black]%}[change:${changes}]%{$reset_color%}"
+		fi
+	}
+
+	function get_git_commits () {
+		local commits
+		commits=$(git status --short 2> /dev/null | head -1 | grep -o '\[.*\]')
+		if [ "$?" -eq 0 ] ; then
+			echo "%{$bg[red]$fg[black]%}${commits}%{$reset_color%}"
+		fi
+	}
+
+	function get_stash_status () {
+		local item_num=$({git stash list 2> /dev/null || echo -n ''} | wc -l)
+		if [ "$item_num" -ge 1 ] ; then
+			echo "%{$bg[cyan]$fg[black]%}[stash:${item_num}]%{$reset_color%}"
+		fi
+	}
+
+	function get_branch_name () {
+		local branches
+		branches=$(git branch --contains 2> /dev/null)
+		if [ "$?" -ne 0 ] ; then
+			echo '[NO REPO]'
+			exit
+		fi
+		local branch_name=$(echo $branches | cut -d' ' -f2-)
+		echo "%{$bg[green]%}[${branch_name}]%{$reset_color%}"
+	}
+
+	function get_vi_mode () {
+		if [ "$KEYMAP" = 'vicmd' ] ; then
+			echo "%{$bg[red]%}[NORMAL]%{$reset_color%}"
+		else
+			echo "%{$bg[blue]%}[INSERT]%{$reset_color%}"
+		fi
+	}
+
+	# Result
+	echo " | $(get_git_changes)$(get_git_commits)$(get_stash_status)$(get_branch_name)$(get_vi_mode)"
+}
+
+# }}}
+
+# }}}
 # Load zsh plugins {{{
 
 # Start zplug
@@ -245,7 +249,7 @@ zplug 'joel-porquet/zsh-dircolors-solarized'
 zplug load
 
 #}}}
-# Plugin settings {{{
+# After settings {{{
 
 # zsh-dircolors-solarized {{{
 
