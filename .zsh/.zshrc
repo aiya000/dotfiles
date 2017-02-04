@@ -207,12 +207,12 @@ function echo_statuses () {
 
 	function get_branch_name () {
 		local branches
-		branches=$(git branch --contains 2> /dev/null)
+		branches=$(git branch 2> /dev/null)
 		if [ "$?" -ne 0 ] ; then
 			echo '[NO REPO]'
 			exit
 		fi
-		local branch_name=$(echo $branches | cut -d' ' -f2-)
+		local branch_name=$(echo $branches | grep '\*\s.*' | awk '{print $2}')
 		echo "%{$bg[green]%}[${branch_name}]%{$reset_color%}"
 	}
 
