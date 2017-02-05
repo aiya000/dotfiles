@@ -8,6 +8,7 @@ setl wrapscan
 
 nmap             <buffer> H              G-
 nmap             <buffer> gg             gg<CR>
+nmap             <buffer> o              x
 nnoremap         <buffer> L              <NOP>
 nnoremap <silent><buffer> Q              :<C-u>quit<CR>
 nnoremap <silent><buffer> ~              :<C-u>execute 'Explore' expand('~')<CR>
