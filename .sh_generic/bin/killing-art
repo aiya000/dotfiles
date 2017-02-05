@@ -8,12 +8,11 @@
 signal="$1"
 #FIXME: Don't show current process in fzf
 # Show columns of the PID, COMMAND and TTY
-target_pid=$(ps aux | sed 's/\s\+/ /g' | cut -d' ' -f2,11-,7 | sed 's/\?//g' | fzf | cut -d' ' -f1)
+target_pid=$(ps aux | sed 's/\s\+/ /g' | cut -d' ' -f2,11-,7 | sed 's/\?//g' | eval "fzf $FZF_CASUAL_OPTIONS" | cut -d' ' -f1)
 
 if [ "$target_pid" == '' ] ; then
 	echo 'くふん！'
 	exit 1
 else
-	kill $signal $target_pid
-	echo 'やったわ'
+	kill $signal $target_pid && echo 'やったわ'
 fi
