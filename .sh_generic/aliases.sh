@@ -22,7 +22,9 @@ alias_of hoe='stack exec --silent -- hoe'
 # }}}
 # Load ./aliases/** {{{
 
-source $basedir/aliases/functions/*.sh
+for script in `ls $basedir/aliases/functions/*.sh` ; do
+	source "$script"
+done
 source $basedir/aliases/vim.sh
 source $basedir/aliases/neovim.sh
 
