@@ -1,9 +1,7 @@
 #!/bin/sh
+# Any scripts depends this
+[ "$SH_GENERIC_PREMISE_LOADED" -eq 1 ] && return
 
-#
-# If you use the file in this directory,
-# You must load this.
-#
 
 # If I have it command, return 0. otherwise return 1.
 function i_have () {
@@ -30,3 +28,6 @@ function is_your_os_name () {
 		echo 0
 	fi
 }
+
+
+export SH_GENERIC_PREMISE_LOADED=1
