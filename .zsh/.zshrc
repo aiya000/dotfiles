@@ -1,8 +1,5 @@
 #!/usr/bin/env zsh
 
-# Load premised commands
-source ~/.sh_generic/aliases.sh
-
 ###################
 # Check .zprofile #
 ###################
@@ -11,6 +8,9 @@ if [ -z "`alias | grep zsh_pr_loaded`" ] ; then
 	source $ZDOTDIR/.zprofile
 fi
 
+
+# Load premised commands
+source ~/.sh_generic/aliases.sh
 
 ###########################################
 # Configure zsh with the local conditions #
