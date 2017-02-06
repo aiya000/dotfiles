@@ -1,4 +1,5 @@
 #!/bin/sh
+source ~/.sh_generic/premise.sh
 
 #
 # This file define the aliases and functions

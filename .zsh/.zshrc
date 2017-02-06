@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
-source ~/.sh_generic/premise.sh
+
+# Load premised commands
+source ~/.sh_generic/aliases.sh
 
 ###################
 # Check .zprofile #
@@ -142,11 +144,6 @@ source ~/.sh_generic/completion.sh
 ###################
 # Define Commands #
 ###################
-# Load general aliases {{{
-
-source ~/.sh_generic/aliases.sh
-
-# }}}
 # Override default {{{
 
 alias vim=vime
