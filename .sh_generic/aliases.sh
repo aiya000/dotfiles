@@ -83,4 +83,4 @@ alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
 # }}}
 
-export PATH=$PATH:~/.dotfiles/.sh_generic/bin
+export PATH=$PATH:~/.sh_generic/bin
