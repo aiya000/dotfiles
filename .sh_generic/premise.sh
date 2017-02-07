@@ -30,4 +30,4 @@ function is_your_os_name () {
 }
 
 
-export SH_GENERIC_PREMISE_LOADED=1
+SH_GENERIC_PREMISE_LOADED=1
