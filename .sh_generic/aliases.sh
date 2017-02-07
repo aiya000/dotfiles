@@ -70,6 +70,8 @@ alias ll='ls -l --color=auto --group-directories-first'
 alias llh='ls -lh --color=auto --group-directories-first'
 alias lla='ls -la --color=auto --group-directories-first'
 
+alias x=xdg-open
+
 alias date-simple='date +"%Y-%m-%d"'
 alias mount4u="sudo mount -o user=$(whoami),uid=1000,gid=1000,iocharset=utf8"
 
