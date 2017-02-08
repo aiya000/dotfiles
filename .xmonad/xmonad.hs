@@ -91,8 +91,9 @@ myNormalKeys =
   , ((superMask .|. shiftMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-hibernate") -- ^ must add pm-hibernate to sudoers without inputting password
   , ((superMask .|. shiftMask, xK_a), sinkAll)
   , ((superMask .|. shiftMask, xK_i), sendMessage NextLayout)
-  , ((superMask, xK_F1), spawn "xscreensaver-command -lock; sudo pm-suspend") -- ^ must add pm-suspend to sudoers without inputting password
-  , ((superMask, xK_F12), spawn "xscreensaver-command -lock")
+  , ((superMask, xK_F10), spawn "xscreensaver-command -lock")
+  , ((superMask, xK_F11), spawn "xscreensaver-command -lock; sudo pm-suspend") -- ^ must add pm-suspend to sudoers without inputting password
+  , ((superMask, xK_F12), spawn "xscreensaver-command -lock; sudo pm-hibernate")  -- ^ must add pm-hibernate to sudoers without inputting password
   , ((superMask, xK_F4), spawn "light -U 10")
   , ((superMask, xK_F5), spawn "light -A 10")
   , ((superMask, xK_F6), void $ toggleMute)
