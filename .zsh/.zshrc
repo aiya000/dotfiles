@@ -55,7 +55,7 @@ stty start undef
 
 # history-incremental-search-backward uses fzf
 function fzf-history-search-backward () {
-	selected=$(fc -ln 1 | fzf-tmux --no-sort)
+	local selected=$(fc -ln 1 | fzf-tmux --no-sort)
 	BUFFER="$selected"
 	CURSOR=${#BUFFER}
 }
@@ -63,7 +63,12 @@ zle -N fzf-history-search-backward
 
 # Select file on the fzf
 function fzf-path-finder () {
-	selected=$(find . | fzf --multi --no-sort)
+	local current_word="${LBUFFER/* /}${RBUFFER/ */}"
+	current_word="${current_word/\~/$HOME}"
+	if [ "$current_word" = "" ] ; then
+		current_word='.'
+	fi
+	local selected=$(find "$current_word" | fzf --multi --no-sort)
 	zle redisplay
 	BUFFER="${BUFFER}${selected}"
 	CURSOR=${#BUFFER}
