@@ -1,0 +1,9 @@
+#!/bin/sh
+if [ "$1" = "" ] ; then
+	echo "Please specify the line number" > /dev/stderr
+	exit 1
+fi
+
+if [ -p /dev/stdin ] ; then
+	cat - | head -${1} | tail -1
+fi
