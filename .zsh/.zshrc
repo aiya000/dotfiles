@@ -54,21 +54,21 @@ stty start undef
 # Prepare {{{
 
 # history-incremental-search-backward uses fzf
-function fzf-history-incremental-search-backward () {
+function fzf-history-search-backward () {
 	selected=$(fc -ln 1 | fzf-tmux --no-sort)
 	BUFFER="$selected"
 	CURSOR=${#BUFFER}
 }
-zle -N fzf-history-incremental-search-backward
+zle -N fzf-history-search-backward
 
 # Select file on the fzf
-function fzf-file-finder-expand () {
+function fzf-path-finder () {
 	selected=$(find . | fzf --multi --no-sort)
 	zle redisplay
 	BUFFER="${BUFFER}${selected}"
 	CURSOR=${#BUFFER}
 }
-zle -N fzf-file-finder-expand
+zle -N fzf-path-finder
 
 # }}}
 
@@ -80,7 +80,7 @@ bindkey -M vicmd '_'  vi-first-non-blank
 bindkey -M vicmd 'g_' vi-end-of-line
 
 # Emacs nize
-bindkey -M viins '^r' fzf-history-incremental-search-backward
+bindkey -M viins '^r' fzf-history-search-backward
 bindkey -M viins '^n' down-history
 bindkey -M viins '^p' up-history
 bindkey -M viins '^a' beginning-of-line
@@ -95,7 +95,7 @@ bindkey -M viins '^d' delete-char
 bindkey -M vicmd '^v'   edit-command-line
 bindkey -M viins '^l'   vi-cmd-mode
 bindkey -M viins '^]'   clear-screen
-bindkey -M viins '^x^f' fzf-file-finder-expand
+bindkey -M viins '^x^f' fzf-path-finder
 
 # }}}
 # Set language tools {{{
