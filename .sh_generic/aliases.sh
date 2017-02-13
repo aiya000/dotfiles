@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 source ~/.sh_generic/premise.sh
 
 #
@@ -25,7 +25,6 @@ alias_of hoe='stack exec --silent -- hoe'
 for script in `ls $basedir/aliases/functions/*.sh` ; do
 	source "$script"
 done
-source $basedir/aliases/vim.sh
 source $basedir/aliases/neovim.sh
 
 # }}}

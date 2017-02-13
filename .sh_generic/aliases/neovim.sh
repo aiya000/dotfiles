@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-function ndotfile_config () {
+function dotfile_config () {
 	if [ -f "${HOME}/.dotfiles/${1}" ] ; then
 		nvim "${HOME}/.dotfiles/${1}"
 	else
@@ -9,41 +9,41 @@ function ndotfile_config () {
 }
 
 # Startup
-alias nvi='nvim -u NONE --noplugin'
-alias nvime='nvim -c ":bufdo tab split" +q'
-alias nvimless='nvim - -c "setl buftype=nofile nolist | nnoremap <buffer> Q :<C-u>q<CR>"'
-alias nvimls='nvim -c "read! ls" -c "nnoremap <buffer> Q :<C-u>q<CR> | setl nolist buftype=nofile | normal! Gddgg"'
+alias vi='nvim -u NONE --noplugin'
+alias vime='nvim -c ":bufdo tab split" +q'
+alias vimless='nvim - -c "setl buftype=nofile nolist | nnoremap <buffer> Q :<C-u>q<CR>"'
+alias vimls='nvim -c "read! ls" -c "nnoremap <buffer> Q :<C-u>q<CR> | setl nolist buftype=nofile | normal! Gddgg"'
 function vimman () {
 	nvim -c "Man ${1}" +only
 }
 
 # Config
-alias nvimconfig='ndotfile_config .vim/init.vim'
+alias vimconfig='dotfile_config .vim/init.vim'
 
 # Plugin
-alias nvimshell='nvim +VimShell'
-alias nvimconsole='nvim +VimConsoleOpen'
-alias nadrone='nvim +AdroneHome'
+alias vimshell='nvim +VimShell'
+alias vimconsole='nvim +VimConsoleOpen'
+alias adrone='nvim +AdroneHome'
 
-function nvim-session () {
+function vim-session () {
 	nvim -c "UniteSessionLoad ${1}"
 }
 
-function nlingr () {
+function lingr () {
 	nvim -c "J6uil ${1}"
 }
 
 
 ## Twitter
-alias ntwitter='nvim +TweetVimHomeTimeline'
-alias ntweet='nvim +TweetVimSay'
-alias ntwitter-public='nvim +TwitterPublic'
-alias ntweet-public='nvim +TweetPublic'
+alias twitter='nvim +TweetVimHomeTimeline'
+alias tweet='nvim +TweetVimSay'
+alias twitter-public='nvim +TwitterPublic'
+alias tweet-public='nvim +TweetPublic'
 
-function ntwitter-usertimeline() {
+function twitter-usertimeline() {
 	nvim -c "TweetVimUserTimeline ${1}"
 }
 
 ## :terminal
-alias nweechat='nvim -c ":terminal weechat"'
+alias weechat='nvim -c ":terminal weechat"'
 alias nterminal='nvim +terminal'
