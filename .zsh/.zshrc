@@ -140,7 +140,6 @@ bindkey -M viins '^x^f' fzf-path-finder
 [ -d ~/.local ] \
 	&& PATH=$PATH:$HOME/.local/bin
 
-
 # }}}
 # Load completion scripts {{{
 
