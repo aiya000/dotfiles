@@ -154,7 +154,6 @@ source ~/.sh_generic/completion.sh
 ###################
 # Override default {{{
 
-alias vim=vime
 alias nvim=nvime
 
 # }}}
