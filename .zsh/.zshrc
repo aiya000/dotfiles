@@ -68,9 +68,12 @@ function fzf-path-finder () {
 	if [ "$current_word" = "" ] ; then
 		current_word='.'
 	fi
-	local selected=$(find "$current_word" | fzf --multi --no-sort)
+	local selected_histories=$(find "$current_word" | fzf --multi --no-sort)
+	local before_cword_num=$(( ${#BUFFER} - ${#current_word} ))
+	local buffer_="${BUFFER[0, $before_cword_num]}"
+
 	zle redisplay
-	BUFFER="${BUFFER}${selected}"
+	BUFFER="${buffer_}${selected_histories}"
 	CURSOR=${#BUFFER}
 }
 zle -N fzf-path-finder
