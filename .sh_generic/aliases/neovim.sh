@@ -19,9 +19,6 @@ function vimman () {
 # with 'n' prefix
 alias nvime='nvim -c ":bufdo tab split" +q'
 
-# Config
-alias vimconfig='dotfile_config .vim/init.vim'
-
 # Plugin
 alias vimshell='nvim +VimShell'
 alias vimconsole='nvim +VimConsoleOpen'
