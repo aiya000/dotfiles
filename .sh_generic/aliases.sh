@@ -32,6 +32,9 @@ source $basedir/aliases/neovim.sh
 
 if i_have git ; then
 	# Short hands
+	alias _gr='git reset'
+	alias _grh='git reset --hard'
+	alias _grs='git reset --soft'
 	alias g='git'
 	alias ga='git add'
 	alias gaa='git add -A'
