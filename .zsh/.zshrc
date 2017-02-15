@@ -245,7 +245,8 @@ zplug 'aiya000/sh-hereis', use:'{init.sh,hereis.sh,place.sh,edit-places.sh,reloa
 zplug 'aiya000/sh-tovim', as:command, use:tovim
 zplug 'zsh-users/zsh-syntax-highlighting'
 zplug 'joel-porquet/zsh-dircolors-solarized'
-zplug 'hchbaw/auto-fu.zsh'; source $ZPLUG_HOME/repos/hchbaw/auto-fu.zsh/auto-fu.zsh  #NOTE: Can I execute source through zplug ?
+#zplug 'hchbaw/auto-fu.zsh'; source $ZPLUG_HOME/repos/hchbaw/auto-fu.zsh/auto-fu.zsh  #NOTE: Can I execute source through zplug ?
+source ~/Repository/auto-fu.zsh/auto-fu.zsh
 
 # Load plugins
 zplug load
@@ -269,7 +270,6 @@ zle -N zle-line-init
 # }}}
 
 # }}}
-
 
 # For each environment
 if [ $in_linux -eq 1 ] ; then
