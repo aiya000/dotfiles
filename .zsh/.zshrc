@@ -21,7 +21,7 @@ in_linux=$(is_your_os_name Linux)
 in_cygwin=$(is_your_os_name Cygwin)
 
 # }}}
-# Set the zsh options {{{
+# Set zsh options {{{
 
 # Use modules
 autoload -U colors            && colors
@@ -49,7 +49,7 @@ stty stop  undef
 stty start undef
 
 # }}}
-# Set the zsh key-mappings {{{
+# Set zsh key-mappings {{{
 
 # Prepare {{{
 
