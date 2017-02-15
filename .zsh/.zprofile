@@ -76,6 +76,10 @@ export SHELL_KAWAII_FAKE_HOSTNAME='aiya000' # ミ☆   on me!
 export SHELL_KAWAII_CLI_TO_LOW=1
 export SHELL_KAWAII_USER_DELIMITER='>>>'
 export SHELL_KAWAII_MORE_PROMPT_COMMAND=echo_statuses  # echo_statuses will be defined by .zshrc
+
+# auto-fu.zsh
+export AUTO_FU_NOCP=1
+
 # }}}
 
 
