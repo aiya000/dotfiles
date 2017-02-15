@@ -49,63 +49,6 @@ stty stop  undef
 stty start undef
 
 # }}}
-# Set zsh key-mappings {{{
-
-# Prepare {{{
-
-# history-incremental-search-backward uses fzf
-function fzf-history-search-backward () {
-	local selected=$(fc -ln 1 | fzf-tmux --no-sort)
-	BUFFER="$selected"
-	CURSOR=${#BUFFER}
-}
-zle -N fzf-history-search-backward
-
-# Select file on the fzf
-function fzf-path-finder () {
-	local current_word="${LBUFFER/* /}${RBUFFER/ */}"
-	current_word="${current_word/\~/$HOME}"
-	if [ "$current_word" = "" ] ; then
-		current_word='.'
-	fi
-	local selected_histories=$(find "$current_word" | fzf --multi --no-sort)
-	local before_cword_num=$(( ${#BUFFER} - ${#current_word} ))
-	local buffer_="${BUFFER[0, $before_cword_num]}"
-
-	zle redisplay
-	BUFFER="${buffer_} ${selected_histories}"
-	CURSOR=${#BUFFER}
-}
-zle -N fzf-path-finder
-
-# }}}
-
-# Use viins
-bindkey -v
-
-# Vim nize
-bindkey -M vicmd '_'  vi-first-non-blank
-bindkey -M vicmd 'g_' vi-end-of-line
-
-# Emacs nize
-bindkey -M viins '^r' fzf-history-search-backward
-bindkey -M viins '^n' down-history
-bindkey -M viins '^p' up-history
-bindkey -M viins '^a' beginning-of-line
-bindkey -M viins '^e' end-of-line
-bindkey -M viins '^b' backward-char
-bindkey -M viins '^f' forward-char
-bindkey -M viins '^k' kill-line
-bindkey -M viins '^u' backward-kill-line
-bindkey -M viins '^d' delete-char
-
-# My taste
-bindkey -M vicmd '^v'   edit-command-line
-bindkey -M viins '^l'   vi-cmd-mode
-bindkey -M viins '^]'   clear-screen
-bindkey -M viins '^x^f' fzf-path-finder
-
-# }}}
 # Set zle widgets {{{
 
 function zle-line-init {
@@ -286,6 +229,60 @@ zplug load
 
 # Use dircolors.ansi-light thema
 setupsolarized dircolors.ansi-light
+
+# }}}
+# Set zsh key-mappings {{{
+
+# Prepare {{{
+
+# history-incremental-search-backward uses fzf
+function fzf-history-search-backward () {
+	local selected=$(fc -ln 1 | fzf-tmux --no-sort)
+	BUFFER="$selected"
+	CURSOR=${#BUFFER}
+}
+zle -N fzf-history-search-backward
+
+# Select file on the fzf
+function fzf-path-finder () {
+	local current_word="${LBUFFER/* /}${RBUFFER/ */}"
+	current_word="${current_word/\~/$HOME}"
+	if [ "$current_word" = "" ] ; then
+		current_word='.'
+	fi
+	local selected_histories=$(find "$current_word" | fzf --multi --no-sort)
+	local before_cword_num=$(( ${#BUFFER} - ${#current_word} ))
+	local buffer_="${BUFFER[0, $before_cword_num]}"
+
+	zle redisplay
+	BUFFER="${buffer_} ${selected_histories}"
+	CURSOR=${#BUFFER}
+}
+zle -N fzf-path-finder
+
+# }}}
+
+# Vim nize
+bindkey -M afu-vicmd '_'  afu-vicmd+vi-first-non-blank
+bindkey -M afu-vicmd 'g_' afu-vicmd+vi-end-of-line
+
+# Emacs nize insert mode
+bindkey -M afu '^r' fzf-history-search-backward
+bindkey -M afu '^n' afu+down-history
+bindkey -M afu '^p' afu+up-history
+bindkey -M afu '^a' afu+beginning-of-line
+bindkey -M afu '^e' afu+end-of-line
+bindkey -M afu '^b' afu+backward-char
+bindkey -M afu '^f' afu+forward-char
+bindkey -M afu '^k' afu+kill-line
+bindkey -M afu '^u' afu+backward-kill-line
+bindkey -M afu '^d' afu+delete-char
+
+# My taste
+bindkey -M afu-vicmd '^v' edit-command-line
+bindkey -M afu '^l'   afu+vi-cmd-mode
+bindkey -M afu '^]'   clear-screen
+bindkey -M afu '^x^f' fzf-path-finder
 
 # }}}
 
