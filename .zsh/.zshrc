@@ -267,6 +267,19 @@ function zle-line-init () {
 }
 zle -N zle-line-init
 
+# Fix the problem of when the directory same as the subcommand name was auto suggested
+# Example {{{
+# $ ls
+# src app test
+# $ stack test/
+#             ^ inserted automatically
+# File does not exist or is not a regular file `test/'
+# }}}
+function zle-line-finish {
+	BUFFER="$(echo $BUFFER | sed -r 's/(.*)\/$/\1/')"
+}
+zle -N zle-line-finish
+
 # }}}
 
 # }}}
