@@ -247,6 +247,7 @@ source ~/Repository/zsh-shell-kawaii/zsh-shell-kawaii.zsh
 zplug 'aiya000/sh-tovim', as:command, use:tovim
 zplug 'zsh-users/zsh-syntax-highlighting'
 zplug 'joel-porquet/zsh-dircolors-solarized'
+zplug 'hchbaw/auto-fu.zsh'; source $ZPLUG_HOME/repos/hchbaw/auto-fu.zsh/auto-fu.zsh  #NOTE: Can I execute source through zplug ?
 
 # Load plugins
 zplug load
@@ -258,6 +259,14 @@ zplug load
 
 # Use dircolors.ansi-light thema
 setupsolarized dircolors.ansi-light
+
+# }}}
+# auto-fu.zsh {{{
+
+function zle-line-init () {
+	auto-fu-init
+}
+zle -N zle-line-init
 
 # }}}
 
