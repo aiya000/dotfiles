@@ -73,7 +73,7 @@ function fzf-path-finder () {
 	local buffer_="${BUFFER[0, $before_cword_num]}"
 
 	zle redisplay
-	BUFFER="${buffer_}${selected_histories}"
+	BUFFER="${buffer_} ${selected_histories}"
 	CURSOR=${#BUFFER}
 }
 zle -N fzf-path-finder
