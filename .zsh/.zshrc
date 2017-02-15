@@ -109,11 +109,7 @@ bindkey -M viins '^x^f' fzf-path-finder
 # Set zle widgets {{{
 
 function zle-line-init {
-	# Don't do it if $KEYMAP is other than viins
-	if [ "$KEYMAP" = "viins" ] ; then
-		auto-fu-init
-	fi
-
+	auto-fu-init
 	shell_kawaii_build_prompt
 	zle reset-prompt
 }
@@ -252,8 +248,8 @@ function echo_statuses () {
 		echo "%{$bg[green]%}[${branch_name}]%{$reset_color%}"
 	}
 
-	function get_vi_mode () {
-		if [ "$KEYMAP" = 'vicmd' ] ; then
+	function get_afu_vi_mode () {
+		if [ "$KEYMAP" = 'afu-vicmd' ] ; then
 			echo "%{$bg[red]%}[NORMAL]%{$reset_color%}"
 		else
 			echo "%{$bg[blue]%}[INSERT]%{$reset_color%}"
@@ -261,7 +257,7 @@ function echo_statuses () {
 	}
 
 	# Result
-	echo " | $(get_git_changes)$(get_git_commits)$(get_stash_status)$(get_branch_name)$(get_vi_mode)"
+	echo " | $(get_git_changes)$(get_git_commits)$(get_stash_status)$(get_branch_name)$(get_afu_vi_mode)"
 }
 
 # }}}
