@@ -106,6 +106,39 @@ bindkey -M viins '^]'   clear-screen
 bindkey -M viins '^x^f' fzf-path-finder
 
 # }}}
+# Set zle widgets {{{
+
+function zle-line-init {
+	# Don't do it if $KEYMAP is other than viins
+	if [ "$KEYMAP" = "viins" ] ; then
+		auto-fu-init
+	fi
+
+	shell_kawaii_build_prompt
+	zle reset-prompt
+}
+zle -N zle-line-init
+
+function zle-keymap-select {
+	shell_kawaii_build_prompt
+	zle reset-prompt
+}
+zle -N zle-keymap-select
+
+# Fix the problem of when the directory same as the subcommand name was auto suggested by auto-fu.zsh
+# Example {{{
+# $ ls
+# src app test
+# $ stack test/
+#             ^ inserted automatically
+# File does not exist or is not a regular file `test/'
+# }}}
+function zle-line-finish {
+	BUFFER="$(echo $BUFFER | sed -r 's/(.*)\/$/\1/')"
+}
+zle -N zle-line-finish
+
+# }}}
 # Set language tools {{{
 
 # stack
@@ -258,27 +291,6 @@ zplug load
 
 # Use dircolors.ansi-light thema
 setupsolarized dircolors.ansi-light
-
-# }}}
-# auto-fu.zsh {{{
-
-function zle-line-init () {
-	auto-fu-init
-}
-zle -N zle-line-init
-
-# Fix the problem of when the directory same as the subcommand name was auto suggested
-# Example {{{
-# $ ls
-# src app test
-# $ stack test/
-#             ^ inserted automatically
-# File does not exist or is not a regular file `test/'
-# }}}
-function zle-line-finish {
-	BUFFER="$(echo $BUFFER | sed -r 's/(.*)\/$/\1/')"
-}
-zle -N zle-line-finish
 
 # }}}
 
