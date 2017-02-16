@@ -1,4 +1,5 @@
 #!/bin/bash
+# This makes the aliases with both vim and neovim
 
 function dotfile_config () {
 	if [ -f "${HOME}/.dotfiles/${1}" ] ; then
