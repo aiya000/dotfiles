@@ -262,7 +262,7 @@ zle -N fzf-path-finder
 
 # Emacs nize insert-mode
 bindkey -M afu '^r' fzf-history-search-backward
-bindkey -M afu '^n' down-history
+bindkey -M afu '^n' down-line-or-history
 bindkey -M afu '^p' up-line-or-history
 bindkey -M afu '^a' beginning-of-line
 bindkey -M afu '^e' end-of-line
@@ -271,6 +271,7 @@ bindkey -M afu '^f' forward-char
 bindkey -M afu '^k' kill-line
 bindkey -M afu '^u' backward-kill-line
 bindkey -M afu '^d' delete-char
+bindkey -M afu '^w' vi-backward-kill-word
 
 # Add needed vim like keys
 bindkey -M afu '^['   afu+vi-cmd-mode
