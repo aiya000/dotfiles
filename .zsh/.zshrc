@@ -192,11 +192,10 @@ function echo_statuses () {
 	}
 
 	function get_afu_vi_mode () {
-		if [ "$KEYMAP" = 'afu-vicmd' ] ; then
-			echo "%{$bg[red]%}[NORMAL]%{$reset_color%}"
-		else
-			echo "%{$bg[blue]%}[INSERT]%{$reset_color%}"
-		fi
+		local cmd_mode_name='afu-vicmd'
+		local keymap_name="$(echo $KEYMAP | sed -r 's/^(.)/\U\1/')"
+		local color; [ "$KEYMAP" = "$cmd_mode_name" ] && color=red || color=blue
+		echo "%{$bg[${color}]%}[${keymap_name}]%{$reset_color%}"
 	}
 
 	# Result
