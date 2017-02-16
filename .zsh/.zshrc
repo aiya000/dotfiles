@@ -262,20 +262,20 @@ zle -N fzf-path-finder
 # }}}
 
 # Vim nize
-bindkey -M afu-vicmd '_'  afu-vicmd+vi-first-non-blank
-bindkey -M afu-vicmd 'g_' afu-vicmd+vi-end-of-line
+bindkey -M afu-vicmd '_'  vi-first-non-blank
+bindkey -M afu-vicmd 'g_' vi-end-of-line
 
 # Emacs nize insert mode
 bindkey -M afu '^r' fzf-history-search-backward
-bindkey -M afu '^n' afu+down-history
-bindkey -M afu '^p' afu+up-history
-bindkey -M afu '^a' afu+beginning-of-line
-bindkey -M afu '^e' afu+end-of-line
-bindkey -M afu '^b' afu+backward-char
-bindkey -M afu '^f' afu+forward-char
-bindkey -M afu '^k' afu+kill-line
-bindkey -M afu '^u' afu+backward-kill-line
-bindkey -M afu '^d' afu+delete-char
+bindkey -M afu '^n' down-history
+bindkey -M afu '^p' up-line-or-history
+bindkey -M afu '^a' beginning-of-line
+bindkey -M afu '^e' end-of-line
+bindkey -M afu '^b' backward-char
+bindkey -M afu '^f' forward-char
+bindkey -M afu '^k' kill-line
+bindkey -M afu '^u' backward-kill-line
+bindkey -M afu '^d' delete-char
 
 # My taste
 bindkey -M afu-vicmd '^v' edit-command-line
