@@ -43,6 +43,17 @@ function twitter-usertimeline() {
 	nvim -c "TweetVimUserTimeline ${1}"
 }
 
+function tweet-say() {
+	yes | vim -c "TweetVimCommandSay ${1}" +q
+}
+
+function tweet-public-say() {
+	yes | vim \
+		-c "TweetVimSwitchAccount public_ai000ya" \
+		-c "TweetVimCommandSay ${1}" \
+		+q
+}
+
 ## :terminal
 alias weechat='nvim -c ":terminal weechat"'
 alias nterminal='nvim +terminal'
