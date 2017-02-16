@@ -222,8 +222,7 @@ source ~/Repository/auto-fu.zsh/auto-fu.zsh  #zplug 'hchbaw/auto-fu.zsh'; source
 zplug load
 
 #}}}
-# After settings {{{
-
+## After settings
 # zsh-dircolors-solarized {{{
 
 # Use dircolors.ansi-light thema
@@ -261,11 +260,7 @@ zle -N fzf-path-finder
 
 # }}}
 
-# Vim nize
-bindkey -M afu-vicmd '_'  vi-first-non-blank
-bindkey -M afu-vicmd 'g_' vi-end-of-line
-
-# Emacs nize insert mode
+# Emacs nize insert-mode
 bindkey -M afu '^r' fzf-history-search-backward
 bindkey -M afu '^n' down-history
 bindkey -M afu '^p' up-line-or-history
@@ -277,13 +272,17 @@ bindkey -M afu '^k' kill-line
 bindkey -M afu '^u' backward-kill-line
 bindkey -M afu '^d' delete-char
 
-# My taste
-bindkey -M afu-vicmd '^v' edit-command-line
+# Add needed vim like keys
+bindkey -M afu '^['   afu+vi-cmd-mode
+bindkey -M afu '^X^V' afu+vi-cmd-mode
+bindkey -M afu-vicmd '_'  vi-first-non-blank
+bindkey -M afu-vicmd 'g_' vi-end-of-line
+
+# ☆
 bindkey -M afu '^l'   afu+vi-cmd-mode
 bindkey -M afu '^]'   clear-screen
 bindkey -M afu '^x^f' fzf-path-finder
-
-# }}}
+bindkey -M afu-vicmd '^v' edit-command-line
 
 # }}}
 
