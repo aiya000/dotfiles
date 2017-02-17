@@ -54,7 +54,7 @@ zle -N fzf-history-search-backward
 function fzf-path-finder () {
 	local current_word="${LBUFFER/* /}${RBUFFER/ */}"
 	current_word="${current_word/\~/$HOME}"
-	if [ "$current_word" = "" ] ; then
+	if [ -z "$current_word" ] ; then
 		current_word='.'
 	fi
 	local selected_histories=$(find "$current_word" | fzf --multi --no-sort)
