@@ -7,7 +7,7 @@ source ~/.sh_generic/premise.sh
 # and you can load .bashrc or another shell rc file, maybe
 #
 
-basedir=$(dirname $0)
+__aliases_basedir=$(dirname $0)
 
 # Override existed name {{{
 
@@ -22,10 +22,10 @@ alias_of hoe='stack exec --silent -- hoe'
 # }}}
 # Load ./aliases/** {{{
 
-for script in `ls $basedir/aliases/functions/*.sh` ; do
+for script in `ls $__aliases_basedir/aliases/functions/*.sh` ; do
 	source "$script"
 done
-source $basedir/aliases/vim.sh
+source $__aliases_basedir/aliases/vim.sh
 
 # }}}
 # Git {{{
