@@ -24,10 +24,10 @@ in_cygwin=$(is_your_os_name Cygwin)
 # Set zsh options {{{
 
 # Use modules
-autoload -U colors            && colors
-autoload -U compinit          && compinit
-autoload -U bashcompinit      && bashcompinit
-autoload -U edit-command-line && zle -N edit-command-line
+autoload -U colors       && colors
+autoload -U compinit     && compinit
+autoload -U bashcompinit && bashcompinit
+autoload -U edit-command-line
 
 # Use select menu in the completion
 zstyle ':completion:*' menu select
@@ -47,35 +47,6 @@ setopt ignore_eof
 # Don't use screen stopping
 stty stop  undef
 stty start undef
-
-# }}}
-# Set zle widgets {{{
-
-function zle-line-init {
-	auto-fu-init
-	shell_kawaii_build_prompt
-	zle reset-prompt
-}
-zle -N zle-line-init
-
-function zle-keymap-select {
-	shell_kawaii_build_prompt
-	zle reset-prompt
-}
-zle -N zle-keymap-select
-
-# Fix the problem of when the directory same as the subcommand name was auto suggested by auto-fu.zsh
-# Example {{{
-# $ ls
-# src app test
-# $ stack test/
-#             ^ inserted automatically
-# File does not exist or is not a regular file `test/'
-# }}}
-function zle-line-finish {
-	BUFFER="$(echo $BUFFER | sed -r 's/(.*)\/$/\1/')"
-}
-zle -N zle-line-finish
 
 # }}}
 # Set language tools {{{
@@ -227,6 +198,38 @@ zplug load
 
 # Use dircolors.ansi-light thema
 setupsolarized dircolors.ansi-light
+
+# }}}
+# Register zle widgets {{{
+
+zle -N edit-command-line
+zle -N zle-keymap-select auto-fu-zle-keymap-select
+
+function zle-line-init {
+	auto-fu-init
+	shell_kawaii_build_prompt
+	zle reset-prompt
+}
+zle -N zle-line-init
+
+function zle-keymap-select {
+	shell_kawaii_build_prompt
+	zle reset-prompt
+}
+zle -N zle-keymap-select
+
+# Fix the problem of when the directory same as the subcommand name was auto suggested by auto-fu.zsh
+# Example {{{
+# $ ls
+# src app test
+# $ stack test/
+#             ^ inserted automatically
+# File does not exist or is not a regular file `test/'
+# }}}
+function zle-line-finish {
+	BUFFER="$(echo $BUFFER | sed -r 's/(.*)\/$/\1/')"
+}
+zle -N zle-line-finish
 
 # }}}
 # Set zsh key-mappings {{{
