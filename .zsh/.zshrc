@@ -93,9 +93,10 @@ source ~/.sh_generic/completion.sh
 ###################
 # Define Commands #
 ###################
-# Override default {{{
+# Shortcut {{{
 
 alias nvim=nvime
+alias cdp=cd-finddir
 
 # }}}
 # Others {{{

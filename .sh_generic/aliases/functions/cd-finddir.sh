@@ -1,5 +1,5 @@
 #!/bin/sh
-function cdp () {
+function cd-finddir () {
 	local depth=$([ -n "$1" ] && echo "$1" || echo 3)
 
 	# Sort by the depth of the path
