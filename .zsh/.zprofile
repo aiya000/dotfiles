@@ -8,9 +8,9 @@
 export ZDOTDIR=~/.zsh
 export HISTFILE=$ZDOTDIR/.zsh_history
 export HISTSIZE=1000000
-export SAVEHIST=1000000
-export HISTTIMEFORMAT='%Y/%m/%d %H:%M '
 export HISTIGNORE="*.zsh_history*:*mount*-o*password=*"
+export SAVEHIST=1000000
+export TIMEFMT='%Y/%m/%d %H:%M '
 
 # }}}
 # Reset $PATH {{{
