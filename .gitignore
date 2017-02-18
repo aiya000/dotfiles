@@ -3,6 +3,7 @@
 .vim/bundle/**
 .vim/doc/tags
 .vim/doc/dein.txt
+.vim/doc/matchit.txt
 .vim/resource/Java  # :Unite javasrc
 
 # NeoVim

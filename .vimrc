@@ -207,7 +207,7 @@ if !exists('loaded_matchit')
 	" Get help of matchit.vim
 	let s:matchit_doc_from = expand('$VIMRUNTIME/macros/matchit.txt')
 	let s:matchit_doc_to   = g:vimrc['vim_home'] . '/doc/matchit.txt'
-	if !filereadable(s:matchit_doc_to)
+	if filereadable(s:matchit_doc_from) && !filereadable(s:matchit_doc_to)
 		call writefile(readfile(s:matchit_doc_from), s:matchit_doc_to)
 	endif
 	unlet s:matchit_doc_to s:matchit_doc_from
