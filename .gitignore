@@ -2,6 +2,7 @@
 .vim/.netrwhist
 .vim/bundle/**
 .vim/doc/tags
+.vim/doc/dein.txt
 .vim/resource/Java  # :Unite javasrc
 
 # NeoVim

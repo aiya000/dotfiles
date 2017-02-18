@@ -148,14 +148,15 @@ if g:vimrc['is_kaoriya'] && g:vimrc['is_windows']
 endif
 
 " }}}
-" Startup dein.vim {{{
+" Prepare dein.vim {{{
 
+" Start dein.vim
 let s:dein_dirname = g:vimrc['vim_home'] . '/bundle/repos/github.com/Shougo/dein.vim'
 let &runtimepath   = &runtimepath . ',' . s:dein_dirname
 
 try
 	call dein#begin(expand('~/.vim/bundle'))
-catch /E117/  " dein.vim not found
+catch /E117/  " If dein.vim is not found
 	try
 		call vimrc#fetch_dein(s:dein_dirname)
 		call dein#begin(expand('~/.vim/bundle'))
@@ -167,6 +168,15 @@ catch /E117/  " dein.vim not found
 		call vimrc#echo_error('>> Error build vim environment <<')
 	endtry
 endtry
+
+" Copy the dein.vim document
+let s:dein_doc_from = s:dein_dirname . '/doc/dein.txt'
+let s:dein_doc_to   = g:vimrc['vim_home'] . '/doc/dein.txt'
+if filereadable(s:dein_doc_from) && !filereadable(s:dein_doc_to)
+	" ~/.vim/doc will be :helptags automatically
+	call writefile(readfile(s:dein_doc_from), s:dein_doc_to)
+endif
+unlet s:dein_doc_from s:dein_doc_to
 
 unlet s:dein_dirname
 
