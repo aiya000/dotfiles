@@ -8,7 +8,7 @@
 signal="$1"
 #FIXME: Don't show current process in fzf
 # Show columns of the PID, COMMAND and TTY
-target_pids=$(ps aux | sed 's/\s\+/ /g' | cut -d' ' -f2,11-,7 | sed 's/\?//g' | grep -v '^PID TTY COMMAND$' | eval "fzf --multi $FZF_CASUAL_OPTIONS" | cut -d' ' -f1)
+target_pids=$(ps aux | sed 's/\s\+/ /g' | cut -d' ' -f2,11-,7 | sed 's/\?//g' | grep -v '^PID TTY COMMAND$' | eval "fzf --multi $UNCO_FZF_OPTIONS" | cut -d' ' -f1)
 
 if [ "$target_pids" == '' ] ; then
 	echo 'くふん！'
