@@ -127,7 +127,7 @@ source $ZPLUG_HOME/init.zsh
 # zsh-shell-kawaii {{{
 
 # for $SHELL_KAWAII_MORE_PROMPT_COMMAND
-function echo_statuses () {
+function show_cmdline_states () {
 	function get_git_changes () {
 		# Subtract a head line minute
 		local changes=$(( $(git status --short 2> /dev/null | wc -l) - 1 ))

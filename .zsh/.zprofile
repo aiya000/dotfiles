@@ -70,7 +70,7 @@ export SHELL_KAWAII_FAKE_USERNAME='☆ミ'    # Dancing stars
 export SHELL_KAWAII_FAKE_HOSTNAME='aiya000' # ミ☆   on me!
 export SHELL_KAWAII_CLI_TO_LOW=1
 export SHELL_KAWAII_USER_DELIMITER='>>>'
-export SHELL_KAWAII_MORE_PROMPT_COMMAND=echo_statuses  # echo_statuses will be defined by .zshrc
+export SHELL_KAWAII_MORE_PROMPT_COMMAND=show_cmdline_states  # show_cmdline_states will be defined by .zshrc
 export SHELL_KAWAII_AUTO_SET_ZLE_WIDGETS=0
 
 # auto-fu.zsh
