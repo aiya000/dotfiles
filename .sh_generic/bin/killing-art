@@ -1,14 +1,10 @@
 #!/bin/sh
-# ＜ キリングアート！
 # kill with fzf
-
-# 1    2   3    4    5   6   7   8    9     10   11-
-# USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
+# ＜ キリングアート！
 
 signal="$1"
 #FIXME: Don't show current process in fzf
-# Show columns of the PID, COMMAND and TTY
-target_pids=$(ps aux | sed 's/\s\+/ /g' | cut -d' ' -f2,11-,7 | sed 's/\?//g' | grep -v '^PID TTY COMMAND$' | eval "fzf --multi $UNCO_FZF_OPTIONS" | cut -d' ' -f1)
+target_pids=$(ps -ax --format='pid,tty,command' | awk 'NR!=1 {print}' | fzf --multi $UNCO_FZF_OPTIONS | cut -d' ' -f1)
 
 if [ "$target_pids" == '' ] ; then
 	echo 'くふん！'
