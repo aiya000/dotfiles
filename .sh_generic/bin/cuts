@@ -1,3 +1,0 @@
-#!/bin/sh
-# 'cuts' means 'cut by space
-sed -r 's/\s+/ /g' | cut -d ' ' -f $1
