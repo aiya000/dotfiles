@@ -1,15 +1,7 @@
 #!/bin/sh
 # Notify an exit code by espeak
 
-function _espeak () {
-	espeak "$1" -s 150 -v +fex 2> /dev/null \
-		|| espeak "$1" -s 150 2> /dev/null
-}
-
-exit_code=$?
-if [ $exit_code -eq 0 ] ; then
-	_espeak 'Succeed!'
-else
-	_espeak 'Exit with the error'
-fi
-exit $exit_code
+exit_status=$?
+[ "$exit_status" -eq 0 ] && message='Succeed!' || message='Exit with the error'
+espeak "$message" $ESPEAK_CASUAL_OPTIONS 2> /dev/null
+exit $exit_status
