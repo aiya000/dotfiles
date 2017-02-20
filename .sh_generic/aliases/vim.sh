@@ -56,5 +56,5 @@ function tweet-public-say() {
 }
 
 ## :terminal
-alias weechat='nvim -c ":terminal weechat"'
+alias nweechat='nvim -c ":terminal weechat"'
 alias nterminal='nvim +terminal'
