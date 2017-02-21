@@ -842,7 +842,7 @@ CmdCnoreabbr DeinUpdateLog echo dein#get_updates_log()
 CmdCnoreabbr Ghci VimShellInteractive stack exec ghci
 
 " Others
-CmdCnoreabbr Gist Gista post
+CmdCnoreabbr Gist Gista post --stay
 CmdCnoreabbr GStatus Gina status
 CmdCnoreabbr GLog GitLogViewer -500
 CmdCnoreabbr GDiff GitDiffViewer
