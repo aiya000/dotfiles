@@ -41,6 +41,7 @@ if i_have git ; then
 	alias gap='git add -p'
 	alias gb='git branch'
 	alias gbd='git branch --delete'
+	alias gbm='git branch -m'
 	alias gc='git commit --verbose'
 	alias gcam='git commit --verbose --amend'
 	alias gcm='git commit -m'
