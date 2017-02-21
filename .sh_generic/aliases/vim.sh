@@ -9,30 +9,33 @@ function dotfile_config () {
 	fi
 }
 
-# Startup
-alias vi='nvim -u NONE --noplugin'
+# Vim
+alias vi='vim -u NONE --noplugin'
+alias vime='vim -c ":bufdo tab split" +q'
+function vim-session () {
+	vim -c "UniteSessionLoad ${1}"
+}
+
+
+# NeoVim
+alias nvime='nvim -c ":bufdo tab split" +q'
+function nvim-session () {
+	nvim -c "UniteSessionLoad ${1}"
+}
+
 alias vimless='nvim - -c "setl buftype=nofile nolist | nnoremap <buffer> Q :<C-u>q<CR>"'
 alias vimls='nvim -c "read! ls" -c "nnoremap <buffer> Q :<C-u>q<CR> | setl nolist buftype=nofile | normal! Gddgg"'
 function vimman () {
 	nvim -c "Man ${1}" +only
 }
 
-# with 'n' prefix
-alias nvime='nvim -c ":bufdo tab split" +q'
-
 # Plugin
 alias vimshell='nvim +VimShell'
 alias vimconsole='nvim +VimConsoleOpen'
 alias adrone='nvim +AdroneHome'
-
-function vim-session () {
-	nvim -c "UniteSessionLoad ${1}"
-}
-
 function lingr () {
 	nvim -c "J6uil ${1}"
 }
-
 
 ## Twitter
 alias twitter='nvim +TweetVimHomeTimeline'
