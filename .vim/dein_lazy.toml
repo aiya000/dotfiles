@@ -224,3 +224,7 @@ on_cmd = [
 [[plugins]]
 repo   = 'lambdalisue/gina.vim'
 on_cmd = 'Gina'
+
+[[plugins]]
+repo  = 'itchyny/vim-haskell-indent'
+on_ft = 'haskell'
