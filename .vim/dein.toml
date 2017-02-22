@@ -36,9 +36,6 @@ repo = 'osyo-manga/vim-anzu'
 repo = 'osyo-manga/vim-over'
 
 [[plugins]]
-repo = 'vim-jp/vimdoc-ja'
-
-[[plugins]]
 repo = 'h1mesuke/vim-alignta'
 
 [[plugins]]
