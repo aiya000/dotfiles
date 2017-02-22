@@ -163,7 +163,10 @@ on_ft = [
 
 [[plugins]]
 repo  = 'thinca/vim-ft-clojure'
-on_ft = 'clojure'
+on_ft = [
+    'clojure',
+    'lisp'  # Use this syntax in ft lisp, see ~/.vim/syntax/lisp.vim
+]
 
 [[plugins]]
 repo   = 'lambdalisue/vim-gista'
