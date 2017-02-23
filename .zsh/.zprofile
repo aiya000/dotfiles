@@ -6,9 +6,9 @@
 # Set the zsh variables {{{
 
 export ZDOTDIR=~/.zsh
-export HISTFILE=$ZDOTDIR/.zsh_history
+export HISTFILE=$ZDOTDIR/history
 export HISTSIZE=1000000
-export HISTIGNORE="*.zsh_history*:*mount*-o*password=*"
+export HISTIGNORE="*mount*-o*password=*"
 export SAVEHIST=1000000
 export TIMEFMT='%Y/%m/%d %H:%M '
 
