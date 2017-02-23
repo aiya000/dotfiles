@@ -85,13 +85,13 @@ bindkey -M afu '^d' delete-char
 bindkey -M afu '^w' vi-backward-kill-word
 
 # Add needed vim like keys
-bindkey -M afu '^['   afu+vi-cmd-mode
-bindkey -M afu '^X^V' afu+vi-cmd-mode
-bindkey -M afu-vicmd '_'  vi-first-non-blank
-bindkey -M afu-vicmd 'g_' vi-end-of-line
+bindkey -M afu '^['   vi-cmd-mode
+bindkey -M afu '^X^V' vi-cmd-mode
+bindkey -M vicmd '_'  vi-first-non-blank
+bindkey -M vicmd 'g_' vi-end-of-line
 
 # ☆
-bindkey -M afu '^l'   afu+vi-cmd-mode
+bindkey -M afu '^l'   vi-cmd-mode
 bindkey -M afu '^]'   clear-screen
 bindkey -M afu '^x^f' fzf-path-finder
-bindkey -M afu-vicmd '^v' edit-command-line
+bindkey -M vicmd '^v' edit-command-line
