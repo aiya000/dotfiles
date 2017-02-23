@@ -15,12 +15,6 @@ source ~/.sh_generic/aliases.sh
 ###########################################
 # Configure zsh with the local conditions #
 ###########################################
-# Define global variables {{{
-
-in_linux=$(is_your_os_name Linux)
-in_cygwin=$(is_your_os_name Cygwin)
-
-# }}}
 # Set zsh options {{{
 
 # Use modules
@@ -209,13 +203,16 @@ setupsolarized dircolors.ansi-light
 source $ZDOTDIR/.zshrc.keymap
 
 # For each environment
-if [ $in_linux -eq 1 ] ; then
+case $(uname) in
+Linux )
 	source ~/.sh_generic/linux.sh
-elif [ $in_cygwin -eq 1 ] ; then
+	;;
+Cygwin )
 	source ~/.sh_generic/cygwin.sh
 	HOME=/home/$USER
 	PATH=$PATH:/cygdrive/c/Windows/system32:/cygdrive/c/Windows
-fi
+	;;
+esac
 
 # If it exists, load environment config
 if [ -f ~/.zshrc_env ] ; then
