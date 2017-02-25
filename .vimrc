@@ -1049,8 +1049,8 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-i> :<C-u>call vimrc#keys#toggle_indent_guides()<CR>
 
 	" neosnippet.vim
-	autocmd User MyVimRc imap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
-	autocmd User MyVimRc smap <expr> <C-s> neosnippet#expandable() ? '<Plug>(neosnippet_expand)' : '<Plug>(neosnippet_jump)'
+	autocmd User MyVimRc imap <C-s> <Plug>(neosnippet_jump_or_expand)
+	autocmd User MyVimRc smap <C-s> <Plug>(neosnippet_jump_or_expand)
 
 	" neocomplete.vim
 	autocmd User MyVimRc inoremap <silent> <C-k><C-i> <C-o>:NeoCompleteToggle<CR>
