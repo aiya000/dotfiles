@@ -15,8 +15,6 @@ alias ls='ls --color=auto --group-directories-first'
 alias mv='mv -i'
 alias cp='cp -i'
 alias_of mysql='mysql --pager="less -r -S -n -i -F -X"'
-alias_of fzf="fzf $UNCO_FZF_OPTIONS"
-alias_of fzf-tmux="fzf-tmux $UNCO_FZF_OPTIONS"
 alias_of hoe='stack exec --silent -- hoe'
 
 # }}}

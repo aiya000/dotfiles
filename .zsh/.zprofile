@@ -40,15 +40,11 @@ export VISUAL=nvim
 export PAGER='nvim - +PAGER -c "setl nonu nornu ft=vim-pager | only"'
 export MANPAGER='nvim - +MANPAGER -c "setl nonu nornu ft=vim-pager | only"'
 
-# Lice copylight user
-export LICE_USER=aiya000
-
-# Languages
+# Others
 export GOPATH=~/.GoPath
-
-# These are injected to .sh_generic/*
-export UNCO_FZF_OPTIONS='--tac --cycle --bind=ctrl-j:accept,ctrl-k:kill-line'
+export LICE_USER=aiya000
 export UNCO_ESPEAK_OPTIONS='-s 150 -v +fex'
+export FZF_DEFAULT_OPTS='--tac --cycle --bind=ctrl-j:accept,ctrl-k:kill-line'
 
 # }}}
 
