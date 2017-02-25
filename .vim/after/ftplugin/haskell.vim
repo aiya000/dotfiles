@@ -1,11 +1,2 @@
-let b:undo_ftplugin = 'setl ' . join([
-\	'tabstop<',
-\	'shiftwidth<',
-\	'expandtab<',
-\	'commentstring<'
-\])
-
-setl tabstop=2
-setl shiftwidth=2
-setl expandtab
+setl ts=2 sw=2 et conceallevel=1
 let &commentstring = ' -- %s'
