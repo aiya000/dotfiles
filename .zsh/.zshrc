@@ -91,6 +91,7 @@ source ~/.sh_generic/completion.sh
 
 alias nvim=nvime
 alias cdp=cd-finddir
+alias psf=ps-fzf
 
 # }}}
 # Others {{{
