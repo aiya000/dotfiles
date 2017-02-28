@@ -108,15 +108,6 @@ alias reload=". $ZDOTDIR/.zshrc && . $ZDOTDIR/.zprofile && echo '>> the zsh conf
 ##################
 # Manage Plugins #
 ##################
-# Prepare zplug {{{
-
-# Install automatically
-if [ ! -d $ZPLUG_HOME ] ; then
-	git clone https://github.com/zplug/zplug $ZPLUG_HOME
-fi
-source $ZPLUG_HOME/init.zsh
-
-# }}}
 # Before settings {{{
 
 # zsh-shell-kawaii {{{
@@ -173,19 +164,16 @@ function show_cmdline_states () {
 # }}}
 # Load zsh plugins {{{
 
-# Start zplug
-source $ZPLUG_HOME/init.zsh
-
 # Plugin list
-source ~/Repository/zsh-shell-kawaii/zsh-shell-kawaii.zsh  #zplug 'aiya000/zsh-shell-kawaii'
-zplug 'aiya000/sh-hereis', use:'{init.sh,hereis.sh,place.sh,edit-places.sh,reload-places.sh}'
-zplug 'aiya000/sh-tovim', as:command, use:tovim
-zplug 'zsh-users/zsh-syntax-highlighting'
-zplug 'joel-porquet/zsh-dircolors-solarized'
-zplug 'hchbaw/auto-fu.zsh'; source $ZPLUG_HOME/repos/hchbaw/auto-fu.zsh/auto-fu.zsh  #NOTE: Can I execute source through zplug ?
-
-# Load plugins
-zplug load
+source $ZAPACK_HOME/zsh-shell-kawaii/zsh-shell-kawaii.zsh
+source $ZAPACK_HOME/sh-hereis/init.sh; PATH=$PATH:$ZAPACK_HOME/sh-hereis
+PATH=$PATH:$ZAPACK_HOME/sh-tovim
+source $ZAPACK_HOME/auto-fu.zsh/auto-fu.zsh  #FIXME: show errors if this line is put after zsh-syntax-highlighting
+source $ZAPACK_HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+cd $ZAPACK_HOME/zsh-dircolors-solarized > /dev/null ; \
+	git submodule update --init ; \
+	source $ZAPACK_HOME/zsh-dircolors-solarized/zsh-dircolors-solarized.zsh ; \
+	cd - > /dev/null
 
 #}}}
 # Set plugin prefs {{{

@@ -15,6 +15,7 @@
 .zsh/.zcompdump
 .zsh/history
 .zsh/zplug
+.zsh/zapack
 
 # Others
 .backup/**
