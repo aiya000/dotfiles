@@ -73,9 +73,8 @@ alias llh='ls -lh --color=auto --group-directories-first'
 alias lla='ls -la --color=auto --group-directories-first'
 
 alias x=xdg-open
-
 alias date-simple='date +"%Y-%m-%d"'
-alias mount4u="sudo mount -o user=$(whoami),uid=1000,gid=1000,iocharset=utf8"
+alias mount4u="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
 
 i_have docker && alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
 i_have rsync  && alias cp-with-progress='rsync --partial --progress'
