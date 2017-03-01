@@ -170,10 +170,13 @@ source $ZAPACK_HOME/sh-hereis/init.sh; PATH=$PATH:$ZAPACK_HOME/sh-hereis
 PATH=$PATH:$ZAPACK_HOME/sh-tovim
 source $ZAPACK_HOME/auto-fu.zsh/auto-fu.zsh  #FIXME: show errors if this line is put after zsh-syntax-highlighting
 source $ZAPACK_HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-cd $ZAPACK_HOME/zsh-dircolors-solarized > /dev/null ; \
+cur_dir=$(pwd) ; \
+	prev_dir=$(cd - > /dev/null 2>&1; pwd; cd - > /dev/null 2>&1) ; \
+	cd $ZAPACK_HOME/zsh-dircolors-solarized > /dev/null ; \
 	git submodule update --init ; \
 	source $ZAPACK_HOME/zsh-dircolors-solarized/zsh-dircolors-solarized.zsh ; \
-	cd - > /dev/null
+	cd "$prev_dir"; \
+	cd "$cur_dir"
 
 #}}}
 # Set plugin prefs {{{
