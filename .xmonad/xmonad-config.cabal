@@ -17,6 +17,7 @@ executable xmonad-config
   main-is:             xmonad.hs
   default-language:    Haskell2010
   other-modules:       XMonadConfig.CommandWrapper
+                     , XMonadConfig.Shelly
                      , XMonadConfig.Types
   build-depends:       base >= 4.7 && < 5
                      , easy-file
