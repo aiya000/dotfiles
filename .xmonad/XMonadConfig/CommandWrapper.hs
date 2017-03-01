@@ -41,12 +41,12 @@ lockScreen = spawn "xscreensaver-command -lock"
 
 -- |
 -- If you want to use this, pm-suspend must be added to sudoers without inputting password
--- `xscreensaver-command -lock; sudo pm-suspend`
+-- `xscreensaver-command -lock; sleep 1; sudo pm-suspend`
 lockScreenSuspend :: X ()
-lockScreenSuspend = spawn "xscreensaver-command -lock; sudo pm-suspend"
+lockScreenSuspend = spawn "xscreensaver-command -lock; sleep 1; sudo pm-suspend"
 
 -- |
 -- If you want to this, pm-hibernate must be added to sudoers without inputting password
--- `xscreensaver-command -lock; sudo pm-hibernate`
+-- `xscreensaver-command -lock; sleep 1; sudo pm-hibernate`
 lockScreenHibernate :: X ()
-lockScreenHibernate = spawn "xscreensaver-command -lock; sudo pm-hibernate"
+lockScreenHibernate = spawn "xscreensaver-command -lock; sleep 1; sudo pm-hibernate"
