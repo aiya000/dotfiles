@@ -838,8 +838,8 @@ CmdCnoreabbr UserTimeline  TweetVimUserTimeline
 " dein.vim
 CmdCnoreabbr DeinInstall   call dein#install()
 CmdCnoreabbr DeinUpdate    call dein#update()
-CmdCnoreabbr DeinLog       new \| setl buftype=nofile noreadonly modifiable \| put=dein#get_log()
-CmdCnoreabbr DeinUpdateLog new \| setl buftype=nofile noreadonly modifiable \| put=dein#get_updates_log()
+CmdCnoreabbr DeinLog       new \| setl buftype=nofile noreadonly modifiable ft=deinlog \| put=dein#get_log()
+CmdCnoreabbr DeinUpdateLog new \| setl buftype=nofile noreadonly modifiable ft=deinlog \| put=dein#get_updates_log()
 
 " GHCi
 CmdCnoreabbr Ghci VimShellInteractive stack exec ghci
