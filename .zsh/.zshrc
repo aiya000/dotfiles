@@ -164,19 +164,7 @@ function show_cmdline_states () {
 # }}}
 # Load zsh plugins {{{
 
-# Plugin list
-source $ZAPACK_HOME/repos/zsh-shell-kawaii/zsh-shell-kawaii.zsh
-source $ZAPACK_HOME/repos/sh-hereis/init.sh; PATH=$PATH:$ZAPACK_HOME/repos/sh-hereis
-PATH=$PATH:$ZAPACK_HOME/repos/sh-tovim
-source $ZAPACK_HOME/repos/auto-fu.zsh/auto-fu.zsh  #FIXME: show errors if this line is put after zsh-syntax-highlighting
-source $ZAPACK_HOME/repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-cur_dir=$(pwd) ; \
-	prev_dir=$(cd - > /dev/null 2>&1; pwd; cd - > /dev/null 2>&1) ; \
-	cd $ZAPACK_HOME/repos/zsh-dircolors-solarized > /dev/null ; \
-	git submodule update --init ; \
-	source $ZAPACK_HOME/repos/zsh-dircolors-solarized/zsh-dircolors-solarized.zsh ; \
-	cd "$prev_dir"; \
-	cd "$cur_dir"
+source $ZAPACK_HOME/zapack.zsh
 
 #}}}
 # Set plugin prefs {{{
