@@ -14,7 +14,6 @@
 .zsh/_git
 .zsh/.zcompdump
 .zsh/history
-.zsh/zplug
 
 # Others
 .backup/**
