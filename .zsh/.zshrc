@@ -164,7 +164,7 @@ function show_cmdline_states () {
 # }}}
 # Load zsh plugins {{{
 
-source $ZAPACK_HOME/zapack.zsh
+source ~/.zsh/zsh-zapack/zapack.zsh
 
 #}}}
 # Set plugin prefs {{{

@@ -55,7 +55,7 @@ export FZF_DEFAULT_OPTS='--tac --cycle --bind=ctrl-j:accept,ctrl-k:kill-line'
 # Configurate the plugin variables {{{
 
 # zapack
-export ZAPACK_HOME=$ZDOTDIR/zapack
+export ZAPACK_REPODIR=$ZDOTDIR/zapack-repos
 
 # sh-hereis
 export HEREIS_ALIAS_PREFIX='p_'
