@@ -11,7 +11,7 @@ function git_submudule_pull () {
 	#NOTE: Support recursive pull if it is needed
 	# Pull submodules
 	cd "$repo" > /dev/null
-	git submodule update --init
+	git submodule update --init --recursive
 
 	# Resume directory stack
 	cd "$prev_dir"
