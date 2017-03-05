@@ -19,21 +19,3 @@
 [submodule ".xmonad/xmonad-extras"]
 	path = .xmonad/xmonad-extras
 	url = https://github.com/xmonad/xmonad-extras
-[submodule ".zsh/zapack/repos/zsh-shell-kawaii"]
-	path = .zsh/zapack/repos/zsh-shell-kawaii
-	url = https://github.com/aiya000/zsh-shell-kawaii
-[submodule ".zsh/zapack/repos/sh-hereis"]
-	path = .zsh/zapack/repos/sh-hereis
-	url = https://github.com/aiya000/sh-hereis
-[submodule ".zsh/zapack/repos/sh-tovim"]
-	path = .zsh/zapack/repos/sh-tovim
-	url = https://github.com/aiya000/sh-tovim
-[submodule ".zsh/zapack/repos/zsh-syntax-highlighting"]
-	path = .zsh/zapack/repos/zsh-syntax-highlighting
-	url = https://github.com/zsh-users/zsh-syntax-highlighting
-[submodule ".zsh/zapack/repos/zsh-dircolors-solarized"]
-	path = .zsh/zapack/repos/zsh-dircolors-solarized
-	url = https://github.com/joel-porquet/zsh-dircolors-solarized
-[submodule ".zsh/zapack/repos/auto-fu.zsh"]
-	path = .zsh/zapack/repos/auto-fu.zsh
-	url = https://github.com/hchbaw/auto-fu.zsh
