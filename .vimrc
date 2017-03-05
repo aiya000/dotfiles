@@ -1072,12 +1072,6 @@ augroup KeyMapping
 	"autocmd User MyVimRc nmap <leader>o <Plug>(repl-run)
 	autocmd User MyVimRc nnoremap <silent> <leader>o :<C-u>Repl<CR>
 
-	" textobj-function
-	autocmd User MyVimRc omap af <Plug>(textobj-function-a)
-	autocmd User MyVimRc omap if <Plug>(textobj-function-i)
-	autocmd User MyVimRc vmap af <Plug>(textobj-function-a)
-	autocmd User MyVimRc vmap if <Plug>(textobj-function-i)
-
 	" textobj-indent
 	autocmd User MyVimRc omap ai <Plug>(textobj-indent-a)
 	autocmd User MyVimRc omap ii <Plug>(textobj-indent-i)
