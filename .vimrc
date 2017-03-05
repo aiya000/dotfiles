@@ -1072,6 +1072,34 @@ augroup KeyMapping
 	"autocmd User MyVimRc nmap <leader>o <Plug>(repl-run)
 	autocmd User MyVimRc nnoremap <silent> <leader>o :<C-u>Repl<CR>
 
+	" textobj-function
+	autocmd User MyVimRc omap af <Plug>(textobj-function-a)
+	autocmd User MyVimRc omap if <Plug>(textobj-function-i)
+	autocmd User MyVimRc vmap af <Plug>(textobj-function-a)
+	autocmd User MyVimRc vmap if <Plug>(textobj-function-i)
+
+	" textobj-indent
+	autocmd User MyVimRc omap ai <Plug>(textobj-indent-a)
+	autocmd User MyVimRc omap ii <Plug>(textobj-indent-i)
+	autocmd User MyVimRc vmap ai <Plug>(textobj-indent-a)
+	autocmd User MyVimRc vmap ii <Plug>(textobj-indent-i)
+	autocmd User MyVimRc nmap <silent> <leader><leader>s vii:sort<CR>
+
+	" textobj-from_regexp
+	" Select line ignore newline code (and ignore head spaces)
+	autocmd User MyVimRc omap <expr> al textobj#from_regexp#mapexpr('^.*$')
+	autocmd User MyVimRc omap <expr> il textobj#from_regexp#mapexpr('^\s*\zs.*\ze.*$')
+
+	" textobj-from_regexp
+	" Select alphabet glob
+	autocmd User MyVimRc vmap <expr> a_ textobj#from_regexp#mapexpr('[^A-Za-z0-9][A-Za-z0-9]\+[^A-Za-z0-9]')
+	autocmd User MyVimRc vmap <expr> i_ textobj#from_regexp#mapexpr('[A-Za-z0-9]\+')
+	autocmd User MyVimRc omap <expr> a_ textobj#from_regexp#mapexpr('[^A-Za-z0-9][A-Za-z0-9]\+[^A-Za-z0-9]')
+	autocmd User MyVimRc omap <expr> i_ textobj#from_regexp#mapexpr('[A-Za-z0-9]\+')
+	" Select line ignore newline code (and ignore head spaces)
+	autocmd User MyVimRc vmap <expr> al textobj#from_regexp#mapexpr('^.*$')
+	autocmd User MyVimRc vmap <expr> il textobj#from_regexp#mapexpr('^\s*\zs.*\ze.*$')
+
 	" vim-textobj-between
 	autocmd User MyVimRc vmap a* <Plug>(textobj-between-a)
 	autocmd User MyVimRc vmap i* <Plug>(textobj-between-i)
@@ -1086,8 +1114,6 @@ augroup KeyMapping
 	" normal mode {{{
 
 	autocmd User MyVimRc nmap <C-j> <CR>
-	" Use textobj-indent
-	autocmd User MyVimRc nmap <silent> <leader><leader>s vii:sort<CR>
 
 	autocmd User MyVimRc nnoremap Q      gQ
 	autocmd User MyVimRc nnoremap zs     zszh
@@ -1152,22 +1178,6 @@ augroup KeyMapping
 	" }}}
 	" visual mode {{{
 
-	" textobj-function
-	autocmd User MyVimRc vmap af <Plug>(textobj-function-a)
-	autocmd User MyVimRc vmap if <Plug>(textobj-function-i)
-
-	" textobj-indent
-	autocmd User MyVimRc vmap ai <Plug>(textobj-indent-a)
-	autocmd User MyVimRc vmap ii <Plug>(textobj-indent-i)
-
-	" textobj-from_regexp
-	" Select alphabet glob
-	autocmd User MyVimRc vmap <expr> a_ textobj#from_regexp#mapexpr('[^A-Za-z0-9][A-Za-z0-9]\+[^A-Za-z0-9]')
-	autocmd User MyVimRc vmap <expr> i_ textobj#from_regexp#mapexpr('[A-Za-z0-9]\+')
-	" Select line ignore newline code (and ignore head spaces)
-	autocmd User MyVimRc vmap <expr> al textobj#from_regexp#mapexpr('^.*$')
-	autocmd User MyVimRc vmap <expr> il textobj#from_regexp#mapexpr('^\s*\zs.*\ze.*$')
-
 	autocmd User MyVimRc vnoremap <C-l> <Esc>
 	autocmd User MyVimRc vnoremap i:    :Alignta
 	autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
@@ -1187,22 +1197,6 @@ augroup KeyMapping
 
 	" }}}
 	" operator {{{
-
-	" textobj-function
-	autocmd User MyVimRc omap af <Plug>(textobj-function-a)
-	autocmd User MyVimRc omap if <Plug>(textobj-function-i)
-
-	" textobj-indent
-	autocmd User MyVimRc omap ai <Plug>(textobj-indent-a)
-	autocmd User MyVimRc omap ii <Plug>(textobj-indent-i)
-
-	" textobj-from_regexp
-	" Select alphabet glob
-	autocmd User MyVimRc omap <expr> a_ textobj#from_regexp#mapexpr('[^A-Za-z0-9][A-Za-z0-9]\+[^A-Za-z0-9]')
-	autocmd User MyVimRc omap <expr> i_ textobj#from_regexp#mapexpr('[A-Za-z0-9]\+')
-	" Select line ignore newline code (and ignore head spaces)
-	autocmd User MyVimRc omap <expr> al textobj#from_regexp#mapexpr('^.*$')
-	autocmd User MyVimRc omap <expr> il textobj#from_regexp#mapexpr('^\s*\zs.*\ze.*$')
 
 	" Don't select blank
 	autocmd User MyVimRc onoremap a" 2i"
