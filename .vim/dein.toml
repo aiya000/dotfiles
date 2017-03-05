@@ -116,3 +116,6 @@ repo = 'romainl/Apprentice'
 
 [[plugins]]
 repo = 'vim-jp/autofmt'
+
+[[plugins]]
+repo = 'thinca/vim-textobj-between'

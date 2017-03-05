@@ -631,6 +631,11 @@ let g:github_complete_enable_neocomplete        = 1
 let g:github_complete_emoji_japanese_workaround = 1
 
 " }}}
+"--- vim-textobj-between --- {{{
+
+let g:textobj_between_no_default_key_mappings = 1
+
+" }}}
 
 call dein#end()
 
@@ -1066,6 +1071,12 @@ augroup KeyMapping
 	"@Bugs('I cannot run second')
 	"autocmd User MyVimRc nmap <leader>o <Plug>(repl-run)
 	autocmd User MyVimRc nnoremap <silent> <leader>o :<C-u>Repl<CR>
+
+	" vim-textobj-between
+	autocmd User MyVimRc vmap a* <Plug>(textobj-between-a)
+	autocmd User MyVimRc vmap i* <Plug>(textobj-between-i)
+	autocmd User MyVimRc omap a* <Plug>(textobj-between-a)
+	autocmd User MyVimRc omap i* <Plug>(textobj-between-i)
 augroup END
 
 " }}}
