@@ -26,24 +26,20 @@ function zle-keymap-select {
 zle -N zle-keymap-select
 
 # Fix problems
-#   1. Suggested item insert to BUFFER when input is done
+#   1. Suggested item is suddenly inserted to $BUFFER when input is done
 # Example {{{
 # $ adb shell
 #            ^ cursor position
-#            v auto suggested
+#            v auto inserted
 # $ adb shell_kawaii_build_prompt
-# }}}
-#   2. '/' is appended to tail of BUFFER by auto-fu.zsh automatically if same name directory exists
-# Example {{{
+# - - -
 # $ ls
 # src app test
 # $ stack test/
-#             ^ inserted automatically
-# File does not exist or is not a regular file `test/'
+#             ^ auto inserted
 # }}}
 function zle-line-finish {
 	BUFFER="$LBUFFER"
-	BUFFER="$(echo $BUFFER | sed -r 's/(.*)\/$/\1/')"
 }
 zle -N zle-line-finish
 
