@@ -171,7 +171,7 @@ source ~/.zsh/zsh-zapack/zapack.zsh
 
 # zsh-dircolors-solarized {{{
 
-# Use dircolors.ansi-light thema
+# Use dircolors.ansi-light theme
 setupsolarized dircolors.ansi-light
 
 # }}}

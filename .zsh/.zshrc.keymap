@@ -26,8 +26,7 @@ function zle-keymap-select {
 zle -N zle-keymap-select
 
 #FIXME: unintended delete $RPROMPT is happened
-# Fix problems
-#   1. Suggested item is suddenly inserted to $BUFFER when input is done
+# Fix problems what suggested item is suddenly inserted to $BUFFER when input is done
 # Example {{{
 # $ adb shell
 #            ^ cursor position
