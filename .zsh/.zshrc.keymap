@@ -25,7 +25,15 @@ function zle-keymap-select {
 }
 zle -N zle-keymap-select
 
-# Fix the problem of when the directory same as the subcommand name was auto suggested by auto-fu.zsh
+# Fix problems
+#   1. Suggested item insert to BUFFER when input is done
+# Example {{{
+# $ adb shell
+#            ^ cursor position
+#            v auto suggested
+# $ adb shell_kawaii_build_prompt
+# }}}
+#   2. '/' is appended to tail of BUFFER by auto-fu.zsh automatically if same name directory exists
 # Example {{{
 # $ ls
 # src app test
@@ -34,6 +42,7 @@ zle -N zle-keymap-select
 # File does not exist or is not a regular file `test/'
 # }}}
 function zle-line-finish {
+	BUFFER="$LBUFFER"
 	BUFFER="$(echo $BUFFER | sed -r 's/(.*)\/$/\1/')"
 }
 zle -N zle-line-finish
