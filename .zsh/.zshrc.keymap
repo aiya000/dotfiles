@@ -25,21 +25,15 @@ function zle-keymap-select {
 }
 zle -N zle-keymap-select
 
-#FIXME: unintended delete $RPROMPT is happened
-# Fix problems what suggested item is suddenly inserted to $BUFFER when input is done
+# Fix the problem of when the directory same as the subcommand name was auto suggested by auto-fu.zsh
 # Example {{{
-# $ adb shell
-#            ^ cursor position
-#            v auto inserted
-# $ adb shell_kawaii_build_prompt
-# - - -
 # $ ls
 # src app test
 # $ stack test/
 #             ^ auto inserted
 # }}}
 function zle-line-finish {
-	BUFFER="$LBUFFER"
+	BUFFER="$(echo $BUFFER | sed -r 's/(.*)\/$/\1/')"
 }
 zle -N zle-line-finish
 
