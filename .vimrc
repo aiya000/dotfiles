@@ -1034,13 +1034,11 @@ augroup KeyMapping
 	autocmd User MyVimRc nmap          <leader>/         /\m\C
 	"FIXME: [Left] doesn't work
 	autocmd User MyVimRc nmap          <leader><leader>/ /\m\C\<\>[Left][Left]
-	autocmd User MyVimRc nmap          q/                /\<<C-r>"\><CR>
 	autocmd User MyVimRc nmap          g/                <Plug>(incsearch-stay)
 	autocmd User MyVimRc nmap <expr>   ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
 	autocmd User MyVimRc nmap          <leader>?         ?\m\C
 	"FIXME: [Left] doesn't work
 	autocmd User MyVimRc nmap          <leader><leader>? ?\m\C\<\>[Left][Left]
-	autocmd User MyVimRc nmap          q?                ?\<<C-r>"\><CR>
 	autocmd User MyVimRc vmap <expr>   /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
 	autocmd User MyVimRc vmap <expr>   ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
 
