@@ -26,4 +26,4 @@ if [ "$passwordNeeded" != "--" ] ; then
 fi
 
 # Apply connecting to selected AP
-nmcli device wifi connect ${selectedAp} ${passwordArgument}
+eval "nmcli device wifi connect ${selectedAp} ${passwordArgument}"
