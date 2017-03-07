@@ -7,9 +7,6 @@
 [submodule ".config/yi/yi-rope"]
 	path = .config/yi/yi-rope
 	url = https://github.com/aiya000/yi-rope
-[submodule "aacceessoorryy"]
-	path = aacceessoorryy
-	url = https://github.com/aiya000/aacceessoorryy
 [submodule ".xmonad/xmonad"]
 	path = .xmonad/xmonad
 	url = https://github.com/xmonad/xmonad
