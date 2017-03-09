@@ -10,6 +10,7 @@ setl tabstop=4
 setl shiftwidth=4
 setl expandtab
 setl completefunc=github_complete#complete
+setl omnifunc=github_complete#complete
 let &commentstring = '<!--%s-->'
 
 nnoremap <silent><buffer> <localleader>r :<C-u>PrevimOpen<CR>
