@@ -26,6 +26,9 @@ PATH=$PATH:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 PATH=$PATH:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
 PATH=$PATH:$GOPATH/bin
 
+# Load haskell-cabal and etc
+PATH=$PATH:$HOME/.local/bin
+
 # zsh completions
 PATH=$PATH:$ZDOTDIR/zsh_completions
 

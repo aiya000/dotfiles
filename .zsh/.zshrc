@@ -42,41 +42,6 @@ stty stop  undef
 stty start undef
 
 # }}}
-# Set language tools {{{
-
-# stack
-[ -d ~/.stack ] \
-	&& PATH=$PATH:$HOME/.stack/programs/x86_64-linux/ghc-7.8.4/bin
-
-# cabal
-[ -d ~/.cabal ] \
-	&& PATH=$PATH:$HOME/.cabal/bin \
-	&& PATH=$PATH:./.cabal-sandbox/bin
-
-# pkgsrc
-[ -d ~/pkg ] \
-	&& PATH=$PATH:$HOME/pkg/bin:$HOME/pkg/sbin
-
-# rbenv
-[ -d ~/.rbenv ] \
-	&& PATH=$PATH:$HOME/.rbenv/bin \
-	&& PATH=$PATH:$HOME/.rbenv/versions/`cat ~/.rbenv/version`/bin \
-	&& eval "$($HOME/.rbenv/bin/rbenv init -)"
-
-# ruby-build
-[ -d ~/.rbenv/plugins/ruby-build/bin ] \
-	&& PATH=$PATH:$HOME/.rbenv/plugins/ruby-build/bin
-
-# virtualenv with virtualenvwrapper
-[ -n $(which virtualenvwrapper.sh) ] \
-	&& export WORKON_HOME=$HOME/.virtualenvs \
-	&& source $(which virtualenvwrapper.sh)
-
-# anything
-[ -d ~/.local ] \
-	&& PATH=$PATH:$HOME/.local/bin
-
-# }}}
 # Load completion scripts {{{
 
 source ~/.sh_generic/completion.sh
