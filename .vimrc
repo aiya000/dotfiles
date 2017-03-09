@@ -1174,7 +1174,7 @@ augroup KeyMapping
 	autocmd User MyVimRc vnoremap i:    :Alignta
 	autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
 	autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
-	autocmd User MyVimRc vnoremap <silent> i=        :Alignta =/1<CR>
+	autocmd User MyVimRc vnoremap <silent> i=        :Alignta => =/1<CR>
 	autocmd User MyVimRc vnoremap <leader>s :sort<CR>
 
 	" Don't select blank
