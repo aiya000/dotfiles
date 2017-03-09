@@ -104,14 +104,18 @@ function! vimrc#plugins#twitter_public() abort " {{{
 endfunction " }}}
 
 " Open tweetvim_say by public account
-function! vimrc#plugins#tweet_public() abort " {{{
+function! vimrc#plugins#tweet_public(...) abort " {{{
 	if !exists('g:vimrc.private["twitter"]["publ_ac"]')
 		call vimrc#echo_error('Not set env variable => g:vimrc.private["twitter"]["publ_ac"]')
 		return
 	endif
 
 	execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['publ_ac']
-	TweetVimSay
+	if len(a:000) is 0
+		TweetVimSay
+	else
+		execute 'TweetVimCommandSay' join(a:000)
+	endif
 
 	"@Incomplete('wait here')
 	"execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
