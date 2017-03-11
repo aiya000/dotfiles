@@ -37,3 +37,6 @@
 [submodule ".zsh/zapack-repos/auto-fu.zsh"]
 	path = .zsh/zapack-repos/auto-fu.zsh
 	url = https://github.com/hchbaw/auto-fu.zsh
+[submodule ".weechat/git/wee-slack"]
+	path = .weechat/git/wee-slack
+	url = https://github.com/wee-slack/wee-slack
