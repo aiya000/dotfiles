@@ -231,3 +231,7 @@ on_cmd = 'Gina'
 [[plugins]]
 repo  = 'itchyny/vim-haskell-indent'
 on_ft = 'haskell'
+
+[[plugins]]
+repo = 'udalov/kotlin-vim'
+on_ft = 'kotlin'
