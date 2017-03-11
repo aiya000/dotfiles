@@ -11,27 +11,23 @@ function aliases::elem () {
 }
 
 function load-my-env () {
-	local installed_plugins=( \
-		haskell-stack \
-		cabal \
+	local available_envs=( \
+		haskell \
+		haskel-legacy \
 		pkgsrc \
-		rbenv \
-		virtualenv \
+		ruby \
+		python \
+		all \
 	)
 	local target_name="$1"
 
-	if [ "$1" != '' -a $(aliases::elem "$installed_plugins" "$target_name") -ne 1 ] ; then
-		echo "You may haven't $target_name"
-		return 1
-	fi
-
 	case "$target_name" in
-	haskell-stack)
+	haskell)
 		if [ -d ~/.stack ] ; then
 			PATH=$PATH:$HOME/.stack/programs/x86_64-linux/ghc-7.8.4/bin
 		fi
 		;;
-	cabal)
+	haskell-legacy)
 		if [ -d ~/.cabal ] ; then
 			PATH=$PATH:$HOME/.cabal/bin
 			PATH=$PATH:./.cabal-sandbox/bin
@@ -42,7 +38,7 @@ function load-my-env () {
 			PATH=$PATH:$HOME/pkg/bin:$HOME/pkg/sbin
 		fi
 		;;
-	rbenv)
+	ruby)
 		if [ -d ~/.rbenv ] ; then
 			PATH=$PATH:$HOME/.rbenv/bin
 			PATH=$PATH:$HOME/.rbenv/versions/$(cat ~/.rbenv/version)/bin
@@ -52,19 +48,15 @@ function load-my-env () {
 			PATH=$PATH:$HOME/.rbenv/plugins/ruby-build/bin
 		fi
 		;;
-	virtualenv)
-		local x="$(which virtualenvwrapper.sh)"
-		if [ -n "$x" ] ; then
-			export WORKON_HOME=$HOME/.virtualenvs
-			source $x
-		fi
+	all)
+		load-my-env haskell
+		load-my-env haskell-legacy
+		load-my-env pkgsrc
+		load-my-env ruby
+		load-my-env python
 		;;
 	*)
-		load-my-env haskell-stack
-		load-my-env cabal
-		load-my-env pkgsrc
-		load-my-env rbenv
-		load-my-env virtualenv
+		echo "You may haven't $target_name" > /dev/stderr
 		;;
 	esac
 }

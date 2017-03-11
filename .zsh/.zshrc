@@ -148,7 +148,7 @@ setupsolarized dircolors.ansi-light
 source $ZDOTDIR/.zshrc.keymap
 
 # Load environment by default
-load-my-env haskell-stack
+load-my-env haskell
 
 # For each environment
 case $(uname) in
