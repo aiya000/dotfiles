@@ -51,3 +51,5 @@
 	branch = true
 [mergetool]
 	keepBackup = false
+[color]
+	ui = auto
