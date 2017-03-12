@@ -84,6 +84,15 @@ i_have ctags  && alias ctags-r='ctags --tag-relative --recurse --sort=yes'
 # Generate items for autotools
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
+function virtualenv-activate () {
+	if [ -f ./.venv/bin/activate ] ; then
+		. ./.venv/bin/activate
+	else
+		echo './.venv/bin/activate was not found, please load it yourself...' > /dev/stderr
+		return 1
+	fi
+}
+
 # }}}
 
 export PATH=$PATH:~/.sh_generic/bin
