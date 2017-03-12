@@ -277,59 +277,64 @@ unlet s:java_src
 " }}}
 "--- vim-quickrun --- {{{
 
-" Define myself, for lazy load
 let g:quickrun_no_default_key_mappings = 0
 
 let g:quickrun_config = {
-\	'_' : {
+\	'_': {
 \		'split'  : '',
 \		'runner' : 'vimproc',
 \		'runner/vimproc/updatetime' : 10,
 \		'hook/time/enable' : 1,
 \		'outputter' : 'error',
-\		'outputter/error/error' : 'quickfix',
+\		'outputter/error/error'   : 'quickfix',
 \		'outputter/error/success' : 'buffer'
 \	},
-\	'cpp' : {
-\		'cmdopt' : '-std=c++14'
+\	'cpp': {
+\		'cmdopt': '-std=c++14'
 \	},
-\	'java' : {
-\		'cmdopt' : '-encoding UTF-8 -source 1.8'
+\	'java': {
+\		'cmdopt': '-encoding UTF-8 -source 1.8'
 \	},
-\	'vimspec' : {
-\		'command'  : 'themis',
-\		'cmdopt'   : '--runtimepath ".."',
-\		'exec'     : '%c %o %s:p | tr -d "\r"',
-\		'tempfile' :  printf('%s/{tempname()}.vimspec', $TMP)
+\	'vimspec': {
+\		'command' : 'themis',
+\		'cmdopt'  : '--runtimepath ".."',
+\		'exec'    : '%c %o %s:p | tr -d "\r"',
+\		'tempfile':  printf('%s/{tempname()}.vimspec', $TMP)
 \	},
 \	'html': {
-\		'outputter' : 'null',
-\		'exec'      : '%c %s:p'
+\		'outputter': 'null',
+\		'exec'     : '%c %s:p'
 \	},
-\	'tex' : {
-\		'command' : 'ptex2pdf',
-\		'cmdopt'  : '-l',
-\		'exec'    : '%c %o %s:r'
+\	'tex': {
+\		'command': 'ptex2pdf',
+\		'cmdopt' : '-l',
+\		'exec'   : '%c %o %s:r'
 \	},
-\	'clojure' : {
-\		'command' : 'lein',
-\		'cmdopt'  : 'exec'
+\	'clojure': {
+\		'command': 'lein',
+\		'cmdopt' : 'exec'
 \	},
-\	'swift' : {
-\		'command' : 'swift'
+\	'swift': {
+\		'command': 'swift'
 \	},
-\	'scala' : {
-\		'cmdopt' : '-feature'
+\	'scala': {
+\		'cmdopt': '-feature'
 \	},
-\	'brainfuck' : {
-\		'command' : 'brainfuck'
+\	'brainfuck': {
+\		'command': 'brainfuck'
 \	},
-\	'nico' : {
-\		'command' : 'nicorun'
+\	'nico': {
+\		'command': 'nicorun'
+\	},
+\	'kotlin': {
+\		'command' : 'java',
+\		'exec'    : ['kotlinc %o %s -include-runtime -d %s:p:r.jar', '%c -jar %s:p:r.jar'],
+\		'tempfile': '%{tempname()}.kt',
+\		'hook/sweep/files': '%S:p:r.jar'
 \	}
 \}
 
-" Set by each environment
+" Append config of each environment
 if g:vimrc['is_unix'] && !g:vimrc['is_cygwin']
 	call vimrc#plugins#append_config_quickrun_unix()
 elseif g:vimrc['is_windows']
@@ -341,10 +346,10 @@ endif
 " }}}
 "--- TweetVim --- {{{
 
-" Do smooth posting tweet
+" Tweet smoothly
 let g:tweetvim_async_post = 1
 
-" Set default value (Avoid unite-tweetvim lazy loading error)
+" Avoid unite-tweetvim lazy loading error
 let g:tweetvim_config_dir = expand('~/.tweetvim')
 
 " }}}
@@ -370,7 +375,7 @@ let g:vimshell_hereis_alias_prefix = 'p_'
 " }}}
 "--- vimshell-kawaii.vim --- {{{
 
-" vimshell is kawaii
+" Her face is very useful
 let g:vimshell_kawaii_smiley = 1
 
 " }}}
@@ -444,7 +449,7 @@ set helplang=en,ja
 " }}}
 "--- incsearch.vim --- {{{
 
-" Set nmap for incsearch.vim
+" Define keymaps for incsearch.vim
 let g:incsearch_cli_key_mappings = {
 \	"\<C-j>": "\<CR>",
 \	"\<C-l>": "\<Esc>"
@@ -453,13 +458,13 @@ let g:incsearch_cli_key_mappings = {
 " }}}
 "--- TaskList.vim --- {{{
 
-" TaskList search these
+" TaskList finds these line
 let g:tlTokenList = ['NOTE', 'TODO', 'FIXME', 'XXX']
 
-" Open window at bottom
+" Show the window at bottom
 let g:tlWindowPosition = 1
 
-" Restore opened position when closed TaskList
+" Save current position when TaskList is closed
 let g:tlRememberPosition = 1
 
 " }}}
@@ -475,13 +480,13 @@ let g:indent_guides_default_mapping = 0
 let g:indent_guides_guide_size      = 1
 let g:indent_guides_auto_colors     = 0
 
-" Define guide colors
+" Define colors
 augroup HighlightPref
 	autocmd VimEnter,ColorScheme * highlight default link IndentGuidesOdd  PmenuSel
 	autocmd VimEnter,ColorScheme * highlight default link IndentGuidesEven Pmenu
 augroup END
 
-" Unify indent-guides available
+" Define indent-guides state at global
 "@See('nnoremap <C-h><C-i>')
 let g:vimrc#keys#indent_guides_enable = get(g:, 'vimrc#keys#indent_guides_enable', 1)
 augroup FileEvent
@@ -501,17 +506,13 @@ let g:solarized_contrast = 'high'
 " }}}
 "--- aho-bakaup.vim --- {{{
 
-" The file was backed up automatically when you written that file
 let g:bakaup_backup_dir  = s:backupdir
 let g:bakaup_auto_backup = 1
 
 " }}}
 "--- neosnippet.vim --- {{{
 
-" for :NeoSnippetEdit
 let g:neosnippet#snippets_directory = g:vimrc['vim_home'] . '/neosnippets'
-
-" Disable default select-mode mapping
 let g:neosnippet#disable_select_select_mappings = 1
 
 " }}}
@@ -523,16 +524,14 @@ let g:vimconsole#no_default_key_mappings = 1
 " }}}
 "--- vim-textobj-indent --- {{{
 
-" Set myself
 let g:textobj_indent_no_default_key_mappings = 1
 
 " }}}
 "--- neocomplete.vim --- {{{
 
-" Start neocomplete automatically
 let g:neocomplete#enable_at_startup = 1
 
-" Disable on
+" neocomplete is disabled in
 let g:neocomplete#sources = {
 \	'int-ghci'  : [],
 \	'int-stack' : []
