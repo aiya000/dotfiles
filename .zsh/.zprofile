@@ -11,6 +11,7 @@ export HISTSIZE=1000000
 export HISTIGNORE="*mount*-o*password=*"
 export SAVEHIST=1000000
 export TIMEFMT='%Y/%m/%d %H:%M '
+export FPATH=$FPATH:$HOME/.zsh/complete
 
 # }}}
 # Reset $PATH {{{
