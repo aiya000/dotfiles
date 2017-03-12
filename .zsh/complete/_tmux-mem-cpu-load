@@ -1,0 +1,15 @@
+#compdef tmux-mem-cpu-load
+
+function _tmux-mem-cpu-load () {
+	_values \
+		'tmux-mem-cpu-load' \
+		'--help[Prints this help message]' \
+		'--colors[Use tmux colors in output]' \
+		'--powerline-left[Use powerline left symbols throughout the output, enables --colors]' \
+		'--powerline-right[Use powerline right symbols throughout the output, enables --colors]' \
+		'--interval[Set tmux status refresh interval in seconds. Default: 1 second]' \
+		'--graph-lines[Set how many lines should be drawn in a graph. Default: 10]' \
+		'--mem-mode[Set memory display mode. 0: Default, 1: Free memory, 2: Usage percent.]' \
+		'--cpu-mode[Set cpu % display mode. 0: Default max 100%, 1: Max 100% * number of threads.]' \
+		'--averages-count[Set how many load-averages should be drawn. Default: 3]'
+}
