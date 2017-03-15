@@ -147,7 +147,7 @@ CmdCnoreabbr Ghci terminal stack exec ghci
 command! -bar NVimConfig    e ~/.config/nvim/init.vim
 command! -bar NVimConfigTab tabnew ~/.config/nvim/init.vim
 
-CmdCnoreabbr Weechat terminal weechat
+command! -bar Weechat call nvimrc#open_weechat()
 
 " }}}
 
