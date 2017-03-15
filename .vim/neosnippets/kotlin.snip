@@ -1,9 +1,12 @@
 snippet fun
 abbr    fun __(__) { __ }
-options head indent
-    fun ${1:funcName}(${2:#:args}) {
-        ${0}
-    }
+options indent
+    fun ${1:funcName}(${2:#:args}) ${0}
+
+snippet block
+alias bl
+options indent
+    {${0}}
 
 snippet main
 abbr    fun main(args: Array<String>) { __ }
@@ -11,3 +14,19 @@ options head indent
     fun main(args: Array<String>) {
         ${0}
     }
+
+snippet println
+abbr    println(__)
+    println(${0})
+
+snippet new_type_with_a_cost
+abbr class __(val un__: __)
+    class ${1:Name}(val un$1: ${2:Type})
+
+snippet data_class
+abbr data class __(val __: __)
+    data class ${1:Name}(${2:members})
+
+snippet companion_object
+abbr companion object {__}
+    companion object {${0}}
