@@ -1,12 +1,7 @@
-let b:undo_ftplugin = 'setl ' . join([
-\	'cursorline<',
-\	'statusline<'
-\])
+setl cursorline statusline+=\ %L wrap
 
-setl cursorline
-setl statusline+=\ %L
 
-nnoremap         <buffer> <C-j> <CR>zz<C-w>p
+nnoremap         <buffer> <C-j> <CR>
 nnoremap <silent><buffer> dd    :call <SID>quickfix_del_entry()<CR>
 nnoremap <silent><buffer> u     :<C-u>call <SID>quickfix_undo_del_entry()<CR>
 nnoremap <silent><buffer> <C-r> :<C-u>call <SID>quickfix_redo_del_entry()<CR>
