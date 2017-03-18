@@ -5,8 +5,7 @@ nnoremap <buffer> <C-b> i<C-e><C-u><PageUp><C-\><C-n>
 nnoremap <buffer> x     i<C-e><C-u><C-x><C-\><C-n>
 nnoremap <buffer> dd    i<C-e><C-u>/close<CR><C-\><C-n>
 nnoremap <buffer> ghc   i<C-e><C-u>/quit<CR>
-nnoremap <buffer> ghq   i<C-e><C-u>/quit<CR>
-nnoremap <buffer> s     :<C-u>call <SID>open_say_buffer()<CR>
+nnoremap <buffer> s     :<C-u>call <SID>open_say_buffer()<CR>i
 
 function! s:open_say_buffer() abort
 	let s:weechat_bufnr = winbufnr('.')
