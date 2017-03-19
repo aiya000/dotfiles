@@ -47,8 +47,9 @@ export MANPAGER='nvim - +MANPAGER -c "setl nonu nornu ft=vim-pager | only"'
 # Others
 export GOPATH=~/.GoPath
 export LICE_USER=aiya000
-export UNCO_ESPEAK_OPTIONS='-s 150 -v +fex'
 export FZF_DEFAULT_OPTS='--tac --cycle --bind=ctrl-j:accept,ctrl-k:kill-line'
+export UNCO_ESPEAK_OPTIONS='-s 150 -v +fex'
+export ZAPACK_OPTIONS='--verbose'
 
 # }}}
 
