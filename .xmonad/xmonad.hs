@@ -62,6 +62,7 @@ myLayoutHook = twoTabbedPane ||| Grid
 myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "termite -e tmux"
+  spawnOnce "tmux new-window 'nvim +\"cd ~/.dotfiles\" +terminal'"
   setWMName "LG3D"  -- For Java Swing apps starting
 
 myManageHook :: ManageHook
