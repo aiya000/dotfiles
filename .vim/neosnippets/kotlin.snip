@@ -19,14 +19,30 @@ snippet println
 abbr    println(__)
     println(${0})
 
+snippet class_without_constructor
+abbr class __ {__}
+    class ${1:Name} {${0}}
+
+snippet class_with_constructor
+abbr class __(__) {__}
+    class ${1:Name}(${2:args}) {${0}}
+
 snippet data_class
 abbr data class __(val __: __)
     data class ${1:Name}(${2:members})
 
 snippet new_type_with_a_cost
-abbr class __(val un__: __)
+abbr data class __(val un__: __)
     data class ${1:Name}(val un$1: ${2:Type})
 
 snippet companion_object
 abbr companion object {__}
     companion object {${0}}
+
+snippet if
+abbr if (__) __
+    if (${1:#:cond}) ${0}
+
+snippet else
+abbr else _
+    else ${0}
