@@ -5,7 +5,15 @@ nnoremap <buffer> <C-b> i<C-e><C-u><PageUp><C-\><C-n>
 nnoremap <buffer> x     i<C-e><C-u><C-x><C-\><C-n>
 nnoremap <buffer> dd    i<C-e><C-u>/close<CR><C-\><C-n>
 nnoremap <buffer> ghc   i<C-e><C-u>/quit<CR>
-nnoremap <buffer> s     :<C-u>call <SID>open_say_buffer()<CR>i
+
+nmap <buffer><silent> <Plug>(term-weechat-open-say-buffer) :<C-u>call <SID>open_say_buffer()<CR>i
+nmap <buffer> i <Plug>(term-weechat-open-say-buffer)
+nmap <buffer> I <Plug>(term-weechat-open-say-buffer)
+nmap <buffer> s <Plug>(term-weechat-open-say-buffer)
+nmap <buffer> S <Plug>(term-weechat-open-say-buffer)
+nmap <buffer> a <Plug>(term-weechat-open-say-buffer)
+nmap <buffer> A <Plug>(term-weechat-open-say-buffer)
+
 
 function! s:open_say_buffer() abort
 	let s:weechat_bufnr = winbufnr('.')
