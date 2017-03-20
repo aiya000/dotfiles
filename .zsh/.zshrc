@@ -95,14 +95,14 @@ function show_cmdline_states () {
 		fi
 	}
 
-	function get_stash_status () {
+	function get_git_stash_status () {
 		local item_num=$({git stash list 2> /dev/null || echo -n ''} | wc -l)
 		if [ "$item_num" -ge 1 ] ; then
 			echo "%{$bg[cyan]$fg[black]%}[stash:${item_num}]%{$reset_color%}"
 		fi
 	}
 
-	function get_branch_name () {
+	function get_git_branch_name () {
 		local branches
 		branches=$(git branch 2> /dev/null)
 		if [ "$?" -ne 0 ] ; then
@@ -114,14 +114,23 @@ function show_cmdline_states () {
 	}
 
 	function get_afu_vi_mode () {
-		local cmd_mode_name='afu-vicmd'
+		local cmd_mode_name='vicmd'
 		local keymap_name="$(echo $KEYMAP | sed -r 's/^(.)/\U\1/')"
 		local color; [ "$KEYMAP" = "$cmd_mode_name" ] && color=red || color=blue
 		echo "%{$bg[${color}]%}[${keymap_name}]%{$reset_color%}"
 	}
 
+	function get_virtualenv_availability () {
+		if [ -n "$VIRTUAL_ENV" ] ; then
+			local env_name=$(echo "$VIRTUAL_ENV" | sed -r 's;^/.*/(.*)/\.venv$;\1;')
+			echo "%{$bg[yellow]$fg[black]%}[${env_name}]%{$reset_color%}"
+		elif [ -d "$(pwd)/.venv" ] ; then
+			echo "%{$bg[red]$fg[black]%}[./.venv was found]%{$reset_color%}"
+		fi
+	}
+
 	# Result
-	echo " | $(get_git_changes)$(get_git_commits)$(get_stash_status)$(get_branch_name)$(get_afu_vi_mode)"
+	echo " | $(get_git_changes)$(get_git_commits)$(get_git_stash_status)$(get_git_branch_name)$(get_afu_vi_mode)$(get_virtualenv_availability)"
 }
 
 # }}}
