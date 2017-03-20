@@ -44,6 +44,9 @@ export LICE_USER=aiya000
 # Languages
 export GOPATH=~/.GoPath
 
+# Others
+export CCACHE_DISABLE=1
+
 # }}}
 
 
