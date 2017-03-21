@@ -17,7 +17,7 @@ nmap <buffer> A <Plug>(term-weechat-open-say-buffer)
 
 function! s:open_say_buffer() abort
 	let s:weechat_bufnr = winbufnr('.')
-	new
+	botright new
 	call s:set_default_buffer_prefs()
 	call s:define_default_keymaps()
 	normal! i
