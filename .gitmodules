@@ -34,9 +34,6 @@
 [submodule ".zsh/zapack-repos/zsh-dircolors-solarized"]
 	path = .zsh/zapack-repos/zsh-dircolors-solarized
 	url = https://github.com/joel-porquet/zsh-dircolors-solarized
-[submodule ".weechat/git/wee-slack"]
-	path = .weechat/git/wee-slack
-	url = https://github.com/wee-slack/wee-slack
 [submodule ".zsh/zapack-repos/zsh-completions"]
 	path = .zsh/zapack-repos/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions
