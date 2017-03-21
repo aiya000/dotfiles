@@ -1,41 +1,24 @@
 #!/usr/bin/env zsh
 #
 # This script depends
-#    - auto-fu.zsh
 #    - zsh-shell-kawaii
-autoload -U edit-command-line
-
 
 ########################
 # Register zle widgets #
 ########################
-zle -N edit-command-line
+autoload -U edit-command-line && zle -N edit-command-line
 
 function zle-line-init {
-	auto-fu-init
 	shell_kawaii_build_prompt
 	zle reset-prompt
 }
 zle -N zle-line-init
 
 function zle-keymap-select {
-	auto-fu-zle-keymap-select "$@"
 	shell_kawaii_build_prompt
 	zle reset-prompt
 }
 zle -N zle-keymap-select
-
-# Fix the problem of when the directory same as the subcommand name was auto suggested by auto-fu.zsh
-# Example {{{
-# $ ls
-# src app test
-# $ stack test/
-#             ^ auto inserted
-# }}}
-function zle-line-finish {
-	BUFFER="$(echo $BUFFER | sed -r 's/(.*)\/$/\1/')"
-}
-zle -N zle-line-finish
 
 
 ##################
@@ -71,26 +54,26 @@ zle -N fzf-path-finder
 # Keymapping #
 ##############
 # Emacs nize insert-mode
-bindkey -M afu '^r' fzf-history-search-backward
-bindkey -M afu '^n' down-line-or-history
-bindkey -M afu '^p' up-line-or-history
-bindkey -M afu '^a' beginning-of-line
-bindkey -M afu '^e' end-of-line
-bindkey -M afu '^b' backward-char
-bindkey -M afu '^f' forward-char
-bindkey -M afu '^k' kill-line
-bindkey -M afu '^u' backward-kill-line
-bindkey -M afu '^d' delete-char
-bindkey -M afu '^w' vi-backward-kill-word
+bindkey -M viins '^r' fzf-history-search-backward
+bindkey -M viins '^n' down-line-or-history
+bindkey -M viins '^p' up-line-or-history
+bindkey -M viins '^a' beginning-of-line
+bindkey -M viins '^e' end-of-line
+bindkey -M viins '^b' backward-char
+bindkey -M viins '^f' forward-char
+bindkey -M viins '^k' kill-line
+bindkey -M viins '^u' backward-kill-line
+bindkey -M viins '^d' delete-char
+bindkey -M viins '^w' vi-backward-kill-word
 
 # Add needed vim like keys
-bindkey -M afu '^['   vi-cmd-mode
-bindkey -M afu '^X^V' vi-cmd-mode
-bindkey -M vicmd '_'  vi-first-non-blank
-bindkey -M vicmd 'g_' vi-end-of-line
+bindkey -M viins '^['   vi-cmd-mode
+bindkey -M viins '^X^V' vi-cmd-mode
+bindkey -M vicmd '_'    vi-first-non-blank
+bindkey -M vicmd 'g_'   vi-end-of-line
 
 # ☆
-bindkey -M afu '^l'   vi-cmd-mode
-bindkey -M afu '^]'   clear-screen
-bindkey -M afu '^x^f' fzf-path-finder
-bindkey -M vicmd '^v' edit-command-line
+bindkey -M viins '^l'   vi-cmd-mode
+bindkey -M viins '^]'   clear-screen
+bindkey -M viins '^x^f' fzf-path-finder
+bindkey -M vicmd '^v'   edit-command-line

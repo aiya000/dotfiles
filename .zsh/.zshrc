@@ -113,10 +113,10 @@ function show_cmdline_states () {
 		echo "%{$bg[green]%}[${branch_name}]%{$reset_color%}"
 	}
 
-	function get_afu_vi_mode () {
-		local cmd_mode_name='vicmd'
+	function get_zle_mode () {
+		local expected_normal_mode='vicmd'
 		local keymap_name="$(echo $KEYMAP | sed -r 's/^(.)/\U\1/')"
-		local color; [ "$KEYMAP" = "$cmd_mode_name" ] && color=red || color=blue
+		local color ; [ "$KEYMAP" = "$expected_normal_mode" ] && color=red || color=blue
 		echo "%{$bg[${color}]%}[${keymap_name}]%{$reset_color%}"
 	}
 
@@ -130,7 +130,7 @@ function show_cmdline_states () {
 	}
 
 	# Result
-	echo " | $(get_git_changes)$(get_git_commits)$(get_git_stash_status)$(get_git_branch_name)$(get_afu_vi_mode)$(get_virtualenv_availability)"
+	echo " | $(get_git_changes)$(get_git_commits)$(get_git_stash_status)$(get_git_branch_name)$(get_zle_mode)$(get_virtualenv_availability)"
 }
 
 # }}}
