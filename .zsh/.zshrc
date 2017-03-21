@@ -4,7 +4,7 @@
 # Check .zprofile #
 ###################
 # The counterplan for if .zprofile never loaded
-if [ -z "`alias | grep zsh_pr_loaded`" ] ; then
+if [ -z "$(alias | grep zsh_pr_loaded)" ] ; then
 	source $ZDOTDIR/.zprofile
 fi
 
@@ -17,17 +17,13 @@ source ~/.sh_generic/aliases.sh
 ###########################################
 # Set zsh options {{{
 
-# Use modules
-autoload -U colors       && colors
-autoload -U compinit     && compinit
-autoload -U bashcompinit && bashcompinit
+autoload -U colors       && colors       # Use color variables (Ex: $bg and $fg)
+autoload -U compinit     && compinit     # Use zsh standard completion
+autoload -U bashcompinit && bashcompinit # Use bash compatible completion
 
-# Use select menu in the completion
-zstyle ':completion:*' menu select
-# Case insensitive completion
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-# list-colors uses $LS_COLORS's colors
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' menu select                        # Highlight selecting item in the menu
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case insensitive completion
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}     # list-colors uses $LS_COLORS's colors
 
 # Set opts
 setopt hist_ignore_dups
