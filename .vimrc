@@ -249,7 +249,7 @@ endif
 "---------------------"
 " Configurate plugins "
 "---------------------"
-"--- netrw --- {{{
+" --- netrw --- {{{
 
 " Enable netrw previewing
 let g:netrw_preview = 1
@@ -261,7 +261,7 @@ let g:netrw_home = g:vimrc['vim_home']
 let g:netrw_bufsettings = 'relativenumber readonly nomodifiable nomodified nowrap nobuflisted'
 
 " }}}
-"--- unite.vim --- {{{
+" --- unite.vim --- {{{
 
 "@Code(':Unite javasrc')
 " If you want to use this, you must extract JDK's src.zip here
@@ -275,7 +275,7 @@ endif
 unlet s:java_src
 
 " }}}
-"--- vim-quickrun --- {{{
+" --- vim-quickrun --- {{{
 
 let g:quickrun_no_default_key_mappings = 0
 
@@ -344,7 +344,7 @@ elseif g:vimrc['is_cygwin']
 endif
 
 " }}}
-"--- TweetVim --- {{{
+" --- TweetVim --- {{{
 
 " Tweet smoothly
 let g:tweetvim_async_post = 1
@@ -353,7 +353,7 @@ let g:tweetvim_async_post = 1
 let g:tweetvim_config_dir = expand('~/.tweetvim')
 
 " }}}
-"--- vimshell.vim --- {{{
+" --- vimshell.vim --- {{{
 
 let g:vimshell_no_save_history_commands = {
 \	'history': 1,
@@ -373,18 +373,18 @@ let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+% '
 let g:vimshell_hereis_alias_prefix = 'p_'
 
 " }}}
-"--- vimshell-kawaii.vim --- {{{
+" --- vimshell-kawaii.vim --- {{{
 
 " Her face is very useful
 let g:vimshell_kawaii_smiley = 1
 
 " }}}
-"--- foldCC --- {{{
+" --- foldCC --- {{{
 
 let g:foldCCtext_maxchars = 120
 
 " }}}
-"--- vim-submode --- {{{
+" --- vim-submode --- {{{
 
 let g:submode_timeout = 0
 
@@ -441,13 +441,13 @@ endfunction
 call dein#set_hook('vim-submode', 'hook_source', function('s:vim_submode_on_source'))
 
 " }}}
-"--- vimdoc-ja --- {{{
+" --- vimdoc-ja --- {{{
 
 " vimdoc-ja is secondary order
 set helplang=en,ja
 
 " }}}
-"--- incsearch.vim --- {{{
+" --- incsearch.vim --- {{{
 
 " Define keymaps for incsearch.vim
 let g:incsearch_cli_key_mappings = {
@@ -456,7 +456,7 @@ let g:incsearch_cli_key_mappings = {
 \}
 
 " }}}
-"--- TaskList.vim --- {{{
+" --- TaskList.vim --- {{{
 
 " TaskList finds these line
 let g:tlTokenList = ['NOTE', 'TODO', 'FIXME', 'XXX']
@@ -468,13 +468,13 @@ let g:tlWindowPosition = 1
 let g:tlRememberPosition = 1
 
 " }}}
-"--- adrone.vim --- {{{
+" --- adrone.vim --- {{{
 
 let g:adrone_say_buffer_size          = 8
 let g:adrone_home_default_keymappings = 0
 
 " }}}
-"--- vim-indent-guides --- {{{
+" --- vim-indent-guides --- {{{
 
 let g:indent_guides_default_mapping = 0
 let g:indent_guides_guide_size      = 1
@@ -498,36 +498,36 @@ augroup FileEvent
 augroup END
 
 " }}}
-"--- vim-colors-solarized --- {{{
+" --- vim-colors-solarized --- {{{
 
 " Use dark color
 let g:solarized_contrast = 'high'
 
 " }}}
-"--- aho-bakaup.vim --- {{{
+" --- aho-bakaup.vim --- {{{
 
 let g:bakaup_backup_dir  = s:backupdir
 let g:bakaup_auto_backup = 1
 
 " }}}
-"--- neosnippet.vim --- {{{
+" --- neosnippet.vim --- {{{
 
 let g:neosnippet#snippets_directory = g:vimrc['vim_home'] . '/neosnippets'
 let g:neosnippet#disable_select_select_mappings = 1
 
 " }}}
-"--- vimconsole.vim --- {{{
+" --- vimconsole.vim --- {{{
 
 let g:vimconsole#auto_redraw             = 1
 let g:vimconsole#no_default_key_mappings = 1
 
 " }}}
-"--- vim-textobj-indent --- {{{
+" --- vim-textobj-indent --- {{{
 
 let g:textobj_indent_no_default_key_mappings = 1
 
 " }}}
-"--- neocomplete.vim --- {{{
+" --- neocomplete.vim --- {{{
 
 let g:neocomplete#enable_at_startup = 1
 
@@ -538,20 +538,20 @@ let g:neocomplete#sources = {
 \}
 
 " }}}
-"--- unite-tag --- {{{
+" --- unite-tag --- {{{
 
 " Fully showing name
 let g:unite_source_tag_max_name_length  = 100
 let g:unite_source_tag_max_fname_length = 100
 
 " }}}
-"--- vim-visualstar --- {{{
+" --- vim-visualstar --- {{{
 
 " Do zzzv after execute visualstar
 let g:visualstar_extra_commands = 'zzzv'
 
 " }}}
-"--- submode-window_move.vim --- {{{
+" --- submode-window_move.vim --- {{{
 
 " Register mode starting keymapping
 let g:submode_window_move = {}
@@ -560,7 +560,7 @@ let g:submode_window_move['start_window_move_with_move_next'] = '<C-s>N'
 let g:submode_window_move['start_window_move_with_move_prev'] = '<C-s>P'
 
 " }}}
-"--- repl.vim --- {{{
+" --- repl.vim --- {{{
 
 " Use this repl
 let g:repl_filetype_repl = {
@@ -576,7 +576,7 @@ let g:repl_no_default_keymappings = 1
 let g:repl_split_command = 'vertical split'
 
 " }}}
-"--- vim-gista --- {{{
+" --- vim-gista --- {{{
 
 " Don't ask description for :Gista post
 let g:gista#command#post#interactive_description = 0
@@ -593,7 +593,7 @@ augroup PluginPrefs
 augroup END
 
 "}}}
-"--- aref-web.vim --- {{{
+" --- aref-web.vim --- {{{
 
 let g:aref_web_source = {
 \	'weblio' : {
@@ -612,13 +612,13 @@ let g:aref_web_split_vertically = v:true
 "let g:ref_source_webdict_sites['weblio'].filter = function('vimrc#plugins#weblio_filter')
 
 "}}}
-"--- autofmt ---" {{{
+" --- autofmt ---" {{{
 
 set formatexpr=autofmt#japanese#formatexpr()
 let autofmt_allow_over_tw=1
 
 "}}}
-"--- github-complete.vim --- {{{
+" --- github-complete.vim --- {{{
 
 " Use as emoji completer
 let g:github_complete_enable_issue_completion = 0
@@ -630,9 +630,16 @@ let g:github_complete_enable_neocomplete        = 1
 let g:github_complete_emoji_japanese_workaround = 1
 
 " }}}
-"--- vim-textobj-between --- {{{
+" --- vim-textobj-between --- {{{
 
 let g:textobj_between_no_default_key_mappings = 1
+
+" }}}
+" --- ale --- {{{
+
+let g:ale_linters = {
+\	'haskell': ['hlint', 'stack ghc']
+\}
 
 " }}}
 
