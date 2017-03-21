@@ -1,0 +1,12 @@
+#compdef load-my-env
+
+function _load-my-env () {
+	_values \
+		'load-my-env' \
+		haskell \
+		haskel-legacy \
+		pkgsrc \
+		ruby \
+		python \
+		all
+}
