@@ -11,14 +11,6 @@ function aliases::elem () {
 }
 
 function load-my-env () {
-	local available_envs=( \
-		haskell \
-		haskel-legacy \
-		pkgsrc \
-		ruby \
-		python \
-		all \
-	)
 	local target_name="$1"
 
 	case "$target_name" in
@@ -41,7 +33,7 @@ function load-my-env () {
 		if [ -d ~/.rbenv ] ; then
 			PATH=$PATH:$HOME/.rbenv/bin
 			PATH=$PATH:$HOME/.rbenv/versions/$(cat ~/.rbenv/version)/bin
-			eval "$($HOME/.rbenv/bin/rbenv init -)"
+			eval "$("$HOME/.rbenv/bin/rbenv" init -)"
 		fi
 		if [ -d ~/.rbenv/plugins/ruby-build/bin ] ; then
 			PATH=$PATH:$HOME/.rbenv/plugins/ruby-build/bin
