@@ -596,14 +596,17 @@ augroup END
 " --- aref-web.vim --- {{{
 
 let g:aref_web_source = {
-\	'weblio' : {
-\		'url' : 'http://ejje.weblio.jp/content/%s'
+\	'weblio': {
+\		'url': 'http://ejje.weblio.jp/content/%s'
 \	},
-\	'stackage' : {
-\		'url' : 'https://www.stackage.org/lts-7.7/hoogle?q=%s&page=1'
+\	'stackage': {
+\		'url': 'https://www.stackage.org/lts-7.7/hoogle?q=%s&page=1'
 \	},
-\	'hoogle' : {
-\		'url' : 'https://www.haskell.org/hoogle/?hoogle=%s'
+\	'hoogle': {
+\		'url': 'https://www.haskell.org/hoogle/?hoogle=%s'
+\	},
+\	'shellcheck': {
+\		'url': 'https://github.com/koalaman/shellcheck/wiki/%s'
 \	}
 \}
 
