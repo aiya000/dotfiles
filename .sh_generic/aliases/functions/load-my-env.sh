@@ -22,8 +22,7 @@ function load-my-env () {
 	local target_name="$1"
 
 	case "$target_name" in
-	haskell)
-		if [ -d ~/.stack ] ; then
+	haskell) if [ -d ~/.stack ] ; then
 			PATH=$PATH:$HOME/.stack/programs/x86_64-linux/ghc-7.8.4/bin
 		fi
 		;;
@@ -54,6 +53,9 @@ function load-my-env () {
 		load-my-env pkgsrc
 		load-my-env ruby
 		load-my-env python
+		;;
+	zsh)
+		export ZAPACK_OPTIONS='--verbose'
 		;;
 	*)
 		echo "You may haven't $target_name" > /dev/stderr

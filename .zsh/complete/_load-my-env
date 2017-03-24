@@ -8,5 +8,6 @@ function _load-my-env () {
 		pkgsrc \
 		ruby \
 		python \
+		zsh \
 		all
 }
