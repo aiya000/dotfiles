@@ -1,4 +1,6 @@
 #!/bin/bash
+
+# shellcheck disable=SC1090
 source ~/.sh_generic/premise.sh
 
 #
@@ -7,7 +9,7 @@ source ~/.sh_generic/premise.sh
 # and you can load .bashrc or another shell rc file, maybe
 #
 
-__aliases_basedir=$(dirname $0)
+__aliases_basedir=$(dirname "$0")
 
 # Override existed name {{{
 
@@ -15,6 +17,8 @@ alias ls='ls --color=auto --group-directories-first'
 alias mv='mv -i'
 alias cp='cp -i'
 alias dd='dd status=progress'
+alias df='df -h'
+alias du='du -h'
 alias_of sudo='sudo '  # Enable aliases on sudo
 alias_of mysql='mysql --pager="less -r -S -n -i -F -X"'
 alias_of hoe='stack exec --silent -- hoe'
@@ -22,7 +26,7 @@ alias_of hoe='stack exec --silent -- hoe'
 # }}}
 # Load ./aliases/** {{{
 
-for script in `ls $__aliases_basedir/aliases/functions/*.sh` ; do
+for script in $(ls $__aliases_basedir/aliases/functions/*.sh) ; do
 	source "$script"
 done
 source $__aliases_basedir/aliases/vim.sh
