@@ -7,7 +7,7 @@ function _load-my-env () {
 		haskel-legacy \
 		pkgsrc \
 		ruby \
-		python \
 		zsh \
+		ccache \
 		all
 }

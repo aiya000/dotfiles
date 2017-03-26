@@ -1,15 +1,5 @@
 #!/bin/bash
 
-function aliases::elem () {
-	for unit in $1 ; do
-		if [ "$unit" = "$1" ] ; then
-			echo 1
-			return
-		fi
-	done
-	echo 0
-}
-
 function load-my-env () {
 	local target_name="$1"
 
@@ -44,10 +34,16 @@ function load-my-env () {
 		load-my-env haskell-legacy
 		load-my-env pkgsrc
 		load-my-env ruby
-		load-my-env python
+		load-my-env zsh
 		;;
 	zsh)
 		export ZAPACK_OPTIONS='--verbose'
+		;;
+	ccache)
+		export CCACHE_DISABLE=0
+		export CCACHE_NODISABLE=1
+		export CCACHE_BASEDIR=$HOME/hdd/tmp/ccache
+		export CCACHE_DIR=$HOME/hdd/tmp/ccache
 		;;
 	*)
 		echo "You may haven't $target_name" > /dev/stderr
