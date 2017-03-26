@@ -841,9 +841,10 @@ AlterCommand tabnew TabnewOverridden
 CmdCnoreabbr CdBufDir cd %:p:h
 
 " aref-web.vim
-CmdCnoreabbr Weblio   Aref weblio
-CmdCnoreabbr Stackage Aref stackage
-CmdCnoreabbr Hoogle   Aref hoogle
+CmdCnoreabbr Hoogle     Aref hoogle
+CmdCnoreabbr ShellCheck Aref shellcheck
+CmdCnoreabbr Stackage   Aref stackage
+CmdCnoreabbr Weblio     Aref weblio
 
 " TweetVim
 CmdCnoreabbr SwitchAccount TweetVimSwitchAccount
