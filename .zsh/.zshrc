@@ -48,19 +48,12 @@ source ~/.sh_generic/completion.sh
 ###################
 # Define Commands #
 ###################
-# Shortcut {{{
+# {{{
 
 alias nvim=nvime
 alias cdp=cd-finddir
 alias psf=ps-fzf
-
-# }}}
-# Others {{{
-
-# The bash like history
-alias history='fc -l 1'
-
-# Reload the zsh configrations
+alias history='fc -li 1'
 alias reload=". $ZDOTDIR/.zshrc && . $ZDOTDIR/.zprofile && echo '>> the zsh configrations are reloaded'"
 
 # }}}
