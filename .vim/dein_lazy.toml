@@ -233,5 +233,10 @@ repo  = 'itchyny/vim-haskell-indent'
 on_ft = 'haskell'
 
 [[plugins]]
-repo = 'udalov/kotlin-vim'
+repo  = 'udalov/kotlin-vim'
 on_ft = 'kotlin'
+
+[[plugins]]
+repo   = 'haya14busa/vim-open-googletranslate'
+on_cmd = 'OpenGoogleTranslate'
+on_map = '<Plug>(operator-open-googletranslate)'
