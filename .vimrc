@@ -846,6 +846,9 @@ CmdCnoreabbr ShellCheck Aref shellcheck
 CmdCnoreabbr Stackage   Aref stackage
 CmdCnoreabbr Weblio     Aref weblio
 
+" vim-open-googletranslate
+CmdCnoreabbr Google OpenGoogleTranslate
+
 " TweetVim
 CmdCnoreabbr SwitchAccount TweetVimSwitchAccount
 CmdCnoreabbr UserTimeline  TweetVimUserTimeline
@@ -1107,6 +1110,9 @@ augroup KeyMapping
 	autocmd User MyVimRc vmap i* <Plug>(textobj-between-i)
 	autocmd User MyVimRc omap a* <Plug>(textobj-between-a)
 	autocmd User MyVimRc omap i* <Plug>(textobj-between-i)
+
+	" vim-open-googletranslate
+	autocmd User MyVimRc vnoremap <silent> <leader>k "zy:OpenGoogleTranslate <C-r>z<CR>
 augroup END
 
 " }}}
