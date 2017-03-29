@@ -240,3 +240,7 @@ on_ft = 'kotlin'
 repo   = 'haya14busa/vim-open-googletranslate'
 on_cmd = 'OpenGoogleTranslate'
 on_map = '<Plug>(operator-open-googletranslate)'
+
+[[plugins]]
+repo   = 'lambdalisue/vital-System-Job'
+on_cmd = 'Vitalize'
