@@ -348,6 +348,7 @@ endif
 
 " Tweet smoothly
 let g:tweetvim_async_post = 1
+let g:twibill_use_job     = 1
 
 " Avoid unite-tweetvim lazy loading error
 let g:tweetvim_config_dir = expand('~/.tweetvim')
@@ -1188,9 +1189,7 @@ augroup KeyMapping
 
 	autocmd User MyVimRc vnoremap <C-l> <Esc>
 	autocmd User MyVimRc vnoremap i:    :Alignta
-	autocmd User MyVimRc vnoremap <silent> <leader>k :<C-u>call <SID>cursor_up_to_lid()<CR>
-	autocmd User MyVimRc vnoremap <silent> <leader>j :<C-u>call <SID>cursor_down_to_ground()<CR>
-	autocmd User MyVimRc vnoremap <silent> i=        :Alignta => =/1<CR>
+	autocmd User MyVimRc vnoremap <silent> i= :Alignta => =/1<CR>
 	autocmd User MyVimRc vnoremap <leader>s :sort<CR>
 
 	" Don't select blank
