@@ -1114,6 +1114,9 @@ augroup KeyMapping
 
 	" vim-open-googletranslate
 	autocmd User MyVimRc vnoremap <silent> <leader>k "zy:OpenGoogleTranslate <C-r>z<CR>
+
+	" ale
+	autocmd User MyVimRc nnoremap <silent> <C-k><C-a> :<C-u>ALEToggle<CR>
 augroup END
 
 " }}}
