@@ -645,6 +645,9 @@ let g:ale_linters = {
 \	'haskell': ['hlint', 'stack ghc']
 \}
 
+" Turn off by default
+ALEToggle
+
 " }}}
 
 call dein#end()
@@ -869,6 +872,7 @@ CmdCnoreabbr GStatus Gina status
 CmdCnoreabbr GLog GitLogViewer -500
 CmdCnoreabbr GDiff GitDiffViewer
 CmdCnoreabbr GDS GitDiffViewer --staged
+CmdCnoreabbr GDH GitDiffViewer HEAD~
 CmdCnoreabbr Lingr J6uil
 CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
 CmdCnoreabbr SessionLoad UniteSessionLoad
