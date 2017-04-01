@@ -47,11 +47,16 @@ function! s:define_default_keymaps() abort
 endfunction
 
 function! s:say() abort
+	" Copy comment detail to l:detail
 	let l:z = @z
 	normal! gg"zyG
 	let [l:detail, @z] = [@z, l:z]
+	let l:detail .= "\<CR>"
+
+	" Put detail to buffer
 	execute 'buffer' s:weechat_bufnr
 	put=l:detail
+
 	normal! i
 	quit
 endfunction
