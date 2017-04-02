@@ -869,7 +869,7 @@ CmdCnoreabbr Ghci VimShellInteractive stack exec ghci
 " Others
 CmdCnoreabbr Gist Gista post --stay
 CmdCnoreabbr GStatus Gina status
-CmdCnoreabbr GLog GitLogViewer -500
+CmdCnoreabbr GLog GitLogViewer -100
 CmdCnoreabbr GDiff GitDiffViewer
 CmdCnoreabbr GDS GitDiffViewer --staged
 CmdCnoreabbr GDH GitDiffViewer HEAD~
