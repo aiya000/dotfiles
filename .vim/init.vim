@@ -140,6 +140,7 @@ command! -bar VimConfigTab tabnew ~/.vimrc
 command! -bar Reload       so ~/.config/nvim/init.vim
 
 CmdCnoreabbr Ghci terminal stack exec ghci
+CmdCnoreabbr CLisp terminal clisp
 
 " }}}
 " Others {{{

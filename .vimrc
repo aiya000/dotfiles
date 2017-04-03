@@ -863,8 +863,9 @@ CmdCnoreabbr DeinUpdate    call dein#update()
 CmdCnoreabbr DeinLog       new \| setl buftype=nofile noreadonly modifiable ft=deinlog \| put=dein#get_log()
 CmdCnoreabbr DeinUpdateLog new \| setl buftype=nofile noreadonly modifiable ft=deinlog \| put=dein#get_updates_log()
 
-" GHCi
+" REPLs
 CmdCnoreabbr Ghci VimShellInteractive stack exec ghci
+CmdCnoreabbr CLisp VimShellInteractive clisp
 
 " Others
 CmdCnoreabbr Gist Gista post --stay
