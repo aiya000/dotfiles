@@ -2,19 +2,11 @@
 nmap <buffer><silent> <Plug>(term-weechat-open-say-buffer) :<C-u>call <SID>open_say_buffer()<CR>i
 
 " Open say buffer
-nmap <buffer> i <Plug>(term-weechat-open-say-buffer)
-nmap <buffer> I <Plug>(term-weechat-open-say-buffer)
 nmap <buffer> s <Plug>(term-weechat-open-say-buffer)
-nmap <buffer> S <Plug>(term-weechat-open-say-buffer)
-nmap <buffer> a <Plug>(term-weechat-open-say-buffer)
-nmap <buffer> A <Plug>(term-weechat-open-say-buffer)
 
 " In and out
-nnoremap <buffer> <localleader>i i
 nnoremap <buffer> <localleader>c A<C-e><C-u>/connect<Space>
 nnoremap <buffer> <localleader>j A<C-e><C-u>/join<Space>
-tnoremap <buffer> <CR> <CR><C-\><C-n>
-tnoremap <buffer> <C-j> <CR><C-\><C-n>
 
 " Easy moves
 nnoremap <buffer> J     i<C-e><C-u><M-Down><C-\><C-n>
