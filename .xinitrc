@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # - Target platforms
 #  - Arch Linux
@@ -16,13 +16,21 @@ if [ -s ~/.Xmodmap ] ; then
 	xmodmap ~/.Xmodmap
 fi
 
-# xmonad
-xsetroot -cursor_name left_ptr
-setxkbmap -layout jp
-fcitx &
-xfce4-clipman &
-dunst &
-pulseaudio --daemonize=true --start &
-xscreensaver &
-exec ~/.local/bin/xmonad-config
+## xfce4
 #exec startxfce4
+
+## Plasma
+#exec startkde
+
+## xmonad (standalone)
+#xsetroot -cursor_name left_ptr
+#setxkbmap -layout jp
+#fcitx &
+#xfce4-clipman &
+#dunst &
+#pulseaudio --daemonize=true --start &
+#xscreensaver &
+#exec ~/.local/bin/xmonad-config
+
+# xmonad + another window manager
+exec ~/.local/bin/xmonad-config
