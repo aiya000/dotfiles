@@ -28,3 +28,6 @@
 [submodule ".zsh/zapack-repos/zsh-completions"]
 	path = .zsh/zapack-repos/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions
+[submodule "xmonad-config"]
+	path = .xmonad
+	url = https://github.com/aiya000/xmonad-mycontrib
