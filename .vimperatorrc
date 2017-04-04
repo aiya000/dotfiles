@@ -145,4 +145,5 @@ command! Reload :execute 'source ' + io.getRCFile().target
 "}}}
 
 
+let mapleader='['
 " vim:ft=vim
