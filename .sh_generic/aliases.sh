@@ -66,6 +66,9 @@ if i_have git ; then
 	alias gs='git status'
 	alias gss='git stash'
 	alias gmt='git mergetool'
+	alias gsm='git submodule'
+	alias gsma='git submodule add'
+	alias gsmd='git submodule deinit'
 
 	# Set casual user.name and user.email at local
 	alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
@@ -83,6 +86,10 @@ alias lla='ls -la --color=auto --group-directories-first'
 alias x=xdg-open
 alias date-simple='date +"%Y-%m-%d"'
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
+alias mount4u.vfat=mount4u.ntfs
+alias mount4u.ext2="sudo mount -o iocharset=utf8"
+alias mount4u.ext3=mount4u.ext2
+alias mount4u.ext4=mount4u.ext2
 
 i_have docker && alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
 i_have rsync  && alias cp-with-progress='rsync --partial --progress'
