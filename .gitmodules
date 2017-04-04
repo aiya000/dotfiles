@@ -7,15 +7,6 @@
 [submodule ".config/yi/yi-rope"]
 	path = .config/yi/yi-rope
 	url = https://github.com/aiya000/yi-rope
-[submodule ".xmonad/xmonad"]
-	path = .xmonad/xmonad
-	url = https://github.com/xmonad/xmonad
-[submodule ".xmonad/xmonad-contrib"]
-	path = .xmonad/xmonad-contrib
-	url = https://github.com/xmonad/xmonad-contrib
-[submodule ".xmonad/xmonad-extras"]
-	path = .xmonad/xmonad-extras
-	url = https://github.com/xmonad/xmonad-extras
 [submodule ".zsh/zsh-zapack"]
 	path = .zsh/zsh-zapack
 	url = https://github.com/aiya000/zsh-zapack
