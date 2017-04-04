@@ -12,7 +12,7 @@ export DefaultIMModule=fcitx
 # Show 2byte chars correctly in libvte
 export VTE_CJK_WIDTH=1
 
-if [ -s ~/.Xmodmap ] ; then
+if [ -f ~/.Xmodmap ] ; then
 	xmodmap ~/.Xmodmap
 fi
 
@@ -33,4 +33,5 @@ fi
 #exec ~/.local/bin/xmonad-config
 
 # xmonad + another window manager
-exec ~/.local/bin/xmonad-config
+setxkbmap -layout us -option ctrl:swapcaps
+exec stack exec xmonad-config
