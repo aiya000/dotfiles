@@ -646,7 +646,7 @@ let g:ale_linters = {
 \}
 
 " Turn off by default
-ALEToggle
+ALEDisable
 
 " }}}
 
