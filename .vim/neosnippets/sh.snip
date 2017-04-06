@@ -17,6 +17,20 @@ options head
     elif [ ${1:#:condition} ] ; then
         ${0:TARGET}
 
+snippet if_extended
+alias ife
+abbr    if [[ __ ]] ; then __ fi
+options head
+    if [[ ${1:#:condtion} ]] ; then
+        ${0}
+    fi
+
+snippet elif_extended
+alias elife
+options head
+    elif [[ ${1:#:condition} ]] ; then
+        ${0:TARGET}
+
 alias   for
 abbr    for __ in __ ; do __ done
 options head
