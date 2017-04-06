@@ -53,6 +53,7 @@ source ~/.sh_generic/completion.sh
 alias nvim=nvime
 alias cdp=cd-finddir
 alias psf=ps-fzf
+alias ki=killing-art
 alias history='fc -li 1'
 alias reload=". $ZDOTDIR/.zshrc && . $ZDOTDIR/.zprofile && echo '>> the zsh configrations are reloaded'"
 
