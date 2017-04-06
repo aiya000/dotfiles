@@ -114,6 +114,7 @@ augroup NeoKeyMapping
 	autocmd User MyNVimRc tnoremap <C-\><C-n> <Esc>
 	autocmd User MyNVimRc tnoremap <C-[>      <Esc>
 	autocmd User MyNVimRc tnoremap <C-]>      <C-l>
+	autocmd User MyNVimRc tnoremap <leader><C-n> <C-\><C-n>
 
 	"}}}
 	" normal mode "{{{
