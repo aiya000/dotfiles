@@ -19,7 +19,8 @@ function! s:read_git_diff(args)
 endfunction
 
 function! FoldExprOfGitDiff(lnum)
-	return getline(a:lnum)     =~# '^@@' ? '>1'
-	\    : getline(a:lnum + 1) =~# '^@@' ? '<1'
-	\                                    : '='
+	return getline(a:lnum)     =~# '^@@'   ? '>1'
+	\    : getline(a:lnum + 1) =~# '^diff' ? '<1'
+	\    : getline(a:lnum + 1) =~# '^@@'   ? '<1'
+	\                                      : '='
 endfunction
