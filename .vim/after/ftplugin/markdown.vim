@@ -13,6 +13,8 @@ setl completefunc=github_complete#complete
 setl omnifunc=github_complete#complete
 let &commentstring = '<!--%s-->'
 
+" require `npm install -g doctoc`
+nnoremap <silent><buffer> <localleader>R :<C-u>w<CR>:!doctoc %<CR>:edit %<CR>
 nnoremap <silent><buffer> <localleader>r :<C-u>PrevimOpen<CR>
 nnoremap <silent><buffer> <Esc>          <Esc>:syntax sync fromstart<CR>
 nmap             <buffer> <C-l>          <Esc>
