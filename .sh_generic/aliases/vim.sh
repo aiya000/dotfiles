@@ -23,6 +23,8 @@ function nvim-session () {
 	nvim -c "UniteSessionLoad ${1}"
 }
 
+alias nvimdiff='\nvim -d'
+
 alias vimless='nvim - -c "setl buftype=nofile nolist | nnoremap <buffer> Q :<C-u>q<CR>"'
 alias vimls='nvim -c "read! ls" -c "nnoremap <buffer> Q :<C-u>q<CR> | setl nolist buftype=nofile | normal! Gddgg"'
 function vimman () {
