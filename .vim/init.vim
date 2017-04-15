@@ -151,6 +151,9 @@ command! -bar NVimConfigTab tabnew ~/.config/nvim/init.vim
 
 command! -bar Weechat call nvimrc#open_weechat()
 
+" Git
+CmdCnoreabbr GAP tabnew \| terminal git add -p
+
 " }}}
 
 doautocmd User MyNVimRc
