@@ -984,6 +984,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
 
 	autocmd User MyVimRc inoremap <silent> <C-k><C-w> <C-o>:setl wrap! wrap?<CR>
+	autocmd User MyVimRc inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
 augroup END
 
 " }}}
@@ -1156,6 +1157,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-r>     :<C-u>Reload<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>r         :<C-u>let &filetype=&filetype<CR>:filetype detect<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>e         :<C-u>EditOverridden %<CR>
+	autocmd User MyVimRc nnoremap <silent> <C-k>E         :<C-u>EditOverridden! %<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-l>     :<C-u>nohlsearch<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-j>     :<C-u>write<CR>
 	autocmd User MyVimRc nnoremap <silent> <C-k>J         :<C-u>wall \| echo 'written all !'<CR>
@@ -1196,7 +1198,7 @@ augroup KeyMapping
 	" visual mode {{{
 
 	autocmd User MyVimRc vnoremap <C-l> <Esc>
-	autocmd User MyVimRc vnoremap i:    :Alignta
+	autocmd User MyVimRc vnoremap i:    :Alignta<Space>
 	autocmd User MyVimRc vnoremap <silent> i= :Alignta => =/1<CR>
 	autocmd User MyVimRc vnoremap <leader>s :sort<CR>
 
