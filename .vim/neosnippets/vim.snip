@@ -17,3 +17,11 @@ options head
     for ${1:#:var} in ${2:iter}
         ${0:TARGET}
     endfor
+
+snippet try
+options head
+    try
+        ${1}
+    catch
+        ${2}
+    endtry
