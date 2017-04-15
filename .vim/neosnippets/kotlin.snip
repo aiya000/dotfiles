@@ -46,3 +46,10 @@ abbr if (__) __
 snippet else
 abbr else _
     else ${0}
+
+snippet when
+abbr when __ { __ -> __}
+options indent
+    when${1} {
+        ${2} -> ${3}
+    }
