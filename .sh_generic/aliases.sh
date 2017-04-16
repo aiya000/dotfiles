@@ -93,6 +93,7 @@ i_have rsync  && alias cp-with-progress='rsync --partial --progress'
 i_have watch  && alias wifi-hardware-check='watch -n1 rfkill list all'
 i_have ctags  && alias ctags-r='ctags --tag-relative --recurse --sort=yes'
 i_have tmux   && alias tmuxa='tmux attach'
+i_have nmcli  && alias nmcli-connect-wifi='nmcli device wifi connect'
 
 # Generate items for autotools
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
