@@ -122,3 +122,9 @@ repo = 'thinca/vim-textobj-between'
 
 [[plugins]]
 repo = 'w0rp/ale'
+
+[[plugins]]
+repo = 'vim-jp/vital.vim'
+
+[[plugins]]
+repo = 'lambdalisue/vital-System-Job'
