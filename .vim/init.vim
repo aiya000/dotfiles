@@ -142,6 +142,7 @@ command! -bar Reload       so ~/.config/nvim/init.vim
 
 CmdCnoreabbr Ghci terminal stack exec ghci
 CmdCnoreabbr CLisp terminal clisp
+CmdCnoreabbr GCommit tabnew \| terminal git commit --verbose
 
 " }}}
 " Others {{{
