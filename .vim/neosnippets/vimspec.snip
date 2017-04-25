@@ -42,3 +42,17 @@ snippet AssertEquals
 alias   asseq asserteq assertequals
 abbr    Assert Equals()
     Assert Equals(${1:#:val1}, ${2:#:val2})
+
+snippet function
+alias   func
+abbr    function! () abort
+options head
+    function! ${1:#:name}(${2:#:args}) abort
+        ${0:TARGET}
+    endfunction
+
+snippet if
+options head
+    if ${1:#:condition}
+        ${0:TARGET}
+    endif
