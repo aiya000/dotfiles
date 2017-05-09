@@ -56,6 +56,8 @@ if i_have git ; then
 	alias gdh='git diff HEAD~..HEAD'
 	alias gds='git diff --staged'
 	alias gl='git log -500'
+	alias glo='git log --oneline -500'
+	alias glp='git log --patch -500'
 	alias gmv='git mv'
 	alias gr='git rebase'
 	alias gra='git rebase --abort'
