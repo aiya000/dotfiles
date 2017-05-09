@@ -4,4 +4,4 @@ let b:undo_ftplugin = 'setl ' . join([
 \	'shiftwidth<'
 \])
 
-set expandtab tabstop=2 shiftwidth=2
+setl expandtab tabstop=2 shiftwidth=2
