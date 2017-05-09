@@ -1152,7 +1152,7 @@ augroup KeyMapping
 
 	autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=scratch<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| resize 5<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>q        :<C-u>call vimrc#keys#bufclose_filetype(['help', 'man', 'qf', 'scratch', 'aref_web', 'quickrun', 'gina-status', 'gitlogviewer', 'gitdiffviewer', 'gitshowviewer', 'gitreflogviewer'])<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>q        :<C-u>call vimrc#keys#bufclose_filetype(['help', 'man', 'qf', 'scratch', 'aref_web', 'quickrun', 'gina-status', 'gitlogviewer', 'gitdiffviewer', 'gitshowviewer', 'gitreflogviewer', 'netrw'])<CR>
 	autocmd User MyVimRc nnoremap <silent> <leader><leader><leader> :<C-u>echohl ErrorMsg \| echo "Don't rush it, keep cool." \| echohl None<CR>
 
 	autocmd User MyVimRc nnoremap <silent> <C-k><C-r>     :<C-u>Reload<CR>
