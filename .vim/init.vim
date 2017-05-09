@@ -91,14 +91,14 @@ endfunction "}}}
 " Override vimrc {{{
 
 augroup NeoKeyMapping
-	" Disable loaded neocomplete keymappings
-	autocmd User MyNVimRc inoremap <C-k><C-i> <NOP>
-	autocmd User MyNVimRc inoremap <CR>       <CR>
-	autocmd User MyNVimRc inoremap <Tab>      <Tab>
+	" Turn off the neocomplete keymaps
+	autocmd User MyNVimRc inoremap <CR> <CR>
+	autocmd User MyNVimRc inoremap <Tab> <Tab>
 
 	" deoplete.nvim
 	autocmd User MyNVimRc inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
 	autocmd User MyNVimRc inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
+	autocmd User MyNVimRc imap <C-k><C-i> deoplete#toggle()
 augroup END
 
 " }}}
