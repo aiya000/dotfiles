@@ -98,7 +98,7 @@ augroup NeoKeyMapping
 	" deoplete.nvim
 	autocmd User MyNVimRc inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
 	autocmd User MyNVimRc inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
-	autocmd User MyNVimRc imap <C-k><C-i> deoplete#toggle()
+	autocmd User MyNVimRc imap <C-k><C-i> <C-o>:call deoplete#toggle()<CR>
 augroup END
 
 " }}}
