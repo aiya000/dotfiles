@@ -1,8 +1,10 @@
 command! -bar VimConfig    e $MYVIMRC
 command! -bar VimConfigTab tabnew $MYVIMRC
 command! -bar Reload       so $MYVIMRC
-\|	if has('gui_running') && filereadable($MYGVIMRC)
-\|		so $MYGVIMRC
+\|	if has('nvim') && filereadable(expand('~/.config/nvim/init.vim'))
+\|		execute 'source' expand('~/.config/nvim/init.vim')
+\|	elseif has('gui_running') && filereadable($MYGVIMRC)
+\|		source $MYGVIMRC
 \|	endif
 
 " Edit .vim/*/
