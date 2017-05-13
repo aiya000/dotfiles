@@ -870,8 +870,10 @@ CmdCnoreabbr CLisp VimShellInteractive clisp
 " Others
 CmdCnoreabbr Gist Gista post --stay
 CmdCnoreabbr GStatus Gina status
-CmdCnoreabbr GCommit tabnew \| Gina commit --verbose
+CmdCnoreabbr GCommit tabnew \| Gina commit --verbose \| only
+CmdCnoreabbr GCAM tabnew \| Gina commit --amend --verbose \| only
 CmdCnoreabbr GLog GitLogViewer -100
+CmdCnoreabbr GLP GitLogViewer --patch -100
 CmdCnoreabbr GDiff GitDiffViewer
 CmdCnoreabbr GDS GitDiffViewer --staged
 CmdCnoreabbr GDH GitDiffViewer HEAD~
