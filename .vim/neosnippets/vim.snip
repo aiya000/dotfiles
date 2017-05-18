@@ -21,10 +21,18 @@ options head
 snippet try
 options head
     try
-        ${1}
-    catch
-        ${2}
+        ${0}
     endtry
+
+snippet catch
+options head
+    catch${1}
+        ${2}
+
+snippet finally
+options head
+    finally
+        ${0}
 
 snippet vimconsolelog
 alias log
