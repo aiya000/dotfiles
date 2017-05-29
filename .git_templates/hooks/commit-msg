@@ -1,9 +1,13 @@
-#!/bin/env zsh
-
+#!/bin/bash
 # The first line of commit-msg must not be over 50 chars
-length=$(cat "$1" | head -1 | wc -m)
-if [ $(($length - 1)) -gt 50 ] ; then
-	# ^^^ expr fix char count ^^^
+
+# Ignore revert commit
+if [[ $(grep -q '^Revert' "$1") -eq 0 ]] ; then
+	exit 0
+fi
+
+length=$(head -1 "$1" | wc -m)
+if [[ $(($length - 1)) -gt 50 ]] ; then
 	echo 'Detected invalid commit message:'
 	echo '  The commit message must not be over 50 chars'
 	exit 1
