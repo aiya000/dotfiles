@@ -71,6 +71,7 @@ if i_have git ; then
 	alias gsm='git submodule'
 	alias gsma='git submodule add'
 	alias gsmd='git submodule deinit'
+	alias gcherry='git cherry-pick'
 
 	# Set casual user.name and user.email at local
 	alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
