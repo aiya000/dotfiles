@@ -14,6 +14,15 @@ snippet import_qualified
 abbr    import qualified __ as __
     import qualified ${1} as ${2}
 
+snippet import_debug_modules
+    --TODO: Remove these import
+    import qualified System.IO.Unsafe as Debug
+    import qualified Debug.Trace as Debug
+    --
+    let target = ${1:value}
+        unsafePrintTarget = Debug.unsafePerformIO $ print target
+    in unsafePrintTarget \`seq\` target
+
 snippet pragma_option_ghc
 abbr    {-# OPTION_GHC ... #-}
 options head
