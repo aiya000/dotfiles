@@ -14,6 +14,10 @@ snippet a
 options word
     <a>${0}</a>
 
+snippet p
+options word
+    <p>${0}</p>
+
 snippet br
 options word
     <br/>
@@ -37,11 +41,11 @@ options word
 
 snippet ol
 options word
-    <ol>${1:TARGET}</ol>
+    <ol>${0:TARGET}</ol>
 
 snippet li
 options word
-    <li>${1:TARGET}</li>
+    <li>${0:TARGET}</li>
 
 snippet id
 options word
@@ -64,11 +68,11 @@ options word
     <div>${0:TARGET}</div>
 
 snippet span
-abbr    <span></span>
+abbr    <span>__</span>
     <span>${0}</span>
 
 snippet ul
-abbr    <ul></ul>
+abbr    <ul>__</ul>
     <ul>${0}</ul>
 
 snippet codepre
@@ -80,9 +84,25 @@ abbr <input type="__"/>
     <input type="${1}"/>
 
 snippet form
-abbr    <form></form>
+abbr    <form>__</form>
     <form>${0}</form>
 
 snippet button
-abbr <button></button>
+abbr <button>__</button>
     <button>${0}</button>
+
+snippet h1
+abbr <h1>__</h1>
+    <h1>${0}</h1>
+
+snippet h2
+abbr <h2>__</h2>
+    <h2>${0}</h2>
+
+snippet h3
+abbr <h3>__</h3>
+    <h3>${0}</h3>
+
+snippet h4
+abbr <h4>__</h4>
+    <h4>${0}</h4>
