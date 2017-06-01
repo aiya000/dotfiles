@@ -39,6 +39,7 @@ PATH=$PATH:$ZDOTDIR/zsh_completions
 # Favorite editor
 export EDITOR=nvim
 export VISUAL=nvim
+export BROWSER=vivaldi-stable
 
 # Using 'vim-pager' and 'vim-manpager'
 export PAGER='nvim - +PAGER -c "setl nonu nornu ft=vim-pager | only"'
