@@ -5,8 +5,10 @@ let mapleader = '['
 "set localconfig
 
 let vimport = 55355
-let hintcharacters = 'yjuiopqwertklhgfdsabnmvcxz'
 let barposition = 'bottom'
+"let hintcharacters = 'yjuiopqwertklhgfdsabnmvcxz'
+let hintcharacters = 'yjuiopwertklhgfdsabnmvcxz'
+set scalehints
 
 
 map a addQuickMark
