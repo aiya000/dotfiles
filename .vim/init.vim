@@ -60,6 +60,14 @@ augroup END
 
 " Toggle keymapping <leader>V (and etc) to :terminal or vimshell
 function! s:toggle_start_shell_mode() "{{{
+	function! s:open_terminal_as_term_zsh_with(cmd) abort
+		if !empty(a:cmd)
+			execute a:cmd
+		endif
+		terminal
+		setf term-zsh
+	endfunction
+
 	" Base properties
 	let l:SHELL_MODE = {
 	\	'vimshell' : ':VimShell',
@@ -73,10 +81,10 @@ function! s:toggle_start_shell_mode() "{{{
 
 	" Toggle keymappings
 	if s:start_shell_mode ==# l:SHELL_MODE.vimshell
-		nnoremap <silent> <leader>v         :<C-u>vsp \| terminal \| setf term-zsh<CR>
-		nnoremap <silent> <leader><leader>v :<C-u>sp \| terminal \| setf term-zsh<CR>
-		nnoremap <silent> <leader>V         :<C-u>terminal \| setf term-zsh<CR>
-		nnoremap <silent> <leader><leader>V :<C-u>tabnew \| terminal \| setf term-zsh<CR>
+		nnoremap <silent> <leader>v         :<C-u>call <SID>open_terminal_as_term_zsh_with('vsp')<CR>
+		nnoremap <silent> <leader><leader>v :<C-u>call <SID>open_terminal_as_term_zsh_with('sp')<CR>
+		nnoremap <silent> <leader>V         :<C-u>call <SID>open_terminal_as_term_zsh_with('')<CR>
+		nnoremap <silent> <leader><leader>V :<C-u>call <SID>open_terminal_as_term_zsh_with('tabnew')<CR>
 		echo 'shell mode ' . l:SHELL_MODE.terminal
 	elseif s:start_shell_mode ==# l:SHELL_MODE.terminal
 		nnoremap <silent> <leader>v         :<C-u>VimShell -split-command=vsp -toggle<CR>
