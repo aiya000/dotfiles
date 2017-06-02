@@ -62,4 +62,4 @@ function tweet-public-say() {
 
 ## :terminal
 alias nweechat='nvim -c ":terminal weechat"'
-alias nterminal='nvim +terminal'
+alias nterminal='nvim +terminal +"setf term-zsh"'
