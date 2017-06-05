@@ -67,6 +67,8 @@ if i_have git ; then
 	alias grmc='git rm --cached'
 	alias gs='git status'
 	alias gss='git stash'
+	alias gsss='git stash save'
+	alias gssl='git stash list | xargs echo'
 	alias gmt='git mergetool'
 	alias gsm='git submodule'
 	alias gsma='git submodule add'
