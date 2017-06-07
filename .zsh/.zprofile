@@ -33,6 +33,9 @@ PATH=$PATH:$HOME/.local/bin
 # zsh completions
 PATH=$PATH:$ZDOTDIR/zsh_completions
 
+# git-credential-gnome-keyring
+PATH=$PATH:/usr/lib/git-core
+
 #}}}
 # Others {{{
 
