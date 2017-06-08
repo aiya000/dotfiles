@@ -36,6 +36,7 @@ source $__aliases_basedir/aliases/vim.sh
 
 if i_have git ; then
 	# Short hands
+	git_taking_limit=100
 	alias _gr='git reset'
 	alias _grh='git reset --hard'
 	alias _grs='git reset --soft'
@@ -56,9 +57,9 @@ if i_have git ; then
 	alias gd='git diff'
 	alias gdh='git diff HEAD~..HEAD'
 	alias gds='git diff --staged'
-	alias gl='git log -500'
-	alias glo='git log --oneline -500'
-	alias glp='git log --patch -500'
+	alias gl="git log -$git_taking_limit"
+	alias glo="git log --oneline -$git_taking_limit"
+	alias glp="git log --patch -$git_taking_limit"
 	alias gmv='git mv'
 	alias gr='git rebase'
 	alias gra='git rebase --abort'
@@ -75,6 +76,8 @@ if i_have git ; then
 	alias gsma='git submodule add'
 	alias gsmd='git submodule deinit'
 	alias gcherry='git cherry-pick'
+	alias gclean='git clean -f'
+	unset git_taking_limit
 
 	# Set casual user.name and user.email at local
 	alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
