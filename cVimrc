@@ -12,6 +12,8 @@ set scalehints
 
 
 map a addQuickMark
+map b :buffer<Space>
+map B :bookmarks<Space>
 map d closeTab
 "map p  :open <C-v>
 map u :restore<Space>
