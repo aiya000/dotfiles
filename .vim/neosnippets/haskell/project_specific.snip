@@ -1,0 +1,13 @@
+snippet template_exception_throwable_instance
+options indent
+    -- | Like java.lang.$1
+    data ${1} a = $1 { ${2}Cause :: String, $2ArgumentClue :: a }
+
+    instance Show a => Show ($1 a) where
+      show ($1 cause  _) = "$1: " ++ show cause
+
+    instance (Typeable a, Show a) => Exception ($1 a)
+
+    -- | A constructor for $1 but doesn't take the clue
+    $2Exception :: String -> $1 ()
+    $2Exception = flip $1 ()

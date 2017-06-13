@@ -23,10 +23,28 @@ snippet import_debug_modules
         unsafePrintTarget = Debug.unsafePerformIO $ print target
     in unsafePrintTarget \`seq\` target
 
-snippet pragma_option_ghc
+snippet liquid_refinement_type
+abbr {-@ __ :: __ @-}
+    {-@ ${1:funcName} :: ${2} @-}
+
+snippet liquid_predicate_of_refinement_type
+abbr {__:__ | __}
+    {${1:valName}:${2:valType} | ${3:predicate}}
+
+snippet hlint_ignore
+abbr {-# ANN __ "HLint: ignore __" #-}
+    {-# ANN ${1:funcName} "HLint: ignore ${2:cause}" #-}
+
+snippet option_ghc
+alias pragma_option_ghc
 abbr    {-# OPTION_GHC ... #-}
 options head
     {-# OPTION_GHC ${1} #-}
+
+snippet pragma
+abbr    {-# LANGUAGE __ #-}
+options head
+    {-# LANGUAGE ${1} #-}
 
 snippet pragma_template_haskell
 abbr    {-# LANGUAGE TemplateHaskell #-}
