@@ -398,41 +398,10 @@ function! s:vim_submode_on_source()
 		autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'h', '<C-w><')
 		autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'l', '<C-w>>')
 
-		" Fold Mover
-		autocmd User MyVimRc call submode#enter_with('fold_move', 'n', '', '<C-s>z')
-		autocmd User MyVimRc call submode#map('fold_move', 'n', 'e', 'j', 'foldlevel(".") > 0 ? "zczjzozz"   : "zjzozz"')
-		autocmd User MyVimRc call submode#map('fold_move', 'n', 'e', 'k', 'foldlevel(".") > 0 ? "zczkzo[zzz" : "zkzo[zzz"')
-		autocmd User MyVimRc call submode#map('fold_move', 'n', '',  'h', '[z')
-		autocmd User MyVimRc call submode#map('fold_move', 'n', '',  'l', ']z')
-
 		" Buffer Changer
 		autocmd User MyVimRc call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
 		autocmd User MyVimRc call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
 		autocmd User MyVimRc call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
-
-		" Broked Line Mover
-		autocmd User MyVimRc call submode#enter_with('b_line_move', 'n', '', 'gk', 'gk')
-		autocmd User MyVimRc call submode#enter_with('b_line_move', 'n', '', 'gj', 'gj')
-		autocmd User MyVimRc call submode#enter_with('b_line_move', 'n', '', 'g0', 'g0')
-		autocmd User MyVimRc call submode#enter_with('b_line_move', 'n', '', 'g^', 'g^')
-		autocmd User MyVimRc call submode#enter_with('b_line_move', 'n', '', 'g$', 'g$')
-		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'k',  'gk')
-		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'j',  'gj')
-		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', '0',  'g0')
-		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', '^',  'g^')
-		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', '$',  'g$')
-		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', '_',  'g^')
-		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'g_', 'g$')
-		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'h',  'h')
-		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'l',  'l')
-		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'w',  'w')
-		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'W',  'W')
-		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'b',  'b')
-		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'B',  'B')
-		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'e',  'e')
-		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'E',  'E')
-		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'ge',  'ge')
-		autocmd User MyVimRc call submode#map('b_line_move', 'n', '', 'gE',  'gE')
 
 		" Continuous Buffer Deleter
 		autocmd User MyVimRc call submode#enter_with('cont_bdelete', 'n', '', '<C-s><C-w>c', ':bdelete<CR>')
