@@ -4,5 +4,5 @@ let b:undo_ftplugin = 'setl ' . join([
 \	'expandtab<'
 \])
 
-setl ts=4 sw=4 et
+setl ts=2 sw=2 et
 setl conceallevel=0
