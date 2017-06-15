@@ -37,6 +37,7 @@ repo = 'basyura/bitly.vim'
 
 [[plugins]]
 repo    = 'thinca/vim-quickrun'
+rev     = '98889e1'
 depends = 'vimproc.vim'
 on_cmd  = 'QuickRun'
 on_map  = [
@@ -140,24 +141,6 @@ repo   = 'rhysd/try-colorscheme.vim'
 on_cmd = 'TryColorscheme'
 
 [[plugins]]
-repo    = 'ujihisa/repl.vim'
-depends = [
-    'vimshell.vim',
-    'vimproc.vim'
-]
-on_cmd  = 'Repl'
-on_map  = '<Plug>(repl-run)'
-
-[[plugins]]
-repo  = 'pbrisbin/vim-syntax-shakespeare'
-on_ft = [
-    'hamlet',
-    'cassius',
-    'lucius',
-    'julius'
-]
-
-[[plugins]]
 repo  = 'thinca/vim-ft-clojure'
 on_ft = [
     'clojure',
@@ -198,10 +181,6 @@ depends = 'game_engine.vim'
 on_cmd  = 'Reversi'
 
 [[plugins]]
-repo  = 'keith/swift.vim'
-on_ft = 'swift'
-
-[[plugins]]
 repo  = 'derekwyatt/vim-scala'
 on_ft = 'scala'
 
@@ -210,14 +189,6 @@ repo  = 'rhysd/github-complete.vim'
 on_ft = [
     'markdown',
     'gitcommit'
-]
-
-[[plugins]]
-repo   = 'aiya000/nvim-vim-runner'
-on_cmd = [
-    'VimRun',
-    'VimRunTab',
-    'VimRunDo'
 ]
 
 [[plugins]]

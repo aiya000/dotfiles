@@ -1,5 +1,6 @@
 [[plugins]]
 repo = 'tyru/open-browser.vim'
+rev  = 'd0cd58e'
 
 [[plugins]]
 repo = 'Shougo/unite.vim'
@@ -9,9 +10,11 @@ repo = 'Shougo/unite.vim'
 repo  = 'Shougo/vimproc.vim'
 build = 'make'
 if    = '!(g:vimrc["is_kaoriya"] && g:vimrc["is_windows"] && !g:vimrc["has_mingw"])'
+rev   = '25cb83f'
 
 [[plugins]]
 repo = 'Shougo/vimshell.vim'
+rev  = 'd0c5bef'
 
 [[plugins]]
 repo = 'supermomonga/vimshell-kawaii.vim'
@@ -61,9 +64,11 @@ repo = 'aiya000/aho-bakaup.vim'
 
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
+rev  = '6f87e27'
 
 [[plugins]]
 repo = 'tpope/vim-surround'
+rev  = 'e49d6c2'
 
 [[plugins]]
 repo    = 'kana/vim-textobj-indent'
@@ -74,10 +79,12 @@ repo = 'kana/vim-textobj-user'
 
 [[plugins]]
 repo = 'Shougo/neocomplete.vim'
+rev  = '9617d82'
 if   = '!has("nvim")'
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
+rev  = '8bd63b7'
 if   = 'has("nvim")'
 
 [[plugins]]
@@ -97,6 +104,7 @@ depends = 'vim-textobj-user'
 
 [[plugins]]
 repo = 'tpope/vim-repeat'
+rev  = '070ee90'
 
 [[plugins]]
 repo = 'thinca/vim-visualstar'
