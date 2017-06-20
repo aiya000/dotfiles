@@ -1,0 +1,28 @@
+snippet type_family_declare
+alias type_func_declare
+abbr type family
+    type family
+
+snippet type_family_define
+alias type_func_define
+abbr type instance __ = __
+    type instance ${1:#:Pattern} ${2:a} = ${0}
+
+snippet type_family_declare_with_kind
+alias type_func_declare_with_kind
+abbr type family __ __ :: __
+    type family ${1:#:TypeName} ${2:a} :: ${0:*}
+
+snippet type_family_with_gadts
+alias type_func_with_gadts
+abbr type family __ __ where
+options indent
+    type family ${1:#:TypeName} ${2:a} where
+        $1 = ${0}
+
+snippet type_family_with_gadts_kind
+alias type_func_with_gadts_kind
+abbr type family __ __ :: __ where
+options indent
+    type family ${1:#:TypeName} ${2:a} :: ${3:*} where
+        $1 ${4:#:args} = ${0}
