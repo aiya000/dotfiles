@@ -5,6 +5,7 @@
 :set -XQuasiQuotes
 
 import Data.Text
+import Data.Char
 import Language.Haskell.TH
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
