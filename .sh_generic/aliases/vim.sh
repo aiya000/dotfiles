@@ -54,6 +54,8 @@ function vimman () {
 	nvim -c "Man ${1}" +only
 }
 
+alias vimgs='nvim +"Gina status" +only'
+
 # Plugin
 alias vimshell='nvim +VimShell'
 alias vimconsole='nvim +VimConsoleOpen'
