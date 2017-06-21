@@ -12,8 +12,10 @@ function! s:open_file() abort
 		" Open the first file
 		normal! j
 	endif
-	let filename = join(split(getline('.'), ' ')[1:])
-	execute 'tabnew' fnameescape(filename)
+	let git_top_dir       = system('git rev-parse --show-toplevel')[:-2]  " [:-2] removes a line break
+	let filename_from_top = join(split(getline('.'), ' ')[1:])  " [1:] removes a modifier
+	let filename          = fnameescape(git_top_dir . '/' . filename_from_top)
+	execute 'tabnew' filename
 endfunction
 
 function! s:show_help_in_scratch_buffer() abort
