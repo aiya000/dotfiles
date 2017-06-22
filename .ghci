@@ -3,6 +3,10 @@
 :set -XOverloadedStrings
 :set -XTemplateHaskell
 :set -XQuasiQuotes
+:set -XDataKinds
+:set -XKindSignatures
+:set -XGADTs
+:set -XPolyKinds
 
 import Data.Text
 import Data.Char
