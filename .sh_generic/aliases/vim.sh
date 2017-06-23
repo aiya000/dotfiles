@@ -26,23 +26,21 @@ function nvim-session () {
 # :SessionSaveInGitBranch compatibled command. (it is defined in dotfiles/.vim/plugin/vimrc.vim)
 # Open the nvim session which is associated the current git branch
 function nvim-session-current () {
-	local git_root_dir
 	local branch
-	local branch_
+	local repo_name
 	local session_name
 
-	#TODO: Detect git root directory
-	git_root_dir=$(pwd | sed -r 's;.*/(.*);\1;')
-	branches=$(git branch 2> /dev/null)
+	branches="$(git branch 2> /dev/null)"
 	# shellcheck disable=SC2181
 	if [ "$?" -ne 0 ] ; then
 		echo 'is here the git branch ?' > /dev/stderr
 		exit
 	fi
 
-	branch="$(echo "$branches" | grep '\*\s.*' | awk '{print $2}')"
-	branch_="$(echo "$branch" | sed -r 's;/;-;g')"
-	session_name="${git_root_dir}-${branch_}.vim"
+	repo_name="$(git rev-parse --show-toplevel | sed -r 's;.*/(.*);\1;')"
+	branch="$(echo "$branches" | grep '\*\s.*' | awk '{print $2}' | sed -r 's;/;-;g')"
+
+	session_name="${repo_name}-${branch}.vim"
 	nvim-session "$session_name"
 }
 
