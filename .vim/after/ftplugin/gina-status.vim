@@ -1,3 +1,6 @@
+let s:V      = vital#vimrc#new()
+let s:String = s:V.import('Data.String')
+
 nnoremap <buffer><silent> <C-r> :<C-u>Gina status<CR>
 nnoremap <buffer><silent> Q  :<C-u>bdelete!<CR>
 nnoremap <buffer><silent> O  :<C-u>call <SID>open_file()<CR>
@@ -12,10 +15,10 @@ function! s:open_file() abort
 		" Open the first file
 		normal! j
 	endif
-	let git_top_dir       = system('git rev-parse --show-toplevel')[:-2]  " [:-2] removes a line break
-	let filename_from_top = join(split(getline('.'), ' ')[1:])  " [1:] removes a modifier
-	let filename          = fnameescape(git_top_dir . '/' . filename_from_top)
-	execute 'tabnew' filename
+	let git_top_dir = system('git rev-parse --show-toplevel')[:-2]      " [:-2] removes a line break
+	let filename    = s:String.trim(join(split(getline('.'), ' ')[1:])) " [1:] removes a modifier
+	let filepath    = fnameescape(git_top_dir . '/' . filename)
+	execute 'tabnew' filepath
 endfunction
 
 function! s:show_help_in_scratch_buffer() abort
