@@ -30,17 +30,17 @@ function nvim-current-session () {
 	local repo_name
 	local session_name
 
-	branches="$(git branch 2> /dev/null)"
+	branch_name="$(git branch 2> /dev/null | sort | tail -1 | awk '{print $2}')"
 	# shellcheck disable=SC2181
 	if [ "$?" -ne 0 ] ; then
-		echo 'is here the git branch ?' > /dev/stderr
+		echo 'Is here the git branch ?' > /dev/stderr
 		exit
 	fi
 
 	repo_name="$(git rev-parse --show-toplevel | sed -r 's;.*/(.*);\1;')"
-	branch="$(echo "$branches" | grep '\*\s.*' | awk '{print $2}' | sed -r 's;/;-;g')"
+	branch_name_="$(echo "$branch_name" | sed -r 's;/;-;g')"
 
-	session_name="${repo_name}-${branch}.vim"
+	session_name="${repo_name}-${branch_name_}.vim"
 	nvim-session "$session_name"
 }
 
