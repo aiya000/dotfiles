@@ -152,7 +152,7 @@ function! vimrc#cmd#pull_webpage_title(target_url) abort " {{{
 	\            . '| head'
 	\            . '| sed "s;<title>\(.*\)</title>;\1;g"'
 	let l:cmd    = printf(l:precmd, a:target_url)
-	let l:result = vimrc#system(l:cmd)
+	let l:result = system(l:cmd)
 	return substitute(l:result, "\r\n", '', 'g')
 endfunction " }}}
 
