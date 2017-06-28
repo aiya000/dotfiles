@@ -25,7 +25,7 @@ function nvim-session () {
 
 # :SessionSaveInGitBranch compatibled command. (it is defined in dotfiles/.vim/plugin/vimrc.vim)
 # Open the nvim session which is associated the current git branch
-function nvim-session-current () {
+function nvim-current-session () {
 	local branch
 	local repo_name
 	local session_name
