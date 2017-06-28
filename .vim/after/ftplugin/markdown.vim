@@ -3,15 +3,15 @@ let b:undo_ftplugin = 'setl ' . join([
 \	'shiftwidth<',
 \	'expandtab<',
 \	'completefunc<',
-\	'commentstring<'
+\	'commentstring<',
+\	'conceallevel<',
 \])
 
-setl tabstop=4
-setl shiftwidth=4
-setl expandtab
+setl tabstop=4 shiftwidth=4 expandtab
 setl completefunc=github_complete#complete
 setl omnifunc=github_complete#complete
 let &commentstring = '<!--%s-->'
+setl conceallevel=2
 
 " + Require
 "   - npm install -g doctoc
