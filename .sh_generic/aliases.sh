@@ -95,6 +95,11 @@ alias lla='ls -la --color=auto --group-directories-first'
 alias x=xdg-open
 alias t=tmux
 alias e=nvim
+
+alias sb='stack build'
+alias se='stack exec --'
+alias nt=nterminal
+
 alias date-simple='date +"%Y-%m-%d"'
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
 alias mount4u.vfat=mount4u.ntfs
