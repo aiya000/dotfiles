@@ -109,12 +109,12 @@ endfunction " }}}
 " Make session_name from git repository
 " and Save current session by :UniteSessionSave
 function! vimrc#cmd#git_branch_session_save() abort " {{{
-	let repo_path = vimrc#system('git rev-parse --show-toplevel')
+	let repo_path = system('git rev-parse --show-toplevel')
 
 	let repo_name  = fnamemodify(repo_path, ':t')
 	let repo_name_ = substitute(repo_name, '\n', '', '')  " Remove tail line break
 
-	let branch_name  = system(printf('cd %s ; git branch | sort | tail -1 | awk "{print $2}"', repo_path))
+	let branch_name  = system(printf("cd %s ; git branch | sort | tail -1 | awk '{print $2}'", repo_path))  " Don't use double quote in awk
 	let branch_name_ = substitute(branch_name, '\n', '', '')  " Remove tail line break
 
 	let session_name  = repo_name_ . '-' . branch_name_
