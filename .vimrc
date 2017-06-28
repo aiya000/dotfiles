@@ -331,7 +331,13 @@ let g:quickrun_config = {
 \		'exec'    : ['kotlinc %o %s -include-runtime -d %s:p:r.jar', '%c -jar %s:p:r.jar'],
 \		'tempfile': '%{tempname()}.kt',
 \		'hook/sweep/files': '%S:p:r.jar'
-\	}
+\	},
+\	'lhaskell': {
+\		'command': 'stack exec runghc',
+\		'exec': ['grep "^>.*$" %s | sed -r "s/^>//g" > %s:p:r.hs', '%c %o %s:p:r.hs'],
+\		'tempfile': '%{tempname()}.lhs',
+\		'hook/sweep/files': '%S:p:r.hs',
+\	},
 \}
 
 " Append config of each environment
@@ -740,6 +746,8 @@ let &tags = join([
 \	'../../../.git/tags',
 \	'../../../../.git/tags'
 \], ',')
+
+let lhs_markup = 'none'
 
 " }}}
 
