@@ -77,6 +77,7 @@ if i_have git ; then
 	alias gsmd='git submodule deinit'
 	alias gcherry='git cherry-pick'
 	alias gclean='git clean -f'
+	alias gret='git return'  # See .gitconfig
 	unset git_taking_limit
 
 	# Set casual user.name and user.email at local
