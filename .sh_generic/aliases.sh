@@ -57,7 +57,7 @@ if i_have git ; then
 	alias gd='git diff'
 	alias gdh='git diff HEAD~..HEAD'
 	alias gds='git diff --staged'
-	alias gl="git log -$git_taking_limit"
+	alias gl="git log --name-only -$git_taking_limit"
 	alias glo="git log --oneline -$git_taking_limit"
 	alias glp="git log --patch -$git_taking_limit"
 	alias gmv='git mv'
@@ -97,9 +97,11 @@ alias x=xdg-open
 alias t=tmux
 alias e=nvim
 
+alias nt=nterminal
+
 alias sb='stack build'
 alias se='stack exec --'
-alias nt=nterminal
+alias srunghc='stack runghc --'
 
 alias date-simple='date +"%Y-%m-%d"'
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
