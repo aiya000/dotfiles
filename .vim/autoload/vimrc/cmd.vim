@@ -30,6 +30,12 @@ function! vimrc#cmd#cmd_cnoreabbr(...) abort " {{{
 	execute 'command!'  l:cmd_name l:UNUSED_VALUE
 endfunction " }}}
 
+" Remove CmdCnoreabbr
+function! vimrc#cmd#un_cmd_cnoreabbr(name) abort " {{{
+	execute 'cunabbr' a:name
+	execute 'delcommand' a:name
+endfunction " }}}
+
 " Reverse ranged lines
 function! vimrc#cmd#reverse_line() abort range " {{{
 	if a:firstline is a:lastline

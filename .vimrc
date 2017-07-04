@@ -805,6 +805,7 @@ call altercmd#load()
 
 " Define cnoreabbr with cmd completion
 command! -nargs=+ CmdCnoreabbr call vimrc#cmd#cmd_cnoreabbr(<f-args>)
+command! -bar -nargs=1 UnCmdCnoreabbr call vimrc#cmd#un_cmd_cnoreabbr(<q-args>)
 
 " }}}
 " AlterCommand {{{
