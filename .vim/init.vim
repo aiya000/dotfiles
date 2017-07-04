@@ -145,7 +145,8 @@ command! -bar VimConfig    e ~/.vimrc
 command! -bar VimConfigTab tabnew ~/.vimrc
 command! -bar Reload       so ~/.config/nvim/init.vim
 
-CmdCnoreabbr Ghci terminal stack exec ghci
+UnCmdCnoreabbr Ghci  | command! -bar Ghci  call nvimrc#open_stack_exec_ghci()
+UnCmdCnoreabbr Ghcie | command! -bar Ghcie call nvimrc#open_stack_ghci()
 CmdCnoreabbr CLisp terminal clisp
 CmdCnoreabbr GCommit tabnew \| terminal git commit --verbose
 CmdCnoreabbr GCAM tabnew \| terminal git commit --amend --verbose

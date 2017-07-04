@@ -843,6 +843,8 @@ CmdCnoreabbr DeinUpdateLog new \| setl buftype=nofile noreadonly modifiable ft=d
 
 " REPLs
 CmdCnoreabbr Ghci VimShellInteractive stack exec ghci
+CmdCnoreabbr Ghcie VimShellInteractive stack ghci
+"NOTE:^ 'e' suffix means 'environment of the project' xD
 CmdCnoreabbr CLisp VimShellInteractive clisp
 
 " Others
