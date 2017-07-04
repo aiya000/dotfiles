@@ -78,6 +78,7 @@ if i_have git ; then
 	alias gcherry='git cherry-pick'
 	alias gclean='git clean -f'
 	alias gret='git return'  # See .gitconfig
+	alias gp='git push'
 	unset git_taking_limit
 
 	# Set casual user.name and user.email at local
@@ -101,7 +102,9 @@ alias nt=nterminal
 
 alias sb='stack build'
 alias se='stack exec --'
+alias st='stack test'
 alias srunghc='stack runghc --'
+alias sghci='stack ghci --'
 
 alias date-simple='date +"%Y-%m-%d"'
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
