@@ -98,7 +98,10 @@ alias x=xdg-open
 alias t=tmux
 alias e=nvim
 
+alias ei=exit
+
 alias nt=nterminal
+alias ngs=vimgs
 
 alias sb='stack build'
 alias se='stack exec --'
