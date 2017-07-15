@@ -78,7 +78,8 @@ if i_have git ; then
 	alias gcherry='git cherry-pick'
 	alias gclean='git clean -f'
 	alias gret='git return'  # See .gitconfig
-	alias gp='git push'
+	alias gpush='git push'
+	alias greflog='git reflog'
 	unset git_taking_limit
 
 	# Set casual user.name and user.email at local
