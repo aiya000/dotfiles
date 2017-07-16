@@ -77,9 +77,12 @@ if i_have git ; then
 	alias gsmd='git submodule deinit'
 	alias gcherry='git cherry-pick'
 	alias gclean='git clean -f'
-	alias gret='git return'  # See .gitconfig
 	alias gpush='git push'
 	alias greflog='git reflog'
+	# These are defined in .gitconfig
+	alias gret='git return'
+	alias gtree='git tree'
+	alias gtree-all='git tree-all'
 	unset git_taking_limit
 
 	# Set casual user.name and user.email at local
@@ -117,12 +120,13 @@ alias mount4u.ext2='sudo mount -o iocharset=utf8'
 alias mount4u.ext3=mount4u.ext2
 alias mount4u.ext4=mount4u.ext2
 
-i_have docker && alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
-i_have rsync  && alias cp-with-progress='rsync --partial --progress'
-i_have watch  && alias wifi-hardware-check='watch -n1 rfkill list all'
-i_have ctags  && alias ctags-r='ctags --tag-relative --recurse --sort=yes'
-i_have tmux   && alias tmuxa='tmux attach'
-i_have nmcli  && alias nmcli-connect-wifi='nmcli device wifi connect'
+i_have docker   && alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
+i_have rsync    && alias cp-with-progress='rsync --partial --progress'
+i_have watch    && alias wifi-hardware-check='watch -n1 rfkill list all'
+i_have ctags    && alias ctags-r='ctags --tag-relative --recurse --sort=yes'
+i_have tmux     && alias tmuxa='tmux attach'
+i_have nmcli    && alias nmcli-connect-wifi='nmcli device wifi connect'
+i_have hasktags && alias hasktags-casual='hasktags --ignore-close-implementation --tags-absolute --ctags -f'
 
 # Generate items for autotools
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
