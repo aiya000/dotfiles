@@ -282,7 +282,7 @@ let g:quickrun_no_default_key_mappings = 0
 let g:quickrun_config = {
 \	'_': {
 \		'split'  : '',
-\		'runner' : 'vimproc',
+\		'runner' : 'system',
 \		'runner/vimproc/updatetime' : 10,
 \		'hook/time/enable' : 1,
 \		'outputter' : 'error',
