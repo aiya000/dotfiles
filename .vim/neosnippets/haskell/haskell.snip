@@ -26,11 +26,11 @@ snippet hlint_ignore
 abbr {-# ANN __ "HLint: ignore __" #-}
     {-# ANN ${1:funcName} "HLint: ignore ${2:cause}" #-}
 
-snippet option_ghc
-alias pragma_option_ghc
-abbr    {-# OPTION_GHC ... #-}
+snippet options_ghc
+alias pragma_options_ghc
+abbr    {-# OPTIONS_GHC ... #-}
 options head
-    {-# OPTION_GHC ${1} #-}
+    {-# OPTIONS_GHC ${1} #-}
 
 snippet pragma
 abbr    {-# LANGUAGE __ #-}
