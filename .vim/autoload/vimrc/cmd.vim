@@ -151,17 +151,6 @@ function! vimrc#cmd#decompress_to_buffer() abort " {{{
 	\	filetype=css
 endfunction " }}}
 
-" Return <title>\(.*\)</title> from web
-function! vimrc#cmd#pull_webpage_title(target_url) abort " {{{
-	let l:precmd = 'curl -sS %s'
-	\            . '| grep "<title>.*</title>"'
-	\            . '| head'
-	\            . '| sed "s;<title>\(.*\)</title>;\1;g"'
-	let l:cmd    = printf(l:precmd, a:target_url)
-	let l:result = system(l:cmd)
-	return substitute(l:result, "\r\n", '', 'g')
-endfunction " }}}
-
 " read! to created buffer or new buffer
 function! vimrc#cmd#read_bang_to_buf(cmd) abort " {{{
 	let s:created_buf = get(s:, 'created_buf', v:null)

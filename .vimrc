@@ -1159,7 +1159,7 @@ augroup KeyMapping
 	autocmd User MyVimRc inoremap <silent> <C-k><C-j> <Esc>:write<CR>
 	autocmd User MyVimRc inoremap <silent> <C-k>J     <Esc>:wall \| echo 'written all !'<CR>
 
-	autocmd User MyVimRc inoremap <silent><expr> <C-b> vimrc#keys#insert_webpage_title()
+	autocmd User MyVimRc inoremap <silent><expr> <C-b> vimrc#keys#get_webpage_title()
 
 	" }}}
 	" command-line mode {{{

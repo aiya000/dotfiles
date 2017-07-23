@@ -1,3 +1,6 @@
+let s:V    = vital#vimrc#new()
+let s:HTML = s:V.import('Web.HTML')
+
 " If list has elem, return v:true
 " otherwise return v:false
 function! s:contains(list, elem) abort " {{{
@@ -79,8 +82,7 @@ function! vimrc#keys#toggle_indent_guides() " {{{
 	IndentGuidesToggle
 endfunction " }}}
 
-" Wrap vimrc#cmd#pull_webpage_title() for insertion
-function! vimrc#keys#insert_webpage_title() abort " {{{
-	let l:result = vimrc#cmd#pull_webpage_title(@+)
-	return l:result
+" Get a detail of <title> from + register
+function! vimrc#keys#get_webpage_title() abort " {{{
+	return s:HTML.parseURL(@+).find('title').value()
 endfunction " }}}
