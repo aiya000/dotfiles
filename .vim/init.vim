@@ -159,6 +159,9 @@ command! -bar NVimConfigTab tabnew ~/.config/nvim/init.vim
 
 command! -bar Weechat call nvimrc#open_weechat()
 
+command! -bar SnowtifyBuildWatch terminal watchexec -w . snowtify build
+command! -bar SnowtifyTestWatch terminal watchexec -w . snowtify test
+
 " Git
 CmdCnoreabbr GAP tabnew \| terminal git add -p
 
