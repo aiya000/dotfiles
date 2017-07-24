@@ -10,7 +10,7 @@
 :set -XPolyKinds
 :set -XTypeOperators
 
-import Data.Text
+import Data.Text hiding (maximum)
 import Data.Char
 import Language.Haskell.TH
 import qualified Data.Text as T
