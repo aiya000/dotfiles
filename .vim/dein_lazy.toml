@@ -207,3 +207,7 @@ on_ft = 'kotlin'
 repo   = 'haya14busa/vim-open-googletranslate'
 on_cmd = 'OpenGoogleTranslate'
 on_map = '<Plug>(operator-open-googletranslate)'
+
+[[plugins]]
+repo  = 'eagletmt/ghcmod-vim'
+on_ft = 'haskell'
