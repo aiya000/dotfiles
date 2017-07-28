@@ -73,6 +73,7 @@ if i_have git ; then
 	alias gssp='git stash pop'
 	alias gssl='git stash list | xargs -I {} echo {}'
 	alias gmt='git mergetool'
+	alias gmerge='git merge --ff'
 	alias gsm='git submodule'
 	alias gsma='git submodule add'
 	alias gsmd='git submodule deinit'
@@ -111,6 +112,7 @@ alias ngs=vimgs
 alias sb='stack build'
 alias se='stack exec --'
 alias st='stack test'
+alias si='stack install'
 alias srunghc='stack runghc --'
 alias sghci='stack ghci --'
 
