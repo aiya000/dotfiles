@@ -1,3 +1,5 @@
+let s:Job = vital#vimrc#new().import('System.Job')
+
 
 " buffer open commands with filetype 'none'
 command! -bar -bang NewOverridden new<bang> | if empty(&ft) | setf none | endif
@@ -20,3 +22,7 @@ command! -bar SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
 
 " CSS
 command! -bar CssShowDecompressed call vimrc#cmd#decompress_to_buffer()
+
+" snowtify
+command! -bar SnowtifyBuild call s:Job.start('snowtify build')
+command! -bar SnowtifyTest call s:Job.start('snowtify test')
