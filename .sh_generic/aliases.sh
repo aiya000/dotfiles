@@ -129,6 +129,11 @@ i_have tmux     && alias tmuxa='tmux attach'
 i_have nmcli    && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have hasktags && alias hasktags-casual='hasktags . --ignore-close-implementation --tags-absolute --ctags -f'
 
+i_have haskdogs &&
+	function haskdogs-casual () {
+		haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=${1}"
+	}
+
 # Generate items for autotools
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
