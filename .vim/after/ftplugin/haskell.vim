@@ -22,10 +22,11 @@ function! s:haskdogs() abort
     let ctags_path  = isdirectory(git_top_dir) ? git_top_dir . '/.git/tags'
     \                                          : './tags'
     call s:Job.start(printf('haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=%s"', ctags_path), {
-    \   'on_exit' : {_, __, ___ ->
-    \       executable('notify-send')
-    \         ? system(printf('notify-send "ftplugin/haskell" "haskdogs may generated ctags to %s"', ctags_path))
-    \         : s:M.echomsg('None', 'haskdogs may generated ctags to ' . ctags_path)
-    \   }
+    \   'on_exit' : {_, __, ___ -> s:M.echo('None', 'haskdogs may generated ctags to ' . ctags_path)}
     \})
+    "\   'on_exit' : {_, __, ___ ->
+    "\       executable('notify-send')
+    "\         ? system(printf('notify-send "ftplugin/haskell" "haskdogs may generated ctags to %s"', ctags_path))
+    "\         : s:M.echo('None', 'haskdogs may generated ctags to ' . ctags_path)
+    "\   }
 endfunction
