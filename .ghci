@@ -1,4 +1,4 @@
-:set prompt "\001\ESC[93m\002%s\001\ESC[34;1m\002>\001\ESC[0;48;05;233m\002 "
+:set prompt "\001\ESC[93m\002%s\001\ESC[34;1m\002\n>>>\001\ESC[0;48;05;233m\002 "
 :set editor vim
 :set +m
 :set -XOverloadedStrings
@@ -10,8 +10,11 @@
 :set -XPolyKinds
 :set -XTypeOperators
 
-import Data.Text hiding (maximum)
+import Control.Lens
+import Control.Lens.Prism
+import Control.Lens.TH
 import Data.Char
+import Data.Text hiding (maximum, words)
 import Language.Haskell.TH
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
