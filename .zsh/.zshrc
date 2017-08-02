@@ -1,5 +1,11 @@
 #!/usr/bin/env zsh
 
+# The order of the loading
+# 1. ~/.zsh/.zprofile
+# 2. ~/.zsh/.zshrc
+# 3. ~/.zshrc_env
+# 4. ~/.zshrc_private
+
 ###################
 # Check .zprofile #
 ###################
@@ -164,6 +170,10 @@ esac
 # If it exists, load environment config
 if [ -f ~/.zshrc_env ] ; then
 	source ~/.zshrc_env
+fi
+
+if [ -f ~/.zshrc_private ] ; then
+	source ~/.zshrc_private
 fi
 
 # Export Loaded Archive
