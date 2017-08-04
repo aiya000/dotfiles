@@ -20,3 +20,10 @@ snippet readln
 abbr    Console.ReadLine()
 options word
     Console.ReadLine()
+
+snippet method
+abbr func function
+options head
+    ${1:public} ${2:void} ${3:#:Name}(${4:args}) {
+        ${0}
+    }
