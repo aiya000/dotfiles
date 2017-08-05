@@ -126,7 +126,7 @@ alias mount4u.ext4=mount4u.ext2
 i_have docker   && alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
 i_have rsync    && alias cp-with-progress='rsync --partial --progress'
 i_have watch    && alias wifi-hardware-check='watch -n1 rfkill list all'
-i_have ctags    && alias ctags-r='ctags --tag-relative --recurse --sort=yes'
+i_have ctags    && alias ctags-casual='ctags --tag-relative --recurse --sort=yes -f'
 i_have tmux     && alias tmuxa='tmux attach'
 i_have nmcli    && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have hasktags && alias hasktags-casual='hasktags . --ignore-close-implementation --tags-absolute --ctags -f'
