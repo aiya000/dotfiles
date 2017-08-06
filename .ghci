@@ -18,3 +18,4 @@ import Data.Text hiding (maximum, words)
 import Language.Haskell.TH
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
+import Data.Monoid
