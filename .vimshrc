@@ -79,5 +79,5 @@ alias reload-places='reload_places'
 alias edit-places='edit_places'
 
 # Others
-alias ctags-r='ctags --tag-relative --recurse --sort=yes'
+alias ctags-r='ctags --tag-relative --recurse --sort=yes -f'
 alias git-set-worker-name='git config --local user.name ishikawa000 && git config --local user.email yoichiro.ishikawa@eflow.jp; git config --local user.name && git config --local user.email'
