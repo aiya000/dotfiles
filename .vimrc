@@ -1277,3 +1277,6 @@ doautocmd User MyVimRc
 " }}}
 
 let g:vimrc['loaded'] = 1
+
+"TODO: Fix indent style to sw=2,ts=2,et and remove this mode lide
+" vim:noet
