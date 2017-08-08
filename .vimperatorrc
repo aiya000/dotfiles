@@ -67,11 +67,12 @@ highlight WarningMsg         background-color: #333;
 
 let mapleader = '['
 
-" Basic keys
 nmap     <C-j>     <CR>
 nnoremap <C-c>     <Esc>
 nnoremap <C-l>     <Esc>
 nnoremap <leader>l <C-l>
+nnoremap < :<C-u>tabmove -1<CR>
+nnoremap > :<C-u>tabmove +1<CR>
 
 imap     <C-j>     <CR>
 inoremap <C-c>     <Esc>
@@ -108,8 +109,8 @@ inoremap <C-h> <BS>
 inoremap <C-d> <Del>
 inoremap <C-,> <S-Left>
 inoremap <C-.> <S-Right>
-inoremap <C-[> <S-Up>
-inoremap <C-]> <S-Down>
+inoremap <C-(> <S-Up>
+inoremap <C-)> <S-Down>
 
 inoremap <C-x>      <NOP>
 inoremap <C-c>      <NOP>
@@ -135,14 +136,8 @@ nnoremap <C-k><C-l> :<C-u>nohlsearch<CR>
 "-------------------------"
 "{{{
 
-
-" Easily Search word in Wikipedia
-command! -nargs=+ WikiSearch :open wikipedia <args>
-
-
 " Easily load this config
 command! Reload :execute 'source ' + io.getRCFile().target
-
 
 "}}}
 
