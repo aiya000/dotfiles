@@ -1,9 +1,23 @@
 # Syntax
+snippet if
+abbr if (__) {__}
+options indent
+    if (${1:#:cond}) {
+        ${0}
+    }
+
 snippet else
 abbr    else {}
 options indent
     else {
         ${0:TARGET}
+    }
+
+snippet switch
+abbr switch (__) {__}
+options indent
+    switch (${1:#:var}) {
+    ${0}
     }
 
 snippet constructor
@@ -23,8 +37,7 @@ options word
 
 snippet method
 abbr func function
-options head
-    ${1:public} ${2:void} ${3:#:Name}(${4:args}) {
+    ${1:void} ${2:#:Name}(${3:args}) {
         ${0}
     }
 
