@@ -3,7 +3,6 @@ repo    = 'basyura/TweetVim'
 depends = [
     'open-browser.vim',
     'unite.vim',
-    'vimproc.vim',
     'unite-outline',
     'twibill.vim',
     'bitly.vim',

@@ -5,11 +5,10 @@ rev  = 'd0cd58e'
 [[plugins]]
 repo = 'Shougo/unite.vim'
 
-#TODO: Fix readability for 'if'
 [[plugins]]
 repo  = 'Shougo/vimproc.vim'
 build = 'make'
-if    = '!(g:vimrc["is_kaoriya"] && g:vimrc["is_windows"] && !g:vimrc["has_mingw"])'
+if    = '!(g:vimrc["is_kaoriya"] && g:vimrc["is_windows"])'
 rev   = '25cb83f'
 
 [[plugins]]

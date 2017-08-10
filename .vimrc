@@ -116,25 +116,14 @@ if g:vimrc['is_kaoriya'] && g:vimrc['is_windows']
 		call mkdir(g:vimrc['vim_home'])
 	endif
 
-	" Use kaoriya's vimproc
-	let s:switch_dir       = $VIM . '/switches/enabled'
-	let s:suppress_vimproc = s:switch_dir . '/disable-vimproc.vim'
-
-	" If you has mingw, use dein.vim's vimproc
-	if !g:vimrc['has_mingw'] && filereadable(s:suppress_vimproc)
-		call delete(s:suppress_vimproc)
-	elseif g:vimrc['has_mingw'] && !filereadable(s:suppress_vimproc)
-		call writefile([], s:suppress_vimproc)
-	endif
-	unlet s:suppress_vimproc
-
 	" Enable kaoriya plugins
-	for s:disf in map(['/utf-8.vim', '/vimdoc-ja.vim'], 's:switch_dir . v:val')
-		if !filereadable(s:disf)
-			call writefile([], s:disf)
+	let s:kaoriya_switch_dir = $VIM . '/switches/enabled/'
+	for s:kaoriya_plugin_flag in map(['utf-8.vim', 'vimdoc-ja.vim', 'vimproc.vim'], 's:kaoriya_switch_dir . v:val')
+		if !filereadable(s:kaoriya_plugin_flag)
+			call writefile([], s:kaoriya_plugin_flag)
 		endif
 	endfor
-	unlet s:switch_dir s:disf
+	unlet s:kaoriya_switch_dir s:kaoriya_plugin_flag
 
 	" Unset kaoriya default preference
 	set noignorecase nosmartcase
