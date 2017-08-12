@@ -80,6 +80,7 @@ if i_have git ; then
 	alias gcherry='git cherry-pick'
 	alias gclean='git clean -f'
 	alias gpush='git push'
+	alias gpull='git pull --rebase'
 	alias greflog='git reflog'
 	# These are defined in .gitconfig
 	alias gret='git return'
