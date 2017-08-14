@@ -20,6 +20,27 @@ options indent
     ${0}
     }
 
+snippet try
+abbr try {__}
+options indent
+    try {
+        ${0}
+    }
+
+snippet catch
+abbr catch (__) {__}
+options indent
+    catch (${1:Exception} e) {
+        ${0}
+    }
+
+snippet finally
+abbr finally {__}
+options indent
+    finally {
+        ${0}
+    }
+
 snippet constructor
 abbr    ClassName(__) {__}
     `expand('%:t:r')`(${1:#:Parameter}) {${0}}
@@ -37,9 +58,7 @@ options word
 
 snippet method
 abbr func function
-    ${1:void} ${2:#:Name}(${3:args}) {
-        ${0}
-    }
+    ${1:void} ${2:#:Name}(${3:args}) ${0}
 
 snippet summary
 abbr <summary>__</summary>
