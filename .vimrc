@@ -838,7 +838,7 @@ CmdCnoreabbr CLisp VimShellInteractive clisp
 
 " Others
 CmdCnoreabbr Gist Gista post --stay
-CmdCnoreabbr GStatus Gina status
+CmdCnoreabbr GStatus Gina status -s
 CmdCnoreabbr GCommit tabnew \| Gina commit --verbose \| only
 CmdCnoreabbr GCAM tabnew \| Gina commit --amend --verbose \| only
 CmdCnoreabbr GLog GitLogViewer -100
@@ -1153,7 +1153,7 @@ augroup KeyMapping
 	" }}}
 	" command-line mode {{{
 
-	autocmd User MyVimRc cmap     <C-]>      \<\>[Left][Left]
+	autocmd User MyVimRc cmap     <C-]>      \m\C\<\>[Left][Left]
 	autocmd User MyVimRc cnoremap <C-b>      <Left>
 	autocmd User MyVimRc cnoremap <C-f>      <Right>
 	autocmd User MyVimRc cnoremap <C-a>      <Home>
