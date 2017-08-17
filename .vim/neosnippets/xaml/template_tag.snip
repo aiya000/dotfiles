@@ -60,3 +60,11 @@ options head indent
     <x:Array Type="{x:Type System:${1:String}}">
         <system:$1>${2:#:Value}</system:$1>
     </x:Array>
+
+snippet CommandBinding_template
+abbr <CommandBinding Command="__" Executed="__" CanExecute="__"/>
+    <CommandBinding Command="${1:#:Resoruce}" Executed="${2:#:vmMethodName}" CanExecute="${3:#:vmMethodName}"/>
+
+snippet RoutedCommand_template
+abbr <__:RoutedCommnad x:Key="__"/>
+    <${1:input}:RoutedCommnad x:Key="${2:#:KeyName}"/>

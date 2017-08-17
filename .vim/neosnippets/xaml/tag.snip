@@ -196,3 +196,26 @@ abbr    <WrapPanelOpacityMask></WrapPanelOpacityMask>
 snippet WrapPanel_surround
 abbr    <WrapPanel></WrapPanel>
     <WrapPanel>${0}</WrapPanel>
+
+snippet Interaction_Triggers_surround_template
+    <${1:i}:Interaction.Triggers>
+        <$1:EventTrigger EventName="${2:Click}">
+            <$1:InvokeCommandAction Command="{Binding ${3:#:An_ICommand}}"/>
+        </$1:EventTrigger>
+    </$1:Interaction.Triggers>
+
+snippet Interaction_Triggers_surround
+abbr <__:Interaction.Triggers>__</__:Interaction.Triggers>
+    <${1:i}:Interaction.Triggers>${0}</$1:Interaction.Triggers>
+
+snippet EventTrigger_surround
+abbr <__:EventTrigger EventName="__">__</__:EventTrigger>
+    <${1:i}:EventTrigger EventName="${2:Click}">${0}</$1:EventTrigger>
+
+snippet InvokeCommandAction
+abbr <__:InvokeCommandAction Command="{Binding __}"/>
+    <${1:i}:InvokeCommandAction Command="{Binding ${2:#:An_ICommand}}"/>
+
+snippet RoutedCommand
+abbr <__:RoutedCommnad/>
+    <${1:input}:RoutedCommnad/>
