@@ -760,10 +760,12 @@ augroup END
 " :P
 "autocmd UserEvent UserGettingBored * echo 'sugar'
 
-" RelativeNumber is used current window only
 augroup UserEvent
+	" RelativeNumber is used current window only
 	autocmd BufEnter,WinEnter * if &number | setl relativenumber | end
 	autocmd BufLeave,Winleave * setl norelativenumber
+
+	autocmd InsertEnter * call vimrc#autocmd#enable_input_completion()
 augroup END
 
 " Hide relativenumber when OverCommandLine entered
