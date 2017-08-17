@@ -2,7 +2,7 @@ snippet Button
 abbr <Button/>
     <Button${0}/>
 
-snippet ButtonSurround
+snippet Button_surround
 abbr <Button></Button>
     <Button>${0}</Button>
 
@@ -18,7 +18,7 @@ snippet ComboBoxItem
 abbr    <ComboBoxItem/>
     <ComboBoxItem${0}/>
 
-snippet DataGrid_ColumnsSurround
+snippet DataGrid_Columns_surround
 abbr <DataGrid.Columns></DataGrid.Columns>
     <DataGrid.Columns>${0}</DataGrid.Columns>
 
@@ -43,7 +43,7 @@ snippet DatePicker
 abbr    <DatePicker/>
     <DatePicker${0}/>
 
-snippet DockPanelSurround
+snippet DockPanel_surround
 abbr    <DockPanel></DockPanel>
     <DockPanel>${0}</DockPanel>
 
@@ -71,7 +71,7 @@ snippet Grid_RowDefinitionsSurrond
 abbr    <Grid.RowDefinitions></Grid.RowDefinitions>
     <Grid.RowDefinitions>${0}</Grid.RowDefinitions>
 
-snippet GridSurround
+snippet Grid_surround
 abbr    <Grid></Grid>
     <Grid>${0}</Grid>
 
@@ -83,7 +83,7 @@ snippet GridViewColumn
 abbr    <GridViewColumn/>
     <GridViewColumn${0}/>
 
-snippet LinearGradientBrushSurround
+snippet LinearGradientBrush_surround
 abbr    <LinearGradientBrush></LinearGradientBrush>
     <LinearGradientBrush>${0}</LinearGradientBrush>
 
@@ -115,7 +115,7 @@ snippet ResourceDictionary
 abbr    <ResourceDictionary/>
     <ResourceDictionary${0}/>
 
-snippet ResourceDictionarySurround
+snippet ResourceDictionary_surround
 abbr    <ResourceDictionary></ResourceDictionary>
     <ResourceDictionary>${0}</ResourceDictionary>
 
@@ -139,11 +139,11 @@ snippet SolidColorBrush
 abbr <SolidColorBrush/>
     <SolidColorBrush${0}/>
 
-snippet StyleSurround
+snippet Style_surround
 abbr    <Style></Style>
     <Style>${0}</Style>
 
-snippet StackPanelSurround
+snippet StackPanel_surround
 abbr    <StackPanel></StackPanel>
     <StackPanel>${0}</StackPanel>
 
@@ -163,11 +163,11 @@ snippet TextBlock
 abbr <TextBlock/>
     <TextBlock${0}/>
 
-snippet TriggerSurround
+snippet Trigger_surround
 abbr    <Trigger></Trigger>
     <Trigger>${0}</Trigger>
 
-snippet UserControlSurround
+snippet UserControl_surround
 abbr    <UserControl></UserControl>
 options indent
     <UserControl x:Class="${1:#:ClassPath}"
@@ -181,7 +181,7 @@ options indent
 snippet Window_CommandBindingsSurrond
     <Window.CommandBindings>${0}</Window.CommandBindings>
 
-snippet WindowSurround
+snippet Window_surround
 abbr    <Window></Window>
 options indent
     <Window x:Class="${1:#:ClassPath}"
@@ -189,21 +189,10 @@ options indent
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             Title="${2:Window}" Width="${3:525}" Height="${4:350}">${0}</Window>
 
-snippet WrapPanel_OpacityMaskSurround
+snippet WrapPanel_OpacityMask_surround
 abbr    <WrapPanelOpacityMask></WrapPanelOpacityMask>
     <WrapPanel.OpacityMask>${0}</WrapPanel.OpacityMask>
 
-snippet WrapPanelSurround
+snippet WrapPanel_surround
 abbr    <WrapPanel></WrapPanel>
     <WrapPanel>${0}</WrapPanel>
-
-
-# Abstract
-
-snippet A_DataContext_surround
-abbr <__.DataContext>__</__DataContext>
-    <${1}.DataContext>${0}</$1.DataContext>
-
-snippet A_Resources_surround
-abbr <__.Resources>__</__.Resources>
-    <${1}.Resources>${0}</$1.Resources>
