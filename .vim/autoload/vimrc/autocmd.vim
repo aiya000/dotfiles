@@ -1,4 +1,8 @@
 " Enable neocomplete or deoplete
 function! vimrc#autocmd#enable_input_completion() abort " {{{
-    NeoCompleteUnlock
+    if has('nvim')
+        call deoplete#enable()
+    else
+        NeoCompleteUnlock
+    endif
 endfunction " }}}
