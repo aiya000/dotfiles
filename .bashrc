@@ -1,5 +1,6 @@
 #!/bin/bash
-source ~/.sh_generic/helper.sh
+source ~/.sh_generic/completion.sh
+source ~/.sh_generic/aliases.sh
 
 ###################
 # Check .zprofile #
@@ -12,12 +13,6 @@ fi
 ############################################
 # Configure bash with the local conditions #
 ############################################
-# Define global variables {{{
-
-in_linux=$(is_your_os_name Linux)
-in_cygwin=$(is_your_os_name Cygwin)
-
-# }}}
 # Set the bash options {{{
 
 set -o ignoreeof  # Disable logoff by Ctrl + D
@@ -74,7 +69,8 @@ bind -m vi-command -x '"\C-k\C-r": . ~/.bashrc && echo ">> bash source reloaded"
 	&& PATH=$PATH:$HOME/.rbenv/plugins/ruby-build/bin
 
 # virtualenv with virtualenvwrapper
-[ -n $(which virtualenvwrapper.sh) ] \
+which virtualenvwrapper.sh > /dev/null 2>&1
+[ "$?" -eq 0 ] \
 	&& export WORKON_HOME=$HOME/.virtualenvs \
 	&& source $(which virtualenvwrapper.sh)
 
@@ -84,48 +80,11 @@ bind -m vi-command -x '"\C-k\C-r": . ~/.bashrc && echo ">> bash source reloaded"
 
 
 # }}}
-# Load the scripts of some software {{{
-
-# Obey how to use git-completion.bash
-if [ -f /usr/share/bash-completion/completions/git -a ! -f ~/.bash_completion_git ] ; then
-	# Ubuntu
-	cp /usr/share/bash-completion/completions/git ~/.bash_completion_git
-elif [ -f /etc/bash_completion.d/git -a ! -f ~/.bash_completion_git ] ; then
-	# Cygwin
-	cp /etc/bash_completion.d/git ~/.bash_completion_git
-fi
-
-# Use git-completion
-if [ -f ~/.bash_completion_git ] ; then
-	source ~/.bash_completion_git
-fi
-
-# Use travis-completion
-if [ -f ~/.travis/travis.sh ] ; then
-	source ~/.travis/travis.sh
-fi
-
-# Use fzf-completion
-#if [ -f /usr/share/fzf/key-bindings.bash ] ; then
-#	source /usr/share/fzf/key-bindings.bash
-#fi
-
-# Use stack-compleetion
-if [ -s "`which stack`" ] ; then
-	eval "$(stack --bash-completion-script stack)"
-fi
-
-# }}}
 
 
 ###################
 # Define Commands #
 ###################
-# Load general aliases {{{
-
-source ~/.sh_generic/aliases.sh
-
-# }}}
 # Override default {{{
 
 alias vim=vime
@@ -163,18 +122,25 @@ unset local_plugins plugin_dir
 
 
 # For each environment
-if [ $in_linux -eq 1 ] ; then
+case $(uname) in
+Linux )
 	source ~/.sh_generic/linux.sh
-elif [ $in_cygwin -eq 1 ] ; then
+	;;
+CYGWIN_NT-10.0 )
 	source ~/.sh_generic/cygwin.sh
-	HOME=/home/$USER
 	PATH=$PATH:/cygdrive/c/Windows/system32:/cygdrive/c/Windows
-fi
+	;;
+esac
 
 # If it exists, load environment config
 if [ -f ~/.bashrc_env ] ; then
 	source ~/.bashrc_env
 fi
+
+# Load plugins
+source ~/.bashfiles/plugin/shell_kawaii.sh
+source ~/.bashfiles/plugin/hereis.sh
+source ~/.bashfiles/plugin/tovim.sh
 
 # Export Loaded Archive
 alias rc_loaded='echo "rc_loaded"'

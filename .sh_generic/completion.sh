@@ -12,7 +12,8 @@ if [ -f ~/.travis/travis.sh ] ; then
 fi
 
 # Use stack-completion
-if [ -s "$(type stack)" ] ; then
+type stack > /dev/null 2>&1
+if [ "$?" -eq 0 ] ; then
 	# This completion needs compinit and bashcompinit function
 	# > autoload -U compinit     && compinit
 	# > autoload -U bashcompinit && bashcompinit
