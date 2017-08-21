@@ -1,3 +1,11 @@
 snippet DependentUpon_surround
 abbr <DependentUpon>__</DependentUpon>
     <DependentUpon>${0:#:ParentFileName}</DependentUpon>
+
+snippet compile_template
+abbr <Compile Include="__">
+    <Compile Include="${1:#:FileName}"/>
+
+snippet compile_template_surround
+abbr <Compile Include="__">__</Compile>
+    <Compile Include="${1:#:FileName}">${0}</Compile>

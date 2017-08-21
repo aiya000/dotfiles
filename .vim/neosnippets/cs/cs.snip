@@ -70,6 +70,13 @@ options indent
         ${0}
     }
 
+snippet class
+abbr class __ {__}
+options indent
+    class ${1:#:Name} {
+        ${0}
+    }
+
 snippet constructor
 abbr    ClassName(__) {__}
     `expand('%:t:r')`(${1:#:Parameter}) {${0}}
@@ -104,3 +111,11 @@ abbr <seealso cref="__"</>
 snippet c
 abbr <c>__</c>
     <c>${0}</c>
+
+snippet example
+abbr <example>__</example>
+    <example>${0}</example>
+
+snippet code
+abbr <code>__</code>
+    <code>${0}</code>

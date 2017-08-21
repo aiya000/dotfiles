@@ -217,5 +217,9 @@ abbr <__:InvokeCommandAction Command="{Binding __}"/>
     <${1:i}:InvokeCommandAction Command="{Binding ${2:#:An_ICommand}}"/>
 
 snippet RoutedCommand
-abbr <__:RoutedCommnad/>
-    <${1:input}:RoutedCommnad/>
+abbr <__:RoutedCommand/>
+    <${1:input}:RoutedCommand/>
+
+snippet Binding_template
+abbr <Binding ElementName="__" Path="__"/>
+    <Binding ElementName="${1:#:xKey_}" Path="${2:#:Property}"/>

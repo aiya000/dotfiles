@@ -46,14 +46,6 @@ options head indent
         </Interactivity:EventTrigger>
     </Interactivity:Interaction.Triggers>
 
-snippet multi_command_parameter
-options head indent
-    <${1:#:BaseControl}.CommandParameter>
-        <MultiBinding Converter="{StaticResource ${2:converterKey}}">
-            <Binding Path="${0}"/>
-        </MultiBinding>
-    </$1.CommandParameter>
-
 snippet xArray
 abbr    <x:Array Type="__">__</x:Array>
 options head indent
@@ -68,3 +60,9 @@ abbr <CommandBinding Command="__" Executed="__" CanExecute="__"/>
 snippet RoutedCommand_template
 abbr <__:RoutedCommnad x:Key="__"/>
     <${1:input}:RoutedCommnad x:Key="${2:#:KeyName}"/>
+
+snippet MultiBinding_template_surround
+options indent
+    <MultiBinding Converter="{StaticResource ${2:converterKey}}">
+        ${0}
+    </MultiBinding>
