@@ -41,6 +41,35 @@ options indent
         ${0}
     }
 
+snippet using_resources
+alias using
+abbr using (__) {__}
+options indent
+    using (${1:#:var resource}) {
+        ${0}
+    }
+
+snippet get
+abbr get {__}
+options indent
+    get {
+        ${0}
+    }
+
+snippet set
+abbr set {__}
+options indent
+    set {
+        ${0}
+    }
+
+snippet namespace
+abbr namespace __ {__}
+options indent
+    namespace ${1:#:Name} {
+        ${0}
+    }
+
 snippet constructor
 abbr    ClassName(__) {__}
     `expand('%:t:r')`(${1:#:Parameter}) {${0}}
