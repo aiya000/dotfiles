@@ -150,6 +150,7 @@ UnCmdCnoreabbr Ghcie | command! -bar Ghcie call nvimrc#open_stack_ghci()
 CmdCnoreabbr CLisp terminal clisp
 CmdCnoreabbr GCommit tabnew \| terminal git commit --verbose
 CmdCnoreabbr GCAM tabnew \| terminal git commit --amend --verbose
+CmdCnoreabbr GAP tabnew \| terminal git add -p
 
 " }}}
 " Others {{{
@@ -161,9 +162,6 @@ command! -bar Weechat call nvimrc#open_weechat()
 
 command! -bar SnowtifyBuildWatch terminal watchexec -w . snowtify build
 command! -bar SnowtifyTestWatch terminal watchexec -w . snowtify test
-
-" Git
-CmdCnoreabbr GAP tabnew \| terminal git add -p
 
 " }}}
 

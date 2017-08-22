@@ -832,7 +832,7 @@ CmdCnoreabbr Ghcie VimShellInteractive stack ghci
 "NOTE:^ 'e' suffix means 'environment of the project' xD
 CmdCnoreabbr CLisp VimShellInteractive clisp
 
-" Others
+" Git
 CmdCnoreabbr Gist Gista post --stay
 CmdCnoreabbr GStatus Gina status -s
 CmdCnoreabbr GCommit tabnew \| Gina commit --verbose \| only
@@ -842,6 +842,9 @@ CmdCnoreabbr GLP GitLogViewer --patch -100
 CmdCnoreabbr GDiff GitDiffViewer
 CmdCnoreabbr GDS GitDiffViewer --staged
 CmdCnoreabbr GDH GitDiffViewer HEAD~
+CmdCnoreabbr GAP tabnew \| terminal git add -p \| only
+
+" Others
 CmdCnoreabbr Lingr J6uil
 CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
 CmdCnoreabbr SessionLoad UniteSessionLoad
