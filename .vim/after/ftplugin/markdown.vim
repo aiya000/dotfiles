@@ -11,7 +11,7 @@ setl tabstop=4 shiftwidth=4 expandtab
 setl completefunc=github_complete#complete
 setl omnifunc=github_complete#complete
 let &commentstring = '<!--%s-->'
-setl conceallevel=2
+setl conceallevel=0
 
 " + Require
 "   - npm install -g doctoc
