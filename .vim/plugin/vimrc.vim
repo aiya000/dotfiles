@@ -26,3 +26,9 @@ command! -bar CssShowDecompressed call vimrc#cmd#decompress_to_buffer()
 " snowtify
 command! -bar SnowtifyBuild call s:Job.start('snowtify build')
 command! -bar SnowtifyTest call s:Job.start('snowtify test')
+
+" dein.vim
+command! -bar DeinInstall   call dein#install()
+command! -bar DeinUpdate    call dein#update()
+command! -bar DeinLog       new \| setl buftype=nofile noreadonly modifiable ft=deinlog \| put=dein#get_log()
+command! -bar DeinUpdateLog new \| setl buftype=nofile noreadonly modifiable ft=deinlog \| put=dein#get_updates_log()
