@@ -16,7 +16,6 @@ export HISTIGNORE="*.bash_history*:*mount*-o*password=*"
 # Mine
 PATH=$HOME/bin:$HOME/sbin
 PATH=$PATH:$HOME/.dotfiles/bin
-PATH=$PATH:$HOME/.dotfiles/aacceessoorryy/bin
 
 # Basics
 PATH=$PATH:/bin:/sbin
