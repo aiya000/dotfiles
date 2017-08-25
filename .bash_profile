@@ -11,7 +11,9 @@ export HISTTIMEFORMAT='%Y/%m/%d %H:%M '
 export HISTIGNORE="*.bash_history*:*mount*-o*password=*"
 
 # }}}
-# Reset $PATH {{{
+# Add paths to $PATH {{{
+
+previous_paths="$PATH"
 
 # Mine
 PATH=$HOME/bin:$HOME/sbin
@@ -25,6 +27,10 @@ PATH=$PATH:$GOPATH/bin
 
 # zsh completions
 PATH=$PATH:$ZDOTDIR/zsh_completions
+
+# Recovery it
+PATH=$PATH:$previous_paths
+unset previous_paths
 
 #}}}
 # Others {{{
