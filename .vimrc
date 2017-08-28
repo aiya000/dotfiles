@@ -827,16 +827,16 @@ CmdCnoreabbr SwitchAccount TweetVimSwitchAccount
 CmdCnoreabbr UserTimeline  TweetVimUserTimeline
 
 " REPLs
-CmdCnoreabbr Ghci VimShellInteractive stack exec ghci
-CmdCnoreabbr Ghcie VimShellInteractive stack ghci
-"NOTE:^ 'e' suffix means 'environment of the project' xD
-CmdCnoreabbr CLisp VimShellInteractive clisp
+CmdCnoreabbr Ghci terminal stack exec ghci
+"NOTE: 'e' suffix means 'environment of the project' :D
+CmdCnoreabbr Ghcie terminal stack ghci
+CmdCnoreabbr CLisp terminal clisp
 
 " Git
 CmdCnoreabbr Gist Gista post --stay
 CmdCnoreabbr GStatus Gina status -s
-CmdCnoreabbr GCommit tabnew \| Gina commit --verbose \| only
-CmdCnoreabbr GCAM tabnew \| Gina commit --amend --verbose \| only
+CmdCnoreabbr GCommit tabnew \| terminal git commit --verbose \| only
+CmdCnoreabbr GCAM tabnew \| terminal git commit --amend --verbose \| only
 CmdCnoreabbr GLog GitLogViewer -100
 CmdCnoreabbr GLP GitLogViewer --patch -100
 CmdCnoreabbr GDiff GitDiffViewer
@@ -937,6 +937,12 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap          ghv   :<C-u>vsplit<CR>
 	autocmd User MyVimRc nnoremap <silent><expr> gH  ('mZ:tabnew<CR>`Zzz'          . (foldlevel('.') > 0 ? 'zo' : ''))
 	autocmd User MyVimRc nnoremap <silent><expr> ghh ('mZ:hide<CR>:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : ''))
+
+	" Open :terminal
+	autocmd User MyVimRc nnoremap <silent> <leader>v         :<C-u>vertical terminal<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>v :<C-u>terminal<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>V         :<C-u>echomsg 'This key is never implemented yet now'<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>V :<C-u>tabnew \| terminal \| only<CR>
 augroup END
 
 " }}}
@@ -978,12 +984,6 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> <leader>R :<C-u>QuickRun -runner shell<CR>
 	autocmd User MyVimRc vmap              <leader>r <Plug>(quickrun)
 	autocmd User MyVimRc vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
-
-	" vimshell
-	autocmd User MyVimRc nnoremap <silent> <leader>v         :<C-u>VimShell -split-command=vsp -toggle<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>v :<C-u>VimShell -split-command=sp  -toggle<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>V         :<C-u>VimShellBufferDir -create<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>V :<C-u>VimShell -split-command=tabnew -create<CR>
 
 	" Unite
 	autocmd User MyVimRc nnoremap          <leader>u         :<C-u>Unite<Space>
