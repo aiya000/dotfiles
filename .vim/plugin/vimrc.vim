@@ -32,3 +32,9 @@ command! -bar DeinInstall   call dein#install()
 command! -bar DeinUpdate    call dein#update()
 command! -bar DeinLog       new | setl buftype=nofile noreadonly modifiable ft=deinlog | put=dein#get_log()
 command! -bar DeinUpdateLog new | setl buftype=nofile noreadonly modifiable ft=deinlog | put=dein#get_updates_log()
+
+" REPLs
+command! -bar Ghci terminal stack exec ghci
+"NOTE: 'e' suffix means 'environment of the project' :D
+command! -bar Ghcie terminal stack ghci
+command! -bar CLisp terminal clisp

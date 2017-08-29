@@ -834,12 +834,6 @@ CmdCnoreabbr Google OpenGoogleTranslate
 CmdCnoreabbr SwitchAccount TweetVimSwitchAccount
 CmdCnoreabbr UserTimeline  TweetVimUserTimeline
 
-" REPLs
-CmdCnoreabbr Ghci VimShellInteractive stack exec ghci
-CmdCnoreabbr Ghcie VimShellInteractive stack ghci
-"NOTE:^ 'e' suffix means 'environment of the project' xD
-CmdCnoreabbr CLisp VimShellInteractive clisp
-
 " Git
 CmdCnoreabbr Gist Gista post --stay
 CmdCnoreabbr GStatus Gina status -s
