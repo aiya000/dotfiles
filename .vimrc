@@ -327,6 +327,14 @@ let g:quickrun_config = {
 \		'tempfile': '%{tempname()}.lhs',
 \		'hook/sweep/files': '%S:p:r.hs',
 \	},
+\	'stack_test': {
+\		'command': 'stack',
+\		'cmdopt': 'test',
+\		'exec': '%c %o',
+\		'runner': 'vimproc',
+\		'outputter': 'quickfix',
+\		'outputter/quickfix/open_cmd': 'botright cwindow',
+\	},
 \}
 
 " Append config of each environment

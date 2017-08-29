@@ -12,6 +12,8 @@ let b:undo_ftplugin = 'setl ' . join([
 setl ts=2 sw=2 et conceallevel=0
 let &commentstring = ' -- %s'
 
+nnoremap <buffer><silent> <leader><leader>r :<C-u>QuickRun stack_test<CR>
+
 augroup FtpluginHaskell
     autocmd!
     autocmd BufWritePost *.hs call s:haskdogs()
