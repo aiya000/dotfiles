@@ -75,12 +75,13 @@ if i_have git ; then
 	alias gsm='git submodule'
 	alias gsma='git submodule add'
 	alias gsmd='git submodule deinit'
-	alias gcherry='git cherry-pick'
+	alias gcherry-p='git cherry-pick'
 	alias gclean='git clean -f'
 	alias gpush='git push'
 	alias gpull='git pull --rebase'
 	alias greflog='git reflog'
-	# These are defined in .gitconfig
+	alias gbackstep='git reset --soft HEAD~'
+	# These are associated to .gitconfig
 	alias gret='git return'
 	alias gtree='git tree'
 	alias gtree-all='git tree-all'
