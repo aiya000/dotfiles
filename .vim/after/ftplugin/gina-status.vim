@@ -13,9 +13,9 @@ nnoremap <buffer><silent> ca :<C-u>q<CR>:tabnew<CR>:Gina commit --verbose --amen
 nnoremap <buffer><silent> gf :<C-u>e <cfile><CR>
 
 function! s:show_help_in_scratch_buffer() abort
-	let l:a = execute('normal ' . "\<Plug>(gina-builtin-help)")
-	new
-	setl buftype=nofile noreadonly modifiable ft=scratch
-	put=l:a
-	normal! ggdddd0
+    let l:a = execute('normal ' . "\<Plug>(gina-builtin-help)")
+    new
+    setl buftype=nofile noreadonly modifiable ft=scratch
+    put=l:a
+    normal! ggdddd0
 endfunction
