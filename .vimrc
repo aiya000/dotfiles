@@ -614,7 +614,9 @@ let g:textobj_between_no_default_key_mappings = 1
 " --- ale --- {{{
 
 let g:ale_linters = {
-\	'haskell': ['hlint', 'stack ghc']
+\	'haskell': ['hlint', 'stack ghc'],
+\	'html': ['htmlhint', 'tidy'],
+\	'css': ['csslint', 'stylelint'],
 \}
 
 " Turn off by default
