@@ -15,6 +15,9 @@
 .zsh/.zcompdump
 .zsh/history
 
+# bash
+.bashfiles/git-completion.bash
+
 # Others
 .backup/**
 
