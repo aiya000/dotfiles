@@ -1,9 +1,16 @@
-#!/bin/bash
+#!/bin/sh
 
 # Use git-completion
-if [ -f /usr/share/git/completion/git-completion.zsh ] && [ ! -f "$ZDOTDIR/_git" ] ; then
-    cp /usr/share/git/completion/git-completion.zsh "$ZDOTDIR/_git"
+if [ -n "$ZDOTDIR" ] ; then
+    if [ -f /usr/share/git/completion/git-completion.zsh ] && [ ! -f "$ZDOTDIR/_git" ] ; then
+        cp /usr/share/git/completion/git-completion.zsh "$ZDOTDIR/_git"
+    fi
+else # Assume the shell is bash
+    if [ -f "$HOME/.bashfiles/git-completion.bash" ] ; then
+        source "$HOME/.bashfiles/git-completion.bash"
+    fi
 fi
+
 
 # Use travis-completion
 if [ -f ~/.travis/travis.sh ] ; then
@@ -17,5 +24,5 @@ if [ "$?" -eq 0 ] ; then
     # This completion needs compinit and bashcompinit function
     # > autoload -U compinit     && compinit
     # > autoload -U bashcompinit && bashcompinit
-    eval "$(stack --bash-completion-script stack)"
+    eval "`stack --bash-completion-script stack`"
 fi
