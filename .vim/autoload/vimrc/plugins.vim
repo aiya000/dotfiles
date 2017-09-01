@@ -1,3 +1,5 @@
+let s:M = vital#vimrc#new().import('Vim.Message')
+
 " Append quickrun config for unix
 function! vimrc#plugins#append_config_quickrun_unix() abort " {{{
     " C#
@@ -66,7 +68,7 @@ endfunction " }}}
 " Open tweetvim by private account
 function! vimrc#plugins#twitter_private() abort " {{{
     if !exists('g:vimrc.private["twitter"]["priv_ac"]')
-        call vimrc#echo_error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
+        call s:M.error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
         return
     endif
 
@@ -79,7 +81,7 @@ endfunction " }}}
 " Open tweetvim_say by private account
 function! vimrc#plugins#tweet_private() abort " {{{
     if !exists('g:vimrc.private["twitter"]["priv_ac"]')
-        call vimrc#echo_error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
+        call s:M.error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
         return
     endif
 
@@ -93,7 +95,7 @@ endfunction " }}}
 " Open tweetvim by public account
 function! vimrc#plugins#twitter_public() abort " {{{
     if !exists("g:vimrc.private['twitter']['publ_ac']")
-        call vimrc#echo_error("Not set env variable => g:vimrc.private['twitter']['publ_ac']")
+        call s:M.error("Not set env variable => g:vimrc.private['twitter']['publ_ac']")
         return
     endif
 
@@ -106,7 +108,7 @@ endfunction " }}}
 " Open tweetvim_say by public account
 function! vimrc#plugins#tweet_public(...) abort " {{{
     if !exists('g:vimrc.private["twitter"]["publ_ac"]')
-        call vimrc#echo_error('Not set env variable => g:vimrc.private["twitter"]["publ_ac"]')
+        call s:M.error('Not set env variable => g:vimrc.private["twitter"]["publ_ac"]')
         return
     endif
 
