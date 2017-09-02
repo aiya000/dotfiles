@@ -24,8 +24,7 @@ command! -bar SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
 command! -bar CssShowDecompressed call vimrc#cmd#decompress_to_buffer()
 
 " snowtify
-command! -bar SnowtifyBuild call s:Job.start('snowtify build')
-command! -bar SnowtifyTest call s:Job.start('snowtify test')
+command! -bar -nargs=? Snowtify call s:Job.start('snowtify ' . (empty(<q-args>) ? 'test' : <q-args>))
 
 " dein.vim
 command! -bar DeinInstall   call dein#install()

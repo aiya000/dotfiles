@@ -160,8 +160,7 @@ command! -bar NVimConfigTab tabnew ~/.config/nvim/init.vim
 
 command! -bar Weechat call nvimrc#open_weechat()
 
-command! -bar SnowtifyBuildWatch terminal watchexec -w . snowtify build
-command! -bar SnowtifyTestWatch terminal watchexec -w . snowtify test
+command! -bar -nargs=? SnowtifyWatch execute 'terminal' ('watchexec -w . snowtify ' . (empty(<q-args>) ? 'test' : <q-args>))
 
 " }}}
 
