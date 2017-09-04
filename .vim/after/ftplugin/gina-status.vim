@@ -1,7 +1,7 @@
 let s:V      = vital#vimrc#new()
 let s:String = s:V.import('Data.String')
 
-nmap <buffer> dd <Plug>(gina-diff)
+nmap <buffer> dd mZ:<C-u>tabnew<CR>'Z<Plug>(gina-diff)
 " gH is defined in vimrc
 nmap <buffer> O  gH<Plug>(gina-edit)
 

@@ -113,6 +113,7 @@ alias sb='stack build'
 alias se='stack exec --'
 alias st='stack test'
 alias si='stack install'
+alias sc='stack clean'
 alias srunghc='stack runghc --'
 alias sghci='stack ghci --'
 

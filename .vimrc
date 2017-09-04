@@ -928,6 +928,7 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent> ghN   :<C-u>EnewOverridden!<CR>
 	autocmd User MyVimRc nnoremap <silent> gho   :<C-u>only<CR>
 	autocmd User MyVimRc nnoremap <silent> gh_   :<C-u>resize<CR>
+	autocmd User MyVimRc nnoremap <silent> gh1   :<C-u>resize 1<CR>
 	autocmd User MyVimRc nnoremap          gh\|  <C-w>\|
 	autocmd User MyVimRc nnoremap          gh=   <C-w>=
 	autocmd User MyVimRc nnoremap <silent> gh"   :<C-u>resize 5<CR>
