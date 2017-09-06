@@ -1,4 +1,6 @@
-setl cursorline statusline+=\ %L wrap
+setl statusline+=\ %L
+setl nonumber norelativenumber
+setl cursorline nolist
 
 
 nnoremap         <buffer> <C-j> <CR>
