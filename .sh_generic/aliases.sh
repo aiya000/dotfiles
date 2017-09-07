@@ -103,9 +103,9 @@ alias lla='ls -la --color=auto --group-directories-first'
 alias x=xdg-open
 alias t=tmux
 alias e=nvim
-
+alias m=mount
+alias um=umount
 alias ei=exit
-
 alias nt=nterminal
 alias ngs=vimgs
 
