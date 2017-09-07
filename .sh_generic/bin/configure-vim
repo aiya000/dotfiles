@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ ! -f "./configure" ] ; then
+    echo './configure is not exists' > /dev/stderr
+    exit 1
+fi
+./configure --prefix=/usr/local/ --enable-fail-if-missing --enable-gui=no --enable-multibyte=yes --enable-perlinterp=yes --enable-pythoninterp=yes --enable-rubyinterp=yes --enable-luainterp=yes --enable-cscope=yes --enable-gpm --enable-cscope --enable-fontset --with-features=huge --without-x --with-compiledby=aiya000
