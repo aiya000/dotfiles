@@ -1,6 +1,6 @@
 let b:undo_ftplugin = 'setl ' . join([
-\	'commentstring<',
-\	'expandtab<'
+\   'commentstring<',
+\   'expandtab<'
 \])
 
 let &commentstring = ' /*%s*/'
