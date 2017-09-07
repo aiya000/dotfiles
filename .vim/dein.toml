@@ -135,3 +135,6 @@ repo = 'vim-jp/vital.vim'
 
 [[plugins]]
 repo = 'lambdalisue/vital-System-Job'
+
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
