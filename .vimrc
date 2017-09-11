@@ -944,10 +944,10 @@ augroup KeyMapping
 	autocmd User MyVimRc nnoremap <silent><expr> ghh ('mZ:hide<CR>:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : ''))
 
 	" Open :terminal
-	autocmd User MyVimRc nnoremap <silent> <leader>v         :<C-u>vertical terminal<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>v :<C-u>terminal<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader>V         :<C-u>echomsg 'This key is never implemented yet now'<CR>
-	autocmd User MyVimRc nnoremap <silent> <leader><leader>V :<C-u>tabnew \| terminal \| only<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>v         :<C-u>call vimrc#keys#open_terminal_as('term-shell', 'vertical')<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>v :<C-u>call vimrc#keys#open_terminal_as('term-shell', 'horizontal')<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader>V         :<C-u>call vimrc#keys#open_terminal_as('term-shell', 'stay')<CR>
+	autocmd User MyVimRc nnoremap <silent> <leader><leader>V :<C-u>call vimrc#keys#open_terminal_as('term-shell', 'tabnew')<CR>
 augroup END
 
 " }}}
