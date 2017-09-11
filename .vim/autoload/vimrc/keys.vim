@@ -4,85 +4,86 @@ let s:HTML = s:V.import('Web.HTML')
 " If list has elem, return v:true
 " otherwise return v:false
 function! s:contains(list, elem) abort " {{{
-	for l:x in a:list
-		if l:x ==# a:elem
-			return v:true
-		endif
-	endfor
-	return v:false
+    for l:x in a:list
+        if l:x ==# a:elem
+            return v:true
+        endif
+    endfor
+    return v:false
 endfunction " }}}
 
 "-------------------"
 
 " Compress continuous space
 function! vimrc#keys#compress_spaces() " {{{
-	let l:recent_pattern = @/
-	try
-		substitute/\s\+/ /g
-		normal! ==
-	finally
-		let @/ = l:recent_pattern
-	endtry
-	nohlsearch
+    let l:recent_pattern = @/
+    try
+        substitute/\s\+/ /g
+        normal! ==
+    finally
+        let @/ = l:recent_pattern
+    endtry
+    nohlsearch
 endfunction " }}}
 
 " Clear all lines end space
 function! vimrc#keys#clear_ends_space() " {{{
-	let l:recent_pattern = @/
-	let l:curpos = getcurpos()
-	try
-		%substitute/\s*\?$//g
-	catch /E486/
-		echo 'nothing todo'
-	finally
-		let @/ = l:recent_pattern
-		call setpos('.', l:curpos)
-	endtry
+    let l:recent_pattern = @/
+    let l:curpos = getcurpos()
+    try
+        %substitute/\s*\?$//g
+    catch /E486/
+        echo 'nothing todo'
+    finally
+        let @/ = l:recent_pattern
+        call setpos('.', l:curpos)
+    endtry
 endfunction " }}}
 
 " Toggle diffthis - diffoff
 function! vimrc#keys#toggle_diff() " {{{
-	if &diff
-		diffoff
-		nunmap <buffer> {
-		nunmap <buffer> }
-	else
-		diffthis
-		nnoremap <buffer> { [c
-		nnoremap <buffer> } ]c
-	endif
-	set diff?
+    if &diff
+        diffoff
+        nunmap <buffer> {
+        nunmap <buffer> }
+    else
+        diffthis
+        nnoremap <buffer> { [c
+        nnoremap <buffer> } ]c
+    endif
+    set diff?
 endfunction " }}}
 
 " If you has nofile buffer, close it.
 function! vimrc#keys#bufclose_filetype(filetypes) " {{{
-	let l:closed = 0
-	for l:w in range(1, winnr('$'))
-		let l:buf_ft = getwinvar(l:w, '&filetype')
-		if s:contains(a:filetypes, l:buf_ft)
-			execute ':' . l:w . 'wincmd w'
-			execute ':quit'
-			let l:closed = 1
-		endif
-	endfor
-	return l:closed
+    let l:closed = 0
+    for l:w in range(1, winnr('$'))
+        let l:buf_ft = getwinvar(l:w, '&filetype')
+        if s:contains(a:filetypes, l:buf_ft)
+            execute ':' . l:w . 'wincmd w'
+            execute ':quit'
+            let l:closed = 1
+        endif
+    endfor
+    return l:closed
 endfunction " }}}
 
 " Toggle open netrw explorer ( vertical split )
 function! vimrc#keys#toggle_netrw_vexplorer() " {{{
-	let l:closed = vimrc#keys#bufclose_filetype(['netrw'])
-	if !l:closed
-		Vexplore
-	endif
+    let l:closed = vimrc#keys#bufclose_filetype(['netrw'])
+    if !l:closed
+        Vexplore
+    endif
 endfunction " }}}
 
 " Toggle showing indent-guides with variable
 function! vimrc#keys#toggle_indent_guides() " {{{
-	let g:vimrc#keys#indent_guides_enable = !g:vimrc#keys#indent_guides_enable
-	IndentGuidesToggle
+    let g:vimrc#keys#indent_guides_enable = !g:vimrc#keys#indent_guides_enable
+    IndentGuidesToggle
 endfunction " }}}
 
 " Get a detail of <title> from + register
 function! vimrc#keys#get_webpage_title() abort " {{{
-	return s:HTML.parseURL(@+).find('title').value()
+    return s:HTML.parseURL(@+).find('title').value()
 endfunction " }}}
+
