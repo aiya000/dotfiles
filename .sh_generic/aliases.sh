@@ -102,12 +102,13 @@ alias lla='ls -la --color=auto --group-directories-first'
 
 alias x=xdg-open
 alias t=tmux
-alias e=nvim
+alias e=$EDITOR
 alias m=mount
 alias um=umount
 alias ei=exit
 alias nt=nterminal
 alias ngs=vimgs
+alias s=sudo
 
 alias sb='stack build'
 alias se='stack exec --'
@@ -116,6 +117,8 @@ alias si='stack install'
 alias sc='stack clean'
 alias srunghc='stack runghc --'
 alias sghci='stack ghci --'
+alias shaddock-gen='stack haddock .'
+alias shaddock-gen-open='stack haddock --open .'
 
 alias date-simple='date +"%Y-%m-%d"'
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
