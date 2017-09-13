@@ -12,7 +12,9 @@ let b:undo_ftplugin = 'setl ' . join([
 setl ts=2 sw=2 et conceallevel=0
 let &commentstring = ' -- %s'
 
-nnoremap <buffer><silent> <leader><leader>r :<C-u>QuickRun stack_test<CR>
+nnoremap <buffer><silent> <leader><leader>r :<C-u>echo 'stack test is started'<CR>:QuickRun stack_test<CR>
+nnoremap <buffer><silent> <leader><leader>R :<C-u>sp<CR>:terminal stack test<CR>
+nnoremap <buffer><silent> <leader><leader>S :<C-u>Snowtify<CR>
 
 augroup FtpluginHaskell
     autocmd!
