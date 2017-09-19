@@ -90,6 +90,10 @@ endfunction " }}}
 " Execute :terminal and :setf to it
 function! vimrc#keys#open_terminal_as(filetype, open_mode) abort " {{{
     if a:open_mode ==# 'vertical'
+        if has('nvim')
+            " NeoVim doesn't split vertically by 'vertical'
+            vsp
+        endif
         execute 'vertical' 'terminal'
     elseif a:open_mode ==# 'horizontal'
         if has('nvim')
