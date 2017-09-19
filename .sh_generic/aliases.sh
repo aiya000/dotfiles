@@ -57,6 +57,7 @@ if i_have git ; then
 	alias gds='git diff --staged'
 	alias gl="git log --name-only -$git_taking_limit"
 	alias glo="git log --oneline -$git_taking_limit"
+	alias gll='glo | head'
 	alias glp="git log --patch -$git_taking_limit"
 	alias gmv='git mv'
 	alias gr='git rebase'
