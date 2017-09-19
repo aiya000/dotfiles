@@ -68,33 +68,12 @@ augroup NeoKeyMapping
 	autocmd User MyNVimRc inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
 	autocmd User MyNVimRc inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
 	autocmd User MyNVimRc imap <C-k><C-i> <C-o>:call deoplete#toggle()<CR>
-augroup END
-
-" }}}
-" Others {{{
-
-augroup NeoKeyMapping
-	" terminal mode "{{{
-
-	" Default,
-	" <C-\><C-n> is sending Esc signal to NeoVim,
-	" and <Esc> is sending Esc signal to innert program
-	autocmd User MyNVimRc tnoremap <C-l>      <C-\><C-n>
-	autocmd User MyNVimRc tnoremap <C-\><C-n> <Esc>
-	autocmd User MyNVimRc tnoremap <C-[>      <Esc>
-	autocmd User MyNVimRc tnoremap <C-]>      <C-l>
-	autocmd User MyNVimRc tnoremap <leader><C-n> <C-\><C-n>
-
-	"}}}
-	" normal mode "{{{
 
 	" :terminal
 	autocmd User MyNVimRc nnoremap <silent> <leader>v         :<C-u>call vimrc#keys#open_terminal_as('term-shell', 'vertical')<CR>
 	autocmd User MyNVimRc nnoremap <silent> <leader><leader>v :<C-u>call vimrc#keys#open_terminal_as('term-shell', 'horizontal')<CR>
 	autocmd User MyNVimRc nnoremap <silent> <leader>V         :<C-u>call vimrc#keys#open_terminal_as('term-shell', 'stay')<CR>
 	autocmd User MyNVimRc nnoremap <silent> <leader><leader>V :<C-u>call vimrc#keys#open_terminal_as('term-shell', 'tabnew')<CR>
-
-	"}}}
 augroup END
 
 " }}}

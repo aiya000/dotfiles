@@ -1217,6 +1217,14 @@ augroup KeyMapping
 	digraph \u 8746  " union
 
 	" }}}
+	" terminal mode {{{
+
+	autocmd User MyVimRc tnoremap <C-l>      <C-\><C-n>
+	autocmd User MyVimRc tnoremap <C-\><C-n> <Esc>
+	autocmd User MyVimRc tnoremap <C-[>      <Esc>
+	autocmd User MyVimRc tnoremap <C-]>      <C-l>
+
+	" }}}
 augroup END
 
 " }}}
