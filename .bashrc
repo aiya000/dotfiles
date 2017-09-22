@@ -7,7 +7,7 @@ source ~/.sh_generic/aliases.sh
 ###################
 # The counterplan for if .bash_profile never loaded
 if [ -z "`alias | grep pr_loaded`" ] ; then
-	source ~/.bash_profile
+    source ~/.bash_profile
 fi
 
 ############################################
@@ -47,37 +47,36 @@ bind -m vi-command -x '"\C-k\C-r": . ~/.bashrc && echo ">> bash source reloaded"
 
 # stack
 [ -d ~/.stack ] \
-	&& PATH=$PATH:$HOME/.stack/programs/x86_64-linux/ghc-7.8.4/bin
+    && PATH=$PATH:$HOME/.stack/programs/x86_64-linux/ghc-7.8.4/bin
 
 # cabal
 [ -d ~/.cabal ] \
-	&& PATH=$PATH:$HOME/.cabal/bin \
-	&& PATH=$PATH:./.cabal-sandbox/bin
+    && PATH=$PATH:$HOME/.cabal/bin \
+    && PATH=$PATH:./.cabal-sandbox/bin
 
 # pkgsrc
 [ -d ~/pkg ] \
-	&& PATH=$PATH:$HOME/pkg/bin:$HOME/pkg/sbin
+    && PATH=$PATH:$HOME/pkg/bin:$HOME/pkg/sbin
 
 # rbenv
 [ -d ~/.rbenv ] \
-	&& PATH=$PATH:$HOME/.rbenv/bin \
-	&& PATH=$PATH:$HOME/.rbenv/versions/`cat ~/.rbenv/version`/bin \
-	&& eval "$($HOME/.rbenv/bin/rbenv init -)"
+    && PATH=$PATH:$HOME/.rbenv/bin \
+    && PATH=$PATH:$HOME/.rbenv/versions/`cat ~/.rbenv/version`/bin \
+    && eval "$($HOME/.rbenv/bin/rbenv init -)"
 
 # ruby-build
 [ -d ~/.rbenv/plugins/ruby-build/bin ] \
-	&& PATH=$PATH:$HOME/.rbenv/plugins/ruby-build/bin
+    && PATH=$PATH:$HOME/.rbenv/plugins/ruby-build/bin
 
 # virtualenv with virtualenvwrapper
 which virtualenvwrapper.sh > /dev/null 2>&1
 [ "$?" -eq 0 ] \
-	&& export WORKON_HOME=$HOME/.virtualenvs \
-	&& source $(which virtualenvwrapper.sh)
+    && export WORKON_HOME=$HOME/.virtualenvs \
+    && source $(which virtualenvwrapper.sh)
 
 # anything
 [ -d ~/.local ] \
-	&& PATH=$PATH:$HOME/.local/bin
-
+    && PATH=$PATH:$HOME/.local/bin
 
 # }}}
 
@@ -106,14 +105,14 @@ alias reload='. ~/.bashrc && . ~/.bash_profile && echo ">> the bash configuratio
 
 plugin_dir=~/.bashfiles/plugin
 local_plugins=( \
-	hereis.sh \
-	shell_kawaii.sh \
-	ezoe_command_not_found_handle.sh \
-	tovim.sh \
+    hereis.sh \
+    shell_kawaii.sh \
+    ezoe_command_not_found_handle.sh \
+    tovim.sh \
 )
 
 for (( i = 0; i < ${#local_plugins[@]}; ++i )) ; do
-	source "${plugin_dir}/${local_plugins[$i]}"
+    source "${plugin_dir}/${local_plugins[$i]}"
 done
 
 unset local_plugins plugin_dir
@@ -124,17 +123,17 @@ unset local_plugins plugin_dir
 # For each environment
 case $(uname) in
 Linux )
-	source ~/.sh_generic/linux.sh
-	;;
+    source ~/.sh_generic/linux.sh
+    ;;
 CYGWIN_NT-10.0 )
-	source ~/.sh_generic/cygwin.sh
-	PATH=$PATH:/cygdrive/c/Windows/system32:/cygdrive/c/Windows
-	;;
+    source ~/.sh_generic/cygwin.sh
+    PATH=$PATH:/cygdrive/c/Windows/system32:/cygdrive/c/Windows
+    ;;
 esac
 
 # If it exists, load environment config
 if [ -f ~/.bashrc_env ] ; then
-	source ~/.bashrc_env
+    source ~/.bashrc_env
 fi
 
 # Load plugins
