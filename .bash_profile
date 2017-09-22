@@ -13,24 +13,11 @@ export HISTIGNORE="*.bash_history*:*mount*-o*password=*"
 # }}}
 # Add paths to $PATH {{{
 
-previous_paths="$PATH"
-
-# Mine
-PATH=$HOME/bin:$HOME/sbin
-PATH=$PATH:$HOME/.dotfiles/bin
-
-# Basics
-PATH=$PATH:/bin:/sbin
-PATH=$PATH:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
-PATH=$PATH:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
+PATH=$HOME/bin:$HOME/sbin:$HOME/.dotfiles/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin:$PATH
 PATH=$PATH:$GOPATH/bin
 
 # zsh completions
 PATH=$PATH:$ZDOTDIR/zsh_completions
-
-# Recovery it
-PATH=$PATH:$previous_paths
-unset previous_paths
 
 #}}}
 # Others {{{
