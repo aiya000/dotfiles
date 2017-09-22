@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Use git-completion
 if [ -n "$ZDOTDIR" ] ; then
@@ -18,11 +18,15 @@ if [ -f ~/.travis/travis.sh ] ; then
     source ~/.travis/travis.sh
 fi
 
-# Use stack-completion
-type stack > /dev/null 2>&1
-if [ "$?" -eq 0 ] ; then
-    # This completion needs compinit and bashcompinit function
-    # > autoload -U compinit     && compinit
-    # > autoload -U bashcompinit && bashcompinit
-    eval "`stack --bash-completion-script stack`"
+#FIXME: Avoid to load that is failure on the cygwin
+#NOTE: Why `uname` returns "MSYS_NT-10.0" only on the startup ?
+if [ "$(uname | grep -i msys)" == '' ] ; then
+    # Use stack-completion
+    type stack > /dev/null 2>&1
+    if [ "$?" -eq 0 ] ; then
+        # This completion needs compinit and bashcompinit function
+        # > autoload -U compinit     && compinit
+        # > autoload -U bashcompinit && bashcompinit
+        eval "$(stack --bash-completion-script stack)"
+    fi
 fi
