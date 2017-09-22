@@ -25,7 +25,7 @@ alias_of hoe='stack exec --silent -- hoe'
 # Load ./aliases/** {{{
 
 for script in $(ls ~/.sh_generic/aliases/functions/*.sh) ; do
-	source "$script"
+    source "$script"
 done
 source ~/.sh_generic/aliases/vim.sh
 
@@ -33,63 +33,63 @@ source ~/.sh_generic/aliases/vim.sh
 # Git {{{
 
 if i_have git ; then
-	# Short hands
-	git_taking_limit=100
-	alias _gr='git reset'
-	alias _grh='git reset --hard'
-	alias _grs='git reset --soft'
-	alias _grs_HEAD-='git reset --soft HEAD~'
-	alias g='git'
-	alias ga='git add'
-	alias gaa='git add -A'
-	alias gap='git add -p'
-	alias gb='git branch'
-	alias gbd='git branch --delete'
-	alias _gbdf='git branch --delete --force'
-	alias gbm='git branch -m'
-	alias gc='git commit --verbose'
-	alias gcam='git commit --verbose --amend'
-	alias gcm='git commit -m'
-	alias gco='git checkout'
-	alias gcob='git checkout -b'
-	alias gd='git diff'
-	alias gdh='git diff HEAD~..HEAD'
-	alias gds='git diff --staged'
-	alias gl="git log --name-only -$git_taking_limit"
-	alias glo="git log --oneline -$git_taking_limit"
-	alias gll='glo | head'
-	alias glp="git log --patch -$git_taking_limit"
-	alias gmv='git mv'
-	alias gr='git rebase'
-	alias gra='git rebase --abort'
-	alias grc='git rebase --continue'
-	alias gri='git rebase --interactive'
-	alias grm='git rm'
-	alias grmc='git rm --cached'
-	alias gs='git status'
-	alias gss='git stash'
-	alias gsss='git stash save'
-	alias gssp='git stash pop'
-	alias gssl='git stash list | xargs -I {} echo {}'
-	alias gmt='git mergetool'
-	alias gmerge='git merge --ff'
-	alias gsm='git submodule'
-	alias gsma='git submodule add'
-	alias gsmd='git submodule deinit'
-	alias gcherry-p='git cherry-pick'
-	alias gclean='git clean -f'
-	alias gpush='git push'
-	alias gpull='git pull --rebase'
-	alias greflog='git reflog'
-	alias gbackstep='git reset --soft HEAD~'
-	# These are associated to .gitconfig
-	alias gret='git return'
-	alias gtree='git tree'
-	alias gtree-all='git tree-all'
-	unset git_taking_limit
+    # Short hands
+    git_taking_limit=100
+    alias _gr='git reset'
+    alias _grh='git reset --hard'
+    alias _grs='git reset --soft'
+    alias _grs_HEAD-='git reset --soft HEAD~'
+    alias g='git'
+    alias ga='git add'
+    alias gaa='git add -A'
+    alias gap='git add -p'
+    alias gb='git branch'
+    alias gbd='git branch --delete'
+    alias _gbdf='git branch --delete --force'
+    alias gbm='git branch -m'
+    alias gc='git commit --verbose'
+    alias gcam='git commit --verbose --amend'
+    alias gcm='git commit -m'
+    alias gco='git checkout'
+    alias gcob='git checkout -b'
+    alias gd='git diff'
+    alias gdh='git diff HEAD~..HEAD'
+    alias gds='git diff --staged'
+    alias gl="git log --name-only -$git_taking_limit"
+    alias glo="git log --oneline -$git_taking_limit"
+    alias gll='glo | head'
+    alias glp="git log --patch -$git_taking_limit"
+    alias gmv='git mv'
+    alias gr='git rebase'
+    alias gra='git rebase --abort'
+    alias grc='git rebase --continue'
+    alias gri='git rebase --interactive'
+    alias grm='git rm'
+    alias grmc='git rm --cached'
+    alias gs='git status'
+    alias gss='git stash'
+    alias gsss='git stash save'
+    alias gssp='git stash pop'
+    alias gssl='git stash list | xargs -I {} echo {}'
+    alias gmt='git mergetool'
+    alias gmerge='git merge --ff'
+    alias gsm='git submodule'
+    alias gsma='git submodule add'
+    alias gsmd='git submodule deinit'
+    alias gcherry-p='git cherry-pick'
+    alias gclean='git clean -f'
+    alias gpush='git push'
+    alias gpull='git pull --rebase'
+    alias greflog='git reflog'
+    alias gbackstep='git reset --soft HEAD~'
+    # These are associated to .gitconfig
+    alias gret='git return'
+    alias gtree='git tree'
+    alias gtree-all='git tree-all'
+    unset git_taking_limit
 
-	# Set casual user.name and user.email at local
-	alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
+    # Set casual user.name and user.email at local
+    alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
 fi
 
 # }}}
@@ -138,20 +138,20 @@ i_have hasktags && alias hasktags-casual='hasktags . --ignore-close-implementati
 i_have unzip    && alias unzip-cp932='unzip -O cp932'
 
 i_have haskdogs &&
-	function haskdogs-casual () {
-		haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=${1}"
-	}
+    function haskdogs-casual () {
+        haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=${1}"
+    }
 
 # Generate items for autotools
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
 function virtualenv-activate () {
-	if [ -f ./.venv/bin/activate ] ; then
-		. ./.venv/bin/activate
-	else
-		echo './.venv/bin/activate was not found, please load it yourself...' > /dev/stderr
-		return 1
-	fi
+    if [ -f ./.venv/bin/activate ] ; then
+        . ./.venv/bin/activate
+    else
+        echo './.venv/bin/activate was not found, please load it yourself...' > /dev/stderr
+        return 1
+    fi
 }
 
 # }}}
