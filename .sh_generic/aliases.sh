@@ -59,6 +59,7 @@ if i_have git ; then
     alias glo="git log --oneline -$git_taking_limit"
     alias gll='glo | head'
     alias glp="git log --patch -$git_taking_limit"
+    alias glf="git log --name-only -$git_taking_limit"
     alias gmv='git mv'
     alias gr='git rebase'
     alias gra='git rebase --abort'
