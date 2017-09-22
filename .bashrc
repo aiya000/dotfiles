@@ -45,10 +45,6 @@ bind -m vi-command -x '"\C-k\C-r": . ~/.bashrc && echo ">> bash source reloaded"
 # }}}
 # Set language tools {{{
 
-# stack
-[ -d ~/.stack ] \
-    && PATH=$PATH:$HOME/.stack/programs/x86_64-linux/ghc-7.8.4/bin
-
 # cabal
 [ -d ~/.cabal ] \
     && PATH=$PATH:$HOME/.cabal/bin \
