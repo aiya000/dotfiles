@@ -21,7 +21,7 @@ fi
 
 #FIXME: Avoid to load that is failure on the cygwin
 #NOTE: Why `uname` returns "MSYS_NT-10.0" only on the startup ?
-if [ "$(uname | grep -i msys)" == '' ] ; then
+if [[ $(uname | grep -i msys) == '' ]] ; then
     # Use stack-completion
     if type stack > /dev/null 2>&1 ; then
         # This completion needs compinit and bashcompinit function
