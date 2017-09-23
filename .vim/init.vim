@@ -1,5 +1,4 @@
 source ~/.vimrc
-let s:Job = vital#vimrc#new().import('System.Job')
 
 "--------------"
 " Starting up "
@@ -104,30 +103,6 @@ command! -bar NVimConfig    e ~/.config/nvim/init.vim
 command! -bar NVimConfigTab tabnew ~/.config/nvim/init.vim
 
 command! -bar Weechat call nvimrc#open_weechat()
-
-command! -bar -nargs=? SnowtifyWatchStart call s:start_snowtify_watch(<q-args>)
-command! -bar SnowtifyWatchStop call s:stop_snowtify_watch()
-
-function! s:start_snowtify_watch(subcommand_or_empty) abort
-    let subcommand = empty(a:subcommand_or_empty)
-    \                ? 'test'
-    \                : a:subcommand_or_empty
-    let s:snowtify_watch_job = s:Job.start('watchexec -w . snowtify ' . subcommand)
-endfunction
-
-function! s:stop_snowtify_watch() abort
-    if exists('s:snowtify_watch_job')
-        if s:snowtify_watch_job.status() ==# 'run'
-            call s:snowtify_watch_job.stop()
-            echo 'snowtify watch is killed'
-        else
-            echo 'snowtify watch is alerady killed'
-        endif
-        unlet s:snowtify_watch_job
-    else
-        echo 'snowtify watch maybe not running'
-    endif
-endfunction
 
 " }}}
 

@@ -23,8 +23,10 @@ command! -bar SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
 " CSS
 command! -bar CssShowDecompressed call vimrc#cmd#decompress_to_buffer()
 
-" snowtify
+" Haskell
 command! -bar -nargs=? Snowtify call s:Job.start('snowtify ' . (empty(<q-args>) ? 'test' : <q-args>))
+command! -bar -nargs=? SnowtifyWatchStart call vimrc#plugins#start_snowtify_watch(<q-args>)
+command! -bar SnowtifyWatchStop call vimrc#plugins#stop_snowtify_watch()
 
 " dein.vim
 command! -bar DeinInstall   call dein#install()

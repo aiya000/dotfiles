@@ -1,4 +1,6 @@
-let s:M = vital#vimrc#new().import('Vim.Message')
+let s:V = vital#vimrc#new()
+let s:M = s:V.import('Vim.Message')
+let s:Job = s:V.import('System.Job')
 
 " Append quickrun config for unix
 function! vimrc#plugins#append_config_quickrun_unix() abort " {{{
@@ -121,4 +123,27 @@ function! vimrc#plugins#tweet_public(...) abort " {{{
 
     "@Incomplete('wait here')
     "execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
+endfunction " }}}
+
+" Start the job of `watchexec -w . snowtify {test|build}`
+function! vimrc#plugins#start_snowtify_watch(subcommand_or_empty) abort " {{{
+    let subcommand = empty(a:subcommand_or_empty)
+    \                ? 'test'
+    \                : a:subcommand_or_empty
+    let s:snowtify_watch_job = s:Job.start('watchexec -w . snowtify ' . subcommand)
+endfunction " }}}
+
+" Kill the job of vimrc#plugins#start_snowtify_watch()
+function! vimrc#plugins#stop_snowtify_watch() abort " {{{
+    if exists('s:snowtify_watch_job')
+        if s:snowtify_watch_job.status() ==# 'run'
+            call s:snowtify_watch_job.stop()
+            echo 'snowtify watch is killed'
+        else
+            echo 'snowtify watch is alerady killed'
+        endif
+        unlet s:snowtify_watch_job
+    else
+        echo 'snowtify watch maybe not running'
+    endif
 endfunction " }}}
