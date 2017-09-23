@@ -461,6 +461,7 @@ augroup END
 
 " Define indent-guides state at global
 "@See('nnoremap <C-h><C-i>')
+"FIXME: Disable if the buffer is &noexpandtab
 let g:vimrc#keys#indent_guides_enable = get(g:, 'vimrc#keys#indent_guides_enable', 1)
 augroup FileEvent
 	autocmd WinEnter,BufWinEnter * IndentGuidesDisable
@@ -643,7 +644,11 @@ set nowrapscan visualbell notimeout
 set fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
 set path=.,,./** shellslash matchpairs+=<:>
 set browsedir=buffer spelllang=en_US,cjk suffixes=
-set termkey=F1
+
+if !has('nvim')
+	set termkey=F3
+endif
+
 
 " Set the status bar format
 let s:statusline_left  = '[Fenc=%{&fileencoding}]'
