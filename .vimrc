@@ -838,14 +838,14 @@ CmdCnoreabbr UserTimeline  TweetVimUserTimeline
 " Git
 CmdCnoreabbr Gist Gista post --stay
 CmdCnoreabbr GStatus Gina status -s
-CmdCnoreabbr GCommit tabnew \| Gina commit --verbose \| only
-CmdCnoreabbr GCAM tabnew \| Gina commit --amend --verbose \| only
+CmdCnoreabbr GCommit tabnew \| terminal ++curwin git commit --verbose
+CmdCnoreabbr GCAM tabnew \| terminal ++curwin git commit --amend --verbose
 CmdCnoreabbr GLog GitLogViewer -100
 CmdCnoreabbr GLP GitLogViewer --patch -100
 CmdCnoreabbr GDiff GitDiffViewer
 CmdCnoreabbr GDS GitDiffViewer --staged
 CmdCnoreabbr GDH GitDiffViewer HEAD~
-CmdCnoreabbr GAP tabnew \| terminal git add -p \| only
+CmdCnoreabbr GAP tabnew \| terminal ++curwin git add -p
 
 " Others
 CmdCnoreabbr Lingr J6uil
