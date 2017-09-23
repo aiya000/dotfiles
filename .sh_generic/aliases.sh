@@ -108,7 +108,7 @@ alias e=$EDITOR
 alias m=mount
 alias um=umount
 alias ei=exit
-alias nt=nterminal
+alias vt=vterminal
 alias ngs=vimgs
 alias s=sudo
 
