@@ -12,22 +12,13 @@ function dotfile_config () {
 # Vim
 alias vi='vim -u NONE --noplugin'
 alias vime='vim -c ":bufdo tab split" +q'
-function vim-session () {
-    vim -c "UniteSessionLoad ${1}"
-}
-
-
-# NeoVim
-alias nvime='nvim -c ":bufdo tab split" +q'
-function nvim-session () {
-    nvim -c "UniteSessionLoad ${1}"
-}
 
 # :SessionSaveInGitBranch compatibled command. (it is defined in dotfiles/.vim/plugin/vimrc.vim)
-# Open the nvim session which is associated the current git branch
-function nvim-current-session () {
+# Open the session which is associated the current git branch
+function vim-current-session () {
     local repo_name
     local session_name
+    local editor=$([[ -n $1 ]] && echo $1 || echo vim)
 
     branch_name="$(git branch 2> /dev/null | sort | tail -1 | awk '{print $2}')"
     # shellcheck disable=SC2181
@@ -40,9 +31,13 @@ function nvim-current-session () {
     branch_name_="$(echo "$branch_name" | sed -r 's;/;-;g')"
 
     session_name="${repo_name}-${branch_name_}.vim"
-    nvim-session "$session_name"
+    "$editor" -c "UniteSessionLoad $session_name"
 }
 
+
+# NeoVim
+alias nvime='nvim -c ":bufdo tab split" +q'
+alias nvim-current-session='vim-current-session nvim'
 alias nvimdiff='\nvim -d'
 
 alias vimless='nvim - -c "setl buftype=nofile nolist | nnoremap <buffer> Q :<C-u>q<CR>"'
