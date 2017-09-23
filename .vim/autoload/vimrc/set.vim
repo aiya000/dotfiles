@@ -41,11 +41,3 @@ function! vimrc#set#tabpage_label(n) " {{{
     let l:label = l:no . l:mod . l:sp . l:fname
     return '%' . a:n . 'T' . l:hi . l:label . '%T%#TabLineFill#'
 endfunction " }}}
-
-" Auto set cursor position in the file
-function! vimrc#set#visit_past_position() " {{{
-    let l:past_posit = line("'\"")
-    if l:past_posit > 0 && l:past_posit <= line('$')
-        execute 'normal! g`"'
-    endif
-endfunction " }}}
