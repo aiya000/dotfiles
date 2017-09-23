@@ -7,6 +7,7 @@ if [ -n "$ZDOTDIR" ] ; then
     fi
 else # Assume the shell is bash
     if [ -f "$HOME/.bashfiles/git-completion.bash" ] ; then
+        # shellcheck disable=SC1090
         source "$HOME/.bashfiles/git-completion.bash"
     fi
 fi
@@ -22,8 +23,7 @@ fi
 #NOTE: Why `uname` returns "MSYS_NT-10.0" only on the startup ?
 if [ "$(uname | grep -i msys)" == '' ] ; then
     # Use stack-completion
-    type stack > /dev/null 2>&1
-    if [ "$?" -eq 0 ] ; then
+    if type stack > /dev/null 2>&1 ; then
         # This completion needs compinit and bashcompinit function
         # > autoload -U compinit     && compinit
         # > autoload -U bashcompinit && bashcompinit
