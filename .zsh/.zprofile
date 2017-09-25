@@ -40,9 +40,9 @@ PATH=$PATH:/usr/lib/git-core
 # Others {{{
 
 # Favorite editor
-export EDITOR=nvim
-export VISUAL=nvim
-export BROWSER=vivaldi-stable
+export EDITOR=vim
+export VISUAL=vim
+export BROWSER=firefox
 
 # Using 'vim-pager' and 'vim-manpager'
 export PAGER='nvim - +PAGER -c "setl nonu nornu ft=vim-pager | only"'
