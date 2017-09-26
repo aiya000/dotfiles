@@ -112,6 +112,9 @@ alias vt=vterminal
 alias ngs=vimgs
 alias s=sudo
 
+alias cdp=cd-finddir
+alias ki=killing-art
+
 alias sb='stack build'
 alias se='stack exec --'
 alias st='stack test'
