@@ -13,7 +13,7 @@ setl ts=2 sw=2 et conceallevel=0
 let &commentstring = ' -- %s'
 
 nnoremap <buffer><silent> <leader><leader>r :<C-u>echo 'stack test is started'<CR>:QuickRun stack_test<CR>
-nnoremap <buffer><silent> <leader><leader>R :<C-u>sp<CR>:terminal stack test<CR>
+nnoremap <buffer><silent> <leader><leader>R :<C-u>terminal stack test<CR>
 nnoremap <buffer><silent> <leader><leader>S :<C-u>Snowtify<CR>
 
 augroup FtpluginHaskell
@@ -22,15 +22,20 @@ augroup FtpluginHaskell
 augroup END
 
 function! s:haskdogs() abort
+    if exists('s:ftplugin_haskell_haskdogs_job')
+        echomsg 'haskdogs is skipped (haskdogs is already running at now)'
+        return
+    endif
+
     let git_top_dir = system('git rev-parse --show-toplevel')[:-2] " [:-2] removes a line break
     let ctags_path  = isdirectory(git_top_dir) ? git_top_dir . '/.git/tags'
     \                                          : './tags'
-    call s:Job.start(printf('haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=%s"', ctags_path), {
-    \   'on_exit' : {_, __, ___ -> s:M.echo('None', 'haskdogs may generated ctags to ' . ctags_path)}
-    \})
-    "\   'on_exit' : {_, __, ___ ->
-    "\       executable('notify-send')
-    "\         ? system(printf('notify-send "ftplugin/haskell" "haskdogs may generated ctags to %s"', ctags_path))
-    "\         : s:M.echo('None', 'haskdogs may generated ctags to ' . ctags_path)
-    "\   }
+
+    let s:ftplugin_haskell_haskdogs_job =
+    \   s:Job.start(printf('haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=%s"', ctags_path), {
+    \      'on_exit' : {_, __, ___ -> [
+    \           s:M.echo('None', 'haskdogs may generated ctags to ' . ctags_path),
+    \           execute('unlet s:ftplugin_haskell_haskdogs_job')
+    \       ]}
+    \   })
 endfunction
