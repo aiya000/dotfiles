@@ -44,11 +44,6 @@ stty stop  undef
 stty start undef
 
 # }}}
-# Load completion scripts {{{
-
-source ~/.sh_generic/completion.sh
-
-# }}}
 
 
 ###################

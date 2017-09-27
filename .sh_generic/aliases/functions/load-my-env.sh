@@ -2,7 +2,6 @@
 
 function load-my-env () {
     local target_name="$1"
-
     case "$target_name" in
     all)
         load-my-env haskell
@@ -10,9 +9,22 @@ function load-my-env () {
         load-my-env pkgsrc
         load-my-env ruby
         load-my-env zsh
+        load-my-env bash
+        load-my-env travis
         ;;
-    haskell) if [ -d ~/.stack ] ; then
+    haskell)
+        if [ -d ~/.stack ] ; then
             PATH=$PATH:$HOME/.stack/programs/x86_64-linux/ghc-7.8.4/bin
+        fi
+        #FIXME: Avoid to load that is failure on the cygwin
+        if [[ $(uname | grep -i cygwin) == '' ]] ; then
+            # Use stack-completion
+            if type stack > /dev/null 2>&1 ; then
+                # This completion needs compinit and bashcompinit function
+                # > autoload -U compinit     && compinit
+                # > autoload -U bashcompinit && bashcompinit
+                eval "$(stack --bash-completion-script stack)"
+            fi
         fi
         ;;
     haskell-legacy)
@@ -38,6 +50,21 @@ function load-my-env () {
         ;;
     zsh)
         export ZAPACK_OPTIONS='--verbose'
+        if [ -f /usr/share/git/completion/git-completion.zsh ] && [ ! -f "$ZDOTDIR/_git" ] ; then
+            cp /usr/share/git/completion/git-completion.zsh "$ZDOTDIR/_git"
+        fi
+        ;;
+    bash)
+        if [ -f "$HOME/.bashfiles/git-completion.bash" ] ; then
+            # shellcheck disable=SC1090
+            source "$HOME/.bashfiles/git-completion.bash"
+        fi
+        ;;
+    travis)
+        if [ -f ~/.travis/travis.sh ] ; then
+            # shellcheck disable=SC1090
+            source ~/.travis/travis.sh
+        fi
         ;;
     ccache)
         export CCACHE_DISABLE=0
