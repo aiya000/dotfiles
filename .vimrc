@@ -639,7 +639,7 @@ set path=.,,./** shellslash matchpairs+=<:>
 set browsedir=buffer spelllang=en_US,cjk suffixes=
 
 if !has('nvim')
-    set termkey=<C-q>
+    set termkey=<C-z>
 endif
 
 
