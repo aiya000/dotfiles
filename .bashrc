@@ -1,5 +1,4 @@
 #!/bin/bash
-source ~/.sh_generic/completion.sh
 source ~/.sh_generic/aliases.sh
 
 ###################
