@@ -1,29 +1,28 @@
-snippet template_basic
-options head
-    snippet ${1:#:snippet_name}
-    abbr    ${2:#be_shown_this_on_the_complete_menu}
-    options head indent
-        ${0}
-
 snippet template_xml_attr
 options head indent
     snippet ${1:#:snippetName}
-    abbr    $1=""
+    abbr $1=""
         $1="${0}"
 
 snippet template_xml_tag
     snippet ${1:#:snippetName}
-    abbr    <$1/>
+    abbr <$1/>
         <$1/>
 
 snippet template_xml_tag_surround
     snippet ${1:#:snippetName}
-    abbr    <$1></$1>
+    abbr <$1></$1>
         <$1>${0}</$1>
 
 snippet template_haskell_pragma
 options indent
     snippet pragma_${1:#:name}
-    abbr    {-# LANGUAGE ${2:#:word} #-}
+    abbr {-# LANGUAGE ${2:#:word} #-}
     options head
         {-# LANGUAGE $2 #-}
+
+snippet template_jsx_attr
+options head indent
+    snippet ${1:#:snippetName}
+    abbr $1=__
+        $1=${0}

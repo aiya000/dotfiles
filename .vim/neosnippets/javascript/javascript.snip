@@ -25,6 +25,16 @@ abbr    else {}
         ${0:TARGET}
     }
 
+snippet switch
+abbr switch (__) {__}
+    switch (${1:var}) {${0}}
+
+snippet case
+abbr case __: __; break;
+    case ${1:LABEL}:
+        ${0}
+        break;
+
 snippet Array#map
     Array.prototype.map = function (f) {
         for (var i = 0; i < this.length; ++i) {
@@ -36,3 +46,16 @@ snippet Array#map
 snippet function
 abbr    function () {}
     function ${1} (${2}) {${3}}
+
+snippet arrow_function
+alias arrow
+abbr __ => __
+    ${1:()} => ${0}
+
+snippet class
+abbr class __ __ { __ }
+    class ${1:ClassName} ${2:#:extends_SomeClass}{${0}}
+
+snippet constructor
+abbr constructor(__) {__}
+    constructor(${1:#:args}) {${0}}

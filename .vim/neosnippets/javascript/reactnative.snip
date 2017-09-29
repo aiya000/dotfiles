@@ -1,0 +1,134 @@
+# Meta
+
+snippet A_tag
+abbr <__/>
+alias at
+    <${0:ComponentName}/>
+
+snippet A_tag_surround
+abbr <__>__</__>
+alias ats
+    <${1:ComponentName}>${0}</$1>
+
+snippet A_attribute
+abbr __=__
+alias aa
+    ${1:attr_name}=${2:value}
+
+
+# JSXes
+
+snippet import_template
+abbr import React, { Component } from 'react'; import { AppRegistry } from 'react-native';
+    import React, { Component } from 'react';
+    import { AppRegistry } from 'react-native';
+
+snippet export_default
+abbr export default
+    export default
+
+snippet comment_jsx
+abbr {/* __ */}
+    {/* ${0} */}
+
+snippet Component_template
+abbr class __ extends Component { render() { return (__); } }
+    class ${1:Name} extends Component {
+      render() {
+        return (
+            ${0:#:JSX}
+        );
+      }
+    }
+
+snippet render_template
+abbr render() { return (__); }
+  render() {
+    return (
+        ${0}
+    );
+  }
+
+snippet AppRegistry_template
+abbr AppRegistry.registerComponent('__', () => __);
+    AppRegistry.registerComponent('${1:ProjectName}', () => ${2:ComponentName});
+
+snippet Stylesheet_template
+abbr const styles = StyleSheet.create({__: {__},});
+    const styles = StyleSheet.create({
+        ${1:name}: {
+            ${0}
+        },
+    });
+
+## Callings
+
+snippet ToastAndroid_show
+abbr ToastAndroid.show('__', ToastAndroid._SHORT|LONG_)
+    ToastAndroid.show('${1:#:message}, ToastAndroid.${2:LONG})
+
+
+# Tags
+
+snippet Text
+abbr <Text>__</Text>
+    <Text>${1:hello}</Text>
+
+snippet Image_template
+abbr <Image source={__}/>
+    <Image source={${1:attribute_object}}/>
+
+snippet View
+abbr <View/>
+    <View/>
+
+snippet View_surround
+abbr <View>__</View>
+    <View>${0}</View>
+
+
+# Attributes
+
+snippet style
+abbr style={__}
+    style={${1}}
+
+snippet style_with_inner_block
+abbr style={{__}}
+alias style_bl
+    style={{${1}}}
+
+snippet placeholder
+abbr placeholder='__'
+    placeholder='${1}'
+
+snippet onChangeText
+abbr onChangeText=__
+    onChangeText=${1:function}
+
+snippet onChangeText_bl
+abbr onChangeText={__}
+    onChangeText={${1:expression}}
+
+snippet onPress
+abbr onPress=__
+    onPress=${1:function}
+
+snippet onPress_bl
+abbr onPress={__}
+    onPress={${0:expression}}
+
+
+# Styles
+
+snippet flex
+abbr flex: __
+    flex: ${1:1}
+
+snippet flexDirection
+abbr flexDirection: '_low|column_'
+    flexDirection: '${1:row}'
+
+snippet justifyContent
+abbr justifyContent: '_flex-start|center|flex-end|space-around|space-between_'
+    justifyContent: '${1:center}'
