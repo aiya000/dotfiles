@@ -1,7 +1,7 @@
 let b:undo_ftplugin = 'setl ' . join([
-\	'tabstop<',
-\	'shiftwidth<',
-\	'expandtab<',
+\   'tabstop<',
+\   'shiftwidth<',
+\   'expandtab<',
 \])
 
 setl tabstop=4
