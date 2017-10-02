@@ -2,6 +2,10 @@ snippet use_strict
 abbr     'use strict';
     'use strict';
 
+snippet import
+abbr import { __ } from '__'
+    import { ${1:objects} } from '${2:module-name}'
+
 snippet print
 abbr    console.log(__);
     console.log(${1:#:hello});
@@ -45,7 +49,7 @@ snippet Array#map
 
 snippet function
 abbr    function () {}
-    function ${1} (${2}) {${3}}
+    function ${1}(${2}) {${0}}
 
 snippet arrow_function
 alias arrow
