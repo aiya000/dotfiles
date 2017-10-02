@@ -19,9 +19,9 @@ alias aa
 # JSXes
 
 snippet import_template
-abbr import React, { Component } from 'react'; import { AppRegistry } from 'react-native';
-    import React, { Component } from 'react';
-    import { AppRegistry } from 'react-native';
+abbr import React, { Component } from 'react' import { AppRegistry } from 'react-native'
+    import React, { Component } from 'react'
+    import { AppRegistry } from 'react-native'
 
 snippet export_default
 abbr export default
@@ -32,34 +32,34 @@ abbr {/* __ */}
     {/* ${0} */}
 
 snippet Component_template
-abbr class __ extends Component { render() { return (__); } }
+abbr class __ extends Component { render() { return (__) } }
     class ${1:Name} extends Component {
       render() {
         return (
             ${0:#:JSX}
-        );
+        )
       }
     }
 
 snippet render_template
-abbr render() { return (__); }
+abbr render() { return (__) }
   render() {
     return (
         ${0}
-    );
+    )
   }
 
 snippet AppRegistry_template
-abbr AppRegistry.registerComponent('__', () => __);
-    AppRegistry.registerComponent('${1:ProjectName}', () => ${2:ComponentName});
+abbr AppRegistry.registerComponent('__', () => __)
+    AppRegistry.registerComponent('${1:ProjectName}', () => ${2:ComponentName})
 
 snippet Stylesheet_template
-abbr const styles = StyleSheet.create({__: {__},});
+abbr const styles = StyleSheet.create({__: {__},})
     const styles = StyleSheet.create({
         ${1:name}: {
             ${0}
         },
-    });
+    })
 
 ## Callings
 
@@ -85,6 +85,12 @@ abbr <View/>
 snippet View_surround
 abbr <View>__</View>
     <View>${0}</View>
+
+snippet Provider_surround_template
+abbr <Provider store={__}>__</Provider>
+    <Provider store={${1}}>
+        ${0}
+    </Provider>
 
 
 # Attributes
