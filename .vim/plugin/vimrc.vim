@@ -27,6 +27,7 @@ command! -bar CssShowDecompressed call vimrc#cmd#decompress_to_buffer()
 command! -bar -nargs=? Snowtify call s:Job.start('snowtify ' . (empty(<q-args>) ? 'test' : <q-args>))
 command! -bar -nargs=? SnowtifyWatchStart call vimrc#plugins#start_snowtify_watch(<q-args>)
 command! -bar SnowtifyWatchStop call vimrc#plugins#stop_snowtify_watch()
+command! -bar HaskDogs call vimrc#plugins#execute_haskdogs_async()
 
 " dein.vim
 command! -bar DeinInstall   call dein#install()

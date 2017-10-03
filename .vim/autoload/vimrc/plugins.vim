@@ -147,3 +147,23 @@ function! vimrc#plugins#stop_snowtify_watch() abort " {{{
         echo 'snowtify watch maybe not running'
     endif
 endfunction " }}}
+
+" Run `haskdogs` command as a job
+function! vimrc#plugins#execute_haskdogs_async() abort " {{{
+    if exists('s:haskdogs_job')
+        echomsg 'haskdogs is skipped (haskdogs is already running at now)'
+        return
+    endif
+
+    let git_top_dir = system('git rev-parse --show-toplevel')[:-2] " [:-2] removes a line break
+    let ctags_path  = isdirectory(git_top_dir) ? git_top_dir . '/.git/tags'
+    \                                          : './tags'
+
+    let s:haskdogs_job =
+    \   s:Job.start(printf('haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=%s"', ctags_path), {
+    \      'on_exit' : {_, __, ___ -> [
+    \           s:M.echo('None', 'haskdogs may generated ctags to ' . ctags_path),
+    \           execute('unlet s:haskdogs_job')
+    \       ]}
+    \   })
+endfunction " }}}
