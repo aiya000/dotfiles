@@ -1,0 +1,15 @@
+include typescript/typescript.snip
+include typescript/typedoc.snip
+
+include javascript/reactnative.snip
+
+delete Component_template
+snippet Component_template
+abbr class __ extends Component<__, __> { render() { return (__); } }
+    class ${1:Name} extends Component<${2:Props}, ${3:{}}> {
+      render() {
+        return (
+            ${0:#:JSX}
+        );
+      }
+    }

@@ -1,13 +1,3 @@
-# Meta
-snippet reference
-alias   include
-abbr    /// <reference path=""/>
-    /// <reference path="${0}"/>
-
-snippet classdesc
-abbr    @classdesc message
-    @classdesc
-
 # Syntax
 snippet for
 abbr    for () {}
@@ -37,6 +27,6 @@ abbr    else {}
 snippet function
 alias   func
 abbr    func () {}
-    function ${1:#:name}(${2:#:arguments}) : ${3:#:type} {
+    function ${1:#:name}(${2:#:arguments})${3:#:: type} {
         ${0:TARGET}
     }
