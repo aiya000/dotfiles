@@ -14,7 +14,7 @@ import Control.Lens
 import Control.Lens.Prism
 import Control.Lens.TH
 import Data.Char
-import Data.Text hiding (maximum, words)
+import Data.Text (Text)
 import Language.Haskell.TH
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
