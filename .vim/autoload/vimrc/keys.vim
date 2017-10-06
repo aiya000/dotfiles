@@ -86,32 +86,3 @@ endfunction " }}}
 function! vimrc#keys#get_webpage_title() abort " {{{
     return s:HTML.parseURL(@+).find('title').value()
 endfunction " }}}
-
-" Execute :terminal and :setf to it
-function! vimrc#keys#open_terminal_as(filetype, open_mode) abort " {{{
-    if a:open_mode ==# 'vertical'
-        if has('nvim')
-            " NeoVim doesn't split vertically by 'vertical'
-            vsp
-        endif
-        execute 'vertical' 'terminal'
-    elseif a:open_mode ==# 'horizontal'
-        if has('nvim')
-            sp
-        endif
-        terminal
-    elseif a:open_mode ==# 'stay'
-        if has('nvim')
-            terminal
-        else
-            terminal ++curwin
-        endif
-    elseif a:open_mode ==# 'tabnew'
-        tabnew
-        terminal
-        only
-    else
-        throw 'undefined open_mode is detected: ' . string(a:open_mode)
-    endif
-    execute 'setf' a:filetype
-endfunction " }}}

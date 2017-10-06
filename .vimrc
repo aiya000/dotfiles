@@ -943,10 +943,10 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <silent><expr> ghh ('mZ:hide<CR>:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : ''))
 
     " Open :terminal
-    autocmd User MyVimRc nnoremap <silent> <leader>v         :<C-u>call vimrc#keys#open_terminal_as('term-shell', 'vertical')<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader><leader>v :<C-u>call vimrc#keys#open_terminal_as('term-shell', 'horizontal')<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader>V         :<C-u>call vimrc#keys#open_terminal_as('term-shell', 'stay')<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader><leader>V :<C-u>call vimrc#keys#open_terminal_as('term-shell', 'tabnew')<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader>v         :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell)<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell)<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader>V         :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell)<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell)<CR>
 augroup END
 
 " }}}
