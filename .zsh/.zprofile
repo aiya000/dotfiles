@@ -40,13 +40,13 @@ PATH=$PATH:/usr/lib/git-core
 # Others {{{
 
 # Favorite editor
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR=nvim
+export VISUAL=nvim
 export BROWSER=firefox
 
 # Using 'vim-pager' and 'vim-manpager'
-export PAGER='nvim - +PAGER -c "setl nonu nornu ft=vim-pager | only"'
-export MANPAGER='nvim - +MANPAGER -c "setl nonu nornu ft=vim-pager | only"'
+export PAGER="$EDITOR - +PAGER -c 'setl nonu nornu ft=vim-pager | only'"
+export MANPAGER="$EDITOR - +MANPAGER -c 'setl nonu nornu ft=vim-pager | only'"
 
 # Others
 export GOPATH=~/.GoPath
