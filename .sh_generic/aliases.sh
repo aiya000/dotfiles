@@ -110,6 +110,7 @@ alias m=mount
 alias um=umount
 alias ei=exit
 alias vt=vterminal
+alias nt=nterminal
 alias ngs=vimgs
 alias s=sudo
 
