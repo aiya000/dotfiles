@@ -12,11 +12,11 @@ let $NVIM_PYTHON_LOG_FILE = g:vimrc['vim_home'] . '/.log/nvim_python.log'
 " Declare autocmd groups {{{
 
 augroup NeoEvent
-	autocmd!
+    autocmd!
 augroup END
 
 augroup NeoKeyMapping
-	autocmd!
+    autocmd!
 augroup END
 
 " }}}
@@ -45,7 +45,7 @@ call dein#disable('vimdoc-ja')
 " :terminal {{{
 
 augroup NeoEvent
-	autocmd TermOpen * setl nolist
+    autocmd TermOpen * setl nolist
 augroup END
 
 " }}}
@@ -59,14 +59,14 @@ augroup END
 " Override vimrc {{{
 
 augroup NeoKeyMapping
-	" Turn off the neocomplete keymaps
-	autocmd User MyNVimRc inoremap <CR> <CR>
-	autocmd User MyNVimRc inoremap <Tab> <Tab>
+    " Turn off the neocomplete keymaps
+    autocmd User MyNVimRc inoremap <CR> <CR>
+    autocmd User MyNVimRc inoremap <Tab> <Tab>
 
-	" deoplete.nvim
-	autocmd User MyNVimRc inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
-	autocmd User MyNVimRc inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
-	autocmd User MyNVimRc imap <C-k><C-i> <C-o>:call deoplete#toggle()<CR>
+    " deoplete.nvim
+    autocmd User MyNVimRc inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
+    autocmd User MyNVimRc inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
+    autocmd User MyNVimRc imap <C-k><C-i> <C-o>:call deoplete#toggle()<CR>
 augroup END
 
 " }}}
