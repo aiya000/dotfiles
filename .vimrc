@@ -431,7 +431,7 @@ let g:incsearch_cli_key_mappings = {
 " --- TaskList.vim --- {{{
 
 " TaskList finds these line
-let g:tlTokenList = ['NOTE', 'TODO', 'FIXME', 'XXX']
+let g:tlTokenList = ['TODO', 'FIXME', 'XXX']
 
 " Show the window at bottom
 let g:tlWindowPosition = 1
