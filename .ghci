@@ -12,11 +12,13 @@
 
 import Control.Applicative
 import Control.Lens
-import Control.Lens.Prism
-import Control.Lens.TH
+import Control.Monad
 import Data.Char
-import Data.Monoid
+import Data.Data
+import Data.Monoid hiding ((<>))
+import Data.Semigroup
 import Data.Text (Text)
+import Data.Typeable
 import Language.Haskell.TH
 import qualified Data.Map.Lazy as M
 import qualified Data.Text as T
