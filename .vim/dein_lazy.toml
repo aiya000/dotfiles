@@ -215,3 +215,7 @@ on_ft = 'haskell'
 repo     = 'ianks/vim-tsx'
 on_event = ['BufNewFile', 'BufRead']
 on_if    = 'expand("%") =~# "\.tsx$"'
+
+[[plugins]]
+repo = 'vmchale/ghci-syntax'
+on_if = 'expand("%") ==# ".ghci"'
