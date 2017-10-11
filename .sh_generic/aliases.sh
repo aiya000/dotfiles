@@ -88,6 +88,7 @@ if i_have git ; then
     alias gret='git return'
     alias gtree='git tree'
     alias gtree-all='git tree-all'
+    alias gclone='git clone'
     unset git_taking_limit
 
     # Set casual user.name and user.email at local
