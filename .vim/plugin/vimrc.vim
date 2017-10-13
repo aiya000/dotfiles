@@ -40,3 +40,9 @@ command! -bar Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 'stay', '
 "NOTE: 'e' suffix means 'environment of the project' :D
 command! -bar Ghcie call vimrc#open_terminal_as('term-stack-ghci', 'stay', 'stack ghci')
 command! -bar CLisp call vimrc#open_terminal_as('', 'stay', 'clisp')
+command! -bar LeinRepl call vimrc#open_terminal_as('', 'stay', 'lein repl')
+
+" git
+command! -bar GCommit call vimrc#open_terminal_as('', 'stay', 'git commit --verbose')
+command! -bar GCAM call vimrc#open_terminal_as('', 'stay', 'git commit --amend --verbose')
+command! -bar GAP call vimrc#open_terminal_as('', 'stay', 'git add -p')

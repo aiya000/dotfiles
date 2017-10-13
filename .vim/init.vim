@@ -83,11 +83,6 @@ command! -bar VimConfig    e ~/.vimrc
 command! -bar VimConfigTab tabnew ~/.vimrc
 command! -bar Reload       so ~/.config/nvim/init.vim
 
-CmdCnoreabbr CLisp terminal clisp
-CmdCnoreabbr GCommit tabnew \| terminal git commit --verbose
-CmdCnoreabbr GCAM tabnew \| terminal git commit --amend --verbose
-CmdCnoreabbr GAP tabnew \| terminal git add -p
-
 " }}}
 " Others {{{
 
