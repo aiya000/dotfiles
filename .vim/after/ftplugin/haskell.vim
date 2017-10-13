@@ -28,3 +28,8 @@ function! s:stack_integrate_test_or_unit_or_both() abort
     \                                   : ':integrate-test'
     call vimrc#open_terminal_as('stack_test', 'horizontal', 'stack test ' . target)
 endfunction
+
+augroup FtpluginHaskell
+    autocmd!
+    autocmd BufWritePost *.hs HaskDogs
+augroup END
