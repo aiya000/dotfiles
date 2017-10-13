@@ -1,7 +1,9 @@
 :set prompt "\001\ESC[93m\002%s\001\ESC[34;1m\002\n>>>\001\ESC[0;48;05;233m\002 "
 :set editor vim
-:set +m
+:set -m
 :set -XOverloadedStrings
+:set -XOverloadedLists
+:set -XFlexibleContexts
 :set -XTemplateHaskell
 :set -XQuasiQuotes
 :set -XDataKinds
