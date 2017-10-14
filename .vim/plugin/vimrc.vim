@@ -39,10 +39,16 @@ command! -bar DeinUpdateLog new | setl buftype=nofile noreadonly modifiable ft=d
 command! -bar Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 'stay', 'stack exec ghci')
 "NOTE: 'e' suffix means 'environment of the project' :D
 command! -bar Ghcie call vimrc#open_terminal_as('term-stack-ghci', 'stay', 'stack ghci')
-command! -bar CLisp call vimrc#open_terminal_as('', 'stay', 'clisp')
-command! -bar LeinRepl call vimrc#open_terminal_as('', 'stay', 'lein repl')
+command! -bar CLisp call vimrc#open_terminal_as('none', 'stay', 'clisp')
+command! -bar LeinRepl call vimrc#open_terminal_as('none', 'stay', 'lein repl')
 
 " git
-command! -bar GCommit call vimrc#open_terminal_as('', 'stay', 'git commit --verbose')
-command! -bar GCAM call vimrc#open_terminal_as('', 'stay', 'git commit --amend --verbose')
-command! -bar GAP call vimrc#open_terminal_as('', 'stay', 'git add -p')
+command! -bar GStatus Gina status -s
+command! -bar GLog GitLogViewer -100
+command! -bar GLP GitLogViewer --patch -100
+command! -bar GDiff GitDiffViewer
+command! -bar GDS GitDiffViewer --staged
+command! -bar GDH GitDiffViewer HEAD~
+command! -bar GCommit call vimrc#open_terminal_as('none', 'tabnew', 'git commit --verbose')
+command! -bar GCAM call vimrc#open_terminal_as('none', 'tabnew', 'git commit --amend --verbose')
+command! -bar GAP call vimrc#open_terminal_as('none', 'tabnew', 'git add -p')
