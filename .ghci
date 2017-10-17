@@ -2,7 +2,6 @@
 :set editor vim
 :set -m
 :set -XOverloadedStrings
-:set -XOverloadedLists
 :set -XFlexibleContexts
 :set -XTemplateHaskell
 :set -XQuasiQuotes
