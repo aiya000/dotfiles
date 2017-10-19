@@ -86,3 +86,34 @@ endfunction " }}}
 function! vimrc#keys#get_webpage_title() abort " {{{
     return s:HTML.parseURL(@+).find('title').value()
 endfunction " }}}
+
+
+" Toggle keymapping <leader>V (and etc) to :terminal or vimshell
+function! vimrc#keys#toggle_shell_mode() "{{{
+    " Base properties
+    let l:SHELL_MODE = {
+    \   'vimshell' : ':VimShell',
+    \   'terminal' : ':terminal'
+    \} | lockvar! l:SHELL_MODE
+
+    " Toggle values
+    let g:vimrc#keys#shell_mode =
+    \   get(g:, 'vimrc#keys#shell_mode', l:SHELL_MODE.vimshell) ==# l:SHELL_MODE.terminal
+    \       ? l:SHELL_MODE.vimshell
+    \       : l:SHELL_MODE.terminal
+
+    " Toggle keymappings
+    if g:vimrc#keys#shell_mode ==# l:SHELL_MODE.vimshell
+        nnoremap <silent> <leader>v         :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell)<CR>
+        nnoremap <silent> <leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell)<CR>
+        nnoremap <silent> <leader>V         :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell)<CR>
+        nnoremap <silent> <leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell)<CR>
+        echo 'shell mode ' . l:SHELL_MODE.terminal
+    elseif g:vimrc#keys#shell_mode ==# l:SHELL_MODE.terminal
+        nnoremap <silent> <leader>v         :<C-u>VimShell -split-command=vsp -toggle<CR>
+        nnoremap <silent> <leader><leader>v :<C-u>VimShell -split-command=sp  -toggle<CR>
+        nnoremap <silent> <leader>V         :<C-u>VimShellBufferDir -create<CR>
+        nnoremap <silent> <leader><leader>V :<C-u>VimShell -split-command=tabnew -create<CR>
+        echo 'shell mode ' . l:SHELL_MODE.vimshell
+    endif
+endfunction "}}}
