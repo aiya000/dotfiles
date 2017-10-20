@@ -33,7 +33,6 @@ function vimman () {
 
 
 # NeoVim
-alias nvimdiff='\nvim -d'
 alias nvime='nvim -c ":bufdo tab split" +q'
 alias nvim-current-session='vim-current-session nvim'
 alias nvimman='vimman nvim'
