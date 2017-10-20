@@ -16,6 +16,7 @@ import Control.Lens
 import Control.Monad
 import Data.Char
 import Data.Data
+import Data.List
 import Data.Monoid hiding ((<>))
 import Data.Semigroup
 import Data.Text (Text)
