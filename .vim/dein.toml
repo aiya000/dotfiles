@@ -1,6 +1,6 @@
 [[plugins]]
 repo = 'tyru/open-browser.vim'
-rev  = 'd0cd58e'
+rev  = '39e8064'
 
 [[plugins]]
 repo = 'Shougo/unite.vim'
