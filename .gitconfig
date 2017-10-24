@@ -2,7 +2,7 @@
 	name = aiya000
 	email = aiya000.develop@gmail.com
 [merge]
-	tool = nvimdiff
+	tool = vimdiff
 
 [github]
 	user = aiya000
@@ -43,7 +43,7 @@
 	ds = diff --staged
 	ap = add -p
 [core]
-	pager = nvim - -R +PAGER -c 'setf vim-pager | set syntax=git'
+	pager = vim - -R +PAGER -c 'setf vim-pager | set syntax=git'
 [init]
 	templatedir = ~/.git_templates
 [status]
