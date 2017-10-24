@@ -208,10 +208,6 @@ on_cmd = 'OpenGoogleTranslate'
 on_map = '<Plug>(operator-open-googletranslate)'
 
 [[plugins]]
-repo  = 'eagletmt/ghcmod-vim'
-on_ft = 'haskell'
-
-[[plugins]]
 repo     = 'ianks/vim-tsx'
 on_event = ['BufNewFile', 'BufRead']
 on_if    = 'expand("%") =~# "\.tsx$"'
