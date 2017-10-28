@@ -22,6 +22,16 @@ augroup END
 " }}}
 
 
+"-----------------"
+" Set vim options "
+"-----------------"
+" {{{
+
+set inccommand=split
+
+" }}}
+
+
 "---------------------"
 " Configurate plugins "
 "---------------------"
@@ -67,6 +77,13 @@ augroup NeoKeyMapping
     autocmd User MyNVimRc inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
     autocmd User MyNVimRc inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
     autocmd User MyNVimRc imap <C-k><C-i> <C-o>:call deoplete#toggle()<CR>
+
+    " disable vim-over keymaps
+    autocmd User MyNVimRc nunmap :%s/
+    autocmd User MyNVimRc nunmap :s/
+    autocmd User MyNVimRc nnoremap <silent><expr> <C-k><C-s> ':%s/\m\C\<' . expand('<cword>') . '\>/<CR>'
+    autocmd User MyNVimRc nnoremap <silent><expr> <C-k>s     ':%s/\m\C\<' . expand('<cword>') . '\>/' . expand('<cword>') . '<CR>'
+    autocmd User MyNVimRc vunmap :s/
 augroup END
 
 " }}}
