@@ -7,8 +7,8 @@ signal="$1"
 target_pids=$(ps -ax --format='pid,tty,command' | awk 'NR!=1 {print}' | fzf --multi | awk '{print $1}')
 
 if [ "$target_pids" == '' ] ; then
-	echo 'くふん！'
-	exit 1
+    echo 'くふん！'
+    exit 1
 else
-	kill $signal $target_pids && echo 'やったわ'
+    kill $signal $target_pids && echo 'やったわ'
 fi
