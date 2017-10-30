@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # kill with fzf
 # ＜ キリングアート！
 
@@ -6,7 +6,7 @@ signal="$1"
 #FIXME: Don't show current process in fzf
 target_pids=$(ps -ax --format='pid,tty,command' | awk 'NR!=1 {print}' | fzf --multi | awk '{print $1}')
 
-if [ "$target_pids" == '' ] ; then
+if [[ "$target_pids" == '' ]] ; then
     echo 'くふん！'
     exit 1
 else
