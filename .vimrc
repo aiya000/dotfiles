@@ -334,6 +334,9 @@ let g:quickrun_config = {
 \        'outputter': 'quickfix',
 \        'outputter/quickfix/open_cmd': 'botright cwindow',
 \    },
+\    'eta': {
+\       'runner': 'vimproc',
+\    },
 \}
 
 " Append config of each environment
