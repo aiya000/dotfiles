@@ -12,6 +12,7 @@ nnoremap <buffer><silent> <localleader><localleader>r :<C-u>echo 'stack test is 
 nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('stack_test', 'horizontal', 'stack test :integrate-test')<CR>
 nnoremap <buffer><silent> <localleader><localleader>S :<C-u>Snowtify<CR>
 nnoremap <buffer><silent> <localleader><localleader>t :<C-u>call <SID>stack_integrate_test_or_unit_or_both()<CR>
+nnoremap <buffer><silent> <localleader><localleader><localleader>r :<C-u>QuickRun eta<CR>
 
 function! s:stack_integrate_test_or_unit_or_both() abort
     echon "a: do integrate-test (default)\n" .
