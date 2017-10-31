@@ -81,8 +81,8 @@ augroup NeoKeyMapping
     " disable vim-over keymaps
     autocmd User MyNVimRc nunmap :%s/
     autocmd User MyNVimRc nunmap :s/
-    autocmd User MyNVimRc nnoremap <silent><expr> <C-k><C-s> ':%s/\m\C\<' . expand('<cword>') . '\>/<CR>'
-    autocmd User MyNVimRc nnoremap <silent><expr> <C-k>s     ':%s/\m\C\<' . expand('<cword>') . '\>/' . expand('<cword>') . '<CR>'
+    autocmd User MyNVimRc nnoremap <silent><expr> <C-k><C-s> ':%s/\m\C\<' . expand('<cword>') . '\>/'
+    autocmd User MyNVimRc nnoremap <silent><expr> <C-k>s     ':%s/\m\C\<' . expand('<cword>') . '\>/' . expand('<cword>')
     autocmd User MyNVimRc vunmap :s/
 augroup END
 
