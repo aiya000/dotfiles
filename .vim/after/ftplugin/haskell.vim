@@ -1,7 +1,3 @@
-let s:V   = vital#vimrc#new()
-let s:Job = s:V.import('System.Job')
-let s:M   = s:V.import('Vim.Message')
-
 let b:undo_ftplugin = 'setl ' . join([
 \   'ts<',
 \   'sw<',
