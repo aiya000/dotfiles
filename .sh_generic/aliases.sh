@@ -98,6 +98,38 @@ if i_have git ; then
 fi
 
 # }}}
+# haskell-stack {{{
+
+if i_have stack ; then
+    alias sb='stack build'
+    alias se='stack exec --'
+    alias st='stack test'
+    alias si='stack install'
+    alias sc='stack clean'
+    alias srunghc='stack runghc --'
+    alias sghci='stack ghci --'
+    alias shaddock-gen='stack haddock .'
+    alias shaddock-gen-open='stack haddock --open .'
+fi
+
+# }}}
+# Dependent things {{{
+
+i_have docker && alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
+i_have rsync && alias cp-with-progress='rsync --partial --progress'
+i_have watch && alias wifi-hardware-check='watch -n1 rfkill list all'
+i_have ctags && alias ctags-casual='ctags --tag-relative --recurse --sort=yes -f'
+i_have tmux && alias tmuxa='tmux attach'
+i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
+i_have hasktags && alias hasktags-casual='hasktags . --ignore-close-implementation --tags-absolute --ctags -f'
+i_have unzip && alias unzip-cp932='unzip -O cp932'
+
+i_have haskdogs &&
+    function haskdogs-casual () {
+        haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=${1}"
+    }
+
+# }}}
 # Others {{{
 
 # Short hands
@@ -120,36 +152,12 @@ alias s=sudo
 alias cdp=cd-finddir
 alias ki=killing-art
 
-alias sb='stack build'
-alias se='stack exec --'
-alias st='stack test'
-alias si='stack install'
-alias sc='stack clean'
-alias srunghc='stack runghc --'
-alias sghci='stack ghci --'
-alias shaddock-gen='stack haddock .'
-alias shaddock-gen-open='stack haddock --open .'
-
 alias date-simple='date +"%Y-%m-%d"'
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
 alias mount4u.vfat=mount4u.ntfs
 alias mount4u.ext2='sudo mount -o iocharset=utf8'
 alias mount4u.ext3=mount4u.ext2
 alias mount4u.ext4=mount4u.ext2
-
-i_have docker   && alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
-i_have rsync    && alias cp-with-progress='rsync --partial --progress'
-i_have watch    && alias wifi-hardware-check='watch -n1 rfkill list all'
-i_have ctags    && alias ctags-casual='ctags --tag-relative --recurse --sort=yes -f'
-i_have tmux     && alias tmuxa='tmux attach'
-i_have nmcli    && alias nmcli-connect-wifi='nmcli device wifi connect'
-i_have hasktags && alias hasktags-casual='hasktags . --ignore-close-implementation --tags-absolute --ctags -f'
-i_have unzip    && alias unzip-cp932='unzip -O cp932'
-
-i_have haskdogs &&
-    function haskdogs-casual () {
-        haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=${1}"
-    }
 
 # Generate items for autotools
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
