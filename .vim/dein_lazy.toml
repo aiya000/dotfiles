@@ -36,7 +36,6 @@ repo = 'basyura/bitly.vim'
 
 [[plugins]]
 repo    = 'thinca/vim-quickrun'
-rev     = '98889e1'
 depends = 'vimproc.vim'
 on_cmd  = 'QuickRun'
 on_map  = [
