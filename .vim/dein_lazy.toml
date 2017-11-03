@@ -212,9 +212,10 @@ on_event = ['BufNewFile', 'BufRead']
 on_if    = 'expand("%") =~# "\.tsx$"'
 
 [[plugins]]
-repo = 'vmchale/ghci-syntax'
+repo  = 'vmchale/ghci-syntax'
 on_if = 'expand("%") ==# ".ghci"'
 
 [[plugins]]
-repo = 'ElmCast/elm-vim'
+repo  = 'aiya000/elm-vim'
+rev   = 'aiya000/use-command-bang'
 on_ft = 'elm'
