@@ -86,11 +86,12 @@ if i_have git ; then
     alias gpull='git pull --rebase'
     alias greflog='git reflog'
     alias gbackstep='git reset --soft HEAD~'
-    # These are associated to .gitconfig
-    alias gret='git return'
-    alias gtree='git tree'
-    alias gtree-all='git tree-all'
     alias gclone='git clone'
+    alias gtag='git tag | xargs echo'
+    alias g-devine-buster='git clean -fd'
+    alias gre='git return'         # These subcommands are defined in .gitconfig
+    alias gtree='git tree'         #
+    alias gtree-all='git tree-all' #
     unset git_taking_limit
 
     # Set casual user.name and user.email at local
@@ -98,7 +99,7 @@ if i_have git ; then
 fi
 
 # }}}
-# haskell-stack {{{
+# Haskell {{{
 
 if i_have stack ; then
     alias sb='stack build'
@@ -112,8 +113,19 @@ if i_have stack ; then
     alias shaddock-gen-open='stack haddock --open .'
 fi
 
+if i_have etlas ; then
+    alias etl=etlas
+    alias eb='etlas build'
+    alias er='etlas run'
+fi
+
+i_have haskdogs &&
+    function haskdogs-casual () {
+        haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=${1}"
+    }
+
 # }}}
-# Dependent things {{{
+# Others {{{
 
 i_have docker && alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
 i_have rsync && alias cp-with-progress='rsync --partial --progress'
@@ -123,14 +135,6 @@ i_have tmux && alias tmuxa='tmux attach'
 i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have hasktags && alias hasktags-casual='hasktags . --ignore-close-implementation --tags-absolute --ctags -f'
 i_have unzip && alias unzip-cp932='unzip -O cp932'
-
-i_have haskdogs &&
-    function haskdogs-casual () {
-        haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=${1}"
-    }
-
-# }}}
-# Others {{{
 
 # Short hands
 alias la='ls -a --color=auto --group-directories-first'
