@@ -41,6 +41,7 @@ command! -bar Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 'stay', '
 command! -bar Ghcie call vimrc#open_terminal_as('term-stack-ghci', 'stay', 'stack ghci')
 command! -bar CLisp call vimrc#open_terminal_as('none', 'stay', 'clisp')
 command! -bar LeinRepl call vimrc#open_terminal_as('none', 'stay', 'lein repl')
+command! -bar ElmRepl call vimrc#open_terminal_as('term-elm-repl', 'stay', 'elm repl')
 
 " git
 command! -bar GStatus Gina status -s
