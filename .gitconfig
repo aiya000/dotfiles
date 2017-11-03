@@ -42,6 +42,7 @@
 	rh = reset --hard
 	ds = diff --staged
 	ap = add -p
+	pr = pull-request
 [core]
 	pager = vim - -R +PAGER -c 'setf vim-pager | set syntax=git'
 [init]
