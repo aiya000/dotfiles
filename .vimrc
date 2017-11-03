@@ -275,7 +275,8 @@ let g:quickrun_config = {
 \       'hook/time/enable' : 1,
 \       'outputter' : 'error',
 \       'outputter/error/error'   : 'quickfix',
-\       'outputter/error/success' : 'buffer'
+\       'outputter/error/success' : 'buffer',
+\       'outputter/quickfix/open_cmd': 'botright cwindow',
 \   },
 \   'cpp': {
 \       'cmdopt': '-std=c++14'
@@ -326,7 +327,6 @@ let g:quickrun_config = {
 \       'exec': '%c %o',
 \       'runner': 'vimproc',
 \       'outputter': 'quickfix',
-\       'outputter/quickfix/open_cmd': 'botright cwindow',
 \   },
 \   'eta': {
 \       'runner': 'vimproc',
