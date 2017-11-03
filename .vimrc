@@ -276,7 +276,6 @@ let g:quickrun_config = {
 \       'outputter' : 'error',
 \       'outputter/error/error'   : 'quickfix',
 \       'outputter/error/success' : 'buffer',
-\       'outputter/quickfix/open_cmd': 'botright cwindow',
 \   },
 \   'cpp': {
 \       'cmdopt': '-std=c++14'
