@@ -215,3 +215,7 @@ on_if    = 'expand("%") =~# "\.tsx$"'
 [[plugins]]
 repo = 'vmchale/ghci-syntax'
 on_if = 'expand("%") ==# ".ghci"'
+
+[[plugins]]
+repo = 'ElmCast/elm-vim'
+on_ft = 'elm'

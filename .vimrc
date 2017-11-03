@@ -620,6 +620,11 @@ let g:ale_linters = {
 ALEDisable
 
 " }}}
+" --- elm-vim --- {{{
+
+let g:elm_setup_keybindings = 0
+
+" }}}
 
 call dein#end()
 
