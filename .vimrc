@@ -331,6 +331,13 @@ let g:quickrun_config = {
 \   'eta': {
 \       'runner': 'vimproc',
 \   },
+\   'elm': {
+\       'runner': 'vimproc',
+\       'command': 'elm-make',
+\       'cmdopt': '--warn',
+\       'exec': ['%c %s %o --output /tmp/vim-quickrun-elm.html', 'xdg-open /tmp/vim-quickrun-elm.html'],
+\       'tempfile': '%{tempname()}.elm',
+\   },
 \}
 
 " Append config of each environment
