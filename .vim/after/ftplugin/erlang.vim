@@ -1,5 +1,5 @@
 let b:undo_ftplugin = 'setl ' . join([
-\	'expandtab<'
+\   'expandtab<'
 \])
 
 setl expandtab
