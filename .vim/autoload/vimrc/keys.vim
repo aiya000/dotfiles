@@ -84,7 +84,7 @@ endfunction " }}}
 
 " Get a detail of <title> from + register
 function! vimrc#keys#get_webpage_title() abort " {{{
-    return s:HTML.parseURL(@+).find('title').value()
+    return substitute(s:HTML.parseURL(@+).find('title').value(), '·', '-', 'g')
 endfunction " }}}
 
 
