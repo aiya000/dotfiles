@@ -422,15 +422,6 @@ call dein#set_hook('vim-submode', 'hook_source', function('s:vim_submode_on_sour
 set helplang=en,ja
 
 " }}}
-" --- incsearch.vim --- {{{
-
-" Define keymaps for incsearch.vim
-let g:incsearch_cli_key_mappings = {
-\    "\<C-j>": "\<CR>",
-\    "\<C-l>": "\<Esc>"
-\}
-
-" }}}
 " --- TaskList.vim --- {{{
 
 " TaskList finds these line
@@ -634,7 +625,7 @@ call dein#end()
 "-----------------"
 " {{{
 
-set number relativenumber nowrap hlsearch list scrolloff=16
+set number relativenumber nowrap hlsearch list scrolloff=16 incsearch
 set textwidth=0 tabstop=4 shiftwidth=4 expandtab
 set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
 set breakindent linebreak autoindent cindent nojoinspaces
@@ -1023,19 +1014,6 @@ augroup KeyMapping
     autocmd User MyVimRc nmap <leader><leader>* g*/<Up><Home>\m\C<CR>
     autocmd User MyVimRc nmap <leader><leader># g#?<Up><Home>\m\C<CR>
 
-    " incsearch.vim
-    autocmd User MyVimRc nmap <expr>   /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)' : '<Plug>(incsearch-forward)'
-    autocmd User MyVimRc nmap          <leader>/         /\m\C
-    "FIXME: [Left] doesn't work
-    autocmd User MyVimRc nmap          <leader><leader>/ /\m\C\<\>[Left][Left]
-    autocmd User MyVimRc nmap          g/                <Plug>(incsearch-stay)
-    autocmd User MyVimRc nmap <expr>   ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
-    autocmd User MyVimRc nmap          <leader>?         ?\m\C
-    "FIXME: [Left] doesn't work
-    autocmd User MyVimRc nmap          <leader><leader>? ?\m\C\<\>[Left][Left]
-    autocmd User MyVimRc vmap <expr>   /                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-forward)'  : '<Plug>(incsearch-forward)'
-    autocmd User MyVimRc vmap <expr>   ?                 foldclosed('.') > -1 ? 'zv<Plug>(incsearch-backward)' : '<Plug>(incsearch-backward)'
-
     " TaskList.vim
     autocmd User MyVimRc nmap <silent> <leader>t <Plug>TaskListToggle
 
@@ -1120,6 +1098,11 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <silent> g> :<C-u>messages<CR>
     autocmd User MyVimRc nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
     autocmd User MyVimRc nnoremap <silent> !  :!<CR>
+
+    autocmd User MyVimRc nnoremap <leader>/         /\m\C
+    autocmd User MyVimRc nnoremap <leader><leader>/ /\m\C\<\><Left><Left>
+    autocmd User MyVimRc nnoremap <leader>?         ?\m\C
+    autocmd User MyVimRc nnoremap <leader><leader>? ?\m\C\<\><Left><Left>
 
     autocmd User MyVimRc nnoremap <silent> <leader>b                :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=scratch<CR>
     autocmd User MyVimRc nnoremap <silent> <leader>B                :<C-u>NewOverridden \| EditOverridden ~/.tmp/vim-memo.md \| resize 5<CR>

@@ -41,9 +41,6 @@ repo = 'osyo-manga/vim-over'
 repo = 'h1mesuke/vim-alignta'
 
 [[plugins]]
-repo = 'haya14busa/incsearch.vim'
-
-[[plugins]]
 repo = 'deris/vim-shot-f'
 
 [[plugins]]
