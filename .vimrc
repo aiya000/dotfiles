@@ -267,6 +267,7 @@ unlet s:java_src
 
 let g:quickrun_no_default_key_mappings = 0
 
+" For *nix environments
 let g:quickrun_config = {
 \   '_': {
 \       'split'  : '',
@@ -283,6 +284,9 @@ let g:quickrun_config = {
 \   'java': {
 \       'cmdopt': '-encoding UTF-8 -source 1.8'
 \   },
+\   'cs': {
+\       'command': 'mcs'
+\   },
 \   'vimspec': {
 \       'command' : 'themis',
 \       'cmdopt'  : '--runtimepath ".."',
@@ -290,6 +294,7 @@ let g:quickrun_config = {
 \       'tempfile':  printf('%s/{tempname()}.vimspec', $TMP)
 \   },
 \   'html': {
+\       'command': 'xdg-open',
 \       'outputter': 'null',
 \       'exec'     : '%c %s:p'
 \   },
@@ -313,6 +318,14 @@ let g:quickrun_config = {
 \   },
 \   'nico': {
 \       'command': 'nicorun'
+\   },
+\   'haskell': {
+\       'cmdopt': '-fprint-explicit-kinds',
+\       'command': 'stack',
+\       'exec': ['%c exec -- ghc %o %s', '%s:p:r'],
+\       'tempfile': '%{tempname()}.hs',
+\       'hook/sweep/files': ['%S:p:r', '%S:p:r.hi', '%S:p:r.o'],
+\       'runner': 'vimproc',
 \   },
 \   'lhaskell': {
 \       'command': 'stack exec runghc',
@@ -340,9 +353,7 @@ let g:quickrun_config = {
 \}
 
 " Append config of each environment
-if g:vimrc['is_unix'] && !g:vimrc['is_cygwin']
-    call vimrc#plugins#append_config_quickrun_unix()
-elseif g:vimrc['is_windows']
+if g:vimrc['is_windows']
     call vimrc#plugins#append_config_quickrun_windows()
 elseif g:vimrc['is_cygwin']
     call vimrc#plugins#append_config_quickrun_cygwin()

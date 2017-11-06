@@ -2,44 +2,23 @@ let s:V = vital#vimrc#new()
 let s:M = s:V.import('Vim.Message')
 let s:Job = s:V.import('System.Job')
 
-" Append quickrun config for unix
-function! vimrc#plugins#append_config_quickrun_unix() abort " {{{
-    " C#
-    let g:quickrun_config['cs'] = {'command' : 'mcs'}
-    " HTML
-    let g:quickrun_config.html['command'] = 'xdg-open'
-    " Haskell
-    if executable('stack')
-        "TODO: Why this specific is invalid ?
-        "let g:quickrun_config['haskell'] = {'command' : 'stack runghc'}
-        let g:quickrun_config['haskell'] = {'exec' : 'stack runghc -- %s'}
-    endif
-endfunction " }}}
-
 " Append quickrun config for windows
 function! vimrc#plugins#append_config_quickrun_windows() abort " {{{
     " C#
-    let g:quickrun_config['cs'] = {
-    \   'command' : 'csc.exe',
-    \   'hook/output_encode/encoding' : 'cp932:utf-8'
-    \}
+    let g:quickrun_config.cs['command'] = 'csc.exe'
+    let g:quickrun_config.cs['hook/output_encode/encoding'] = 'cp932:utf-8'
     " Java
     let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
     " HTML
-    "TODO: Don't specify firefox.exe
-    let g:quickrun_config.html['command'] = 'firefox.exe'
-    let g:quickrun_config.html['exec']    = '%c file://%s:p'
+    let g:quickrun_config.html['command'] = 'rundll32'
+    let g:quickrun_config.html['exec']    = '%c url.dll,FileProtocolHandler uri file://%s:p'
 endfunction " }}}
 
 " Append quickrun config for cygwin
 function! vimrc#plugins#append_config_quickrun_cygwin() abort " {{{
-    "NOTE: for vimproc runner problem
-    let g:quickrun_config._['runner'] = 'system'
     " C#
-    let g:quickrun_config['cs'] = {
-    \   'command' : 'csc.exe',
-    \   'hook/output_encode/encoding' : 'cp932:utf-8'
-    \}
+    let g:quickrun_config.cs['command'] = 'csc.exe'
+    let g:quickrun_config.cs['hook/output_encode/encoding'] = 'cp932:utf-8'
     " Java
     let g:quickrun_config.java['exec']                        = ['%c %o `cygpath -w %s:p`', '%c %s:t:r %a']
     let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
