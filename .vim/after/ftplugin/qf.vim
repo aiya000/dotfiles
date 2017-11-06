@@ -12,9 +12,10 @@ setl statusline+=\ %L
 setl nonumber norelativenumber
 setl cursorline nolist
 
-nnoremap <silent> <buffer> <expr> <C-a> <SID>go_to_errorformat(v:count1)
-nnoremap <silent> <buffer> <expr> <C-x> <SID>go_to_errorformat(-v:count1)
+nnoremap <buffer> Q :<C-u>bdelete<CR>
 nnoremap <buffer> <C-j> <CR>
+nnoremap <buffer><silent> <expr> <C-a> <SID>go_to_errorformat(v:count1)
+nnoremap <buffer><silent> <expr> <C-x> <SID>go_to_errorformat(-v:count1)
 
 " Thanks thinca for teaching this
 function! s:go_to_errorformat(motion)
