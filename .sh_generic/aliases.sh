@@ -150,7 +150,6 @@ alias um=umount
 alias ei=exit
 alias vt=vterminal
 alias nt=nterminal
-alias s=sudo
 
 alias cdp=cd-finddir
 alias ki=killing-art
