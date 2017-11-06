@@ -320,11 +320,9 @@ let g:quickrun_config = {
 \       'command': 'nicorun'
 \   },
 \   'haskell': {
-\       'cmdopt': '-fprint-explicit-kinds',
+\       'cmdopt': '--ghc-arg=-fprint-explicit-kinds',
 \       'command': 'stack',
-\       'exec': ['%c exec -- ghc %o %s', '%s:p:r'],
-\       'tempfile': '%{tempname()}.hs',
-\       'hook/sweep/files': ['%S:p:r', '%S:p:r.hi', '%S:p:r.o'],
+\       'exec': ['%c exec runghc -- %o %s', '%s:p:r'],
 \       'runner': 'vimproc',
 \   },
 \   'lhaskell': {
