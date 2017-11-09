@@ -9,14 +9,14 @@
 autoload -U edit-command-line && zle -N edit-command-line
 
 function zle-line-init {
-	shell_kawaii_build_prompt
-	zle reset-prompt
+    shell_kawaii_build_prompt
+    zle reset-prompt
 }
 zle -N zle-line-init
 
 function zle-keymap-select {
-	shell_kawaii_build_prompt
-	zle reset-prompt
+    shell_kawaii_build_prompt
+    zle reset-prompt
 }
 zle -N zle-keymap-select
 
@@ -26,26 +26,26 @@ zle -N zle-keymap-select
 ##################
 # history-incremental-search-backward with fzf
 function fzf-history-search-backward () {
-	local selected=$(fc -ln 1 | fzf-tmux --no-sort)
-	BUFFER="$selected"
-	CURSOR=${#BUFFER}
+    local selected=$(fc -ln 1 | fzf-tmux --no-sort)
+    BUFFER="$selected"
+    CURSOR=${#BUFFER}
 }
 zle -N fzf-history-search-backward
 
 # Select paths by fzf
 function fzf-path-finder () {
-	local current_word="${LBUFFER/* /}${RBUFFER/ */}"
-	current_word="${current_word/\~/$HOME}"
-	if [ -z "$current_word" ] ; then
-		current_word='.'
-	fi
-	local selected_histories=$(find "$current_word" | fzf --multi --no-sort)
-	local before_cword_num=$(( ${#BUFFER} - ${#current_word} ))
-	local buffer_="${BUFFER[0, $before_cword_num]}"
+    local current_word="${LBUFFER/* /}${RBUFFER/ */}"
+    current_word="${current_word/\~/$HOME}"
+    if [ -z "$current_word" ] ; then
+        current_word='.'
+    fi
+    local selected_histories=$(find "$current_word" | fzf --multi --no-sort)
+    local before_cword_num=$(( ${#BUFFER} - ${#current_word} ))
+    local buffer_="${BUFFER[0, $before_cword_num]}"
 
-	zle redisplay
-	BUFFER="${buffer_} ${selected_histories}"
-	CURSOR=${#BUFFER}
+    zle redisplay
+    BUFFER="${buffer_} ${selected_histories}"
+    CURSOR=${#BUFFER}
 }
 zle -N fzf-path-finder
 
