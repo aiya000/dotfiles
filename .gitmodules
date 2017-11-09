@@ -25,3 +25,6 @@
 [submodule "xmonad-config"]
 	path = .xmonad
 	url = https://github.com/aiya000/xmonad-mycontrib
+[submodule ".tmux/plugins/tpm"]
+	path = .tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm
