@@ -14,12 +14,11 @@ export TIMEFMT='%Y/%m/%d %H:%M '
 export FPATH=$FPATH:$HOME/.zsh/complete
 
 # }}}
-# Reset $PATH {{{
+# Add paths to $PATH {{{
 
 # Mine
-PATH=$HOME/bin:$HOME/sbin
+PATH=$HOME/bin:$HOME/sbin:$PATH
 PATH=$PATH:$HOME/.dotfiles/bin
-PATH=$PATH:$HOME/.dotfiles/aacceessoorryy/bin
 
 # Basics
 PATH=$PATH:/bin:/sbin
