@@ -15,8 +15,13 @@ abbr    import qualified __ as __
     import qualified ${1} as ${2}
 
 snippet comment_block
-snippet com
+alias com
     {- ${1} -}
+
+snippet quasi_quote
+alias q
+abbr [{quoter}|{stuff}|]
+    [${1:r}|${0}|]
 
 snippet liquid_refinement_type
 abbr {-@ __ :: __ @-}
