@@ -135,3 +135,6 @@ repo = 'lambdalisue/vital-System-Job'
 
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
+
+[[plugins]]
+repo = 'kana/vim-fakeclip'

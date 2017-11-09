@@ -39,10 +39,11 @@ let g:vimrc = get(g:, 'vimrc', {
 \})
 
 " Global values for local plugins
-let g:vimrc['is_windows'] = get(g:vimrc, 'is_windows', has('win32')    )
-let g:vimrc['is_cygwin']  = get(g:vimrc, 'is_cygwin',  has('win32unix'))
-let g:vimrc['is_kaoriya'] = get(g:vimrc, 'is_kaoriya', has('kaoriya')  )
-let g:vimrc['is_unix']    = get(g:vimrc, 'is_unix',    has('unix')     )
+let g:vimrc['is_windows'] = get(g:vimrc, 'is_windows', has('win32'))
+let g:vimrc['is_cygwin']  = get(g:vimrc, 'is_cygwin', has('win32unix'))
+let g:vimrc['is_kaoriya'] = get(g:vimrc, 'is_kaoriya', has('kaoriya'))
+let g:vimrc['is_unix']    = get(g:vimrc, 'is_unix', has('unix'))
+let g:vimrc['is_wsl']     = get(g:vimrc, 'is_wsl', executable('uname') && (system('uname -a') =~# 'Microsoft'))
 
 let g:vimrc['has_cygwin'] = executable('cygstart')
 let g:vimrc['has_mingw']  = 0  "NOTE: ('dummy')
@@ -623,6 +624,11 @@ ALEDisable
 " --- elm-vim --- {{{
 
 let g:elm_setup_keybindings = 0
+
+" }}}
+" --- vim-fakeclip --- {{{
+
+let fakeclip_provide_clipboard_key_mappings = g:vimrc['is_wsl']
 
 " }}}
 
