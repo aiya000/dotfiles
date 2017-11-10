@@ -1,9 +1,23 @@
 # This file was copied from https://raw.githubusercontent.com/Shougo/neosnippet-snippets/master/neosnippets/sh.snip
 
 snippet if
+abbr    if __ ; then __ fi
+options head
+    if ${1:#:condtion} ; then
+        ${0}
+    fi
+
+snippet if_block
 abbr    if [ __ ] ; then __ fi
 options head
     if [ ${1:#:condtion} ] ; then
+        ${0}
+    fi
+
+snippet if_zsh_block
+abbr    if [[ __ ]] ; then __ fi
+options head
+    if [[ ${1:#:condtion} ]] ; then
         ${0}
     fi
 
