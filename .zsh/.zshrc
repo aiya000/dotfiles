@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+#zmodload zsh/zprof && zprof
 
 # The order of the loading
 # 1. ~/.zsh/.zprofile
@@ -24,7 +25,7 @@ source ~/.sh_generic/aliases.sh
 # Set zsh options {{{
 
 autoload -U colors       && colors       # Use color variables (Ex: $bg and $fg)
-autoload -U compinit     && compinit     # Use zsh standard completion
+autoload -U compinit     && compinit -C  # Use zsh standard completion
 autoload -U bashcompinit && bashcompinit # Use bash compatible completion
 
 zstyle ':completion:*' menu select                        # Highlight selecting item in the menu
@@ -143,9 +144,6 @@ setupsolarized dircolors.ansi-light
 # Do keymapping
 source $ZDOTDIR/.zshrc.keymap
 
-# Load environment by default
-load-my-env haskell
-
 # For each environment
 case $(uname) in
 Linux )
@@ -169,3 +167,7 @@ fi
 
 # Export Loaded Archive
 alias zsh_rc_loaded='echo "rc_loaded"'
+
+#if (which zprof > /dev/null) ;then
+#  zprof | less
+#fi
