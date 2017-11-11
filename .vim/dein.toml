@@ -60,7 +60,7 @@ repo = 'aiya000/aho-bakaup.vim'
 
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
-rev  = 'af6e74863a8aee770bac02e321edda2e03e78205'
+rev  = 'ddd01d0'
 
 [[plugins]]
 repo = 'tpope/vim-surround'
@@ -80,7 +80,7 @@ if   = '!has("nvim")'
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-rev  = 'ac4e8b56115f1bdcda5401ea7eeb1b5a3046ebe3'
+rev  = '3c38321'
 if   = 'has("nvim")'
 
 [[plugins]]
