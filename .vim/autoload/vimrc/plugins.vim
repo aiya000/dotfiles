@@ -140,7 +140,7 @@ function! vimrc#plugins#execute_haskdogs_async() abort " {{{
 
     let s:haskdogs_job =
     \   s:Job.start(printf('haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=%s"', ctags_path), {
-    \      'on_exit' : {_, __, ___ -> [
+    \      'on_exit' : {x, y, z -> [
     \           s:M.echo('None', 'haskdogs may generated ctags to ' . ctags_path),
     \           execute('unlet s:haskdogs_job')
     \       ]}

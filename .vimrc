@@ -323,7 +323,7 @@ let g:quickrun_config = {
 \   'haskell': {
 \       'cmdopt': '--ghc-arg=-fprint-explicit-kinds',
 \       'command': 'stack',
-\       'exec': ['%c exec runghc -- %o %s', '%s:p:r'],
+\       'exec': '%c exec runghc -- %o %s',
 \       'runner': 'vimproc',
 \   },
 \   'lhaskell': {
@@ -442,12 +442,6 @@ let g:tlWindowPosition = 1
 
 " Save current position when TaskList is closed
 let g:tlRememberPosition = 1
-
-" }}}
-" --- adrone.vim --- {{{
-
-let g:adrone_say_buffer_size          = 8
-let g:adrone_home_default_keymappings = 0
 
 " }}}
 " --- vim-indent-guides --- {{{
