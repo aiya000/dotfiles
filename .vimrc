@@ -562,7 +562,7 @@ augroup END
 
 let g:aref_web_source = {
 \    'weblio': {
-\        'url': 'http://ejje.weblio.jp/content/%s'
+\        'url': 'https://ejje.weblio.jp/content/%s'
 \    },
 \    'stackage': {
 \        'url': 'https://www.stackage.org/lts-9.2/hoogle?q=%s&page=1'
@@ -617,7 +617,10 @@ ALEDisable
 " }}}
 " --- elm-vim --- {{{
 
-let g:elm_setup_keybindings = 0
+let g:elm_setup_keybindings  = 0
+let g:elm_make_output_file   = '/tmp/elm-vim-output.html'
+let g:elm_make_show_warnings = 1
+let g:elm_browser_command    = 'xdg-open'
 
 " }}}
 " --- vim-fakeclip --- {{{
