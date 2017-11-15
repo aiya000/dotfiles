@@ -1,9 +1,12 @@
+# Syntaxes
+
 snippet import
 abbr import {module-name}
 options head
     import ${1:ModuleName}
 
-snippet exposing
+snippet exposing_of_import
+alias exposing
 abbr exposing ({stuffs})
     exposing (${2:stuffs})
 
@@ -11,10 +14,21 @@ snippet as_of_import
 abbr as {alias-name}
     as ${1:AliasName}
 
+
+# Values
+
 snippet div_empty
 abbr div [] [{stuff}]
-    div [] [${1:stuff}]
+    div [] [${1:#:stuff}]
 
 snippet to
 abbr |>
     |>
+
+
+# Others
+
+snippet document_comment
+alias doccom
+abbr {-| {document} -}
+    {-| ${1} -}
