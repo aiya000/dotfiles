@@ -8,6 +8,8 @@ let b:undo_ftplugin = 'setl ' . join([
 setl ts=2 sw=2 et conceallevel=0
 let &commentstring = ' -- %s'
 
+nnoremap <buffer><silent> <localleader>o :<C-u>vsp<CR>:Ghci<CR>
+nnoremap <buffer><silent> <localleader>O :<C-u>vsp<CR>:Ghcie<CR>
 nnoremap <buffer><silent> <localleader><localleader>r :<C-u>echo 'stack test is started'<CR>:QuickRun stack_test<CR>
 nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('stack_test', 'horizontal', 'stack test :integrate-test')<CR>
 nnoremap <buffer><silent> <localleader><localleader>S :<C-u>Snowtify<CR>
