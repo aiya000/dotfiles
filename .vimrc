@@ -1129,6 +1129,7 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <silent> <C-k>J         :<C-u>wall \| echo 'written all !'<CR>
     autocmd User MyVimRc nnoremap <silent> <C-k><Space>   :<C-u>call vimrc#keys#clear_ends_space()<CR>
     autocmd User MyVimRc nnoremap <silent> <Space><Space> :<C-u>call vimrc#keys#compress_spaces()<CR>
+    autocmd User MyVimRc nnoremap <C-k>f :<C-u>setf<Space>
 
     " }}}
     " insert mode {{{
