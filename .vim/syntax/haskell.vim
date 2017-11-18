@@ -3,6 +3,12 @@ syntax match ftHaskellHeadSpace '^\s\+'
 highlight ftHaskellKeywordUndefined cterm=underline ctermfg=Red gui=underline guifg=Red
 syntax keyword ftHaskellKeywordUndefined undefined
 
+highlight ftHaskellGHCExtensionKeyword ctermfg=cyan guifg=cyan
+
 " PatternSynonyms
-highlight ftHaskellKeywordPattern ctermfg=cyan guifg=cyan
+highlight default link ftHaskellKeywordPattern ftHaskellGHCExtensionKeyword
 syntax keyword ftHaskellKeywordPattern pattern
+
+" TypeFamilies
+highlight link ftHaskellKeywordFamily ftHaskellGHCExtensionKeyword
+syntax keyword ftHaskellKeywordPattern family
