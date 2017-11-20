@@ -12,3 +12,7 @@ syntax keyword ftHaskellKeywordPattern pattern
 " TypeFamilies
 highlight link ftHaskellKeywordFamily ftHaskellGHCExtensionKeyword
 syntax keyword ftHaskellKeywordPattern family
+
+" anything
+highlight link ftHaskellAnythingExtension ftHaskellGHCExtensionKeyword
+syntax keyword ftHaskellAnythingExtension forall
