@@ -1101,6 +1101,7 @@ augroup KeyMapping
     " normal mode {{{
 
     autocmd User MyVimRc nmap <C-j> <CR>
+    autocmd User MyVimRc nmap gd    *ggn
 
     autocmd User MyVimRc nnoremap Q      gQ
     autocmd User MyVimRc nnoremap zs     zszh
