@@ -342,6 +342,13 @@ let g:quickrun_config = {
 \   'eta': {
 \       'runner': 'vimproc',
 \   },
+\   'etlas_build': {
+\       'command': 'etlas',
+\       'cmdopt': 'build',
+\       'exec': '%c %o',
+\       'runner': 'vimproc',
+\       'outputter': 'quickfix',
+\   },
 \   'elm': {
 \       'runner': 'vimproc',
 \       'command': 'elm-make',
