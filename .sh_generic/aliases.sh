@@ -114,9 +114,10 @@ if i_have stack ; then
 fi
 
 if i_have etlas ; then
-    alias etl=etlas
-    alias eb='etlas build'
-    alias er='etlas run'
+    alias et=etlas
+    alias etb='etlas build'
+    alias etr='etlas run'
+    alias etc='etlas clean'
 fi
 
 i_have haskdogs &&
