@@ -120,6 +120,20 @@ if i_have etlas ; then
     alias etc='etlas clean'
 fi
 
+if i_have hasktags ; then
+    alias hasktags-casual='hasktags . --ignore-close-implementation --tags-absolute --ctags -f'
+    function eta-library-tags-append () {
+        if [ ! -d ~/git/eta ] ; then
+            echo '~/git/eta is not found' > /dev/stderr
+            return 1
+        elif [ ! -f "$1" ] ; then
+            echo "'$1' is not found, please make it first" > /dev/stderr
+            return 1
+        fi
+        hasktags ~/git/eta/libraries --ignore-close-implementation --tags-absolute --ctags -f /tmp/eta_tags && cat /tmp/eta_tags >> $1
+    }
+fi
+
 i_have haskdogs &&
     function haskdogs-casual () {
         haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=${1}"
@@ -134,7 +148,6 @@ i_have watch && alias wifi-hardware-check='watch -n1 rfkill list all'
 i_have ctags && alias ctags-casual='ctags --tag-relative --recurse --sort=yes -f'
 i_have tmux && alias tmuxa='tmux attach'
 i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
-i_have hasktags && alias hasktags-casual='hasktags . --ignore-close-implementation --tags-absolute --ctags -f'
 i_have unzip && alias unzip-cp932='unzip -O cp932'
 
 # Short hands
