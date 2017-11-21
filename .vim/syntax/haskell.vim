@@ -6,12 +6,23 @@ syntax keyword ftHaskellKeywordUndefined undefined
 highlight ftHaskellGHCExtensionKeyword ctermfg=cyan guifg=cyan
 
 " PatternSynonyms
-highlight default link ftHaskellKeywordPattern ftHaskellGHCExtensionKeyword
-syntax keyword ftHaskellKeywordPattern pattern
+highlight default link ftHaskellPatternSynonyms ftHaskellGHCExtensionKeyword
+syntax keyword ftHaskellPatternSynonyms pattern
 
 " TypeFamilies
-highlight link ftHaskellKeywordFamily ftHaskellGHCExtensionKeyword
-syntax keyword ftHaskellKeywordPattern family
+highlight link ftHaskellTypeFamilies ftHaskellGHCExtensionKeyword
+syntax keyword ftHaskellPatternSynonyms family
+
+" ForeignFunctionInterface
+highlight link ftHaskellForeignFunctionInterface ftHaskellGHCExtensionKeyword
+syntax keyword ftHaskellForeignFunctionInterface foreign
+syntax keyword ftHaskellForeignFunctionInterface export
+syntax keyword ftHaskellForeignFunctionInterface unsafe
+
+" eta
+highlight ftHaskellEtaKeyword ctermfg=darkred guifg=darkred
+syntax keyword ftHaskellEtaKeyword java
+syntax keyword ftHaskellForeignFunctionInterface safe
 
 " anything
 highlight link ftHaskellAnythingExtension ftHaskellGHCExtensionKeyword
