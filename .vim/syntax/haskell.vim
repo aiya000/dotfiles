@@ -19,8 +19,15 @@ syntax keyword ftHaskellForeignFunctionInterface foreign
 syntax keyword ftHaskellForeignFunctionInterface export
 syntax keyword ftHaskellForeignFunctionInterface unsafe
 
+" RoleAnnotations
+highlight link ftHaskellRoleAnnotations ftHaskellGHCExtensionKeyword
+syntax keyword ftHaskellRoleAnnotations role
+syntax keyword ftHaskellRoleAnnotations nominal
+syntax keyword ftHaskellRoleAnnotations representational
+
 " eta
 highlight ftHaskellEtaKeyword ctermfg=darkred guifg=darkred
+"TODO: Don't highlight /^java/ (e.g. a function)
 syntax keyword ftHaskellEtaKeyword java
 syntax keyword ftHaskellForeignFunctionInterface safe
 
