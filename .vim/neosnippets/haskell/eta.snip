@@ -1,40 +1,46 @@
 snippet pragma_class
+alias eta_class_pragma
 abbr {-# CLASS "__" #-}
-options head
     {-# CLASS "${1:java.lang.Integer}" #-}
 
 snippet data_of_java
 abbr data {-# CLASS "{class-path}" #-} {class-name} = {class-name} (Object# {class-name}) deriving (Class)
-options head indent
+alias eta_data
+options indent
     data {-# CLASS "${1:java.lang.String}" #-} ${2:JString} = $2 (Object# $2)
       deriving (Class)
 
 snippet foreign_import_a_java
 alias import_foreign_a_java
-options head
+options head indent
 abbr foreign import java unsafe "some annotation" {class-or-field} :: Java __ __
-    foreign import java unsafe ${1:#:"some annotation" }${2:fieldName} :: Java ${3:AssocType} ${4:ReturnType}
+    foreign import java unsafe
+        ${1:#:"some annotation" }${2:fieldName} :: Java ${3:AssocType} ${4:ReturnType}
 
 snippet foreign_import_a_java_constructor
-alias import_foreign_a_java_constructor
-options head
+alias import_foreign_a_java_constructor eta_new_a_class new_function
+options head indent
 abbr foreign import java unsafe "@new" new{class-name} :: Java a {class-name}
-    foreign import java unsafe "@new" new${1:ClassName} :: Java a $1
+    foreign import java unsafe "@new"
+        new${1:ClassName} :: ${2:#:arguments ->}Java a $1
 
 snippet foreign_import_a_java_method
-alias import_foreign_a_java_method
-options head
-abbr foreign import java unsafe {method-name} :: Java {associated-type} {return-type}
-    foreign import java unsafe ${1:methodName} :: Java ${2:AssocType} ${3:ReturnType}
+alias import_foreign_a_java_method eta_method_function
+options head indent
+abbr foreign import java unsafe "{original-method-name}" {method-name} :: Java {associated-type} {return-type}
+    foreign import java unsafe "${1:originalMethodName}"
+        ${2:methodName} :: ${3:#:arguments ->}Java ${4:AssocType} ${5:ReturnType}
 
 snippet foreign_import_a_java_field
-alias import_foreign_a_java_field
-options head
+alias import_foreign_a_java_field eta_field
+options head indent
 abbr foreign import java unsafe {method-name} :: Java {associated-type} {return-type}
-    foreign import java unsafe "@field ${1:fieldName}" ${2:fieldNameInHs} :: ${3:Java ClassName Int}
+    foreign import java unsafe "@field ${1:fieldName}"
+        ${2:fieldNameInHs} :: ${3:Java ClassName Int}
 
 snippet foreign_import_a_java_static_field
-alias import_foreign_a_java_static_field
-options head
+alias import_foreign_a_java_static_field eta_static_field
+options head indent
 abbr foreign import java unsafe {method-name} :: Java {associated-type} {return-type}
-    foreign import java unsafe "@static @field ${1:fieldName}" ${2:fieldNameInHs} :: ${3:Java ClassName Int}
+    foreign import java unsafe "@static @field ${1:fieldName}"
+        ${2:fieldNameInHs} :: ${3:Java ClassName Int}
