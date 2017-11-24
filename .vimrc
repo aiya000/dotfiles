@@ -339,6 +339,10 @@ let g:quickrun_config = {
 \       'runner': 'vimproc',
 \       'outputter': 'quickfix',
 \   },
+\   'stack_build': {
+\       'type': 'stack_test',
+\       'cmdopt': 'build',
+\   },
 \   'eta': {
 \       'runner': 'vimproc',
 \   },
