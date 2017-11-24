@@ -106,10 +106,7 @@ endfunction " }}}
 
 " Start the job of `watchexec -w . snowtify {test|build}`
 function! vimrc#plugins#start_snowtify_watch(subcommand_or_empty) abort " {{{
-    let subcommand = empty(a:subcommand_or_empty)
-    \                ? 'test'
-    \                : a:subcommand_or_empty
-    let s:snowtify_watch_job = s:Job.start('watchexec -w . snowtify ' . subcommand)
+    let s:snowtify_watch_job = s:Job.start('watchexec -w . snowtify ' . a:subcommand_or_empty)
 endfunction " }}}
 
 " Kill the job of vimrc#plugins#start_snowtify_watch()
