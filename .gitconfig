@@ -3,12 +3,10 @@
 	email = aiya000.develop@gmail.com
 [merge]
 	tool = vimdiff
-
 [github]
 	user = aiya000
-
-[credential]
-	helper = git-credential-gnome-keyring
+[include]
+	path = ~/.gitconfig.env
 [push]
 	default = simple
 [alias]
