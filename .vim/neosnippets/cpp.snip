@@ -17,8 +17,12 @@ abbr    for (auto x : xs) {}
         ${0:TARGET}
     }
 
-# Functions
+# Alias
 
 snippet demangle
 abbr    abi::__cxa_demangle(mangled_name, 0, 0, nullptr)
     abi::__cxa_demangle(${1:#:var}.name(), 0, 0, nullptr)
+
+snippet println
+abbr std::cout << {something} << std::endl
+    std::cout << ${1:something} << std::endl
