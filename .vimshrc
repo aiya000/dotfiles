@@ -21,7 +21,7 @@ alias lla='ls -la --color=auto --group-directories-first'
 
 ## Short hands
 alias ei=exit
-alias e=vim
+alias e=viv
 alias la='ls -a'
 
 ## git
