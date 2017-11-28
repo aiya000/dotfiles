@@ -36,7 +36,7 @@ command! -bar DeinLog       new | setl buftype=nofile noreadonly modifiable ft=d
 command! -bar DeinUpdateLog new | setl buftype=nofile noreadonly modifiable ft=deinlog | put=dein#get_updates_log()
 
 " REPLs
-command! -bar Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 'stay', 'stack exec ghci')
+command! -bar -nargs=? Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 'stay', 'stack exec ghci ' . <q-args>)
 "NOTE: 'e' suffix means 'environment of the project' :D
 command! -bar Ghcie call vimrc#open_terminal_as('term-stack-ghci', 'stay', 'stack ghci')
 command! -bar CLisp call vimrc#open_terminal_as('none', 'stay', 'clisp')
