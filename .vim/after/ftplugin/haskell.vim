@@ -17,8 +17,8 @@ nnoremap <buffer><silent> <localleader><localleader>t :<C-u>call <SID>stack_inte
 nnoremap <buffer><silent> <localleader><localleader>b :<C-u>echo 'stack build is started'<CR>:QuickRun stack_build<CR>
 nnoremap <buffer><silent> <localleader><localleader>B :<C-u>call vimrc#open_terminal_as('none', 'horizontal', 'stack build')<CR>
 nnoremap <buffer><silent> <localleader><localleader><localleader>r :<C-u>QuickRun eta<CR>
-nnoremap <buffer><silent> <localleader><localleader><localleader>b :<C-u>call vimrc#open_terminal_as('none', 'horizontal', 'etlas build')<CR>
-nnoremap <buffer><silent> <localleader><localleader><localleader>t :<C-u>echo 'etlas build is started'<CR>:QuickRun etlas_build<CR>
+nnoremap <buffer><silent> <localleader><localleader><localleader>b :<C-u>echo 'etlas build is started'<CR>:QuickRun etlas_build<CR>
+nnoremap <buffer><silent> <localleader><localleader><localleader>B :<C-u>call vimrc#open_terminal_as('none', 'horizontal', 'etlas build')<CR>
 
 function! s:stack_integrate_test_or_unit_or_both() abort
     echon "a: do integrate-test (default)\n" .
