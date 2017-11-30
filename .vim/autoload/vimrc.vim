@@ -11,33 +11,32 @@ function! vimrc#fetch_dein(install_dirname) " {{{
     endif
 endfunction " }}}
 
-" Execute :terminal and :setf to it,
-" for resorbing :terminal's defference of vim and neovim
+" Execute :terminal and :setf to it, and
+" `a:command` will be opened in current window's directory.
+" Also this resorbs :terminal's defference of vim and neovim
+"
 "   open_mode: 'vertical' | 'horizontal' | 'stay' | 'tabnew'
 function! vimrc#open_terminal_as(filetype, open_mode, command) abort " {{{
+    let buf_dir = expand('%:p:h')
+
     if a:open_mode ==# 'vertical'
-        if has('nvim')
-            " NeoVim doesn't split vertically by 'vertical'
-            vsp
-        endif
-        execute 'vertical' 'terminal' a:command
+        vnew
     elseif a:open_mode ==# 'horizontal'
-        if has('nvim')
-            sp
-        endif
-        execute 'terminal' a:command
+        new
     elseif a:open_mode ==# 'stay'
-        if has('nvim')
-            execute 'terminal' a:command
-        else
-            execute 'terminal' '++curwin' a:command
-        endif
+        enew!
     elseif a:open_mode ==# 'tabnew'
         tabnew
-        execute 'terminal' a:command
-        only
     else
         throw 'undefined open_mode is detected: ' . string(a:open_mode)
     endif
+
+    execute ':tcd' fnameescape(buf_dir)
+    if has('nvim')
+        execute 'terminal' a:command
+    else
+        execute 'terminal' '++curwin' a:command
+    endif
+
     execute 'setf' a:filetype
 endfunction " }}}
