@@ -473,7 +473,7 @@ augroup END
 let g:vimrc#keys#indent_guides_enable = get(g:, 'vimrc#keys#indent_guides_enable', 1)
 augroup FileEvent
     autocmd WinEnter,BufWinEnter * IndentGuidesDisable
-    autocmd WinEnter,BufWinEnter *.{xml,html,css,scss,erb,xaml,fxml,scala,kt,gradle,vim,cs,csproj,ts,js,json,tsx,java,vimspec,sh,zsh}
+    autocmd WinEnter,BufWinEnter *.{xml,html,css,scss,erb,xaml,fxml,scala,kt,gradle,vim,cs,csproj,ts,js,json,tsx,java,vimspec,sh,zsh,c,cpp}
     \   if g:vimrc#keys#indent_guides_enable
     \|      IndentGuidesEnable
     \|  endif
