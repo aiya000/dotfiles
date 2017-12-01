@@ -2,7 +2,7 @@
 	name = aiya000
 	email = aiya000.develop@gmail.com
 [merge]
-	tool = nvimdiff
+	tool = vimdiff
 [github]
 	user = aiya000
 [include]
