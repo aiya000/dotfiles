@@ -80,6 +80,8 @@ if i_have git ; then
     alias gsm='git submodule'
     alias gsma='git submodule add'
     alias gsmd='git submodule deinit'
+    alias gsmu='git submodule update'
+    alias gsmui='git submodule update --init'
     alias gcherry-p='git cherry-pick'
     alias gclean='git clean -f'
     alias gpush='git push'
