@@ -1,16 +1,20 @@
 #!/bin/bash
-# The first line of commit-msg must not be over 50 chars
+# The first line of commit-msg should not be over 50 chars
 
 # Ignore revert commit
 if [[ $(grep -q '^Revert' "$1") -eq 0 ]] ; then
-	exit 0
+    exit 0
 fi
 
 length=$(head -1 "$1" | wc -m)
 if [[ $(($length - 1)) -gt 50 ]] ; then
-	echo 'Detected invalid commit message:'
-	echo '  The commit message must not be over 50 chars'
-	exit 1
+    echo 'The first line of this commit message is over 50 chars.'
+    echo -n 'Do you want to commit this ? (y/n): ' && read confirm
+    if [[ $confirm == 'y' ]] ; then
+        exit 0
+    else
+        exit 1
+    fi
 fi
 
 #TODO: The detail of commit-msg must not be over 70 chars
