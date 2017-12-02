@@ -1,0 +1,419 @@
+{
+    "activeProfiles": {
+        "General": "power",
+        "Keybindings": "vimperator",
+        "Appearance": "default"
+    },
+    "profiles": {
+        "General": {},
+        "Keybindings": {
+            "vimperator": {
+                "physicalKeys": false,
+                "ignoreModifierKeys": false,
+                "toggleHelpMenu": [
+                    [
+                        {
+                            "code": "F11",
+                            "key": "F11",
+                            "shiftKey": false
+                        }
+                    ]
+                ],
+                "toggleSaka": [
+                    [
+                        {
+                            "code": "F12",
+                            "key": "F12",
+                            "shiftKey": false,
+                            "ctrlKey": false,
+                            "altKey": false,
+                            "metaKey": false
+                        }
+                    ]
+                ],
+                "openLink": [
+                    [
+                        {
+                            "code": "KeyF",
+                            "key": "f"
+                        }
+                    ]
+                ],
+                "openLinkInBackgroundTab": [
+                    [
+                        {
+                            "code": "KeyF",
+                            "key": "F",
+                            "shiftKey": true
+                        }
+                    ]
+                ],
+                "openLinkInForegroundTab": [],
+                "openLinkInNewWindow": [],
+                "openLinkInIncognitoWindow": [],
+                "downloadLink": [],
+                "focusLink": [],
+                "focusInput": [
+                    [
+                        {
+                            "code": "KeyG",
+                            "key": "g"
+                        },
+                        {
+                            "code": "KeyI",
+                            "key": "i"
+                        }
+                    ]
+                ],
+                "hintChars": "yjuiopqwertklhgfdsabnmvcxz",
+                "scrollDown": [
+                    [
+                        {
+                            "code": "KeyJ",
+                            "key": "j"
+                        }
+                    ]
+                ],
+                "scrollUp": [
+                    [
+                        {
+                            "code": "KeyK",
+                            "key": "k"
+                        }
+                    ]
+                ],
+                "scrollLeft": [
+                    [
+                        {
+                            "code": "KeyH",
+                            "key": "h"
+                        }
+                    ]
+                ],
+                "scrollRight": [
+                    [
+                        {
+                            "code": "KeyL",
+                            "key": "l"
+                        }
+                    ]
+                ],
+                "scrollPageDown": [
+                    [
+                        {
+                            "code": "<C-f>",
+                            "key": "f",
+                            "ctrlKey": true
+                        }
+                    ]
+                ],
+                "scrollPageUp": [
+                    [
+                        {
+                            "code": "<C-b>",
+                            "key": "b",
+                            "ctrlKey": true
+                        }
+                    ]
+                ],
+                "scrollHalfPageDown": [],
+                "scrollHalfPageUp": [],
+                "scrollToBottom": [
+                    [
+                        {
+                            "code": "KeyG",
+                            "key": "G",
+                            "shiftKey": true
+                        }
+                    ]
+                ],
+                "scrollToTop": [
+                    [
+                        {
+                            "code": "KeyG",
+                            "key": "g"
+                        },
+                        {
+                            "code": "KeyG",
+                            "key": "g"
+                        }
+                    ]
+                ],
+                "scrollToLeft": [
+                    [
+                        {
+                            "code": "KeyZ",
+                            "key": "z"
+                        },
+                        {
+                            "code": "KeyH",
+                            "key": "H",
+                            "shiftKey": true
+                        }
+                    ]
+                ],
+                "scrollToRight": [
+                    [
+                        {
+                            "code": "KeyZ",
+                            "key": "z"
+                        },
+                        {
+                            "code": "KeyL",
+                            "key": "L",
+                            "shiftKey": true
+                        }
+                    ]
+                ],
+                "goBack": [
+                    [
+                        {
+                            "code": "KeyH",
+                            "key": "H",
+                            "shiftKey": true
+                        }
+                    ]
+                ],
+                "goForward": [
+                    [
+                        {
+                            "code": "KeyL",
+                            "key": "L",
+                            "shiftKey": true
+                        }
+                    ]
+                ],
+                "nextPage": [],
+                "previousPage": [],
+                "goUp": [
+                    [
+                        {
+                            "code": "KeyG",
+                            "key": "g"
+                        },
+                        {
+                            "code": "KeyU",
+                            "key": "u"
+                        }
+                    ]
+                ],
+                "goToRoot": [
+                    [
+                        {
+                            "code": "KeyG",
+                            "key": "g"
+                        },
+                        {
+                            "code": "KeyU",
+                            "key": "U",
+                            "shiftKey": true
+                        }
+                    ]
+                ],
+                "previousTab": [
+                    [
+                        {
+                            "code": "<C-p>",
+                            "key": "p",
+                            "ctrlKey": true
+                        }
+                    ]
+                ],
+                "nextTab": [
+                    [
+                        {
+                            "code": "<C-n>",
+                            "key": "n",
+                            "ctrlKey": true
+                        }
+                    ]
+                ],
+                "firstTab": [
+                    [
+                        {
+                            "code": "KeyG",
+                            "key": "g"
+                        },
+                        {
+                            "code": "Digit0",
+                            "key": "0"
+                        }
+                    ]
+                ],
+                "lastTab": [
+                    [
+                        {
+                            "code": "KeyG",
+                            "key": "g"
+                        },
+                        {
+                            "code": "Digit4",
+                            "key": "$",
+                            "shiftKey": true
+                        }
+                    ]
+                ],
+                "moveTabLeft": [
+                    [
+                        {
+                            "code": "Comma",
+                            "key": "<",
+                            "shiftKey": true
+                        },
+                        {
+                            "code": "Comma",
+                            "key": "<",
+                            "shiftKey": true
+                        }
+                    ]
+                ],
+                "moveTabRight": [
+                    [
+                        {
+                            "code": "Period",
+                            "key": ">",
+                            "shiftKey": true
+                        },
+                        {
+                            "code": "Period",
+                            "key": ">",
+                            "shiftKey": true
+                        }
+                    ]
+                ],
+                "moveTabFirst": [],
+                "moveTabLast": [],
+                "closeOtherTabs": [],
+                "closeRightTabs": [],
+                "closeLeftTabs": [],
+                "newTab": [
+                    [
+                        {
+                            "code": "g",
+                            "key": "g"
+                        },
+                        {
+                            "code": "H",
+                            "key": "H",
+                            "shiftKey": true
+                        }
+                    ]
+                ],
+                "closeTab": [
+                    [
+                        {
+                            "code": "d",
+                            "key": "d"
+                        }
+                    ]
+                ],
+                "restoreTab": [
+                    [
+                        {
+                            "code": "u",
+                            "key": "u"
+                        }
+                    ]
+                ],
+                "duplicateTab": [
+                    [
+                        {
+                            "code": "KeyY",
+                            "key": "y"
+                        },
+                        {
+                            "code": "KeyT",
+                            "key": "t"
+                        }
+                    ]
+                ],
+                "newWindow": [
+                    [
+                        {
+                            "code": "KeyW",
+                            "key": "w"
+                        }
+                    ]
+                ],
+                "newIncognitoWindow": [
+                    [
+                        {
+                            "code": "KeyW",
+                            "key": "W",
+                            "shiftKey": true
+                        }
+                    ]
+                ],
+                "switchWindow": [],
+                "zoomIn": [],
+                "zoomOut": [],
+                "zoomReset": [],
+                "refreshTab": [
+                    [
+                        {
+                            "code": "KeyR",
+                            "key": "r"
+                        }
+                    ]
+                ],
+                "refreshAllTabs": [],
+                "hardRefreshTab": [],
+                "toggleMuteTab": [
+                    [
+                        {
+                            "code": "KeyM",
+                            "key": "µ",
+                            "altKey": true
+                        }
+                    ]
+                ],
+                "toggleMuteAllTabs": [],
+                "togglePinTab": [
+                    [
+                        {
+                            "code": "KeyP",
+                            "key": "π",
+                            "altKey": true
+                        }
+                    ]
+                ],
+                "passOneKey": [],
+                "passAllKeys": [],
+                "exitPassMode": [],
+                "copyURL": [
+                    [
+                        {
+                            "code": "KeyY",
+                            "key": "y"
+                        },
+                        {
+                            "code": "KeyY",
+                            "key": "y"
+                        }
+                    ]
+                ],
+                "clipboardCurrentTab": [
+                    [
+                        {
+                            "code": "KeyP",
+                            "key": "p"
+                        }
+                    ]
+                ],
+                "clipboardBackgroundTab": [],
+                "clipboardForegroundTab": [
+                    [
+                        {
+                            "code": "KeyP",
+                            "key": "P",
+                            "shiftKey": true
+                        }
+                    ]
+                ],
+                "clipboardNewWindow": [],
+                "clipboardIncognitoWindow": []
+            }
+        },
+        "Appearance": {}
+    }
+}
