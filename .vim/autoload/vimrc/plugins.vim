@@ -125,7 +125,9 @@ function! vimrc#plugins#stop_snowtify_watch() abort " {{{
 endfunction " }}}
 
 " Run `haskdogs` command as a job
-function! vimrc#plugins#execute_haskdogs_async() abort " {{{
+"
+" on_exit: a function of () -> ()
+function! vimrc#plugins#execute_haskdogs_async(on_exit) abort " {{{
     if exists('s:haskdogs_job')
         echomsg 'haskdogs is skipped (haskdogs is already running at now)'
         return
@@ -138,8 +140,27 @@ function! vimrc#plugins#execute_haskdogs_async() abort " {{{
     let s:haskdogs_job =
     \   s:Job.start(printf('haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=%s"', ctags_path), {
     \      'on_exit' : {x, y, z -> [
+    \           call(a:on_exit, []),
     \           s:M.echo('None', 'haskdogs may generated ctags to ' . ctags_path),
     \           execute('unlet s:haskdogs_job')
     \       ]}
     \   })
+    return s:haskdogs_job
 endfunction " }}}
+
+function! vimrc#plugins#execute_haskdogs_in_eta_async() abort
+    function! s:body_of_execute_haskdogs_in_eta_async() abort
+        let git_top_dir = system('git rev-parse --show-toplevel')[:-2] " [:-2] removes a line break
+        let ctags_path  = isdirectory(git_top_dir) ? git_top_dir . '/.git/tags'
+        \                                          : './tags'
+        if !isdirectory($HOME . '/git/eta')
+            echo '~/git/eta is not found'
+            return
+        elseif !filereadable(ctags_path)
+            echo "'" . ctags_path . "' is not found"
+            return
+        endif
+        call system('hasktags ~/git/eta/libraries --ignore-close-implementation --tags-absolute --ctags -f /tmp/eta_tags && cat /tmp/eta_tags >> ' . ctags_path)
+    endfunction
+    call vimrc#plugins#execute_haskdogs_async(function('s:body_of_execute_haskdogs_in_eta_async'))
+endfunction
