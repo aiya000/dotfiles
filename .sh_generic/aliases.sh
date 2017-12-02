@@ -136,10 +136,17 @@ if i_have hasktags ; then
     }
 fi
 
-i_have haskdogs &&
+if i_have haskdogs ; then
     function haskdogs-casual () {
         haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=${1}"
     }
+    if i_have eta-library-tags-append ; then
+        function etadogs-casual () {
+            haskdogs-casual $1
+            eta-library-tags-append $1
+        }
+    fi
+fi
 
 # }}}
 # Others {{{
