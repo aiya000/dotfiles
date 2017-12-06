@@ -1,4 +1,6 @@
-let s:Math = vital#vimrc#new().import('Math')
+let s:V    = vital#vimrc#new()
+let s:Math = s:V.import('Math')
+let s:O    = s:V.import('Data.Optional')
 
 let b:undo_ftplugin = 'setl ' . join([
 \   'statusline<',
@@ -14,6 +16,7 @@ setl cursorline nolist
 
 nnoremap <buffer> Q :<C-u>bdelete<CR>
 nnoremap <buffer> <C-j> <CR>
+nnoremap <buffer><silent> r :<C-u>call <SID>execute_last_quickrun_if_it_exists()<CR>
 nnoremap <buffer><silent> <expr> <C-a> <SID>go_to_errorformat(v:count1)
 nnoremap <buffer><silent> <expr> <C-x> <SID>go_to_errorformat(-v:count1)
 
@@ -31,4 +34,13 @@ function! s:go_to_errorformat(motion)
         let pos = s:Math.modulo(pos + m, max)
     endwhile
     return (pos + 1) . 'G'
+endfunction
+
+function! s:execute_last_quickrun_if_it_exists() abort
+    let x = get(b:, 'vimrc_quickrun_executed_cmd') 
+    if x
+        execute ':QuickRun ' x
+    else
+        echo "this buffer doesn't have b:vimrc_quickrun_executed_cmd"
+    endif
 endfunction
