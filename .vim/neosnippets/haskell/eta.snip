@@ -5,7 +5,7 @@ abbr {-# CLASS "__" #-}
 
 snippet data_of_java
 abbr data {-# CLASS "{class-path}" #-} {class-name} = {class-name} (Object# {class-name}) deriving (Class)
-alias eta_data
+alias eta_data data_eta
 options indent
     data {-# CLASS "${1:java.lang.String}" #-}
         ${2:JString} = $2 (Object# $2)
@@ -23,7 +23,7 @@ alias import_foreign_a_java_constructor eta_new_a_class new_function
 options head indent
 abbr foreign import java unsafe "@new" new{class-name} :: Java a {class-name}
     foreign import java unsafe "@new"
-        new${1:ClassName} :: ${2:#:arguments ->}Java a $1${0}
+        new${1:Name} :: ${2:#:arguments ->}Java a ${3:ClassName}${0}
 
 # Import a method for the Java class from already existent definition to the side of Haskell
 snippet foreign_import_a_java_method
