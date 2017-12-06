@@ -1,3 +1,7 @@
+"-------------------------------------
+" This file is the preference for cVim
+"-------------------------------------
+
 let mapleader = '['
 
 "let homedirectory = '/home/aiya000'
@@ -6,7 +10,6 @@ let mapleader = '['
 
 let vimport = 55355
 let barposition = 'bottom'
-"let hintcharacters = 'yjuiopqwertklhgfdsabnmvcxz'
 let hintcharacters = 'yjuiopwertklhgfdsabnmvcxz'
 set scalehints
 
@@ -69,5 +72,3 @@ imap <C-g> editWithVim
 
 
 command Reload source ~/.cvimrc
-
-" vim:ft=vim
