@@ -271,13 +271,13 @@ let g:quickrun_no_default_key_mappings = 0
 " For *nix environments
 let g:quickrun_config = {
 \   '_': {
-\       'split'  : '',
-\       'runner' : 'system',
-\       'runner/vimproc/updatetime' : 10,
-\       'hook/time/enable' : 1,
-\       'outputter' : 'error',
-\       'outputter/error/error'   : 'quickfix',
-\       'outputter/error/success' : 'buffer',
+\       'split': '',
+\       'runner': 'system',
+\       'runner/vimproc/updatetime': 10,
+\       'hook/time/enable': 1,
+\       'outputter': 'error',
+\       'outputter/error/error': 'quickfix',
+\       'outputter/error/success': 'buffer',
 \   },
 \   'cpp': {
 \       'cmdopt': '-std=c++14'
@@ -1128,7 +1128,7 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <leader>?         ?\m\C
     autocmd User MyVimRc nnoremap <leader><leader>? ?\m\C\<\><Left><Left>
 
-    autocmd User MyVimRc nnoremap <silent> <leader>b         :<C-u>Unite buffer<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader>b         :<C-u>Unite buffer -start-insert<CR>
     autocmd User MyVimRc nnoremap <silent> <leader>B         :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=scratch<CR>
     autocmd User MyVimRc nnoremap <silent> <leader><leader>q :<C-u>call vimrc#keys#bufclose_filetype(['help', 'man', 'qf', 'scratch', 'aref_web', 'quickrun', 'gina-status', 'gitlogviewer', 'gitdiffviewer', 'gitshowviewer', 'gitreflogviewer', 'netrw', 'tasklist'])<CR>
 
