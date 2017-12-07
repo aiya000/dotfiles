@@ -1,14 +1,16 @@
 :set prompt "\001\ESC[93m\002%s\001\ESC[34;1m\002\n>>>\001\ESC[0;48;05;233m\002 "
 :set editor vim
 :set -m
-:set -XOverloadedStrings
-:set -XFlexibleContexts
-:set -XTemplateHaskell
-:set -XQuasiQuotes
+
 :set -XDataKinds
-:set -XKindSignatures
+:set -XFlexibleContexts
 :set -XGADTs
+:set -XKindSignatures
+:set -XMagicHash
+:set -XOverloadedStrings
 :set -XPolyKinds
+:set -XQuasiQuotes
+:set -XTemplateHaskell
 :set -XTypeOperators
 
 import Control.Applicative
@@ -21,6 +23,7 @@ import Data.Monoid hiding ((<>))
 import Data.Semigroup
 import Data.Text (Text)
 import Data.Typeable
+import GHC.Prim
 import Language.Haskell.TH
 import qualified Data.Map.Lazy as M
 import qualified Data.Text as T
