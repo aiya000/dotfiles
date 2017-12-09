@@ -36,3 +36,6 @@
 
 # For each environment
 .zsh/history_archive
+
+# Why macOS's stack put '.stack' to ~/.dotfiles when 'stack setup' is executed ?
+.stack
