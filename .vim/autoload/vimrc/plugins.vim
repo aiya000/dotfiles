@@ -148,7 +148,10 @@ function! vimrc#plugins#execute_haskdogs_async(on_exit) abort " {{{
     return s:haskdogs_job
 endfunction " }}}
 
-function! vimrc#plugins#execute_haskdogs_in_eta_async() abort
+" Execute vimrc#plugins#execute_haskdogs_async(),
+" and Append the tags of eta libraries to it
+" after it is executed
+function! vimrc#plugins#execute_haskdogs_in_eta_async() abort " {{{
     function! s:body_of_execute_haskdogs_in_eta_async() abort
         let git_top_dir = system('git rev-parse --show-toplevel')[:-2] " [:-2] removes a line break
         let ctags_path  = isdirectory(git_top_dir) ? git_top_dir . '/.git/tags'
@@ -163,4 +166,4 @@ function! vimrc#plugins#execute_haskdogs_in_eta_async() abort
         call system('hasktags ~/git/eta/libraries --ignore-close-implementation --tags-absolute --ctags -f /tmp/eta_tags && cat /tmp/eta_tags >> ' . ctags_path)
     endfunction
     call vimrc#plugins#execute_haskdogs_async(function('s:body_of_execute_haskdogs_in_eta_async'))
-endfunction
+endfunction " }}}
