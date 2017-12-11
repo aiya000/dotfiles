@@ -177,12 +177,14 @@ alias nt=nterminal
 alias cdp=cd-finddir
 alias ki=killing-art
 
-alias date-simple='date +"%Y-%m-%d"'
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
 alias mount4u.vfat=mount4u.ntfs
 alias mount4u.ext2='sudo mount -o iocharset=utf8'
 alias mount4u.ext3=mount4u.ext2
 alias mount4u.ext4=mount4u.ext2
+
+alias date-simple='date +"%Y-%m-%d"'
+alias rand='cat /dev/urandom | tr -dc "[:alnum:]" | head -c 8'
 
 # Generate items for autotools
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
