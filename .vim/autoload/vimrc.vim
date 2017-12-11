@@ -17,7 +17,11 @@ endfunction " }}}
 "
 "   open_mode: 'vertical' | 'horizontal' | 'stay' | 'tabnew'
 function! vimrc#open_terminal_as(filetype, open_mode, command) abort " {{{
-    let buf_dir = expand('%:p:h')
+    let buf_dir = fnameescape(expand('%:p:h'))
+    " If it is not valid directory (e.g :terminal's buffer has term://.//xxxxx:/bin/zsh)
+    if !isdirectory(buf_dir)
+        let buf_dir = getcwd()
+    endif
 
     if a:open_mode ==# 'vertical'
         vnew
@@ -31,7 +35,7 @@ function! vimrc#open_terminal_as(filetype, open_mode, command) abort " {{{
         throw 'undefined open_mode is detected: ' . string(a:open_mode)
     endif
 
-    execute ':tcd' fnameescape(buf_dir)
+    execute ':tcd' buf_dir
     if has('nvim')
         execute 'terminal' a:command
     else
