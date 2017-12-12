@@ -1,19 +1,21 @@
 # Syntax
 
 snippet template
-abbr    template <T>
-    template <typename ${1:T}>
+abbr    template <{typename} {T}>
+    template <${1:typename} ${2:T}>
 
 snippet for
-abbr    for () {}
-    for (${1:#:var}; ${2:#:condition}; ${3:#:effect}) {
+abbr    for ({var}; {cond}; {effect}) {}
+options indent
+    for (${1:var}; ${2:condition}; ${3:effect}) {
         ${0:TARGET}
     }
 
 snippet foreach
 alias   fore
-abbr    for (auto x : xs) {}
-    for (${1:auto} ${2:#:x} : ${3:#:xs}) {
+options indent
+abbr    for (auto {x} : {xs}) {}
+    for (${1:auto} ${2:x} : ${3:xs}) {
         ${0:TARGET}
     }
 
