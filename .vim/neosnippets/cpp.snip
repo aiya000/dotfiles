@@ -19,6 +19,13 @@ abbr    for (auto {x} : {xs}) {}
         ${0:TARGET}
     }
 
+snippet if
+abbr if ({cond}) {}
+options indent
+    if (${1:condition}) {
+        ${0}
+    }
+
 # Alias
 
 snippet demangle
