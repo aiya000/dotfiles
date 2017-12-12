@@ -11,6 +11,8 @@ command! -bar -bang -complete=file -nargs=? TabnewOverridden tabnew<bang> <args>
 " Rename the file of current buffer
 command! -bar -nargs=1 -complete=file Rename call vimrc#cmd#rename_to(<q-args>)
 
+command! -bar Memo sp ~/vim-memo.md
+
 " Pull and Insert <title>\(.*\)</title>
 command! -bar -nargs=1 InsertWebPageTitle execute 'normal! i' . vimrc#cmd#pull_webpage_title(<q-args>)
 
