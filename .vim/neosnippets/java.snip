@@ -1,10 +1,4 @@
-snippet block
-alias bl
-    {${0}}
-
-snippet println
-abbr System.out.println(__);
-    System.out.println(${0});
+# Syntax
 
 snippet method
 abbr    void method() {}
@@ -38,12 +32,40 @@ abbr    try () {}
         ${0:TARGET}
     }
 
+snippet if
+abbr if ({cond}) {}
+options indent
+    if (${1:condition}) {
+        ${0}
+    }
+
 snippet else
 abbr    else {}
 options indent
     else {
         ${0:TARGET}
     }
+
+snippet for
+abbr    for ({var}; {cond}; {effect}) {}
+options indent
+    for (${1:var}; ${2:condition}; ${3:effect}) {
+        ${0:TARGET}
+    }
+
+snippet foreach
+alias   fore
+options indent
+abbr    for ({type} {x} : {xs}) {}
+    for (${1:type} ${2:x} : ${3:xs}) {
+        ${0:TARGET}
+    }
+
+# Alias
+
+snippet println
+abbr System.out.println(__);
+    System.out.println(${0});
 
 snippet main
 abbr    public static void main(String[] args) {}
