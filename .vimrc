@@ -668,6 +668,7 @@ endif
 " Set the status bar format
 let s:statusline_left  = '[Fenc=%{&fileencoding}]'
 \                      . '[Enc=%{&encoding}]'
+\                      . '[PWD=%{getcwd()}]'
 \                      . '%{vimrc#set#tag_load_status()}'
 let s:statusline_right = '%1*%F(%n)%*'
 \                      . '%2*%m%*'
