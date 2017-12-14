@@ -11,6 +11,7 @@ command! -bar -bang -complete=file -nargs=? TabnewOverridden tabnew<bang> <args>
 " Rename the file of current buffer
 command! -bar -nargs=1 -complete=file Rename call vimrc#cmd#rename_to(<q-args>)
 
+command! -bar -nargs=* Vim call vimrc#open_terminal_as('term-vim', 'stay', 'vim ' . <q-args>)
 command! -bar Memo sp ~/vim-memo.md
 
 " Pull and Insert <title>\(.*\)</title>
