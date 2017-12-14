@@ -761,6 +761,10 @@ let g:tex_flavor = 'latex'
 let &tags = join([
 \    'tags',
 \    '.git/tags',
+\    '../tags',
+\    '../../tags',
+\    '../../../tags',
+\    '../../../../tags',
 \    '../.git/tags',
 \    '../../.git/tags',
 \    '../../../.git/tags',
