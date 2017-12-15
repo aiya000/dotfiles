@@ -26,6 +26,19 @@ options indent
         ${0}
     }
 
+# Macro
+
+snippet include_library
+alias include
+options head
+abbr #include <{path}>
+    #include <${0}>
+
+snippet include_myown
+options head
+abbr #include "{path}"
+    #include "${0}"
+
 # Alias
 
 snippet demangle
