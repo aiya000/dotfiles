@@ -1008,7 +1008,7 @@ augroup KeyMapping
 
     " Unite
     autocmd User MyVimRc nnoremap          <leader>u         :<C-u>Unite<Space>
-    autocmd User MyVimRc nnoremap <silent> <C-k>h            :<C-u>Unite -ignorecase file_rec<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-k>h            :<C-u>tcd <C-r>=expand('%:p:h')<CR><CR>:Unite -ignorecase file_rec<CR>
     autocmd User MyVimRc nnoremap <silent> <C-k><C-h>        :<C-u>Unite -ignorecase neomru/file<CR>
     autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Unite -ignorecase outline<CR>
     autocmd User MyVimRc nnoremap <silent> <C-k><C-t>        :<C-u>Unite -ignorecase -start-insert tag<CR>
