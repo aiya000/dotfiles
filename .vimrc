@@ -653,7 +653,7 @@ set textwidth=0 tabstop=4 shiftwidth=4 expandtab
 set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
 set breakindent linebreak autoindent cindent nojoinspaces
 set laststatus=2 wildmenu noruler cmdheight=2 history=500
-set tabline=%!vimrc#set#with_delimitter_tab_line()
+set tabline=%!vimrc#set#tabline_as_statusline()
 set backspace=indent,eol,start
 set nowrapscan visualbell notimeout
 set fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
@@ -664,19 +664,15 @@ if !has('nvim')
     set termkey=<C-z>
 endif
 
-
-" Set the status bar format
-let s:statusline_left  = '[Fenc=%{&fileencoding}]'
-\                      . '[Enc=%{&encoding}]'
-\                      . '[PWD=%{getcwd()}]'
-\                      . '%{vimrc#set#tag_load_status()}'
-let s:statusline_right = '%1*%F(%n)%*'
-\                      . '%2*%m%*'
-\                      . '%3*%r%*'
-\                      . '%4*[FT=%y]%*'
-\                      . '[%03v]'
-let &statusline        = s:statusline_left . '%=' . s:statusline_right
-unlet s:statusline_left s:statusline_right
+" See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer),
+" and below augroup 'HighlightPref'
+let &statusline = '%1*[%F(%n)]%*'
+    \           . '%2*[FT=%y]%*'
+    \           . '[%03v]'
+    \           . '[Fenc=%{&fileencoding}]'
+    \           . '[Enc=%{&encoding}]'
+    \           . '%3*%m%*'
+    \           . '%4*%r%*'
 
 " ☆
 set ambiwidth=double
@@ -699,9 +695,9 @@ augroup HighlightPref
     "autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 
     " StatusLine specified highlight
-    autocmd ColorScheme * highlight User1 cterm=standout ctermfg=Black      ctermbg=White
-    autocmd ColorScheme * highlight User2 cterm=standout ctermfg=Yellow     ctermbg=Black
-    autocmd ColorScheme * highlight User3 cterm=standout ctermfg=DarkYellow ctermbg=Black
+    autocmd ColorScheme * highlight User1 cterm=standout ctermfg=Red        ctermbg=Black
+    autocmd ColorScheme * highlight User2 cterm=standout ctermfg=DarkYellow ctermbg=Black
+    autocmd ColorScheme * highlight User3 cterm=standout ctermfg=Yellow     ctermbg=Black
     autocmd ColorScheme * highlight User4 cterm=standout ctermfg=Gray       ctermbg=Black
 augroup END
 
