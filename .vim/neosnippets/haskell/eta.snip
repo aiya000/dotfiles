@@ -1,56 +1,47 @@
 snippet pragma_class
 alias eta_class_pragma
-abbr {-# CLASS "__" #-}
     {-# CLASS "${1:java.lang.Integer}" #-}
 
 snippet data_of_java
-abbr data {-# CLASS "{class-path}" #-} {class-name} = {class-name} (Object# {class-name}) deriving (Class)
 alias eta_data data_eta
 options indent
-    data {-# CLASS "${1:java.lang.String}" #-}
-        ${2:JString} = $2 (Object# $2)
+    data ${1:JString} = $1 @${2:java.lang.String}
         deriving (Class)
 
 snippet foreign_import_a_java
 alias import_foreign_a_java
 options head indent
-abbr foreign import java unsafe "some annotation" {class-or-field} :: Java __ __
-    foreign import java unsafe
-        ${1:#:"some annotation" }${2:fieldName} :: Java ${3:AssocType} ${4:ReturnType}
+    foreign import java unsafe ${1:#:"some annotation" }${2:fieldName} ::
+        Java ${3:AssocType} ${4:ReturnType}
 
 snippet foreign_import_a_java_constructor
 alias import_foreign_a_java_constructor eta_new_a_class new_function
 options head indent
-abbr foreign import java unsafe "@new" new{class-name} :: Java a {class-name}
-    foreign import java unsafe "@new"
-        new${1:Name} :: ${2:#:arguments ->}Java a ${3:ClassName}${0}
+    foreign import java unsafe "@new" new${1:Name} ::
+        ${2:#:arguments ->}Java a ${3:ClassName}${0}
 
 # Import a method for the Java class from already existent definition to the side of Haskell
 snippet foreign_import_a_java_method
 alias import_foreign_a_java_method eta_method_function_side_java
 options head indent
-abbr foreign import java unsafe "{original-method-name}" {method-name} :: Java {associated-type} {return-type}
-    foreign import java unsafe "${1:originalMethodName}"
-        ${2:methodName} :: ${3:#:arguments ->}Java ${4:AssocType} ${5:ReturnType}
+    foreign import java unsafe "${1:originalMethodName}" ${2:methodName} ::
+        ${3:#:arguments ->}Java ${4:AssocType} ${5:ReturnType}
 
 snippet foreign_import_a_java_field
 alias import_foreign_a_java_field eta_field
 options head indent
-abbr foreign import java unsafe {method-name} :: Java {associated-type} {return-type}
-    foreign import java unsafe "@field ${1:fieldName}"
-        ${2:fieldNameInHs} :: ${3:Java ClassName Int}
+    foreign import java unsafe "@field ${1:fieldName}" ${2:fieldNameInHs} ::
+        ${3:Java ClassName Int}
 
 snippet foreign_import_a_java_static_field
 alias import_foreign_a_java_static_field eta_static_field
 options head indent
-abbr foreign import java unsafe {method-name} :: Java {associated-type} {return-type}
-    foreign import java unsafe "@static @field ${1:fieldName}"
-        ${2:fieldNameInHs} :: ${3:Java ClassName Int}
+    foreign import java unsafe "@static @field ${1:fieldName}" ${2:fieldNameInHs} ::
+        ${3:Java ClassName Int}
 
 # Define an appendix method for the Java class, in the side of Haskell
 snippet foreign_export_a_java_method
 alias eta_method_function_side_haskell
 options indent
-abbr foreign export java "{method-name}" {method-name} :: Java {receiver-java-class} {return-type}
-    foreign export java "$1"
-       ${1:methodName} :: ${2:#:arguments ->}Java ${3:ReceiverJClass} ${5:ReturnType}
+    foreign export java "$1" ${1:methodName} ::
+        ${2:#:arguments ->}Java ${3:ReceiverJClass} ${5:ReturnType}
