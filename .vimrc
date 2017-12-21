@@ -1108,7 +1108,10 @@ augroup KeyMapping
     autocmd User MyVimRc nmap <C-j> <CR>
     autocmd User MyVimRc nmap gd    *ggn
 
-    autocmd User MyVimRc nnoremap K      :<C-u>Unite buffer -start-insert<CR>
+    autocmd User MyVimRc nnoremap H      :<C-u>Unite register<CR>
+    autocmd User MyVimRc nnoremap M      :<C-u>marks<CR>
+    autocmd User MyVimRc nnoremap L      :<C-u>Unite buffer -start-insert<CR>
+    autocmd User MyVimRc nnoremap K      :<C-u>Unite tab -start-insert<CR>
     autocmd User MyVimRc nnoremap Q      gQ
     autocmd User MyVimRc nnoremap zs     zszh
     autocmd User MyVimRc nnoremap <C-n>  gt
@@ -1131,7 +1134,7 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <leader><leader>? ?\m\C\<\><Left><Left>
 
     autocmd User MyVimRc nnoremap <silent> <leader>b         :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=scratch<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader>B         :<C-u>e ~/.backup/vim-memo.md<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader>B         :<C-u>sp ~/.backup/vim-memo.md<CR>
     autocmd User MyVimRc nnoremap <silent> <leader><leader>q :<C-u>call vimrc#keys#bufclose_filetype(['help', 'man', 'qf', 'scratch', 'aref_web', 'quickrun', 'gina-status', 'gitlogviewer', 'gitdiffviewer', 'gitshowviewer', 'gitreflogviewer', 'netrw', 'tasklist'])<CR>
 
     autocmd User MyVimRc nnoremap <silent> <C-k><C-r>     :<C-u>Reload<CR>
