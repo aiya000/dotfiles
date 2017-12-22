@@ -2,6 +2,13 @@ snippet pragma_class
 alias eta_class_pragma
     {-# CLASS "${1:java.lang.Integer}" #-}
 
+snippet data_of_java_old
+alias eta_data_old data_eta_old
+options indent
+    data {-# CLASS "${1:java.lang.String}" #-}
+        ${2:JString} = $2 (Object# $2)
+        deriving (Class)
+
 snippet data_of_java
 alias eta_data data_eta
 options indent
