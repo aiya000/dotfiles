@@ -48,12 +48,12 @@ command! -bar LeinRepl call vimrc#open_terminal_as('none', 'stay', 'lein repl')
 command! -bar ElmRepl call vimrc#open_terminal_as('term-elm-repl', 'stay', 'elm repl')
 
 " git
-command! -bar GStatus Gina status -s
-command! -bar GLog GitLogViewer -100
-command! -bar GLP GitLogViewer --patch -100
-command! -bar GDiff GitDiffViewer
-command! -bar GDS GitDiffViewer --staged
-command! -bar GDH GitDiffViewer HEAD~
-command! -bar GCommit call vimrc#open_terminal_as('none', 'tabnew', 'git commit --verbose')
-command! -bar GCAM call vimrc#open_terminal_as('none', 'tabnew', 'git commit --amend --verbose')
-command! -bar GAP call vimrc#open_terminal_as('none', 'tabnew', 'git add -p')
+command! -bar -nargs=* GStatus Gina status -s <args>
+command! -bar -nargs=* GLog GitLogViewer -100 <args>
+command! -bar -nargs=* GLP GitLogViewer --patch -100 <args>
+command! -bar -nargs=* GDiff GitDiffViewer <args>
+command! -bar -nargs=* GDS GitDiffViewer --staged <args>
+command! -bar -nargs=* GDH GitDiffViewer HEAD~ <args>
+command! -bar -nargs=* GCommit call vimrc#open_terminal_as('none', 'tabnew', 'git commit --verbose ' . <q-args>)
+command! -bar -nargs=* GCAM call vimrc#open_terminal_as('none', 'tabnew', 'git commit --amend --verbose ' . <q-args>)
+command! -bar -nargs=* GAP call vimrc#open_terminal_as('none', 'tabnew', 'git add -p ' . <q-args>)
