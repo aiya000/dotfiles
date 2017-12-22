@@ -3,9 +3,7 @@
 " See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer),
 " and below augroup 'HighlightPref'.
 function! vimrc#set#tabline_as_statusline() abort " {{{
-    let tabs = s:tabline_tabs()
     return '%1*[PWD=%{getcwd()}]%*'
-        \. tabs
         \. '%2*%{vimrc#set#tabline_tags_if_present()}%*'
 endfunction " }}}
 
