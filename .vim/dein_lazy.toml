@@ -95,9 +95,9 @@ on_cmd = [
 [[plugins]]
 repo   = 'aiya000/adrone.vim'
 on_cmd = [
-	'AdroneHome',
-	'AdroneSay',
-	'AdroneVersion'
+    'AdroneHome',
+    'AdroneSay',
+    'AdroneVersion'
 ]
 
 [[plugins]]
