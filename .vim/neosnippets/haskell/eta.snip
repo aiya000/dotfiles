@@ -5,8 +5,8 @@ alias eta_class_pragma
 snippet data_of_java_old
 alias eta_data_old data_eta_old
 options indent
-    data {-# CLASS "${1:java.lang.String}" #-}
-        ${2:JString} = $2 (Object# $2)
+    data {-# CLASS "${1:java.lang.String}" #-} ${2:JString} =
+        $2 (Object# $2)
         deriving (Class)
 
 snippet data_of_java
@@ -41,7 +41,7 @@ options head indent
         ${3:Java ClassName Int}
 
 snippet foreign_import_a_java_static_field
-alias import_foreign_a_java_static_field eta_static_field
+alias import_foreign_a_java_static_field eta_static_field import_foreign_a_java_enum_term eta_enum_term enum_term_eta
 options head indent
     foreign import java unsafe "@static @field ${1:fieldName}" ${2:fieldNameInHs} ::
         ${3:Java ClassName Int}
