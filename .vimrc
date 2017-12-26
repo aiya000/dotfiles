@@ -931,7 +931,7 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <C-w>v <NOP>
     autocmd User MyVimRc nnoremap ghR    <C-w>r
     " Enable custom
-    autocmd User MyVimRc nnoremap <silent> ghq   :<C-u>quit<CR>
+    autocmd User MyVimRc nnoremap <silent> ghq   :<C-u>hide<CR>
     autocmd User MyVimRc nnoremap <silent> ghQ   :<C-u>quitall<CR>
     autocmd User MyVimRc nnoremap <silent> ghT   :<C-u>tabclose<CR>
     autocmd User MyVimRc nnoremap <silent> ghc   :<C-u>bdelete<CR>
