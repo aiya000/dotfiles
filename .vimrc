@@ -933,15 +933,13 @@ augroup KeyMapping
     " Enable custom
     autocmd User MyVimRc nnoremap <silent> ghq   :<C-u>call vimrc#keys#hide_or_quit()<CR>
     autocmd User MyVimRc nnoremap <silent> ghQ   :<C-u>quitall<CR>
-    autocmd User MyVimRc nnoremap <silent> ghT   :<C-u>tabclose<CR>
     autocmd User MyVimRc nnoremap <silent> ghc   :<C-u>bdelete<CR>
     autocmd User MyVimRc nnoremap <silent> ghC   :<C-u>bdelete!<CR>
-    autocmd User MyVimRc nnoremap <silent> ghN   :<C-u>EnewOverridden!<CR>
     autocmd User MyVimRc nnoremap <silent> gho   :<C-u>only<CR>
     autocmd User MyVimRc nnoremap <silent> gh_   :<C-u>resize<CR>
+    autocmd User MyVimRc nnoremap <silent> gh"   :<C-u>resize 5<CR>
     autocmd User MyVimRc nnoremap          gh\|  <C-w>\|
     autocmd User MyVimRc nnoremap          gh=   <C-w>=
-    autocmd User MyVimRc nnoremap <silent> gh"   :<C-u>resize 5<CR>
     autocmd User MyVimRc nmap              gh+   gh_gh\|
     autocmd User MyVimRc nnoremap          ghH   <C-w>H
     autocmd User MyVimRc nnoremap          ghJ   <C-w>J
