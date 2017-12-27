@@ -45,6 +45,7 @@ if i_have git ; then
     alias gaa='git add -A'
     alias gap='git add -p'
     alias gb='git branch'
+    alias gba='git branch --all'
     alias gbd='git branch --delete'
     alias _gbdf='git branch --delete --force'
     alias gbm='git branch -m'
