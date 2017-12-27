@@ -87,7 +87,6 @@ function! vimrc#keys#get_webpage_title() abort " {{{
     return substitute(s:HTML.parseURL(@+).find('title').value(), '·', '-', 'g')
 endfunction " }}}
 
-
 " Toggle keymapping <leader>V (and etc) to :terminal or vimshell
 function! vimrc#keys#toggle_shell_mode() "{{{
     " Base properties
@@ -117,3 +116,15 @@ function! vimrc#keys#toggle_shell_mode() "{{{
         echo 'shell mode ' . l:SHELL_MODE.vimshell
     endif
 endfunction "}}}
+
+" :quit if only a window is existent,
+" :hide otherwise
+function! vimrc#keys#hide_or_quit() abort " {{{
+    let tabnum = tabpagenr('$')
+    let winnum = tabpagewinnr(tabpagenr(), '$')
+    if tabnum is 1 && winnum is 1
+        quit
+    else
+        hide
+    endif
+endfunction " }}}
