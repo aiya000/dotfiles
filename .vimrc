@@ -631,6 +631,11 @@ call denite#custom#map('insert', '<C-l>', '<Esc>')
 call denite#custom#map('insert', '<C-j>', '<CR>')
 call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>')
 call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>')
+call denite#custom#map('insert', '<C-a>', '<denite:move_caret_to_head>')
+call denite#custom#map('insert', '<C-e>', '<denite:move_caret_to_tail>')
+call denite#custom#map('insert', '<C-f>', '<denite:move_caret_to_right>')
+call denite#custom#map('insert', '<C-b>', '<denite:move_caret_to_left>')
+call denite#custom#map('insert', '<C-x>', '<denite:do_action:delete>')
 
 " }}}
 
