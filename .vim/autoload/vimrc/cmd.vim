@@ -127,9 +127,9 @@ function! vimrc#cmd#git_branch_session_save() abort " {{{
 
     let session_name  = repo_name_ . '-' . branch_name_
     let session_name_ = substitute(session_name, '/', '-', 'g')
-    let session_name__ = substitute(session_name, '#', '-', 'g')  "NOTE: '#' should be used as a file name
+    let session_name__ = substitute(session_name_, '#', '-', 'g')  "NOTE: '#' should be used as a file name
 
-    execute 'mksession' (sessions_dir . '/' . session_name__ . '.vim')
+    execute 'mksession!' (sessions_dir . '/' . session_name__ . '.vim')
 endfunction " }}}
 
 " Generate decompress css from compressed css to temporary buffer
