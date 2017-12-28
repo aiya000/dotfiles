@@ -14,6 +14,7 @@ function vim-current-session () {
     local editor
     local branch_name
     local branch_name_
+    local branch_name__
 
     editor=$([[ -n $1 ]] && echo "$1" || echo vim)
     branch_name="$(git branch 2> /dev/null | sort | tail -1 | awk '{print $2}')"
@@ -25,8 +26,9 @@ function vim-current-session () {
 
     repo_name="$(git rev-parse --show-toplevel | sed -r 's;.*/(.*);\1;')"
     branch_name_="$(echo "$branch_name" | sed -r 's;/;-;g')"
+    branch_name__="$(echo "$branch_name_" | sed -r 's;#;-;g')"
 
-    session_name="${repo_name}-${branch_name_}.vim"
+    session_name="${repo_name}-${branch_name__}.vim"
     "$editor" -S "$sessions_dir/$session_name"
 }
 
