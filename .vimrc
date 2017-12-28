@@ -855,8 +855,6 @@ CmdCnoreabbr UserTimeline  TweetVimUserTimeline
 " Others
 CmdCnoreabbr Lingr J6uil
 CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
-CmdCnoreabbr SessionLoad UniteSessionLoad
-CmdCnoreabbr SessionSave UniteSessionSave
 CmdCnoreabbr Gist Gista post --stay
 
 " }}}

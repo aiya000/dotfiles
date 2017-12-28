@@ -115,6 +115,8 @@ endfunction " }}}
 " Make session_name from git repository
 " and Save current session by :UniteSessionSave
 function! vimrc#cmd#git_branch_session_save() abort " {{{
+    let sessions_dir = $HOME . '/.backup/vim_backup/session'
+
     let repo_path = system('git rev-parse --show-toplevel')
 
     let repo_name  = fnamemodify(repo_path, ':t')
@@ -126,7 +128,7 @@ function! vimrc#cmd#git_branch_session_save() abort " {{{
     let session_name  = repo_name_ . '-' . branch_name_
     let session_name_ = substitute(session_name, '/', '-', 'g')  "NOTE: '.' cannot be used as session name
 
-    execute 'UniteSessionSave' session_name_
+    execute 'mksession' (sessions_dir . '/' . session_name_ . '.vim')
 endfunction " }}}
 
 " Generate decompress css from compressed css to temporary buffer
