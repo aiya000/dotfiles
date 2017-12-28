@@ -250,20 +250,6 @@ let g:netrw_home = g:vimrc['vim_home']
 let g:netrw_bufsettings = 'relativenumber readonly nomodifiable nomodified nowrap nobuflisted'
 
 " }}}
-" --- unite.vim --- {{{
-
-"@Code(':Unite javasrc')
-" If you want to use this, you must extract JDK's src.zip here
-let s:java_src = printf('%s/resource/Java/src', g:vimrc['vim_home'])
-if filereadable(s:java_src)
-    let g:unite_source_alias_aliases.javasrc = {
-    \    'source' : 'file_rec',
-    \    'args'   : s:java_src
-    \}
-endif
-unlet s:java_src
-
-" }}}
 " --- vim-quickrun --- {{{
 
 let g:quickrun_no_default_key_mappings = 0
@@ -639,6 +625,14 @@ let g:elm_browser_command    = 'xdg-open'
 let fakeclip_provide_clipboard_key_mappings = g:vimrc['is_wsl']
 
 " }}}
+" --- denite.nvim --- {{{
+
+call denite#custom#map('insert', '<C-l>', '<Esc>')
+call denite#custom#map('insert', '<C-j>', '<CR>')
+call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>')
+call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>')
+
+" }}}
 
 call dein#end()
 
@@ -998,13 +992,11 @@ augroup KeyMapping
     autocmd User MyVimRc vmap              <leader>r <Plug>(quickrun)
     autocmd User MyVimRc vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
 
-    " Unite
-    autocmd User MyVimRc nnoremap          <leader>u         :<C-u>Unite<Space>
-    autocmd User MyVimRc nnoremap <silent> <C-k>h            :<C-u>tcd <C-r>=expand('%:p:h')<CR><CR>:Unite -ignorecase file_rec<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-k><C-h>        :<C-u>Unite -ignorecase neomru/file<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Unite -ignorecase outline<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-k><C-t>        :<C-u>Unite -ignorecase -start-insert tag<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader><leader>u :<C-u>UniteClose<CR>
+    " denite.nvim
+    autocmd User MyVimRc nnoremap          <leader>u         :<C-u>Denite<Space>
+    autocmd User MyVimRc nnoremap <silent> <C-k>h            :<C-u>tcd <C-r>=expand('%:p:h')<CR><CR>:Denite file_rec<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-k><C-h>        :<C-u>Denite file_mru<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Denite outline<CR>
 
     " aref-web.vim
     autocmd User MyVimRc nnoremap <leader>K :<C-u>Aref weblio <C-r>=expand('<cword>')<CR><CR>
@@ -1104,9 +1096,10 @@ augroup KeyMapping
     autocmd User MyVimRc nmap <C-j> <CR>
     autocmd User MyVimRc nmap gd    *ggn
 
-    autocmd User MyVimRc nnoremap H      :<C-u>Unite tag -start-insert<CR>
-    autocmd User MyVimRc nnoremap M      :<C-u>Unite tab -start-insert<CR>
-    autocmd User MyVimRc nnoremap L      :<C-u>Unite buffer -start-insert<CR>
+    autocmd User MyVimRc nnoremap H      :<C-u>Denite tag<CR>
+    "TODO: ない
+    "autocmd User MyVimRc nnoremap M      :<C-u>Denite tab<CR>
+    autocmd User MyVimRc nnoremap L      :<C-u>Denite buffer<CR>
     autocmd User MyVimRc nnoremap Q      gQ
     autocmd User MyVimRc nnoremap zs     zszh
     autocmd User MyVimRc nnoremap <C-n>  gt
@@ -1141,7 +1134,7 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <silent> <C-k>J         :<C-u>wall \| echo 'written all !'<CR>
     autocmd User MyVimRc nnoremap <silent> <C-k><Space>   :<C-u>call vimrc#keys#clear_ends_space()<CR>
     autocmd User MyVimRc nnoremap <silent> <Space><Space> :<C-u>call vimrc#keys#compress_spaces()<CR>
-    autocmd User MyVimRc nnoremap <C-k>f :<C-u>setf<Space>
+    autocmd User MyVimRc nnoremap <C-k>f :<C-u>Denite filetype<CR>
 
     " }}}
     " insert mode {{{

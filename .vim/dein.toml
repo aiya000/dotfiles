@@ -3,9 +3,6 @@ repo = 'tyru/open-browser.vim'
 rev  = '39e8064'
 
 [[plugins]]
-repo = 'Shougo/unite.vim'
-
-[[plugins]]
 repo  = 'Shougo/vimproc.vim'
 build = 'make'
 if    = '!(g:vimrc["is_kaoriya"] && g:vimrc["is_windows"])'
@@ -19,11 +16,8 @@ rev  = 'd0c5bef'
 repo = 'supermomonga/vimshell-kawaii.vim'
 
 [[plugins]]
-repo = 'ujihisa/unite-colorscheme'
-
-[[plugins]]
 repo    = 'Shougo/unite-outline'
-depends = 'unite.vim'
+depends = 'denite.nvim'
 
 [[plugins]]
 repo = 'LeafCage/foldCC'
@@ -85,7 +79,7 @@ if   = 'has("nvim")'
 
 [[plugins]]
 repo    = 'tsukkee/unite-tag'
-depends = 'unite.vim'
+depends = 'denite.nvim'
 
 [[plugins]]
 repo = 'aiya000/vimshell-command-dehanai.vim'
@@ -110,7 +104,7 @@ repo = 'jonathanfilip/vim-lucius'
 
 [[plugins]]
 repo    = 'Shougo/unite-session'
-depends = 'unite.vim'
+depends = 'denite.nvim'
 
 [[plugins]]
 repo = 'aiya000/submode-window_move.vim'
@@ -138,3 +132,6 @@ repo = 'editorconfig/editorconfig-vim'
 
 [[plugins]]
 repo = 'kana/vim-fakeclip'
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'

@@ -2,7 +2,7 @@
 repo    = 'basyura/TweetVim'
 depends = [
     'open-browser.vim',
-    'unite.vim',
+    'denite.nvim',
     'unite-outline',
     'twibill.vim',
     'bitly.vim',
@@ -49,7 +49,7 @@ depends = [
     'webapi-vim',
     'vimproc.vim',
     'open-browser.vim',
-    'unite.vim'
+    'denite.nvim'
 ]
 on_cmd  = 'J6uil'
 
