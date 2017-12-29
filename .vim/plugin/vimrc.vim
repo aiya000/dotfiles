@@ -11,9 +11,6 @@ command! -bar -bang -complete=file -nargs=? TabnewOverridden tabnew<bang> <args>
 " Rename the file of current buffer
 command! -bar -nargs=1 -complete=file Rename call vimrc#cmd#rename_to(<q-args>)
 
-command! -bar -nargs=* Vim call vimrc#open_terminal_as('term-vim', 'stay', 'vim ' . <q-args>)
-command! -bar Memo sp ~/vim-memo.md
-
 " Pull and Insert <title>\(.*\)</title>
 command! -bar -nargs=1 InsertWebPageTitle execute 'normal! i' . vimrc#cmd#pull_webpage_title(<q-args>)
 
@@ -25,6 +22,11 @@ command! -bar SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
 
 " CSS
 command! -bar CssShowDecompressed call vimrc#cmd#decompress_to_buffer()
+
+"
+command! -bar -nargs=* Vim call vimrc#open_terminal_as('term-vim', 'stay', 'vim ' . <q-args>)
+command! -bar Memo sp ~/vim-memo.md
+command! -bar CdGitRoot execute ':cd' system('git rev-parse --show-toplevel')
 
 " Haskell
 command! -bar -nargs=? Snowtify call s:Job.start('snowtify ' . <q-args>)
