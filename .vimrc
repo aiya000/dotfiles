@@ -637,6 +637,8 @@ call denite#custom#map('insert', '<C-f>', '<denite:move_caret_to_right>')
 call denite#custom#map('insert', '<C-b>', '<denite:move_caret_to_left>')
 call denite#custom#map('insert', '<C-x>', '<denite:do_action:delete>')
 
+call denite#custom#source('buffer', 'matchers', ['matcher_substring'])
+
 " }}}
 
 call dein#end()
