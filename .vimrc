@@ -861,6 +861,9 @@ CmdCnoreabbr Google OpenGoogleTranslate
 CmdCnoreabbr SwitchAccount TweetVimSwitchAccount
 CmdCnoreabbr UserTimeline  TweetVimUserTimeline
 
+" Haskell
+CmdCnoreabbr Etr !etlas run
+
 " Others
 CmdCnoreabbr Lingr J6uil
 CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
