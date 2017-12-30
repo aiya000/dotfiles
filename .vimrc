@@ -638,6 +638,7 @@ call denite#custom#map('insert', '<C-b>', '<denite:move_caret_to_left>')
 call denite#custom#map('insert', '<C-x>', '<denite:do_action:delete>')
 
 call denite#custom#source('buffer', 'matchers', ['matcher_substring'])
+call denite#custom#source('file_mru', 'matchers', ['matcher_substring'])
 
 " }}}
 
@@ -843,6 +844,10 @@ AlterCommand vne[w] VnewOverridden
 AlterCommand ene[w] EnewOverridden
 AlterCommand tabnew TabnewOverridden
 
+" Haskell
+AlterCommand etr !etlas run
+
+
 " }}}
 " CmdCnoreabbr {{{
 
@@ -860,9 +865,6 @@ CmdCnoreabbr Google OpenGoogleTranslate
 " TweetVim
 CmdCnoreabbr SwitchAccount TweetVimSwitchAccount
 CmdCnoreabbr UserTimeline  TweetVimUserTimeline
-
-" Haskell
-CmdCnoreabbr Etr !etlas run
 
 " Others
 CmdCnoreabbr Lingr J6uil
