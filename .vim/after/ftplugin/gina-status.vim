@@ -1,7 +1,6 @@
 nmap <buffer> dd mZ:<C-u>tabnew<CR>'Z<Plug>(gina-diff)
 nmap <buffer> <C-j> <Plug>(gina-diff)<C-w>p
-" gH is defined in vimrc
-nmap <buffer> O  gH<Plug>(gina-edit)
+nmap <buffer> O <Plug>(gina-edit)
 
 nnoremap <buffer><silent> ? :<C-u>call <SID>show_help_in_scratch_buffer()<CR>
 nnoremap <buffer><silent> <C-r> :<C-u>Gina status<CR>
