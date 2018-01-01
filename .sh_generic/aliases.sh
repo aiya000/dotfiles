@@ -99,6 +99,8 @@ if i_have git ; then
 
     # Set casual user.name and user.email at local
     alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
+
+    alias cd-git-root='cd $(git rev-parse --show-toplevel)'
 fi
 
 # }}}
@@ -177,6 +179,7 @@ alias nt=nterminal
 
 alias cdp=cd-finddir
 alias ki=killing-art
+alias cdg=cd-git-root
 
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
 alias mount4u.vfat=mount4u.ntfs
