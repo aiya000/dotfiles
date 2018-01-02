@@ -15,6 +15,15 @@ options indent
     data ${1:JString} = $1 @${2:java.lang.String}
         deriving (Class)
 
+snippet data_of_java_array
+alias eta_array array_eta
+options indent
+    data {-# CLASS "${1:java.lang.String}[]" #-} J${2:String}Array =
+        J$2Array (Object# J$2Array)
+        deriving (Class)
+    
+    instance JArray $2 J$2Array
+
 snippet foreign_import_a_java
 alias import_foreign_a_java
 options head indent
