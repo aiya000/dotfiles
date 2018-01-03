@@ -1,6 +1,6 @@
-nmap <buffer> dd mZ:<C-u>tabnew<CR>'Z<Plug>(gina-diff)
+nmap <buffer> dd <Plug>(gina-diff)<C-w>p
 nmap <buffer> <C-j> <Plug>(gina-diff)<C-w>p
-nmap <buffer> O <Plug>(gina-edit)
+nmap <buffer> o <Plug>(gina-edit)<leader><leader>q
 
 nnoremap <buffer><silent> ? :<C-u>call <SID>show_help_in_scratch_buffer()<CR>
 nnoremap <buffer><silent> <C-r> :<C-u>Gina status<CR>
