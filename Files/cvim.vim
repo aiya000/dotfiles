@@ -10,7 +10,7 @@ let mapleader = '['
 
 let vimport = 55355
 let barposition = 'bottom'
-let hintcharacters = 'yjuiopwertklhgfdsabnmvcxz'
+let hintcharacters = 'yjuopwertklhgfdsabnmvcxz'
 set scalehints
 
 
