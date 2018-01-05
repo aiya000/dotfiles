@@ -48,10 +48,11 @@ let g:vimrc['is_wsl']     = get(g:vimrc, 'is_wsl', executable('uname') && (syste
 let g:vimrc['has_cygwin'] = executable('cygstart')
 let g:vimrc['has_mingw']  = 0  "NOTE: ('dummy')
 
-let s:backupdir = expand('~/.backup/vim_backup')
-let s:directory = s:backupdir . '/swp'
-let s:undodir   = s:backupdir . '/undo'
-let s:viewdir   = s:backupdir . '/view'
+let s:backupdir  = expand('~/.backup/vim_backup')
+let s:directory  = s:backupdir . '/swp'
+let s:undodir    = s:backupdir . '/undo'
+let s:viewdir    = s:backupdir . '/view'
+let s:sessiondir = s:backupdir . '/session'
 
 " }}}
 
@@ -173,18 +174,18 @@ unlet s:dein_dirname
 " }}}
 " Check backup directories {{{
 
-if !isdirectory(s:backupdir)
-    call mkdir(s:backupdir, 'p', 0700)
-    call vimrc#system(printf('chown -R %s:%s %s', $USER, $GROUP, s:backupdir))
-endif
-
 if !isdirectory(s:directory)
     call mkdir(s:directory, 'p', 0700)
     call vimrc#system(printf('chown -R %s:%s %s', $USER, $GROUP, s:directory))
 endif
 
 if !isdirectory(s:undodir)
-    call mkdir(s:undodir, 'p', 0700)
+    call mkdir(s:undodir, '', 0700)
+    call vimrc#system(printf('chown -R %s:%s %s', $USER, $GROUP, s:undodir))
+endif
+
+if !isdirectory(s:sessiondir)
+    call mkdir(s:undodir, '', 0700)
     call vimrc#system(printf('chown -R %s:%s %s', $USER, $GROUP, s:undodir))
 endif
 
