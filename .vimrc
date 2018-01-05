@@ -640,6 +640,7 @@ call denite#custom#map('insert', '<C-x>', '<denite:do_action:delete>')
 
 call denite#custom#source('buffer', 'matchers', ['matcher_substring'])
 call denite#custom#source('file_mru', 'matchers', ['matcher_substring'])
+call denite#custom#source('tag', 'matchers', ['matcher_substring'])
 
 " }}}
 
@@ -991,9 +992,9 @@ augroup END
 augroup KeyMapping
     " netrw
     autocmd User MyVimRc nnoremap <silent> <leader>e         :<C-u>call vimrc#keys#toggle_netrw_vexplorer()<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader><leader>e :<C-u>Sexplore<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader>E         :<C-u>Explore<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader><leader>E :<C-u>Texplore<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader><leader>e :<C-u>call vimrc#keys#netrw_wrapper('horizontal')<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader>E         :<C-u>call vimrc#keys#netrw_wrapper('stay')<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader><leader>E :<C-u>call vimrc#keys#netrw_wrapper('tabnew')<CR>
 
     " open-browser.vim
     autocmd User MyVimRc nmap <leader>w <Plug>(openbrowser-open)

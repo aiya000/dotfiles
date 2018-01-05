@@ -72,7 +72,31 @@ endfunction " }}}
 function! vimrc#keys#toggle_netrw_vexplorer() " {{{
     let l:closed = vimrc#keys#bufclose_filetype(['netrw'])
     if !l:closed
-        Vexplore
+        call vimrc#keys#netrw_wrapper('vertical')
+    endif
+endfunction " }}}
+
+" Avoid a behavior that netrw cannot be opened on :terminal buffer
+function! vimrc#keys#netrw_wrapper(o) abort " {{{
+    let pwd = expand('%:p:h')
+    if a:o ==# 'stay'
+        new
+        execute "normal! \<C-w>p"
+        hide
+        execute 'tcd' pwd
+        Explore
+    elseif a:o ==# 'horizontal'
+        new
+        execute 'tcd' pwd
+        Explore
+    elseif a:o ==# 'vertical'
+        vertical new
+        execute 'tcd' pwd
+        Explore
+    elseif a:o ==# 'tabnew'
+        Texplore
+    else
+        throw "'" . a:o . "' is not expected"
     endif
 endfunction " }}}
 
