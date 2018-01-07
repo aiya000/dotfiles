@@ -1,5 +1,6 @@
 let s:V    = vital#vimrc#new()
 let s:HTML = s:V.import('Web.HTML')
+let s:Msg  = s:V.import('Vim.Message')
 
 " If list has elem, return v:true
 " otherwise return v:false
@@ -79,25 +80,14 @@ endfunction " }}}
 " Avoid a behavior that netrw cannot be opened on :terminal buffer
 function! vimrc#keys#netrw_wrapper(o) abort " {{{
     let pwd = expand('%:p:h')
-    if a:o ==# 'stay'
-        new
-        execute "normal! \<C-w>p"
-        hide
-        execute 'tcd' pwd
-        Explore
-    elseif a:o ==# 'horizontal'
-        new
-        execute 'tcd' pwd
-        Explore
-    elseif a:o ==# 'vertical'
-        vertical new
-        execute 'tcd' pwd
-        Explore
-    elseif a:o ==# 'tabnew'
-        Texplore
-    else
-        throw "'" . a:o . "' is not expected"
-    endif
+    let appendix = a:o ==# 'stay'       ? 'enew'
+        \        : a:o ==# 'horizontal' ? 'new'
+        \        : a:o ==# 'vertical'   ? 'vertical new'
+        \        : a:o ==# 'tabnew'     ? 'tabnew'
+        \        : s:Msg.error(printf("'%s' is not expected", a:o))
+    execute appendix
+    execute 'tcd' pwd
+    Explore
 endfunction " }}}
 
 " Toggle showing indent-guides with variable
