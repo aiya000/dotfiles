@@ -1009,7 +1009,6 @@ augroup KeyMapping
     " denite.nvim
     autocmd User MyVimRc nnoremap          <leader>u         :<C-u>Denite<Space>
     autocmd User MyVimRc nnoremap <silent> <C-k>h            :<C-u>tcd <C-r>=expand('%:p:h')<CR><CR>:Denite file_rec<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-k><C-h>        :<C-u>Denite file_mru<CR>
     autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Denite outline<CR>
 
     " aref-web.vim
@@ -1111,8 +1110,7 @@ augroup KeyMapping
     autocmd User MyVimRc nmap gd    *ggn
 
     autocmd User MyVimRc nnoremap H      :<C-u>Denite tag<CR>
-    "TODO: ない
-    "autocmd User MyVimRc nnoremap M      :<C-u>Denite tab<CR>
+    autocmd User MyVimRc nnoremap M      :<C-u>Denite file_mru<CR>
     autocmd User MyVimRc nnoremap L      :<C-u>Denite buffer<CR>
     autocmd User MyVimRc nnoremap Q      gQ
     autocmd User MyVimRc nnoremap zs     zszh
