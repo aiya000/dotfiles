@@ -18,10 +18,11 @@ snippet comment_block
 alias com
     {- ${1} -}
 
-snippet quasi_quote
-alias q
-abbr [{quoter}|{stuff}|]
-    [${1:r}|${0}|]
+snippet main
+abbr main :: IO () \n main = {expr}
+options indent
+    main :: IO ()
+    main = ${0}
 
 snippet liquid_refinement_type
 abbr {-@ __ :: __ @-}
