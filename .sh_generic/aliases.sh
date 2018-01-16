@@ -88,6 +88,7 @@ if i_have git ; then
     alias gpush='git push'
     alias gpull='git pull --rebase'
     alias greflog='git reflog'
+    alias gshow='git show'
     alias gbackstep='git reset --soft HEAD~'
     alias gclone='git clone'
     alias gtag='git tag | xargs echo'
