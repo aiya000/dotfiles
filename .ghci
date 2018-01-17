@@ -2,6 +2,7 @@
 :set editor vim
 :set -m
 
+:set -XBangPatterns
 :set -XDataKinds
 :set -XFlexibleContexts
 :set -XGADTs
