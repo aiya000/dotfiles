@@ -86,7 +86,7 @@ function! vimrc#keys#netrw_wrapper(o) abort " {{{
         \        : a:o ==# 'tabnew'     ? 'tabnew'
         \        : s:Msg.error(printf("'%s' is not expected", a:o))
     execute appendix
-    execute 'tcd' pwd
+    execute 'tcd' fnameescape(pwd)
     Explore
 endfunction " }}}
 
