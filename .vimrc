@@ -665,6 +665,7 @@ set number relativenumber nowrap hlsearch list scrolloff=16 incsearch
 set textwidth=0 tabstop=4 shiftwidth=4 expandtab
 set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
 set breakindent linebreak autoindent cindent nojoinspaces
+set previewheight=40
 set laststatus=2 wildmenu noruler cmdheight=2 history=500
 set tabline=%!vimrc#set#tabline_as_statusline()
 set backspace=indent,eol,start
