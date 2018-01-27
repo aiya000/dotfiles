@@ -642,6 +642,15 @@ call denite#custom#source('buffer', 'matchers', ['matcher_substring'])
 call denite#custom#source('file_mru', 'matchers', ['matcher_substring'])
 call denite#custom#source('tag', 'matchers', ['matcher_substring'])
 
+augroup PluginPrefs
+    autocmd BufEnter,BufWinEnter *
+        \   call denite#custom#var('outline', 'command', ['ctags'])
+        \|  call denite#custom#var('outline', 'options', [])
+    autocmd BufEnter,BufWinEnter *.hs
+        \   call denite#custom#var('outline', 'command', ['hasktags'])
+        \|  call denite#custom#var('outline', 'options', ['--ignore-close-implementation', '--ctags', '-x'])
+augroup END
+
 " }}}
 
 call dein#end()
