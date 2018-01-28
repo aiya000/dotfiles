@@ -79,7 +79,8 @@ endfunction " }}}
 
 " Avoid a behavior that netrw cannot be opened on :terminal buffer
 function! vimrc#keys#netrw_wrapper(o) abort " {{{
-    let pwd = expand('%:p:h')
+    let pwd = isdirectory(expand('%:p:h')) ? expand('%:p:h')
+            \                              : getcwd()
     let appendix = a:o ==# 'stay'       ? 'enew'
         \        : a:o ==# 'horizontal' ? 'new'
         \        : a:o ==# 'vertical'   ? 'vertical new'
