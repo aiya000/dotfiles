@@ -190,8 +190,9 @@ on_ft = [
 ]
 
 [[plugins]]
-repo   = 'lambdalisue/gina.vim'
-on_cmd = 'Gina'
+repo        = 'lambdalisue/gina.vim'
+on_cmd      = 'Gina'
+hook_source = 'call vimrc#dein#hook_source#gina()'
 
 [[plugins]]
 repo  = 'itchyny/vim-haskell-indent'
