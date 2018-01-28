@@ -801,8 +801,8 @@ augroup FileEvent
     " Auto load filetype dictionary
     autocmd FileType *
     \    if filereadable(printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype))
-    \|        execute 'setl dict+=' . printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype)
-    \|    endif
+    \|       execute 'setl dict+=' . printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype)
+    \|   endif
 augroup END
 
 " :P

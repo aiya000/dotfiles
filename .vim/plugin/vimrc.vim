@@ -40,6 +40,7 @@ command! -bar DeinInstall   call dein#install()
 command! -bar DeinUpdate    call dein#update()
 command! -bar DeinLog       new | setl buftype=nofile noreadonly modifiable ft=deinlog | put=dein#get_log()
 command! -bar DeinUpdateLog new | setl buftype=nofile noreadonly modifiable ft=deinlog | put=dein#get_updates_log()
+command! -bar DeinRecacheRuntimepath call dein#recache_runtimepath()
 
 " REPLs
 command! -bar -nargs=? Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 'stay', 'stack exec ghci ' . <q-args>)
@@ -56,6 +57,6 @@ command! -bar -nargs=* GLP GitLogViewer --patch -100 <args>
 command! -bar -nargs=* GDiff GitDiffViewer <args>
 command! -bar -nargs=* GDS GitDiffViewer --staged <args>
 command! -bar -nargs=* GDH GitDiffViewer HEAD~ <args>
-command! -bar -nargs=* GCommit call vimrc#open_terminal_as('none', 'tabnew', 'git commit --verbose ' . <q-args>)
-command! -bar -nargs=* GCAM call vimrc#open_terminal_as('none', 'tabnew', 'git commit --amend --verbose ' . <q-args>)
-command! -bar -nargs=* GAP call vimrc#open_terminal_as('none', 'tabnew', 'git add -p ' . <q-args>)
+command! -bar -nargs=* GCommit Gina commit <args>
+command! -bar -nargs=* GCAM Gina commit --amend <args>
+command! -bar -nargs=* GAP Gina!! add -p <args>
