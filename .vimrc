@@ -1233,6 +1233,9 @@ augroup KeyMapping
     digraph \U 8745  " intersect
     digraph \u 8746  " union
 
+    digraph \|^ 8593 " arrow up
+    digraph \|v 8595 " arrow down
+
     " }}}
     " terminal mode {{{
 
