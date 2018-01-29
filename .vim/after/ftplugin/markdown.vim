@@ -13,6 +13,15 @@ setl omnifunc=github_complete#complete
 let &commentstring = '<!--%s-->'
 set conceallevel=0
 
+" 論文
+command! -bar Ronbunize call s:ronbunize()
+
+" 論文
+function! s:ronbunize() abort
+    :%s/、/，/g
+    :%s/。/．/g
+endfunction
+
 " + Require
 "   - npm install -g doctoc
 "   - yaourt -S python-grip
