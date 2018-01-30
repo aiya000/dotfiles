@@ -49,6 +49,8 @@ command! -bar Ghcie call vimrc#open_terminal_as('term-stack-ghci', 'stay', 'stac
 command! -bar CLisp call vimrc#open_terminal_as('none', 'stay', 'clisp')
 command! -bar LeinRepl call vimrc#open_terminal_as('none', 'stay', 'lein repl')
 command! -bar ElmRepl call vimrc#open_terminal_as('term-elm-repl', 'stay', 'elm repl')
+command! -bar PythonRepl call vimrc#open_terminal_as('none', 'stay', 'PAGER=cat python')
+command! -bar IPyRepl call vimrc#open_terminal_as('none', 'stay', 'ipython')
 
 " git
 command! -bar -nargs=* GStatus Gina status -s <args>
