@@ -61,4 +61,4 @@ command! -bar -nargs=* GDS GitDiffViewer --staged <args>
 command! -bar -nargs=* GDH GitDiffViewer HEAD~ <args>
 command! -bar -nargs=* GCommit Gina commit --verbose <args>
 command! -bar -nargs=* GCAM Gina commit --verbose --amend <args>
-command! -bar -nargs=* GAP Gina!! add -p <args>
+command! -bar -nargs=* GAP terminal git add -p <args>
