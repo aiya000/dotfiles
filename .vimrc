@@ -406,10 +406,10 @@ function! s:vim_submode_on_source()
     augroup PluginPrefs
         " Window Resizer
         autocmd User MyVimRc call submode#enter_with('window_resize', 'n', '', '<C-s>w')
-        autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'j', '<C-w>+')
-        autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'k', '<C-w>-')
-        autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'h', '<C-w><')
-        autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'l', '<C-w>>')
+        autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'j', '3<C-w>+')
+        autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'k', '3<C-w>-')
+        autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'h', '3<C-w><')
+        autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'l', '3<C-w>>')
 
         " Buffer Changer
         autocmd User MyVimRc call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
@@ -957,6 +957,7 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <silent> gh_   :<C-u>resize<CR>
     autocmd User MyVimRc nnoremap <silent> gh"   :<C-u>resize 5<CR>
     autocmd User MyVimRc nnoremap          gh\|  <C-w>\|
+    autocmd User MyVimRc nnoremap <silent> gh\   :<C-u>vertical resize 1<CR>
     autocmd User MyVimRc nnoremap          gh=   <C-w>=
     autocmd User MyVimRc nmap              gh+   gh_gh\|
     autocmd User MyVimRc nnoremap          ghH   <C-w>H
