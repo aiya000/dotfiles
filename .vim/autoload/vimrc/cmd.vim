@@ -1,3 +1,7 @@
+let s:Msg = vital#vimrc#new().import('Vim.Message')
+
+"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
+
 " script local functions
 
 " Do a:cmd to a:bufnr without changing the buffer of current window
@@ -79,7 +83,7 @@ function! vimrc#cmd#rename_to(new_name) abort " {{{
     let l:new_file = fnamemodify(l:this_file, ':h') . '/' . l:new_name
     let l:failed   = rename(l:this_file, l:new_file)
     if l:failed
-        call vimrc#echo_error(printf('Rename %s to %s is failed', l:this_file, l:new_file))
+        call s:Msg.error(printf('Rename %s to %s is failed', l:this_file, l:new_file))
         return
     endif
 
