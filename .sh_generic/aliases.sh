@@ -78,7 +78,7 @@ if i_have git ; then
     alias gss='git stash'
     alias gsss='git stash save'
     alias gssp='git stash pop'
-    alias gssps='git stash -p save'
+    alias gsssp='git stash save ${1} -p'
     alias gssa='git stash apply'
     alias gssd='git stash drop'
     alias gssl='git stash list | xargs -I {} echo {}'
