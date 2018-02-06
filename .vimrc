@@ -1146,7 +1146,23 @@ augroup KeyMapping
 
     autocmd User MyVimRc nnoremap <silent> <leader>b         :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=markdown<CR>
     autocmd User MyVimRc nnoremap <silent> <leader>B         :<C-u>sp ~/.backup/vim-memo.md<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader><leader>q :<C-u>call vimrc#keys#bufclose_filetype(['help', 'man', 'qf', 'scratch', 'aref_web', 'quickrun', 'gina-status', 'gitlogviewer', 'gitdiffviewer', 'gitshowviewer', 'gitreflogviewer', 'netrw', 'tasklist'])<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader><leader>q :<C-u>call vimrc#keys#bufclose_filetype(<C-r>=string(g:vimrc.auto_closing_filetypes)<CR>)<CR>
+    autocmd User MyVimRc let g:vimrc.auto_closing_filetypes = [
+        \ 'help',
+        \ 'man',
+        \ 'qf',
+        \ 'scratch',
+        \ 'aref_web',
+        \ 'quickrun',
+        \ 'gina-status',
+        \ 'gitlogviewer',
+        \ 'gitdiffviewer',
+        \ 'gitshowviewer',
+        \ 'gitreflogviewer',
+        \ 'netrw',
+        \ 'tasklist',
+        \ 'diff',
+    \]
 
     autocmd User MyVimRc nnoremap <silent> <C-k><C-r>     :<C-u>Reload<CR>
     autocmd User MyVimRc nnoremap <silent> <C-k>r         :<C-u>let &filetype=&filetype<CR>:filetype detect<CR>
