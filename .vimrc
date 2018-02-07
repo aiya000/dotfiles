@@ -1127,6 +1127,15 @@ augroup KeyMapping
 
     " ale
     autocmd User MyVimRc nnoremap <silent> <C-k><C-a> :<C-u>ALEToggle<CR>
+
+    " gina.vim (and .vim/plugin/vimrc.vim)
+    autocmd User MyVimRc nnoremap <silent> <leader>gs :<C-u>GStatus<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader>gc :<C-u>GCommit<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader>gC :<C-u>GCAM<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader>ga :<C-u>GAP<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader>gl :<C-u>GLog<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader>gL :<C-u>GLP<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader>gd :<C-u>GDiff<CR>
 augroup END
 
 " }}}
