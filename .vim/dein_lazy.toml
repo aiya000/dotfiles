@@ -222,5 +222,6 @@ rev   = 'aiya000/use-command-bang'
 on_ft = 'elm'
 
 [[plugins]]
-repo  = 'idris-hackers/idris-vim'
+repo  = 'aiya000/idris-vim'
+rev   = 'aiya000/can-be-disabled-keymappings'
 on_ft = ['idris', 'lidris']

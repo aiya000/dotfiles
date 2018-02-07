@@ -347,6 +347,9 @@ let g:quickrun_config = {
 \       'exec': ['%c %s %o --output /tmp/vim-quickrun-elm.html', 'xdg-open /tmp/vim-quickrun-elm.html'],
 \       'tempfile': '%{tempname()}.elm',
 \   },
+\   'idris': {
+\       'runner': 'vimproc',
+\   },
 \}
 
 " Append config of each environment
@@ -514,6 +517,16 @@ let g:unite_source_tag_max_name_length  = 100
 let g:unite_source_tag_max_fname_length = 100
 
 " }}}
+" --- deoplete.nvim --- {{{
+
+let g:deoplete#enable_at_startup = 0
+
+augroup PluginPrefs
+    "TODO: Why doesn't this work?
+    "autocmd InsertEnter * call deoplete#enable()
+augroup END
+
+" }}}
 " --- vim-visualstar --- {{{
 
 " Do zzzv after execute visualstar
@@ -650,6 +663,11 @@ augroup PluginPrefs
         \   call denite#custom#var('outline', 'command', ['hasktags'])
         \|  call denite#custom#var('outline', 'options', ['--ignore-close-implementation', '--ctags', '-x'])
 augroup END
+
+" }}}
+" --- idris-vim --- {{{
+
+let g:idris_vim_enable_keymappings_by_default = v:false
 
 " }}}
 
