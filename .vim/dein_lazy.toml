@@ -220,3 +220,7 @@ on_if = 'expand("%") ==# ".ghci"'
 repo  = 'aiya000/elm-vim'
 rev   = 'aiya000/use-command-bang'
 on_ft = 'elm'
+
+[[plugins]]
+repo  = 'idris-hackers/idris-vim'
+on_ft = ['idris', 'lidris']
