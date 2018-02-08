@@ -16,3 +16,6 @@
 --regex-Elm=/^port +([[:lower:]][[:alnum:]_]+)[[:blank:]]*:[^:]/\1/p,port,ports/
 --regex-Elm=/^type +([[:upper:]][[:alnum:]_]+)/\1/t,type,types/
 --regex-Elm=/^type[[:blank:]]+alias[[:blank:]]+([[:upper:]][[:alnum:]_]+)/\1/a,type-alias,type-aliases/
+--langdef=markdown
+--langmap=markdown:.md
+--regex-markdown=/^#[ \t](.*$)/\1/h,heading,headings/
