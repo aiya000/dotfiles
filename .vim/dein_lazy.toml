@@ -6,7 +6,8 @@ depends = [
     'unite-outline',
     'twibill.vim',
     'bitly.vim',
-    'favstar-vim'
+    'favstar-vim',
+    'unite.vim',
 ]
 on_cmd  = [
     'TweetVimVersion',
@@ -225,3 +226,9 @@ on_ft = 'elm'
 repo  = 'aiya000/idris-vim'
 rev   = 'aiya000/can-be-disabled-keymappings'
 on_ft = ['idris', 'lidris']
+
+# For only TweetVim
+[[plugins]]
+repo    = 'Shougo/unite.vim'
+depends = 'TweetVim'
+on_cmd  = 'Unite'
