@@ -54,7 +54,7 @@ command! -bar IPyRepl call vimrc#open_terminal_as('none', 'stay', 'ipython')
 
 " git
 command! -bar -nargs=* GStatus Gina status -s <args>
-command! -bar -nargs=* GLog GitLogViewer -100 <args>
+command! -bar -nargs=* GLog GitLogViewer -100 --name-only <args>
 command! -bar -nargs=* GLP GitLogViewer --patch -100 <args>
 command! -bar -nargs=* GDiff GitDiffViewer <args>
 command! -bar -nargs=* GDS GitDiffViewer --staged <args>
