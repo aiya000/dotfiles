@@ -39,3 +39,4 @@
 
 # Why macOS's stack put '.stack' to ~/.dotfiles when 'stack setup' is executed ?
 .stack
+.idris/repl/history
