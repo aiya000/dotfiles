@@ -20,7 +20,6 @@ alias du='du -h'
 alias_of sudo='sudo '  # Enable aliases on sudo
 alias_of mysql='mysql --pager="less -r -S -n -i -F -X"'
 alias_of hoe='stack exec --silent -- hoe'
-alias_of make='make -j5'
 
 # }}}
 # Load ./aliases/** {{{
