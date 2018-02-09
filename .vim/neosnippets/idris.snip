@@ -1,0 +1,34 @@
+snippet module
+abbr module {module-name}
+    module ${1:module}
+
+snippet import
+abbr import {module-name}{ as alias-name}
+    import ${1:module}${2:#: as alias}${0}
+
+# Directives
+
+snippet directive
+abbr %{directive-name}
+    %{1:name}
+
+snippet directive_access_export
+abbr %access export
+    %access export
+
+snippet directive_hide
+alias hide hiding
+abbr %hide {a-stuff}
+    %hide ${1:stuff}
+
+# Templates
+
+snippet main
+abbr main : IO ()\nmain = {something}
+    main : IO ()
+    main = ${0}
+
+snippet output
+abbr -- {output}\n-- {__}
+    -- {output}
+    -- ${0}
