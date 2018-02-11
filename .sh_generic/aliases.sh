@@ -110,26 +110,7 @@ if i_have git ; then
 fi
 
 # }}}
-# Haskell {{{
-
-if i_have stack ; then
-    alias sb='stack build'
-    alias se='stack exec --'
-    alias st='stack test'
-    alias si='stack install'
-    alias sc='stack clean'
-    alias srunghc='stack runghc --'
-    alias sghci='stack ghci --'
-    alias shaddock-gen='stack haddock .'
-    alias shaddock-gen-open='stack haddock --open .'
-fi
-
-if i_have etlas ; then
-    alias et=etlas
-    alias etb='etlas build'
-    alias etr='etlas run'
-    alias etc='etlas clean'
-fi
+# Haskell functions {{{
 
 if i_have hasktags ; then
     alias hasktags-casual='hasktags . --ignore-close-implementation --tags-absolute --ctags -f'
@@ -156,6 +137,23 @@ if i_have haskdogs ; then
         }
     fi
 fi
+
+# }}}
+# Idris functions {{{
+
+i_have idris && \
+    function run-idris() {
+        idris ${1} -o /tmp/${1}.idris-run-output \
+            && /tmp/${1}.idris-run-output
+        if [[ $? == 0 ]] ; then
+            echo "\n>>> run-idris is succeed"
+        else
+            echo "\n>>> run-idris is failed"
+        fi
+        if [[ -f ${1} ]] ; then
+            rm /tmp/${1}.idris-run-output
+        fi
+    }
 
 # }}}
 # Others {{{
@@ -186,6 +184,31 @@ alias nt=nterminal
 alias cdp=cd-finddir
 alias ki=killing-art
 alias cdg=cd-git-root
+
+if i_have stack ; then
+    alias sb='stack build'
+    alias se='stack exec --'
+    alias st='stack test'
+    alias si='stack install'
+    alias sc='stack clean'
+    alias srunghc='stack runghc --'
+    alias sghci='stack ghci --'
+    alias shaddock-gen='stack haddock .'
+    alias shaddock-gen-open='stack haddock --open .'
+fi
+
+if i_have etlas ; then
+    alias et=etlas
+    alias etb='etlas build'
+    alias etr='etlas run'
+    alias etc='etlas clean'
+fi
+
+if i_have idris ; then
+    alias runidris=run-idris
+fi
+
+# ---
 
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
 alias mount4u.vfat=mount4u.ntfs

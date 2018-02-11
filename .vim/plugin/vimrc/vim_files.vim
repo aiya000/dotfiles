@@ -1,3 +1,7 @@
+" -------------------------------------------------------
+" Define commands to open basic architecture files of vim
+" -------------------------------------------------------
+
 command! -bar VimConfig    e $MYVIMRC
 command! -bar VimConfigTab tabnew $MYVIMRC
 command! -bar Reload       so $MYVIMRC
@@ -29,6 +33,3 @@ command! -bar -nargs=? -complete=filetype PluginEdit
 
 command! -bar -nargs=? -complete=filetype AutoloadEdit
 \	execute ':edit' printf('%s/autoload/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
-
-" Dev
-command! -bar -nargs=1 TestCodeEdit TabnewOverridden ~/.tmp/Test.<args>
