@@ -1,25 +1,27 @@
+# Syntaxes
+
 snippet module
 abbr module {module-name}
-    module ${1:module}
+    module ${1:Module}
 
 snippet import
 abbr import {module-name}{ as alias-name}
-    import ${1:module}${2:#: as alias}${0}
+    import ${1:Module}
 
-# Directives
+snippet import_as
+alias import_qualified
+abbr import {module-name} as {alias-name}
+    import ${1:Module} as ${2:Alias}
 
-snippet directive
-abbr %{directive-name}
-    %{1:name}
+snippet using
+abbr using ({var}:{type})
+    using (${1:x}:${2:a})
 
-snippet directive_access_export
-abbr %access export
-    %access export
-
-snippet directive_hide
-alias hide hiding
-abbr %hide {a-stuff}
-    %hide ${1:stuff}
+snippet mutual
+abbr mutual\n{things}
+options indent
+    mutual
+        ${0}
 
 # Templates
 
@@ -28,7 +30,38 @@ abbr main : IO ()\nmain = {something}
     main : IO ()
     main = ${0}
 
+snippet println
+abbr printLn
+    printLn ${0}
+
 snippet output
 abbr -- {output}\n-- {__}
     -- {output}
     -- ${0}
+
+# Directives
+
+snippet directive
+abbr %{directive-name}
+    %{1:name}
+
+snippet directive_access
+alias access
+abbr %access {export|public export|private}
+    %access ${1:export}
+
+snippet directive_hide
+alias hide hiding
+abbr %hide {a-stuff}
+    %hide ${1:stuff}
+
+snippet directive_language
+alias language
+abbr %language {an-extension}
+    %language ${1:Extension}
+
+snippet directive_language_elab_reflection
+alias language_elab_reflection
+abbr %language ElabReflection
+options head
+    %language ElabReflection

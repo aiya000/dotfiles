@@ -16,13 +16,21 @@ snippet template_xml_tag_surround
 
 snippet template_haskell_language_pragma
 options indent
-    snippet pragma_language_${1:#:name}
-    abbr {-# LANGUAGE ${2:#:word} #-}
+    snippet pragma_language_${1:name}
+    abbr {-# LANGUAGE ${2:Name} #-}
     options head
         {-# LANGUAGE $2 #-}
+
+snippet template_idris_language_directive
+options indent
+    snippet directive_language_${1:name}
+    alias language_$1
+    abbr %language ${2:Name}
+    options head
+        %language $2
 
 snippet template_jsx_attr
 options head indent
     snippet ${1:#:snippetName}
-    abbr $1=__
+    abbr $1={stuff}
         $1=${0}
