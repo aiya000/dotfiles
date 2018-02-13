@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# I should do
+# $ ln -s /usr/local/Cellar/chunkwm/0.3.3/share/chunkwm/plugins .chunkwm_plugins
+chunkc core::plugin_dir ~/.chunkwm_plugins
+chunkc core::load border.so
+chunkc core::load tiling.so
+chunkc core::load ffm.so
+
+# General
+chunkc set focused_border_color 0xe6e6fa
+chunkc set focused_border_radius 5
+chunkc set focused_border_width 2
+chunkc set global_desktop_mode monocle
+chunkc set global_desktop_offset_bottom 2
+chunkc set global_desktop_offset_gap 2
+chunkc set global_desktop_offset_left 2
+chunkc set global_desktop_offset_right 2
+chunkc set global_desktop_offset_top 2
+chunkc set window_focus_cycle monitor
+
+# bsp
+chunkc set bsp_split_mode vertical
