@@ -13,6 +13,27 @@ alias import_qualified
 abbr import {module-name} as {alias-name}
     import ${1:Module} as ${2:Alias}
 
+snippet record
+abbr record {type} where\nconstructor {value-constructor}
+options indent
+    record ${1:TypeName} where
+        constructor ${2:ValueConstructor}
+
+snippet record_update
+alias update_record
+abbr record {{record-term} = {value}} {target}
+    record {${1:recordTerm} = ${2:value}} ${3:target}
+
+snippet record_func_update
+alias update_func_record
+abbr record {{record-term} $= {unary-function}} {target}
+    record {${1:recordTerm} $= ${2:unaryFunc}} ${3:target}
+
+snippet record_access
+alias record_get access_record
+abbr record {{record-term}} {target}
+    record {${1:recordTerm}} ${3:target}
+
 snippet using
 abbr using ({var}:{type})
     using (${1:x}:${2:a})
@@ -23,6 +44,18 @@ options indent
     mutual
         ${0}
 
+snippet idiom_bracket
+abbr [|{applicative-expression}|]
+    [|${0}|]
+
+snippet public_export
+abbr public export
+    public export
+
+snippet export
+abbr export
+    export
+
 # Templates
 
 snippet main
@@ -32,7 +65,11 @@ abbr main : IO ()\nmain = {something}
 
 snippet println
 abbr printLn
-    printLn ${0}
+    printLn
+
+snippet doc
+abbr |||
+    ||| ${0}
 
 snippet output
 abbr -- {output}\n-- {__}

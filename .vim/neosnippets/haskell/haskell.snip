@@ -24,6 +24,11 @@ options indent
     main :: IO ()
     main = ${0}
 
+snippet output
+abbr -- {output}\n-- {__}
+    -- {output}
+    -- ${0}
+
 snippet liquid_refinement_type
 abbr {-@ __ :: __ @-}
     {-@ ${1:funcName} :: ${2} @-}
