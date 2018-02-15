@@ -62,7 +62,7 @@ function! s:idris_clnum_word(cmd, word) abort
 endfunction
 
 nnoremap <buffer><silent> <localleader>o :<C-u>vsp<CR>:IdrisRepl <C-r>=expand('%:p')<CR><CR>
-nnoremap <buffer><silent> <localleader>R :<C-u>call <SID>idris_cword(':reload')<CR>
+nnoremap <buffer><silent> <localleader>R :<C-u>call <SID>idris(':reload')<CR>
 nnoremap <buffer><silent> <localleader>T :<C-u>call <SID>idris_cword(':type')<CR>
 nnoremap <buffer><silent> <localleader>d :<C-u>call <SID>idris_cword(':doc')<CR>
 nnoremap <buffer><silent> <localleader>m :<C-u>call <SID>idris_cword(':missing')<CR>
