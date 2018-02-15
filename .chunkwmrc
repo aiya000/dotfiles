@@ -17,6 +17,7 @@ chunkc set global_desktop_offset_gap 2
 chunkc set global_desktop_offset_left 2
 chunkc set global_desktop_offset_right 2
 chunkc set global_desktop_offset_top 2
+chunkc set monitor_focus_cycle 1
 chunkc set window_focus_cycle monitor
 
 # bsp
