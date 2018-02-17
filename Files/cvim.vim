@@ -32,6 +32,9 @@ map <C-b> scrollPageUp
 map <C-j> <CR>
 map <C-c> <Esc>
 map <C-l> <Esc>
+map <C--> zoomPageOut
+map <C-S-=> zoomPageIn
+map <C-=> zoomPageOrig
 map <leader>l <C-l>
 map <C-k><C-l> :nohlsearch<CR>
 
@@ -70,5 +73,4 @@ imap <C-x><C-a> selectAll
 "imap <C-i> <Tab>
 imap <C-g> editWithVim
 
-
-command Reload source ~/.cvimrc
+command Reload source /home/aiya000/.dotfiles/.cvimrc
