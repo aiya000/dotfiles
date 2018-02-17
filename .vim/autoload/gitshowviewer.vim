@@ -1,5 +1,5 @@
 function! gitshowviewer#git_show_viewer(args)
-    new
+    enew!
     setl buftype=nofile
     call s:read_git_show(a:args)
     set  filetype=gitshowviewer

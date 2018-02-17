@@ -1,5 +1,5 @@
 function! gitreflogviewer#git_reflog_viewer(args)
-    new
+    enew!
     setl buftype=nofile
     call s:read_git_reflog(a:args)
     set  filetype=gitreflogviewer

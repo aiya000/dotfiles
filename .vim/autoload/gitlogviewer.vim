@@ -2,7 +2,7 @@
 " And deris's code (http://deris.hatenablog.jp/entry/2013/05/10/003430)
 function! gitlogviewer#git_log_viewer(args)
     enew!
-    setl buiiftype=nofile
+    setl buftype=nofile
     call s:read_git_log(a:args)
     set  filetype=gitlogviewer
     set  foldmethod=expr
