@@ -1,0 +1,38 @@
+{
+    "title": "with macOS builtin accessibility",
+    "rules": [
+        {
+            "description": "toggle mousekey if the preference is on",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "c",
+                        "modifiers": {
+                            "mandatory": [
+                                "option"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "left_option"
+                        },
+                        {
+                            "key_code": "left_option"
+                        },
+                        {
+                            "key_code": "left_option"
+                        },
+                        {
+                            "key_code": "left_option"
+                        },
+                        {
+                            "key_code": "left_option"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

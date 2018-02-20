@@ -98,6 +98,7 @@ if i_have git ; then
     alias gclone='git clone'
     alias gtag='git tag | xargs echo'
     alias g-devine-buster='git clean -fd'
+    alias gf='git fetch'
     alias gre='git return'         # These subcommands are defined in .gitconfig
     alias gtree='git tree'         #
     alias gtree-all='git tree-all' #
