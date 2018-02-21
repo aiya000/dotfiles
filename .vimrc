@@ -347,6 +347,9 @@ let g:quickrun_config = {
 \       'exec': ['%c %s %o --output /tmp/vim-quickrun-elm.html', 'xdg-open /tmp/vim-quickrun-elm.html'],
 \       'tempfile': '%{tempname()}.elm',
 \   },
+\   'idris': {
+\       'cmdopt': '-p base -p prelude -p effects',
+\   },
 \}
 
 " Append config of each environment
