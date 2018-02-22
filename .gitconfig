@@ -41,6 +41,7 @@
 	ds = diff --staged
 	ap = add -p
 	pr = pull-request
+	clone = clone --recursive
 [core]
 	pager = nvim - -R +PAGER -c 'setf vim-pager | set syntax=git'
 [init]

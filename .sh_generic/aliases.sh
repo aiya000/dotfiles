@@ -95,7 +95,7 @@ if i_have git ; then
     alias greflog='git reflog'
     alias gshow='git show'
     alias gbackstep='git reset --soft HEAD~'
-    alias gclone='git clone'
+    alias gclone='git clone --recursive'
     alias gtag='git tag | xargs echo'
     alias g-devine-buster='git clean -fd'
     alias gf='git fetch'
