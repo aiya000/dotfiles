@@ -19,6 +19,16 @@
 "-------------------
 
 
+"------"
+" Memo "
+"------"
+" {{{
+"
+" my gina.vim keymappings are existent in .vim/autoload/vimrc/dein/hook_source.vim
+"
+" }}}
+
+
 "----------------------"
 " Define global values "
 "----------------------"
