@@ -1,0 +1,85 @@
+# Syntaxes
+
+snippet template
+abbr    template <{typename} {T}>
+    template <${1:typename} ${2:T}>
+
+snippet for
+options indent
+abbr    for (auto&& {x} : {xs}) {}
+    for (${1:auto&&} ${2:x} : ${3:xs}) {
+        ${0:TARGET}
+    }
+
+snippet for_with_index
+abbr    for ({var}; {cond}; {effect}) {}
+options indent
+    for (${1:var}; ${2:condition}; ${3:effect}) {
+        ${0:TARGET}
+    }
+
+snippet if
+abbr if ({cond}) {}
+options indent
+    if (${1:condition}) {
+        ${0}
+    }
+
+snippet while
+abbr while ({cond}) {}
+options indent
+    while (${1:condition}) {
+        ${0}
+    }
+
+snippet try
+abbr try {}
+    try {
+        ${0}
+    }
+
+snippet catch
+abbr catch ({exception}) {}
+options indent
+    catch (${1:exception}) {
+        ${0}
+    }
+
+snippet finally
+abbr finally {}
+    finally {
+        ${0}
+    }
+
+# Macros
+
+snippet include_library
+alias include
+options head
+abbr #include <{path}>
+    #include <${0}>
+
+snippet include_myown
+options head
+abbr #include "{path}"
+    #include "${0}"
+
+# Expressions
+
+snippet demangle
+abbr    abi::__cxa_demangle(mangled_name, 0, 0, nullptr);
+    abi::__cxa_demangle(${1:#:var}.name(), 0, 0, nullptr);
+
+snippet println
+abbr std::cout << {something} << std::endl;
+    std::cout << ${1:something} << std::endl;
+
+# Templates
+
+snippet do_demangle
+alias lets_demangle demangle_template
+options indent
+    #include <cxxabi.h> // copy and paste this to the top of your file
+    char* typeName = abi::__cxa_demangle(typeid(${1:#:var}).name(), 0, 0, nullptr);
+    ${0}
+    std::free(typeName);

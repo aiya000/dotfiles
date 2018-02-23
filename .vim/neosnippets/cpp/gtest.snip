@@ -1,0 +1,72 @@
+snippet gtest_test_class
+options indent
+    class ${1:TestName} : public ::testing::Test {
+    protected:
+        $1() {}
+        virtual ~$1() {}
+        virtual void SetUp() {}
+        virtual void TearDown() {}
+    public:
+        static void SetUpTestCase() {}
+        static void TearDownTestCase() {}
+    }
+
+snippet gtest_setup
+abbr virtual void SetUp() {{do}}
+    virtual void SetUp() {
+        ${0}
+    }
+
+snippet gtest_teardown
+abbr virtual void TearDown() {{do}}
+    virtual void TearDown() {
+        ${0}
+    }
+
+snippet gtest_setup_testcase
+abbr static void SetUpTestCase() {{do}}
+    static void SetUpTestCase() {
+        ${0}
+    }
+
+snippet gtest_teardown_testcase
+abbr static void TearDownTestCase() {{do}}
+    static void TearDownTestCase() {
+        ${0}
+    }
+
+snippet gtest_test_f
+alias testf
+    TEST_F(${1:TestName}, ${2:TestCaseName}) {
+        ${0}
+    }
+
+snippet gtest_succeed
+alias succeed
+abbr SUCCEED();
+    SUCCEED();
+
+snippet gtest_assert_true
+alias assert_true
+abbr ASSERT_TRUE({value});
+    ASSERT_TRUE(${0:value});
+
+snippet gtest_assert_false
+alias assert_false
+abbr ASSERT_FALSE({value});
+    ASSERT_FALSE(${0:value});
+
+snippet gtest_assert_eq
+alias assert_eq
+abbr ASSERT_EQ({expected}, {actual});
+    ASSERT_EQ(${1:expected}, ${2:actual});
+
+snippet gtest_assert_no_throw
+alias assert_no_throw
+abbr ASSERT_NO_THROW({syntax});
+    ASSERT_NO_THROW(${0:syntax});
+
+snippet gtest_assert_any_throw
+alias assert_any_throw
+abbr ASSERT_ANY_THROW({syntax});
+    ASSERT_ANY_THROW(${0:syntax});
