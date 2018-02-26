@@ -358,7 +358,7 @@ let g:quickrun_config = {
 \       'tempfile': '%{tempname()}.elm',
 \   },
 \   'idris': {
-\       'cmdopt': '-p base -p prelude -p effects',
+\       'cmdopt': '-p base -p prelude -p effects -p contrib',
 \   },
 \}
 
@@ -803,17 +803,17 @@ set iminsert=0
 let g:tex_flavor = 'latex'
 
 " Reference tags of ctags
-let &tags = join([
-\    'tags',
-\    '.git/tags',
-\    '../tags',
-\    '../../tags',
-\    '../../../tags',
-\    '../../../../tags',
-\    '../.git/tags',
-\    '../../.git/tags',
-\    '../../../.git/tags',
-\    '../../../../.git/tags'
+let &tags = &tags . ',' . join([
+    \ 'tags',
+    \ '.git/tags',
+    \ '../tags',
+    \ '../../tags',
+    \ '../../../tags',
+    \ '../../../../tags',
+    \ '../.git/tags',
+    \ '../../.git/tags',
+    \ '../../../.git/tags',
+    \ '../../../../.git/tags'
 \], ',')
 
 let lhs_markup = 'none'
