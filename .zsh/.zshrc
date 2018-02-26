@@ -113,7 +113,7 @@ function show_cmdline_states () {
             exit
         fi
         local branch_name=$(echo $branches | grep '\*\s.*' | awk '{print $2}')
-        echo "%{$bg[green]%}[${branch_name}]%{$reset_color%}"
+        echo "%{$bg[green]$fg[black]%}[${branch_name}]%{$reset_color%}"
     }
 
     function get_zle_mode () {
