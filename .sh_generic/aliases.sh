@@ -113,18 +113,20 @@ fi
 # }}}
 # Haskell functions {{{
 
+if i_have stack ; then
+    function stack-new-default() {
+        stack new "$1" simple
+    }
+    alias make-new-package-yaml='cp ~/.dotfiles/Files/package.yaml .'
+    alias cabal-sdit='stack exec -- cabal sdist'
+    function cabal-upload() {
+         stack exec -- cabal upload "$1"
+    }
+fi
+
 if i_have hasktags ; then
     alias hasktags-casual='hasktags . --ignore-close-implementation --tags-absolute --ctags -f'
-    function eta-library-tags-append () {
-        if [ ! -d ~/git/eta ] ; then
-            echo '~/git/eta is not found' > /dev/stderr
-            return 1
-        elif [ ! -f "$1" ] ; then
-            echo "'$1' is not found, please make it first" > /dev/stderr
-            return 1
-        fi
-        hasktags ~/git/eta/libraries --ignore-close-implementation --tags-absolute --ctags -f /tmp/eta_tags && cat /tmp/eta_tags >> $1
-    }
+    alias hasktags-eta-repository='hasktags ~/git/eta/libraries --ignore-close-implementation --tags-absolute --ctags -f ~/git/eta/.git/tags'
 fi
 
 if i_have haskdogs ; then
@@ -133,8 +135,8 @@ if i_have haskdogs ; then
     }
     if i_have eta-library-tags-append ; then
         function etadogs-casual () {
-            haskdogs-casual $1
-            eta-library-tags-append $1
+            haskdogs-casual "$1"
+            eta-library-tags-append "$1"
         }
     fi
 fi
@@ -144,15 +146,17 @@ fi
 
 i_have idris && \
     function run-idris() {
-        idris ${1} -o /tmp/${1}.idris-run-output \
-            && /tmp/${1}.idris-run-output
-        if [[ $? == 0 ]] ; then
+        if idris "$1" -o "/tmp/$1.idris-run-output" && "/tmp/$1.idris-run-output" ; then
+            # shellcheck disable=SC2028
+            # shellcheck disable=SC1117
             echo "\n>>> run-idris is succeed"
         else
+            # shellcheck disable=SC2028
+            # shellcheck disable=SC1117
             echo "\n>>> run-idris is failed"
         fi
-        if [[ -f ${1} ]] ; then
-            rm /tmp/${1}.idris-run-output
+        if [[ -f $1 ]] ; then
+            rm "/tmp/$1.idris-run-output"
         fi
     }
 
@@ -162,7 +166,7 @@ i_have idris && \
 i_have docker && alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
 i_have rsync && alias cp-with-progress='rsync --partial --progress'
 i_have watch && alias wifi-hardware-check='watch -n1 rfkill list all'
-i_have ctags && alias ctags-casual='ctags --tag-relative --recurse --sort=yes -f'
+i_have ctags && alias ctags-casual='ctags --tag-relative=yes --recurse --sort=yes -f'
 i_have tmux && alias tmuxa='tmux attach'
 i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have unzip && alias unzip-cp932='unzip -O cp932'
@@ -175,7 +179,8 @@ alias lla='ls -la --color=auto --group-directories-first'
 
 alias x=xdg-open
 alias t=tmux
-alias e=$EDITOR
+# shellcheck disable=SC2139
+alias e="$EDITOR"
 alias m=mount
 alias um=umount
 alias ei=exit
@@ -211,6 +216,7 @@ fi
 
 # ---
 
+# shellcheck disable=SC2139
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
 alias mount4u.vfat=mount4u.ntfs
 alias mount4u.ext2='sudo mount -o iocharset=utf8'
@@ -220,11 +226,16 @@ alias mount4u.ext4=mount4u.ext2
 alias date-simple='date +"%Y-%m-%d"'
 alias rand='cat /dev/urandom | tr -dc "[:alnum:]" | head -c 8'
 
+function cat-which () {
+    cat "$(which "$1")"
+}
+
 # Generate items for autotools
 alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
 
 function virtualenv-activate () {
     if [ -f ./.venv/bin/activate ] ; then
+        # shellcheck disable=SC1091
         . ./.venv/bin/activate
     else
         echo './.venv/bin/activate was not found, please load it yourself...' > /dev/stderr
