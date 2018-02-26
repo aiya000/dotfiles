@@ -1,7 +1,5 @@
-# This file was copied from https://raw.githubusercontent.com/Shougo/neosnippet-snippets/master/neosnippets/sh.snip
-
 snippet if
-abbr    if [ __ ] ; then __ fi
+abbr if [ __ ] ; then __ fi
 options head
     if [ ${1:#:condtion} ] ; then
         ${0}
@@ -17,22 +15,20 @@ options head
     elif [ ${1:#:condition} ] ; then
         ${0:TARGET}
 
-snippet if_extended
-alias ife
-abbr    if [[ __ ]] ; then __ fi
+snippet if_bash
+abbr if [[ __ ]] ; then __ fi
 options head
     if [[ ${1:#:condtion} ]] ; then
         ${0}
     fi
 
-snippet elif_extended
-alias elife
+snippet elif_bash
 options head
     elif [[ ${1:#:condition} ]] ; then
         ${0:TARGET}
 
-alias   for
-abbr    for __ in __ ; do __ done
+alias for
+abbr for __ in __ ; do __ done
 options head
     for ${1:i} in ${2:#:var} ; do
         ${0}
@@ -45,7 +41,7 @@ options head
     done
 
 snippet function
-alias   func
+alias func
 options head
     function ${1:#:name} () {
         ${0:TARGET}
@@ -61,9 +57,13 @@ options head
         ${3:echo "$$1 Didn't match anything"}
     esac
 
-alias   for_bash
-abbr    for (( __; __; __ )) ; do __ done
+alias for_bash
+abbr for (( __; __; __ )) ; do __ done
 options head
     for (( ${1:#:init}; ${2:#:condtion}; ${3:#:effect} )) ; do
         ${0}
     done
+
+snippet shellcheck_disable
+alias disable_shellcheck
+    # shellcheck disable=${1:SC1090}
