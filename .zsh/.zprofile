@@ -22,7 +22,8 @@ PATH=$PATH:$HOME/.dotfiles/bin
 
 # Basics
 PATH=$PATH:/bin:/sbin
-PATH=$PATH:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+PATH=$PATH:/usr/local/bin:/usr/local/sbin
+PATH=$PATH:/usr/bin:/usr/sbin
 PATH=$PATH:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
 PATH=$PATH:$GOPATH/bin
 
