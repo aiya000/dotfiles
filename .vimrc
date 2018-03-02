@@ -67,9 +67,9 @@ let s:sessiondir = s:backupdir . '/session'
 " }}}
 
 
-"-----------------"
-" Startup scripts "
-"-----------------"
+"---------"
+" Startup "
+"---------"
 " Set encodings {{{
 
 " Set default file encoding
@@ -707,7 +707,6 @@ set path=.,,./** shellslash matchpairs+=<:>
 set browsedir=buffer spelllang=en_US,cjk suffixes=
 set hidden
 
-
 if !has('nvim')
     set termkey=<C-z>
 endif
@@ -1144,6 +1143,7 @@ augroup KeyMapping
 
     " gina.vim (and .vim/plugin/vimrc.vim)
     autocmd User MyVimRc nnoremap <silent> <leader>gs :<C-u>GStatus<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader>gS :<C-u>GitShowViewer<CR>
     autocmd User MyVimRc nnoremap <silent> <leader>gc :<C-u>GCommit<CR>
     autocmd User MyVimRc nnoremap <silent> <leader>gC :<C-u>GCAM<CR>
     autocmd User MyVimRc nnoremap <silent> <leader>ga :<C-u>GAP<CR>
@@ -1339,9 +1339,9 @@ augroup END
 " }}}
 
 
-"------------------"
-" Final proceduces "
-"------------------"
+"---------"
+" Finally "
+"---------"
 " {{{
 
 " Generate the help tags
