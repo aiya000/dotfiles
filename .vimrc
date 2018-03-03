@@ -738,7 +738,7 @@ augroup HighlightPref
     autocmd ColorScheme * highlight VertSplit    cterm=NONE      ctermfg=Cyan  ctermbg=Blue
     autocmd ColorScheme * highlight StatusLine                   ctermfg=Cyan  ctermbg=Black
     autocmd ColorScheme * highlight StatusLineNC                 ctermfg=Blue
-    autocmd ColorScheme * highlight LineNr                       ctermfg=Blue
+    autocmd ColorScheme * highlight LineNr                       ctermfg=Gray
     "autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 
     " StatusLine specified highlight
