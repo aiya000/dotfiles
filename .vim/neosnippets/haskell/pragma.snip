@@ -1,0 +1,289 @@
+snippet hlint_ignore
+abbr {-# ANN __ "HLint: ignore __" #-}
+    {-# ANN ${1:funcName} "HLint: ignore ${2:cause}" #-}
+
+snippet options_ghc
+alias pragma_options_ghc
+abbr    {-# OPTIONS_GHC ... #-}
+options head
+    {-# OPTIONS_GHC ${1} #-}
+
+snippet pragma_language
+abbr    {-# LANGUAGE __ #-}
+options head
+    {-# LANGUAGE ${1} #-}
+
+snippet pragma_language_template_haskell
+abbr    {-# LANGUAGE TemplateHaskell #-}
+options head
+    {-# LANGUAGE TemplateHaskell #-}
+
+snippet pragma_language_derive_typeable
+abbr    {-# LANGUAGE DeriveDataTypeable #-}
+options head
+    {-# LANGUAGE DeriveDataTypeable #-}
+
+snippet pragma_language_overloaded_strings
+abbr    {-# LANGUAGE OverloadedStrings #-}
+options head
+    {-# LANGUAGE OverloadedStrings #-}
+
+snippet pragma_language_exteded_default_rules
+abbr    {-# LANGUAGE ExtendedDefaultRules #-}
+options head
+    {-# LANGUAGE ExtendedDefaultRules #-}
+
+snippet pragma_language_derive_generic
+abbr    {-# LANGUAGE DeriveGeneric #-}
+options head
+    {-# LANGUAGE DeriveGeneric #-}
+
+snippet pragma_language_scoped_type_variables
+abbr    {-# LANGUAGE ScopedTypeVariables #-}
+options head
+    {-# LANGUAGE ScopedTypeVariables #-}
+
+snippet pragma_language_arrows
+abbr    {-# LANGUAGE Arrows #-}
+options head
+    {-# LANGUAGE Arrows #-}
+
+snippet pragma_language_gadts
+abbr    {-# LANGUAGE GADTs #-}
+options head
+    {-# LANGUAGE GADTs #-}
+
+snippet pragma_language_type_families
+abbr    {-# LANGUAGE TypeFamilies #-}
+options head
+    {-# LANGUAGE TypeFamilies #-}
+
+snippet pragma_language_generalized_newtype_deriving
+abbr    {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+options head
+    {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+
+snippet pragma_language_functional_dependencies
+abbr    {-# LANGUAGE FunctionalDependencies #-}
+options head
+    {-# LANGUAGE FunctionalDependencies #-}
+
+snippet pragma_language_multi_param_type_classes
+abbr    {-# LANGUAGE MultiParamTypeClasses #-}
+options head
+    {-# LANGUAGE MultiParamTypeClasses #-}
+
+snippet pragma_language_flexible_contexts
+abbr    {-# LANGUAGE FlexibleContexts #-}
+options head
+    {-# LANGUAGE FlexibleContexts #-}
+
+snippet pragma_language_existential_quantification
+abbr    {-# LANGUAGE ExistentialQuantification #-}
+options head
+    {-# LANGUAGE ExistentialQuantification #-}
+
+snippet pragma_language_type_operators
+abbr    {-# LANGUAGE TypeOperators #-}
+options head
+    {-# LANGUAGE TypeOperators #-}
+
+snippet pragma_language_recursive_do
+abbr    {-# LANGUAGE RecursiveDo #-}
+options head
+    {-# LANGUAGE RecursiveDo #-}
+
+snippet pragma_language_flexible_instances
+abbr    {-# LANGUAGE FlexibleInstances #-}
+options head
+    {-# LANGUAGE FlexibleInstances #-}
+
+snippet pragma_language_data_kinds
+abbr    {-# LANGUAGE DataKinds #-}
+options head
+    {-# LANGUAGE DataKinds #-}
+
+snippet pragma_language_lambda_case
+abbr    {-# LANGUAGE LambdaCase #-}
+options head
+    {-# LANGUAGE LambdaCase #-}
+
+snippet pragma_language_type_synonym_instances
+abbr    {-# LANGUAGE TypeSynonymInstances #-}
+options head
+    {-# LANGUAGE TypeSynonymInstances #-}
+
+snippet pragma_language_rank_2_types
+abbr    {-# LANGUAGE Rank2Types #-}
+options head
+    {-# LANGUAGE Rank2Types #-}
+
+snippet pragma_language_rank_n_types
+abbr    {-# LANGUAGE RankNTypes #-}
+options head
+    {-# LANGUAGE RankNTypes #-}
+
+snippet pragma_language_overloaded_lists
+abbr    {-# LANGUAGE OverloadedLists #-}
+options head
+    {-# LANGUAGE OverloadedLists #-}
+
+snippet pragma_language_multi_way_if
+abbr    {-# LANGUAGE MultiWayIf #-}
+options head
+    {-# LANGUAGE MultiWayIf #-}
+
+snippet pragma_language_standalone_deriving
+abbr    {-# LANGUAGE StandaloneDeriving #-}
+options head
+    {-# LANGUAGE StandaloneDeriving #-}
+
+snippet pragma_language_undecidable_instances
+abbr    {-# LANGUAGE UndecidableInstances #-}
+options head
+    {-# LANGUAGE UndecidableInstances #-}
+
+snippet pragma_language_default_signatures
+abbr    {-# LANGUAGE DefaultSignatures #-}
+options head
+    {-# LANGUAGE DefaultSignatures #-}
+
+snippet pragma_language_pattern_synonyms
+abbr    {-# LANGUAGE PatternSynonyms #-}
+options head
+    {-# LANGUAGE PatternSynonyms #-}
+
+snippet pragma_language_record_wild_cards
+abbr    {-# LANGUAGE RecordWildCards #-}
+options head
+    {-# LANGUAGE RecordWildCards #-}
+
+snippet pragma_language_kind_signatures
+abbr    {-# LANGUAGE KindSignatures #-}
+options head
+    {-# LANGUAGE KindSignatures #-}
+
+snippet pragma_language_pattern_guards
+abbr    {-# LANGUAGE PatternGuards #-}
+options head
+    {-# LANGUAGE PatternGuards #-}
+
+snippet pragma_language_poly_kinds
+abbr    {-# LANGUAGE PolyKinds #-}
+options head
+    {-# LANGUAGE PolyKinds #-}
+
+snippet pragma_language_type_in_type
+abbr    {-# LANGUAGE TypeInType #-}
+options head
+    {-# LANGUAGE TypeInType #-}
+
+snippet pragma_language_instance_sigs
+abbr    {-# LANGUAGE InstanceSigs #-}
+options head
+    {-# LANGUAGE InstanceSigs #-}
+
+snippet pragma_language_quasi_quotes
+abbr    {-# LANGUAGE QuasiQuotes #-}
+options head
+    {-# LANGUAGE QuasiQuotes #-}
+
+snippet pragma_language_overlapping_instances
+abbr    {-# LANGUAGE OverlappingInstances #-}
+options head
+    {-# LANGUAGE OverlappingInstances #-}
+
+snippet pragma_language_incoherent_instances
+abbr    {-# LANGUAGE IncoherentInstances #-}
+options head
+    {-# LANGUAGE IncoherentInstances #-}
+
+snippet pragma_language_view_patterns
+abbr    {-# LANGUAGE ViewPatterns #-}
+options head
+    {-# LANGUAGE ViewPatterns #-}
+
+snippet pragma_language_tuple_sections
+abbr    {-# LANGUAGE TupleSections #-}
+options head
+    {-# LANGUAGE TupleSections #-}
+
+snippet pragma_language_liberal_type_synonyms
+abbr    {-# LANGUAGE LiberalTypeSynonyms #-}
+options head
+    {-# LANGUAGE LiberalTypeSynonyms #-}
+
+snippet pragma_language_overloaded_labels
+abbr    {-# LANGUAGE OverloadedLabels #-}
+options head
+    {-# LANGUAGE OverloadedLabels #-}
+
+snippet pragma_language_type_applications
+abbr    {-# LANGUAGE TypeApplications #-}
+options head
+    {-# LANGUAGE TypeApplications #-}
+
+snippet pragma_language_duplicate_record_fields
+abbr    {-# LANGUAGE DuplicateRecordFields #-}
+options head
+    {-# LANGUAGE DuplicateRecordFields #-}
+
+snippet pragma_language_constraint_kinds
+abbr    {-# LANGUAGE ConstraintKinds #-}
+options head
+    {-# LANGUAGE ConstraintKinds #-}
+
+snippet pragma_language_magic_hash
+abbr {-# LANGUAGE MagicHash #-}
+options head
+    {-# LANGUAGE MagicHash #-}
+
+snippet pragma_language_explicit_namespaces
+abbr {-# LANGUAGE ExplicitNamespaces #-}
+options head
+    {-# LANGUAGE ExplicitNamespaces #-}
+
+snippet pragma_language_partial_type_signatures
+abbr {-# LANGUAGE PartialTypeSignatures #-}
+options head
+    {-# LANGUAGE PartialTypeSignatures #-}
+
+snippet pragma_language_no_implicit_prelude
+abbr {-# LANGUAGE NoImplicitPrelude #-}
+options head
+    {-# LANGUAGE NoImplicitPrelude #-}
+
+snippet pragma_language_rebidable_syntax
+abbr {-# LANGUAGE RebindableSyntax #-}
+options head
+    {-# LANGUAGE RebindableSyntax #-}
+
+snippet pragma_language_constrained_class_methods
+abbr {-# LANGUAGE ConstrainedClassMethods #-}
+options head
+    {-# LANGUAGE ConstrainedClassMethods #-}
+
+snippet pragma_language_impredicative_polymorphism
+abbr {-# LANGUAGE ImpredicativeTypes #-}
+options head
+    {-# LANGUAGE ImpredicativeTypes #-}
+
+snippet pragma_language_named_field_puns
+abbr {-# LANGUAGE NamedFieldPuns #-}
+options head
+    {-# LANGUAGE NamedFieldPuns #-}
+
+snippet pragma_language_derive_any_class
+abbr {-# LANGUAGE DeriveAnyClass #-}
+options head
+    {-# LANGUAGE DeriveAnyClass #-}
+
+snippet pragma_language_strict
+abbr {-# LANGUAGE Strict #-}
+options head
+    {-# LANGUAGE Strict #-}
+
+snippet pragma_language_strict_data
+abbr {-# LANGUAGE StrictData #-}
+options head
+    {-# LANGUAGE StrictData #-}
