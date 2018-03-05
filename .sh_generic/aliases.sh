@@ -87,7 +87,7 @@ if i_have git ; then
     alias gsma='git submodule add'
     alias gsmd='git submodule deinit'
     alias gsmu='git submodule update'
-    alias gsmui='git submodule update --init'
+    alias gsmuir='git submodule update --init --recursive'
     alias gcherry-p='git cherry-pick'
     alias gclean='git clean -f'
     alias gpush='git push'
@@ -99,9 +99,10 @@ if i_have git ; then
     alias gtag='git tag | xargs echo'
     alias g-devine-buster='git clean -fd'
     alias gf='git fetch'
-    alias gre='git return'         # These subcommands are defined in .gitconfig
-    alias gtree='git tree'         #
-    alias gtree-all='git tree-all' #
+    alias gbi='git bisect'
+    alias gre='git reset --hard HEAD'
+    alias gtree='git log --graph --decorate --oneline'
+    alias gtree-all='git log --graph --decorate --oneline --all'
     unset git_taking_limit
 
     # Set casual user.name and user.email at local
