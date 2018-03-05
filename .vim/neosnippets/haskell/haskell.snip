@@ -37,6 +37,20 @@ snippet liquid_refinement_type
 abbr {-@ __ :: __ @-}
     {-@ ${1:funcName} :: ${2} @-}
 
+snippet unboxed_sums_type
+abbr (# {a-type} | {a-type} #)
+    (# ${1:X} | ${2:Y} #)
+
+snippet unboxed_sums_pattern_first
+alias unboxed_sums_expression_first
+abbr #( {an-expression} | #)
+    #( ${0} | #)
+
+snippet unboxed_sums_pattern_second
+alias unboxed_sums_expression_second
+abbr #( | {an-expression} #)
+    #( | ${0} #)
+
 snippet doctest_block
 abbr >>> :{\n__\n-- >>> :}
     >>> :{
