@@ -51,6 +51,18 @@ abbr finally {}
         ${0}
     }
 
+snippet namespace
+abbr namespace {foo::bar} {}
+    namespace ${1:foo::bar} {
+        ${0}
+    }
+
+snippet namespace_anonymous
+abbr namespace {}
+    namespace {
+        ${0}
+    }
+
 # Macros
 
 snippet include_library
@@ -83,3 +95,13 @@ options indent
     char* typeName = abi::__cxa_demangle(typeid(${1:#:var}).name(), 0, 0, nullptr);
     ${0}
     std::free(typeName);
+
+snippet catch_std_exception
+abbr catch (const std::exception& e) {}
+    catch (const std::exception& e) {
+        ${0}
+    }
+
+snippet get_type_of_exception_ptr
+alias exception_ptr_type
+    std::cout << (${1:p} ? $1.__cxa_exception_type()->name() : "null") << std::endl;
