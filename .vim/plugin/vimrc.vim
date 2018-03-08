@@ -48,7 +48,7 @@ command! -bar DeinRecacheRuntimepath call dein#recache_runtimepath()
 " REPLs
 command! -bar -nargs=? Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 'stay', 'stack exec ghci ' . <q-args>)
 "NOTE: 'e' suffix means 'environment of the project' :D
-command! -bar Ghcie call vimrc#open_terminal_as('term-stack-ghci', 'stay', 'stack ghci')
+command! -bar -nargs=? Ghcie call vimrc#open_terminal_as('term-stack-ghci', 'stay', 'stack ghci ' . <q-args>)
 command! -bar -nargs=? IdrisRepl call vimrc#open_terminal_as('term-idris', 'stay', 'idris ' . <q-args>)
 command! -bar CLisp call vimrc#open_terminal_as('none', 'stay', 'clisp')
 command! -bar LeinRepl call vimrc#open_terminal_as('none', 'stay', 'lein repl')
