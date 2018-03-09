@@ -684,6 +684,11 @@ augroup END
 let g:idris_vim_enable_keymappings_by_default = v:false
 
 " }}}
+" --- vim-textobj-clang --- {{{
+
+let g:textobj_clang_more_mappings = 1
+
+" }}}
 
 call dein#end()
 
