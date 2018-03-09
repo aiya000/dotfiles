@@ -245,3 +245,13 @@ on_cmd = [
     'WandboxOptionListAsync',
     'WandboxSync',
 ]
+
+[[plugins]]
+repo  = 'libclang-vim/libclang-vim'
+build = 'make'
+on_ft = ['c', 'cpp']
+
+[[plugins]]
+repo    = 'libclang-vim/vim-textobj-clang'
+depends = 'libclang-vim'
+on_ft   = ['c', 'cpp']

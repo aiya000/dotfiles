@@ -29,6 +29,7 @@ install_general_stuff:
 	yaourt -S --noconfirm z3  # Needed by liquidhaskell
 	git clone https://github.com/jszakmeister/markdown2ctags ~/git/markdown2ctags
 	ln -s ~/git/markdown2ctags/markdown2ctags.py ~/bin
+	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit  # Needed
 
 install_with_stack:
 	git clone --recursive https://github.com/ucsd-progsys/liquidhaskell ~/git/liquidhaskell
