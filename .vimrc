@@ -1155,6 +1155,7 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <silent> <leader>gl :<C-u>GLog<CR>
     autocmd User MyVimRc nnoremap <silent> <leader>gL :<C-u>GLP<CR>
     autocmd User MyVimRc nnoremap <silent> <leader>gd :<C-u>GDiff<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader>gb :<C-u>GBA<CR>
 augroup END
 
 " }}}
@@ -1201,6 +1202,7 @@ augroup KeyMapping
         \ 'aref_web',
         \ 'quickrun',
         \ 'gina-status',
+        \ 'gina-branch',
         \ 'gitlogviewer',
         \ 'gitdiffviewer',
         \ 'gitshowviewer',

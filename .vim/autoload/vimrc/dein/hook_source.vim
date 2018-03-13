@@ -8,4 +8,6 @@ function! vimrc#dein#hook_source#gina() abort
 
     call gina#custom#mapping#nmap('commit' , 'ZZ'    , ':<C-u>wq<CR>' , {'noremap': 1   , 'silent': 1}) " Avoid to don't commit
     call gina#custom#mapping#nmap('commit' , '<C-j>' , '<C-o><Esc>'   , {'noremap': 1})
+
+    call gina#custom#mapping#nmap('branch' , 'Q' , ':<C-u>bdelete!<CR>' , {'noremap': 1 , 'silent': 1})
 endfunction
