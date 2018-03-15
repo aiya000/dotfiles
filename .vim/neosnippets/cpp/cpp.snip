@@ -63,6 +63,18 @@ abbr namespace {}
         ${0}
     }
 
+snippet class
+abbr class {class-name} {};
+    class ${1:Name} {
+        ${0}
+    };
+
+snippet struct
+abbr struct {struct-name} {};
+    struct ${1:Name} {
+        ${0}
+    };
+
 # Macros
 
 snippet include_library
