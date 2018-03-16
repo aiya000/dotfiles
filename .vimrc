@@ -1156,6 +1156,8 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <silent> <leader>gL :<C-u>GLP<CR>
     autocmd User MyVimRc nnoremap <silent> <leader>gd :<C-u>GDiff<CR>
     autocmd User MyVimRc nnoremap <silent> <leader>gb :<C-u>GBA<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader>gt :<C-u>GTree<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader>gT :<C-u>GTreeAll<CR>
 augroup END
 
 " }}}
