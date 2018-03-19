@@ -1197,21 +1197,22 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <silent> <leader>B         :<C-u>sp ~/.backup/vim-memo.md<CR>
     autocmd User MyVimRc nnoremap <silent> <leader><leader>q :<C-u>call vimrc#keys#bufclose_filetype(<C-r>=string(g:vimrc.auto_closing_filetypes)<CR>)<CR>
     autocmd User MyVimRc let g:vimrc.auto_closing_filetypes = [
+        \ 'aref_web',
+        \ 'diff',
+        \ 'gina-branch',
+        \ 'gina-log',
+        \ 'gina-status',
+        \ 'gitdiffviewer',
+        \ 'gitlogviewer',
+        \ 'gitreflogviewer',
+        \ 'gitshowviewer',
         \ 'help',
         \ 'man',
-        \ 'qf',
-        \ 'scratch',
-        \ 'aref_web',
-        \ 'quickrun',
-        \ 'gina-status',
-        \ 'gina-branch',
-        \ 'gitlogviewer',
-        \ 'gitdiffviewer',
-        \ 'gitshowviewer',
-        \ 'gitreflogviewer',
         \ 'netrw',
+        \ 'qf',
+        \ 'quickrun',
+        \ 'scratch',
         \ 'tasklist',
-        \ 'diff',
     \]
 
     autocmd User MyVimRc nnoremap <silent> <C-k><C-r>     :<C-u>Reload<CR>

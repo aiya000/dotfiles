@@ -66,6 +66,6 @@ command! -bar -nargs=* GDH GitDiffViewer HEAD~ <args>
 command! -bar -nargs=* GCommit Gina commit --verbose <args>
 command! -bar -nargs=* GCAM Gina commit --verbose --amend <args>
 command! -bar -nargs=* GAP terminal git add -p <args>
-command! -bar -nargs=* GTree GitLogViewer --graph --decorate --oneline <args>
+command! -bar -nargs=* GTree Gina log --graph --decorate --oneline <args>
 command! -bar -nargs=* GTreeAll GTree --all <args>
 command! -bar -nargs=* GBA Gina branch --all <args>
