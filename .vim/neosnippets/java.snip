@@ -1,4 +1,4 @@
-# Syntax
+# Syntaxes
 
 snippet method
 abbr    void method() {}
@@ -6,24 +6,23 @@ abbr    void method() {}
         ${0:TARGET}
     }
 
-snippet try_finally
-alias   try_f
-abbr    try {} finally {}
+snippet try
+abbr try {}
     try {
-        ${0:TARGET}
-    } finally {
-        ${1}
+        ${0}
     }
 
-snippet try_catch_finally
-alias   try_cf
-abbr    try {} catch () {} finally {}
-    try {
-        ${0:TARGET}
-    } catch (${1:#:Exception} ${2:#:e}) {
-        ${3}
-    } finally {
-        ${4}
+snippet catch
+abbr catch ({exception}) {}
+options indent
+    catch (${1:exception}) {
+        ${0}
+    }
+
+snippet finally
+abbr finally {}
+    finally {
+        ${0}
     }
 
 snippet try_with_resource
@@ -46,22 +45,20 @@ options indent
         ${0:TARGET}
     }
 
-snippet for
-abbr    for ({var}; {cond}; {effect}) {}
-options indent
-    for (${1:var}; ${2:condition}; ${3:effect}) {
-        ${0:TARGET}
-    }
-
-snippet foreach
-alias   fore
-options indent
+snippet for_each
+alias   for
 abbr    for ({type} {x} : {xs}) {}
     for (${1:type} ${2:x} : ${3:xs}) {
         ${0:TARGET}
     }
 
-# Alias
+snippet for_with_index
+abbr    for ({var}; {cond}; {effect}) {}
+    for (${1:var}; ${2:condition}; ${3:effect}) {
+        ${0:TARGET}
+    }
+
+# Aliases
 
 snippet println
 abbr System.out.println(__);
@@ -69,7 +66,7 @@ abbr System.out.println(__);
 
 snippet main
 abbr    public static void main(String[] args) {}
-options head indent
+options head
     public static void main(String[] args) {
         ${0:TARGET}
     }
