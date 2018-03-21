@@ -6,6 +6,7 @@ function! vimrc#set#tabline_as_statusline() abort " {{{
     return '%1*[PWD=%{getcwd()}]%*'
         \. '%2*%{vimrc#set#tabline_tags_if_present()}%*'
         \. '%3*%{vimrc#set#tabline_marks_if_present()}%*'
+        \. "%4*%{'[' . tabpagenr('$') . ']'}%*"
 endfunction " }}}
 
 function! vimrc#set#tabline_tags_if_present() abort " {{{
