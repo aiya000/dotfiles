@@ -586,14 +586,14 @@ let g:aref_web_source = {
 \        'url': 'https://ejje.weblio.jp/content/%s'
 \    },
 \    'stackage': {
-\        'url': 'https://www.stackage.org/lts-9.2/hoogle?q=%s&page=1'
+\        'url': 'https://www.stackage.org/lts-10.9/hoogle?q=%s&page=1'
 \    },
 \    'hoogle': {
 \        'url': 'https://www.haskell.org/hoogle/?hoogle=%s'
 \    },
 \    'shellcheck': {
 \        'url': 'https://github.com/koalaman/shellcheck/wiki/%s'
-\    }
+\    },
 \}
 
 let g:aref_web_split_vertically = v:true
