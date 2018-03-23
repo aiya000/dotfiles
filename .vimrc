@@ -1146,6 +1146,19 @@ augroup KeyMapping
     " ale
     autocmd User MyVimRc nnoremap <silent> <C-k><C-a> :<C-u>ALEToggle<CR>
 
+    " incsearch.vim
+    autocmd User MyVimRc nmap g/ <Plug>(incsearch-stay)
+    autocmd User MyVimRc IncSearchNoreMap <C-j> <CR>
+    autocmd User MyVimRc IncSearchNoreMap <C-b> <Left>
+    autocmd User MyVimRc IncSearchNoreMap <C-f> <Right>
+    autocmd User MyVimRc IncSearchNoreMap <C-a> <Home>
+    autocmd User MyVimRc IncSearchNoreMap <C-h> <BS>
+    autocmd User MyVimRc IncSearchNoreMap <C-d> <Del>
+    autocmd User MyVimRc IncSearchNoreMap <C-e> <End>
+    autocmd User MyVimRc IncSearchNoreMap <C-l> <C-c>
+    autocmd User MyVimRc IncSearchNoreMap <C-o> <Up>
+    autocmd User MyVimRc IncSearchNoreMap <C-y> <Down>
+
     " gina.vim (and .vim/plugin/vimrc.vim)
     autocmd User MyVimRc nnoremap <silent> <leader>gs :<C-u>GStatus<CR>
     autocmd User MyVimRc nnoremap <silent> <leader>gS :<C-u>GitShowViewer<CR>

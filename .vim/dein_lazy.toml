@@ -255,3 +255,19 @@ on_ft = ['c', 'cpp']
 repo    = 'libclang-vim/vim-textobj-clang'
 depends = 'libclang-vim'
 on_ft   = ['c', 'cpp']
+
+[[plugins]]
+repo   = 'haya14busa/incsearch.vim'
+on_map = [
+    '<Plug>(incsearch-forward)',
+    '<Plug>(incsearch-backward)',
+    '<Plug>(incsearch-stay)',
+    '<Plug>(incsearch-nohl)',
+    '<Plug>(incsearch-nohl0)',
+    '<Plug>(incsearch-nohl-n)',
+    '<Plug>(incsearch-nohl-N)',
+    '<Plug>(incsearch-nohl-*)',
+    '<Plug>(incsearch-nohl-#)',
+    '<Plug>(incsearch-nohl-g*)',
+    '<Plug>(incsearch-nohl-g#)',
+]
