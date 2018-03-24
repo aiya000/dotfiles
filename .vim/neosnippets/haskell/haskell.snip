@@ -33,9 +33,14 @@ abbr -- {output}\n-- {__}
     -- {output}
     -- ${0}
 
-snippet liquid_refinement_type
-abbr {-@ __ :: __ @-}
+snippet liquid_refinement_type_func
+alias liquid_refinement_type
+abbr {-@ {function} :: {type} @-}
     {-@ ${1:funcName} :: ${2} @-}
+
+snippet liquid_refinement_type_type
+abbr {-@ type {type-name} = {type} @-}
+    {-@ type ${1:typeName} = ${2} @-}
 
 snippet unboxed_sums_type
 abbr (# {a-type} | {a-type} #)
@@ -76,6 +81,11 @@ snippet quasi_quote_s
 alias qs s
 abbr [s|{stuff}|]
     [s|${0}|]
+
+snippet here_string_interpolation
+alias interp
+abbr ${{an-expression}}
+    ${${1:expr}}${0}
 
 snippet expand_debug_modules
 alias unsafe_debug debug_unsafe
