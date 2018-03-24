@@ -21,16 +21,16 @@ nnoremap <buffer><silent> <localleader><localleader><localleader>b :<C-u>echo 'e
 nnoremap <buffer><silent> <localleader><localleader><localleader>B :<C-u>call vimrc#open_terminal_as('none', 'horizontal', 'etlas build')<CR>
 
 function! s:stack_integrate_test_or_unit_or_both() abort
-    echon join("a: do tasty-test (default)",
-        \      "b: do doctest",
-        \      "b: do liquid-prove",
-        \      "c: both",
-        \      "\n")
+    echon join(["a: do tasty-test (default)",
+        \       "b: do doctest",
+        \       "c: do liquid-haskell",
+        \       "d: all",
+        \       ], "\n")
     let answer = getchar()
     let target = answer is char2nr('a') ? ':tasty-test'
     \          : answer is char2nr('b') ? ':doctest'
-    \          : answer is char2nr('c') ? ''
-    \          : answer is char2nr('c') ? ''
+    \          : answer is char2nr('c') ? 'liquid-haskell'
+    \          : answer is char2nr('d') ? ''
     \                                   : ':tasty-test'
     call vimrc#open_terminal_as('stack_test', 'horizontal', 'stack test ' . target)
 endfunction
