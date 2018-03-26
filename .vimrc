@@ -925,8 +925,13 @@ CmdCnoreabbr Gist Gista post --stay
 "--------------------"
 " Define keymappings "
 "--------------------"
-" Global {{{
+" Virtual {{{
 
+augroup KeyMapping
+    autocmd User MyVimRc cnoremap [Left] <Left>
+augroup END
+
+" }}}
 " Disabling {{{
 
 augroup KeyMapping
@@ -934,10 +939,8 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <C-c>      <NOP>
     autocmd User MyVimRc nnoremap <C-c><C-c> <C-c>
 
-    " Cancel <C-w>foo
     autocmd User MyVimRc nnoremap <C-w><C-l> <NOP>
-
-    autocmd User MyVimRc cnoremap [Left] <Left>
+    autocmd User MyVimRc nnoremap <C-w><C-o> <NOP>
 augroup END
 
 " }}}
