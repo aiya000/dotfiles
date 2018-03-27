@@ -747,9 +747,9 @@ augroup HighlightPref
     "autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 
     " StatusLine specified highlight
-    autocmd ColorScheme * highlight User1 cterm=standout ctermfg=Red        ctermbg=Black
-    autocmd ColorScheme * highlight User2 cterm=standout ctermfg=DarkYellow ctermbg=Black
-    autocmd ColorScheme * highlight User3 cterm=standout ctermfg=Yellow     ctermbg=Black
+    autocmd ColorScheme * highlight User1 cterm=standout ctermfg=Green      ctermbg=Black
+    autocmd ColorScheme * highlight User2 cterm=standout ctermfg=Yellow     ctermbg=Black
+    autocmd ColorScheme * highlight User3 cterm=standout ctermfg=DarkYellow ctermbg=Black
     autocmd ColorScheme * highlight User4 cterm=standout ctermfg=Gray       ctermbg=Black
 augroup END
 
