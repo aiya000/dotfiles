@@ -725,6 +725,7 @@ let &statusline = '%1*[%F(%n)]%*'
     \           . '[Enc=%{&encoding}]'
     \           . '%3*%m%*'
     \           . '%4*%r%*'
+    \           . '%5*%{get(g:, "ale_enabled", 0) ? "[ale]" : ""}%*'
 
 " ☆
 set ambiwidth=double
@@ -751,6 +752,7 @@ augroup HighlightPref
     autocmd ColorScheme * highlight User2 cterm=standout ctermfg=Yellow     ctermbg=Black
     autocmd ColorScheme * highlight User3 cterm=standout ctermfg=DarkYellow ctermbg=Black
     autocmd ColorScheme * highlight User4 cterm=standout ctermfg=Gray       ctermbg=Black
+    autocmd ColorScheme * highlight User5 cterm=standout ctermfg=Black      ctermbg=White
 augroup END
 
 augroup HighlightPref
@@ -1148,6 +1150,8 @@ augroup KeyMapping
 
     " ale
     autocmd User MyVimRc nnoremap <silent> <C-k><C-a> :<C-u>ALEToggle<CR>
+    autocmd User MyVimRc nnoremap <silent> g{ :<C-u>ALEPrevious<CR>
+    autocmd User MyVimRc nnoremap <silent> g} :<C-u>ALENext<CR>
 
     " incsearch.vim
     autocmd User MyVimRc nmap g/ <Plug>(incsearch-stay)
