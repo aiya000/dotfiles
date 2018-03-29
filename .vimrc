@@ -725,7 +725,6 @@ let &statusline = '%1*[%F(%n)]%*'
     \           . '[Enc=%{&encoding}]'
     \           . '%3*%m%*'
     \           . '%4*%r%*'
-    \           . '%5*%{get(g:, "ale_enabled", 0) ? "[ale]" : ""}%*'
 
 " ☆
 set ambiwidth=double
@@ -748,11 +747,11 @@ augroup HighlightPref
     "autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
 
     " StatusLine specified highlight
-    autocmd ColorScheme * highlight User1 cterm=standout ctermfg=Green      ctermbg=Black
-    autocmd ColorScheme * highlight User2 cterm=standout ctermfg=Yellow     ctermbg=Black
-    autocmd ColorScheme * highlight User3 cterm=standout ctermfg=White      ctermbg=Black
-    autocmd ColorScheme * highlight User4 cterm=standout ctermfg=DarkYellow ctermbg=Black
-    autocmd ColorScheme * highlight User5 cterm=standout ctermfg=Black      ctermbg=White
+    autocmd ColorScheme * highlight User1 cterm=standout ctermfg=Green  ctermbg=Black
+    autocmd ColorScheme * highlight User2 cterm=standout ctermfg=Yellow ctermbg=Black
+    autocmd ColorScheme * highlight User3 cterm=standout ctermfg=White  ctermbg=Black
+    autocmd ColorScheme * highlight User4 cterm=standout ctermfg=Gray   ctermbg=Black
+    autocmd ColorScheme * highlight User5 cterm=standout ctermfg=Black  ctermbg=White
 augroup END
 
 augroup HighlightPref

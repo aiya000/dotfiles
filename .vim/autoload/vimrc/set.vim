@@ -5,11 +5,13 @@
 function! vimrc#set#tabline_as_statusline() abort " {{{
     return '%1*[PWD=%{getcwd()}]%*'
         \. '%2*%{vimrc#set#tabline_tags_if_present()}%*'
-        \. '%3*%{vimrc#set#tabline_marks_if_present()}%*'
-        \. "%4*%{'[' . tabpagenr('$') . ']'}%*"
+        \. "%3*%{'[' . tabpagenr('$') . ']'}%*"
+        \. '%4*%{vimrc#set#tabline_marks_if_present()}%*'
+        \. '%5*%{get(g:, "ale_enabled", 0) ? "[ale]" : ""}%*'
 endfunction " }}}
 
 function! vimrc#set#tabline_tags_if_present() abort " {{{
+
     let tags = tagfiles()
     return empty(tags)    ? ''
         \: len(tags) is 1 ? ('[Tag=' . tags[0] . ']')
