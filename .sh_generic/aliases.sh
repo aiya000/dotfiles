@@ -24,7 +24,7 @@ alias_of hoe='stack exec --silent -- hoe'
 # }}}
 # Load ./aliases/** {{{
 
-for script in $(ls ~/.sh_generic/aliases/functions/*.sh) ; do
+for script in ~/.sh_generic/aliases/functions/*.sh ; do
     source "$script"
 done
 source ~/.sh_generic/aliases/vim.sh
@@ -77,7 +77,9 @@ if i_have git ; then
     alias gss='git stash'
     alias gsss='git stash save'
     alias gssp='git stash pop'
-    alias gsssp='git stash save ${1} -p'
+    function gsssp () {
+        git stash save "$1" -p
+    }
     alias gssa='git stash apply'
     alias gssd='git stash drop'
     alias gssl='git stash list | xargs -I {} echo {}'
@@ -164,7 +166,6 @@ i_have idris && \
 # }}}
 # Others {{{
 
-i_have docker && alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
 i_have rsync && alias cp-with-progress='rsync --partial --progress'
 i_have watch && alias wifi-hardware-check='watch -n1 rfkill list all'
 i_have ctags && alias ctags-casual='ctags --tag-relative=yes --recurse --sort=yes -f'
@@ -213,6 +214,12 @@ fi
 
 if i_have idris ; then
     alias runidris=run-idris
+fi
+
+if i_have docker ; then
+    alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
+    alias dps='docker ps'
+    alias da=docker-attach-menu.sh
 fi
 
 # ---
