@@ -220,6 +220,7 @@ if i_have docker ; then
     alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
     alias dps='docker ps'
     alias da=docker-attach-menu.sh
+    alias dkill='docker kill'
 fi
 
 # ---
