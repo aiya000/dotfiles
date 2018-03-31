@@ -17,6 +17,7 @@
 import Control.Applicative
 import Control.Lens
 import Control.Monad
+import Data.ByteString (ByteString)
 import Data.Char
 import Data.Data
 import Data.List
@@ -28,9 +29,6 @@ import GHC.Prim
 import Language.Haskell.TH
 import System.Random
 import Test.QuickCheck
-import Text.Trifecta.Delta
-import Text.Trifecta.Parser
-import Text.Trifecta.Result
 import Unsafe.Coerce
 import qualified Data.Map.Lazy as M
 import qualified Data.Text as T
@@ -38,3 +36,6 @@ import qualified Data.Text.IO as T
 import qualified Text.Parser.Char as P
 import qualified Text.Parser.Token as P
 import qualified Text.Parser.Token.Highlight as P
+import qualified Text.Trifecta.Delta as P
+import qualified Text.Trifecta.Parser as P
+import qualified Text.Trifecta.Result as P
