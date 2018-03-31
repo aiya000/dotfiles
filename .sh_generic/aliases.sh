@@ -20,6 +20,7 @@ alias du='du -h'
 alias_of sudo='sudo '  # Enable aliases on sudo
 alias_of mysql='mysql --pager="less -r -S -n -i -F -X"'
 alias_of hoe='stack exec --silent -- hoe'
+alias_of hawk='stack exec -- hawk'
 
 # }}}
 # Load ./aliases/** {{{
@@ -78,7 +79,7 @@ if i_have git ; then
     alias gsss='git stash save'
     alias gssp='git stash pop'
     function gsssp () {
-        git stash save "$1" -p
+        git stash push --message "$1" --patch
     }
     alias gssa='git stash apply'
     alias gssd='git stash drop'
@@ -120,6 +121,7 @@ if i_have stack ; then
     function stack-new-default() {
         stack new "$1" simple
     }
+    alias stack-build-profile='stack build --profile'
     alias make-new-package-yaml='cp ~/.dotfiles/Files/package.yaml .'
     alias cabal-sdit='stack exec -- cabal sdist'
     function cabal-upload() {
@@ -195,6 +197,7 @@ alias cdg=cd-git-root
 
 if i_have stack ; then
     alias sb='stack build'
+    alias sbp=stack-build-profile
     alias se='stack exec --'
     alias st='stack test'
     alias si='stack install'
