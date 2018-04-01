@@ -1,12 +1,21 @@
-snippet hlint_ignore
-abbr {-# ANN __ "HLint: ignore __" #-}
-    {-# ANN ${1:funcName} "HLint: ignore ${2:cause}" #-}
-
-snippet options_ghc
-alias pragma_options_ghc
+snippet pragma_options_ghc
+alias options_ghc
 abbr    {-# OPTIONS_GHC ... #-}
 options head
     {-# OPTIONS_GHC ${1} #-}
+
+snippet pragma_ann
+abbr {-# ANN {target} "{detail}" #-}
+    {-# ANN ${1:target} "${2:detail}" #-}
+
+snippet pragma_ann_hlint_ignore
+alias hlint_ignore
+abbr {-# ANN {target} "HLint: ignore {message}" #-}
+    {-# ANN ${1:target} "HLint: ignore ${2:message}" #-}
+
+snippet pragma_ann_hlint_ignore_use_camel_case
+abbr {-# ANN {target} "HLint: ignore {message}" #-}
+    {-# ANN module "HLint: ignore Use camelCase" #-}
 
 snippet pragma_language
 abbr    {-# LANGUAGE __ #-}

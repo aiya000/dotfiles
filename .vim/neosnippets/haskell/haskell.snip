@@ -16,6 +16,14 @@ snippet import_qualified
 abbr    import qualified __ as __
     import qualified ${1} as ${2}
 
+snippet infixl
+abbr infixl {infixity} {operator}
+    infixl ${1:3} ${2:<>}
+
+snippet infixr
+abbr infixr {infixity} {operator}
+    infixr ${1:3} ${2:<>}
+
 # Templates
 
 snippet main
@@ -90,9 +98,21 @@ abbr ${{an-expression}}
 snippet expand_debug_modules
 alias unsafe_debug debug_unsafe
     --TODO: Remove these import
-    import qualified System.IO.Unsafe as Debug
+    import qualified GHC.Stack as Debug
     import qualified Debug.Trace as Debug
+    import qualified System.IO.Unsafe as Debug
     --
-    let target = ${1:value}
-        unsafePrintTarget = Debug.unsafePerformIO $ print target
-    in unsafePrintTarget \`seq\` target
+
+    --TODO: Remove these import
+    unsafePrint :: Show a => a -> ()
+    unsafePrint = Debug.unsafePerformIO $ print target
+
+    --TODO: Remove these import
+    debugNinja :: Show a => a -> a
+    debugNinja x = unsafePrint x \`seq\` x
+
+    --TODO: Remove these import
+    currentFuncName :: IO String
+    currentFuncName = Debug.currentCallStack >>= \xs -> case xs of
+      [] -> error "no callstack is found (do you `stack build --profile`?)"
+      _  -> return . head . words $ xs !! (length xs - 2)
