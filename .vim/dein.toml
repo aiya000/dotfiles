@@ -137,8 +137,6 @@ rev  = 'f5c29185e5b95a22955c26d1a1cb3ac45d7a0fc6'
 repo = 'kana/vim-textobj-jabraces'
 
 [[plugins]]
-repo    = 'prabirshrestha/vim-lsp'
-depends = 'async.vim'
-
-[[plugins]]
-repo = 'prabirshrestha/async.vim'
+repo  = 'autozimu/LanguageClient-neovim'
+rev   = 'next'
+build = 'bash install.sh'

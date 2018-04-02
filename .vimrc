@@ -689,6 +689,13 @@ let g:idris_vim_enable_keymappings_by_default = v:false
 let g:textobj_clang_more_mappings = 1
 
 " }}}
+" --- LanguageClient-neovim --- " {{{
+
+let g:LanguageClient_serverCommands = {
+    \ 'haskell': ['hie', '--lsp'],
+\}
+
+" }}}
 
 call dein#end()
 
@@ -1178,16 +1185,16 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <silent> <leader>gt :<C-u>GTree<CR>
     autocmd User MyVimRc nnoremap <silent> <leader>gT :<C-u>GTreeAll<CR>
 
-    " vim-lsp
+    " LanguageClient-neovim
     autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-g> :<C-u>LspDocumentDiagnostics<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-d> :<C-u>LspDefinition<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-d> :<C-u>call LanguageClient_textDocument_definition()<CR>
     autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-f> :<C-u>LspDocumentFormat<CR>
     autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-r> :<C-u>LspDocumentRangeFormat<CR>
     autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-s> :<C-u>LspDocumentSymbol<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-h> :<C-u>LspHover<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-h> :<C-u>call LanguageClient_textDocument_hover()<CR>
     autocmd User MyVimRc nnoremap <silent> <C-x><C-i> :<C-u>LspImplementation<CR>
     autocmd User MyVimRc nnoremap <silent> <C-x><C-g> :<C-u>LspReferences<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-r> :<C-u>LspRename<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-r> :<C-u>call LanguageClient_textDocument_rename()<CR>
     autocmd User MyVimRc nnoremap <silent> <C-x><C-w> :<C-u>LspWorkspaceSymbol<CR>
 augroup END
 
@@ -1200,7 +1207,7 @@ augroup KeyMapping
     autocmd User MyVimRc nmap <C-j> <CR>
     autocmd User MyVimRc nmap gd    *ggn
 
-    autocmd User MyVimRc nnoremap H      :<C-u>Denite tag<CR>
+    autocmd User MyVimRc nnoremap H      :<C-u>Denite line<CR>
     autocmd User MyVimRc nnoremap M      :<C-u>Denite file_mru<CR>
     autocmd User MyVimRc nnoremap L      :<C-u>Denite buffer<CR>
     autocmd User MyVimRc nnoremap Q      gQ
