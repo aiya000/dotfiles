@@ -30,6 +30,7 @@ command! -bar CssShowDecompressed call vimrc#cmd#decompress_to_buffer()
 command! -bar -nargs=* Vim call vimrc#open_terminal_as('term-vim', 'stay', 'vim ' . <q-args>)
 command! -bar Memo sp ~/vim-memo.md
 command! -bar CdGitRoot execute ':cd' system('git rev-parse --show-toplevel')
+command! -bar -nargs=+ Grep echo {-> [execute('grep ' . <q-args> . ' %', "silent!"), execute('copen')]}()
 
 " Haskell
 command! -bar -nargs=? Snowtify call s:Job.start('snowtify ' . <q-args>)
