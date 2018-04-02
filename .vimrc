@@ -1177,6 +1177,18 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <silent> <leader>gb :<C-u>GBA<CR>
     autocmd User MyVimRc nnoremap <silent> <leader>gt :<C-u>GTree<CR>
     autocmd User MyVimRc nnoremap <silent> <leader>gT :<C-u>GTreeAll<CR>
+
+    " vim-lsp
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-g> :<C-u>LspDocumentDiagnostics<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-d> :<C-u>LspDefinition<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-f> :<C-u>LspDocumentFormat<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-r> :<C-u>LspDocumentRangeFormat<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-s> :<C-u>LspDocumentSymbol<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-h> :<C-u>LspHover<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-i> :<C-u>LspImplementation<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-g> :<C-u>LspReferences<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-r> :<C-u>LspRename<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-w> :<C-u>LspWorkspaceSymbol<CR>
 augroup END
 
 " }}}
