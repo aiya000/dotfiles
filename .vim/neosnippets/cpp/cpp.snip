@@ -71,16 +71,33 @@ abbr namespace {}
     }
 
 snippet class
-abbr class {class-name} {};
+abbr class {name} {};
     class ${1:Name} {
         ${0}
     };
 
 snippet struct
-abbr struct {struct-name} {};
+abbr struct {name} {};
     struct ${1:Name} {
         ${0}
     };
+
+snippet enum
+abbr enum {name} {};
+    enum ${1:Name} {
+        ${0}
+    };
+
+snippet enum_class
+abbr enum class {name} {};
+    enum class ${1:Name} {
+        ${0}
+    };
+
+snippet lambda
+alias lam
+abbr [{captures}]({parameters}){{body}}
+    [${1}](${2}){${0}}
 
 # Macros
 
@@ -105,6 +122,10 @@ snippet println
 abbr std::cout << {something} << std::endl;
     std::cout << ${1:something} << std::endl;
 
+snippet print
+abbr std::cout << {something};
+    std::cout << ${1:something};
+
 # Templates
 
 snippet do_demangle
@@ -124,3 +145,14 @@ abbr catch (const std::exception& e) {}
 snippet get_type_of_exception_ptr
 alias exception_ptr_type
     std::cout << (${1:p} ? $1.__cxa_exception_type()->name() : "null") << std::endl;
+
+snippet do_at_scope_end
+alias finally
+options indent
+    struct ${1:Finally} {
+        std::function<void()> f;
+        $1(std::function<void()> f) : f(f) {}
+        ~$1() {
+            this->f();
+        }
+    };
