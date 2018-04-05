@@ -25,6 +25,7 @@
 " {{{
 "
 " my gina.vim keymappings are existent in .vim/autoload/vimrc/dein/hook_source.vim
+" LanguageClient-neovim is for not only neovim, both vim and neovim
 "
 " }}}
 
@@ -759,6 +760,7 @@ augroup HighlightPref
     autocmd ColorScheme * highlight User3 cterm=standout ctermfg=White  ctermbg=Black
     autocmd ColorScheme * highlight User4 cterm=standout ctermfg=Gray   ctermbg=Black
     autocmd ColorScheme * highlight User5 cterm=standout ctermfg=Black  ctermbg=White
+    autocmd ColorScheme * highlight User6 cterm=standout ctermfg=Black  ctermbg=White
 augroup END
 
 augroup HighlightPref
@@ -1188,14 +1190,14 @@ augroup KeyMapping
     " LanguageClient-neovim
     autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-g> :<C-u>LspDocumentDiagnostics<CR>
     autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-d> :<C-u>call LanguageClient_textDocument_definition()<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-f> :<C-u>LspDocumentFormat<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-r> :<C-u>LspDocumentRangeFormat<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-s> :<C-u>LspDocumentSymbol<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-f> :<C-u>call LanguageClient_textDocument_formatting()<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-r> :<C-u>call LanguageClient_textDocument_rangeFormatting()<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-s> :<C-u>call LanguageClient_textDocument_documentSymbol()<CR>
     autocmd User MyVimRc nnoremap <silent> <C-x><C-h> :<C-u>call LanguageClient_textDocument_hover()<CR>
     autocmd User MyVimRc nnoremap <silent> <C-x><C-i> :<C-u>LspImplementation<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-g> :<C-u>LspReferences<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-g> :<C-u>call LanguageClient_textDocument_references()<CR>
     autocmd User MyVimRc nnoremap <silent> <C-x><C-r> :<C-u>call LanguageClient_textDocument_rename()<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-w> :<C-u>LspWorkspaceSymbol<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-x><C-w> :<C-u>call LanguageClient_workspace_symbol()<CR>
 augroup END
 
 " }}}

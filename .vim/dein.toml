@@ -135,8 +135,3 @@ rev  = 'f5c29185e5b95a22955c26d1a1cb3ac45d7a0fc6'
 
 [[plugins]]
 repo = 'kana/vim-textobj-jabraces'
-
-[[plugins]]
-repo  = 'autozimu/LanguageClient-neovim'
-rev   = 'next'
-build = 'bash install.sh'

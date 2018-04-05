@@ -3,11 +3,16 @@
 " See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer),
 " and below augroup 'HighlightPref'.
 function! vimrc#set#tabline_as_statusline() abort " {{{
+    let language_client_status =
+        \ get(g:vimrc, 'language_client', {'has_started': v:false})['has_started']
+            \ ? '%6*%{LanguageClient_statusLine()}%*'
+            \ : ''
     return '%1*[PWD=%{getcwd()}]%*'
         \. '%2*%{vimrc#set#tabline_tags_if_present()}%*'
         \. "%3*%{'[' . tabpagenr('$') . ']'}%*"
         \. '%4*%{vimrc#set#tabline_marks_if_present()}%*'
         \. '%5*%{get(g:, "ale_enabled", 0) ? "[ale]" : ""}%*'
+        \. language_client_status
 endfunction " }}}
 
 function! vimrc#set#tabline_tags_if_present() abort " {{{
