@@ -71,3 +71,4 @@ command! -bar -nargs=* GAP terminal git add -p <args>
 command! -bar -nargs=* GTree Gina log --graph --decorate --oneline <args>
 command! -bar -nargs=* GTreeAll GTree --all <args>
 command! -bar -nargs=* GBA Gina branch --all <args>
+command! -bar -nargs=* GBlame Gina blame <args>
