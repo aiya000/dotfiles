@@ -665,6 +665,7 @@ call denite#custom#map('insert', '<C-x>', '<denite:do_action:delete>')
 call denite#custom#source('buffer', 'matchers', ['matcher_substring'])
 call denite#custom#source('file_mru', 'matchers', ['matcher_substring'])
 call denite#custom#source('tag', 'matchers', ['matcher_substring'])
+call denite#custom#source('file_rec', 'matchers', ['matcher_substring'])
 
 augroup PluginPrefs
     autocmd BufEnter,BufWinEnter *
@@ -1067,9 +1068,10 @@ augroup KeyMapping
     autocmd User MyVimRc vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
 
     " denite.nvim
-    autocmd User MyVimRc nnoremap          <leader>u         :<C-u>Denite<Space>
-    autocmd User MyVimRc nnoremap <silent> <C-k>h            :<C-u>tcd <C-r>=expand('%:p:h')<CR><CR>:Denite file_rec<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-k><C-f>        :<C-u>Denite outline<CR>
+    autocmd User MyVimRc nnoremap          <leader>u  :<C-u>Denite<Space>
+    autocmd User MyVimRc nnoremap <silent> <C-k><C-h> :<C-u>tcd <C-r>=isdirectory(expand('%:p:h')) ? expand('%:p:h') : execute(':pwd')[1:]<CR><CR>:Denite file_rec<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-k><C-t> :<C-u>Denite tag<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-k><C-f> :<C-u>Denite outline<CR>
 
     " aref-web.vim
     autocmd User MyVimRc nnoremap <leader>K :<C-u>Aref weblio <C-r>=expand('<cword>')<CR><CR>
