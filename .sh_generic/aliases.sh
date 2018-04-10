@@ -21,6 +21,8 @@ alias_of sudo='sudo '  # Enable aliases on sudo
 alias_of mysql='mysql --pager="less -r -S -n -i -F -X"'
 alias_of hoe='stack exec --silent -- hoe'
 alias_of hawk='stack exec -- hawk'
+i_have yaourt && alias yaourt-noconfirm='yaourt --noconfirm'
+i_have say || alias say=espeak
 
 # }}}
 # Load ./aliases/** {{{
@@ -34,7 +36,6 @@ source ~/.sh_generic/aliases/vim.sh
 # Git {{{
 
 if i_have git ; then
-    # Short hands
     git_taking_limit=100
     alias _gr='git reset'
     alias _grh='git reset --hard'
@@ -102,6 +103,7 @@ if i_have git ; then
     alias g-devine-buster='git clean -fd'
     alias gf='git fetch'
     alias gbi='git bisect'
+    alias gt='git tag | xargs echo'
     alias gre='git reset --hard HEAD'
     alias gtree='git log --graph --decorate --oneline'
     alias gtree-all='git log --graph --decorate --oneline --all'
@@ -109,46 +111,73 @@ if i_have git ; then
 
     # Set casual user.name and user.email at local
     alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
-
     alias cd-git-root='cd $(git rev-parse --show-toplevel)'
+    alias cdg=cd-git-root
 fi
 
 # }}}
-# Haskell functions {{{
+# Others {{{
+
+alias la='ls -a --color=auto --group-directories-first'
+alias ll='ls -l --color=auto --group-directories-first'
+alias llh='ls -lh --color=auto --group-directories-first'
+alias lla='ls -la --color=auto --group-directories-first'
+# shellcheck disable=SC2139
+alias e="$EDITOR"
+alias m=mount
+alias um=umount
+alias ei=exit
+alias vt=vterminal
+alias nt=nterminal
+alias cdp=cd-finddir
+alias ki=killing-art
+
+i_have tmux && alias t=tmux && alias ta='tmux attach'
+i_have rsync && alias cp-with-progress='rsync --partial --progress'
+i_have watch && alias wifi-hardware-check='watch -n1 rfkill list all'
+i_have ctags && alias ctags-casual='ctags --tag-relative=yes --recurse --sort=yes -f'
+i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
+i_have unzip && alias unzip-cp932='unzip -O cp932'
+i_have xdg-open && alias x=xdg-open
+i_have hasktags && alias hasktags-casual='hasktags . --ignore-close-implementation --tags-absolute --ctags -f'
 
 if i_have stack ; then
+    alias sb='stack build'
+    alias se='stack exec --'
+    alias st='stack test'
+    alias si='stack install'
+    alias sc='stack clean'
+    alias sbp=stack-build-profile
+
+    alias srunghc='stack runghc --'
+    alias sghci='stack ghci --'
+    alias shaddock-gen='stack haddock .'
+    alias shaddock-gen-open='stack haddock --open .'
     function stack-new-default() {
         stack new "$1" simple
     }
     alias stack-build-profile='stack build --profile'
-    alias make-new-package-yaml='cp ~/.dotfiles/Files/package.yaml .'
     alias cabal-sdit='stack exec -- cabal sdist'
     function cabal-upload() {
          stack exec -- cabal upload "$1"
     }
-fi
-
-if i_have hasktags ; then
-    alias hasktags-casual='hasktags . --ignore-close-implementation --tags-absolute --ctags -f'
-    alias hasktags-eta-repository='hasktags ~/git/eta/libraries --ignore-close-implementation --tags-absolute --ctags -f ~/git/eta/.git/tags'
+    alias make-new-package-yaml='cp ~/.dotfiles/Files/package.yaml .'
 fi
 
 if i_have haskdogs ; then
     function haskdogs-casual () {
         haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=${1}"
     }
-    if i_have eta-library-tags-append ; then
-        function etadogs-casual () {
-            haskdogs-casual "$1"
-            eta-library-tags-append "$1"
-        }
-    fi
 fi
 
-# }}}
-# Idris functions {{{
+if i_have etlas ; then
+    alias et=etlas
+    alias etb='etlas build'
+    alias etr='etlas run'
+    alias etc='etlas clean'
+fi
 
-i_have idris && \
+if i_have idris ; then
     function run-idris() {
         if idris "$1" -o "/tmp/$1.idris-run-output" && "/tmp/$1.idris-run-output" ; then
             # shellcheck disable=SC2028
@@ -163,58 +192,6 @@ i_have idris && \
             rm "/tmp/$1.idris-run-output"
         fi
     }
-
-# }}}
-# Others {{{
-
-i_have rsync && alias cp-with-progress='rsync --partial --progress'
-i_have watch && alias wifi-hardware-check='watch -n1 rfkill list all'
-i_have ctags && alias ctags-casual='ctags --tag-relative=yes --recurse --sort=yes -f'
-i_have tmux && alias tmuxa='tmux attach'
-i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
-i_have unzip && alias unzip-cp932='unzip -O cp932'
-
-# Short hands
-alias la='ls -a --color=auto --group-directories-first'
-alias ll='ls -l --color=auto --group-directories-first'
-alias llh='ls -lh --color=auto --group-directories-first'
-alias lla='ls -la --color=auto --group-directories-first'
-
-alias x=xdg-open
-alias t=tmux
-# shellcheck disable=SC2139
-alias e="$EDITOR"
-alias m=mount
-alias um=umount
-alias ei=exit
-alias vt=vterminal
-alias nt=nterminal
-
-alias cdp=cd-finddir
-alias ki=killing-art
-alias cdg=cd-git-root
-
-if i_have stack ; then
-    alias sb='stack build'
-    alias sbp=stack-build-profile
-    alias se='stack exec --'
-    alias st='stack test'
-    alias si='stack install'
-    alias sc='stack clean'
-    alias srunghc='stack runghc --'
-    alias sghci='stack ghci --'
-    alias shaddock-gen='stack haddock .'
-    alias shaddock-gen-open='stack haddock --open .'
-fi
-
-if i_have etlas ; then
-    alias et=etlas
-    alias etb='etlas build'
-    alias etr='etlas run'
-    alias etc='etlas clean'
-fi
-
-if i_have idris ; then
     alias runidris=run-idris
 fi
 
@@ -225,8 +202,6 @@ if i_have docker ; then
     alias dkill='docker kill'
 fi
 
-# ---
-
 # shellcheck disable=SC2139
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
 alias mount4u.vfat=mount4u.ntfs
@@ -234,18 +209,12 @@ alias mount4u.ext2='sudo mount -o iocharset=utf8'
 alias mount4u.ext3=mount4u.ext2
 alias mount4u.ext4=mount4u.ext2
 
-alias date-simple='date +"%Y-%m-%d"'
-alias rand='cat /dev/urandom | tr -dc "[:alnum:]" | head -c 8'
-
 function cat-which () {
     cat "$(which "$1")"
 }
 
-# Generate items for autotools
-alias autofiles='touch AUTHORS COPYING ChangeLog INSTALL NEWS README'
-
 function virtualenv-activate () {
-    if [ -f ./.venv/bin/activate ] ; then
+    if [[ -f ./.venv/bin/activate ]] ; then
         # shellcheck disable=SC1091
         . ./.venv/bin/activate
     else
