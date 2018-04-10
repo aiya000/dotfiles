@@ -47,6 +47,11 @@ let g:deoplete#enable_at_startup = 1
 call dein#disable('vimdoc-ja')
 
 "}}}
+"--- ghcid ---" {{{
+
+let g:ghcid_keep_open = v:true
+
+"}}}
 
 
 "---------------------"

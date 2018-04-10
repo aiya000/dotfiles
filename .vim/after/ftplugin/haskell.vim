@@ -10,7 +10,7 @@ let &commentstring = ' -- %s'
 
 nnoremap <buffer><silent> <localleader>o :<C-u>vsp<CR>:Ghci <C-r>=expand('%:p')<CR><CR>
 nnoremap <buffer><silent> <localleader>O :<C-u>vsp<CR>:Ghcie<CR>
-nnoremap <buffer><silent> <localleader><localleader>r :<C-u>echo 'stack test is started'<CR>:QuickRun stack_test<CR>
+nnoremap <buffer><silent> <localleader><localleader>r :<C-u>Ghcid --command='stack ghci :tasty-test'<CR>:vertical copen 20<CR>
 nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('stack_test', 'horizontal', 'stack test :tasty-test')<CR>
 nnoremap <buffer><silent> <localleader><localleader>S :<C-u>Snowtify<CR>
 nnoremap <buffer><silent> <localleader><localleader>t :<C-u>call <SID>stack_integrate_test_or_unit_or_both()<CR>

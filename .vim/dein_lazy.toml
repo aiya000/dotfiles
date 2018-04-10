@@ -304,3 +304,8 @@ on_cmd = [
     'LanguageClientStart',
     'LanguageClientStop',
 ]
+
+[[plugins]]
+repo   = 'ndmitchell/ghcid'
+rtp    = 'plugins/nvim'
+on_cmd = ['Ghcid', 'GhcidKill']
