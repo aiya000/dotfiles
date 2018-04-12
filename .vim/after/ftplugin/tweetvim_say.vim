@@ -1,3 +1,5 @@
+resize 5
+
 let b:undo_ftplugin = 'setl ' . join([
 \	'number<',
 \	'relativenumber<',
