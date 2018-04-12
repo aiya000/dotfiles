@@ -1200,6 +1200,13 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <silent> <C-x><C-g> :<C-u>call LanguageClient_textDocument_references()<CR>
     autocmd User MyVimRc nnoremap <silent> <C-x><C-r> :<C-u>call LanguageClient_textDocument_rename()<CR>
     autocmd User MyVimRc nnoremap <silent> <C-x><C-w> :<C-u>call LanguageClient_workspace_symbol()<CR>
+
+    " vim-textobj-clang
+    " You are not i
+    autocmd User MyVimRc vmap <silent> a;m i;m
+    autocmd User MyVimRc omap <silent> a;m i;m
+    autocmd User MyVimRc vmap <silent> a;f i;f
+    autocmd User MyVimRc omap <silent> a;f i;f
 augroup END
 
 " }}}
