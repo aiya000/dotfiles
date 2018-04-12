@@ -25,15 +25,13 @@ install_package_managers:
 	yaourt -S --noconfirm static-stack npm python-pip
 
 install_general_stuff:
-	yaourt -S git neovim
-	yaourt -S --noconfirm z3  # Needed by liquidhaskell
+	yaourt -S --noconfirm \
+		git neovim tmux autoreconf \
+		z3  # Needed by liquidhaskell
+		haskell-ide-engine # LanguageClient-neovim
+	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit  # Needed by vim-textobj-clang
 	git clone https://github.com/jszakmeister/markdown2ctags ~/git/markdown2ctags
 	ln -s ~/git/markdown2ctags/markdown2ctags.py ~/bin
-	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit  # Needed by vim-textobj-clang
-	yaourt -S --noconfirm dzen2 # by xmonad
-	yaourt -S --noconfirm termite # xmonad
-	yaourt -S --noconfirm haskell-ide-engine # vim-lsp
-	yaourt -S --nocnfirm sox # say-result
 
 install_with_stack:
 	stack install ghcid # .vimrc
@@ -46,3 +44,16 @@ install_with_npm:
 
 install_with_pip:
 	sudo -H pip install neovim grip
+
+install_if_linux:
+	#TODO: Return at here if the OS is not linux
+	:
+	yaourt -S --noconfirm dzen2 # by xmonad
+	yaourt -S --noconfirm rxvt-unicode # xmonad
+	yaourt -S --nocnfirm sox # say-result
+	# Fix East Asian Ambiguous character width in libc, urxvt, and somewhere
+	# Please see https://github.com/hamano/locale-eaw
+	wget https://raw.githubusercontent.com/hamano/locale-eaw/master/UTF-8-EAW-FULLWIDTH.gz
+	sudo mv UTF-8-EAW-FULLWIDTH.gz /usr/share/i18n/charmaps/UTF-8-EAW-FULLWIDTH.gz
+	cat /etc/locale.gen | sed -r 's/^([^#].+)/#\1/' | sudo tee /etc/locale.gen > /dev/null
+	echo 'ja_JP.UTF-8 UTF-8-EAW-FULLWIDTH' | sudo tee -a /etc/locale.gen > /dev/null
