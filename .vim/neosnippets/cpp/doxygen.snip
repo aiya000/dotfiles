@@ -1,9 +1,52 @@
-snippet doxygen_brief
+# Basics
+
+snippet doxygen_block
     /*!
-     * @brief ${1:what-does-this}
+     * ${0}
      */
 
+snippet doxygen_fn
+alias fn
+    @fn ${1:which-does-this-function}
+
+snippet doxygen_def
+alias def
+    @def ${1:which-does-this-macro}
+
+snippet doxygen_enum
+alias enum
+    @enum ${1:what-is-this-enum}
+
+snippet doxygen_brief
+alias brief
+    @brief ${1:summary-what-does-this}
+
+snippet doxygen_details
+alias details
+    @details ${1:what-does-this}
+
+snippet doxygen_param
+alias param
+    @param ${1:paramName} ${2:how-is-this-used}
+
+snippet doxygen_return
+    @return ${1:which-does-this-return}
+
+snippet doxygen_sa
+alias sa
+    @sa ${1:which-does-this-sa}
+
 # Templates
+
+snippet doxygen_block_fn
+    /*!
+     * @fn ${1:what-does-this-function}
+     */
+
+snippet doxygen_block_def
+    /*!
+     * @def ${1:what-does-this-macro}
+     */
 
 snippet doxygen_describe_file
     /*!
