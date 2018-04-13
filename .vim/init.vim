@@ -35,11 +35,6 @@ set inccommand=split
 "---------------------"
 " Configurate plugins "
 "---------------------"
-"--- deoplete.nvim ---"{{{
-
-let g:deoplete#enable_at_startup = 1
-
-"}}}
 "--- vimdoc-ja ---" {{{
 
 "@Bug("Didn't work")

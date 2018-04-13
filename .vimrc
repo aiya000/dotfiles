@@ -532,11 +532,6 @@ let g:unite_source_tag_max_fname_length = 100
 
 let g:deoplete#enable_at_startup = 0
 
-augroup PluginPrefs
-    "TODO: Why doesn't this work?
-    "autocmd InsertEnter * call deoplete#enable()
-augroup END
-
 " }}}
 " --- vim-visualstar --- {{{
 
