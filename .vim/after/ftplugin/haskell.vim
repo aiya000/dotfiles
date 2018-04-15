@@ -10,7 +10,7 @@ let &commentstring = ' -- %s'
 
 nnoremap <buffer><silent> <localleader>o :<C-u>vsp<CR>:Ghci <C-r>=expand('%:p')<CR><CR>
 nnoremap <buffer><silent> <localleader>O :<C-u>vsp<CR>:Ghcie<CR>
-nnoremap <buffer><silent> <localleader><localleader>r :<C-u>Ghcid --command='stack ghci :tasty-test'<CR>:vertical copen 20<CR>
+nnoremap <buffer><silent> <localleader><localleader>r :<C-u>call <SID>open_the_world()<CR>
 nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('stack_test', 'horizontal', 'stack test :tasty-test')<CR>
 nnoremap <buffer><silent> <localleader><localleader>S :<C-u>Snowtify<CR>
 nnoremap <buffer><silent> <localleader><localleader>t :<C-u>call <SID>stack_integrate_test_or_unit_or_both()<CR>
@@ -33,4 +33,17 @@ function! s:stack_integrate_test_or_unit_or_both() abort
     \          : answer is char2nr('d') ? ''
     \                                   : ':tasty-test'
     call vimrc#open_terminal_as('stack_test', 'horizontal', 'stack test ' . target)
+endfunction
+
+function! s:open_the_world() abort
+    Ghcid --command='stack ghci :tasty-test'
+    execute 'normal!' "\<C-w>j"
+    call vimrc#open_terminal_as('stack_test', 'vertical', 'stack test :tasty-test')
+    execute 'normal!' "\<C-w>l"
+    vertical copen
+    execute 'normal!' "\<C-w>L"
+    vertical resize 20
+    execute 'normal!' "\<C-w>h\<C-w>j"
+    vertical resize +30
+    execute 'normal!' "\<C-w>k"
 endfunction
