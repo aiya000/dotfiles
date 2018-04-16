@@ -647,7 +647,10 @@ let fakeclip_provide_clipboard_key_mappings = g:vimrc['is_wsl']
 " }}}
 " --- denite.nvim --- {{{
 
-call denite#custom#map('insert', '<C-l>', '<Esc>')
+call denite#custom#map('normal', '<C-l>', '<denite:quit>')
+call denite#custom#map('normal', '<C-j>', '<CR>')
+
+call denite#custom#map('insert', '<C-l>', '<denite:enter_mode:normal>')
 call denite#custom#map('insert', '<C-j>', '<CR>')
 call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>')
 call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>')
@@ -1237,7 +1240,7 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <leader>?         ?\m\C
     autocmd User MyVimRc nnoremap <leader><leader>? ?\m\C\<\><Left><Left>
 
-    autocmd User MyVimRc nnoremap <silent> <leader>b         :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=markdown<CR>
+    autocmd User MyVimRc nnoremap <silent> <leader>b         :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=markdown \| setl syntax=<CR>
     autocmd User MyVimRc nnoremap <silent> <leader>B         :<C-u>sp ~/.backup/vim-memo.md<CR>
     autocmd User MyVimRc nnoremap <silent> <leader><leader>q :<C-u>call vimrc#keys#bufclose_filetype(<C-r>=string(g:vimrc.auto_closing_filetypes)<CR>)<CR>
     autocmd User MyVimRc let g:vimrc.auto_closing_filetypes = [
