@@ -121,7 +121,7 @@ endfunction " }}}
 function! vimrc#cmd#git_branch_session_save() abort " {{{
     let sessions_dir = $HOME . '/.backup/vim_backup/session'
 
-    let repo_path = system('git rev-parse --show-toplevel')
+    let repo_path = fnameescape(system('git rev-parse --show-toplevel'))
 
     let repo_name  = fnamemodify(repo_path, ':t')
     let repo_name_ = substitute(repo_name, '\n', '', '')  " Remove tail line break
@@ -131,7 +131,7 @@ function! vimrc#cmd#git_branch_session_save() abort " {{{
 
     let session_name  = repo_name_ . '-' . branch_name_
     let session_name_ = substitute(session_name, '/', '-', 'g')
-    let session_name__ = substitute(session_name_, '#', '-', 'g')  "NOTE: '#' should be used as a file name
+    let session_name__ = substitute(session_name_, '#', '-', 'g')  "NOTE: '#' shouldn't be used as a file name
 
     execute 'mksession!' (sessions_dir . '/' . session_name__ . '.vim')
 endfunction " }}}
