@@ -1201,10 +1201,10 @@ augroup KeyMapping
 
     " vim-textobj-clang
     " You are not i
-    autocmd User MyVimRc vmap <silent> a;m i;m
-    autocmd User MyVimRc omap <silent> a;m i;m
-    autocmd User MyVimRc vmap <silent> a;f i;f
-    autocmd User MyVimRc omap <silent> a;f i;f
+    autocmd User MyVimRc vmap a;m i;m
+    autocmd User MyVimRc omap a;m i;m
+    autocmd User MyVimRc vmap a;f i;f
+    autocmd User MyVimRc omap a;f i;f
 augroup END
 
 " }}}
