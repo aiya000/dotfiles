@@ -306,7 +306,8 @@ on_cmd = [
 ]
 
 [[plugins]]
-repo   = 'ndmitchell/ghcid'
+repo   = 'aiya000/ghcid'
+rev    = 'aiya000/neovim-ghcid-filetype'
 rtp    = 'plugins/nvim'
 on_cmd = ['Ghcid', 'GhcidKill']
 
@@ -317,3 +318,7 @@ on_map = [
     '<Plug>(operator-reverse-text)',
     '<Plug>(operator-reverse-lines)',
 ]
+
+[[plugins]]
+repo  = 'vim-scripts/happy.vim'
+on_ft = 'happy'

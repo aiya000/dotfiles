@@ -1,0 +1,57 @@
+include haskell/haskell.snip
+
+snippet name
+abbr %name {function-name}
+    %name ${0:funcName}
+
+snippet tokentype
+abbr %tokentype { {type-name} }
+    %tokentype { ${0:TypeName} }
+
+snippet error
+abbr %error { {handler} }
+    %error { ${0:handler} }
+
+snippet token
+abbr %token\n\t{tokens}
+options indent
+    %token
+        ${0}
+
+snippet a_token
+alias a
+abbr {token-name} { {value-constructor} }
+    ${1:tokenName} { ${0:ValueConst} }
+
+snippet a_rule
+alias rule
+abbr {rule-name} : {symbols} { {value-constructor} {$1} }
+    ${1:RuleName} : ${2:symbols} { ${3:ValueConst}${4: $1} }
+
+snippet left
+abbr %left {symbols}
+    %left ${0}
+
+snippet right
+abbr %right {symbols}
+    %right ${0}
+
+snippet nonassoc
+abbr %nonassoc {symbols}
+    %nonassoc ${0}
+
+# Templates
+
+snippet example_rule
+abbr {rule-name} : {symbols} { {value-constructor} {$1} }\n| ...
+    ${1:RuleName} : ${2:symbols} { ${3:ValueConst}${4: $1} }
+                  | ${0}
+
+snippet lexer
+    lexer :: String -> [${1:TokenType}]
+    lexer "" = []
+    lexer ${0}
+
+snippet empty
+abbr {- empty -}
+    {- empty -}
