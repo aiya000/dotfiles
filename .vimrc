@@ -1006,6 +1006,7 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <silent> gh"   :<C-u>resize 5<CR>
     autocmd User MyVimRc nnoremap          gh\|  <C-w>\|
     autocmd User MyVimRc nnoremap <silent> gh\   :<C-u>vertical resize 1<CR>
+    autocmd User MyVimRc nnoremap <silent> gh%   :<C-u>vertical resize 20<CR>
     autocmd User MyVimRc nnoremap          gh=   <C-w>=
     autocmd User MyVimRc nmap              gh+   gh_gh\|
     autocmd User MyVimRc nnoremap          ghH   <C-w>H
