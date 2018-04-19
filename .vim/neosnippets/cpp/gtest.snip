@@ -46,6 +46,11 @@ alias succeed
 abbr SUCCEED();
     SUCCEED();
 
+snippet gtest_fail
+alias fail
+abbr FAIL();
+    FAIL();
+
 snippet gtest_assert_true
 alias assert_true
 abbr ASSERT_TRUE({value});
@@ -60,6 +65,11 @@ snippet gtest_assert_eq
 alias assert_eq
 abbr ASSERT_EQ({expected}, {actual});
     ASSERT_EQ(${1:expected}, ${2:actual});
+
+snippet gtest_assert_ne
+alias assert_ne
+abbr ASSERT_NE({expected}, {actual});
+    ASSERT_NE(${1:expected}, ${2:actual});
 
 snippet gtest_assert_no_throw
 alias assert_no_throw
