@@ -111,7 +111,7 @@ if i_have git ; then
 
     # Set casual user.name and user.email at local
     alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
-    alias cd-git-root='cd $(git rev-parse --show-toplevel)'
+    alias cd-git-root='cd "$(git rev-parse --show-toplevel)"'
     alias cdg=cd-git-root
 fi
 
