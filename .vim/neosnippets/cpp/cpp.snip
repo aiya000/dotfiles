@@ -33,8 +33,8 @@ options indent
     }
 
 snippet switch
-abbr switch {x} {}
-    switch ${1:target} {
+abbr switch ({x}) {}
+    switch (${1:target}) {
     ${0}
     }
 
@@ -76,6 +76,10 @@ abbr namespace {}
         ${0}
     }
 
+snippet using
+abbr using {stuff}
+    using ${0}
+
 snippet class
 abbr class {name} {};
     class ${1:Name} {
@@ -105,18 +109,23 @@ alias lam
 abbr [{captures}]({parameters}){{body}}
     [${1}](${2}){${0}}
 
+snippet noexcept
+abbr noexcept
+    noexcept
+
 # Macros
 
 snippet include_library
 alias include
 options head
 abbr #include <{path}>
-    #include <${0}>
+    #include <${0:path}>
 
 snippet include_myown
+alias includeo
 options head
 abbr #include "{path}"
-    #include "${0}"
+    #include "${0:path}"
 
 # Expressions
 
@@ -131,6 +140,14 @@ abbr std::cout << {something} << std::endl;
 snippet print
 abbr std::cout << {something};
     std::cout << ${1:something};
+
+snippet wprintln
+abbr std::wcout << {something} << std::endl;
+    std::wcout << ${1:something} << std::endl;
+
+snippet wprint
+abbr std::wcout << {something};
+    std::wcout << ${1:something};
 
 # Templates
 
@@ -162,3 +179,8 @@ options indent
             this->f();
         }
     };
+
+snippet main
+options indent
+abbr int main() {{}}
+    int main() {${0:here}}
