@@ -1189,16 +1189,16 @@ augroup KeyMapping
     autocmd User MyVimRc nnoremap <silent> <leader>gT :<C-u>GTreeAll<CR>
 
     " LanguageClient-neovim
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-g> :<C-u>LspDocumentDiagnostics<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-d> :<C-u>call LanguageClient_textDocument_definition()<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-f> :<C-u>call LanguageClient_textDocument_formatting()<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-r> :<C-u>call LanguageClient_textDocument_rangeFormatting()<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-d><C-s> :<C-u>call LanguageClient_textDocument_documentSymbol()<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-h> :<C-u>call LanguageClient_textDocument_hover()<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-i> :<C-u>LspImplementation<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-g> :<C-u>call LanguageClient_textDocument_references()<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-r> :<C-u>call LanguageClient_textDocument_rename()<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-x><C-w> :<C-u>call LanguageClient_workspace_symbol()<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-q><C-d><C-g> :<C-u>LspDocumentDiagnostics<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-q><C-d><C-d> :<C-u>call LanguageClient_textDocument_definition()<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-q><C-d><C-f> :<C-u>call LanguageClient_textDocument_formatting()<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-q><C-d><C-r> :<C-u>call LanguageClient_textDocument_rangeFormatting()<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-q><C-d><C-s> :<C-u>call LanguageClient_textDocument_documentSymbol()<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-q><C-h> :<C-u>call LanguageClient_textDocument_hover()<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-q><C-i> :<C-u>LspImplementation<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-q><C-g> :<C-u>call LanguageClient_textDocument_references()<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-q><C-r> :<C-u>call LanguageClient_textDocument_rename()<CR>
+    autocmd User MyVimRc nnoremap <silent> <C-q><C-w> :<C-u>call LanguageClient_workspace_symbol()<CR>
 
     " vim-textobj-clang
     " You are not i
