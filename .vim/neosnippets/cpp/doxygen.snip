@@ -1,9 +1,14 @@
 # Basics
 
 snippet doxygen_block
+alias dbl
     /*!
      * ${0}
      */
+
+snippet br
+abbr <br>
+    <br>
 
 snippet doxygen_fn
 alias fn
@@ -15,7 +20,7 @@ alias def
 
 snippet doxygen_enum
 alias enum
-    @enum ${1:what-is-this-enum}
+    @enum ${1:what-does-this-mean}
 
 snippet doxygen_brief
 alias brief
@@ -36,6 +41,18 @@ snippet doxygen_sa
 alias sa
     @sa ${1:which-does-this-sa}
 
+snippet doxygen_namnespace
+    @namespace ${1:what-are-things-is-defined-at-here}
+
+snippet doxygen_struct
+    @struct ${1:what-does-this-mean}
+
+snippet doxygen_class
+    @class ${1:what-does-this-mean}
+
+snippet doxygen_typedef
+    @typedef ${1:what-does-this-mean}
+
 # Templates
 
 snippet doxygen_block_fn
@@ -52,4 +69,29 @@ snippet doxygen_describe_file
     /*!
      * @file ${1:file-name}
      * @brief ${2:what-does-this-file}
+     */
+
+snippet doxygen_block_namespace
+    /*!
+     * @namespace ${1:what-are-things-is-defined-at-here}
+     */
+
+snippet doxygen_block_class
+    /*!
+     * @class ${1:what-does-this-mean}
+     */
+
+snippet doxygen_block_struct
+    /*!
+     * @struct ${1:what-does-this-mean}
+     */
+
+snippet doxygen_block_enum
+    /*!
+     * @enum ${1:what-does-this-mean}
+     */
+
+snippet doxygen_block_typedef
+    /*!
+     * @typedef ${1:what-does-this-mean}
      */
