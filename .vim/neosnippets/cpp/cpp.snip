@@ -184,3 +184,26 @@ snippet main
 options indent
 abbr int main() {{}}
     int main() {${0:here}}
+
+snippet unique_resource
+alias scoped_resource scoped_guard finally
+abbr class unique_resource ...
+options indent
+    /*!
+     * A 'finally' implementation (like N3949),
+     * this doesn't have thread safeties.
+     */
+    class unique_resource {
+        std::function<void()> finally;
+    public:
+        unique_resource(const unique_resource&) = delete;
+        explicit unique_resource(std::function<void()> finally) : finally(finally) {}
+        ~unique_resource() {
+            this->finally();
+        }
+    };
+
+snippet vector_filter
+alias filter
+    std::vector<${1:int}> ${2:zs};
+    std::copy_if(${3:xs}.begin(), $3.end(), std::back_inserter($2), ${4:predicate});
