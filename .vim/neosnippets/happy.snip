@@ -40,6 +40,10 @@ snippet nonassoc
 abbr %nonassoc {symbols}
     %nonassoc ${0}
 
+snippet monad
+abbr %monad { {type} } { {then} } { {return} }
+    %monad { ${1:MonadType } }
+
 # Templates
 
 snippet example_rule
@@ -55,3 +59,8 @@ snippet lexer
 snippet empty
 abbr {- empty -}
     {- empty -}
+
+snippet monad_block
+alias m
+abbr {% {monadic-context} }
+    {% ${1:context} }
