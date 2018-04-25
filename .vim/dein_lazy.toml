@@ -320,5 +320,9 @@ on_map = [
 ]
 
 [[plugins]]
-repo  = 'vim-scripts/happy.vim'
+repo  = 'andy-morris/happy.vim'
 on_ft = 'happy'
+
+[[plugins]]
+repo  = 'vim-scripts/alex.vim'
+on_ft = 'alex'
