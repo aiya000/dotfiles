@@ -4,3 +4,4 @@ let b:undo_ftplugin = 'setl ' . join([
 
 let &commentstring = '{- %s -}'
 setl ts=2 sw=2 et tw=0
+filetype indent off
