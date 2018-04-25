@@ -1,0 +1,16 @@
+include haskell/haskell.snip
+include haskell/pragma.snip
+
+snippet wrapper
+abbr %wrapper "{stuff}"
+    %wrapper "${1:basic}"
+
+snippet tokens
+abbr tokens :-\n
+    tokens :-
+        ${0}
+
+snippet a_token
+alias a
+abbr {token-regex} { \s -> ${expr} }
+    ${1:tokenRegex} { \s -> ${0:expr} }
