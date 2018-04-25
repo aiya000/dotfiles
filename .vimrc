@@ -1308,7 +1308,7 @@ augroup KeyMapping
     " visual mode {{{
 
     autocmd User MyVimRc vnoremap <C-l> <Esc>
-    autocmd User MyVimRc vnoremap i:    :Alignta<Space>
+    autocmd User MyVimRc vnoremap i:    :Alignta =><Space>
     autocmd User MyVimRc vnoremap <silent> i= :Alignta => =/1<CR>
     autocmd User MyVimRc vnoremap <leader>s :sort<CR>
 
