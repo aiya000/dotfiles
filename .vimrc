@@ -647,10 +647,12 @@ let fakeclip_provide_clipboard_key_mappings = g:vimrc['is_wsl']
 " }}}
 " --- denite.nvim --- {{{
 
+call denite#custom#map('normal', '<C-[>', '<denite:quit>')
 call denite#custom#map('normal', '<C-l>', '<denite:quit>')
 call denite#custom#map('normal', '<C-j>', '<CR>')
 
-call denite#custom#map('insert', '<C-l>', '<denite:enter_mode:normal>')
+call denite#custom#map('insert', '<C-[>', '<denite:enter_mode:normal>')
+call denite#custom#map('insert', '<C-l>', '<denite:quit>')
 call denite#custom#map('insert', '<C-j>', '<CR>')
 call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>')
 call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>')
