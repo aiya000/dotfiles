@@ -278,7 +278,7 @@ let g:quickrun_config = {
 \       'outputter/error/success': 'buffer',
 \   },
 \   'cpp': {
-\       'cmdopt': '-std=c++14'
+\       'cmdopt': '-std=c++17'
 \   },
 \   'java': {
 \       'cmdopt': '-encoding UTF-8 -source 1.8'
