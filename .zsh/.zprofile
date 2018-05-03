@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+# Configure environment variables without any plugins
+
 ##########################
 # Config the environment #
 ##########################
@@ -55,30 +57,6 @@ export FZF_DEFAULT_OPTS='--tac --cycle --bind=ctrl-j:accept,ctrl-k:kill-line'
 export UNCO_ESPEAK_OPTIONS='-s 150 -v +fex'
 export CCACHE_DISABLE=1
 export THEMIS_HOME="$HOME/.vim/bundle/repos/github.com/thinca/vim-themis"
-
-# }}}
-
-
-##################
-# Manage Plugins #
-##################
-# Configurate the plugin variables {{{
-
-# zapack
-export ZAPACK_REPODIR=$ZDOTDIR/zapack-repos
-
-# sh-hereis
-export HEREIS_ALIAS_PREFIX='p_'
-
-# zsh-shell-kawaii
-export SHELL_KAWAII_HER_VISIBILITY=1
-export SHELL_KAWAII_HOST_VISIBILITY=1
-export SHELL_KAWAII_FAKE_USERNAME='☆ミ'    # Dancing stars
-export SHELL_KAWAII_FAKE_HOSTNAME='aiya000' # ミ☆   on me!
-export SHELL_KAWAII_CLI_TO_LOW=1
-export SHELL_KAWAII_USER_DELIMITER='>>>'
-export SHELL_KAWAII_MORE_PROMPT_COMMAND=show_cmdline_states  # show_cmdline_states will be defined by .zshrc
-export SHELL_KAWAII_AUTO_SET_ZLE_WIDGETS=0
 
 # }}}
 
