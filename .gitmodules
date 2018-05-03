@@ -7,3 +7,12 @@
 [submodule ".tmux/plugins/tpm"]
 	path = .tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule ".zsh/plugin/zsh-completions"]
+	path = .zsh/plugin/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions
+[submodule ".zsh/plugin/zsh-dircolors-solarized"]
+	path = .zsh/plugin/zsh-dircolors-solarized
+	url = https://github.com/joel-porquet/zsh-dircolors-solarized
+[submodule ".zsh/plugin/zsh-syntax-highlighting"]
+	path = .zsh/plugin/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting
