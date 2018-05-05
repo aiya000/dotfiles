@@ -695,6 +695,7 @@ let g:textobj_clang_more_mappings = 1
 
 let g:LanguageClient_serverCommands = {
     \ 'haskell': ['hie', '--lsp'],
+    \ 'javascript': ['javascript-typescript-stdio'],
 \}
 
 " }}}
