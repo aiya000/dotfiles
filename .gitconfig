@@ -42,6 +42,7 @@
 	ap = add -p
 	pr = pull-request
 	clone = clone --recursive
+	make = create
 [core]
 	pager = nvim - -R +PAGER -c 'setf vim-pager | set syntax=git'
 [init]
