@@ -326,3 +326,8 @@ on_ft = 'happy'
 [[plugins]]
 repo  = 'vim-scripts/alex.vim'
 on_ft = 'alex'
+
+[[plugins]]
+repo  = 'apple/swift'
+rtp   = 'utils/vim'
+on_ft = 'swift'
