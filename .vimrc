@@ -744,29 +744,6 @@ set ambiwidth=double
 " {{{
 
 augroup HighlightPref
-    autocmd ColorScheme * highlight Visual       cterm=underline ctermfg=White ctermbg=Cyan
-    autocmd ColorScheme * highlight IncSearch                    ctermfg=Black ctermbg=Cyan
-    autocmd ColorScheme * highlight Pmenu        cterm=standout  ctermfg=Blue
-    autocmd ColorScheme * highlight PmenuSel                     ctermfg=Black ctermbg=White
-    autocmd ColorScheme * highlight TabLine      cterm=standout  ctermfg=Blue
-    autocmd ColorScheme * highlight TabLineSel   cterm=NONE      ctermfg=Cyan
-    autocmd ColorScheme * highlight TabLineFill  cterm=standout  ctermfg=Blue
-    autocmd ColorScheme * highlight VertSplit    cterm=NONE      ctermfg=Cyan  ctermbg=Blue
-    autocmd ColorScheme * highlight StatusLine                   ctermfg=Cyan  ctermbg=Black
-    autocmd ColorScheme * highlight StatusLineNC                 ctermfg=Blue
-    autocmd ColorScheme * highlight LineNr                       ctermfg=Gray
-    "autocmd ColorScheme * highlight CursorLine   cterm=underline ctermfg=Cyan
-
-    " StatusLine specified highlight
-    autocmd ColorScheme * highlight User1 cterm=standout ctermfg=Green  ctermbg=Black
-    autocmd ColorScheme * highlight User2 cterm=standout ctermfg=Yellow ctermbg=Black
-    autocmd ColorScheme * highlight User3 cterm=standout ctermfg=White  ctermbg=Black
-    autocmd ColorScheme * highlight User4 cterm=standout ctermfg=Gray   ctermbg=Black
-    autocmd ColorScheme * highlight User5 cterm=standout ctermfg=Black  ctermbg=White
-    autocmd ColorScheme * highlight User6 cterm=standout ctermfg=Black  ctermbg=White
-augroup END
-
-augroup HighlightPref
     autocmd ColorScheme       * highlight RcEmSpace ctermbg=LightBlue
     autocmd VimEnter,WinEnter * call matchadd('RcEmSpace', '　')
     " Highlight VCS conflict markers
