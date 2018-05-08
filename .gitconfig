@@ -45,6 +45,7 @@
 	make = create
 [core]
 	pager = nvim - -R +PAGER -c 'setf vim-pager | set syntax=git'
+	quotepath = false
 [init]
 	templatedir = ~/.git_templates
 [status]
