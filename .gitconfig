@@ -43,6 +43,7 @@
 	pr = pull-request
 	clone = clone --recursive
 	make = create
+	take = !"git stash push --message 'This is saved by alias.take' && git pull && git stash pop"
 [core]
 	pager = nvim - -R +PAGER -c 'setf vim-pager | set syntax=git'
 	quotepath = false
