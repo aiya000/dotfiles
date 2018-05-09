@@ -1,6 +1,5 @@
 let s:Job = vital#vimrc#new().import('System.Job')
 
-
 " buffer open commands with filetype 'none'
 command! -bar -bang NewOverridden new<bang> | if empty(&ft) | setf none | endif
 command! -bar -bang -complete=file -nargs=? EditOverridden e<bang> <args> | if empty(&ft) | setf none | endif
@@ -45,6 +44,9 @@ command! -bar DeinUpdate    call dein#update()
 command! -bar DeinLog       new | setl buftype=nofile noreadonly modifiable ft=deinlog | put=dein#get_log()
 command! -bar DeinUpdateLog new | setl buftype=nofile noreadonly modifiable ft=deinlog | put=dein#get_updates_log()
 command! -bar DeinRecacheRuntimepath call dein#recache_runtimepath()
+
+" dein-ui.vim
+"command! -bar DeinUpdate SPUpdate
 
 " REPLs
 command! -bar -nargs=? Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 'stay', 'stack exec ghci ' . <q-args>)
