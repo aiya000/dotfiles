@@ -760,7 +760,7 @@ augroup END
 " Set the colorscheme, but it is set only once
 if !g:vimrc['loaded']
     set background=dark
-    colorscheme elflord
+    colorscheme lucariox
 endif
 
 " Tabline is always shown

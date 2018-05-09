@@ -47,9 +47,6 @@ repo = 'Shougo/neomru.vim'
 repo = 'nathanaelkane/vim-indent-guides'
 
 [[plugins]]
-repo = 'altercation/vim-colors-solarized'
-
-[[plugins]]
 repo = 'aiya000/aho-bakaup.vim'
 
 [[plugins]]
@@ -135,3 +132,6 @@ rev  = 'f5c29185e5b95a22955c26d1a1cb3ac45d7a0fc6'
 
 [[plugins]]
 repo = 'kana/vim-textobj-jabraces'
+
+[[plugins]]
+repo = 'aiya000/lucariox.vim'
