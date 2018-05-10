@@ -464,8 +464,8 @@ let g:indent_guides_auto_colors     = 0
 
 " Define colors
 augroup HighlightPref
-    autocmd VimEnter,ColorScheme * highlight default link IndentGuidesOdd  PmenuSel
-    autocmd VimEnter,ColorScheme * highlight default link IndentGuidesEven Pmenu
+    autocmd VimEnter,ColorScheme * highlight IndentGuidesOdd ctermbg=64
+    autocmd VimEnter,ColorScheme * highlight IndentGuidesEven ctermbg=60
 augroup END
 
 " Define indent-guides state at global
@@ -751,8 +751,8 @@ augroup HighlightPref
 augroup END
 
 augroup HighlightPref
-    autocmd InsertEnter * highlight StatusLine ctermfg=Black ctermbg=Cyan
-    autocmd InsertLeave * highlight StatusLine ctermfg=Cyan  ctermbg=Black
+    autocmd InsertEnter * highlight StatusLine ctermfg=231 ctermbg=64
+    autocmd InsertLeave * highlight StatusLine ctermfg=231 ctermbg=60
 augroup END
 
 " }}}
