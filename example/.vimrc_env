@@ -1,0 +1,18 @@
+let mapleader      = '['
+let maplocalleader = '['
+
+function! s:use_locally_instead(name) abort
+    call dein#disable(a:name)
+    let &rtp = $HOME . '/Repository/' . a:name . ',' . &rtp
+endfunction
+
+call s:use_locally_instead('aref-web.vim')
+call dein#disable('ghcid')
+let &rtp = $HOME . '/Repository/ghcid/plugins/nvim,' . &rtp
+
+augroup AutoloadFiletypeTags
+    autocmd!
+    autocmd FileType haskell set tags+=~/git/eta/.git/tags,~/.vim/my-nvim-hs/tags
+    autocmd FileType idris set tags+=~/Repository/Idris-dev/libs/tags
+    autocmd FileType * set tags-=~/git/eta/.git/tags,~/Repository/Idris-dev/libs/tags
+augroup END
