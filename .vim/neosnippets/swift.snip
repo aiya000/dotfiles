@@ -1,0 +1,197 @@
+# An origin of this file is https://github.com/Shougo/neosnippet-snippets,
+# below is the LICENSE.
+
+#-------------------------------------------------------
+# License: MIT license
+# 
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+# OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#-------------------------------------------------------
+
+# Syntax
+
+snippet struct
+options word
+    struct ${1:name} {
+        ${0:TARGET}
+    }
+
+snippet class
+options word
+    class ${1:name} {
+        ${0:TARGET}
+    }
+
+snippet enum
+options word
+    enum ${1:name} {
+        ${0:TARGET}
+    }
+
+snippet case
+options head
+    case ${1:pattern}${0}
+
+snippet protocol
+options word
+    protocol ${1:name} {
+        ${0:TARGET}
+    }
+
+snippet var
+options word
+    var ${1:name}: ${2:Int}${0}
+
+snippet let
+options word
+    let ${1:name}: ${2:Int}${0}
+
+snippet extension
+    extension ${1:Int} {
+        ${0:TARGET}
+    }
+
+snippet func
+abbr func {name}({args}) {the-return-type}
+options word
+    func ${1:name}(${2:#:arguments}) ${3:#:-> Int}${0}
+
+snippet for_with_index
+    for var ${1:i = 0}; ${2:i < j}; ${3:i++} {
+        ${0:TARGET}
+    }
+
+snippet for
+    for ${1:item} in ${2:collection} {
+        ${0:TARGET}
+    }
+
+snippet while
+options head
+    while ${1:false} {
+        ${0:TARGET}
+    }
+
+snippet repeat
+alias repeat_while do_while
+options head
+    repeat {
+        ${0:TARGET}
+    } while ${1:false}
+
+snippet if
+options word
+    if ${1:false} {
+        ${0:TARGET}
+    }
+
+snippet if_let
+options head
+    if let x = ${1:optional} {
+        ${0:TARGET}
+    }
+
+snippet if_case
+options head
+    if case ${2:name} = ${3:expression} else {
+        ${0:TARGET}
+    }
+
+snippet guard
+abbr guard let ... else { ... }
+options head
+    guard let ${1:x} = ${2:optional} else {
+        ${0:abort}
+    }
+
+snippet else
+options word
+    else {
+        ${0:TARGET}
+    }
+
+snippet switch
+options head
+    switch ${1:expression} {
+        ${0:TARGET}
+    }
+
+snippet do
+options head
+    do {
+        ${0:TARGET}
+    }
+
+snippet catch
+options word
+    catch${1:#:pattern} {
+        ${0:TARGET}
+    }
+
+snippet defer
+options head
+    defer {
+        ${0:TARGET}
+    }
+
+snippet import
+    import ${1:module}
+
+snippet subscript
+options word
+    subscript(${1:index: Int}) -> ${2:Int} {
+        ${0:TARGET}
+    }
+
+snippet init
+options word
+    init${1:#:?}(${2:#:arguments}) {
+        ${0:TARGET}
+    }
+
+snippet deinit
+options head
+    deinit {
+        ${0:TARGET}
+    }
+
+snippet closure
+options word
+abbr { (...) -> Type in ... }
+    { ${1:#capture}(${2:#:arguments}) -> ${3:Void} in
+        ${0:TARGET}
+    }
+
+snippet override
+abbr override
+    override
+
+snippet private
+abbr private(set)
+    private${1:(set)}${0}
+
+snippet convenience
+abbr convenience
+    convenience
+
+# Expression
+
+snippet fatal_error_not_implemnted_yet
+alias not_implemented_yet fatal_error_has_not_been_implemented
+    fatalError("${1:funcName(args)} has not been implemented")
