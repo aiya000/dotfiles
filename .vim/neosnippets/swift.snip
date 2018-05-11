@@ -70,7 +70,7 @@ snippet extension
 snippet func
 abbr func {name}({args}) {the-return-type}
 options word
-    func ${1:name}(${2:#:arguments}) ${3:#:-> Int}${0}
+    func ${1:name}(${2:#:arguments}) ${3:#:-> Int}
 
 snippet for_with_index
     for var ${1:i = 0}; ${2:i < j}; ${3:i++} {
@@ -190,8 +190,17 @@ snippet convenience
 abbr convenience
     convenience
 
+snippet typealias
+alias typedef
+    typealias ${1:TypeName} = ${2:BaseType}
+
 # Expression
 
 snippet fatal_error_not_implemnted_yet
 alias not_implemented_yet fatal_error_has_not_been_implemented
     fatalError("${1:funcName(args)} has not been implemented")
+
+snippet print
+alias println
+abbr print({stuff})
+    print(${0:here})
