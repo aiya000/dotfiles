@@ -100,10 +100,6 @@ augroup HighlightPref
     autocmd!
 augroup END
 
-augroup KeyMapping
-    autocmd!
-augroup END
-
 augroup UserEvent
     autocmd!
 augroup END
@@ -417,24 +413,17 @@ let g:foldCCtext_maxchars = 120
 let g:submode_timeout = 0
 
 function! s:vim_submode_on_source()
-    augroup PluginPrefs
-        " Window Resizer
-        autocmd User MyVimRc call submode#enter_with('window_resize', 'n', '', '<C-s>w')
-        autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'j', '3<C-w>+')
-        autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'k', '3<C-w>-')
-        autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'h', '3<C-w><')
-        autocmd User MyVimRc call submode#map('window_resize', 'n', '', 'l', '3<C-w>>')
+    call submode#enter_with('window_resize', 'n', '', '<C-s>w')
+    call submode#map('window_resize', 'n', '', 'j', '3<C-w>+')
+    call submode#map('window_resize', 'n', '', 'k', '3<C-w>-')
+    call submode#map('window_resize', 'n', '', 'h', '3<C-w><')
+    call submode#map('window_resize', 'n', '', 'l', '3<C-w>>')
 
-        " Buffer Changer
-        autocmd User MyVimRc call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
-        autocmd User MyVimRc call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
-        autocmd User MyVimRc call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
-
-        " Continuous Buffer Deleter
-        autocmd User MyVimRc call submode#enter_with('cont_bdelete', 'n', '', '<C-s><C-w>c', ':bdelete<CR>')
-        autocmd User MyVimRc call submode#map('cont_bdelete', 'n', 's', 'c', ':bdelete<CR>')
-    augroup END
+    call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
+    call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
+    call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
 endfunction
+
 call dein#set_hook('vim-submode', 'hook_source', function('s:vim_submode_on_source'))
 
 " }}}
@@ -628,9 +617,6 @@ let g:ale_linters = {
 \    'css': ['csslint', 'stylelint'],
 \}
 
-" Turn off by default
-ALEDisable
-
 " }}}
 " --- elm-vim --- {{{
 
@@ -727,8 +713,7 @@ if !has('nvim')
     set termkey=<C-z>
 endif
 
-" See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer),
-" and below augroup 'HighlightPref'
+" See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer)
 let &statusline = '%1*[%F(%n)]%*'
     \           . '%2*[FT=%y]%*'
     \           . '[%03v]'
@@ -832,7 +817,7 @@ augroup FileEvent
 augroup END
 
 " :P
-"autocmd UserEvent UserGettingBored * echo 'sugar'
+"autocmd UserGettingBored * echo 'sugar'
 
 augroup UserEvent
     " RelativeNumber is used current window only
@@ -915,441 +900,388 @@ CmdCnoreabbr Gist Gista post --stay
 "--------------------"
 " Define keymappings "
 "--------------------"
-" Virtual {{{
+" virtual keymappings {{{
 
-augroup KeyMapping
-    autocmd User MyVimRc cnoremap [Left] <Left>
-augroup END
+cnoremap [Left] <Left>
 
 " }}}
-" Disabling {{{
+" normal mode {{{
 
-augroup KeyMapping
-    " Enable some hoge<C-c> mappings
-    autocmd User MyVimRc nnoremap <C-c>      <NOP>
-    autocmd User MyVimRc nnoremap <C-c><C-c> <C-c>
+" listup
+nnoremap <silent> m: :<C-u>marks<CR>
+nnoremap <silent> q: :<C-u>register<CR>
+nnoremap <silent> g: :<C-u>buffers<CR>
+nnoremap <silent> z: :<C-u>tabs<CR>
+nnoremap <silent> g> :<C-u>messages<CR>
 
-    autocmd User MyVimRc nnoremap <C-w><C-l> <NOP>
-    autocmd User MyVimRc nnoremap <C-w><C-o> <NOP>
-augroup END
+" search
+nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
+nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
 
-" }}}
-" Folding {{{
+" open/close
+nnoremap <silent> <leader>b :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=markdown \| setl syntax=<CR>
+nnoremap <silent> <leader>B :<C-u>sp ~/.backup/vim-memo.md<CR>
+nnoremap <silent> <leader><leader>q :<C-u>call vimrc#keys#bufclose_filetype(<C-r>=string(g:vimrc.auto_closing_filetypes)<CR>)<CR>
+let g:vimrc.auto_closing_filetypes = [
+    \ 'aref_web',
+    \ 'diff',
+    \ 'gina-branch',
+    \ 'gina-log',
+    \ 'gina-status',
+    \ 'gitdiffviewer',
+    \ 'gitlogviewer',
+    \ 'gitreflogviewer',
+    \ 'gitshowviewer',
+    \ 'help',
+    \ 'man',
+    \ 'netrw',
+    \ 'qf',
+    \ 'quickrun',
+    \ 'scratch',
+    \ 'tasklist',
+\]
+nnoremap <silent> <C-k>e :<C-u>EditOverridden %<CR>
+nnoremap <silent> <C-k>E :<C-u>EditOverridden! %<CR>
 
-augroup KeyMapping
-    autocmd User MyVimRc nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
-    autocmd User MyVimRc nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
+" folds
+nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
+nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
+nnoremap zj zjzo
+nnoremap zk zkzo
 
-    autocmd User MyVimRc nnoremap zj zjzo
-    autocmd User MyVimRc nnoremap zk zkzo
-    autocmd User MyVimRc nnoremap {  {zv
-    autocmd User MyVimRc nnoremap }  }zv
-    autocmd User MyVimRc nnoremap (  (zv
-    autocmd User MyVimRc nnoremap )  )zv
+" windows
+" <Space> prefix
+nnoremap <Space>h <C-w>h
+nnoremap <Space>j <C-w>j
+nnoremap <Space>k <C-w>k
+nnoremap <Space>l <C-w>l
+" gh prefix
+nnoremap ghR <C-w>r
+nnoremap <silent> ghq :<C-u>call vimrc#keys#hide_or_quit()<CR>
+nnoremap <silent> ghQ :<C-u>quitall<CR>
+nnoremap <silent> ghc :<C-u>bdelete<CR>
+nnoremap <silent> ghC :<C-u>bdelete!<CR>
+nnoremap <silent> gho :<C-u>only<CR>
+nnoremap <silent> gh_ :<C-u>resize<CR>
+nnoremap <silent> gh" :<C-u>resize 5<CR>
+nnoremap gh\| <C-w>\|
+nnoremap <silent> gh\ :<C-u>vertical resize 1<CR>
+nnoremap <silent> gh% :<C-u>vertical resize 20<CR>
+nnoremap gh= <C-w>=
+nmap gh+ gh_gh\|
+nnoremap ghH <C-w>H
+nnoremap ghJ <C-w>J
+nnoremap ghK <C-w>K
+nnoremap ghL <C-w>L
+nnoremap ghs :<C-u>split<CR>
+nnoremap ghv :<C-u>vsplit<CR>
+nnoremap <silent><expr> gH  ('mZ:tabnew<CR>`Zzz'          . (foldlevel('.') > 0 ? 'zo' : ''))
+nnoremap <silent><expr> ghh ('mZ:hide<CR>:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : ''))
+" Disable defaults
+nnoremap <C-w>q <NOP>
+nnoremap <C-w>c <NOP>
+nnoremap <C-w>r <NOP>
+nnoremap <C-w>_ <NOP>
+nnoremap <C-w>\ <NOP>
+nnoremap <C-w>= <NOP>
+nnoremap <C-w>o <NOP>
+nnoremap <C-w>H <NOP>
+nnoremap <C-w>J <NOP>
+nnoremap <C-w>K <NOP>
+nnoremap <C-w>L <NOP>
+nnoremap <C-w>s <NOP>
+nnoremap <C-w>v <NOP>
+nnoremap gh <NOP>
 
-    autocmd User MyVimRc vnoremap zo zogv
-    autocmd User MyVimRc vnoremap zO zOgv
-augroup END
+" :terminal
+nnoremap <silent> <leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell)<CR>
+nnoremap <silent> <leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell)<CR>
+nnoremap <silent> <leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell)<CR>
+nnoremap <silent> <leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell)<CR>
+" and vimshell
+nnoremap <silent> <C-[><C-v> :<C-u>call vimrc#keys#toggle_shell_mode()<CR>
 
-" }}}
-" Windows and Buffers {{{
+" set
+nnoremap <silent> <C-h><C-d> :<C-u>call vimrc#keys#toggle_diff()<CR>
+nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
+nnoremap <silent><expr> zm ':setl foldmethod=' . (&foldmethod ==# 'marker' ? 'syntax' : 'marker') . ' foldmethod?<CR>'
+nnoremap <silent> <C-h><C-w> :<C-u>setl wrap! wrap? <CR>
+nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline! cursorline? <CR>
+nnoremap <silent> <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
+nnoremap <silent> <C-h><C-l> :<C-u>setl list! list? <CR>
+nnoremap <silent> <C-h><C-n> :<C-u>setl number! number? <CR>
+nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan! wrapscan? <CR>
 
-augroup KeyMapping
-    autocmd User MyVimRc nnoremap <Space>h <C-w>h
-    autocmd User MyVimRc nnoremap <Space>j <C-w>j
-    autocmd User MyVimRc nnoremap <Space>k <C-w>k
-    autocmd User MyVimRc nnoremap <Space>l <C-w>l
-
-    " Window key <C-w> to gh (save filger epoint)
-    "" Disable default
-    autocmd User MyVimRc nnoremap gh     <NOP>
-    autocmd User MyVimRc nnoremap <C-w>q <NOP>
-    autocmd User MyVimRc nnoremap <C-w>c <NOP>
-    autocmd User MyVimRc nnoremap <C-w>r <NOP>
-    autocmd User MyVimRc nnoremap <C-w>_ <NOP>
-    autocmd User MyVimRc nnoremap <C-w>\ <NOP>
-    autocmd User MyVimRc nnoremap <C-w>= <NOP>
-    autocmd User MyVimRc nnoremap <C-w>o <NOP>
-    autocmd User MyVimRc nnoremap <C-w>H <NOP>
-    autocmd User MyVimRc nnoremap <C-w>J <NOP>
-    autocmd User MyVimRc nnoremap <C-w>K <NOP>
-    autocmd User MyVimRc nnoremap <C-w>L <NOP>
-    autocmd User MyVimRc nnoremap <C-w>s <NOP>
-    autocmd User MyVimRc nnoremap <C-w>v <NOP>
-    autocmd User MyVimRc nnoremap ghR    <C-w>r
-    " Enable custom
-    autocmd User MyVimRc nnoremap <silent> ghq   :<C-u>call vimrc#keys#hide_or_quit()<CR>
-    autocmd User MyVimRc nnoremap <silent> ghQ   :<C-u>quitall<CR>
-    autocmd User MyVimRc nnoremap <silent> ghc   :<C-u>bdelete<CR>
-    autocmd User MyVimRc nnoremap <silent> ghC   :<C-u>bdelete!<CR>
-    autocmd User MyVimRc nnoremap <silent> gho   :<C-u>only<CR>
-    autocmd User MyVimRc nnoremap <silent> gh_   :<C-u>resize<CR>
-    autocmd User MyVimRc nnoremap <silent> gh"   :<C-u>resize 5<CR>
-    autocmd User MyVimRc nnoremap          gh\|  <C-w>\|
-    autocmd User MyVimRc nnoremap <silent> gh\   :<C-u>vertical resize 1<CR>
-    autocmd User MyVimRc nnoremap <silent> gh%   :<C-u>vertical resize 20<CR>
-    autocmd User MyVimRc nnoremap          gh=   <C-w>=
-    autocmd User MyVimRc nmap              gh+   gh_gh\|
-    autocmd User MyVimRc nnoremap          ghH   <C-w>H
-    autocmd User MyVimRc nnoremap          ghJ   <C-w>J
-    autocmd User MyVimRc nnoremap          ghK   <C-w>K
-    autocmd User MyVimRc nnoremap          ghL   <C-w>L
-    autocmd User MyVimRc nnoremap          ghs   :<C-u>split<CR>
-    autocmd User MyVimRc nnoremap          ghv   :<C-u>vsplit<CR>
-    autocmd User MyVimRc nnoremap <silent><expr> gH  ('mZ:tabnew<CR>`Zzz'          . (foldlevel('.') > 0 ? 'zo' : ''))
-    autocmd User MyVimRc nnoremap <silent><expr> ghh ('mZ:hide<CR>:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : ''))
-
-    " Open :terminal
-    autocmd User MyVimRc nnoremap <silent> <leader>v         :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell)<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell)<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader>V         :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell)<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell)<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-[><C-v> :<C-u>call vimrc#keys#toggle_shell_mode()<CR>
-augroup END
-
-" }}}
-" Toggling Option {{{
-
-augroup KeyMapping
-    " Local
-    autocmd User MyVimRc nnoremap <silent>       <C-h><C-d> :<C-u>call vimrc#keys#toggle_diff()<CR>
-    autocmd User MyVimRc nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
-    autocmd User MyVimRc nnoremap <silent><expr> zm         ':setl foldmethod=' . (&foldmethod ==# 'marker' ? 'syntax' : 'marker') . ' foldmethod?<CR>'
-
-    autocmd User MyVimRc nnoremap <silent> <C-h><C-w> :<C-u>setl wrap!           wrap?          <CR>
-    autocmd User MyVimRc nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline!     cursorline?    <CR>
-    autocmd User MyVimRc nnoremap <silent> <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-h><C-l> :<C-u>setl list!           list?          <CR>
-    autocmd User MyVimRc nnoremap <silent> <C-h><C-n> :<C-u>setl number!         number?        <CR>
-    autocmd User MyVimRc nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan!       wrapscan?      <CR>
-
-    autocmd User MyVimRc inoremap <silent> <C-k><C-w> <C-o>:setl wrap! wrap?<CR>
-    autocmd User MyVimRc inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
-augroup END
-
-" }}}
-" With plugins {{{
-
-augroup KeyMapping
-    " netrw
-    autocmd User MyVimRc nnoremap <silent> <leader>e         :<C-u>call vimrc#keys#toggle_netrw_vexplorer()<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader><leader>e :<C-u>call vimrc#keys#netrw_wrapper('horizontal')<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader>E         :<C-u>call vimrc#keys#netrw_wrapper('stay')<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader><leader>E :<C-u>call vimrc#keys#netrw_wrapper('tabnew')<CR>
-
-    " open-browser.vim
-    autocmd User MyVimRc nmap <leader>w <Plug>(openbrowser-open)
-    autocmd User MyVimRc vmap <leader>w <Plug>(openbrowser-open)
-
-    " vim-quickrun
-    autocmd User MyVimRc nmap              <leader>r <Plug>(quickrun)
-    autocmd User MyVimRc nnoremap <silent> <leader>R :<C-u>QuickRun -runner shell<CR>
-    autocmd User MyVimRc vmap              <leader>r <Plug>(quickrun)
-    autocmd User MyVimRc vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
-
-    " denite.nvim
-    autocmd User MyVimRc nnoremap          <leader>u  :<C-u>Denite<Space>
-    autocmd User MyVimRc nnoremap <silent> <C-k><C-h> :<C-u>tcd <C-r>=isdirectory(expand('%:p:h')) ? expand('%:p:h') : execute(':pwd')[1:]<CR><CR>:Denite file_rec<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-k><C-t> :<C-u>Denite tag<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-k><C-f> :<C-u>Denite outline<CR>
-
-    " aref-web.vim
-    autocmd User MyVimRc nnoremap <leader>K :<C-u>Aref weblio <C-r>=expand('<cword>')<CR><CR>
-    autocmd User MyVimRc nnoremap <leader>S :<C-u>Aref stackage <C-r>=expand('<cword>')<CR><CR>
-    autocmd User MyVimRc vnoremap <leader>K "zy:<C-u>Aref weblio <C-r>z<CR>
-    autocmd User MyVimRc vnoremap <leader>S "zy:<C-u>Aref stackage <C-r>z<CR>
-
-    " vim-over
-    autocmd User MyVimRc nnoremap <silent>       :%s/       :<C-u>OverCommandLine %s/<CR>
-    autocmd User MyVimRc nnoremap <silent>       :s/        :<C-u>OverCommandLine s/<CR>
-    autocmd User MyVimRc nnoremap <silent><expr> <C-k><C-s> ':OverCommandLine %s/\m\C\<' . expand('<cword>') . '\>/<CR>'
-    autocmd User MyVimRc nnoremap <silent><expr> <C-k>s     ':OverCommandLine %s/\m\C\<' . expand('<cword>') . '\>/' . expand('<cword>') . '<CR>'
-    autocmd User MyVimRc vnoremap <silent>       :s/        :<C-u>OverCommandLine '<,'>s/<CR>
-    autocmd User MyVimRc cnoremap <silent>       <C-k>:     <Home>OverCommandLine <CR>
-    "NOTE: this is temporary keymapping, because vim-over do not imported cnoremap maybe
-    autocmd FileType * OverCommandLineNoremap <C-b> <Left>
-    autocmd FileType * OverCommandLineNoremap <C-f> <Right>
-    "autocmd FileType * OverCommandLineNoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
-
-    " anzu-chan
-    autocmd User MyVimRc nmap n      <Plug>(anzu-n-with-echo)zv
-    autocmd User MyVimRc nmap N      <Plug>(anzu-N-with-echo)zv
-    autocmd User MyVimRc nmap *      <Plug>(anzu-star-with-echo)zv
-    autocmd User MyVimRc nmap #      <Plug>(anzu-sharp-with-echo)zv
-    autocmd User MyVimRc nmap <C-w>* <C-w>v<Plug>(anzu-star-with-echo)zv
-    autocmd User MyVimRc nmap <C-w># <C-w>v<Plug>(anzu-sharp-with-echo)zv
-    autocmd User MyVimRc nmap <leader><leader>* g*/<Up><Home>\m\C<CR>
-    autocmd User MyVimRc nmap <leader><leader># g#?<Up><Home>\m\C<CR>
-
-    " TaskList.vim
-    autocmd User MyVimRc nmap <silent> <leader>t <Plug>TaskListToggle
-
-    " undotree
-    autocmd User MyVimRc nnoremap <silent> <leader>U :<C-u>UndotreeToggle<CR>
-
-    " vim-indent-guides
-    autocmd User MyVimRc nnoremap <silent> <C-h><C-i> :<C-u>call vimrc#keys#toggle_indent_guides()<CR>
-
-    " neosnippet.vim
-    autocmd User MyVimRc imap <C-s> <Plug>(neosnippet_jump_or_expand)
-    autocmd User MyVimRc smap <C-s> <Plug>(neosnippet_jump_or_expand)
-
-    " neocomplete.vim
-    autocmd User MyVimRc inoremap <silent> <C-k><C-i> <C-o>:NeoCompleteToggle<CR>
-    autocmd User MyVimRc inoremap <expr>   <CR>  neocomplete#close_popup()  . '<CR>'
-    autocmd User MyVimRc inoremap <expr>   <Tab> neocomplete#close_popup()  . '<Tab>'
-    autocmd User MyVimRc inoremap <expr>   <C-y> neocomplete#cancel_popup() . '<C-y>'
-    autocmd User MyVimRc inoremap <expr>   <C-e> neocomplete#cancel_popup() . '<C-e>'
-
-    " vim-visualstar
-    autocmd User MyVimRc vmap g* <Plug>(visualstar-*)Nzz
-
-    " repl.vim
-    autocmd User MyVimRc nmap <leader>o <Plug>(repl-run)
-
-    " textobj-indent
-    autocmd User MyVimRc omap ai <Plug>(textobj-indent-a)
-    autocmd User MyVimRc omap ii <Plug>(textobj-indent-i)
-    autocmd User MyVimRc vmap ai <Plug>(textobj-indent-a)
-    autocmd User MyVimRc vmap ii <Plug>(textobj-indent-i)
-    autocmd User MyVimRc nmap <silent> <leader><leader>s vii:sort<CR>
-
-    " textobj-from_regexp
-    " Select line ignore newline code (and ignore head spaces)
-    autocmd User MyVimRc omap <expr> al textobj#from_regexp#mapexpr('^.*$')
-    autocmd User MyVimRc omap <expr> il textobj#from_regexp#mapexpr('^\s*\zs.*\ze.*$')
-
-    " textobj-from_regexp
-    " Select alphabet glob
-    autocmd User MyVimRc vmap <expr> a_ textobj#from_regexp#mapexpr('[^A-Za-z0-9][A-Za-z0-9]\+[^A-Za-z0-9]')
-    autocmd User MyVimRc vmap <expr> i_ textobj#from_regexp#mapexpr('[A-Za-z0-9]\+')
-    autocmd User MyVimRc omap <expr> a_ textobj#from_regexp#mapexpr('[^A-Za-z0-9][A-Za-z0-9]\+[^A-Za-z0-9]')
-    autocmd User MyVimRc omap <expr> i_ textobj#from_regexp#mapexpr('[A-Za-z0-9]\+')
-    " Select line ignore newline code (and ignore head spaces)
-    autocmd User MyVimRc vmap <expr> al textobj#from_regexp#mapexpr('^.*$')
-    autocmd User MyVimRc vmap <expr> il textobj#from_regexp#mapexpr('^\s*\zs.*\ze.*$')
-
-    " vim-textobj-between
-    autocmd User MyVimRc vmap a* <Plug>(textobj-between-a)
-    autocmd User MyVimRc vmap i* <Plug>(textobj-between-i)
-    autocmd User MyVimRc omap a* <Plug>(textobj-between-a)
-    autocmd User MyVimRc omap i* <Plug>(textobj-between-i)
-
-    " vim-open-googletranslate
-    autocmd User MyVimRc vnoremap <silent> <leader>k "zy:OpenGoogleTranslate <C-r>z<CR>
-
-    " ale
-    autocmd User MyVimRc nnoremap <silent> <C-k><C-a> :<C-u>ALEToggle<CR>
-    autocmd User MyVimRc nnoremap <silent> g{ :<C-u>ALEPrevious<CR>
-    autocmd User MyVimRc nnoremap <silent> g} :<C-u>ALENext<CR>
-
-    " incsearch.vim
-    autocmd User MyVimRc nmap g/ <Plug>(incsearch-stay)
-    autocmd User MyVimRc IncSearchNoreMap <C-j> <CR>
-    autocmd User MyVimRc IncSearchNoreMap <C-b> <Left>
-    autocmd User MyVimRc IncSearchNoreMap <C-f> <Right>
-    autocmd User MyVimRc IncSearchNoreMap <C-a> <Home>
-    autocmd User MyVimRc IncSearchNoreMap <C-h> <BS>
-    autocmd User MyVimRc IncSearchNoreMap <C-d> <Del>
-    autocmd User MyVimRc IncSearchNoreMap <C-e> <End>
-    autocmd User MyVimRc IncSearchNoreMap <C-l> <C-c>
-    autocmd User MyVimRc IncSearchNoreMap <C-o> <Up>
-    autocmd User MyVimRc IncSearchNoreMap <C-y> <Down>
-
-    " gina.vim (and .vim/plugin/vimrc.vim)
-    autocmd User MyVimRc nnoremap <silent> <leader>gs :<C-u>GStatus<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader>gS :<C-u>GitShowViewer<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader>gc :<C-u>GCommit<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader>gC :<C-u>GCAM<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader>ga :<C-u>GAP<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader>gl :<C-u>GLog<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader>gL :<C-u>GLP<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader>gd :<C-u>GDiff<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader>gb :<C-u>GBA<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader>gt :<C-u>GTree<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader>gT :<C-u>GTreeAll<CR>
-
-    " LanguageClient-neovim
-    autocmd User MyVimRc nnoremap <silent> <C-q><C-d><C-g> :<C-u>LspDocumentDiagnostics<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-q><C-d><C-d> :<C-u>call LanguageClient_textDocument_definition()<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-q><C-d><C-f> :<C-u>call LanguageClient_textDocument_formatting()<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-q><C-d><C-r> :<C-u>call LanguageClient_textDocument_rangeFormatting()<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-q><C-d><C-s> :<C-u>call LanguageClient_textDocument_documentSymbol()<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-q><C-h> :<C-u>call LanguageClient_textDocument_hover()<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-q><C-i> :<C-u>LspImplementation<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-q><C-g> :<C-u>call LanguageClient_textDocument_references()<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-q><C-r> :<C-u>call LanguageClient_textDocument_rename()<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-q><C-w> :<C-u>call LanguageClient_workspace_symbol()<CR>
-
-    " vim-textobj-clang
-    " You are not i
-    autocmd User MyVimRc vmap a;m i;m
-    autocmd User MyVimRc omap a;m i;m
-    autocmd User MyVimRc vmap a;f i;f
-    autocmd User MyVimRc omap a;f i;f
-augroup END
+" others
+nmap <C-j> <CR>
+nmap gd *ggn
+nnoremap Q gQ
+nnoremap { {zv
+nnoremap } }zv
+nnoremap ( (zv
+nnoremap ) )zv
+nnoremap zs zszh
+nnoremap <C-n> gt
+nnoremap <C-p> gT
+nnoremap <C-m> o<Esc>
+nnoremap <C-]> g<C-]>
+nnoremap g<C-]> <C-]>
+nnoremap <silent> ! :!<CR>
+nnoremap <silent> <C-k><Space> :<C-u>call vimrc#keys#clear_ends_space()<CR>
+nnoremap <silent> <Space><Space> :<C-u>call vimrc#keys#compress_spaces()<CR>
+nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
+nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
+nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
+" Enable keymappings like <C-c>{some}
+nnoremap <C-c> <NOP>
+nnoremap <C-c><C-c> <C-c>
 
 " }}}
-" Basics {{{
+" insert mode {{{
 
-augroup KeyMapping
-    " normal mode {{{
+" set
+inoremap <silent> <C-k><C-w> <C-o>:setl wrap! wrap?<CR>
+inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
 
-    autocmd User MyVimRc nmap <C-j> <CR>
-    autocmd User MyVimRc nmap gd    *ggn
-
-    autocmd User MyVimRc nnoremap H      :<C-u>Denite line<CR>
-    autocmd User MyVimRc nnoremap M      :<C-u>Denite file_mru<CR>
-    autocmd User MyVimRc nnoremap L      :<C-u>Denite buffer<CR>
-    autocmd User MyVimRc nnoremap Q      gQ
-    autocmd User MyVimRc nnoremap zs     zszh
-    autocmd User MyVimRc nnoremap <C-n>  gt
-    autocmd User MyVimRc nnoremap <C-p>  gT
-    autocmd User MyVimRc nnoremap <C-m>  o<Esc>
-    autocmd User MyVimRc nnoremap <C-]>  g<C-]>
-    autocmd User MyVimRc nnoremap g<C-]> <C-]>
-
-    autocmd User MyVimRc nnoremap <silent> m: :<C-u>marks<CR>
-    autocmd User MyVimRc nnoremap <silent> q: :<C-u>register<CR>
-    autocmd User MyVimRc nnoremap <silent> g: :<C-u>buffers<CR>
-    autocmd User MyVimRc nnoremap <silent> z: :<C-u>tabs<CR>
-    autocmd User MyVimRc nnoremap <silent> g> :<C-u>messages<CR>
-    autocmd User MyVimRc nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
-    autocmd User MyVimRc nnoremap <silent> !  :!<CR>
-
-    autocmd User MyVimRc nnoremap <leader>/         /\m\C
-    autocmd User MyVimRc nnoremap <leader><leader>/ /\m\C\<\><Left><Left>
-    autocmd User MyVimRc nnoremap <leader>?         ?\m\C
-    autocmd User MyVimRc nnoremap <leader><leader>? ?\m\C\<\><Left><Left>
-
-    autocmd User MyVimRc nnoremap <silent> <leader>b         :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=markdown \| setl syntax=<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader>B         :<C-u>sp ~/.backup/vim-memo.md<CR>
-    autocmd User MyVimRc nnoremap <silent> <leader><leader>q :<C-u>call vimrc#keys#bufclose_filetype(<C-r>=string(g:vimrc.auto_closing_filetypes)<CR>)<CR>
-    autocmd User MyVimRc let g:vimrc.auto_closing_filetypes = [
-        \ 'aref_web',
-        \ 'diff',
-        \ 'gina-branch',
-        \ 'gina-log',
-        \ 'gina-status',
-        \ 'gitdiffviewer',
-        \ 'gitlogviewer',
-        \ 'gitreflogviewer',
-        \ 'gitshowviewer',
-        \ 'help',
-        \ 'man',
-        \ 'netrw',
-        \ 'qf',
-        \ 'quickrun',
-        \ 'scratch',
-        \ 'tasklist',
-    \]
-
-    autocmd User MyVimRc nnoremap <silent> <C-k><C-r>     :<C-u>Reload<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-k>r         :<C-u>let &filetype=&filetype<CR>:filetype detect<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-k>e         :<C-u>EditOverridden %<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-k>E         :<C-u>EditOverridden! %<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-k><C-l>     :<C-u>nohlsearch<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-k><C-j>     :<C-u>write<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-k>J         :<C-u>wall \| echo 'written all !'<CR>
-    autocmd User MyVimRc nnoremap <silent> <C-k><Space>   :<C-u>call vimrc#keys#clear_ends_space()<CR>
-    autocmd User MyVimRc nnoremap <silent> <Space><Space> :<C-u>call vimrc#keys#compress_spaces()<CR>
-    autocmd User MyVimRc nnoremap <C-k>f :<C-u>Denite filetype<CR>
-
-    " }}}
-    " insert mode {{{
-
-    autocmd User MyVimRc imap <C-j> <CR>
-
-    autocmd User MyVimRc inoremap <C-l> <Esc>
-    autocmd User MyVimRc inoremap <C-k><C-k> <C-o>"_d$
-    autocmd User MyVimRc inoremap <C-k><C-y> <Esc>k"zyyjV"zp:let @z = ''<CR>A
-
-    autocmd User MyVimRc inoremap <silent> <C-k><C-j> <Esc>:write<CR>
-    autocmd User MyVimRc inoremap <silent> <C-k>J     <Esc>:wall \| echo 'written all !'<CR>
-
-    autocmd User MyVimRc inoremap <silent><expr> <C-b> vimrc#keys#get_webpage_title()
-
-    " }}}
-    " command-line mode {{{
-
-    autocmd User MyVimRc cmap     <C-]>      \m\C\<\>[Left][Left]
-    autocmd User MyVimRc cnoremap <C-b>      <Left>
-    autocmd User MyVimRc cnoremap <C-f>      <Right>
-    autocmd User MyVimRc cnoremap <C-a>      <Home>
-    autocmd User MyVimRc cnoremap <C-h>      <BS>
-    autocmd User MyVimRc cnoremap <C-d>      <Del>
-    autocmd User MyVimRc cnoremap <C-e>      <End>
-    autocmd User MyVimRc cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[ : getcmdpos() - 2]<CR>
-    autocmd User MyVimRc cnoremap <C-l>      <C-c>
-    autocmd User MyVimRc cnoremap <C-g>      '<,'>
-    autocmd User MyVimRc cnoremap <C-o>      <Up>
-    autocmd User MyVimRc cnoremap <C-y>      <Down>
-
-    " }}}
-    " visual mode {{{
-
-    autocmd User MyVimRc vnoremap <C-l> <Esc>
-    autocmd User MyVimRc vnoremap i:    :Alignta =><Space>
-    autocmd User MyVimRc vnoremap <silent> i= :Alignta => =/1<CR>
-    autocmd User MyVimRc vnoremap <leader>s :sort<CR>
-
-    " Don't select blank
-    autocmd User MyVimRc vnoremap a" 2i"
-    autocmd User MyVimRc vnoremap a' 2i'
-    autocmd User MyVimRc vnoremap a` 2i`
-
-    " }}}
-    " select mode {{{
-
-    autocmd User MyVimRc snoremap <C-l> <Esc>
-
-    " }}}
-    " operator {{{
-
-    " Don't select blank
-    autocmd User MyVimRc onoremap a" 2i"
-    autocmd User MyVimRc onoremap a' 2i'
-    autocmd User MyVimRc onoremap a` 2i`
-
-    " }}}
-    " digraph {{{
-
-    digraph /= 8800  " not equal
-
-    digraph \( 8834  " right includes left
-    digraph \) 8835  " left includes right
-    digraph \A 8704  " forall
-    digraph \E 8707  " exists
-    digraph \a 8743  " and
-    digraph \o 8744  " or
-    digraph \= 8803  " equivalence relation
-    digraph \< 8804  " right more than left or equals
-    digraph \> 8805  " left mode than right or equals
-    digraph \. 9675  " compose
-    digraph \*  215  " cartesian product
-    digraph \U 8745  " intersect
-    digraph \u 8746  " union
-
-    digraph \|^ 8593 " arrow up
-    digraph \|v 8595 " arrow down
-
-    " }}}
-    " terminal mode {{{
-
-    autocmd User MyVimRc tnoremap <C-l>      <C-\><C-n>
-    autocmd User MyVimRc tnoremap <C-\><C-n> <Esc>
-    autocmd User MyVimRc tnoremap <C-[>      <Esc>
-    autocmd User MyVimRc tnoremap <C-]>      <C-l>
-
-    " }}}
-augroup END
+" others
+imap <C-j> <CR>
+inoremap <C-l> <Esc>
+inoremap <C-k><C-k> <C-o>"_d$
+inoremap <silent> <C-k><C-j> <Esc>:write<CR>
+inoremap <silent> <C-k>J <Esc>:wall \| echo 'written all !'<CR>
+inoremap <silent><expr> <C-b> vimrc#keys#get_webpage_title()
 
 " }}}
+" command-line mode {{{
+
+cmap <C-]> \m\C\<\>[Left][Left]
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-a> <Home>
+cnoremap <C-h> <BS>
+cnoremap <C-d> <Del>
+cnoremap <C-e> <End>
+cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[ : getcmdpos() - 2]<CR>
+cnoremap <C-l> <C-c>
+cnoremap <C-g> '<,'>
+cnoremap <C-o> <Up>
+cnoremap <C-y> <Down>
 
 " }}}
-" Buffer local {{{
+" visual/operator mode {{{
 
-augroup PluginPrefs
+" folds
+vnoremap zo zogv
+vnoremap zO zOgv
+
+" others
+vnoremap <C-l> <Esc>
+vnoremap <leader>s :sort<CR>
+" Don't select blanks
+vnoremap a" 2i"
+onoremap a" 2i"
+vnoremap a' 2i'
+onoremap a' 2i'
+vnoremap a` 2i`
+onoremap a` 2i`
+
+" }}}
+" select mode {{{
+
+snoremap <C-l> <Esc>
+
+" }}}
+" terminal mode {{{
+
+tnoremap <C-l> <C-\><C-n>
+tnoremap <C-\><C-n> <Esc>
+tnoremap <C-[> <Esc>
+tnoremap <C-]> <C-l>
+
+" }}}
+" digraph {{{
+
+digraph /= 8800  " not equal
+digraph \( 8834  " right includes left
+digraph \) 8835  " left includes right
+digraph \A 8704  " forall
+digraph \E 8707  " exists
+digraph \a 8743  " and
+digraph \o 8744  " or
+digraph \= 8803  " equivalence relation
+digraph \< 8804  " right more than left or equals
+digraph \> 8805  " left mode than right or equals
+digraph \. 9675  " compose
+digraph \*  215  " cartesian product
+digraph \U 8745  " intersect
+digraph \u 8746  " union
+digraph \|^ 8593 " arrow up
+digraph \|v 8595 " arrow down
+
+" }}}
+" plugins {{{
+
+" netrw
+nnoremap <silent> <leader>e         :<C-u>call vimrc#keys#toggle_netrw_vexplorer()<CR>
+nnoremap <silent> <leader><leader>e :<C-u>call vimrc#keys#netrw_wrapper('horizontal')<CR>
+nnoremap <silent> <leader>E         :<C-u>call vimrc#keys#netrw_wrapper('stay')<CR>
+nnoremap <silent> <leader><leader>E :<C-u>call vimrc#keys#netrw_wrapper('tabnew')<CR>
+
+" open-browser.vim
+nmap <leader>w <Plug>(openbrowser-open)
+vmap <leader>w <Plug>(openbrowser-open)
+
+" vim-quickrun
+nmap              <leader>r <Plug>(quickrun)
+nnoremap <silent> <leader>R :<C-u>QuickRun -runner shell<CR>
+vmap              <leader>r <Plug>(quickrun)
+vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
+
+" denite.nvim
+nnoremap          <leader>u  :<C-u>Denite<Space>
+nnoremap <silent> <C-k><C-h> :<C-u>tcd <C-r>=isdirectory(expand('%:p:h')) ? expand('%:p:h') : execute(':pwd')[1:]<CR><CR>:Denite file_rec<CR>
+nnoremap <silent> <C-k><C-t> :<C-u>Denite tag<CR>
+nnoremap <silent> <C-k><C-f> :<C-u>Denite outline<CR>
+nnoremap <silent> <C-k>f :<C-u>Denite filetype<CR>
+nnoremap <silent> H :<C-u>Denite line<CR>
+nnoremap <silent> M :<C-u>Denite file_mru<CR>
+nnoremap <silent> L :<C-u>Denite buffer<CR>
+
+" aref-web.vim
+nnoremap <leader>K :<C-u>Aref weblio <C-r>=expand('<cword>')<CR><CR>
+nnoremap <leader>S :<C-u>Aref stackage <C-r>=expand('<cword>')<CR><CR>
+vnoremap <leader>K "zy:<C-u>Aref weblio <C-r>z<CR>
+vnoremap <leader>S "zy:<C-u>Aref stackage <C-r>z<CR>
+
+" vim-over
+nnoremap <expr> <C-k><C-s> ':OverCommandLine %s/\m\C\<' . expand('<cword>') . '\>/<CR>'
+nnoremap <expr> <C-k>s     ':OverCommandLine %s/\m\C\<' . expand('<cword>') . '\>/' . expand('<cword>') . '<CR>'
+nnoremap <silent> :%s/     :<C-u>OverCommandLine %s/<CR>
+nnoremap <silent> :s/      :<C-u>OverCommandLine s/<CR>
+vnoremap <silent> :s/      :<C-u>OverCommandLine '<,'>s/<CR>
+cnoremap <silent> <C-k>:   <Home>OverCommandLine <CR>
+"NOTE: this is temporary keymapping, because vim-over do not imported cnoremap maybe
+OverCommandLineNoremap <C-b> <Left>
+OverCommandLineNoremap <C-f> <Right>
+"OverCommandLineNoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
+
+" anzu-chan
+nmap n      <Plug>(anzu-n-with-echo)zv
+nmap N      <Plug>(anzu-N-with-echo)zv
+nmap *      <Plug>(anzu-star-with-echo)zv
+nmap #      <Plug>(anzu-sharp-with-echo)zv
+nmap <C-w>* <C-w>v<Plug>(anzu-star-with-echo)zv
+nmap <C-w># <C-w>v<Plug>(anzu-sharp-with-echo)zv
+nmap <leader><leader>* g*/<Up><Home>\m\C<CR>
+nmap <leader><leader># g#?<Up><Home>\m\C<CR>
+
+" TaskList.vim
+nmap <silent> <leader>t <Plug>TaskListToggle
+
+" undotree
+nnoremap <silent> <leader>U :<C-u>UndotreeToggle<CR>
+
+" vim-indent-guides
+nnoremap <silent> <C-h><C-i> :<C-u>call vimrc#keys#toggle_indent_guides()<CR>
+
+" neosnippet.vim
+imap <C-s> <Plug>(neosnippet_jump_or_expand)
+smap <C-s> <Plug>(neosnippet_jump_or_expand)
+
+" neocomplete.vim
+inoremap <silent> <C-k><C-i> <C-o>:NeoCompleteToggle<CR>
+inoremap <expr>   <CR>  neocomplete#close_popup()  . '<CR>'
+inoremap <expr>   <Tab> neocomplete#close_popup()  . '<Tab>'
+inoremap <expr>   <C-y> neocomplete#cancel_popup() . '<C-y>'
+inoremap <expr>   <C-e> neocomplete#cancel_popup() . '<C-e>'
+
+" vim-visualstar
+vmap g* <Plug>(visualstar-*)Nzz
+
+" textobj-indent
+omap ai <Plug>(textobj-indent-a)
+omap ii <Plug>(textobj-indent-i)
+vmap ai <Plug>(textobj-indent-a)
+vmap ii <Plug>(textobj-indent-i)
+nmap <silent> <leader><leader>s vii:sort<CR>
+
+" textobj-from_regexp
+" Select an alphabet glob
+vmap <expr> a_ textobj#from_regexp#mapexpr('[^A-Za-z0-9][A-Za-z0-9]\+[^A-Za-z0-9]')
+vmap <expr> i_ textobj#from_regexp#mapexpr('[A-Za-z0-9]\+')
+omap <expr> a_ textobj#from_regexp#mapexpr('[^A-Za-z0-9][A-Za-z0-9]\+[^A-Za-z0-9]')
+omap <expr> i_ textobj#from_regexp#mapexpr('[A-Za-z0-9]\+')
+" Select a line without a trailing line break
+vmap <expr> al textobj#from_regexp#mapexpr('^.*$')
+vmap <expr> il textobj#from_regexp#mapexpr('^\s*\zs.*\ze.*$')
+
+" vim-textobj-between
+vmap a* <Plug>(textobj-between-a)
+vmap i* <Plug>(textobj-between-i)
+omap a* <Plug>(textobj-between-a)
+omap i* <Plug>(textobj-between-i)
+
+" vim-open-googletranslate
+vnoremap <silent> <leader>k "zy:OpenGoogleTranslate <C-r>z<CR>
+
+" ale
+nnoremap <silent> <C-k><C-a> :<C-u>ALEToggle<CR>
+nnoremap <silent> g{ :<C-u>ALEPrevious<CR>
+nnoremap <silent> g} :<C-u>ALENext<CR>
+
+" incsearch.vim
+nmap g/ <Plug>(incsearch-stay)
+IncSearchNoreMap <C-j> <CR>
+IncSearchNoreMap <C-b> <Left>
+IncSearchNoreMap <C-f> <Right>
+IncSearchNoreMap <C-a> <Home>
+IncSearchNoreMap <C-h> <BS>
+IncSearchNoreMap <C-d> <Del>
+IncSearchNoreMap <C-e> <End>
+IncSearchNoreMap <C-l> <C-c>
+IncSearchNoreMap <C-o> <Up>
+IncSearchNoreMap <C-y> <Down>
+
+" gina.vim (and .vim/plugin/vimrc.vim)
+nnoremap <silent> <leader>gs :<C-u>GStatus<CR>
+nnoremap <silent> <leader>gS :<C-u>GitShowViewer<CR>
+nnoremap <silent> <leader>gc :<C-u>GCommit<CR>
+nnoremap <silent> <leader>gC :<C-u>GCAM<CR>
+nnoremap <silent> <leader>ga :<C-u>GAP<CR>
+nnoremap <silent> <leader>gl :<C-u>GLog<CR>
+nnoremap <silent> <leader>gL :<C-u>GLP<CR>
+nnoremap <silent> <leader>gd :<C-u>GDiff<CR>
+nnoremap <silent> <leader>gb :<C-u>GBA<CR>
+nnoremap <silent> <leader>gt :<C-u>GTree<CR>
+nnoremap <silent> <leader>gT :<C-u>GTreeAll<CR>
+
+" LanguageClient-neovim
+nnoremap <silent> <C-q><C-d><C-g> :<C-u>LspDocumentDiagnostics<CR>
+nnoremap <silent> <C-q><C-d><C-d> :<C-u>call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <C-q><C-d><C-f> :<C-u>call LanguageClient_textDocument_formatting()<CR>
+nnoremap <silent> <C-q><C-d><C-r> :<C-u>call LanguageClient_textDocument_rangeFormatting()<CR>
+nnoremap <silent> <C-q><C-d><C-s> :<C-u>call LanguageClient_textDocument_documentSymbol()<CR>
+nnoremap <silent> <C-q><C-h> :<C-u>call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> <C-q><C-i> :<C-u>LspImplementation<CR>
+nnoremap <silent> <C-q><C-g> :<C-u>call LanguageClient_textDocument_references()<CR>
+nnoremap <silent> <C-q><C-r> :<C-u>call LanguageClient_textDocument_rename()<CR>
+nnoremap <silent> <C-q><C-w> :<C-u>call LanguageClient_workspace_symbol()<CR>
+
+" vim-textobj-clang
+" You are not i
+vmap a;m i;m
+omap a;m i;m
+vmap a;f i;f
+omap a;f i;f
+
+" vim-alignta
+vnoremap i: :Alignta =><Space>
+vnoremap <silent> i= :Alignta => =/1<CR>
+
+" }}}
+" filetypes {{{
+
+augroup FileEvent
     autocmd FileType int-* nnoremap <buffer> q          <NOP>
     autocmd FileType int-* nnoremap <buffer> <C-n>      gt
     autocmd FileType int-* nnoremap <buffer> <C-p>      gT
@@ -1391,7 +1323,6 @@ endif
 nohlsearch
 filetype plugin indent on
 syntax enable
-doautocmd User MyVimRc
 
 " }}}
 

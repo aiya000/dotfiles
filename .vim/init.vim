@@ -64,29 +64,21 @@ augroup END
 "--------------------"
 " Define keymappings "
 "--------------------"
-" Global {{{
-
 " Override vimrc {{{
 
-augroup NeoKeyMapping
-    " Turn off the neocomplete keymaps
-    autocmd User MyNVimRc inoremap <CR> <CR>
-    autocmd User MyNVimRc inoremap <Tab> <Tab>
+" Disable keymappings of neocomplete, use deoplete.nvim instead in neovim
+inoremap <CR> <CR>
+inoremap <Tab> <Tab>
+inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
+inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
+imap <C-k><C-i> <C-o>:call deoplete#toggle()<CR>
 
-    " deoplete.nvim
-    autocmd User MyNVimRc inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
-    autocmd User MyNVimRc inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
-    autocmd User MyNVimRc imap <C-k><C-i> <C-o>:call deoplete#toggle()<CR>
-
-    " disable vim-over keymaps
-    autocmd User MyNVimRc nunmap :%s/
-    autocmd User MyNVimRc nunmap :s/
-    autocmd User MyNVimRc nnoremap <silent><expr> <C-k><C-s> ':%s/\m\C\<' . expand('<cword>') . '\>/'
-    autocmd User MyNVimRc nnoremap <silent><expr> <C-k>s     ':%s/\m\C\<' . expand('<cword>') . '\>/' . expand('<cword>')
-    autocmd User MyNVimRc vunmap :s/
-augroup END
-
-" }}}
+" Disable keymappings of vim-over, use 'inccommand' instead in neovim
+nunmap :%s/
+nunmap :s/
+vunmap :s/
+nnoremap <expr> <C-k><C-s> ':%s/\m\C\<' . expand('<cword>') . '\>/'
+nnoremap <expr> <C-k>s ':%s/\m\C\<' . expand('<cword>') . '\>/' . expand('<cword>')
 
 " }}}
 
@@ -109,5 +101,3 @@ command! -bar NVimConfigTab tabnew ~/.config/nvim/init.vim
 command! -bar Weechat call nvimrc#open_weechat()
 
 " }}}
-
-doautocmd User MyNVimRc
