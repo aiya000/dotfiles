@@ -331,3 +331,12 @@ on_ft = 'alex'
 repo  = 'apple/swift'
 rtp   = 'utils/vim'
 on_ft = 'swift'
+
+[[plugins]]
+repo = 'osyo-manga/vim-over'
+on_cmd = [
+    'OverCommandLine',
+    'OverCommandLineNoremap',
+    'OverCommandLineMap',
+    'OverCommandLineUnmap',
+]
