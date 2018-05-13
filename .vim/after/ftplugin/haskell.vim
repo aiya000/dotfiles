@@ -8,20 +8,45 @@ let b:undo_ftplugin = 'setl ' . join([
 setl ts=2 sw=2 et conceallevel=0
 let &commentstring = ' -- %s'
 
+" (true)  I'm write implementations now, please tell me compile errors.
+" (false) I finished to write implementations, please be quiet at now.
+let g:vimrc['filetype_haskell'] = {
+    \ 'please_tell_me_compile_errors': v:false,
+\}
+
+function! s:toggle_phases() abort
+    let g:vimrc.filetype_haskell.want_to_tell_me_compile_errors
+        \ = !g:vimrc.filetype_haskell.please_tell_me_compile_errors
+    if g:vimrc.filetype_haskell.want_to_tell_me_compile_errors
+        echo "QuickFix, please tell me compile errors :D"
+    else
+        echo 'QuickFix, please be quiet at now :)'
+    endif
+endfunction
+
+nnoremap <buffer><silent> <C-k><C-n> :<C-u>call <SID>toggle_phases()<CR>
+
 nnoremap <buffer><silent> <localleader>o :<C-u>vsp<CR>:Ghci <C-r>=expand('%:p')<CR><CR>
 nnoremap <buffer><silent> <localleader>O :<C-u>vsp<CR>:Ghcie<CR>
-nnoremap <buffer><silent> <localleader><localleader>r :<C-u>call <SID>open_the_world()<CR>
 nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('stack_test', 'horizontal', 'stack test :tasty-test')<CR>
-nnoremap <buffer><silent> <localleader><localleader>S :<C-u>Snowtify<CR>
 nnoremap <buffer><silent> <localleader><localleader>t :<C-u>call <SID>stack_integrate_test_or_unit_or_both()<CR>
-nnoremap <buffer><silent> <localleader><localleader>b :<C-u>echo 'stack build is started'<CR>:QuickRun stack_build<CR>
-nnoremap <buffer><silent> <localleader><localleader>B :<C-u>call vimrc#open_terminal_as('none', 'horizontal', 'stack build')<CR>
+nnoremap <buffer><silent> <localleader><localleader>r :<C-u>echo 'stack build is started'<CR>:QuickRun stack_build<CR>
+nnoremap <buffer><silent> <localleader><localleader>b :<C-u>call vimrc#open_terminal_as('none', 'horizontal', 'stack build')<CR>
 nnoremap <buffer><silent> <localleader><localleader><localleader>r :<C-u>echo 'stack test is started'<CR>:QuickRun stack_test<CR>
 
 "TODO: Detect a context of Eta, and set filetype=eta, please
 "nnoremap <buffer><silent> <localleader><localleader><localleader>r :<C-u>QuickRun eta<CR>
 "nnoremap <buffer><silent> <localleader><localleader><localleader>b :<C-u>echo 'etlas build is started'<CR>:QuickRun etlas_build<CR>
 "nnoremap <buffer><silent> <localleader><localleader><localleader>B :<C-u>call vimrc#open_terminal_as('none', 'horizontal', 'etlas build')<CR>
+
+augroup FtpluginHaskell
+    autocmd!
+    autocmd BufWrite *.hs
+        \  if g:vimrc.filetype_haskell.please_tell_me_compile_errors
+            \| echo 'stack build is started'
+            \| QuickRun stack_test
+        \| endif
+augroup END
 
 function! s:stack_integrate_test_or_unit_or_both() abort
     echon join(["a: do tasty-test (default)",
@@ -36,17 +61,4 @@ function! s:stack_integrate_test_or_unit_or_both() abort
     \          : answer is char2nr('d') ? ''
     \                                   : ':tasty-test'
     call vimrc#open_terminal_as('stack_test', 'horizontal', 'stack test ' . target)
-endfunction
-
-function! s:open_the_world() abort
-    Ghcid --command='stack ghci :tasty-test'
-    execute 'normal!' "\<C-w>j"
-    call vimrc#open_terminal_as('stack_test', 'vertical', 'stack test :tasty-test')
-    execute 'normal!' "\<C-w>l"
-    vertical copen
-    execute 'normal!' "\<C-w>L"
-    vertical resize 20
-    execute 'normal!' "\<C-w>h\<C-w>j"
-    vertical resize +30
-    execute 'normal!' "\<C-w>k"
 endfunction
