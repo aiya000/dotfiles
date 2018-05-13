@@ -95,6 +95,7 @@ if i_have git ; then
     alias _gclean='git clean -fd'
     alias gpush='git push'
     alias gpull='git pull --rebase'
+    alias gtake='git stash push --message "This is saved by alias.take" && git pull && git stash pop'
     alias greflog='git reflog'
     alias gshow='git show'
     alias gbackstep='git reset --soft HEAD~'
