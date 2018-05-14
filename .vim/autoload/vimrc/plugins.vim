@@ -125,27 +125,26 @@ function! vimrc#plugins#stop_snowtify_watch() abort " {{{
 endfunction " }}}
 
 " Run `haskdogs` command as a job
-"
-" on_exit: a function of () -> ()
-function! vimrc#plugins#execute_haskdogs_async(on_exit) abort " {{{
+function! vimrc#plugins#execute_haskdogs_async() abort " {{{
     if exists('s:haskdogs_job')
         echomsg 'haskdogs is skipped (haskdogs is already running at now)'
         return
     endif
+    echomsg 'haskdogs is started'
 
     let git_top_dir = system('git rev-parse --show-toplevel')[:-2] " [:-2] removes a line break
     let dot_git     = git_top_dir . '/.git' " This is a file (not a directory) if here is a git submodule
     let ctags_path  = isdirectory(dot_git) ? dot_git . '/tags'
-    \                                      : './tags'
+        \                                  : './tags'
 
-    let s:haskdogs_job =
-    \   s:Job.start(printf('haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=%s"', ctags_path), {
-    \      'on_exit' : {x, y, z -> [
-    \           call(a:on_exit, []),
-    \           s:M.echomsg('None', 'haskdogs may generated ctags to ' . ctags_path),
-    \           execute('unlet s:haskdogs_job')
-    \       ]}
-    \   })
+    let cmd = printf('haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=%s"', ctags_path)
+    echomsg 'haskdogs: ' . cmd
+    let s:haskdogs_job = s:Job.start(cmd, {
+        \ 'on_exit' : {x, y, z -> [
+        \      s:M.echomsg('None', 'haskdogs generated ctags to ' . ctags_path),
+        \      execute('unlet s:haskdogs_job')
+        \  ]}
+    \ })
     return s:haskdogs_job
 endfunction " }}}
 

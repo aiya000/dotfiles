@@ -35,7 +35,7 @@ command! -bar -nargs=+ Grep echo {-> [execute('grep ' . <q-args> . ' %', "silent
 command! -bar -nargs=? Snowtify call s:Job.start('snowtify ' . <q-args>)
 command! -bar -nargs=? SnowtifyWatchStart call vimrc#plugins#start_snowtify_watch(<q-args>)
 command! -bar SnowtifyWatchStop call vimrc#plugins#stop_snowtify_watch()
-command! -bar HaskDogs call vimrc#plugins#execute_haskdogs_async({-> execute('echom ""')})
+command! -bar HaskDogs call vimrc#plugins#execute_haskdogs_async()
 command! -bar EtaDogs call vimrc#plugins#execute_haskdogs_in_eta_async()
 
 " dein.vim

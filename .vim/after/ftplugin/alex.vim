@@ -1,3 +1,5 @@
+execute 'source' (g:vimrc['vim_home'] . '/after/ftplugin/haskell.vim')
+
 let b:undo_ftplugin = 'setl ' . join([
     \ 'commentstring<',
 \])
