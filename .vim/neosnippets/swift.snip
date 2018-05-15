@@ -103,7 +103,7 @@ options word
 
 snippet if_let
 options head
-    if let x = ${1:optional} {
+    if let ${1:x} = ${2:optional} {
         ${0:TARGET}
     }
 
@@ -194,6 +194,14 @@ snippet typealias
 alias typedef
     typealias ${1:TypeName} = ${2:BaseType}
 
+snippet throw
+abbr throw
+    throw
+
+snippet throws
+abbr throws
+    throws
+
 # Expression
 
 snippet fatal_error_not_implemnted_yet
@@ -204,3 +212,29 @@ snippet print
 alias println
 abbr print({stuff})
     print(${0:here})
+
+snippet cgrect
+    CGRect(x: ${1:0}, y: ${2:0}, width: ${3:100}, height: ${4:100})
+
+snippet constraints_to_match_parent
+alias match_parent_constraints
+    ${1:parent}.topAnchor.constraint(equalTo: ${2:target}.topAnchor).isActive = true
+    $1.bottomAnchor.constraint(equalTo: $2.bottomAnchor).isActive = true
+    $1.leadingAnchor.constraint(equalTo: $2.leadingAnchor).isActive = true
+    $1.trailingAnchor.constraint(equalTo: $2.trailingAnchor).isActive = true
+
+snippet constraints_to_match_parent_top
+alias match_parent_constraints_top
+    ${1:parent}.topAnchor.constraint(equalTo: ${2:target}.topAnchor).isActive = true
+
+snippet constraints_to_match_parent_bottom
+alias match_parent_constraints_bottom
+    ${1:parent}.bottomAnchor.constraint(equalTo: ${2:target}.bottomAnchor).isActive = true
+
+snippet constraints_to_match_parent_leading
+alias match_parent_constraints_leading
+    ${1:parent}.leadingAnchor.constraint(equalTo: ${2:target}.leadingAnchor).isActive = true
+
+snippet constraints_to_match_parent_trailing
+alias match_parent_constraints_trailing
+    ${1:parent}.trailingAnchor.constraint(equalTo: ${2:target}.trailingAnchor).isActive = true
