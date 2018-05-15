@@ -103,7 +103,7 @@ options word
 
 snippet if_let
 options head
-    if let x = ${1:optional} {
+    if let ${1:x} = ${2:optional} {
         ${0:TARGET}
     }
 
@@ -193,6 +193,14 @@ abbr convenience
 snippet typealias
 alias typedef
     typealias ${1:TypeName} = ${2:BaseType}
+
+snippet throw
+abbr throw
+    throw
+
+snippet throws
+abbr throws
+    throws
 
 # Expression
 

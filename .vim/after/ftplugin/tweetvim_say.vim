@@ -1,11 +1,11 @@
 resize 5
 
 let b:undo_ftplugin = 'setl ' . join([
-\	'number<',
-\	'relativenumber<',
-\	'tabstop<',
-\	'shiftwidth<',
-\	'expandtab<'
+    \ 'number<',
+    \ 'relativenumber<',
+    \ 'tabstop<',
+    \ 'shiftwidth<',
+    \ 'expandtab<'
 \])
 
 setl nonumber
@@ -19,4 +19,4 @@ nnoremap <buffer> <C-j> o<Esc>
 nnoremap <buffer> <localleader>a :<C-u>TweetVimSwitchAccount<Space>
 
 inoremap <buffer> <C-i> <Tab>
-inoremap <buffer> <C-b> <C-o>:TweetVimBitly<CR><C-r>+
+imap <buffer> <C-b> <C-o>:TweetVimBitly<CR><C-r>+

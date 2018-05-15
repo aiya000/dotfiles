@@ -135,11 +135,43 @@ alias ki=killing-art
 i_have tmux && alias t=tmux && alias ta='tmux attach'
 i_have rsync && alias cp-with-progress='rsync --partial --progress'
 i_have watch && alias wifi-hardware-check='watch -n1 rfkill list all'
-i_have ctags && alias ctags-casual='ctags --tag-relative=yes --recurse --sort=yes -f'
 i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have unzip && alias unzip-cp932='unzip -O cp932'
 i_have xdg-open && alias x=xdg-open
-i_have hasktags && alias hasktags-casual='hasktags . --ignore-close-implementation --tags-absolute --ctags -f'
+
+function sh_generic::aliases::tags-auto () {
+    local generate_tag_to git_root tag_place
+    generate_tag_to=$1  # This value is exptected to 'ctags-casual', 'haskdogs-casual', or like it
+    git_root=$(git rev-parse --show-toplevel)
+
+    if [[ -d $git_root/.git ]] ; then
+        tag_place=$git_root/.git/tags
+    elif [[ -f $git_root/.git ]] ; then
+        # If here is a submodule
+        tag_place=$git_root/tags
+    else
+        echo 'an undefined condition is detected! X(' > /dev/stderr
+        exit 1
+    fi
+    eval "$generate_tag_to $tag_place"
+}
+
+if i_have ctags ; then
+    alias ctags-casual='ctags --tag-relative=yes --recurse --sort=yes -f'
+    alias ctags-auto='sh_generic::aliases::tags-auto ctags-casual'
+fi
+
+if i_have hasktags ; then
+    alias hasktags-casual='hasktags . --ignore-close-implementation --tags-absolute --ctags -f'
+    alias hasktags-auto='sh_generic::aliases::tags-auto hasktags-casual'
+fi
+
+if i_have haskdogs ; then
+    function haskdogs-casual () {
+        haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=${1}"
+    }
+    alias haskdogs-auto='sh_generic::aliases::tags-auto haskdogs-casual'
+fi
 
 if i_have stack ; then
     alias sb='stack build'
@@ -162,12 +194,6 @@ if i_have stack ; then
          stack exec -- cabal upload "$1"
     }
     alias make-new-package-yaml='cp ~/.dotfiles/Files/package.yaml .'
-fi
-
-if i_have haskdogs ; then
-    function haskdogs-casual () {
-        haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=${1}"
-    }
 fi
 
 if i_have etlas ; then
