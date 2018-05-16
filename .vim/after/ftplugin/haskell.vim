@@ -15,12 +15,12 @@ let g:vimrc['filetype_haskell'] = {
 \}
 
 function! s:toggle_phases() abort
-    let g:vimrc.filetype_haskell.want_to_tell_me_compile_errors
+    let g:vimrc.filetype_haskell.please_tell_me_compile_errors
         \ = !g:vimrc.filetype_haskell.please_tell_me_compile_errors
-    if g:vimrc.filetype_haskell.want_to_tell_me_compile_errors
+    if g:vimrc.filetype_haskell.please_tell_me_compile_errors
         echo "QuickFix, please tell me compile errors :D"
     else
-        echo 'QuickFix, please be quiet at now :)'
+        echo 'Thanks QuickFix, please be quiet at now :)'
     endif
 endfunction
 
@@ -41,10 +41,10 @@ nnoremap <buffer><silent> <localleader><localleader><localleader>r :<C-u>echo 's
 
 augroup FtpluginHaskell
     autocmd!
-    autocmd BufWrite *.hs
+    autocmd BufWritePost *.hs
         \  if g:vimrc.filetype_haskell.please_tell_me_compile_errors
+            \| call execute('QuickRun stack_test')
             \| echo 'stack build is started'
-            \| QuickRun stack_test
         \| endif
 augroup END
 
