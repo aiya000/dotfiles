@@ -52,6 +52,7 @@ if i_have git ; then
     alias gc='git commit --verbose'
     alias gcam='git commit --verbose --amend'
     alias gcm='git commit -m'
+    alias gcf='git commit --fixup'
     alias gco='git checkout'
     alias gcob='git checkout -b'
     alias gco-='git-checkout-to-a-revision-menu.sh'
@@ -95,7 +96,7 @@ if i_have git ; then
     alias _gclean='git clean -fd'
     alias gpush='git push'
     alias gpull='git pull --rebase'
-    alias gtake='git stash push --message "This is saved by alias.take" && git pull && git stash pop'
+    alias gtake='git stash push --message "This is saved by alias.take" && git pull --rebase && git stash pop'
     alias greflog='git reflog'
     alias gshow='git show'
     alias gbackstep='git reset --soft HEAD~'
@@ -107,6 +108,13 @@ if i_have git ; then
     alias gre='git reset --hard HEAD'
     alias gtree='git log --graph --decorate --oneline'
     alias gtree-all='git log --graph --decorate --oneline --all'
+    alias gw='git worktree'
+    function gwb () {
+        local branch_name=$1
+        git worktree add "$branch_name" -b "$branch_name"
+    }
+    alias gwl='git worktree list'
+    alias _gwp='git worktree prune'
     unset git_taking_limit
 
     # Set casual user.name and user.email at local
