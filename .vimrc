@@ -657,7 +657,6 @@ augroup PluginPrefs
     autocmd BufEnter,BufWinEnter *
         \   call denite#custom#var('outline', 'command', ['ctags'])
         \|  call denite#custom#var('outline', 'options', [])
-        \|  call denite#custom#var('outline', 'file_opt', ['-f']) " an output option of universal-ctags is -f
     autocmd BufEnter,BufWinEnter *.hs
         \   call denite#custom#var('outline', 'command', ['hasktags'])
         \|  call denite#custom#var('outline', 'options', ['--ignore-close-implementation', '--ctags', '-x'])
