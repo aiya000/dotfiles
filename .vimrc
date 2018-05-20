@@ -902,6 +902,8 @@ CmdCnoreabbr Gist Gista post --stay
 " virtual keymappings {{{
 
 cnoremap [Left] <Left>
+nnoremap <silent> [ale-previous] :<C-u>ALEPrevious<CR>
+nnoremap <silent> [ale-next] :<C-u>ALENext<CR>
 
 " }}}
 " normal mode {{{
@@ -1225,8 +1227,9 @@ vnoremap <silent> <leader>k "zy:OpenGoogleTranslate <C-r>z<CR>
 
 " ale
 nnoremap <silent> <C-k><C-a> :<C-u>ALEToggle<CR>
-nnoremap <silent> g{ :<C-u>ALEPrevious<CR>
-nnoremap <silent> g} :<C-u>ALENext<CR>
+" but this doesn't overwrite diff keymaps, please see <C-h><C-d> and vimrc#keys#toggle_diff()
+nmap [c [ale-previous]
+nmap ]c [ale-next]
 
 " incsearch.vim
 nmap g/ <Plug>(incsearch-stay)

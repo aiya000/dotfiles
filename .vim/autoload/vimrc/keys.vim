@@ -45,12 +45,15 @@ endfunction " }}}
 function! vimrc#keys#toggle_diff() " {{{
     if &diff
         diffoff
-        nunmap <buffer> {
-        nunmap <buffer> }
+        "NOTE: This restores a [c and ]c keymaps of .vimrc,
+        "NOTE: please see [c, ]c, [ale-previous], and [ale-next] at .vimrc.
+        nmap <buffer> [c [ale-previous]
+        nmap <buffer> ]c [ale-next]
     else
         diffthis
-        nnoremap <buffer> { [c
-        nnoremap <buffer> } ]c
+        " Get the origin
+        nnoremap <buffer> [c [c
+        nnoremap <buffer> ]c ]c
     endif
     set diff?
 endfunction " }}}
