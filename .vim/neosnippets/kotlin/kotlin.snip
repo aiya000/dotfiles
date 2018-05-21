@@ -52,3 +52,24 @@ options indent
 snippet for
 abbr for (__ in __) {__}
     for (${1} in ${2}) {${0}}
+
+snippet lambda
+alias lam
+    { ${1:x} ->${0}}
+
+snippet import
+    import ${0}
+
+# Expression
+## Android SDK
+
+snippet log_debug
+alias logd
+    Log.d("poi", ${0:here})
+
+snippet iterate
+alias steps
+    Array(${1:5}, ${2:Int->T})
+
+snippet java_array
+    val x: ${1:Int}Array = ${2:int}ArrayOf(${3:#:...})
