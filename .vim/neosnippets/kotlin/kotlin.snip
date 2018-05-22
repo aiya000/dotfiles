@@ -14,6 +14,9 @@ snippet println
 abbr    println(__)
     println(${0})
 
+snippet class
+    class ${1:Name} {${0:here}}
+
 snippet class_without_constructor
 abbr class __ {__}
     class ${1:Name} {${0}}
@@ -35,12 +38,10 @@ abbr companion object {__}
     companion object {${0}}
 
 snippet if
-abbr if (__) __
-    if (${1:#:cond}) ${0}
+    if (${1:#:cond}) {${0}}
 
 snippet else
-abbr else _
-    else ${0}
+    else {${0}}
 
 snippet when
 abbr when __ { __ -> __}
@@ -60,12 +61,19 @@ alias lam
 snippet import
     import ${0}
 
-# Expression
-## Android SDK
+snippet try
+    try {${0:here}}
 
-snippet log_debug
-alias logd
-    Log.d("poi", ${0:here})
+snippet catch
+    catch (${1:e}: ${2:Exception}) {${0:here}}
+
+snippet finally
+    finally {${0:here}}
+
+snippet anonymous_class_instance
+    object : ${1:ParentClass}(${2:#:constrArgs}) {${0}}
+
+# Expression
 
 snippet iterate
 alias steps
@@ -73,3 +81,12 @@ alias steps
 
 snippet java_array
     val x: ${1:Int}Array = ${2:int}ArrayOf(${3:#:...})
+
+snippet synchronized
+    synchronized (${1:lockObject}) {${0}}
+
+## Android SDK
+
+snippet log_debug
+alias logd
+    Log.d("poi", ${0:here})
