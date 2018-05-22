@@ -1,14 +1,14 @@
 # Vim Config
+alias e=vim
 alias vis='vim --split=sp'
 alias viv='vim --split=vsp'
 alias vim='vim --split=tabedit'
 alias nvim='vim --split=tabedit'
-alias vimshell=':VimShellCreate'
 alias new=':VimShellCreate'
 alias vsp=':VimShellCreate -split-command=vsp'
 alias sp=':VimShellCreate -split-command=sp'
 alias tabnew=':VimShellCreate -split-command=tabnew'
-alias reload='vimsh ~/.vimshrc'
+alias rel='vimsh ~/.vimshrc'
 
 ## Override existed names
 alias ls='ls --color=auto --group-directories-first'
@@ -73,6 +73,9 @@ alias greflog='git reflog'
 alias gret='git return'
 alias gtree='git tree'
 alias gtree-all='git tree-all'
+#
+alias cd-git-root='cd "`git rev-parse --show-toplevel`"'
+alias cdg=cd-git-root
 
 # For my plugins
 alias reload-places='reload_places'
