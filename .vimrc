@@ -460,13 +460,13 @@ augroup END
 " Define indent-guides state at global
 "@See('nnoremap <C-h><C-i>')
 "FIXME: Disable if the buffer is &noexpandtab
-let g:vimrc#keys#indent_guides_enable = get(g:, 'vimrc#keys#indent_guides_enable', 1)
+let g:vimrc#keys#indent_guides_enable = get(g:, 'vimrc#keys#indent_guides_enable', v:true)
 augroup FileEvent
     autocmd WinEnter,BufWinEnter * IndentGuidesDisable
-    autocmd WinEnter,BufWinEnter *.{xml,html,css,scss,erb,xaml,fxml,scala,kt,gradle,vim,cs,csproj,ts,js,json,tsx,java,vimspec,sh,zsh,c,h,cpp,hpp,storyboard,swift}
-    \   if g:vimrc#keys#indent_guides_enable
-    \|      IndentGuidesEnable
-    \|  endif
+    autocmd WinEnter,BufWinEnter *.{xml,html,css,scss,erb,xaml,fxml,scala,kt,gradle,vim,cs,csproj,ts,js,json,tsx,java,vimspec,sh,zsh,c,h,cpp,hpp,storyboard,swift},.vimrc
+        \  if g:vimrc#keys#indent_guides_enable
+            \| IndentGuidesEnable
+        \| endif
 augroup END
 
 " }}}
