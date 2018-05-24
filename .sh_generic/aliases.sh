@@ -72,7 +72,7 @@ if i_have git ; then
     alias gr='git rebase'
     alias gra='git rebase --abort'
     alias grc='git rebase --continue'
-    alias gri='git rebase --interactive'
+    alias gri='git rebase --interactive --autosquash'
     alias grm='git rm'
     alias grmc='git rm --cached'
     alias gs='git status'
