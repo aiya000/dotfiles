@@ -70,6 +70,7 @@ command! -bar -nargs=* GDS GitDiffViewer --staged <args>
 command! -bar -nargs=* GDH GitDiffViewer HEAD~ <args>
 command! -bar -nargs=* GCommit Gina commit --verbose <args>
 command! -bar -nargs=* GCAM Gina commit --verbose --amend <args>
+command! -bar -nargs=1 GCF echomsg system('git commit --fixup ' . <q-args>)
 command! -bar -nargs=* GAP terminal git add -p <args>
 command! -bar -nargs=* GTree Gina log --graph --decorate --oneline <args>
 command! -bar -nargs=* GTreeAll GTree --all <args>
