@@ -1227,6 +1227,7 @@ vnoremap <silent> <leader>k "zy:OpenGoogleTranslate <C-r>z<CR>
 
 " ale
 nnoremap <silent> <C-k><C-a> :<C-u>ALEToggle<CR>
+nnoremap <silent> <C-k>a :<C-u>call vimrc#keys#toggle_ale_at_buffer()<CR>
 " but this doesn't overwrite diff keymaps, please see <C-h><C-d> and vimrc#keys#toggle_diff()
 nmap [c [ale-previous]
 nmap ]c [ale-next]
