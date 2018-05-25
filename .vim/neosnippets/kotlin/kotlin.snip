@@ -35,20 +35,40 @@ abbr data class __(val un__: __)
 
 snippet companion_object
 abbr companion object {__}
-    companion object {${0}}
+    companion object {${0:here}}
 
 snippet if
     if (${1:#:cond}) {${0}}
 
 snippet else
-    else {${0}}
+    else {${0:here}}
+
+snippet get
+    get (${0:here})
+
+snippet set
+    set (${0:here})
+
+snippet elvis_operator
+    ?:
+
+snippet force_unwrap_nullable_operator
+    !!
 
 snippet when
-abbr when __ { __ -> __}
 options indent
-    when${1} {
+    when (${1}) {
         ${2} -> ${3}
     }
+
+snippet when_without_arg
+options indent
+    when {
+        ${2} -> ${3}
+    }
+
+snippet init
+    init {${0:here}}
 
 snippet for
 abbr for (__ in __) {__}
@@ -72,6 +92,12 @@ snippet finally
 
 snippet anonymous_class_instance
     object : ${1:ParentClass}(${2:#:constrArgs}) {${0}}
+
+snippet constructor
+    constructor(${1:args})
+
+snippet constructor_delegate_to_parent
+    constructor(${1:args}) : Super(${2:args})
 
 # Expression
 
