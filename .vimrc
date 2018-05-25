@@ -264,99 +264,106 @@ let g:quickrun_no_default_key_mappings = 0
 
 " For *nix environments
 let g:quickrun_config = {
-\   '_': {
-\       'split': '',
-\       'runner': 'system',
-\       'runner/vimproc/updatetime': 10,
-\       'hook/time/enable': 1,
-\       'outputter': 'error',
-\       'outputter/error/error': 'quickfix',
-\       'outputter/error/success': 'buffer',
-\   },
-\   'cpp': {
-\       'cmdopt': '-std=c++17'
-\   },
-\   'java': {
-\       'cmdopt': '-encoding UTF-8 -source 1.8'
-\   },
-\   'cs': {
-\       'command': 'mcs'
-\   },
-\   'vimspec': {
-\       'command' : 'themis',
-\       'cmdopt'  : '--runtimepath ".."',
-\       'exec'    : '%c %o %s:p | tr -d "\r"',
-\       'tempfile':  printf('%s/{tempname()}.vimspec', $TMP)
-\   },
-\   'html': {
-\       'command': 'xdg-open',
-\       'outputter': 'null',
-\       'exec'     : '%c %s:p'
-\   },
-\   'tex': {
-\       'command': 'ptex2pdf',
-\       'cmdopt' : '-l',
-\       'exec'   : '%c %o %s:r'
-\   },
-\   'clojure': {
-\       'command': 'lein',
-\       'cmdopt' : 'exec'
-\   },
-\   'swift': {
-\       'command': 'swift'
-\   },
-\   'scala': {
-\       'cmdopt': '-feature'
-\   },
-\   'brainfuck': {
-\       'command': 'brainfuck'
-\   },
-\   'nico': {
-\       'command': 'nicorun'
-\   },
-\   'haskell': {
-\       'cmdopt': '--ghc-arg=-fprint-explicit-kinds',
-\       'command': 'stack',
-\       'exec': '%c exec runghc -- %o %s',
-\       'runner': 'vimproc',
-\   },
-\   'lhaskell': {
-\       'command': 'stack exec runghc',
-\       'exec': ['grep "^>.*$" %s | sed -r "s/^>//g" > %s:p:r.hs', '%c %o %s:p:r.hs'],
-\       'tempfile': '%{tempname()}.lhs',
-\       'hook/sweep/files': '%S:p:r.hs',
-\   },
-\   'stack_test': {
-\       'command': 'stack',
-\       'cmdopt': 'test',
-\       'exec': '%c %o',
-\       'runner': 'vimproc',
-\       'outputter': 'quickfix',
-\   },
-\   'stack_build': {
-\       'type': 'stack_test',
-\       'cmdopt': 'build',
-\   },
-\   'eta': {
-\       'runner': 'vimproc',
-\   },
-\   'etlas_build': {
-\       'command': 'etlas',
-\       'cmdopt': 'build',
-\       'exec': '%c %o',
-\       'runner': 'vimproc',
-\       'outputter': 'quickfix',
-\   },
-\   'elm': {
-\       'runner': 'vimproc',
-\       'command': 'elm-make',
-\       'cmdopt': '--warn',
-\       'exec': ['%c %s %o --output /tmp/vim-quickrun-elm.html', 'xdg-open /tmp/vim-quickrun-elm.html'],
-\       'tempfile': '%{tempname()}.elm',
-\   },
-\   'idris': {
-\       'cmdopt': '-p base -p prelude -p effects -p contrib',
-\   },
+    \ '_': {
+        \ 'split': '',
+        \ 'runner': 'system',
+        \ 'runner/vimproc/updatetime': 10,
+        \ 'hook/time/enable': 1,
+        \ 'outputter': 'error',
+        \ 'outputter/error/error': 'quickfix',
+        \ 'outputter/error/success': 'buffer',
+    \ },
+    \ 'cpp': {
+        \ 'cmdopt': '-std=c++17',
+    \ },
+    \ 'java': {
+        \ 'cmdopt': '-encoding UTF-8 -source 1.8',
+    \ },
+    \ 'cs': {
+        \ 'command': 'mcs',
+    \ },
+    \ 'vimspec': {
+        \ 'command' : 'themis',
+        \ 'cmdopt'  : '--runtimepath ".."',
+        \ 'exec'    : '%c %o %s:p | tr -d "\r"',
+        \ 'tempfile':  printf('%s/{tempname()}.vimspec', $TMP),
+    \ },
+    \ 'html': {
+        \ 'command': 'xdg-open',
+        \ 'outputter': 'null',
+        \ 'exec'     : '%c %s:p',
+    \ },
+    \ 'tex': {
+        \ 'command': 'ptex2pdf',
+        \ 'cmdopt' : '-l',
+        \ 'exec'   : '%c %o %s:r',
+    \ },
+    \ 'clojure': {
+        \ 'command': 'lein',
+        \ 'cmdopt' : 'exec',
+    \ },
+    \ 'swift': {
+        \ 'command': 'swift',
+    \ },
+    \ 'scala': {
+        \ 'cmdopt': '-feature'
+    \ },
+    \ 'brainfuck': {
+        \ 'command': 'brainfuck'
+    \ },
+    \ 'nico': {
+        \ 'command': 'nicorun'
+    \ },
+    \ 'haskell': {
+        \ 'cmdopt': '--ghc-arg=-fprint-explicit-kinds',
+        \ 'command': 'stack',
+        \ 'exec': '%c exec runghc -- %o %s',
+        \ 'runner': 'vimproc',
+    \ },
+    \ 'lhaskell': {
+        \ 'command': 'stack exec runghc',
+        \ 'exec': ['grep "^>.*$" %s | sed -r "s/^>//g" > %s:p:r.hs', '%c %o %s:p:r.hs'],
+        \ 'tempfile': '%{tempname()}.lhs',
+        \ 'hook/sweep/files': '%S:p:r.hs',
+    \ },
+    \ 'stack_test': {
+        \ 'command': 'stack',
+        \ 'cmdopt': 'test',
+        \ 'exec': '%c %o',
+        \ 'runner': 'vimproc',
+        \ 'outputter': 'quickfix',
+    \ },
+    \ 'stack_build': {
+        \ 'type': 'stack_test',
+        \ 'cmdopt': 'build',
+    \ },
+    \ 'eta': {
+        \ 'runner': 'vimproc',
+    \ },
+    \ 'etlas_build': {
+        \ 'command': 'etlas',
+        \ 'cmdopt': 'build',
+        \ 'exec': '%c %o',
+        \ 'runner': 'vimproc',
+        \ 'outputter': 'quickfix',
+    \ },
+    \ 'elm': {
+        \ 'runner': 'vimproc',
+        \ 'command': 'elm-make',
+        \ 'cmdopt': '--warn',
+        \ 'exec': ['%c %s %o --output /tmp/vim-quickrun-elm.html', 'xdg-open /tmp/vim-quickrun-elm.html'],
+        \ 'tempfile': '%{tempname()}.elm',
+    \ },
+    \ 'idris': {
+        \ 'cmdopt': '-p base -p prelude -p effects -p contrib',
+    \ },
+    \ 'gradle_build': {
+        \ 'runner': 'vimproc',
+        \ 'outputter': 'quickfix',
+        \ 'command': 'gradle',
+        \ 'cmdopt': 'build',
+        \ 'exec': '%c %o',
+    \ },
 \}
 
 " Append config of each environment
