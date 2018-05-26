@@ -3,10 +3,13 @@ let b:undo_ftplugin = 'setl ' . join([
     \ 'sw<',
     \ 'et<',
     \ 'conceallevel<',
+    \ 'commentstring<',
+    \ 'errorformat<',
 \])
 
 setl ts=2 sw=2 et conceallevel=0
 let &commentstring = ' -- %s'
+let &errorformat   = '%f:%l%c:%m' " a format for stack build and stack test
 
 " (true)  I'm write implementations now, please tell me compile errors.
 " (false) I finished to write implementations, please be quiet at now.

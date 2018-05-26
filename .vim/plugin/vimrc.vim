@@ -17,7 +17,7 @@ command! -bar -nargs=1 TestCodeEdit EditOverridden ~/.tmp/Test.<args>
 command! -bar -nargs=1 InsertWebPageTitle execute 'normal! i' . vimrc#cmd#pull_webpage_title(<q-args>)
 
 " r! to scratch buffer
-command! -bar -nargs=* ReadBangBuf call vimrc#cmd#read_bang_to_buf(<q-args>)
+command! -bar -nargs=* ReadBangBuf call vimrc#cmd#read_bato_buf(<q-args>)
 
 " Save session and specify session name automatically
 command! -bar SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
@@ -32,11 +32,9 @@ command! -bar CdGitRoot execute ':cd' system('git rev-parse --show-toplevel')
 command! -bar -nargs=+ Grep echo {-> [execute('grep ' . <q-args> . ' %', "silent!"), execute('copen')]}()
 
 " Haskell
-command! -bar -nargs=? Snowtify call s:Job.start('snowtify ' . <q-args>)
-command! -bar -nargs=? SnowtifyWatchStart call vimrc#plugins#start_snowtify_watch(<q-args>)
-command! -bar SnowtifyWatchStop call vimrc#plugins#stop_snowtify_watch()
 command! -bar HaskDogs call vimrc#plugins#execute_haskdogs_async()
 command! -bar EtaDogs call vimrc#plugins#execute_haskdogs_in_eta_async()
+command! -bar -nargs=* StackWatchExec call vimrc#plugins#watchexec_stack_quickfix(<q-args>)
 
 " dein.vim
 command! -bar DeinInstall   call dein#install()
@@ -76,3 +74,7 @@ command! -bar -nargs=* GTree Gina log --graph --decorate --oneline <args>
 command! -bar -nargs=* GTreeAll GTree --all <args>
 command! -bar -nargs=* GBA Gina branch --all <args>
 command! -bar -nargs=* GBlame Gina blame <args>
+
+" Others
+command! -bar -nargs=* EspeakSay call vimrc#plugins#espeak_say(<q-args>)
+command! -bar EspeakDoesntSay call vimrc#plugins#espeak_doesnt_say()

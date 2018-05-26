@@ -104,26 +104,6 @@ function! vimrc#plugins#tweet_public(...) abort " {{{
     "execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
 endfunction " }}}
 
-" Start the job of `watchexec -w . snowtify {test|build}`
-function! vimrc#plugins#start_snowtify_watch(subcommand_or_empty) abort " {{{
-    let s:snowtify_watch_job = s:Job.start('watchexec -w . snowtify ' . a:subcommand_or_empty)
-endfunction " }}}
-
-" Kill the job of vimrc#plugins#start_snowtify_watch()
-function! vimrc#plugins#stop_snowtify_watch() abort " {{{
-    if exists('s:snowtify_watch_job')
-        if s:snowtify_watch_job.status() ==# 'run'
-            call s:snowtify_watch_job.stop()
-            echo 'snowtify watch is killed'
-        else
-            echo 'snowtify watch is alerady killed'
-        endif
-        unlet s:snowtify_watch_job
-    else
-        echo 'snowtify watch maybe not running'
-    endif
-endfunction " }}}
-
 " Run `haskdogs` command as a job
 function! vimrc#plugins#execute_haskdogs_async() abort " {{{
     if exists('s:haskdogs_job')
@@ -166,3 +146,35 @@ function! vimrc#plugins#execute_haskdogs_in_eta_async() abort " {{{
     endfunction
     call vimrc#plugins#execute_haskdogs_async(function('s:body_of_execute_haskdogs_in_eta_async'))
 endfunction " }}}
+
+function! vimrc#plugins#espeak_say(msg) abort " {{{
+    call  vimrc#plugins#espeak_doesnt_say()
+
+    let options = printf('-s %d -v %s ',
+        \ g:espeak_speed,
+        \ g:espeak_voice,
+    \)
+    let cmd = 'espeak ' . options . shellescape(printf('"%s"', a:msg))
+    "echo system(cmd)
+    let s:espeak_job = s:Job.start(cmd)
+endfunction
+
+function! vimrc#plugins#espeak_doesnt_say() abort
+    if exists('s:espeak_job')
+        silent! call s:espeak_job.stop()
+    endif
+endfunction " }}}
+
+function! vimrc#plugins#watchexec_stack_quickfix(stack_subcmd) abort
+    sp
+    function! s:watchexec_stack_aggregate_output(x, data, z) abort closure
+        for line in a:data
+            caddexpr line
+        endfor
+    endfunction
+    call s:Job.start('watchexec --exts hs,x,y,yaml --restart -- stack ' . a:stack_subcmd, {
+        \ 'on_stdout': function('s:watchexec_stack_aggregate_output'),
+        \ 'on_stderr': function('s:watchexec_stack_aggregate_output'),
+        \})
+    copen
+endfunction
