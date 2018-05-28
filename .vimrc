@@ -692,6 +692,11 @@ let g:LanguageClient_serverCommands = {
 \}
 
 " }}}
+" --- vim-keepeye --- " {{{
+
+let g:keepeye_autostart = v:true
+
+" }}}
 
 call dein#end()
 

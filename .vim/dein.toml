@@ -132,3 +132,6 @@ repo = 'kana/vim-textobj-jabraces'
 
 [[plugins]]
 repo = 'aiya000/lucariox.vim'
+
+[[plugins]]
+repo = 'soywod/vim-keepeye'
