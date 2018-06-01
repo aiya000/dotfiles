@@ -22,7 +22,6 @@ map d closeTab
 map u :restore<Space>
 map gH :tabnew google<CR>
 map gh :open google<CR>
-map gf :viewsource!<CR>
 map <C-a> incrementURLPath
 map <C-x> decrementURLPath
 map <C-n> nextTab
