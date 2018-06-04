@@ -1,0 +1,23 @@
+{
+    "title": "These keymaps overwrites existent keymaps",
+    "rules": [
+        {
+            "description": "don't show emojis in unintended times",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "spacebar",
+                        "modifiers": {
+                            "mandatory": [
+                                "control",
+                                "command"
+                            ]
+                        }
+                    },
+                    "to": []
+                }
+            ]
+        }
+    ]
+}
