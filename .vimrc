@@ -664,6 +664,7 @@ augroup PluginPrefs
     autocmd BufEnter,BufWinEnter *
         \   call denite#custom#var('outline', 'command', ['ctags'])
         \|  call denite#custom#var('outline', 'options', [])
+        \|  call denite#custom#var('outline', 'file_opt', '-o')
     autocmd BufEnter,BufWinEnter *.hs
         \   call denite#custom#var('outline', 'command', ['hasktags'])
         \|  call denite#custom#var('outline', 'options', ['--ignore-close-implementation', '--ctags', '-x'])
