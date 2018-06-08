@@ -1,6 +1,7 @@
-# Syntaxes
+# Syntax
 
 snippet method
+alias func fun
 abbr    void method() {}
     ${1:void} ${2:#:methodName}(${3:#:args}) {
         ${0:TARGET}
@@ -53,16 +54,40 @@ abbr    for ({type} {x} : {xs}) {}
     }
 
 snippet for_with_index
+alias for_traditional
 abbr    for ({var}; {cond}; {effect}) {}
     for (${1:var}; ${2:condition}; ${3:effect}) {
         ${0:TARGET}
     }
 
-# Aliases
+snippet switch
+    switch (${1:var}) {
+        ${0}
+    }
+
+snippet case
+    case ${1:Label}: ${0}
+
+snippet enum
+    enum ${1:Name} {
+        ${0}
+    }
+
+# Annotation
+
+snippet override_annotation
+alias   override
+abbr    @Override
+options head
+    @Override
+
+# Expression
 
 snippet println
 abbr System.out.println(__);
     System.out.println(${0});
+
+# Other
 
 snippet main
 abbr    public static void main(String[] args) {}
@@ -71,34 +96,5 @@ options head
         ${0:TARGET}
     }
 
-snippet override_annotation
-alias   override
-abbr    @Override
-options head
-    @Override
-
-snippet javafx_template
-options head indent
-    import javafx.application.*;
-    import javafx.stage.*;
-    import javafx.scene.*;
-    import javafx.scene.layout.*;
-    import javafx.fxml.*;
-
-    public class Main extends Application {
-        @Override
-        public void start(Stage primaryStage) {
-            try {
-                GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("${1:#:FxmlFilePath}.fxml"));
-                Scene scene = new Scene(root, ${2:540}, ${3:400});
-                primaryStage.setScene(scene);
-                primaryStage.show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        public static void main(String[] args) {
-            launch(args);
-        }
-    }
+snippet public_static_final
+    public static final
