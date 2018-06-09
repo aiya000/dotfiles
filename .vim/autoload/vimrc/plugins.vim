@@ -165,16 +165,28 @@ function! vimrc#plugins#espeak_doesnt_say() abort
     endif
 endfunction " }}}
 
+function! s:caddexpr_on_stout(x, data, z) abort
+    for line in a:data
+        caddexpr line
+    endfor
+endfunction
+
+let s:read_to_quickfix_it = {cmd ->
+    \ s:Job.start(cmd, {
+        \ 'on_stdout': function('s:caddexpr_on_stout'),
+        \ 'on_stderr': function('s:caddexpr_on_stout'),
+    \})
+\}
+
 function! vimrc#plugins#watchexec_stack_quickfix(stack_subcmd) abort
-    sp
-    function! s:watchexec_stack_aggregate_output(x, data, z) abort closure
-        for line in a:data
-            caddexpr line
-        endfor
-    endfunction
-    call s:Job.start('watchexec --exts hs,x,y,yaml --restart -- stack ' . a:stack_subcmd, {
-        \ 'on_stdout': function('s:watchexec_stack_aggregate_output'),
-        \ 'on_stderr': function('s:watchexec_stack_aggregate_output'),
-        \})
+    " Start once without changes
+    call s:read_to_quickfix_it('stack ' . a:stack_subcmd)
+    " And watch
+    call s:read_to_quickfix_it('watchexec --exts hs,x,y,yaml --restart -- stack ' . a:stack_subcmd)
     copen
+endfunction
+
+function! vimrc#plugins#run_stack_quickfix(stack_subcmd) abort
+    call s:read_to_quickfix_it('stack ' . a:stack_subcmd)
+    cwindow
 endfunction

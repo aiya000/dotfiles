@@ -7,6 +7,9 @@ command! -bar -bang -complete=file -nargs=? VnewOverridden vnew<bang> <args> | i
 command! -bar -bang -complete=file -nargs=? EnewOverridden enew<bang> <args> | if empty(&ft) | setf none | endif
 command! -bar -bang -complete=file -nargs=? TabnewOverridden tabnew<bang> <args> | if empty(&ft) | setf none | endif
 
+" Clear quickfix
+command! -bar CClear call setqflist([])
+
 " Rename the file of current buffer
 command! -bar -nargs=1 -complete=file Rename call vimrc#cmd#rename_to(<q-args>)
 
@@ -35,6 +38,8 @@ command! -bar -nargs=+ Grep echo {-> [execute('grep ' . <q-args> . ' %', "silent
 command! -bar HaskDogs call vimrc#plugins#execute_haskdogs_async()
 command! -bar EtaDogs call vimrc#plugins#execute_haskdogs_in_eta_async()
 command! -bar -nargs=* StackWatchExec call vimrc#plugins#watchexec_stack_quickfix(<q-args>)
+command! -bar -nargs=* StackQuickfixRun call vimrc#plugins#run_stack_quickfix(<q-args>)
+"TODO: Detect hs-sonoda/src/Sonoda/Types/Lexer.hs:7:1: warning: [-Wunused-imports] as a warning
 
 " dein.vim
 command! -bar DeinInstall   call dein#install()
