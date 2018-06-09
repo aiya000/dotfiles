@@ -1,4 +1,4 @@
-# Syntaxes
+# Syntax
 
 snippet import
 abbr import {module-name}
@@ -14,21 +14,26 @@ snippet as_of_import
 abbr as {alias-name}
     as ${1:AliasName}
 
+snippet update_record
+alias update up
+    { ${1:object} | ${2:record} = ${0:value} }
 
-# Values
+snippet let
+    let ${1:var} = ${2:value}
+    in ${0}
 
-snippet div_empty
-abbr div [] [{stuff}]
-    div [] [${1:#:stuff}]
+# Expression
 
 snippet to
 abbr |>
     |>
 
+snippet div
+    div [${1:#:stuff}] [${2:#:stuff}]
 
-# Others
+# Other
 
 snippet document_comment
-alias doccom
-abbr {-| {document} -}
-    {-| ${1} -}
+alias doc
+abbr {-|{document}-}
+    {-|${0:here}-}
