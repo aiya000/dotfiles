@@ -221,6 +221,7 @@ on_if = 'expand("%") ==# ".ghci"'
 repo  = 'aiya000/elm-vim'
 rev   = 'aiya000/use-command-bang'
 on_ft = 'elm'
+on_cmd = ['ElmFormat']
 
 [[plugins]]
 repo  = 'aiya000/idris-vim'
@@ -318,10 +319,6 @@ on_map = [
     '<Plug>(operator-reverse-text)',
     '<Plug>(operator-reverse-lines)',
 ]
-
-[[plugins]]
-repo  = 'andy-morris/happy.vim'
-on_ft = 'happy'
 
 [[plugins]]
 repo  = 'vim-scripts/alex.vim'
