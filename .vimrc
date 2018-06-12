@@ -364,6 +364,11 @@ let g:quickrun_config = {
         \ 'cmdopt': 'build',
         \ 'exec': '%c %o',
     \ },
+    \ 'happy': {
+        \ 'runner': 'vimproc',
+        \ 'exec': ['happy %s', 'stack runghc %s:p:r.hs'],
+        \ 'hook/sweep/files': '%S:p:r.hs',
+    \ }
 \}
 
 " Append config of each environment
@@ -586,6 +591,9 @@ let g:aref_web_source = {
 \    'shellcheck': {
 \        'url': 'https://github.com/koalaman/shellcheck/wiki/%s'
 \    },
+\    'elm-search': {
+\        'url': 'http://klaftertief.github.io/elm-search/?q=%s'
+\    },
 \}
 
 let g:aref_web_split_vertically = v:true
@@ -627,10 +635,11 @@ let g:ale_linters = {
 " }}}
 " --- elm-vim --- {{{
 
-let g:elm_setup_keybindings  = 0
+let g:elm_browser_command    = 'xdg-open'
+let g:elm_format_autosave    = 1
 let g:elm_make_output_file   = '/tmp/elm-vim-output.html'
 let g:elm_make_show_warnings = 1
-let g:elm_browser_command    = 'xdg-open'
+let g:elm_setup_keybindings  = 0
 
 " }}}
 " --- vim-fakeclip --- {{{
@@ -893,6 +902,7 @@ CmdCnoreabbr Hoogle     Aref hoogle
 CmdCnoreabbr ShellCheck Aref shellcheck
 CmdCnoreabbr Stackage   Aref stackage
 CmdCnoreabbr Weblio     Aref weblio
+CmdCnoreabbr ElmSearch  Aref elm-search
 
 " vim-open-googletranslate
 CmdCnoreabbr Google OpenGoogleTranslate
@@ -1163,7 +1173,6 @@ nnoremap <silent> L :<C-u>Denite buffer<CR>
 
 " aref-web.vim
 nnoremap <leader>K :<C-u>Aref weblio <C-r>=expand('<cword>')<CR><CR>
-nnoremap <leader>S :<C-u>Aref stackage <C-r>=expand('<cword>')<CR><CR>
 vnoremap <leader>K "zy:<C-u>Aref weblio <C-r>z<CR>
 vnoremap <leader>S "zy:<C-u>Aref stackage <C-r>z<CR>
 
