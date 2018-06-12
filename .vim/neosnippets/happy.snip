@@ -1,4 +1,4 @@
-include haskell/haskell.snip
+include haskell/*.snip
 
 snippet name
 abbr %name {function-name}
@@ -43,6 +43,10 @@ abbr %nonassoc {symbols}
 snippet monad
 abbr %monad { {type} } { {then} } { {return} }
     %monad { ${1:MonadType } }
+
+snippet errorhandlertype
+abbr %errorhandlertype {explist}
+    %errorhandlertype ${1:explist}
 
 # Templates
 
