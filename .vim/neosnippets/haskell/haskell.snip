@@ -104,16 +104,16 @@ abbr ${{an-expression}}
     ${${1:expr}}${0}
 
 snippet cpp_current_file_line
-abbr __FILE__ ++ ":L" ++ show (__LINE__ :: Int)
-    __FILE__ ++ ":L" ++ show (__LINE__ :: Int)
+abbr (__FILE__ :: String) ++ ":L" ++ show (__LINE__ :: Int)
+    (__FILE__ :: String) ++ ":L" ++ show (__LINE__ :: Int)
 
 snippet qq_cpp_current_file_line
 alias cpp_qq_current_file_line current_file_line
-    [${1:i}|${__FILE__}:L${show (__LINE__ :: Int)}${0}|]
+    [${1:i}|${(__FILE__ :: String)}:L${show (__LINE__ :: Int)}${0}|]
 
 snippet raise_fatal_error
 alias fatal_error
-    error [i|${__FILE__}:L${show (__LINE__ :: Int)}: fatal error! Sorry, please report an issue :(|]
+    error [i|${(__FILE__ :: String)}:L${show (__LINE__ :: Int)}: fatal error! Sorry, please report an issue :(|]
 
 snippet expand_debug_modules
 alias unsafe_debug debug_unsafe
