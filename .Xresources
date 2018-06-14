@@ -1,3 +1,6 @@
+# Fix hard seeing dark blue to visible
+*color4: #00ffff
+
 Xft.dpi: 140
 Xft.autohint: 0
 Xft.lcdfilter:  lcddefault
