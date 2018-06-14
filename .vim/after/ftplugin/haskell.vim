@@ -11,31 +11,16 @@ setl ts=2 sw=2 et conceallevel=0
 let &commentstring = ' -- %s'
 let &errorformat   = '%f:%l%c:%m' " a format for stack build and stack test
 
-" (true)  I'm write implementations now, please tell me compile errors.
-" (false) I finished to write implementations, please be quiet at now.
-let g:vimrc['filetype_haskell'] = {
-    \ 'please_tell_me_compile_errors': v:false,
-\}
-
-function! s:toggle_phases() abort
-    let g:vimrc.filetype_haskell.please_tell_me_compile_errors
-        \ = !g:vimrc.filetype_haskell.please_tell_me_compile_errors
-    if g:vimrc.filetype_haskell.please_tell_me_compile_errors
-        echo "QuickFix, please tell me compile errors :D"
-    else
-        echo 'Thanks QuickFix, please be quiet at now :)'
-    endif
-endfunction
-
-nnoremap <buffer><silent> <C-k><C-n> :<C-u>call <SID>toggle_phases()<CR>
-
-nnoremap <buffer><silent> <localleader>o :<C-u>vsp<CR>:Ghci <C-r>=expand('%:p')<CR><CR>
-nnoremap <buffer><silent> <localleader>O :<C-u>vsp<CR>:Ghcie<CR>
-nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('stack_test', 'horizontal', 'stack test :tasty-test')<CR>
-nnoremap <buffer><silent> <localleader><localleader>t :<C-u>call <SID>stack_integrate_test_or_unit_or_both()<CR>
-nnoremap <buffer><silent> <localleader><localleader>r :<C-u>echo 'stack build is started'<CR>:QuickRun stack_build<CR>
-nnoremap <buffer><silent> <localleader><localleader>b :<C-u>call vimrc#open_terminal_as('none', 'horizontal', 'stack build')<CR>
 nnoremap <buffer><silent> <localleader><localleader><localleader>r :<C-u>echo 'stack test is started'<CR>:QuickRun stack_test<CR>
+nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('stack_test', 'horizontal', 'stack test :tasty-test')<CR>
+nnoremap <buffer><silent> <localleader><localleader>W :<C-u>StackWatchExec test :tasty-test<CR>
+nnoremap <buffer><silent> <localleader><localleader>b :<C-u>call vimrc#open_terminal_as('none', 'horizontal', 'stack build')<CR>
+nnoremap <buffer><silent> <localleader><localleader>r :<C-u>echo 'stack build is started'<CR>:QuickRun stack_build<CR>
+nnoremap <buffer><silent> <localleader><localleader>t :<C-u>call <SID>stack_integrate_test_or_unit_or_both()<CR>
+nnoremap <buffer><silent> <localleader><localleader>w :<C-u>StackQuickfixRun test :tasty-test<CR>
+nnoremap <buffer><silent> <localleader>O :<C-u>vsp<CR>:Ghcie<CR>
+nnoremap <buffer><silent> <localleader>S :<C-u>Aref stackage <C-r>=expand('<cword>')<CR><CR>
+nnoremap <buffer><silent> <localleader>o :<C-u>vsp<CR>:Ghci <C-r>=expand('%:p')<CR><CR>
 
 "TODO: Detect a context of Eta, and set filetype=eta, please
 "nnoremap <buffer><silent> <localleader><localleader><localleader>r :<C-u>QuickRun eta<CR>
@@ -44,11 +29,8 @@ nnoremap <buffer><silent> <localleader><localleader><localleader>r :<C-u>echo 's
 
 augroup FtpluginHaskell
     autocmd!
-    autocmd BufWritePost *.hs
-        \  if g:vimrc.filetype_haskell.please_tell_me_compile_errors
-            \| call execute('QuickRun stack_test')
-            \| echo 'stack build is started'
-        \| endif
+    " v for :StackWatchExec
+    autocmd BufWritePost *.hs CClear
 augroup END
 
 function! s:stack_integrate_test_or_unit_or_both() abort
