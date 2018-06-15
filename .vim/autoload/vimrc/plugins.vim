@@ -190,3 +190,12 @@ function! vimrc#plugins#run_stack_quickfix(stack_subcmd) abort
     call s:read_to_quickfix_it('stack ' . a:stack_subcmd)
     cwindow
 endfunction
+
+
+function! vimrc#plugins#quickrun_gradle_build() abort
+    let current_dir = fnameescape(execute('pwd')[1:])
+    echo 'gradle build is started'
+    CdGitRoot
+    QuickRun gradle_build
+    execute 'cd' current_dir
+endfunction
