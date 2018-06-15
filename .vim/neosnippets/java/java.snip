@@ -75,11 +75,19 @@ snippet enum
 
 # Annotation
 
-snippet override_annotation
+snippet annotation_override
 alias   override
 abbr    @Override
 options head
     @Override
+
+snippet annoration_suppress_warnings
+alias suppress_warnings
+    @SuppressWarnings("${0:here}")
+
+snippet annoration_suppress_warnings_serial
+alias suppress_warnings_serial
+    @SuppressWarnings("serial")
 
 # Expression
 
