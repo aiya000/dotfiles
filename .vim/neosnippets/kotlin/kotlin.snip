@@ -1,7 +1,7 @@
 snippet fun
 abbr    fun __(__) { __ }
 options indent
-    fun ${1:funcName}(${2:#:args}) ${0}
+    fun ${1:funcName}(${2:#:args})${0}
 
 snippet main
 abbr    fun main(args: Array<String>) { __ }
@@ -13,6 +13,10 @@ options head indent
 snippet println
 abbr    println(__)
     println(${0})
+
+snippet print_error_line
+alias print_errror_ln
+    System.err.println(${1:here})
 
 snippet class
     class ${1:Name} {${0:here}}
@@ -44,7 +48,7 @@ snippet else
     else {${0:here}}
 
 snippet get
-    get (${0:here})
+    get (${1:#:args}) ${0}
 
 snippet set
     set (${0:here})
@@ -74,6 +78,9 @@ snippet for
 abbr for (__ in __) {__}
     for (${1} in ${2}) {${0}}
 
+snippet while
+    while (${1:cond}) {${0}}
+
 snippet lambda
 alias lam
     { ${1:x} ->${0}}
@@ -100,6 +107,27 @@ snippet constructor
 snippet constructor_delegate_to_parent
     constructor(${1:args}) : Super(${2:args})
 
+snippet return
+    return;
+
+snippet enum_class
+alias enum
+    enum class ${1:Name} {
+        ${0}
+    }
+
+snippet sealed
+    sealed
+
+snippet abstract
+    abstract
+
+snippet override
+    override
+
+snippet operator_overload_get
+    operator fun get(${1:i: Int}): ${2:Int}
+
 # Expression
 
 snippet iterate
@@ -111,6 +139,14 @@ snippet java_array
 
 snippet synchronized
     synchronized (${1:lockObject}) {${0}}
+
+snippet throw_runtime_exception_as_todo_not_implemented_yet
+alias todo undefined not_implemented_yet
+    throw RuntimeException("TODO: Not implemented yet")
+
+# Anotation
+snippet annotation_throws
+    @Throws(${1:SomeException}::class)
 
 ## Android SDK
 
