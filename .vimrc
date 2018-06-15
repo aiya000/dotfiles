@@ -668,6 +668,7 @@ call denite#custom#source('buffer', 'matchers', ['matcher_substring'])
 call denite#custom#source('file_mru', 'matchers', ['matcher_substring'])
 call denite#custom#source('tag', 'matchers', ['matcher_substring'])
 call denite#custom#source('file_rec', 'matchers', ['matcher_substring'])
+call denite#custom#source('file', 'matchers', ['matcher_substring'])
 
 augroup PluginPrefs
     autocmd BufEnter,BufWinEnter *
@@ -915,6 +916,7 @@ CmdCnoreabbr UserTimeline  TweetVimUserTimeline
 CmdCnoreabbr Lingr J6uil
 CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
 CmdCnoreabbr Gist Gista post --stay
+CmdCnoreabbr ReverseLines OperatorReverseLines
 
 " }}}
 
@@ -1163,7 +1165,7 @@ vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
 
 " denite.nvim
 nnoremap          <leader>u  :<C-u>Denite<Space>
-nnoremap <silent> <C-k><C-h> :<C-u>tcd <C-r>=isdirectory(expand('%:p:h')) ? expand('%:p:h') : execute(':pwd')[1:]<CR><CR>:Denite file_rec<CR>
+nnoremap <silent> <C-k><C-e> :<C-u>tcd <C-r>=isdirectory(expand('%:p:h')) ? expand('%:p:h') : execute(':pwd')[1:]<CR><CR>:Denite file<CR>
 nnoremap <silent> <C-k><C-t> :<C-u>Denite tag<CR>
 nnoremap <silent> <C-k><C-f> :<C-u>Denite outline<CR>
 nnoremap <silent> <C-k>f :<C-u>Denite filetype<CR>
