@@ -20,6 +20,25 @@ augroup NeoKeyMapping
 augroup END
 
 " }}}
+" nvim-hs {{{
+
+call remote#host#Register('haskell', "*.l\?hs", {name ->
+    \ jobstart(
+        \ [
+            \ 'stack',
+            \ 'exec',
+            \ 'nvim-hs',
+            \ name.name,
+        \ ], {
+            \ 'rpc' : v:true,
+            \ 'cwd' : expand('$HOME') . '/.config/nvim/my-nvim-hs',
+        \ }
+    \ )
+\ })
+
+let hc = remote#host#Require('haskell')
+
+" }}}
 
 
 "-----------------"

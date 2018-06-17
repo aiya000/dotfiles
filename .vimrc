@@ -703,9 +703,13 @@ let g:LanguageClient_serverCommands = {
 \}
 
 " }}}
-" --- vim-keepeye --- " {{{
+" --- vim-espeak --- " {{{
 
-let g:keepeye_autostart = v:true
+let g:espeak_speed = 100
+let g:espeak_voice = 'en-us'
+"let g:espeak_voice = 'ja'
+
+"autocmd! InsertLeave * execute 'EspeakNgSay' getline('.')
 
 " }}}
 
@@ -1304,6 +1308,11 @@ omap a;f i;f
 " vim-alignta
 vnoremap i: :Alignta =><Space>
 vnoremap <silent> i= :Alignta => =/1<CR>
+
+" vim-espeak-ng
+"nnoremap <silent> <C-g><C-w> :<C-u>EspeakNgSay <C-r>=expand('<cWORD>')<CR><CR>
+"nnoremap <silent> <C-g><C-g> :<C-u>EspeakNgSay <C-r>=getline('.')<CR><CR>:execute 'normal!' "\<C-g>"<CR>
+"nnoremap <silent> <C-g><C-k> :<C-u>EspeakNgDoesntSay<CR>
 
 " }}}
 " filetypes {{{
