@@ -32,6 +32,9 @@ PATH=$PATH:$GOPATH/bin
 # Load haskell-cabal and etc
 PATH=$PATH:$HOME/.local/bin
 
+# yarn
+PATH=$PATH:$HOME/.yarn/bin
+
 # zsh completions
 PATH=$PATH:$ZDOTDIR/zsh_completions
 
