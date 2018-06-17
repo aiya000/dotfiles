@@ -104,6 +104,7 @@ source ~/.zsh/zshrc/prompt.sh
 # {{{
 
 alias history='fc -li 1'
+alias hist=history
 alias reload=". $ZDOTDIR/.zshrc && . $ZDOTDIR/.zprofile && echo '>> the zsh configrations are reloaded'"
 alias rel=reload
 
