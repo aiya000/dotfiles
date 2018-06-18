@@ -105,6 +105,22 @@
                 {
                     "type": "basic",
                     "from": {
+                        "key_code": "3",
+                        "modifiers": {
+                            "mandatory": [
+                                "option"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "shell_command": "/usr/local/bin/chunkc tiling::window --send-to-monitor 3"
+                        }
+                    ]
+                },
+                {
+                    "type": "basic",
+                    "from": {
                         "key_code": "i",
                         "modifiers": {
                             "mandatory": [
