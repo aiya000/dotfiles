@@ -1,56 +1,36 @@
 let s:Job = vital#vimrc#new().import('System.Job')
 
-" buffer open commands with filetype 'none'
+" Vim common
+"" buffer open commands with filetype 'none'
 command! -bar -bang NewOverridden new<bang> | if empty(&ft) | setf none | endif
 command! -bar -bang -complete=file -nargs=? EditOverridden e<bang> <args> | if empty(&ft) | setf none | endif
 command! -bar -bang -complete=file -nargs=? VnewOverridden vnew<bang> <args> | if empty(&ft) | setf none | endif
 command! -bar -bang -complete=file -nargs=? EnewOverridden enew<bang> <args> | if empty(&ft) | setf none | endif
 command! -bar -bang -complete=file -nargs=? TabnewOverridden tabnew<bang> <args> | if empty(&ft) | setf none | endif
-
-" Clear quickfix
+"" Clear quickfix
 command! -bar CClear call setqflist([])
-
-" Rename the file of current buffer
+"" Rename a file of the current buffer
 command! -bar -nargs=1 -complete=file Rename call vimrc#cmd#rename_to(<q-args>)
-
-" Dev
-command! -bar -nargs=1 TestCodeEdit EditOverridden ~/.tmp/Test.<args>
-
-" Pull and Insert <title>\(.*\)</title>
+"" Pull and Insert <title>\(.*\)</title>
 command! -bar -nargs=1 InsertWebPageTitle execute 'normal! i' . vimrc#cmd#pull_webpage_title(<q-args>)
-
-" r! to scratch buffer
-command! -bar -nargs=* ReadBangBuf call vimrc#cmd#read_bato_buf(<q-args>)
-
-" Save session and specify session name automatically
+"" Save session and specify session name automatically
 command! -bar SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
-
-" CSS
+"" CSS
 command! -bar CssShowDecompressed call vimrc#cmd#decompress_to_buffer()
-
-"
+"" Others
 command! -bar -nargs=* Vim call vimrc#open_terminal_as('term-vim', 'stay', 'vim ' . <q-args>)
 command! -bar Memo sp ~/vim-memo.md
 command! -bar CdGitRoot execute ':cd' system('git rev-parse --show-toplevel')
 command! -bar -nargs=+ Grep echo {-> [execute('grep ' . <q-args> . ' %', "silent!"), execute('copen')]}()
 
-" Haskell
+" Developments
+command! -bar -nargs=1 TestCodeEdit EditOverridden ~/.tmp/Test.<args>
+"" Haskell
 command! -bar HaskDogs call vimrc#plugins#execute_haskdogs_async()
 command! -bar EtaDogs call vimrc#plugins#execute_haskdogs_in_eta_async()
 command! -bar -nargs=* StackWatchExec call vimrc#plugins#watchexec_stack_quickfix(<q-args>)
 command! -bar -nargs=* StackQuickfixRun call vimrc#plugins#run_stack_quickfix(<q-args>)
-"TODO: Detect hs-sonoda/src/Sonoda/Types/Lexer.hs:7:1: warning: [-Wunused-imports] as a warning
-
-" dein.vim
-command! -bar DeinInstall   call dein#install()
-command! -bar DeinUpdate    call dein#update()
-command! -bar DeinLog       new | setl buftype=nofile noreadonly modifiable ft=deinlog | put=dein#get_log()
-command! -bar DeinUpdateLog new | setl buftype=nofile noreadonly modifiable ft=deinlog | put=dein#get_updates_log()
-command! -bar DeinRecacheRuntimepath call dein#recache_runtimepath()
-
-" dein-ui.vim
-"command! -bar DeinUpdate SPUpdate
-
+"TODO: ^^^ Detect hs-sonoda/src/Sonoda/Types/Lexer.hs:7:1: warning: [-Wunused-imports] as a warning
 " REPLs
 command! -bar -nargs=? Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 'stay', 'stack exec ghci ' . <q-args>)
 "NOTE: 'e' suffix means 'environment of the project' :D
@@ -64,7 +44,17 @@ command! -bar PythonRepl call vimrc#open_terminal_as('none', 'stay', 'PAGER=cat 
 command! -bar IPyRepl call vimrc#open_terminal_as('none', 'stay', 'ipython')
 command! -bar SwiftRepl call vimrc#open_terminal_as('none', 'stay', 'swift')
 
-" git
+" Plugins
+"" dein.vim
+command! -bar DeinInstall   call dein#install()
+command! -bar DeinUpdate    call dein#update()
+command! -bar DeinLog       new | setl buftype=nofile noreadonly modifiable ft=deinlog | put=dein#get_log()
+command! -bar DeinUpdateLog new | setl buftype=nofile noreadonly modifiable ft=deinlog | put=dein#get_updates_log()
+command! -bar DeinRecacheRuntimepath call dein#recache_runtimepath()
+"" dein-ui.vim
+"command! -bar DeinUpdate SPUpdate
+
+" git commands
 command! -bar -nargs=* GStatus Gina status -s <args>
 command! -bar -nargs=* GLog GitLogViewer -100 --name-only <args>
 command! -bar -nargs=* GLP GitLogViewer --patch -100 <args>
@@ -80,6 +70,6 @@ command! -bar -nargs=* GTreeAll GTree --all <args>
 command! -bar -nargs=* GBA Gina branch --all <args>
 command! -bar -nargs=* GBlame Gina blame <args>
 
-" Others
+" espeak
 command! -bar -nargs=* EspeakSay call vimrc#plugins#espeak_say(<q-args>)
 command! -bar EspeakDoesntSay call vimrc#plugins#espeak_doesnt_say()
