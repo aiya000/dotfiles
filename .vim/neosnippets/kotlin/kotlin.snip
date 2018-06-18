@@ -42,7 +42,7 @@ abbr companion object {__}
     companion object {${0:here}}
 
 snippet if
-    if (${1:#:cond}) {${0}}
+    if (${1:#:cond}) {${0:here}}
 
 snippet else
     else {${0:here}}
@@ -76,14 +76,10 @@ snippet init
 
 snippet for
 abbr for (__ in __) {__}
-    for (${1} in ${2}) {${0}}
+    for (${1} in ${2}) {${0:her}}
 
 snippet while
-    while (${1:cond}) {${0}}
-
-snippet lambda
-alias lam
-    { ${1:x} ->${0}}
+    while (${1:cond}) {${0:here}}
 
 snippet import
     import ${0}
@@ -99,7 +95,7 @@ snippet finally
 
 snippet anonymous_class_instance
 alias object_anonymous_instance object
-    object : ${1:ParentClass}(${2:#:constrArgs}) {${0}}
+    object : ${1:ParentClass}(${2:#:constrArgs}) {${0:here}}
 
 snippet constructor
     constructor(${1:args})
@@ -125,8 +121,17 @@ snippet abstract
 snippet override
     override
 
+snippet tailrec
+    tailrec
+
+snippet typealias
+    typealias
+
 snippet operator_overload_get
     operator fun get(${1:i: Int}): ${2:Int}
+
+snippet operator_overload_iterator
+    operator fun iterator(): Iterator<${1:Type}> ${0}
 
 # Expression
 
