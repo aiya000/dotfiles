@@ -25,6 +25,7 @@ command! -bar -nargs=+ Grep echo {-> [execute('grep ' . <q-args> . ' %', "silent
 
 " Developments
 command! -bar -nargs=1 TestCodeEdit EditOverridden ~/.tmp/Test.<args>
+command! -bar CtagsAuto call vimrc#plugins#ctags_auto()<CR>
 "" Haskell
 command! -bar HaskDogs call vimrc#plugins#execute_haskdogs_async()
 command! -bar EtaDogs call vimrc#plugins#execute_haskdogs_in_eta_async()
