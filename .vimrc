@@ -631,6 +631,7 @@ let g:ale_linters = {
    \ 'html': ['htmlhint', 'tidy'],
    \ 'css': ['csslint', 'stylelint'],
    \ 'kotlin': ['ktlint'],
+   \ 'java': ['checkstyle', 'google-java-format', 'PMD'],
 \}
 
 " }}}
