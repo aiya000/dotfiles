@@ -64,8 +64,10 @@ ifeq ($(UNAME),Linux)
 	sudo make install
 endif
 ifeq ($(UNAME),Darwin)
+	brew install \
+		graphviz plantuml \
+		jq
 	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit # vim-textobj-clang
-	brew install graphviz plantuml
 endif
 ifeq ($(OS),Windows_NT)
 	echo Please define install_on_each_os
