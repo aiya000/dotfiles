@@ -1171,7 +1171,7 @@ vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
 
 " denite.nvim
 nnoremap          <leader>u  :<C-u>Denite<Space>
-nnoremap <silent> <C-k><C-e> :<C-u>tcd <C-r>=isdirectory(expand('%:p:h')) ? expand('%:p:h') : execute(':pwd')[1:]<CR><CR>:Denite file<CR>
+nnoremap <silent> <C-k><C-e> :<C-u>:Denite file<CR>
 nnoremap <silent> <C-k><C-t> :<C-u>Denite tag<CR>
 nnoremap <silent> <C-k><C-f> :<C-u>Denite outline<CR>
 nnoremap <silent> <C-k>f :<C-u>Denite filetype<CR>
