@@ -337,3 +337,23 @@ on_cmd = [
     'OverCommandLineMap',
     'OverCommandLineUnmap',
 ]
+
+[[plugins]]
+repo   = 'thinca/vim-textobj-between'
+on_map = [
+    '<Plug>(textobj-between-a)',
+    '<Plug>(textobj-between-i)',
+]
+
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
+repo        = 'rhysd/vim-operator-surround'
+depends     = 'vim-operator-user'
+hook_source = 'call vimrc#dein#hook_source#operator_surround()'
+on_map      = [
+    '<Plug>(operator-surround-append)',
+    '<Plug>(operator-surround-delete)',
+    '<Plug>(operator-surround-replace)',
+]

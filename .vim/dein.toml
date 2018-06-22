@@ -51,10 +51,6 @@ repo = 'Shougo/neosnippet.vim'
 rev  = 'ddd01d0'
 
 [[plugins]]
-repo = 'tpope/vim-surround'
-rev  = 'e49d6c2'
-
-[[plugins]]
 repo    = 'kana/vim-textobj-indent'
 depends = 'vim-textobj-user'
 
@@ -104,9 +100,6 @@ repo = 'romainl/Apprentice'
 
 [[plugins]]
 repo = 'vim-jp/autofmt'
-
-[[plugins]]
-repo = 'thinca/vim-textobj-between'
 
 [[plugins]]
 repo = 'w0rp/ale'

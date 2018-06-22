@@ -24,7 +24,7 @@
 "------"
 " {{{
 "
-" my gina.vim keymappings are existent in .vim/autoload/vimrc/dein/hook_source.vim
+" Please see .vim/autoload/vimrc/dein/hook_source.vim if you can't find a preference of dein lazily plugins
 " LanguageClient-neovim is for not only neovim, both vim and neovim
 "
 " }}}
@@ -1315,6 +1315,14 @@ vnoremap <silent> i= :Alignta => =/1<CR>
 "nnoremap <silent> <C-g><C-w> :<C-u>EspeakNgSay <C-r>=expand('<cWORD>')<CR><CR>
 "nnoremap <silent> <C-g><C-g> :<C-u>EspeakNgSay <C-r>=getline('.')<CR><CR>:execute 'normal!' "\<C-g>"<CR>
 "nnoremap <silent> <C-g><C-k> :<C-u>EspeakNgDoesntSay<CR>
+
+" vim-operator-surround
+vmap <silent> Sa <Plug>(operator-surround-append)
+vmap <silent> Sd <Plug>(operator-surround-delete)
+vmap <silent> Sc <Plug>(operator-surround-replace)
+omap <silent> Sa <Plug>(operator-surround-append)
+omap <silent> Sd <Plug>(operator-surround-delete)
+omap <silent> Sc <Plug>(operator-surround-replace)
 
 " }}}
 " filetypes {{{
