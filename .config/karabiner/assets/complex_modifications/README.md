@@ -1,0 +1,8 @@
+- accessibility.json
+    - アクセシビリティ関連
+- chunkwm.json
+    - chunkwmの操作について
+- override.json
+    - 既存のキーマッピングを上書きする
+- virtual.json
+    - 普通は押さないようなキーマッピングを定義し、baroccoキーボードの側からそのキーにキーマッピングする

@@ -1,0 +1,48 @@
+{
+    "title": "Virtual keymappings",
+    "rules": [
+        {
+            "description": "not usual (virtual) keymappings for keyborad side keymappings",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "a",
+                        "modifiers": {
+                            "mandatory": [
+                                "control",
+                                "command",
+                                "option",
+                                "shift"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "consumer_key_code": "display_brightness_decrement"
+                        }
+                    ]
+                },
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "b",
+                        "modifiers": {
+                            "mandatory": [
+                                "control",
+                                "command",
+                                "option",
+                                "shift"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "consumer_key_code": "display_brightness_increment"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
