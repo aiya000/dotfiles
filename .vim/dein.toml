@@ -125,7 +125,6 @@ repo = 'kana/vim-fakeclip'
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-rev  = 'f5c29185e5b95a22955c26d1a1cb3ac45d7a0fc6'
 
 [[plugins]]
 repo = 'kana/vim-textobj-jabraces'
