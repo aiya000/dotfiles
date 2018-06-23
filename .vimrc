@@ -714,6 +714,11 @@ let g:espeak_voice = 'en-us'
 "autocmd! InsertLeave * execute 'EspeakNgSay' getline('.')
 
 " }}}
+" --- vim-highlightedyank --- " {{{
+
+let g:highlightedyank_highlight_duration = 200
+
+" }}}
 
 call dein#end()
 
