@@ -127,3 +127,6 @@ repo = 'aiya000/lucariox.vim'
 
 [[plugins]]
 repo = 'machakann/vim-highlightedyank'
+
+[[plugins]]
+repo = 'andymass/vim-matchup'
