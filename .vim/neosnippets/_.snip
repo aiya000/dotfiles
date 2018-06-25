@@ -7,7 +7,19 @@ alias       datef df
 options     word
     `strftime("%Y-%m-%d_%H:%M:%S")`
 
-snippet block
-alias bl
+snippet braces
+alias bra block bl
 options indent
     {${0:here}}
+
+snippet brackets
+alias ba
+    [${0:here}]
+
+snippet parens
+alias pa
+    (${0:here})
+
+snippet angles
+alias an
+    <${0:here}>
