@@ -140,6 +140,11 @@ alias nt=nterminal
 alias cdp=cd-finddir
 alias ki=killing-art
 
+function dustbox () {
+    # shellcheck disable=SC2068
+    mv $@ ~/.backup/dustbox
+}
+
 i_have tmux && alias t=tmux && alias ta='tmux attach'
 i_have rsync && alias cp-with-progress='rsync --partial --progress'
 i_have watch && alias wifi-hardware-check='watch -n1 rfkill list all'
