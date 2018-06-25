@@ -29,8 +29,8 @@ command! -bar CtagsAuto call vimrc#plugins#ctags_auto()<CR>
 "" Haskell
 command! -bar HaskDogs call vimrc#plugins#execute_haskdogs_async()
 command! -bar EtaDogs call vimrc#plugins#execute_haskdogs_in_eta_async()
-command! -bar -nargs=* StackWatchExec call vimrc#plugins#watchexec_stack_quickfix(<q-args>)
-command! -bar -nargs=* StackQuickfixRun call vimrc#plugins#run_stack_quickfix(<q-args>)
+command! -bar -nargs=* WatchExecStack call vimrc#plugins#watchexec_stack_quickfix(<q-args>)
+command! -bar -nargs=* QuickfixRunStack call vimrc#plugins#run_stack_quickfix(<q-args>)
 "TODO: ^^^ Detect hs-sonoda/src/Sonoda/Types/Lexer.hs:7:1: warning: [-Wunused-imports] as a warning
 " REPLs
 command! -bar -nargs=? Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 'stay', 'stack exec ghci ' . <q-args>)
