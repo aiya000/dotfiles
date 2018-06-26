@@ -37,6 +37,8 @@ map <C-=> zoomPageOrig
 map <leader>l <C-l>
 map <C-k><C-l> :nohlsearch<CR>
 
+unmap gf
+
 "cnoremap <C-p> <S-Up>
 "cnoremap <C-n> <S-Down>
 "cnoremap <C-b> <Left>
