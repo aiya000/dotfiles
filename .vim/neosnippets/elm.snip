@@ -5,8 +5,8 @@ abbr import {module-name}
 options head
     import ${1:ModuleName}
 
-snippet exposing_of_import
-alias exposing
+snippet exposing
+alias exp
 abbr exposing ({stuffs})
     exposing (${2:stuffs})
 
@@ -22,11 +22,29 @@ snippet let
     let ${1:var} = ${2:value}
     in ${0}
 
+snippet case
+    case ${1:var} of
+        ${2:pattern} -> ${0}
+
+snippet if
+    if ${1:cond} then ${2:expr} else ${3:expr}
+
+snippet module
+    module ${1:Name} exposing (${0:here})
+
+snippet lambda
+alias lam
+    \\${1:var} -> ${0}
+
 # Expression
 
 snippet to
 abbr |>
     |>
+
+snippet from
+abbr <|
+    <|
 
 snippet div
     div [${1:#:stuff}] [${2:#:stuff}]
