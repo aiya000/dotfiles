@@ -17,6 +17,9 @@ snippet pragma_ann_hlint_ignore_use_camel_case
 abbr {-# ANN {target} "HLint: ignore {message}" #-}
     {-# ANN module "HLint: ignore Use camelCase" #-}
 
+snippet pragma_noinline
+    {-# NOINLINE ${0:funcName} #-}
+
 snippet pragma_language
 abbr    {-# LANGUAGE __ #-}
 options head

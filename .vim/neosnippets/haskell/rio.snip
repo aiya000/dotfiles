@@ -1,0 +1,7 @@
+snippet rio_has_pattern
+alias has_pattern
+    class Has${1:EnvName} ${2:envName} where
+        $2L :: Lens' $2 $1
+
+    instance Has$1 $1 where
+        $2L = id
