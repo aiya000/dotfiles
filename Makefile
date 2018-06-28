@@ -38,7 +38,7 @@ install_with_stack:
 	stack install
 
 install_with_npm:
-	sudo -H npm install -g doctoc shiba textlint
+	sudo -H npm install -g doctoc shiba textlint pretty-xml
 
 install_with_pip:
 	sudo -H pip install neovim grip
