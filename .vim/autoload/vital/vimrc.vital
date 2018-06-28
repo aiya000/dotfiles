@@ -1,5 +1,14 @@
 vimrc
-96e7b70d9c646a19030633c143ec68854f0169b0
+25af587b280ff5b3ef58dbdd336d789709be0953
 
 Data.List
 Data.String
+Web.JSON
+Vim.Message
+Web.HTML
+Web.HTTP
+Web.XML
+Data.Optional
+Data.Closure
+Math
+System.Job
