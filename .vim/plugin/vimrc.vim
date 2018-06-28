@@ -44,6 +44,7 @@ command! -bar ElmRepl call vimrc#open_terminal_as('term-elm-repl', 'stay', 'elm 
 command! -bar PythonRepl call vimrc#open_terminal_as('none', 'stay', 'PAGER=cat python')
 command! -bar IPyRepl call vimrc#open_terminal_as('none', 'stay', 'ipython')
 command! -bar SwiftRepl call vimrc#open_terminal_as('none', 'stay', 'swift')
+command! -bar KotlinRepl call vimrc#open_terminal_as('none', 'stay', 'kotlinc-jvm')
 
 " Plugins
 "" dein.vim
