@@ -108,7 +108,7 @@ repo = 'w0rp/ale'
 repo = 'vim-jp/vital.vim'
 
 [[plugins]]
-repo = 'lambdalisue/vital-System-Job'
+repo = 'lambdalisue/vital-Whisky'
 
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
