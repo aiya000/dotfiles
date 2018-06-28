@@ -151,7 +151,7 @@ snippet synchronized
 
 snippet throw_runtime_exception_as_todo_not_implemented_yet
 alias todo undefined not_implemented_yet
-    throw RuntimeException("TODO: Not implemented yet")
+    throw RuntimeException("TODO: Not implemented yet (${1:#:piece})")${0}
 
 # Anotation
 snippet annotation_throws
