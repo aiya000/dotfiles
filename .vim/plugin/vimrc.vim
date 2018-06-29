@@ -32,6 +32,8 @@ command! -bar EtaDogs call vimrc#plugins#execute_haskdogs_in_eta_async()
 command! -bar -nargs=* WatchExecStack call vimrc#plugins#watchexec_stack_quickfix(<q-args>)
 command! -bar -nargs=* QuickfixRunStack call vimrc#plugins#run_stack_quickfix(<q-args>)
 "TODO: ^^^ Detect hs-sonoda/src/Sonoda/Types/Lexer.hs:7:1: warning: [-Wunused-imports] as a warning
+" Kotlin
+command! -bar KtlintAutoFix call system('ktlint --format ' . fnameescape(expand('%'))) | edit %
 " REPLs
 command! -bar -nargs=? Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 'stay', 'stack exec ghci ' . <q-args>)
 "NOTE: 'e' suffix means 'environment of the project' :D
