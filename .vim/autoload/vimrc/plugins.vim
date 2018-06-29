@@ -192,14 +192,6 @@ function! vimrc#plugins#run_stack_quickfix(stack_subcmd) abort
 endfunction
 
 
-function! vimrc#plugins#quickrun_gradle_build() abort
-    let current_dir = fnameescape(execute('pwd')[1:])
-    echo 'gradle build is started'
-    CdGitRoot
-    QuickRun gradle_build
-    execute 'cd' current_dir
-endfunction
-
 function! vimrc#plugins#ctags_auto() abort
     if exists('s:ctags_job')
         echomsg 'ctags is skipped (ctags is already running at now)'
