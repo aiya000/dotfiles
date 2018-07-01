@@ -204,7 +204,7 @@ if i_have stack ; then
     alias stack-build-profile='stack build --profile'
     alias cabal-sdit='stack exec -- cabal sdist'
     function cabal-upload() {
-         stack exec -- cabal upload "$1"
+        stack exec -- cabal upload "$1"
     }
     alias make-new-package-yaml='cp ~/.dotfiles/Files/package.yaml .'
 fi
@@ -234,6 +234,10 @@ if i_have idris ; then
     alias runidris=run-idris
 fi
 
+if i_have npm ; then
+    alias nr='npm run'
+fi
+
 if i_have docker ; then
     alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
     alias dps='docker ps'
@@ -251,6 +255,7 @@ alias mount4u.ext2='sudo mount -o iocharset=utf8'
 alias mount4u.ext3=mount4u.ext2
 alias mount4u.ext4=mount4u.ext2
 
+# TODO: Add the completion
 function cat-which () {
     cat "$(which "$1")"
 }
