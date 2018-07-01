@@ -1,4 +1,4 @@
-# Fix hard seeing dark blue to visible
+! Fix hard seeing dark blue to visible
 *color4: #00ffff
 
 Xft.dpi: 140
@@ -13,7 +13,7 @@ dzen2.font:       -*-fixed-*-*-*-*-*-*-*-*-*-*-*-*
 dzen2.foreground: #22EE11
 dzen2.background: black
 
-URxvt.font: xft:Ricty:Regular:size=10:antialias=true
+URxvt.font: xft:Ricty:Regular:size=14:antialias=true
 URxvt.letterSpace: 1
 URxvt.foreground: White
 URxvt.background: black
