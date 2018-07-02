@@ -137,6 +137,20 @@ snippet operator_overload_get
 snippet operator_overload_iterator
     operator fun iterator(): Iterator<${1:Type}> ${0}
 
+# Anotation
+snippet annotation_throws
+    @Throws(${1:SomeException}::class)
+
+## Android SDK
+
+snippet log_debug
+alias logd
+    Log.d("poi", ${0:here})
+
+snippet log_error
+alias loge
+    Log.e("poi", ${0:here})
+
 # Expression
 
 snippet iterate
@@ -157,16 +171,13 @@ snippet throw_runtime_exception_as_fatal_error
 alias fatal_error
     throw RuntimeException("fatal error! ${1:message}")
 
-# Anotation
-snippet annotation_throws
-    @Throws(${1:SomeException}::class)
+# Template
 
-## Android SDK
+snippet define_sum_types
+alias sum_types declare_sum_types
+    sealed class ${1:TypeName} {
+        data class ${2:TermName}(${3:#:fields}) : $1()${0}
+    }
 
-snippet log_debug
-alias logd
-    Log.d("poi", ${0:here})
-
-snippet log_error
-alias loge
-    Log.e("poi", ${0:here})
+snippet override_to_string
+        override fun toString(): String ${0}
