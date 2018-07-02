@@ -313,9 +313,10 @@ rtp    = 'plugins/nvim'
 on_cmd = ['Ghcid', 'GhcidKill']
 
 [[plugins]]
-repo   = 'tyru/operator-reverse.vim'
-on_cmd = 'OperatorReverseLines'
-on_map = [
+repo    = 'tyru/operator-reverse.vim'
+depends = 'vim-operator-user'
+on_cmd  = 'OperatorReverseLines'
+on_map  = [
     '<Plug>(operator-reverse-text)',
     '<Plug>(operator-reverse-lines)',
 ]
