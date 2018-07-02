@@ -1097,9 +1097,6 @@ cnoremap <C-y> <Down>
 vnoremap zo zogv
 vnoremap zO zOgv
 
-" others
-vnoremap <C-l> <Esc>
-vnoremap <leader>s :sort<CR>
 " Don't select blanks
 vnoremap a" 2i"
 onoremap a" 2i"
@@ -1107,6 +1104,20 @@ vnoremap a' 2i'
 onoremap a' 2i'
 vnoremap a` 2i`
 onoremap a` 2i`
+
+" brackets
+vnoremap ak a[
+onoremap ak a[
+vnoremap aK a<
+onoremap aK a<
+vnoremap ik i[
+onoremap ik i[
+vnoremap iK i<
+onoremap iK i<
+
+" others
+vnoremap <C-l> <Esc>
+vnoremap <leader>s :sort<CR>
 
 " }}}
 " select mode {{{
