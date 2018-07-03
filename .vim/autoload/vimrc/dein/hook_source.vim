@@ -1,4 +1,4 @@
-function! vimrc#dein#hook_source#gina() abort
+function! vimrc#dein#hook_source#gina() abort " {{{
     call gina#custom#mapping#nmap('status' , 'o'     , ':<C-u>call gina#action#call("edit")<CR>'                , {'noremap': 1 , 'silent': 1})
     call gina#custom#mapping#nmap('status' , 'Q'     , ':<C-u>bdelete!<CR>'                                     , {'noremap': 1 , 'silent': 1})
     call gina#custom#mapping#nmap('status' , 'cc'    , ':<C-u>Gina commit --verbose<CR>'                        , {'noremap': 1 , 'silent': 1})
@@ -12,9 +12,9 @@ function! vimrc#dein#hook_source#gina() abort
 
     call gina#custom#mapping#nmap('branch' , 'Q' , ':<C-u>bdelete!<CR>' , {'noremap': 1 , 'silent': 1})
     call gina#custom#mapping#nmap('log'    , 'Q' , ':<C-u>bdelete!<CR>' , {'noremap': 1 , 'silent': 1})
-endfunction
+endfunction " }}}
 
-function! vimrc#dein#hook_source#LanguageClient_neovim() abort
+function! vimrc#dein#hook_source#LanguageClient_neovim() abort " {{{
     augroup DeinHookSourceLanguageClient
         autocmd!
         " Please see vimrc#set#tabline_as_statusline() for g:vimrc.language_client_neovim
@@ -27,15 +27,15 @@ function! vimrc#dein#hook_source#LanguageClient_neovim() abort
         autocmd User LanguageClientStopped
             \ let &completefunc = s:prev_completefunc
     augroup END
-endfunction
+endfunction " }}}
 
-function! vimrc#dein#hook_source#operator_surround() abort
+function! vimrc#dein#hook_source#operator_surround() abort " {{{
     let g:operator#surround#blocks = {
         \ '-' : [
             \ { 'block' : ['(', ')'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['(', ')', 'b'] },
-            \ { 'block' : ['[', ']'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['[', ']'] },
+            \ { 'block' : ['[', ']'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['[', ']', 'k'] },
             \ { 'block' : ['{', '}'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['{', '}', 'B'] },
-            \ { 'block' : ['<', '>'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['<', '>'] },
+            \ { 'block' : ['<', '>'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['<', '>', 'K'] },
             \ { 'block' : ['"', '"'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['"'] },
             \ { 'block' : ["'", "'"], 'motionwise' : ['char', 'line', 'block'], 'keys' : ["'"] },
             \ { 'block' : ['`', '`'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['`'] },
@@ -43,9 +43,9 @@ function! vimrc#dein#hook_source#operator_surround() abort
             \ { 'block' : ['( ', ' )'], 'motionwise' : ['char', 'line', 'block'], 'keys' : [' (', ' )'] },
             \ { 'block' : ['{ ', ' }'], 'motionwise' : ['char', 'line', 'block'], 'keys' : [' {', ' }'] },
             \ { 'block' : ['（', '）'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['（', ' ）', 'j(', 'j)', 'jb'] },
-            \ { 'block' : ['「', '」'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['「', ' 」', 'j[', 'j]'] },
+            \ { 'block' : ['「', '」'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['「', ' 」', 'j[', 'j]', 'jk'] },
             \ { 'block' : ['｛', '｝'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['｛', ' ｝', 'j{', 'j}', 'jB'] },
-            \ { 'block' : ['＜', '＞'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['＜', ' ＞', 'j<', 'j>'] },
+            \ { 'block' : ['＜', '＞'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['＜', ' ＞', 'j<', 'j>', 'jK'] },
         \ ],
     \ }
-endfunction
+endfunction " }}}
