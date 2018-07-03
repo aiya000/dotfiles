@@ -1028,12 +1028,12 @@ nnoremap <silent> <C-[><C-v> :<C-u>call vimrc#keys#toggle_shell_mode()<CR>
 nnoremap <silent> <C-h><C-d> :<C-u>call vimrc#keys#toggle_diff()<CR>
 nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
 nnoremap <silent><expr> zm ':setl foldmethod=' . (&foldmethod ==# 'marker' ? 'syntax' : 'marker') . ' foldmethod?<CR>'
-nnoremap <silent> <C-h><C-w> :<C-u>setl wrap! wrap? <CR>
-nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline! cursorline? <CR>
+nnoremap <silent> <C-h><C-w> :<C-u>setl wrap! wrap?<CR>
+nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline! cursorline?<CR>
 nnoremap <silent> <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
-nnoremap <silent> <C-h><C-l> :<C-u>setl list! list? <CR>
-nnoremap <silent> <C-h><C-n> :<C-u>setl number! number? <CR>
-nnoremap <silent> <C-h><C-s> :<C-u>setl wrapscan! wrapscan? <CR>
+nnoremap <silent> <C-h><C-l> :<C-u>setl list! list?<CR>
+nnoremap <silent> <C-h><C-n> :<C-u>setl number! number?<CR>
+nnoremap <silent> <C-h><C-s> :<C-u>if exists("g:syntax_on") \| syntax off \| else \| syntax on \| endif<CR>
 
 " others
 nmap <C-j> <CR>
