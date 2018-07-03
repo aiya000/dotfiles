@@ -3,16 +3,17 @@ let s:Math = s:V.import('Math')
 let s:O    = s:V.import('Data.Optional')
 
 let b:undo_ftplugin = 'setl ' . join([
-\   'statusline<',
-\   'nonumber<',
-\   'norelativenumber<',
-\   'cursorline',
-\   'nolist<',
+  \ 'statusline<',
+  \ 'nonumber<',
+  \ 'norelativenumber<',
+  \ 'cursorline',
+  \ 'nolist<',
+  \ 'wrap<',
 \])
 
 setl statusline+=\ %L
 setl nonumber norelativenumber
-setl cursorline nolist
+setl cursorline nolist wrap
 
 nnoremap <buffer> Q :<C-u>bdelete<CR>
 nnoremap <buffer> <C-j> <CR>
