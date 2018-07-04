@@ -1,10 +1,10 @@
 let b:undo_ftplugin = 'setl ' . join([
-    \ 'ts<',
-    \ 'sw<',
-    \ 'et<',
-    \ 'conceallevel<',
-    \ 'commentstring<',
-    \ 'errorformat<',
+  \ 'ts<',
+  \ 'sw<',
+  \ 'et<',
+  \ 'conceallevel<',
+  \ 'commentstring<',
+  \ 'errorformat<',
 \])
 
 setl ts=2 sw=2 et conceallevel=0
@@ -28,22 +28,24 @@ nnoremap <buffer><silent> <localleader>o :<C-u>vsp<CR>:Ghci <C-r>=expand('%:p')<
 "nnoremap <buffer><silent> <localleader><localleader><localleader>B :<C-u>call vimrc#open_terminal_as('none', 'horizontal', 'etlas build')<CR>
 
 augroup FtpluginHaskell
-    autocmd!
-    " v for :StackWatchExec
-    autocmd BufWritePost *.hs CClear
+  autocmd!
+  " v for :StackWatchExec
+  "TODO: CClear in StackWatchExec
+  autocmd BufWritePost *.hs CClear
 augroup END
 
 function! s:stack_integrate_test_or_unit_or_both() abort
-    echon join(["a: do tasty-test (default)",
-        \       "b: do doctest",
-        \       "c: do liquid-haskell",
-        \       "d: all",
-        \       ], "\n")
-    let answer = getchar()
-    let target = answer is char2nr('a') ? ':tasty-test'
-    \          : answer is char2nr('b') ? ':doctest'
-    \          : answer is char2nr('c') ? 'liquid-haskell'
-    \          : answer is char2nr('d') ? ''
-    \                                   : ':tasty-test'
-    call vimrc#open_terminal_as('stack_test', 'horizontal', 'stack test ' . target)
+  echon join([
+    \ "a: do tasty-test (default)",
+    \ "b: do doctest",
+    \ "c: do liquid-haskell",
+    \ "d: all",
+  \ ], "\n")
+  let answer = getchar()
+  let target = answer is char2nr('a') ? ':tasty-test'
+  \          : answer is char2nr('b') ? ':doctest'
+  \          : answer is char2nr('c') ? 'liquid-haskell'
+  \          : answer is char2nr('d') ? ''
+  \                                   : ':tasty-test'
+  call vimrc#open_terminal_as('stack_test', 'horizontal', 'stack test ' . target)
 endfunction

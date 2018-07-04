@@ -2,6 +2,8 @@ let s:V = vital#vimrc#new()
 let s:M = s:V.import('Vim.Message')
 let s:Job = s:V.import('System.Job')
 
+" TODO: Move functions to the ftplugin
+
 " Append quickrun config for windows
 function! vimrc#plugins#append_config_quickrun_windows() abort " {{{
     " C#

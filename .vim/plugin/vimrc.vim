@@ -1,5 +1,7 @@
 let s:Job = vital#vimrc#new().import('System.Job')
 
+"TODO: Move commands to the ftplugin
+
 " Vim common
 "" buffer open commands with filetype 'none'
 command! -bar -bang NewOverridden new<bang> | if empty(&ft) | setf none | endif

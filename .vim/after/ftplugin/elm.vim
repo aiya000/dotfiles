@@ -40,14 +40,16 @@ function! s:show_quickfix(exit_code) abort dict
     " If no errors are gotten
     caddexpr output
     copen
+    execute 'normal!' "\<C-w>p"
     return
   endtry
 
   for error in errors
-    let msg = printf('%s (%s - %s)', error.type, error.tag, error.details)
+    let msg = printf('%s %s - %s', error.type, error.tag, error.details)
     caddexpr printf('%s:%d:%d: %s', error.file, error.region.start.line, error.region.start.column, msg)
   endfor
   copen
+  execute 'normal!' "\<C-w>p"
 endfunction
 
 function! s:start_quickfix(file) abort
