@@ -47,6 +47,8 @@ install_on_each_os:
 	# vim depends
 	git clone https://github.com/jszakmeister/markdown2ctags ~/git/markdown2ctags
 	ln -s ~/git/markdown2ctags/markdown2ctags.py ~/bin
+	# kotlin
+	curl -o ~/bin/ktlint -SLO https://github.com/shyiko/ktlint/releases/download/0.24.0/ktlint && chmod +x ~/bin/ktlint
 ifeq ($(UNAME),Linux)
 	yaourt -S --noconfirm \
 		git neovim tmux autoreconf redshift nightshift \
