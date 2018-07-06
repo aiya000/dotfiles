@@ -724,7 +724,7 @@ set backspace=indent,eol,start
 set nowrapscan visualbell notimeout
 set fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
 set path=.,,./** shellslash
-set matchpairs+=<:>,（:）,｛:｝,「:」,＜:＞
+set matchpairs+=<:>,（:）,｛:｝,「:」,＜:＞,『:』
 set browsedir=buffer spelllang=en_US,cjk suffixes=
 set hidden
 
@@ -735,7 +735,7 @@ endif
 " See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer)
 let &statusline = '%1*[%F(%n)]%*'
     \           . '%2*[FT=%y]%*'
-    \           . '[%03v]'
+    \           . '[%l,%v]'
     \           . '[Fenc=%{&fileencoding}]'
     \           . '[Enc=%{&encoding}]'
     \           . '%3*%m%*'
