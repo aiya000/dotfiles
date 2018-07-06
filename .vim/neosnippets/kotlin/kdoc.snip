@@ -6,11 +6,15 @@ alias document_comment_block doc
 
 snippet kdoc_param
 alias param
-    @param ${0}
+    @param ${1:paramName} ${2:description}
 
 snippet kdoc_property
 alias property
-    @property ${0}
+    @property${0}
 
 snippet kdoc_constructor
-    @constructor ${0}
+    @constructor${0}
+
+snippet kdoc_see
+alias see
+    @see${0:identifier}
