@@ -1105,11 +1105,25 @@ onoremap a' 2i'
 vnoremap a` 2i`
 onoremap a` 2i`
 
+" quotes
+vnoremap ab 2i`
+onoremap ab 2i`
+vnoremap ib i`
+onoremap ib i`
+
 " brackets
+vnoremap ap a(
+onoremap ap a(
+vnoremap aP a{
+onoremap aP a{
 vnoremap ak a[
 onoremap ak a[
 vnoremap aK a<
 onoremap aK a<
+vnoremap ip i(
+onoremap ip i(
+vnoremap iP i{
+onoremap iP i{
 vnoremap ik i[
 onoremap ik i[
 vnoremap iK i<
@@ -1249,10 +1263,10 @@ vmap <expr> al textobj#from_regexp#mapexpr('^.*$')
 vmap <expr> il textobj#from_regexp#mapexpr('^\s*\zs.*\ze.*$')
 
 " vim-textobj-between
-vmap a* <Plug>(textobj-between-a)
-vmap i* <Plug>(textobj-between-i)
-omap a* <Plug>(textobj-between-a)
-omap i* <Plug>(textobj-between-i)
+vmap ab <Plug>(textobj-between-a)
+vmap ib <Plug>(textobj-between-i)
+omap ab <Plug>(textobj-between-a)
+omap ib <Plug>(textobj-between-i)
 
 " vim-open-googletranslate
 vnoremap <silent> <leader>k "zy:OpenGoogleTranslate <C-r>z<CR>
@@ -1325,6 +1339,12 @@ vmap <silent> Sc <Plug>(operator-surround-replace)
 omap <silent> Sa <Plug>(operator-surround-append)
 omap <silent> Sd <Plug>(operator-surround-delete)
 omap <silent> Sc <Plug>(operator-surround-replace)
+
+" vim-textobj-jabraces
+vmap ijp <Plug>(textobj-jabraces-parens-i)
+omap ijp <Plug>(textobj-jabraces-parens-i)
+vmap ajp <Plug>(textobj-jabraces-parens-a)
+omap ajp <Plug>(textobj-jabraces-parens-a)
 
 " }}}
 " filetypes {{{
