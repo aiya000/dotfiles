@@ -38,7 +38,7 @@ install_with_stack:
 	stack install
 
 install_with_npm:
-	sudo -H npm install -g doctoc shiba textlint pretty-xml
+	sudo -H npm install -g doctoc shiba textlint htmlhint csslint pretty-xml
 
 install_with_pip:
 	sudo -H pip install neovim grip
@@ -51,12 +51,14 @@ install_on_each_os:
 	curl -o ~/bin/ktlint -SLO https://github.com/shyiko/ktlint/releases/download/0.24.0/ktlint && chmod +x ~/bin/ktlint
 ifeq ($(UNAME),Linux)
 	yaourt -S --noconfirm \
-		git neovim tmux autoreconf redshift nightshift \
 		z3 \ # liquidhaskell
 		haskell-ide-engine \ # LanguageClient-neovim
-		dzen2 rxvt-unicode \ # xmonad
+		dzen2 rxvt-unicode slock \ # xmonad
 		sox \ # ~/.sh_generic/bin/say-result
-		llvm # vim-textobj-clang
+		llvm \ # vim-textobj-clang
+		git neovim tmux autoreconf \
+		redshift nightshift arandr \
+		espeak-ng watchexec
 	# Fix East Asian Ambiguous character width problems
 	git clone https://github.com/fumiyas/wcwidth-cjk ~/git/wcwidth-cjk
 	cd ~/git/wcwidth-cjk
