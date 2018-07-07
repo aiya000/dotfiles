@@ -130,3 +130,6 @@ repo = 'machakann/vim-highlightedyank'
 
 [[plugins]]
 repo = 'andymass/vim-matchup'
+
+[[plugins]]
+repo = 'ujihisa/unite-colorscheme'
