@@ -1263,10 +1263,10 @@ vmap <expr> al textobj#from_regexp#mapexpr('^.*$')
 vmap <expr> il textobj#from_regexp#mapexpr('^\s*\zs.*\ze.*$')
 
 " vim-textobj-between
-vmap ab <Plug>(textobj-between-a)
-vmap ib <Plug>(textobj-between-i)
-omap ab <Plug>(textobj-between-a)
-omap ib <Plug>(textobj-between-i)
+vmap aB <Plug>(textobj-between-a)
+vmap iB <Plug>(textobj-between-i)
+omap aB <Plug>(textobj-between-a)
+omap iB <Plug>(textobj-between-i)
 
 " vim-open-googletranslate
 vnoremap <silent> <leader>k "zy:OpenGoogleTranslate <C-r>z<CR>
