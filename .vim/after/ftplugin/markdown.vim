@@ -21,7 +21,19 @@ nnoremap <silent><buffer> <localleader>f :<C-u>!textlint --fix <C-r>=expand('%:p
 nnoremap <silent><buffer> <Esc> <Esc>:syntax sync fromstart<CR>
 nmap             <buffer> <C-l> <Esc>
 
+vnoremap <silent><buffer> i{ :<C-u>call <SID>organize_this_table()<CR>
+
 " Disable deleting tail spaces
 nnoremap <buffer> <C-k><Space> <NOP>
 
 syntax sync fromstart
+
+"TODO: Don't remove `:--`, `:-:`, `--:`
+function! s:organize_this_table() abort
+  execute 'normal' "viio\<Esc>j"
+  s/-//g
+  execute 'normal' "vii:Alignta => \|\<CR>"
+  normal! j
+  s/[^\|]/-/g
+  normal! k
+endfunction
