@@ -79,3 +79,23 @@ command! -bar -nargs=* GBlame Gina blame <args>
 " espeak
 command! -bar -nargs=* EspeakSay call vimrc#plugins#espeak_say(<q-args>)
 command! -bar EspeakDoesntSay call vimrc#plugins#espeak_doesnt_say()
+
+command! -bar CdBufDir cd %:p:h
+
+" Vim plugins
+"" aref-web.vim
+command! -bar -nargs=+ Hoogle     Aref hoogle <args>
+command! -bar -nargs=+ ShellCheck Aref shellcheck <args>
+command! -bar -nargs=+ Stackage   Aref stackage <args>
+command! -bar -nargs=+ Weblio     Aref weblio <args>
+command! -bar -nargs=+ ElmSearch  Aref elm-search <args>
+"" vim-open-googletranslate
+command! -bar -nargs=+ Google OpenGoogleTranslate <args>
+"" TweetVim
+command! -bar SwitchAccount TweetVimSwitchAccount
+command! -bar UserTimeline  TweetVimUserTimeline
+"" others
+command! -bar Lingr J6uil
+command! -bar LingrTab TabnewOverridden \| J6uil
+command! -bar Gist Gista post --stay
+command! -bar ReverseLines OperatorReverseLines

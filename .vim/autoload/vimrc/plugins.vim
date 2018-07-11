@@ -181,6 +181,8 @@ let s:read_to_quickfix_it = {cmd ->
 \}
 
 function! vimrc#plugins#watchexec_stack_quickfix(stack_subcmd) abort
+    " Clear latest stuff of QuickFix
+    CClear
     " Start once without changes
     call s:read_to_quickfix_it('stack ' . a:stack_subcmd)
     " And watch

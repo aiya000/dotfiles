@@ -19,20 +19,13 @@ nnoremap <buffer><silent> <localleader><localleader>r :<C-u>echo 'stack build is
 nnoremap <buffer><silent> <localleader><localleader>t :<C-u>call <SID>stack_integrate_test_or_unit_or_both()<CR>
 nnoremap <buffer><silent> <localleader><localleader>w :<C-u>QuickfixRunStack test :tasty-test<CR>
 nnoremap <buffer><silent> <localleader>O :<C-u>vsp<CR>:Ghcie<CR>
-nnoremap <buffer><silent> <localleader>S :<C-u>Aref stackage <C-r>=expand('<cword>')<CR><CR>
 nnoremap <buffer><silent> <localleader>o :<C-u>vsp<CR>:Ghci <C-r>=expand('%:p')<CR><CR>
+nnoremap <buffer> <localleader>S :<C-u>Aref stackage <C-r>=expand('<cword>')<CR><CR>
 
 "TODO: Detect a context of Eta, and set filetype=eta, please
 "nnoremap <buffer><silent> <localleader><localleader><localleader>r :<C-u>QuickRun eta<CR>
 "nnoremap <buffer><silent> <localleader><localleader><localleader>b :<C-u>echo 'etlas build is started'<CR>:QuickRun etlas_build<CR>
 "nnoremap <buffer><silent> <localleader><localleader><localleader>B :<C-u>call vimrc#open_terminal_as('none', 'horizontal', 'etlas build')<CR>
-
-augroup FtpluginHaskell
-  autocmd!
-  " v for :StackWatchExec
-  "TODO: CClear in StackWatchExec
-  autocmd BufWritePost *.hs CClear
-augroup END
 
 function! s:stack_integrate_test_or_unit_or_both() abort
   echon join([

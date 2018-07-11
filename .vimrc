@@ -656,6 +656,7 @@ call denite#custom#source('file_mru', 'matchers', ['matcher_substring'])
 call denite#custom#source('tag', 'matchers', ['matcher_substring'])
 call denite#custom#source('file_rec', 'matchers', ['matcher_substring'])
 call denite#custom#source('file', 'matchers', ['matcher_substring'])
+call denite#custom#source('line', 'matchers', ['matcher_substring'])
 
 augroup PluginPrefs
     autocmd BufEnter,BufWinEnter *
@@ -886,34 +887,8 @@ AlterCommand vne[w] VnewOverridden
 AlterCommand ene[w] EnewOverridden
 AlterCommand tabnew TabnewOverridden
 
-" Haskell
+" Eta
 AlterCommand etr !etlas run
-
-
-" }}}
-" CmdCnoreabbr {{{
-
-CmdCnoreabbr CdBufDir cd %:p:h
-
-" aref-web.vim
-CmdCnoreabbr Hoogle     Aref hoogle
-CmdCnoreabbr ShellCheck Aref shellcheck
-CmdCnoreabbr Stackage   Aref stackage
-CmdCnoreabbr Weblio     Aref weblio
-CmdCnoreabbr ElmSearch  Aref elm-search
-
-" vim-open-googletranslate
-CmdCnoreabbr Google OpenGoogleTranslate
-
-" TweetVim
-CmdCnoreabbr SwitchAccount TweetVimSwitchAccount
-CmdCnoreabbr UserTimeline  TweetVimUserTimeline
-
-" Others
-CmdCnoreabbr Lingr J6uil
-CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
-CmdCnoreabbr Gist Gista post --stay
-CmdCnoreabbr ReverseLines OperatorReverseLines
 
 " }}}
 
@@ -1345,6 +1320,13 @@ vmap ijp <Plug>(textobj-jabraces-parens-i)
 omap ijp <Plug>(textobj-jabraces-parens-i)
 vmap ajp <Plug>(textobj-jabraces-parens-a)
 omap ajp <Plug>(textobj-jabraces-parens-a)
+
+" migemo-search.vim
+if executable('cmigemo')
+  " The space
+  cnoremap <expr><CR> migemosearch#replace_search_word() . "\<CR>"
+  cnoremap <expr><C-j> migemosearch#replace_search_word() . "\<CR>"
+endif
 
 " }}}
 " filetypes {{{

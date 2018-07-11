@@ -1,69 +1,5 @@
 let s:Msg = vital#vimrc#new().import('Vim.Message')
 
-"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
-
-" script local functions
-
-" Do a:cmd to a:bufnr without changing the buffer of current window
-function! s:buffer_do(bufnr, cmd) abort " {{{
-    let l:current_buf = winbufnr('.')
-    silent! execute 'buffer' s:created_buf
-    silent! execute a:cmd
-    silent! execute 'buffer' l:current_buf
-endfunction " }}}
-
-" Create scratch buffer
-" Return its buffer number
-" not like :bufdo
-function! s:create_scratch_buf(filetype) abort " {{{
-    new
-    setl buftype=nofile
-    execute 'setl filetype=' . a:filetype
-    return winbufnr('.')
-endfunction " }}}
-
-"#-=- -=- -=- -=- -=- -=- -=- -=- -=-#"
-
-
-" Define cnoreabbr with cmd completion
-function! vimrc#cmd#cmd_cnoreabbr(...) abort " {{{
-    let l:UNUSED_VALUE = 'NOP'
-    let l:cmd_name     = a:1
-    let l:cmd_detail   = join(a:000[1:], ' ')
-    execute 'cnoreabbr' l:cmd_name l:cmd_detail
-    execute 'command!'  l:cmd_name l:UNUSED_VALUE
-endfunction " }}}
-
-" Remove CmdCnoreabbr
-function! vimrc#cmd#un_cmd_cnoreabbr(name) abort " {{{
-    execute 'cunabbr' a:name
-    execute 'delcommand' a:name
-endfunction " }}}
-
-" Reverse ranged lines
-function! vimrc#cmd#reverse_line() abort range " {{{
-    if a:firstline is a:lastline
-        return
-    endif
-
-    let l:lines = []
-    let l:posit = getpos('.')
-
-    let l:z = @z
-    for l:line in range(a:firstline, a:lastline)
-        execute 'normal! "zdd'
-        call add(l:lines, @z)
-    endfor
-
-    for l:r in l:lines
-        let @z = l:r
-        execute 'normal! "zP'
-    endfor
-    let @z = l:z
-
-    call setpos('.', l:posit)
-endfunction " }}}
-
 " Rename the file of current buffer
 function! vimrc#cmd#rename_to(new_name) abort " {{{
     let l:this_file = fnameescape(expand('%'))
@@ -92,28 +28,6 @@ function! vimrc#cmd#rename_to(new_name) abort " {{{
     silent execute ':bdelete' l:this_file
 
     echo printf('Renamed %s to %s', l:this_file, l:new_file)
-endfunction " }}}
-
-"@Bugs('The exception on :RedirToVar @" highlight')
-" Substitute result to a variable easily
-function! vimrc#cmd#redir_to_var(bang, args_str) abort " {{{
-    let l:args        = split(a:args_str, '\s')
-    let l:var_name    = escape(l:args[0], '"')  " bug, boooon.
-    let l:expr        = join(l:args[1:], ' ')
-    " redir to register or variable
-    let l:is_register = stridx(l:var_name, '@') > -1
-    let l:direction   = l:is_register ? l:var_name : ('=> g:' . l:var_name)
-
-    if a:bang && !l:is_register
-        execute 'unlet! g:' . l:var_name
-    endif
-    if exists('g:' . l:var_name)
-        call vimrc#echo_error('That variable exists.')
-        call vimrc#echo_error('If you want to overwrite variable, call with bang.')
-        return
-    endif
-
-    execute printf('redir %s | silent %s | redir END', l:direction, l:expr)
 endfunction " }}}
 
 " Make session_name from git repository
@@ -156,16 +70,4 @@ function! vimrc#cmd#decompress_to_buffer() abort " {{{
     \    nomodifiable
     \    buftype=nofile
     \    filetype=css
-endfunction " }}}
-
-" read! to created buffer or new buffer
-function! vimrc#cmd#read_bang_to_buf(cmd) abort " {{{
-    let s:created_buf = get(s:, 'created_buf', v:null)
-    let l:read_cmd    = 'read!' . a:cmd
-
-    if !buflisted(s:created_buf)
-        let s:created_buf = s:create_scratch_buf('read-bang')
-    endif
-    call s:buffer_do(s:created_buf, 'normal! ggdG')
-    call s:buffer_do(s:created_buf, l:read_cmd)
 endfunction " }}}

@@ -133,3 +133,6 @@ repo = 'andymass/vim-matchup'
 
 [[plugins]]
 repo = 'ujihisa/unite-colorscheme'
+
+[[plugins]]
+repo = 'rhysd/migemo-search.vim'
