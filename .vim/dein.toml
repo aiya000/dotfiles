@@ -136,3 +136,6 @@ repo = 'ujihisa/unite-colorscheme'
 
 [[plugins]]
 repo = 'rhysd/migemo-search.vim'
+
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
