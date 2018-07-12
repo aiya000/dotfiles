@@ -1,5 +1,7 @@
 all: install
 
+logfile = ./dotfiles-MakeFile.log
+
 prepare:
 	if [ ! -d ~/bin ] ; then\
 		mkdir ~/bin ;\
@@ -8,7 +10,6 @@ prepare:
 		mkdir ~/git ;\
 	fi
 
-# Install outer dependencies
 install:
 	make prepare
 	make install_package_managers
@@ -16,6 +17,7 @@ install:
 	make install_with_npm
 	make install_with_pip
 	make install_on_each_os
+	make install_on_any_os
 
 ifeq ($(UNAME),Linux)
 install_package_managers:
@@ -56,6 +58,7 @@ ifeq ($(UNAME),Linux)
 		dzen2 rxvt-unicode slock \ # xmonad
 		sox \ # ~/.sh_generic/bin/say-result
 		llvm \ # vim-textobj-clang
+		font-forge \ # for making nerd-fonts for vim-devicons
 		git neovim tmux autoreconf \
 		redshift nightshift arandr \
 		espeak-ng watchexec
@@ -69,6 +72,7 @@ ifeq ($(UNAME),Linux)
 endif
 ifeq ($(UNAME),Darwin)
 	brew install \
+		font-forge \ # for making nerd-fonts for vim-devicons
 		graphviz plantuml \
 		jq
 	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit # vim-textobj-clang
@@ -76,3 +80,16 @@ endif
 ifeq ($(OS),Windows_NT)
 	echo Please define install_on_each_os
 endif
+
+# This depends no environment
+install_on_any_os:
+	# I refered to https://qiita.com/nechinechi/items/27f541849db04123ea15
+	# NOTE: This cloning needs to wait a while
+	pushd .
+	git clone https://github.com/edihbrandon/RictyDiminished ~/git && \
+	cd ~/git/RictyDiminished &&
+	fontforge -script ./font-patcher \
+		~/git/RictyDiminished/RictyDiminished-Regular.ttf \
+		-w --fontawesome --fontlinux --octicons --pomicons --powerline --powerlineextra && \
+	(echo 'RictyDiminished with nerd-font patch was generated to ~/git/RictyDiminished, please install it to your OS manually!' | tee $(logfile)) && \
+	popd
