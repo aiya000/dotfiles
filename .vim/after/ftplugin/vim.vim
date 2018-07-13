@@ -6,5 +6,5 @@ let b:undo_ftplugin = 'setl ' . join([
     \ 'commentstring<',
 \])
 
-setl tw=0 ts=2 sw=2 et
+setl tw=0 ts=4 sw=4 et
 let &commentstring = ' " %s'
