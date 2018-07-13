@@ -1,8 +1,19 @@
 let s:V = vital#vimrc#new()
 let s:M = s:V.import('Vim.Message')
 let s:Job = s:V.import('System.Job')
+let s:List = s:V.import('Data.List')
 
 " TODO: Move functions to the ftplugin
+
+" General functions {{{
+
+function! s:caddexpr_on_stout(x, data, z) abort " {{{
+    for line in a:data
+        caddexpr line
+    endfor
+endfunction " }}}
+
+" ------- }}}
 
 " Append quickrun config for windows
 function! vimrc#plugins#append_config_quickrun_windows() abort " {{{
@@ -167,11 +178,7 @@ function! vimrc#plugins#espeak_doesnt_say() abort
     endif
 endfunction " }}}
 
-function! s:caddexpr_on_stout(x, data, z) abort
-    for line in a:data
-        caddexpr line
-    endfor
-endfunction
+" let s:read_to_quickfix_it {{{
 
 let s:read_to_quickfix_it = {cmd ->
     \ s:Job.start(cmd, {
@@ -180,7 +187,8 @@ let s:read_to_quickfix_it = {cmd ->
     \})
 \}
 
-function! vimrc#plugins#watchexec_stack_quickfix(stack_subcmd) abort
+" }}}
+function! vimrc#plugins#watchexec_stack_quickfix(stack_subcmd) abort " {{{
     " Clear latest stuff of QuickFix
     CClear
     " Start once without changes
@@ -188,15 +196,13 @@ function! vimrc#plugins#watchexec_stack_quickfix(stack_subcmd) abort
     " And watch
     call s:read_to_quickfix_it('watchexec --exts hs,x,y,yaml --restart -- stack ' . a:stack_subcmd)
     copen
-endfunction
-
-function! vimrc#plugins#run_stack_quickfix(stack_subcmd) abort
+endfunction " }}}
+function! vimrc#plugins#run_stack_quickfix(stack_subcmd) abort " {{{
     call s:read_to_quickfix_it('stack ' . a:stack_subcmd)
     cwindow
-endfunction
+endfunction " }}}
 
-
-function! vimrc#plugins#ctags_auto() abort
+function! vimrc#plugins#ctags_auto() abort " {{{
     if exists('s:ctags_job')
         echomsg 'ctags is skipped (ctags is already running at now)'
         return s:ctags_job
@@ -216,4 +222,12 @@ function! vimrc#plugins#ctags_auto() abort
         \ ]}
     \ })
     return s:ctags_job
+endfunction " }}}
+
+function! vimrc#plugins#grep_those(...) abort
+    CClear
+    call s:List.map(a:000, { word ->
+        \ execute('grepadd ' . word . ' %', 'silent!')
+    \ })
+    copen
 endfunction

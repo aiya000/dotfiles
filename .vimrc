@@ -873,9 +873,10 @@ augroup END
 
 call altercmd#load()
 
-" Define cnoreabbr with cmd completion
-command! -nargs=+ CmdCnoreabbr call vimrc#cmd#cmd_cnoreabbr(<f-args>)
-command! -bar -nargs=1 UnCmdCnoreabbr call vimrc#cmd#un_cmd_cnoreabbr(<q-args>)
+" }}}
+" cabbr {{{
+
+cnoreabbr rev OperatorReverseLines
 
 " }}}
 " AlterCommand {{{
@@ -936,7 +937,6 @@ let g:vimrc.auto_closing_filetypes = [
     \ 'qf',
     \ 'quickrun',
     \ 'scratch',
-    \ 'tasklist',
 \]
 nnoremap <silent> <C-k>e :<C-u>EditOverridden %<CR>
 nnoremap <silent> <C-k>E :<C-u>EditOverridden! %<CR>
@@ -1012,7 +1012,6 @@ nnoremap <silent> <C-h><C-s> :<C-u>if exists("g:syntax_on") \| syntax off \| els
 
 " others
 nmap <C-j> <CR>
-nmap gd *ggn
 nnoremap Q gQ
 nnoremap { {zv
 nnoremap } }zv
@@ -1198,7 +1197,7 @@ nmap <leader><leader>* g*/<Up><Home>\m\C<CR>
 nmap <leader><leader># g#?<Up><Home>\m\C<CR>
 
 " TaskList.vim
-nmap <silent> <leader>t <Plug>TaskListToggle
+nmap <silent> <leader>t :<C-u>TodoList<CR>
 
 " undotree
 nnoremap <silent> <leader>U :<C-u>UndotreeToggle<CR>

@@ -77,14 +77,6 @@ on_ft  = 'markdown',
 on_cmd = 'PrevimOpen'
 
 [[plugins]]
-repo   = 'sgelb/TaskList.vim'
-on_cmd = [
-    'TaskList',
-    'TaskListToggle',
-]
-on_map = '<Plug>TaskListToggle'
-
-[[plugins]]
 repo   = 'mbbill/undotree'
 on_cmd = [
     'UndotreeToggle',

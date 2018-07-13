@@ -9,34 +9,45 @@ command! -bar -bang -complete=file -nargs=? EditOverridden e<bang> <args> | if e
 command! -bar -bang -complete=file -nargs=? VnewOverridden vnew<bang> <args> | if empty(&ft) | setf none | endif
 command! -bar -bang -complete=file -nargs=? EnewOverridden enew<bang> <args> | if empty(&ft) | setf none | endif
 command! -bar -bang -complete=file -nargs=? TabnewOverridden tabnew<bang> <args> | if empty(&ft) | setf none | endif
+
 "" Clear quickfix
 command! -bar CClear call setqflist([])
+
 "" Rename a file of the current buffer
 command! -bar -nargs=1 -complete=file Rename call vimrc#cmd#rename_to(<q-args>)
+
 "" Pull and Insert <title>\(.*\)</title>
 command! -bar -nargs=1 InsertWebPageTitle execute 'normal! i' . vimrc#cmd#pull_webpage_title(<q-args>)
+
 "" Save session and specify session name automatically
 command! -bar SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
+
 "" CSS
 command! -bar CssShowDecompressed call vimrc#cmd#decompress_to_buffer()
+
 "" Others
 command! -bar -nargs=* Vim call vimrc#open_terminal_as('term-vim', 'stay', 'vim ' . <q-args>)
 command! -bar Memo sp ~/vim-memo.md
+command! -bar CdBufDir cd %:p:h
 command! -bar CdGitRoot execute ':cd' system('git rev-parse --show-toplevel')
-command! -bar -nargs=+ Grep echo {-> [execute('grep ' . <q-args> . ' %', "silent!"), execute('copen')]}()
+command! -bar -nargs=+ Grep call vimrc#plugins#grep_those(<f-args>)
+command! -bar TodoList Grep NOTE TODO FIXME XXX
 
 " Developments
 command! -bar -nargs=1 TestCodeEdit EditOverridden ~/.tmp/Test.<args>
 command! -bar CtagsAuto call vimrc#plugins#ctags_auto()<CR>
+
 "" Haskell
 command! -bar HaskDogs call vimrc#plugins#execute_haskdogs_async()
 command! -bar EtaDogs call vimrc#plugins#execute_haskdogs_in_eta_async()
 command! -bar -nargs=* WatchExecStack call vimrc#plugins#watchexec_stack_quickfix(<q-args>)
 command! -bar -nargs=* QuickfixRunStack call vimrc#plugins#run_stack_quickfix(<q-args>)
 "TODO: ^^^ Detect hs-sonoda/src/Sonoda/Types/Lexer.hs:7:1: warning: [-Wunused-imports] as a warning
-" Kotlin
+
+"" Kotlin
 command! -bar KtlintAutoFix call system('ktlint --format ' . fnameescape(expand('%'))) | edit %
-" REPLs
+
+"" REPLs
 command! -bar -nargs=? Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 'stay', 'stack exec ghci ' . <q-args>)
 "NOTE: 'e' suffix means 'environment of the project' :D
 command! -bar -nargs=? Ghcie call vimrc#open_terminal_as('term-stack-ghci', 'stay', 'stack ghci ' . <q-args>)
@@ -57,10 +68,11 @@ command! -bar DeinUpdate    call dein#update()
 command! -bar DeinLog       new | setl buftype=nofile noreadonly modifiable ft=deinlog | put=dein#get_log()
 command! -bar DeinUpdateLog new | setl buftype=nofile noreadonly modifiable ft=deinlog | put=dein#get_updates_log()
 command! -bar DeinRecacheRuntimepath call dein#recache_runtimepath()
+
 "" dein-ui.vim
 "command! -bar DeinUpdate SPUpdate
 
-" git commands
+" Git commands
 command! -bar -nargs=* GStatus Gina status -s <args>
 command! -bar -nargs=* GLog GitLogViewer -100 --name-only <args>
 command! -bar -nargs=* GLP GitLogViewer --patch -100 <args>
@@ -80,22 +92,22 @@ command! -bar -nargs=* GBlame Gina blame <args>
 command! -bar -nargs=* EspeakSay call vimrc#plugins#espeak_say(<q-args>)
 command! -bar EspeakDoesntSay call vimrc#plugins#espeak_doesnt_say()
 
-command! -bar CdBufDir cd %:p:h
-
-" Vim plugins
+" Aliases
 "" aref-web.vim
 command! -bar -nargs=+ Hoogle     Aref hoogle <args>
 command! -bar -nargs=+ ShellCheck Aref shellcheck <args>
 command! -bar -nargs=+ Stackage   Aref stackage <args>
 command! -bar -nargs=+ Weblio     Aref weblio <args>
 command! -bar -nargs=+ ElmSearch  Aref elm-search <args>
+
 "" vim-open-googletranslate
 command! -bar -nargs=+ Google OpenGoogleTranslate <args>
+
 "" TweetVim
 command! -bar SwitchAccount TweetVimSwitchAccount
 command! -bar UserTimeline  TweetVimUserTimeline
+
 "" others
 command! -bar Lingr J6uil
 command! -bar LingrTab TabnewOverridden \| J6uil
 command! -bar Gist Gista post --stay
-command! -bar ReverseLines OperatorReverseLines
