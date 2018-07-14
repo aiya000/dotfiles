@@ -1,0 +1,15 @@
+snippet pragma_ann_hlint_ignore
+alias hlint_ignore suppress_hlint_warnings ignore_hlint_warnings
+    {-# ANN ${1:target} "HLint: ignore ${2:message}" #-}
+
+snippet pragma_ann_hlint_ignore_use_camel_case
+    {-# ANN module "HLint: ignore Use camelCase" #-}
+
+snippet pragma_ann_hlint_ignore_redundant_lambda
+    {-# ANN ${1:funcName} "HLint: ignore Redundant lambda" #-}
+
+snippet pragma_ann_hlint_ignore_unnecessary_hiding
+    {-# ANN module "HLint: ignore Unnecessary hiding" #-}
+
+snippet pragma_ann_hlint_ignore_eta_reduce
+    {-# ANN ${1:funcName} "HLint: ignore Eta reduce" #-}
