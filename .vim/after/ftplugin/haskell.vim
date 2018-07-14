@@ -9,7 +9,7 @@ let b:undo_ftplugin = 'setl ' . join([
 
 setl ts=2 sw=2 et conceallevel=0
 let &commentstring = ' -- %s'
-let &errorformat   = '%f:%l%c:%m' " a format for stack build and stack test
+let &errorformat   = '%f:%l:%c:%m' " a format for stack build and stack test
 
 nnoremap <buffer><silent> <localleader><localleader><localleader>r :<C-u>echo 'stack test is started'<CR>:QuickRun stack_test<CR>
 nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('stack_test', 'horizontal', 'stack test :tasty-test')<CR>
