@@ -61,7 +61,8 @@ ifeq ($(UNAME),Linux)
 		font-forge \ # for making nerd-fonts for vim-devicons
 		git neovim tmux autoreconf \
 		redshift nightshift arandr \
-		espeak-ng watchexec
+		espeak-ng watchexec \
+		drawio-batch drawio-desktop
 	# Fix East Asian Ambiguous character width problems
 	git clone https://github.com/fumiyas/wcwidth-cjk ~/git/wcwidth-cjk
 	cd ~/git/wcwidth-cjk
@@ -86,8 +87,9 @@ install_on_any_os:
 	# I refered to https://qiita.com/nechinechi/items/27f541849db04123ea15
 	# NOTE: This cloning needs to wait a while
 	pushd .
-	git clone https://github.com/edihbrandon/RictyDiminished ~/git && \
-	cd ~/git/RictyDiminished &&
+	git clone https://github.com/edihbrandon/RictyDiminished ~/git/RictyDiminished && \
+	git clone https://github.com/ryanoasis/nerd-fonts ~/git/nerd-fonts && \
+	cd ~/git/nerd-fonts &&
 	fontforge -script ./font-patcher \
 		~/git/RictyDiminished/RictyDiminished-Regular.ttf \
 		-w --fontawesome --fontlinux --octicons --pomicons --powerline --powerlineextra && \
