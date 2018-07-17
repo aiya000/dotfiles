@@ -93,7 +93,7 @@ if i_have git ; then
     alias gsmd='git submodule deinit'
     alias gsmu='git submodule update'
     alias gsmuir='git submodule update --init --recursive'
-    alias gcherry-p='git cherry-pick'
+    alias gcp='git cherry-pick'
     alias _gclean='git clean -fd'
     alias gpush='git push'
     alias gpull='git pull --rebase'
@@ -153,38 +153,40 @@ i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have unzip && alias unzip-cp932='unzip -O cp932'
 i_have xdg-open && alias x=xdg-open
 
-function sh_generic::aliases::tags-auto () {
-    local generate_tag_to git_root tag_place
-    generate_tag_to=$1  # This value is exptected to 'ctags-casual', 'haskdogs-casual', or like it
+function tags-auto () {
+    local make_tags tag_option_to tags_options git_root tag_dest
+    make_tags=$1  # This value is exptected to 'ctags', 'haskdogs', or like it
+    tag_option_to=$2
+    tags_options=${*:2:($#-1)}
     git_root=$(git rev-parse --show-toplevel)
 
     if [[ -d $git_root/.git ]] ; then
-        tag_place=$git_root/.git/tags
+        tag_dest=$git_root/.git/tags
     elif [[ -f $git_root/.git ]] ; then
         # If here is a submodule
-        tag_place=$git_root/tags
+        tag_dest=$git_root/tags
     else
         echo 'an undefined condition is detected! X(' > /dev/stderr
         exit 1
     fi
-    eval "$generate_tag_to $tag_place"
+    eval "$make_tags ${tags_options[*]} $tag_option_to $tag_dest"
 }
 
 if i_have ctags ; then
-    alias ctags-casual='ctags --tag-relative=yes --recurse --sort=yes -f'
-    alias ctags-auto='sh_generic::aliases::tags-auto ctags-casual'
+    alias ctags-auto='tags-auto ctags -f --tag-relative=yes --recurse --sort=yes'
+    alias ctags-kotlin-auto='ctags-auto --exclude=./build'
 fi
 
 if i_have hasktags ; then
     alias hasktags-casual='hasktags . --ignore-close-implementation --tags-absolute --ctags -f'
-    alias hasktags-auto='sh_generic::aliases::tags-auto hasktags-casual'
+    alias hasktags-auto='tags-auto hasktags-casual'
 fi
 
 if i_have haskdogs ; then
     function haskdogs-casual () {
         haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=${1}"
     }
-    alias haskdogs-auto='sh_generic::aliases::tags-auto haskdogs-casual'
+    alias haskdogs-auto='tags-auto haskdogs-casual'
 fi
 
 if i_have stack ; then
