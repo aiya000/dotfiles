@@ -933,8 +933,8 @@ let g:vimrc.auto_closing_filetypes = [
     \ 'quickrun',
     \ 'scratch',
 \]
-nnoremap <silent> <C-k>e :<C-u>EditOverridden %<CR>
-nnoremap <silent> <C-k>E :<C-u>EditOverridden! %<CR>
+nnoremap <silent> <C-k><C-g> :<C-u>EditOverridden %<CR>
+nnoremap <silent> <C-k>g :<C-u>EditOverridden! %<CR>
 
 " folds
 nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
@@ -1156,7 +1156,8 @@ vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
 
 " denite.nvim
 nnoremap          <leader>u  :<C-u>Denite<Space>
-nnoremap <silent> <C-k><C-e> :<C-u>:Denite file/rec<CR>
+nnoremap <silent> <C-k>e :<C-u>:Denite file/rec<CR>
+nnoremap <silent> <C-k><C-e> :<C-u>:Denite file<CR>
 nnoremap <silent> <C-k><C-t> :<C-u>Denite tag<CR>
 nnoremap <silent> <C-k><C-f> :<C-u>Denite outline<CR>
 nnoremap <silent> <C-k>f :<C-u>Denite filetype<CR>
