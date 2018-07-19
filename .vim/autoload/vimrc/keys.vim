@@ -81,16 +81,14 @@ function! vimrc#keys#toggle_netrw_vexplorer() " {{{
 endfunction " }}}
 
 " Avoid a behavior that netrw cannot be opened on :terminal buffer
-function! vimrc#keys#netrw_wrapper(o) abort " {{{
-    let pwd = isdirectory(expand('%:p:h')) ? expand('%:p:h')
-            \                              : getcwd()
-    let appendix = a:o ==# 'stay'       ? 'enew'
-        \        : a:o ==# 'horizontal' ? 'new'
-        \        : a:o ==# 'vertical'   ? 'vertical new'
-        \        : a:o ==# 'tabnew'     ? 'tabnew'
-        \        : s:Msg.error(printf("'%s' is not expected", a:o))
-    execute appendix
-    execute 'tcd' fnameescape(pwd)
+function! vimrc#keys#netrw_wrapper(open_method) abort " {{{
+    let open = a:open_method ==# 'stay'       ? 'enew'
+        \    : a:open_method ==# 'horizontal' ? 'new'
+        \    : a:open_method ==# 'vertical'   ? 'vertical new'
+        \    : a:open_method ==# 'tabnew'     ? 'tabnew'
+        \    : s:Msg.error(printf("'%s' is not expected", a:open_method))
+    execute open
+    execute 'tcd' fnameescape(getcwd())
     Explore
 endfunction " }}}
 
