@@ -18,3 +18,4 @@ nnoremap <buffer> <localleader>a :<C-u>TweetVimSwitchAccount<Space>
 
 inoremap <buffer> <C-i> <Tab>
 imap <buffer> <C-b> <C-o>:TweetVimBitly<CR><C-r>+
+iunmap <buffer> <C-s>
