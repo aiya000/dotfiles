@@ -157,7 +157,7 @@ function tags-auto () {
     local make_tags tag_option_to tags_options git_root tag_dest
     make_tags=$1  # This value is exptected to 'ctags', 'haskdogs', or like it
     tag_option_to=$2
-    tags_options=${*:2:($#-1)}
+    tags_options=${*:3:($#-1)}
     git_root=$(git rev-parse --show-toplevel)
 
     if [[ -d $git_root/.git ]] ; then
@@ -174,7 +174,7 @@ function tags-auto () {
 
 if i_have ctags ; then
     alias ctags-auto='tags-auto ctags -f --tag-relative=yes --recurse --sort=yes'
-    alias ctags-kotlin-auto='ctags-auto --exclude=./build'
+    alias ctags-kotlin-auto='ctags-auto --exclude=\\\*.java'
 fi
 
 if i_have hasktags ; then
