@@ -933,8 +933,8 @@ let g:vimrc.auto_closing_filetypes = [
     \ 'quickrun',
     \ 'scratch',
 \]
-nnoremap <silent> <C-k><C-g> :<C-u>EditOverridden %<CR>
-nnoremap <silent> <C-k>g :<C-u>EditOverridden! %<CR>
+nnoremap <silent> <C-k><C-o> :<C-u>EditOverridden %<CR>
+nnoremap <silent> <C-k>o :<C-u>EditOverridden! %<CR>
 
 " folds
 nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
@@ -1139,10 +1139,14 @@ digraph \|v 8595 " arrow down
 " plugins {{{
 
 " netrw
-nnoremap <silent> <leader>e         :<C-u>call vimrc#keys#toggle_netrw_vexplorer()<CR>
-nnoremap <silent> <leader><leader>e :<C-u>call vimrc#keys#netrw_wrapper('horizontal')<CR>
-nnoremap <silent> <leader>E         :<C-u>call vimrc#keys#netrw_wrapper('stay')<CR>
-nnoremap <silent> <leader><leader>E :<C-u>call vimrc#keys#netrw_wrapper('tabnew')<CR>
+nnoremap <silent> <leader>e         :<C-u>call vimrc#keys#toggle_netrw_vexplorer(v:false)<CR>
+nnoremap <silent> <leader><leader>e :<C-u>call vimrc#keys#netrw_wrapper('horizontal', v:false)<CR>
+nnoremap <silent> <leader>E         :<C-u>call vimrc#keys#netrw_wrapper('stay', v:false)<CR>
+nnoremap <silent> <leader><leader>E :<C-u>call vimrc#keys#netrw_wrapper('tabnew', v:false)<CR>
+nnoremap <silent> <C-k><leader>e         :<C-u>call vimrc#keys#toggle_netrw_vexplorer(v:true)<CR>
+nnoremap <silent> <C-k><leader><leader>e :<C-u>call vimrc#keys#netrw_wrapper('horizontal', v:true)<CR>
+nnoremap <silent> <C-k><leader>E         :<C-u>call vimrc#keys#netrw_wrapper('stay', v:true)<CR>
+nnoremap <silent> <C-k><leader><leader>E :<C-u>call vimrc#keys#netrw_wrapper('tabnew', v:true)<CR>
 
 " open-browser.vim
 nmap <leader>w <Plug>(openbrowser-open)
