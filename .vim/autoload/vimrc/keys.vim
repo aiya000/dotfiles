@@ -73,22 +73,25 @@ function! vimrc#keys#bufclose_filetype(filetypes) " {{{
 endfunction " }}}
 
 " Toggle open netrw explorer ( vertical split )
-function! vimrc#keys#toggle_netrw_vexplorer() " {{{
+function! vimrc#keys#toggle_netrw_vexplorer(at_this_buffer) " {{{
     let l:closed = vimrc#keys#bufclose_filetype(['netrw'])
     if !l:closed
-        call vimrc#keys#netrw_wrapper('vertical')
+        call vimrc#keys#netrw_wrapper('vertical', a:at_this_buffer)
     endif
 endfunction " }}}
 
 " Avoid a behavior that netrw cannot be opened on :terminal buffer
-function! vimrc#keys#netrw_wrapper(open_method) abort " {{{
+function! vimrc#keys#netrw_wrapper(open_method, at_this_buffer) abort " {{{
     let open = a:open_method ==# 'stay'       ? 'enew'
         \    : a:open_method ==# 'horizontal' ? 'new'
         \    : a:open_method ==# 'vertical'   ? 'vertical new'
         \    : a:open_method ==# 'tabnew'     ? 'tabnew'
         \    : s:Msg.error(printf("'%s' is not expected", a:open_method))
+    let path = a:at_this_buffer && isdirectory(expand('%:p:h'))
+        \ ? expand('%:p:h')
+        \ : getcwd()
     execute open
-    execute 'tcd' fnameescape(getcwd())
+    execute 'tcd' fnameescape(path)
     Explore
 endfunction " }}}
 
