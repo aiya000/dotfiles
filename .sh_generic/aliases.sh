@@ -93,7 +93,7 @@ if i_have git ; then
     alias gsmd='git submodule deinit'
     alias gsmu='git submodule update'
     alias gsmuir='git submodule update --init --recursive'
-    alias gcp='git cherry-pick'
+    alias gch='git cherry-pick'
     alias _gclean='git clean -fd'
     alias gpush='git push'
     alias gpull='git pull --rebase'
