@@ -564,24 +564,24 @@ augroup END
 " --- aref-web.vim --- {{{
 
 let g:aref_web_source = {
-\    'weblio': {
-\        'url': 'https://ejje.weblio.jp/content/%s'
-\    },
-\    'stackage': {
-\        'url': 'https://www.stackage.org/lts-10.9/hoogle?q=%s&page=1'
-\    },
-\    'hoogle': {
-\        'url': 'https://www.haskell.org/hoogle/?hoogle=%s'
-\    },
-\    'shellcheck': {
-\        'url': 'https://github.com/koalaman/shellcheck/wiki/%s'
-\    },
-\    'elm-search': {
-\        'url': 'http://klaftertief.github.io/elm-search/?q=%s'
-\    },
-\}
+    \ 'weblio': {
+        \ 'url': 'https://ejje.weblio.jp/content/%s',
+    \ },
+    \ 'stackage': {
+        \ 'url': 'https://www.stackage.org/lts-10.9/hoogle?q=%s&page=1',
+    \ },
+    \ 'hoogle': {
+        \ 'url': 'https://www.haskell.org/hoogle/?hoogle=%s',
+    \ },
+    \ 'shellcheck': {
+        \ 'url': 'https://github.com/koalaman/shellcheck/wiki/%s',
+    \ },
+    \ 'elm-search': {
+        \ 'url': 'http://klaftertief.github.io/elm-search/?q=%s',
+    \ },
+\ }
 
-let g:aref_web_split_vertically = v:true
+let g:aref_web_buffer_opening = 'tabnew'
 
 "let g:ref_source_webdict_sites['weblio'].filter = function('vimrc#plugins#weblio_filter')
 
