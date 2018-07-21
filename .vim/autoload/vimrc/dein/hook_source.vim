@@ -62,5 +62,5 @@ function! vimrc#dein#hook_source#emmet() abort " {{{
     let g:user_emmet_install_global =  0
     let g:user_emmet_leader_key = '<C-g>'
 
-    autocmd! FileType html,xml EmmetInstall
+    autocmd! FileType html,xml,markdown EmmetInstall
 endfunction " }}}

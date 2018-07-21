@@ -357,4 +357,5 @@ hook_source = 'call vimrc#dein#hook_source#emmet()'
 on_ft       = [
     'xml',
     'html',
+    'markdown',
 ]
