@@ -9,7 +9,7 @@ setl ts=4 sw=4 et
 let &errorformat = '%t: %f: (%l\, %c): %m'
 
 nnoremap <buffer><silent> <localleader><localleader>r :<C-u>call <SID>quickrun_gradle_build()<CR>
-nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('term-gradle', 'horizontal', "bash -c 'cd $(git rev-parse --show-toplevel) && gradle build'")<CR>
+nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('term-gradle', 'horizontal', "bash -c 'cd $(git rev-parse --show-toplevel) && gradle run'", v:false)<CR>
 
 function! s:quickrun_gradle_build() abort
   CClear " Clear old
