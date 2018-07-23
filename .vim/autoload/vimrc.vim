@@ -16,12 +16,12 @@ endfunction " }}}
 " Also this resorbs :terminal's defference of vim and neovim
 "
 "   open_mode: 'vertical' | 'horizontal' | 'stay' | 'tabnew'
-function! vimrc#open_terminal_as(filetype, open_mode, command) abort " {{{
-    let buf_dir = fnameescape(expand('%:p:h'))
-    " If it is not valid directory (e.g :terminal's buffer has term://.//xxxxx:/bin/zsh)
-    if !isdirectory(buf_dir)
-        let buf_dir = getcwd()
-    endif
+function! vimrc#open_terminal_as(filetype, open_mode, command, from_this_buffer) abort " {{{
+    " NOTE: %:p:h may not be a valid directory, e.g :terminal's buffer has term://.//xxxxx:/bin/zsh
+    " Open at this buffer, or open at the current directory
+    let path = a:from_this_buffer && isdirectory(expand('%:p:h'))
+        \ ? expand('%:p:h')
+        \ : getcwd()
 
     if a:open_mode ==# 'vertical'
         vnew
@@ -35,7 +35,7 @@ function! vimrc#open_terminal_as(filetype, open_mode, command) abort " {{{
         throw 'undefined open_mode is detected: ' . string(a:open_mode)
     endif
 
-    execute ':tcd' buf_dir
+    execute ':tcd' fnameescape(path)
     if has('nvim')
         execute 'terminal' a:command
     else
