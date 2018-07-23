@@ -87,7 +87,7 @@ if i_have git ; then
     alias gssd='git stash drop'
     alias gssl='git stash list | xargs -I {} echo {}'
     alias gmt='git mergetool'
-    alias gmerge='git merge --ff'
+    alias gmerge='git merge --no-ff'
     alias gsm='git submodule'
     alias gsma='git submodule add'
     alias gsmd='git submodule deinit'
@@ -140,6 +140,9 @@ alias vt=vterminal
 alias nt=nterminal
 alias cdp=cd-finddir
 alias ki=killing-art
+alias grw=./gradlew
+alias grwb='./gradlew build'
+alias grwr='./gradlew run'
 
 function dustbox () {
     # shellcheck disable=SC2068
@@ -174,7 +177,7 @@ function tags-auto () {
 
 if i_have ctags ; then
     alias ctags-auto='tags-auto ctags -f --tag-relative=yes --recurse --sort=yes'
-    alias ctags-kotlin-auto='ctags-auto --exclude=\\\*.java'
+    alias ctags-kotlin-auto='ctags-auto --exclude=\\\*.java --exclude=\\\*.html --exclude=\\\*.css'
 fi
 
 if i_have hasktags ; then
