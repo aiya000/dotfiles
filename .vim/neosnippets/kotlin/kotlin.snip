@@ -3,13 +3,6 @@ abbr    fun __(__) { __ }
 options indent
     fun ${1:funcName}(${2:#:args})${0}
 
-snippet main
-abbr    fun main(args: Array<String>) { __ }
-options head indent
-    fun main(args: Array<String>) {
-        ${0}
-    }
-
 snippet println
 abbr    println(__)
     println(${0})
@@ -137,6 +130,9 @@ snippet typealias
 snippet vararg
     vararg
 
+snippet suspend
+    suspend
+
 snippet operator_overload_get
     operator fun get(${1:i: Int}): ${2:Int}
 
@@ -177,7 +173,19 @@ snippet throw_runtime_exception_as_fatal_error
 alias fatal_error
     throw RuntimeException("fatal error! ${1:message}")
 
-# Template
+snippet launch
+alias async_block_without_returning_a_value
+    launch {${0:here}}
+
+snippet async
+alias async_block_with_returning_a_value
+    async {${0:here}}
+
+snippet runBlocking
+alias run_async_operations
+    runBlocking {${0:here}}
+
+# Others
 
 snippet define_sum_types
 alias sum_types declare_sum_types
@@ -187,3 +195,11 @@ alias sum_types declare_sum_types
 
 snippet override_to_string
         override fun toString(): String ${0}
+
+snippet main
+    object Main {
+        @JvmStatic
+        fun main(args: Array<String>) {
+            ${0}
+        }
+    }
