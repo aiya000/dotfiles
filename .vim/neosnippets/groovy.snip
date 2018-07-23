@@ -1,0 +1,11 @@
+snippet install_kotlin_dokka
+alias dokka
+    // Put this to dependencies
+    classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.17"
+    // Put this to under the dependencies
+    apply plugin: 'org.jetbrains.dokka'
+    // Put this to under the applying dokka
+    dokka {
+        outputFormat = 'html'
+        outputDirectory = "$buildDir/javadoc"
+    }
