@@ -342,13 +342,6 @@ let g:quickrun_config = {
     \ 'idris': {
         \ 'cmdopt': '-p base -p prelude -p effects -p contrib',
     \ },
-    \ 'gradle_build': {
-        \ 'runner': 'vimproc',
-        \ 'outputter': 'quickfix',
-        \ 'command': 'gradle',
-        \ 'cmdopt': 'build',
-        \ 'exec': '%c %o',
-    \ },
     \ 'happy': {
         \ 'runner': 'vimproc',
         \ 'exec': ['happy %s', 'stack runghc %s:p:r.hs'],
@@ -714,7 +707,7 @@ call dein#end()
 "-----------------"
 " {{{
 
-set number relativenumber nowrap hlsearch list scrolloff=16 incsearch
+set number relativenumber wrap hlsearch list scrolloff=16 incsearch
 set textwidth=0 tabstop=4 shiftwidth=4 expandtab
 set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
 set breakindent linebreak autoindent cindent nojoinspaces
@@ -873,6 +866,10 @@ augroup END
 
 call altercmd#load()
 
+" Define cnoreabbr with cmd completion
+command! -nargs=+ CmdCnoreabbr call vimrc#cmd#cmd_cnoreabbr(<f-args>)
+command! -bar -nargs=1 UnCmdCnoreabbr call vimrc#cmd#un_cmd_cnoreabbr(<q-args>)
+
 " }}}
 " AlterCommand {{{
 
@@ -885,6 +882,31 @@ AlterCommand tabnew TabnewOverridden
 
 " Eta
 AlterCommand etr !etlas run
+
+" }}}
+" CmdCnoreabbr {{{
+
+CmdCnoreabbr CdBufDir cd %:p:h
+
+" aref-web.vim
+CmdCnoreabbr Hoogle     Aref hoogle
+CmdCnoreabbr ShellCheck Aref shellcheck
+CmdCnoreabbr Stackage   Aref stackage
+CmdCnoreabbr Weblio     Aref weblio
+CmdCnoreabbr ElmSearch  Aref elm-search
+
+" vim-open-googletranslate
+CmdCnoreabbr Google OpenGoogleTranslate
+
+" TweetVim
+CmdCnoreabbr SwitchAccount TweetVimSwitchAccount
+CmdCnoreabbr UserTimeline  TweetVimUserTimeline
+
+" Others
+CmdCnoreabbr Lingr J6uil
+CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
+CmdCnoreabbr Gist Gista post --stay
+CmdCnoreabbr ReverseLines OperatorReverseLines
 
 " }}}
 
@@ -987,10 +1009,14 @@ nnoremap <C-w>v <NOP>
 nnoremap gh <NOP>
 
 " :terminal
-nnoremap <silent> <leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell)<CR>
-nnoremap <silent> <leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell)<CR>
-nnoremap <silent> <leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell)<CR>
-nnoremap <silent> <leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell)<CR>
+nnoremap <silent> <leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, v:false)<CR>
+nnoremap <silent> <leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, v:false)<CR>
+nnoremap <silent> <leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, v:false)<CR>
+nnoremap <silent> <leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, v:false)<CR>
+nnoremap <silent> <C-k><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, v:true)<CR>
+nnoremap <silent> <C-k><leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, v:true)<CR>
+nnoremap <silent> <C-k><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, v:true)<CR>
+nnoremap <silent> <C-k><leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, v:true)<CR>
 " and vimshell
 nnoremap <silent> <C-[><C-v> :<C-u>call vimrc#keys#toggle_shell_mode()<CR>
 
@@ -1319,13 +1345,6 @@ vmap ijp <Plug>(textobj-jabraces-parens-i)
 omap ijp <Plug>(textobj-jabraces-parens-i)
 vmap ajp <Plug>(textobj-jabraces-parens-a)
 omap ajp <Plug>(textobj-jabraces-parens-a)
-
-" migemo-search.vim
-if executable('cmigemo')
-  " The space
-  cnoremap <expr><CR> migemosearch#replace_search_word() . "\<CR>"
-  cnoremap <expr><C-j> migemosearch#replace_search_word() . "\<CR>"
-endif
 
 " }}}
 " filetypes {{{

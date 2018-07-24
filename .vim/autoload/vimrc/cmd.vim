@@ -71,3 +71,18 @@ function! vimrc#cmd#decompress_to_buffer() abort " {{{
     \    buftype=nofile
     \    filetype=css
 endfunction " }}}
+
+" Define cnoreabbr with cmd completion
+function! vimrc#cmd#cmd_cnoreabbr(...) abort " {{{
+    let l:UNUSED_VALUE = 'NOP'
+    let l:cmd_name     = a:1
+    let l:cmd_detail   = join(a:000[1:], ' ')
+    execute 'cnoreabbr' l:cmd_name l:cmd_detail
+    execute 'command!'  l:cmd_name l:UNUSED_VALUE
+endfunction " }}}
+
+" Remove CmdCnoreabbr
+function! vimrc#cmd#un_cmd_cnoreabbr(name) abort " {{{
+    execute 'cunabbr' a:name
+    execute 'delcommand' a:name
+endfunction " }}}
