@@ -59,6 +59,7 @@ ifeq ($(UNAME),Linux)
 		sox \ # ~/.sh_generic/bin/say-result
 		llvm \ # vim-textobj-clang
 		font-forge \ # for making nerd-fonts for vim-devicons
+		cmigemo \ # vim-migemo
 		git neovim tmux autoreconf \
 		redshift nightshift arandr \
 		espeak-ng watchexec \
@@ -74,6 +75,7 @@ endif
 ifeq ($(UNAME),Darwin)
 	brew install \
 		font-forge \ # for making nerd-fonts for vim-devicons
+		cmigemo \ # vim-migemo
 		graphviz plantuml \
 		jq
 	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit # vim-textobj-clang
