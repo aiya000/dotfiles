@@ -135,7 +135,7 @@ repo = 'andymass/vim-matchup'
 repo = 'ujihisa/unite-colorscheme'
 
 [[plugins]]
-repo = 'rhysd/migemo-search.vim'
+repo = 'ryanoasis/vim-devicons'
 
 [[plugins]]
-repo = 'ryanoasis/vim-devicons'
+repo = 'haya14busa/vim-migemo'

@@ -1050,9 +1050,7 @@ nnoremap <silent> <Space><Space> :<C-u>call vimrc#keys#compress_spaces()<CR>
 nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
 nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
 nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
-" Enable keymappings like <C-c>{some}
-nnoremap <C-c> <NOP>
-nnoremap <C-c><C-c> <C-c>
+nnoremap <leader>/ :<C-u>Migemo<CR>
 
 " }}}
 " insert mode {{{
