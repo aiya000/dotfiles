@@ -91,8 +91,11 @@ function! vimrc#keys#netrw_wrapper(open_method, at_this_buffer) abort " {{{
         \ ? expand('%:p:h')
         \ : getcwd()
     execute open
+
+    let current_dir = execute(':pwd')[1:]
     execute 'tcd' fnameescape(path)
     Explore
+    execute 'tcd' fnameescape(current_dir)
 endfunction " }}}
 
 " Toggle showing indent-guides with variable
