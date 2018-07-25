@@ -7,9 +7,25 @@ let s:List = s:V.import('Data.List')
 
 " General functions {{{
 
-function! s:caddexpr_on_stout(x, data, z) abort " {{{
+function! s:caddexpr_on_stdout(data) abort " {{{
     for line in a:data
+        " NOTE:
+        " On NeoVim v0.3.1, the job's on_stdout may take 『『『無』』』 as a line break and else.
+        " This passes it.
+        if line ==# ''
+            caddexpr "\n"
+            continue
+        endif
         caddexpr line
+    endfor
+
+    " Always show the last lines
+    for n in range(1, winnr('$'))
+        if getwinvar(n, '&filetype') ==# 'qf'
+            execute n 'windo' 'normal! G'
+            wincmd p
+            break
+        endif
     endfor
 endfunction " }}}
 
@@ -130,13 +146,20 @@ function! vimrc#plugins#execute_haskdogs_async() abort " {{{
     let ctags_path  = isdirectory(dot_git) ? dot_git . '/tags'
         \                                  : './tags'
 
-    let cmd = printf('haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=%s"', ctags_path)
+    let previous_current_dir = execute('pwd')[1:]
+    execute ':tcd' git_top_dir
+
+    let cmd = ['haskdogs', '--hasktags-args', '"--ignore-close-implementation', '--tags-absolute', '--ctags', printf('--file=%s"', ctags_path)]
+    echomsg 'haskdogs will make a ctags on ' . git_top_dir
+
     let s:haskdogs_job = s:Job.start(cmd, {
-        \ 'on_exit' : {x, y, z -> [
-        \      s:M.echomsg('None', 'haskdogs generated ctags to ' . ctags_path),
-        \      execute('unlet s:haskdogs_job')
-        \  ]}
+        \ 'on_exit': { _ -> [
+            \ s:M.echomsg('None', 'haskdogs might make a ctags to ' . ctags_path),
+            \ execute('unlet s:haskdogs_job')
+        \ ]}
     \ })
+
+    execute ':tcd' previous_current_dir
     return s:haskdogs_job
 endfunction " }}}
 
@@ -180,26 +203,19 @@ endfunction " }}}
 
 " let s:read_to_quickfix_it {{{
 
-let s:read_to_quickfix_it = {cmd ->
+let s:read_to_quickfix_it = { cmd ->
     \ s:Job.start(cmd, {
-        \ 'on_stdout': function('s:caddexpr_on_stout'),
-        \ 'on_stderr': function('s:caddexpr_on_stout'),
-    \})
-\}
+        \ 'on_stdout': function('s:caddexpr_on_stdout'),
+        \ 'on_stderr': function('s:caddexpr_on_stdout'),
+    \ })
+\ }
 
 " }}}
-function! vimrc#plugins#watchexec_stack_quickfix(stack_subcmd) abort " {{{
-    " Clear latest stuff of QuickFix
-    CClear
-    " Start once without changes
-    call s:read_to_quickfix_it('stack ' . a:stack_subcmd)
-    " And watch
-    call s:read_to_quickfix_it('watchexec --exts hs,x,y,yaml --restart -- stack ' . a:stack_subcmd)
-    copen
-endfunction " }}}
 function! vimrc#plugins#run_stack_quickfix(stack_subcmd) abort " {{{
-    call s:read_to_quickfix_it('stack ' . a:stack_subcmd)
-    cwindow
+    CClear
+    let stack_cmd = ['stack'] + split(a:stack_subcmd, ' ')
+    call s:read_to_quickfix_it(stack_cmd)
+    copen
 endfunction " }}}
 
 function! vimrc#plugins#ctags_auto() abort " {{{
@@ -211,10 +227,11 @@ function! vimrc#plugins#ctags_auto() abort " {{{
 
     let git_top_dir = system('git rev-parse --show-toplevel')[:-2] " [:-2] removes a line break
     let dot_git     = git_top_dir . '/.git' " This is a file (not a directory) if here is a git submodule
-    let ctags_path  = isdirectory(dot_git) ? dot_git . '/tags'
-        \                                  : './tags'
+    let ctags_path  = isdirectory(dot_git)
+        \ ? dot_git . '/tags'
+        \ : './tags'
 
-    let cmd = 'ctags --tag-relative=yes --recurse --sort=yes -f ' . fnameescape(ctags_path)
+    let cmd = ['ctags', '--tag-relative=yes', '--recurse', '--sort=yes', '-f', fnameescape(ctags_path)]
     let s:ctags_job = s:Job.start(cmd, {
         \ 'on_exit' : {x, y, z -> [
             \ s:M.echomsg('None', 'ctags generated ctags to ' . fnameescape(ctags_path)),
@@ -230,4 +247,10 @@ function! vimrc#plugins#grep_those(...) abort
         \ execute('grepadd ' . word . ' %', 'silent!')
     \ })
     copen
+endfunction
+
+function! vimrc#plugins#open_this_file_in_gui() abort
+    let file = expand('%:p')
+    bdelete
+    call s:Job.start(['nyaovim', file])
 endfunction
