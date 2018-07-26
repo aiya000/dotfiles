@@ -131,6 +131,24 @@
                     },
                     "to": [
                         {
+                            "shell_command": "/usr/local/bin/zsh -c '[[ $(/usr/local/bin/chunkc tiling::query --monitor id) == 3 ]] && /usr/local/bin/chunkc tiling::monitor -f 1 || /usr/local/bin/chunkc tiling::monitor -f 3'"
+                        }
+                    ]
+                },
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "i",
+                        "modifiers": {
+                            "mandatory": [
+                                "control",
+                                "command",
+                                "shift"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
                             "shell_command": "/usr/local/bin/chunkc tiling::monitor -f next"
                         }
                     ]
