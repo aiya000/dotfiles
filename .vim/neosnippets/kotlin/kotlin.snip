@@ -34,6 +34,10 @@ snippet new_type_with_a_cost
 abbr data class __(val un__: __)
     data class ${1:Name}(val un$1: ${2:Type})
 
+snippet sealed_class
+abbr sealed class __
+    sealed class ${1:Name}
+
 snippet interface
     interface ${1:Name} {${0:here}}
 
