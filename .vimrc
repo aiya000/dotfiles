@@ -1211,14 +1211,11 @@ OverCommandLineNoremap <C-f> <Right>
 "OverCommandLineNoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
 
 " anzu-chan
-nmap n      <Plug>(anzu-n-with-echo)zv
-nmap N      <Plug>(anzu-N-with-echo)zv
-nmap *      <Plug>(anzu-star-with-echo)zv
-nmap #      <Plug>(anzu-sharp-with-echo)zv
-nmap <C-w>* <C-w>v<Plug>(anzu-star-with-echo)zv
-nmap <C-w># <C-w>v<Plug>(anzu-sharp-with-echo)zv
-nmap <leader><leader>* g*/<Up><Home>\m\C<CR>
-nmap <leader><leader># g#?<Up><Home>\m\C<CR>
+"" always n moves to forward / N moves to backward
+nmap <expr> n (v:searchforward ? '<Plug>(anzu-n-with-echo)' : '<Plug>(anzu-N-with-echo)') . 'zv'
+nmap <expr> N (v:searchforward ? '<Plug>(anzu-N-with-echo)' : '<Plug>(anzu-n-with-echo)') . 'zv'
+nmap * <Plug>(anzu-star-with-echo)zv
+nmap # <Plug>(anzu-sharp-with-echo)zv
 
 " TaskList.vim
 nmap <silent> <leader>t :<C-u>TodoList<CR>
