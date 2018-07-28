@@ -359,3 +359,7 @@ on_ft       = [
     'html',
     'markdown',
 ]
+
+[[plugins]]
+repo = 'moro/vim-review'
+on_ft = 'review'
