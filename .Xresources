@@ -13,8 +13,11 @@ dzen2.font:       -*-fixed-*-*-*-*-*-*-*-*-*-*-*-*
 dzen2.foreground: #22EE11
 dzen2.background: black
 
-URxvt.font: xft:Ricty:Regular:size=14:antialias=true
-URxvt.letterSpace: 1
+URxvt.font: xft:Ricty-nerd:Regular:size=14:antialias=true, \
+            xft:Ricty:Regular:size=14:antialias=true, \
+            xft:DejaVu Sans Mono:Regular:size=13, \
+            xft:NotoColorEmoji:Regular:size=13
+URxvt.letterSpace: 0
 URxvt.foreground: White
 URxvt.background: black
 URxvt.scrollBar: false
