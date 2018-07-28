@@ -1,5 +1,5 @@
 [options]
-font = ricty 10
+font = ricty 14
 mouse_autohide = true
 allow_bold = true
 
