@@ -654,7 +654,7 @@ call denite#custom#source('line', 'matchers', ['matcher_substring'])
 augroup PluginPrefs
     autocmd BufEnter,BufWinEnter *
         \   call denite#custom#var('outline', 'command', ['ctags'])
-        \|  call denite#custom#var('outline', 'options', [])
+        \|  call denite#custom#var('outline', 'options', ['--sort=no'])
         \|  call denite#custom#var('outline', 'file_opt', '-o')
     autocmd BufEnter,BufWinEnter *.hs
         \   call denite#custom#var('outline', 'command', ['hasktags'])
