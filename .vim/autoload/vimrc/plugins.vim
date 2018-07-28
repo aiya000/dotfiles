@@ -251,6 +251,5 @@ endfunction
 
 function! vimrc#plugins#open_this_file_in_gui() abort
     let file = expand('%:p')
-    bdelete
     call s:Job.start(['nyaovim', file])
 endfunction

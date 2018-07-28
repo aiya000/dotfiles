@@ -9,6 +9,7 @@ command! -bar -bang -complete=file -nargs=? EditOverridden e<bang> <args> | if e
 command! -bar -bang -complete=file -nargs=? VnewOverridden vnew<bang> <args> | if empty(&ft) | setf none | endif
 command! -bar -bang -complete=file -nargs=? EnewOverridden enew<bang> <args> | if empty(&ft) | setf none | endif
 command! -bar -bang -complete=file -nargs=? TabnewOverridden tabnew<bang> <args> | if empty(&ft) | setf none | endif
+command! -bar GUI call vimrc#plugins#open_this_file_in_gui()
 
 "" Clear quickfix
 command! -bar CClear call setqflist([])
@@ -40,7 +41,6 @@ command! -bar CtagsAuto call vimrc#plugins#ctags_auto()<CR>
 "" Haskell
 command! -bar HaskDogs call vimrc#plugins#execute_haskdogs_async()
 command! -bar EtaDogs call vimrc#plugins#execute_haskdogs_in_eta_async()
-command! -bar -nargs=* WatchExecStack call vimrc#plugins#watchexec_stack_quickfix(<q-args>)
 command! -bar -nargs=* QuickfixRunStack call vimrc#plugins#run_stack_quickfix(<q-args>)
 "TODO: ^^^ Detect hs-sonoda/src/Sonoda/Types/Lexer.hs:7:1: warning: [-Wunused-imports] as a warning
 
