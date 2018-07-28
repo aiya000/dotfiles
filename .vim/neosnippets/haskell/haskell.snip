@@ -98,26 +98,31 @@ alias qs s
 abbr [s|{stuff}|]
     [s|${0}|]
 
+snippet quasi_quote_here
+alias qhere here
+abbr [here|{stuff}|]
+    [here|${0}|]
+
 snippet import_data_string_here_i
 abbr import Data.String.Here (i)
     import Data.String.Here (i)
+
+snippet import_data_string_here_here
+abbr import Data.String.Here (here)
+    import Data.String.Here (here)
 
 snippet here_string_interpolation
 alias interp
 abbr ${{an-expression}}
     ${${1:expr}}${0}
 
-snippet cpp_current_file_line
-abbr (__FILE__ :: String) ++ ":L" ++ show (__LINE__ :: Int)
-    (__FILE__ :: String) ++ ":L" ++ show (__LINE__ :: Int)
-
-snippet qq_cpp_current_file_line
-alias cpp_qq_current_file_line current_file_line
-    [${1:i}|${(__FILE__ :: String)}:L${show (__LINE__ :: Int)}${0}|]
-
 snippet raise_fatal_error
 alias fatal_error
-    error [i|${(__FILE__ :: String)}:L${show (__LINE__ :: Int)}: fatal error! Sorry, please report an issue :(|]
+    [${1:i}|${2:funcName} at ${(__FILE__ :: String)}:L${(__LINE__ :: Int)}: fatal error! Sorry, please report an issue :(|]
+
+snippet println
+alias print
+    print ${0}
 
 snippet expand_debug_modules
 alias unsafe_debug debug_unsafe
@@ -132,8 +137,8 @@ alias unsafe_debug debug_unsafe
     unsafePrint = Debug.unsafePerformIO . print
 
     --TODO: Remove this function
-    unsafetyNinja :: Show a => a -> a
-    unsafetyNinja x = unsafePrint x \`seq\` x
+    ninjaOfUnsafe :: Show a => a -> a
+    ninjaOfUnsafe x = unsafePrint x \`seq\` x
 
     --TODO: Remove this function
     currentFuncName :: IO String
