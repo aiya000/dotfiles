@@ -1,15 +1,37 @@
-snippet tt
-    @<tt>{${1:stuff}}
-
-snippet fn
-alias link_to_footnote
-    @<fn>{${1:footnote_number}}
-
-snippet footnote
-    //footnote[${1:number}][${2:sentence_or_url_or_else}]
-
 snippet hr
     //hr
 
 snippet h1
     = ${0:chapter_title}
+
+snippet comment
+alias com
+    #@#
+
+snippet tt
+    @<tt>{${0:stuff}}
+
+snippet fn
+alias link_to_footnote
+    @<fn>{${0:footnote_number}}
+
+snippet strong
+    @<strong>{${0:here}}
+
+snippet footnote
+    //footnote[${1:number}][${0:sentence_or_url_or_else}]
+
+snippet image
+    //image[${1:image_name_without_the_extension}][${0:name_for_display}]
+
+snippet emlist
+alias code_block bl
+    //emlist[][${1:filetype}]{
+    ${0:code}
+    //}
+
+snippet emlist_haskell
+alias code_block_haskell blhs
+    //emlist[][haskell]{
+    ${0:code}
+    //}
