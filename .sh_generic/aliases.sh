@@ -21,8 +21,16 @@ alias_of sudo='sudo '  # Enable aliases on sudo
 alias_of mysql='mysql --pager="less -r -S -n -i -F -X"'
 alias_of hoe='stack exec --silent -- hoe'
 alias_of hawk='stack exec -- hawk'
-i_have yaourt && alias yaourt-noconfirm='yaourt --noconfirm'
 i_have say || alias say=espeak
+
+if i_have aurman ; then
+    alias aurman='aurman --color always'
+    alias aurman-noconfirm='aurman --noconfirm'
+    alias yaourt=aurman
+    alias yaourt-noconfirm=aurman-noconfirm
+elif i_have yaourt ; then
+    alias yaourt-noconfirm='yaourt --noconfirm'
+fi
 
 # }}}
 # Load ./aliases/** {{{
