@@ -17,6 +17,7 @@ alias cp='cp -i'
 alias dd='dd status=progress'
 alias df='df -h'
 alias du='du -h'
+alias free='free -h'
 alias_of sudo='sudo '  # Enable aliases on sudo
 alias_of mysql='mysql --pager="less -r -S -n -i -F -X"'
 alias_of hoe='stack exec --silent -- hoe'
@@ -152,7 +153,7 @@ alias grw=./gradlew
 alias grwb='./gradlew build'
 alias grwr='./gradlew run'
 
-function dustbox () {
+function dust () {
     # shellcheck disable=SC2068
     mv $@ ~/.backup/dustbox
 }
