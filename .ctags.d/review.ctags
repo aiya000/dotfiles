@@ -1,0 +1,3 @@
+--langdef=ReView
+--langmap=review:.re
+--regex-review=/^=+\s(.+)$/\1/c,classes/
