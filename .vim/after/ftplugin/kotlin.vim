@@ -43,15 +43,13 @@ function! s:exec_quickfix() abort
     execute 'cd' current_dir
 endfunction
 
-let s:does_quickfix_watch = v:false
-
 function! s:start_quickfix() abort
     let s:does_quickfix_watch = v:true
     call s:exec_quickfix()
 endfunction
 
 function! s:toggle_quickfix() abort
-    let s:does_quickfix_watch = !s:does_quickfix_watch
+    let s:does_quickfix_watch = !get(s:, 'does_quickfix_watch', v:false)
     if s:does_quickfix_watch
         echo 'turned on the quickfix'
     else
@@ -60,7 +58,7 @@ function! s:toggle_quickfix() abort
 endfunction
 
 function! s:exec_quickfix_if_available() abort
-    if s:does_quickfix_watch
+    if get(s:, 'does_quickfix_watch', v:false)
         call s:exec_quickfix()
     endif
 endfunction
