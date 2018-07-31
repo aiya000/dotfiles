@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Any scripts depends this
 [ -n "$SH_GENERIC_PREMISE_LOADED" ] && return
 
@@ -13,8 +13,9 @@ function i_have () {
 # define the alias.
 # otherwise don't define it.
 function alias_of () {
+    local alias_detail name
     alias_detail="$1"
-    name="`echo $alias_detail | awk -F = '{print $1}'`"
+    name=$(echo "$alias_detail" | awk -F = '{print $1}')
     i_have "$name" && alias "$alias_detail"
 }
 
