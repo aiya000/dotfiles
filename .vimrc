@@ -923,6 +923,10 @@ nnoremap <silent> [ale-next] :<C-u>ALENext<CR>
 " }}}
 " normal mode {{{
 
+" Allow keymaps like <C-c>{foo}, and {bar}<C-c>
+nnoremap <C-c> <NOP>
+nnoremap <C-c><C-c> <C-c>
+
 " listup
 nnoremap <silent> m: :<C-u>marks<CR>
 nnoremap <silent> q: :<C-u>register<CR>
