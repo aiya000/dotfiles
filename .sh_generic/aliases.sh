@@ -158,6 +158,14 @@ function dust () {
     mv $@ ~/.backup/dustbox
 }
 
+function packet-watch () {
+    local interface=$1
+    local output=$2 # expects foo.pcap
+    sudo tcpdump -i "$interface" -n -s0 -w "$output"
+}
+
+alias watch-packet=packet-watch
+
 i_have tmux && alias t=tmux && alias ta='tmux attach'
 i_have rsync && alias cp-with-progress='rsync --partial --progress'
 i_have watch && alias wifi-hardware-check='watch -n1 rfkill list all'
