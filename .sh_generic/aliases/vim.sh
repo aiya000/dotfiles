@@ -8,13 +8,7 @@ alias vime='vim -c ":bufdo tab split" +q'
 # :SessionSaveInGitBranch compatibled command. (it is defined in dotfiles/.vim/plugin/vimrc.vim)
 # Open the session which is associated the current git branch
 function vim-current-session () {
-    local sessions_dir=~/.backup/vim_backup/session
-    local repo_name
-    local session_name
-    local editor
-    local branch_name
-    local branch_name_
-    local branch_name__
+    local sessions_dir=~/.backup/vim_backup/session repo_name session_name editor branch_name branch_name_ branch_name__
 
     editor=$([[ -n $1 ]] && echo "$1" || echo vim)
     branch_name="$(git branch 2> /dev/null | sort | tail -1 | awk '{print $2}')"
@@ -29,7 +23,7 @@ function vim-current-session () {
     branch_name__="$(echo "$branch_name_" | sed -r 's;#;-;g')"
 
     session_name="${repo_name}-${branch_name__}.vim"
-    "$editor" -S "$sessions_dir/$session_name"
+    "$editor" -S "$sessions_dir/$session_name" +'bufdo CdGitRoot' +'execute "normal!" "\<C-o>"'
 }
 
 function vimman () {
@@ -38,19 +32,16 @@ function vimman () {
     "$editor" -c "Man ${1}" +only
 }
 
-
 # NeoVim
 alias nvime='nvim -c ":bufdo tab split" +q'
 alias nvim-current-session='vim-current-session nvim'
 alias nvimman='vimman nvim'
-
 
 ## Twitter
 alias twitter='vim +TweetVimHomeTimeline'
 alias tweet='vim +TweetVimSay'
 alias twitter-public='vim +TwitterPublic'
 alias tweet-public='vim +TweetPublic'
-
 function twitter-usertimeline() {
     vim -c "TweetVimUserTimeline ${1}"
 }
