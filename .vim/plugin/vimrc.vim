@@ -9,7 +9,9 @@ command! -bar -bang -complete=file -nargs=? EditOverridden e<bang> <args> | if e
 command! -bar -bang -complete=file -nargs=? VnewOverridden vnew<bang> <args> | if empty(&ft) | setf none | endif
 command! -bar -bang -complete=file -nargs=? EnewOverridden enew<bang> <args> | if empty(&ft) | setf none | endif
 command! -bar -bang -complete=file -nargs=? TabnewOverridden tabnew<bang> <args> | if empty(&ft) | setf none | endif
+"" Others
 command! -bar GUI call vimrc#plugins#open_this_file_in_gui()
+command! -bar -nargs=+ DeleteLines call vimrc#plugins#delete_lines(<f-args>)
 
 "" Clear quickfix
 command! -bar CClear call setqflist([])
@@ -46,6 +48,7 @@ command! -bar -nargs=* QuickfixRunStack call vimrc#plugins#run_stack_quickfix(<q
 
 "" Kotlin
 command! -bar KtlintAutoFix call system('ktlint --format ' . fnameescape(expand('%'))) | edit %
+command! -bar -nargs=* QuickfixRunGradle call vimrc#plugins#run_gradle_quickfix(<q-args>)
 
 "" REPLs
 command! -bar -nargs=? Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 'stay', 'stack exec ghci ' . <q-args>)

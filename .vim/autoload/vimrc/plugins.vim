@@ -211,10 +211,17 @@ let s:read_to_quickfix_it = { cmd ->
 \ }
 
 " }}}
+" TODO: Unify to one
 function! vimrc#plugins#run_stack_quickfix(stack_subcmd) abort " {{{
     CClear
     let stack_cmd = ['stack'] + split(a:stack_subcmd, ' ')
     call s:read_to_quickfix_it(stack_cmd)
+    copen
+endfunction " }}}
+function! vimrc#plugins#run_gradle_quickfix(gradle_subcmd) abort " {{{
+    CClear
+    let gradle_cmd = ['gradle', '--console=plain'] + split(a:gradle_subcmd, ' ')
+    call s:read_to_quickfix_it(gradle_cmd)
     copen
 endfunction " }}}
 
@@ -241,15 +248,28 @@ function! vimrc#plugins#ctags_auto() abort " {{{
     return s:ctags_job
 endfunction " }}}
 
-function! vimrc#plugins#grep_those(...) abort
+function! vimrc#plugins#grep_those(...) abort " {{{
     CClear
     call s:List.map(a:000, { word ->
         \ execute('grepadd ' . word . ' %', 'silent!')
     \ })
     copen
-endfunction
+endfunction " }}}
 
-function! vimrc#plugins#open_this_file_in_gui() abort
+function! vimrc#plugins#open_this_file_in_gui() abort " {{{
     let file = expand('%:p')
     call s:Job.start(['nyaovim', file])
+endfunction " }}}
+
+function! vimrc#plugins#delete_lines(...) abort
+    let lineNums = s:List.map(a:000, { x -> str2nr(x) })
+    let lineNums = s:List.sort(lineNums, { x, y -> x - y })
+    while v:true
+        if empty(lineNums)
+            break
+        endif
+        let lineNum = s:List.shift(lineNums)
+        let lineNums = s:List.map(lineNums, { x -> x - 1 })
+        execute lineNum 'delete'
+    endwhile
 endfunction
