@@ -707,7 +707,7 @@ call dein#end()
 "-----------------"
 " {{{
 
-set number relativenumber wrap hlsearch list scrolloff=16 incsearch
+set number relativenumber nowrap hlsearch list scrolloff=16 incsearch
 set textwidth=0 tabstop=4 shiftwidth=4 expandtab
 set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
 set breakindent linebreak autoindent cindent nojoinspaces
@@ -1043,6 +1043,7 @@ nnoremap } }zv
 nnoremap ( (zv
 nnoremap ) )zv
 nnoremap zs zszh
+nnoremap g_ $
 nnoremap <C-n> gt
 nnoremap <C-p> gT
 nnoremap <C-m> o<Esc>
