@@ -645,11 +645,11 @@ call denite#custom#map('insert', '<C-b>', '<denite:move_caret_to_left>')
 call denite#custom#map('insert', '<C-x>', '<denite:do_action:delete>')
 
 call denite#custom#source('buffer', 'matchers', ['matcher_substring'])
-call denite#custom#source('file_mru', 'matchers', ['matcher_substring'])
-call denite#custom#source('tag', 'matchers', ['matcher_substring'])
-call denite#custom#source('file_rec', 'matchers', ['matcher_substring'])
 call denite#custom#source('file', 'matchers', ['matcher_substring'])
+call denite#custom#source('file_mru', 'matchers', ['matcher_substring'])
+call denite#custom#source('file_rec', 'matchers', ['matcher_substring'])
 call denite#custom#source('line', 'matchers', ['matcher_substring'])
+call denite#custom#source('tag', 'matchers', ['matcher_substring'])
 
 augroup PluginPrefs
     autocmd BufEnter,BufWinEnter *
@@ -1056,6 +1056,8 @@ nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
 nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
 nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
 nnoremap <leader>/ :<C-u>Migemo<CR>
+"" Don't stop
+nnoremap gs <NOP>
 
 " }}}
 " insert mode {{{
