@@ -1,12 +1,8 @@
 
 
 # ==== Emojis ====
-# 🐛 :bug:        Fix
 # 👍 :+1:         Improve
 # 🎉 :tada:       Add grandly functions
 # ♻️  :recycle:    Refactor
-# 🚿 :shower:     Remove unneeded/unused functions
-# 👕 :shirt:      Fix lint errors/code styles / Improve tests
-# 🚀 :rocket:     Enhance performances
+# 👕 :shirt:      Fix bugs, lint errors, code styles, or Improve tests
 # 🆙 :up:         Update dependencies
-# 👮 :cop:        Improve securities
