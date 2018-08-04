@@ -9,14 +9,14 @@ alias com
     #@#
 
 snippet tt
-    @<tt>{${0:stuff}}
+    @<tt>{${1:stuff}}${0}
 
 snippet fn
 alias link_to_footnote
-    @<fn>{${0:footnote_number}}
+    @<fn>{${1:footnote_number}}${0}
 
 snippet strong
-    @<strong>{${0:here}}
+    @<strong>{${1:here}}${0}
 
 snippet footnote
     //footnote[${1:number}][${0:sentence_or_url_or_else}]
@@ -35,3 +35,11 @@ alias code_block_haskell blhs
     //emlist[][haskell]{
     ${0:code}
     //}
+
+snippet mapfile
+    #@mapfile(${1:filePath})
+    #@end
+
+snippet mapoutput
+    #@mapoutput(${1:cli-command})
+    #@end
