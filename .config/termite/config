@@ -3,4 +3,7 @@ font = ricty 14
 mouse_autohide = true
 allow_bold = true
 
+[colors]
+color4 = #00ffff
+
 # vim: ft=dosini cms=#%s
