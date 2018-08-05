@@ -51,18 +51,18 @@ command! -bar KtlintAutoFix call system('ktlint --format ' . fnameescape(expand(
 command! -bar -nargs=* QuickfixRunGradle call vimrc#plugins#run_gradle_quickfix(<q-args>)
 
 "" REPLs
-command! -bar -nargs=? Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 'stay', 'stack exec ghci ' . <q-args>)
+command! -bar -nargs=? Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 'stay', 'stack exec ghci ' . <q-args>, v:false)
 "NOTE: 'e' suffix means 'environment of the project' :D
-command! -bar -nargs=? Ghcie call vimrc#open_terminal_as('term-stack-ghci', 'stay', 'stack ghci ' . <q-args>)
-command! -bar -nargs=? GhcieTastyTest call vimrc#open_terminal_as('term-stack-ghci', 'stay', 'stack ghci :tasty-test ' . <q-args>)
-command! -bar -nargs=? IdrisRepl call vimrc#open_terminal_as('term-idris', 'stay', 'idris ' . <q-args>)
-command! -bar CLisp call vimrc#open_terminal_as('none', 'stay', 'clisp')
-command! -bar LeinRepl call vimrc#open_terminal_as('none', 'stay', 'lein repl')
-command! -bar ElmRepl call vimrc#open_terminal_as('term-elm-repl', 'stay', 'elm repl')
-command! -bar PythonRepl call vimrc#open_terminal_as('none', 'stay', 'PAGER=cat python')
-command! -bar IPyRepl call vimrc#open_terminal_as('none', 'stay', 'ipython')
-command! -bar SwiftRepl call vimrc#open_terminal_as('none', 'stay', 'swift')
-command! -bar KotlinRepl call vimrc#open_terminal_as('none', 'stay', 'kotlinc-jvm')
+command! -bar -nargs=? Ghcie call vimrc#open_terminal_as('term-stack-ghci', 'stay', 'stack ghci ' . <q-args>, v:false)
+command! -bar -nargs=? GhcieTastyTest call vimrc#open_terminal_as('term-stack-ghci', 'stay', 'stack ghci :tasty-test ' . <q-args>, v:false)
+command! -bar -nargs=? IdrisRepl call vimrc#open_terminal_as('term-idris', 'stay', 'idris ' . <q-args>, v:false)
+command! -bar CLisp call vimrc#open_terminal_as('none', 'stay', 'clisp', v:false)
+command! -bar LeinRepl call vimrc#open_terminal_as('none', 'stay', 'lein repl', v:false)
+command! -bar ElmRepl call vimrc#open_terminal_as('term-elm-repl', 'stay', 'elm repl', v:false)
+command! -bar PythonRepl call vimrc#open_terminal_as('none', 'stay', 'PAGER=cat python', v:false)
+command! -bar IPyRepl call vimrc#open_terminal_as('none', 'stay', 'ipython', v:false)
+command! -bar SwiftRepl call vimrc#open_terminal_as('none', 'stay', 'swift', v:false)
+command! -bar KotlinRepl call vimrc#open_terminal_as('none', 'stay', 'kotlinc-jvm', v:false)
 
 " Plugins
 "" dein.vim
