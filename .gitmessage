@@ -1,8 +1,8 @@
 
 
 # ==== Emojis ====
-# 👍 :+1:         Improve
-# 🎉 :tada:       Add grandly functions
-# ♻️  :recycle:    Refactor
-# 👕 :shirt:      Fix bugs, lint errors, code styles, or Improve tests
-# 🆙 :up:         Update dependencies
+# 👍 :+1:       Improve
+# 🎉 :tada:     Add grandly functions
+# ♻️  :recycle:  Refactor / Fix code styles and lint errors
+# 🐛 :bug:      Fix bugs
+# 🆙 :up:       Update dependencies
