@@ -203,10 +203,10 @@ if i_have hasktags ; then
 fi
 
 if i_have haskdogs ; then
-    function haskdogs-casual () {
+    function _haskdogs-casual () {
         haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=${1}"
     }
-    alias haskdogs-auto='tags-auto haskdogs-casual'
+    alias haskdogs-auto='tags-auto _haskdogs-casual'
 fi
 
 if i_have stack ; then
