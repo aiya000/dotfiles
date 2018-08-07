@@ -12,6 +12,7 @@ source ~/.sh_generic/premise.sh
 # Override existed name {{{
 
 alias ls='ls --color=auto --group-directories-first'
+alias sl=ls
 alias mv='mv -i'
 alias cp='cp -i'
 alias dd='dd status=progress'
