@@ -363,3 +363,13 @@ on_ft       = [
 [[plugins]]
 repo = 'moro/vim-review'
 on_ft = 'review'
+
+[[plugins]]
+repo = 'aiya000/vim-fmap'
+on_map = [
+    '<Plug>(fmap-forward-f)',
+    '<Plug>(fmap-backward-f)',
+    '<Plug>(fmap-forward-t)',
+    '<Plug>(fmap-backward-t)',
+]
+on_cmd = ['FNoreMap']
