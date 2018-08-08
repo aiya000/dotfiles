@@ -18,23 +18,8 @@ alias link_to_footnote
 snippet strong
     @<strong>{${1:here}}${0}
 
-snippet footnote
-    //footnote[${1:number}][${0:sentence_or_url_or_else}]
-
-snippet image
-    //image[${1:image_name_without_the_extension}][${0:name_for_display}]
-
-snippet emlist
-alias code_block bl
-    //emlist[][${1:filetype}]{
-    ${0:code}
-    //}
-
-snippet emlist_haskell
-alias code_block_haskell blhs
-    //emlist[][haskell]{
-    ${0:code}
-    //}
+snippet href
+    @<href>{${1:url}}${0}
 
 snippet mapfile
     #@mapfile(${1:filePath})
@@ -43,3 +28,25 @@ snippet mapfile
 snippet mapoutput
     #@mapoutput(${1:cli-command})
     #@end
+
+snippet maprange
+    #@maprange(${1:filePath}, ${2:rangeName})
+    #@end
+
+snippet footnote
+    //footnote[${1:number}][${0:sentence_or_url_or_else}]
+
+snippet image
+    //image[${1:image_name_without_the_extension}][${0:name_for_display}]
+
+snippet emlist
+alias code_block bl
+    //emlist[][${1:#:filetype}]{
+    ${0:code}
+    //}
+
+snippet emlist_haskell
+alias code_block_haskell blhs
+    //emlist[][haskell]{
+    ${0:code}
+    //}
