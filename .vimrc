@@ -1058,6 +1058,8 @@ nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
 nnoremap <leader>/ :<C-u>Migemo<CR>
 "" Don't stop
 nnoremap gs <NOP>
+"" Visual a last pasted range
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " }}}
 " insert mode {{{
