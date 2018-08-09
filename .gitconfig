@@ -45,7 +45,7 @@
 	make = create
 	take = !"git stash push --message 'This is saved by alias.take' && git pull && git stash pop"
 [core]
-	pager = nvim - -R +PAGER -c 'setf vim-pager | set syntax=git'
+	pager = cat
 	quotepath = false
 [init]
 	templatedir = ~/.git_templates
