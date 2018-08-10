@@ -698,6 +698,28 @@ let g:espeak_voice = 'en-us'
 let g:highlightedyank_highlight_duration = 200
 
 " }}}
+" --- vim-fmap --- " {{{
+
+let g:fmap_mappings = [
+    \ { 'strokes': ['pb'], 'target': '（' },
+    \ { 'strokes': ['pe'], 'target': '）' },
+    \ { 'strokes': ['kb'], 'target': '「' },
+    \ { 'strokes': ['ke'], 'target': '」' },
+    \ { 'strokes': ['Kb'], 'target': '『' },
+    \ { 'strokes': ['Ke'], 'target': '』' },
+\ ]
+
+augroup PluginPrefs
+    autocmd VimEnter * FNoreMap . 。
+    autocmd VimEnter * FNoreMap , 、
+augroup END
+
+" }}}
+" --- vimhelpgenerator --- " {{{
+
+let g:vimhelpgenerator_defaultlanguage = 'en'
+
+" }}}
 
 call dein#end()
 
