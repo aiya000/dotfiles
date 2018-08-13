@@ -701,17 +701,16 @@ let g:highlightedyank_highlight_duration = 200
 " --- vim-fmap --- " {{{
 
 let g:fmap_mappings = [
-    \ { 'strokes': ['pb'], 'target': '（' },
-    \ { 'strokes': ['pe'], 'target': '）' },
-    \ { 'strokes': ['kb'], 'target': '「' },
-    \ { 'strokes': ['ke'], 'target': '」' },
-    \ { 'strokes': ['Kb'], 'target': '『' },
-    \ { 'strokes': ['Ke'], 'target': '』' },
+    \ { 'strokes': ['p'], 'target': '（' },
+    \ { 'strokes': ['k'], 'target': '「' },
+    \ { 'strokes': ['K'], 'target': '『' },
 \ ]
 
 augroup PluginPrefs
     autocmd VimEnter * FNoreMap . 。
     autocmd VimEnter * FNoreMap , 、
+    autocmd VimEnter * FNoreMap ! ！
+    autocmd VimEnter * FNoreMap ? ？
 augroup END
 
 " }}}
