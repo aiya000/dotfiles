@@ -98,12 +98,6 @@ function! vimrc#keys#netrw_wrapper(open_method, at_this_buffer) abort " {{{
     execute 'tcd' fnameescape(current_dir)
 endfunction " }}}
 
-" Toggle showing indent-guides with variable
-function! vimrc#keys#toggle_indent_guides() " {{{
-    let g:vimrc#keys#indent_guides_enable = !g:vimrc#keys#indent_guides_enable
-    IndentGuidesToggle
-endfunction " }}}
-
 " Get a detail of <title> from + register
 function! vimrc#keys#get_webpage_title() abort " {{{
     return substitute(s:HTML.parseURL(@+).find('title').value(), '·', '-', 'g')

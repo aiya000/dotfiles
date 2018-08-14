@@ -84,6 +84,8 @@ scriptencoding utf-8
 " }}}
 " Declare autocmd groups {{{
 
+" TODO: Unify augroups to one, because I may not need spliting augroups
+
 augroup PluginPrefs
     autocmd!
 augroup END
@@ -435,31 +437,6 @@ let g:tlWindowPosition = 1
 let g:tlRememberPosition = 1
 
 " }}}
-" --- vim-indent-guides --- {{{
-
-let g:indent_guides_default_mapping = 0
-let g:indent_guides_guide_size      = 1
-let g:indent_guides_auto_colors     = 0
-
-" Define colors
-augroup HighlightPref
-    autocmd VimEnter,ColorScheme * highlight IndentGuidesOdd ctermbg=64
-    autocmd VimEnter,ColorScheme * highlight IndentGuidesEven ctermbg=60
-augroup END
-
-" Define indent-guides state at global
-"@See('nnoremap <C-h><C-i>')
-"FIXME: Disable if the buffer is &noexpandtab
-let g:vimrc#keys#indent_guides_enable = get(g:, 'vimrc#keys#indent_guides_enable', v:true)
-augroup FileEvent
-    autocmd WinEnter,BufWinEnter * IndentGuidesDisable
-    autocmd WinEnter,BufWinEnter *.{xml,html,css,scss,erb,xaml,fxml,scala,kt,gradle,vim,cs,csproj,ts,js,json,tsx,java,vimspec,sh,zsh,c,h,cpp,hpp,storyboard,swift},.vimrc
-        \  if g:vimrc#keys#indent_guides_enable
-            \| IndentGuidesEnable
-        \| endif
-augroup END
-
-" }}}
 " --- vim-colors-solarized --- {{{
 
 " Use dark color
@@ -612,6 +589,15 @@ let g:ale_linters = {
    \ 'java': ['checkstyle', 'google-java-format', 'PMD'],
 \}
 
+let g:ale_scala_scalastyle_config = $HOME . '/.dotfiles/scalastyle_config_default.xml'
+
+augroup PluginPrefs
+    autocmd VimEnter *
+        \  if filereadable('./scalastyle_config.xml')
+            \| let g:ale_scala_scalastyle_config = execute('pwd')[:-1] . '/scalastyle_config.xml'
+        \| endif
+augroup END
+
 " }}}
 " --- elm-vim --- {{{
 
@@ -717,6 +703,12 @@ augroup END
 " --- vimhelpgenerator --- " {{{
 
 let g:vimhelpgenerator_defaultlanguage = 'en'
+
+" }}}
+" --- vim-autoformat --- " {{{
+
+" let g:formatdef_scalafmt = '"ng scalafmt --stdin"' " Please see Makefile for about `ng scalafmt`
+" let g:formatters_scala = ['scalafmt']
 
 " }}}
 
@@ -1253,8 +1245,8 @@ nmap <silent> <leader>t :<C-u>TodoList<CR>
 " undotree
 nnoremap <silent> <leader>U :<C-u>UndotreeToggle<CR>
 
-" vim-indent-guides
-nnoremap <silent> <C-h><C-i> :<C-u>call vimrc#keys#toggle_indent_guides()<CR>
+" indentLine
+nnoremap <silent> <C-h><C-i> :<C-u>IndentLinesToggle<CR>
 
 " neosnippet.vim
 imap <C-s> <Plug>(neosnippet_jump_or_expand)

@@ -41,9 +41,6 @@ repo = 'tyru/vim-altercmd'
 repo = 'Shougo/neomru.vim'
 
 [[plugins]]
-repo = 'nathanaelkane/vim-indent-guides'
-
-[[plugins]]
 repo = 'aiya000/aho-bakaup.vim'
 
 [[plugins]]
@@ -139,3 +136,6 @@ repo = 'ryanoasis/vim-devicons'
 
 [[plugins]]
 repo = 'haya14busa/vim-migemo'
+
+[[plugins]]
+repo = 'Yggdroot/indentLine'
