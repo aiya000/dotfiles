@@ -373,3 +373,9 @@ on_map = [
     '<Plug>(fmap-backward-t)',
 ]
 on_cmd = ['FNoreMap']
+
+[[plugins]]
+repo = 'Chiel92/vim-autoformat'
+on_ft = [
+    'scala',
+]
