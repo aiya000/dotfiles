@@ -16,6 +16,7 @@ install:
 	make install_with_stack
 	make install_with_npm
 	make install_with_pip
+	make install_with_coursier
 	make install_on_each_os
 	make install_on_any_os
 
@@ -23,12 +24,19 @@ ifeq ($(UNAME),Linux)
 install_package_managers:
 	yaourt -Sy
 	yaourt -S --noconfirm static-stack npm python-pip
+	echo Please define install_package_managers for coursier > /dev/stderr
 endif
 ifeq ($(UNAME),Darwin)
-	echo Please define install_package_managers > /dev/stderr
+	echo Please define install_package_managers for haskell-stack > /dev/stderr
+	echo Please define install_package_managers for npm > /dev/stderr
+	echo Please define install_package_managers for pip > /dev/stderr
+	brew install --HEAD coursier/formulas/coursier
 endif
 ifeq ($(OS),Windows_NT)
-	echo Please define install_package_managers
+	echo Please define install_package_managers for haskell-stack > /dev/stderr
+	echo Please define install_package_managers for npm > /dev/stderr
+	echo Please define install_package_managers for pip > /dev/stderr
+	echo Please define install_package_managers for coursier > /dev/stderr
 endif
 
 install_with_stack:
@@ -44,6 +52,17 @@ install_with_npm:
 
 install_with_pip:
 	sudo -H pip install neovim grip
+
+install_with_coursier:
+	# Please see https://scalameta.org/scalafmt/#Installation for latest
+	coursier bootstrap com.geirsson:scalafmt-cli_2.12:1.5.1 \
+		-r bintray:scalameta/maven \
+		-o ~/bin/scalafmt --standalone --main org.scalafmt.cli.Cli
+	# Please see https://scalameta.org/scalafmt/#Nailgun for latest
+	coursier bootstrap --standalone com.geirsson:scalafmt-cli_2.12:1.5.1 \
+		-r bintray:scalameta/maven \
+		-o ~/bin/scalafmt_ng -f --main com.martiansoftware.nailgun.NGServer
+	ng ng-alias scalafmt org.scalafmt.cli.Cli
 
 install_on_each_os:
 	# vim depends
@@ -71,11 +90,13 @@ ifeq ($(UNAME),Linux)
 	./configure --prefix=/usr/local/
 	make
 	sudo make install
+	echo Please define install_on_each_os for scalastyle > /dev/stderr
 endif
 ifeq ($(UNAME),Darwin)
 	brew install \
 		font-forge \ # for making nerd-fonts for vim-devicons
 		cmigemo \ # vim-migemo
+		scalastyle \ # ale (vim)
 		graphviz plantuml \
 		jq
 	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit # vim-textobj-clang
