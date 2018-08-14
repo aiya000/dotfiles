@@ -155,6 +155,7 @@ alias grwb='./gradlew build'
 alias grwr='./gradlew run'
 alias grwc='./gradlew clean'
 alias grwj='./gradlew jar'
+alias grwi='./gradlew install'
 
 function dust () {
     # shellcheck disable=SC2068
