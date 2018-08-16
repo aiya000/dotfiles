@@ -1,12 +1,10 @@
 let b:undo_ftplugin = 'setl ' . join([
-\   'nonumber<',
-\   'norelativenumber<',
-\   'nolist<',
-\   'wrap<',
-\   'noexpandtab<',
-\])
-
-IndentGuidesDisable
+    \ 'nonumber<',
+    \ 'norelativenumber<',
+    \ 'nolist<',
+    \ 'wrap<',
+    \ 'noexpandtab<',
+\ ])
 
 setl nonumber norelativenumber nolist wrap noexpandtab
 
