@@ -711,6 +711,18 @@ let g:vimhelpgenerator_defaultlanguage = 'en'
 " let g:formatters_scala = ['scalafmt']
 
 " }}}
+" --- indentLine --- " {{{
+
+let g:indentLine_bufTypeExclude = [
+    \ 'help',
+    \ 'terminal',
+\ ]
+
+let g:indentLine_fileTypeExclude = [
+    \ 'aref_web',
+\ ]
+
+" }}}
 
 call dein#end()
 
