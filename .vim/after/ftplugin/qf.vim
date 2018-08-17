@@ -1,6 +1,4 @@
-let s:V    = vital#vimrc#new()
-let s:Math = s:V.import('Math')
-let s:O    = s:V.import('Data.Optional')
+let s:Math = vital#vimrc#import('Math')
 
 let b:undo_ftplugin = 'setl ' . join([
   \ 'statusline<',
@@ -9,7 +7,7 @@ let b:undo_ftplugin = 'setl ' . join([
   \ 'cursorline',
   \ 'nolist<',
   \ 'wrap<',
-\])
+\ ])
 
 setl statusline+=\ %L
 setl nonumber norelativenumber
