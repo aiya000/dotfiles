@@ -1,0 +1,138 @@
+# Syntaxes
+
+snippet def
+alias fun
+    def ${1:funcName}(${2:#:args}): ${3:Type} = ${0}
+
+snippet object
+    object ${1:ObjectName}
+
+snippet package
+    package ${0:packagename}
+
+snippet sealed_abstract_class
+    sealed abstract class ${1:TypeName}
+
+snippet sealed_trait
+alias sum_type_parent
+    sealed trait ${1:TypeName}
+
+snippet case_object
+alias sum_type_chlild
+    case object ${1:ValueName} extends ${2:ParentName}
+
+snippet case_class
+alias product_type
+    case class ${1:TypeName}(${0:args})
+
+snippet class
+    class ${1:TypeName}${2:#:(args)} ${0}
+
+snippet import
+    import ${0}
+
+snippet package_object
+    /*
+     * ${1}
+     */
+    package object ${0:packagename} {}
+
+snippet match
+    match {
+        case ${1:pattern} => ${0:here}
+    }
+
+snippet throw
+    throw ${0}
+
+snippet try
+    try {${0:#:here}}
+
+snippet catch
+    catch {
+        case ${1:varName}: ${2:Exception} => ${0}
+    }
+
+snippet finally
+    finally {${0:#:here}}
+
+snippet type
+alias type_alias
+    type ${1:TypeName} = ${0:OriginalName}
+
+#snippet implicit
+#    implicit ${0}
+
+snippet if
+    if (${1:cond}) {${0:here}}
+
+snippet else_if
+    else if (${1:cond}) {${0:here}}
+
+snippet else
+    else {${0:here}}
+
+# Expressions
+
+snippet println
+    println(${0:here})
+
+snippet println_err
+    System.err.println(${0:her})
+
+snippet throw_runtime_exception_as_todo_not_implemented_yet
+alias todo undefined not_implemented_yet
+    ???
+
+snippet throw_runtime_exception_as_a_fatal_errror
+alias fatal_errror
+    throw new RuntimeException("Fatal error! ${0}")
+
+snippet yield
+    yield ${0}
+
+# Templates
+
+snippet sum_type
+    sealed trait ${1:TypeName}
+    case class ${2:ValueName}(${3:args}) extends $1
+
+snippet implicit_class
+alias extension_method enrich_my_library
+    implicit class ${1:AlternativeName}(${2:self}: ${3:TargetType}) {
+        def ${4:funcName}(${5:#:args}): ${6:Type} = ${0}
+    }
+
+snippet document_comment
+alias doc
+    /**
+     * ${0}
+     */
+
+snippet document_comment_link
+alias link
+    [[${1:stuff}]]
+
+snippet template_getType
+abbr    def getType[A : TypeTag](x: A): Type = typeOf[A]
+    import scala.reflect.runtime.{universe => ru}
+    import ru._
+    def getType[A : TypeTag](x: A): Type = typeOf[A]
+
+snippet template_multiline_string_with_margin
+    """
+    | ${0}
+    """.trim.stripMargin
+
+snippet to
+    =>
+
+snippet main
+    object Main {
+        def main(args: Array[String]): Unit = {
+            ${0}
+        }
+    }
+
+snippet isInstanceOf
+    isInstanceOf[${1:TypeName}]
