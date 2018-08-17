@@ -1008,6 +1008,7 @@ nnoremap <silent> ghC :<C-u>bdelete!<CR>
 nnoremap <silent> gho :<C-u>only<CR>
 nnoremap <silent> gh_ :<C-u>resize<CR>
 nnoremap <silent> gh" :<C-u>resize 5<CR>
+nnoremap <silent> gh' :<C-u>resize 10<CR>
 nnoremap gh\| <C-w>\|
 nnoremap <silent> gh\ :<C-u>vertical resize 1<CR>
 nnoremap <silent> gh% :<C-u>vertical resize 20<CR>
