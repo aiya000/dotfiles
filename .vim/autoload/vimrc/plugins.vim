@@ -225,6 +225,21 @@ function! vimrc#plugins#run_gradle_quickfix(gradle_subcmd) abort " {{{
     copen
 endfunction " }}}
 
+function! vimrc#plugins#run_scala_compile_watch_quickfix(sbt_subcmd) abort " {{{
+    CClear
+    call vimrc#plugins#stop_scala_compile_watch_quickfix() " Avoid running more processes
+    let sbt_cmd = ['sbt', '~test:compile', '-no-colors', '-Dsbt.log.noformat=true'] + split(a:sbt_subcmd, ' ')
+    let s:sbt_compile_watch_job = s:read_to_quickfix_it(sbt_cmd)
+    copen
+endfunction " }}}
+function! vimrc#plugins#stop_scala_compile_watch_quickfix() abort " {{{
+    if get(s:, 'sbt_compile_watch_job', v:null) isnot v:null
+        call s:sbt_compile_watch_job.stop()
+        let s:sbt_compile_watch_job = v:null
+        cclose
+    endif
+endfunction " }}}
+
 function! vimrc#plugins#ctags_auto() abort " {{{
     if exists('s:ctags_job')
         echomsg 'ctags is skipped (ctags is already running at now)'

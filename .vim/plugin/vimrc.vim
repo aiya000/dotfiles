@@ -50,6 +50,10 @@ command! -bar -nargs=* QuickfixRunStack call vimrc#plugins#run_stack_quickfix(<q
 command! -bar KtlintAutoFix call system('ktlint --format ' . fnameescape(expand('%'))) | edit %
 command! -bar -nargs=* QuickfixRunGradle call vimrc#plugins#run_gradle_quickfix(<q-args>)
 
+"" Scala
+command! -bar -nargs=* QuickfixRunSbtCompileWatch call vimrc#plugins#run_scala_compile_watch_quickfix(<q-args>)
+command! -bar QuickfixStopSbtCompileWatch call vimrc#plugins#stop_scala_compile_watch_quickfix()
+
 "" REPLs
 command! -bar -nargs=? Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 'stay', 'stack exec ghci ' . <q-args>, v:false)
 "NOTE: 'e' suffix means 'environment of the project' :D
@@ -63,6 +67,7 @@ command! -bar PythonRepl call vimrc#open_terminal_as('none', 'stay', 'PAGER=cat 
 command! -bar IPyRepl call vimrc#open_terminal_as('none', 'stay', 'ipython', v:false)
 command! -bar SwiftRepl call vimrc#open_terminal_as('none', 'stay', 'swift', v:false)
 command! -bar KotlinRepl call vimrc#open_terminal_as('none', 'stay', 'kotlinc-jvm', v:false)
+command! -bar SbtRepl call vimrc#open_terminal_as('term-sbt', 'stay', 'sbt', v:false)
 
 " Plugins
 "" dein.vim
