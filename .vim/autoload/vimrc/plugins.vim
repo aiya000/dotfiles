@@ -276,7 +276,7 @@ function! vimrc#plugins#open_this_file_in_gui() abort " {{{
     call s:Job.start(['nyaovim', file])
 endfunction " }}}
 
-function! vimrc#plugins#delete_lines(...) abort
+function! vimrc#plugins#delete_lines(...) abort " {{{
     let lineNums = s:List.map(a:000, { x -> str2nr(x) })
     let lineNums = s:List.sort(lineNums, { x, y -> x - y })
     while v:true
@@ -287,4 +287,13 @@ function! vimrc#plugins#delete_lines(...) abort
         let lineNums = s:List.map(lineNums, { x -> x - 1 })
         execute lineNum 'delete'
     endwhile
+endfunction " }}}
+
+function! vimrc#plugins#exec_at_this_buffer_dir(cmd) abort
+    let current_dir = execute('pwd')[1:]
+    let buffuer_dir = expand('%:p:h')
+
+    execute 'tcd' buffuer_dir
+    execute a:cmd
+    execute 'tcd' current_dir
 endfunction
