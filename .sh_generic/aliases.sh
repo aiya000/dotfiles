@@ -106,6 +106,7 @@ if i_have git ; then
     alias gch='git cherry-pick'
     alias _gclean='git clean -fd'
     alias gpush='git push'
+    alias gpushf='git push --force-with-lease'
     alias gpull='git pull --rebase'
     alias gtake='git stash push --message "This is saved by alias.take" && git pull --rebase && git stash pop'
     alias greflog='git reflog'
