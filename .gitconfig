@@ -44,6 +44,7 @@
 	clone = clone --recursive
 	make = create
 	take = !"git stash push --message 'This is saved by alias.take' && git pull && git stash pop"
+	pushf = push --force-with-lease
 [core]
 	pager = cat
 	quotepath = false
