@@ -89,7 +89,13 @@ alias fatal_errror
     throw new RuntimeException("Fatal error! ${0}")
 
 snippet yield
-    yield ${0}
+    yield
+
+snippet private
+    private
+
+snippet final
+    final
 
 # Templates
 
@@ -125,7 +131,12 @@ snippet template_multiline_string_with_margin
     """.trim.stripMargin
 
 snippet to
+alias arrow
     =>
+
+snippet from
+alias for_into into
+    <-
 
 snippet main
     object Main {

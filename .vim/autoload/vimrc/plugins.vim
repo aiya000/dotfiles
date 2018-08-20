@@ -225,6 +225,11 @@ function! vimrc#plugins#run_gradle_quickfix(gradle_subcmd) abort " {{{
     copen
 endfunction " }}}
 
+augroup ScalaCompileWatch
+    autocmd!
+    autocmd VimLeave * call vimrc#plugins#stop_scala_compile_watch_quickfix()
+augroup END
+
 function! vimrc#plugins#run_scala_compile_watch_quickfix(sbt_subcmd) abort " {{{
     CClear
     call vimrc#plugins#stop_scala_compile_watch_quickfix() " Avoid running more processes
