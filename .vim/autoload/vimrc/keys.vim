@@ -152,3 +152,9 @@ function! vimrc#keys#toggle_ale_at_buffer() abort
     ALEToggle
     ALEToggle
 endfunction
+
+" Toggle showing indent-guides with variable
+function! vimrc#keys#toggle_indent_guides() " {{{
+    let g:vimrc#keys#indent_guides_enable = !get(g:, 'vimrc#keys#indent_guides_enable', v:true)
+    IndentGuidesToggle
+endfunction " }}}

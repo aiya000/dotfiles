@@ -138,4 +138,4 @@ repo = 'ryanoasis/vim-devicons'
 repo = 'haya14busa/vim-migemo'
 
 [[plugins]]
-repo = 'Yggdroot/indentLine'
+repo = 'nathanaelkane/vim-indent-guides'

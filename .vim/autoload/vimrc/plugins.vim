@@ -1,5 +1,5 @@
 let s:V = vital#vimrc#new()
-let s:M = s:V.import('Vim.Message')
+let s:Msg = s:V.import('Vim.Message')
 let s:Job = s:V.import('System.Job')
 let s:List = s:V.import('Data.List')
 
@@ -78,7 +78,7 @@ endfunction " }}}
 " Open tweetvim by private account
 function! vimrc#plugins#twitter_private() abort " {{{
     if !exists('g:vimrc.private["twitter"]["priv_ac"]')
-        call s:M.error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
+        call s:Msg.error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
         return
     endif
 
@@ -91,7 +91,7 @@ endfunction " }}}
 " Open tweetvim_say by private account
 function! vimrc#plugins#tweet_private() abort " {{{
     if !exists('g:vimrc.private["twitter"]["priv_ac"]')
-        call s:M.error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
+        call s:Msg.error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
         return
     endif
 
@@ -105,7 +105,7 @@ endfunction " }}}
 " Open tweetvim by public account
 function! vimrc#plugins#twitter_public() abort " {{{
     if !exists("g:vimrc.private['twitter']['publ_ac']")
-        call s:M.error("Not set env variable => g:vimrc.private['twitter']['publ_ac']")
+        call s:Msg.error("Not set env variable => g:vimrc.private['twitter']['publ_ac']")
         return
     endif
 
@@ -118,7 +118,7 @@ endfunction " }}}
 " Open tweetvim_say by public account
 function! vimrc#plugins#tweet_public(...) abort " {{{
     if !exists('g:vimrc.private["twitter"]["publ_ac"]')
-        call s:M.error('Not set env variable => g:vimrc.private["twitter"]["publ_ac"]')
+        call s:Msg.error('Not set env variable => g:vimrc.private["twitter"]["publ_ac"]')
         return
     endif
 
@@ -154,7 +154,7 @@ function! vimrc#plugins#execute_haskdogs_async() abort " {{{
 
     let s:haskdogs_job = s:Job.start(cmd, {
         \ 'on_exit': { _ -> [
-            \ s:M.echomsg('None', 'haskdogs might make a ctags to ' . ctags_path),
+            \ s:Msg.echomsg('None', 'haskdogs might make a ctags to ' . ctags_path),
             \ execute('unlet s:haskdogs_job')
         \ ]}
     \ })
@@ -240,6 +240,7 @@ endfunction " }}}
 function! vimrc#plugins#stop_scala_compile_watch_quickfix() abort " {{{
     if get(s:, 'sbt_compile_watch_job', v:null) isnot v:null
         call s:sbt_compile_watch_job.stop()
+        echomsg 'status: ' . string(s:sbt_compile_watch_job.status())
         let s:sbt_compile_watch_job = v:null
         cclose
     endif
@@ -261,7 +262,7 @@ function! vimrc#plugins#ctags_auto() abort " {{{
     let cmd = ['ctags', '--tag-relative=yes', '--recurse', '--sort=yes', '-f', fnameescape(ctags_path)]
     let s:ctags_job = s:Job.start(cmd, {
         \ 'on_exit' : {x, y, z -> [
-            \ s:M.echomsg('None', 'ctags generated ctags to ' . fnameescape(ctags_path)),
+            \ s:Msg.echomsg('None', 'ctags generated ctags to ' . fnameescape(ctags_path)),
             \ execute('unlet s:ctags_job')
         \ ]}
     \ })
@@ -297,6 +298,10 @@ endfunction " }}}
 function! vimrc#plugins#exec_at_this_buffer_dir(cmd) abort
     let current_dir = execute('pwd')[1:]
     let buffuer_dir = expand('%:p:h')
+    if !isdirectory(buffuer_dir)
+        call s:Msg.error('vimrc#plugins#exec_at_this_buffer_dir: the buffer was not a file, :pwd directory was used instead.')
+        let buffuer_dir = current_dir
+    endif
 
     execute 'tcd' buffuer_dir
     execute a:cmd

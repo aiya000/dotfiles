@@ -711,17 +711,40 @@ let g:vimhelpgenerator_defaultlanguage = 'en'
 " let g:formatters_scala = ['scalafmt']
 
 " }}}
-" --- indentLine --- " {{{
+" --- vim-indent-guides --- " {{{
 
-let g:indentLine_bufTypeExclude = [
-    \ 'help',
-    \ 'terminal',
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_default_mapping = 0
+let g:indent_guides_guide_size = 1
+let g:indent_guides_auto_colors = 0
+let g:indent_guides_exclude_filetypes = [
+   \ 'xml',
+   \ 'html',
+   \ 'xaml',
+   \ 'fxml',
+   \ 'gradle',
+   \ 'csproj',
+   \ 'json',
+   \ 'vimspec',
+   \ 'storyboard',
+   \ 'aref_web',
 \ ]
 
-let g:indentLine_fileTypeExclude = [
-    \ 'aref_web',
-    \ 'haskell',
-\ ]
+" Define colors
+augroup HighlightPref
+    autocmd VimEnter,ColorScheme * highlight IndentGuidesOdd ctermbg=60
+    autocmd VimEnter,ColorScheme * highlight IndentGuidesEven ctermbg=60
+augroup END
+
+augroup FileEvent
+    autocmd WinEnter,BufWinEnter *
+        \  if get(g:, 'vimrc#keys#indent_guides_enable', v:true)
+            \| IndentGuidesEnable
+        \| else
+            \| IndentGuidesDisable
+        \| endif
+augroup END
 
 " }}}
 
@@ -1074,13 +1097,14 @@ nnoremap <C-p> gT
 nnoremap <C-m> o<Esc>
 nnoremap <C-]> g<C-]>
 nnoremap g<C-]> <C-]>
+nnoremap <leader>/ :<C-u>Migemo<CR>
 nnoremap <silent> ! :!<CR>
 nnoremap <silent> <C-k><Space> :<C-u>call vimrc#keys#clear_ends_space()<CR>
 nnoremap <silent> <Space><Space> :<C-u>call vimrc#keys#compress_spaces()<CR>
 nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
 nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
 nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
-nnoremap <leader>/ :<C-u>Migemo<CR>
+nnoremap <silent> <leader>o :<C-u>copen<CR>
 "" Don't stop
 nnoremap gs <NOP>
 "" Visual a last pasted range
@@ -1217,9 +1241,11 @@ vmap              <leader>r <Plug>(quickrun)
 vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
 
 " denite.nvim
-nnoremap          <leader>u  :<C-u>Denite<Space>
-nnoremap <silent> <C-k>e     :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file/rec')<CR>
+nnoremap <leader>u :<C-u>Denite<Space>
+nnoremap <silent> <C-k>e :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file/rec')<CR>
 nnoremap <silent> <C-k><C-e> :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file')<CR>
+nnoremap <silent> <leader><C-k>e :<C-u>Denite file/rec<CR>
+nnoremap <silent> <leader><C-k><C-e> :<C-u>Denite file<CR>
 nnoremap <silent> <C-k><C-t> :<C-u>Denite tag<CR>
 nnoremap <silent> <C-k><C-f> :<C-u>Denite outline<CR>
 nnoremap <silent> <C-k>f :<C-u>Denite filetype<CR>
@@ -1257,8 +1283,8 @@ nmap <silent> <leader>t :<C-u>TodoList<CR>
 " undotree
 nnoremap <silent> <leader>U :<C-u>UndotreeToggle<CR>
 
-" indentLine
-nnoremap <silent> <C-h><C-i> :<C-u>IndentLinesToggle<CR>
+" vim-indent-guides
+nnoremap <silent> <C-h><C-i> :<C-u>call vimrc#keys#toggle_indent_guides()<CR>
 
 " neosnippet.vim
 imap <C-s> <Plug>(neosnippet_jump_or_expand)
