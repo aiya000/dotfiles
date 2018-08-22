@@ -718,6 +718,7 @@ let g:indent_guides_start_level = 2
 let g:indent_guides_default_mapping = 0
 let g:indent_guides_guide_size = 1
 let g:indent_guides_auto_colors = 0
+let g:indent_guides_tab_guides = 0
 let g:indent_guides_exclude_filetypes = [
    \ 'xml',
    \ 'html',
@@ -729,6 +730,11 @@ let g:indent_guides_exclude_filetypes = [
    \ 'vimspec',
    \ 'storyboard',
    \ 'aref_web',
+   \ 'term-shell',
+   \ 'gitcommit',
+   \ 'review',
+   \ 'markdown',
+   \ 'haskell',
 \ ]
 
 " Define colors
