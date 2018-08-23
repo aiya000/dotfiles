@@ -6,19 +6,6 @@
 "    - NeoVim                "
 "----------------------------"
 
-"-------------------
-" {- Message -} "
-" @Bugs         => It has some bug
-" @Incomplete   => It is incompleted implementation
-" @Unchecked    => I implemented without check
-" @Unsupported  => I don't support some environment
-" @Deprecated   => Deprecated
-" @Experiment   => That is experimental implementation
-" @See          => Please see it
-" @Code         => The sample code for how to use
-"-------------------
-
-
 "------"
 " Memo "
 "------"
@@ -768,7 +755,7 @@ set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
 set breakindent linebreak autoindent cindent nojoinspaces
 set previewheight=40
 set laststatus=2 wildmenu noruler cmdheight=2 history=500
-set tabline=%!vimrc#set#tabline_as_statusline()
+set tabline=%!vimrc#set#tabline()
 set backspace=indent,eol,start
 set nowrapscan visualbell notimeout
 set fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
@@ -797,9 +784,9 @@ set ambiwidth=double
 " {{{
 
 augroup HighlightPref
-    autocmd ColorScheme       * highlight RcEmSpace ctermbg=LightBlue
+    autocmd ColorScheme * highlight RcEmSpace ctermbg=LightBlue
     autocmd VimEnter,WinEnter * call matchadd('RcEmSpace', '　')
-    " Highlight VCS conflict markers
+    " git conflicts
     autocmd ColorScheme * call matchadd('Error', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
 augroup END
 
@@ -836,7 +823,7 @@ let &undodir = s:undodir
 " Use aho-bakaup.vim's the backup functions
 set nobackup
 
-"@Bugs("This option doesn't work finely (?)")
+" TODO: This option doesn't work finely (?)
 " Disable auto commentalize new line
 set formatoptions-=ro
 

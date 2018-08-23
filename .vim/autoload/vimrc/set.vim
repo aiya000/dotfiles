@@ -1,8 +1,10 @@
+let s:List = vital#vimrc#import('Data.List')
+
 " Maybe this is specified to 'tabline' with a pattern like `set tabline=%!this_function()`.
 "
 " See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer),
 " and below augroup 'HighlightPref'.
-function! vimrc#set#tabline_as_statusline() abort " {{{
+function! vimrc#set#tabline() abort " {{{
     let language_client_status =
         \ get(g:vimrc, 'language_client', {'has_started': v:false})['has_started']
             \ ? '%6*%{LanguageClient_statusLine()}%*'
@@ -13,10 +15,10 @@ function! vimrc#set#tabline_as_statusline() abort " {{{
         \. '%4*%{vimrc#set#tabline_marks_if_present()}%*'
         \. '%5*%{get(g:, "ale_enabled", 0) ? "[ale]" : ""}%*'
         \. language_client_status
+        \. ' | ' . s:tabs()
 endfunction " }}}
 
 function! vimrc#set#tabline_tags_if_present() abort " {{{
-
     let tags = tagfiles()
     return empty(tags)    ? ''
         \: len(tags) is 1 ? ('[Tag=' . tags[0] . ']')
@@ -25,8 +27,9 @@ endfunction " }}}
 
 function! vimrc#set#tabline_marks_if_present() abort " {{{
     let marks = s:get_buf_marks()
-    return empty(marks) ? ''
-        \               : '[Mark=' . join(marks, '') . ']'
+    return empty(marks)
+        \ ? ''
+        \ : '[Mark=' . join(marks, '') . ']'
 endfunction " }}}
 
 function! s:get_buf_marks() abort " {{{
@@ -35,3 +38,34 @@ function! s:get_buf_marks() abort " {{{
     let local_marks = filter(all_marks, {_, x -> match(x, '\l', 0, 0) is 0})
     return local_marks
 endfunction " }}}
+
+" NOTE: http://d.hatena.ne.jp/thinca/20111204/1322932585
+function! s:tabs() " {{{
+    let titles = s:List.map(range(1, tabpagenr('$')), {
+        \ tabnr -> vimrc#set#tabpage_label(tabnr)
+    \ })
+    return join(titles) . '%#TabLineFill#%T'
+endfunction
+
+function! vimrc#set#tabpage_label(tabnr) " {{{
+    let title = gettabvar(a:tabnr, 'title')
+    if title != ''
+        return title
+    endif
+    " Please see `:h TabLineSel` and `:h TabLine`
+    let highlight = a:tabnr is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
+
+    let bufnrs_at_current = tabpagebuflist(a:tabnr)
+    let modified_buffers = s:List.filter(bufnrs_at_current, { bufnr ->
+        \ getbufvar(bufnr, '&modified')
+    \ })
+    let mod_mark = (len(modified_buffers) is 0) ? '' : '[+]'
+    let curbufnr = bufnrs_at_current[tabpagewinnr(a:tabnr) - 1]
+    let fname = fnamemodify(bufname(curbufnr), ':t')
+    if fname == ''
+        let fname = '[NoName]'
+    endif
+    let label_of_a_buf = '[' . mod_mark . fname . ']'
+
+    return '%' . a:tabnr . 'T' . highlight . label_of_a_buf . '%T%#TabLineFill#'
+endfunction
