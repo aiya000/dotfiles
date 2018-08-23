@@ -5,7 +5,7 @@ let b:undo_ftplugin = 'setl ' . join([
     \ 'completefunc<',
     \ 'commentstring<',
     \ 'conceallevel<',
-\])
+\ ])
 
 setl tabstop=4 shiftwidth=4 expandtab
 setl completefunc=github_complete#complete
