@@ -1,0 +1,7 @@
+alias co=console
+alias coq=consoleQuick
+alias r=run
+alias t=test
+alias c=compile
+alias tc=test:compile
+alias rel=reload
