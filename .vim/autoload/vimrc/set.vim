@@ -9,13 +9,14 @@ function! vimrc#set#tabline() abort " {{{
         \ get(g:vimrc, 'language_client', {'has_started': v:false})['has_started']
             \ ? '%6*%{LanguageClient_statusLine()}%*'
             \ : ''
-    return '%1*[PWD=%{getcwd()}]%*'
-        \. '%2*%{vimrc#set#tabline_tags_if_present()}%*'
-        \. "%3*%{'[' . tabpagenr('$') . ']'}%*"
-        \. '%4*%{vimrc#set#tabline_marks_if_present()}%*'
-        \. '%5*%{get(g:, "ale_enabled", 0) ? "[ale]" : ""}%*'
+    return '%1*[%{tabpagenr()}]%* '
+        \. s:tabs() . ' => '
+        \. '%2*[PWD=%{getcwd()}]%*'
+        \. '%3*%{vimrc#set#tabline_tags_if_present()}%*'
+        \. "%4*%{'[' . tabpagenr('$') . ']'}%*"
+        \. '%5*%{vimrc#set#tabline_marks_if_present()}%*'
+        \. '%6*%{get(g:, "ale_enabled", 0) ? "[ale]" : ""}%*'
         \. language_client_status
-        \. ' | ' . s:tabs()
 endfunction " }}}
 
 function! vimrc#set#tabline_tags_if_present() abort " {{{
