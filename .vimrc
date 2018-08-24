@@ -718,6 +718,7 @@ let g:indent_guides_exclude_filetypes = [
    \ 'storyboard',
    \ 'aref_web',
    \ 'term-shell',
+   \ 'term-sbt',
    \ 'gitcommit',
    \ 'review',
    \ 'markdown',
