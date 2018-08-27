@@ -40,7 +40,7 @@ command! -bar TodoList Grep NOTE TODO FIXME XXX
 
 " Developments
 command! -bar -nargs=1 TestCodeEdit EditOverridden ~/.tmp/Test.<args>
-command! -bar CtagsAuto call vimrc#plugins#ctags_auto()<CR>
+command! -bar CtagsAuto call vimrc#plugins#ctags_auto()
 
 "" Haskell
 command! -bar HaskDogs call vimrc#plugins#execute_haskdogs_async()
