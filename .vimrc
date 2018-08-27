@@ -723,6 +723,8 @@ let g:indent_guides_exclude_filetypes = [
    \ 'review',
    \ 'markdown',
    \ 'haskell',
+   \ 'tweetvim',
+   \ 'tweetvim_say',
 \ ]
 
 " Define colors
