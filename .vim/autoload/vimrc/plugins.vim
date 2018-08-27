@@ -223,12 +223,13 @@ function! vimrc#plugins#run_gradle_quickfix(gradle_subcmd) abort " {{{
     let gradle_cmd = ['gradle', '--console=plain'] + split(a:gradle_subcmd, ' ')
     call s:read_to_quickfix_it(gradle_cmd)
     copen
-endfunction " }}}
 
-augroup ScalaCompileWatch
-    autocmd!
-    autocmd VimLeave * call vimrc#plugins#stop_scala_compile_watch_quickfix()
-augroup END
+    " Avoid
+    augroup ScalaCompileWatch
+        autocmd!
+        autocmd VimLeave * call vimrc#plugins#stop_scala_compile_watch_quickfix()
+    augroup END
+endfunction " }}}
 
 function! vimrc#plugins#run_scala_compile_watch_quickfix(sbt_subcmd) abort " {{{
     CClear
@@ -237,10 +238,10 @@ function! vimrc#plugins#run_scala_compile_watch_quickfix(sbt_subcmd) abort " {{{
     let s:sbt_compile_watch_job = s:read_to_quickfix_it(sbt_cmd)
     copen
 endfunction " }}}
+" FIXME: Maybe this doesn't kill it.
 function! vimrc#plugins#stop_scala_compile_watch_quickfix() abort " {{{
     if get(s:, 'sbt_compile_watch_job', v:null) isnot v:null
         call s:sbt_compile_watch_job.stop()
-        echomsg 'status: ' . string(s:sbt_compile_watch_job.status())
         let s:sbt_compile_watch_job = v:null
         cclose
     endif
@@ -261,7 +262,7 @@ function! vimrc#plugins#ctags_auto() abort " {{{
 
     let cmd = ['ctags', '--tag-relative=yes', '--recurse', '--sort=yes', '-f', fnameescape(ctags_path)]
     let s:ctags_job = s:Job.start(cmd, {
-        \ 'on_exit' : {x, y, z -> [
+        \ 'on_exit' : { _ -> [
             \ s:Msg.echomsg('None', 'ctags generated ctags to ' . fnameescape(ctags_path)),
             \ execute('unlet s:ctags_job')
         \ ]}
