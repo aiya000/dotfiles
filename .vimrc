@@ -580,8 +580,9 @@ let g:ale_scala_scalastyle_config = $HOME . '/.dotfiles/scalastyle_config_defaul
 
 augroup PluginPrefs
     autocmd VimEnter *
-        \  if filereadable('./scalastyle_config.xml')
+        \  if filereadable('./scalastyle_config.xml') && (input('locally scalastyle_config.xml was found, Do you want to load? (y/n)') == 'y')
             \| let g:ale_scala_scalastyle_config = execute('pwd')[:-1] . '/scalastyle_config.xml'
+            \| echomsg 'a scalastyle config loaded: ' . g:ale_scala_scalastyle_config
         \| endif
 augroup END
 
@@ -1272,9 +1273,6 @@ nmap <expr> n (v:searchforward ? '<Plug>(anzu-n-with-echo)' : '<Plug>(anzu-N-wit
 nmap <expr> N (v:searchforward ? '<Plug>(anzu-N-with-echo)' : '<Plug>(anzu-n-with-echo)') . 'zv'
 nmap * <Plug>(anzu-star-with-echo)zv
 nmap # <Plug>(anzu-sharp-with-echo)zv
-
-" TaskList.vim
-nmap <silent> <leader>t :<C-u>TodoList<CR>
 
 " undotree
 nnoremap <silent> <leader>U :<C-u>UndotreeToggle<CR>

@@ -36,7 +36,7 @@ command! -bar CdGitRoot execute ':cd' system('git rev-parse --show-toplevel')
 command! -bar TcdBufDir tcd %:p:h
 command! -bar TcdGitRoot execute ':tcd' system('git rev-parse --show-toplevel')
 command! -bar -nargs=+ Grep call vimrc#plugins#grep_those(<f-args>)
-command! -bar TodoList Grep NOTE TODO FIXME XXX
+command! -bar TodoList Grep TODO FIXME XXX
 
 " Developments
 command! -bar -nargs=1 TestCodeEdit EditOverridden ~/.tmp/Test.<args>
