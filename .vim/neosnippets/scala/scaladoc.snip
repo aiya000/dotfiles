@@ -1,0 +1,30 @@
+snippet scaladoc_comment
+alias doc
+    /**
+     * ${0}
+     */
+
+snippet scaladoc_comment_format
+alias doc_format
+     * === Exceptions ===
+     * ${2:how_any_exceptions_are_thrown? (optional, if some exeception is thrown)}
+     *
+     * === Failures ===
+     * ${3:how_invalid_value_are_returned? (optional, if it has a return type of Either[E, A] or Option[A])}
+     *
+     * === Example ===
+     * {{{
+     * ${4:actual_codes}
+     * }}}
+
+snippet scaladoc_comment_link
+alias l
+    [[${1:stuff}]]
+
+snippet scaladoc_constructor
+alias constructor
+    @constructor ${0:description}
+
+snippet scaladoc_param
+alias param
+    @param ${1:paramName} ${0:description}

@@ -2,7 +2,7 @@
 
 snippet def
 alias fun
-    def ${1:funcName}(${2:#:args}): ${3:Type} = ${0}
+    def ${1:funcName}${2:#:(args)}: ${3:Type} =${0}
 
 snippet object
     object ${1:ObjectName}
@@ -32,14 +32,14 @@ snippet import
     import ${0}
 
 snippet package_object
-    /*
+    /**
      * ${1}
      */
-    package object ${0:packagename} {}
+    package object ${0:packagename}
 
 snippet match
     match {
-        case ${1:pattern} => ${0:here}
+        case ${1:pattern} =>${0:#:here}
     }
 
 snippet throw
@@ -60,8 +60,8 @@ snippet type
 alias type_alias
     type ${1:TypeName} = ${0:OriginalName}
 
-#snippet implicit
-#    implicit ${0}
+snippet implicit
+    implicit ${0}
 
 snippet if
     if (${1:cond}) {${0:here}}
@@ -71,6 +71,9 @@ snippet else_if
 
 snippet else
     else {${0:here}}
+
+snippet for
+    for {${0:here}}
 
 # Expressions
 
@@ -97,7 +100,13 @@ snippet private
 snippet final
     final
 
+snippet override
+    override
+
 # Templates
+
+snippet impliclit_parameters_on_a_method
+    (implicit ${1:var}: ${2:Type}${3:#:, var: Type, ...})
 
 snippet sum_type
     sealed trait ${1:TypeName}
@@ -108,16 +117,6 @@ alias extension_method enrich_my_library
     implicit class ${1:AlternativeName}(${2:self}: ${3:TargetType}) {
         def ${4:funcName}(${5:#:args}): ${6:Type} = ${0}
     }
-
-snippet document_comment
-alias doc
-    /**
-     * ${0}
-     */
-
-snippet document_comment_link
-alias link
-    [[${1:stuff}]]
 
 snippet template_getType
 abbr    def getType[A : TypeTag](x: A): Type = typeOf[A]
@@ -147,3 +146,8 @@ snippet main
 
 snippet isInstanceOf
     isInstanceOf[${1:TypeName}]
+
+snippet match_it
+    match {
+        case it => ${1:println(it)}; it
+    }
