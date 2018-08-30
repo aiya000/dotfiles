@@ -1239,10 +1239,10 @@ vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
 
 " denite.nvim
 nnoremap <leader>u :<C-u>Denite<Space>
-nnoremap <silent> <C-k>e :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file/rec')<CR>
-nnoremap <silent> <C-k><C-e> :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file')<CR>
-nnoremap <silent> <leader><C-k>e :<C-u>Denite file/rec<CR>
-nnoremap <silent> <leader><C-k><C-e> :<C-u>Denite file<CR>
+nnoremap <silent> <C-k>e :<C-u>Denite file/rec<CR>
+nnoremap <silent> <C-k><C-e> :<C-u>Denite file<CR>
+nnoremap <silent> <leader><C-k>e :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file/rec')<CR>
+nnoremap <silent> <leader><C-k><C-e> :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file')<CR>
 nnoremap <silent> <C-k><C-t> :<C-u>Denite tag<CR>
 nnoremap <silent> <C-k><C-f> :<C-u>Denite outline<CR>
 nnoremap <silent> <C-k>f :<C-u>Denite filetype<CR>
