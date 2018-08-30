@@ -6,7 +6,7 @@ alias doc
 
 snippet scaladoc_comment_format
 alias doc_format
-     * === Exceptions ===
+     === Exceptions ===
      * ${2:how_any_exceptions_are_thrown? (optional, if some exeception is thrown)}
      *
      * === Failures ===
@@ -15,6 +15,23 @@ alias doc_format
      * === Example ===
      * {{{
      * ${4:actual_codes}
+     * }}}
+
+snippet scaladoc_comment_format_exceptions
+alias doc_format_exceptions
+     === Exceptions ===
+     * ${0}
+
+snippet scaladoc_comment_format_failures
+alias doc_format_failures
+     === Failures ===
+     * ${0}
+
+snippet scaladoc_comment_format_example
+alias doc_format_example
+     === Example ===
+     * {{{
+     * ${0}
      * }}}
 
 snippet scaladoc_comment_link
