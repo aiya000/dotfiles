@@ -69,7 +69,7 @@ command! -bar PythonRepl call vimrc#open_terminal_as('none', 'stay', 'PAGER=cat 
 command! -bar IPyRepl call vimrc#open_terminal_as('none', 'stay', 'ipython', v:false)
 command! -bar SwiftRepl call vimrc#open_terminal_as('none', 'stay', 'swift', v:false)
 command! -bar KotlinRepl call vimrc#open_terminal_as('none', 'stay', 'kotlinc-jvm', v:false)
-command! -bar SbtRepl call vimrc#open_terminal_as('term-sbt', 'stay', 'sbt', v:false)
+command! -bar SbtRepl call vimrc#open_terminal_as('term-sbt', 'stay', 'cd "$(git rev-parse --show-toplevel)" ; sbt', v:false)
 
 " Plugins
 "" dein.vim
