@@ -581,7 +581,7 @@ let g:ale_scala_scalastyle_config = $HOME . '/.dotfiles/scalastyle_config_defaul
 augroup PluginPrefs
     autocmd VimEnter *
         \  if filereadable('./scalastyle_config.xml') && (input('locally scalastyle_config.xml was found, Do you want to load? (y/n)') == 'y')
-            \| let g:ale_scala_scalastyle_config = execute('pwd')[:-1] . '/scalastyle_config.xml'
+            \| let g:ale_scala_scalastyle_config = execute('pwd')[:-1] . '/scalastyle-config.xml'
             \| echomsg 'a scalastyle config loaded: ' . g:ale_scala_scalastyle_config
         \| endif
 augroup END
