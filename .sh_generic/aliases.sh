@@ -285,7 +285,7 @@ alias mount4u.ext4=mount4u.ext2
 
 # TODO: Add the completion
 function cat-which () {
-    cat "$(which "$1")"
+    cat "$(command -v "$1")"
 }
 
 function virtualenv-activate () {
