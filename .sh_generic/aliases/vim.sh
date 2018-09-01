@@ -23,7 +23,7 @@ function vim-current-session () {
     branch_name__="$(echo "$branch_name_" | sed -r 's;#;-;g')"
 
     session_name="${repo_name}-${branch_name__}.vim"
-    "$editor" -S "$sessions_dir/$session_name" +'bufdo CdGitRoot' +'execute "normal!" "\<C-o>"'
+    "$editor" -S "$sessions_dir/$session_name"
 }
 
 function vimman () {
