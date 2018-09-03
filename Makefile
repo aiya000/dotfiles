@@ -54,10 +54,6 @@ install_with_pip:
 	sudo -H pip install neovim grip
 
 install_with_coursier:
-	# Please see https://scalameta.org/scalafmt/#Installation for latest
-	coursier bootstrap com.geirsson:scalafmt-cli_2.12:1.5.1 \
-		-r bintray:scalameta/maven \
-		-o ~/bin/scalafmt --standalone --main org.scalafmt.cli.Cli
 	# Please see https://scalameta.org/scalafmt/#Nailgun for latest
 	coursier bootstrap --standalone com.geirsson:scalafmt-cli_2.12:1.5.1 \
 		-r bintray:scalameta/maven \
@@ -90,7 +86,6 @@ ifeq ($(UNAME),Linux)
 	./configure --prefix=/usr/local/
 	make
 	sudo make install
-	echo Please define install_on_each_os for scalastyle > /dev/stderr
 endif
 ifeq ($(UNAME),Darwin)
 	brew install \
@@ -116,5 +111,5 @@ install_on_any_os:
 	fontforge -script ./font-patcher \
 		~/git/RictyDiminished/RictyDiminished-Regular.ttf \
 		-w --fontawesome --fontlinux --octicons --pomicons --powerline --powerlineextra && \
-	(echo 'RictyDiminished with nerd-font patch was generated to ~/git/RictyDiminished, please install it to your OS manually!' | tee $(logfile)) && \
+	(echo 'RictyDiminished with nerd-font patch was generated to ~/git/nerd-fonts, please rename it to "RictyDiminished NF" and install it to your OS manually!' | tee $(logfile)) && \
 	popd
