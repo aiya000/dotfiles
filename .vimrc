@@ -714,7 +714,6 @@ let g:indent_guides_exclude_filetypes = [
    \ 'fxml',
    \ 'gradle',
    \ 'csproj',
-   \ 'json',
    \ 'vimspec',
    \ 'storyboard',
    \ 'aref_web',

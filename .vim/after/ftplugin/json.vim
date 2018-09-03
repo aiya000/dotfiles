@@ -5,4 +5,4 @@ let b:undo_ftplugin = 'setl ' . join([
     \ 'conceallevel<',
 \ ])
 
-setl tabstop=4 shiftwidth=4 et conceallevel=0
+setl tabstop=2 shiftwidth=2 et conceallevel=0
