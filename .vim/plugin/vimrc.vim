@@ -12,6 +12,7 @@ command! -bar -bang -complete=file -nargs=? TabnewOverridden tabnew<bang> <args>
 "" Others
 command! -bar GUI call vimrc#plugins#open_this_file_in_gui()
 command! -bar -nargs=+ DeleteLines call vimrc#plugins#delete_lines(<f-args>)
+command! -bar SneakToCamelAll %s/_\(.\)/\u\1/g
 
 "" Clear quickfix
 command! -bar CClear call setqflist([])
