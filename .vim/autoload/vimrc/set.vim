@@ -46,7 +46,7 @@ function! s:tabs() " {{{
         \ tabnr -> vimrc#set#tabpage_label(tabnr)
     \ })
     return join(titles) . '%#TabLineFill#%T'
-endfunction
+endfunction " }}}
 
 function! vimrc#set#tabpage_label(tabnr) " {{{
     let title = gettabvar(a:tabnr, 'title')
@@ -60,13 +60,14 @@ function! vimrc#set#tabpage_label(tabnr) " {{{
     let modified_buffers = s:List.filter(bufnrs_at_current, { bufnr ->
         \ getbufvar(bufnr, '&modified')
     \ })
-    let mod_mark = (len(modified_buffers) is 0) ? '' : '[+]'
+    let window_num = '[' . len(tabpagebuflist(a:tabnr)) . ']'
+    let mod_mark = (len(modified_buffers) is 0) ? '' : '+'
     let curbufnr = bufnrs_at_current[tabpagewinnr(a:tabnr) - 1]
     let fname = fnamemodify(bufname(curbufnr), ':t')
     if fname == ''
         let fname = '[NoName]'
     endif
-    let label_of_a_buf = '[' . mod_mark . fname . ']'
+    let label_of_a_buf = '[' . mod_mark . window_num . fname . ']'
 
     return '%' . a:tabnr . 'T' . highlight . label_of_a_buf . '%T%#TabLineFill#'
-endfunction
+endfunction " }}}
