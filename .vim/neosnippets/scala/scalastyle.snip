@@ -1,10 +1,13 @@
 snippet scalastyle_suppress_check_a_line
-    // scalastyle:ignore ${1:magic.number}
+    // scalastyle:ignore ${1:null}
 
 snippet scalastyle_suppress_check_a_range
-    // scalastyle:off ${1:magic.number}
+    // scalastyle:off ${1:null}
     ${0:#:target}
     // scalastyle:on $1
 
 snippet scalastyle_suppress_indentation
     // scalastyle:ignore indentation
+
+snippet scalastyle_suppress_regex
+    // scalastyle:ignore regex
