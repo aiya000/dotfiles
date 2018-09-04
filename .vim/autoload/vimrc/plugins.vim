@@ -231,14 +231,18 @@ function! vimrc#plugins#run_gradle_quickfix(gradle_subcmd) abort " {{{
     augroup END
 endfunction " }}}
 
+" NOTE: This requires to add sbt-launch.jar to $PATH
 function! vimrc#plugins#run_scala_compile_watch_quickfix(sbt_subcmd) abort " {{{
     CClear
     call vimrc#plugins#stop_scala_compile_watch_quickfix() " Avoid running more processes
-    let sbt_cmd = ['sbt', '~test:compile', '-no-colors', '-Dsbt.log.noformat=true'] + split(a:sbt_subcmd, ' ')
+    " Run sbt directly for killing the sbt process (vimrc#plugins#stop_scala_compile_watch_quickfix)
+    let sbt_launcher = system('which sbt-launch.jar')[0:-2]
+    let sbt_cmd = ['java', '-jar', sbt_launcher, '-Dsbt.log.noformat=true', '~test:compile'] + split(a:sbt_subcmd, ' ')
+    echomsg string(sbt_cmd)
     let s:sbt_compile_watch_job = s:read_to_quickfix_it(sbt_cmd)
     copen
 endfunction " }}}
-" FIXME: Maybe this doesn't kill it.
+
 function! vimrc#plugins#stop_scala_compile_watch_quickfix() abort " {{{
     if get(s:, 'sbt_compile_watch_job', v:null) isnot v:null
         call s:sbt_compile_watch_job.stop()
