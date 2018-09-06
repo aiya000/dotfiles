@@ -139,3 +139,6 @@ repo = 'haya14busa/vim-migemo'
 
 [[plugins]]
 repo = 'nathanaelkane/vim-indent-guides'
+
+[[plugins]]
+repo = 'cohama/lexima.vim'

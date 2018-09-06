@@ -348,7 +348,6 @@ endif
 " }}}
 " --- TweetVim --- {{{
 
-" Tweet smoothly
 let g:tweetvim_async_post = 1
 let g:twibill_use_job     = 1
 
@@ -741,6 +740,19 @@ augroup FileEvent
             \| IndentGuidesDisable
         \| endif
 augroup END
+
+" }}}
+" --- lexima.vim --- " {{{
+
+for deleter in ['<C-h>', '<BS>', '<C-w>']
+    call lexima#add_rule({'char': deleter, 'at': '(\%#)', 'delete': 1})
+    call lexima#add_rule({'char': deleter, 'at': '{\%#}', 'delete': 1})
+    call lexima#add_rule({'char': deleter, 'at': '[\%#]', 'delete': 1})
+    call lexima#add_rule({'char': deleter, 'at': '<\%#>', 'delete': 1})
+    call lexima#add_rule({'char': deleter, 'at': "'\%#'", 'delete': 1})
+    call lexima#add_rule({'char': deleter, 'at': '"\%#"', 'delete': 1})
+    call lexima#add_rule({'char': deleter, 'at': '`\%#`', 'delete': 1})
+endfor
 
 " }}}
 
