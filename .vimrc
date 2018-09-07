@@ -744,6 +744,13 @@ augroup END
 " }}}
 " --- lexima.vim --- " {{{
 
+let g:lexima_no_default_rules = 1
+
+" Don't it if the cursor is in a word
+call map(g:lexima#default_rules, { _, keymap ->
+    \ lexima#add_rule(extend(keymap, {'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'}))
+\ })
+
 for deleter in ['<C-h>', '<BS>', '<C-w>']
     call lexima#add_rule({'char': deleter, 'at': '(\%#)', 'delete': 1})
     call lexima#add_rule({'char': deleter, 'at': '{\%#}', 'delete': 1})
