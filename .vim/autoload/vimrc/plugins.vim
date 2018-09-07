@@ -238,7 +238,6 @@ function! vimrc#plugins#run_scala_compile_watch_quickfix(sbt_subcmd) abort " {{{
     " Run sbt directly for killing the sbt process (vimrc#plugins#stop_scala_compile_watch_quickfix)
     let sbt_launcher = system('which sbt-launch.jar')[0:-2]
     let sbt_cmd = ['java', '-jar', sbt_launcher, '-Dsbt.log.noformat=true', '~test:compile'] + split(a:sbt_subcmd, ' ')
-    echomsg string(sbt_cmd)
     let s:sbt_compile_watch_job = s:read_to_quickfix_it(sbt_cmd)
     copen
 endfunction " }}}
