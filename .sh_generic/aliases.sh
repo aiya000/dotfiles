@@ -95,7 +95,7 @@ if i_have git ; then
     }
     alias gssa='git stash apply'
     alias gssd='git stash drop'
-    alias gssl='git stash list | xargs -I {} echo {}'
+    alias gssl='git stash list'
     alias gmt='git mergetool'
     alias gmerge='git merge --no-ff'
     alias gsm='git submodule'
