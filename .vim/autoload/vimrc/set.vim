@@ -9,7 +9,7 @@ function! vimrc#set#tabline() abort " {{{
         \ get(g:vimrc, 'language_client', {'has_started': v:false})['has_started']
             \ ? '%6*%{LanguageClient_statusLine()}%*'
             \ : ''
-    return '%1*[%{tabpagenr()}]%* '
+    return '%1*[%{tabpagenr("$")}]%* '
         \. s:tabs() . ' => '
         \. '%2*[PWD=%{getcwd()}]%*'
         \. '%3*%{vimrc#set#tabline_tags_if_present()}%*'

@@ -1,40 +1,32 @@
 snippet use_strict
-abbr     'use strict';
     'use strict';
 
 snippet import
-abbr import { __ } from '__'
     import { ${1:objects} } from '${2:module-name}'
 
 snippet print
-abbr    console.log(__);
     console.log(${1:#:hello});
 
 snippet for
-abbr    for () {}
     for (${1:#:var}; ${2:#:condition}; ${3:#:effect}) {
         ${0:TARGET}
     }
 
 snippet foreach
 alias   fore
-abbr    for (var x in xs) {}
     for (${1:var} ${2:#:x} in ${3:#:xs}) {
         ${0:TARGET}
     }
 
 snippet else
-abbr    else {}
     else {
         ${0:TARGET}
     }
 
 snippet switch
-abbr switch (__) {__}
     switch (${1:var}) {${0}}
 
 snippet case
-abbr case __: __; break;
     case ${1:LABEL}:
         ${0}
         break;
@@ -48,18 +40,18 @@ snippet Array#map
     };
 
 snippet function
-abbr    function () {}
+alias fun
     function ${1}(${2}) {${0}}
 
 snippet arrow_function
 alias arrow
-abbr __ => __
     ${1:()} => ${0}
 
 snippet class
-abbr class __ __ { __ }
     class ${1:ClassName} ${2:#:extends_SomeClass}{${0}}
 
 snippet constructor
-abbr constructor(__) {__}
     constructor(${1:#:args}) {${0}}
+
+snippet if
+    if (${1:cond}) {${0:here}}

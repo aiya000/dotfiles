@@ -158,3 +158,14 @@ function! vimrc#keys#toggle_indent_guides() " {{{
     let g:vimrc#keys#indent_guides_enable = !get(g:, 'vimrc#keys#indent_guides_enable', v:true)
     IndentGuidesToggle
 endfunction " }}}
+
+function! vimrc#keys#contextual(mode) abort
+    if a:mode ==# 's'
+        return '<Plug>(neosnippet_jump_or_expand)'
+    elseif a:mode ==# 'i'
+        return '<Plug>(neosnippet_jump_or_expand)'
+    else
+        call s:Msg.error(printf('mode `%s` is not supported', a:mode))
+        return
+    endif
+endfunction

@@ -39,8 +39,11 @@ snippet package_object
 
 snippet match
     match {
-        case ${1:pattern} =>${0:#:here}
+        case ${1:Pattern} =>${0:#:here}
     }
+
+snippet case
+    case ${1:Pattern} =>${0:#:here}
 
 snippet throw
     throw ${0}

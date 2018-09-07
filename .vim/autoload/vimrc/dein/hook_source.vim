@@ -19,7 +19,7 @@ endfunction " }}}
 
 function! vimrc#dein#hook_source#gina_git_add_patch_this() abort " {{{
   "TODO: This may fail if the file name contains spaces
-  let file = split(getline('.'))[2]
+  let file = split(getline('.'), ' ')[1]
   CdGitRoot
   execute 'terminal' 'git add' '--patch' file
 endfunction " }}}

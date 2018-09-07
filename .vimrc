@@ -1140,6 +1140,10 @@ inoremap <silent> <C-k><C-j> <Esc>:write<CR>
 inoremap <silent> <C-k>J <Esc>:wall \| echo 'written all !'<CR>
 inoremap <silent><expr> <C-b> vimrc#keys#get_webpage_title()
 
+" neosnippet.vim
+imap <expr> <C-s> vimrc#keys#contextual('i')
+smap <expr> <C-s> vimrc#keys#contextual('s')
+
 " }}}
 " command-line mode {{{
 
@@ -1299,8 +1303,7 @@ nnoremap <silent> <leader>U :<C-u>UndotreeToggle<CR>
 nnoremap <silent> <C-h><C-i> :<C-u>call vimrc#keys#toggle_indent_guides()<CR>
 
 " neosnippet.vim
-imap <C-s> <Plug>(neosnippet_jump_or_expand)
-smap <C-s> <Plug>(neosnippet_jump_or_expand)
+" NOTE: Please see <C-s> of imap and smap
 
 " neocomplete.vim
 inoremap <silent> <C-k><C-i> <C-o>:NeoCompleteToggle<CR>
