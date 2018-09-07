@@ -18,3 +18,7 @@ nnoremap <buffer> <localleader>a :<C-u>TweetVimSwitchAccount<Space>
 
 inoremap <buffer> <C-i> <Tab>
 imap <buffer> <C-b> <C-o>:TweetVimBitly<CR><C-r>+
+
+if bufname('%') ==# 'tweetvim_say'
+    resize 10
+endif
