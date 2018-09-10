@@ -14,7 +14,10 @@ autoload -U edit-command-line && zle -N edit-command-line
 ##################
 # history-incremental-search-backward with fzf
 function fzf-history-search-backward () {
-    local selected=$(fc -ln 1 | fzf-tmux --no-sort)
+    local fzf selected
+    # Use fzf-tmux only if I'm on a tmux session
+    fzf=$([[ -n "$TMUX" ]] && echo 'fzf-tmux' || echo 'fzf')
+    selected=$(fc -ln 1 | $fzf --no-sort)
     BUFFER="$selected"
     CURSOR=${#BUFFER}
 }

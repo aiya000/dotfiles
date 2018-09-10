@@ -129,8 +129,11 @@ setupsolarized dircolors.ansi-light
 # }}}
 
 
-# Do keymapping
+# Load keymaps
 source $ZDOTDIR/.zshrc.keymap
+
+# Don't export
+force-unexport TMUX
 
 # If it exists, load environment config
 if [ -f ~/.zshrc_env ] ; then
