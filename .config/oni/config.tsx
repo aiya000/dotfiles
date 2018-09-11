@@ -1,23 +1,22 @@
 import * as React from 'react'
 import * as Oni from 'oni-api'
 
-const escape_keys = ['<Esc>', '<C-[>', '<C-l>']
+const escapeKeys = ['<Esc>', '<C-[>', '<C-l>']
 
 export const activate = (oni: Oni.Plugin.Api) => {
     const { editors, input, menu } = oni
 
-    const isVisualMode = () => editors.activeEditor.mode === 'visual'
-    const isNormalMode = () => editors.activeEditor.mode === 'normal'
     const isInsertMode = () => editors.activeEditor.mode === 'insert'
-    const isNotInsertMode = () => editors.activeEditor.mode !== 'insert'
+    const isNormalMode = () => editors.activeEditor.mode === 'normal'
+    const isVisualMode = () => editors.activeEditor.mode === 'visual'
 
     input.unbindAll()
     input.bind('<C-,>', 'sneak.show', isNormalMode)
-    input.bind(escape_keys, 'sneak.hide', isNormalMode)
+    input.bind(escapeKeys, 'sneak.hide', isNormalMode)
 
     input.bind(['<Enter>', '<C-j>'], 'contextMenu.select', isInsertMode)
-    input.bind(['<down>', '<C-n>'], 'contextMenu.next', isInsertMode)
-    input.bind(['<up>', '<C-p>'], 'contextMenu.previous', isInsertMode)
+    input.bind(['<Down>', '<C-n>'], 'contextMenu.next', isInsertMode)
+    input.bind(['<Up>', '<C-p>'], 'contextMenu.previous', isInsertMode)
 }
 
 export const deactivate = (oni: Oni.Plugin.Api) => {
