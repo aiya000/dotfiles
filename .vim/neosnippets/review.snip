@@ -4,6 +4,16 @@ snippet hr
 snippet h1
     = ${0:chapter_title}
 
+snippet column
+    ====[column] ${1:column title}
+    ${0}
+    ====[/column]
+
+ * succ :: Int -> Int
+
+====[/column]
+
+
 snippet comment
 alias com
     #@#
@@ -55,3 +65,18 @@ alias code_block_haskell blhs
     //emlist[${1:subject}][haskell]{
     ${0:code}
     //}
+
+snippet watashi_saying
+alias watashi
+    私「${0:here}」
+
+snippet nico_saying
+alias nico
+    にこ「${0:here}」
+
+snippet maki_saying
+alias maki
+    真姫「${0:here}」
+
+snippet maki_thinking
+    真姫（${0:here}）
