@@ -11,6 +11,8 @@ export const activate = (oni: Oni.Plugin.Api) => {
     const isVisualMode = () => editors.activeEditor.mode === 'visual'
 
     input.unbindAll()
+    input.bind("<C-'>", 'commands.show', isNormalMode)
+    input.bind(escapeKeys, 'commands.close', isNormalMode)
     input.bind('<C-,>', 'sneak.show', isNormalMode)
     input.bind(escapeKeys, 'sneak.hide', isNormalMode)
 
@@ -29,13 +31,14 @@ export const configuration = {
     'browser.defaultUrl': 'https://www.google.com/',
     'editor.clipboard.enabled': false,
     'editor.fontFamily': 'RictyDiminished NF',
-    'editor.fontSize': '17px',
+    'editor.fontSize': '18px',
     'editor.linePadding': 2,
     'editor.scrollBar.visible': false,
     'experimental.markdownPreview.enabled': false,
+    "statusbar.fontSize": "18px",
     'learning.enabled': true,
     'oni.enhancedSyntaxHighlighting': false,
-    'oni.hideMenu': false,
+    'oni.hideMenu': true,
     'oni.useDefaultConfig': false,
     'tabs.mode': 'native',
     'ui.colorscheme': 'lucariox',
