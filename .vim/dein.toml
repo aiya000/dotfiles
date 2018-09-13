@@ -55,6 +55,9 @@ depends = 'vim-textobj-user'
 repo = 'kana/vim-textobj-user'
 
 [[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
 repo = 'Shougo/neocomplete.vim'
 rev  = '9617d82'
 if   = '!has("nvim")'
