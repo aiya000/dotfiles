@@ -59,6 +59,9 @@ export FZF_DEFAULT_OPTS='--tac --cycle --bind=ctrl-j:accept,ctrl-k:kill-line'
 export CCACHE_DISABLE=1
 export THEMIS_HOME="$HOME/.vim/bundle/repos/github.com/thinca/vim-themis"
 
+# Plugins
+export HEREIS_ALIAS_PREFIX=p-
+
 # }}}
 
 

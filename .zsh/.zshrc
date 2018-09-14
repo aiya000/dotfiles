@@ -120,6 +120,10 @@ fpath=(~/.zsh/plugin/zsh-completions/src $fpath)
 source ~/.zsh/plugin/zsh-dircolors-solarized/zsh-dircolors-solarized.zsh
 source ~/.zsh/plugin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+for file in ~/.zsh/plugin/sh-hereis/{edit-places,hereis,place,reload-places,sh-hereis}.sh ; do
+    source "$file"
+done
+
 #}}}
 # zsh-dircolors-solarized {{{
 
