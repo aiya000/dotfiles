@@ -1,8 +1,8 @@
 source ~/.vimrc
 
-"--------------"
-" Starting up "
-"--------------"
+"---------"
+" Prepare "
+"---------"
 " Define global values {{{
 
 " For the exceptions
@@ -11,11 +11,7 @@ let $NVIM_PYTHON_LOG_FILE = g:vimrc['vim_home'] . '/.log/nvim_python.log'
 " }}}
 " Declare autocmd groups {{{
 
-augroup NeoEvent
-    autocmd!
-augroup END
-
-augroup NeoKeyMapping
+augroup InitVim
     autocmd!
 augroup END
 
@@ -41,48 +37,37 @@ let hc = remote#host#Require('haskell')
 " }}}
 
 
-"-----------------"
-" Set vim options "
-"-----------------"
-" {{{
+"-----------"
+" Options "
+"-----------"
+"--- neovim --- {{{
 
 set inccommand=split
 
 " }}}
+"--- gonvim ---" {{{
+
+let g:gonvim_draw_statusline = 0
+let g:gonvim_draw_tabline = 0
+
+" }}}
 
 
-"---------------------"
-" Configurate plugins "
-"---------------------"
-"--- vimdoc-ja ---" {{{
-
-"@Bug("Didn't work")
-" vimdoc-ja for vim only (not for neovim)
-call dein#disable('vimdoc-ja')
-
-"}}}
-"--- ghcid ---" {{{
-
-let g:ghcid_keep_open = v:true
-
-"}}}
-
-
-"---------------------"
-" Set augroup details "
-"---------------------"
+"----------"
+" augroups "
+"----------"
 " :terminal {{{
 
-augroup NeoEvent
+augroup InitVim
     autocmd TermOpen * setl nolist
 augroup END
 
 " }}}
 
 
-"--------------------"
-" Define keymappings "
-"--------------------"
+"---------"
+" Keymaps "
+"---------"
 " Override vimrc {{{
 
 " Disable keymappings of neocomplete, use deoplete.nvim instead in neovim
@@ -102,9 +87,9 @@ nnoremap <expr> <C-k>s ':%s/\m\C\<' . expand('<cword>') . '\>/' . expand('<cword
 " }}}
 
 
-"-----------------"
-" Manage commands "
-"-----------------"
+"----------"
+" Commands "
+"----------"
 " Overwrite defined commands {{{
 
 command! -bar VimConfig    e ~/.vimrc
