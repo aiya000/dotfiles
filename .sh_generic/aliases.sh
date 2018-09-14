@@ -28,10 +28,6 @@ i_have say || alias say=espeak
 if i_have aurman ; then
     alias aurman='aurman --color always'
     alias aurman-noconfirm='aurman --noconfirm'
-    alias yaourt=aurman
-    alias yaourt-noconfirm=aurman-noconfirm
-elif i_have yaourt ; then
-    alias yaourt-noconfirm='yaourt --noconfirm'
 fi
 
 # }}}
@@ -117,7 +113,6 @@ if i_have git ; then
     alias gf='git fetch'
     alias gbi='git bisect'
     alias gt='git tag | xargs echo'
-    alias gre='git reset --hard HEAD'
     alias gtree='git log --graph --decorate --oneline'
     alias gtree-all='git log --graph --decorate --oneline --all'
     alias gw='git worktree'
@@ -133,6 +128,13 @@ if i_have git ; then
     alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
     alias cd-git-root='cd "$(git rev-parse --show-toplevel)"'
     alias cdg=cd-git-root
+
+    function _gre () {
+        if read -rq "(at \`$(git rev-parse --show-toplevel)\`) Do you really force reset the git index tree?" ; then
+            git reset --hard HEAD
+            echo 'done'
+        fi
+    }
 fi
 
 # }}}
