@@ -195,6 +195,12 @@ endif
 
 call dein#load_toml('~/.vim/dein.toml',      {'lazy': 0})
 call dein#load_toml('~/.vim/dein_lazy.toml', {'lazy': 1})
+
+if has('nvim')
+    call dein#load_toml('~/.vim/dein-neovim.toml',      {'lazy': 0})
+    call dein#load_toml('~/.vim/dein_lazy-neovim.toml', {'lazy': 1})
+endif
+
 call dein#add('Shougo/dein.vim', {'rtp': ''})
 
 " }}}
@@ -605,6 +611,7 @@ let fakeclip_provide_clipboard_key_mappings = g:vimrc['is_wsl']
 call denite#custom#map('normal', '<C-[>', '<denite:quit>')
 call denite#custom#map('normal', '<C-l>', '<denite:quit>')
 call denite#custom#map('normal', '<C-j>', '<CR>')
+call denite#custom#map('normal', '<C-i>', '<denite:toggle_select_down>')
 
 call denite#custom#map('insert', '<C-[>', '<denite:enter_mode:normal>')
 call denite#custom#map('insert', '<C-l>', '<denite:quit>')
@@ -724,6 +731,7 @@ let g:indent_guides_exclude_filetypes = [
    \ 'haskell',
    \ 'tweetvim',
    \ 'tweetvim_say',
+   \ 'help',
 \ ]
 
 " Define colors
@@ -750,6 +758,11 @@ let g:lexima_no_default_rules = 1
 call map(g:lexima#default_rules, { _, keymap ->
     \ lexima#add_rule(extend(keymap, {'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'}))
 \ })
+
+call lexima#add_rule({'char': '「', 'input_after': '」'})
+call lexima#add_rule({'char': '『', 'input_after': '』'})
+call lexima#add_rule({'char': '（', 'input_after': '）'})
+call lexima#add_rule({'char': '｛', 'input_after': '｝'})
 
 for deleter in ['<C-h>', '<BS>', '<C-w>']
     call lexima#add_rule({'char': deleter, 'at': '(\%#)', 'delete': 1})
@@ -888,9 +901,9 @@ augroup FileEvent
 
     " Auto load filetype dictionary
     autocmd FileType *
-    \    if filereadable(printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype))
-    \|       execute 'setl dict+=' . printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype)
-    \|   endif
+        \  if filereadable(printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype))
+        \|      execute 'setl dict+=' . printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype)
+        \| endif
 augroup END
 
 " :P
@@ -1140,9 +1153,12 @@ inoremap <silent> <C-k><C-j> <Esc>:write<CR>
 inoremap <silent> <C-k>J <Esc>:wall \| echo 'written all !'<CR>
 inoremap <silent><expr> <C-b> vimrc#keys#get_webpage_title()
 
-" neosnippet.vim
-imap <expr> <C-s> vimrc#keys#contextual('i')
-smap <expr> <C-s> vimrc#keys#contextual('s')
+" lexima.vim and neosnippet.vim
+imap <C-s> <Plug>(neosnippet_jump_or_expand)
+smap <C-s> <Plug>(neosnippet_jump_or_expand)
+" TODO
+"'imap <expr> <C-s> vimrc#keys#contextual('i')
+"'smap <expr> <C-s> vimrc#keys#contextual('s')
 
 " }}}
 " command-line mode {{{
