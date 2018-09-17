@@ -71,25 +71,7 @@ scriptencoding utf-8
 " }}}
 " Declare autocmd groups {{{
 
-" TODO: Unify augroups to one, because I may not need spliting augroups
-
-augroup PluginPrefs
-    autocmd!
-augroup END
-
-augroup FileEvent
-    autocmd!
-augroup END
-
-augroup ExtensionType
-    autocmd!
-augroup END
-
-augroup HighlightPref
-    autocmd!
-augroup END
-
-augroup UserEvent
+augroup VimRc
     autocmd!
 augroup END
 
@@ -518,7 +500,7 @@ let g:repl_split_command = 'vertical split'
 let g:gista#command#post#interactive_description = 0
 let g:gista#command#post#allow_empty_description = 1
 
-augroup PluginPrefs
+augroup VimRc
     autocmd User GistaPost call vimrc#autocmd#yank_gista_posted_url()
 augroup END
 
@@ -583,7 +565,7 @@ let g:ale_linters = {
 
 let g:ale_scala_scalastyle_config = $HOME . '/.dotfiles/scalastyle_config_default.xml'
 
-augroup PluginPrefs
+augroup VimRc
     autocmd VimEnter *
         \  if filereadable('./scalastyle_config.xml') && (input('locally scalastyle_config.xml was found, Do you want to load? (y/n)') == 'y')
             \| let g:ale_scala_scalastyle_config = execute('pwd')[:-1] . '/scalastyle-config.xml'
@@ -631,7 +613,7 @@ call denite#custom#source('file_rec', 'matchers', ['matcher_substring'])
 call denite#custom#source('line', 'matchers', ['matcher_substring'])
 call denite#custom#source('tag', 'matchers', ['matcher_substring'])
 
-augroup PluginPrefs
+augroup VimRc
     autocmd BufEnter,BufWinEnter *
         \   call denite#custom#var('outline', 'command', ['ctags'])
         \|  call denite#custom#var('outline', 'options', ['--sort=no'])
@@ -686,7 +668,7 @@ let g:fmap_mappings = [
     \ { 'strokes': ['K'], 'target': '『' },
 \ ]
 
-augroup PluginPrefs
+augroup VimRc
     autocmd VimEnter * FNoreMap . 。
     autocmd VimEnter * FNoreMap , 、
     autocmd VimEnter * FNoreMap ! ！
@@ -735,12 +717,12 @@ let g:indent_guides_exclude_filetypes = [
 \ ]
 
 " Define colors
-augroup HighlightPref
+augroup VimRc
     autocmd VimEnter,ColorScheme * highlight IndentGuidesOdd ctermbg=60
     autocmd VimEnter,ColorScheme * highlight IndentGuidesEven ctermbg=60
 augroup END
 
-augroup FileEvent
+augroup VimRc
     autocmd WinEnter,BufWinEnter *
         \  if get(g:, 'vimrc#keys#indent_guides_enable', v:true)
             \| IndentGuidesEnable
@@ -818,14 +800,14 @@ set ambiwidth=double
 " Define my highlight colors
 " {{{
 
-augroup HighlightPref
+augroup VimRc
     autocmd ColorScheme * highlight RcEmSpace ctermbg=LightBlue
     autocmd VimEnter,WinEnter * call matchadd('RcEmSpace', '　')
     " git conflicts
     autocmd ColorScheme * call matchadd('Error', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
 augroup END
 
-augroup HighlightPref
+augroup VimRc
     autocmd InsertEnter * highlight StatusLine ctermfg=231 ctermbg=64
     autocmd InsertLeave * highlight StatusLine ctermfg=231 ctermbg=60
 augroup END
@@ -895,7 +877,7 @@ let lhs_markup = 'none'
 "---------------------"
 " {{{
 
-augroup FileEvent
+augroup VimRc
     " Auto set cursor position in the file
     autocmd BufReadPost * call vimrc#autocmd#visit_past_position()
 
@@ -904,32 +886,21 @@ augroup FileEvent
         \  if filereadable(printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype))
         \|      execute 'setl dict+=' . printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype)
         \| endif
-augroup END
 
-" :P
-"autocmd UserGettingBored * echo 'sugar'
-
-augroup UserEvent
     " RelativeNumber is used current window only
     autocmd BufEnter,WinEnter * if &number | setl relativenumber | end
     autocmd BufLeave,Winleave * setl norelativenumber
 
     autocmd InsertEnter * call vimrc#autocmd#enable_input_completion()
-augroup END
 
-" Hide relativenumber when OverCommandLine entered
-augroup UserEvent
+    " Hide relativenumber when OverCommandLine entered
     autocmd User OverCmdLineEnter setl norelativenumber
     autocmd User OverCmdLineLeave if &number | setl relativenumber | end
-augroup END
 
-" Set the 'none' filetype to the empty filetype
-augroup ExtensionType
+    " Set the 'none' filetype to the empty filetype
     autocmd VimEnter,BufNew * if empty(&ft) | setf none | endif
-augroup END
 
-"NOTE: Remove this after the auto indent bug is fixed
-augroup UserEvent
+    "NOTE: Remove this after the auto indent bug is fixed
     autocmd FileType int-* set indentkeys-=:
 augroup END
 
@@ -1152,13 +1123,6 @@ inoremap <C-k><C-k> <C-o>"_d$
 inoremap <silent> <C-k><C-j> <Esc>:write<CR>
 inoremap <silent> <C-k>J <Esc>:wall \| echo 'written all !'<CR>
 inoremap <silent><expr> <C-b> vimrc#keys#get_webpage_title()
-
-" lexima.vim and neosnippet.vim
-imap <C-s> <Plug>(neosnippet_jump_or_expand)
-smap <C-s> <Plug>(neosnippet_jump_or_expand)
-" TODO
-"'imap <expr> <C-s> vimrc#keys#contextual('i')
-"'smap <expr> <C-s> vimrc#keys#contextual('s')
 
 " }}}
 " command-line mode {{{
@@ -1432,10 +1396,14 @@ omap ijp <Plug>(textobj-jabraces-parens-i)
 vmap ajp <Plug>(textobj-jabraces-parens-a)
 omap ajp <Plug>(textobj-jabraces-parens-a)
 
+" neosnippet.vim
+inoremap <silent><expr> <C-s> (neosnippet#mappings#expandable_or_jumpable() ? neosnippet#mappings#expand_or_jump_impl() : "\<C-o>a")
+snoremap <silent><expr> <C-s> (neosnippet#mappings#expandable_or_jumpable() ? neosnippet#mappings#expand_or_jump_impl() : "i<BS>\<C-o>a")
+
 " }}}
 " filetypes {{{
 
-augroup FileEvent
+augroup VimRc
     autocmd FileType int-* nnoremap <buffer> q          <NOP>
     autocmd FileType int-* nnoremap <buffer> <C-n>      gt
     autocmd FileType int-* nnoremap <buffer> <C-p>      gT
