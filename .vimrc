@@ -714,6 +714,7 @@ let g:indent_guides_exclude_filetypes = [
    \ 'tweetvim',
    \ 'tweetvim_say',
    \ 'help',
+   \ 'man',
 \ ]
 
 " Define colors
