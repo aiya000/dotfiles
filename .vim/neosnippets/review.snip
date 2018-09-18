@@ -16,6 +16,15 @@ alias com
 snippet tt
     @<tt>{${1:stuff}}${0}
 
+snippet b
+    @<b>{${1:stuff}}${0}
+
+snippet i
+    @<i>{${1:stuff}}${0}
+
+snippet u
+    @<u>{${1:stuff}}${0}
+
 snippet fn
 alias link_to_footnote
     @<fn>{${1:footnote_number}}${0}
@@ -51,13 +60,13 @@ snippet quote
 
 snippet emlist
 alias code_block bl
-    //emlist[${1:subject}][${2:#:filetype}]{
+    //emlist[${1:#:subject}][${2:#:filetype}]{
     ${0:code}
     //}
 
 snippet emlist_haskell
 alias code_block_haskell blhs
-    //emlist[${1:subject}][haskell]{
+    //emlist[${1:#:subject}][haskell]{
     ${0:code}
     //}
 
