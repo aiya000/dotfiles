@@ -51,25 +51,32 @@ function! vimrc#dein#hook_source#LanguageClient_neovim() abort " {{{
 endfunction " }}}
 
 function! vimrc#dein#hook_source#operator_surround() abort " {{{
-  let g:operator#surround#blocks = {
-    \ '-' : [
-      \ { 'block' : ['(', ')'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['(', ')', 'p'] },
-      \ { 'block' : ['[', ']'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['[', ']', 'k'] },
-      \ { 'block' : ['{', '}'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['{', '}', 'P'] },
-      \ { 'block' : ['<', '>'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['<', '>', 'K'] },
-      \ { 'block' : ['"', '"'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['"'] },
-      \ { 'block' : ["'", "'"], 'motionwise' : ['char', 'line', 'block'], 'keys' : ["'"] },
-      \ { 'block' : ['`', '`'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['`', 'b'] },
-      \ { 'block' : [' ', ' '], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['  '] },
-      \ { 'block' : ['( ', ' )'], 'motionwise' : ['char', 'line', 'block'], 'keys' : [' (', ' )'] },
-      \ { 'block' : ['{ ', ' }'], 'motionwise' : ['char', 'line', 'block'], 'keys' : [' {', ' }'] },
-      \ { 'block' : ['（', '）'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['（', ' ）', 'j(', 'j)', 'jp'] },
-      \ { 'block' : ['｛', '｝'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['｛', ' ｝', 'j{', 'j}', 'jP'] },
-      \ { 'block' : ['「', '」'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['「', ' 」', 'j[', 'j]', 'jk'] },
-      \ { 'block' : ['『', '』'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['『', ' 』', 'jK'] },
-      \ { 'block' : ['＜', '＞'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['『', ' 』', 'j<', 'j>'] },
-    \ ],
-  \ }
+    let g:operator#surround#blocks = {
+        \ '-' : [
+            \ { 'block' : ['(', ')'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['(', ')', 'p'] },
+            \ { 'block' : ['[', ']'], 'motionwise' : ['char', 'line', 'block'], 'keys' : [']', 'k'] },
+            \ { 'block' : ['{', '}'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['{', '}', 'P'] },
+            \ { 'block' : ['<', '>'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['<', '>', 'K'] },
+            \ { 'block' : ['"', '"'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['"'] },
+            \ { 'block' : ["'", "'"], 'motionwise' : ['char', 'line', 'block'], 'keys' : ["'"] },
+            \ { 'block' : ['`', '`'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['`', 'b'] },
+            \ { 'block' : [' ', ' '], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['  '] },
+            \ { 'block' : ['( ', ' )'], 'motionwise' : ['char', 'line', 'block'], 'keys' : [' (', ' )'] },
+            \ { 'block' : ['{ ', ' }'], 'motionwise' : ['char', 'line', 'block'], 'keys' : [' {', ' }'] },
+            \ { 'block' : ['（', '）'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['（', ' ）', 'j(', 'j)', 'jp'] },
+            \ { 'block' : ['｛', '｝'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['｛', ' ｝', 'j{', 'j}', 'jP'] },
+            \ { 'block' : ['「', '」'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['「', ' 」', 'j[', 'j]', 'jk'] },
+            \ { 'block' : ['『', '』'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['『', ' 』', 'jK'] },
+            \ { 'block' : ['＜', '＞'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['『', ' 』', 'j<', 'j>'] },
+        \ ],
+        \ 'review' : [
+            \ { 'block' : ['@<tt>{', '}'], 'motionwise' : ['char'], 'keys' : ['[tt'] },
+            \ { 'block' : ['@<b>{', '}'], 'motionwise' : ['char'], 'keys' : ['[b'] },
+            \ { 'block' : ['@<i>{', '}'], 'motionwise' : ['char'], 'keys' : ['[i'] },
+            \ { 'block' : ['@<u>{', '}'], 'motionwise' : ['char'], 'keys' : ['[u'] },
+        \ ],
+    \ }
+    " NOTE: Does operator-surround allow <localleader> by a way?
 endfunction " }}}
 
 function! vimrc#dein#hook_source#emmet() abort " {{{
