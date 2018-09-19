@@ -673,6 +673,7 @@ augroup VimRc
     autocmd VimEnter * FNoreMap , 、
     autocmd VimEnter * FNoreMap ! ！
     autocmd VimEnter * FNoreMap ? ？
+    autocmd VimEnter * FNoreMap tt ・
 augroup END
 
 " }}}
