@@ -1,0 +1,14 @@
+clipboard = true
+
+[navigation]
+display = true
+width = 300
+
+[workspace]
+restoresession = false
+path = minimum
+
+[dein]
+# dein GUI settings
+
+# vim:ft=config
