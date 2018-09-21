@@ -63,7 +63,7 @@ command! -bar -nargs=? Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 
 command! -bar -nargs=? Ghcie call vimrc#open_terminal_as('term-stack-ghci', 'stay', 'stack ghci ' . <q-args>, v:false)
 command! -bar -nargs=? GhcieTastyTest call vimrc#open_terminal_as('term-stack-ghci', 'stay', 'stack ghci :tasty-test ' . <q-args>, v:false)
 command! -bar -nargs=? IdrisRepl call vimrc#open_terminal_as('term-idris', 'stay', 'idris ' . <q-args>, v:false)
-command! -bar -nargs=? SbtRepl call vimrc#open_terminal_as('term-sbt', 'stay', "cd \"$(git rev-parse --show-toplevel)\" ; sbt '"  . <q-args> . "'", v:false)
+command! -bar -nargs=? SbtRepl call vimrc#open_terminal_as('term-sbt', 'stay', 'cd "$(git rev-parse --show-toplevel)" ; sbt ' . (empty(<q-args>) ? '' : printf("'%s'", <q-args>)), v:false)
 command! -bar CLisp call vimrc#open_terminal_as('none', 'stay', 'clisp', v:false)
 command! -bar LeinRepl call vimrc#open_terminal_as('none', 'stay', 'lein repl', v:false)
 command! -bar ElmRepl call vimrc#open_terminal_as('term-elm-repl', 'stay', 'elm repl', v:false)
