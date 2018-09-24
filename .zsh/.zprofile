@@ -61,6 +61,7 @@ export THEMIS_HOME="$HOME/.vim/bundle/repos/github.com/thinca/vim-themis"
 
 # Plugins
 export HEREIS_ALIAS_PREFIX=p-
+export ENHANCD_COMMAND=cde
 
 # }}}
 

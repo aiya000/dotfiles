@@ -19,3 +19,6 @@
 [submodule ".zsh/plugin/sh-hereis"]
 	path = .zsh/plugin/sh-hereis
 	url = https://github.com/aiya000/sh-hereis
+[submodule ".zsh/plugin/enhancd"]
+	path = .zsh/plugin/enhancd
+	url = https://github.com/b4b4r07/enhancd
