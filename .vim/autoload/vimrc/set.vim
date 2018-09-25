@@ -63,11 +63,11 @@ function! vimrc#set#tabpage_label(tabnr) " {{{
     let window_num = '[' . len(tabpagebuflist(a:tabnr)) . ']'
     let mod_mark = (len(modified_buffers) is 0) ? '' : '+'
     let curbufnr = bufnrs_at_current[tabpagewinnr(a:tabnr) - 1]
-    let fname = fnamemodify(bufname(curbufnr), ':t')
-    if fname == ''
-        let fname = '[NoName]'
-    endif
-    let label_of_a_buf = '[' . mod_mark . window_num . fname . ']'
+    let file_name = fnamemodify(bufname(curbufnr), ':t')
+    let file_name = (file_name == '') ? '[NoName]'
+        \: (len(file_name) > 20) ? (file_name[0:7] . '...' . file_name[-10:-1])
+        \: file_name
+    let label_of_a_buf = '[' . mod_mark . window_num . file_name . ']'
 
     return '%' . a:tabnr . 'T' . highlight . label_of_a_buf . '%T%#TabLineFill#'
 endfunction " }}}
