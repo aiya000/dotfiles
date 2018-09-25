@@ -621,10 +621,6 @@ augroup VimRc
     autocmd BufEnter,BufWinEnter *.hs
         \   call denite#custom#var('outline', 'command', ['hasktags'])
         \|  call denite#custom#var('outline', 'options', ['--ignore-close-implementation', '--ctags', '-x'])
-    autocmd BufEnter,BufWinEnter *.md,*.markdown
-        \   call denite#custom#var('outline', 'command', ['markdown2ctags.py'])
-        \|  call denite#custom#var('outline', 'options', ['--sort=no']) " Keep the sections order that is top to bottom
-        \|  call denite#custom#var('outline', 'file_opt', '-f')
 augroup END
 
 " }}}
