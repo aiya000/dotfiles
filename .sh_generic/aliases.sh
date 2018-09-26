@@ -273,7 +273,7 @@ if i_have docker ; then
     alias dps='docker ps'
     alias da=docker-attach-menu.sh
     alias dkill='docker kill'
-    alias dkilla=docker-kill-menu.sh
+    alias dkill-menu=docker-kill-menu.sh
     alias drm='docker rm'
     alias drmi='docker rmi'
 fi
