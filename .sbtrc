@@ -1,7 +1,10 @@
 alias co=console
 alias coq=consoleQuick
+alias cop=consoleProject
 alias r=run
 alias t=test
 alias c=compile
 alias tc=test:compile
 alias rel=reload
+alias p=project
+alias ps=projects
