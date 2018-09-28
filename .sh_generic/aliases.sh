@@ -270,9 +270,11 @@ if i_have npm ; then
 fi
 
 if i_have docker ; then
+    alias d=docker
     alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
     alias dps='docker ps'
     alias da=docker-attach-menu.sh
+    alias di='docker images'
     alias dkill='docker kill'
     alias dkill-menu=docker-kill-menu.sh
     alias drm='docker rm'
