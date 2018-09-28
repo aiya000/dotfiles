@@ -1,6 +1,7 @@
-let s:V    = vital#vimrc#new()
+let s:V = vital#vimrc#new()
 let s:HTML = s:V.import('Web.HTML')
-let s:Msg  = s:V.import('Vim.Message')
+let s:List = s:V.import('Data.List')
+let s:Msg = s:V.import('Vim.Message')
 
 " If list has elem, return v:true
 " otherwise return v:false
@@ -158,3 +159,24 @@ function! vimrc#keys#toggle_indent_guides() " {{{
     let g:vimrc#keys#indent_guides_enable = !get(g:, 'vimrc#keys#indent_guides_enable', v:true)
     IndentGuidesToggle
 endfunction " }}}
+
+function! vimrc#keys#delete_mostly_inner() abort
+    let obj = nr2char(getchar())
+    if s:List.has(['', '', ''], obj)
+        return
+    endif
+    execute 'normal' ('va' . obj . "\<Plug>(operator-surround-delete)")
+endfunction
+
+function! vimrc#keys#replace_mostly_inner() abort
+    let from = nr2char(getchar())
+    if s:List.has(['', '', ''], from)
+        return
+    endif
+
+    let to = nr2char(getchar())
+    if s:List.has(['', '', ''], to)
+        return
+    endif
+    execute 'normal' ('va' . from . "\<Plug>(operator-surround-replace)" . to)
+endfunction

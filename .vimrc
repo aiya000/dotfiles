@@ -1387,6 +1387,8 @@ vmap <silent> Sc <Plug>(operator-surround-replace)
 omap <silent> Sa <Plug>(operator-surround-append)
 omap <silent> Sd <Plug>(operator-surround-delete)
 omap <silent> Sc <Plug>(operator-surround-replace)
+nmap <silent> ds :<C-u>execute 'normal' ('va' . nr2char(getchar()) . "\<Plug>(operator-surround-delete)")<CR>
+nmap <silent> cs :<C-u>call vimrc#keys#replace_mostly_inner()<CR>
 
 " vim-textobj-jabraces
 vmap ijp <Plug>(textobj-jabraces-parens-i)
