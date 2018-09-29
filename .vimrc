@@ -658,18 +658,13 @@ let g:highlightedyank_highlight_duration = 200
 " }}}
 " --- vim-fmap --- " {{{
 
-let g:fmap_mappings = [
-    \ { 'strokes': ['p'], 'target': '（' },
-    \ { 'strokes': ['k'], 'target': '「' },
-    \ { 'strokes': ['K'], 'target': '『' },
-\ ]
+let g:fmap_escape_keys = ['', '', '']
 
 augroup VimRc
-    autocmd VimEnter * FNoreMap . 。
-    autocmd VimEnter * FNoreMap , 、
-    autocmd VimEnter * FNoreMap ! ！
-    autocmd VimEnter * FNoreMap ? ？
     autocmd VimEnter * FNoreMap tt ・
+    autocmd VimEnter * FNoreMap p （
+    autocmd VimEnter * FNoreMap k 「
+    autocmd VimEnter * FNoreMap K 『
 augroup END
 
 " }}}
@@ -1114,6 +1109,9 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 inoremap <silent> <C-k><C-w> <C-o>:setl wrap! wrap?<CR>
 inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
 
+" fake digraphs
+inoremap <C-k>++ ＋
+
 " others
 imap <C-j> <CR>
 inoremap <C-l> <Esc>
@@ -1213,6 +1211,8 @@ digraph \U 8745  " intersect
 digraph \u 8746  " union
 digraph \|^ 8593 " arrow up
 digraph \|v 8595 " arrow down
+digraph xx 215   " product
+digraph pi 960   " pi
 
 " }}}
 " plugins {{{
@@ -1251,7 +1251,9 @@ nnoremap <silent> M :<C-u>Denite file_mru<CR>
 nnoremap <silent> L :<C-u>Denite buffer<CR>
 
 " aref-web.vim
-nnoremap <leader>K :<C-u>Aref weblio <C-r>=expand('<cword>')<CR><CR>
+"nnoremap <leader>K :<C-u>Aref weblio <C-r>=expand('<cword>')<CR><CR>
+" NOTE: Avoid gonvim crushing
+nmap <leader>K viw[K
 vnoremap <leader>K "zy:<C-u>Aref weblio <C-r>z<CR>
 vnoremap <leader>S "zy:<C-u>Aref stackage <C-r>z<CR>
 
