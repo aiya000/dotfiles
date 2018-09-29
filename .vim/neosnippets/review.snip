@@ -29,12 +29,23 @@ snippet u
 snippet code
     @<code>{${1:stuff}}${0}
 
+snippet idx
+alias index
+    @<idx>{${1:stuff}}${0}
+
+snippet hidx
+alias hindex
+    @<hidx>{${1:stuff}}${0}
+
 snippet img
     @<img>{${1:an image ID}}${0}
 
 snippet fn
 alias link_to_footnote
     @<fn>{${1:footnote_number}}${0}
+
+snippet ruby
+    @<ruby>{${1:word}, ${2:spell}}${0}
 
 snippet strong
     @<strong>{${1:here}}${0}
@@ -62,6 +73,11 @@ snippet image
 
 snippet quote
     //quote{
+    ${0:sentence}
+    //}
+
+snippet note
+    //note[${1:#:subject}]{
     ${0:sentence}
     //}
 
