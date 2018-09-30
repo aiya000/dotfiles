@@ -18,11 +18,13 @@ function! vimrc#dein#hook_source#operator_surround() abort " {{{
             \ { 'block' : ['＜', '＞'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['『', ' 』', 'j<', 'j>'] },
         \ ],
         \ 'review' : [
-            \ { 'block' : ['@<tt>{', '}'], 'motionwise' : ['char'], 'keys' : ['[tt'] },
             \ { 'block' : ['@<b>{', '}'], 'motionwise' : ['char'], 'keys' : ['[b'] },
             \ { 'block' : ['@<i>{', '}'], 'motionwise' : ['char'], 'keys' : ['[i'] },
             \ { 'block' : ['@<u>{', '}'], 'motionwise' : ['char'], 'keys' : ['[u'] },
+            \ { 'block' : ['@<tt>{', '}'], 'motionwise' : ['char'], 'keys' : ['[tt'] },
             \ { 'block' : ['@<idx>{', '}'], 'motionwise' : ['char'], 'keys' : ['[x'] },
+            \ { 'block' : ['@<ruby>{', ', ""}'], 'motionwise' : ['char'], 'keys' : ['[r'] },
+            \ { 'block' : ['@<code>{', '}'], 'motionwise' : ['char'], 'keys' : ['[c'] },
         \ ],
     \ }
     " NOTE: Does operator-surround allow <localleader> by a way?
