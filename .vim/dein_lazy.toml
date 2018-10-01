@@ -318,11 +318,6 @@ repo  = 'vim-scripts/alex.vim'
 on_ft = 'alex'
 
 [[plugins]]
-repo  = 'apple/swift'
-rtp   = 'utils/vim'
-on_ft = 'swift'
-
-[[plugins]]
 repo = 'osyo-manga/vim-over'
 on_cmd = [
     'OverCommandLine',
