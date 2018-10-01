@@ -81,22 +81,6 @@ snippet for
 snippet while
     while (${1:cond}) {${0:here}}
 
-# Expressions
-
-snippet println
-    println(${0:here})
-
-snippet println_err
-    System.err.println(${0:her})
-
-snippet throw_runtime_exception_as_todo_not_implemented_yet
-alias todo undefined not_implemented_yet
-    ???
-
-snippet throw_runtime_exception_as_a_fatal_errror
-alias fatal_errror
-    throw new RuntimeException("Fatal error! ${0}")
-
 snippet yield
     yield
 
@@ -114,6 +98,26 @@ snippet macro
 
 snippet extend_list_to_varargs
     :_*
+
+# Expressions
+
+snippet println
+    println(${0:here})
+
+snippet println_err
+    System.err.println(${0:her})
+
+snippet throw_runtime_exception_as_todo_not_implemented_yet
+alias todo undefined not_implemented_yet
+    ???
+
+snippet throw_runtime_exception_as_a_fatal_errror
+alias fatal_errror
+    throw new RuntimeException("Fatal error! ${0}")
+
+snippet quasi_quote
+alias q
+    q"""${0}"""
 
 # Templates
 
