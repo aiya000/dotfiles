@@ -1,7 +1,9 @@
 let s:V = vital#vimrc#new()
+
 let s:HTML = s:V.import('Web.HTML')
 let s:List = s:V.import('Data.List')
 let s:Msg = s:V.import('Vim.Message')
+let s:Optional = s:V.import('Data.Optional')
 
 " If list has elem, return v:true
 " otherwise return v:false
@@ -161,22 +163,41 @@ function! vimrc#keys#toggle_indent_guides() " {{{
 endfunction " }}}
 
 function! vimrc#keys#delete_mostly_inner() abort
-    let obj = nr2char(getchar())
-    if s:List.has(['', '', ''], obj)
-        return
-    endif
-    execute 'normal' ('va' . obj . "\<Plug>(operator-surround-delete)")
+    call dein#source('vim-operator-surround')
+
+    let obj_keys = s:get_current_obj_keys()
+    let maybe_obj_key = s:input_obj_key_on(obj_keys)
+
+    call s:Optional.map(maybe_obj_key, {obj_key ->
+        \ execute('normal ' . ('va' . obj_key . "\<Plug>(operator-surround-delete)"))
+    \ })
+endfunction
+
+function! s:get_current_obj_keys() abort
+    let surrounds = g:operator#surround#blocks['-'] + get(g:operator#surround#blocks, &filetype, [])
+    let obj_keys = map(surrounds, { _, x -> x.keys })
+    return s:List.flatten(obj_keys)
+endfunction
+
+function! s:input_obj_key_on(obj_keys) abort
+    let stroke = ''
+    while !s:List.has(a:obj_keys, stroke)
+        let char = nr2char(getchar())
+        if s:List.has(['', '', ''], char)
+            return s:Optional.none()
+        endif
+        let stroke .= char
+    endwhile
+    return s:Optional.new(stroke)
 endfunction
 
 function! vimrc#keys#replace_mostly_inner() abort
-    let from = nr2char(getchar())
-    if s:List.has(['', '', ''], from)
-        return
-    endif
+    call dein#source('vim-operator-surround')
 
-    let to = nr2char(getchar())
-    if s:List.has(['', '', ''], to)
-        return
-    endif
-    execute 'normal' ('va' . from . "\<Plug>(operator-surround-replace)" . to)
+    let obj_keys = s:get_current_obj_keys()
+    call s:Optional.map(s:input_obj_key_on(obj_keys), { from ->
+        \ s:Optional.map(s:input_obj_key_on(obj_keys), { to ->
+            \ execute('normal ' . ('va' . from  . "\<Plug>(operator-surround-replace)" . to))
+        \ })
+    \ })
 endfunction
