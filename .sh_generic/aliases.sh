@@ -131,7 +131,9 @@ if i_have git ; then
     alias cdg=cd-git-root
 
     function _gre () {
-        if read -rq "(at \`$(git rev-parse --show-toplevel)\`) Do you really force reset the git index tree?" ; then
+        echo -n "(at \`$(git rev-parse --show-toplevel)\`) Do you really force reset the git index tree? (y/n)"
+        if read -rq _  ; then
+            echo
             git reset --hard HEAD
             echo 'done'
         fi
@@ -276,7 +278,7 @@ if i_have docker ; then
     alias da=docker-attach-menu.sh
     alias di='docker images'
     alias dkill='docker kill'
-    alias dkill-menu=docker-kill-menu.sh
+    alias dki=docker-kill-menu.sh
     alias drm='docker rm'
     alias drmi='docker rmi'
 fi
