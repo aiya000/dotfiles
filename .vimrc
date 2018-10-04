@@ -608,10 +608,13 @@ call denite#custom#map('insert', '<C-x>', '<denite:do_action:delete>')
 
 call denite#custom#source('buffer', 'matchers', ['matcher_substring'])
 call denite#custom#source('file', 'matchers', ['matcher_substring'])
-call denite#custom#source('file_mru', 'matchers', ['matcher_substring'])
 call denite#custom#source('file_rec', 'matchers', ['matcher_substring'])
 call denite#custom#source('line', 'matchers', ['matcher_substring'])
 call denite#custom#source('tag', 'matchers', ['matcher_substring'])
+call denite#custom#source('file_mru', 'matchers', ['matcher_substring', 'matcher_ignore_globs'])
+
+" NOTE: How I can ignore it without this DEPRECATED value
+let g:neomru#file_mru_ignore_pattern = '^gina://.*'
 
 augroup VimRc
     autocmd BufEnter,BufWinEnter *
@@ -1057,10 +1060,10 @@ nnoremap <silent> <leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'ver
 nnoremap <silent> <leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, v:true)<CR>
 nnoremap <silent> <leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, v:true)<CR>
 nnoremap <silent> <leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, v:true)<CR>
-nnoremap <silent> <C-k><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, v:false)<CR>
-nnoremap <silent> <C-k><leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, v:false)<CR>
-nnoremap <silent> <C-k><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, v:false)<CR>
-nnoremap <silent> <C-k><leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, v:false)<CR>
+nnoremap <silent> '<leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, v:false)<CR>
+nnoremap <silent> '<leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, v:false)<CR>
+nnoremap <silent> '<leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, v:false)<CR>
+nnoremap <silent> '<leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, v:false)<CR>
 " and vimshell
 nnoremap <silent> <C-[><C-v> :<C-u>call vimrc#keys#toggle_shell_mode()<CR>
 
@@ -1131,6 +1134,7 @@ cnoremap <C-h> <BS>
 cnoremap <C-d> <Del>
 cnoremap <C-e> <End>
 cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[ : getcmdpos() - 2]<CR>
+" TODO: Escape from ex
 cnoremap <C-l> <C-c>
 cnoremap <C-g> '<,'>
 cnoremap <C-o> <Up>
@@ -1222,10 +1226,10 @@ nnoremap <silent> <leader>e         :<C-u>call vimrc#keys#toggle_netrw_vexplorer
 nnoremap <silent> <leader><leader>e :<C-u>call vimrc#keys#netrw_wrapper('horizontal', v:true)<CR>
 nnoremap <silent> <leader>E         :<C-u>call vimrc#keys#netrw_wrapper('stay', v:true)<CR>
 nnoremap <silent> <leader><leader>E :<C-u>call vimrc#keys#netrw_wrapper('tabnew', v:true)<CR>
-nnoremap <silent> <C-k><leader>e         :<C-u>call vimrc#keys#toggle_netrw_vexplorer(v:false)<CR>
-nnoremap <silent> <C-k><leader><leader>e :<C-u>call vimrc#keys#netrw_wrapper('horizontal', v:false)<CR>
-nnoremap <silent> <C-k><leader>E         :<C-u>call vimrc#keys#netrw_wrapper('stay', v:false)<CR>
-nnoremap <silent> <C-k><leader><leader>E :<C-u>call vimrc#keys#netrw_wrapper('tabnew', v:false)<CR>
+nnoremap <silent> '<leader>e         :<C-u>call vimrc#keys#toggle_netrw_vexplorer(v:false)<CR>
+nnoremap <silent> '<leader><leader>e :<C-u>call vimrc#keys#netrw_wrapper('horizontal', v:false)<CR>
+nnoremap <silent> '<leader>E         :<C-u>call vimrc#keys#netrw_wrapper('stay', v:false)<CR>
+nnoremap <silent> '<leader><leader>E :<C-u>call vimrc#keys#netrw_wrapper('tabnew', v:false)<CR>
 
 " open-browser.vim
 nmap <leader>w <Plug>(openbrowser-open)
