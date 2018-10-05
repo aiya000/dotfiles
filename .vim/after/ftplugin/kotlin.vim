@@ -14,7 +14,7 @@ let &errorformat = '%t: %f: (%l\, %c): %m'
 nnoremap <buffer><silent> <localleader><localleader>r :<C-u>QuickfixRunGradle build<CR>
 nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('term-gradle', 'horizontal', "bash -c 'cd $(git rev-parse --show-toplevel) && gradle run'", v:false)<CR>
 nnoremap <buffer><silent> <localleader><localleader>w :<C-u>call <SID>start_quickfix()<CR>
-nnoremap <buffer><silent> <C-k><C-w> :<C-u>call <SID>toggle_quickfix()<CR>
+nnoremap <buffer><silent> <localleader><localleader>W :<C-u>call <SID>stop_quickfix()<CR>
 nnoremap <silent><buffer> <Esc> <Esc>:syntax sync fromstart<CR>
 nmap             <buffer> <C-l> <Esc>
 
@@ -30,13 +30,9 @@ function! s:start_quickfix() abort
     QuickfixRunGradle build
 endfunction
 
-function! s:toggle_quickfix() abort
-    let s:does_quickfix_watch = !get(s:, 'does_quickfix_watch', v:false)
-    if s:does_quickfix_watch
-        echo 'turned on the quickfix'
-    else
-        echo 'turned off the quickfix'
-    endif
+function! s:stop_quickfix() abort
+    let s:does_quickfix_watch = v:false
+    cclose
 endfunction
 
 function! s:exec_quickfix_if_available() abort
