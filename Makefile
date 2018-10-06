@@ -78,7 +78,8 @@ ifeq ($(UNAME),Linux)
 		git neovim tmux autoreconf \
 		redshift nightshift arandr \
 		espeak-ng watchexec \
-		drawio-batch drawio-desktop
+		drawio-batch drawio-desktop \
+		xfce4-find-cursor # xmonad (xfce4-find-cursor)
 	# Fix East Asian Ambiguous character width problems
 	git clone https://github.com/fumiyas/wcwidth-cjk ~/git/wcwidth-cjk
 	cd ~/git/wcwidth-cjk
