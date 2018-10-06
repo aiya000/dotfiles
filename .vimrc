@@ -1114,6 +1114,7 @@ inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
 
 " fake digraphs
 inoremap <C-k>++ ＋
+inoremap <C-k>?= ≒
 
 " others
 imap <C-j> <CR>
