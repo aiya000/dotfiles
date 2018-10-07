@@ -1322,6 +1322,11 @@ vmap aB <Plug>(textobj-between-a)
 vmap iB <Plug>(textobj-between-i)
 omap aB <Plug>(textobj-between-a)
 omap iB <Plug>(textobj-between-i)
+"" basic between
+vmap a* <Plug>(textobj-between-a)*
+vmap i* <Plug>(textobj-between-i)*
+omap a* <Plug>(textobj-between-a)*
+omap i* <Plug>(textobj-between-i)*
 
 " vim-open-googletranslate
 vnoremap <silent> <leader>k "zy:OpenGoogleTranslate <C-r>z<CR>
