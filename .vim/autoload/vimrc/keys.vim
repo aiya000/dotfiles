@@ -162,7 +162,8 @@ function! vimrc#keys#toggle_indent_guides() " {{{
     IndentGuidesToggle
 endfunction " }}}
 
-function! vimrc#keys#delete_mostly_inner() abort
+" Delete a surround `{ _ }` -> ` _ `
+function! vimrc#keys#delete_mostly_inner() abort " {{{
     call dein#source('vim-operator-surround')
 
     let obj_keys = s:get_current_obj_keys()
@@ -171,15 +172,15 @@ function! vimrc#keys#delete_mostly_inner() abort
     call s:Optional.map(maybe_obj_key, {obj_key ->
         \ execute('normal ' . ('va' . obj_key . "\<Plug>(operator-surround-delete)"))
     \ })
-endfunction
+endfunction " }}}
 
-function! s:get_current_obj_keys() abort
+function! s:get_current_obj_keys() abort " {{{
     let surrounds = g:operator#surround#blocks['-'] + get(g:operator#surround#blocks, &filetype, [])
     let obj_keys = map(surrounds, { _, x -> x.keys })
     return s:List.flatten(obj_keys)
-endfunction
+endfunction " }}}
 
-function! s:input_obj_key_on(obj_keys) abort
+function! s:input_obj_key_on(obj_keys) abort " {{{
     let stroke = ''
     while !s:List.has(a:obj_keys, stroke)
         let char = nr2char(getchar())
@@ -189,9 +190,10 @@ function! s:input_obj_key_on(obj_keys) abort
         let stroke .= char
     endwhile
     return s:Optional.new(stroke)
-endfunction
+endfunction " }}}
 
-function! vimrc#keys#replace_mostly_inner() abort
+" Replace a surround to a surround `{ _ }` -> `[ _ ]`
+function! vimrc#keys#replace_mostly_inner() abort " {{{
     call dein#source('vim-operator-surround')
 
     let obj_keys = s:get_current_obj_keys()
@@ -200,4 +202,4 @@ function! vimrc#keys#replace_mostly_inner() abort
             \ execute('normal ' . ('va' . from  . "\<Plug>(operator-surround-replace)" . to))
         \ })
     \ })
-endfunction
+endfunction " }}}
