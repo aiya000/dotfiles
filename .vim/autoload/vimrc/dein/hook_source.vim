@@ -1,22 +1,31 @@
+let s:V = vital#vimrc#new()
+let s:List = s:V.import('Data.List')
+
 function! vimrc#dein#hook_source#operator_surround() abort " {{{
+    " Exclude brackets () [] {} and ` for unique mappings ('keys')
+    let basic_chars =
+        \ s:List.char_range('!', "'") +
+        \ s:List.char_range('*', 'Z') +
+        \ s:List.char_range('a', 'z') +
+        \ ['&', '_', '|', '~']
+    let basic_between = map(basic_chars, { _, char ->
+        \ { 'block' : [char, char], 'motionwise' : ['char', 'line', 'block'], 'keys' : [char] }
+    \ })
+
     let g:operator#surround#blocks = {
         \ '-' : [
             \ { 'block' : ['(', ')'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['(', ')', 'p'] },
             \ { 'block' : ['[', ']'], 'motionwise' : ['char', 'line', 'block'], 'keys' : [']', 'k'] },
             \ { 'block' : ['{', '}'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['{', '}', 'P'] },
             \ { 'block' : ['<', '>'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['<', '>', 'K'] },
-            \ { 'block' : ['"', '"'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['"'] },
-            \ { 'block' : ["'", "'"], 'motionwise' : ['char', 'line', 'block'], 'keys' : ["'"] },
-            \ { 'block' : ['`', '`'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['`', 'b'] },
             \ { 'block' : [' ', ' '], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['  '] },
-            \ { 'block' : ['( ', ' )'], 'motionwise' : ['char', 'line', 'block'], 'keys' : [' (', ' )'] },
-            \ { 'block' : ['{ ', ' }'], 'motionwise' : ['char', 'line', 'block'], 'keys' : [' {', ' }'] },
+            \ { 'block' : ['`', '`'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['`', 'b'] },
             \ { 'block' : ['（', '）'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['（', ' ）', 'j(', 'j)', 'jp'] },
             \ { 'block' : ['｛', '｝'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['｛', ' ｝', 'j{', 'j}', 'jP'] },
             \ { 'block' : ['「', '」'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['「', ' 」', 'j[', 'j]', 'jk'] },
             \ { 'block' : ['『', '』'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['『', ' 』', 'jK'] },
             \ { 'block' : ['＜', '＞'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['『', ' 』', 'j<', 'j>'] },
-        \ ],
+        \ ] + basic_between,
         \ 'review' : [
             \ { 'block' : ['@<b>{', '}'], 'motionwise' : ['char'], 'keys' : ['[b'] },
             \ { 'block' : ['@<i>{', '}'], 'motionwise' : ['char'], 'keys' : ['[i'] },
@@ -27,7 +36,7 @@ function! vimrc#dein#hook_source#operator_surround() abort " {{{
             \ { 'block' : ['@<code>{', '}'], 'motionwise' : ['char'], 'keys' : ['[c'] },
         \ ],
     \ }
-    " NOTE: Does operator-surround allow <localleader> by a way?
+    " NOTE: Does operator-surround allow <localleader> by some way?
 endfunction " }}}
 
 function! vimrc#dein#hook_source#gina() abort " {{{
