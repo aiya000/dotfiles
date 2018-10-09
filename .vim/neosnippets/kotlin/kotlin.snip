@@ -1,4 +1,5 @@
 snippet fun
+alias def
 abbr    fun __(__) { __ }
 options indent
     fun ${1:funcName}(${2:#:args})${0}
@@ -12,7 +13,7 @@ abbr    print(__)
     print(${0})
 
 snippet print_error_line
-alias print_errror_ln
+alias print_errror_ln err_println
     System.err.println(${1:here})
 
 snippet class
@@ -52,10 +53,10 @@ snippet else
     else {${0:here}}
 
 snippet get
-    get (${1:#:args}) ${0}
+    get(${1:#:args}) ${0}
 
 snippet set
-    set (${0:here})
+    set(${0:here})
 
 snippet elvis_operator
     ?:
