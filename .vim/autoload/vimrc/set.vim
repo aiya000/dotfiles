@@ -53,21 +53,37 @@ function! vimrc#set#tabpage_label(tabnr) " {{{
     if title != ''
         return title
     endif
-    " Please see `:h TabLineSel` and `:h TabLine`
-    let highlight = a:tabnr is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
-
-    let bufnrs_at_current = tabpagebuflist(a:tabnr)
-    let modified_buffers = s:List.filter(bufnrs_at_current, { bufnr ->
-        \ getbufvar(bufnr, '&modified')
-    \ })
-    let window_num = '[' . len(tabpagebuflist(a:tabnr)) . ']'
-    let mod_mark = (len(modified_buffers) is 0) ? '' : '+'
-    let curbufnr = bufnrs_at_current[tabpagewinnr(a:tabnr) - 1]
+    let focused_winnr = tabpagewinnr(a:tabnr)
+    let curbufnr = tabpagebuflist(a:tabnr)[focused_winnr - 1]
     let file_name = fnamemodify(bufname(curbufnr), ':t')
-    let file_name = (file_name == '') ? '[NoName]'
+    let file_name =
+        \  (file_name == '')     ? '[NoName]'
         \: (len(file_name) > 20) ? (file_name[0:7] . '...' . file_name[-10:-1])
         \: file_name
-    let label_of_a_buf = '[' . mod_mark . window_num . file_name . ']'
 
-    return '%' . a:tabnr . 'T' . highlight . label_of_a_buf . '%T%#TabLineFill#'
+    " Please see `:h TabLineSel` and `:h TabLine`
+    let window_num = '[' . len(tabpagebuflist(a:tabnr)) . ']'
+    let label_of_a_buf = s:is_stayed_tab(a:tabnr)
+        \ ? '%#TabLineSel#[* ' . s:get_mod_mark_for_window(focused_winnr) . window_num . file_name . ' *]'
+        \ : '%#TabLine#[' . s:get_mod_mark_for_tab(a:tabnr) . window_num . file_name . ']'
+
+    return '%' . a:tabnr . 'T' . label_of_a_buf . '%T%#TabLineFill#'
+endfunction " }}}
+
+" Do you staying the specified tab?
+function! s:is_stayed_tab(tabnr) abort " {{{
+    return a:tabnr is tabpagenr()
+endfunction " }}}
+
+" Return '+' if the buffer of the specified window is modified
+function! s:get_mod_mark_for_window(winnr) abort " {{{
+    return getbufvar(winbufnr(a:winnr), '&modified') ? '+' : ''
+endfunction " }}}
+
+" Return '+' if one or more the modified buffer is existent on the specified tab
+function! s:get_mod_mark_for_tab(tabnr) abort " {{{
+    let modified_buffer = s:List.find(tabpagebuflist(a:tabnr), v:null, { bufnr_at_tab ->
+        \ getbufvar(bufnr_at_tab, '&modified')
+    \ })
+    return (modified_buffer is v:null) ? '' : '+'
 endfunction " }}}
