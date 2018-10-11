@@ -737,6 +737,7 @@ call map(g:lexima#default_rules, { _, keymap ->
     \ lexima#add_rule(extend(keymap, {'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'}))
 \ })
 
+call lexima#add_rule({'char': '<', 'input_after': '>', 'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'})
 call lexima#add_rule({'char': '「', 'input_after': '」'})
 call lexima#add_rule({'char': '『', 'input_after': '』'})
 call lexima#add_rule({'char': '（', 'input_after': '）'})
@@ -1056,14 +1057,14 @@ nnoremap <C-w>v <NOP>
 nnoremap gh <NOP>
 
 " :terminal
-nnoremap <silent> <leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, v:true)<CR>
-nnoremap <silent> <leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, v:true)<CR>
-nnoremap <silent> <leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, v:true)<CR>
-nnoremap <silent> <leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, v:true)<CR>
-nnoremap <silent> '<leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, v:false)<CR>
-nnoremap <silent> '<leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, v:false)<CR>
-nnoremap <silent> '<leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, v:false)<CR>
-nnoremap <silent> '<leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, v:false)<CR>
+nnoremap <silent> <leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, v:false)<CR>
+nnoremap <silent> <leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, v:false)<CR>
+nnoremap <silent> <leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, v:false)<CR>
+nnoremap <silent> <leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, v:false)<CR>
+nnoremap <silent> '<leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, v:true)<CR>
+nnoremap <silent> '<leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, v:true)<CR>
+nnoremap <silent> '<leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, v:true)<CR>
+nnoremap <silent> '<leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, v:true)<CR>
 " and vimshell
 nnoremap <silent> <C-[><C-v> :<C-u>call vimrc#keys#toggle_shell_mode()<CR>
 

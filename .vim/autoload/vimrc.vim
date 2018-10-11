@@ -35,12 +35,14 @@ function! vimrc#open_terminal_as(filetype, open_mode, command, from_this_buffer)
         throw 'undefined open_mode is detected: ' . string(a:open_mode)
     endif
 
+    let current = getcwd()
     execute ':tcd' fnameescape(path)
     if has('nvim')
         execute 'terminal' a:command
     else
         execute 'terminal' '++curwin' a:command
     endif
+    execute ':tcd' current
 
     execute 'setf' a:filetype
 endfunction " }}}
