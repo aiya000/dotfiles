@@ -1088,6 +1088,7 @@ nnoremap ( (zv
 nnoremap ) )zv
 nnoremap zs zszh
 nnoremap g_ $
+nnoremap 'yy "+yy
 nnoremap <C-n> gt
 nnoremap <C-p> gT
 nnoremap <C-m> o<Esc>
@@ -1184,6 +1185,7 @@ onoremap iK i<
 " others
 vnoremap <C-l> <Esc>
 vnoremap <leader>s :sort<CR>
+vnoremap 'y "+y
 
 " }}}
 " select mode {{{
