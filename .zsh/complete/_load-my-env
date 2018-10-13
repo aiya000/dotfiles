@@ -1,13 +1,13 @@
 #compdef load-my-env
 
-function _load-my-env () {
-	_values \
-		'load-my-env' \
-		haskell \
-		haskel-legacy \
-		pkgsrc \
-		ruby \
-		zsh \
-		ccache \
-		all
+function _load-my-env {
+    _values \
+        'load-my-env' \
+        haskell \
+        haskel-legacy \
+        pkgsrc \
+        ruby \
+        zsh \
+        ccache \
+        all
 }

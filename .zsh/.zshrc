@@ -36,7 +36,7 @@ esac
 ###########################################
 # Configure zsh with the local conditions #
 ###########################################
-# Configure with autoload, zstyle, setopts, or etc {{{
+# Configure options {{{
 
 autoload -U colors       && colors       # Use color variables (Ex: $bg and $fg)
 autoload -U compinit     && compinit -C  # Use zsh standard completion
@@ -66,29 +66,6 @@ function zle-line-init zle-keymap-select {
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
-
-# }}}
-# Set zsh options {{{
-
-autoload -U colors       && colors       # Use color variables (Ex: $bg and $fg)
-autoload -U compinit     && compinit -C  # Use zsh standard completion
-autoload -U bashcompinit && bashcompinit # Use bash compatible completion
-
-zstyle ':completion:*' menu select                        # Highlight selecting item in the menu
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case insensitive completion
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}     # list-colors uses $LS_COLORS's colors
-
-# Set opts
-setopt hist_ignore_dups
-setopt extended_history
-setopt hist_reduce_blanks
-setopt share_history
-setopt transient_rprompt
-setopt ignore_eof
-
-# Don't use screen stopping
-stty stop  undef
-stty start undef
 
 # }}}
 # PROMPTs {{{
