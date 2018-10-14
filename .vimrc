@@ -1396,24 +1396,47 @@ vnoremap <silent> i= :Alignta => =/1<CR>
 "nnoremap <silent> <C-g><C-k> :<C-u>EspeakNgDoesntSay<CR>
 
 " vim-operator-surround
-vmap <silent> Sa <Plug>(operator-surround-append)
-vmap <silent> Sd <Plug>(operator-surround-delete)
-vmap <silent> Sc <Plug>(operator-surround-replace)
-omap <silent> Sa <Plug>(operator-surround-append)
-omap <silent> Sd <Plug>(operator-surround-delete)
-omap <silent> Sc <Plug>(operator-surround-replace)
+vmap Sa <Plug>(operator-surround-append)
+vmap Sd <Plug>(operator-surround-delete)
+vmap Sc <Plug>(operator-surround-replace)
+omap Sa <Plug>(operator-surround-append)
+omap Sd <Plug>(operator-surround-delete)
+omap Sc <Plug>(operator-surround-replace)
 nmap <silent> ds :<C-u>call vimrc#keys#delete_mostly_inner()<CR>
 nmap <silent> cs :<C-u>call vimrc#keys#replace_mostly_inner()<CR>
 
 " vim-textobj-jabraces
 vmap ijp <Plug>(textobj-jabraces-parens-i)
-omap ijp <Plug>(textobj-jabraces-parens-i)
 vmap ajp <Plug>(textobj-jabraces-parens-a)
+omap ijp <Plug>(textobj-jabraces-parens-i)
 omap ajp <Plug>(textobj-jabraces-parens-a)
+
+" TODO: Why this doesn't work
+vmap ijP <Plug>(textobj-jabraces-brackets-i)
+vmap ajP <Plug>(textobj-jabraces-brackets-a)
+omap ijP <Plug>(textobj-jabraces-brackets-i)
+omap ajP <Plug>(textobj-jabraces-brackets-a)
 
 " neosnippet.vim
 inoremap <silent><expr> <C-s> (neosnippet#mappings#expandable_or_jumpable() ? neosnippet#mappings#expand_or_jump_impl() : "\<C-o>a")
 snoremap <silent><expr> <C-s> (neosnippet#mappings#expandable_or_jumpable() ? neosnippet#mappings#expand_or_jump_impl() : "i<BS>\<C-o>a")
+
+" NOTE: These overrides a part of the marking keys.
+" vim-fmap
+nmap 'f <Plug>(fmap-forward-f)
+nmap 'F <Plug>(fmap-backword-f)
+nmap 't <Plug>(fmap-forward-t)
+nmap 'T <Plug>(fmap-backword-T)
+
+vmap 'f <Plug>(fmap-forward-f)
+vmap 'F <Plug>(fmap-backword-f)
+vmap 't <Plug>(fmap-forward-t)
+vmap 'T <Plug>(fmap-backword-T)
+
+omap 'f <Plug>(fmap-forward-f)
+omap 'F <Plug>(fmap-backword-f)
+omap 't <Plug>(fmap-forward-t)
+omap 'T <Plug>(fmap-backword-T)
 
 " }}}
 " filetypes {{{
