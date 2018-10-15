@@ -1,3 +1,5 @@
+include vim/*
+
 snippet Describe
 alias   desc describe
 abbr    Describe ~ End
@@ -35,24 +37,9 @@ abbr    It ~ End
 
 snippet Assert
 alias   ass assert
-abbr    Assert ()
-    Assert (${0:#:condition})
+    Assert ${0:#:condition}
 
 snippet AssertEquals
 alias   asseq asserteq assertequals
 abbr    Assert Equals()
     Assert Equals(${1:#:actual}, ${2:#:expected})
-
-snippet function
-alias   func
-abbr    function! () abort
-options head
-    function! ${1:#:name}(${2:#:args}) abort
-        ${0:TARGET}
-    endfunction
-
-snippet if
-options head
-    if ${1:#:condition}
-        ${0:TARGET}
-    endif
