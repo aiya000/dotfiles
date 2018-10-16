@@ -710,6 +710,7 @@ let g:indent_guides_exclude_filetypes = [
    \ 'tweetvim_say',
    \ 'help',
    \ 'man',
+   \ 'elm',
 \ ]
 
 " Define colors
@@ -1088,6 +1089,8 @@ nnoremap ( (zv
 nnoremap ) )zv
 nnoremap zs zszh
 nnoremap g_ $
+nnoremap 'p "+p
+nnoremap 'P "+P
 nnoremap 'yy "+yy
 nnoremap <C-n> gt
 nnoremap <C-p> gT
@@ -1142,6 +1145,7 @@ cnoremap <C-l> <C-c>
 cnoremap <C-g> '<,'>
 cnoremap <C-o> <Up>
 cnoremap <C-y> <Down>
+cnoremap <C-r>' <C-r>+
 
 " }}}
 " visual/operator mode {{{
@@ -1185,6 +1189,8 @@ onoremap iK i<
 " others
 vnoremap <C-l> <Esc>
 vnoremap <leader>s :sort<CR>
+vnoremap 'p "+p
+vnoremap 'P "+P
 vnoremap 'y "+y
 
 " }}}
