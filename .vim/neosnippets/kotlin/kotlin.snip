@@ -1,6 +1,5 @@
 snippet fun
 alias def
-abbr    fun __(__) { __ }
 options indent
     fun ${1:funcName}(${2:#:args})${0}
 
@@ -207,8 +206,14 @@ alias sum_types declare_sum_types
         data class ${2:TermName}(${3:#:fields}) : $1()${0}
     }
 
+snippet override_fun
+    override fun ${1:funcName}(${2:#:args})${0}
+
+snippet abstract_fun
+    abstract fun ${1:funcName}(${2:#:args})${0}
+
 snippet override_to_string
-        override fun toString(): String ${0}
+    override fun toString() ${0}
 
 snippet main
     object Main {
