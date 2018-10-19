@@ -150,7 +150,7 @@ endfunction " }}}
 
 " Toggle b:ale_enabled
 function! vimrc#keys#toggle_ale_at_buffer() abort
-    let b:ale_enabled = get(b:, 'ale_enabled', 0)
+    let b:ale_enabled = !get(b:, 'ale_enabled', 1)
     " Refresh the state
     ALEToggle
     ALEToggle
