@@ -1091,7 +1091,7 @@ nnoremap zs zszh
 nnoremap g_ $
 nnoremap 'p "+p
 nnoremap 'P "+P
-nnoremap 'yy "+yy
+nnoremap 'y "+y
 nnoremap <C-n> gt
 nnoremap <C-p> gT
 nnoremap <C-m> o<Esc>
