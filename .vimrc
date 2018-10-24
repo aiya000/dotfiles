@@ -681,6 +681,9 @@ let g:vimhelpgenerator_defaultlanguage = 'en'
 " let g:formatdef_scalafmt = '"ng scalafmt --stdin"' " Please see Makefile for about `ng scalafmt`
 " let g:formatters_scala = ['scalafmt']
 
+let g:formatdef_hfmt = '"hfmt --source"'
+let g:formatters_haskell = ['hfmt']
+
 " }}}
 " --- vim-indent-guides --- " {{{
 
@@ -1064,9 +1067,9 @@ nnoremap <silent> <leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shel
 nnoremap <silent> <leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, v:false)<CR>
 nnoremap <silent> <leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, v:false)<CR>
 nnoremap <silent> 'v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, v:true)<CR>
-nnoremap <silent> '<leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, v:true)<CR>
+nnoremap <silent> ''v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, v:true)<CR>
 nnoremap <silent> 'V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, v:true)<CR>
-nnoremap <silent> '<leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, v:true)<CR>
+nnoremap <silent> ''V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, v:true)<CR>
 " and vimshell
 nnoremap <silent> <C-[><C-v> :<C-u>call vimrc#keys#toggle_shell_mode()<CR>
 
@@ -1239,9 +1242,9 @@ nnoremap <silent> <leader><leader>e :<C-u>call vimrc#keys#netrw_wrapper('horizon
 nnoremap <silent> <leader>E         :<C-u>call vimrc#keys#netrw_wrapper('stay', v:true)<CR>
 nnoremap <silent> <leader><leader>E :<C-u>call vimrc#keys#netrw_wrapper('tabnew', v:true)<CR>
 nnoremap <silent> 'e         :<C-u>call vimrc#keys#toggle_netrw_vexplorer(v:false)<CR>
-nnoremap <silent> '<leader>e :<C-u>call vimrc#keys#netrw_wrapper('horizontal', v:false)<CR>
+nnoremap <silent> ''e :<C-u>call vimrc#keys#netrw_wrapper('horizontal', v:false)<CR>
 nnoremap <silent> 'E         :<C-u>call vimrc#keys#netrw_wrapper('stay', v:false)<CR>
-nnoremap <silent> '<leader>E :<C-u>call vimrc#keys#netrw_wrapper('tabnew', v:false)<CR>
+nnoremap <silent> ''E :<C-u>call vimrc#keys#netrw_wrapper('tabnew', v:false)<CR>
 
 " open-browser.vim
 nmap <leader>w <Plug>(openbrowser-open)
