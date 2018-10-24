@@ -169,7 +169,7 @@ function! vimrc#keys#delete_mostly_inner() abort " {{{
     let obj_keys = s:get_current_obj_keys()
     let maybe_obj_key = s:input_obj_key_on(obj_keys)
 
-    call s:Optional.map(maybe_obj_key, {obj_key ->
+    call s:Optional.map(maybe_obj_key, { obj_key ->
         \ execute('normal ' . ('va' . obj_key . "\<Plug>(operator-surround-delete)"))
     \ })
 endfunction " }}}
@@ -203,3 +203,12 @@ function! vimrc#keys#replace_mostly_inner() abort " {{{
         \ })
     \ })
 endfunction " }}}
+
+function! vimrc#keys#append_surround(visualizer) abort
+    call dein#source('vim-operator-surround')
+
+    let obj_keys = s:get_current_obj_keys()
+    call s:Optional.map(s:input_obj_key_on(obj_keys), { obj_key ->
+        \ execute('normal ' . (a:visualizer . "\<Plug>(operator-surround-append)" . obj_key))
+    \ })
+endfunction
