@@ -715,8 +715,8 @@ let g:indent_guides_exclude_filetypes = [
 
 " Define colors
 augroup VimRc
-    autocmd VimEnter,ColorScheme * highlight IndentGuidesOdd ctermbg=60
-    autocmd VimEnter,ColorScheme * highlight IndentGuidesEven ctermbg=60
+    autocmd VimEnter,ColorScheme * highlight IndentGuidesOdd ctermbg=60 guibg=#468F8C
+    autocmd VimEnter,ColorScheme * highlight IndentGuidesEven ctermbg=60 guibg=#468F8C
 augroup END
 
 augroup VimRc
@@ -738,7 +738,6 @@ call map(g:lexima#default_rules, { _, keymap ->
     \ lexima#add_rule(extend(keymap, {'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'}))
 \ })
 
-call lexima#add_rule({'char': '<', 'input_after': '>', 'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'})
 call lexima#add_rule({'char': '「', 'input_after': '」'})
 call lexima#add_rule({'char': '『', 'input_after': '』'})
 call lexima#add_rule({'char': '（', 'input_after': '）'})
@@ -753,6 +752,8 @@ for deleter in ['<C-h>', '<BS>', '<C-w>']
     call lexima#add_rule({'char': deleter, 'at': '"\%#"', 'delete': 1})
     call lexima#add_rule({'char': deleter, 'at': '`\%#`', 'delete': 1})
 endfor
+
+call lexima#add_rule({'filetype': 'kotlin', 'char': '<', 'input_after': '>', 'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'})
 
 " }}}
 
@@ -1124,6 +1125,7 @@ inoremap <C-k>?= ≒
 " others
 imap <C-j> <CR>
 inoremap <C-l> <Esc>
+inoremap <C-r>' <C-r>+
 inoremap <C-k><C-k> <C-o>"_d$
 inoremap <silent> <C-k><C-j> <Esc>:write<CR>
 inoremap <silent> <C-k>J <Esc>:wall \| echo 'written all !'<CR>
@@ -1408,6 +1410,8 @@ vmap Sc <Plug>(operator-surround-replace)
 omap Sa <Plug>(operator-surround-append)
 omap Sd <Plug>(operator-surround-delete)
 omap Sc <Plug>(operator-surround-replace)
+nmap <silent> ga :<C-u>call vimrc#keys#append_surround('viw')<CR>
+nmap <silent> gA :<C-u>call vimrc#keys#append_surround('viW')<CR>
 nmap <silent> ds :<C-u>call vimrc#keys#delete_mostly_inner()<CR>
 nmap <silent> cs :<C-u>call vimrc#keys#replace_mostly_inner()<CR>
 
