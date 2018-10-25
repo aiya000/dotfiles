@@ -299,7 +299,7 @@ function! vimrc#plugins#delete_lines(...) abort " {{{
     endwhile
 endfunction " }}}
 
-function! vimrc#plugins#exec_at_this_buffer_dir(cmd) abort
+function! vimrc#plugins#exec_at_this_buffer_dir(cmd) abort " {{{
     let current_dir = execute('pwd')[1:]
     let buffuer_dir = expand('%:p:h')
     if !isdirectory(buffuer_dir)
@@ -310,4 +310,4 @@ function! vimrc#plugins#exec_at_this_buffer_dir(cmd) abort
     execute 'tcd' buffuer_dir
     execute a:cmd
     execute 'tcd' current_dir
-endfunction
+endfunction " }}}
