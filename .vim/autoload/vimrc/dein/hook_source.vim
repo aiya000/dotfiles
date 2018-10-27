@@ -3,12 +3,8 @@ let s:List = s:V.import('Data.List')
 
 function! vimrc#dein#hook_source#operator_surround() abort " {{{
     " Exclude brackets () [] {} and ` for unique mappings ('keys')
-    let basic_chars =
-        \ s:List.char_range('!', "'") +
-        \ s:List.char_range('*', 'Z') +
-        \ s:List.char_range('a', 'z') +
-        \ ['&', '_', '|', '~']
-    let basic_between = map(basic_chars, { _, char ->
+    let basic_symbols = s:List.char_range('!', "'") + ['&', '_', '|', '~']
+    let basic_between = map(basic_symbols, { _, char ->
         \ { 'block' : [char, char], 'motionwise' : ['char', 'line', 'block'], 'keys' : [char] }
     \ })
 
