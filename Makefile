@@ -42,7 +42,7 @@ endif
 install_with_stack:
 	stack install \
 		hasktags haskdogs \
-		ghcid # .vimrc
+		ghcid hfmt # vim
 	git clone --recursive https://github.com/ucsd-progsys/liquidhaskell ~/git/liquidhaskell
 	cd ~/git/liquidhaskell
 	stack install

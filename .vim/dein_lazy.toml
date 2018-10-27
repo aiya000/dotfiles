@@ -370,4 +370,5 @@ on_cmd = ['FNoreMap']
 repo = 'Chiel92/vim-autoformat'
 on_ft = [
     'scala',
+    'haskell',
 ]

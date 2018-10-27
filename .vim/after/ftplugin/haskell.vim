@@ -48,9 +48,10 @@ endfunction
 "nnoremap <buffer><silent> <localleader><localleader><localleader>b :<C-u>echo 'etlas build is started'<CR>:QuickRun etlas_build<CR>
 "nnoremap <buffer><silent> <localleader><localleader><localleader>B :<C-u>call vimrc#open_terminal_as('none', 'horizontal', 'etlas build')<CR>
 
-augroup FtpluginHappy
+augroup FtpluginHaskell
     autocmd!
     autocmd BufWritePost *.hs call s:exec_the_quickfix_if_enabled()
+    autocmd BufWritePost *.hs Autoformat
 augroup END
 
 function! s:stack_integrate_test_or_unit_or_both() abort

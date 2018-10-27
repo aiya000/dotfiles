@@ -681,7 +681,7 @@ let g:vimhelpgenerator_defaultlanguage = 'en'
 " let g:formatdef_scalafmt = '"ng scalafmt --stdin"' " Please see Makefile for about `ng scalafmt`
 " let g:formatters_scala = ['scalafmt']
 
-let g:formatdef_hfmt = '"hfmt --source"'
+let g:formatdef_hfmt = '"hfmt --print-sources " . expand("%:p")'
 let g:formatters_haskell = ['hfmt']
 
 " }}}
