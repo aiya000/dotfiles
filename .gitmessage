@@ -2,7 +2,7 @@
 
 # ==== Emojis ====
 # 👍 :+1:       Improve
-# 🎉 :tada:     Add grandly functions
-# ♻️  :recycle:  Refactor / Fix code styles and lint errors
 # 🐛 :bug:      Fix bugs
+# ♻️  :recycle:  Refactor / Fix code styles and lint errors
 # 🆙 :up:       Update dependencies
+# 🎉 :tada:     Update the version of the app/the compiler/the processor
