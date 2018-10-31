@@ -1,0 +1,26 @@
+[editor]
+clipboard = false
+cursorBlink = false
+
+[scrollBar]
+visible = false
+
+[activityBar]
+visible = false
+dropshadow = false
+
+[miniMap]
+visible = true
+
+[sideBar]
+visible = false
+dropshadow = false
+width = 300
+accentColor = "#5596ea"
+
+[workspace]
+pathStyle = "minimum"
+restoreSession = false
+
+[dein]
+tomlFile = '' # Ignore
