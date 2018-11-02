@@ -28,12 +28,8 @@ abbr class __(__) {__}
     class ${1:Name}(${2:args}) {${0}}
 
 snippet data_class
-abbr data class __(val __: __)
+alias data
     data class ${1:Name}(${2:members})
-
-snippet new_type_with_a_cost
-abbr data class __(val un__: __)
-    data class ${1:Name}(val un$1: ${2:Type})
 
 snippet sealed_class
 abbr sealed class __
