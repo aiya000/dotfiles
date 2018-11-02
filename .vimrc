@@ -462,6 +462,10 @@ let g:unite_source_tag_max_fname_length = 100
 
 let g:deoplete#enable_at_startup = 0
 
+augroup VimRc
+    autocmd InsertLeave * call deoplete#enable()
+augroup END
+
 " }}}
 " --- vim-visualstar --- {{{
 
