@@ -1,8 +1,20 @@
 # Syntaxes
 
+snippet data
+    data ${1:Name} = ${0}
+
+snippet newtype
+options indent
+    newtype ${1:Name} = $1
+        { un$1 :: ${2:Origin}
+        } deriving (${0:here})
+
 snippet deriving
 abbr    deriving (__)
     deriving (${0:here})
+
+snippet class
+    class ${1:Name} where${0}
 
 snippet import
 abbr    import (__)

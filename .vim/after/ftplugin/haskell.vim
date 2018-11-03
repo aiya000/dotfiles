@@ -17,11 +17,15 @@ nnoremap <buffer><silent> <localleader><localleader>b :<C-u>call vimrc#open_term
 nnoremap <buffer><silent> <localleader><localleader>r :<C-u>echo 'stack build is started'<CR>:QuickfixRunStack test<CR>
 nnoremap <buffer><silent> <localleader><localleader>t :<C-u>call <SID>stack_integrate_test_or_unit_or_both()<CR>
 nnoremap <buffer><silent> <localleader><localleader>w :<C-u>call <SID>start_the_quickfix()<CR>
-nnoremap <buffer><silent> <localleader>O :<C-u>vsp<CR>:Ghcie<CR>
-nnoremap <buffer><silent> <localleader>o :<C-u>vsp<CR>:Ghci <C-r>=expand('%:p')<CR><CR>
+nnoremap <buffer><silent> <localleader><localleader>W :<C-u>call <SID>stop_the_quickfix()<CR>
 nnoremap <buffer> <localleader>S :<C-u>Aref stackage <C-r>=expand('<cword>')<CR><CR>
 
 nnoremap <buffer><silent> <C-k><C-w> :<C-u>call <SID>toggle_the_quickfix()<CR>
+
+function! s:stop_the_quickfix() abort
+    let s:does_quickfix_watch = v:false
+    cclose
+endfunction
 
 function! s:start_the_quickfix() abort
     let s:does_quickfix_watch = v:true
@@ -51,7 +55,6 @@ endfunction
 augroup FtpluginHaskell
     autocmd!
     autocmd BufWritePost *.hs call s:exec_the_quickfix_if_enabled()
-    autocmd BufWritePost *.hs Autoformat
 augroup END
 
 function! s:stack_integrate_test_or_unit_or_both() abort
