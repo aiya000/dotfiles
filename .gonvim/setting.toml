@@ -10,7 +10,7 @@ visible = false
 dropshadow = false
 
 [miniMap]
-visible = true
+visible = false
 
 [sideBar]
 visible = false
