@@ -38,6 +38,9 @@ abbr sealed class __
 snippet interface
     interface ${1:Name} {${0:here}}
 
+snippet object
+    object ${1:Name} {${0:here}}
+
 snippet companion_object
 abbr companion object
     companion object
@@ -95,7 +98,7 @@ snippet finally
     finally {${0:here}}
 
 snippet anonymous_class_instance
-alias object_anonymous_instance object
+alias object_anonymous_instance
     object : ${1:Parent} {${0:here}}
 
 snippet constructor
@@ -225,3 +228,7 @@ snippet main_object
             ${0}
         }
     }
+
+snippet annotation_jvm_static
+alias jvm_static
+    @JvmStatic
