@@ -1129,6 +1129,7 @@ inoremap <C-k>?= ≒
 " others
 imap <C-j> <CR>
 inoremap <C-l> <Esc>
+inoremap <C-f> <Right>
 inoremap <C-r>' <C-r>+
 inoremap <C-k><C-k> <C-o>"_d$
 inoremap <silent> <C-k><C-j> <Esc>:write<CR>
@@ -1303,9 +1304,6 @@ nnoremap <silent> <leader>U :<C-u>UndotreeToggle<CR>
 " vim-indent-guides
 nnoremap <silent> <C-h><C-i> :<C-u>call vimrc#keys#toggle_indent_guides()<CR>
 
-" neosnippet.vim
-" NOTE: Please see <C-s> of imap and smap
-
 " neocomplete.vim
 inoremap <silent> <C-k><C-i> <C-o>:NeoCompleteToggle<CR>
 inoremap <expr>   <CR>  neocomplete#close_popup()  . '<CR>'
@@ -1433,8 +1431,8 @@ omap ijP <Plug>(textobj-jabraces-brackets-i)
 omap ajP <Plug>(textobj-jabraces-brackets-a)
 
 " neosnippet.vim
-inoremap <silent><expr> <C-s> (neosnippet#mappings#expandable_or_jumpable() ? neosnippet#mappings#expand_or_jump_impl() : "\<C-o>a")
-snoremap <silent><expr> <C-s> (neosnippet#mappings#expandable_or_jumpable() ? neosnippet#mappings#expand_or_jump_impl() : "i<BS>\<C-o>a")
+inoremap <silent><expr> <C-s> neosnippet#mappings#expand_or_jump_impl()
+snoremap <silent><expr> <C-s> neosnippet#mappings#expand_or_jump_impl()
 
 " NOTE: These overrides a part of the marking keys.
 " vim-fmap
