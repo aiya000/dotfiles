@@ -95,7 +95,7 @@ if i_have git ; then
     alias gmt='git mergetool'
     alias gmerge='git merge --no-ff'
     alias gsm='git submodule'
-    alias gsma='git submodule add'
+    alias gsma='git submodule add --recursive'
     alias gsmd='git submodule deinit'
     alias gsmu='git submodule update'
     alias gsmui='git submodule update --init'
