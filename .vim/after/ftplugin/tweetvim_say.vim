@@ -26,4 +26,4 @@ inoremap <buffer> <C-i> <Tab>
 imap <buffer> <C-b> <C-o>:TweetVimBitly<CR><C-r>+
 
 " Recover my <C-s>
-inoremap <silent><expr><buffer> <C-s> (neosnippet#mappings#expandable_or_jumpable() ? neosnippet#mappings#expand_or_jump_impl() : "\<C-o>a")
+inoremap <silent><expr><buffer> <C-s> neosnippet#mappings#expand_or_jump_impl()
