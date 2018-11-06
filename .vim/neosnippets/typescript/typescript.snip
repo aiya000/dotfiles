@@ -1,4 +1,5 @@
 # Syntax
+
 snippet for
 abbr    for () {}
     for (${1:#:let}; ${2:#:condition}; ${3:#:effect}) {
@@ -25,8 +26,23 @@ abbr    else {}
     }
 
 snippet function
-alias   func
+alias   func fun def
 abbr    func () {}
     function ${1:#:name}(${2:#:arguments})${3:#:: type} {
         ${0:TARGET}
     }
+
+snippet reference
+    /// <reference path="${0:d-ts-path}"/>
+
+snippet val
+    const
+
+snippet try
+    try {${0:here}}
+
+snippet catch
+    catch (e) {${0:here}}
+
+snippet println
+    console.log(${0:here})
