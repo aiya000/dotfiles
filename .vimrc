@@ -6,17 +6,6 @@
 "    - NeoVim                "
 "----------------------------"
 
-"------"
-" Memo "
-"------"
-" {{{
-"
-" Please see .vim/autoload/vimrc/dein/hook_source.vim if you can't find a preference of dein lazily plugins
-" LanguageClient-neovim is for not only neovim, both vim and neovim
-"
-" }}}
-
-
 "----------------------"
 " Define global values "
 "----------------------"
@@ -641,6 +630,11 @@ let g:idris_vim_enable_keymappings_by_default = v:false
 let g:textobj_clang_more_mappings = 1
 
 " }}}
+" --- vim-operator-surround --- {{{
+
+" Please see hook_source.vim
+
+" }}}
 " --- LanguageClient-neovim --- " {{{
 
 let g:LanguageClient_serverCommands = {
@@ -648,8 +642,9 @@ let g:LanguageClient_serverCommands = {
     \ 'javascript': ['language-server-stdio.js'],
     \ 'typescript': ['language-server-stdio.js'],
 \}
-
 let g:LanguageClient_diagnosticsEnable = v:false
+
+" Also please see hook_source.vim
 
 " }}}
 " --- vim-espeak --- " {{{
@@ -1132,7 +1127,7 @@ inoremap <C-k>?= ≒
 " others
 imap <C-j> <CR>
 inoremap <C-l> <Esc>
-inoremap <C-f> <Right>
+inoremap <C-a> <Right>
 inoremap <C-r>' <C-r>+
 inoremap <C-k><C-k> <C-o>"_d$
 inoremap <silent> <C-k><C-j> <Esc>:write<CR>

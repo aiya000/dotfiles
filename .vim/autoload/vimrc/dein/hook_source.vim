@@ -77,11 +77,10 @@ function! vimrc#dein#hook_source#LanguageClient_neovim() abort " {{{
         autocmd!
         " Please see vimrc#set#tabline_as_statusline() for g:vimrc.language_client_neovim
         autocmd User LanguageClientStarted
-            \ let s:prev_completefunc = &completefunc
-            \|set completefunc=LanguageClient#complete
-            \|let g:vimrc['language_client_neovim'] = {'has_started': v:true}
-            \|redrawstatus
-            \|echomsg 'hi'
+            \  let s:prev_completefunc = &completefunc
+            \| set completefunc=LanguageClient#complete
+            \| let g:vimrc['language_client_neovim'] = {'has_started': v:true}
+            \| redrawstatus
         autocmd User LanguageClientStopped
             \ let &completefunc = s:prev_completefunc
     augroup END
