@@ -297,12 +297,10 @@ on_cmd = [
     'LanguageClientStart',
     'LanguageClientStop',
 ]
-
-[[plugins]]
-repo   = 'aiya000/ghcid'
-rev    = 'aiya000/neovim-ghcid-filetype'
-rtp    = 'plugins/nvim'
-on_cmd = ['Ghcid', 'GhcidKill']
+on_ft = [
+    'javascript',
+    'typescript',
+]
 
 [[plugins]]
 repo    = 'tyru/operator-reverse.vim'
