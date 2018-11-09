@@ -278,7 +278,7 @@ on_func     = [
     'LanguageClient_textDocument_references',
     'LanguageClient_workspace_symbol',
     'LanguageClient_textDocument_completion',
-    'LanguageClient_setLoggingLevel(level: str)',
+    'LanguageClient_setLoggingLevel',
     'LanguageClient_textDocument_formatting',
     'LanguageClient_textDocument_rangeFormatting',
     'LanguageClient#Notify',
