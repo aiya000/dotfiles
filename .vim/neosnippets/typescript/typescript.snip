@@ -1,45 +1,27 @@
-# Syntax
+# Syntaxes
 
 snippet traditional_for
-    for (${1:#:let}; ${2:#:condition}; ${3:#:effect}) {
-        ${0}
-    }
+    for (${1:#:let}; ${2:#:condition}; ${3:#:effect}) {${0}}
 
 snippet for_in
-    for (const ${1:i} in ${2:xs}) {
-        ${0}
-    }
+    for (const ${1:i} in ${2:xs}) {${0}}
 
 snippet for_of
 alias for
-    for (const ${1:x} of ${2:xs}) {
-        ${0}
-    }
+    for (const ${1:x} of ${2:xs}) {${0}}
 
 snippet if
 abbr    if () {}
-    if (${1:#:condition}) {
-        ${0}
-    }
+    if (${1:#:condition}) {${0}}
 
 snippet else
 abbr    else {}
-    else {
-        ${0}
-    }
+    else {${0}}
 
 snippet function
 alias   func fun def
 abbr    func () {}
-    function ${1:#:name}(${2:#:arguments})${3:#:: type} {
-        ${0}
-    }
-
-snippet reference
-    /// <reference path="${0:d-ts-path}"/>
-
-snippet val
-    const
+    function ${1:#:name}(${2:#:arguments})${3:#:: type} {${0}}
 
 snippet try
     try {${0:here}}
@@ -47,11 +29,31 @@ snippet try
 snippet catch
     catch (e) {${0:here}}
 
-snippet println
-    console.log(${0:here})
-
 snippet import_as
     import ${1:*} as ${2:name} from "${0}"
 
 snippet import
     import ${1:*} from "${0}"
+
+snippet const
+alias val
+    const
+
+snippet let
+    let
+
+snippet class
+    class ${1:Name} {${0:here}}
+
+snippet constructor
+    constructor(${1:args}) {${0:here}}
+
+# Expressions
+
+snippet println
+    console.log(${0:here})
+
+# Others
+
+snippet reference
+    /// <reference path="${0:d-ts-path}"/>
