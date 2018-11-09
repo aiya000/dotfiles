@@ -276,6 +276,10 @@ if i_have npm ; then
     alias nr='npm run'
 fi
 
+if i_have yarn ; then
+    alias yaru='yarn run'
+fi
+
 if i_have docker ; then
     alias d=docker
     alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
