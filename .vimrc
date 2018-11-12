@@ -583,6 +583,7 @@ let fakeclip_provide_clipboard_key_mappings = g:vimrc['is_wsl']
 " }}}
 " --- denite.nvim --- {{{
 
+call denite#custom#map('normal', 'Q', '<denite:quit>')
 call denite#custom#map('normal', '<C-[>', '<denite:quit>')
 call denite#custom#map('normal', '<C-l>', '<denite:quit>')
 call denite#custom#map('normal', '<C-j>', '<CR>')
