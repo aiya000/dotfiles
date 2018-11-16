@@ -664,6 +664,7 @@ let g:highlightedyank_highlight_duration = 200
 " }}}
 " --- vim-fmap --- " {{{
 
+let g:fmap_use_default_keymappings = v:false
 let g:fmap_escape_keys = ['', '', '']
 
 augroup VimRc
