@@ -1,11 +1,3 @@
-"----------------------------"
-"  This file supports        "
-"    - *NIX (exclude MacOSX) "
-"    - Cygwin                "
-"    - Windows Kaoriya GVim  "
-"    - NeoVim                "
-"----------------------------"
-
 "----------------------"
 " Define global values "
 "----------------------"
