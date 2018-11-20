@@ -635,6 +635,7 @@ let g:LanguageClient_serverCommands = {
     \ 'javascript': ['language-server-stdio.js'],
     \ 'typescript': ['language-server-stdio.js'],
 \}
+
 let g:LanguageClient_diagnosticsEnable = v:false
 
 " Also please see hook_source.vim
@@ -750,6 +751,7 @@ for deleter in ['<C-h>', '<BS>', '<C-w>']
 endfor
 
 call lexima#add_rule({'filetype': 'kotlin', 'char': '<', 'input_after': '>', 'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'})
+call lexima#add_rule({'filetype': 'typescript', 'char': '<', 'input_after': '>', 'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'})
 
 " }}}
 
@@ -1089,6 +1091,7 @@ nnoremap g_ $
 nnoremap 'p "+p
 nnoremap 'P "+P
 nnoremap 'y "+y
+nnoremap 'd "+d
 nnoremap <C-n> gt
 nnoremap <C-p> gT
 nnoremap <C-m> o<Esc>
