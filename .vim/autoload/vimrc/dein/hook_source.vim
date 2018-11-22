@@ -79,11 +79,12 @@ function! vimrc#dein#hook_source#LanguageClient_neovim() abort " {{{
         autocmd User LanguageClientStarted
             \  let s:prev_completefunc = &completefunc
             \| set completefunc=LanguageClient#complete
-            \| let g:vimrc['language_client_neovim'] = {'has_started': v:true}
+            \| let g:vimrc['language_client_neovim'] = {'enabled': v:true}
             \| redrawstatus
             \| echo 'the language client started'
         autocmd User LanguageClientStopped
-            \ let &completefunc = s:prev_completefunc
+            \  let &completefunc = s:prev_completefunc
+            \| let g:vimrc['language_client_neovim'].enabled = v:false
     augroup END
 endfunction " }}}
 

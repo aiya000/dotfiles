@@ -6,8 +6,8 @@ let s:List = vital#vimrc#import('Data.List')
 " and below augroup 'HighlightPref'.
 function! vimrc#set#tabline() abort " {{{
     let language_client_status =
-        \ get(g:vimrc, 'language_client', {'has_started': v:false})['has_started']
-            \ ? '%6*%{LanguageClient_statusLine()}%*'
+        \ get(g:vimrc, 'language_client_neovim', {'enabled': v:false})['enabled']
+            \ ? '%7*[lsp]%*'
             \ : ''
     return '%1*[%{tabpagenr("$")}]%* '
         \. s:tabs() . ' => '
