@@ -47,7 +47,6 @@ if i_have git ; then
     alias _grh='git reset --hard'
     alias _grs='git reset --soft'
     alias _grs_HEAD-='git reset --soft HEAD~'
-    alias g='git'
     alias ga='git add'
     alias gaa='git add -A'
     alias gap='git add -p'
