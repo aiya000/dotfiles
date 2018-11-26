@@ -86,17 +86,18 @@ command! -bar DeinRecacheRuntimepath call dein#recache_runtimepath()
 " Git commands
 command! -bar -nargs=* GStatus Gina status -s <args>
 command! -bar -nargs=* GLog GitLogViewer -100 --name-only <args>
-command! -bar -nargs=* GLP GitLogViewer --patch -100 <args>
+command! -bar -nargs=* GLogPatch GitLogViewer --patch -100 <args>
+command! -bar -nargs=* GLogOneline GitLogViewer --oneline <args>
 command! -bar -nargs=* GDiff GitDiffViewer <args>
 command! -bar -nargs=* GDS GitDiffViewer --staged <args>
 command! -bar -nargs=* GDH GitDiffViewer HEAD~ <args>
 command! -bar -nargs=* GCommit Gina commit --verbose <args>
-command! -bar -nargs=* GCAM Gina commit --verbose --amend <args>
-command! -bar -nargs=1 GCF echomsg system('git commit --fixup ' . <q-args>)
-command! -bar -nargs=* GAP terminal git add -p <args>
-command! -bar -nargs=* GTree Gina log --graph --decorate --oneline <args>
-command! -bar -nargs=* GTreeAll GTree --all <args>
-command! -bar -nargs=* GBA Gina branch --all <args>
+command! -bar -nargs=* GCommitAmmend Gina commit --verbose --amend <args>
+command! -bar -nargs=1 GCommitFixup echomsg system('git commit --fixup ' . <q-args>)
+command! -bar -nargs=* GAddPatch terminal git add -p <args>
+command! -bar -nargs=* GLogTree Gina log --graph --decorate --oneline <args>
+command! -bar -nargs=* GLogTreeAll GTree --all <args>
+command! -bar -nargs=* GBrahcnAll Gina branch --all <args>
 command! -bar -nargs=* GBlame Gina blame <args>
 
 " espeak

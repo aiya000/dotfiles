@@ -1364,14 +1364,15 @@ IncSearchNoreMap <C-y> <Down>
 nnoremap <silent> <leader>gs :<C-u>GStatus<CR>
 nnoremap <silent> <leader>gS :<C-u>GitShowViewer<CR>
 nnoremap <silent> <leader>gc :<C-u>GCommit<CR>
-nnoremap <silent> <leader>gC :<C-u>GCAM<CR>
-nnoremap <silent> <leader>ga :<C-u>GAP<CR>
+nnoremap <silent> <leader>gC :<C-u>GCommitAmmend<CR>
+nnoremap <silent> <leader>ga :<C-u>GAddPatch<CR>
 nnoremap <silent> <leader>gl :<C-u>GLog<CR>
-nnoremap <silent> <leader>gL :<C-u>GLP<CR>
+nnoremap <silent> <leader>gL :<C-u>GLogPatch<CR>
+nnoremap <silent> <leader>go :<C-u>GLogOneline<CR>
 nnoremap <silent> <leader>gd :<C-u>GDiff<CR>
-nnoremap <silent> <leader>gb :<C-u>GBA<CR>
-nnoremap <silent> <leader>gt :<C-u>GTree<CR>
-nnoremap <silent> <leader>gT :<C-u>GTreeAll<CR>
+nnoremap <silent> <leader>gb :<C-u>GBrahcnAll<CR>
+nnoremap <silent> <leader>gt :<C-u>GLogTree<CR>
+nnoremap <silent> <leader>gT :<C-u>GLogTreeAll<CR>
 
 " LanguageClient-neovim
 nnoremap <silent> <C-q><C-d><C-g> :<C-u>LspDocumentDiagnostics<CR>
