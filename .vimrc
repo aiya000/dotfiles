@@ -754,6 +754,11 @@ call lexima#add_rule({'filetype': 'kotlin', 'char': '<', 'input_after': '>', 'ex
 call lexima#add_rule({'filetype': 'typescript', 'char': '<', 'input_after': '>', 'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'})
 
 " }}}
+" --- gina.vim --- " {{{
+
+let g:gina#command#blame#formatter#format = '%su%=on %ti by %au %ma%in'
+
+" }}
 
 call dein#end()
 
