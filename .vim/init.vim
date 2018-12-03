@@ -3,12 +3,6 @@ source ~/.vimrc
 "---------"
 " Prepare "
 "---------"
-" Define global values {{{
-
-" For the exceptions
-let $NVIM_PYTHON_LOG_FILE = g:vimrc['vim_home'] . '/.log/nvim_python.log'
-
-" }}}
 " Declare autocmd groups {{{
 
 augroup InitVim

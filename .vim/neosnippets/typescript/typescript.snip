@@ -1,42 +1,50 @@
 # Syntaxes
 
 snippet traditional_for
-    for (${1:#:let}; ${2:#:condition}; ${3:#:effect}) {${0}}
+abbr for (${1:#:let}; ${2:#:cond}; ${3:#:eff}) {${0}}
+    for (${1:#:let}; ${2:#:cond}; ${3:#:eff}) {${0}}
 
 snippet for_in
+abbr for (const ${1:i} in ${2:xs}) {${0}}
     for (const ${1:i} in ${2:xs}) {${0}}
 
 snippet for_of
 alias for
+abbr for (const ${1:x} of ${2:xs}) {${0}}
     for (const ${1:x} of ${2:xs}) {${0}}
 
 snippet if
-abbr    if () {}
-    if (${1:#:condition}) {${0}}
+abbr if (${1:#:cond}) {${0}}
+    if (${1:#:cond}) {${0}}
 
 snippet else
-abbr    else {}
-    else {${0}}
+abbr else {${0:here}}
+    else {${0:here}}
 
 snippet function
 alias   func fun def
-abbr    func () {}
-    function ${1:#:name}(${2:#:arguments})${3:#:: type} {${0}}
+abbr function ${1:#:name}(${2:#:args})${3:#:: type} {${0}}
+    function ${1:#:name}(${2:#:args})${3:#:: type} {${0}}
 
 snippet arrow_function
 alias arrow arr
-    (${1:params}) =>${0}
+abbr (${1:args}) =>${0}
+    (${1:args}) =>${0}
 
 snippet try
+abbr try {${0:here}}
     try {${0:here}}
 
 snippet catch
+abbr catch (e) {${0:here}}
     catch (e) {${0:here}}
 
 snippet import_as
+abbr import ${1:*} as ${2:name} from "${0}"
     import ${1:*} as ${2:name} from "${0}"
 
 snippet import
+abbr import ${1:*} from "${0}"
     import ${1:*} from "${0}"
 
 snippet const
@@ -52,19 +60,32 @@ snippet instanceof
 snippet typeof
     typeof
 
+snippet public
+    public
+
+snippet private
+    private
+
+snippet readonly
+    readonly
+
 snippet class
-    class ${1:Name} {${0:here}}
+abbr class ${1:Name} {${0}}
+    class ${1:Name} {${0}}
 
 snippet constructor
-    constructor(${1:args}) {${0:here}}
+abbr constructor(${1:args}) {${0}}
+    constructor(${1:args}) {${0}}
 
 # Expressions
 
 snippet println
 alias pr
+abbr console.log(${0:here})
     console.log(${0:here})
 
 # Others
 
 snippet reference
+abbr /// <reference path="${0:d-ts-path}"/>
     /// <reference path="${0:d-ts-path}"/>

@@ -64,7 +64,7 @@ if   = '!has("nvim")'
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-rev  = '3c38321'
+rev  = 'acae373'
 if   = 'has("nvim")'
 
 [[plugins]]

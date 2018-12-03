@@ -1,38 +1,44 @@
 snippet use_strict
+abbr 'use strict';
     'use strict';
 
 snippet import
+abbr import { ${1:objects} } from '${2:module-name}'
     import { ${1:objects} } from '${2:module-name}'
 
 snippet print
 alias prlintln
+abbr console.log(${1:#:hello});
     console.log(${1:#:hello});
 
 snippet for
-    for (${1:#:var}; ${2:#:condition}; ${3:#:effect}) {
-        ${0:TARGET}
-    }
+abbr for (${1:#:var}; ${2:#:condition}; ${3:#:effect}) {${0:here}}
+    for (${1:#:var}; ${2:#:condition}; ${3:#:effect}) {${0:here}}
 
 snippet foreach
 alias   fore
-    for (${1:var} ${2:#:x} in ${3:#:xs}) {
-        ${0:TARGET}
-    }
+abbr for (${1:var} ${2:#:x} in ${3:#:xs}) {${0:here}}
+    for (${1:var} ${2:#:x} in ${3:#:xs}) {${0:here}}
+
+snippet if
+abbr if (${1:cond}) {${0:here}}
+    if (${1:cond}) {${0:here}}
 
 snippet else
-    else {
-        ${0:TARGET}
-    }
+abbr else {${0:here}}
+    else {${0:here}}
 
 snippet switch
-    switch (${1:var}) {${0}}
+abbr switch (${1:var}) {${0:here}}
+    switch (${1:var}) {${0:here}}
 
 snippet case
+abbr case ${1:LABEL}:\n${0}\nbreak;
     case ${1:LABEL}:
         ${0}
         break;
 
-snippet Array#map
+snippet define_prototype_Array#map
     Array.prototype.map = function (f) {
         for (var i = 0; i < this.length; ++i) {
             this[i] = f(i);
@@ -42,17 +48,18 @@ snippet Array#map
 
 snippet function
 alias fun
-    function ${1}(${2}) {${0}}
+abbr function ${1}(${2}) {${0:here}}
+    function ${1}(${2}) {${0:here}}
 
 snippet arrow_function
 alias arrow
-    ${1:()} => ${0}
+abbr (${1:#:args}) => ${0}
+    (${1:#:args}) => ${0}
 
 snippet class
-    class ${1:ClassName} ${2:#:extends_SomeClass}{${0}}
+abbr class ${1:Class} ${2:#:extends_Super}{${0:here}}
+    class ${1:Class} ${2:#:extends_Super}{${0:here}}
 
 snippet constructor
-    constructor(${1:#:args}) {${0}}
-
-snippet if
-    if (${1:cond}) {${0:here}}
+abbr constructor(${1:#:args}) {${0:here}}
+    constructor(${1:#:args}) {${0:here}}

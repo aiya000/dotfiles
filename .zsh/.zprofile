@@ -44,7 +44,6 @@ PATH=$PATH:/usr/lib/git-core
 #}}}
 # Others {{{
 
-# Favorite things
 export BROWSER=vivaldi-stable
 export EDITOR=nvim
 export GIT_EDITOR=nvim
@@ -52,12 +51,12 @@ export VISUAL=nvim
 export PAGER='nvim - +PAGER -c "setl nonu nornu ft=vim-pager | only"' # vim-pager
 export MANPAGER='nvim - +MANPAGER -c "setl nonu nornu ft=vim-pager | only"' # vim-manpager
 
-# Others
 export GOPATH=~/.GoPath
 export LICE_USER=aiya000
 export FZF_DEFAULT_OPTS='--tac --cycle --bind=ctrl-j:accept,ctrl-k:kill-line'
 export CCACHE_DISABLE=1
 export THEMIS_HOME="$HOME/.vim/bundle/repos/github.com/thinca/vim-themis"
+export NVIM_PYTHON_LOG_FILE=$HOME/.vim/.log/nvim_python.log
 
 # Plugins
 export HEREIS_ALIAS_PREFIX=p-

@@ -313,6 +313,17 @@ function virtualenv-activate () {
     fi
 }
 
+function vim-fix-plugins-for-dein-update () {
+    local plugin_names plugin_dir
+    plugin_names=("$@")
+    for name in "${plugin_names[@]}" ; do
+        cd ~/.vim/bundle/repos || exit
+        plugin_dir=$(bash -c "find . -type d -name '$name'")
+        echo "$name"
+        cd "$plugin_dir" && git checkout master
+    done
+}
+
 # }}}
 
 export PATH=$PATH:~/.sh_generic/bin
