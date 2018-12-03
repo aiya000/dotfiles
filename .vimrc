@@ -415,7 +415,7 @@ let g:unite_source_tag_max_fname_length = 100
 let g:deoplete#enable_at_startup = 0
 
 augroup VimRc
-  autocmd InsertLeave * call deoplete#enable()
+  autocmd InsertEnter * call deoplete#enable()
 augroup END
 
 " }}}
@@ -1256,7 +1256,7 @@ inoremap <CR> <CR>
 inoremap <Tab> <Tab>
 inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
 inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
-imap <C-k><C-i> <C-o>:call deoplete#toggle()<CR>
+imap <expr> <C-k><C-i> deoplete#toggle() ? '' : ''
 
 " vim-visualstar
 vmap g* <Plug>(visualstar-*)Nzz
