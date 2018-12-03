@@ -506,11 +506,13 @@ let g:ale_linters = {
 let g:ale_scala_scalastyle_config = $HOME . '/.dotfiles/scalastyle_config_default.xml'
 
 augroup VimRc
+  autocmd ColorScheme * highlight ALEError ctermbg=gray ctermfg=black
+
   autocmd VimEnter *
-  \  if filereadable('./scalastyle_config.xml') && (input('locally scalastyle_config.xml was found, Do you want to load? (y/n)') == 'y')
-    \| let g:ale_scala_scalastyle_config = execute('pwd')[:-1] . '/scalastyle-config.xml'
-    \| echomsg 'a scalastyle config loaded: ' . g:ale_scala_scalastyle_config
-  \| endif
+    \  if filereadable('./scalastyle_config.xml') && (input('locally scalastyle_config.xml was found, Do you want to load? (y/n)') == 'y')
+      \| let g:ale_scala_scalastyle_config = execute('pwd')[:-1] . '/scalastyle-config.xml'
+      \| echomsg 'a scalastyle config loaded: ' . g:ale_scala_scalastyle_config
+    \| endif
 augroup END
 
 " }}}
@@ -1320,7 +1322,7 @@ nnoremap <silent> <leader>gC :<C-u>GCommitAmmend<CR>
 nnoremap <silent> <leader>ga :<C-u>GAddPatch<CR>
 nnoremap <silent> <leader>gl :<C-u>GLog<CR>
 nnoremap <silent> <leader>gL :<C-u>GLogPatch<CR>
-nnoremap <silent> <leader>go :<C-u>GLogOneline<CR>
+nnoremap <silent> <leader>go :<C-u>GLogOneline --pretty='%h %ad %s' --date='format:%Y-%m-%d %H:%M'<CR>
 nnoremap <silent> <leader>gd :<C-u>GDiff<CR>
 nnoremap <silent> <leader>gb :<C-u>GBrahcnAll<CR>
 nnoremap <silent> <leader>gt :<C-u>GLogTree<CR>
