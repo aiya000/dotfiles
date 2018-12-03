@@ -64,13 +64,6 @@ augroup END
 "---------"
 " Override vimrc {{{
 
-" Disable keymappings of neocomplete, use deoplete.nvim instead in neovim
-inoremap <CR> <CR>
-inoremap <Tab> <Tab>
-inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
-inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
-imap <C-k><C-i> <C-o>:call deoplete#toggle()<CR>
-
 " Disable keymappings of vim-over, use 'inccommand' instead in neovim
 nunmap :%s/
 nunmap :s/

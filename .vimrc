@@ -5,17 +5,17 @@
 
 " Open in preference to an entity
 let $MYVIMRC = filereadable(expand('~/.dotfiles/.vimrc'))
-\    ? expand('~/.dotfiles/.vimrc')
-\    : $MYVIMRC
+  \ ? expand('~/.dotfiles/.vimrc')
+  \ : $MYVIMRC
 
 let $MYGVIMRC = filereadable(expand('~/.dotfiles/.gvimrc'))
-\    ? expand('~/.dotfiles/.gvimrc')
-\    : $MYGVIMRC
+  \ ? expand('~/.dotfiles/.gvimrc')
+  \ : $MYGVIMRC
 
 let g:vimrc = get(g:, 'vimrc', {
-\    'loaded'   : 0,
-\    'vim_home' : expand('~/.vim')
-\})
+  \ 'loaded'   : 0,
+  \ 'vim_home' : expand('~/.vim')
+\ })
 
 " Global values for local plugins
 let g:vimrc['is_windows'] = get(g:vimrc, 'is_windows', has('win32'))
@@ -43,7 +43,7 @@ let s:sessiondir = s:backupdir . '/session'
 
 " Set default file encoding
 if !g:vimrc['loaded']
-    set fileencoding=utf-8 encoding=utf-8
+  set fileencoding=utf-8 encoding=utf-8
 endif
 
 " Specify encoding for this file
@@ -53,48 +53,48 @@ scriptencoding utf-8
 " Declare autocmd groups {{{
 
 augroup VimRc
-    autocmd!
+  autocmd!
 augroup END
 
 " }}}
 " Build environment for Kaoriya Vim {{{
 
 if g:vimrc['is_kaoriya'] && g:vimrc['is_windows']
-    " Set environments
-    let $HOME               = $VIM
-    let $PATH               = $HOME . '/bin;' . $PATH
-    let g:vimrc['vim_home'] = substitute($VIM, '\', '/', 'g') . '/vimfiles'
-    let &runtimepath        = &runtimepath . ',' . g:vimrc['vim_home']
+  " Set environments
+  let $HOME               = $VIM
+  let $PATH               = $HOME . '/bin;' . $PATH
+  let g:vimrc['vim_home'] = substitute($VIM, '\', '/', 'g') . '/vimfiles'
+  let &runtimepath        = &runtimepath . ',' . g:vimrc['vim_home']
 
-    " Use cygwin's commands
-    if g:vimrc['has_cygwin']
-        let $PATH = '/cygwin/bin;/cygwin/usr/bin;/cygwin/usr/sbin;' . $PATH
+  " Use cygwin's commands
+  if g:vimrc['has_cygwin']
+    let $PATH = '/cygwin/bin;/cygwin/usr/bin;/cygwin/usr/sbin;' . $PATH
+  endif
+
+  " Make base directories
+  "TODO: tmp for windows 10 env (over symlink)
+  if !filereadable(g:vimrc['vim_home'] . '/init.vim')  "!isdirectory(g:vimrc['vim_home'])
+    call mkdir(g:vimrc['vim_home'])
+  endif
+
+  " Enable kaoriya plugins
+  let s:kaoriya_switch_dir = $VIM . '/switches/enabled/'
+  for s:kaoriya_plugin_flag in map(['utf-8.vim', 'vimdoc-ja.vim', 'vimproc.vim'], 's:kaoriya_switch_dir . v:val')
+    if !filereadable(s:kaoriya_plugin_flag)
+      call writefile([], s:kaoriya_plugin_flag)
     endif
+  endfor
+  unlet s:kaoriya_switch_dir s:kaoriya_plugin_flag
 
-    " Make base directories
-    "TODO: tmp for windows 10 env (over symlink)
-    if !filereadable(g:vimrc['vim_home'] . '/init.vim')  "!isdirectory(g:vimrc['vim_home'])
-        call mkdir(g:vimrc['vim_home'])
-    endif
+  " Unset kaoriya default preference
+  set noignorecase nosmartcase
 
-    " Enable kaoriya plugins
-    let s:kaoriya_switch_dir = $VIM . '/switches/enabled/'
-    for s:kaoriya_plugin_flag in map(['utf-8.vim', 'vimdoc-ja.vim', 'vimproc.vim'], 's:kaoriya_switch_dir . v:val')
-        if !filereadable(s:kaoriya_plugin_flag)
-            call writefile([], s:kaoriya_plugin_flag)
-        endif
-    endfor
-    unlet s:kaoriya_switch_dir s:kaoriya_plugin_flag
+  " Disable plugins/kaoriya/plugin/{cmdex,scrnmode}.vim
+  let g:plugin_cmdex_disable    = 1
+  let g:plugin_scrnmode_disable = 1
 
-    " Unset kaoriya default preference
-    set noignorecase nosmartcase
-
-    " Disable plugins/kaoriya/plugin/{cmdex,scrnmode}.vim
-    let g:plugin_cmdex_disable    = 1
-    let g:plugin_scrnmode_disable = 1
-
-    " You must open the vimrc by the utf-8
-    autocmd FileEvent BufRead $MYVIMRC setl enc=utf8 fenc=utf8
+  " You must open the vimrc by the utf-8
+  autocmd FileEvent BufRead $MYVIMRC setl enc=utf8 fenc=utf8
 endif
 
 " }}}
@@ -105,26 +105,26 @@ let s:dein_dirname = g:vimrc['vim_home'] . '/bundle/repos/github.com/Shougo/dein
 let &runtimepath   = &runtimepath . ',' . s:dein_dirname
 
 try
-    call dein#begin(expand('~/.vim/bundle'))
+  call dein#begin(expand('~/.vim/bundle'))
 catch /E117/  " If dein.vim is not found
-    try
-        call vimrc#fetch_dein(s:dein_dirname)
-        call dein#begin(expand('~/.vim/bundle'))
-        echo 'dein.vim installation was completed.'
-        echo 'Please execute :call dein#install(),'
-        echo 'and restart your vim.'
-    catch /FALIED/
-        call vimrc#echo_error('cloning or starting dein.vim failed.')
-        call vimrc#echo_error('>> Error build vim environment <<')
-    endtry
+  try
+    call vimrc#fetch_dein(s:dein_dirname)
+    call dein#begin(expand('~/.vim/bundle'))
+    echo 'dein.vim installation was completed.'
+    echo 'Please execute :call dein#install(),'
+    echo 'and restart your vim.'
+  catch /FALIED/
+    call vimrc#echo_error('cloning or starting dein.vim failed.')
+    call vimrc#echo_error('>> Error build vim environment <<')
+  endtry
 endtry
 
 " Copy the dein.vim document
 let s:dein_doc_from = s:dein_dirname . '/doc/dein.txt'
 let s:dein_doc_to   = g:vimrc['vim_home'] . '/doc/dein.txt'
 if filereadable(s:dein_doc_from) && !filereadable(s:dein_doc_to)
-    " ~/.vim/doc will be :helptags automatically
-    call writefile(readfile(s:dein_doc_from), s:dein_doc_to)
+  " ~/.vim/doc will be :helptags automatically
+  call writefile(readfile(s:dein_doc_from), s:dein_doc_to)
 endif
 unlet s:dein_doc_from s:dein_doc_to
 
@@ -134,18 +134,18 @@ unlet s:dein_dirname
 " Check backup directories {{{
 
 if !isdirectory(s:directory)
-    call mkdir(s:directory, 'p', 0700)
-    call system(printf('chown -R %s:%s %s', $USER, $GROUP, s:directory))
+  call mkdir(s:directory, 'p', 0700)
+  call system(printf('chown -R %s:%s %s', $USER, $GROUP, s:directory))
 endif
 
 if !isdirectory(s:undodir)
-    call mkdir(s:undodir, '', 0700)
-    call system(printf('chown -R %s:%s %s', $USER, $GROUP, s:undodir))
+  call mkdir(s:undodir, '', 0700)
+  call system(printf('chown -R %s:%s %s', $USER, $GROUP, s:undodir))
 endif
 
 if !isdirectory(s:sessiondir)
-    call mkdir(s:sessiondir, '', 0700)
-    call system(printf('chown -R %s:%s %s', $USER, $GROUP, s:sessiondir))
+  call mkdir(s:sessiondir, '', 0700)
+  call system(printf('chown -R %s:%s %s', $USER, $GROUP, s:sessiondir))
 endif
 
 " }}}
@@ -160,8 +160,8 @@ call dein#load_toml('~/.vim/dein.toml',      {'lazy': 0})
 call dein#load_toml('~/.vim/dein_lazy.toml', {'lazy': 1})
 
 if has('nvim')
-    call dein#load_toml('~/.vim/dein-neovim.toml',      {'lazy': 0})
-    call dein#load_toml('~/.vim/dein_lazy-neovim.toml', {'lazy': 1})
+  call dein#load_toml('~/.vim/dein-neovim.toml',      {'lazy': 0})
+  call dein#load_toml('~/.vim/dein_lazy-neovim.toml', {'lazy': 1})
 endif
 
 call dein#add('Shougo/dein.vim', {'rtp': ''})
@@ -176,11 +176,11 @@ call dein#add('Shougo/dein.vim', {'rtp': ''})
 "NOTE: This section must be put at between dein#begin() and dein#end()
 
 if filereadable(expand('~/.vimrc_private'))
-    source ~/.vimrc_private
+  source ~/.vimrc_private
 endif
 
 if filereadable(expand('~/.vimrc_env'))
-    source ~/.vimrc_env
+  source ~/.vimrc_env
 endif
 
 " }}}
@@ -207,111 +207,111 @@ let g:quickrun_no_default_key_mappings = 0
 
 " For *nix environments
 let g:quickrun_config = {
-    \ '_': {
-        \ 'split': '',
-        \ 'runner': 'system',
-        \ 'runner/vimproc/updatetime': 10,
-        \ 'hook/time/enable': 1,
-        \ 'outputter': 'error',
-        \ 'outputter/error/error': 'quickfix',
-        \ 'outputter/error/success': 'buffer',
-    \ },
-    \ 'cpp': {
-        \ 'cmdopt': '-std=c++17',
-    \ },
-    \ 'java': {
-        \ 'cmdopt': '-encoding UTF-8 -source 1.8',
-    \ },
-    \ 'cs': {
-        \ 'command': 'mcs',
-    \ },
-    \ 'vimspec': {
-        \ 'command' : 'themis',
-        \ 'cmdopt'  : '--runtimepath ".."',
-        \ 'exec'    : '%c %o %s:p | tr -d "\r"',
-        \ 'tempfile':  printf('%s/{tempname()}.vimspec', $TMP),
-    \ },
-    \ 'html': {
-        \ 'command': 'xdg-open',
-        \ 'outputter': 'null',
-        \ 'exec'     : '%c %s:p',
-    \ },
-    \ 'tex': {
-        \ 'command': 'ptex2pdf',
-        \ 'cmdopt' : '-l',
-        \ 'exec'   : '%c %o %s:r',
-    \ },
-    \ 'clojure': {
-        \ 'command': 'lein',
-        \ 'cmdopt' : 'exec',
-    \ },
-    \ 'swift': {
-        \ 'command': 'swift',
-    \ },
-    \ 'scala': {
-        \ 'cmdopt': '-feature'
-    \ },
-    \ 'brainfuck': {
-        \ 'command': 'brainfuck'
-    \ },
-    \ 'nico': {
-        \ 'command': 'nicorun'
-    \ },
-    \ 'haskell': {
-        \ 'cmdopt': '--ghc-arg=-fprint-explicit-kinds',
-        \ 'command': 'stack',
-        \ 'exec': '%c exec runghc -- %o %s',
-        \ 'runner': 'vimproc',
-    \ },
-    \ 'lhaskell': {
-        \ 'command': 'stack exec runghc',
-        \ 'exec': ['grep "^>.*$" %s | sed -r "s/^>//g" > %s:p:r.hs', '%c %o %s:p:r.hs'],
-        \ 'tempfile': '%{tempname()}.lhs',
-        \ 'hook/sweep/files': '%S:p:r.hs',
-    \ },
-    \ 'stack_test': {
-        \ 'command': 'stack',
-        \ 'cmdopt': 'test',
-        \ 'exec': '%c %o',
-        \ 'runner': 'vimproc',
-        \ 'outputter': 'quickfix',
-    \ },
-    \ 'stack_build': {
-        \ 'type': 'stack_test',
-        \ 'cmdopt': 'build',
-    \ },
-    \ 'eta': {
-        \ 'runner': 'vimproc',
-    \ },
-    \ 'etlas_build': {
-        \ 'command': 'etlas',
-        \ 'cmdopt': 'build',
-        \ 'exec': '%c %o',
-        \ 'runner': 'vimproc',
-        \ 'outputter': 'quickfix',
-    \ },
-    \ 'elm': {
-        \ 'runner': 'vimproc',
-        \ 'command': 'elm-make',
-        \ 'cmdopt': '--warn',
-        \ 'exec': ['%c %s %o --output /tmp/vim-quickrun-elm.html', 'xdg-open /tmp/vim-quickrun-elm.html'],
-        \ 'tempfile': '%{tempname()}.elm',
-    \ },
-    \ 'idris': {
-        \ 'cmdopt': '-p base -p prelude -p effects -p contrib',
-    \ },
-    \ 'happy': {
-        \ 'runner': 'vimproc',
-        \ 'exec': ['happy %s', 'stack runghc %s:p:r.hs'],
-        \ 'hook/sweep/files': '%S:p:r.hs',
-    \ }
-\}
+  \ '_': {
+    \ 'split': '',
+    \ 'runner': 'system',
+    \ 'runner/vimproc/updatetime': 10,
+    \ 'hook/time/enable': 1,
+    \ 'outputter': 'error',
+    \ 'outputter/error/error': 'quickfix',
+    \ 'outputter/error/success': 'buffer',
+  \ },
+  \ 'cpp': {
+    \ 'cmdopt': '-std=c++17',
+  \ },
+  \ 'java': {
+    \ 'cmdopt': '-encoding UTF-8 -source 1.8',
+  \ },
+  \ 'cs': {
+    \ 'command': 'mcs',
+  \ },
+  \ 'vimspec': {
+    \ 'command' : 'themis',
+    \ 'cmdopt'  : '--runtimepath ".."',
+    \ 'exec'    : '%c %o %s:p | tr -d "\r"',
+    \ 'tempfile':  printf('%s/{tempname()}.vimspec', $TMP),
+  \ },
+  \ 'html': {
+    \ 'command': 'xdg-open',
+    \ 'outputter': 'null',
+    \ 'exec'     : '%c %s:p',
+  \ },
+  \ 'tex': {
+    \ 'command': 'ptex2pdf',
+    \ 'cmdopt' : '-l',
+    \ 'exec'   : '%c %o %s:r',
+  \ },
+  \ 'clojure': {
+    \ 'command': 'lein',
+    \ 'cmdopt' : 'exec',
+  \ },
+  \ 'swift': {
+    \ 'command': 'swift',
+  \ },
+  \ 'scala': {
+    \ 'cmdopt': '-feature'
+  \ },
+  \ 'brainfuck': {
+    \ 'command': 'brainfuck'
+  \ },
+  \ 'nico': {
+    \ 'command': 'nicorun'
+  \ },
+  \ 'haskell': {
+    \ 'cmdopt': '--ghc-arg=-fprint-explicit-kinds',
+    \ 'command': 'stack',
+    \ 'exec': '%c exec runghc -- %o %s',
+    \ 'runner': 'vimproc',
+  \ },
+  \ 'lhaskell': {
+    \ 'command': 'stack exec runghc',
+    \ 'exec': ['grep "^>.*$" %s | sed -r "s/^>//g" > %s:p:r.hs', '%c %o %s:p:r.hs'],
+    \ 'tempfile': '%{tempname()}.lhs',
+    \ 'hook/sweep/files': '%S:p:r.hs',
+  \ },
+  \ 'stack_test': {
+    \ 'command': 'stack',
+    \ 'cmdopt': 'test',
+    \ 'exec': '%c %o',
+    \ 'runner': 'vimproc',
+    \ 'outputter': 'quickfix',
+  \ },
+  \ 'stack_build': {
+    \ 'type': 'stack_test',
+    \ 'cmdopt': 'build',
+  \ },
+  \ 'eta': {
+    \ 'runner': 'vimproc',
+  \ },
+  \ 'etlas_build': {
+    \ 'command': 'etlas',
+    \ 'cmdopt': 'build',
+    \ 'exec': '%c %o',
+    \ 'runner': 'vimproc',
+    \ 'outputter': 'quickfix',
+  \ },
+  \ 'elm': {
+    \ 'runner': 'vimproc',
+    \ 'command': 'elm-make',
+    \ 'cmdopt': '--warn',
+    \ 'exec': ['%c %s %o --output /tmp/vim-quickrun-elm.html', 'xdg-open /tmp/vim-quickrun-elm.html'],
+    \ 'tempfile': '%{tempname()}.elm',
+  \ },
+  \ 'idris': {
+    \ 'cmdopt': '-p base -p prelude -p effects -p contrib',
+  \ },
+  \ 'happy': {
+    \ 'runner': 'vimproc',
+    \ 'exec': ['happy %s', 'stack runghc %s:p:r.hs'],
+    \ 'hook/sweep/files': '%S:p:r.hs',
+  \ }
+\ }
 
 " Append config of each environment
 if g:vimrc['is_windows']
-    call vimrc#plugins#append_config_quickrun_windows()
+  call vimrc#plugins#append_config_quickrun_windows()
 elseif g:vimrc['is_cygwin']
-    call vimrc#plugins#append_config_quickrun_cygwin()
+  call vimrc#plugins#append_config_quickrun_cygwin()
 endif
 
 " }}}
@@ -327,10 +327,10 @@ let g:tweetvim_config_dir = expand('~/.tweetvim')
 " --- vimshell.vim --- {{{
 
 let g:vimshell_no_save_history_commands = {
-\    'history': 1,
-\    'ls'     : 1,
-\    'clear'  : 1
-\}
+  \ 'history': 1,
+  \ 'ls'     : 1,
+  \ 'clear'  : 1
+\ }
 let g:vimshell_enable_transient_user_prompt = 1
 let g:vimshell_max_command_history          = 10000
 let g:vimshell_scrollback_limit             = 10000
@@ -344,12 +344,6 @@ let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+% '
 let g:vimshell_hereis_alias_prefix = 'p_'
 
 " }}}
-" --- vimshell-kawaii.vim --- {{{
-
-" Her face is very useful
-let g:vimshell_kawaii_smiley = 1
-
-" }}}
 " --- foldCC --- {{{
 
 let g:foldCCtext_maxchars = 120
@@ -360,15 +354,15 @@ let g:foldCCtext_maxchars = 120
 let g:submode_timeout = 0
 
 function! s:vim_submode_on_source()
-    call submode#enter_with('window_resize', 'n', '', '<C-s>w')
-    call submode#map('window_resize', 'n', '', 'j', '3<C-w>+')
-    call submode#map('window_resize', 'n', '', 'k', '3<C-w>-')
-    call submode#map('window_resize', 'n', '', 'h', '3<C-w><')
-    call submode#map('window_resize', 'n', '', 'l', '3<C-w>>')
+  call submode#enter_with('window_resize', 'n', '', '<C-s>w')
+  call submode#map('window_resize', 'n', '', 'j', '3<C-w>+')
+  call submode#map('window_resize', 'n', '', 'k', '3<C-w>-')
+  call submode#map('window_resize', 'n', '', 'h', '3<C-w><')
+  call submode#map('window_resize', 'n', '', 'l', '3<C-w>>')
 
-    call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
-    call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
-    call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
+  call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
+  call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
+  call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
 endfunction
 
 call dein#set_hook('vim-submode', 'hook_source', function('s:vim_submode_on_source'))
@@ -378,18 +372,6 @@ call dein#set_hook('vim-submode', 'hook_source', function('s:vim_submode_on_sour
 
 " vimdoc-ja is secondary order
 set helplang=en,ja
-
-" }}}
-" --- TaskList.vim --- {{{
-
-" TaskList finds these line
-let g:tlTokenList = ['TODO', 'FIXME', 'XXX']
-
-" Show the window at bottom
-let g:tlWindowPosition = 1
-
-" Save current position when TaskList is closed
-let g:tlRememberPosition = 1
 
 " }}}
 " --- vim-colors-solarized --- {{{
@@ -421,17 +403,6 @@ let g:vimconsole#no_default_key_mappings = 1
 let g:textobj_indent_no_default_key_mappings = 1
 
 " }}}
-" --- neocomplete.vim --- {{{
-
-let g:neocomplete#enable_at_startup = 1
-
-" neocomplete is disabled in
-let g:neocomplete#sources = {
-\    'int-ghci'  : [],
-\    'int-stack' : []
-\}
-
-" }}}
 " --- unite-tag --- {{{
 
 " Fully showing name
@@ -444,7 +415,7 @@ let g:unite_source_tag_max_fname_length = 100
 let g:deoplete#enable_at_startup = 0
 
 augroup VimRc
-    autocmd InsertLeave * call deoplete#enable()
+  autocmd InsertLeave * call deoplete#enable()
 augroup END
 
 " }}}
@@ -463,22 +434,6 @@ let g:submode_window_move['start_window_move_with_move_next'] = '<C-s>N'
 let g:submode_window_move['start_window_move_with_move_prev'] = '<C-s>P'
 
 " }}}
-" --- repl.vim --- {{{
-
-" Use this repl
-let g:repl_filetype_repl = {
-\    'haskell' : {
-\        'repl' : 'stack ghci',
-\        'opt'  : ''
-\    }
-\}
-
-" Set myself
-let g:repl_no_default_keymappings = 1
-" Open by vertical split
-let g:repl_split_command = 'vertical split'
-
-" }}}
 " --- vim-gista --- {{{
 
 " Don't ask description for :Gista post
@@ -486,28 +441,28 @@ let g:gista#command#post#interactive_description = 0
 let g:gista#command#post#allow_empty_description = 1
 
 augroup VimRc
-    autocmd User GistaPost call vimrc#autocmd#yank_gista_posted_url()
+  autocmd User GistaPost call vimrc#autocmd#yank_gista_posted_url()
 augroup END
 
 "}}}
 " --- aref-web.vim --- {{{
 
 let g:aref_web_source = {
-    \ 'weblio': {
-        \ 'url': 'https://ejje.weblio.jp/content/%s',
-    \ },
-    \ 'stackage': {
-        \ 'url': 'https://www.stackage.org/lts-10.9/hoogle?q=%s&page=1',
-    \ },
-    \ 'hoogle': {
-        \ 'url': 'https://www.haskell.org/hoogle/?hoogle=%s',
-    \ },
-    \ 'shellcheck': {
-        \ 'url': 'https://github.com/koalaman/shellcheck/wiki/%s',
-    \ },
-    \ 'elm-search': {
-        \ 'url': 'http://klaftertief.github.io/elm-search/?q=%s',
-    \ },
+  \ 'weblio': {
+    \ 'url': 'https://ejje.weblio.jp/content/%s',
+  \ },
+  \ 'stackage': {
+    \ 'url': 'https://www.stackage.org/lts-10.9/hoogle?q=%s&page=1',
+  \ },
+  \ 'hoogle': {
+    \ 'url': 'https://www.haskell.org/hoogle/?hoogle=%s',
+  \ },
+  \ 'shellcheck': {
+    \ 'url': 'https://github.com/koalaman/shellcheck/wiki/%s',
+  \ },
+  \ 'elm-search': {
+    \ 'url': 'http://klaftertief.github.io/elm-search/?q=%s',
+  \ },
 \ }
 
 let g:aref_web_buffer_opening = 'tabnew'
@@ -541,21 +496,21 @@ let g:textobj_between_no_default_key_mappings = 1
 " --- ale --- {{{
 
 let g:ale_linters = {
-   \ 'haskell': ['hlint', 'stack ghc'],
-   \ 'html': ['htmlhint', 'tidy'],
-   \ 'css': ['csslint', 'stylelint'],
-   \ 'kotlin': ['ktlint'],
-   \ 'java': ['checkstyle', 'google-java-format', 'PMD'],
-\}
+  \ 'haskell': ['hlint', 'stack ghc'],
+  \ 'html': ['htmlhint', 'tidy'],
+  \ 'css': ['csslint', 'stylelint'],
+  \ 'kotlin': ['ktlint'],
+  \ 'java': ['checkstyle', 'google-java-format', 'PMD'],
+\ }
 
 let g:ale_scala_scalastyle_config = $HOME . '/.dotfiles/scalastyle_config_default.xml'
 
 augroup VimRc
-    autocmd VimEnter *
-        \  if filereadable('./scalastyle_config.xml') && (input('locally scalastyle_config.xml was found, Do you want to load? (y/n)') == 'y')
-            \| let g:ale_scala_scalastyle_config = execute('pwd')[:-1] . '/scalastyle-config.xml'
-            \| echomsg 'a scalastyle config loaded: ' . g:ale_scala_scalastyle_config
-        \| endif
+  autocmd VimEnter *
+  \  if filereadable('./scalastyle_config.xml') && (input('locally scalastyle_config.xml was found, Do you want to load? (y/n)') == 'y')
+    \| let g:ale_scala_scalastyle_config = execute('pwd')[:-1] . '/scalastyle-config.xml'
+    \| echomsg 'a scalastyle config loaded: ' . g:ale_scala_scalastyle_config
+  \| endif
 augroup END
 
 " }}}
@@ -603,13 +558,13 @@ call denite#custom#source('file_mru', 'matchers', ['matcher_substring', 'matcher
 let g:neomru#file_mru_ignore_pattern = '^gina://.*'
 
 augroup VimRc
-    autocmd BufEnter,BufWinEnter *
-        \   call denite#custom#var('outline', 'command', ['ctags'])
-        \|  call denite#custom#var('outline', 'options', ['--sort=no'])
-        \|  call denite#custom#var('outline', 'file_opt', '-o')
-    autocmd BufEnter,BufWinEnter *.hs
-        \   call denite#custom#var('outline', 'command', ['hasktags'])
-        \|  call denite#custom#var('outline', 'options', ['--ignore-close-implementation', '--ctags', '-x'])
+  autocmd BufEnter,BufWinEnter *
+    \   call denite#custom#var('outline', 'command', ['ctags'])
+    \|  call denite#custom#var('outline', 'options', ['--sort=no'])
+    \|  call denite#custom#var('outline', 'file_opt', '-o')
+  autocmd BufEnter,BufWinEnter *.hs
+    \   call denite#custom#var('outline', 'command', ['hasktags'])
+    \|  call denite#custom#var('outline', 'options', ['--ignore-close-implementation', '--ctags', '-x'])
 augroup END
 
 " }}}
@@ -631,23 +586,14 @@ let g:textobj_clang_more_mappings = 1
 " --- LanguageClient-neovim --- " {{{
 
 let g:LanguageClient_serverCommands = {
-    \ 'haskell': ['hie', '--lsp'],
-    \ 'javascript': ['language-server-stdio.js'],
-    \ 'typescript': ['language-server-stdio.js'],
-\}
+  \ 'haskell': ['hie', '--lsp'],
+  \ 'javascript': ['language-server-stdio.js'],
+  \ 'typescript': ['language-server-stdio.js'],
+\ }
 
 let g:LanguageClient_diagnosticsEnable = v:false
 
 " Also please see hook_source.vim
-
-" }}}
-" --- vim-espeak --- " {{{
-
-let g:espeak_speed = 100
-let g:espeak_voice = 'en-us'
-"let g:espeak_voice = 'ja'
-
-"autocmd! InsertLeave * execute 'EspeakNgSay' getline('.')
 
 " }}}
 " --- vim-highlightedyank --- " {{{
@@ -661,10 +607,10 @@ let g:fmap_use_default_keymappings = v:false
 let g:fmap_escape_keys = ['', '', '']
 
 augroup VimRc
-    autocmd VimEnter * FNoreMap tt ・
-    autocmd VimEnter * FNoreMap p （
-    autocmd VimEnter * FNoreMap k 「
-    autocmd VimEnter * FNoreMap K 『
+  autocmd VimEnter * FNoreMap tt ・
+  autocmd VimEnter * FNoreMap p （
+  autocmd VimEnter * FNoreMap k 「
+  autocmd VimEnter * FNoreMap K 『
 augroup END
 
 " }}}
@@ -688,41 +634,41 @@ let g:indent_guides_guide_size = 1
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_tab_guides = 0
 let g:indent_guides_exclude_filetypes = [
-   \ 'xml',
-   \ 'html',
-   \ 'xaml',
-   \ 'fxml',
-   \ 'gradle',
-   \ 'csproj',
-   \ 'vimspec',
-   \ 'storyboard',
-   \ 'aref_web',
-   \ 'term-shell',
-   \ 'term-sbt',
-   \ 'gitcommit',
-   \ 'review',
-   \ 'markdown',
-   \ 'haskell',
-   \ 'tweetvim',
-   \ 'tweetvim_say',
-   \ 'help',
-   \ 'man',
-   \ 'elm',
+  \ 'xml',
+  \ 'html',
+  \ 'xaml',
+  \ 'fxml',
+  \ 'gradle',
+  \ 'csproj',
+  \ 'vimspec',
+  \ 'storyboard',
+  \ 'aref_web',
+  \ 'term-shell',
+  \ 'term-sbt',
+  \ 'gitcommit',
+  \ 'review',
+  \ 'markdown',
+  \ 'haskell',
+  \ 'tweetvim',
+  \ 'tweetvim_say',
+  \ 'help',
+  \ 'man',
+  \ 'elm',
 \ ]
 
 " Define colors
 augroup VimRc
-    autocmd VimEnter,ColorScheme * highlight IndentGuidesOdd ctermbg=60 guibg=#468F8C
-    autocmd VimEnter,ColorScheme * highlight IndentGuidesEven ctermbg=60 guibg=#468F8C
+  autocmd VimEnter,ColorScheme * highlight IndentGuidesOdd ctermbg=60 guibg=#468F8C
+  autocmd VimEnter,ColorScheme * highlight IndentGuidesEven ctermbg=60 guibg=#468F8C
 augroup END
 
 augroup VimRc
-    autocmd WinEnter,BufWinEnter *
-        \  if get(g:, 'vimrc#keys#indent_guides_enable', v:true)
-            \| IndentGuidesEnable
-        \| else
-            \| IndentGuidesDisable
-        \| endif
+  autocmd WinEnter,BufWinEnter *
+    \  if get(g:, 'vimrc#keys#indent_guides_enable', v:true)
+      \| IndentGuidesEnable
+    \| else
+      \| IndentGuidesDisable
+    \| endif
 augroup END
 
 " }}}
@@ -732,7 +678,7 @@ let g:lexima_no_default_rules = 1
 
 " Don't it if the cursor is in a word
 call map(g:lexima#default_rules, { _, keymap ->
-    \ lexima#add_rule(extend(keymap, {'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'}))
+  \ lexima#add_rule(extend(keymap, {'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'}))
 \ })
 
 call lexima#add_rule({'char': '「', 'input_after': '」'})
@@ -741,13 +687,13 @@ call lexima#add_rule({'char': '（', 'input_after': '）'})
 call lexima#add_rule({'char': '｛', 'input_after': '｝'})
 
 for deleter in ['<C-h>', '<BS>', '<C-w>']
-    call lexima#add_rule({'char': deleter, 'at': '(\%#)', 'delete': 1})
-    call lexima#add_rule({'char': deleter, 'at': '{\%#}', 'delete': 1})
-    call lexima#add_rule({'char': deleter, 'at': '[\%#]', 'delete': 1})
-    call lexima#add_rule({'char': deleter, 'at': '<\%#>', 'delete': 1})
-    call lexima#add_rule({'char': deleter, 'at': "'\%#'", 'delete': 1})
-    call lexima#add_rule({'char': deleter, 'at': '"\%#"', 'delete': 1})
-    call lexima#add_rule({'char': deleter, 'at': '`\%#`', 'delete': 1})
+  call lexima#add_rule({'char': deleter, 'at': '(\%#)', 'delete': 1})
+  call lexima#add_rule({'char': deleter, 'at': '{\%#}', 'delete': 1})
+  call lexima#add_rule({'char': deleter, 'at': '[\%#]', 'delete': 1})
+  call lexima#add_rule({'char': deleter, 'at': '<\%#>', 'delete': 1})
+  call lexima#add_rule({'char': deleter, 'at': "'\%#'", 'delete': 1})
+  call lexima#add_rule({'char': deleter, 'at': '"\%#"', 'delete': 1})
+  call lexima#add_rule({'char': deleter, 'at': '`\%#`', 'delete': 1})
 endfor
 
 call lexima#add_rule({'filetype': 'kotlin', 'char': '<', 'input_after': '>', 'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'})
@@ -758,7 +704,7 @@ call lexima#add_rule({'filetype': 'typescript', 'char': '<', 'input_after': '>',
 
 let g:gina#command#blame#formatter#format = '%su%=on %ti by %au %ma%in'
 
-" }}
+" }}}
 
 call dein#end()
 
@@ -784,17 +730,18 @@ set browsedir=buffer spelllang=en_US,cjk suffixes=
 set hidden
 
 if !has('nvim')
-    set termkey=<C-z>
+  set termkey=<C-z>
 endif
 
 " See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer)
-let &statusline = '%1*[%F(%n)]%*'
-    \           . '%2*[FT=%y]%*'
-    \           . '[%l,%v]'
-    \           . '[Fenc=%{&fileencoding}]'
-    \           . '[Enc=%{&encoding}]'
-    \           . '%3*%m%*'
-    \           . '%4*%r%*'
+let &statusline =
+  \ '%1*[%F(%n)]%*' .
+  \ '%2*[FT=%y]%*' .
+  \ '[%l,%v]' .
+  \ '[Fenc=%{&fileencoding}]' .
+  \ '[Enc=%{&encoding}]' .
+  \ '%3*%m%*' .
+  \ '%4*%r%*'
 
 " ☆
 set ambiwidth=double
@@ -803,23 +750,23 @@ set ambiwidth=double
 " {{{
 
 augroup VimRc
-    autocmd ColorScheme * highlight RcEmSpace ctermbg=LightBlue
-    autocmd VimEnter,WinEnter * call matchadd('RcEmSpace', '　')
-    " git conflicts
-    autocmd ColorScheme * call matchadd('Error', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
+  autocmd ColorScheme * highlight RcEmSpace ctermbg=LightBlue
+  autocmd VimEnter,WinEnter * call matchadd('RcEmSpace', '　')
+  " git conflictions
+  autocmd ColorScheme * call matchadd('Error', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
 augroup END
 
 augroup VimRc
-    autocmd InsertEnter * highlight StatusLine ctermfg=231 ctermbg=64
-    autocmd InsertLeave * highlight StatusLine ctermfg=231 ctermbg=60
+  autocmd InsertEnter * highlight StatusLine ctermfg=231 ctermbg=64
+  autocmd InsertLeave * highlight StatusLine ctermfg=231 ctermbg=60
 augroup END
 
 " }}}
 
 " Set the colorscheme, but it is set only once
 if !g:vimrc['loaded']
-    set background=dark
-    colorscheme lucariox
+  set background=dark
+  colorscheme lucariox
 endif
 
 " Tabline is always shown
@@ -857,17 +804,17 @@ let g:tex_flavor = 'latex'
 
 " Reference tags of ctags
 let &tags = &tags . ',' . join([
-    \ 'tags',
-    \ '.git/tags',
-    \ '../tags',
-    \ '../../tags',
-    \ '../../../tags',
-    \ '../../../../tags',
-    \ '../.git/tags',
-    \ '../../.git/tags',
-    \ '../../../.git/tags',
-    \ '../../../../.git/tags'
-\], ',')
+  \ 'tags',
+  \ '.git/tags',
+  \ '../tags',
+  \ '../../tags',
+  \ '../../../tags',
+  \ '../../../../tags',
+  \ '../.git/tags',
+  \ '../../.git/tags',
+  \ '../../../.git/tags',
+  \ '../../../../.git/tags'
+\ ], ',')
 
 let lhs_markup = 'none'
 
@@ -880,30 +827,30 @@ let lhs_markup = 'none'
 " {{{
 
 augroup VimRc
-    " Auto set cursor position in the file
-    autocmd BufReadPost * call vimrc#autocmd#visit_past_position()
+  " Auto set cursor position in the file
+  autocmd BufReadPost * call vimrc#autocmd#visit_past_position()
 
-    " Auto load filetype dictionary
-    autocmd FileType *
-        \  if filereadable(printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype))
-        \|      execute 'setl dict+=' . printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype)
-        \| endif
+  " Auto load filetype dictionary
+  autocmd FileType *
+    \  if filereadable(printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype))
+      \| execute 'setl dict+=' . printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype)
+    \| endif
 
-    " RelativeNumber is used current window only
-    autocmd BufEnter,WinEnter * if &number | setl relativenumber | end
-    autocmd BufLeave,Winleave * setl norelativenumber
+  " RelativeNumber is used current window only
+  autocmd BufEnter,WinEnter * if &number | setl relativenumber | end
+  autocmd BufLeave,Winleave * setl norelativenumber
 
-    autocmd InsertEnter * call vimrc#autocmd#enable_input_completion()
+  autocmd InsertEnter * call vimrc#autocmd#enable_input_completion()
 
-    " Hide relativenumber when OverCommandLine entered
-    autocmd User OverCmdLineEnter setl norelativenumber
-    autocmd User OverCmdLineLeave if &number | setl relativenumber | end
+  " Hide relativenumber when OverCommandLine entered
+  autocmd User OverCmdLineEnter setl norelativenumber
+  autocmd User OverCmdLineLeave if &number | setl relativenumber | end
 
-    " Set the 'none' filetype to the empty filetype
-    autocmd VimEnter,BufNew * if empty(&ft) | setf none | endif
+  " Set the 'none' filetype to the empty filetype
+  autocmd VimEnter,BufNew * if empty(&ft) | setf none | endif
 
-    "NOTE: Remove this after the auto indent bug is fixed
-    autocmd FileType int-* set indentkeys-=:
+  "NOTE: Remove this after the auto indent bug is fixed
+  autocmd FileType int-* set indentkeys-=:
 augroup END
 
 " }}}
@@ -991,22 +938,22 @@ nnoremap <silent> <leader>b :<C-u>NewOverridden \| resize 5 \| setl buftype=nofi
 nnoremap <silent> <leader>B :<C-u>sp ~/.backup/vim-memo.md<CR>
 nnoremap <silent> <leader><leader>q :<C-u>call vimrc#keys#bufclose_filetype(<C-r>=string(g:vimrc.auto_closing_filetypes)<CR>)<CR>
 let g:vimrc.auto_closing_filetypes = [
-    \ 'aref_web',
-    \ 'diff',
-    \ 'gina-branch',
-    \ 'gina-log',
-    \ 'gina-status',
-    \ 'gitdiffviewer',
-    \ 'gitlogviewer',
-    \ 'gitreflogviewer',
-    \ 'gitshowviewer',
-    \ 'help',
-    \ 'man',
-    \ 'netrw',
-    \ 'qf',
-    \ 'quickrun',
-    \ 'scratch',
-\]
+  \ 'aref_web',
+  \ 'diff',
+  \ 'gina-branch',
+  \ 'gina-log',
+  \ 'gina-status',
+  \ 'gitdiffviewer',
+  \ 'gitlogviewer',
+  \ 'gitreflogviewer',
+  \ 'gitshowviewer',
+  \ 'help',
+  \ 'man',
+  \ 'netrw',
+  \ 'qf',
+  \ 'quickrun',
+  \ 'scratch',
+\ ]
 nnoremap <silent> <C-k><C-o> :<C-u>EditOverridden %<CR>
 nnoremap <silent> <C-k>o :<C-u>EditOverridden! %<CR>
 
@@ -1115,7 +1062,7 @@ nnoremap gs <NOP>
 "" Visual a last pasted range
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
-" }}}
+  " }}}
 " insert mode {{{
 
 " set
@@ -1304,12 +1251,12 @@ nnoremap <silent> <leader>U :<C-u>UndotreeToggle<CR>
 " vim-indent-guides
 nnoremap <silent> <C-h><C-i> :<C-u>call vimrc#keys#toggle_indent_guides()<CR>
 
-" neocomplete.vim
-inoremap <silent> <C-k><C-i> <C-o>:NeoCompleteToggle<CR>
-inoremap <expr>   <CR>  neocomplete#close_popup()  . '<CR>'
-inoremap <expr>   <Tab> neocomplete#close_popup()  . '<Tab>'
-inoremap <expr>   <C-y> neocomplete#cancel_popup() . '<C-y>'
-inoremap <expr>   <C-e> neocomplete#cancel_popup() . '<C-e>'
+" deoplete.nvim
+inoremap <CR> <CR>
+inoremap <Tab> <Tab>
+inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
+inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
+imap <C-k><C-i> <C-o>:call deoplete#toggle()<CR>
 
 " vim-visualstar
 vmap g* <Plug>(visualstar-*)Nzz
@@ -1456,29 +1403,29 @@ omap 'T <Plug>(fmap-backword-T)
 " filetypes {{{
 
 augroup VimRc
-    autocmd FileType int-* nnoremap <buffer> q          <NOP>
-    autocmd FileType int-* nnoremap <buffer> <C-n>      gt
-    autocmd FileType int-* nnoremap <buffer> <C-p>      gT
-    autocmd FileType int-* nnoremap <buffer> <C-l>      <NOP>
+  autocmd FileType int-* nnoremap <buffer> q          <NOP>
+  autocmd FileType int-* nnoremap <buffer> <C-n>      gt
+  autocmd FileType int-* nnoremap <buffer> <C-p>      gT
+  autocmd FileType int-* nnoremap <buffer> <C-l>      <NOP>
 
-    autocmd FileType int-* nmap     <buffer> <C-]>      <Plug>(vimshell_int_clear)
-    autocmd FileType int-* nmap     <buffer> Q          <Plug>(vimshell_int_exit)
-    autocmd FileType int-* nmap     <buffer> gJ         <Plug>(vimshell_int_next_prompt)
-    autocmd FileType int-* nmap     <buffer> gK         <Plug>(vimshell_int_previous_prompt)
+  autocmd FileType int-* nmap     <buffer> <C-]>      <Plug>(vimshell_int_clear)
+  autocmd FileType int-* nmap     <buffer> Q          <Plug>(vimshell_int_exit)
+  autocmd FileType int-* nmap     <buffer> gJ         <Plug>(vimshell_int_next_prompt)
+  autocmd FileType int-* nmap     <buffer> gK         <Plug>(vimshell_int_previous_prompt)
 
-    autocmd FileType int-* inoremap <buffer> <C-l>      <Esc>
-    autocmd FileType int-* inoremap <buffer> <C-b>      <Left>
-    autocmd FileType int-* inoremap <buffer> <C-f>      <Right>
-    autocmd FileType int-* inoremap <buffer> <C-e>      <End>
-    autocmd FileType int-* inoremap <buffer> <C-d>      <Del>
-    autocmd FileType int-* inoremap <buffer> <C-n>      <Tab>
+  autocmd FileType int-* inoremap <buffer> <C-l>      <Esc>
+  autocmd FileType int-* inoremap <buffer> <C-b>      <Left>
+  autocmd FileType int-* inoremap <buffer> <C-f>      <Right>
+  autocmd FileType int-* inoremap <buffer> <C-e>      <End>
+  autocmd FileType int-* inoremap <buffer> <C-d>      <Del>
+  autocmd FileType int-* inoremap <buffer> <C-n>      <Tab>
 
-    autocmd FileType int-* imap     <buffer> <C-p>      <Plug>(vimshell_int_history_unite)
-    autocmd FileType int-* imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
-    autocmd FileType int-* imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
-    autocmd FileType int-* imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
+  autocmd FileType int-* imap     <buffer> <C-p>      <Plug>(vimshell_int_history_unite)
+  autocmd FileType int-* imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
+  autocmd FileType int-* imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
+  autocmd FileType int-* imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
 
-    autocmd FileType ref-* nnoremap <silent><buffer> Q :<C-u>quit<CR>
+  autocmd FileType ref-* nnoremap <silent><buffer> Q :<C-u>quit<CR>
 augroup END
 
 " }}}
@@ -1491,7 +1438,7 @@ augroup END
 
 " Generate the help tags
 if isdirectory(g:vimrc['vim_home'] . '/doc')
-    execute 'helptags' (g:vimrc['vim_home'] . '/doc')
+  execute 'helptags' (g:vimrc['vim_home'] . '/doc')
 endif
 
 nohlsearch

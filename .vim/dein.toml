@@ -58,14 +58,8 @@ repo = 'kana/vim-textobj-user'
 repo = 'kana/vim-operator-user'
 
 [[plugins]]
-repo = 'Shougo/neocomplete.vim'
-rev  = '9617d82'
-if   = '!has("nvim")'
-
-[[plugins]]
 repo = 'Shougo/deoplete.nvim'
 rev  = 'acae373'
-if   = 'has("nvim")'
 
 [[plugins]]
 repo    = 'tsukkee/unite-tag'
