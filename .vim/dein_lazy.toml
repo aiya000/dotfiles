@@ -370,3 +370,7 @@ on_ft = [
     'scala',
     'haskell',
 ]
+
+[[plugins]]
+repo  = 'rhysd/vim-gfm-syntax'
+on_ft = ['markdown']

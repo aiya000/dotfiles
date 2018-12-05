@@ -911,13 +911,6 @@ CmdCnoreabbr ReverseLines OperatorReverseLines
 "--------------------"
 " Define keymappings "
 "--------------------"
-" virtual keymappings {{{
-
-cnoremap [Left] <Left>
-nnoremap <silent> [ale-previous] :<C-u>ALEPrevious<CR>
-nnoremap <silent> [ale-next] :<C-u>ALENext<CR>
-
-" }}}
 " normal mode {{{
 
 " Allow keymaps like <C-c>{foo}, and {bar}<C-c>
@@ -936,6 +929,8 @@ nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
 nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
 
 " open/close
+nnoremap <silent> <C-k><C-o> :<C-u>EditOverridden %<CR>
+nnoremap <silent> <C-k>o :<C-u>EditOverridden! %<CR>
 nnoremap <silent> <leader>b :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=markdown \| setl syntax=<CR>
 nnoremap <silent> <leader>B :<C-u>sp ~/.backup/vim-memo.md<CR>
 nnoremap <silent> <leader><leader>q :<C-u>call vimrc#keys#bufclose_filetype(<C-r>=string(g:vimrc.auto_closing_filetypes)<CR>)<CR>
@@ -956,8 +951,6 @@ let g:vimrc.auto_closing_filetypes = [
   \ 'quickrun',
   \ 'scratch',
 \ ]
-nnoremap <silent> <C-k><C-o> :<C-u>EditOverridden %<CR>
-nnoremap <silent> <C-k>o :<C-u>EditOverridden! %<CR>
 
 " folds
 nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
@@ -1088,7 +1081,7 @@ inoremap <silent><expr> <C-b> vimrc#keys#get_webpage_title()
 " }}}
 " command-line mode {{{
 
-cmap <C-]> \m\C\<\>[Left][Left]
+cmap <C-]> \m\C\<\><Left><Left>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
 cnoremap <C-a> <Home>
@@ -1298,8 +1291,8 @@ vnoremap <silent> <leader>k "zy:OpenGoogleTranslate <C-r>z<CR>
 nnoremap <silent> <C-k><C-a> :<C-u>ALEToggle<CR>
 nnoremap <silent> <C-k>a :<C-u>call vimrc#keys#toggle_ale_at_buffer()<CR>
 " but this doesn't overwrite diff keymaps, please see <C-h><C-d> and vimrc#keys#toggle_diff()
-nmap [c [ale-previous]
-nmap ]c [ale-next]
+nmap [c :<C-u>ALEPrevious<CR>
+nmap ]c :<C-u>ALENext<CR>
 
 " incsearch.vim
 nmap g/ <Plug>(incsearch-stay)

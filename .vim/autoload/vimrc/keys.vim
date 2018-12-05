@@ -202,11 +202,12 @@ function! vimrc#keys#replace_mostly_inner() abort " {{{
     \ })
 endfunction " }}}
 
-function! vimrc#keys#append_surround(visualizer) abort
+" a:visualizer <- 'v' or 'V'
+function! vimrc#keys#append_surround(visualizer) abort " {{{
     call dein#source('vim-operator-surround')
 
     let obj_keys = s:get_current_obj_keys()
     call s:Optional.map(s:input_obj_key_on(obj_keys), { obj_key ->
         \ execute('normal ' . (a:visualizer . "\<Plug>(operator-surround-append)" . obj_key))
     \ })
-endfunction
+endfunction " }}}

@@ -1,4 +1,4 @@
-GuiFont RictyDiminished NF:h14
+GuiFont RictyDiminished NF:h11
 
 nnoremap <C-+> :<C-u>call <SID>increase_font_size()<CR>
 nnoremap <C--> :<C-u>call <SID>decrease_font_size()<CR>
