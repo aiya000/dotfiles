@@ -76,6 +76,12 @@ options indent
     \`\`\`shell-session
     \`\`\`
 
+snippet block_vim
+alias blv
+options indent
+    \`\`\`vim
+    \`\`\`
+
 snippet comment
 alias com
 abbr <!--{}-->
@@ -165,15 +171,15 @@ snippet philip_wadler
     P-W博士:${0}
 
 snippet subject_with_diamond
-alias subject_about_this_project subject_what_is_this_project
+alias subject_title
 abbr # :diamond_shape_with_a_dot_inside: __ :diamond_shape_with_a_dot_inside:
     # :diamond_shape_with_a_dot_inside: ${1:project-name} :diamond_shape_with_a_dot_inside:
 
 # This maybe supported in only GitHub
-snippet subject_with_thinking
+snippet subject_with_dizzy
 alias subject_how_to_use_this
-abbr # :thinking: __ :thinking:
-    # :thinking: ${1:How to use this} :thinking:
+abbr # :dizzy: __ :dizzy:
+    # :dizzy: ${1:How to use this} :dizzy:
 
 snippet subject_with_gift
 alias subject_how_to_install_this

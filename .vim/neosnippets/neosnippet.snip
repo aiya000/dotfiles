@@ -1,3 +1,10 @@
+snippet snippet
+alias snip
+options indent
+    snippet ${1:name}
+    abbr $2
+        ${2}${0}
+
 snippet template_xml_attr
 options head indent
     snippet ${1:#:snippetName}

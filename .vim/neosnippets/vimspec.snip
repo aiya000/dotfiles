@@ -36,10 +36,14 @@ abbr    It ~ End
     End
 
 snippet Assert
-alias   ass assert
+alias   assert
     Assert ${0:#:condition}
 
 snippet AssertEquals
-alias   asseq asserteq assertequals
+alias   as asserteq assertequals
 abbr    Assert Equals()
     Assert Equals(${1:#:actual}, ${2:#:expected})
+
+snippet throws
+abbr Throws /${1:regex}/ ${0}
+    Throws /${1:regex}/ ${0}
