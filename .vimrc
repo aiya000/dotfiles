@@ -304,7 +304,11 @@ let g:quickrun_config = {
     \ 'runner': 'vimproc',
     \ 'exec': ['happy %s', 'stack runghc %s:p:r.hs'],
     \ 'hook/sweep/files': '%S:p:r.hs',
-  \ }
+  \ },
+  \ 'dhall': {
+    \ 'exec': ['dhall %o < %s'],
+    \ 'hook/sweep/files': '%S:p:r.dhall',
+  \ },
 \ }
 
 " Append config of each environment
@@ -447,23 +451,28 @@ augroup END
 "}}}
 " --- aref-web.vim --- {{{
 
-let g:aref_web_source = {
-  \ 'weblio': {
+let g:aref_web_source = [
+  \ {
+    \ 'name': 'weblio',
     \ 'url': 'https://ejje.weblio.jp/content/%s',
   \ },
-  \ 'stackage': {
+  \ {
+    \ 'name': 'stackage',
     \ 'url': 'https://www.stackage.org/lts-10.9/hoogle?q=%s&page=1',
   \ },
-  \ 'hoogle': {
+  \ {
+    \ 'name': 'hoogle',
     \ 'url': 'https://www.haskell.org/hoogle/?hoogle=%s',
   \ },
-  \ 'shellcheck': {
+  \ {
+    \ 'name': 'shellcheck',
     \ 'url': 'https://github.com/koalaman/shellcheck/wiki/%s',
   \ },
-  \ 'elm-search': {
+  \ {
+    \ 'name': 'elm-search',
     \ 'url': 'http://klaftertief.github.io/elm-search/?q=%s',
   \ },
-\ }
+\ ]
 
 let g:aref_web_buffer_opening = 'tabnew'
 
@@ -473,7 +482,6 @@ let g:aref_web_buffer_opening = 'tabnew'
 " --- autofmt ---" {{{
 
 set formatexpr=autofmt#japanese#formatexpr()
-let autofmt_allow_over_tw=1
 
 "}}}
 " --- github-complete.vim --- {{{
@@ -497,6 +505,7 @@ let g:textobj_between_no_default_key_mappings = 1
 
 let g:ale_linters = {
   \ 'haskell': ['hlint', 'stack ghc'],
+  \ 'dhall' : ['dhall lint'],
   \ 'html': ['htmlhint', 'tidy'],
   \ 'css': ['csslint', 'stylelint'],
   \ 'kotlin': ['ktlint'],
@@ -527,7 +536,7 @@ let g:elm_setup_keybindings  = 0
 " }}}
 " --- vim-fakeclip --- {{{
 
-let fakeclip_provide_clipboard_key_mappings = g:vimrc['is_wsl']
+let g:fakeclip_provide_clipboard_key_mappings = g:vimrc['is_wsl']
 
 " }}}
 " --- denite.nvim --- {{{
@@ -688,15 +697,16 @@ call lexima#add_rule({'char': '『', 'input_after': '』'})
 call lexima#add_rule({'char': '（', 'input_after': '）'})
 call lexima#add_rule({'char': '｛', 'input_after': '｝'})
 
-for deleter in ['<C-h>', '<BS>', '<C-w>']
-  call lexima#add_rule({'char': deleter, 'at': '(\%#)', 'delete': 1})
-  call lexima#add_rule({'char': deleter, 'at': '{\%#}', 'delete': 1})
-  call lexima#add_rule({'char': deleter, 'at': '[\%#]', 'delete': 1})
-  call lexima#add_rule({'char': deleter, 'at': '<\%#>', 'delete': 1})
-  call lexima#add_rule({'char': deleter, 'at': "'\%#'", 'delete': 1})
-  call lexima#add_rule({'char': deleter, 'at': '"\%#"', 'delete': 1})
-  call lexima#add_rule({'char': deleter, 'at': '`\%#`', 'delete': 1})
+for s:deleter in ['<C-h>', '<BS>', '<C-w>']
+  call lexima#add_rule({'char': s:deleter, 'at': '(\%#)', 'delete': 1})
+  call lexima#add_rule({'char': s:deleter, 'at': '{\%#}', 'delete': 1})
+  call lexima#add_rule({'char': s:deleter, 'at': '[\%#]', 'delete': 1})
+  call lexima#add_rule({'char': s:deleter, 'at': '<\%#>', 'delete': 1})
+  call lexima#add_rule({'char': s:deleter, 'at': "'\%#'", 'delete': 1})
+  call lexima#add_rule({'char': s:deleter, 'at': '"\%#"', 'delete': 1})
+  call lexima#add_rule({'char': s:deleter, 'at': '`\%#`', 'delete': 1})
 endfor
+unlet s:deleter
 
 call lexima#add_rule({'filetype': 'kotlin', 'char': '<', 'input_after': '>', 'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'})
 call lexima#add_rule({'filetype': 'typescript', 'char': '<', 'input_after': '>', 'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'})
@@ -817,8 +827,6 @@ let &tags = &tags . ',' . join([
   \ '../../../.git/tags',
   \ '../../../../.git/tags'
 \ ], ',')
-
-let lhs_markup = 'none'
 
 " }}}
 
@@ -1205,8 +1213,8 @@ vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
 nnoremap <leader>u :<C-u>Denite<Space>
 nnoremap <silent> <C-k>e :<C-u>Denite file/rec<CR>
 nnoremap <silent> <C-k><C-e> :<C-u>Denite file<CR>
-nnoremap <silent> <leader><C-k>e :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file/rec')<CR>
-nnoremap <silent> <leader><C-k><C-e> :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file')<CR>
+nnoremap <silent> '<C-k>e :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file/rec')<CR>
+nnoremap <silent> '<C-k><C-e> :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file')<CR>
 nnoremap <silent> <C-k><C-t> :<C-u>Denite tag<CR>
 nnoremap <silent> <C-k><C-f> :<C-u>Denite outline<CR>
 nnoremap <silent> <C-k>f :<C-u>Denite filetype<CR>

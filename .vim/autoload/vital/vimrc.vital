@@ -1,5 +1,5 @@
 vimrc
-ccfe1e17859e824f0f1a13440ca2020929d531fd
+9b584074f2d64bc538d635e21fb67f71a00b2b2a
 
 Data.List
 Data.String
@@ -12,3 +12,4 @@ Data.Optional
 Data.Closure
 Math
 System.Job
+Dhall
