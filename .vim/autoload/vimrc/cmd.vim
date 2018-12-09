@@ -2,68 +2,66 @@ let s:Msg = vital#vimrc#new().import('Vim.Message')
 
 " Rename the file of current buffer
 function! vimrc#cmd#rename_to(new_name) abort " {{{
-    let l:this_file = fnameescape(expand('%'))
-    let l:new_name  = fnameescape(a:new_name)
+  let this_file = fnameescape(expand('%'))
+  let new_name  = fnameescape(a:new_name)
 
-    if fnamemodify(l:this_file, ':t') ==# l:new_name
-        call vimrc#echo_error('New name is same old name, operation abort')
-        return
-    endif
+  if fnamemodify(this_file, ':t') ==# new_name
+    call vimrc#echo_error('New name is same old name, operation abort')
+    return
+  endif
 
-    let l:file_editing = &modified
-    if l:file_editing
-        call vimrc#echo_error('Please :write this file')
-        return
-    endif
+  let file_editing = &modified
+  if file_editing
+    call vimrc#echo_error('Please :write this file')
+    return
+  endif
 
-    let l:new_file = fnamemodify(l:this_file, ':h') . '/' . l:new_name
-    let l:failed   = rename(l:this_file, l:new_file)
-    if l:failed
-        call s:Msg.error(printf('Rename %s to %s is failed', l:this_file, l:new_file))
-        return
-    endif
+  let new_file = fnamemodify(this_file, ':h') . '/' . new_name
+  let failed   = rename(this_file, new_file)
+  if failed
+    call s:Msg.error(printf('Rename %s to %s is failed', this_file, new_file))
+    return
+  endif
 
-    execute ':edit' l:new_file
-    silent write
-    silent execute ':bdelete' l:this_file
+  execute ':edit' new_file
+  silent write
+  silent execute ':bdelete' this_file
 
-    echo printf('Renamed %s to %s', l:this_file, l:new_file)
+  echo printf('Renamed %s to %s', this_file, new_file)
 endfunction " }}}
 
 " Make session_name from git repository
 " and Save current session by :UniteSessionSave
 function! vimrc#cmd#git_branch_session_save() abort " {{{
-    let sessions_dir = $HOME . '/.backup/vim_backup/session'
+  let repo_path = fnameescape(system('git rev-parse --show-toplevel'))
 
-    let repo_path = fnameescape(system('git rev-parse --show-toplevel'))
+  let repo_name  = fnamemodify(repo_path, ':t')
+  let repo_name_ = substitute(repo_name, '\n', '', '')  " Remove tail line break
 
-    let repo_name  = fnamemodify(repo_path, ':t')
-    let repo_name_ = substitute(repo_name, '\n', '', '')  " Remove tail line break
+  let branch_name  = system(printf("cd %s ; git branch | sort | tail -1 | awk '{print $2}'", repo_path))  " Don't use double quote in awk
+  let branch_name_ = substitute(branch_name, '\n', '', '')  " Remove tail line break
 
-    let branch_name  = system(printf("cd %s ; git branch | sort | tail -1 | awk '{print $2}'", repo_path))  " Don't use double quote in awk
-    let branch_name_ = substitute(branch_name, '\n', '', '')  " Remove tail line break
+  let session_name  = repo_name_ . '-' . branch_name_
+  let session_name_ = substitute(session_name, '/', '-', 'g')
+  let session_name__ = substitute(session_name_, '#', '-', 'g')  "NOTE: '#' shouldn't be used as a file name
 
-    let session_name  = repo_name_ . '-' . branch_name_
-    let session_name_ = substitute(session_name, '/', '-', 'g')
-    let session_name__ = substitute(session_name_, '#', '-', 'g')  "NOTE: '#' shouldn't be used as a file name
-
-    execute 'mksession!' (sessions_dir . '/' . session_name__ . '.vim')
+  execute 'mksession!' (g:vimrc['sessiondir'] . '/' . session_name__ . '.vim')
 endfunction " }}}
 
 " Generate decompress css from compressed css to temporary buffer
 function! vimrc#cmd#decompress_to_buffer() abort " {{{
     " Yank detail
-    let l:lines = getline('^', '$')
+    let lines = getline('^', '$')
     " Output detail as pretty style css to new buffer
     new
-    for l:line in reverse(l:lines)
-        1put!=l:line
+    for line in reverse(lines)
+        1put!=line
     endfor
-    %s/}/\r}\r\r/g
-    %s/{/ {\r/g
-    %s/@/\r@/g
-    %s/;/;\r/g
-    %s/,/,\r/g
+    execute '%s/}/\r}\r\r/g'
+    execute '%s/{/ {\r/g'
+    execute '%s/@/\r@/g'
+    execute '%s/;/;\r/g'
+    execute '%s/,/,\r/g'
     execute 'normal! gg=Ggg'
     " Set options
     setl noswapfile
@@ -74,11 +72,11 @@ endfunction " }}}
 
 " Define cnoreabbr with cmd completion
 function! vimrc#cmd#cmd_cnoreabbr(...) abort " {{{
-    let l:UNUSED_VALUE = 'NOP'
-    let l:cmd_name     = a:1
-    let l:cmd_detail   = join(a:000[1:], ' ')
-    execute 'cnoreabbr' l:cmd_name l:cmd_detail
-    execute 'command!'  l:cmd_name l:UNUSED_VALUE
+    let UNUSED_VALUE = 'NOP'
+    let cmd_name     = a:1
+    let cmd_detail   = join(a:000[1:], ' ')
+    execute 'cnoreabbr' cmd_name cmd_detail
+    execute 'command!'  cmd_name UNUSED_VALUE
 endfunction " }}}
 
 " Remove CmdCnoreabbr

@@ -8,7 +8,7 @@ alias vime='vim -c ":bufdo tab split" +q'
 # :SessionSaveInGitBranch compatibled command. (it is defined in dotfiles/.vim/plugin/vimrc.vim)
 # Open the session which is associated the current git branch
 function vim-current-session () {
-    local sessions_dir=~/.backup/vim_backup/session repo_name session_name editor branch_name branch_name_ branch_name__
+    local sessions_dir=~/.backup/vim-backup/session repo_name session_name editor branch_name branch_name_ branch_name__
 
     editor=$([[ -n $1 ]] && echo "$1" || echo vim)
     branch_name="$(git branch 2> /dev/null | sort | tail -1 | awk '{print $2}')"

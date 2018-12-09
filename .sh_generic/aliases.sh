@@ -225,6 +225,7 @@ fi
 
 if i_have stack ; then
     alias sb='stack build'
+    alias se='stack run --'
     alias se='stack exec --'
     alias st='stack test'
     alias si='stack install'

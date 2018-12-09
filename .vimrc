@@ -27,11 +27,11 @@ let g:vimrc['is_wsl']     = get(g:vimrc, 'is_wsl', executable('uname') && (syste
 let g:vimrc['has_cygwin'] = executable('cygstart')
 let g:vimrc['has_mingw']  = 0  "NOTE: ('dummy')
 
-let s:backupdir  = expand('~/.backup/vim-backup')
-let s:directory  = s:backupdir . '/swp'
-let s:undodir    = s:backupdir . '/undo'
-let s:viewdir    = s:backupdir . '/view'
-let s:sessiondir = s:backupdir . '/session'
+let g:vimrc['backupdir']  = expand('~/.backup/vim-backup')
+let g:vimrc['directory']  = g:vimrc['backupdir'] . '/swp'
+let g:vimrc['undodir']    = g:vimrc['backupdir'] . '/undo'
+let g:vimrc['viewdir']    = g:vimrc['backupdir'] . '/view'
+let g:vimrc['sessiondir'] = g:vimrc['backupdir'] . '/session'
 
 " }}}
 
@@ -133,19 +133,19 @@ unlet s:dein_dirname
 " }}}
 " Check backup directories {{{
 
-if !isdirectory(s:directory)
-  call mkdir(s:directory, 'p', 0700)
-  call system(printf('chown -R %s:%s %s', $USER, $GROUP, s:directory))
+if !isdirectory(g:vimrc.directory)
+  call mkdir(g:vimrc.directory, 'p', 0700)
+  call system(printf('chown -R %g:vimrc.%s %s', $USER, $GROUP, g:vimrc.directory))
 endif
 
-if !isdirectory(s:undodir)
-  call mkdir(s:undodir, '', 0700)
-  call system(printf('chown -R %s:%s %s', $USER, $GROUP, s:undodir))
+if !isdirectory(g:vimrc.undodir)
+  call mkdir(g:vimrc.undodir, '', 0700)
+  call system(printf('chown -R %g:vimrc.%s %s', $USER, $GROUP, g:vimrc.undodir))
 endif
 
-if !isdirectory(s:sessiondir)
-  call mkdir(s:sessiondir, '', 0700)
-  call system(printf('chown -R %s:%s %s', $USER, $GROUP, s:sessiondir))
+if !isdirectory(g:vimrc.sessiondir)
+  call mkdir(g:vimrc.sessiondir, '', 0700)
+  call system(printf('chown -R %g:vimrc.%s %s', $USER, $GROUP, g:vimrc.sessiondir))
 endif
 
 " }}}
@@ -385,7 +385,7 @@ let g:solarized_contrast = 'high'
 " }}}
 " --- aho-bakaup.vim --- {{{
 
-let g:bakaup_backup_dir  = s:backupdir
+let g:bakaup_backup_dir  = g:vimrc['backupdir']
 let g:bakaup_auto_backup = 1
 
 " }}}
@@ -792,10 +792,10 @@ set foldopen=search,jump,mark,percent,insert,tag,undo
 set foldclose=all
 
 " The backup options
-let &directory = s:directory
-let &viewdir = s:viewdir
+let &directory = g:vimrc.directory
+let &viewdir = g:vimrc.viewdir
 set undofile
-let &undodir = s:undodir
+let &undodir = g:vimrc.undodir
 
 " Use aho-bakaup.vim's the backup functions
 set nobackup
