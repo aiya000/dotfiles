@@ -42,3 +42,4 @@
 .idris/repl/history
 .config/karabiner/karabiner.json
 .domterm/default.socket
+.history
