@@ -32,4 +32,4 @@ policies:
   ProhibitAbbreviationOption:
     enabled: true
   ProhibitImplicitScopeVariable:
-    enabled: true
+    enabled: false

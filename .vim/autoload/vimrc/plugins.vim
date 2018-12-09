@@ -283,7 +283,7 @@ endfunction " }}}
 
 function! vimrc#plugins#open_this_file_in_gui() abort " {{{
     let file = expand('%:p')
-    call s:Job.start(['nyaovim', file])
+    call s:Job.start(['gonvim', file])
 endfunction " }}}
 
 function! vimrc#plugins#delete_lines(...) abort " {{{

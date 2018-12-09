@@ -10,3 +10,13 @@ abbr {${1:name} = ${0:value}}
 snippet union
 abbr <<${1:Name} = ${2:Value} | ${3:Name} : ${4:Type}>
     <${1:Name} = ${2:Value} | ${3:Name} : ${4:Type}>
+
+snippet lambda
+alias ar
+abbr \(${1:name} : ${2:Type}) ->${0}
+    \(${1:name} : ${2:Type}) ->${0}
+
+snippet multiline_text
+    ''
+    ${0}
+    ''

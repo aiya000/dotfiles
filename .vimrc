@@ -27,7 +27,7 @@ let g:vimrc['is_wsl']     = get(g:vimrc, 'is_wsl', executable('uname') && (syste
 let g:vimrc['has_cygwin'] = executable('cygstart')
 let g:vimrc['has_mingw']  = 0  "NOTE: ('dummy')
 
-let s:backupdir  = expand('~/.backup/vim_backup')
+let s:backupdir  = expand('~/.backup/vim-backup')
 let s:directory  = s:backupdir . '/swp'
 let s:undodir    = s:backupdir . '/undo'
 let s:viewdir    = s:backupdir . '/view'
@@ -306,8 +306,7 @@ let g:quickrun_config = {
     \ 'hook/sweep/files': '%S:p:r.hs',
   \ },
   \ 'dhall': {
-    \ 'exec': ['dhall %o < %s'],
-    \ 'hook/sweep/files': '%S:p:r.dhall',
+    \ 'exec': ['dhall --explain --plain %o < %s'],
   \ },
 \ }
 
@@ -451,28 +450,23 @@ augroup END
 "}}}
 " --- aref-web.vim --- {{{
 
-let g:aref_web_source = [
-  \ {
-    \ 'name': 'weblio',
+let g:aref_web_source = {
+\ 'weblio': {
     \ 'url': 'https://ejje.weblio.jp/content/%s',
   \ },
-  \ {
-    \ 'name': 'stackage',
+  \ 'stackage': {
     \ 'url': 'https://www.stackage.org/lts-10.9/hoogle?q=%s&page=1',
   \ },
-  \ {
-    \ 'name': 'hoogle',
+  \ 'hoogle': {
     \ 'url': 'https://www.haskell.org/hoogle/?hoogle=%s',
   \ },
-  \ {
-    \ 'name': 'shellcheck',
+  \ 'shellcheck': {
     \ 'url': 'https://github.com/koalaman/shellcheck/wiki/%s',
   \ },
-  \ {
-    \ 'name': 'elm-search',
+  \ 'elm-search': {
     \ 'url': 'http://klaftertief.github.io/elm-search/?q=%s',
   \ },
-\ ]
+\ }
 
 let g:aref_web_buffer_opening = 'tabnew'
 
@@ -511,6 +505,8 @@ let g:ale_linters = {
   \ 'kotlin': ['ktlint'],
   \ 'java': ['checkstyle', 'google-java-format', 'PMD'],
 \ }
+
+let g:ale_vim_vint_show_style_issues = v:false
 
 let g:ale_scala_scalastyle_config = $HOME . '/.dotfiles/scalastyle_config_default.xml'
 
@@ -631,6 +627,9 @@ let g:vimhelpgenerator_defaultlanguage = 'en'
 
 " }}}
 " --- vim-autoformat --- " {{{
+
+let g:formatdef_dhall_format = '"dhall format"'
+let g:formatters_dhall = ['dhall_format']
 
 " let g:formatdef_scalafmt = '"ng scalafmt --stdin"' " Please see Makefile for about `ng scalafmt`
 " let g:formatters_scala = ['scalafmt']
@@ -940,7 +939,7 @@ nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
 nnoremap <silent> <C-k><C-o> :<C-u>EditOverridden %<CR>
 nnoremap <silent> <C-k>o :<C-u>EditOverridden! %<CR>
 nnoremap <silent> <leader>b :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=markdown \| setl syntax=<CR>
-nnoremap <silent> <leader>B :<C-u>sp ~/.backup/vim-memo.md<CR>
+nnoremap <silent> <leader>B :<C-u>Memo<CR>
 nnoremap <silent> <leader><leader>q :<C-u>call vimrc#keys#bufclose_filetype(<C-r>=string(g:vimrc.auto_closing_filetypes)<CR>)<CR>
 let g:vimrc.auto_closing_filetypes = [
   \ 'aref_web',

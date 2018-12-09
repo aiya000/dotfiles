@@ -31,7 +31,7 @@ command! -bar CssShowDecompressed call vimrc#cmd#decompress_to_buffer()
 
 "" Others
 command! -bar -nargs=* Vim call vimrc#open_terminal_as('term-vim', 'stay', 'vim ' . <q-args>)
-command! -bar Memo sp ~/vim-memo.md
+command! -bar Memo sp ~/.backup/memo.md
 command! -bar CdBufDir cd %:p:h
 command! -bar CdGitRoot execute ':cd' system('git rev-parse --show-toplevel')
 command! -bar TcdBufDir tcd %:p:h
@@ -71,6 +71,7 @@ command! -bar PythonRepl call vimrc#open_terminal_as('none', 'stay', 'PAGER=cat 
 command! -bar IPyRepl call vimrc#open_terminal_as('none', 'stay', 'ipython', v:false)
 command! -bar SwiftRepl call vimrc#open_terminal_as('none', 'stay', 'swift', v:false)
 command! -bar KotlinRepl call vimrc#open_terminal_as('none', 'stay', 'kotlinc-jvm', v:false)
+command! -bar DhallRepl call vimrc#open_terminal_as('none', 'stay', 'dhall repl', v:false)
 
 " Plugins
 "" dein.vim
