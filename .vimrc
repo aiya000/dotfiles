@@ -725,20 +725,44 @@ call dein#end()
 "-----------------"
 " {{{
 
-set number relativenumber nowrap hlsearch list scrolloff=16 incsearch
-set textwidth=0 tabstop=4 shiftwidth=4 expandtab
-set listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
-set breakindent linebreak autoindent cindent nojoinspaces
-set previewheight=40
-set laststatus=2 wildmenu noruler cmdheight=2 history=500
-set tabline=%!vimrc#set#tabline()
-set backspace=indent,eol,start
-set nowrapscan visualbell notimeout
-set fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
-set path=.,,./** shellslash
-set matchpairs+=<:>,（:）,｛:｝,「:」,＜:＞,『:』
-set browsedir=buffer spelllang=en_US,cjk suffixes=
-set hidden
+set
+  \ number
+  \ relativenumber
+  \ nowrap
+  \ hlsearch
+  \ list
+  \ scrolloff=16
+  \ incsearch
+  \ textwidth=0
+  \ tabstop=4
+  \ shiftwidth=4
+  \ expandtab
+  \ breakindent
+  \ linebreak
+  \ autoindent
+  \ cindent
+  \ nojoinspaces
+  \ previewheight=40
+  \ laststatus=2
+  \ wildmenu
+  \ wildignorecase
+  \ noruler
+  \ cmdheight=2
+  \ history=500
+  \ nowrapscan
+  \ visualbell
+  \ notimeout
+  \ path=.,,./**
+  \ shellslash
+  \ hidden
+  \ browsedir=buffer
+  \ spelllang=en_US,cjk
+  \ suffixes=
+  \ tabline=%!vimrc#set#tabline()
+  \ backspace=indent,eol,start
+  \ listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
+  \ fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
+  \ matchpairs+=<:>,（:）,｛:｝,「:」,＜:＞,『:』
 
 if !has('nvim')
   set termkey=<C-z>
@@ -1210,10 +1234,10 @@ vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
 
 " denite.nvim
 nnoremap <leader>u :<C-u>Denite<Space>
-nnoremap <silent> <C-k>e :<C-u>Denite file/rec<CR>
-nnoremap <silent> <C-k><C-e> :<C-u>Denite file<CR>
-nnoremap <silent> '<C-k>e :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file/rec')<CR>
-nnoremap <silent> '<C-k><C-e> :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file')<CR>
+nnoremap <silent> <C-k>e :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file/rec')<CR>
+nnoremap <silent> <C-k><C-e> :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file')<CR>
+nnoremap <silent> '<C-k>e :<C-u>Denite file/rec<CR>
+nnoremap <silent> '<C-k><C-e> :<C-u>Denite file<CR>
 nnoremap <silent> <C-k><C-t> :<C-u>Denite tag<CR>
 nnoremap <silent> <C-k><C-f> :<C-u>Denite outline<CR>
 nnoremap <silent> <C-k>f :<C-u>Denite filetype<CR>

@@ -40,10 +40,12 @@ abbr catch (e) {${0:here}}
     catch (e) {${0:here}}
 
 snippet import_as
+alias impas
 abbr import ${1:*} as ${2:name} from "${0}"
     import ${1:*} as ${2:name} from "${0}"
 
 snippet import
+alias imp
 abbr import ${1:*} from "${0}"
     import ${1:*} from "${0}"
 
@@ -76,6 +78,14 @@ abbr class ${1:Name} {${0}}
 snippet constructor
 abbr constructor(${1:args}) {${0}}
     constructor(${1:args}) {${0}}
+
+snippet namespace
+abbr namespace ${1:Name} {${0}}
+    namespace ${1:Name} {${0}}
+
+snippet module
+abbr module ${1:Name} {${0}}
+    module ${1:Name} {${0}}
 
 # Expressions
 
