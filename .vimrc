@@ -135,17 +135,17 @@ unlet s:dein_dirname
 
 if !isdirectory(g:vimrc.directory)
   call mkdir(g:vimrc.directory, 'p', 0700)
-  call system(printf('chown -R %g:vimrc.%s %s', $USER, $GROUP, g:vimrc.directory))
+  call system(printf('chown -R %s:%s', $USER, $GROUP, g:vimrc.directory))
 endif
 
 if !isdirectory(g:vimrc.undodir)
   call mkdir(g:vimrc.undodir, '', 0700)
-  call system(printf('chown -R %g:vimrc.%s %s', $USER, $GROUP, g:vimrc.undodir))
+  call system(printf('chown -R %s:%s', $USER, $GROUP, g:vimrc.undodir))
 endif
 
 if !isdirectory(g:vimrc.sessiondir)
   call mkdir(g:vimrc.sessiondir, '', 0700)
-  call system(printf('chown -R %g:vimrc.%s %s', $USER, $GROUP, g:vimrc.sessiondir))
+  call system(printf('chown -R %s:%s', $USER, $GROUP, g:vimrc.sessiondir))
 endif
 
 " }}}

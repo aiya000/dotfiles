@@ -1,3 +1,5 @@
+# Syntax
+
 snippet use_strict
 abbr 'use strict';
     'use strict';
@@ -5,11 +7,6 @@ abbr 'use strict';
 snippet import
 abbr import { ${1:objects} } from '${2:module-name}'
     import { ${1:objects} } from '${2:module-name}'
-
-snippet print
-alias prlintln
-abbr console.log(${1:#:hello});
-    console.log(${1:#:hello});
 
 snippet for
 abbr for (${1:#:var}; ${2:#:condition}; ${3:#:effect}) {${0:here}}
@@ -38,14 +35,6 @@ abbr case ${1:LABEL}:\n${0}\nbreak;
         ${0}
         break;
 
-snippet define_prototype_Array#map
-    Array.prototype.map = function (f) {
-        for (var i = 0; i < this.length; ++i) {
-            this[i] = f(i);
-        }
-        return this;
-    };
-
 snippet function
 alias fun
 abbr function ${1}(${2}) {${0:here}}
@@ -63,3 +52,18 @@ abbr class ${1:Class} ${2:#:extends_Super}{${0:here}}
 snippet constructor
 abbr constructor(${1:#:args}) {${0:here}}
     constructor(${1:#:args}) {${0:here}}
+
+# Definition / Expression
+
+snippet define_prototype_Array#map
+    Array.prototype.map = function (f) {
+        for (var i = 0; i < this.length; ++i) {
+            this[i] = f(i);
+        }
+        return this;
+    };
+
+snippet print
+alias prlintln pr
+abbr console.log(${1:#:hello});
+    console.log(${1:#:hello});
