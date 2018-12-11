@@ -135,3 +135,7 @@ repo = 'nathanaelkane/vim-indent-guides'
 
 [[plugins]]
 repo = 'cohama/lexima.vim'
+
+[[plugins]]
+repo  = 'tbodt/deoplete-tabnine'
+build = './install.sh'
