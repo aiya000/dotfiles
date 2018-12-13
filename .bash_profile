@@ -30,9 +30,6 @@ export VISUAL=nvim
 export PAGER='nvim - +PAGER -c "setl nonu nornu ft=vim-pager | only"'
 export MANPAGER='nvim - +MANPAGER -c "setl nonu nornu ft=vim-pager | only"'
 
-# Lice copylight user
-export LICE_USER=aiya000
-
 # Languages
 export GOPATH=~/.GoPath
 
@@ -48,13 +45,7 @@ export CCACHE_DISABLE=1
 # Configurate the plugin variables {{{
 
 # sh-hereis
-export HEREIS_ALIAS_PREFIX='p_'
-
-# zsh-shell-kawaii
-export SHELL_KAWAII_HER_VISIBILITY=1
-export SHELL_KAWAII_HOST_VISIBILITY=1
-export SHELL_KAWAII_FAKE_USERNAME='aiya_000'
-export SHELL_KAWAII_FAKE_HOSTNAME='Arch'
+export HEREIS_ALIAS_PREFIX=p-
 
 # }}}
 

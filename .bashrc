@@ -1,11 +1,13 @@
 #!/bin/bash
+
+# shellcheck disable=SC1090
 source ~/.sh_generic/aliases.sh
 
 ###################
 # Check .zprofile #
 ###################
 # The counterplan for if .bash_profile never loaded
-if [ -z "`alias | grep pr_loaded`" ] ; then
+if ! alias | grep -q pr_loaded ; then
     source ~/.bash_profile
 fi
 
@@ -45,29 +47,33 @@ bind -m vi-command -x '"\C-k\C-r": . ~/.bashrc && echo ">> bash source reloaded"
 # Set language tools {{{
 
 # cabal
-[ -d ~/.cabal ] \
-    && PATH=$PATH:$HOME/.cabal/bin \
-    && PATH=$PATH:./.cabal-sandbox/bin
+if [ -d ~/.cabal ] ; then
+    PATH=$PATH:$HOME/.cabal/bin \
+        && PATH=$PATH:./.cabal-sandbox/bin
+fi
 
 # pkgsrc
-[ -d ~/pkg ] \
-    && PATH=$PATH:$HOME/pkg/bin:$HOME/pkg/sbin
+if [ -d ~/pkg ] ; then
+    PATH=$PATH:$HOME/pkg/bin:$HOME/pkg/sbin
+fi
 
 # rbenv
-[ -d ~/.rbenv ] \
-    && PATH=$PATH:$HOME/.rbenv/bin \
-    && PATH=$PATH:$HOME/.rbenv/versions/`cat ~/.rbenv/version`/bin \
-    && eval "$($HOME/.rbenv/bin/rbenv init -)"
+if [ -d ~/.rbenv ] ; then
+    PATH=$PATH:$HOME/.rbenv/bin \
+        && PATH=$PATH:$HOME/.rbenv/versions/$(cat ~/.rbenv/version)/bin \
+        && eval "$("$HOME/.rbenv/bin/rbenv" init -)"
+fi
 
 # ruby-build
-[ -d ~/.rbenv/plugins/ruby-build/bin ] \
-    && PATH=$PATH:$HOME/.rbenv/plugins/ruby-build/bin
+if [ -d ~/.rbenv/plugins/ruby-build/bin ] ; then
+    PATH=$PATH:$HOME/.rbenv/plugins/ruby-build/bin
+fi
 
 # virtualenv with virtualenvwrapper
-which virtualenvwrapper.sh > /dev/null 2>&1
-[ "$?" -eq 0 ] \
-    && export WORKON_HOME=$HOME/.virtualenvs \
-    && source $(which virtualenvwrapper.sh)
+if which virtualenvwrapper.sh > /dev/null 2>&1 ; then
+    export WORKON_HOME=$HOME/.virtualenvs \
+        && source "$(which virtualenvwrapper.sh)"
+fi
 
 # anything
 [ -d ~/.local ] \
@@ -79,41 +85,12 @@ which virtualenvwrapper.sh > /dev/null 2>&1
 ###################
 # Define Commands #
 ###################
-# Override default {{{
-
-alias vim=vime
-alias nvim=nvime
-
-# }}}
 # Define specified aliases for bash {{{
 
 # Bash Short Cuts
 alias reload='. ~/.bashrc && . ~/.bash_profile && echo ">> the bash configurations are reloaded"'
 
 # }}}
-
-
-##################
-# Manage Plugins #
-##################
-# Load the local plugins {{{
-
-plugin_dir=~/.bashfiles/plugin
-local_plugins=( \
-    hereis.sh \
-    shell_kawaii.sh \
-    ezoe_command_not_found_handle.sh \
-    tovim.sh \
-)
-
-for (( i = 0; i < ${#local_plugins[@]}; ++i )) ; do
-    source "${plugin_dir}/${local_plugins[$i]}"
-done
-
-unset local_plugins plugin_dir
-
-# }}}
-
 
 # For each environment
 case $(uname) in
@@ -130,11 +107,6 @@ esac
 if [ -f ~/.bashrc_env ] ; then
     source ~/.bashrc_env
 fi
-
-# Load plugins
-source ~/.bashfiles/plugin/shell_kawaii.sh
-source ~/.bashfiles/plugin/hereis.sh
-source ~/.bashfiles/plugin/tovim.sh
 
 # Export Loaded Archive
 alias rc_loaded='echo "rc_loaded"'

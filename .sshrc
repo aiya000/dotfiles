@@ -1,10 +1,16 @@
-source $SSHHOME/.sshrc.d/.bash_profile
-source $SSHHOME/.sshrc.d/.bashrc
-source $SSHHOME/.sshrc.d/.sh_generic/aliases.sh
-source $SSHHOME/.sshrc.d/.bashfiles/plugin/shell_kawaii.sh
+rm ~/.sh_generic
+ln -s $SSHHOME/.sshrc.d/.sh_generic ~
+rm ~/.bashrc
+ln -s $SSHHOME/.sshrc.d/.bashrc ~
+rm ~/.bash_profile
+ln -s $SSHHOME/.sshrc.d/.bash_profile ~
+
+source ~/.bashrc
 
 export VIMINIT='source $SSHHOME/.sshrc.d/.vimrc'
 export MANPAGER=less
 export PAGER=less
+export EDITOR=vim
 
+alias e=vim
 alias tmux="tmux -f $SSHHOME/.sshrc.d/.tmux.conf"
