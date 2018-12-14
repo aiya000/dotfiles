@@ -61,5 +61,5 @@ function tweet-public-say() {
 }
 
 ## :terminal
-alias vterminal='vim +terminal +"setf term-shell" +only'
-alias nterminal='nvim +terminal +"setf term-shell"'
+alias vterminal='vim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell, v:false)"'
+alias nterminal='nvim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell, v:false)"'

@@ -7,9 +7,10 @@ snippet newtype
 options indent
     newtype ${1:Name} = $1
         { un$1 :: ${2:Origin}
-        } deriving (${0:here})
+        } deriving (${3:Show, Eq})${0}
 
 snippet deriving
+alias der deri
 abbr    deriving (__)
     deriving (${0:here})
 
@@ -61,7 +62,7 @@ alias haddock_comment doc
     -- |
 
 snippet document_comment_back
-alias doc_back back_doc bak
+alias doc_back back_doc bak doca
     -- ^
 
 snippet output

@@ -383,11 +383,3 @@ on_ft = ['dhall']
 [[plugins]]
 repo  = 'fszymanski/deoplete-emoji'
 on_ft = ['markdown', 'gitcommit']
-
-[[plugins]]
-repo  = 'tbodt/deoplete-tabnine'
-build = './install.sh'
-on_ft = [
-    'none',
-    'markdown',
-]

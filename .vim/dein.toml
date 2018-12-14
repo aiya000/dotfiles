@@ -138,3 +138,6 @@ repo = 'cohama/lexima.vim'
 
 [[plugins]]
 repo = 'roxma/vim-hug-neovim-rpc'
+
+[[plugins]]
+repo = 'roxma/nvim-yarp'

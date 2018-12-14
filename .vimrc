@@ -417,11 +417,6 @@ let g:unite_source_tag_max_fname_length = 100
 
 let g:deoplete#enable_at_startup = 0
 
-" See after/ftplugin/markdown.vim
-let g:vimrc['deoplete'] = {
-  \ 'ignore_sources': {'_': ['tabnine']},
-\ }
-
 " }}}
 " --- vim-visualstar --- {{{
 
@@ -765,10 +760,6 @@ set
   \ fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
   \ matchpairs+=<:>,（:）,｛:｝,「:」,＜:＞,『:』
 
-if !has('nvim')
-  set termkey=<C-z>
-endif
-
 " See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer)
 let &statusline =
   \ '%1*[%F(%n)]%*' .
@@ -1089,10 +1080,6 @@ nnoremap <silent> <leader>o :<C-u>copen<CR>
 nnoremap gs <NOP>
 "" Visual a last pasted range
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
-
-augroup VimRc
-  autocmd TermOpen * nnoremap <buffer><expr> p vimrc#keys#put_as_stdin()
-augroup END
 
   " }}}
 " insert mode {{{

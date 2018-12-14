@@ -34,14 +34,10 @@ command! -bar -nargs=* Vim call vimrc#open_terminal_as('term-vim', 'stay', 'vim 
 command! -bar Memo sp ~/.backup/memo.md
 command! -bar CdBufDir cd %:p:h
 command! -bar CdGitRoot execute ':cd' system('git rev-parse --show-toplevel')
+command! -bar LcdBufDir lcd %:p:h
+command! -bar LcdGitRoot execute ':lcd' system('git rev-parse --show-toplevel')
 command! -bar -nargs=+ Grep call vimrc#plugins#grep_those(<f-args>)
 command! -bar TodoList Grep TODO FIXME XXX
-
-if has('nvim')
-  " Vim doesn't have tcd
-  command! -bar TcdBufDir tcd %:p:h
-  command! -bar TcdGitRoot execute ':tcd' system('git rev-parse --show-toplevel')
-endif
 
 " Developments
 command! -bar -nargs=1 TestCodeEdit EditOverridden ~/.tmp/Test.<args>

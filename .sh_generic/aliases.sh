@@ -153,10 +153,11 @@ alias llh='ls -lh --color=auto --group-directories-first'
 alias lla='ls -la --color=auto --group-directories-first'
 # shellcheck disable=SC2139
 alias e="$EDITOR"
+alias g=gonvim
 alias m=mount
+alias t=vterminal
 alias um=umount
 alias ei=exit
-alias nt=vterminal
 alias cdp=cd-finddir
 alias ki=killing-art
 alias grw=./gradlew
@@ -179,7 +180,7 @@ function packet-watch () {
 
 alias watch-packet=packet-watch
 
-i_have tmux && alias t=tmux && alias ta='tmux attach'
+i_have tmux && alias tm=tmux && alias ta='tmux attach'
 i_have rsync && alias cp-with-progress='rsync --partial --progress'
 i_have watch && alias wifi-hardware-check='watch -n1 rfkill list all'
 i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'

@@ -55,11 +55,6 @@ abbr {rule-name} : {symbols} { {value-constructor} {$1} }\n| ...
     ${1:RuleName} : ${2:symbols} { ${3:ValueConst}${4: $1} }
                   | ${0}
 
-snippet lexer
-    lexer :: String -> [${1:TokenType}]
-    lexer "" = []
-    lexer ${0}
-
 snippet empty
 abbr {- empty -}
     {- empty -}

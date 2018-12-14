@@ -96,9 +96,9 @@ function! vimrc#keys#netrw_wrapper(open_method, at_this_buffer) abort " {{{
     execute open
 
     let current_dir = execute(':pwd')[1:]
-    execute 'tcd' fnameescape(path)
+    execute ':lcd' fnameescape(path)
     Explore
-    execute 'tcd' fnameescape(current_dir)
+    execute ':lcd' fnameescape(current_dir)
 endfunction " }}}
 
 " Get a detail of <title> from + register
@@ -149,12 +149,12 @@ function! vimrc#keys#hide_or_quit() abort " {{{
 endfunction " }}}
 
 " Toggle b:ale_enabled
-function! vimrc#keys#toggle_ale_at_buffer() abort
+function! vimrc#keys#toggle_ale_at_buffer() abort " {{{
     let b:ale_enabled = !get(b:, 'ale_enabled', 1)
     " Refresh the state
     ALEToggle
     ALEToggle
-endfunction
+endfunction " }}}
 
 " Toggle showing indent-guides with variable
 function! vimrc#keys#toggle_indent_guides() " {{{
@@ -212,9 +212,9 @@ function! vimrc#keys#append_surround(visualizer) abort " {{{
     \ })
 endfunction " }}}
 
-" TODO: other than @"
 " Put a regsiter as stdin to the terminal buffer
-function! vimrc#keys#put_as_stdin() abort " {{{
-  call timer_start(0, { x -> term_sendkeys('.', @") }, {'repeat': 1})
+function! vimrc#keys#put_as_stdin(detail) abort " {{{
+  let current_bufnr = bufnr('%')
+  call timer_start(0, { _ -> term_sendkeys(current_bufnr, a:detail) }, {'repeat': 1})
   return 'i'
 endfunction " }}}
