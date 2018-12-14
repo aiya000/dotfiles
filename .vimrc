@@ -417,9 +417,10 @@ let g:unite_source_tag_max_fname_length = 100
 
 let g:deoplete#enable_at_startup = 0
 
-augroup VimRc
-  autocmd InsertEnter * call deoplete#enable()
-augroup END
+" See after/ftplugin/markdown.vim
+let g:vimrc['deoplete'] = {
+  \ 'ignore_sources': {'_': ['tabnine']},
+\ }
 
 " }}}
 " --- vim-visualstar --- {{{
@@ -873,7 +874,7 @@ augroup VimRc
   autocmd BufEnter,WinEnter * if &number | setl relativenumber | end
   autocmd BufLeave,Winleave * setl norelativenumber
 
-  autocmd InsertEnter * call vimrc#autocmd#enable_input_completion()
+  autocmd InsertEnter * call deoplete#enable()
 
   " Hide relativenumber when OverCommandLine entered
   autocmd User OverCmdLineEnter setl norelativenumber
@@ -1088,6 +1089,10 @@ nnoremap <silent> <leader>o :<C-u>copen<CR>
 nnoremap gs <NOP>
 "" Visual a last pasted range
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
+augroup VimRc
+  autocmd TermOpen * nnoremap <buffer><expr> p vimrc#keys#put_as_stdin()
+augroup END
 
   " }}}
 " insert mode {{{

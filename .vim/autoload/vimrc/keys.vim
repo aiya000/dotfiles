@@ -211,3 +211,10 @@ function! vimrc#keys#append_surround(visualizer) abort " {{{
         \ execute('normal ' . (a:visualizer . "\<Plug>(operator-surround-append)" . obj_key))
     \ })
 endfunction " }}}
+
+" TODO: other than @"
+" Put a regsiter as stdin to the terminal buffer
+function! vimrc#keys#put_as_stdin() abort " {{{
+  call timer_start(0, { x -> term_sendkeys('.', @") }, {'repeat': 1})
+  return 'i'
+endfunction " }}}

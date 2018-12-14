@@ -307,7 +307,9 @@ function! vimrc#plugins#exec_at_this_buffer_dir(cmd) abort " {{{
         let buffuer_dir = current_dir
     endif
 
-    execute 'tcd' buffuer_dir
+    " TODO: Vim should cd at a tab
+    let tcd = has('nvim') ? 'tcd' : 'cd'
+    execute tcd buffuer_dir
     execute a:cmd
-    execute 'tcd' current_dir
+    execute tcd current_dir
 endfunction " }}}

@@ -23,6 +23,9 @@ function! vimrc#open_terminal_as(filetype, open_mode, command, from_this_buffer)
         \ ? expand('%:p:h')
         \ : getcwd()
 
+    " TODO: Vim should cd at a tab
+    let tcd = has('nvim') ? ':tcd' : ':cd'
+
     if a:open_mode ==# 'vertical'
         vnew
     elseif a:open_mode ==# 'horizontal'
@@ -36,13 +39,13 @@ function! vimrc#open_terminal_as(filetype, open_mode, command, from_this_buffer)
     endif
 
     let current = getcwd()
-    execute ':tcd' fnameescape(path)
+    execute tcd fnameescape(path)
     if has('nvim')
         execute 'terminal' a:command
     else
         execute 'terminal' '++curwin' a:command
     endif
-    execute ':tcd' current
+    execute tcd current
 
     execute 'setf' a:filetype
 endfunction " }}}

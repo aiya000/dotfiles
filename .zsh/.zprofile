@@ -45,11 +45,11 @@ PATH=$PATH:/usr/lib/git-core
 # Others {{{
 
 export BROWSER=vivaldi-stable
-export EDITOR=nvim
-export GIT_EDITOR=nvim
-export VISUAL=nvim
-export PAGER='nvim - +PAGER -c "setl nonu nornu ft=vim-pager | only"' # vim-pager
-export MANPAGER='nvim - +MANPAGER -c "setl nonu nornu ft=vim-pager | only"' # vim-manpager
+export EDITOR=vim
+export GIT_EDITOR=vim
+export VISUAL=vim
+export PAGER='vim - +PAGER -c "setl nonu nornu ft=vim-pager | only"' # vim-pager
+export MANPAGER='vim - +MANPAGER -c "setl nonu nornu ft=vim-pager | only"' # vim-manpager
 
 export GOPATH=~/.GoPath
 export LICE_USER=aiya000

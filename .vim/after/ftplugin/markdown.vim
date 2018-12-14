@@ -28,6 +28,26 @@ nnoremap <buffer> <C-k><Space> <NOP>
 
 syntax sync fromstart
 
+augroup FtpluginMarkdown
+  autocmd!
+  autocmd WinEnter *.md call s:enable_deoplete_tabnine()
+  autocmd WinLeave *.md call s:disable_deoplete_tabnine()
+augroup END
+
+function! s:enable_deoplete_tabnine() abort
+  let RemoveTabNine = { xs ->
+    \ filter(xs, { _, x -> x !=# 'tabnine' })
+  \ }
+  let g:vimrc.deoplete.ignore_sources._ = RemoveTabNine(g:vimrc.deoplete.ignore_sources._)
+
+  call deoplete#custom#option('ignore_sources', g:vimrc.deoplete.ignore_sources)
+endfunction
+
+function! s:disable_deoplete_tabnine() abort
+  let g:vimrc.deoplete.ignore_sources._ += ['tabnine']
+  call deoplete#custom#option('ignore_sources', g:vimrc.deoplete.ignore_sources)
+endfunction
+
 function! s:open_grip() abort
     let cmd = printf('grip --user %s --pass %s --browser %s',
         \ g:vimrc.github.username,
