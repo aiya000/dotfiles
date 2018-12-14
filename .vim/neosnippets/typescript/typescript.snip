@@ -31,6 +31,10 @@ alias arrow arr
 abbr (${1:args}) =>${0}
     (${1:args}) =>${0}
 
+snippet interface
+abbr interface ${1:Name} {${0}}
+    interface ${1:Name} {${0}}
+
 snippet try
 abbr try {${0:here}}
     try {${0:here}}
@@ -40,14 +44,18 @@ abbr catch (e) {${0:here}}
     catch (e) {${0:here}}
 
 snippet import_as
-alias impas
-abbr import ${1:*} as ${2:name} from "${0}"
-    import ${1:*} as ${2:name} from "${0}"
+alias imp
+abbr import ${1:*} as ${2:name} from '${0}'
+    import ${1:*} as ${2:name} from '${0}'
 
 snippet import
-alias imp
-abbr import ${1:*} from "${0}"
-    import ${1:*} from "${0}"
+abbr import ${1:*} from '${0}'
+    import ${1:*} from '${0}'
+
+snippet export
+alias exp
+abbr export
+    export
 
 snippet const
 alias val
@@ -94,8 +102,17 @@ alias pr
 abbr console.log(${0:here})
     console.log(${0:here})
 
+snippet print_error_ln
+alias er
+abbr console.error(${0:here})
+    console.error(${0:here})
+
+snippet stripLineBreaks
+abbr .replace(/(?:\r\n|\r|\n)/g, '')
+    .replace(/(?:\r\n|\r|\n)/g, '')
+
 # Others
 
 snippet reference
-abbr /// <reference path="${0:d-ts-path}"/>
-    /// <reference path="${0:d-ts-path}"/>
+abbr /// <reference path='${0:d-ts-path}'/>
+    /// <reference path='${0:d-ts-path}'/>

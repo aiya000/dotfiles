@@ -1060,6 +1060,7 @@ nnoremap <silent> <C-h><C-s> :<C-u>if exists("g:syntax_on") \| syntax off \| els
 " others
 nmap <C-j> <CR>
 nnoremap Q gQ
+nnoremap Y yg_
 nnoremap { {zv
 nnoremap } }zv
 nnoremap ( (zv
