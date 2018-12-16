@@ -101,6 +101,37 @@ command! -bar -nargs=* GLogTreeAll GTree --all <args>
 command! -bar -nargs=* GBrahcnAll Gina branch --all <args>
 command! -bar -nargs=* GBlame Gina blame <args>
 
-" espeak
-command! -bar -nargs=* EspeakSay call vimrc#plugins#espeak_say(<q-args>)
-command! -bar EspeakDoesntSay call vimrc#plugins#espeak_doesnt_say()
+" Twitter
+command! -bar Twitter TweetVimHomeTimeline
+command! -bar TwitterTab tabnew | Twitter
+command! -bar Tweet TweetVimSay
+command! -bar TwitterPrivate call vimrc#plugins#twitter_private()
+command! -bar TwitterPrivateTab tabnew | TwitterPrivate
+command! -bar TweetPrivate call vimrc#plugins#tweet_private()
+command! -bar -nargs=+ TweetPrivateCommandSay call vimrc#plugins#tweet_private(<q-args>)
+command! -bar TwitterPublic call vimrc#plugins#twitter_public()
+command! -bar TwitterPublicTab tabnew | TwitterPublic
+command! -bar TweetPublic call vimrc#plugins#tweet_public()
+command! -bar -nargs=+ TweetPublicCommandSay call vimrc#plugins#tweet_public(<q-args>)
+
+" Plugins
+command! -bar -nargs=? -complete=filetype FtpluginEditAfter
+    \ execute ':edit' printf('%s/after/ftplugin/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+
+command! -bar -nargs=? -complete=filetype FtDictionaryEdit
+    \ execute ':edit' printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+
+command! -bar -nargs=? -complete=filetype SyntaxEdit
+    \ execute ':edit' printf('%s/syntax/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+
+command! -bar -nargs=? -complete=filetype IndentEdit
+    \ execute ':edit' printf('%s/indent/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+
+command! -bar -nargs=? -complete=filetype FtDetectEdit
+    \ execute ':edit' printf('%s/ftdetect/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+
+command! -bar -nargs=? -complete=filetype PluginEdit
+    \ execute ':edit' printf('%s/plugin/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+
+command! -bar -nargs=? -complete=filetype AutoloadEdit
+    \ execute ':edit' printf('%s/autoload/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))

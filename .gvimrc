@@ -1,64 +1,31 @@
-"-------------------
-"--  Recipe Menu  --
-"-------------------
-" -- Parameter
-" -- Initialize
-" -- Application_Setting
-" -- Functional_Command
-" -- Command_Utils
-" -- View_Setting
-" -- Plugin_Configure
-" ---
-" Ideas {{{
+"---------"
+" Startup "
+"---------"
+" Set encodings {{{
 
-
-
-" }}}
-" Issues {{{
-
-
-
-"}}}
-" Todo {{{
-
-
+scriptencoding utf-8
 
 " }}}
 
 
-"-------------------------"
-"       Initialize        "
-"-------------------------"
-" file encoding {{{
-
-" Encoding for this script
-scriptencoding utf8
-
-" }}}
-
-
-"-------------------------"
-"        Parameter        "
-"-------------------------"
-"{{{
+"----------------------"
+" Define global values "
+"----------------------"
+" {{{
 
 let g:gvimrc = get(g:, 'gvimrc', {})
 let g:gvimrc['loaded'] = get(g:gvimrc, 'loaded', 0)
 
-let s:is_unix    = has('unix')
-let s:is_windows = has('win32')
-
-let g:gvimrc['guifont']      = get(g:gvimrc, 'guifont', {})
-let g:gvimrc['guifont'].font = get(g:gvimrc, 'font', s:is_windows ? 'MS_Gothic' : 'Andale Mono')
-let g:gvimrc['guifont'].size = get(g:gvimrc, 'size', s:is_windows ? ':h10' : ' 10')
-
-"}}}
+" }}}
 
 
-"-------------------------"
-"   Application_Setting   "
-"-------------------------"
-"{{{
+"------------------"
+" Set gvim options "
+"------------------"
+" {{{
+
+" TODO: If Windows
+set guifont=RictyDiminished\ NF\ 11
 
 set guioptions-=T
 set guioptions-=m
@@ -69,114 +36,38 @@ set guioptions+=c
 set winaltkeys=no
 set mouse=
 
-if !g:gvimrc['loaded']
-	let &guifont     = g:gvimrc.guifont['font'] . g:gvimrc.guifont['size']
-	let &guifontwide = g:gvimrc.guifont['font'] . g:gvimrc.guifont['size']
-endif
-
-"}}}
+" }}}
 
 
-"-------------------------"
-"      Command_Utils      "
-"-------------------------"
-"{{{
+"--------------"
+" GUI Commands "
+"--------------"
+" {{{
 
-command! -bar GVimConfig    e $MYGVIMRC
-command! -bar GVimConfigTab tabnew $MYGVIMRC
-
-"@Incomplete('windows support only')
-"@Bugs('Loading sume plugin')
 function! s:open_this_file_in_new_window()
-	let l:filepath = expand('%')
-	execute ':bd' l:filepath
-	execute ':!start gvim' printf('"%s"', fnameescape(l:filepath))
+  let filepath = expand('%')
+  execute ':bd' filepath
+  execute ':!start' g:vimrc.gui_editor printf('"%s"', fnameescape(filepath))
 endfunction
 
 command! OpenThisFileInNewWindow call s:open_this_file_in_new_window()
 
-"}}}
+" }}}
 
-
-"-------------------------"
-"       View_Setting      "
-"-------------------------"
-"{{{
-
-augroup HighlightPrefs
-	"autocmd Colorscheme * highlight Normal       gui=NONE      guifg=Cyan
-	"autocmd ColorScheme * highlight Visual       gui=underline guifg=White guibg=Cyan
-	"autocmd ColorScheme * highlight IncSearch                  guifg=Black guibg=Cyan
-	"autocmd ColorScheme * highlight Pmenu        gui=standout  guifg=Blue
-	"autocmd ColorScheme * highlight PmenuSel                   guifg=Black guibg=White
-	"autocmd ColorScheme * highlight TabLine      gui=standout  guifg=Blue
-	"autocmd ColorScheme * highlight TabLineSel   gui=NONE      guifg=Cyan
-	"autocmd ColorScheme * highlight TabLineFill  gui=standout  guifg=Blue
-	autocmd ColorScheme * highlight VertSplit    gui=bold      guifg=#606060 guibg=DarkGray
-	autocmd ColorScheme * highlight StatusLine                 guifg=Black   guibg=LightGray
-	autocmd ColorScheme * highlight StatusLineNC               guifg=Black   guibg=DarkGray
-	autocmd ColorScheme * highlight LineNr                     guifg=Orange
-	autocmd ColorScheme * highlight CursorLineNr               guifg=Yellow
-	autocmd ColorScheme * highlight CursorLine   gui=underline guifg=Cyan    guibg=NONE
-
-	" StatusLine specified highlight
-	autocmd ColorScheme * highlight User1 cterm=standout guifg=White guibg=Black
-	autocmd ColorScheme * highlight User2 cterm=standout guifg=Black guibg=Yellow
-	autocmd ColorScheme * highlight User3 cterm=standout guifg=Black guibg=DarkYellow
-	autocmd ColorScheme * highlight User4 cterm=standout guifg=Black guibg=Gray
-augroup END
-
-augroup HighlightPref
-	autocmd ColorScheme       * highlight GuiRcEmSpace guibg=White
-	autocmd VimEnter,WinEnter * call matchadd('GuiRcEmSpace', '　')
-	" Highlight VCS conflict markers
-	autocmd ColorScheme * call matchadd('Error', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
-augroup END
-
-augroup HighlightPref
-	autocmd InsertEnter * highlight StatusLine guifg=LightGray guibg=Black
-	autocmd InsertLeave * highlight StatusLine guifg=Black     guibg=LightGray
-augroup END
-
-
-if !g:gvimrc['loaded']
-	set background=dark
-	colorscheme solarized
-endif
-
-"}}}
-
-
-"------------------------"
-"*** Plugin_Configure ***"
-"------------------------"
-"--- TweetVim ---"{{{
+"------------------"
+" Plugin_Configure "
+"------------------"
+" --- TweetVim --- {{{
 
 let g:tweetvim_display_username = 1
 let g:tweetvim_display_icon     = 1
 
-"}}}
-"--- J6uil ---"{{{
+" }}}
+" --- J6uil --- {{{
 
 let g:J6uil_display_icon = 1
 
-"}}}
-"--- vim-submode ---{{{
-
-if s:is_windows
-	augroup KeyMapping
-		autocmd User MyGVimRc call submode#enter_with('trans_changer', 'n', '', '<C-s>*')
-		autocmd User MyGVimRc call submode#map('trans_changer', 'n', '', 'j', ':let &transparency = <C-r>=&transparency<CR> + 10<CR>')
-		autocmd User MyGVimRc call submode#map('trans_changer', 'n', '', 'k', ':let &transparency = <C-r>=&transparency<CR> - 10<CR>')
-		autocmd User MyGVimRc call submode#map('trans_changer', 'n', '', 'H', ':set transparency=1<CR>')
-		autocmd User MyGVimRc call submode#map('trans_changer', 'n', '', 'M', ':set transparency=127<CR>')
-		autocmd User MyGVimRc call submode#map('trans_changer', 'n', '', 'L', ':set transparency=255<CR>')
-	augroup END
-endif
-
-"}}}
-
+" }}}
 
 syntax enable
-doautocmd User MyGVimRc
 let g:gvimrc['loaded'] = 1

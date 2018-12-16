@@ -12,12 +12,13 @@ let $MYGVIMRC = filereadable(expand('~/.dotfiles/.gvimrc'))
   \ ? expand('~/.dotfiles/.gvimrc')
   \ : $MYGVIMRC
 
+" Global values
 let g:vimrc = get(g:, 'vimrc', {
   \ 'loaded'   : 0,
-  \ 'vim_home' : expand('~/.vim')
+  \ 'vim_home' : expand('~/.vim'),
+  \ 'gui_editor' : has('nvim') ? 'gonvim' : 'gvim',
 \ })
 
-" Global values for local plugins
 let g:vimrc['is_windows'] = get(g:vimrc, 'is_windows', has('win32'))
 let g:vimrc['is_cygwin']  = get(g:vimrc, 'is_cygwin', has('win32unix'))
 let g:vimrc['is_kaoriya'] = get(g:vimrc, 'is_kaoriya', has('kaoriya'))
@@ -41,12 +42,10 @@ let g:vimrc['sessiondir'] = g:vimrc['backupdir'] . '/session'
 "---------"
 " Set encodings {{{
 
-" Set default file encoding
 if !g:vimrc['loaded']
   set fileencoding=utf-8 encoding=utf-8
 endif
 
-" Specify encoding for this file
 scriptencoding utf-8
 
 " }}}
@@ -759,6 +758,7 @@ set
   \ listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
   \ fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
   \ matchpairs+=<:>,（:）,｛:｝,「:」,＜:＞,『:』
+  \ termwinkey=<C-z>
 
 " See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer)
 let &statusline =

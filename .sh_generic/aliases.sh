@@ -153,7 +153,7 @@ alias llh='ls -lh --color=auto --group-directories-first'
 alias lla='ls -la --color=auto --group-directories-first'
 # shellcheck disable=SC2139
 alias e="$EDITOR"
-alias g=gonvim
+alias g=gvim
 alias m=mount
 alias t=vterminal
 alias um=umount

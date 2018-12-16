@@ -176,13 +176,6 @@ repo  = 'derekwyatt/vim-scala'
 on_ft = 'scala'
 
 [[plugins]]
-repo  = 'rhysd/github-complete.vim'
-on_ft = [
-    'markdown',
-    'gitcommit',
-]
-
-[[plugins]]
 repo        = 'lambdalisue/gina.vim'
 on_cmd      = 'Gina'
 hook_source = 'call vimrc#dein#hook_source#gina()'
