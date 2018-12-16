@@ -167,6 +167,9 @@ alias grwc='./gradlew clean'
 alias grwj='./gradlew jar'
 alias grwi='./gradlew install'
 
+alias e-current-session="vim-current-session $EDITOR"
+alias g-current-session="vim-current-session $MY_GUI_EDITOR"
+
 function dust () {
     # shellcheck disable=SC2068
     mv $@ ~/.backup/dustbox

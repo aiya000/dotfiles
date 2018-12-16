@@ -58,6 +58,9 @@ export CCACHE_DISABLE=1
 export THEMIS_HOME="$HOME/.vim/bundle/repos/github.com/thinca/vim-themis"
 export NVIM_PYTHON_LOG_FILE=$HOME/.vim/.log/nvim_python.log
 
+# Mine
+export MY_GUI_EDITOR=gvim
+
 # Plugins
 export HEREIS_ALIAS_PREFIX=p-
 export ENHANCD_COMMAND=cde
