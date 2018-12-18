@@ -41,7 +41,7 @@ command! -bar TodoList Grep TODO FIXME XXX
 
 " Developments
 command! -bar -nargs=1 TestCodeEdit EditOverridden ~/.tmp/Test.<args>
-command! -bar CtagsAuto call vimrc#plugins#ctags_auto()
+command! -bar CtagsAuto call vimrc#open_terminal_as('', '++open', 'zsh -c ctags-auto', v:false)
 
 "" Haskell
 command! -bar HaskDogs call vimrc#plugins#execute_haskdogs_async()

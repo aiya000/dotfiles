@@ -20,10 +20,15 @@ function! vimrc#open_terminal_as(filetype, open_mode, command, from_this_buffer)
   " NOTE: %:p:h may not be a valid directory, e.g :terminal's buffer has term://.//xxxxx:/bin/zsh
   " Open at this buffer, or open at the current directory
   let path = a:from_this_buffer && isdirectory(expand('%:p:h'))
-    \ ? expand('%:p:h')
-    \ : getcwd()
+  \ ? expand('%:p:h')
+  \ : getcwd()
 
-  let terminal = has('nvim') ? ':terminal' : ':terminal ++curwin ++close'
+  let terminal
+    \ = has('nvim') && (a:open_mode ==# '++open') ?
+      \ [execute('throw ++open is not available for NeoVim, do :terminal without ++open instead'), ':terminal'][1]
+    \ : has('nvim') ? ':terminal'
+    \ : (a:open_mode ==# '++open') ? ':terminal ++curwin ++close ++open'
+    \ : ':terminal ++curwin ++close'
 
   if a:open_mode ==# 'vertical'
     vnew
@@ -33,13 +38,17 @@ function! vimrc#open_terminal_as(filetype, open_mode, command, from_this_buffer)
     enew!
   elseif a:open_mode ==# 'tabnew'
     tabnew
+  elseif a:open_mode ==# '++open'
+    " :D
   else
     throw 'undefined open_mode is detected: ' . string(a:open_mode)
   endif
 
   execute ':lcd' fnameescape(path)
   execute terminal a:command
-  execute 'setf' a:filetype
+  if a:filetype !=# ''
+    execute 'setf' a:filetype
+  endif
   " TODO: Use TermOpen event in .vimrc after vim implements
   " TODO: for any registers
   nnoremap <buffer><expr> p vimrc#keys#put_as_stdin(@")

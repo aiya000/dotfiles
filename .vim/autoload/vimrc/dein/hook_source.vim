@@ -59,8 +59,9 @@ endfunction " }}}
 function! vimrc#dein#hook_source#gina_git_add_patch_this() abort " {{{
   "TODO: This may fail if the file name contains spaces
   let file = split(getline('.'), ' ')[1]
+  let git_add = 'git add --patch ' . file
   CdGitRoot
-  execute 'terminal' 'git add' '--patch' file
+  call vimrc#open_terminal_as('', 'tabnew', git_add, v:false)
 endfunction " }}}
 
 function! vimrc#dein#hook_source#gina_git_stash_patch_this() abort " {{{
@@ -70,8 +71,9 @@ function! vimrc#dein#hook_source#gina_git_stash_patch_this() abort " {{{
     return
   endif
   let file = split(getline('.'))[2]
+  let git_stash = 'git stash push --message' . shellescape(name) . ' --patch ' . file
   CdGitRoot
-  execute 'terminal' 'git stash push' '--message' shellescape(name) '--patch' file
+  call vimrc#open_terminal_as('', 'tabnew', git_stash, v:false)
 endfunction " }}}
 
 function! vimrc#dein#hook_source#LanguageClient_neovim() abort " {{{

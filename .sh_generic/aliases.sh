@@ -167,7 +167,9 @@ alias grwc='./gradlew clean'
 alias grwj='./gradlew jar'
 alias grwi='./gradlew install'
 
+# shellcheck disable=SC2139
 alias e-current-session="vim-current-session $EDITOR"
+# shellcheck disable=SC2139
 alias g-current-session="vim-current-session $MY_GUI_EDITOR"
 
 function dust () {
@@ -212,6 +214,7 @@ function tags-auto () {
 if i_have ctags ; then
     alias ctags-auto='tags-auto ctags -f --tag-relative=yes --recurse --sort=yes'
     alias ctags-kotlin-auto='ctags-auto --exclude=\\\*.java --exclude=\\\*.html --exclude=\\\*.css'
+    alias ctags-typescript-auto='ctags-auto --exclude=\\\*.js'
 fi
 
 if i_have hasktags ; then

@@ -234,29 +234,6 @@ function! vimrc#plugins#stop_scala_compile_watch_quickfix() abort " {{{
   endif
 endfunction " }}}
 
-function! vimrc#plugins#ctags_auto() abort " {{{
-  if exists('s:ctags_job')
-    echomsg 'ctags is skipped (ctags is already running at now)'
-    return s:ctags_job
-  endif
-  echomsg 'ctags is started'
-
-  let git_top_dir = system('git rev-parse --show-toplevel')[:-2] " [:-2] removes a line break
-  let dot_git     = git_top_dir . '/.git' " This is a file (not a directory) if here is a git submodule
-  let ctags_path  = isdirectory(dot_git)
-    \ ? dot_git . '/tags'
-    \ : './tags'
-
-  let cmd = ['ctags', '--tag-relative=yes', '--recurse', '--sort=yes', '-f', fnameescape(ctags_path)]
-  let s:ctags_job = s:Job.start(cmd, {
-    \ 'on_exit' : { _ -> [
-      \ s:Msg.echomsg('None', 'ctags generated ctags to ' . fnameescape(ctags_path)),
-      \ execute('unlet s:ctags_job')
-    \ ]}
-  \ })
-  return s:ctags_job
-endfunction " }}}
-
 function! vimrc#plugins#grep_those(...) abort " {{{
   CClear
   call s:List.map(a:000, { word ->
