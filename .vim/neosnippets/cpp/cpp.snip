@@ -76,6 +76,10 @@ abbr namespace {}
         ${0}
     }
 
+snippet namespace_alias
+abbr namespace ${1:alias} = ${0}
+    namespace ${1:alias} = ${0}
+
 snippet using
 abbr using {stuff}
     using ${0}
@@ -134,6 +138,7 @@ abbr    abi::__cxa_demangle(mangled_name, 0, 0, nullptr);
     abi::__cxa_demangle(${1:#:var}.name(), 0, 0, nullptr);
 
 snippet println
+alias pr
 abbr std::cout << {something} << '\n';
     std::cout << ${1:something} << '\n';
 
