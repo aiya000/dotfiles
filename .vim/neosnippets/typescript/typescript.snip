@@ -112,6 +112,10 @@ snippet stripLineBreaks
 abbr .replace(/(?:\r\n|\r|\n)/g, '')
     .replace(/(?:\r\n|\r|\n)/g, '')
 
+snippet unify_spaces_to_one
+abbr .replace(/\s+/g, ' ')
+    .replace(/\s+/g, ' ')
+
 snippet todo
 abbr throw new Error('TODO (${0:somewhere})')
     throw new Error('TODO (${0:somewhere})')
