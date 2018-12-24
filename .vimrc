@@ -1062,7 +1062,9 @@ nnoremap g_ $
 nnoremap 'p "+p
 nnoremap 'P "+P
 nnoremap 'y "+y
+nnoremap 'Y "+yg_
 nnoremap 'd "+d
+nnoremap 'D "+D
 nnoremap <C-n> gt
 nnoremap <C-p> gT
 nnoremap <C-m> o<Esc>
