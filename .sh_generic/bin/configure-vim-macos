@@ -1,0 +1,27 @@
+#!/bin/bash
+configure=$(cat << EOS
+./configure \
+    --prefix=/usr/local/ \
+    --enable-fail-if-missing \
+    --enable-multibyte \
+    --enable-perlinterp \
+    --enable-pythoninterp \
+    --enable-python3interp \
+    --enable-rubyinterp \
+    --enable-luainterp \
+    --enable-cscope \
+    --enable-fontset \
+    --with-luajit \
+    --with-lua-prefix=/usr/local/Cellar/luajit/2.0.5 \
+    --with-features=huge \
+    --with-compiledby=aiya000 \
+    --enable-terminal
+EOS
+)
+
+if [ -f ./configure ] ; then
+    echo "$configure"
+    eval "$configure"
+else
+    echo './configure cannot be found'
+fi

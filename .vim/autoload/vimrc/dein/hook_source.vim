@@ -5,7 +5,7 @@ scriptencoding utf-8
 
 function! vimrc#dein#hook_source#operator_surround() abort " {{{
     " Exclude brackets () [] {} and ` for unique mappings ('keys')
-    let basic_symbols = s:List.char_range('!', "'") + ['&', '_', '|', '~']
+    let basic_symbols = s:List.char_range('!', "'") + ['*', '&', '_', '|', '~']
     let basic_between = map(basic_symbols, { _, char ->
       \ { 'block' : [char, char], 'motionwise' : ['char', 'line', 'block'], 'keys' : [char] }
     \ })

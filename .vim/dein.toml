@@ -141,3 +141,6 @@ repo = 'roxma/vim-hug-neovim-rpc'
 
 [[plugins]]
 repo = 'roxma/nvim-yarp'
+
+[[plugins]]
+repo = 'Shougo/neco-syntax'
