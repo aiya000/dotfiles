@@ -1,7 +1,7 @@
+scriptencoding utf-8
+
 let s:V = vital#vimrc#new()
 let s:List = s:V.import('Data.List')
-
-scriptencoding utf-8
 
 function! vimrc#dein#hook_source#operator_surround() abort " {{{
     " Exclude brackets () [] {} and ` for unique mappings ('keys')

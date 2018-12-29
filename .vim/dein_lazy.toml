@@ -376,3 +376,12 @@ on_ft = ['dhall']
 [[plugins]]
 repo  = 'fszymanski/deoplete-emoji'
 on_ft = ['markdown', 'gitcommit']
+
+[[plugins]]
+repo = 'osyo-manga/vim-hopping'
+on_cmd = [
+    'HoppingStart',
+]
+on_map = [
+    '<Plug>(hopping-start)',
+]

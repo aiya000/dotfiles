@@ -417,8 +417,7 @@ let g:unite_source_tag_max_fname_length = 100
 let g:deoplete#enable_at_startup = 0
 
 " }}}
-" --- vim-visualstar --- {{{
-
+" --- vim-visualstar --- {{{ 
 " Do zzzv after execute visualstar
 let g:visualstar_extra_commands = 'zzzv'
 
@@ -654,6 +653,7 @@ let g:indent_guides_exclude_filetypes = [
   \ 'review',
   \ 'markdown',
   \ 'haskell',
+  \ 'happy',
   \ 'tweetvim',
   \ 'tweetvim_say',
   \ 'help',
@@ -709,6 +709,15 @@ call lexima#add_rule({'filetype': 'typescript', 'char': '<', 'input_after': '>',
 " --- gina.vim --- " {{{
 
 let g:gina#command#blame#formatter#format = '%su%=on %ti by %au %ma%in'
+
+" }}}
+" --- vim-hopping --- {{{
+
+let g:hopping#prompt = '(*^v^) '
+
+let g:hopping#keymapping = {
+  \ "\<C-l>": "\<Esc>",
+\ }
 
 " }}}
 
@@ -1068,7 +1077,6 @@ nnoremap 'D "+D
 nnoremap <C-n> gt
 nnoremap <C-p> gT
 nnoremap <C-m> o<Esc>
-nnoremap <C-]> g<C-]>
 nnoremap g<C-]> <C-]>
 nnoremap <leader>/ :<C-u>Migemo<CR>
 nnoremap <silent> ! :!<CR>
@@ -1229,6 +1237,7 @@ vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
 
 " denite.nvim
 nnoremap <leader>u :<C-u>Denite<Space>
+nnoremap <silent> <C-]> :<C-u>execute printf('Denite tag -input=%s', expand('<cword>'))<CR>
 nnoremap <silent> <C-k>e :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file/rec')<CR>
 nnoremap <silent> <C-k><C-e> :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file')<CR>
 nnoremap <silent> '<C-k>e :<C-u>Denite file/rec<CR>
@@ -1248,16 +1257,18 @@ vnoremap <leader>K "zy:<C-u>Aref weblio <C-r>z<CR>
 vnoremap <leader>S "zy:<C-u>Aref stackage <C-r>z<CR>
 
 " vim-over
-nnoremap <expr> <C-k><C-s> ':OverCommandLine %s/\m\C\<' . expand('<cword>') . '\>/<CR>'
-nnoremap <expr> <C-k>s     ':OverCommandLine %s/\m\C\<' . expand('<cword>') . '\>/' . expand('<cword>') . '<CR>'
-nnoremap <silent> :%s/     :<C-u>OverCommandLine %s/<CR>
 nnoremap <silent> :s/      :<C-u>OverCommandLine s/<CR>
 vnoremap <silent> :s/      :<C-u>OverCommandLine '<,'>s/<CR>
-cnoremap <silent> <C-k>:   <Home>OverCommandLine <CR>
-"NOTE: this is temporary keymapping, because vim-over do not imported cnoremap maybe
+cnoremap <silent> <C-k>:   <Home>OverCommandLine<CR>
 OverCommandLineNoremap <C-b> <Left>
 OverCommandLineNoremap <C-f> <Right>
 "OverCommandLineNoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
+
+" vim-hopping
+nnoremap <expr> <C-k><C-s> printf(':HoppingStart --input=\m\C\<%s\>/', expand('<cword>')) . "\<CR>"
+nnoremap <expr> <C-k>s printf(':HoppingStart --input=\m\C\<%s\>/%s', expand('<cword>'), expand('<cword>')) . "\<CR>"
+nnoremap :%s/ :<C-u>HoppingStart<CR>
+nnoremap :: :<C-u>HoppingStart<CR>
 
 " anzu-chan
 "" always n moves to forward / N moves to backward

@@ -15,6 +15,7 @@ augroup FtpluginHappy
     autocmd BufWritePost *.y CClear
 augroup END
 
+nnoremap <buffer><silent> <C-l> :<C-u>syntax off<CR>:syntax on<CR>:setl syntax=haskell<CR>
 vnoremap <buffer><silent> i{ :<C-u>call <SID>align()<CR>
 
 function! s:align() abort

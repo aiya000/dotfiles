@@ -23,6 +23,7 @@ abbr    import (__)
     import ${1} (${2:here})
 
 snippet import_qualified
+alias imq
 abbr    import qualified __ as __
     import qualified ${1} as ${2}
 
@@ -178,3 +179,21 @@ alias set
 snippet prism_get
 alias look lk
     ^?
+
+# this [i|
+#          foo
+#          bar
+#      |]
+snippet trimMargins
+alias stripMargins
+abbr trimMargins :: String -> String
+    trimMargins :: String -> String
+    trimMargins = unlines . filter (/= "") . map (dropWhile (== ' ')) . lines
+
+snippet flattenMargins
+abbr flattenMargins :: String -> String
+    flattenMargins :: String -> String
+    flattenMargins = replace . unlines . filter (/= "") . map (dropWhile (== ' ')) . lines
+        where
+            replace [] = []
+            replace ('\n' : xs) = ' ' : replace xs
