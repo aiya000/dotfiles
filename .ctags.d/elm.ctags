@@ -1,7 +1,0 @@
---langdef=Elm
---langmap=elm:.elm
---regex-Elm=/^ *([[:lower:]][[:alnum:]_]+)[[:blank:]]*:[^:].*->.*/\1/f,function/
---regex-Elm=/^ *([[:lower:]][[:alnum:]_]+)[[:blank:]]*:[^:][^-]+$/\1/v,constant/
---regex-Elm=/^port +([[:lower:]][[:alnum:]_]+)[[:blank:]]*:[^:]/\1/p,port/
---regex-Elm=/^type +([[:upper:]][[:alnum:]_]+)/\1/t,type/
---regex-Elm=/^type[[:blank:]]+alias[[:blank:]]+([[:upper:]][[:alnum:]_]+)/\1/ta,type-alias/
