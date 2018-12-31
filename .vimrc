@@ -34,6 +34,9 @@ let g:vimrc['undodir']    = g:vimrc['backupdir'] . '/undo'
 let g:vimrc['viewdir']    = g:vimrc['backupdir'] . '/view'
 let g:vimrc['sessiondir'] = g:vimrc['backupdir'] . '/session'
 
+" Please see ~/.sh_generic/aliases.sh
+let $I_AM_ON_VIM = 1
+
 " }}}
 
 

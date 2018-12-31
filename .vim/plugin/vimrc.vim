@@ -135,3 +135,15 @@ command! -bar -nargs=? -complete=filetype PluginEdit
 
 command! -bar -nargs=? -complete=filetype AutoloadEdit
     \ execute ':edit' printf('%s/autoload/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+
+" Tapis
+function! Tapi_Tabnew(_, args) abort
+  let [ pwd, files ] = [ a:args[0], a:args[1 :] ]
+  let paths = map(files, { _, file ->
+    \ fnameescape(pwd . '/' . file)
+  \ })
+
+  for path in paths
+    execute 'tabnew' path
+  endfor
+endfunction

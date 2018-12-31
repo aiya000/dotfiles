@@ -331,6 +331,22 @@ function vim-fix-plugins-for-dein-update () {
     done
 }
 
+# See .vim/autoload/vimrc/autocmd.vim
+function vimterm-quote-args() {
+    for a in "$@" ; do
+        echo ", \"$a\""
+    done
+}
+
+function vimterm-open-parent-vim() {
+    echo -e "\e]51;[\"call\", \"Tapi_Tabnew\", [\"$PWD\" $(vimterm-quote-args "$@")]]\x07"
+}
+
+# If I'm on a shell on Vim
+if [[ $I_AM_ON_VIM -eq 1 ]] ; then
+    alias vim=vimterm-open-parent-vim
+fi
+
 # }}}
 
 export PATH=$PATH:~/.sh_generic/bin
