@@ -1,3 +1,8 @@
+let s:V = vital#vimrc#new()
+
+let s:List = s:V.import('Data.List')
+let s:Msg = s:V.import('Vim.Message')
+
 " Clone dein.vim to target dir
 function! vimrc#fetch_dein(install_dirname) " {{{
     if executable('git')
@@ -16,7 +21,9 @@ endfunction " }}}
 " Also this resorbs :terminal's defference of vim and neovim
 "
 "   open_mode: 'vertical' | 'horizontal' | 'stay' | 'tabnew'
-function! vimrc#open_terminal_as(filetype, open_mode, command, from_this_buffer) abort " {{{
+function! vimrc#open_terminal_as(filetype, open_mode, command, from_this_buffer, ...) abort " {{{
+  let options = a:000
+
   " NOTE: %:p:h may not be a valid directory, e.g :terminal's buffer has term://.//xxxxx:/bin/zsh
   " Open at this buffer, or open at the current directory
   let path = a:from_this_buffer && isdirectory(expand('%:p:h'))
@@ -24,10 +31,10 @@ function! vimrc#open_terminal_as(filetype, open_mode, command, from_this_buffer)
   \ : getcwd()
 
   let terminal
-    \ = has('nvim') && (a:open_mode ==# '++open') ?
-      \ [execute('throw ++open is not available for NeoVim, do :terminal without ++open instead'), ':terminal'][1]
+    \ = has('nvim') && (a:open_mode ==# '++open') ? s:terminal_with_warn()
     \ : has('nvim') ? ':terminal'
     \ : (a:open_mode ==# '++open') ? ':terminal ++curwin ++close ++open'
+    \ : s:List.has(options, 'noclose') ? ':terminal ++curwin'
     \ : ':terminal ++curwin ++close'
 
   if a:open_mode ==# 'vertical'
@@ -55,3 +62,8 @@ function! vimrc#open_terminal_as(filetype, open_mode, command, from_this_buffer)
   nnoremap <buffer><expr> "+p vimrc#keys#put_as_stdin(@+)
   nmap <buffer> 'p "+p
 endfunction " }}}
+
+function! s:terminal_with_warn() abort
+  call s:Msg.warn('throw ++open is not available for NeoVim, do :terminal without ++open instead')
+  return ':terminal'
+endfunction

@@ -1,8 +1,20 @@
 snippet import
     import ${1}
 
+snippet if
+abbr if ${1}:${0}
+    if ${1}:${0}
+
+snippet else
+abbr else:
+    else:
+
+snippet for
+abbr for ${1:x} in ${2:xs}:
+    for ${1:x} in ${2:xs}:
+
 snippet print
-abbr print(__)
+alias pr
     print(${0})
 
 snippet init
@@ -18,3 +30,8 @@ snippet doc_param
 alias param
 abbr :param {type} {name}: {description}
     :param ${1:int} ${2:x}: ${0:description}
+
+snippet def
+alias fun
+abbr def ${1:name}(${2:#:self}):${0}
+    def ${1:name}(${2:#:self}):${0}
