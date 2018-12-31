@@ -16,10 +16,6 @@ rev  = 'd0c5bef'
 repo = 'supermomonga/vimshell-kawaii.vim'
 
 [[plugins]]
-repo    = 'Shougo/unite-outline'
-depends = 'denite.nvim'
-
-[[plugins]]
 repo = 'LeafCage/foldCC'
 
 [[plugins]]
@@ -60,10 +56,6 @@ repo = 'kana/vim-operator-user'
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
 rev  = 'acae373'
-
-[[plugins]]
-repo    = 'tsukkee/unite-tag'
-depends = 'denite.nvim'
 
 [[plugins]]
 repo = 'aiya000/vimshell-command-dehanai.vim'
