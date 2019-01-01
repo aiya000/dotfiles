@@ -10,7 +10,7 @@
 export ZDOTDIR=~/.zsh
 export HISTFILE=$ZDOTDIR/history
 export HISTSIZE=1000000
-export HISTIGNORE="*mount*-o*password=*"
+export HISTORY_IGNORE=''
 export SAVEHIST=1000000
 export TIMEFMT='%Y/%m/%d %H:%M '
 export FPATH=$FPATH:$HOME/.zsh/complete

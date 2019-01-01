@@ -1,16 +1,6 @@
-"---------"
-" Startup "
-"---------"
-" Set encodings {{{
-
-scriptencoding utf-8
-
-" }}}
-
-
-"----------------------"
-" Define global values "
-"----------------------"
+"---------------"
+" Global values "
+"---------------"
 " {{{
 
 let g:gvimrc = get(g:, 'gvimrc', {})
@@ -19,13 +9,16 @@ let g:gvimrc['loaded'] = get(g:gvimrc, 'loaded', 0)
 " }}}
 
 
-"------------------"
-" Set gvim options "
-"------------------"
+"---------"
+" Options "
+"---------"
 " {{{
 
 " TODO: If Windows
-set guifont=RictyDiminished\ NF\ 11
+let g:vimrc['guifont'] = {
+  \ 'size': 11,
+\ }
+let &guifont = 'RictyDiminished NF ' . g:vimrc.guifont.size
 
 set guioptions-=T
 set guioptions-=m
@@ -39,9 +32,9 @@ set mouse=
 " }}}
 
 
-"--------------"
-" GUI Commands "
-"--------------"
+"----------"
+" Commands "
+"----------"
 " {{{
 
 function! s:open_this_file_in_new_window()
@@ -51,12 +44,15 @@ function! s:open_this_file_in_new_window()
 endfunction
 
 command! OpenThisFileInNewWindow call s:open_this_file_in_new_window()
+command! IncrementGuiFontSize call vimrc#cmd#increment_gui_fontsize()
+command! DecrementGuiFontSize call vimrc#cmd#decrement_gui_fontsize()
 
 " }}}
 
-"------------------"
-" Plugin_Configure "
-"------------------"
+
+"---------"
+" Plugins "
+"---------"
 " --- TweetVim --- {{{
 
 let g:tweetvim_display_username = 1

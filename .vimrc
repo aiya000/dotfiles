@@ -1,6 +1,6 @@
-"----------------------"
-" Define global values "
-"----------------------"
+"---------------"
+" Global values "
+"---------------"
 " {{{
 
 " Open in preference to an entity
@@ -40,9 +40,9 @@ let $I_AM_ON_VIM = 1
 " }}}
 
 
-"---------"
-" Startup "
-"---------"
+"-----------"
+" Preparing "
+"-----------"
 " Set encodings {{{
 
 if !g:vimrc['loaded']
@@ -121,11 +121,10 @@ catch /E117/  " If dein.vim is not found
   endtry
 endtry
 
-" Copy the dein.vim document
+" Copy the dein.vim's document
 let s:dein_doc_from = s:dein_dirname . '/doc/dein.txt'
 let s:dein_doc_to   = g:vimrc['vim_home'] . '/doc/dein.txt'
 if filereadable(s:dein_doc_from) && !filereadable(s:dein_doc_to)
-  " ~/.vim/doc will be :helptags automatically
   call writefile(readfile(s:dein_doc_from), s:dein_doc_to)
 endif
 unlet s:dein_doc_from s:dein_doc_to
@@ -153,9 +152,9 @@ endif
 " }}}
 
 
-"--------------"
-" Load plugins "
-"--------------"
+"---------"
+" Plugins "
+"---------"
 " {{{
 
 call dein#load_toml('~/.vim/dein.toml',      {'lazy': 0})
@@ -171,9 +170,9 @@ call dein#add('Shougo/dein.vim', {'rtp': ''})
 " }}}
 
 
-"--------------------"
-" Load local scripts "
-"--------------------"
+"---------------"
+" Local scripts "
+"---------------"
 " {{{
 "NOTE: This section must be put at between dein#begin() and dein#end()
 
@@ -188,9 +187,9 @@ endif
 " }}}
 
 
-"---------------------"
-" Configurate plugins "
-"---------------------"
+"---------"
+" Plugins "
+"---------"
 " --- netrw --- {{{
 
 " Enable netrw previewing
@@ -727,9 +726,9 @@ let g:hopping#keymapping = {
 call dein#end()
 
 
-"-----------------"
-" Set vim options "
-"-----------------"
+"---------"
+" Options "
+"---------"
 " {{{
 
 set
@@ -858,9 +857,9 @@ let &tags = &tags . ',' . join([
 " }}}
 
 
-"---------------------"
-" Set augroup details "
-"---------------------"
+"----------"
+" Augroups "
+"----------"
 " {{{
 
 augroup VimRc
@@ -893,9 +892,9 @@ augroup END
 " }}}
 
 
-"-----------------"
-" Manage commands "
-"-----------------"
+"----------"
+" Commands "
+"----------"
 " Prepare {{{
 
 call altercmd#load()
@@ -943,9 +942,9 @@ CmdCnoreabbr ReverseLines OperatorReverseLines
 " }}}
 
 
-"--------------------"
-" Define keymappings "
-"--------------------"
+"---------"
+" Keymaps "
+"---------"
 " normal mode {{{
 
 " Allow keymaps like <C-c>{foo}, and {bar}<C-c>
@@ -1465,21 +1464,8 @@ augroup END
 
 " }}}
 
-
-"---------"
-" Finally "
-"---------"
-" {{{
-
-" Generate the help tags
-if isdirectory(g:vimrc['vim_home'] . '/doc')
-  execute 'helptags' (g:vimrc['vim_home'] . '/doc')
-endif
-
+execute 'helptags' (g:vimrc['vim_home'] . '/doc')
 nohlsearch
 filetype plugin indent on
 syntax enable
-
-" }}}
-
 let g:vimrc['loaded'] = 1

@@ -79,8 +79,18 @@ function! vimrc#cmd#cmd_cnoreabbr(...) abort " {{{
     execute 'command!'  cmd_name UNUSED_VALUE
 endfunction " }}}
 
-" Remove CmdCnoreabbr
+" Remove a CmdCnoreabbr
 function! vimrc#cmd#un_cmd_cnoreabbr(name) abort " {{{
     execute 'cunabbr' a:name
     execute 'delcommand' a:name
+endfunction " }}}
+
+function! vimrc#cmd#increment_gui_fontsize() abort " {{{
+  let g:vimrc.guifont.size += 1
+  let &guifont = 'RictyDiminished NF ' . g:vimrc.guifont.size
+endfunction " }}}
+
+function! vimrc#cmd#decrement_gui_fontsize() abort " {{{
+  let g:vimrc.guifont.size -= 1
+  let &guifont = 'RictyDiminished NF ' . g:vimrc.guifont.size
 endfunction " }}}
