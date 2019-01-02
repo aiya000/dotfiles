@@ -220,3 +220,47 @@ function! vimrc#keys#put_as_stdin(detail) abort " {{{
   call timer_start(0, { _ -> term_sendkeys(current_bufnr, a:detail) }, {'repeat': 1})
   return 'i'
 endfunction " }}}
+
+function! vimrc#keys#move_window_forward() " {{{
+  mark Z
+  hide
+  if winnr('$') <= 1
+    tabnext
+  endif
+  vsp
+  normal! `Z
+  if foldlevel('.') > 0
+    normal! zO
+  endif
+  normal! zz
+endfunction " }}}
+
+"FIXME: if winnum in tab is 1
+" Current buffer move to next tab
+function! vimrc#keys#move_window_backward() " {{{
+  mark Z
+  hide
+  tabprevious
+  vsp
+  normal! `Z
+  if foldlevel('.') > 0
+    normal! zO
+  endif
+  normal! zz
+endfunction " }}}
+
+function! vimrc#keys#move_tab_prev() " {{{
+  if tabpagenr() is 1
+    execute ':tabmove' tabpagenr('$')
+  else
+    execute ':tabmove -1'
+  endif
+endfunction " }}}
+
+function! vimrc#keys#move_tab_next() " {{{
+  if tabpagenr() is tabpagenr('$')
+    execute ':tabmove 0'
+  else
+    execute ':tabmove +1'
+  endif
+endfunction " }}}

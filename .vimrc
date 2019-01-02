@@ -357,20 +357,27 @@ let g:foldCCtext_maxchars = 120
 
 let g:submode_timeout = 0
 
-function! s:vim_submode_on_source()
-  call submode#enter_with('window_resize', 'n', '', '<C-s>w')
-  call submode#map('window_resize', 'n', '', 'j', '3<C-w>+')
-  call submode#map('window_resize', 'n', '', 'k', '3<C-w>-')
-  call submode#map('window_resize', 'n', '', 'h', '3<C-w><')
-  call submode#map('window_resize', 'n', '', 'l', '3<C-w>>')
+call submode#enter_with('window_resize', 'n', '', '<C-s>w')
+call submode#map('window_resize', 'n', '', 'j', '3<C-w>+')
+call submode#map('window_resize', 'n', '', 'k', '3<C-w>-')
+call submode#map('window_resize', 'n', '', 'h', '3<C-w><')
+call submode#map('window_resize', 'n', '', 'l', '3<C-w>>')
 
-  call submode#enter_with('buffer_change', 'n', '', '<C-s>b')
-  call submode#map('buffer_change', 'n', 's', 'n', ':bnext<CR>')
-  call submode#map('buffer_change', 'n', 's', 'p', ':bprevious<CR>')
-endfunction
+call submode#enter_with('tab_move', 'n', '', '<C-s>p', ':<C-u>call vimrc#keys#move_tab_prev()<CR>')
+call submode#enter_with('tab_move', 'n', '', '<C-s>n', ':<C-u>call vimrc#keys#move_tab_next()<CR>')
+call submode#map('tab_move', 'n', 's', 'n', ':<C-u>call vimrc#keys#move_tab_prev()<CR>')
+call submode#map('tab_move', 'n', 's', 'p', ':<C-u>call vimrc#keys#move_tab_next()<CR>')
 
-call dein#set_hook('vim-submode', 'hook_source', function('s:vim_submode_on_source'))
-
+call submode#enter_with('window_move', 'n', '', '<C-s>P', ':<C-u>call vimrc#keys#move_window_forward()<CR>')
+call submode#enter_with('window_move', 'n', '', '<C-s>N', ':<C-u>call vimrc#keys#move_window_backward()<CR>')
+call submode#map('window_move', 'n', 's', 'N', ':<C-u>call vimrc#keys#move_window_forward()<CR>')
+call submode#map('window_move', 'n', 's', 'P', ':<C-u>call vimrc#keys#move_window_backward()<CR>')
+call submode#map('window_move', 'n', 'e', 'H', '"<C-w>H" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
+call submode#map('window_move', 'n', 'e', 'J', '"<C-w>J" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
+call submode#map('window_move', 'n', 'e', 'K', '"<C-w>K" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
+call submode#map('window_move', 'n', 'e', 'L', '"<C-w>L" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
+call submode#map('window_move', 'n', 's', '_', '<C-w>_')
+call submode#map('window_move', 'n', 's', '"', ':resize 5<CR>')
 " }}}
 " --- vimdoc-ja --- {{{
 
@@ -422,15 +429,6 @@ let g:deoplete#enable_at_startup = 0
 " --- vim-visualstar --- {{{ 
 " Do zzzv after execute visualstar
 let g:visualstar_extra_commands = 'zzzv'
-
-" }}}
-" --- submode-window_move.vim --- {{{
-
-" Register mode starting keymapping
-let g:submode_window_move = {}
-let g:submode_window_move['start_tab_move']                   = '<C-s><C-g>'
-let g:submode_window_move['start_window_move_with_move_next'] = '<C-s>N'
-let g:submode_window_move['start_window_move_with_move_prev'] = '<C-s>P'
 
 " }}}
 " --- vim-gista --- {{{
@@ -1178,6 +1176,7 @@ vnoremap g_ $
 vnoremap 'p "+p
 vnoremap 'P "+P
 vnoremap 'y "+y
+vnoremap 'd "+d
 
 " }}}
 " select mode {{{

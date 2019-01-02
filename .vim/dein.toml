@@ -75,9 +75,6 @@ repo = 'thinca/vim-visualstar'
 repo = 'jonathanfilip/vim-lucius'
 
 [[plugins]]
-repo = 'aiya000/submode-window_move.vim'
-
-[[plugins]]
 repo = 'romainl/Apprentice'
 
 [[plugins]]
