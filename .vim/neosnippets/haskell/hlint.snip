@@ -1,18 +1,28 @@
 snippet pragma_ann_hlint_ignore
 alias hlint_ignore suppress_hlint_warnings ignore_hlint_warnings
+abbr {-# ANN ${1:target} "HLint: ignore ${2:message}" #-}
     {-# ANN ${1:target} "HLint: ignore ${2:message}" #-}
 
 snippet hlint_ignore_use_camel_case
+abbr {-# ANN module "HLint: ignore Use camelCase" #-}
     {-# ANN module "HLint: ignore Use camelCase" #-}
 
 snippet hlint_ignore_redundant_lambda
+abbr {-# ANN ${1:funcName} "HLint: ignore Redundant lambda" #-}
     {-# ANN ${1:funcName} "HLint: ignore Redundant lambda" #-}
 
 snippet hlint_ignore_unnecessary_hiding
+abbr {-# ANN module "HLint: ignore Unnecessary hiding" #-}
     {-# ANN module "HLint: ignore Unnecessary hiding" #-}
 
 snippet hlint_ignore_eta_reduce
+abbr {-# ANN ${1:funcName} "HLint: ignore Eta reduce" #-}
     {-# ANN ${1:funcName} "HLint: ignore Eta reduce" #-}
 
 snippet hlint_ignore_use_newtype_instead_of_data
+abbr {-# ANN ${1:type} "HLint: ignore Use newtype instead of data" #-}
     {-# ANN ${1:type} "HLint: ignore Use newtype instead of data" #-}
+
+snippet hlint_ignore_evaluate
+abbr {-# ANN ${1:func} "HLint: ignore Evaluate" #-}
+    {-# ANN ${1:func} "HLint: ignore Evaluate" #-}

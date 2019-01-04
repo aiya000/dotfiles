@@ -347,6 +347,11 @@ if [[ $I_AM_ON_VIM -eq 1 ]] ; then
     alias vim=vimterm-open-parent-vim
 fi
 
+if i_have skim ; then
+    # shellcheck disable=SC2139
+    alias sk="sk $SKIM_DEFAULT_OPTS"
+fi
+
 # }}}
 
 export PATH=$PATH:~/.sh_generic/bin

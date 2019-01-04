@@ -23,6 +23,14 @@ function fzf-history-search-backward () {
 }
 zle -N fzf-history-search-backward
 
+function skim-history-find-backward () {
+    local selected
+    selected=$(fc -ln 1 | sk --regex)
+    BUFFER="$selected"
+    CURSOR=${#BUFFER}
+}
+zle -N skim-history-find-backward
+
 # Select paths by fzf
 function fzf-path-finder () {
     local current_word="${LBUFFER/* /}${RBUFFER/ */}"
@@ -46,6 +54,7 @@ zle -N fzf-path-finder
 ##############
 # Emacs nize insert-mode
 bindkey -M viins '^r' fzf-history-search-backward
+bindkey -M viins '^g^r' skim-history-find-backward
 bindkey -M viins '^n' down-line-or-history
 bindkey -M viins '^p' up-line-or-history
 bindkey -M viins '^a' beginning-of-line

@@ -44,8 +44,6 @@ function! s:open_this_file_in_new_window()
 endfunction
 
 command! OpenThisFileInNewWindow call s:open_this_file_in_new_window()
-command! IncrementGuiFontSize call vimrc#cmd#increment_gui_fontsize()
-command! DecrementGuiFontSize call vimrc#cmd#decrement_gui_fontsize()
 
 " }}}
 
@@ -64,6 +62,14 @@ let g:tweetvim_display_icon     = 1
 let g:J6uil_display_icon = 1
 
 " }}}
+" --- vim-suvmode --- {{{
+
+call submode#enter_with('font_size', 'n', 's', '<C-s>+', ':<C-u>call vimrc#cmd#increment_gui_fontsize()<CR>')
+call submode#enter_with('font_size', 'n', 's', '<C-s>-', ':<C-u>call vimrc#cmd#decrement_gui_fontsize()<CR>')
+call submode#map('font_size', 'n', 's', '+', ':<C-u>call vimrc#cmd#increment_gui_fontsize()<CR>')
+call submode#map('font_size', 'n', 's', '-', ':<C-u>call vimrc#cmd#decrement_gui_fontsize()<CR>')
+
+" }}
 
 syntax enable
 let g:gvimrc['loaded'] = 1
