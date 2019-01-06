@@ -27,6 +27,10 @@ alias imq
 abbr    import qualified __ as __
     import qualified ${1} as ${2}
 
+snippet hiding
+abbr hiding (${0:here})
+    hiding (${0:here})
+
 snippet infixl
 abbr infixl {infixity} {operator}
     infixl ${1:3} ${2:<>}

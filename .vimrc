@@ -554,6 +554,7 @@ call denite#custom#source('file_rec', 'matchers', ['matcher_substring'])
 call denite#custom#source('line', 'matchers', ['matcher_substring'])
 call denite#custom#source('tag', 'matchers', ['matcher_substring'])
 call denite#custom#source('file_mru', 'matchers', ['matcher_substring', 'matcher_ignore_globs'])
+call denite#custom#source('tag', 'converters', ['converter/abbr_word'])
 
 " NOTE: How I can ignore it without this DEPRECATED value
 let g:neomru#file_mru_ignore_pattern = '^gina://.*'
@@ -1388,12 +1389,8 @@ vnoremap <silent> i= :Alignta => =/1<CR>
 "nnoremap <silent> <C-g><C-k> :<C-u>EspeakNgDoesntSay<CR>
 
 " vim-operator-surround
-vmap Sa <Plug>(operator-surround-append)
-vmap Sd <Plug>(operator-surround-delete)
-vmap Sc <Plug>(operator-surround-replace)
-omap Sa <Plug>(operator-surround-append)
-omap Sd <Plug>(operator-surround-delete)
-omap Sc <Plug>(operator-surround-replace)
+vmap ga <Plug>(operator-surround-append)
+omap ga <Plug>(operator-surround-append)
 nmap <silent> ga :<C-u>call vimrc#keys#append_surround('viw')<CR>
 nmap <silent> gA :<C-u>call vimrc#keys#append_surround('viW')<CR>
 nmap <silent> ds :<C-u>call vimrc#keys#delete_mostly_inner()<CR>

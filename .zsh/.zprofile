@@ -20,7 +20,8 @@ export FPATH=$FPATH:$HOME/.zsh/complete
 
 # Mine
 PATH=$HOME/bin:$HOME/sbin:$PATH
-PATH=$PATH:$HOME/.dotfiles/bin
+PATH=$HOME/.dotfiles/bin:$PATH
+PATH=$HOME/.local/bin:$PATH # Load haskell-cabal and etc
 
 # Basics
 PATH=$PATH:/bin:/sbin
@@ -28,9 +29,6 @@ PATH=$PATH:/usr/local/bin:/usr/local/sbin
 PATH=$PATH:/usr/bin:/usr/sbin
 PATH=$PATH:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
 PATH=$PATH:$GOPATH/bin
-
-# Load haskell-cabal and etc
-PATH=$PATH:$HOME/.local/bin
 
 # yarn
 PATH=$PATH:$HOME/.yarn/bin
