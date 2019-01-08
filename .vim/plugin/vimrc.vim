@@ -9,10 +9,32 @@ command! -bar -bang -complete=file -nargs=? EditOverridden e<bang> <args> | if e
 command! -bar -bang -complete=file -nargs=? VnewOverridden vnew<bang> <args> | if empty(&ft) | setf none | endif
 command! -bar -bang -complete=file -nargs=? EnewOverridden enew<bang> <args> | if empty(&ft) | setf none | endif
 command! -bar -bang -complete=file -nargs=? TabnewOverridden tabnew<bang> <args> | if empty(&ft) | setf none | endif
+"" Scripts
+command! -bar -nargs=? -complete=filetype FtpluginEditAfter
+    \ execute ':edit' printf('%s/after/ftplugin/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+
+command! -bar -nargs=? -complete=filetype FtDictionaryEdit
+    \ execute ':edit' printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+
+command! -bar -nargs=? -complete=filetype SyntaxEdit
+    \ execute ':edit' printf('%s/syntax/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+
+command! -bar -nargs=? -complete=filetype IndentEdit
+    \ execute ':edit' printf('%s/indent/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+
+command! -bar -nargs=? -complete=filetype FtDetectEdit
+    \ execute ':edit' printf('%s/ftdetect/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+
+command! -bar -nargs=? -complete=filetype PluginEdit
+    \ execute ':edit' printf('%s/plugin/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+
+command! -bar -nargs=? -complete=filetype AutoloadEdit
+    \ execute ':edit' printf('%s/autoload/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
 "" Others
 command! -bar GUI call vimrc#plugins#open_this_file_in_gui()
 command! -bar -nargs=+ DeleteLines call vimrc#plugins#delete_lines(<f-args>)
 command! -bar SneakToCamelAll %s/_\(.\)/\u\1/g
+command! -bar ReverseLines OperatorReverseLines
 
 "" Clear quickfix
 command! -bar CClear call setqflist([])
@@ -25,23 +47,6 @@ command! -bar -nargs=1 InsertWebPageTitle execute 'normal! i' . vimrc#cmd#pull_w
 
 "" Save session and specify session name automatically
 command! -bar SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
-
-"" CSS
-command! -bar CssShowDecompressed call vimrc#cmd#decompress_to_buffer()
-
-"" Others
-command! -bar -nargs=* Vim call vimrc#open_terminal_as('term-vim', 'stay', 'vim ' . <q-args>)
-command! -bar Memo sp ~/.backup/memo.md
-command! -bar CdBufDir cd %:p:h
-command! -bar CdGitRoot execute ':cd' system('git rev-parse --show-toplevel')
-command! -bar LcdBufDir lcd %:p:h
-command! -bar LcdGitRoot execute ':lcd' system('git rev-parse --show-toplevel')
-command! -bar -nargs=+ Grep call vimrc#plugins#grep_those(<f-args>)
-command! -bar TodoList Grep TODO FIXME XXX
-
-" Developments
-command! -bar -nargs=1 TestCodeEdit EditOverridden ~/.tmp/Test.<args>
-command! -bar CtagsAuto call vimrc#open_terminal_as('', '++open', 'zsh -c ctags-auto', v:false)
 
 "" Haskell
 command! -bar HaskDogs call vimrc#plugins#execute_haskdogs_async()
@@ -73,17 +78,6 @@ command! -bar SwiftRepl call vimrc#open_terminal_as('none', 'stay', 'swift', v:f
 command! -bar KotlinRepl call vimrc#open_terminal_as('none', 'stay', 'kotlinc-jvm', v:false)
 command! -bar DhallRepl call vimrc#open_terminal_as('none', 'stay', 'dhall repl', v:false)
 
-" Plugins
-"" dein.vim
-command! -bar DeinInstall   call dein#install()
-command! -bar DeinUpdate    call dein#update()
-command! -bar DeinLog       new | setl buftype=nofile noreadonly modifiable ft=deinlog | put=dein#get_log()
-command! -bar DeinUpdateLog new | setl buftype=nofile noreadonly modifiable ft=deinlog | put=dein#get_updates_log()
-command! -bar DeinRecacheRuntimepath call dein#recache_runtimepath()
-
-"" dein-ui.vim
-"command! -bar DeinUpdate SPUpdate
-
 " Git commands
 command! -bar -nargs=* GStatus Gina status -s <args>
 command! -bar -nargs=* GLog GitLogViewer -100 --name-only <args>
@@ -100,6 +94,7 @@ command! -bar -nargs=* GLogTree Gina log --graph --decorate --oneline <args>
 command! -bar -nargs=* GLogTreeAll GTree --all <args>
 command! -bar -nargs=* GBrahcnAll Gina branch --all <args>
 command! -bar -nargs=* GBlame Gina blame <args>
+command! -bar -nargs=* Gist Gista post --stay <args>
 
 " Twitter
 command! -bar Twitter TweetVimHomeTimeline
@@ -114,27 +109,23 @@ command! -bar TwitterPublicTab tabnew | TwitterPublic
 command! -bar TweetPublic call vimrc#plugins#tweet_public()
 command! -bar -nargs=+ TweetPublicCommandSay call vimrc#plugins#tweet_public(<q-args>)
 
-" Plugins
-command! -bar -nargs=? -complete=filetype FtpluginEditAfter
-    \ execute ':edit' printf('%s/after/ftplugin/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+" aref-web.vim
+command! -bar -nargs=+ Hoogle Aref hoogle <args>
+command! -bar -nargs=+ ShellCheck Aref shellcheck <args>
+command! -bar -nargs=+ Stackage Aref stackage <args>
+command! -bar -nargs=+ Weblio Aref weblio <args>
+command! -bar -nargs=+ ElmSearch Aref elm-search <args>
 
-command! -bar -nargs=? -complete=filetype FtDictionaryEdit
-    \ execute ':edit' printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
-
-command! -bar -nargs=? -complete=filetype SyntaxEdit
-    \ execute ':edit' printf('%s/syntax/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
-
-command! -bar -nargs=? -complete=filetype IndentEdit
-    \ execute ':edit' printf('%s/indent/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
-
-command! -bar -nargs=? -complete=filetype FtDetectEdit
-    \ execute ':edit' printf('%s/ftdetect/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
-
-command! -bar -nargs=? -complete=filetype PluginEdit
-    \ execute ':edit' printf('%s/plugin/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
-
-command! -bar -nargs=? -complete=filetype AutoloadEdit
-    \ execute ':edit' printf('%s/autoload/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
+"" Others
+command! -bar -nargs=* Vim call vimrc#open_terminal_as('term-vim', 'stay', 'vim ' . <q-args>)
+command! -bar Memo sp ~/.backup/memo.md
+command! -bar CdBufDir cd %:p:h
+command! -bar CdGitRoot execute ':cd' system('git rev-parse --show-toplevel')
+command! -bar LcdBufDir lcd %:p:h
+command! -bar LcdGitRoot execute ':lcd' system('git rev-parse --show-toplevel')
+command! -bar -nargs=+ Grep call vimrc#plugins#grep_those(<f-args>)
+command! -bar TodoList Grep TODO FIXME XXX
+command! -bar CtagsAuto call vimrc#open_terminal_as('', '++open', 'zsh -c ctags-auto', v:false)
 
 " Tapis
 function! Tapi_Tabnew(_, args) abort

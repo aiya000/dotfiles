@@ -44,16 +44,6 @@ on_map  = [
 ]
 
 [[plugins]]
-repo    = 'basyura/J6uil.vim'
-depends = [
-    'webapi-vim',
-    'vimproc.vim',
-    'open-browser.vim',
-    'denite.nvim',
-]
-on_cmd  = 'J6uil'
-
-[[plugins]]
 repo = 'mattn/webapi-vim'
 
 [[plugins]]
@@ -139,7 +129,7 @@ on_ft = [
 
 [[plugins]]
 repo   = 'lambdalisue/vim-gista'
-on_cmd = 'Gist'
+on_cmd = 'Gista'
 
 [[plugins]]
 repo    = 'aiya000/aref-web.vim'
@@ -156,19 +146,6 @@ on_ft = 'toml'
 [[plugins]]
 repo      = 'yomi322/neco-tweetvim'
 on_source = 'TweetVim'
-
-[[plugins]]
-repo = 'rbtnn/game_engine.vim'
-
-[[plugins]]
-repo    = 'rbtnn/puyo.vim'
-depends = 'game_engine.vim'
-on_cmd  = 'Puyo'
-
-[[plugins]]
-repo    = 'rbtnn/reversi.vim'
-depends = 'game_engine.vim'
-on_cmd  = 'Reversi'
 
 [[plugins]]
 repo  = 'derekwyatt/vim-scala'
@@ -195,11 +172,11 @@ on_map = '<Plug>(operator-open-googletranslate)'
 [[plugins]]
 repo     = 'ianks/vim-tsx'
 on_event = ['BufNewFile', 'BufRead']
-on_if    = 'expand("%") =~# "\.tsx$"'
+on_ft    = 'expand("%") =~# "\.tsx$"'
 
 [[plugins]]
 repo  = 'vmchale/ghci-syntax'
-on_if = 'expand("%") ==# ".ghci"'
+on_ft = 'dot-ghci'
 
 [[plugins]]
 repo  = 'aiya000/elm-vim'
@@ -217,19 +194,6 @@ on_ft = ['idris', 'lidris']
 repo    = 'Shougo/unite.vim'
 depends = 'TweetVim'
 on_cmd  = 'Unite'
-
-[[plugins]]
-repo   = 'rhysd/wandbox-vim'
-on_cmd = [
-    'Wandbox',
-    'Wandbox',
-    'WandboxAbortAsyncWorks',
-    'WandboxAsync',
-    'WandboxOpenBrowser',
-    'WandboxOptionList',
-    'WandboxOptionListAsync',
-    'WandboxSync',
-]
 
 [[plugins]]
 repo  = 'libclang-vim/libclang-vim'
@@ -298,7 +262,7 @@ on_ft = [
 repo    = 'tyru/operator-reverse.vim'
 depends = 'vim-operator-user'
 on_cmd  = 'OperatorReverseLines'
-on_map  = [
+on_map = [
     '<Plug>(operator-reverse-text)',
     '<Plug>(operator-reverse-lines)',
 ]
@@ -327,7 +291,7 @@ on_map = [
 repo        = 'rhysd/vim-operator-surround'
 depends     = 'vim-operator-user'
 hook_source = 'call vimrc#dein#hook_source#operator_surround()'
-on_map      = [
+on_map = [
     '<Plug>(operator-surround-append)',
     '<Plug>(operator-surround-delete)',
     '<Plug>(operator-surround-replace)',
@@ -336,25 +300,25 @@ on_map      = [
 [[plugins]]
 repo        = 'mattn/emmet-vim'
 hook_source = 'call vimrc#dein#hook_source#emmet()'
-on_ft       = [
+on_ft = [
     'xml',
     'html',
     'markdown',
 ]
 
 [[plugins]]
-repo = 'moro/vim-review'
+repo  = 'moro/vim-review'
 on_ft = 'review'
 
 [[plugins]]
-repo = 'aiya000/vim-fmap'
+repo   = 'aiya000/vim-fmap'
+on_cmd = ['FNoreMap']
 on_map = [
     '<Plug>(fmap-forward-f)',
     '<Plug>(fmap-backward-f)',
     '<Plug>(fmap-forward-t)',
     '<Plug>(fmap-backward-t)',
 ]
-on_cmd = ['FNoreMap']
 
 [[plugins]]
 repo = 'Chiel92/vim-autoformat'
@@ -377,10 +341,10 @@ repo  = 'fszymanski/deoplete-emoji'
 on_ft = ['markdown', 'gitcommit']
 
 [[plugins]]
-repo = 'osyo-manga/vim-hopping'
-on_cmd = [
-    'HoppingStart',
-]
-on_map = [
-    '<Plug>(hopping-start)',
-]
+repo   = 'osyo-manga/vim-hopping'
+on_cmd = ['HoppingStart']
+on_map = ['<Plug>(hopping-start)']
+
+[[plugins]]
+repo   = 'haya14busa/dein-command.vim'
+on_cmd = ['Dein']

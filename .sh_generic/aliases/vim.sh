@@ -26,36 +26,47 @@ function vim-current-session () {
     "$editor" -S "$sessions_dir/$session_name"
 }
 
-function vimman () {
-    local editor
-    editor=$([[ -n $1 ]] && echo "$1" || echo vim)
-    "$editor" -c "Man ${1}" +only
-}
-
 # NeoVim
 alias nvime='nvim -c ":bufdo tab split" +q'
-alias nvimman='vimman nvim'
-
-## Twitter
-alias twitter='vim +TweetVimHomeTimeline'
-alias tweet='vim +TweetVimSay'
-alias twitter-public='vim +TwitterPublic'
-alias tweet-public='vim +TweetPublic'
-function twitter-usertimeline() {
-    vim -c "TweetVimUserTimeline ${1}"
-}
-
-function tweet-say() {
-    yes | vim -c "TweetVimCommandSay ${1}" +q
-}
-
-function tweet-public-say() {
-    yes | vim \
-        -c "TweetVimSwitchAccount public_ai000ya" \
-        -c "TweetVimCommandSay ${1}" \
-        +q
-}
 
 ## :terminal
 alias vterminal='vim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell, v:false)"'
 alias nterminal='nvim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell, v:false)"'
+
+function vim-fix-plugins-for-dein-update () {
+    local plugin_names plugin_dir
+    plugin_names=("$@")
+    for name in "${plugin_names[@]}" ; do
+        cd ~/.vim/bundle/repos || exit
+        plugin_dir=$(bash -c "find . -type d -name '$name'")
+        echo "$name"
+        cd "$plugin_dir" && git checkout master
+    done
+}
+
+function vim-get-latest-git-hashes () {
+    local plugin_names plugin_dir
+    plugin_names=("$@")
+    for name in "${plugin_names[@]}" ; do
+        cd ~/.vim/bundle/repos || exit 1
+        plugin_dir=$(bash -c "find . -type d -name '$name'")
+        cd "$plugin_dir" || exit 1
+        echo "$name: $(git log | head -1 | awk '{print $2}')"
+    done
+}
+
+# See .vim/autoload/vimrc/autocmd.vim
+function vimterm-quote-args() {
+    for a in "$@" ; do
+        echo ", \"$a\""
+    done
+}
+
+function vimterm-open-parent-vim() {
+    echo -e "\e]51;[\"call\", \"Tapi_Tabnew\", [\"$PWD\" $(vimterm-quote-args "$@")]]\x07"
+}
+
+# If I'm on a shell on Vim
+if [[ $I_AM_ON_VIM -eq 1 ]] ; then
+    alias vim=vimterm-open-parent-vim
+fi

@@ -721,6 +721,17 @@ let g:hopping#keymapping = {
 \ }
 
 " }}}
+" --- vim-altercmd --- {{{
+
+call altercmd#load()
+
+AlterCommand new NewOverridden
+AlterCommand e[dit] EditOverridden
+AlterCommand vne[w] VnewOverridden
+AlterCommand ene[w] EnewOverridden
+AlterCommand tabnew TabnewOverridden
+
+" }}}
 
 call dein#end()
 
@@ -887,56 +898,6 @@ augroup VimRc
   "NOTE: Remove this after the auto indent bug is fixed
   autocmd FileType int-* set indentkeys-=:
 augroup END
-
-" }}}
-
-
-"----------"
-" Commands "
-"----------"
-" Prepare {{{
-
-call altercmd#load()
-
-" Define cnoreabbr with cmd completion
-command! -nargs=+ CmdCnoreabbr call vimrc#cmd#cmd_cnoreabbr(<f-args>)
-command! -bar -nargs=1 UnCmdCnoreabbr call vimrc#cmd#un_cmd_cnoreabbr(<q-args>)
-
-" }}}
-" AlterCommand {{{
-
-" See .vim/plugin/vimrc.vim
-AlterCommand new NewOverridden
-AlterCommand e[dit] EditOverridden
-AlterCommand vne[w] VnewOverridden
-AlterCommand ene[w] EnewOverridden
-AlterCommand tabnew TabnewOverridden
-
-" Eta
-AlterCommand etr !etlas run
-
-" }}}
-" CmdCnoreabbr {{{
-
-" aref-web.vim
-CmdCnoreabbr Hoogle     Aref hoogle
-CmdCnoreabbr ShellCheck Aref shellcheck
-CmdCnoreabbr Stackage   Aref stackage
-CmdCnoreabbr Weblio     Aref weblio
-CmdCnoreabbr ElmSearch  Aref elm-search
-
-" vim-open-googletranslate
-CmdCnoreabbr Google OpenGoogleTranslate
-
-" TweetVim
-CmdCnoreabbr SwitchAccount TweetVimSwitchAccount
-CmdCnoreabbr UserTimeline  TweetVimUserTimeline
-
-" Others
-CmdCnoreabbr Lingr J6uil
-CmdCnoreabbr LingrTab TabnewOverridden \| J6uil
-CmdCnoreabbr Gist Gista post --stay
-CmdCnoreabbr ReverseLines OperatorReverseLines
 
 " }}}
 

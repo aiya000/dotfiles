@@ -16,3 +16,31 @@ snippet lambda_do
 alias lamdo
 abbr do |${1:name}|${0}end
     do |${1:name}|${0}end
+
+snippet case
+abbr case ${1:x}${0}end
+    case ${1:x}${0}end
+
+snippet when
+abbr when ${0:cond}
+    when ${0:cond}
+
+snippet else
+abbr else
+    else
+
+snippet when_then
+abbr when ${1:cond} then ${0}
+    when ${1:cond} then ${0}
+
+snippet raise
+abbr raise ${0:exception}
+    raise ${0:exception}
+
+snippet begin
+abbr begin${1}rescue${0}end
+    begin${1}rescue${0}end
+
+snippet rescue
+abbr rescue${0}end
+    rescue${0}end

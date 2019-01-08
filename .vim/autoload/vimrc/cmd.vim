@@ -48,43 +48,6 @@ function! vimrc#cmd#git_branch_session_save() abort " {{{
   execute 'mksession!' (g:vimrc['sessiondir'] . '/' . session_name__ . '.vim')
 endfunction " }}}
 
-" Generate decompress css from compressed css to temporary buffer
-function! vimrc#cmd#decompress_to_buffer() abort " {{{
-    " Yank detail
-    let lines = getline('^', '$')
-    " Output detail as pretty style css to new buffer
-    new
-    for line in reverse(lines)
-        1put!=line
-    endfor
-    execute '%s/}/\r}\r\r/g'
-    execute '%s/{/ {\r/g'
-    execute '%s/@/\r@/g'
-    execute '%s/;/;\r/g'
-    execute '%s/,/,\r/g'
-    execute 'normal! gg=Ggg'
-    " Set options
-    setl noswapfile
-    \    nomodifiable
-    \    buftype=nofile
-    \    filetype=css
-endfunction " }}}
-
-" Define cnoreabbr with cmd completion
-function! vimrc#cmd#cmd_cnoreabbr(...) abort " {{{
-    let UNUSED_VALUE = 'NOP'
-    let cmd_name     = a:1
-    let cmd_detail   = join(a:000[1:], ' ')
-    execute 'cnoreabbr' cmd_name cmd_detail
-    execute 'command!'  cmd_name UNUSED_VALUE
-endfunction " }}}
-
-" Remove a CmdCnoreabbr
-function! vimrc#cmd#un_cmd_cnoreabbr(name) abort " {{{
-    execute 'cunabbr' a:name
-    execute 'delcommand' a:name
-endfunction " }}}
-
 function! vimrc#cmd#increment_gui_fontsize() abort " {{{
   let g:vimrc.guifont.size += 1
   let &guifont = 'RictyDiminished NF ' . g:vimrc.guifont.size

@@ -320,33 +320,6 @@ function virtualenv-activate () {
     fi
 }
 
-function vim-fix-plugins-for-dein-update () {
-    local plugin_names plugin_dir
-    plugin_names=("$@")
-    for name in "${plugin_names[@]}" ; do
-        cd ~/.vim/bundle/repos || exit
-        plugin_dir=$(bash -c "find . -type d -name '$name'")
-        echo "$name"
-        cd "$plugin_dir" && git checkout master
-    done
-}
-
-# See .vim/autoload/vimrc/autocmd.vim
-function vimterm-quote-args() {
-    for a in "$@" ; do
-        echo ", \"$a\""
-    done
-}
-
-function vimterm-open-parent-vim() {
-    echo -e "\e]51;[\"call\", \"Tapi_Tabnew\", [\"$PWD\" $(vimterm-quote-args "$@")]]\x07"
-}
-
-# If I'm on a shell on Vim
-if [[ $I_AM_ON_VIM -eq 1 ]] ; then
-    alias vim=vimterm-open-parent-vim
-fi
-
 if i_have skim ; then
     # shellcheck disable=SC2139
     alias sk="sk $SKIM_DEFAULT_OPTS"

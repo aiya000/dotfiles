@@ -8,6 +8,9 @@ setl nonumber norelativenumber nolist
 
 nnoremap <buffer> <localleader>r i<End><C-u>:reload<CR>
 nnoremap <buffer> s :<C-u>call <SID>open_say_buffer()<CR>i
+nnoremap <buffer><silent> S i:show breaks<CR>
+nnoremap <buffer><silent> o i:steplocal<CR>
+nnoremap <buffer><silent> O i:list<CR>
 
 function! s:open_say_buffer() abort
   let s:ghci_bufnr = winbufnr('.')
