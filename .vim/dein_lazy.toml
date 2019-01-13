@@ -307,7 +307,7 @@ on_ft = [
 ]
 
 [[plugins]]
-repo  = 'moro/vim-review'
+repo  = 'aiya000/vim-review'
 on_ft = 'review'
 
 [[plugins]]
