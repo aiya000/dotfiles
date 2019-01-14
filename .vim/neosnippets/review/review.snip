@@ -92,3 +92,18 @@ alias code_block_haskell blhs
     //emlist[${1:#:subject}][haskell]{
     ${0:code}
     //}
+
+snippet graph
+abbr //graph[${1:file-name}][${2:cmd-name}][${3:#:caption}]{${0}//}
+    //graph[${1:file-name}][${2:cmd-name}][${3:#:caption}]{
+    ${0}
+    //}
+
+snippet graph_graphviz
+alias graphviz
+abbr //graph[${1:file-name}][graphviz][${2:#:caption}]{${0}//}
+    //graph[${1:file-name}][graphviz][${2:#:caption}]{
+    ${0}
+    //}
+
+include graphviz.snip
