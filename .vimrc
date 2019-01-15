@@ -491,6 +491,9 @@ let g:textobj_between_no_default_key_mappings = 1
 " }}}
 " --- ale --- {{{
 
+let g:ale_completion_enabled = v:true
+let g:ale_vim_vint_show_style_issues = v:false
+
 let g:ale_linters = {
   \ 'haskell': ['hlint', 'stack ghc'],
   \ 'dhall' : ['dhall lint'],
@@ -499,8 +502,6 @@ let g:ale_linters = {
   \ 'kotlin': ['ktlint'],
   \ 'java': ['checkstyle', 'google-java-format', 'PMD'],
 \ }
-
-let g:ale_vim_vint_show_style_issues = v:false
 
 let g:ale_scala_scalastyle_config = $HOME . '/.dotfiles/scalastyle_config_default.xml'
 
@@ -583,19 +584,6 @@ let g:textobj_clang_more_mappings = 1
 " --- vim-operator-surround --- {{{
 
 " Please see hook_source.vim
-
-" }}}
-" --- LanguageClient-neovim --- " {{{
-
-let g:LanguageClient_serverCommands = {
-  \ 'haskell': ['hie', '--lsp'],
-  \ 'javascript': ['language-server-stdio.js'],
-  \ 'typescript': ['language-server-stdio.js'],
-\ }
-
-let g:LanguageClient_diagnosticsEnable = v:false
-
-" Also please see hook_source.vim
 
 " }}}
 " --- vim-highlightedyank --- " {{{
@@ -1320,18 +1308,6 @@ nnoremap <silent> <leader>gd :<C-u>GDiff<CR>
 nnoremap <silent> <leader>gb :<C-u>GBrahcnAll<CR>
 nnoremap <silent> <leader>gt :<C-u>GLogTree<CR>
 nnoremap <silent> <leader>gT :<C-u>GLogTreeAll<CR>
-
-" LanguageClient-neovim
-nnoremap <silent> <C-q><C-d><C-g> :<C-u>LspDocumentDiagnostics<CR>
-nnoremap <silent> <C-q><C-d><C-d> :<C-u>call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <C-q><C-d><C-f> :<C-u>call LanguageClient_textDocument_formatting()<CR>
-nnoremap <silent> <C-q><C-d><C-r> :<C-u>call LanguageClient_textDocument_rangeFormatting()<CR>
-nnoremap <silent> <C-q><C-d><C-s> :<C-u>call LanguageClient_textDocument_documentSymbol()<CR>
-nnoremap <silent> <C-q><C-h> :<C-u>call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> <C-q><C-i> :<C-u>LspImplementation<CR>
-nnoremap <silent> <C-q><C-g> :<C-u>call LanguageClient_textDocument_references()<CR>
-nnoremap <silent> <C-q><C-r> :<C-u>call LanguageClient_textDocument_rename()<CR>
-nnoremap <silent> <C-q><C-w> :<C-u>call LanguageClient_workspace_symbol()<CR>
 
 " vim-textobj-clang
 " You are not i

@@ -222,43 +222,6 @@ on_map = [
 ]
 
 [[plugins]]
-repo        = 'autozimu/LanguageClient-neovim'
-rev         = 'next'
-build       = 'bash install.sh'
-hook_source = 'call vimrc#dein#hook_source#LanguageClient_neovim()'
-on_func     = [
-    'LanguageClient_textDocument_hover',
-    'LanguageClient_textDocument_definition',
-    'LanguageClient_textDocument_rename',
-    'LanguageClient_textDocument_documentSymbol',
-    'LanguageClient_textDocument_references',
-    'LanguageClient_workspace_symbol',
-    'LanguageClient_textDocument_completion',
-    'LanguageClient_setLoggingLevel',
-    'LanguageClient_textDocument_formatting',
-    'LanguageClient_textDocument_rangeFormatting',
-    'LanguageClient#Notify',
-    'LanguageClient#Call',
-    'LanguageClient_serverStatus',
-    'LanguageClient_serverStatusMessage',
-    'LanguageClient_statusLine',
-    'LanguageClient_workspace_applyEdit',
-    'LanguageClient_cquery_base',
-    'LanguageClient_cquery_derived',
-    'LanguageClient_cquery_callers',
-    'LanguageClient_cquery_vars',
-    'LanguageClient_registerHandlers',
-]
-on_cmd = [
-    'LanguageClientStart',
-    'LanguageClientStop',
-]
-on_ft = [
-    'javascript',
-    'typescript',
-]
-
-[[plugins]]
 repo    = 'tyru/operator-reverse.vim'
 depends = 'vim-operator-user'
 on_cmd  = 'OperatorReverseLines'
