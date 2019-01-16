@@ -1,3 +1,8 @@
 snippet digraph
 abbr digraph ${1:Name} {${0}}
     digraph ${1:Name} {${0}}
+
+snippet arrow
+alias ar
+abbr ${1:dom} -> ${2:cod} [ label = "${0:name}" ]
+    ${1:dom} -> ${2:cod} [ label = "${0:name}" ]

@@ -48,3 +48,14 @@ abbr rescue${0}end
 snippet q
 abbr %Q(${0:here})
     %Q(${0:here})
+
+snippet heredoc
+    <<-${1:EOS}
+    ${0}
+    $1
+
+snippet heredoc_strip_margins
+alias here
+    <<~${1:EOS}
+    ${0}
+    $1
