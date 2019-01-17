@@ -187,6 +187,41 @@ endif
 " }}}
 
 
+"----------"
+" Augroups "
+"----------"
+" {{{
+
+augroup VimRc
+  " Auto set cursor position in the file
+  autocmd BufReadPost * call vimrc#autocmd#visit_past_position()
+
+  " Auto load filetype dictionary
+  autocmd FileType *
+    \  if filereadable(printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype))
+      \| execute 'setl dict+=' . printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype)
+    \| endif
+
+  " RelativeNumber is used current window only
+  autocmd BufEnter,WinEnter * if &number | setl relativenumber | end
+  autocmd BufLeave,Winleave * setl norelativenumber
+
+  autocmd InsertEnter * call deoplete#enable()
+
+  " Hide relativenumber when OverCommandLine entered
+  autocmd User OverCmdLineEnter setl norelativenumber
+  autocmd User OverCmdLineLeave if &number | setl relativenumber | end
+
+  " Set the 'none' filetype to the empty filetype
+  autocmd VimEnter,BufNew * if empty(&ft) | setf none | endif
+
+  "NOTE: Remove this after the auto indent bug is fixed
+  autocmd FileType int-* set indentkeys-=:
+augroup END
+
+" }}}
+
+
 "---------"
 " Plugins "
 "---------"
@@ -851,41 +886,6 @@ let &tags = &tags . ',' . join([
   \ '../../../.git/tags',
   \ '../../../../.git/tags'
 \ ], ',')
-
-" }}}
-
-
-"----------"
-" Augroups "
-"----------"
-" {{{
-
-augroup VimRc
-  " Auto set cursor position in the file
-  autocmd BufReadPost * call vimrc#autocmd#visit_past_position()
-
-  " Auto load filetype dictionary
-  autocmd FileType *
-    \  if filereadable(printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype))
-      \| execute 'setl dict+=' . printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype)
-    \| endif
-
-  " RelativeNumber is used current window only
-  autocmd BufEnter,WinEnter * if &number | setl relativenumber | end
-  autocmd BufLeave,Winleave * setl norelativenumber
-
-  autocmd InsertEnter * call deoplete#enable()
-
-  " Hide relativenumber when OverCommandLine entered
-  autocmd User OverCmdLineEnter setl norelativenumber
-  autocmd User OverCmdLineLeave if &number | setl relativenumber | end
-
-  " Set the 'none' filetype to the empty filetype
-  autocmd VimEnter,BufNew * if empty(&ft) | setf none | endif
-
-  "NOTE: Remove this after the auto indent bug is fixed
-  autocmd FileType int-* set indentkeys-=:
-augroup END
 
 " }}}
 
