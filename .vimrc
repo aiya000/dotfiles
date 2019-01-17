@@ -1036,8 +1036,6 @@ nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
 nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
 nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
 nnoremap <silent> <leader>o :<C-u>copen<CR>
-"" Don't stop
-nnoremap gs <NOP>
 "" Visual a last pasted range
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
@@ -1329,7 +1327,7 @@ vnoremap <silent> i= :Alignta => =/1<CR>
 vmap ga <Plug>(operator-surround-append)
 omap ga <Plug>(operator-surround-append)
 nmap <silent> ga :<C-u>call vimrc#keys#append_surround('viw')<CR>
-nmap <silent> gA :<C-u>call vimrc#keys#append_surround('viW')<CR>
+nmap <silent> gs :<C-u>call vimrc#keys#append_surround('viW')<CR>
 nmap <silent> ds :<C-u>call vimrc#keys#delete_mostly_inner()<CR>
 nmap <silent> cs :<C-u>call vimrc#keys#replace_mostly_inner()<CR>
 
