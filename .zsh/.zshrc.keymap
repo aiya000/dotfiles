@@ -12,17 +12,6 @@ autoload -U edit-command-line && zle -N edit-command-line
 ##################
 # Define keymaps #
 ##################
-# history-incremental-search-backward with fzf
-function fzf-history-search-backward () {
-    local fzf selected
-    # Use fzf-tmux only if I'm on a tmux session
-    fzf=$([[ -n "$TMUX" ]] && echo 'fzf-tmux' || echo 'fzf')
-    selected=$(fc -ln 1 | $fzf --no-sort)
-    BUFFER="$selected"
-    CURSOR=${#BUFFER}
-}
-zle -N fzf-history-search-backward
-
 function skim-history-find-backward () {
     local selected
     selected=$(fc -ln 1 | sk --regex)
@@ -53,8 +42,7 @@ zle -N fzf-path-finder
 # Keymapping #
 ##############
 # Emacs nize insert-mode
-bindkey -M viins '^r' fzf-history-search-backward
-bindkey -M viins '^g^r' skim-history-find-backward
+bindkey -M viins '^r' skim-history-find-backward
 bindkey -M viins '^n' down-line-or-history
 bindkey -M viins '^p' up-line-or-history
 bindkey -M viins '^a' beginning-of-line
