@@ -201,6 +201,7 @@ abbr flattenMargins :: String -> String
         where
             replace [] = []
             replace ('\n' : xs) = ' ' : replace xs
+            replace (x : xs) = x : replace xs
 
 snippet undefined
 abbr Prelude.undefined
