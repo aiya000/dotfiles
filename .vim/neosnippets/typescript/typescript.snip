@@ -139,6 +139,10 @@ snippet stripLineBreaks
 abbr .replace(/(?:\r\n|\r|\n)/g, '')
     .replace(/(?:\r\n|\r|\n)/g, '')
 
+snippet stripMargings
+abbr .replace(/^\s\+/g, '')
+    .replace(/^\s\+/g, '')
+
 snippet unify_spaces_to_one
 abbr .replace(/\s+/g, ' ')
     .replace(/\s+/g, ' ')

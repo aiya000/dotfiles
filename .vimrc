@@ -802,7 +802,7 @@ set
   \ listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
   \ fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
   \ matchpairs+=<:>,（:）,｛:｝,「:」,＜:＞,『:』
-  \ termwinkey=<C-z>
+  \ termwinkey=<F1>
 
 " See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer)
 let &statusline =

@@ -1,5 +1,11 @@
 snippet import
-    import ${1}
+alias imp
+abbr import ${0:module}
+    import ${0:module}
+
+snippet from
+abbr from ${1:stuff} import ${0:module}
+    from ${1:module} import ${0:stuff}
 
 snippet if
 abbr if ${1}:${0}
@@ -35,3 +41,7 @@ snippet def
 alias fun
 abbr def ${1:name}(${2:#:self}):${0}
     def ${1:name}(${2:#:self}):${0}
+
+snippet class
+abbr class ${1:Name}${2:#:(Super)}:${0}
+    class ${1:Name}${2:#:(Super)}:${0}
