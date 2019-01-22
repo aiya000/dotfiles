@@ -62,12 +62,6 @@ depends = 'vim-textobj-user'
 repo = 'thinca/vim-visualstar'
 
 [[plugins]]
-repo = 'jonathanfilip/vim-lucius'
-
-[[plugins]]
-repo = 'romainl/Apprentice'
-
-[[plugins]]
 repo = 'vim-jp/autofmt'
 
 [[plugins]]
@@ -101,9 +95,6 @@ repo = 'machakann/vim-highlightedyank'
 repo = 'andymass/vim-matchup'
 
 [[plugins]]
-repo = 'ujihisa/unite-colorscheme'
-
-[[plugins]]
 repo = 'ryanoasis/vim-devicons'
 
 [[plugins]]
@@ -120,6 +111,3 @@ repo = 'roxma/vim-hug-neovim-rpc'
 
 [[plugins]]
 repo = 'roxma/nvim-yarp'
-
-[[plugins]]
-repo = 'Shougo/neco-syntax'

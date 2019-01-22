@@ -1,5 +1,5 @@
 [[plugins]]
-repo    = 'basyura/TweetVim'
+repo = 'basyura/TweetVim'
 depends = [
     'open-browser.vim',
     'denite.nvim',
@@ -117,14 +117,10 @@ on_cmd = [
 ]
 
 [[plugins]]
-repo   = 'rhysd/try-colorscheme.vim'
-on_cmd = 'TryColorscheme'
-
-[[plugins]]
 repo  = 'thinca/vim-ft-clojure'
 on_ft = [
     'clojure',
-    'lisp',  # Use this syntax in ft lisp, see ~/.vim/syntax/lisp.vim
+    'lisp',  # Please see ~/.vim/syntax/lisp.vim
 ]
 
 [[plugins]]
@@ -189,7 +185,7 @@ repo  = 'aiya000/idris-vim'
 rev   = 'aiya000/can-be-disabled-keymappings'
 on_ft = ['idris', 'lidris']
 
-# For only TweetVim
+# Now only for TweetVim
 [[plugins]]
 repo    = 'Shougo/unite.vim'
 depends = 'TweetVim'
@@ -219,15 +215,6 @@ on_map = [
     '<Plug>(incsearch-nohl-#)',
     '<Plug>(incsearch-nohl-g*)',
     '<Plug>(incsearch-nohl-g#)',
-]
-
-[[plugins]]
-repo    = 'tyru/operator-reverse.vim'
-depends = 'vim-operator-user'
-on_cmd  = 'OperatorReverseLines'
-on_map = [
-    '<Plug>(operator-reverse-text)',
-    '<Plug>(operator-reverse-lines)',
 ]
 
 [[plugins]]
