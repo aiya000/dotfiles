@@ -77,6 +77,7 @@ command! -bar IPyRepl call vimrc#open_terminal_as('none', 'stay', 'ipython', v:f
 command! -bar SwiftRepl call vimrc#open_terminal_as('none', 'stay', 'swift', v:false)
 command! -bar KotlinRepl call vimrc#open_terminal_as('none', 'stay', 'kotlinc-jvm', v:false)
 command! -bar DhallRepl call vimrc#open_terminal_as('none', 'stay', 'dhall repl', v:false)
+command! -bar IrbRepl call vimrc#open_terminal_as('none', 'stay', 'irb', v:false)
 
 " Git commands
 command! -bar -nargs=* GStatus Gina status -s <args>
