@@ -1,3 +1,5 @@
+" NOTE: Don't use the mark Z, because this is often used by my functions
+
 "---------------"
 " Global values "
 "---------------"
@@ -398,13 +400,13 @@ call submode#map('window_resize', 'n', '', 'k', '3<C-w>-')
 call submode#map('window_resize', 'n', '', 'h', '3<C-w><')
 call submode#map('window_resize', 'n', '', 'l', '3<C-w>>')
 
-call submode#enter_with('tab_move', 'n', 's', '<C-s>p', ':<C-u>call vimrc#keys#move_tab_prev()<CR>')
 call submode#enter_with('tab_move', 'n', 's', '<C-s>n', ':<C-u>call vimrc#keys#move_tab_next()<CR>')
-call submode#map('tab_move', 'n', 's', 'n', ':<C-u>call vimrc#keys#move_tab_prev()<CR>')
-call submode#map('tab_move', 'n', 's', 'p', ':<C-u>call vimrc#keys#move_tab_next()<CR>')
+call submode#enter_with('tab_move', 'n', 's', '<C-s>p', ':<C-u>call vimrc#keys#move_tab_prev()<CR>')
+call submode#map('tab_move', 'n', 's', 'n', ':<C-u>call vimrc#keys#move_tab_next()<CR>')
+call submode#map('tab_move', 'n', 's', 'p', ':<C-u>call vimrc#keys#move_tab_prev()<CR>')
 
-call submode#enter_with('window_move', 'n', 's', '<C-s>P', ':<C-u>call vimrc#keys#move_window_forward()<CR>')
-call submode#enter_with('window_move', 'n', 's', '<C-s>N', ':<C-u>call vimrc#keys#move_window_backward()<CR>')
+call submode#enter_with('window_move', 'n', 's', '<C-s>N', ':<C-u>call vimrc#keys#move_window_forward()<CR>')
+call submode#enter_with('window_move', 'n', 's', '<C-s>P', ':<C-u>call vimrc#keys#move_window_backward()<CR>')
 call submode#map('window_move', 'n', 's', 'N', ':<C-u>call vimrc#keys#move_window_forward()<CR>')
 call submode#map('window_move', 'n', 's', 'P', ':<C-u>call vimrc#keys#move_window_backward()<CR>')
 call submode#map('window_move', 'n', 'e', 'H', '"\<C-w>H" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
