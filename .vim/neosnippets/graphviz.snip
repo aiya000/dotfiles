@@ -2,6 +2,16 @@ snippet digraph
 abbr digraph ${1:Name} {${0}}
     digraph ${1:Name} {${0}}
 
+snippet labelloc
+abbr labelloc = "t"
+    labelloc = "t"
+
+snippet graph_left_to_right
+alias graph_lr
+    graph [
+      rankdir = LR
+    ]
+
 snippet arrow
 alias ar
 abbr ${1:dom} -> ${2:cod} [ label = "${0:name}" ]
