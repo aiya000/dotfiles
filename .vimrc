@@ -346,6 +346,13 @@ let g:quickrun_config = {
   \ 'dhall': {
     \ 'exec': ['dhall --explain --plain %o < %s'],
   \ },
+  \ 'dot': {
+    \ 'runner': 'vimproc',
+    \ 'exec': ['dot -T png %o %s -o %s.png', 'xdg-open %s.png'],
+    \ 'hook/sweep/files': '%S:p:r.png',
+    \ 'outputter/error/error': 'quickfix',
+    \ 'outputter/error/success': 'message',
+  \ }
 \ }
 
 " Append config of each environment
