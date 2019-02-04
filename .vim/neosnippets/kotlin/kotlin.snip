@@ -90,6 +90,11 @@ snippet import
 alias imp
     import ${0}
 
+snippet import_as
+alias import_qualified imq
+abbr import ${1} as ${0:alias}
+    import ${1} as ${0:alias}
+
 snippet try
     try {${0:here}}
 

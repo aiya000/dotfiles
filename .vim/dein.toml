@@ -48,7 +48,7 @@ repo = 'kana/vim-operator-user'
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-rev  = '4de241047efa152e4c764de19c57fa2152177d11'
+rev  = '1d577d43feae8eae88176c7909e7891297acc8de'
 
 [[plugins]]
 repo    = 'osyo-manga/vim-textobj-from_regexp'
