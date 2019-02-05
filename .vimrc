@@ -853,12 +853,13 @@ endif
 set showtabline=2
 
 " Set the fold options
-set foldmethod=marker
-set foldtext=FoldCCtext()
-set foldcolumn=1
+set foldmethod=syntax
+  \ foldnestmax=1
+  \ foldtext=FoldCCtext()
+  \ foldcolumn=1
+  \ foldopen=search,jump,mark,percent,insert,tag,undo
+  \ foldclose=all
 let &fillchars = 'vert:|,fold: '
-set foldopen=search,jump,mark,percent,insert,tag,undo
-set foldclose=all
 
 " The backup options
 let &directory = g:vimrc.directory

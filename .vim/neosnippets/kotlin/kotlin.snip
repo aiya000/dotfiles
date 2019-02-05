@@ -166,6 +166,9 @@ snippet operator_overload_get
 snippet operator_overload_iterator
     operator fun iterator(): Iterator<${1:Type}> ${0}
 
+snippet operator_overload_plus
+    operator fun plus(${1:x: This}): ${2:This}
+
 # Anotation
 snippet annotation_throws
     @Throws(${1:SomeException}::class)
