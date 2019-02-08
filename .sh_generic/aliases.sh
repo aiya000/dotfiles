@@ -127,6 +127,15 @@ if i_have git ; then
     alias _gwp='git worktree prune'
     unset git_taking_limit
 
+    function git-push-wip () {
+        git branch -D current-wip-unique-unique-yazawa-nico
+        git checkout -b current-wip-unique-unique-yazawa-nico
+        git add -A
+        git commit -m "Today's WIP"
+        git push -f origin current-wip-unique-unique-yazawa-nico
+        git checkout -
+    }
+
     function _gre () {
         echo -n "(at \`$(git rev-parse --show-toplevel)\`) Do you really force reset the git index tree? (y/n)"
         if read -rq _  ; then
