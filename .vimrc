@@ -1410,3 +1410,5 @@ nohlsearch
 filetype plugin indent on
 syntax enable
 let g:vimrc['loaded'] = 1
+
+" vim:foldmethod=marker

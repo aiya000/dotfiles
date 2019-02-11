@@ -69,7 +69,9 @@ call submode#enter_with('font_size', 'n', 's', '<C-s>-', ':<C-u>call vimrc#cmd#d
 call submode#map('font_size', 'n', 's', '+', ':<C-u>call vimrc#cmd#increment_gui_fontsize()<CR>')
 call submode#map('font_size', 'n', 's', '-', ':<C-u>call vimrc#cmd#decrement_gui_fontsize()<CR>')
 
-" }}
+" }}}
 
 syntax enable
 let g:gvimrc['loaded'] = 1
+
+" vim:foldmethod=marker

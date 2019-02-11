@@ -191,8 +191,8 @@ alias look lk
 snippet trimMargins
 alias stripMargins
 abbr trimMargins :: String -> String
-    trimMargins :: String -> String
-    trimMargins = unlines . filter (/= "") . map (dropWhile (== ' ')) . lines
+    trimMargins = trim . unlines . map trim . lines
+    trim = reverse . dropWhile (== ' ') . reverse . dropWhile (== ' ')
 
 snippet flattenMargins
 abbr flattenMargins :: String -> String

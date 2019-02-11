@@ -64,6 +64,9 @@ if i_have git ; then
     alias gd='git diff'
     alias gdh='git diff HEAD~..HEAD'
     alias gds='git diff --staged'
+    alias gdst0='git diff stash@{0}'
+    alias gdst1='git diff stash@{1}'
+    alias gdst2='git diff stash@{2}'
     # shellcheck disable=SC2139
     alias gl="git log --name-only -$git_taking_limit"
     # shellcheck disable=SC2139
@@ -78,6 +81,16 @@ if i_have git ; then
     alias gra='git rebase --abort'
     alias grc='git rebase --continue'
     alias gri='git rebase --interactive --autosquash'
+    alias gri~='git rebase --interactive --autosquash HEAD~'
+    alias gri~~='git rebase --interactive --autosquash HEAD~'
+    alias gri~~~='git rebase --interactive --autosquash HEAD~~'
+    alias gri~~~~='git rebase --interactive --autosquash HEAD~~~'
+    alias gri~~~~~='git rebase --interactive --autosquash HEAD~~~~'
+    alias gri~~~~~~='git rebase --interactive --autosquash HEAD~~~~~'
+    alias gri~~~~~~~='git rebase --interactive --autosquash HEAD~~~~~~'
+    alias gri~~~~~~~~='git rebase --interactive --autosquash HEAD~~~~~~~'
+    alias gri~~~~~~~~~='git rebase --interactive --autosquash HEAD~~~~~~~~'
+    alias gri~~~~~~~~~~='git rebase --interactive --autosquash HEAD~~~~~~~~~'
     alias gri_='git rebase --interactive'
     alias grm='git rm'
     alias grmc='git rm --cached'
