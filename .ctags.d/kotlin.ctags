@@ -6,6 +6,6 @@
 --regex-kotlin=/^[ \t]*((abstract|final|sealed|lazy)[ \t]*)*(private[^ ]*|protected)?[ \t]*object[ \t]+([a-zA-Z0-9_]+)/\4/o,object/
 --regex-kotlin=/^[ \t]*((abstract|final|sealed|lazy)[ \t]*)*(private[^ ]*|protected)?[ \t]*interface[ \t]+([a-zA-Z0-9_]+)/\4/i,interfaces/
 --regex-kotlin=/^[ \t]*typealias[ \t]+([a-zA-Z0-9_]+)/\1/T,typealias/
---regex-kotlin=/fun[ \t]+(<.+>[ \t]*)?([a-zA-Z0-9_]+\.)?([a-zA-Z0-9_]+)/\3/m,methods/
+--regex-kotlin=/fun[ \t]+([^=\{$]+)/\1/m,methods/
 --regex-kotlin=/^[ \t]*((abstract|final|sealed|lazy|override|private[^ ]*|protected)[ \t]*)*(var|val)[ \t]+([a-zA-Z0-9_]+)/\4/v,variable/
 --regex-kotlin=/^[ \t]*package[ \t]+([a-zA-Z0-9_.]+)/\1/p,packages/
