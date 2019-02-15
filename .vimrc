@@ -19,18 +19,19 @@ let g:vimrc = get(g:, 'vimrc', {
   \ 'loaded'   : 0,
   \ 'vim_home' : expand('~/.vim'),
   \ 'gui_editor' : has('nvim') ? 'gonvim' : 'gvim',
+  \ 'backupdir': expand('~/.backup/vim-backup'),
+  \ 'is_unix': has('unix'),
+  \ 'is_macos': has('macunix'),
+  \ 'is_wsl': executable('uname') && (system('uname -a') =~# 'Microsoft'),
+  \ 'is_windows': has('win32'),
+  \ 'is_kaoriya': has('kaoriya'),
 \ })
 
-let g:vimrc['is_windows'] = get(g:vimrc, 'is_windows', has('win32'))
-let g:vimrc['is_cygwin']  = get(g:vimrc, 'is_cygwin', has('win32unix'))
-let g:vimrc['is_kaoriya'] = get(g:vimrc, 'is_kaoriya', has('kaoriya'))
-let g:vimrc['is_unix']    = get(g:vimrc, 'is_unix', has('unix'))
-let g:vimrc['is_wsl']     = get(g:vimrc, 'is_wsl', executable('uname') && (system('uname -a') =~# 'Microsoft'))
-
-let g:vimrc['has_cygwin'] = executable('cygstart')
-let g:vimrc['has_mingw']  = 0  "NOTE: ('dummy')
-
-let g:vimrc['backupdir']  = expand('~/.backup/vim-backup')
+let g:vimrc['open_on_gui'] =
+  \ g:vimrc['is_macos']   ? 'open' :
+  \ g:vimrc['is_windows'] ? 'start' :
+  \ g:vimrc['is_unix']    ? 'xdg-open' :
+    \ 'no method for GUI-open'
 let g:vimrc['directory']  = g:vimrc['backupdir'] . '/swp'
 let g:vimrc['undodir']    = g:vimrc['backupdir'] . '/undo'
 let g:vimrc['viewdir']    = g:vimrc['backupdir'] . '/view'
@@ -270,7 +271,7 @@ let g:quickrun_config = {
     \ 'tempfile':  printf('%s/{tempname()}.vimspec', $TMP),
   \ },
   \ 'html': {
-    \ 'command': 'xdg-open',
+    \ 'command': g:vimrc['open_on_gui'],
     \ 'outputter': 'null',
     \ 'exec'     : '%c %s:p',
   \ },
@@ -332,7 +333,10 @@ let g:quickrun_config = {
     \ 'runner': 'vimproc',
     \ 'command': 'elm-make',
     \ 'cmdopt': '--warn',
-    \ 'exec': ['%c %s %o --output /tmp/vim-quickrun-elm.html', 'xdg-open /tmp/vim-quickrun-elm.html'],
+    \ 'exec': [
+      \ '%c %s %o --output /tmp/vim-quickrun-elm.html',
+      \ g:vimrc['open_on_gui'] . ' /tmp/vim-quickrun-elm.html',
+    \ ],
     \ 'tempfile': '%{tempname()}.elm',
   \ },
   \ 'idris': {
@@ -348,7 +352,10 @@ let g:quickrun_config = {
   \ },
   \ 'dot': {
     \ 'runner': 'vimproc',
-    \ 'exec': ['dot -T png %o %s -o %s.png', 'xdg-open %s.png'],
+    \ 'exec': [
+      \ 'dot -T png %o %s -o %s.png',
+      \ g:vimrc['open_on_gui'] . ' %s.png',
+    \ ],
     \ 'hook/sweep/files': '%S:p:r.png',
     \ 'outputter/error/error': 'quickfix',
     \ 'outputter/error/success': 'message',
@@ -358,8 +365,6 @@ let g:quickrun_config = {
 " Append config of each environment
 if g:vimrc['is_windows']
   call vimrc#plugins#append_config_quickrun_windows()
-elseif g:vimrc['is_cygwin']
-  call vimrc#plugins#append_config_quickrun_cygwin()
 endif
 
 " }}}
@@ -561,7 +566,7 @@ augroup END
 " }}}
 " --- elm-vim --- {{{
 
-let g:elm_browser_command    = 'xdg-open'
+let g:elm_browser_command    = g:vimrc['open_on_gui']
 let g:elm_format_autosave    = 1
 let g:elm_make_output_file   = '/tmp/elm-vim-output.html'
 let g:elm_make_show_warnings = 1

@@ -43,32 +43,6 @@ function! vimrc#plugins#append_config_quickrun_windows() abort " {{{
   let g:quickrun_config.html['exec']    = '%c url.dll,FileProtocolHandler uri file://%s:p'
 endfunction " }}}
 
-" Append quickrun config for cygwin
-function! vimrc#plugins#append_config_quickrun_cygwin() abort " {{{
-  " C#
-  let g:quickrun_config.cs['command'] = 'csc.exe'
-  let g:quickrun_config.cs['hook/output_encode/encoding'] = 'cp932:utf-8'
-  " Java
-  let g:quickrun_config.java['exec'] = ['%c %o `cygpath -w %s:p`', '%c %s:t:r %a']
-  let g:quickrun_config.java['tempfile'] = printf('%s/{tempname()}.java', $TMP)
-  let g:quickrun_config.java['hook/output_encode/encoding'] = 'cp932:utf-8'
-  " Haskell
-  "@Bugs('cannot run rightly')
-  let g:quickrun_config['haskell'] = {
-    \ 'exec' : '%c %o `cygpath -w "%s:p"` | tr -d "\\r"'
-  \ }
-  " TypeScript
-  let g:quickrun_config['typescript'] = {
-    \ 'exec' : ['%c %o "`cygpath -w %s:p`"', 'node "`cygpath -w %s:p:r`.js"']
-  \ }
-  " HTML
-  let g:quickrun_config.html['command'] = 'cygstart'
-  " LaTex
-  let g:quickrun_config.tex['exec'] = '%c %o "`cygpath -w %s:r`" | tr -d "\r"'
-  " Clojure
-  let g:quickrun_config.clojure['exec'] = '%c %o "`cygpath -w %s`" | tr -d "\r"'
-endfunction " }}}
-
 " Delete otiose lines
 function! vimrc#plugins#weblio_filter(output) abort " {{{
   let l:lines = split(a:output, "\n")
