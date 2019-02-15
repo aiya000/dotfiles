@@ -172,6 +172,14 @@ snippet operator_overload_iterator
 snippet operator_overload_plus
     operator fun plus(${1:x: This}): ${2:This}
 
+snippet operator_overload_getValue
+abbr operator fun getValue(self: ${1:This}, property: KProperty<*>): ${2:DelgatedType} =${0}
+    operator fun getValue(self: ${1:This}, property: KProperty<*>): ${2:DelegatedType} =${0}
+
+snippet operator_overload_setValue
+abbr operator fun setValue(self: ${1:This}, property: KProperty<*>, value: ${2:delegatedType}) {${0:here}}
+    operator fun setValue(self: ${1:This}, property: KProperty<*>, value: ${2:delegatedType}) {${0:here}}
+
 # Anotation
 snippet annotation_throws
     @Throws(${1:SomeException}::class)

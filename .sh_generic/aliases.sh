@@ -141,11 +141,12 @@ if i_have git ; then
     unset git_taking_limit
 
     function git-push-wip () {
-        git branch -D current-wip-unique-unique-yazawa-nico
-        git checkout -b current-wip-unique-unique-yazawa-nico
+        local wip_name=wip-current-unique-unique-yazawa-nico
+        git branch -D "$wip_name"
+        git checkout -b "$wip_name"
         git add -A
         git commit -m "Today's WIP"
-        git push -f origin current-wip-unique-unique-yazawa-nico
+        git push -f origin "$wip_name"
         git checkout -
     }
 

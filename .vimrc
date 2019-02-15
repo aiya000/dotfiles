@@ -535,7 +535,6 @@ let g:textobj_between_no_default_key_mappings = 1
 " }}}
 " --- ale --- {{{
 
-let g:ale_completion_enabled = v:true
 let g:ale_vim_vint_show_style_issues = v:false
 
 let g:ale_linters = {
@@ -853,9 +852,7 @@ endif
 set showtabline=2
 
 " Set the fold options
-set foldmethod=syntax
-  \ foldnestmax=1
-  \ foldtext=FoldCCtext()
+set foldtext=FoldCCtext()
   \ foldcolumn=1
   \ foldopen=search,jump,mark,percent,insert,tag,undo
   \ foldclose=all
