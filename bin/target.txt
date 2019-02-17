@@ -2,7 +2,7 @@
 .bash_profile
 .bashrc
 .bvirc
-.ctags
+.ctags.d
 .gemrc
 .ghci
 .gitconfig
