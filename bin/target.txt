@@ -1,12 +1,15 @@
-.bashfiles
+.Xdefaults
+.Xmodmap
+.Xresources
 .bash_profile
+.bashfiles
 .bashrc
 .bvirc
 .ctags.d
 .gemrc
 .ghci
-.gitconfig
 .git_templates
+.gitconfig
 .gvimrc
 .lein
 .sh_generic
@@ -20,9 +23,7 @@
 .vimshrc
 .vrapperrc
 .vsvimrc
-.Xdefaults
 .xinitrc
 .xmobarrc
-.Xmodmap
 .xmonad
 .zsh

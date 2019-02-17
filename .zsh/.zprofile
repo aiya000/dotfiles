@@ -22,6 +22,7 @@ export FPATH=$FPATH:$HOME/.zsh/complete
 PATH=$HOME/bin:$HOME/sbin:$PATH
 PATH=$HOME/.dotfiles/bin:$PATH
 PATH=$HOME/.local/bin:$PATH # Load haskell-cabal and etc
+PATH=$HOME/.npm-prefix//bin
 
 # Basics
 PATH=$PATH:/bin:/sbin

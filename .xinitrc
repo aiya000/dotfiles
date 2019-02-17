@@ -36,18 +36,7 @@ fi
 PATH=$PATH:$HOME/bin
 xrdb -merge ~/.Xresources
 xsetroot -cursor_name left_ptr
-setxkbmap -layout us "$XMONAD_CONFIG_SETXKBMAP_OPTIONS" #setxkbmap -layout jp
-
-## Start Xfce4 env
-##fcitx &
-##xfce4-clipman &
-#pulseaudio --daemonize=true --start &
-#dunst &
-##xscreensaver &
-## termite -e tmux
-## tmux new-window 'nvim +"cd ~/.dotfiles" +terminal'
-#~/bin/cvim_server.py &  # For cvim's editWithVim keymap
-#exec startxfce4
+setxkbmap -layout us "$XMONAD_CONFIG_SETXKBMAP_OPTIONS"
 
 # Start xmonad
 fcitx &

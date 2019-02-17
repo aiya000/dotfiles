@@ -2,7 +2,8 @@ all: install
 
 logfile = ./dotfiles-MakeFile.log
 
-UNAME = Linux
+# TODO: Detect auto
+OS = Linux
 
 prepare:
 	if [ ! -d ~/bin ] ; then\
@@ -11,69 +12,49 @@ prepare:
 	if [ ! -d ~/git ] ; then\
 		mkdir ~/git ;\
 	fi
+	# Please see .npmrc
+	if [ ! -d ~/.npm-prefix ] ; then\
+		mkdir ~/.npm-prefix ;\
+	fi
 
 install:
 	make prepare
 	make install_package_managers
-	make install_with_stack
-	make install_with_npm
-	make install_with_pip
-	make install_with_coursier
-	make install_on_each_os
-	make install_on_any_os
+	make build-os-env
+	make install-by-pip
 
-ifeq ($(UNAME),Linux)
+ifeq ($(OS),Linux)
 install_package_managers:
 	yay -Sy
-	yay -S --noconfirm stack-static npm python-pip
-	echo Please define install_package_managers for coursier > /dev/stderr
+	yay -S --noconfirm --needed stack-static npm python-pip
 endif
-ifeq ($(UNAME),Darwin)
+ifeq ($(OS),Darwin)
 	echo Please define install_package_managers for haskell-stack > /dev/stderr
 	echo Please define install_package_managers for npm > /dev/stderr
 	echo Please define install_package_managers for pip > /dev/stderr
-	brew install --HEAD coursier/formulas/coursier
 endif
-ifeq ($(OS),Windows_NT)
+ifeq ($(OS),Windows)
 	echo Please define install_package_managers for haskell-stack > /dev/stderr
 	echo Please define install_package_managers for npm > /dev/stderr
 	echo Please define install_package_managers for pip > /dev/stderr
-	echo Please define install_package_managers for coursier > /dev/stderr
 endif
 
-install_with_stack:
-	stack install hasktags haskdogs
+install-by-pip:
+	pip install neovim grip
 
-install_with_npm:
-	npm install -g doctoc shiba textlint htmlhint csslint pretty-xml
-
-install_with_pip:
-	sudo -H pip install neovim grip
-
-install_with_coursier:
-	# Please see https://scalameta.org/scalafmt/#Nailgun for latest
-	coursier bootstrap --standalone com.geirsson:scalafmt-cli_2.12:1.5.1 \
-		-r bintray:scalameta/maven \
-		-o ~/bin/scalafmt_ng -f --main com.martiansoftware.nailgun.NGServer
-	ng ng-alias scalafmt org.scalafmt.cli.Cli
-
-install_on_each_os:
-	# kotlin
-	curl -o ~/bin/ktlint -SLO https://github.com/shyiko/ktlint/releases/download/0.24.0/ktlint && chmod +x ~/bin/ktlint
-ifeq ($(UNAME),Linux)
-	yay -S --noconfirm \
-		z3 \ # liquidhaskell
-		haskell-ide-engine \ # LanguageClient-neovim
-		dzen2 rxvt-unicode slock \ # xmonad
-		sox \ # ~/.sh_generic/bin/say-result
-		llvm \ # vim-textobj-clang
-		font-forge \ # for making nerd-fonts for vim-devicons
-		cmigemo \ # vim-migemo
-		git neovim tmux autoreconf \
-		redshift nightshift arandr \
-		espeak-ng watchexec \
-		drawio-batch drawio-desktop \
-		xfce4-find-cursor # xmonad (xfce4-find-cursor)
+build-os-env:
+ifeq ($(OS),Linux)
+	yay -S --noconfirm --needed \
+		dzen2 termite slock sox fontforge \
+		git tmux autoconf jq progress dropbox-cli pkgfile fzf skim \
+		redshift nightshift arandr watchexec xfce4-settings \
+		lxdm xorg-server xorg-xinit xorg-apps xf86-video-intel xinit-xsession \
+		dunst fcitx fcitx-mozc \
+		networkmanager docker libnotify ristretto asciinema \
+		vivaldi dzen2 \
+		libxss # for xmonad-config
+	sudo systemctl enable NetworkManager
+	sudo systemctl enable docker
 	# Fix East Asian Ambiguous character width problems
 	git clone https://github.com/fumiyas/wcwidth-cjk ~/git/wcwidth-cjk
 	cd ~/git/wcwidth-cjk
@@ -81,22 +62,13 @@ ifeq ($(UNAME),Linux)
 	./configure --prefix=/usr/local/
 	make
 	sudo make install
-endif
-ifeq ($(UNAME),Darwin)
-	brew install \
-		font-forge \ # for making nerd-fonts for vim-devicons
-		cmigemo \ # vim-migemo
-		scalastyle \ # ale (vim)
-		graphviz plantuml \
-		jq
-	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit # vim-textobj-clang
-endif
-ifeq ($(OS),Windows_NT)
-	echo Please define install_on_each_os
-endif
-
-# This depends no environment
-install_on_any_os:
+	#
+	git clone https://github.com/kenhys/fcitx-imlist ~/git/fc itx-imlist
+	cd ~/git/fcitx-imlist
+	./autogen.sh
+	./configure
+	make
+	sudo make install
 	# I refered to https://qiita.com/nechinechi/items/27f541849db04123ea15
 	# NOTE: This cloning needs to wait a while
 	git clone https://github.com/edihbrandon/RictyDiminished ~/git/RictyDiminished
@@ -105,4 +77,44 @@ install_on_any_os:
 	fontforge -script ./font-patcher \
 		~/git/RictyDiminished/RictyDiminished-Regular.ttf \
 		-w --fontawesome --fontlinux --octicons --pomicons --powerline --powerlineextra
-	(echo 'RictyDiminished with nerd-font patch was generated to ~/git/nerd-fonts, please rename it to "RictyDiminished NF" and install it to your OS manually!' | tee $(logfile)) && \
+	(echo 'RictyDiminished with nerd-font patch was generated to ~/git/nerd-fonts, please rename it to "RictyDiminished NF" and install it to your OS manually!' | tee $(logfile))
+endif
+ifeq ($(OS),Darwin)
+	brew install \
+		font-forge \ # for making nerd-fonts for vim-devicons
+		cmigemo \ # vim-migemo
+		scalastyle \ # ale (vim)
+		graphviz plantuml \
+		jq
+	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit # vim-textobj-clang
+endif
+ifeq ($(OS),Windows)
+	echo Please define build-os-env
+endif
+
+# These are not installed by make install
+install-for-haskell:
+	stack install hasktags haskdogs hlint
+
+install-for-markdown:
+	npm install -g doctoc shiba
+
+install-for-text:
+	npm install -g textlint
+
+install-for-html-css:
+	npm install -g htmlhint csslint
+
+install-for-xml:
+	npm install -g pretty-xml
+
+install-for-sh:
+ifeq ($(OS),Linux)
+	yay -S shellcheck
+endif
+ifeq ($(OS),Darwin)
+	echo Please define install-for-sh > /dev/stderr
+endif
+ifeq ($(OS),Windows)
+	echo Please define install-for-sh > /dev/stderr
+endif
