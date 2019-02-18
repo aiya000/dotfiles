@@ -22,7 +22,6 @@ export FPATH=$FPATH:$HOME/.zsh/complete
 PATH=$HOME/bin:$HOME/sbin:$PATH
 PATH=$HOME/.dotfiles/bin:$PATH
 PATH=$HOME/.local/bin:$PATH # Load haskell-cabal and etc
-PATH=$HOME/.npm-prefix//bin
 
 # Basics
 PATH=$PATH:/bin:/sbin
@@ -31,10 +30,8 @@ PATH=$PATH:/usr/bin:/usr/sbin
 PATH=$PATH:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
 PATH=$PATH:$GOPATH/bin
 
-# yarn
 PATH=$PATH:$HOME/.yarn/bin
-
-# zsh completions
+PATH=$PATH:$HOME/.npm-prefix//bin
 PATH=$PATH:$ZDOTDIR/zsh_completions
 
 # git-credential-gnome-keyring
