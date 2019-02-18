@@ -45,13 +45,12 @@ install-by-pip:
 build-os-env:
 ifeq ($(OS),Linux)
 	yay -S --noconfirm --needed \
-		dzen2 termite slock sox fontforge \
+		termite slock sox fontforge vivaldi dzen2 conky \
 		git tmux autoconf jq progress dropbox-cli pkgfile fzf skim \
 		redshift nightshift arandr watchexec xfce4-settings \
 		lxdm xorg-server xorg-xinit xorg-apps xf86-video-intel xinit-xsession \
-		dunst fcitx fcitx-mozc \
-		networkmanager docker libnotify ristretto asciinema \
-		vivaldi dzen2 \
+		dunst fcitx fcitx-mozc fcitx-configtool \
+		networkmanager docker libnotify ristretto thunar asciinema \
 		libxss # for xmonad-config
 	sudo systemctl enable NetworkManager
 	sudo systemctl enable docker

@@ -14,6 +14,7 @@ dzen2.foreground: #22EE11
 dzen2.background: black
 
 URxvt.font: xft:Ricty-nerd:Regular:size=14:antialias=true, \
+            xft:RictyDiminished\ NF:Regular:size=14:antialias=true, \
             xft:Ricty:Regular:size=14:antialias=true, \
             xft:DejaVu Sans Mono:Regular:size=13, \
             xft:NotoColorEmoji:Regular:size=13

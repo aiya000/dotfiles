@@ -13,6 +13,7 @@ source ~/.sh_generic/premise.sh
 
 alias ls='ls --color=auto --group-directories-first'
 alias sl=ls
+alias rm=dust # no more cry
 alias mv='mv -i'
 alias cp='cp -i'
 alias dd='dd status=progress'
@@ -196,8 +197,7 @@ alias e-current-session="vim-current-session $EDITOR"
 alias g-current-session="vim-current-session $MY_GUI_EDITOR"
 
 function dust () {
-    # shellcheck disable=SC2068
-    mv $@ ~/.backup/dustbox
+    mv "$@" ~/.backup/dustbox
 }
 
 function packet-watch () {

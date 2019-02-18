@@ -1,6 +1,6 @@
 let s:Job = vital#vimrc#new().import('System.Job')
 
-"TODO: Move commands to the ftplugin
+"TODO: Move commands to each ftplugins
 
 " Vim common
 "" buffer open commands with filetype 'none'

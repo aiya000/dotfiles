@@ -18,6 +18,7 @@ let g:gvimrc['loaded'] = get(g:gvimrc, 'loaded', 0)
 let g:vimrc['guifont'] = {
   \ 'size': 11,
 \ }
+"let &guifont = 'Ricty-Nerd-Font-Regular ' . g:vimrc.guifont.size
 let &guifont = 'RictyDiminished NF ' . g:vimrc.guifont.size
 
 set guioptions-=T
