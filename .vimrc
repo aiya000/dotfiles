@@ -615,7 +615,8 @@ augroup VimRc
     \|  call denite#custom#var('outline', 'file_opt', '-o')
   autocmd BufEnter,BufWinEnter *.hs
     \   call denite#custom#var('outline', 'command', ['hasktags'])
-    \|  call denite#custom#var('outline', 'options', ['--ignore-close-implementation', '--ctags', '-x'])
+    \|  call denite#custom#var('outline', 'options', ['--ctags'])
+    \|  call denite#custom#var('outline', 'file_opt', '-f')
 augroup END
 
 " }}}
@@ -1044,7 +1045,6 @@ nnoremap <leader>/ :<C-u>Migemo<CR>
 nnoremap <silent> ! :!<CR>
 nnoremap <silent> <C-k><Space> :<C-u>call vimrc#keys#clear_ends_space()<CR>
 nnoremap <silent> <Space><Space> :<C-u>call vimrc#keys#compress_spaces()<CR>
-nnoremap <silent> <C-k><C-r> :<C-u>Reload<CR>
 nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
 nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
 nnoremap <silent> <leader>o :<C-u>copen<CR>
