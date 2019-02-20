@@ -240,18 +240,6 @@ if i_have ctags ; then
     alias ctags-typescript-auto='ctags-auto --exclude=\\\*.js'
 fi
 
-if i_have hasktags ; then
-    alias hasktags-casual='hasktags . --ignore-close-implementation --tags-absolute --ctags -f'
-    alias hasktags-auto='tags-auto hasktags-casual'
-fi
-
-if i_have haskdogs ; then
-    function _haskdogs-casual () {
-        haskdogs --hasktags-args "--ignore-close-implementation --tags-absolute --ctags --file=${1}"
-    }
-    alias haskdogs-auto='tags-auto _haskdogs-casual'
-fi
-
 if i_have stack ; then
     alias sb='stack build'
     alias se='stack run --'

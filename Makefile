@@ -45,15 +45,75 @@ install-by-pip:
 build-os-env:
 ifeq ($(OS),Linux)
 	yay -S --noconfirm --needed \
-		termite slock sox fontforge vivaldi dzen2 conky \
-		git tmux autoconf jq progress dropbox-cli pkgfile fzf skim \
-		redshift nightshift arandr watchexec xfce4-settings \
-		lxdm xorg-server xorg-xinit xorg-apps xf86-video-intel xinit-xsession \
-		dunst fcitx fcitx-mozc fcitx-configtool \
-		networkmanager docker libnotify ristretto thunar asciinema \
-		libxss # for xmonad-config
+		alsa-utils \
+		arandr \
+		asciinema \
+		autoconf \
+		bluez bluez-utils \
+		conky \
+		dmenu \
+		docker \
+		docker-compose \
+		dropbox-cli \
+		dunst \
+		dzen2 \
+		extundelete \
+		fcitx \
+		fcitx-configtool \
+		fcitx-configtool \
+		fcitx-im \
+		fcitx-mozc \
+		fontforge \
+		fzf \
+		gimp \
+		git \
+		graphicsmagick \
+		hub \
+		jq \
+		libnotify \
+		libxss \
+		light \
+		linux-headers \
+		lxdm \
+		mimi-git \
+		networkmanager \
+		nightshift \
+		noto-fonts-emoji \
+		openssh \
+		pavucontrol \
+		pkgfile \
+		progress \
+		pulseaudio \
+		redshift \
+		ristretto \
+		rsync \
+		skim \
+		slock \
+		sox \
+		termite \
+		thunar \
+		tmux \
+		tmux-mem-cpu-load \
+		unzip-iconv \
+		vivaldi \
+		watchexec \
+		xf86-video-intel \
+		xfce4-settings \
+		xinit-xsession \
+		xorg-apps \
+		xorg-server \
+		xorg-xinit \
+		zathura \
+		zathura-pdf-mupdf
 	sudo systemctl enable NetworkManager
+	sudo systemctl start NetworkManager
 	sudo systemctl enable docker
+	sudo systemctl start docker
+	sudo gpasswd -a aiya000 docker
+	sudo gpasswd -a aiya000 audio
+	sudo modprobe btusb
+	sudo systemctl enable bluetooth
+	sudo systemctl start bluetooth
 	# Fix East Asian Ambiguous character width problems
 	git clone https://github.com/fumiyas/wcwidth-cjk ~/git/wcwidth-cjk
 	cd ~/git/wcwidth-cjk
