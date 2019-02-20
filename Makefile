@@ -44,6 +44,7 @@ install-by-pip:
 
 build-os-env:
 ifeq ($(OS),Linux)
+	# xmonad: needed by xmonad-config --restart and --replace
 	yay -S --noconfirm --needed \
 		alsa-utils \
 		arandr \
@@ -100,6 +101,7 @@ ifeq ($(OS),Linux)
 		xf86-video-intel \
 		xfce4-settings \
 		xinit-xsession \
+		xmonad \
 		xorg-apps \
 		xorg-server \
 		xorg-xinit \
