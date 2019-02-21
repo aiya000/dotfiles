@@ -198,6 +198,7 @@ endif
 augroup VimRc
   " Auto set cursor position in the file
   autocmd BufReadPost * call vimrc#autocmd#visit_past_position()
+  autocmd BufNew,TerminalOpen,BufEnter,WinEnter * call vimrc#autocmd#force_lcd()
 
   " Auto load filetype dictionary
   autocmd FileType *
@@ -862,6 +863,7 @@ set foldtext=FoldCCtext()
   \ foldcolumn=1
   \ foldopen=search,jump,mark,percent,insert,tag,undo
   \ foldclose=all
+  \ foldmethod=marker
 let &fillchars = 'vert:|,fold: '
 
 " The backup options
@@ -1176,14 +1178,14 @@ digraph pi 960   " pi
 " plugins {{{
 
 " netrw
-nnoremap <silent> <leader>e         :<C-u>call vimrc#keys#toggle_netrw_vexplorer(v:true)<CR>
-nnoremap <silent> <leader><leader>e :<C-u>call vimrc#keys#netrw_wrapper('horizontal', v:true)<CR>
-nnoremap <silent> <leader>E         :<C-u>call vimrc#keys#netrw_wrapper('stay', v:true)<CR>
-nnoremap <silent> <leader><leader>E :<C-u>call vimrc#keys#netrw_wrapper('tabnew', v:true)<CR>
-nnoremap <silent> 'e         :<C-u>call vimrc#keys#toggle_netrw_vexplorer(v:false)<CR>
-nnoremap <silent> ''e :<C-u>call vimrc#keys#netrw_wrapper('horizontal', v:false)<CR>
-nnoremap <silent> 'E         :<C-u>call vimrc#keys#netrw_wrapper('stay', v:false)<CR>
-nnoremap <silent> ''E :<C-u>call vimrc#keys#netrw_wrapper('tabnew', v:false)<CR>
+nnoremap <silent> <leader>e         :<C-u>call vimrc#keys#toggle_netrw_vexplorer()<CR>
+nnoremap <silent> <leader><leader>e :<C-u>execute ':Sexplore' getcwd()<CR>
+nnoremap <silent> <leader>E         :<C-u>execute ':Explore' getcwd()<CR>
+nnoremap <silent> <leader><leader>E :<C-u>execute ':Texplore' getcwd()<CR>
+nnoremap <silent> 'e  :<C-u>call vimrc#keys#execute_on_git_root(function('vimrc#keys#toggle_netrw_vexplorer'))<CR>
+nnoremap <silent> ''e :<C-u>call vimrc#keys#execute_on_git_root({ -> execute(':Sexplore ' . fnameescape(getcwd()))})<CR>
+nnoremap <silent> 'E  :<C-u>call vimrc#keys#execute_on_git_root({ -> execute(':Explore ' . fnameescape(getcwd()))})<CR>
+nnoremap <silent> ''E :<C-u>call vimrc#keys#execute_on_git_root({ -> execute(':Texplore ' . fnameescape(getcwd()))})<CR>
 
 " open-browser.vim
 nmap <leader>w <Plug>(openbrowser-open)
@@ -1198,10 +1200,10 @@ vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
 " denite.nvim
 nnoremap <leader>u :<C-u>Denite<Space>
 nnoremap <silent> <C-]> :<C-u>execute printf('Denite tag -input=%s', expand('<cword>'))<CR>
-nnoremap <silent> <C-k>e :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file/rec')<CR>
-nnoremap <silent> <C-k><C-e> :<C-u>call vimrc#plugins#exec_at_this_buffer_dir('Denite file')<CR>
-nnoremap <silent> '<C-k>e :<C-u>Denite file/rec<CR>
-nnoremap <silent> '<C-k><C-e> :<C-u>Denite file<CR>
+nnoremap <silent> <C-k>e :<C-u>Denite file/rec<CR>
+nnoremap <silent> <C-k><C-e> :<C-u>Denite file<CR>
+nnoremap <silent> '<C-k>e :<C-u>call vimrc#keys#execute_cmd_on_git_root('Denite file/rec')<CR>
+nnoremap <silent> '<C-k><C-e> :<C-u>call vimrc#keys#execute_cmd_on_git_root('Denite file')<CR>
 nnoremap <silent> <C-k><C-t> :<C-u>Denite tag<CR>
 nnoremap <silent> <C-k><C-f> :<C-u>Denite outline<CR>
 nnoremap <silent> <C-k>f :<C-u>Denite filetype<CR>
@@ -1411,5 +1413,3 @@ nohlsearch
 filetype plugin indent on
 syntax enable
 let g:vimrc['loaded'] = 1
-
-" vim:foldmethod=marker

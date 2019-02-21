@@ -107,58 +107,6 @@ function! vimrc#plugins#tweet_public(...) abort " {{{
   "execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
 endfunction " }}}
 
-" Run `haskdogs` command as a job
-function! vimrc#plugins#execute_haskdogs_async() abort " {{{
-  if exists('s:haskdogs_job')
-    echomsg 'haskdogs is skipped (haskdogs is already running at now)'
-    return
-  endif
-  echomsg 'haskdogs is started'
-
-  let git_top_dir = system('git rev-parse --show-toplevel')[:-2] " [:-2] removes a line break
-  let dot_git     = git_top_dir . '/.git' " This is a file (not a directory) if here is a git submodule
-  let ctags_path  = isdirectory(dot_git)
-    \ ? dot_git . '/tags'
-    \ : './tags'
-
-  let previous_current_dir = execute('pwd')[1:]
-  execute ':lcd' git_top_dir
-
-  let cmd = ['haskdogs', '--hasktags-args', '"--ignore-close-implementation', '--tags-absolute', '--ctags', printf('--file=%s"', ctags_path)]
-  echomsg 'haskdogs will make a ctags on ' . git_top_dir
-
-  let s:haskdogs_job = s:Job.start(cmd, {
-    \ 'on_exit': { _ -> [
-      \ s:Msg.echomsg('None', 'haskdogs might make a ctags to ' . ctags_path),
-      \ execute('unlet s:haskdogs_job')
-    \ ]}
-  \ })
-
-  execute ':lcd' previous_current_dir
-  return s:haskdogs_job
-endfunction " }}}
-
-" Execute vimrc#plugins#execute_haskdogs_async(),
-" and Append the tags of eta libraries to it
-" after it is executed
-function! vimrc#plugins#execute_haskdogs_in_eta_async() abort " {{{
-  function! s:body_of_execute_haskdogs_in_eta_async() abort
-    let git_top_dir = system('git rev-parse --show-toplevel')[:-2] " [:-2] removes a line break
-    let ctags_path  = isdirectory(git_top_dir)
-      \ ? git_top_dir . '/.git/tags'
-      \ : './tags'
-    if !isdirectory($HOME . '/git/eta')
-      echo '~/git/eta is not found'
-      return
-    elseif !filereadable(ctags_path)
-      echo "'" . ctags_path . "' is not found"
-      return
-    endif
-    call system('hasktags ~/git/eta/libraries --ignore-close-implementation --tags-absolute --ctags -f /tmp/eta_tags && cat /tmp/eta_tags >> ' . ctags_path)
-  endfunction
-  call vimrc#plugins#execute_haskdogs_async(function('s:body_of_execute_haskdogs_in_eta_async'))
-endfunction " }}}
-
 " let s:read_to_quickfix_it {{{
 
 let s:read_to_quickfix_it = { cmd ->
@@ -219,32 +167,4 @@ endfunction " }}}
 function! vimrc#plugins#open_this_file_in_gui() abort " {{{
   let file = expand('%:p')
   call s:Job.start([g:vimrc.gui_editor, file])
-endfunction " }}}
-
-function! vimrc#plugins#delete_lines(...) abort " {{{
-    let lineNums = s:List.map(a:000, { x -> str2nr(x) })
-    let lineNums = s:List.sort(lineNums, { x, y -> x - y })
-    while v:true
-        if empty(lineNums)
-            break
-        endif
-        let lineNum = s:List.shift(lineNums)
-        let lineNums = s:List.map(lineNums, { x -> x - 1 })
-        execute lineNum 'delete'
-    endwhile
-endfunction " }}}
-
-function! vimrc#plugins#exec_at_this_buffer_dir(cmd) abort " {{{
-    let current_dir = execute('pwd')[1:]
-    let buffuer_dir = expand('%:p:h')
-    if !isdirectory(buffuer_dir)
-        call s:Msg.error('vimrc#plugins#exec_at_this_buffer_dir: the buffer was not a file, :pwd directory was used instead.')
-        let buffuer_dir = current_dir
-    endif
-
-    " TODO: Vim should cd at a tab
-    let tcd = has('nvim') ? 'tcd' : 'cd'
-    execute tcd buffuer_dir
-    execute a:cmd
-    execute tcd current_dir
 endfunction " }}}

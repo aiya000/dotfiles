@@ -78,29 +78,30 @@ function! vimrc#keys#bufclose_filetype(filetypes) " {{{
 endfunction " }}}
 
 " Toggle open netrw explorer ( vertical split )
-function! vimrc#keys#toggle_netrw_vexplorer(at_this_buffer) " {{{
+function! vimrc#keys#toggle_netrw_vexplorer() " {{{
   let closed = vimrc#keys#bufclose_filetype(['netrw'])
   if !closed
-    call vimrc#keys#netrw_wrapper('vertical', a:at_this_buffer)
+    call vimrc#keys#netrw_wrapper('vertical')
   endif
 endfunction " }}}
 
-" Avoid a behavior that netrw cannot be opened on :terminal buffer
-function! vimrc#keys#netrw_wrapper(open_method, at_this_buffer) abort " {{{
-  let open = a:open_method ==# 'stay'       ? 'enew'
-  \    : a:open_method ==# 'horizontal' ? 'new'
-  \    : a:open_method ==# 'vertical'   ? 'vertical new'
-  \    : a:open_method ==# 'tabnew'     ? 'tabnew'
-  \    : s:Msg.error(printf("'%s' is not expected", a:open_method))
-  let path = a:at_this_buffer && isdirectory(expand('%:p:h'))
-  \ ? expand('%:p:h')
-  \ : getcwd()
-  execute open
+" Wrap netrw commands to avoid opening failure on :ternimal buffers
+function! vimrc#keys#netrw_wrapper(open_method) abort " {{{
+  let open =
+    \ a:open_method ==# 'stay' ? 'enew' :
+    \ a:open_method ==# 'horizontal' ? 'new' :
+    \ a:open_method ==# 'vertical' ? 'vertical new' :
+    \ a:open_method ==# 'tabnew' ? 'tabnew' :
+      \ s:Msg.error(printf("'%s' is not expected", a:open_method))
 
-  let current_dir = execute(':pwd')[1:]
-  execute ':lcd' fnameescape(path)
-  Explore
-  execute ':lcd' fnameescape(current_dir)
+  let current_dir = fnameescape(getcwd())
+  try
+    execute ':lcd' fnameescape(getcwd())
+    execute open
+    Explore
+  finally
+    execute ':lcd' current_dir
+  endtry
 endfunction " }}}
 
 " Get a detail of <title> from + register
@@ -266,3 +267,21 @@ function! vimrc#keys#move_tab_next() " {{{
     +tabmove
   endif
 endfunction " }}}
+
+function! vimrc#keys#execute_on_git_root(func, ...) abort
+  let current = getcwd()
+  let git_root = fnameescape(system('git rev-parse --show-toplevel')[:-2])
+  echomsg fnameescape(system('git rev-parse --show-toplevel')[:-2])
+  try
+    execute ':lcd' git_root
+    call call(a:func, a:000)
+  finally
+    execute ':lcd' current
+  endtry
+endfunction
+
+function! vimrc#keys#execute_cmd_on_git_root(cmd) abort
+  call vimrc#keys#execute_on_git_root({ ->
+    \ execute(a:cmd)
+  \})
+endfunction

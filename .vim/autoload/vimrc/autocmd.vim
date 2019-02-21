@@ -12,3 +12,11 @@ function! vimrc#autocmd#visit_past_position() " {{{
     execute 'normal! g`"'
   endif
 endfunction " }}}
+
+function! vimrc#autocmd#force_lcd() abort
+  try
+    lcd %:p:h
+  catch /E344/
+    execute ':lcd' system('git rev-parse --show-toplevel')
+  endtry
+endfunction

@@ -32,8 +32,6 @@ command! -bar -nargs=? -complete=filetype AutoloadEdit
     \ execute ':edit' printf('%s/autoload/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
 "" Others
 command! -bar GUI call vimrc#plugins#open_this_file_in_gui()
-command! -bar -nargs=+ DeleteLines call vimrc#plugins#delete_lines(<f-args>)
-command! -bar SneakToCamelAll %s/_\(.\)/\u\1/g
 command! -bar ReverseLines OperatorReverseLines
 
 "" Clear quickfix
@@ -98,17 +96,12 @@ command! -bar -nargs=* GBlame Gina blame <args>
 command! -bar -nargs=* Gist Gista post --stay <args>
 
 " Twitter
-command! -bar Twitter TweetVimHomeTimeline
-command! -bar TwitterTab tabnew | Twitter
-command! -bar Tweet TweetVimSay
 command! -bar TwitterPrivate call vimrc#plugins#twitter_private()
 command! -bar TwitterPrivateTab tabnew | TwitterPrivate
 command! -bar TweetPrivate call vimrc#plugins#tweet_private()
-command! -bar -nargs=+ TweetPrivateCommandSay call vimrc#plugins#tweet_private(<q-args>)
 command! -bar TwitterPublic call vimrc#plugins#twitter_public()
 command! -bar TwitterPublicTab tabnew | TwitterPublic
 command! -bar TweetPublic call vimrc#plugins#tweet_public()
-command! -bar -nargs=+ TweetPublicCommandSay call vimrc#plugins#tweet_public(<q-args>)
 
 " aref-web.vim
 command! -bar -nargs=+ Hoogle Aref hoogle <args>
@@ -126,11 +119,11 @@ command! -bar LcdBufDir lcd %:p:h
 command! -bar LcdGitRoot execute ':lcd' system('git rev-parse --show-toplevel')
 command! -bar -nargs=+ Grep call vimrc#plugins#grep_those(<f-args>)
 command! -bar TodoList Grep TODO FIXME XXX
-command! -bar CtagsAuto call vimrc#open_terminal_as('', '++open', 'zsh -c ctags-auto', v:false)
 
 " Tapis
 function! Tapi_Tabnew(_, args) abort
-  let [ pwd, files ] = [ a:args[0], a:args[1 :] ]
+  let pwd = a:args[0]
+  let files = a:args[1:]
   let paths = map(files, { _, file ->
     \ fnameescape(pwd . '/' . file)
   \ })
