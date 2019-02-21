@@ -309,6 +309,11 @@ if i_have docker ; then
     alias drmi='docker rmi'
 fi
 
+if i_have draw.io ; then
+    # The unification for drawio-batch
+    alias drawio=draw.io
+fi
+
 # shellcheck disable=SC2139
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
 alias mount4u.vfat=mount4u.ntfs

@@ -95,6 +95,7 @@ ifeq ($(OS),Linux)
 		thunar \
 		tmux \
 		tmux-mem-cpu-load \
+		universal-ctags-git \
 		unzip-iconv \
 		vivaldi \
 		watchexec \
@@ -178,4 +179,15 @@ ifeq ($(OS),Darwin)
 endif
 ifeq ($(OS),Windows)
 	echo Please define install-for-sh > /dev/stderr
+endif
+
+install-drawio:
+ifeq ($(OS),Linux)
+	yay -S drawio-desktop drawio-batch
+endif
+ifeq ($(OS),Darwin)
+	echo Please define install-drawio > /dev/stderr
+endif
+ifeq ($(OS),Windows)
+	echo Please define install-drawio > /dev/stderr
 endif

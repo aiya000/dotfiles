@@ -98,9 +98,6 @@ repo = 'andymass/vim-matchup'
 repo = 'ryanoasis/vim-devicons'
 
 [[plugins]]
-repo = 'haya14busa/vim-migemo'
-
-[[plugins]]
 repo = 'nathanaelkane/vim-indent-guides'
 
 [[plugins]]

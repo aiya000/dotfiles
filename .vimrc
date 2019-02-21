@@ -1041,7 +1041,6 @@ nnoremap <C-n> gt
 nnoremap <C-p> gT
 nnoremap <C-m> o<Esc>
 nnoremap g<C-]> <C-]>
-nnoremap <leader>/ :<C-u>Migemo<CR>
 nnoremap <silent> ! :!<CR>
 nnoremap <silent> <C-k><Space> :<C-u>call vimrc#keys#clear_ends_space()<CR>
 nnoremap <silent> <Space><Space> :<C-u>call vimrc#keys#compress_spaces()<CR>
