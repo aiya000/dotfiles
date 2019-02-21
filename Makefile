@@ -53,9 +53,6 @@ ifeq ($(OS),Linux)
 		bluez bluez-utils \
 		conky \
 		dmenu \
-		docker \
-		docker-compose \
-		dropbox-cli \
 		dunst \
 		dzen2 \
 		extundelete \
@@ -154,40 +151,42 @@ ifeq ($(OS),Windows)
 	echo Please define build-os-env
 endif
 
-# These are not installed by make install
-install-for-haskell:
+# Here are not installed by make install
+
+install-haskell:
 	stack install hasktags haskdogs hlint
 
-install-for-markdown:
+install-markdown:
 	npm install -g doctoc shiba
 
-install-for-text:
+install-text:
 	npm install -g textlint
 
-install-for-html-css:
+install-html-css:
 	npm install -g htmlhint csslint
 
-install-for-xml:
+install-xml:
 	npm install -g pretty-xml
 
-install-for-sh:
 ifeq ($(OS),Linux)
+install-java:
+	yay -S jdk
+
+install-sh:
 	yay -S shellcheck
-endif
-ifeq ($(OS),Darwin)
-	echo Please define install-for-sh > /dev/stderr
-endif
-ifeq ($(OS),Windows)
-	echo Please define install-for-sh > /dev/stderr
-endif
+
+install-ruby:
+	yay -S ruby ruby-irb
 
 install-drawio:
-ifeq ($(OS),Linux)
 	yay -S drawio-desktop drawio-batch
-endif
-ifeq ($(OS),Darwin)
-	echo Please define install-drawio > /dev/stderr
-endif
-ifeq ($(OS),Windows)
-	echo Please define install-drawio > /dev/stderr
+
+install-audio-player:
+	yay -S mpg123
+
+install-docker:
+	yay -S docker docker-compose
+
+install-dropbox:
+	yay -S dropbox-cli
 endif
