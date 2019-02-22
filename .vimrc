@@ -16,9 +16,10 @@ let $MYGVIMRC = filereadable(expand('~/.dotfiles/.gvimrc'))
 
 " Global values
 let g:vimrc = get(g:, 'vimrc', {
-  \ 'loaded'   : 0,
-  \ 'vim_home' : expand('~/.vim'),
-  \ 'gui_editor' : has('nvim') ? 'gonvim' : 'gvim',
+  \ 'loaded': 0,
+  \ 'vim_home': expand('~/.vim'),
+  \ 'path_at_started': getcwd(),
+  \ 'gui_editor': has('nvim') ? 'gonvim' : 'gvim',
   \ 'backupdir': expand('~/.backup/vim-backup'),
   \ 'is_unix': has('unix'),
   \ 'is_macos': has('macunix'),
@@ -198,7 +199,7 @@ endif
 augroup VimRc
   " Auto set cursor position in the file
   autocmd BufReadPost * call vimrc#autocmd#visit_past_position()
-  autocmd BufNew,TerminalOpen,BufEnter,WinEnter * call vimrc#autocmd#force_lcd()
+  autocmd BufNew,TerminalOpen,BufEnter,WinEnter * call vimrc#autocmd#lcd_buffer_dir_or_base()
 
   " Auto load filetype dictionary
   autocmd FileType *
@@ -1001,14 +1002,14 @@ nnoremap <C-w>v <NOP>
 nnoremap gh <NOP>
 
 " :terminal
-nnoremap <silent> <leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, v:false)<CR>
-nnoremap <silent> <leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, v:false)<CR>
-nnoremap <silent> <leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, v:false)<CR>
-nnoremap <silent> <leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, v:false)<CR>
-nnoremap <silent> 'v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, v:true)<CR>
-nnoremap <silent> ''v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, v:true)<CR>
-nnoremap <silent> 'V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, v:true)<CR>
-nnoremap <silent> ''V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, v:true)<CR>
+nnoremap <silent> <leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell)<CR>
+nnoremap <silent> <leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell)<CR>
+nnoremap <silent> <leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell)<CR>
+nnoremap <silent> <leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell)<CR>
+nnoremap <silent> 'v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, {'path': g:vimrc.path_at_started})<CR>
+nnoremap <silent> ''v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, {'path': g:vimrc.path_at_started})<CR>
+nnoremap <silent> 'V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, {'path': g:vimrc.path_at_started})<CR>
+nnoremap <silent> ''V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, {'path': g:vimrc.path_at_started})<CR>
 " and vimshell
 nnoremap <silent> <C-[><C-v> :<C-u>call vimrc#keys#toggle_shell_mode()<CR>
 
@@ -1182,10 +1183,10 @@ nnoremap <silent> <leader>e         :<C-u>call vimrc#keys#toggle_netrw_vexplorer
 nnoremap <silent> <leader><leader>e :<C-u>execute ':Sexplore' getcwd()<CR>
 nnoremap <silent> <leader>E         :<C-u>execute ':Explore' getcwd()<CR>
 nnoremap <silent> <leader><leader>E :<C-u>execute ':Texplore' getcwd()<CR>
-nnoremap <silent> 'e  :<C-u>call vimrc#keys#execute_on_git_root(function('vimrc#keys#toggle_netrw_vexplorer'))<CR>
-nnoremap <silent> ''e :<C-u>call vimrc#keys#execute_on_git_root({ -> execute(':Sexplore ' . fnameescape(getcwd()))})<CR>
-nnoremap <silent> 'E  :<C-u>call vimrc#keys#execute_on_git_root({ -> execute(':Explore ' . fnameescape(getcwd()))})<CR>
-nnoremap <silent> ''E :<C-u>call vimrc#keys#execute_on_git_root({ -> execute(':Texplore ' . fnameescape(getcwd()))})<CR>
+nnoremap <silent> 'e  :<C-u>call vimrc#keys#execute_on_base_path(function('vimrc#keys#toggle_netrw_vexplorer'))<CR>
+nnoremap <silent> ''e :<C-u>call vimrc#keys#execute_on_base_path({ -> execute(':Sexplore ' . fnameescape(getcwd()))})<CR>
+nnoremap <silent> 'E  :<C-u>call vimrc#keys#execute_on_base_path({ -> execute(':Explore ' . fnameescape(getcwd()))})<CR>
+nnoremap <silent> ''E :<C-u>call vimrc#keys#execute_on_base_path({ -> execute(':Texplore ' . fnameescape(getcwd()))})<CR>
 
 " open-browser.vim
 nmap <leader>w <Plug>(openbrowser-open)
@@ -1202,8 +1203,8 @@ nnoremap <leader>u :<C-u>Denite<Space>
 nnoremap <silent> <C-]> :<C-u>execute printf('Denite tag -input=%s', expand('<cword>'))<CR>
 nnoremap <silent> <C-k>e :<C-u>Denite file/rec<CR>
 nnoremap <silent> <C-k><C-e> :<C-u>Denite file<CR>
-nnoremap <silent> '<C-k>e :<C-u>call vimrc#keys#execute_cmd_on_git_root('Denite file/rec')<CR>
-nnoremap <silent> '<C-k><C-e> :<C-u>call vimrc#keys#execute_cmd_on_git_root('Denite file')<CR>
+nnoremap <silent> '<C-k>e :<C-u>call vimrc#keys#execute_on_base_path(function('denite#start'), [{'name':'file/rec','args':[]}])<CR>
+nnoremap <silent> '<C-k><C-e> :<C-u>call vimrc#keys#execute_on_base_path(function('denite#start'), [{'name':'file','args':[]}])<CR>
 nnoremap <silent> <C-k><C-t> :<C-u>Denite tag<CR>
 nnoremap <silent> <C-k><C-f> :<C-u>Denite outline<CR>
 nnoremap <silent> <C-k>f :<C-u>Denite filetype<CR>

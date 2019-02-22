@@ -16,25 +16,15 @@ function! vimrc#fetch_dein(install_dirname) " {{{
     endif
 endfunction " }}}
 
-" Execute :terminal and :setf to it, and
-" `a:command` will be opened in current window's directory.
-" Also this resorbs :terminal's defference of vim and neovim
-"
+" Absorbs the different of Vim and NeoVim.
 "   open_mode: 'vertical' | 'horizontal' | 'stay' | 'tabnew'
-function! vimrc#open_terminal_as(filetype, open_mode, command, from_this_buffer, ...) abort " {{{
-  let options = a:000
-
-  " NOTE: %:p:h may not be a valid directory, e.g :terminal's buffer has term://.//xxxxx:/bin/zsh
-  " Open at this buffer, or open at the current directory
-  let path = a:from_this_buffer && isdirectory(expand('%:p:h'))
-  \ ? expand('%:p:h')
-  \ : getcwd()
-
+function! vimrc#open_terminal_as(filetype, open_mode, command, ...) abort " {{{
+  let options = get(a:000, 1, {})
   let terminal
     \ = has('nvim') && (a:open_mode ==# '++open') ? s:terminal_with_warn()
     \ : has('nvim') ? ':terminal'
     \ : (a:open_mode ==# '++open') ? ':terminal ++curwin ++close ++open'
-    \ : s:List.has(options, 'noclose') ? ':terminal ++curwin'
+    \ : get(options, 'noclose', v:false) ? ':terminal ++curwin'
     \ : ':terminal ++curwin ++close'
 
   if a:open_mode ==# 'vertical'
@@ -51,16 +41,19 @@ function! vimrc#open_terminal_as(filetype, open_mode, command, from_this_buffer,
     throw 'undefined open_mode is detected: ' . string(a:open_mode)
   endif
 
-  execute ':lcd' fnameescape(path)
+  execute ':lcd' get(options, 'path', getcwd())
   execute terminal a:command
   if a:filetype !=# ''
     execute 'setf' a:filetype
   endif
-  " TODO: Use TermOpen event in .vimrc after vim implements
-  " TODO: for any registers
-  nnoremap <buffer><expr> p vimrc#keys#put_as_stdin(@")
-  nnoremap <buffer><expr> "+p vimrc#keys#put_as_stdin(@+)
-  nmap <buffer> 'p "+p
+
+  if !has('nvim')
+    " TODO: Use TermOpen event in .vimrc after vim implements
+    " TODO: for any registers
+    nnoremap <buffer><expr> p vimrc#keys#put_as_stdin(@")
+    nnoremap <buffer><expr> "+p vimrc#keys#put_as_stdin(@+)
+    nmap <buffer> 'p "+p
+  endif
 endfunction " }}}
 
 function! s:terminal_with_warn() abort

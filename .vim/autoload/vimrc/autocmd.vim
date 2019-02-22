@@ -1,22 +1,22 @@
 " Yank posted gist to clipboard
 function! vimrc#autocmd#yank_gista_posted_url() abort " {{{
-  let l:gistid = g:gista#avars.gistid
-  execute printf('Gista browse --yank --gistid=%s', l:gistid)
+  let gistid = g:gista#avars.gistid
+  execute printf('Gista browse --yank --gistid=%s', gistid)
   let @+ = @"
 endfunction " }}}
 
 " Auto set cursor position in the file
 function! vimrc#autocmd#visit_past_position() " {{{
-  let l:past_posit = line("'\"")
-  if l:past_posit > 0 && l:past_posit <= line('$')
+  let past_posit = line("'\"")
+  if past_posit > 0 && past_posit <= line('$')
     execute 'normal! g`"'
   endif
 endfunction " }}}
 
-function! vimrc#autocmd#force_lcd() abort
+function! vimrc#autocmd#lcd_buffer_dir_or_base() abort " {{{
   try
     lcd %:p:h
   catch /E344/
-    execute ':lcd' system('git rev-parse --show-toplevel')
+    execute ':lcd' g:vimrc.path_at_started
   endtry
-endfunction
+endfunction " }}}
