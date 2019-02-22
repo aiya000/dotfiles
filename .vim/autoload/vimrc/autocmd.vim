@@ -16,7 +16,7 @@ endfunction " }}}
 function! vimrc#autocmd#lcd_buffer_dir_or_base() abort " {{{
   try
     lcd %:p:h
-  catch /E344/
+  catch /\(E344\|E472\)/ " the buffer has no file
     execute ':lcd' g:vimrc.path_at_started
   endtry
 endfunction " }}}
