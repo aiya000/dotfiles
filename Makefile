@@ -189,4 +189,10 @@ install-docker:
 
 install-dropbox:
 	yay -S dropbox-cli
+
+install-gyazo-cli:
+	yay -S --needed dep
+	go get -d github.com/Tomohiro/gyazo-cli
+	cd $GOPATH/src/github.com/Tomohiro/gyazo-cli
+	make install
 endif
