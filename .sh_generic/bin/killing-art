@@ -2,7 +2,7 @@
 # kill with fzf
 # ＜ キリングアート！
 
-signal=$1  # -9
+signal=$([[ -z "$1" ]] && echo '-9' || echo "$1")
 
 if [[ $(uname) == 'Darwin' ]] ; then
     target_pids=$(ps -axO 'pid,tty,command' | awk 'NR!=1 {print}' | fzf --multi --preview='echo {+8..}' | awk '{print $1}')
@@ -14,5 +14,5 @@ if [[ "$target_pids" == '' ]] ; then
     echo 'くふん！'
     exit 1
 else
-    kill "$signal" "$target_pids" && echo 'やったわ'
+    kill "$signal" "$target_pids" && echo 'やったわ' || exit 1
 fi
