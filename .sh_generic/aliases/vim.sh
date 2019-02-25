@@ -30,8 +30,8 @@ function vim-current-session () {
 alias nvime='nvim -c ":bufdo tab split" +q'
 
 ## :terminal
-alias vterminal='vim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell, v:false)"'
-alias nterminal='nvim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell, v:false)"'
+alias vterminal='vim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell)"'
+alias nterminal='nvim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell)"'
 
 function vim-fix-plugins-for-dein-update () {
     local plugin_names plugin_dir
