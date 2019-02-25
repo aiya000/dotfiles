@@ -1,6 +1,5 @@
 let s:V = vital#vimrc#new()
 
-let s:List = s:V.import('Data.List')
 let s:Msg = s:V.import('Vim.Message')
 
 " Clone dein.vim to target dir
@@ -19,7 +18,7 @@ endfunction " }}}
 " Absorbs the different of Vim and NeoVim.
 "   open_mode: 'vertical' | 'horizontal' | 'stay' | 'tabnew'
 function! vimrc#open_terminal_as(filetype, open_mode, command, ...) abort " {{{
-  let options = get(a:000, 1, {})
+  let options = get(a:000, 0, {})
   let terminal
     \ = has('nvim') && (a:open_mode ==# '++open') ? s:terminal_with_warn()
     \ : has('nvim') ? ':terminal'
