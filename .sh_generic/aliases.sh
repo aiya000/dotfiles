@@ -197,7 +197,13 @@ alias e-current-session="vim-current-session $EDITOR"
 alias g-current-session="vim-current-session $MY_GUI_EDITOR"
 
 function dust () {
-    mv "$@" ~/.backup/dustbox
+    local now_dir
+    now_dir="$HOME/.backup/dustbox/$(date +'%Y-%m-%d')/$(date +'%H:%M:%S')"
+
+    if [[ ! -d $now_dir ]] ; then
+        mkdir -p "$now_dir"
+    fi
+    mv "$@" "$now_dir"
 }
 
 function packet-watch () {

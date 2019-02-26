@@ -3,7 +3,7 @@
     format               = "<b>%s</b>\n%b"
     alignment            = left
     word_wrap            = yes
-    geometry             = "300x5-30+20"
+    geometry             = "600x5-30+20"
     separator_height     = 2
     padding              = 8
     horizontal_padding   = 8
