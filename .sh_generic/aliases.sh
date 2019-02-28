@@ -20,15 +20,21 @@ alias dd='dd status=progress'
 alias df='df -h'
 alias du='du -h'
 alias free='free -h'
+
 alias_of sudo='sudo '  # Enable aliases on sudo
 alias_of mysql='mysql --pager="less -r -S -n -i -F -X"'
 alias_of hoe='stack exec --silent -- hoe'
 alias_of hawk='stack exec -- hawk'
+# shellcheck disable=SC2139
+alias_of sk="sk $SKIM_DEFAULT_OPTS"
+
 i_have say || alias say=espeak
 
-if i_have aurman ; then
-    alias aurman='aurman --color always'
-    alias aurman-noconfirm='aurman --noconfirm'
+if i_have yay ; then
+    alias yay='yay --color always'
+    alias yays='yay -S'
+    alias yays-noconfirm='yay --noconfirm -S'
+    alias yayss='yay -Ss'
 fi
 
 # }}}
@@ -196,22 +202,6 @@ alias e-current-session="vim-current-session $EDITOR"
 # shellcheck disable=SC2139
 alias g-current-session="vim-current-session $MY_GUI_EDITOR"
 
-function dust () {
-    local now_dir
-    now_dir="$HOME/.backup/dustbox/$(date +'%Y-%m-%d')/$(date +'%H:%M:%S')"
-
-    if [[ ! -d $now_dir ]] ; then
-        mkdir -p "$now_dir"
-    fi
-    mv "$@" "$now_dir"
-}
-
-function packet-watch () {
-    local interface=$1
-    local output=$2 # expects foo.pcap
-    sudo tcpdump -i "$interface" -n -s0 -w "$output"
-}
-
 alias watch-packet=packet-watch
 
 i_have tmux && alias tm=tmux && alias ta='tmux attach'
@@ -293,6 +283,8 @@ fi
 
 if i_have npm ; then
     alias nr='npm run'
+    alias ni='npm install'
+    alias nig='npm install --global'
 fi
 
 if i_have yarn ; then
@@ -337,11 +329,6 @@ function virtualenv-activate () {
         return 1
     fi
 }
-
-if i_have skim ; then
-    # shellcheck disable=SC2139
-    alias sk="sk $SKIM_DEFAULT_OPTS"
-fi
 
 # }}}
 

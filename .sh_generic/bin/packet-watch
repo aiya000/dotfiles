@@ -1,0 +1,5 @@
+#!/bin/bash
+
+interface=$1
+output=$2 # expects foo.pcap
+sudo tcpdump -i "$interface" -n -s0 -w "$output"

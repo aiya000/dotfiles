@@ -1,1 +1,3 @@
-These commands are loaded by ../aliases.sh automatically.
+An instead of `function`.
+
+These allows to be executed via `sudo`.
