@@ -222,22 +222,18 @@ i_have unzip && alias unzip-cp932='unzip -O cp932'
 i_have xdg-open && alias x=xdg-open
 
 function tags-auto () {
-    local make_tags tag_option_to tags_options git_root tag_dest
+    local make_tags tag_option_to tags_options root dest
     make_tags=$1  # This value is exptected to 'ctags', 'haskdogs', or like it
     tag_option_to=$2
     tags_options=${*:3:($#-1)}
-    git_root=$(git rev-parse --show-toplevel)
+    root=$(git rev-parse --show-toplevel 2> /dev/null || pwd)
 
-    if [[ -d $git_root/.git ]] ; then
-        tag_dest=$git_root/.git/tags
-    elif [[ -f $git_root/.git ]] ; then
-        # If here is a submodule
-        tag_dest=$git_root/tags
+    if [[ -d $root/.git ]] ; then
+        dest=$root/.git/tags
     else
-        echo 'an undefined condition is detected! X(' > /dev/stderr
-        exit 1
+        dest=$root/tags
     fi
-    eval "$make_tags ${tags_options[*]} $tag_option_to $tag_dest"
+    eval "$make_tags ${tags_options[*]} $tag_option_to $dest"
 }
 
 if i_have ctags ; then

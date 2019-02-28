@@ -125,10 +125,16 @@ function! vimrc#plugins#run_stack_quickfix(stack_subcmd) abort " {{{
   copen
 endfunction " }}}
 function! vimrc#plugins#run_gradle_quickfix(gradle_subcmd) abort " {{{
-  CClear
-  let gradle_cmd = ['gradle', '--console=plain'] + split(a:gradle_subcmd, ' ')
-  call s:read_to_quickfix_it(gradle_cmd)
-  copen
+  let current = getcwd()
+  try
+    CClear
+    let gradle_cmd = ['gradle', '--console=plain'] + split(a:gradle_subcmd, ' ')
+    execute ':lcd' g:vimrc.path_at_started
+    call s:read_to_quickfix_it(gradle_cmd)
+    copen
+  finally
+    execute ':lcd' current
+  endtry
 
   " Avoid
   augroup ScalaCompileWatch
