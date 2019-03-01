@@ -222,15 +222,6 @@ repo  = 'vim-scripts/alex.vim'
 on_ft = 'alex'
 
 [[plugins]]
-repo = 'osyo-manga/vim-over'
-on_cmd = [
-    'OverCommandLine',
-    'OverCommandLineNoremap',
-    'OverCommandLineMap',
-    'OverCommandLineUnmap',
-]
-
-[[plugins]]
 repo   = 'thinca/vim-textobj-between'
 on_map = [
     '<Plug>(textobj-between-a)',

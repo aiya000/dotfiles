@@ -213,10 +213,6 @@ augroup VimRc
 
   autocmd InsertEnter * call deoplete#enable()
 
-  " Hide relativenumber when OverCommandLine entered
-  autocmd User OverCmdLineEnter setl norelativenumber
-  autocmd User OverCmdLineLeave if &number | setl relativenumber | end
-
   " Set the 'none' filetype to the empty filetype
   autocmd VimEnter,BufNew * if empty(&ft) | setf none | endif
 
@@ -1219,14 +1215,6 @@ nnoremap <silent> L :<C-u>Denite buffer<CR>
 nmap <leader>K viw[K
 vnoremap <leader>K "zy:<C-u>Aref weblio <C-r>z<CR>
 vnoremap <leader>S "zy:<C-u>Aref stackage <C-r>z<CR>
-
-" vim-over
-nnoremap <silent> :s/      :<C-u>OverCommandLine s/<CR>
-vnoremap <silent> :s/      :<C-u>OverCommandLine '<,'>s/<CR>
-cnoremap <silent> <C-k>:   <Home>OverCommandLine<CR>
-OverCommandLineNoremap <C-b> <Left>
-OverCommandLineNoremap <C-f> <Right>
-"OverCommandLineNoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[:getcmdpos()-2]<CR>
 
 " vim-hopping
 nnoremap <expr> <C-k><C-s> printf(':HoppingStart --input=\m\C\<%s\>/', expand('<cword>')) . "\<CR>"
