@@ -168,6 +168,9 @@ install-html-css:
 install-xml:
 	npm install -g pretty-xml
 
+install-lice:
+	npm install -g lice
+
 ifeq ($(OS),Linux)
 install-java:
 	yay -S jdk
