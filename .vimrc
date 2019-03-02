@@ -1353,19 +1353,19 @@ snoremap <silent><expr> <C-s> neosnippet#mappings#expand_or_jump_impl()
 " NOTE: These overrides a part of the marking keys.
 " vim-fmap
 nmap 'f <Plug>(fmap-forward-f)
-nmap 'F <Plug>(fmap-backword-f)
+nmap 'F <Plug>(fmap-backward-f)
 nmap 't <Plug>(fmap-forward-t)
-nmap 'T <Plug>(fmap-backword-T)
+nmap 'T <Plug>(fmap-backward-T)
 
 vmap 'f <Plug>(fmap-forward-f)
-vmap 'F <Plug>(fmap-backword-f)
+vmap 'F <Plug>(fmap-backward-f)
 vmap 't <Plug>(fmap-forward-t)
-vmap 'T <Plug>(fmap-backword-T)
+vmap 'T <Plug>(fmap-backward-T)
 
 omap 'f <Plug>(fmap-forward-f)
-omap 'F <Plug>(fmap-backword-f)
+omap 'F <Plug>(fmap-backward-f)
 omap 't <Plug>(fmap-forward-t)
-omap 'T <Plug>(fmap-backword-T)
+omap 'T <Plug>(fmap-backward-T)
 
 " }}}
 " filetypes {{{
