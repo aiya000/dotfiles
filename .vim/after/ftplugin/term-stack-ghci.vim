@@ -9,8 +9,10 @@ setl nonumber norelativenumber nolist
 nnoremap <buffer> <localleader>r i<End><C-u>:reload<CR>
 nnoremap <buffer> s :<C-u>call <SID>open_say_buffer()<CR>i
 nnoremap <buffer><silent> S i:show breaks<CR>
-nnoremap <buffer><silent> o i:steplocal<CR>
+nnoremap <buffer><silent> o i:step<CR>:list<CR>
 nnoremap <buffer><silent> O i:list<CR>
+nnoremap <buffer><silent> A i:steplocal<CR>:list<CR>
+nnoremap <buffer><silent> <C-r> :<C-u>call vimrc#open_terminal_as('term-stack-ghci', 'horizontal', 'stack ghci', {'path': g:vimrc.path_at_started})<CR><C-w>p:quit<CR><C-w>p
 
 function! s:open_say_buffer() abort
   let s:ghci_bufnr = winbufnr('.')

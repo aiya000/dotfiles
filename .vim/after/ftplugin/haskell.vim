@@ -12,8 +12,8 @@ let &commentstring = ' -- %s'
 let &errorformat   = '%f:%l:%c:%m' " a format for stack build and stack test
 
 nnoremap <buffer><silent> <localleader><localleader><localleader>r :<C-u>echo 'stack test is started'<CR>:QuickRun stack_test<CR>
-nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('stack_test', 'horizontal', 'stack test', v:false, 'noclose')<CR>
-nnoremap <buffer><silent> <localleader><localleader>b :<C-u>call vimrc#open_terminal_as('none', 'horizontal', 'stack build', v:false, 'noclose)<CR>
+nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('stack_test', 'horizontal', 'stack test', {'noclose': v:true, 'path': g:vimrc.path_at_started})<CR>
+nnoremap <buffer><silent> <localleader><localleader>b :<C-u>call vimrc#open_terminal_as('none', 'horizontal', 'stack build', {'noclose': v:true, 'path': g:vimrc.path_at_started})<CR>
 nnoremap <buffer><silent> <localleader><localleader>r :<C-u>echo 'stack build is started'<CR>:QuickfixRunStack build<CR>
 nnoremap <buffer><silent> <localleader><localleader>w :<C-u>call <SID>start_the_quickfix('build')<CR>
 nnoremap <buffer><silent> <localleader><localleader>W :<C-u>call <SID>stop_the_quickfix()<CR>

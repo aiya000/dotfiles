@@ -1007,8 +1007,6 @@ nnoremap <silent> 'v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical',
 nnoremap <silent> ''v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, {'path': g:vimrc.path_at_started})<CR>
 nnoremap <silent> 'V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, {'path': g:vimrc.path_at_started})<CR>
 nnoremap <silent> ''V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, {'path': g:vimrc.path_at_started})<CR>
-" and vimshell
-nnoremap <silent> <C-[><C-v> :<C-u>call vimrc#keys#toggle_shell_mode()<CR>
 
 " set
 nnoremap <silent> <C-h><C-d> :<C-u>call vimrc#keys#toggle_diff()<CR>
