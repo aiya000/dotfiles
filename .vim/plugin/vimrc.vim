@@ -60,22 +60,32 @@ command! -bar -nargs=* QuickfixRunGradle call vimrc#plugins#run_gradle_quickfix(
 command! -bar -nargs=* QuickfixRunSbtCompileWatch call vimrc#plugins#run_scala_compile_watch_quickfix(<q-args>)
 command! -bar QuickfixStopSbtCompileWatch call vimrc#plugins#stop_scala_compile_watch_quickfix()
 
+function! s:terminal_at_started(filetype, command, ...) abort
+  let options = get(a:, 1, {})
+  return vimrc#open_terminal_as(
+    \ a:filetype,
+    \ 'stay',
+    \ a:command,
+    \ extend(options, {'path': g:vimrc.path_at_started})
+    \ )
+endfunction
+
 "" REPLs
-command! -bar -nargs=? Ghci call vimrc#open_terminal_as('term-stack-exec-ghci', 'stay', 'stack exec ghci ' . <q-args>, v:false)
+command! -bar -nargs=? Ghci call s:terminal_at_started('term-stack-exec-ghci', 'stack exec ghci ' . <q-args>)
 "NOTE: 'e' suffix means 'environment of the project' :D
-command! -bar -nargs=? Ghcie call vimrc#open_terminal_as('term-stack-ghci', 'stay', 'stack ghci ' . <q-args>, v:false)
-command! -bar -nargs=? GhcieTastyTest call vimrc#open_terminal_as('term-stack-ghci', 'stay', 'stack ghci :tasty-test ' . <q-args>, v:false)
-command! -bar -nargs=? IdrisRepl call vimrc#open_terminal_as('term-idris', 'stay', 'idris ' . <q-args>, v:false)
-command! -bar -nargs=? SbtRepl call vimrc#open_terminal_as('term-sbt', 'stay', 'cd "$(git rev-parse --show-toplevel)" ; sbt ' . (empty(<q-args>) ? '' : printf("'%s'", <q-args>)), v:false)
-command! -bar CLisp call vimrc#open_terminal_as('none', 'stay', 'clisp', v:false)
-command! -bar LeinRepl call vimrc#open_terminal_as('none', 'stay', 'lein repl', v:false)
-command! -bar ElmRepl call vimrc#open_terminal_as('term-elm-repl', 'stay', 'elm repl', v:false)
-command! -bar PythonRepl call vimrc#open_terminal_as('none', 'stay', 'PAGER=cat python', v:false)
-command! -bar IPyRepl call vimrc#open_terminal_as('none', 'stay', 'ipython', v:false)
-command! -bar SwiftRepl call vimrc#open_terminal_as('none', 'stay', 'swift', v:false)
-command! -bar KotlinRepl call vimrc#open_terminal_as('none', 'stay', 'kotlinc-jvm', v:false)
-command! -bar DhallRepl call vimrc#open_terminal_as('none', 'stay', 'dhall repl', v:false)
-command! -bar IrbRepl call vimrc#open_terminal_as('none', 'stay', 'irb', v:false)
+command! -bar -nargs=? Ghcie call s:terminal_at_started('term-stack-ghci', 'stack ghci ' . <q-args>)
+command! -bar -nargs=? GhcieTastyTest call s:terminal_at_started('term-stack-ghci', 'stack ghci :tasty-test ' . <q-args>)
+command! -bar -nargs=? IdrisRepl call s:terminal_at_started('term-idris', 'idris ' . <q-args>)
+command! -bar -nargs=? SbtRepl call s:terminal_at_started('term-sbt', 'cd "$(git rev-parse --show-toplevel)" ; sbt ' . (empty(<q-args>) ? '' : printf("'%s'", <q-args>)))
+command! -bar CLisp call s:terminal_at_started('none', 'clisp')
+command! -bar LeinRepl call s:terminal_at_started('none', 'lein repl')
+command! -bar ElmRepl call s:terminal_at_started('term-elm-repl', 'elm repl')
+command! -bar PythonRepl call s:terminal_at_started('none', 'PAGER=cat python')
+command! -bar IPyRepl call s:terminal_at_started('none', 'ipython')
+command! -bar SwiftRepl call s:terminal_at_started('none', 'swift')
+command! -bar KotlinRepl call s:terminal_at_started('none', 'kotlinc-jvm')
+command! -bar DhallRepl call s:terminal_at_started('none', 'dhall repl')
+command! -bar IrbRepl call s:terminal_at_started('none', 'irb')
 
 " Git commands
 command! -bar -nargs=* GStatus Gina status -s <args>
