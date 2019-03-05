@@ -1,0 +1,62 @@
+include javascript/javascript.snip
+
+snippet template
+abbr <template>${0}</template>
+    <template>${0}</template>
+
+snippet view
+abbr <view>${0}</view>
+    <view>${0}</view>
+
+snippet style
+abbr <style>${0}</style>
+    <style>${0}</style>
+
+snippet script
+abbr <script>${0}</script>
+    <script>${0}</script>
+
+snippet text
+abbr <text>${0}</text>
+    <text>${0}</text>
+
+snippet class
+abbr class="${0:here}"
+    class="${0:here}"
+
+snippet export_default
+abbr export default {${0:here}}
+    export default {${0:here}}
+
+snippet data
+abbr data: () => ({${0:here}})
+    data: () => ({${0:here}})
+
+snippet bind
+abbr {{${0:name}}}
+    {{${0:name}}}
+
+snippet v_if
+alias vif
+abbr v-if="${0:cond}"
+    v-if="${0:cond}"
+
+snippet v_else_if
+alias velseif
+abbr v-else-if="${0:cond}"
+    v-else-if="${0:cond}"
+
+snippet v_else
+alias velse
+abbr v-else
+    v-else
+
+snippet v_for
+alias vfor
+abbr v-for="${1:x} in ${0:xs}"
+    v-for="${1:x} in ${0:xs}"
+
+snippet v_model
+alias vmodel
+abbr v-model="${0:data_property}"
+    v-model="${0:data_property}"
