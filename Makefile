@@ -193,6 +193,9 @@ install-docker:
 install-dropbox:
 	yay -S dropbox-cli
 
+install-audacity:
+	yay -S audacity
+
 install-gyazo-cli:
 	yay -S --needed dep
 	go get -d github.com/Tomohiro/gyazo-cli

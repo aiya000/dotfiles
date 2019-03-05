@@ -211,23 +211,14 @@ i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have unzip && alias unzip-cp932='unzip -O cp932'
 i_have xdg-open && alias x=xdg-open
 
-function tags-auto () {
-    local make_tags tag_option_to tags_options root dest
-    make_tags=$1  # This value is exptected to 'ctags', 'haskdogs', or like it
-    tag_option_to=$2
-    tags_options=${*:3:($#-1)}
-    root=$(git rev-parse --show-toplevel 2> /dev/null || pwd)
-
-    if [[ -d $root/.git ]] ; then
-        dest=$root/.git/tags
-    else
-        dest=$root/tags
-    fi
-    eval "$make_tags ${tags_options[*]} $tag_option_to $dest"
-}
-
 if i_have ctags ; then
-    alias ctags-auto='tags-auto ctags -f --tag-relative=yes --recurse --sort=yes'
+    function ctags-auto () {
+        local root
+        root=$(git rev-parse --show-toplevel 2> /dev/null || pwd)
+        dest=$([[ -d $root/.git ]] && echo "$root/.git/tags" || echo "$root/tags")
+        ctags -f "$dest" --tag-relative=yes --recurse --sort=yes
+    }
+
     alias ctags-kotlin-auto='ctags-auto --exclude=\\\*.java --exclude=\\\*.html --exclude=\\\*.css'
     alias ctags-typescript-auto='ctags-auto --exclude=\\\*.js'
 fi
