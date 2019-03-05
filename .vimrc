@@ -696,6 +696,7 @@ let g:indent_guides_exclude_filetypes = [
   \ 'help',
   \ 'man',
   \ 'elm',
+  \ 'stack_test',
 \ ]
 
 " Define colors

@@ -1,3 +1,7 @@
+snippet pragma
+abbr {-# ${0} #-}
+    {-# ${0} #-}
+
 snippet pragma_options_ghc
 alias options_ghc
 abbr    {-# OPTIONS_GHC ... #-}
@@ -8,7 +12,12 @@ snippet pragma_ann
 abbr {-# ANN {target} "{detail}" #-}
     {-# ANN ${1:target} "${2:detail}" #-}
 
+snippet pragma_inline
+alias inline
+    {-# INLINE ${0:funcName} #-}
+
 snippet pragma_noinline
+alias noinline
     {-# NOINLINE ${0:funcName} #-}
 
 snippet pragma_language
