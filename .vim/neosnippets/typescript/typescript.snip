@@ -101,13 +101,16 @@ snippet private
 snippet readonly
     readonly
 
+snippet enum
+abbr enum ${1:Name} {${0}}
+    enum ${1:Name} {${0}}
+
 snippet class
 abbr class ${1:Name} {${0}}
     class ${1:Name} {${0}}
 
 snippet constructor
-abbr constructor(${1:args}) {${0}}
-    constructor(${1:args}) {${0}}
+    constructor(${1:#:args}) {${0}}
 
 snippet namespace
 alias names

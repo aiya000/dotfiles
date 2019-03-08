@@ -740,8 +740,9 @@ for s:deleter in ['<C-h>', '<BS>', '<C-w>']
 endfor
 unlet s:deleter
 
-call lexima#add_rule({'filetype': 'kotlin', 'char': '<', 'input_after': '>', 'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'})
-call lexima#add_rule({'filetype': 'typescript', 'char': '<', 'input_after': '>', 'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'})
+for ft in ['kotlin', 'typescript', 'typescript.tsx']
+  call lexima#add_rule({'filetype': ft, 'char': '<', 'input_after': '>', 'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'})
+endfor
 
 " }}}
 " --- gina.vim --- " {{{

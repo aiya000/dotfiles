@@ -280,6 +280,8 @@ fi
 
 if i_have yarn ; then
     alias yaru='yarn run'
+    alias yard='yarn add'
+    alias yard-dev='yarn add --dev'
 fi
 
 if i_have docker ; then
