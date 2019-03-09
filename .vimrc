@@ -648,7 +648,8 @@ augroup VimRc
   autocmd VimEnter * FNoreMap tt …
   autocmd VimEnter * FNoreMap p （
   autocmd VimEnter * FNoreMap k 「
-  autocmd VimEnter * FNoreMap K 『
+  autocmd VimEnter * FNoreMap K 〈
+  autocmd VimEnter * FNoreMap -k 『
 augroup END
 
 " }}}
