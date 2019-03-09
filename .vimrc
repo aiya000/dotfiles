@@ -698,6 +698,7 @@ let g:indent_guides_exclude_filetypes = [
   \ 'man',
   \ 'elm',
   \ 'stack_test',
+  \ 'adrone_home',
 \ ]
 
 " Define colors
