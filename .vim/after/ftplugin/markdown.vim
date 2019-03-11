@@ -34,7 +34,7 @@ function! s:open_grip() abort
         \ g:vimrc.github.password,
         \ expand('%:p'),
     \ )
-    call vimrc#open_terminal_as('none', 'horizontal', cmd, v:false)
+    call vimrc#open_terminal_as('none', 'horizontal', cmd)
     hide
 endfunction
 
