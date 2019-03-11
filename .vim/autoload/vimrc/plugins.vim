@@ -162,6 +162,19 @@ function! vimrc#plugins#stop_scala_compile_watch_quickfix() abort " {{{
   endif
 endfunction " }}}
 
+function! vimrc#plugins#run_yarn_quickfix(yarn_subcmd) abort
+  let current = getcwd()
+  try
+    CClear
+    let yarn_cmd = ['yarn'] + split(a:yarn_subcmd, ' ')
+    execute ':lcd' g:vimrc.path_at_started
+    call s:read_to_quickfix_it(yarn_cmd)
+    copen
+  finally
+    execute ':lcd' current
+  endtry
+endfunction
+
 function! vimrc#plugins#grep_those(...) abort " {{{
   CClear
   call s:List.map(a:000, { word ->

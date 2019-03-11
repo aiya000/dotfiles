@@ -124,8 +124,8 @@ if i_have git ; then
     alias gsmuir='git submodule update --init --recursive'
     alias gch='git cherry-pick'
     alias _gclean='git clean -fd'
-    alias gpush='git push'
-    alias gpushf='git push --force-with-lease'
+    alias gp='git push'
+    alias gpf='git push --force-with-lease'
     alias gpull='git pull --rebase'
     alias gtake='git stash push --message "This is saved by alias.take" && git pull --rebase && git stash pop'
     alias greflog='git reflog'
@@ -283,9 +283,8 @@ if i_have npm ; then
 fi
 
 if i_have yarn ; then
+    alias ya='yarn'
     alias yaru='yarn run'
-    alias yard='yarn add'
-    alias yard-dev='yarn add --dev'
 fi
 
 if i_have docker ; then

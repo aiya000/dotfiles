@@ -60,6 +60,9 @@ command! -bar -nargs=* QuickfixRunGradle call vimrc#plugins#run_gradle_quickfix(
 command! -bar -nargs=* QuickfixRunSbtCompileWatch call vimrc#plugins#run_scala_compile_watch_quickfix(<q-args>)
 command! -bar QuickfixStopSbtCompileWatch call vimrc#plugins#stop_scala_compile_watch_quickfix()
 
+"" TypeSCript
+command! -bar -nargs=* QuickfixRunYarn call vimrc#plugins#run_yarn_quickfix(<q-args>)
+
 function! s:terminal_at_started(filetype, command, ...) abort
   let options = get(a:, 1, {})
   return vimrc#open_terminal_as(
@@ -126,6 +129,7 @@ command! -bar Memo sp ~/.backup/memo.md
 command! -bar CdBufDir cd %:p:h
 command! -bar CdGitRoot execute ':cd' system('git rev-parse --show-toplevel')
 command! -bar LcdBufDir lcd %:p:h
+command! -bar LcdStarted execute ':lcd' g:vimrc.path_at_started
 command! -bar LcdGitRoot execute ':lcd' system('git rev-parse --show-toplevel')
 command! -bar -nargs=+ Grep call vimrc#plugins#grep_those(<f-args>)
 command! -bar TodoList Grep TODO FIXME XXX

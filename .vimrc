@@ -470,7 +470,7 @@ let g:unite_source_tag_max_fname_length = 100
 " }}}
 " --- deoplete.nvim --- {{{
 
-let g:deoplete#enable_at_startup = 0
+let g:deoplete#enable_at_startup = 1
 
 " }}}
 " --- vim-visualstar --- {{{ 
@@ -772,6 +772,24 @@ AlterCommand ene[w] EnewOverridden
 AlterCommand tabnew TabnewOverridden
 
 " }}}
+" --- vim-lsp --- " {{{
+
+" TODO: いつか有効になってくれますように
+augroup VimRc
+  autocmd User lsp_setup call lsp#register_server({
+    \ 'name': 'language-server-stdio.js',
+    \ 'cmd': { _ -> [&shell, &shellcmdflag, 'language-server-stdio.js'] },
+    \ 'root_uri': { _ -> lsp#utils#path_to_uri(
+      \ lsp#utils#find_nearest_parent_file_directory(
+        \ lsp#utils#get_buffer_path(),
+        \ 'tsconfig.json'
+      \ )
+    \ )},
+    \ 'whitelist': ['javascript', 'typescript', 'typescript.tsx'],
+  \ })
+augroup END
+
+" }}
 
 call dein#end()
 

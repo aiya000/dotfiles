@@ -293,3 +293,23 @@ on_cmd = ['Dein']
 [[plugins]]
 repo  = 'posva/vim-vue'
 on_ft = 'vue'
+
+[[plugins]]
+repo  = 'prabirshrestha/vim-lsp'
+on_ft = [
+    'haskell',
+    'javascript',
+    'typescript',
+    'typescript.tsx',
+]
+depends = [
+    'async.vim',
+]
+
+[[plugins]]
+repo      = 'prabirshrestha/async.vim'
+on_source = 'vim-lsp'
+
+[[plugins]]
+repo      = 'lighttiger2505/deoplete-vim-lsp'
+on_source = 'vim-lsp'
