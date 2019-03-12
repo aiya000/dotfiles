@@ -789,7 +789,7 @@ augroup VimRc
   \ })
 augroup END
 
-" }}
+" }}}
 
 call dein#end()
 
@@ -1060,6 +1060,7 @@ nnoremap 'D "+D
 nnoremap <C-n> gt
 nnoremap <C-p> gT
 nnoremap <C-m> o<Esc>
+nnoremap <C-]> g<C-]>
 nnoremap g<C-]> <C-]>
 nnoremap <silent> ! :!<CR>
 nnoremap <silent> <C-k><Space> :<C-u>call vimrc#keys#clear_ends_space()<CR>
@@ -1217,7 +1218,6 @@ vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
 
 " denite.nvim
 nnoremap <leader>u :<C-u>Denite<Space>
-nnoremap <silent> <C-]> :<C-u>execute printf('Denite tag -input=%s', expand('<cword>'))<CR>
 nnoremap <silent> <C-k>e :<C-u>Denite file/rec<CR>
 nnoremap <silent> <C-k><C-e> :<C-u>Denite file<CR>
 nnoremap <silent> '<C-k>e :<C-u>call vimrc#keys#execute_on_base_path(function('denite#start'), [{'name':'file/rec','args':[]}])<CR>
