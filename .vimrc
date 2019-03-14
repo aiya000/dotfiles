@@ -730,6 +730,7 @@ call lexima#add_rule({'char': '「', 'input_after': '」'})
 call lexima#add_rule({'char': '『', 'input_after': '』'})
 call lexima#add_rule({'char': '（', 'input_after': '）'})
 call lexima#add_rule({'char': '｛', 'input_after': '｝'})
+call lexima#add_rule({'char': '〈', 'input_after': '〉'})
 
 for s:deleter in ['<C-h>', '<BS>', '<C-w>']
   call lexima#add_rule({'char': s:deleter, 'at': '(\%#)', 'delete': 1})
@@ -1360,11 +1361,15 @@ vmap ajp <Plug>(textobj-jabraces-parens-a)
 omap ijp <Plug>(textobj-jabraces-parens-i)
 omap ajp <Plug>(textobj-jabraces-parens-a)
 
-" TODO: Why this doesn't work
-vmap ijP <Plug>(textobj-jabraces-brackets-i)
-vmap ajP <Plug>(textobj-jabraces-brackets-a)
-omap ijP <Plug>(textobj-jabraces-brackets-i)
-omap ajP <Plug>(textobj-jabraces-brackets-a)
+vmap ijK <Plug>(textobj-jabraces-yama-kakko-i)
+vmap ajK <Plug>(textobj-jabraces-yama-kakko-a)
+omap ijK <Plug>(textobj-jabraces-yama-kakko-i)
+omap ajK <Plug>(textobj-jabraces-yama-kakko-a)
+
+vmap ij-k <Plug>(textobj-jabraces-double-kakko-i)
+vmap ij-k <Plug>(textobj-jabraces-double-kakko-a)
+omap ij-k <Plug>(textobj-jabraces-double-kakko-i)
+omap ij-k <Plug>(textobj-jabraces-double-kakko-a)
 
 " neosnippet.vim
 inoremap <silent><expr> <C-s> neosnippet#mappings#expand_or_jump_impl()
