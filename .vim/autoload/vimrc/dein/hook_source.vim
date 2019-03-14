@@ -62,7 +62,7 @@ function! vimrc#dein#hook_source#gina_git_add_patch_this() abort " {{{
   let file = split(getline('.'), ' ')[1]
   let git_add = 'git add --patch ' . file
   CdGitRoot
-  call vimrc#open_terminal_as('', 'tabnew', git_add, v:false)
+  call vimrc#open_terminal_as('', 'tabnew', git_add)
 endfunction " }}}
 
 function! vimrc#dein#hook_source#gina_git_stash_patch_this() abort " {{{
