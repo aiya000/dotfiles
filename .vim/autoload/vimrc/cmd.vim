@@ -6,13 +6,13 @@ function! vimrc#cmd#rename_to(new_name) abort " {{{
   let new_name  = fnameescape(a:new_name)
 
   if fnamemodify(this_file, ':t') ==# new_name
-    call vimrc#echo_error('New name is same old name, operation abort')
+    call s:Msg.error('New name is same old name, operation abort')
     return
   endif
 
   let file_editing = &modified
   if file_editing
-    call vimrc#echo_error('Please :write this file')
+    call s:Msg.error('Please :write this file')
     return
   endif
 

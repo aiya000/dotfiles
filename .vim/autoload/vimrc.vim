@@ -9,8 +9,8 @@ function! vimrc#fetch_dein(install_dirname) " {{{
         echo 'Installing dein.vim now.'
         execute '!git clone https://github.com/Shougo/dein.vim' a:install_dirname
     else
-        call vimrc#echo_error('Sorry, You do not have git command.')
-        call vimrc#echo_error('I cannot introduce dein.vim.')
+        call s:Msg.error('Sorry, You do not have git command.')
+        call s:Msg.error('I cannot introduce dein.vim.')
         throw 'FALIED: cloning deim.vim failed.'
     endif
 endfunction " }}}
