@@ -194,6 +194,21 @@ alias um=umount
 alias ei=exit
 alias cdp=cd-finddir
 alias ki=killing-art
+
+# alias ..='cd ../'
+# alias ...='cd ../../'
+# alias ....='cd ../../../'
+# ...
+function aliases::define_cd_to_parents () {
+    local name
+    for (( i = 2; i <= 20; ++i )) ; do
+        name=$(eval "printf '.%.0s' {1..$i}")
+        dir=$(eval "printf '../%.0s' {2..$i}")
+        eval "alias $name='cd $dir'"
+    done
+}
+aliases::define_cd_to_parents
+
 alias grw=./gradlew
 alias grwb='./gradlew build'
 alias grwr='./gradlew run'
