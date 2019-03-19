@@ -943,6 +943,7 @@ nnoremap <silent> z: :<C-u>tabs<CR>
 nnoremap <silent> g> :<C-u>messages<CR>
 
 " search
+nnoremap / /\v
 nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
 nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
 
@@ -1305,7 +1306,7 @@ nmap [c :<C-u>ALEPrevious<CR>
 nmap ]c :<C-u>ALENext<CR>
 
 " incsearch.vim
-nmap g/ <Plug>(incsearch-stay)
+nmap g/ <Plug>(incsearch-stay)\v
 IncSearchNoreMap <C-j> <CR>
 IncSearchNoreMap <C-b> <Left>
 IncSearchNoreMap <C-f> <Right>
