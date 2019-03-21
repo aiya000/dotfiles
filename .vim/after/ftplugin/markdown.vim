@@ -9,7 +9,6 @@ let b:undo_ftplugin = 'setl ' . join([
 
 setl tabstop=4 shiftwidth=4 expandtab
 setl completefunc=github_complete#complete
-setl omnifunc=github_complete#complete
 let &commentstring = '<!--%s-->'
 set conceallevel=0
 
