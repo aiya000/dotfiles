@@ -53,7 +53,7 @@ snippet strong
     @<strong>{${0:here}}
 
 snippet href
-    @<href>{${0:here}}
+    @<href>{${1:URL}, ${0:content}}
 
 snippet list_single
     @<list>{${0:here}}
@@ -75,6 +75,10 @@ snippet footnote
 
 snippet image
     //image[${1:image_name_without_the_extension}][${0:name_for_display}]
+
+snippet numberlessimage
+alias numberless_image
+    //numberlessimage[${1:image_name_without_the_extension}][${0:name_for_display}]
 
 snippet quote
     //quote{
