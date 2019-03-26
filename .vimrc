@@ -1084,7 +1084,12 @@ inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
 inoremap <C-k>++ ＋
 inoremap <C-k>?= ≒
 inoremap <C-k>\N ℕ
+inoremap <C-k>\Z ℤ
 inoremap <C-k>\R ℝ
+inoremap <C-k>\Q ℚ
+inoremap <C-k>\C ℂ
+inoremap <C-k>\A 𝔸
+inoremap <C-k>\H ℍ
 
 " others
 imap <C-j> <CR>
