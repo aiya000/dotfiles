@@ -77,6 +77,7 @@ ifeq ($(OS),Linux)
 		networkmanager \
 		nightshift \
 		noto-fonts-emoji \
+		noto-fonts-cjk \
 		openssh \
 		pavucontrol \
 		pkgfile \
