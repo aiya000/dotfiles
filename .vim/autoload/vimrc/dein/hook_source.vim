@@ -39,6 +39,7 @@ function! vimrc#dein#hook_source#operator_surround() abort " {{{
 endfunction " }}}
 
 function! vimrc#dein#hook_source#gina() abort " {{{
+  " TODO: Move to ftplugins
   call gina#custom#mapping#nmap('status' , 'A'     , ':<C-u>call vimrc#dein#hook_source#gina_git_add_patch_this()<CR>'   , { 'noremap': 1 , 'silent': 1})
   call gina#custom#mapping#nmap('status' , 'o'     , ':<C-u>call gina#action#call("edit")<CR>'                           , { 'noremap': 1 , 'silent': 1})
   call gina#custom#mapping#nmap('status' , 'Q'     , ':<C-u>bdelete!<CR>'                                                , { 'noremap': 1 , 'silent': 1})

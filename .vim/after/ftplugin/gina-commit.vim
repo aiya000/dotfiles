@@ -1,8 +1,8 @@
 let b:undo_ftplugin = 'setl ' . join([
-\   'number<',
-\   'relativenumber<',
-\])
+  \ 'number<',
+  \ 'relativenumber<',
+  \ 'syntax=gina-commit<',
+  \ 'filetype=markdown<',
+\ ])
 
-setl number relativenumber
-setl syntax=gina-commit
-setl filetype=markdown
+setl number relativenumber syntax=gina-commit filetype=markdown
