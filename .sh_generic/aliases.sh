@@ -320,6 +320,10 @@ if i_have draw.io ; then
     alias drawio=draw.io
 fi
 
+if i_have krita ; then
+    alias kra=krita
+fi
+
 # shellcheck disable=SC2139
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
 alias mount4u.vfat=mount4u.ntfs
