@@ -34,6 +34,9 @@ function! vimrc#dein#hook_source#operator_surround() abort " {{{
         \ { 'block' : ['@<ruby>{', ', ""}'], 'motionwise' : ['char'], 'keys' : ['[r'] },
         \ { 'block' : ['@<code>{', '}'], 'motionwise' : ['char'], 'keys' : ['[c'] },
       \ ],
+      \ 'markdown' : [
+        \ { 'block' : ['**', '**'], 'motionwise' : ['char'], 'keys' : ['B'] },
+      \ ],
     \ }
     " NOTE: Does operator-surround allow <localleader> by some way?
 endfunction " }}}

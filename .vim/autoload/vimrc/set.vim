@@ -1,5 +1,12 @@
 let s:List = vital#vimrc#import('Data.List')
 
+function! s:shorten_path_if_needed(path) abort
+  let mettya_nagai = 60 | lockvar! mettya_nagai
+  return len(a:path) > mettya_nagai
+    \ ? pathshorten(a:path)
+    \ : a:path
+endfunction
+
 " Maybe this is specified to 'tabline' with a pattern like `set tabline=%!this_function()`.
 "
 " See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer),
@@ -11,7 +18,7 @@ function! vimrc#set#tabline() abort " {{{
             \ : ''
     return '%1*[%{tabpagenr("$")}]%* '
         \. s:tabs() . ' => '
-        \. '%2*[PWD=%{getcwd()}]%*'
+        \. '%2*[PWD=%{vimrc#set#cwd_or_shorten()}]%*'
         \. '%3*%{vimrc#set#tabline_tags_if_present()}%*'
         \. "%4*%{'[' . tabpagenr('$') . ']'}%*"
         \. '%5*%{vimrc#set#tabline_marks_if_present()}%*'
@@ -21,9 +28,11 @@ endfunction " }}}
 
 function! vimrc#set#tabline_tags_if_present() abort " {{{
     let tags = tagfiles()
-    return empty(tags)    ? ''
-        \: len(tags) is 1 ? ('[Tag=' . tags[0] . ']')
-        \                 : ('[Tag=' . tags[0] . ' +]')
+
+    return empty(tags) ? ''
+      \ : len(tags) is 1
+        \ ? ('[Tag=' . s:shorten_path_if_needed(tags[0]) . ']')
+        \ : ('[Tag=' . s:shorten_path_if_needed(tags[0]) . ' +]')
 endfunction " }}}
 
 function! vimrc#set#tabline_marks_if_present() abort " {{{
@@ -87,3 +96,7 @@ function! s:get_mod_mark_for_tab(tabnr) abort " {{{
     \ })
     return (modified_buffer is v:null) ? '' : '+'
 endfunction " }}}
+
+function! vimrc#set#cwd_or_shorten() abort
+  return s:shorten_path_if_needed(getcwd())
+endfunction
