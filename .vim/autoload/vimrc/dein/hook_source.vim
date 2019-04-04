@@ -33,6 +33,7 @@ function! vimrc#dein#hook_source#operator_surround() abort " {{{
         \ { 'block' : ['@<idx>{', '}'], 'motionwise' : ['char'], 'keys' : ['[x'] },
         \ { 'block' : ['@<ruby>{', ', ""}'], 'motionwise' : ['char'], 'keys' : ['[r'] },
         \ { 'block' : ['@<code>{', '}'], 'motionwise' : ['char'], 'keys' : ['[c'] },
+        \ { 'block' : ['@<mathcode>{', '}'], 'motionwise' : ['char'], 'keys' : ['[m'] },
       \ ],
       \ 'markdown' : [
         \ { 'block' : ['**', '**'], 'motionwise' : ['char'], 'keys' : ['B'] },
