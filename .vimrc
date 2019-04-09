@@ -920,7 +920,9 @@ let &tags = &tags . ',' . join([
   \ '../.git/tags',
   \ '../../.git/tags',
   \ '../../../.git/tags',
-  \ '../../../../.git/tags'
+  \ '../../../../.git/tags',
+  \ g:vimrc.path_at_started . '/tags',
+  \ g:vimrc.path_at_started . '/.git/tags',
 \ ], ',')
 
 " }}}
