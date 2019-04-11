@@ -9,4 +9,4 @@ let b:undo_ftplugin = 'setl ' . join([
 setl tw=0 ts=2 sw=2 et
 let &commentstring = ' " %s'
 
-nnoremap <buffer><silent> <leader>o :<C-u>VimConsoleOpen<CR>
+nnoremap <buffer><silent> <leader><leader>o :<C-u>VimConsoleOpen<CR>
