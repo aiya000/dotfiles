@@ -1065,6 +1065,8 @@ nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
 nnoremap <silent> <leader>o :<C-u>copen<CR>
 "" Visual a last pasted range
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+nnoremap <expr> <C-k><C-s> printf(':%%s/\m\C\<%s\>/', expand('<cword>'))
+nnoremap <expr> <C-k>s printf(':%%s/\m\C\<%s\>/%s', expand('<cword>'), expand('<cword>'))
 
   " }}}
 " insert mode {{{
