@@ -162,6 +162,7 @@ if i_have git ; then
         git checkout -
     }
     alias gp-wip=git-push-wip
+    alias gpw=gp-wip
 
     function _gre () {
         echo -n "(at \`$(git rev-parse --show-toplevel)\`) Do you really force reset the git index tree? (y/n)"
