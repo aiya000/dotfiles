@@ -753,15 +753,6 @@ endfor
 let g:gina#command#blame#formatter#format = '%su%=on %ti by %au %ma%in'
 
 " }}}
-" --- vim-hopping --- {{{
-
-let g:hopping#prompt = '(*^v^) '
-
-let g:hopping#keymapping = {
-  \ "\<C-l>": "\<Esc>",
-\ }
-
-" }}}
 " --- vim-altercmd --- {{{
 
 call altercmd#load()
@@ -1244,12 +1235,6 @@ nnoremap <silent> L :<C-u>Denite buffer<CR>
 nmap <leader>K viw[K
 vnoremap <leader>K "zy:<C-u>Aref weblio <C-r>z<CR>
 vnoremap <leader>S "zy:<C-u>Aref stackage <C-r>z<CR>
-
-" vim-hopping
-nnoremap <expr> <C-k><C-s> printf(':HoppingStart --input=\m\C\<%s\>/', expand('<cword>')) . "\<CR>"
-nnoremap <expr> <C-k>s printf(':HoppingStart --input=\m\C\<%s\>/%s', expand('<cword>'), expand('<cword>')) . "\<CR>"
-nnoremap :%s/ :<C-u>HoppingStart<CR>
-nnoremap :: :<C-u>HoppingStart<CR>
 
 " anzu-chan
 "" always n moves to forward / N moves to backward
