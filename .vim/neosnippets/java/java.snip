@@ -1,5 +1,8 @@
 # Syntax
 
+snippet class
+    class ${1:Name} {${0:here}}
+
 snippet method
 alias func fun
 abbr    void method() {}
@@ -72,6 +75,11 @@ snippet enum
     enum ${1:Name} {
         ${0}
     }
+
+snippet import
+alias imp
+abbr import ${0}
+    import ${0}
 
 # Annotation
 

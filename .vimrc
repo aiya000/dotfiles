@@ -743,7 +743,7 @@ for s:deleter in ['<C-h>', '<BS>', '<C-w>']
 endfor
 unlet s:deleter
 
-for ft in ['kotlin', 'typescript', 'typescript.tsx']
+for ft in ['kotlin', 'typescript', 'typescript.tsx', 'java']
   call lexima#add_rule({'filetype': ft, 'char': '<', 'input_after': '>', 'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'})
 endfor
 
@@ -936,7 +936,6 @@ nnoremap <silent> z: :<C-u>tabs<CR>
 nnoremap <silent> g> :<C-u>messages<CR>
 
 " search
-nnoremap / /\v
 nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
 nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
 
