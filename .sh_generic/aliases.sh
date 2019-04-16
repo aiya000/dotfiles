@@ -126,6 +126,7 @@ if i_have git ; then
     alias _gclean='git clean -fd'
     alias gp='git push'
     alias gpu='git push -u'
+    alias gpuo='git push -u origin'
     alias gpf='git push --force-with-lease'
     alias gpull='git pull --rebase'
     alias gtake='git stash push --message "This is saved by alias.take" && git pull --rebase && git stash pop'
