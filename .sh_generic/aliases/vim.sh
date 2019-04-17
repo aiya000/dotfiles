@@ -31,6 +31,7 @@ alias nvime='nvim -c ":bufdo tab split" +q'
 
 ## :terminal
 alias vterminal='vim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell)"'
+alias gvterminal='gvim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell)"'
 alias nterminal='nvim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell)"'
 
 function vim-fix-plugins-for-dein-update () {
