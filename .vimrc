@@ -1051,6 +1051,7 @@ nnoremap 'y "+y
 nnoremap 'Y "+yg_
 nnoremap 'd "+d
 nnoremap 'D "+D
+nnoremap :: :%s/
 nnoremap <C-n> gt
 nnoremap <C-p> gT
 nnoremap <C-m> o<Esc>
