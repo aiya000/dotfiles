@@ -248,3 +248,11 @@ function! vimrc#keys#execute_on_base_path(func, ...) abort
     execute ':lcd' current
   endtry
 endfunction
+
+function! vimrc#keys#open_scratch_buffer() abort
+  sp ~/.backup/scratch.md
+  normal! ggVG"_d
+  resize 5
+  nnoremap <buffer> ghq :<C-u>w! \| close<CR>
+  nnoremap <buffer> ghc :<C-u>w! \| close<CR>
+endfunction

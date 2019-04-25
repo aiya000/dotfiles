@@ -125,7 +125,6 @@ command! -bar -nargs=+ ElmSearch Aref elm-search <args>
 
 "" Others
 command! -bar -nargs=* Vim call vimrc#open_terminal_as('term-vim', 'stay', 'vim ' . <q-args>)
-command! -bar Memo sp ~/.backup/memo.md
 command! -bar CdBufDir cd %:p:h
 command! -bar CdStarted execute ':cd' g:vimrc.path_at_started
 command! -bar CdGitRoot execute ':cd' system('git rev-parse --show-toplevel')

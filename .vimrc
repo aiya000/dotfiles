@@ -942,8 +942,8 @@ nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
 " open/close
 nnoremap <silent> <C-k><C-o> :<C-u>EditOverridden %<CR>
 nnoremap <silent> <C-k>o :<C-u>EditOverridden! %<CR>
-nnoremap <silent> <leader>b :<C-u>NewOverridden \| resize 5 \| setl buftype=nofile \| setl filetype=markdown \| setl syntax=<CR>
-nnoremap <silent> <leader>B :<C-u>Memo<CR>
+nnoremap <silent> <leader>b :<C-u>call vimrc#keys#open_scratch_buffer()<CR>
+nnoremap <silent> <leader>B :<C-u>sp ~/.backup/memo.md<CR>
 nnoremap <silent> <leader><leader>q :<C-u>call vimrc#keys#bufclose_filetype(<C-r>=string(g:vimrc.auto_closing_filetypes)<CR>)<CR>
 let g:vimrc.auto_closing_filetypes = [
   \ 'aref_web',
