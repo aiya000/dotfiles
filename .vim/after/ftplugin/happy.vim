@@ -1,7 +1,7 @@
 execute 'source' (g:vimrc['vim_home'] . '/after/ftplugin/haskell.vim')
 
 let b:undo_ftplugin = 'setl ' . join([
-    \ 'commentstring<',
+  \ 'commentstring<',
 \ ])
 
 let &commentstring = '{- %s -}'
@@ -10,9 +10,9 @@ setl ts=2 sw=2 et tw=0
 filetype indent off
 
 augroup FtpluginHappy
-    autocmd!
-    " v for :WatchExecStack
-    autocmd BufWritePost *.y CClear
+  autocmd!
+  " v for :WatchExecStack
+  autocmd BufWritePost *.y CClear
 augroup END
 
 nnoremap <buffer><silent> <C-l> :<C-u>syntax off<CR>:syntax on<CR>:setl syntax=haskell<CR>
