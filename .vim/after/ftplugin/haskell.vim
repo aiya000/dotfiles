@@ -11,53 +11,26 @@ setl ts=2 sw=2 et conceallevel=0
 let &commentstring = ' -- %s'
 let &errorformat   = '%f:%l:%c:%m' " a format for stack build and stack test
 
-nnoremap <buffer><silent> <localleader><localleader><localleader>r :<C-u>echo 'stack test is started'<CR>:QuickRun stack_test<CR>
 nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('stack_test', 'horizontal', 'stack test', {'noclose': v:true, 'path': g:vimrc.path_at_started})<CR>
 nnoremap <buffer><silent> <localleader><localleader>b :<C-u>call vimrc#open_terminal_as('none', 'horizontal', 'stack build', {'noclose': v:true, 'path': g:vimrc.path_at_started})<CR>
-nnoremap <buffer><silent> <localleader><localleader>r :<C-u>echo 'stack build is started'<CR>:QuickfixRunStack build<CR>
-nnoremap <buffer><silent> <localleader><localleader>w :<C-u>call <SID>start_the_quickfix('build')<CR>
-nnoremap <buffer><silent> <localleader><localleader>W :<C-u>call <SID>stop_the_quickfix()<CR>
+nnoremap <buffer><silent> <localleader><localleader>w :<C-u>call <SID>ghcid_quickfix_start_on_path_started()<CR>
+nnoremap <buffer><silent> <localleader><localleader>W :<C-u>GhcidQuickfixStop<CR>
 nnoremap <buffer><silent> <localleader><localleader>T :<C-u>call <SID>stack_integrate_test_or_unit_or_both()<CR>
-nnoremap <buffer><silent> <localleader><localleader>t :<C-u>call <SID>start_the_quickfix('test')<CR>
+nnoremap <buffer><silent> <localleader><localleader>t :<C-u>GhcidQuickfixStart '--command=stack ghci :tasty'<CR>
 nnoremap <buffer> <localleader>S :<C-u>Aref stackage <C-r>=expand('<cword>')<CR><CR>
-
-nnoremap <buffer><silent> <C-k><C-w> :<C-u>call <SID>toggle_the_quickfix()<CR>
-
-function! s:stop_the_quickfix() abort
-  let s:does_quickfix_watch = v:false
-  cclose
-endfunction
-
-function! s:start_the_quickfix(subcmd) abort
-  let s:executed_subcmd = a:subcmd
-  let s:does_quickfix_watch = v:true
-  execute 'QuickfixRunStack' a:subcmd
-endfunction
-
-function! s:toggle_the_quickfix() abort
-  let s:does_quickfix_watch = !get(s:, 'does_quickfix_watch', v:false)
-  if s:does_quickfix_watch
-    echo 'turned on the quickfix'
-  else
-    echo 'turned off the quickfix'
-  endif
-endfunction
-
-function! s:exec_the_quickfix_if_enabled() abort
-  if get(s:, 'does_quickfix_watch', v:false)
-    execute 'QuickfixRunStack' s:executed_subcmd
-  endif
-endfunction
 
 "TODO: Detect a context of Eta, and set filetype=eta, please
 "nnoremap <buffer><silent> <localleader><localleader><localleader>r :<C-u>QuickRun eta<CR>
 "nnoremap <buffer><silent> <localleader><localleader><localleader>b :<C-u>echo 'etlas build is started'<CR>:QuickRun etlas_build<CR>
 "nnoremap <buffer><silent> <localleader><localleader><localleader>B :<C-u>call vimrc#open_terminal_as('none', 'horizontal', 'etlas build')<CR>
 
-augroup FtpluginHaskell
-  autocmd!
-  autocmd BufWritePost *.hs,*.y call s:exec_the_quickfix_if_enabled()
-augroup END
+function! s:ghcid_quickfix_start_on_path_started() abort
+  let current = getcwd()
+  copen
+  LcdStarted
+  GhcidQuickfixStart
+  execute 'lcd' current
+endfunction
 
 function! s:stack_integrate_test_or_unit_or_both() abort
   echon join([

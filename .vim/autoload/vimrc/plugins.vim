@@ -117,13 +117,7 @@ let s:read_to_quickfix_it = { cmd ->
 \ }
 
 " }}}
-" TODO: Unify to one
-function! vimrc#plugins#run_stack_quickfix(stack_subcmd) abort " {{{
-  CClear
-  let stack_cmd = ['stack'] + split(a:stack_subcmd, ' ')
-  call s:read_to_quickfix_it(stack_cmd)
-  copen
-endfunction " }}}
+" TODO: Unify run_foo_quickfix to one
 function! vimrc#plugins#run_gradle_quickfix(gradle_subcmd) abort " {{{
   let current = getcwd()
   try

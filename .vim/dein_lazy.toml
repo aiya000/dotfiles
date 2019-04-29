@@ -308,3 +308,11 @@ on_source = 'vim-lsp'
 [[plugins]]
 repo      = 'lighttiger2505/deoplete-vim-lsp'
 on_source = 'vim-lsp'
+
+[[plugins]]
+repo  = 'aiya000/vim-ghcid-quickfix'
+on_ft = [
+    'haskell',
+    'happy',
+    'alex',
+]

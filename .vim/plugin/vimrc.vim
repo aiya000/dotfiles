@@ -49,8 +49,6 @@ command! -bar SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
 "" Haskell
 command! -bar HaskDogs call vimrc#plugins#execute_haskdogs_async()
 command! -bar EtaDogs call vimrc#plugins#execute_haskdogs_in_eta_async()
-command! -bar -nargs=* QuickfixRunStack call vimrc#plugins#run_stack_quickfix(<q-args>)
-"TODO: ^^^ Detect hs-sonoda/src/Sonoda/Types/Lexer.hs:7:1: warning: [-Wunused-imports] as a warning
 
 "" Kotlin
 command! -bar KtlintAutoFix call system('ktlint --format ' . fnameescape(expand('%'))) | edit %
@@ -75,9 +73,9 @@ endfunction
 
 "" REPLs
 command! -bar -nargs=? Ghci call s:terminal_at_started('term-stack-exec-ghci', 'stack exec ghci ' . <q-args>)
-"NOTE: 'e' suffix means 'environment of the project' :D
-command! -bar -nargs=? Ghcie call s:terminal_at_started('term-stack-ghci', 'stack ghci ' . <q-args>)
-command! -bar -nargs=? GhcieTastyTest call s:terminal_at_started('term-stack-ghci', 'stack ghci :tasty-test ' . <q-args>)
+command! -bar -nargs=? StackGhci call s:terminal_at_started('term-stack-ghci', 'stack ghci ' . <q-args>)
+command! -bar -nargs=? StackGhciTasty call s:terminal_at_started('term-stack-ghci', 'stack ghci :tasty ' . <q-args>)
+"command! -bar -nargs=? Ghcid call s:terminal_at_started('none', 'ghcid --command="stack ghci :tasty" ' . <q-args>)
 command! -bar -nargs=? IdrisRepl call s:terminal_at_started('term-idris', 'idris ' . <q-args>)
 command! -bar -nargs=? SbtRepl call s:terminal_at_started('term-sbt', 'cd "$(git rev-parse --show-toplevel)" ; sbt ' . (empty(<q-args>) ? '' : printf("'%s'", <q-args>)))
 command! -bar CLisp call s:terminal_at_started('none', 'clisp')
