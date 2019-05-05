@@ -1,1 +1,1 @@
-runtime syntax/haskell.vim
+setl syntax=haskell
