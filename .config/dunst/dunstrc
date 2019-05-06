@@ -4,14 +4,13 @@
     alignment            = left
     word_wrap            = yes
     geometry             = "600x5-30+20"
+    follow = keyboard
     separator_height     = 2
     padding              = 8
     horizontal_padding   = 8
     separator_color      = frame
-
-[frame]
-    width = 3
-    color = "#aaaaaa"
+    frame_width = 3
+    frame_color = "#aaaaaa"
 
 [shortcuts]
     close     = ctrl+period
