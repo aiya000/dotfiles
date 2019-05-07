@@ -53,6 +53,10 @@ if i_have git ; then
     git_taking_limit=100
     alias _gr='git reset'
     alias _grh='git reset --hard'
+    alias _grh~='git reset --hard HEAD~'
+    alias _grh~~='git reset --hard HEAD~~'
+    alias _grh~~~='git reset --hard HEAD~~~'
+    alias _grh~~~~='git reset --hard HEAD~~~~'
     alias _grs='git reset --soft'
     alias _grs~='git reset --soft HEAD~'
     alias _grs~~='git reset --soft HEAD~~'

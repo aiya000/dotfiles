@@ -175,6 +175,8 @@ install-lice:
 ifeq ($(OS),Linux)
 install-java:
 	yay -S jdk
+	wget https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7.jar -O ~/bin/google-java-format-1.7.jar
+	wget https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7-all-deps.jar -O ~/bin/google-java-format-1.7-all-deps.jar
 
 install-sh:
 	yay -S shellcheck
