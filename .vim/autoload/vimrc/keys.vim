@@ -250,9 +250,31 @@ function! vimrc#keys#execute_on_base_path(func, ...) abort
 endfunction
 
 function! vimrc#keys#open_scratch_buffer() abort
-  sp ~/.backup/scratch.md
+  let file = s:find_fresh_scratch_file()
+  if file is v:null
+    call s:Msg.error('no fresh scratch file found.')
+    return
+  endif
+
+  execute 'silent' 'sp' file
+  silent write
   normal! ggVG"_d
   resize 5
-  nnoremap <buffer> ghq :<C-u>w! \| close<CR>
-  nnoremap <buffer> ghc :<C-u>w! \| close<CR>
+endfunction
+
+function! s:find_fresh_scratch_file() abort
+  for i in range(0, 100000)
+    let file = printf('~/.backup/scratch%d.md', i)
+    if !filereadable(expand(file))
+      return file
+    endif
+  endfor
+  return v:null
+endfunction
+
+function! vimrc#keys#open_buffer_to_execute(cmd) abort
+  call vimrc#keys#open_scratch_buffer()
+  put=execute(a:cmd)
+  normal! gg2dd
+  silent write
 endfunction
