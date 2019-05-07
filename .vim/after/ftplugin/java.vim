@@ -1,7 +1,11 @@
 let b:undo_ftplugin = 'setl ' . join([
-  \ 'commentstring<'
+  \ 'commentstring<',
+  \ 'tw<',
+  \ 'ts<',
+  \ 'sw<',
 \ ])
 let &commentstring = ' /*%s*/'
+setl ts=2 sw=2 tw=100
 
 nnoremap <buffer><silent> <localleader><localleader>r :<C-u>QuickfixRunGradle build<CR>
 nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('term-gradle', 'horizontal', "bash -c 'cd $(git rev-parse --show-toplevel) && gradle run'", v:false)<CR>
@@ -14,6 +18,7 @@ syntax sync fromstart
 
 augroup FtpluginJava
   autocmd!
+  autocmd BufWritePre *.java Autoformat
   autocmd BufWritePost *.java call s:exec_quickfix_if_available()
 augroup END
 

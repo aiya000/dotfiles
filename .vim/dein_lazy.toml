@@ -264,9 +264,10 @@ on_map = [
 [[plugins]]
 repo = 'Chiel92/vim-autoformat'
 on_ft = [
-    'scala',
     'haskell',
     'dhall',
+    'scala',
+    'java',
 ]
 
 [[plugins]]
