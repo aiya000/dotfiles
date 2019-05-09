@@ -3,10 +3,15 @@
 snippet class
     class ${1:Name} {${0:here}}
 
-snippet method
+snippet function
 alias func fun
+abbr    static void func() {}
+    static ${1:void} ${2:#:func}(${3:#:args}) {${0:here}}
+
+snippet method
+alias met
 abbr    void method() {}
-    ${1:void} ${2:#:methodName}(${3:#:args}) {${0:here}}
+    ${1:void} ${2:#:method}(${3:#:args}) {${0:here}}
 
 snippet try
 abbr try {}
@@ -67,7 +72,7 @@ snippet switch
     }
 
 snippet case
-    case ${1:Label}: ${0}
+    case ${1:Label}:${0}
 
 snippet enum
     enum ${1:Name} {
@@ -85,6 +90,11 @@ abbr public static
 
 snippet private_function
 alias prifun
+abbr private static ${1:void} ${2:#:methodName}(${3:#:args}) {${0:here}}
+    private static ${1:void} ${2:#:methodName}(${3:#:args}) {${0:here}}
+
+snippet private_method
+alias primethod
 abbr private ${1:void} ${2:#:methodName}(${3:#:args}) {${0:here}}
     private ${1:void} ${2:#:methodName}(${3:#:args}) {${0:here}}
 
@@ -130,3 +140,7 @@ snippet public_static_final
 snippet precode
 abbr <pre><code>${0:here}</code></pre>
     <pre><code>${0:here}</code></pre>
+
+snippet br
+abbr <br>
+    <br>
