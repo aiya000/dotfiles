@@ -934,11 +934,11 @@ nnoremap <C-c> <NOP>
 nnoremap <C-c><C-c> <C-c>
 
 " listup
-nnoremap <silent> m: :<C-u>call vimrc#keys#open_buffer_to_execute('marks')<CR>g_
-nnoremap <silent> q: :<C-u>call vimrc#keys#open_buffer_to_execute('register')<CR>g_
-nnoremap <silent> g: :<C-u>call vimrc#keys#open_buffer_to_execute('buffers')<CR>g_
-nnoremap <silent> z: :<C-u>call vimrc#keys#open_buffer_to_execute('tabs')<CR>g_
-nnoremap <silent> g> :<C-u>call vimrc#keys#open_buffer_to_execute('messages')<CR>g_
+nmap <silent> m: :<C-u>call vimrc#keys#open_buffer_to_execute('marks')<CR>gh_
+nmap <silent> q: :<C-u>call vimrc#keys#open_buffer_to_execute('register')<CR>gh_
+nmap <silent> g: :<C-u>call vimrc#keys#open_buffer_to_execute('buffers')<CR>gh_
+nmap <silent> z: :<C-u>call vimrc#keys#open_buffer_to_execute('tabs')<CR>gh_
+nmap <silent> g> :<C-u>call vimrc#keys#open_buffer_to_execute('messages')<CR>gh_
 
 " search
 nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>

@@ -264,7 +264,7 @@ endfunction
 
 function! s:find_fresh_scratch_file() abort
   for i in range(0, 100000)
-    let file = printf('~/.backup/scratch%d.md', i)
+    let file = printf('/tmp/scratch%d.md', i)
     if !filereadable(expand(file))
       return file
     endif
