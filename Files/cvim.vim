@@ -29,7 +29,6 @@ map <C-p> previousTab
 map <C-f> scrollPageDown
 map <C-b> scrollPageUp
 map <C-j> <CR>
-map <C-c> <Esc>
 map <C-l> <Esc>
 map <C--> zoomPageOut
 map <C-S-=> zoomPageIn
