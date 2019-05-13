@@ -15,7 +15,6 @@ function! vimrc#fetch_dein(install_dirname) " {{{
     endif
 endfunction " }}}
 
-"TODO: Escape this buffer after :terminal
 " Absorbs the different of Vim and NeoVim.
 "   open_mode: 'vertical' | 'horizontal' | 'stay' | 'tabnew'
 function! vimrc#open_terminal_as(filetype, open_mode, command, ...) abort " {{{
