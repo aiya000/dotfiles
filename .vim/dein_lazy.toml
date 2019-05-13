@@ -8,7 +8,7 @@ depends = [
     'favstar-vim',
     'unite.vim',
 ]
-on_cmd  = [
+on_cmd = [
     'TweetVimVersion',
     'TweetVimAddAccount',
     'TweetVimSwitchAccount',
