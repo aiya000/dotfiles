@@ -168,6 +168,7 @@ if i_have git ; then
         git commit -m "Today's WIP"
         git push -f origin "$wip_name"
         git checkout -
+        git cherry-pick "$wip_name"
     }
     alias gp-wip=git-push-wip
     alias gpw=gp-wip
