@@ -15,6 +15,7 @@ if [ -z "$(alias | grep zsh_pr_loaded)" ] ; then
     source $ZDOTDIR/.zprofile
 fi
 
+source ~/.sh_generic/vars.sh
 
 # Load premised commands
 source ~/.sh_generic/aliases.sh
