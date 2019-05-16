@@ -853,15 +853,16 @@ set ambiwidth=double
 " {{{
 
 augroup VimRc
-  autocmd ColorScheme * highlight RcEmSpace ctermbg=LightBlue
-  autocmd VimEnter,WinEnter * call matchadd('RcEmSpace', '　')
+  autocmd ColorScheme * highlight EmSpace ctermbg=LightBlue guibg=LightBlue
+  autocmd VimEnter,WinEnter * call matchadd('EmSpace', '　')
   " git conflictions
-  autocmd ColorScheme * call matchadd('Error', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
+  autocmd ColorScheme * highlight GitConflict ctermbg=Red guibg=Red
+  autocmd VimEnter,WinEnter * call matchadd('GitConflict', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
 augroup END
 
 augroup VimRc
-  autocmd InsertEnter * highlight StatusLine ctermfg=231 ctermbg=64
-  autocmd InsertLeave * highlight StatusLine ctermfg=231 ctermbg=60
+  autocmd InsertEnter * highlight StatusLine ctermfg=231 ctermbg=64 guifg=231 guibg=64
+  autocmd InsertLeave * highlight StatusLine ctermfg=231 ctermbg=60 guifg=231 guibg=60
 augroup END
 
 " }}}
