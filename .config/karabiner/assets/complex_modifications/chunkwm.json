@@ -2,7 +2,7 @@
     "title": "chunkwm",
     "rules": [
         {
-            "description": "focus window",
+            "description": "chunkwm keys",
             "manipulators": [
                 {
                     "type": "basic",
@@ -131,7 +131,7 @@
                     },
                     "to": [
                         {
-                            "shell_command": "/usr/local/bin/zsh -c '[[ $(/usr/local/bin/chunkc tiling::query --monitor id) == 2 ]] && /usr/local/bin/chunkc tiling::monitor -f 1 || /usr/local/bin/chunkc tiling::monitor -f 2'"
+                            "shell_command": "/usr/local/bin/zsh -c '[[ $(/usr/local/bin/chunkc tiling::query --monitor id) == 1 ]] && /usr/local/bin/chunkc tiling::monitor -f 2 || /usr/local/bin/chunkc tiling::monitor -f 1'"
                         }
                     ]
                 },
