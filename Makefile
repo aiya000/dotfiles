@@ -205,3 +205,8 @@ install-gyazo-cli:
 	cd $GOPATH/src/github.com/Tomohiro/gyazo-cli
 	make install
 endif
+
+install-gtran:
+	git clone https://github.com/skanehira/gtran ~/git/gtran
+	cd ~/git/gtran
+	go install
