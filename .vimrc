@@ -58,7 +58,7 @@ scriptencoding utf-8
 " }}}
 " Declare autocmd groups {{{
 
-augroup VimRc
+augroup VIMRC
   autocmd!
 augroup END
 
@@ -196,7 +196,7 @@ endif
 "----------"
 " {{{
 
-augroup VimRc
+augroup VIMRC
   " Auto set cursor position in the file
   autocmd BufReadPost * call vimrc#autocmd#visit_past_position()
   autocmd BufNew,TerminalOpen,BufEnter,WinEnter * call vimrc#autocmd#lcd_buffer_dir_or_base()
@@ -484,7 +484,7 @@ let g:visualstar_extra_commands = 'zzzv'
 let g:gista#command#post#interactive_description = 0
 let g:gista#command#post#allow_empty_description = 1
 
-augroup VimRc
+augroup VIMRC
   autocmd User GistaPost call vimrc#autocmd#yank_gista_posted_url()
 augroup END
 
@@ -551,7 +551,7 @@ let g:ale_linters = {
 
 let g:ale_scala_scalastyle_config = $HOME . '/.dotfiles/scalastyle_config_default.xml'
 
-augroup VimRc
+augroup VIMRC
   autocmd ColorScheme * highlight ALEError ctermbg=gray ctermfg=black
 
   autocmd VimEnter *
@@ -606,7 +606,7 @@ call denite#custom#source('tag', 'converters', ['converter/abbr_word'])
 " NOTE: How I can ignore it without this DEPRECATED value
 let g:neomru#file_mru_ignore_pattern = '^gina://.*'
 
-augroup VimRc
+augroup VIMRC
   autocmd BufEnter,BufWinEnter *
     \   call denite#custom#var('outline', 'command', ['ctags'])
     \|  call denite#custom#var('outline', 'options', ['--sort=no'])
@@ -643,7 +643,7 @@ let g:highlightedyank_highlight_duration = 200
 let g:fmap_use_default_keymappings = v:false
 let g:fmap_escape_keys = ['', '', '']
 
-augroup VimRc
+augroup VIMRC
   autocmd VimEnter * FNoreMap / ・
   autocmd VimEnter * FNoreMap tt …
   autocmd VimEnter * FNoreMap p （
@@ -707,12 +707,12 @@ let g:indent_guides_exclude_filetypes = [
 \ ]
 
 " Define colors
-augroup VimRc
+augroup VIMRC
   autocmd VimEnter,ColorScheme * highlight IndentGuidesOdd ctermbg=60 guibg=#468F8C
   autocmd VimEnter,ColorScheme * highlight IndentGuidesEven ctermbg=60 guibg=#468F8C
 augroup END
 
-augroup VimRc
+augroup VIMRC
   autocmd WinEnter,BufWinEnter *
     \  if get(g:, 'vimrc#keys#indent_guides_enable', v:true)
       \| IndentGuidesEnable
@@ -772,7 +772,7 @@ AlterCommand tabnew TabnewOverridden
 " --- vim-lsp --- " {{{
 
 " TODO: いつか有効になってくれますように
-augroup VimRc
+augroup VIMRC
   autocmd User lsp_setup call lsp#register_server({
     \ 'name': 'language-server-stdio.js',
     \ 'cmd': { _ -> [&shell, &shellcmdflag, 'language-server-stdio.js'] },
@@ -867,7 +867,7 @@ augroup VimRc
   autocmd VimEnter,WinEnter * call matchadd('GitConflict', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
 augroup END
 
-augroup VimRc
+augroup VIMRC
   autocmd InsertEnter * highlight StatusLine ctermfg=231 ctermbg=64
   autocmd InsertLeave * highlight StatusLine ctermfg=231 ctermbg=60
 augroup END
@@ -1403,7 +1403,7 @@ omap 'T <Plug>(fmap-backward-T)
 " }}}
 " filetypes {{{
 
-augroup VimRc
+augroup VIMRC
   autocmd FileType int-* nnoremap <buffer> q          <NOP>
   autocmd FileType int-* nnoremap <buffer> <C-n>      gt
   autocmd FileType int-* nnoremap <buffer> <C-p>      gT
