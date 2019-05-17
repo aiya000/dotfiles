@@ -861,8 +861,8 @@ augroup VimRc
 augroup END
 
 augroup VimRc
-  autocmd InsertEnter * highlight StatusLine ctermfg=231 ctermbg=64 guifg=231 guibg=64
-  autocmd InsertLeave * highlight StatusLine ctermfg=231 ctermbg=60 guifg=231 guibg=60
+  autocmd InsertEnter * highlight StatusLine ctermfg=231 ctermbg=64
+  autocmd InsertLeave * highlight StatusLine ctermfg=231 ctermbg=60
 augroup END
 
 " }}}
