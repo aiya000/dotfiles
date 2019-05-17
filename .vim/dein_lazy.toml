@@ -316,3 +316,12 @@ on_ft = [
     'happy',
     'alex',
 ]
+
+[[plugins]]
+repo   = 'skanehira/translate.vim'
+on_cmd = [
+    'Translate',
+    'AutoTranslateModeToggle',
+    'AutoTranslateModeEnable',
+    'AutoTranslateModeDisable',
+]

@@ -8,9 +8,10 @@ let &commentstring = ' /*%s*/'
 setl ts=2 sw=2 tw=100
 
 nnoremap <buffer><silent> <localleader><localleader>r :<C-u>QuickfixRunGradle build<CR>
-nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('term-gradle', 'horizontal', "bash -c 'cd $(git rev-parse --show-toplevel) && gradle run'", v:false)<CR>
+nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('term-gradle', 'horizontal', "gradle run'", {'path': g:vimrc.path_at_started, 'noclose': v:true})<CR>
 nnoremap <buffer><silent> <localleader><localleader>w :<C-u>call <SID>start_quickfix()<CR>
 nnoremap <buffer><silent> <localleader><localleader>W :<C-u>call <SID>stop_quickfix()<CR>
+nnoremap <buffer><silent> <localleader><localleader>c :<C-u>call vimrc#open_terminal_as('term-gradle', 'horizontal', "gradle clean'", {'path': g:vimrc.path_at_started, 'noclose': v:true})<CR>
 nnoremap <silent><buffer> <Esc> <Esc>:syntax sync fromstart<CR>
 nmap <buffer> <C-l> <Esc>
 
