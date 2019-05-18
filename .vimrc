@@ -859,7 +859,7 @@ set ambiwidth=double
 " Define my highlight colors
 " {{{
 
-augroup VimRc
+augroup VIMRC
   autocmd ColorScheme * highlight EmSpace ctermbg=LightBlue guibg=LightBlue
   autocmd VimEnter,WinEnter * call matchadd('EmSpace', '　')
   " git conflictions
