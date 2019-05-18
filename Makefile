@@ -98,6 +98,7 @@ ifeq ($(OS),Linux)
 		vivaldi \
 		watchexec \
 		xf86-video-intel \
+		xf86-input-wacom \
 		xfce4-settings \
 		xinit-xsession \
 		xmonad \
