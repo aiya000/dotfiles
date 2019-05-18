@@ -136,7 +136,14 @@ if i_have git ; then
     alias gpuo='git push -u origin'
     alias gpf='git push --force-with-lease'
     alias gpull='git pull --rebase'
-    alias gtake='git stash push --message "This is saved by alias.take" && git pull --rebase && git stash pop'
+    function gtake () {
+        local stash_result
+        stash_result=$(git stash push --message "This is saved by alias.take")
+        git pull --rebase
+        if [[ $stash_result != 'No local changes to save' ]] ; then
+            git stash pop
+        fi
+    }
     alias greflog='git reflog'
     alias gshow='git show'
     alias gbackstep='git reset --soft HEAD~'
