@@ -46,14 +46,14 @@ on_map  = [
 repo = 'mattn/webapi-vim'
 
 [[plugins]]
-repo   = 'Shougo/vinarise.vim'
+repo = 'Shougo/vinarise.vim'
 on_cmd = [
     'Vinarise',
     'VinariseDump',
 ]
 
 [[plugins]]
-repo  = 'thinca/vim-themis'
+repo = 'thinca/vim-themis'
 on_ft = [
     'vim',
     'vimspec',
@@ -65,7 +65,7 @@ on_ft  = 'markdown',
 on_cmd = 'PrevimOpen'
 
 [[plugins]]
-repo   = 'mbbill/undotree'
+repo = 'mbbill/undotree'
 on_cmd = [
     'UndotreeToggle',
     'UndotreeFocus',
@@ -74,7 +74,7 @@ on_cmd = [
 ]
 
 [[plugins]]
-repo   = 'aiya000/adrone.vim'
+repo = 'aiya000/adrone.vim'
 on_cmd = [
     'AdroneHome',
     'AdroneSay',
@@ -82,7 +82,7 @@ on_cmd = [
 ]
 
 [[plugins]]
-repo   = 'LeafCage/vimhelpgenerator'
+repo = 'LeafCage/vimhelpgenerator'
 on_cmd = [
     'VimHelpGenerator',
     'VimHelpGeneratorVirtual',
@@ -90,7 +90,7 @@ on_cmd = [
 ]
 
 [[plugins]]
-repo   = 'rbtnn/vimconsole.vim'
+repo = 'rbtnn/vimconsole.vim'
 on_cmd = [
     'VimConsoleLog',
     'VimConsoleOpen',
@@ -109,14 +109,14 @@ repo   = 'lambdalisue/vim-pager'
 on_cmd = 'PAGER'
 
 [[plugins]]
-repo   = 'lambdalisue/vim-manpager'
+repo = 'lambdalisue/vim-manpager'
 on_cmd = [
     'Man',
     'MANPAGER',
 ]
 
 [[plugins]]
-repo  = 'thinca/vim-ft-clojure'
+repo = 'thinca/vim-ft-clojure'
 on_ft = [
     'clojure',
     'lisp',  # Please see ~/.vim/syntax/lisp.vim
@@ -129,7 +129,7 @@ on_cmd = 'Gista'
 [[plugins]]
 repo    = 'aiya000/aref-web.vim'
 depends = 'open-browser.vim'
-on_cmd  = [
+on_cmd = [
     'Aref',
     'ArefOpenBrowser',
 ]
@@ -174,15 +174,18 @@ repo  = 'vmchale/ghci-syntax'
 on_ft = 'dot-ghci'
 
 [[plugins]]
-repo  = 'aiya000/elm-vim'
-rev   = 'aiya000/use-command-bang'
-on_ft = 'elm'
+repo   = 'aiya000/elm-vim'
+rev    = 'aiya000/use-command-bang'
+on_ft  = 'elm'
 on_cmd = ['ElmFormat']
 
 [[plugins]]
-repo  = 'aiya000/idris-vim'
-rev   = 'aiya000/can-be-disabled-keymappings'
-on_ft = ['idris', 'lidris']
+repo = 'aiya000/idris-vim'
+rev  = 'aiya000/can-be-disabled-keymappings'
+on_ft = [
+    'idris',
+    'lidris',
+]
 
 # Now only for TweetVim
 [[plugins]]
@@ -201,7 +204,7 @@ depends = 'libclang-vim'
 on_ft   = ['c', 'cpp']
 
 [[plugins]]
-repo   = 'haya14busa/incsearch.vim'
+repo = 'haya14busa/incsearch.vim'
 on_map = [
     '<Plug>(incsearch-forward)',
     '<Plug>(incsearch-backward)',
@@ -221,7 +224,7 @@ repo  = 'vim-scripts/alex.vim'
 on_ft = 'alex'
 
 [[plugins]]
-repo   = 'thinca/vim-textobj-between'
+repo = 'thinca/vim-textobj-between'
 on_map = [
     '<Plug>(textobj-between-a)',
     '<Plug>(textobj-between-i)',
@@ -278,8 +281,11 @@ repo  = 'vmchale/dhall-vim'
 on_ft = ['dhall']
 
 [[plugins]]
-repo  = 'fszymanski/deoplete-emoji'
-on_ft = ['markdown', 'gitcommit']
+repo = 'fszymanski/deoplete-emoji'
+on_ft = [
+    'markdown',
+    'gitcommit',
+]
 
 [[plugins]]
 repo   = 'haya14busa/dein-command.vim'
@@ -290,7 +296,7 @@ repo  = 'posva/vim-vue'
 on_ft = 'vue'
 
 [[plugins]]
-repo  = 'prabirshrestha/vim-lsp'
+repo = 'prabirshrestha/vim-lsp'
 on_ft = [
     'haskell',
     'javascript',
@@ -310,7 +316,7 @@ repo      = 'lighttiger2505/deoplete-vim-lsp'
 on_source = 'vim-lsp'
 
 [[plugins]]
-repo  = 'aiya000/vim-ghcid-quickfix'
+repo = 'aiya000/vim-ghcid-quickfix'
 on_ft = [
     'haskell',
     'happy',
@@ -318,10 +324,19 @@ on_ft = [
 ]
 
 [[plugins]]
-repo   = 'skanehira/translate.vim'
+repo = 'skanehira/translate.vim'
 on_cmd = [
     'Translate',
     'AutoTranslateModeToggle',
     'AutoTranslateModeEnable',
     'AutoTranslateModeDisable',
+]
+
+[[plugins]]
+repo = 'tyru/open-browser-github.vim'
+on_cmd = [
+    'OpenGithubFile',
+    'OpenGithubIssue',
+    'OpenGithubPullReq',
+    'OpenGithubProject',
 ]
