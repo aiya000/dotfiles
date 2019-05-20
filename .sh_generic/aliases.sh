@@ -36,6 +36,7 @@ if i_have yay ; then
     alias yays-noconfirm='yay --noconfirm -S'
     alias yayss='yay -Ss'
     alias yayRns='yay -Rns'
+    alias yaysy='yay -Sy'
 fi
 
 # }}}
