@@ -509,8 +509,6 @@ let g:aref_web_source = {
   \ },
 \ }
 
-let g:aref_web_buffer_opening = 'tabnew'
-
 "let g:ref_source_webdict_sites['weblio'].filter = function('vimrc#plugins#weblio_filter')
 
 "}}}
