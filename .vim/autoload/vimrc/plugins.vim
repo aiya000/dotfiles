@@ -169,6 +169,19 @@ function! vimrc#plugins#run_yarn_quickfix(yarn_subcmd) abort
   endtry
 endfunction
 
+function! vimrc#plugins#run_make_quickfix(make_args) abort
+  let current = getcwd()
+  try
+    CClear
+    let make_cmd = ['make'] + split(a:make_args, ' ')
+    execute ':lcd' g:vimrc.path_at_started
+    call s:read_to_quickfix_it(make_cmd)
+    copen
+  finally
+    execute ':lcd' current
+  endtry
+endfunction
+
 function! vimrc#plugins#grep_those(...) abort " {{{
   CClear
   call s:List.map(a:000, { word ->

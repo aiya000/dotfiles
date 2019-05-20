@@ -58,8 +58,11 @@ command! -bar -nargs=* QuickfixRunGradle call vimrc#plugins#run_gradle_quickfix(
 command! -bar -nargs=* QuickfixRunSbtCompileWatch call vimrc#plugins#run_scala_compile_watch_quickfix(<q-args>)
 command! -bar QuickfixStopSbtCompileWatch call vimrc#plugins#stop_scala_compile_watch_quickfix()
 
-"" TypeSCript
+"" TypeScript
 command! -bar -nargs=* QuickfixRunYarn call vimrc#plugins#run_yarn_quickfix(<q-args>)
+
+"" Make
+command! -bar -nargs=* QuickfixRunMake call vimrc#plugins#run_make_quickfix(<q-args>)
 
 function! s:terminal_at_started(filetype, command, ...) abort
   let options = get(a:, 1, {})
