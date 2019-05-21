@@ -54,6 +54,7 @@ setopt hist_reduce_blanks
 setopt share_history
 setopt transient_rprompt
 setopt ignore_eof
+setopt auto_cd
 
 # Don't use screen stopping
 stty stop  undef
