@@ -28,10 +28,11 @@ PATH=$PATH:/bin:/sbin
 PATH=$PATH:/usr/local/bin:/usr/local/sbin
 PATH=$PATH:/usr/bin:/usr/sbin
 PATH=$PATH:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
-PATH=$PATH:$GOPATH/bin
 
+PATH=$PATH:$GOPATH/bin
 PATH=$PATH:$HOME/.yarn/bin
 PATH=$PATH:$HOME/.npm-prefix//bin
+PATH=$PATH:$HOME/.cargo/bin
 PATH=$PATH:$ZDOTDIR/zsh_completions
 
 # git-credential-gnome-keyring

@@ -3,7 +3,7 @@ all: install
 logfile = ./dotfiles-MakeFile.log
 
 # TODO: Detect auto
-OS = Linux
+OS = Arch
 
 prepare:
 	if [ ! -d ~/bin ] ; then\
@@ -23,7 +23,7 @@ install:
 	make build-os-env
 	make install-by-pip
 
-ifeq ($(OS),Linux)
+ifeq ($(OS),Arch)
 install_package_managers:
 	yay -Sy
 	yay -S --noconfirm --needed stack-static npm python-pip
@@ -43,7 +43,7 @@ install-by-pip:
 	pip install neovim grip
 
 build-os-env:
-ifeq ($(OS),Linux)
+ifeq ($(OS),Arch)
 	# xmonad: needed by xmonad-config --restart and --replace
 	yay -S --noconfirm --needed \
 		alsa-utils \
@@ -140,6 +140,11 @@ ifeq ($(OS),Linux)
 		-w --fontawesome --fontlinux --octicons --pomicons --powerline --powerlineextra
 	(echo 'RictyDiminished with nerd-font patch was generated to ~/git/nerd-fonts, please rename it to "RictyDiminished NF" and install it to your OS manually!' | tee $(logfile))
 endif
+ifeq ($(OS),Ubuntu)
+	sudo apt install \
+		cargo
+	cargo install skim
+endif
 ifeq ($(OS),Darwin)
 	brew install \
 		font-forge \ # for making nerd-fonts for vim-devicons
@@ -173,7 +178,7 @@ install-xml:
 install-lice:
 	npm install -g lice
 
-ifeq ($(OS),Linux)
+ifeq ($(OS),Arch)
 install-java:
 	yay -S jdk
 	wget https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7.jar -O ~/bin/google-java-format-1.7.jar
