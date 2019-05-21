@@ -39,6 +39,12 @@ if i_have yay ; then
     alias yaysy='yay -Sy'
 fi
 
+if i_have apt ; then
+    alias apts='apt search'
+    alias apti='apt install'
+    alias aptu='apt update'
+fi
+
 # }}}
 # Load ./aliases/** {{{
 
