@@ -1,7 +1,7 @@
 # Syntaxes
 
-snippet if_traditional
-    if [ ${1:#:condtion} ] ; then
+snippet if
+    if ${1:#:condtion} ; then
         ${0}
     fi
 
@@ -9,18 +9,16 @@ snippet else
     else
         ${0:TARGET}
 
-snippet elif_traditional
-    elif [ ${1:#:condition} ] ; then
+snippet elif
+    elif ${1:#:condition} ; then
         ${0:TARGET}
 
-snippet if_bash
-alias if
+snippet if_braced
     if [[ ${1:#:condtion} ]] ; then
         ${0}
     fi
 
-snippet elif_bash
-alias elif
+snippet elif_braced
     elif [[ ${1:#:cond} ]] ; then
         ${0}
 
