@@ -1,7 +1,0 @@
-#!/bin/sh
-# Notify an exit code by espeak
-
-exit_status=$?
-[ "$exit_status" -eq 0 ] && message='Succeed!' || message='Exit with the error'
-espeak "$message" $UNCO_ESPEAK_OPTIONS 2> /dev/null
-exit $exit_status

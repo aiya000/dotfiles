@@ -70,4 +70,8 @@ function vimterm-open-parent-vim() {
 # If I'm on a shell on Vim
 if [[ $I_AM_ON_VIM -eq 1 ]] ; then
     alias vim=vimterm-open-parent-vim
+    cd "$(git rev-parse --show-toplevel)" \
+        && xl \
+        && cd - > /dev/null \
+        || return
 fi

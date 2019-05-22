@@ -30,27 +30,14 @@ alias_of sk="sk $SKIM_DEFAULT_OPTS"
 
 i_have say || alias say=espeak
 
-if i_have yay ; then
-    alias yay='yay --color always'
-    alias yays='yay -S'
-    alias yays-noconfirm='yay --noconfirm -S'
-    alias yayss='yay -Ss'
-    alias yayRns='yay -Rns'
-    alias yaysy='yay -Sy'
-fi
-
-if i_have apt ; then
-    alias apts='apt search'
-    alias apti='apt install'
-    alias aptu='apt update'
-fi
-
 # }}}
 # Load ./aliases/** {{{
 
 for script in ~/.sh_generic/aliases/functions/*.sh ; do
     source "$script"
 done
+source ~/.sh_generic/aliases/build-tools.sh
+source ~/.sh_generic/aliases/os-package-managers.sh
 source ~/.sh_generic/aliases/vim.sh
 
 # }}}
@@ -235,13 +222,6 @@ function aliases::define_cd_to_parents () {
 }
 aliases::define_cd_to_parents
 
-alias grw=./gradlew
-alias grwb='./gradlew build'
-alias grwr='./gradlew run'
-alias grwc='./gradlew clean'
-alias grwj='./gradlew jar'
-alias grwi='./gradlew install'
-
 # shellcheck disable=SC2139
 alias e-current-session="vim-current-session $EDITOR"
 # shellcheck disable=SC2139
@@ -268,15 +248,24 @@ if i_have ctags ; then
     alias ctags-typescript-auto='ctags-auto --exclude=\\\*.js'
 fi
 
-if i_have stack ; then
-    alias sb='stack build'
-    alias se='stack run --'
-    alias se='stack exec --'
-    alias st='stack test'
-    alias si='stack install'
-    alias sc='stack clean'
-    alias sbp=stack-build-profile
+if i_have docker ; then
+    alias d=docker
+    alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
+    alias dps='docker ps'
+    alias da=docker-attach-menu.sh
+    alias di='docker images'
+    alias dkill='docker kill'
+    alias dki=docker-kill-menu.sh
+    alias drm='docker rm'
+    alias drmi='docker rmi'
+fi
 
+if i_have yay ; then
+    alias yay='yay --color always'
+fi
+
+if i_have stack ; then
+    alias si='stack install'
     alias srunghc='stack runghc --'
     alias sghci='stack ghci --'
     alias shaddock-gen='stack haddock .'
@@ -285,18 +274,16 @@ if i_have stack ; then
         stack new "$1" simple
     }
     alias stack-build-profile='stack build --profile'
+    alias make-new-package-yaml='cp ~/.dotfiles/Files/package.yaml .'
+
     alias cabal-sdit='stack exec -- cabal sdist'
     function cabal-upload() {
         stack exec -- cabal upload "$1"
     }
-    alias make-new-package-yaml='cp ~/.dotfiles/Files/package.yaml .'
 fi
 
-if i_have etlas ; then
-    alias et=etlas
-    alias etb='etlas build'
-    alias etr='etlas run'
-    alias etc='etlas clean'
+if i_have cabal ; then
+    alias ci='cabal new-install'
 fi
 
 if i_have idris ; then
@@ -317,27 +304,8 @@ if i_have idris ; then
     alias runidris=run-idris
 fi
 
-if i_have npm ; then
-    alias nr='npm run'
-    alias ni='npm install'
-    alias nig='npm install --global'
-fi
-
-if i_have yarn ; then
-    alias ya='yarn'
-    alias yaru='yarn run'
-fi
-
-if i_have docker ; then
-    alias d=docker
-    alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
-    alias dps='docker ps'
-    alias da=docker-attach-menu.sh
-    alias di='docker images'
-    alias dkill='docker kill'
-    alias dki=docker-kill-menu.sh
-    alias drm='docker rm'
-    alias drmi='docker rmi'
+if [[ -e ./gradlew ]] ; then
+    alias grwj='./gradlew jar'
 fi
 
 if i_have draw.io ; then
