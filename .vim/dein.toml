@@ -77,9 +77,6 @@ repo = 'lambdalisue/vital-Whisky'
 repo = 'editorconfig/editorconfig-vim'
 
 [[plugins]]
-repo = 'kana/vim-fakeclip'
-
-[[plugins]]
 repo = 'Shougo/denite.nvim'
 
 [[plugins]]

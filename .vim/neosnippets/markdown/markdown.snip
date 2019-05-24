@@ -40,9 +40,10 @@ abbr <summary>{}</summary>
     <summary>${1:summary}</summary>
 
 snippet folding
-alias details_summary
+alias details_summary fold
     <details>
     <summary>${1:summary}</summary>
+    ${0}
     </details>
 
 snippet img
@@ -85,8 +86,8 @@ options indent
 
 snippet comment
 alias com
-abbr <!--{}-->
-    <!--${0:here}-->
+abbr <!-- {} -->
+    <!-- ${0:here} -->
 
 snippet revealjs_speaker_notes
 alias speaker_notes

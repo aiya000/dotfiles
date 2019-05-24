@@ -64,10 +64,6 @@ augroup END
 "---------"
 " Override vimrc {{{
 
-" Disable keymappings of vim-over, use 'inccommand' instead in neovim
-nunmap :%s/
-nunmap :s/
-vunmap :s/
 nnoremap <expr> <C-k><C-s> ':%s/\m\C\<' . expand('<cword>') . '\>/'
 nnoremap <expr> <C-k>s ':%s/\m\C\<' . expand('<cword>') . '\>/' . expand('<cword>')
 

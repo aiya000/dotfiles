@@ -9,7 +9,7 @@ let b:undo_ftplugin = 'setl ' . join([
 
 setl tabstop=4 shiftwidth=4 expandtab
 setl completefunc=github_complete#complete
-let &commentstring = '<!--%s-->'
+let &commentstring = '<!-- %s -->'
 set conceallevel=0
 
 nnoremap <silent><buffer> <localleader>R :<C-u>w<CR>:!doctoc %<CR>:edit %<CR>

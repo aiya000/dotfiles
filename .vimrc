@@ -165,8 +165,11 @@ call dein#load_toml('~/.vim/dein.toml',      {'lazy': 0})
 call dein#load_toml('~/.vim/dein_lazy.toml', {'lazy': 1})
 
 if has('nvim')
-  call dein#load_toml('~/.vim/dein-neovim.toml',      {'lazy': 0})
-  call dein#load_toml('~/.vim/dein_lazy-neovim.toml', {'lazy': 1})
+  call dein#load_toml('~/.vim/dein-neovim.toml', {'lazy': 0})
+endif
+
+if g:vimrc['is_wsl']
+  call dein#load_toml('~/.vim/dein-wsl.toml', {'lazy': 0})
 endif
 
 call dein#add('Shougo/dein.vim', {'rtp': ''})
@@ -199,7 +202,12 @@ endif
 augroup VIMRC
   " Auto set cursor position in the file
   autocmd BufReadPost * call vimrc#autocmd#visit_past_position()
-  autocmd BufNew,TerminalOpen,BufEnter,WinEnter * call vimrc#autocmd#lcd_buffer_dir_or_base()
+
+  if has('nvim')
+    autocmd BufNew,TermOpen,BufEnter,WinEnter * call vimrc#autocmd#lcd_buffer_dir_or_base()
+  else
+    autocmd BufNew,TerminalOpen,BufEnter,WinEnter * call vimrc#autocmd#lcd_buffer_dir_or_base()
+  endif
 
   " Auto load filetype dictionary
   autocmd FileType *
@@ -789,7 +797,7 @@ augroup END
 
 let g:ghcid_quickfix_show_only_error_occured = v:true
 
-" }}
+" }}}
 " --- translate.vim --- {{{
 
 let g:translate_source = "en"
@@ -844,7 +852,10 @@ set
   \ listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
   \ fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
   \ matchpairs+=<:>,（:）,｛:｝,「:」,＜:＞,『:』
-  \ termwinkey=<F1>
+
+if !has('nvim')
+  set termwinkey=<F1>
+endif
 
 " See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer)
 let &statusline =
@@ -1053,6 +1064,8 @@ nnoremap <silent> <C-h><C-s> :<C-u>if exists("g:syntax_on") \| syntax off \| els
 
 " others
 nmap <C-j> <CR>
+nnoremap 'd "+d
+nnoremap 'D "+D
 nnoremap Q gQ
 nnoremap Y yg_
 nnoremap { {zv
@@ -1061,12 +1074,6 @@ nnoremap ( (zv
 nnoremap ) )zv
 nnoremap zs zszh
 nnoremap g_ $
-nnoremap 'p "+p
-nnoremap 'P "+P
-nnoremap 'y "+y
-nnoremap 'Y "+yg_
-nnoremap 'd "+d
-nnoremap 'D "+D
 nnoremap :: :%s/
 nnoremap <C-n> gt
 nnoremap <C-p> gT
@@ -1083,8 +1090,15 @@ nnoremap <silent> <leader>o :<C-u>copen<CR>
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 nnoremap <expr> <C-k><C-s> printf(':%%s/\m\C\<%s\>/', expand('<cword>'))
 nnoremap <expr> <C-k>s printf(':%%s/\m\C\<%s\>/%s', expand('<cword>'), expand('<cword>'))
+" Don't noremap for fake-clip
+nmap 'p "+p
+nmap 'P "+P
+nmap 'y "+y
+nmap 'Y "+yg_
+nmap 'dd "+dd
+nmap 'x "+x
 
-  " }}}
+" }}}
 " insert mode {{{
 
 " set
@@ -1171,10 +1185,12 @@ onoremap iK i<
 vnoremap <C-l> <Esc>
 vnoremap <leader>s :sort<CR>
 vnoremap g_ $
-vnoremap 'p "+p
-vnoremap 'P "+P
-vnoremap 'y "+y
-vnoremap 'd "+d
+" Don't noremap for fake-clip
+vmap 'p "+p
+vmap 'P "+P
+vmap 'y "+y
+vmap 'd "+d
+vmap 'x "+x
 
 " }}}
 " select mode {{{
