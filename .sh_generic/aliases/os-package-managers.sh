@@ -6,13 +6,17 @@ if i_have yay ; then
     alias par='yay -Rns'
     alias pau='yay -Sy'
 elif i_have pacman ; then
-    alias pai='pacman -S'
+    alias pai='sudo pacman -S'
     alias pas='pacman -Ss'
-    alias par='pacman -Rns'
-    alias pau='pacman -Sy'
+    alias par='sudo pacman -Rns'
+    alias pau='sudo pacman -Sy'
 elif i_have apt ; then
-    alias pai='apt install'
+    alias pai='sudo apt install'
+    alias par='sudo apt purge'
     alias pas='apt search'
-    alias pau='apt purge'
-    alias pau='apt update'
+    alias pau='sudo apt update'
+elif i_have brew ; then
+    alias pai='brew install'
+    alias par='brew uninstall'
+    alias pas='brew search'
 fi
