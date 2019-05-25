@@ -68,9 +68,13 @@ function load-my-env () {
         ;;
     ccache)
         export USE_CCACHE=1
-        export CCACHE_DIR=~/hdd/.ccache
         export set CC='ccache gcc'
         export set CXX='ccache g++'
+        if [[ -d ~/hdd/.ccache ]] ; then
+            export CCACHE_DIR=~/hdd/.ccache
+        else
+            export CCACHE_DIR=~/.ccache
+        fi
         ;;
     *)
         echo "You may haven't $target_name" > /dev/stderr
