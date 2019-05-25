@@ -57,3 +57,15 @@ snippet throw_not_implemented_yet
 alias todo
 abbr throw 'Not implemented yet (${1:name})'
     throw 'Not implemented yet (${1:name})'
+
+# Expression
+
+snippet assert_equal
+alias ase
+abbr call assert_equal(${1:actual}, ${0:expected})
+    call assert_equal(${1:actual}, ${0:expected})
+
+snippet assert_report
+alias asr assert_failure
+abbr call assert_report(${0:msg})
+    call assert_report(${0:msg})

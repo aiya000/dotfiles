@@ -4,10 +4,6 @@ let b:undo_ftplugin = 'setl ' . join([
 
 let &commentstring = ' /*%s*/'
 
-let s:make_args = (isdirectory(expand('~/hdd/.ccache')) && executable('ccache'))
-  \ ? ('"' . 'CC="ccache gcc"' . '"')
-  \ : ''
-
 nnoremap <buffer><silent> <localleader><localleader>r :<C-u>call <SID>run_quickfix()<CR>
 nnoremap <buffer><silent> <localleader><localleader>w :<C-u>call <SID>start_quickfix()<CR>
 nnoremap <buffer><silent> <localleader><localleader>W :<C-u>call <SID>stop_quickfix()<CR>
@@ -16,6 +12,19 @@ augroup FtpluginC
   autocmd!
   autocmd BufWritePost *.c,*.h call s:exec_quickfix_if_available()
 augroup END
+
+function! s:is_ready_to_ccache() abort
+  let directory_exists =
+    \ isdirectory(expand('~/hdd/.ccache')) ||
+    \ isdirectory(expand('~/.ccache'))
+
+  return directory_exists
+    \ && executable('ccache')
+endfunction
+
+let s:make_args = s:is_ready_to_ccache()
+  \ ? ('"' . 'CC="ccache gcc"' . '"')
+  \ : ''
 
 function! s:run_quickfix() abort
   execute 'QuickfixRunMake' s:make_args
