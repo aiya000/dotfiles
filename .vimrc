@@ -1118,11 +1118,12 @@ inoremap <C-k>\C ℂ
 imap <C-j> <CR>
 inoremap <C-l> <Esc>
 inoremap <C-a> <Right>
-inoremap <C-r>' <C-r>+
 inoremap <C-k><C-k> <C-o>"_d$
 inoremap <silent> <C-k><C-j> <Esc>:write<CR>
 inoremap <silent> <C-k>J <Esc>:wall \| echo 'written all !'<CR>
 inoremap <silent><expr> <C-b> vimrc#keys#get_webpage_title()
+" Don't noremap for fake-clip
+imap <C-r>' <C-r>+
 
 " }}}
 " command-line mode {{{
