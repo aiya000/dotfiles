@@ -1,0 +1,46 @@
+snippet for
+abbr for (${1:var}; ${2:condition}; ${3:effect}) {${0:here}}
+    for (${1:var}; ${2:condition}; ${3:effect}) {${0:here}}
+
+snippet if
+abbr if (${1:condition}) {${0:here}}
+    if (${1:condition}) {${0:here}}
+
+snippet else
+abbr else {${0:here}}
+    else {${0:here}}
+
+snippet switch
+abbr switch (${1:target}) {${0:here}}
+    switch (${1:target}) {${0:here}}
+
+snippet while
+abbr while (${1:condition}) {${0:here}}
+    while (${1:condition}) {${0:here}}
+
+snippet struct
+abbr struct ${1:name} {${0:here}};
+    struct ${1:name} {${0:here}};
+
+# Macros
+
+snippet include_library
+alias include
+abbr #include <${0:here}>
+    #include <${0:here}>
+
+snippet include_path
+alias includep
+abbr #include "{path}"
+    #include "${0:path}"
+
+# Expressions
+
+snippet printf
+abbr printf(${0:here})
+    printf("${1}"${0:here})
+
+snippet printf_ln
+alias pr
+abbr printf("${0:here}\n")
+    printf("${1}\n"${0:here})
