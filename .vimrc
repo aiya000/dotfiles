@@ -795,7 +795,7 @@ augroup END
 " }}}
 " --- vim-ghcid-quickfix --- " {{{
 
-let g:ghcid_quickfix_show_only_error_occured = v:true
+let g:ghcid_quickfix_showing = 'quickfix_on_error'
 
 " }}}
 " --- translate.vim --- {{{
