@@ -44,7 +44,6 @@ install-by-pip:
 
 build-os-env:
 ifeq ($(OS),Arch)
-	# TODO: Install peco
 	# xmonad: needed by xmonad-config --restart and --replace
 	yay -S --noconfirm --needed \
 		alsa-utils \
@@ -68,6 +67,7 @@ ifeq ($(OS),Arch)
 		graphicsmagick \
 		hub \
 		jq \
+		peco \
 		libnotify \
 		libxss \
 		light \

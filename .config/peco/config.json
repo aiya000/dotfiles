@@ -6,5 +6,8 @@
     "C-j": "peco.Finish",
     "C-k": "peco.KillEndOfLine",
     "C-i": "peco.ToggleSelection"
+  },
+  "Style": {
+    "Selected": ["green", "bold"]
   }
 }
