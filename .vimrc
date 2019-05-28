@@ -517,8 +517,6 @@ let g:aref_web_source = {
   \ },
 \ }
 
-"let g:ref_source_webdict_sites['weblio'].filter = function('vimrc#plugins#weblio_filter')
-
 "}}}
 " --- autofmt ---" {{{
 

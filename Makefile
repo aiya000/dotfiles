@@ -44,6 +44,7 @@ install-by-pip:
 
 build-os-env:
 ifeq ($(OS),Arch)
+	# TODO: Install peco
 	# xmonad: needed by xmonad-config --restart and --replace
 	yay -S --noconfirm --needed \
 		alsa-utils \
@@ -62,7 +63,6 @@ ifeq ($(OS),Arch)
 		fcitx-im \
 		fcitx-mozc \
 		fontforge \
-		fzf \
 		gimp \
 		git \
 		graphicsmagick \
@@ -86,7 +86,6 @@ ifeq ($(OS),Arch)
 		redshift \
 		ristretto \
 		rsync \
-		skim \
 		slock \
 		sox \
 		termite \
@@ -141,9 +140,10 @@ ifeq ($(OS),Arch)
 	(echo 'RictyDiminished with nerd-font patch was generated to ~/git/nerd-fonts, please rename it to "RictyDiminished NF" and install it to your OS manually!' | tee $(logfile))
 endif
 ifeq ($(OS),Ubuntu)
-	sudo apt install \
-		cargo
-	cargo install skim
+	git clone https://github.com/peco/peco ~/git/peco
+	cd ~/git/peco
+	make build
+	cp ./releases/peco_linux_amd64/peco ~/bin
 endif
 ifeq ($(OS),Darwin)
 	brew install \

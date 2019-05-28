@@ -12,37 +12,20 @@ autoload -U edit-command-line && zle -N edit-command-line
 ##################
 # Define keymaps #
 ##################
-function skim-history-find-backward () {
+function peco-history-find-backward () {
     local selected
-    selected=$(fc -ln 1 | sk --regex)
+    selected=$(fc -ln 1 | tac | peco --initial-filter Regexp --select-1 --query "$LBUFFER" | sed 's/\\n/\n/g')
     BUFFER="$selected"
     CURSOR=${#BUFFER}
 }
-zle -N skim-history-find-backward
-
-# Select paths by fzf
-function fzf-path-finder () {
-    local current_word="${LBUFFER/* /}${RBUFFER/ */}"
-    current_word="${current_word/\~/$HOME}"
-    if [ -z "$current_word" ] ; then
-        current_word='.'
-    fi
-    local selected_histories=$(find "$current_word" | fzf --multi --no-sort)
-    local before_cword_num=$(( ${#BUFFER} - ${#current_word} ))
-    local buffer_="${BUFFER[0, $before_cword_num]}"
-
-    zle redisplay
-    BUFFER="${buffer_} ${selected_histories}"
-    CURSOR=${#BUFFER}
-}
-zle -N fzf-path-finder
+zle -N peco-history-find-backward
 
 
 ##############
 # Keymapping #
 ##############
-# Emacs nize insert-mode
-bindkey -M viins '^r' skim-history-find-backward
+# insert-mode to be emacs like
+bindkey -M viins '^r' peco-history-find-backward
 bindkey -M viins '^n' down-line-or-history
 bindkey -M viins '^p' up-line-or-history
 bindkey -M viins '^a' beginning-of-line
@@ -54,14 +37,12 @@ bindkey -M viins '^u' backward-kill-line
 bindkey -M viins '^d' delete-char
 bindkey -M viins '^w' vi-backward-kill-word
 
-# Add needed vim like keys
-bindkey -M viins '^['   vi-cmd-mode
-bindkey -M viins '^X^V' vi-cmd-mode
-bindkey -M vicmd '_'    vi-first-non-blank
-bindkey -M vicmd 'g_'   vi-end-of-line
+# Add needed vim keys
+bindkey -M viins '^[' vi-cmd-mode
+bindkey -M vicmd '_'  vi-first-non-blank
+bindkey -M vicmd 'g_' vi-end-of-line
 
 # ☆
-bindkey -M viins '^l'   vi-cmd-mode
-bindkey -M viins '^]'   clear-screen
-bindkey -M viins '^x^f' fzf-path-finder
-bindkey -M vicmd '^v'   edit-command-line
+bindkey -M viins '^l' vi-cmd-mode
+bindkey -M viins '^]' clear-screen
+bindkey -M vicmd '^v' edit-command-line

@@ -3,10 +3,6 @@ let s:Msg = s:V.import('Vim.Message')
 let s:Job = s:V.import('System.Job')
 let s:List = s:V.import('Data.List')
 
-" TODO: Move functions to the ftplugin
-
-" General functions {{{
-
 function! s:caddexpr_on_stdout(data) abort " {{{
   for line in a:data
     " NOTE:
@@ -29,8 +25,6 @@ function! s:caddexpr_on_stdout(data) abort " {{{
   endfor
 endfunction " }}}
 
-" ------- }}}
-
 " Append quickrun config for windows
 function! vimrc#plugins#append_config_quickrun_windows() abort " {{{
   " C#
@@ -43,60 +37,51 @@ function! vimrc#plugins#append_config_quickrun_windows() abort " {{{
   let g:quickrun_config.html['exec']    = '%c url.dll,FileProtocolHandler uri file://%s:p'
 endfunction " }}}
 
-" Delete otiose lines
-function! vimrc#plugins#weblio_filter(output) abort " {{{
-  let l:lines = split(a:output, "\n")
-  return join(l:lines[17 : ], "\n")
-endfunction " }}}
-
 " Open tweetvim by private account
 function! vimrc#plugins#twitter_private() abort " {{{
-  if !exists('g:vimrc.private["twitter"]["priv_ac"]')
-    call s:Msg.error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
+  if !exists('g:vimrc.private["twitter"]["private_account"]')
+    call s:Msg.error('Not set env variable => g:vimrc.private["twitter"]["private_account"]')
     return
   endif
 
-  execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['priv_ac']
-  let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['priv_ac']
+  execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['private_account']
+  let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['private_account']
 
   TweetVimHomeTimeline
 endfunction " }}}
 
 " Open tweetvim_say by private account
 function! vimrc#plugins#tweet_private() abort " {{{
-  if !exists('g:vimrc.private["twitter"]["priv_ac"]')
-    call s:Msg.error('Not set env variable => g:vimrc.private["twitter"]["priv_ac"]')
+  if !exists('g:vimrc.private["twitter"]["private_account"]')
+    call s:Msg.error('Not set env variable => g:vimrc.private["twitter"]["private_account"]')
     return
   endif
 
-  execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['priv_ac']
+  execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['private_account']
   TweetVimSay
-
-  "@Incomplete('wait sync here')
-  "execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['curr_ac']
 endfunction " }}}
 
 " Open tweetvim by public account
 function! vimrc#plugins#twitter_public() abort " {{{
-  if !exists("g:vimrc.private['twitter']['publ_ac']")
-    call s:Msg.error("Not set env variable => g:vimrc.private['twitter']['publ_ac']")
+  if !exists("g:vimrc.private['twitter']['public_account']")
+    call s:Msg.error("Not set env variable => g:vimrc.private['twitter']['public_account']")
     return
   endif
 
-  execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['publ_ac']
-  let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['publ_ac']
+  execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['public_account']
+  let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['public_account']
 
   TweetVimHomeTimeline
 endfunction " }}}
 
 " Open tweetvim_say by public account
 function! vimrc#plugins#tweet_public(...) abort " {{{
-  if !exists('g:vimrc.private["twitter"]["publ_ac"]')
-    call s:Msg.error('Not set env variable => g:vimrc.private["twitter"]["publ_ac"]')
+  if !exists('g:vimrc.private["twitter"]["public_account"]')
+    call s:Msg.error('Not set env variable => g:vimrc.private["twitter"]["public_account"]')
     return
   endif
 
-  execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['publ_ac']
+  execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['public_account']
   if len(a:000) is 0
     TweetVimSay
   else

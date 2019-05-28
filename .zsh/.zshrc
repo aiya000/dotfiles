@@ -25,11 +25,6 @@ case $(uname) in
 Linux )
     source ~/.sh_generic/linux.sh
     ;;
-Cygwin )
-    source ~/.sh_generic/cygwin.sh
-    HOME=/home/$USER
-    PATH=$PATH:/cygdrive/c/Windows/system32:/cygdrive/c/Windows
-    ;;
 Darwin )
     source ~/.sh_generic/macOS.sh
 esac

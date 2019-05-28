@@ -1,0 +1,10 @@
+{
+  "Layout": "bottom-up",
+  "Prompt": ">",
+  "OnCancel": "error",
+  "Keymap": {
+    "C-j": "peco.Finish",
+    "C-k": "peco.KillEndOfLine",
+    "C-i": "peco.ToggleSelection"
+  }
+}
