@@ -21,7 +21,8 @@ done
 
 count=$(( $(read_count) + 1 )) # 1 based
 echo "a $count-th working time finished!"
-notify-send "the $count-th working time finished!"
+which notify-send > /dev/null 2>&1 \
+    && notify-send "the $count-th working time finished!"
 date
 
 increase_count

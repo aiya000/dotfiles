@@ -8,7 +8,8 @@ for (( minutes = 0; minutes < "$interval"; minutes++ )) ; do
 done
 
 echo 'the rest time finished!'
-notify-send 'the rest time finished!'
+which notify-send > /dev/null 2>&1 \
+    && notify-send 'the rest time finished!'
 date
 
 if uname -a | grep Microsoft > /dev/null ; then
