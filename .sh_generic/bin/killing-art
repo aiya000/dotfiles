@@ -5,9 +5,9 @@
 signal=$([[ -z "$1" ]] && echo '-9' || echo "$1")
 
 if [[ $(uname) == 'Darwin' ]] ; then
-    target_pids=$(ps -axO 'pid,tty,command' | awk 'NR!=1 {print}' | fzf --multi --preview='echo {+8..}' | awk '{print $1}')
+    target_pids=$(ps -axO 'pid,tty,command' | awk 'NR!=1 {print}' | peco | awk '{print $1}')
 else
-    target_pids=$(ps -ax --format='pid,tty,command' | awk 'NR!=1 {print}' | fzf --multi --preview='echo {+8..}' | awk '{print $1}')
+    target_pids=$(ps -ax --format='pid,tty,command' | awk 'NR!=1 {print}' | peco | awk '{print $1}')
 fi
 
 if [[ "$target_pids" == '' ]] ; then

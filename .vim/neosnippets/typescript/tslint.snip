@@ -1,3 +1,40 @@
+snippet tslint_disable
+abbr /* tslint:disable */
+    /* tslint:disable */
+
+snippet tslint_enable
+abbr /* tslint:enable */
+    /* tslint:enable */
+
+snippet tslint_disable_rules
+abbr /* tslint:disable:${0:rules_separated_by_space} */
+    /* tslint:disable:${0:rules_separated_by_space} */
+
+snippet tslint_enable_rules
+abbr /* tslint:enable:${0:rules_separated_by_space} */
+    /* tslint:enable:${0:rules_separated_by_space} */
+
+snippet tslint_disable_next_lint
+abbr // tslint:disable-next-line
+    // tslint:disable-next-line
+
+snippet tslint_disable_next_lint_rules
+abbr // tslint:disable-next-line:${0:rules_separated_by_space}
+    // tslint:disable-next-line:${0:rules_separated_by_space}
+
+snippet tslint_disable_line
+alias tslint_disable_left
+abbr // tslint:disable-line
+    // tslint:disable-line
+
+snippet tslint_disable_line_rules
+alias tslint_disable_left_rules
+abbr // tslint:disable-line:${0:rules_separated_by_space}
+    // tslint:disable-line:${0:rules_separated_by_space}
+
+# Templates
+
 snippet tslint_ignore
-abbr /* tslint:disable:${1:ruleNames} */${0}/* tslint:enable:$1 */
-    /* tslint:disable:${1:ruleNames} */${0}/* tslint:enable:$1 */
+    /* tslint:disable:${1:rules_separated_by_space} */
+    ${0}
+    /* tslint:enable:$1 */

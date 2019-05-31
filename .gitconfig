@@ -10,42 +10,12 @@
 [push]
 	default = simple
 [alias]
-	c = commit
-	s = status
-	b = branch
-	l = log
-	co = checkout
-	cm = commit -m
-	a = add
-	d = diff
-	ca = commit -a
-	cam = commit -am
-	ba = branch -a
-	cob = checkout -b
-	aa = add -A
-	bd = branch -d
-	tree = log --graph --decorate --oneline
-	r = rebase
-	rc = rebase --continue
-	ra = rebase --abort
-	dc = diff --cached
-	return = reset --hard HEAD
-	tree-all = log --graph --decorate --all --oneline
-	ri = rebase -i
-	ma = merge --abort
-	br = branch -r
-	ta = log --all --graph --oneline --decorate
-	t = log --graph --oneline --decorate
-	bm = branch -m
-	rh = reset --hard
-	ds = diff --staged
-	ap = add -p
-	pr = pull-request
 	clone = clone --recursive
 	make = create
-	take = !"git stash push --message 'This is saved by alias.take' && git pull && git stash pop"
-	pushf = push --force-with-lease
-	sma = submodule add --recursive
+	pr = pull-request
+	ta = log --all --graph --oneline --decorate
+	tree = log --graph --decorate --oneline
+	tree-all = log --graph --decorate --all --oneline
 [core]
 	pager = cat
 	quotepath = false

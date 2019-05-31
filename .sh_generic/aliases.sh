@@ -30,6 +30,10 @@ alias_of sk="sk $SKIM_DEFAULT_OPTS"
 
 i_have say || alias say=espeak
 
+function - () {
+    cd -
+}
+
 # }}}
 # Load ./aliases/** {{{
 
@@ -184,6 +188,16 @@ if i_have git ; then
     }
 
     alias ginit='git init'
+
+    function github-change-remote-from-git-to-https () {
+        local remote https_url
+        remote=${1:-origin}
+        https_url=$(git remote get-url "$remote" \
+            | sed -r 's/git@([^:]+):([^\/]+)\/(.*)/https:\/\/\1\/\2\/\3/' \
+            | sed -r 's/\.git$//')
+        git remote set-url "$remote" "$https_url"
+        git remote get-url "$remote" "$https_url"
+    }
 
     # Set casual user.name and user.email at local
     alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
