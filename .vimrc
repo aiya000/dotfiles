@@ -499,6 +499,8 @@ augroup END
 "}}}
 " --- aref-web.vim --- {{{
 
+let g:aref_web_buffer_opening = 'vsplit'
+
 let g:aref_web_source = {
 \ 'weblio': {
     \ 'url': 'https://ejje.weblio.jp/content/%s',
