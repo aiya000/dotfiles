@@ -584,30 +584,20 @@ let g:fakeclip_provide_clipboard_key_mappings = g:vimrc['is_wsl']
 " }}}
 " --- denite.nvim --- {{{
 
-call denite#custom#map('normal', 'Q', '<denite:quit>')
-call denite#custom#map('normal', '<C-[>', '<denite:quit>')
-call denite#custom#map('normal', '<C-l>', '<denite:quit>')
-call denite#custom#map('normal', '<C-j>', '<CR>')
-call denite#custom#map('normal', '<C-i>', '<denite:toggle_select_down>')
-
-call denite#custom#map('insert', '<C-[>', '<denite:enter_mode:normal>')
-call denite#custom#map('insert', '<C-l>', '<denite:quit>')
-call denite#custom#map('insert', '<C-j>', '<CR>')
-call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>')
-call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>')
-call denite#custom#map('insert', '<C-a>', '<denite:move_caret_to_head>')
-call denite#custom#map('insert', '<C-e>', '<denite:move_caret_to_tail>')
-call denite#custom#map('insert', '<C-f>', '<denite:move_caret_to_right>')
-call denite#custom#map('insert', '<C-b>', '<denite:move_caret_to_left>')
-call denite#custom#map('insert', '<C-x>', '<denite:do_action:delete>')
-
-call denite#custom#source('buffer', 'matchers', ['matcher_substring'])
-call denite#custom#source('file', 'matchers', ['matcher_substring'])
-call denite#custom#source('file_rec', 'matchers', ['matcher_substring'])
-call denite#custom#source('line', 'matchers', ['matcher_substring'])
-call denite#custom#source('tag', 'matchers', ['matcher_substring'])
-call denite#custom#source('file_mru', 'matchers', ['matcher_substring', 'matcher_ignore_globs'])
-call denite#custom#source('tag', 'converters', ['converter/abbr_word'])
+augroup VIMRC
+  autocmd FileType denite nnoremap <buffer><silent><expr> Q     denite#do_map('quit')
+  autocmd FileType denite nnoremap <buffer><silent><expr> <C-[> denite#do_map('quit')
+  autocmd FileType denite nnoremap <buffer><silent><expr> <C-l> denite#do_map('quit')
+  autocmd FileType denite nnoremap <buffer><silent><expr> <C-j> denite#do_map('do_action')
+  autocmd FileType denite nnoremap <buffer><silent><expr> <C-i> denite#do_map('toggle_select_down')
+  autocmd FileType denite call denite#custom#source('buffer', 'matchers', ['matcher_substring'])
+  autocmd FileType denite call denite#custom#source('file', 'matchers', ['matcher_substring'])
+  autocmd FileType denite call denite#custom#source('file_rec', 'matchers', ['matcher_substring'])
+  autocmd FileType denite call denite#custom#source('line', 'matchers', ['matcher_substring'])
+  autocmd FileType denite call denite#custom#source('tag', 'matchers', ['matcher_substring'])
+  autocmd FileType denite call denite#custom#source('file_mru', 'matchers', ['matcher_substring', 'matcher_ignore_globs'])
+  autocmd FileType denite call denite#custom#source('tag', 'converters', ['converter/abbr_word'])
+augroup END
 
 " NOTE: How I can ignore it without this DEPRECATED value
 let g:neomru#file_mru_ignore_pattern = '^gina://.*'
@@ -877,8 +867,13 @@ set ambiwidth=double
 " {{{
 
 augroup VIMRC
+<<<<<<< Updated upstream
   autocmd ColorScheme * highlight EmSpace ctermbg=LightBlue guibg=LightBlue
   autocmd VimEnter,WinEnter * call matchadd('EmSpace', '　')
+=======
+  autocmd ColorScheme * highlight RcEmSpace ctermbg=LightBlue
+  autocmd VimEnter,WinEnter * call matchadd('RcEmSpace', '　')
+>>>>>>> Stashed changes
   " git conflictions
   autocmd ColorScheme * highlight GitConflict ctermbg=Red guibg=Red
   autocmd VimEnter,WinEnter * call matchadd('GitConflict', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
@@ -1256,16 +1251,16 @@ vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
 
 " denite.nvim
 nnoremap <leader>u :<C-u>Denite<Space>
-nnoremap <silent> <C-k>e :<C-u>Denite file/rec<CR>
-nnoremap <silent> <C-k><C-e> :<C-u>Denite file<CR>
-nnoremap <silent> '<C-k>e :<C-u>call vimrc#keys#execute_on_base_path(function('denite#start'), [{'name':'file/rec','args':[]}])<CR>
-nnoremap <silent> '<C-k><C-e> :<C-u>call vimrc#keys#execute_on_base_path(function('denite#start'), [{'name':'file','args':[]}])<CR>
-nnoremap <silent> <C-k><C-t> :<C-u>Denite tag<CR>
-nnoremap <silent> <C-k><C-f> :<C-u>Denite outline<CR>
-nnoremap <silent> <C-k>f :<C-u>Denite filetype<CR>
-nnoremap <silent> H :<C-u>Denite line<CR>
-nnoremap <silent> M :<C-u>Denite file_mru<CR>
-nnoremap <silent> L :<C-u>Denite buffer<CR>
+nnoremap <C-k>e :<C-u>Denite file/rec<CR>/
+nnoremap <C-k><C-e> :<C-u>Denite file<CR>/
+nnoremap '<C-k>e :<C-u>call vimrc#keys#execute_on_base_path(function('denite#start'), [{'name':'file/rec','args':[]}])<CR>/
+nnoremap '<C-k><C-e> :<C-u>call vimrc#keys#execute_on_base_path(function('denite#start'), [{'name':'file','args':[]}])<CR>/
+nnoremap <C-k><C-t> :<C-u>Denite tag<CR>/
+nnoremap <C-k><C-f> :<C-u>Denite outline<CR>/
+nnoremap <C-k>f :<C-u>Denite filetype<CR>/
+nnoremap H :<C-u>Denite line<CR>/
+nnoremap M :<C-u>Denite file_mru<CR>/
+nnoremap L :<C-u>Denite buffer<CR>/
 
 " aref-web.vim
 "nnoremap <leader>K :<C-u>Aref weblio <C-r>=expand('<cword>')<CR><CR>
