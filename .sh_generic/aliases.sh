@@ -21,6 +21,12 @@ alias df='df -h'
 alias du='du -h'
 alias free='free -h'
 
+# NOTE: Who did define the original - ?
+function - () {
+    # shellcheck disable=SC2164
+    cd -
+}
+
 alias_of sudo='sudo '  # Enable aliases on sudo
 alias_of mysql='mysql --pager="less -r -S -n -i -F -X"'
 alias_of hoe='stack exec --silent -- hoe'
@@ -29,10 +35,6 @@ alias_of hawk='stack exec -- hawk'
 alias_of sk="sk $SKIM_DEFAULT_OPTS"
 
 i_have say || alias say=espeak
-
-function - () {
-    cd -
-}
 
 # }}}
 # Load ./aliases/** {{{
