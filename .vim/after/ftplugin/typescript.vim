@@ -14,6 +14,7 @@ nnoremap <buffer><silent> <localleader><localleader>W :<C-u>call <SID>stop_quick
 
 augroup FtpluginTypeScript
   autocmd!
+  autocmd BufWritePost *.ts Autoformat
   autocmd BufWritePost *.ts,*.tsx call s:exec_quickfix_if_available()
 augroup END
 

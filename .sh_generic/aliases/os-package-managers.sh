@@ -10,13 +10,13 @@ elif i_have pacman ; then
     alias pas='pacman -Ss'
     alias par='sudo pacman -Rns'
     alias pau='sudo pacman -Sy'
+elif i_have brew ; then
+    alias pai='brew install'
+    alias par='brew uninstall'
+    alias pas='brew search'
 elif i_have apt ; then
     alias pai='sudo apt install'
     alias par='sudo apt purge'
     alias pas='apt search'
     alias pau='sudo apt update'
-elif i_have brew ; then
-    alias pai='brew install'
-    alias par='brew uninstall'
-    alias pas='brew search'
 fi

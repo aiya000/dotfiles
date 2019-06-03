@@ -270,6 +270,7 @@ on_ft = [
     'dhall',
     'scala',
     'java',
+    'typescript',
 ]
 
 [[plugins]]

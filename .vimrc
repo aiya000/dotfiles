@@ -669,6 +669,9 @@ let g:vimhelpgenerator_defaultlanguage = 'en'
 let g:formatdef_dhall_format = '"dhall format"'
 let g:formatters_dhall = ['dhall_format']
 
+let g:formatdef_typescript_format = '"tsfmt --stdin"'
+let g:formatters_typescript = ['typescript_format']
+
 " let g:formatdef_scalafmt = '"ng scalafmt --stdin"' " Please see Makefile for about `ng scalafmt`
 " let g:formatters_scala = ['scalafmt']
 

@@ -169,6 +169,9 @@ install-markdown:
 install-text:
 	npm install -g textlint
 
+install-typescript:
+	npm install -g typescript tslint tsfmt
+
 install-html-css:
 	npm install -g htmlhint csslint
 
