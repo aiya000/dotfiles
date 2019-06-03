@@ -584,20 +584,7 @@ let g:fakeclip_provide_clipboard_key_mappings = g:vimrc['is_wsl']
 " }}}
 " --- denite.nvim --- {{{
 
-augroup VIMRC
-  autocmd FileType denite nnoremap <buffer><silent><expr> Q     denite#do_map('quit')
-  autocmd FileType denite nnoremap <buffer><silent><expr> <C-[> denite#do_map('quit')
-  autocmd FileType denite nnoremap <buffer><silent><expr> <C-l> denite#do_map('quit')
-  autocmd FileType denite nnoremap <buffer><silent><expr> <C-j> denite#do_map('do_action')
-  autocmd FileType denite nnoremap <buffer><silent><expr> <C-i> denite#do_map('toggle_select_down')
-  autocmd FileType denite call denite#custom#source('buffer', 'matchers', ['matcher_substring'])
-  autocmd FileType denite call denite#custom#source('file', 'matchers', ['matcher_substring'])
-  autocmd FileType denite call denite#custom#source('file_rec', 'matchers', ['matcher_substring'])
-  autocmd FileType denite call denite#custom#source('line', 'matchers', ['matcher_substring'])
-  autocmd FileType denite call denite#custom#source('tag', 'matchers', ['matcher_substring'])
-  autocmd FileType denite call denite#custom#source('file_mru', 'matchers', ['matcher_substring', 'matcher_ignore_globs'])
-  autocmd FileType denite call denite#custom#source('tag', 'converters', ['converter/abbr_word'])
-augroup END
+" Please see the ftplugin 'denite'
 
 " NOTE: How I can ignore it without this DEPRECATED value
 let g:neomru#file_mru_ignore_pattern = '^gina://.*'
@@ -867,13 +854,8 @@ set ambiwidth=double
 " {{{
 
 augroup VIMRC
-<<<<<<< Updated upstream
   autocmd ColorScheme * highlight EmSpace ctermbg=LightBlue guibg=LightBlue
   autocmd VimEnter,WinEnter * call matchadd('EmSpace', '　')
-=======
-  autocmd ColorScheme * highlight RcEmSpace ctermbg=LightBlue
-  autocmd VimEnter,WinEnter * call matchadd('RcEmSpace', '　')
->>>>>>> Stashed changes
   " git conflictions
   autocmd ColorScheme * highlight GitConflict ctermbg=Red guibg=Red
   autocmd VimEnter,WinEnter * call matchadd('GitConflict', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
@@ -986,6 +968,8 @@ let g:vimrc.auto_closing_filetypes = [
   \ 'qf',
   \ 'quickrun',
   \ 'scratch',
+  \ 'denite',
+  \ 'denite-filter',
 \ ]
 
 " folds
@@ -1250,17 +1234,18 @@ vmap              <leader>r <Plug>(quickrun)
 vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
 
 " denite.nvim
-nnoremap <leader>u :<C-u>Denite<Space>
-nnoremap <C-k>e :<C-u>Denite file/rec<CR>/
-nnoremap <C-k><C-e> :<C-u>Denite file<CR>/
-nnoremap '<C-k>e :<C-u>call vimrc#keys#execute_on_base_path(function('denite#start'), [{'name':'file/rec','args':[]}])<CR>/
-nnoremap '<C-k><C-e> :<C-u>call vimrc#keys#execute_on_base_path(function('denite#start'), [{'name':'file','args':[]}])<CR>/
-nnoremap <C-k><C-t> :<C-u>Denite tag<CR>/
-nnoremap <C-k><C-f> :<C-u>Denite outline<CR>/
-nnoremap <C-k>f :<C-u>Denite filetype<CR>/
-nnoremap H :<C-u>Denite line<CR>/
-nnoremap M :<C-u>Denite file_mru<CR>/
-nnoremap L :<C-u>Denite buffer<CR>/
+"" map i to do open_filter_buffer
+nmap <leader>u :<C-u>Denite<Space>
+nmap <C-k>e :<C-u>Denite file/rec<CR>i
+nmap <C-k><C-e> :<C-u>Denite file<CR>i
+nmap '<C-k>e :<C-u>call vimrc#keys#execute_on_base_path(function('denite#start'), [{'name':'file/rec','args':[]}])<CR>i
+nmap '<C-k><C-e> :<C-u>call vimrc#keys#execute_on_base_path(function('denite#start'), [{'name':'file','args':[]}])<CR>i
+nmap <C-k><C-t> :<C-u>Denite tag<CR>i
+nmap <C-k><C-f> :<C-u>Denite outline<CR>i
+nmap <C-k>f :<C-u>Denite filetype<CR>i
+nmap H :<C-u>Denite line<CR>i
+nmap M :<C-u>Denite file_mru<CR>i
+nmap L :<C-u>Denite buffer<CR>i
 
 " aref-web.vim
 "nnoremap <leader>K :<C-u>Aref weblio <C-r>=expand('<cword>')<CR><CR>

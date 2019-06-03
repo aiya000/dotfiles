@@ -4,7 +4,7 @@ rev  = '39e80649c739151673373bbaf3a56d126531467b'
 
 [[plugins]]
 repo  = 'Shougo/vimproc.vim'
-rev   = '25cb83f24edec4aec1e9f1329302235e7a7a7fe0'
+rev   = 'eb5b2b1248ccc8b1b9e84d7658508e38b964d17d'
 build = 'make'
 if    = '!(g:vimrc["is_kaoriya"] && g:vimrc["is_windows"])'
 
@@ -48,7 +48,7 @@ repo = 'kana/vim-operator-user'
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-rev  = 'fee9301bfa8d52efc38d314b17bf89c39c22015d'
+rev  = 'cfa0a0028961a4f2b20edab5f8efe997b0988cff'
 
 [[plugins]]
 repo    = 'osyo-manga/vim-textobj-from_regexp'
