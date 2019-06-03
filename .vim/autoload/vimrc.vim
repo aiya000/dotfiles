@@ -15,16 +15,23 @@ function! vimrc#fetch_dein(install_dirname) " {{{
     endif
 endfunction " }}}
 
+" NOTE: open_mode 'open' ってなんだっけ？
 " Absorbs the different of Vim and NeoVim.
-"   open_mode: 'vertical' | 'horizontal' | 'stay' | 'tabnew'
+"   open_mode: 'vertical' | 'horizontal' | 'stay' | 'tabnew' | 'hidden' | 'open'
 function! vimrc#open_terminal_as(filetype, open_mode, command, ...) abort " {{{
   let options = get(a:000, 0, {})
-  let terminal
-    \ = has('nvim') && (a:open_mode ==# '++open') ? s:terminal_with_warn()
-    \ : has('nvim') ? ':terminal'
-    \ : (a:open_mode ==# '++open') ? ':terminal ++curwin ++close ++open'
-    \ : get(options, 'noclose', v:false) ? ':terminal ++curwin'
-    \ : ':terminal ++curwin ++close'
+  let terminal =
+    \ (has('nvim') && !s:is_supported_by_neovim(a:open_mode))
+      \ ? s:terminal_with_warn(a:open_mode)
+    \ : has('nvim')
+      \ ? ':terminal'
+    \ : (a:open_mode ==# 'hidden')
+      \ ? ':terminal ++hidden'
+    \ : (a:open_mode ==# 'open')
+      \ ? ':terminal ++curwin ++close ++open'
+    \ : get(options, 'noclose', v:false)
+      \ ? ':terminal ++curwin'
+      \ : ':terminal ++curwin ++close'
 
   if a:open_mode ==# 'vertical'
     vnew
@@ -34,8 +41,6 @@ function! vimrc#open_terminal_as(filetype, open_mode, command, ...) abort " {{{
     enew!
   elseif a:open_mode ==# 'tabnew'
     tabnew
-  elseif a:open_mode ==# '++open'
-    " :D
   else
     throw 'undefined open_mode is detected: ' . string(a:open_mode)
   endif
@@ -55,7 +60,14 @@ function! vimrc#open_terminal_as(filetype, open_mode, command, ...) abort " {{{
   endif
 endfunction " }}}
 
-function! s:terminal_with_warn() abort
-  call s:Msg.warn('throw ++open is not available for NeoVim, do :terminal without ++open instead')
+function! s:is_supported_by_neovim(open_mode) abort
+  return a:open_mode ==# 'vertical'
+    \ || a:open_mode ==# 'horizontal'
+    \ || a:open_mode ==# 'stay'
+    \ || a:open_mode ==# 'tabnew'
+endfunction
+
+function! s:terminal_with_warn(unsupprted_open_mode) abort
+  call s:Msg.warn(printf('throw %s is not available for NeoVim, now do `:terminal` with no arguments instead.', a:unsupprted_open_mode))
   return ':terminal'
 endfunction

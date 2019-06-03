@@ -1,13 +1,4 @@
-let b:undo_ftplugin = 'setl ' . join([
-  \ 'tabstop<',
-  \ 'shiftwidth<',
-  \ 'nolist<',
-  \ 'nonumber<',
-  \ 'norelativenumber<',
-  \ 'wrap<',
-\ ])
-
-setl tabstop=2 shiftwidth=2 nolist nonu nornu nowrap
+execute 'source' (g:vimrc['vim_home'] . '/after/ftplugin/stack_build.vim')
 
 nnoremap <buffer><silent> <C-r> :<C-u>call <SID>reopen_stack_test()<CR>
 
