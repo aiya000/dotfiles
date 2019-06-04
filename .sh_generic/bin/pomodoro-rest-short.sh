@@ -14,8 +14,6 @@ date
 
 if uname -a | grep Microsoft > /dev/null ; then
     cd ~/Desktop && cmd.exe /c start Music/初手は丸.mp3
-elif [[ $(uname) = 'Darwin' ]] ; then
-    open ~/Music/初手は丸.mp3
 else
     mpg123 ~/Music/初手は丸.mp3 > /dev/null
 fi

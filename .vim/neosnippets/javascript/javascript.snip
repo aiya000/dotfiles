@@ -5,6 +5,7 @@ abbr 'use strict';
     'use strict';
 
 snippet import
+alias imp
 abbr import { ${1:objects} } from '${2:module-name}'
     import { ${1:objects} } from '${2:module-name}'
 
@@ -48,6 +49,11 @@ alias arrow
 abbr (${1:#:args}) => ${0}
     (${1:#:args}) => ${0}
 
+snippet method
+alias met
+abbr ${1:name}(${2:#:args}) {${0:here}}
+    ${1:name}(${2:#:args}) {${0:here}}
+
 snippet class
 abbr class ${1:Class} ${2:#:extends_Super}{${0:here}}
     class ${1:Class} ${2:#:extends_Super}{${0:here}}
@@ -56,7 +62,7 @@ snippet constructor
 abbr constructor(${1:#:args}) {${0:here}}
     constructor(${1:#:args}) {${0:here}}
 
-# Definition / Expression
+# Templates
 
 snippet define_prototype_Array#map
     Array.prototype.map = function (f) {
@@ -70,3 +76,7 @@ snippet print
 alias prlintln pr
 abbr console.log(${1:#:hello});
     console.log(${1:#:hello});
+
+snippet export_default
+abbr export default {${0:here}}
+    export default {${0:here}}

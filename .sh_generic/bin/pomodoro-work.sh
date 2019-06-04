@@ -30,8 +30,6 @@ increase_count
 
 if uname -a | grep Microsoft > /dev/null ; then
     cd ~/Desktop && cmd.exe /c start Music/にぃに.mp3
-elif [[ $(uname) = 'Darwin' ]] ; then
-    open ~/Music/にぃに.mp3
 else
     mpg123 ~/Music/にぃに.mp3 > /dev/null
 fi

@@ -1,0 +1,106 @@
+include javascript/javascript.snip
+
+# Syntax
+
+snippet comment
+alias com
+abbr <!-- ${0} -->
+    <!-- ${0} -->
+
+snippet document_comment
+alias doc
+    /**
+     * ${0}
+     */
+
+snippet single
+alias sin
+abbr <${0:Component} />
+    <${0:Component} />
+
+snippet surround
+alias sur
+abbr <${1:Component}>${0:here}</$1>
+    <${1:Component}>${0:here}</$1>
+
+snippet template
+abbr <template>${0}</template>
+    <template>${0}</template>
+
+snippet style_scoped
+abbr <style scoped>${0:here}</style>
+    <style scoped>${0:here}</style>
+
+snippet script_lang_ts
+abbr <script lang="ts">${0:here}</script>
+    <script lang="ts">${0:here}</script>
+
+# Tags
+
+snippet view
+abbr <view>${0}</view>
+    <view>${0}</view>
+
+snippet style
+abbr <style>${0}</style>
+    <style>${0}</style>
+
+snippet script
+abbr <script>${0}</script>
+    <script>${0}</script>
+
+snippet text
+abbr <text>${0}</text>
+    <text>${0}</text>
+
+# Directives
+
+snippet v_if
+alias vif
+abbr v-if="${0:cond}"
+    v-if="${0:cond}"
+
+snippet v_else_if
+alias velseif
+abbr v-else-if="${0:cond}"
+    v-else-if="${0:cond}"
+
+snippet v_else
+alias velse
+abbr v-else
+    v-else
+
+snippet v_for
+alias vfor
+abbr v-for="${1:x} in ${0:xs}"
+    v-for="${1:x} in ${0:xs}"
+
+snippet v_model
+alias vmodel
+abbr v-model="${0:data_property}"
+    v-model="${0:data_property}"
+
+
+# Other attributes
+
+snippet class
+abbr class="${0:here}"
+    class="${0:here}"
+
+# Annotations
+
+snippet annotation_component
+alias component
+abbr @Component
+    @Component
+
+snippet annotation_prop
+alias prop
+abbr @Prop(${1:#:here})${0}
+    @Prop(${1:#:here})${0}
+
+# Templates
+
+snippet data
+abbr data: () => ({${0:here}})
+    data: () => ({${0:here}})

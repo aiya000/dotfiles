@@ -5,3 +5,13 @@ abbr <?xml version="1.0" encoding="utf-8"?>
 snippet comment
 alias com
     <!-- ${0} -->
+
+snippet single
+alias sin
+abbr <${0:name} />
+    <${0:name} />
+
+snippet surround
+alias sur
+abbr <${1:name}>${0:here}</$1>
+    <${1:name}>${0:here}</$1>

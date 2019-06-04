@@ -8,8 +8,8 @@ options indent
 snippet template_xml_attr
 options head indent
     snippet ${1:#:snippetName}
-    abbr $1=""
-        $1="${0}"
+    abbr $1="\${0:here}"
+        $1="\${0:here}"
 
 snippet template_xml_tag
     snippet ${1:#:snippetName}

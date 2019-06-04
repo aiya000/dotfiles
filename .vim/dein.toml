@@ -4,7 +4,6 @@ rev  = '39e80649c739151673373bbaf3a56d126531467b'
 
 [[plugins]]
 repo  = 'Shougo/vimproc.vim'
-rev   = 'eb5b2b1248ccc8b1b9e84d7658508e38b964d17d'
 build = 'make'
 if    = '!(g:vimrc["is_kaoriya"] && g:vimrc["is_windows"])'
 
