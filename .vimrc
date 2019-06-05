@@ -1248,9 +1248,7 @@ nmap M :<C-u>Denite file_mru<CR>i
 nmap L :<C-u>Denite buffer<CR>i
 
 " aref-web.vim
-"nnoremap <leader>K :<C-u>Aref weblio <C-r>=expand('<cword>')<CR><CR>
-" NOTE: Avoid gonvim crushing
-nmap <leader>K viw[K
+nnoremap <leader>K :<C-u>Aref weblio <C-r>=expand('<cword>')<CR><CR>
 vnoremap <leader>K "zy:<C-u>Aref weblio <C-r>z<CR>
 vnoremap <leader>S "zy:<C-u>Aref stackage <C-r>z<CR>
 
