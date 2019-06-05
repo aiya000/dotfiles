@@ -70,10 +70,18 @@ function load-my-env () {
         export USE_CCACHE=1
         export set CC='ccache gcc'
         export set CXX='ccache g++'
+        alias make-ccache='make CC="ccache gcc"'
+        echo export USE_CCACHE=1
+        echo export set CC='ccache gcc'
+        echo export set CXX='ccache g++'
+        echo alias make-ccache='make CC="ccache gcc"'
+
         if [[ -d ~/hdd/.ccache ]] ; then
             export CCACHE_DIR=~/hdd/.ccache
+            echo export CCACHE_DIR=~/hdd/.ccache
         else
             export CCACHE_DIR=~/.ccache
+            echo export CCACHE_DIR=~/.ccache
         fi
         ;;
     *)
