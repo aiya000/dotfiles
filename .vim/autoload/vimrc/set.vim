@@ -22,7 +22,7 @@ function! vimrc#set#tabline() abort " {{{
         \. '%3*%{vimrc#set#tabline_tags_if_present()}%*'
         \. "%4*%{'[' . tabpagenr('$') . ']'}%*"
         \. '%5*%{vimrc#set#tabline_marks_if_present()}%*'
-        \. '%6*%{get(g:, "ale_enabled", 0) ? "[ale]" : ""}%*'
+        \. '%6*%{vimrc#set#tabline_ale_if_present()}%*'
         \. language_client_status
 endfunction " }}}
 
@@ -99,4 +99,12 @@ endfunction " }}}
 
 function! vimrc#set#cwd_or_shorten() abort
   return s:shorten_path_if_needed(getcwd())
+endfunction
+
+function! vimrc#set#tabline_ale_if_present() abort
+  let g_label = get(g:, 'ale_enabled', 1) ? '' : 'g'
+  let b_label = get(b:, 'ale_enabled', 1) ? '' : 'b'
+  return (g_label !=# '') || (b_label !=# '')
+    \ ? ('[ale_disabled:' . g_label . b_label . ']')
+    \ : '[ale]'
 endfunction

@@ -304,9 +304,7 @@ on_ft = [
     'typescript',
     'typescript.tsx',
 ]
-depends = [
-    'async.vim',
-]
+depends = ['async.vim']
 
 [[plugins]]
 repo      = 'prabirshrestha/async.vim'
