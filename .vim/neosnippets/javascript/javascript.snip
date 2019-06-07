@@ -6,8 +6,13 @@ abbr 'use strict';
 
 snippet import
 alias imp
-abbr import { ${1:objects} } from '${2:module-name}'
-    import { ${1:objects} } from '${2:module-name}'
+abbr import { ${1:objects} } from '${0:module-name}'
+    import { ${1:objects} } from '${0:module-name}'
+
+snippet import_as
+alias import_qualified imq
+abbr import * as ${1:name} from '${0:module-name}'
+    import * as ${1:name} from '${0:module-name}'
 
 snippet for_traditional
 abbr for (${1:#:var}; ${2:#:condition}; ${3:#:effect}) {${0:here}}
