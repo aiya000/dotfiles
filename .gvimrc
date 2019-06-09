@@ -16,7 +16,7 @@ let g:gvimrc['loaded'] = get(g:gvimrc, 'loaded', 0)
 
 " TODO: If Windows
 let g:vimrc['guifont'] = {
-  \ 'size': 9,
+  \ 'size': 8,
 \ }
 let &guifont = 'RictyDiminished NF ' . g:vimrc.guifont.size
 
