@@ -2,7 +2,6 @@
 configure=$(cat << EOS
 ./configure \
     --prefix=/usr/local/ \
-    --disable-darwin \
     --enable-fail-if-missing \
     --enable-multibyte \
     --enable-perlinterp \
@@ -12,12 +11,11 @@ configure=$(cat << EOS
     --enable-luainterp \
     --enable-cscope \
     --enable-fontset \
-    --enable-terminal \
-    --enable-gui=athena \
     --with-luajit \
     --with-lua-prefix=/usr/local/Cellar/luajit/2.0.5 \
     --with-features=huge \
-    --with-compiledby=aiya000
+    --with-compiledby=aiya000 \
+    --enable-terminal
 EOS
 )
 

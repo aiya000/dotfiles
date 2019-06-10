@@ -294,7 +294,7 @@ on_cmd = ['Dein']
 
 [[plugins]]
 repo  = 'posva/vim-vue'
-on_ft = 'vue'
+on_ft = ['vue']
 
 [[plugins]]
 repo = 'prabirshrestha/vim-lsp'

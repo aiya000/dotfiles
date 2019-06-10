@@ -22,15 +22,12 @@ function xl () {
         alias xc='etlas clean'
         alias xr='etlas run'
         alias xx=etlas
-    elif i_have yarn && false ; then
-        # TODO
+    elif i_have yarn && [[ -e package.json ]] ; then
         alias xi='yarn install'
         alias xr='yarn run'
         alias xx=yarn
-    elif i_have npm && false ; then
-        # TODO
+    elif i_have npm && [[ -e package.json ]] ; then
         alias xi='npm install'
-        alias xig='npm install --global'
         alias xr='npm run'
         alias xx=npm
     elif i_have gradle && false ; then
