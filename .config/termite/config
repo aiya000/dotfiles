@@ -1,5 +1,5 @@
 [options]
-font = RictyDiminished NF 10
+font = RictyDiminished NF 9
 mouse_autohide = true
 allow_bold = true
 
