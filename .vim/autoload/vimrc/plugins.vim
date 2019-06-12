@@ -3,7 +3,7 @@ let s:Msg = s:V.import('Vim.Message')
 let s:Job = s:V.import('System.Job')
 let s:List = s:V.import('Data.List')
 
-function! s:caddexpr_on_stdout(data) abort " {{{
+function! s:caddexpr_on_stdout(data) abort
   for line in a:data
     " NOTE:
     " On NeoVim v0.3.1, the job's on_stdout may take 『『『無』』』 as a line break and else.
@@ -23,10 +23,10 @@ function! s:caddexpr_on_stdout(data) abort " {{{
       break
     endif
   endfor
-endfunction " }}}
+endfunction
 
 " Append quickrun config for windows
-function! vimrc#plugins#append_config_quickrun_windows() abort " {{{
+function! vimrc#plugins#append_config_quickrun_windows() abort
   " C#
   let g:quickrun_config.cs['command'] = 'csc.exe'
   let g:quickrun_config.cs['hook/output_encode/encoding'] = 'cp932:utf-8'
@@ -35,10 +35,10 @@ function! vimrc#plugins#append_config_quickrun_windows() abort " {{{
   " HTML
   let g:quickrun_config.html['command'] = 'rundll32'
   let g:quickrun_config.html['exec']    = '%c url.dll,FileProtocolHandler uri file://%s:p'
-endfunction " }}}
+endfunction
 
 " Open tweetvim by private account
-function! vimrc#plugins#twitter_private() abort " {{{
+function! vimrc#plugins#twitter_private() abort
   if !exists('g:vimrc.private["twitter"]["private_account"]')
     call s:Msg.error('Not set env variable => g:vimrc.private["twitter"]["private_account"]')
     return
@@ -48,10 +48,10 @@ function! vimrc#plugins#twitter_private() abort " {{{
   let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['private_account']
 
   TweetVimHomeTimeline
-endfunction " }}}
+endfunction
 
 " Open tweetvim_say by private account
-function! vimrc#plugins#tweet_private() abort " {{{
+function! vimrc#plugins#tweet_private() abort
   if !exists('g:vimrc.private["twitter"]["private_account"]')
     call s:Msg.error('Not set env variable => g:vimrc.private["twitter"]["private_account"]')
     return
@@ -59,10 +59,10 @@ function! vimrc#plugins#tweet_private() abort " {{{
 
   execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['private_account']
   TweetVimSay
-endfunction " }}}
+endfunction
 
 " Open tweetvim by public account
-function! vimrc#plugins#twitter_public() abort " {{{
+function! vimrc#plugins#twitter_public() abort
   if !exists("g:vimrc.private['twitter']['public_account']")
     call s:Msg.error("Not set env variable => g:vimrc.private['twitter']['public_account']")
     return
@@ -72,10 +72,10 @@ function! vimrc#plugins#twitter_public() abort " {{{
   let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['public_account']
 
   TweetVimHomeTimeline
-endfunction " }}}
+endfunction
 
 " Open tweetvim_say by public account
-function! vimrc#plugins#tweet_public(...) abort " {{{
+function! vimrc#plugins#tweet_public(...) abort
   if !exists('g:vimrc.private["twitter"]["public_account"]')
     call s:Msg.error('Not set env variable => g:vimrc.private["twitter"]["public_account"]')
     return
@@ -90,7 +90,7 @@ function! vimrc#plugins#tweet_public(...) abort " {{{
 
   "@Incomplete('wait here')
   "execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
-endfunction " }}}
+endfunction
 
 " let s:read_to_quickfix_it {{{
 
@@ -103,7 +103,7 @@ let s:read_to_quickfix_it = { cmd ->
 
 " }}}
 " TODO: Unify run_foo_quickfix to one
-function! vimrc#plugins#run_gradle_quickfix(gradle_subcmd) abort " {{{
+function! vimrc#plugins#run_gradle_quickfix(gradle_subcmd) abort
   let current = getcwd()
   try
     CClear
@@ -120,10 +120,10 @@ function! vimrc#plugins#run_gradle_quickfix(gradle_subcmd) abort " {{{
     autocmd!
     autocmd VimLeave * call vimrc#plugins#stop_scala_compile_watch_quickfix()
   augroup END
-endfunction " }}}
+endfunction
 
 " NOTE: This requires to add sbt-launch.jar to $PATH
-function! vimrc#plugins#run_scala_compile_watch_quickfix(sbt_subcmd) abort " {{{
+function! vimrc#plugins#run_scala_compile_watch_quickfix(sbt_subcmd) abort
   CClear
   call vimrc#plugins#stop_scala_compile_watch_quickfix() " Avoid running more processes
   " Run sbt directly for killing the sbt process (vimrc#plugins#stop_scala_compile_watch_quickfix)
@@ -131,15 +131,15 @@ function! vimrc#plugins#run_scala_compile_watch_quickfix(sbt_subcmd) abort " {{{
   let sbt_cmd = ['java', '-jar', sbt_launcher, '-Dsbt.log.noformat=true', '~test:compile'] + split(a:sbt_subcmd, ' ')
   let s:sbt_compile_watch_job = s:read_to_quickfix_it(sbt_cmd)
   copen
-endfunction " }}}
+endfunction
 
-function! vimrc#plugins#stop_scala_compile_watch_quickfix() abort " {{{
+function! vimrc#plugins#stop_scala_compile_watch_quickfix() abort
   if get(s:, 'sbt_compile_watch_job', v:null) isnot v:null
     call s:sbt_compile_watch_job.stop()
     let s:sbt_compile_watch_job = v:null
     cclose
   endif
-endfunction " }}}
+endfunction
 
 function! vimrc#plugins#run_yarn_quickfix(yarn_subcmd) abort
   let current = getcwd()
@@ -167,15 +167,15 @@ function! vimrc#plugins#run_make_quickfix(make_args) abort
   endtry
 endfunction
 
-function! vimrc#plugins#grep_those(...) abort " {{{
+function! vimrc#plugins#grep_those(...) abort
   CClear
   call s:List.map(a:000, { word ->
     \ execute('grepadd ' . word . ' %', 'silent!')
   \ })
   copen
-endfunction " }}}
+endfunction
 
-function! vimrc#plugins#open_this_file_in_gui() abort " {{{
+function! vimrc#plugins#open_this_file_in_gui() abort
   let file = expand('%:p')
   call s:Job.start([g:vimrc.gui_editor, file])
-endfunction " }}}
+endfunction

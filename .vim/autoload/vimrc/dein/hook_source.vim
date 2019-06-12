@@ -3,7 +3,7 @@ scriptencoding utf-8
 let s:V = vital#vimrc#new()
 let s:List = s:V.import('Data.List')
 
-function! vimrc#dein#hook_source#operator_surround() abort " {{{
+function! vimrc#dein#hook_source#operator_surround() abort
     " Exclude brackets () [] {} and ` for unique mappings ('keys')
     let basic_symbols = s:List.char_range('!', "'") + ['*', '&', '_', '|', '~']
     let basic_between = map(basic_symbols, { _, char ->
@@ -40,9 +40,9 @@ function! vimrc#dein#hook_source#operator_surround() abort " {{{
       \ ],
     \ }
     " NOTE: Does operator-surround allow <localleader> by some way?
-endfunction " }}}
+endfunction
 
-function! vimrc#dein#hook_source#gina() abort " {{{
+function! vimrc#dein#hook_source#gina() abort
   " TODO: Move to ftplugins
   call gina#custom#mapping#nmap('status' , 'A'     , ':<C-u>call vimrc#dein#hook_source#gina_git_add_patch_this()<CR>'   , { 'noremap': 1 , 'silent': 1})
   call gina#custom#mapping#nmap('status' , 'o'     , ':<C-u>call gina#action#call("edit")<CR>'                           , { 'noremap': 1 , 'silent': 1})
@@ -60,17 +60,17 @@ function! vimrc#dein#hook_source#gina() abort " {{{
 
   call gina#custom#mapping#nmap('branch' , 'Q' , ':<C-u>bdelete!<CR>' , {'noremap': 1 , 'silent': 1})
   call gina#custom#mapping#nmap('log'    , 'Q' , ':<C-u>bdelete!<CR>' , {'noremap': 1 , 'silent': 1})
-endfunction " }}}
+endfunction
 
-function! vimrc#dein#hook_source#gina_git_add_patch_this() abort " {{{
+function! vimrc#dein#hook_source#gina_git_add_patch_this() abort
   "TODO: This may fail if the file name contains spaces
   let file = split(getline('.'), ' ')[1]
   let git_add = 'git add --patch ' . file
   CdGitRoot
   call vimrc#open_terminal_as('', 'tabnew', git_add)
-endfunction " }}}
+endfunction
 
-function! vimrc#dein#hook_source#gina_git_stash_patch_this() abort " {{{
+function! vimrc#dein#hook_source#gina_git_stash_patch_this() abort
   "TODO: This may fail if the file name contains spaces
   let name = input('stash name: ')
   if empty(name)
@@ -80,9 +80,9 @@ function! vimrc#dein#hook_source#gina_git_stash_patch_this() abort " {{{
   let git_stash = 'git stash push -m ' . shellescape(name) . ' --patch ' . file
   CdGitRoot
   call vimrc#open_terminal_as('', 'tabnew', git_stash, {'noclose': v:true})
-endfunction " }}}
+endfunction
 
-function! vimrc#dein#hook_source#LanguageClient_neovim() abort " {{{
+function! vimrc#dein#hook_source#LanguageClient_neovim() abort
   augroup DeinHookSourceLanguageClient
     autocmd!
     " Please see vimrc#set#tabline_as_statusline() for g:vimrc.language_client_neovim
@@ -96,13 +96,13 @@ function! vimrc#dein#hook_source#LanguageClient_neovim() abort " {{{
       \  let &completefunc = s:prev_completefunc
       \| let g:vimrc['language_client_neovim'].enabled = v:false
   augroup END
-endfunction " }}}
+endfunction
 
-function! vimrc#dein#hook_source#emmet() abort " {{{
+function! vimrc#dein#hook_source#emmet() abort
   let g:user_emmet_install_global = 0
   let g:user_emmet_leader_key = '<C-g>'
 
   augroup VimRc
     autocmd! FileType html,xml,markdown EmmetInstall
   augroup END
-endfunction " }}}
+endfunction

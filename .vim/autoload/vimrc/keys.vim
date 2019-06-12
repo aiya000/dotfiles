@@ -9,19 +9,19 @@ let s:Optional = s:V.import('Data.Optional')
 
 " If list has elem, return v:true
 " otherwise return v:false
-function! s:contains(list, elem) abort " {{{
+function! s:contains(list, elem) abort
   for x in a:list
     if x ==# a:elem
       return v:true
     endif
   endfor
   return v:false
-endfunction " }}}
+endfunction
 
 "-------------------"
 
 " Compress continuous space
-function! vimrc#keys#compress_spaces() " {{{
+function! vimrc#keys#compress_spaces()
   let recent_pattern = @/
   try
     execute 'substitute/\s\+/ /g'
@@ -30,10 +30,10 @@ function! vimrc#keys#compress_spaces() " {{{
     let @/ = recent_pattern
   endtry
   nohlsearch
-endfunction " }}}
+endfunction
 
 " Clear all lines end space
-function! vimrc#keys#clear_ends_space() " {{{
+function! vimrc#keys#clear_ends_space()
   let recent_pattern = @/
   let curpos = getcurpos()
   try
@@ -44,10 +44,10 @@ function! vimrc#keys#clear_ends_space() " {{{
     let @/ = recent_pattern
     call setpos('.', curpos)
   endtry
-endfunction " }}}
+endfunction
 
 " Toggle diffthis - diffoff
-function! vimrc#keys#toggle_diff() " {{{
+function! vimrc#keys#toggle_diff()
   if &diff
     diffoff
     "NOTE: This restores a [c and ]c keymaps of .vimrc,
@@ -61,10 +61,10 @@ function! vimrc#keys#toggle_diff() " {{{
     nnoremap <buffer> ]c ]c
   endif
   set diff?
-endfunction " }}}
+endfunction
 
 " If you has nofile buffer, close it.
-function! vimrc#keys#bufclose_filetype(filetypes) " {{{
+function! vimrc#keys#bufclose_filetype(filetypes)
   let closed = 0
   for w in range(1, winnr('$'))
     let buf_ft = getwinvar(w, '&filetype')
@@ -75,18 +75,18 @@ function! vimrc#keys#bufclose_filetype(filetypes) " {{{
     endif
   endfor
   return closed
-endfunction " }}}
+endfunction
 
 " Toggle open netrw explorer ( vertical split )
-function! vimrc#keys#toggle_netrw_vexplorer() " {{{
+function! vimrc#keys#toggle_netrw_vexplorer()
   let closed = vimrc#keys#bufclose_filetype(['netrw'])
   if !closed
     call vimrc#keys#netrw_wrapper('vertical')
   endif
-endfunction " }}}
+endfunction
 
 " Wrap netrw commands to avoid opening failure on :ternimal buffers
-function! vimrc#keys#netrw_wrapper(open_method) abort " {{{
+function! vimrc#keys#netrw_wrapper(open_method) abort
   let open =
     \ a:open_method ==# 'stay' ? 'enew' :
     \ a:open_method ==# 'horizontal' ? 'new' :
@@ -102,16 +102,16 @@ function! vimrc#keys#netrw_wrapper(open_method) abort " {{{
   finally
     execute ':lcd' current_dir
   endtry
-endfunction " }}}
+endfunction
 
 " Get a detail of <title> from + register
-function! vimrc#keys#get_webpage_title() abort " {{{
+function! vimrc#keys#get_webpage_title() abort
   return substitute(s:HTML.parseURL(@+).find('title').value(), '·', '-', 'g')
-endfunction " }}}
+endfunction
 
 " :quit if only a window is existent,
 " :hide otherwise
-function! vimrc#keys#hide_or_quit() abort " {{{
+function! vimrc#keys#hide_or_quit() abort
   let tabnum = tabpagenr('$')
   let winnum = tabpagewinnr(tabpagenr(), '$')
   if tabnum is 1 && winnum is 1
@@ -119,39 +119,39 @@ function! vimrc#keys#hide_or_quit() abort " {{{
   else
     hide
   endif
-endfunction " }}}
+endfunction
 
 " Toggle b:ale_enabled
-function! vimrc#keys#toggle_ale_at_buffer() abort " {{{
+function! vimrc#keys#toggle_ale_at_buffer() abort
   let b:ale_enabled = !get(b:, 'ale_enabled', 1)
   " Refresh the state
   ALEToggle
   ALEToggle
-endfunction " }}}
+endfunction
 
 " Toggle showing indent-guides with variable
-function! vimrc#keys#toggle_indent_guides() " {{{
+function! vimrc#keys#toggle_indent_guides()
   let g:vimrc#keys#indent_guides_enable = !get(g:, 'vimrc#keys#indent_guides_enable', v:true)
   IndentGuidesToggle
-endfunction " }}}
+endfunction
 
 " Delete a surround `{ _ }` -> ` _ `
-function! vimrc#keys#delete_mostly_inner() abort " {{{
+function! vimrc#keys#delete_mostly_inner() abort
   call dein#source('vim-operator-surround')
 
   let obj_keys = s:get_current_obj_keys()
   call s:Optional.map(s:input_obj_key_on(obj_keys), { obj_key ->
   \ execute('normal ' . ('va' . obj_key . "\<Plug>(operator-surround-delete)"))
   \ })
-endfunction " }}}
+endfunction
 
-function! s:get_current_obj_keys() abort " {{{
+function! s:get_current_obj_keys() abort
   let surrounds = g:operator#surround#blocks['-'] + get(g:operator#surround#blocks, &filetype, [])
   let obj_keys = map(surrounds, { _, x -> x.keys })
   return s:List.flatten(obj_keys)
-endfunction " }}}
+endfunction
 
-function! s:input_obj_key_on(obj_keys) abort " {{{
+function! s:input_obj_key_on(obj_keys) abort
   let stroke = ''
   while !s:List.has(a:obj_keys, stroke)
     let char = nr2char(getchar())
@@ -161,10 +161,10 @@ function! s:input_obj_key_on(obj_keys) abort " {{{
     let stroke .= char
   endwhile
   return s:Optional.new(stroke)
-endfunction " }}}
+endfunction
 
 " Replace a surround to a surround `{ _ }` -> `[ _ ]`
-function! vimrc#keys#replace_mostly_inner() abort " {{{
+function! vimrc#keys#replace_mostly_inner() abort
   call dein#source('vim-operator-surround')
 
   let obj_keys = s:get_current_obj_keys()
@@ -173,26 +173,26 @@ function! vimrc#keys#replace_mostly_inner() abort " {{{
   \ execute('normal ' . ('va' . from  . "\<Plug>(operator-surround-replace)" . to))
   \ })
   \ })
-endfunction " }}}
+endfunction
 
 " a:visualizer <- 'v' or 'V'
-function! vimrc#keys#append_surround(visualizer) abort " {{{
+function! vimrc#keys#append_surround(visualizer) abort
   call dein#source('vim-operator-surround')
 
   let obj_keys = s:get_current_obj_keys()
   call s:Optional.map(s:input_obj_key_on(obj_keys), { obj_key ->
   \ execute('normal ' . (a:visualizer . "\<Plug>(operator-surround-append)" . obj_key))
   \ })
-endfunction " }}}
+endfunction
 
 " Put a regsiter as stdin to the terminal buffer
-function! vimrc#keys#put_as_stdin(detail) abort " {{{
+function! vimrc#keys#put_as_stdin(detail) abort
   let current_bufnr = bufnr('%')
   call timer_start(0, { _ -> term_sendkeys(current_bufnr, a:detail) }, {'repeat': 1})
   return 'i'
-endfunction " }}}
+endfunction
 
-function! vimrc#keys#move_window_forward() " {{{
+function! vimrc#keys#move_window_forward()
   let tabwin_num = len(tabpagebuflist())
   mark Z
   hide
@@ -206,10 +206,10 @@ function! vimrc#keys#move_window_forward() " {{{
     normal! zO
   endif
   normal! zz
-endfunction " }}}
+endfunction
 
 " Current buffer move to next tab
-function! vimrc#keys#move_window_backward() " {{{
+function! vimrc#keys#move_window_backward()
   mark Z
   hide
   tabprevious
@@ -220,23 +220,23 @@ function! vimrc#keys#move_window_backward() " {{{
     normal! zO
   endif
   normal! zz
-endfunction " }}}
+endfunction
 
-function! vimrc#keys#move_tab_prev() " {{{
+function! vimrc#keys#move_tab_prev()
   if tabpagenr() is 1
     $tabmove
   else
     tabmove -1
   endif
-endfunction " }}}
+endfunction
 
-function! vimrc#keys#move_tab_next() " {{{
+function! vimrc#keys#move_tab_next()
   if tabpagenr() is tabpagenr('$')
     0tabmove
   else
     +tabmove
   endif
-endfunction " }}}
+endfunction
 
 function! vimrc#keys#execute_on_base_path(func, ...) abort
   let current = getcwd()

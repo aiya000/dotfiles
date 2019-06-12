@@ -1,7 +1,7 @@
 let s:Msg = vital#vimrc#new().import('Vim.Message')
 
 " Rename the file of current buffer
-function! vimrc#cmd#rename_to(new_name) abort " {{{
+function! vimrc#cmd#rename_to(new_name) abort
   let this_file = fnameescape(expand('%'))
   let new_name  = fnameescape(a:new_name)
 
@@ -28,11 +28,11 @@ function! vimrc#cmd#rename_to(new_name) abort " {{{
   silent execute ':bdelete' this_file
 
   echo printf('Renamed %s to %s', this_file, new_file)
-endfunction " }}}
+endfunction
 
 " Make session_name from git repository
 " and Save current session by :UniteSessionSave
-function! vimrc#cmd#git_branch_session_save() abort " {{{
+function! vimrc#cmd#git_branch_session_save() abort
   let repo_path = fnameescape(system('git rev-parse --show-toplevel'))
 
   let repo_name  = fnamemodify(repo_path, ':t')
@@ -46,14 +46,14 @@ function! vimrc#cmd#git_branch_session_save() abort " {{{
   let session_name__ = substitute(session_name_, '#', '-', 'g')  "NOTE: '#' shouldn't be used as a file name
 
   execute 'mksession!' (g:vimrc['sessiondir'] . '/' . session_name__ . '.vim')
-endfunction " }}}
+endfunction
 
-function! vimrc#cmd#increment_gui_fontsize() abort " {{{
+function! vimrc#cmd#increment_gui_fontsize() abort
   let g:vimrc.guifont.size += 1
   let &guifont = 'RictyDiminished NF ' . g:vimrc.guifont.size
-endfunction " }}}
+endfunction
 
-function! vimrc#cmd#decrement_gui_fontsize() abort " {{{
+function! vimrc#cmd#decrement_gui_fontsize() abort
   let g:vimrc.guifont.size -= 1
   let &guifont = 'RictyDiminished NF ' . g:vimrc.guifont.size
-endfunction " }}}
+endfunction

@@ -3,7 +3,7 @@ let s:V = vital#vimrc#new()
 let s:Msg = s:V.import('Vim.Message')
 
 " Clone dein.vim to target dir
-function! vimrc#fetch_dein(install_dirname) " {{{
+function! vimrc#fetch_dein(install_dirname)
     if executable('git')
         echo 'dein.vim was not installed yet.'
         echo 'Installing dein.vim now.'
@@ -13,12 +13,12 @@ function! vimrc#fetch_dein(install_dirname) " {{{
         call s:Msg.error('I cannot introduce dein.vim.')
         throw 'FALIED: cloning deim.vim failed.'
     endif
-endfunction " }}}
+endfunction
 
 " NOTE: open_mode 'open' ってなんだっけ？
 " Absorbs the different of Vim and NeoVim.
 "   open_mode: 'vertical' | 'horizontal' | 'stay' | 'tabnew' | 'hidden' | 'open'
-function! vimrc#open_terminal_as(filetype, open_mode, command, ...) abort " {{{
+function! vimrc#open_terminal_as(filetype, open_mode, command, ...) abort
   let options = get(a:000, 0, {})
   let terminal =
     \ (has('nvim') && !s:is_supported_by_neovim(a:open_mode))
@@ -58,7 +58,7 @@ function! vimrc#open_terminal_as(filetype, open_mode, command, ...) abort " {{{
     nnoremap <buffer><expr> "+p vimrc#keys#put_as_stdin(@+)
     nmap <buffer> 'p "+p
   endif
-endfunction " }}}
+endfunction
 
 function! s:is_supported_by_neovim(open_mode) abort
   return a:open_mode ==# 'vertical'
