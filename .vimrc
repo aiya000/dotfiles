@@ -708,37 +708,6 @@ augroup VIMRC
 augroup END
 
 " }}}
-" --- lexima.vim --- " {{{
-
-let g:lexima_no_default_rules = 1
-
-" Don't it if the cursor is in a word
-call map(g:lexima#default_rules, { _, keymap ->
-  \ lexima#add_rule(extend(keymap, {'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'}))
-\ })
-
-call lexima#add_rule({'char': '「', 'input_after': '」'})
-call lexima#add_rule({'char': '『', 'input_after': '』'})
-call lexima#add_rule({'char': '（', 'input_after': '）'})
-call lexima#add_rule({'char': '｛', 'input_after': '｝'})
-call lexima#add_rule({'char': '〈', 'input_after': '〉'})
-
-for s:deleter in ['<C-h>', '<BS>', '<C-w>']
-  call lexima#add_rule({'char': s:deleter, 'at': '(\%#)', 'delete': 1})
-  call lexima#add_rule({'char': s:deleter, 'at': '{\%#}', 'delete': 1})
-  call lexima#add_rule({'char': s:deleter, 'at': '[\%#]', 'delete': 1})
-  call lexima#add_rule({'char': s:deleter, 'at': '<\%#>', 'delete': 1})
-  call lexima#add_rule({'char': s:deleter, 'at': "'\%#'", 'delete': 1})
-  call lexima#add_rule({'char': s:deleter, 'at': '"\%#"', 'delete': 1})
-  call lexima#add_rule({'char': s:deleter, 'at': '`\%#`', 'delete': 1})
-endfor
-unlet s:deleter
-
-for ft in ['kotlin', 'typescript', 'typescript.tsx', 'java']
-  call lexima#add_rule({'filetype': ft, 'char': '<', 'input_after': '>', 'except': '[a-zA-Z0-9]\%#[a-zA-Z0-9]'})
-endfor
-
-" }}}
 " --- gina.vim --- " {{{
 
 let g:gina#command#blame#formatter#format = '%su%=on %ti by %au %ma%in'

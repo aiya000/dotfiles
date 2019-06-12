@@ -7,18 +7,6 @@ let s:List = s:V.import('Data.List')
 let s:Msg = s:V.import('Vim.Message')
 let s:Optional = s:V.import('Data.Optional')
 
-" If list has elem, return v:true
-" otherwise return v:false
-function! s:contains(list, elem) abort
-  for x in a:list
-    if x ==# a:elem
-      return v:true
-    endif
-  endfor
-  return v:false
-endfunction
-
-"-------------------"
 
 " Compress continuous space
 function! vimrc#keys#compress_spaces()
@@ -68,7 +56,7 @@ function! vimrc#keys#bufclose_filetype(filetypes)
   let closed = 0
   for w in range(1, winnr('$'))
     let buf_ft = getwinvar(w, '&filetype')
-    if s:contains(a:filetypes, buf_ft)
+    if s:List.has(a:filetypes, buf_ft)
       execute ':' . w . 'wincmd w'
       execute ':quit'
       let closed = 1

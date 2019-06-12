@@ -97,9 +97,6 @@ repo = 'ryanoasis/vim-devicons'
 repo = 'nathanaelkane/vim-indent-guides'
 
 [[plugins]]
-repo = 'cohama/lexima.vim'
-
-[[plugins]]
 repo = 'roxma/vim-hug-neovim-rpc'
 
 [[plugins]]
