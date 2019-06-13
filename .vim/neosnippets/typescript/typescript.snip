@@ -52,6 +52,11 @@ alias arrow arr
 abbr (${1:args}) =>${0}
     (${1:args}) =>${0}
 
+snippet method
+alias met
+abbr ${1:name}(${2:#:args}) {${0:here}}
+    ${1:name}(${2:#:args}) {${0:here}}
+
 snippet interface
 alias inter
 abbr interface ${1:Name} {${0}}
@@ -72,8 +77,8 @@ abbr import ${1:*} as ${2:name} from '${0:here}'
 
 snippet import
 alias imp
-abbr import ${1:*} from '${0:here}'
-    import ${1:*} from '${0:here}'
+abbr import { ${1:here} } from '${0:here}'
+    import { ${1:here} } from '${0:here}'
 
 snippet export
 alias exp
@@ -165,3 +170,15 @@ abbr null as any as string
 snippet reference
 abbr /// <reference path='${0:d-ts-path}'/>
     /// <reference path='${0:d-ts-path}'/>
+
+# Templates
+
+snippet private_method
+alias primet
+abbr private ${1:name}(${2:#:args}) {${0:here}}
+    private ${1:name}(${2:#:args}) {${0:here}}
+
+snippet public_method
+alias pubmet
+abbr public ${1:name}(${2:#:args}) {${0:here}}
+    public ${1:name}(${2:#:args}) {${0:here}}

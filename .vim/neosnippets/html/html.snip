@@ -2,13 +2,17 @@
 # and it was modified by me.
 
 snippet script
-    <script type="text/javascript">
-        ${1:TARGET}
-    </script>
+abbr <script type="text/javascript">${1:TARGET}</script>
+    <script type="text/javascript">${1:TARGET}</script>
 
 snippet script_load
 abbr    <script src="__"></script>
     <script src="${1:TARGET}"></script>
+
+snippet single
+alias sin
+abbr <${1:name} />
+    <${1:name} />
 
 snippet a
 options word
