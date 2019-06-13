@@ -754,6 +754,16 @@ let g:translate_target = "ja"
 let g:translate_winsize = 10
 
 " }}}
+" --- vim-precious --- " {{{
+
+let g:precious_enable_switchers = {
+  \ 'help': {
+    \ 'setfiletype': v:false,
+  \ },
+\ }
+let g:textobj_precious_no_default_key_mappings = v:false
+
+" }}}
 
 call dein#end()
 
