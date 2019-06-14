@@ -8,4 +8,4 @@ setl tabstop=2
 setl shiftwidth=2
 setl expandtab
 
-nnoremap <buffer><silent> <C-l> <Esc>:syntax sync fromstart<CR>
+nnoremap <buffer><silent> <C-l> :<C-u>syntax sync fromstart \| PreciousReset<CR>

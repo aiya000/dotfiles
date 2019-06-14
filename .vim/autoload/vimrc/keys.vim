@@ -58,7 +58,7 @@ function! vimrc#keys#bufclose_filetype(filetypes)
     let buf_ft = getwinvar(w, '&filetype')
     if s:List.has(a:filetypes, buf_ft)
       execute ':' . w . 'wincmd w'
-      execute ':quit'
+      quit
       let closed = 1
     endif
   endfor

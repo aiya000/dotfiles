@@ -161,7 +161,6 @@ abbr throw new Error('TODO (${0:somewhere})')
     throw new Error('TODO (${0:somewhere})')
 
 snippet force_null
-alias undefined
 abbr null as any as string
     null as any as string
 
@@ -182,3 +181,8 @@ snippet public_method
 alias pubmet
 abbr public ${1:name}(${2:#:args}) {${0:here}}
     public ${1:name}(${2:#:args}) {${0:here}}
+
+snippet public_readonly
+alias pubre
+abbr public readonly
+    public readonly
