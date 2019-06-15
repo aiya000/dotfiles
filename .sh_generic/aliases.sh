@@ -198,7 +198,7 @@ if i_have git ; then
             | sed -r 's/git@([^:]+):([^\/]+)\/(.*)/https:\/\/\1\/\2\/\3/' \
             | sed -r 's/\.git$//')
         git remote set-url "$remote" "$https_url"
-        git remote get-url "$remote" "$https_url"
+        git remote get-url "$remote"
     }
 
     # Set casual user.name and user.email at local

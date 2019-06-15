@@ -24,7 +24,7 @@ zle -N peco-history-find-backward
 ##############
 # Keymapping #
 ##############
-# insert-mode to be emacs like
+# Emacs like insert-mode
 bindkey -M viins '^r' peco-history-find-backward
 bindkey -M viins '^n' down-line-or-history
 bindkey -M viins '^p' up-line-or-history
@@ -37,12 +37,15 @@ bindkey -M viins '^u' backward-kill-line
 bindkey -M viins '^d' delete-char
 bindkey -M viins '^w' vi-backward-kill-word
 
-# Add needed vim keys
+# Missing vim keys
 bindkey -M viins '^[' vi-cmd-mode
 bindkey -M vicmd '_'  vi-first-non-blank
 bindkey -M vicmd 'g_' vi-end-of-line
 
-# ☆
+# I like
 bindkey -M viins '^l' vi-cmd-mode
 bindkey -M viins '^]' clear-screen
 bindkey -M vicmd '^v' edit-command-line
+
+# Others
+bindkey -M viins '^x^j' autosuggest-accept
