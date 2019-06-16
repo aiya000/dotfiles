@@ -257,7 +257,7 @@ if i_have ctags ; then
         local root
         root=$(git rev-parse --show-toplevel 2> /dev/null || pwd)
         dest=$([[ -d $root/.git ]] && echo "$root/.git/tags" || echo "$root/tags")
-        ctags -f "$dest" --tag-relative=never --recurse --sort=yes
+        ctags -f "$dest" --tag-relative=never --recurse --sort=yes "$@"
     }
 
     alias ctags-kotlin-auto='ctags-auto --exclude=\\\*.java --exclude=\\\*.html --exclude=\\\*.css'
