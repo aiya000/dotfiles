@@ -1220,6 +1220,7 @@ nmap <C-k><C-e> :<C-u>Denite file<CR>i
 nmap '<C-k>e :<C-u>call vimrc#keys#execute_on_base_path(function('denite#start'), [{'name':'file/rec','args':[]}])<CR>i
 nmap '<C-k><C-e> :<C-u>call vimrc#keys#execute_on_base_path(function('denite#start'), [{'name':'file','args':[]}])<CR>i
 nmap <C-k><C-t> :<C-u>Denite tag<CR>i
+nmap <C-k>T :<C-u>execute ':tselect' input('tag name: ')<CR>
 nmap <C-k><C-f> :<C-u>Denite outline<CR>i
 nmap <C-k>f :<C-u>Denite filetype<CR>i
 nmap H :<C-u>Denite line<CR>i

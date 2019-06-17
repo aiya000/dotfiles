@@ -44,8 +44,8 @@ abbr else {${0:here}}
 
 snippet function
 alias   func fun def
-abbr function ${1:#:name}(${2:#:args})${3:#:: type} {${0}}
-    function ${1:#:name}(${2:#:args})${3:#:: type} {${0}}
+abbr function ${1:#:name}(${2:#:args}): ${3:type} {${0}}
+    function ${1:#:name}(${2:#:args}): ${3:type} {${0}}
 
 snippet arrow_function
 alias arrow arr
@@ -54,8 +54,8 @@ abbr (${1:args}) =>${0}
 
 snippet method
 alias met
-abbr ${1:name}(${2:#:args}) {${0:here}}
-    ${1:name}(${2:#:args}) {${0:here}}
+abbr ${1:name}(${2:#:args}): ${3:type} {${0:here}}
+    ${1:name}(${2:#:args}): ${3:type} {${0:here}}
 
 snippet interface
 alias inter
@@ -174,13 +174,13 @@ abbr /// <reference path='${0:d-ts-path}'/>
 
 snippet private_method
 alias primet
-abbr private ${1:name}(${2:#:args}) {${0:here}}
-    private ${1:name}(${2:#:args}) {${0:here}}
+abbr private ${1:name}(${2:#:args}): ${3:type} {${0:here}}
+    private ${1:name}(${2:#:args}): ${3:type} {${0:here}}
 
 snippet public_method
 alias pubmet
-abbr public ${1:name}(${2:#:args}) {${0:here}}
-    public ${1:name}(${2:#:args}) {${0:here}}
+abbr public ${1:name}(${2:#:args}): ${3:type} {${0:here}}
+    public ${1:name}(${2:#:args}): ${3:type} {${0:here}}
 
 snippet public_readonly
 alias pubre

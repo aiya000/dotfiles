@@ -25,3 +25,6 @@
 [submodule ".zsh/plugin/--recursive"]
 	path = .zsh/plugin/--recursive
 	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule ".zsh/plugin/zsh-autosuggestions"]
+	path = .zsh/plugin/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
