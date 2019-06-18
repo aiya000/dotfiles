@@ -260,8 +260,8 @@ if i_have ctags ; then
         ctags -f "$dest" --tag-relative=never --recurse --sort=yes "$@"
     }
 
-    alias ctags-kotlin-auto='ctags-auto --exclude=\\\*.java --exclude=\\\*.html --exclude=\\\*.css'
-    alias ctags-typescript-auto='ctags-auto --exclude=\\\*.js'
+    alias ctags-kotlin-auto="ctags-auto '--exclude=*.java' '--exclude=*.html' '--exclude=*.css'"
+    alias ctags-typescript-auto="ctags-auto '--exclude=*.js' '--exclude=*.json'"
 fi
 
 if i_have docker ; then
