@@ -63,7 +63,6 @@ imap <C-w> deleteWord
 "imap <C-[> <S-Up>
 "imap <C-]> <S-Down>
 "imap <C-j> <CR>
-imap <C-c> <Esc>
 imap <C-l> <Esc>
 "imap <C-x> <NOP>
 "imap <C-c> <NOP>

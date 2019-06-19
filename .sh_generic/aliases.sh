@@ -163,8 +163,8 @@ if i_have git ; then
     }
 
     alias gwl='git worktree list'
-    alias _gwp='git worktree prune'
-    alias _gwp='git worktree prune'
+    alias gw-prune='git worktree prune'
+    alias gw-erase-removed='git worktree prune'
     unset git_taking_limit
 
     function git-push-wip () {

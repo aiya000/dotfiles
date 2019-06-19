@@ -19,12 +19,18 @@ nnoremap <buffer><silent> <localleader><localleader>w :<C-u>call <SID>ghcid_quic
 nnoremap <buffer><silent> <localleader><localleader>W :<C-u>GhcidQuickfixStop<CR>
 nnoremap <buffer><silent> <localleader><localleader>T :<C-u>call <SID>stack_integrate_test_or_unit_or_both()<CR>
 nnoremap <buffer><silent> <localleader><localleader>t :<C-u>GhcidQuickfixStart '--command=stack ghci :tasty'<CR>
+nnoremap <buffer><silent> <localleader><localleader>s :<C-u>sp \| StackGhci<CR>
 nnoremap <buffer> <localleader>S :<C-u>Aref stackage <C-r>=expand('<cword>')<CR><CR>
 
 "TODO: Detect a context of Eta, and set filetype=eta, please
 "nnoremap <buffer><silent> <localleader><localleader><localleader>r :<C-u>QuickRun eta<CR>
 "nnoremap <buffer><silent> <localleader><localleader><localleader>b :<C-u>echo 'etlas build is started'<CR>:QuickRun etlas_build<CR>
 "nnoremap <buffer><silent> <localleader><localleader><localleader>B :<C-u>call vimrc#open_terminal_as('none', 'horizontal', 'etlas build')<CR>
+
+augroup FtpluginHaskell
+  autocmd!
+  autocmd BufWritePre *.hs HaskellSortImport
+augroup END
 
 function! s:ghcid_quickfix_start_on_path_started() abort
   let current = getcwd()

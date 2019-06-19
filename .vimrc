@@ -739,6 +739,18 @@ augroup VIMRC
     \ )},
     \ 'whitelist': ['javascript', 'typescript', 'typescript.tsx'],
   \ })
+
+  autocmd User lsp_setup call lsp#register_server({
+    \ 'name': 'haskell-ide-engine',
+    \ 'cmd': { _ -> [&shell, &shellcmdflag, 'hie-wrapper'] },
+    \ 'root_uri': { _ -> lsp#utils#path_to_uri(
+      \ lsp#utils#find_nearest_parent_file_directory(
+        \ lsp#utils#get_buffer_path(),
+        \ 'package.yaml'
+      \ )
+    \ )},
+    \ 'whitelist': ['haskell', 'happy', 'alex'],
+  \ })
 augroup END
 
 " }}}
