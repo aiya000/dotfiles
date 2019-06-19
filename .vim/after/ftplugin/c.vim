@@ -23,8 +23,8 @@ function! s:is_ready_to_ccache() abort
 endfunction
 
 let s:make_args = s:is_ready_to_ccache()
-  \ ? '-j4' . (' "' . 'CC="ccache gcc"' . '"')
-  \ : '-j4'
+  \ ? '-j4 -e CFLAGS="-g3 -O0"' . (' "' . 'CC="ccache gcc"' . '"')
+  \ : '-j4 -e CFLAGS="-g3 -O0"'
 
 function! s:run_quickfix() abort
   execute 'QuickfixRunMake' s:make_args
