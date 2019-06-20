@@ -50,14 +50,6 @@ function! vimrc#open_terminal_as(filetype, open_mode, command, ...) abort
   if a:filetype !=# ''
     execute 'setf' a:filetype
   endif
-
-  if !has('nvim')
-    " TODO: Use TermOpen event in .vimrc after vim implements
-    " TODO: for any registers
-    nnoremap <buffer><expr> p vimrc#keys#put_as_stdin(@")
-    nnoremap <buffer><expr> "+p vimrc#keys#put_as_stdin(@+)
-    nmap <buffer> 'p "+p
-  endif
 endfunction
 
 function! s:is_supported_by_neovim(open_mode) abort

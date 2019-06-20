@@ -209,11 +209,12 @@ augroup VIMRC
     autocmd BufNew,TerminalOpen,BufEnter,WinEnter * call vimrc#autocmd#lcd_buffer_dir_or_base()
   endif
 
-  " Auto load filetype dictionary
-  autocmd FileType *
-    \  if filereadable(printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype))
-      \| execute 'setl dict+=' . printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], &filetype)
-    \| endif
+  if !has('nvim')
+    " TODO: for any registers
+    autocmd TerminalOpen * nnoremap <buffer><expr> p vimrc#keys#put_as_stdin(@")
+    autocmd TerminalOpen * nnoremap <buffer><expr> "+p vimrc#keys#put_as_stdin(@+)
+    autocmd TerminalOpen * nmap <buffer> 'p "+p
+  endif
 
   " RelativeNumber is used current window only
   autocmd BufEnter,WinEnter * if &number | setl relativenumber | end
@@ -223,9 +224,6 @@ augroup VIMRC
 
   " Set the 'none' filetype to the empty filetype
   autocmd VimEnter,BufNew * if empty(&ft) | setf none | endif
-
-  "NOTE: Remove this after the auto indent bug is fixed
-  autocmd FileType int-* set indentkeys-=:
 augroup END
 
 " }}}
