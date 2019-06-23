@@ -58,7 +58,7 @@ scriptencoding utf-8
 " }}}
 " Declare autocmd groups {{{
 
-augroup VIMRC
+augroup vimrc
   autocmd!
 augroup END
 
@@ -199,20 +199,20 @@ endif
 "----------"
 " {{{
 
-augroup VIMRC
+augroup vimrc
   " Auto set cursor position in the file
-  autocmd BufReadPost * call vimrc#autocmd#visit_past_position()
+  autocmd BufReadPost * call vimrc#visit_past_position()
 
   if has('nvim')
-    autocmd BufNew,TermOpen,BufEnter,WinEnter * call vimrc#autocmd#lcd_buffer_dir_or_base()
+    autocmd BufNew,TermOpen,BufEnter,WinEnter * call vimrc#lcd_buffer_dir_or_base()
   else
-    autocmd BufNew,TerminalOpen,BufEnter,WinEnter * call vimrc#autocmd#lcd_buffer_dir_or_base()
+    autocmd BufNew,TerminalOpen,BufEnter,WinEnter * call vimrc#lcd_buffer_dir_or_base()
   endif
 
   if !has('nvim')
     " TODO: for any registers
-    autocmd TerminalOpen * nnoremap <buffer><expr> p vimrc#keys#put_as_stdin(@")
-    autocmd TerminalOpen * nnoremap <buffer><expr> "+p vimrc#keys#put_as_stdin(@+)
+    autocmd TerminalOpen * nnoremap <buffer><expr> p vimrc#put_as_stdin(@")
+    autocmd TerminalOpen * nnoremap <buffer><expr> "+p vimrc#put_as_stdin(@+)
     autocmd TerminalOpen * nmap <buffer> 'p "+p
   endif
 
@@ -368,7 +368,7 @@ let g:quickrun_config = {
 
 " Append config of each environment
 if g:vimrc['is_windows']
-  call vimrc#plugins#append_config_quickrun_windows()
+  call vimrc#append_config_quickrun_windows()
 endif
 
 " }}}
@@ -416,15 +416,15 @@ call submode#map('window_resize', 'n', '', 'k', '3<C-w>-')
 call submode#map('window_resize', 'n', '', 'h', '3<C-w><')
 call submode#map('window_resize', 'n', '', 'l', '3<C-w>>')
 
-call submode#enter_with('tab_move', 'n', 's', '<C-s>n', ':<C-u>call vimrc#keys#move_tab_next()<CR>')
-call submode#enter_with('tab_move', 'n', 's', '<C-s>p', ':<C-u>call vimrc#keys#move_tab_prev()<CR>')
-call submode#map('tab_move', 'n', 's', 'n', ':<C-u>call vimrc#keys#move_tab_next()<CR>')
-call submode#map('tab_move', 'n', 's', 'p', ':<C-u>call vimrc#keys#move_tab_prev()<CR>')
+call submode#enter_with('tab_move', 'n', 's', '<C-s>n', ':<C-u>call vimrc#move_tab_next()<CR>')
+call submode#enter_with('tab_move', 'n', 's', '<C-s>p', ':<C-u>call vimrc#move_tab_prev()<CR>')
+call submode#map('tab_move', 'n', 's', 'n', ':<C-u>call vimrc#move_tab_next()<CR>')
+call submode#map('tab_move', 'n', 's', 'p', ':<C-u>call vimrc#move_tab_prev()<CR>')
 
-call submode#enter_with('window_move', 'n', 's', '<C-s>N', ':<C-u>call vimrc#keys#move_window_forward()<CR>')
-call submode#enter_with('window_move', 'n', 's', '<C-s>P', ':<C-u>call vimrc#keys#move_window_backward()<CR>')
-call submode#map('window_move', 'n', 's', 'N', ':<C-u>call vimrc#keys#move_window_forward()<CR>')
-call submode#map('window_move', 'n', 's', 'P', ':<C-u>call vimrc#keys#move_window_backward()<CR>')
+call submode#enter_with('window_move', 'n', 's', '<C-s>N', ':<C-u>call vimrc#move_window_forward()<CR>')
+call submode#enter_with('window_move', 'n', 's', '<C-s>P', ':<C-u>call vimrc#move_window_backward()<CR>')
+call submode#map('window_move', 'n', 's', 'N', ':<C-u>call vimrc#move_window_forward()<CR>')
+call submode#map('window_move', 'n', 's', 'P', ':<C-u>call vimrc#move_window_backward()<CR>')
 call submode#map('window_move', 'n', 'e', 'H', '"\<C-w>H" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
 call submode#map('window_move', 'n', 'e', 'J', '"\<C-w>J" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
 call submode#map('window_move', 'n', 'e', 'K', '"\<C-w>K" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
@@ -490,8 +490,8 @@ let g:visualstar_extra_commands = 'zzzv'
 let g:gista#command#post#interactive_description = 0
 let g:gista#command#post#allow_empty_description = 1
 
-augroup VIMRC
-  autocmd User GistaPost call vimrc#autocmd#yank_gista_posted_url()
+augroup vimrc
+  autocmd User GistaPost call vimrc#yank_gista_posted_url()
 augroup END
 
 "}}}
@@ -555,7 +555,7 @@ let g:ale_linters = {
 
 let g:ale_scala_scalastyle_config = $HOME . '/.dotfiles/scalastyle_config_default.xml'
 
-augroup VIMRC
+augroup vimrc
   autocmd ColorScheme * highlight ALEError ctermbg=gray ctermfg=black
 
   autocmd VimEnter *
@@ -587,7 +587,7 @@ let g:fakeclip_provide_clipboard_key_mappings = g:vimrc['is_wsl']
 " NOTE: How I can ignore it without this DEPRECATED value
 let g:neomru#file_mru_ignore_pattern = '^gina://.*'
 
-augroup VIMRC
+augroup vimrc
   autocmd BufEnter,BufWinEnter *
     \   call denite#custom#var('outline', 'command', ['ctags'])
     \|  call denite#custom#var('outline', 'options', ['--sort=no'])
@@ -624,7 +624,7 @@ let g:highlightedyank_highlight_duration = 200
 let g:fmap_use_default_keymappings = v:false
 let g:fmap_escape_keys = ['', '', '']
 
-augroup VIMRC
+augroup vimrc
   autocmd VimEnter * FNoreMap / ・
   autocmd VimEnter * FNoreMap tt …
   autocmd VimEnter * FNoreMap p （
@@ -691,14 +691,14 @@ let g:indent_guides_exclude_filetypes = [
 \ ]
 
 " Define colors
-augroup VIMRC
+augroup vimrc
   autocmd VimEnter,ColorScheme * highlight IndentGuidesOdd ctermbg=60 guibg=#468F8C
   autocmd VimEnter,ColorScheme * highlight IndentGuidesEven ctermbg=60 guibg=#468F8C
 augroup END
 
-augroup VIMRC
+augroup vimrc
   autocmd WinEnter,BufWinEnter *
-    \  if get(g:, 'vimrc#keys#indent_guides_enable', v:true)
+    \  if get(g:, 'vimrc#indent_guides_enable', v:true)
       \| IndentGuidesEnable
     \| else
       \| IndentGuidesDisable
@@ -725,7 +725,7 @@ AlterCommand tabnew TabnewOverridden
 " --- vim-lsp --- " {{{
 
 " TODO: いつか有効になってくれますように
-augroup VIMRC
+augroup vimrc
   autocmd User lsp_setup call lsp#register_server({
     \ 'name': 'language-server-stdio.js',
     \ 'cmd': { _ -> [&shell, &shellcmdflag, 'language-server-stdio.js'] },
@@ -816,7 +816,7 @@ set
   \ browsedir=buffer
   \ spelllang=en_US,cjk
   \ suffixes=
-  \ tabline=%!vimrc#set#tabline()
+  \ tabline=%!vimrc#tabline#make()
   \ backspace=indent,eol,start
   \ listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
   \ fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
@@ -842,7 +842,7 @@ set ambiwidth=double
 " Define my highlight colors
 " {{{
 
-augroup VIMRC
+augroup vimrc
   autocmd ColorScheme * highlight EmSpace ctermbg=LightBlue guibg=LightBlue
   autocmd VimEnter,WinEnter * call matchadd('EmSpace', '　')
   " git conflictions
@@ -850,7 +850,7 @@ augroup VIMRC
   autocmd VimEnter,WinEnter * call matchadd('GitConflict', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
 augroup END
 
-augroup VIMRC
+augroup vimrc
   autocmd InsertEnter * highlight StatusLine ctermfg=231 ctermbg=64
   autocmd InsertLeave * highlight StatusLine ctermfg=231 ctermbg=60
 augroup END
@@ -925,11 +925,11 @@ nnoremap <C-c> <NOP>
 nnoremap <C-c><C-c> <C-c>
 
 " listup
-nmap <silent> m: :<C-u>call vimrc#keys#open_buffer_to_execute('marks')<CR>gh_
-nmap <silent> q: :<C-u>call vimrc#keys#open_buffer_to_execute('register')<CR>gh_
-nmap <silent> g: :<C-u>call vimrc#keys#open_buffer_to_execute('buffers')<CR>gh_
-nmap <silent> z: :<C-u>call vimrc#keys#open_buffer_to_execute('tabs')<CR>gh_
-nmap <silent> g> :<C-u>call vimrc#keys#open_buffer_to_execute('messages')<CR>gh_
+nmap <silent> m: :<C-u>call vimrc#open_buffer_to_execute('marks')<CR>gh_
+nmap <silent> q: :<C-u>call vimrc#open_buffer_to_execute('register')<CR>gh_
+nmap <silent> g: :<C-u>call vimrc#open_buffer_to_execute('buffers')<CR>gh_
+nmap <silent> z: :<C-u>call vimrc#open_buffer_to_execute('tabs')<CR>gh_
+nmap <silent> g> :<C-u>call vimrc#open_buffer_to_execute('messages')<CR>gh_
 
 " search
 nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
@@ -938,9 +938,9 @@ nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
 " open/close
 nnoremap <silent> <C-k><C-o> :<C-u>EditOverridden %<CR>
 nnoremap <silent> <C-k>o :<C-u>EditOverridden! %<CR>
-nnoremap <silent> <leader>b :<C-u>call vimrc#keys#open_scratch_buffer()<CR>
+nnoremap <silent> <leader>b :<C-u>call vimrc#open_scratch_buffer()<CR>
 nnoremap <silent> <leader>B :<C-u>sp ~/.backup/memo.md<CR>
-nnoremap <silent> <leader><leader>q :<C-u>call vimrc#keys#bufclose_filetype(<C-r>=string(g:vimrc.auto_closing_filetypes)<CR>)<CR>
+nnoremap <silent> <leader><leader>q :<C-u>call vimrc#bufclose_filetype(<C-r>=string(g:vimrc.auto_closing_filetypes)<CR>)<CR>
 let g:vimrc.auto_closing_filetypes = [
   \ 'aref_web',
   \ 'diff',
@@ -975,7 +975,7 @@ nnoremap <Space>k <C-w>k
 nnoremap <Space>l <C-w>l
 " gh prefix
 nnoremap ghR <C-w>r
-nnoremap <silent> ghq :<C-u>call vimrc#keys#hide_or_quit()<CR>
+nnoremap <silent> ghq :<C-u>call vimrc#hide_or_quit()<CR>
 nnoremap <silent> ghQ :<C-u>quitall<CR>
 nnoremap <silent> ghc :<C-u>bdelete<CR>
 nnoremap <silent> ghC :<C-u>bdelete!<CR>
@@ -1023,7 +1023,7 @@ nnoremap <silent> 'V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &sh
 nnoremap <silent> ''V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, {'path': g:vimrc.path_at_started})<CR>
 
 " set
-nnoremap <silent> <C-h><C-d> :<C-u>call vimrc#keys#toggle_diff()<CR>
+nnoremap <silent> <C-h><C-d> :<C-u>call vimrc#toggle_diff()<CR>
 nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
 nnoremap <silent><expr> zm ':setl foldmethod=' . (&foldmethod ==# 'marker' ? 'syntax' : 'marker') . ' foldmethod?<CR>'
 nnoremap <silent> <C-h><C-w> :<C-u>setl wrap! wrap?<CR>
@@ -1052,8 +1052,8 @@ nnoremap <C-m> o<Esc>
 nnoremap <C-]> g<C-]>
 nnoremap g<C-]> <C-]>
 nnoremap <silent> ! :!<CR>
-nnoremap <silent> <C-k><Space> :<C-u>call vimrc#keys#clear_ends_space()<CR>
-nnoremap <silent> <Space><Space> :<C-u>call vimrc#keys#compress_spaces()<CR>
+nnoremap <silent> <C-k><Space> :<C-u>call vimrc#clear_ends_space()<CR>
+nnoremap <silent> <Space><Space> :<C-u>call vimrc#compress_spaces()<CR>
 nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
 nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
 nnoremap <silent> <leader>o :<C-u>copen<CR>
@@ -1092,7 +1092,7 @@ inoremap <C-a> <Right>
 inoremap <C-k><C-k> <C-o>"_d$
 inoremap <silent> <C-k><C-j> <Esc>:write<CR>
 inoremap <silent> <C-k>J <Esc>:wall \| echo 'written all !'<CR>
-inoremap <silent><expr> <C-b> vimrc#keys#get_webpage_title()
+inoremap <silent><expr> <C-b> vimrc#get_webpage_title()
 " Don't noremap for fake-clip
 imap <C-r>' <C-r>+
 
@@ -1203,14 +1203,14 @@ digraph pi 960   " pi
 " plugins {{{
 
 " netrw
-nnoremap <silent> <leader>e         :<C-u>call vimrc#keys#toggle_netrw_vexplorer()<CR>
+nnoremap <silent> <leader>e         :<C-u>call vimrc#toggle_netrw_vexplorer()<CR>
 nnoremap <silent> <leader><leader>e :<C-u>execute ':Sexplore' getcwd()<CR>
 nnoremap <silent> <leader>E         :<C-u>execute ':Explore' getcwd()<CR>
 nnoremap <silent> <leader><leader>E :<C-u>execute ':Texplore' getcwd()<CR>
-nnoremap <silent> 'e  :<C-u>call vimrc#keys#execute_on_base_path(function('vimrc#keys#toggle_netrw_vexplorer'))<CR>
-nnoremap <silent> ''e :<C-u>call vimrc#keys#execute_on_base_path({ -> execute(':Sexplore ' . fnameescape(getcwd()))})<CR>
-nnoremap <silent> 'E  :<C-u>call vimrc#keys#execute_on_base_path({ -> execute(':Explore ' . fnameescape(getcwd()))})<CR>
-nnoremap <silent> ''E :<C-u>call vimrc#keys#execute_on_base_path({ -> execute(':Texplore ' . fnameescape(getcwd()))})<CR>
+nnoremap <silent> 'e  :<C-u>call vimrc#execute_on_base_path(function('vimrc#toggle_netrw_vexplorer'))<CR>
+nnoremap <silent> ''e :<C-u>call vimrc#execute_on_base_path({ -> execute(':Sexplore ' . fnameescape(getcwd()))})<CR>
+nnoremap <silent> 'E  :<C-u>call vimrc#execute_on_base_path({ -> execute(':Explore ' . fnameescape(getcwd()))})<CR>
+nnoremap <silent> ''E :<C-u>call vimrc#execute_on_base_path({ -> execute(':Texplore ' . fnameescape(getcwd()))})<CR>
 
 " open-browser.vim
 nmap <leader>w <Plug>(openbrowser-open)
@@ -1227,8 +1227,8 @@ vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
 nmap <leader>u :<C-u>Denite<Space>
 nmap <C-k>e :<C-u>Denite file/rec<CR>i
 nmap <C-k><C-e> :<C-u>Denite file<CR>i
-nmap '<C-k>e :<C-u>call vimrc#keys#execute_on_base_path(function('denite#start'), [{'name':'file/rec','args':[]}])<CR>i
-nmap '<C-k><C-e> :<C-u>call vimrc#keys#execute_on_base_path(function('denite#start'), [{'name':'file','args':[]}])<CR>i
+nmap '<C-k>e :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name':'file/rec','args':[]}])<CR>i
+nmap '<C-k><C-e> :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name':'file','args':[]}])<CR>i
 nmap <C-k><C-t> :<C-u>Denite tag<CR>i
 nmap <C-k>T :<C-u>execute ':tselect' input('tag name: ')<CR>
 nmap <C-k><C-f> :<C-u>Denite outline<CR>i
@@ -1253,7 +1253,7 @@ nmap # <Plug>(anzu-sharp-with-echo)zv
 nnoremap <silent> <leader>U :<C-u>UndotreeToggle<CR>
 
 " vim-indent-guides
-nnoremap <silent> <C-h><C-i> :<C-u>call vimrc#keys#toggle_indent_guides()<CR>
+nnoremap <silent> <C-h><C-i> :<C-u>call vimrc#toggle_indent_guides()<CR>
 
 " deoplete.nvim
 inoremap <CR> <CR>
@@ -1298,8 +1298,8 @@ vnoremap <silent> <leader>k "zy:OpenGoogleTranslate <C-r>z<CR>
 
 " ale
 nnoremap <silent> <C-k><C-a> :<C-u>ALEToggle<CR>
-nnoremap <silent> <C-k>a :<C-u>call vimrc#keys#toggle_ale_at_buffer()<CR>
-" but this doesn't overwrite diff keymaps, please see <C-h><C-d> and vimrc#keys#toggle_diff()
+nnoremap <silent> <C-k>a :<C-u>call vimrc#toggle_ale_at_buffer()<CR>
+" but this doesn't overwrite diff keymaps, please see <C-h><C-d> and vimrc#toggle_diff()
 nmap [c :<C-u>ALEPrevious<CR>
 nmap ]c :<C-u>ALENext<CR>
 
@@ -1349,10 +1349,10 @@ vnoremap <silent> i= :Alignta => =/1<CR>
 " vim-operator-surround
 vmap ga <Plug>(operator-surround-append)
 omap ga <Plug>(operator-surround-append)
-nmap <silent> ga :<C-u>call vimrc#keys#append_surround('viw')<CR>
-nmap <silent> gs :<C-u>call vimrc#keys#append_surround('viW')<CR>
-nmap <silent> ds :<C-u>call vimrc#keys#delete_mostly_inner()<CR>
-nmap <silent> cs :<C-u>call vimrc#keys#replace_mostly_inner()<CR>
+nmap <silent> ga :<C-u>call vimrc#append_surround('viw')<CR>
+nmap <silent> gs :<C-u>call vimrc#append_surround('viW')<CR>
+nmap <silent> ds :<C-u>call vimrc#delete_mostly_inner()<CR>
+nmap <silent> cs :<C-u>call vimrc#replace_mostly_inner()<CR>
 
 " vim-textobj-jabraces
 vmap ijp <Plug>(textobj-jabraces-parens-i)
@@ -1394,7 +1394,7 @@ omap 'T <Plug>(fmap-backward-T)
 " }}}
 " filetypes {{{
 
-augroup VIMRC
+augroup vimrc
   autocmd FileType int-* nnoremap <buffer> q          <NOP>
   autocmd FileType int-* nnoremap <buffer> <C-n>      gt
   autocmd FileType int-* nnoremap <buffer> <C-p>      gT

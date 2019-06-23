@@ -1,5 +1,3 @@
-let s:List = vital#vimrc#import('Data.List')
-
 function! s:shorten_path_if_needed(path) abort
   let mettya_nagai = 60 | lockvar! mettya_nagai
   return len(a:path) > mettya_nagai
@@ -11,22 +9,22 @@ endfunction
 "
 " See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer),
 " and below augroup 'HighlightPref'.
-function! vimrc#set#tabline() abort
+function! vimrc#tabline#make() abort
     let language_client_status =
         \ get(g:vimrc, 'language_client_neovim', {'enabled': v:false})['enabled']
             \ ? '%7*[lsp]%*'
             \ : ''
     return '%1*[%{tabpagenr("$")}]%* '
         \. s:tabs() . ' => '
-        \. '%2*[PWD=%{vimrc#set#cwd_or_shorten()}]%*'
-        \. '%3*%{vimrc#set#tabline_tags_if_present()}%*'
+        \. '%2*[PWD=%{vimrc#tabline#cwd_or_shorten()}]%*'
+        \. '%3*%{vimrc#tabline#tags_if_present()}%*'
         \. "%4*%{'[' . tabpagenr('$') . ']'}%*"
-        \. '%5*%{vimrc#set#tabline_marks_if_present()}%*'
-        \. '%6*%{vimrc#set#tabline_ale_if_present()}%*'
+        \. '%5*%{vimrc#tabline#marks_if_present()}%*'
+        \. '%6*%{vimrc#tabline#ale_if_present()}%*'
         \. language_client_status
 endfunction
 
-function! vimrc#set#tabline_tags_if_present() abort
+function! vimrc#tabline#tags_if_present() abort
   let tags = tagfiles()
   return
     \ empty(tags) ? '' :
@@ -35,7 +33,7 @@ function! vimrc#set#tabline_tags_if_present() abort
       \ ('[Tag=' . s:shorten_path_if_needed(tags[0]) . ' +]')
 endfunction
 
-function! vimrc#set#tabline_marks_if_present() abort
+function! vimrc#tabline#marks_if_present() abort
   let marks = s:get_buf_marks()
   return empty(marks)
     \ ? ''
@@ -52,12 +50,12 @@ endfunction
 " NOTE: http://d.hatena.ne.jp/thinca/20111204/1322932585
 function! s:tabs()
   let titles = map(range(1, tabpagenr('$')), { _, tabnr ->
-    \ vimrc#set#tabpage_label(tabnr)
+    \ vimrc#tabline#tabpage_label(tabnr)
   \ })
   return join(titles) . '%#TabLineFill#%T'
 endfunction
 
-function! vimrc#set#tabpage_label(tabnr)
+function! vimrc#tabline#tabpage_label(tabnr)
   let title = gettabvar(a:tabnr, 'title')
   if title != ''
     return title
@@ -97,11 +95,11 @@ function! s:get_mod_mark_for_tab(tabnr) abort
   return (modified_buffer is v:null) ? '' : '+'
 endfunction
 
-function! vimrc#set#cwd_or_shorten() abort
+function! vimrc#tabline#cwd_or_shorten() abort
   return s:shorten_path_if_needed(getcwd())
 endfunction
 
-function! vimrc#set#tabline_ale_if_present() abort
+function! vimrc#tabline#ale_if_present() abort
   let g_label = get(g:, 'ale_enabled', 1) ? '' : 'g'
   let b_label = get(b:, 'ale_enabled', 1) ? '' : 'b'
   return (g_label !=# '') || (b_label !=# '')
