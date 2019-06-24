@@ -56,13 +56,6 @@ endif
 scriptencoding utf-8
 
 " }}}
-" Declare autocmd groups {{{
-
-augroup vimrc
-  autocmd!
-augroup END
-
-" }}}
 " Build environment for Kaoriya Vim {{{
 
 if g:vimrc['is_kaoriya'] && g:vimrc['is_windows']
@@ -195,11 +188,13 @@ endif
 
 
 "----------"
-" Augroups "
+" Autocmds "
 "----------"
 " {{{
 
 augroup vimrc
+  autocmd!
+
   " Auto set cursor position in the file
   autocmd BufReadPost * call vimrc#visit_past_position()
 
@@ -224,6 +219,9 @@ augroup vimrc
 
   " Set the 'none' filetype to the empty filetype
   autocmd VimEnter,BufNew * if empty(&ft) | setf none | endif
+
+  " Please see vimrc#open_scratch_buffer()
+  autocmd InsertLeave,Winleave,BufLeave scratch*.md w
 augroup END
 
 " }}}

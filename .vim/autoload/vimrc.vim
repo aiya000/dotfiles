@@ -310,11 +310,6 @@ function! vimrc#open_scratch_buffer() abort
   silent write
   normal! ggVG"_d
   resize 5
-
-  augroup vimrc-scratch
-    autocmd!
-    autocmd InsertLeave scratch*.md w
-  augroup END
 endfunction
 
 function! s:find_fresh_scratch_file() abort
