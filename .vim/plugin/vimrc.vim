@@ -31,7 +31,7 @@ command! -bar -nargs=? -complete=filetype PluginEdit
 command! -bar -nargs=? -complete=filetype AutoloadEdit
     \ execute ':edit' printf('%s/autoload/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
 "" Others
-command! -bar GUI call vimrc#plugins#open_this_file_in_gui()
+command! -bar GUI call vimrc#open_this_file_in_gui()
 command! -bar ReverseLines OperatorReverseLines
 
 "" Clear quickfix
@@ -47,22 +47,22 @@ command! -bar -nargs=1 InsertWebPageTitle execute 'normal! i' . vimrc#cmd#pull_w
 command! -bar SessionSaveInGitBranch call vimrc#cmd#git_branch_session_save()
 
 "" Haskell
-command! -bar HaskDogs call vimrc#plugins#execute_haskdogs_async()
-command! -bar EtaDogs call vimrc#plugins#execute_haskdogs_in_eta_async()
+command! -bar HaskDogs call vimrc#execute_haskdogs_async()
+command! -bar EtaDogs call vimrc#execute_haskdogs_in_eta_async()
 
 "" Kotlin
 command! -bar KtlintAutoFix call system('ktlint --format ' . fnameescape(expand('%'))) | edit %
-command! -bar -nargs=* QuickfixRunGradle call vimrc#plugins#run_gradle_quickfix(<q-args>)
+command! -bar -nargs=* QuickfixRunGradle call vimrc#run_gradle_quickfix(<q-args>)
 
 "" Scala
-command! -bar -nargs=* QuickfixRunSbtCompileWatch call vimrc#plugins#run_scala_compile_watch_quickfix(<q-args>)
-command! -bar QuickfixStopSbtCompileWatch call vimrc#plugins#stop_scala_compile_watch_quickfix()
+command! -bar -nargs=* QuickfixRunSbtCompileWatch call vimrc#run_scala_compile_watch_quickfix(<q-args>)
+command! -bar QuickfixStopSbtCompileWatch call vimrc#stop_scala_compile_watch_quickfix()
 
 "" TypeScript
-command! -bar -nargs=* QuickfixRunYarn call vimrc#plugins#run_yarn_quickfix(<q-args>)
+command! -bar -nargs=* QuickfixRunYarn call vimrc#run_yarn_quickfix(<q-args>)
 
 "" Make
-command! -bar -nargs=* QuickfixRunMake call vimrc#plugins#run_make_quickfix(<q-args>)
+command! -bar -nargs=* QuickfixRunMake call vimrc#run_make_quickfix(<q-args>)
 
 function! s:terminal_at_started(filetype, command, ...) abort
   let options = get(a:, 1, {})
@@ -110,12 +110,12 @@ command! -bar -nargs=* GBlame Gina blame <args>
 command! -bar -nargs=* Gist Gista post --stay <args>
 
 " Twitter
-command! -bar TwitterPrivate call vimrc#plugins#twitter_private()
+command! -bar TwitterPrivate call vimrc#twitter_private()
 command! -bar TwitterPrivateTab tabnew | TwitterPrivate
-command! -bar TweetPrivate call vimrc#plugins#tweet_private()
-command! -bar TwitterPublic call vimrc#plugins#twitter_public()
+command! -bar TweetPrivate call vimrc#tweet_private()
+command! -bar TwitterPublic call vimrc#twitter_public()
 command! -bar TwitterPublicTab tabnew | TwitterPublic
-command! -bar TweetPublic call vimrc#plugins#tweet_public()
+command! -bar TweetPublic call vimrc#tweet_public()
 
 " aref-web.vim
 command! -bar -nargs=+ Hoogle Aref hoogle <args>
@@ -132,7 +132,7 @@ command! -bar CdGitRoot execute ':cd' system('git rev-parse --show-toplevel')
 command! -bar LcdBufDir lcd %:p:h
 command! -bar LcdStarted execute ':lcd' g:vimrc.path_at_started
 command! -bar LcdGitRoot execute ':lcd' system('git rev-parse --show-toplevel')
-command! -bar -nargs=+ Grep call vimrc#plugins#grep_those(<f-args>)
+command! -bar -nargs=+ Grep call vimrc#grep_those(<f-args>)
 command! -bar TodoList Grep TODO FIXME XXX
 
 " Tapis

@@ -665,14 +665,6 @@ let g:indent_guides_guide_size = 1
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_tab_guides = 0
 let g:indent_guides_exclude_filetypes = [
-  \ 'xml',
-  \ 'html',
-  \ 'xaml',
-  \ 'fxml',
-  \ 'gradle',
-  \ 'csproj',
-  \ 'vimspec',
-  \ 'storyboard',
   \ 'aref_web',
   \ 'term-shell',
   \ 'term-sbt',
