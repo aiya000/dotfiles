@@ -724,7 +724,8 @@ AlterCommand tabnew TabnewOverridden
 " }}}
 " --- vim-lsp --- " {{{
 
-" TODO: いつか有効になってくれますように
+let g:lsp_diagnostics_enabled = 0
+
 augroup vimrc
   autocmd User lsp_setup call lsp#register_server({
     \ 'name': 'language-server-stdio.js',
@@ -821,6 +822,7 @@ set
   \ listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
   \ fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
   \ matchpairs+=<:>,（:）,｛:｝,「:」,＜:＞,『:』
+  \ completeopt-=preview
 
 if !has('nvim')
   set termwinkey=<F1>
