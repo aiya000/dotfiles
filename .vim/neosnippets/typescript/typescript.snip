@@ -132,6 +132,14 @@ alias decl
 abbr declare
     declare
 
+snippet get
+abbr get ${1:fieldName}(): ${2:type} {${0:here}}
+    get ${1:fieldName}(): ${2:type} {${0:here}}
+
+snippet set
+abbr set ${1:fieldName}(x: ${2:type}): void {${0:here}}
+    set ${1:fieldName}(x: ${2:type}): void {${0:here}}
+
 # Expressions
 
 snippet println
@@ -186,3 +194,13 @@ snippet public_readonly
 alias pubre
 abbr public readonly
     public readonly
+
+snippet equals
+alias eq
+abbr ===
+    ===
+
+snippet not_equals
+alias ne
+abbr !==
+    !==
