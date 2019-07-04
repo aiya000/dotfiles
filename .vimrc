@@ -290,7 +290,10 @@ let g:quickrun_config = {
     \ 'command': 'swift',
   \ },
   \ 'scala': {
-    \ 'cmdopt': '-feature'
+    \ 'cmdopt': '-feature',
+  \ },
+  \ 'typescript': {
+    \ 'cmdopt': '--experimentalDecorators',
   \ },
   \ 'brainfuck': {
     \ 'command': 'brainfuck'
