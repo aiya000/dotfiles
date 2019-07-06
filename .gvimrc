@@ -64,10 +64,10 @@ let g:J6uil_display_icon = 1
 " }}}
 " --- vim-suvmode --- {{{
 
-call submode#enter_with('font_size', 'n', 's', '<C-s>+', ':<C-u>call vimrc#cmd#increment_gui_fontsize()<CR>')
-call submode#enter_with('font_size', 'n', 's', '<C-s>-', ':<C-u>call vimrc#cmd#decrement_gui_fontsize()<CR>')
-call submode#map('font_size', 'n', 's', '+', ':<C-u>call vimrc#cmd#increment_gui_fontsize()<CR>')
-call submode#map('font_size', 'n', 's', '-', ':<C-u>call vimrc#cmd#decrement_gui_fontsize()<CR>')
+call submode#enter_with('font_size', 'n', 's', '<C-s>+', ':<C-u>call vimrc#increment_gui_fontsize()<CR>')
+call submode#enter_with('font_size', 'n', 's', '<C-s>-', ':<C-u>call vimrc#decrement_gui_fontsize()<CR>')
+call submode#map('font_size', 'n', 's', '+', ':<C-u>call vimrc#increment_gui_fontsize()<CR>')
+call submode#map('font_size', 'n', 's', '-', ':<C-u>call vimrc#decrement_gui_fontsize()<CR>')
 
 " }}}
 
