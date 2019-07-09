@@ -4,6 +4,6 @@ let b:undo_ftplugin = 'setl ' . join([
   \ 'expandtab<'
 \ ])
 
-setl tabstop=2 shiftwidth=2 expandtab omnifunc=lsp#complete
+setl tabstop=2 shiftwidth=2 expandtab
 
 nnoremap <buffer><silent> <C-l> :<C-u>syntax sync fromstart \| PreciousReset<CR>
