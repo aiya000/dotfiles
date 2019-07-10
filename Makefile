@@ -4,6 +4,8 @@ logfile = ./dotfiles-MakeFile.log
 
 # TODO: Detect auto
 OS = Arch
+YayInstall = yay -S
+YayUpdate = yay -Sy
 
 prepare:
 	if [ ! -d ~/bin ] ; then\
@@ -25,8 +27,8 @@ install:
 
 ifeq ($(OS),Arch)
 install_package_managers:
-	yay -Sy
-	yay -S --noconfirm --needed stack-static npm python-pip
+	$(YayUpdate)
+	$(YayInstall) --noconfirm --needed stack-static npm python-pip
 endif
 ifeq ($(OS),Darwin)
 	echo Please define install_package_managers for haskell-stack > /dev/stderr
@@ -45,7 +47,7 @@ install-by-pip:
 build-os-env:
 ifeq ($(OS),Arch)
 	# xmonad: needed by xmonad-config --restart and --replace
-	yay -S --noconfirm --needed \
+	$(YayInstall) --noconfirm --needed \
 		alsa-utils \
 		arandr \
 		asciinema \
@@ -183,36 +185,40 @@ install-lice:
 
 ifeq ($(OS),Arch)
 install-java:
-	yay -S jdk
+	$(YayInstall) jdk
 	wget https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7.jar -O ~/bin/google-java-format-1.7.jar
 	wget https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7-all-deps.jar -O ~/bin/google-java-format-1.7-all-deps.jar
 
 install-sh:
-	yay -S shellcheck
+	$(YayInstall) shellcheck
 
 install-ruby:
-	yay -S ruby ruby-irb
+	$(YayInstall) ruby ruby-irb
 
 install-drawio:
-	yay -S drawio-desktop drawio-batch
+	$(YayInstall) drawio-desktop drawio-batch
 
 install-audio-player:
-	yay -S mpg123
+	$(YayInstall) mpg123
 
 install-docker:
-	yay -S docker docker-compose
+	$(YayInstall) docker docker-compose
 
 install-dropbox:
-	yay -S dropbox-cli
+	$(YayInstall) dropbox-cli
 
 install-audacity:
-	yay -S audacity
+	$(YayInstall) audacity
 
 install-gyazo-cli:
-	yay -S --needed dep
+	$(YayInstall) --needed dep
 	go get -d github.com/Tomohiro/gyazo-cli
 	cd $GOPATH/src/github.com/Tomohiro/gyazo-cli
 	make install
+
+# Mapping from joypad strokes to keyboard strokes
+install-antimicro:
+	$(YayInstall) antimicro-git
 endif
 
 install-gtran:
