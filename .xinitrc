@@ -43,7 +43,7 @@ setxkbmap -layout us "$XMONAD_CONFIG_SETXKBMAP_OPTIONS"
 
 # Start xmonad
 fcitx &
-fcitx-imlist --set fcitx-keyboard-us
+#fcitx-imlist --set fcitx-keyboard-us
 dunst &
 #stack exec xmobar &
 #xscreensaver &
