@@ -717,7 +717,8 @@ AlterCommand tabnew TabnewOverridden
 " }}}
 " --- vim-lsp --- " {{{
 
-let g:lsp_diagnostics_enabled = 0
+let g:lsp_diagnostics_enabled = v:false
+let g:lsp_async_completion = v:true
 
 augroup vimrc
   autocmd User lsp_setup call lsp#register_server({
@@ -729,7 +730,7 @@ augroup vimrc
         \ 'tsconfig.json'
       \ )
     \ )},
-    \ 'whitelist': ['javascript', 'typescript', 'typescript.tsx'],
+    \ 'whitelist': ['javascript', 'typescript', 'typescript.tsx', 'vue'],
   \ })
 
   autocmd User lsp_setup call lsp#register_server({
@@ -766,6 +767,17 @@ let g:precious_enable_switchers = {
   \ },
 \ }
 let g:textobj_precious_no_default_key_mappings = v:false
+
+augroup vimrc
+  autocmd User PreciousFileType IndentGuidesToggle | IndentGuidesToggle
+  autocmd User PreciousFileType call s:dont_enter_vue_promise()
+augroup END
+
+function! s:dont_enter_vue_promise() abort
+  if context_filetype#get()['filetype'] =~# '^vue-'
+    call precious#switch('typescript')
+  endif
+endfunction
 
 " }}}
 
