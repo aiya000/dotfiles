@@ -32,7 +32,7 @@ command! -bar -nargs=? -complete=filetype AutoloadEdit
     \ execute ':edit' printf('%s/autoload/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
 "" Others
 command! -bar GUI call vimrc#open_this_file_in_gui()
-command! -bar ReverseLines OperatorReverseLines
+command! -bar ReverseLines !tac
 
 "" Clear quickfix
 command! -bar CClear call setqflist([])
