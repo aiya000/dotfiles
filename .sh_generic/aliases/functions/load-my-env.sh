@@ -11,6 +11,7 @@ function load-my-env () {
         load-my-env zsh
         load-my-env bash
         load-my-env travis
+        load-my-env ccache
         ;;
     haskell)
         if [ -d ~/.stack ] ; then
@@ -68,6 +69,7 @@ function load-my-env () {
         ;;
     ccache)
         export USE_CCACHE=1
+        export CCACHE_DISABLE=0
         export set CC='ccache gcc'
         export set CXX='ccache g++'
         alias make-ccache='make CC="ccache gcc"'
