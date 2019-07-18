@@ -191,7 +191,7 @@ function! vimrc#delete_mostly_inner() abort
 
   let obj_keys = s:get_current_obj_keys()
   call s:Optional.map(s:input_obj_key_on(obj_keys), { obj_key ->
-  \ execute('normal ' . ('va' . obj_key . "\<Plug>(operator-surround-delete)"))
+    \ execute('normal ' . ('va' . obj_key . "\<Plug>(operator-surround-delete)"))
   \ })
 endfunction
 
@@ -217,11 +217,34 @@ endfunction
 function! vimrc#replace_mostly_inner() abort
   call dein#source('vim-operator-surround')
 
+  " Fix vvv
+  "   Error detected while processing function ale#Queue[33]..<SNR>127_Lint[26]..ale#engine#RunLinters[28]..ale#engine#SetResults[6]..ale#sign#SetSigns[8]..ale#sign#FindCurrentSigns[1]..ale#sign#ReadSigns:
+  "   E930: Cannot use :redir inside execute()
+  try
+    let [g_ale_enabled, b_ale_enabled] = [
+      \ get(g:, 'ale_enabled', v:true),
+      \ get(b:, 'ale_enabled', v:true),
+    \ ]
+    let [g:ale_enabled, b:ale_enabled] = [
+      \ v:false,
+      \ v:false,
+    \ ]
+
+    call s:replace_mostly_inner()
+  finally
+    let [g:ale_enabled, b:ale_enabled] = [
+      \ g_ale_enabled,
+      \ b_ale_enabled,
+    \ ]
+  endtry
+endfunction
+
+function! s:replace_mostly_inner() abort
   let obj_keys = s:get_current_obj_keys()
   call s:Optional.map(s:input_obj_key_on(obj_keys), { from ->
-  \ s:Optional.map(s:input_obj_key_on(obj_keys), { to ->
-  \ execute('normal ' . ('va' . from  . "\<Plug>(operator-surround-replace)" . to))
-  \ })
+    \ s:Optional.map(s:input_obj_key_on(obj_keys), { to ->
+      \ execute('normal ' . ('va' . from  . "\<Plug>(operator-surround-replace)" . to))
+    \ })
   \ })
 endfunction
 
@@ -231,7 +254,7 @@ function! vimrc#append_surround(visualizer) abort
 
   let obj_keys = s:get_current_obj_keys()
   call s:Optional.map(s:input_obj_key_on(obj_keys), { obj_key ->
-  \ execute('normal ' . (a:visualizer . "\<Plug>(operator-surround-append)" . obj_key))
+    \ execute('normal ' . (a:visualizer . "\<Plug>(operator-surround-append)" . obj_key))
   \ })
 endfunction
 
