@@ -6,4 +6,4 @@ let b:undo_ftplugin = 'setl ' . join([
 
 setl tabstop=2 shiftwidth=2 expandtab
 
-nnoremap <buffer><silent> <C-l> :<C-u>syntax sync fromstart \| PreciousReset<CR>
+nmap <silent> <C-l> <C-[>:syntax sync fromstart<CR>

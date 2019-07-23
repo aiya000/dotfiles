@@ -761,12 +761,19 @@ let g:translate_winsize = 10
 " }}}
 " --- vim-precious --- " {{{
 
+let g:precious_enable_switch_CursorMoved = {
+  \ '*': v:false,
+\ }
+
+let g:precious_enable_switch_CursorMoved_i = g:precious_enable_switch_CursorMoved
+
 let g:precious_enable_switchers = {
   \ 'help': {
     \ 'setfiletype': v:false,
   \ },
 \ }
-let g:textobj_precious_no_default_key_mappings = v:false
+
+let g:textobj_precious_no_default_key_mappings = v:true
 
 augroup vimrc
   autocmd User PreciousFileType IndentGuidesToggle | IndentGuidesToggle
@@ -1189,24 +1196,24 @@ tnoremap <C-]> <C-l>
 " }}}
 " digraph {{{
 
-digraph /= 8800  " not equal
-digraph (( 8834  " right includes left
-digraph )) 8835  " left includes right
-digraph \A 8704  " forall
-digraph \E 8707  " exists
-digraph \a 8743  " and
-digraph \o 8744  " or
-digraph \= 8803  " equivalence relation
-digraph \< 8804  " right more than left or equals
-digraph \> 8805  " left mode than right or equals
-digraph \. 9675  " compose
-digraph \*  215  " cartesian product
-digraph \U 8745  " intersect
-digraph \u 8746  " union
-digraph \|^ 8593 " arrow up
-digraph \|v 8595 " arrow down
-digraph xx 215   " product
-digraph pi 960   " pi
+digraph /= 8800   " not equal
+digraph (( 8834   " right includes left
+digraph )) 8835   " left includes right
+digraph \A 8704   " forall
+digraph \E 8707   " exists
+digraph \a 8743   " and
+digraph \o 8744   " or
+digraph \= 8803   " equivalence relation
+digraph \< 8804   " right more than left or equals
+digraph \> 8805   " left mode than right or equals
+digraph \. 9675   " compose
+digraph \*  215   " cartesian product
+digraph \U 8745   " intersect
+digraph \u 8746   " union
+digraph \|^ 8593  " arrow up
+digraph \|v 8595  " arrow down
+digraph xx 215    " product
+digraph pi 960    " pi
 
 " }}}
 " plugins {{{
@@ -1358,10 +1365,10 @@ vnoremap <silent> i= :Alignta => =/1<CR>
 " vim-operator-surround
 vmap ga <Plug>(operator-surround-append)
 omap ga <Plug>(operator-surround-append)
-nmap <silent> ga :<C-u>call vimrc#append_surround('viw')<CR>
-nmap <silent> gs :<C-u>call vimrc#append_surround('viW')<CR>
-nmap <silent> ds :<C-u>call vimrc#delete_mostly_inner()<CR>
-nmap <silent> cs :<C-u>call vimrc#replace_mostly_inner()<CR>
+nnoremap <silent> ga :<C-u>call vimrc#append_surround('viw')<CR>
+nnoremap <silent> gs :<C-u>call vimrc#append_surround('viW')<CR>
+nnoremap <silent> ds :<C-u>call vimrc#delete_mostly_inner()<CR>
+nnoremap <silent> cs :<C-u>call vimrc#replace_mostly_inner()<CR>
 
 " vim-textobj-jabraces
 vmap ijp <Plug>(textobj-jabraces-parens-i)
@@ -1400,34 +1407,10 @@ omap 'F <Plug>(fmap-backward-f)
 omap 't <Plug>(fmap-forward-t)
 omap 'T <Plug>(fmap-backward-T)
 
-" }}}
-" filetypes {{{
-
-augroup vimrc
-  autocmd FileType int-* nnoremap <buffer> q          <NOP>
-  autocmd FileType int-* nnoremap <buffer> <C-n>      gt
-  autocmd FileType int-* nnoremap <buffer> <C-p>      gT
-  autocmd FileType int-* nnoremap <buffer> <C-l>      <NOP>
-
-  autocmd FileType int-* nmap     <buffer> <C-]>      <Plug>(vimshell_int_clear)
-  autocmd FileType int-* nmap     <buffer> Q          <Plug>(vimshell_int_exit)
-  autocmd FileType int-* nmap     <buffer> gJ         <Plug>(vimshell_int_next_prompt)
-  autocmd FileType int-* nmap     <buffer> gK         <Plug>(vimshell_int_previous_prompt)
-
-  autocmd FileType int-* inoremap <buffer> <C-l>      <Esc>
-  autocmd FileType int-* inoremap <buffer> <C-b>      <Left>
-  autocmd FileType int-* inoremap <buffer> <C-f>      <Right>
-  autocmd FileType int-* inoremap <buffer> <C-e>      <End>
-  autocmd FileType int-* inoremap <buffer> <C-d>      <Del>
-  autocmd FileType int-* inoremap <buffer> <C-n>      <Tab>
-
-  autocmd FileType int-* imap     <buffer> <C-p>      <Plug>(vimshell_int_history_unite)
-  autocmd FileType int-* imap     <buffer> <C-]>      <C-o><Plug>(vimshell_int_clear)
-  autocmd FileType int-* imap     <buffer> <CR>       <Plug>(vimshell_int_execute_line)
-  autocmd FileType int-* imap     <buffer> <C-k><C-p> <Plug>(vimshell_int_history_unite)
-
-  autocmd FileType ref-* nnoremap <silent><buffer> Q :<C-u>quit<CR>
-augroup END
+" vim-precious
+nnoremap <silent> <Esc> :<C-u>PreciousReset \| PreciousSwitch<CR>
+nnoremap <silent> <C-[> :<C-u>PreciousReset \| PreciousSwitch<CR>
+nnoremap <silent> <C-l> :<C-u>PreciousReset \| PreciousSwitch<CR>
 
 " }}}
 
