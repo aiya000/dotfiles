@@ -221,7 +221,7 @@ augroup vimrc
   autocmd VimEnter,BufNew * if empty(&ft) | setf none | endif
 
   " Please see vimrc#open_scratch_buffer()
-  autocmd InsertLeave,Winleave,BufLeave scratch*.md w
+  autocmd WinEnter,BufEnter,InsertLeave,Winleave,BufLeave scratch*.md w
 augroup END
 
 " }}}

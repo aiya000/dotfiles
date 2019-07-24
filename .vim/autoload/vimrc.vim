@@ -188,10 +188,9 @@ endfunction
 " Delete a surround `{ _ }` -> ` _ `
 function! vimrc#delete_mostly_inner() abort
   call dein#source('vim-operator-surround')
-
   let obj_keys = s:get_current_obj_keys()
   call s:Optional.map(s:input_obj_key_on(obj_keys), { obj_key ->
-    \ execute('normal ' . ('va' . obj_key . "\<Plug>(operator-surround-delete)"))
+    \ s:normal('va' . obj_key . "\<Plug>(operator-surround-delete)")
   \ })
 endfunction
 
@@ -213,52 +212,32 @@ function! s:input_obj_key_on(obj_keys) abort
   return s:Optional.new(stroke)
 endfunction
 
-" Replace a surround to a surround `{ _ }` -> `[ _ ]`
-function! vimrc#replace_mostly_inner() abort
-  call dein#source('vim-operator-surround')
-
-  " Fix vvv
-  "   Error detected while processing function ale#Queue[33]..<SNR>127_Lint[26]..ale#engine#RunLinters[28]..ale#engine#SetResults[6]..ale#sign#SetSigns[8]..ale#sign#FindCurrentSigns[1]..ale#sign#ReadSigns:
-  "   E930: Cannot use :redir inside execute()
-  try
-    let [g_ale_enabled, b_ale_enabled] = [
-      \ get(g:, 'ale_enabled', v:true),
-      \ get(b:, 'ale_enabled', v:true),
-    \ ]
-    let [g:ale_enabled, b:ale_enabled] = [
-      \ v:false,
-      \ v:false,
-    \ ]
-
-    call s:replace_mostly_inner()
-  finally
-    let [g:ale_enabled, b:ale_enabled] = [
-      \ g_ale_enabled,
-      \ b_ale_enabled,
-    \ ]
-  endtry
+" Avoids E930
+function! s:normal(stroke) abort
+  execute 'normal ' . a:stroke
 endfunction
 
-function! s:replace_mostly_inner() abort
+" Replaces a surround to a surround `{ _ }` -> `[ _ ]`
+function! vimrc#replace_mostly_inner() abort
+  call dein#source('vim-operator-surround')
   let obj_keys = s:get_current_obj_keys()
   call s:Optional.map(s:input_obj_key_on(obj_keys), { from ->
     \ s:Optional.map(s:input_obj_key_on(obj_keys), { to ->
-      \ execute('normal ' . ('va' . from  . "\<Plug>(operator-surround-replace)" . to))
+      \ s:normal(('va' . from  . "\<Plug>(operator-surround-replace)" . to))
     \ })
   \ })
 endfunction
 
-" a:visualizer <- 'v' or 'V'
+" a:visualizer: e.g. 'viw', 'viW'
 function! vimrc#append_surround(visualizer) abort
   call dein#source('vim-operator-surround')
-
   let obj_keys = s:get_current_obj_keys()
   call s:Optional.map(s:input_obj_key_on(obj_keys), { obj_key ->
-    \ execute('normal ' . (a:visualizer . "\<Plug>(operator-surround-append)" . obj_key))
+    \ s:normal(a:visualizer . "\<Plug>(operator-surround-append)" . obj_key)
   \ })
 endfunction
 
-" Put a regsiter as stdin to the terminal buffer
+" Puts a regsiter as stdin to the terminal buffer
 function! vimrc#put_as_stdin(detail) abort
   let current_bufnr = bufnr('%')
   call timer_start(0, { _ -> term_sendkeys(current_bufnr, a:detail) }, {'repeat': 1})

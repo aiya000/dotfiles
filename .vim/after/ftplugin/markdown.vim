@@ -17,8 +17,7 @@ nnoremap <silent><buffer> <localleader>r :<C-u>PrevimOpen<CR>
 nnoremap <silent><buffer> <localleader><localleader>r :<C-u>call <SID>open_grip()<CR>
 nnoremap <silent><buffer> <localleader><localleader>R :<C-u>silent !shiba % > /dev/null 2>&1 &<CR>
 "nnoremap <silent><buffer> <localleader>f :<C-u>!textlint --fix <C-r>=expand('%:p')<CR><CR>
-nnoremap <silent><buffer> <Esc> <Esc>:syntax sync fromstart<CR>
-nmap             <buffer> <C-l> <Esc>
+nmap <silent><buffer> <C-l> <C-[>:syntax sync fromstart<CR>
 
 vnoremap <silent><buffer> i{ :<C-u>call <SID>organize_this_table()<CR>
 
