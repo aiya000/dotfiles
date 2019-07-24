@@ -196,7 +196,7 @@ install-ruby:
 	$(YayInstall) ruby ruby-irb
 
 install-drawio:
-	$(YayInstall) drawio-desktop drawio-batch
+	$(YayInstall) drawio-desktop
 
 install-audio-player:
 	$(YayInstall) mpg123
