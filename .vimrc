@@ -941,9 +941,9 @@ nnoremap <C-c><C-c> <C-c>
 
 " listup
 nmap <silent> m: :<C-u>call vimrc#open_buffer_to_execute('marks')<CR>gh_
-nmap <silent> q: :<C-u>call vimrc#open_buffer_to_execute('register')<CR>gh_
 nmap <silent> g: :<C-u>call vimrc#open_buffer_to_execute('buffers')<CR>gh_
 nmap <silent> z: :<C-u>call vimrc#open_buffer_to_execute('tabs')<CR>gh_
+nmap <silent> q> :<C-u>call vimrc#open_buffer_to_execute('register')<CR>gh_
 nmap <silent> g> :<C-u>call vimrc#open_buffer_to_execute('messages')<CR>gh_
 
 " search
