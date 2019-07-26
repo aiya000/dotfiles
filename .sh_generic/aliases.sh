@@ -324,11 +324,6 @@ if [[ -e ./gradlew ]] ; then
     alias grwj='./gradlew jar'
 fi
 
-if i_have draw.io ; then
-    # The unification for drawio-batch
-    alias drawio=draw.io
-fi
-
 if i_have krita ; then
     alias kra=krita
 fi
