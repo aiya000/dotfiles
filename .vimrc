@@ -133,17 +133,17 @@ unlet s:dein_dirname
 
 if !isdirectory(g:vimrc.directory)
   call mkdir(g:vimrc.directory, 'p', 0700)
-  call system(printf('chown -R %s:%s', $USER, $GROUP, g:vimrc.directory))
+  call system(printf("chown -R '%s:%s' '%s'", $USER, $GROUP, g:vimrc.directory))
 endif
 
 if !isdirectory(g:vimrc.undodir)
   call mkdir(g:vimrc.undodir, '', 0700)
-  call system(printf('chown -R %s:%s', $USER, $GROUP, g:vimrc.undodir))
+  call system(printf("chown -R '%s:%s' '%s'", $USER, $GROUP, g:vimrc.undodir))
 endif
 
 if !isdirectory(g:vimrc.sessiondir)
   call mkdir(g:vimrc.sessiondir, '', 0700)
-  call system(printf('chown -R %s:%s', $USER, $GROUP, g:vimrc.sessiondir))
+  call system(printf("chown -R '%s:%s' '%s'", $USER, $GROUP, g:vimrc.sessiondir))
 endif
 
 " }}}
@@ -779,6 +779,7 @@ augroup vimrc
   autocmd User PreciousFileType IndentGuidesToggle | IndentGuidesToggle
   autocmd User PreciousFileType call s:dont_enter_vue_promise()
   autocmd FileType vue-* setl syntax=typescript
+  autocmd WinEnter * PreciousSwitch
 augroup END
 
 function! s:dont_enter_vue_promise() abort

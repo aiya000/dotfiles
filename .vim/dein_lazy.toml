@@ -101,10 +101,6 @@ on_cmd = [
 ]
 
 [[plugins]]
-repo  = 'leafgarland/typescript-vim'
-on_ft = 'typescript'
-
-[[plugins]]
 repo   = 'lambdalisue/vim-pager'
 on_cmd = 'PAGER'
 
