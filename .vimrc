@@ -382,26 +382,6 @@ let g:twibill_use_job     = 1
 let g:tweetvim_config_dir = expand('~/.tweetvim')
 
 " }}}
-" --- vimshell.vim --- {{{
-
-let g:vimshell_no_save_history_commands = {
-  \ 'history': 1,
-  \ 'ls'     : 1,
-  \ 'clear'  : 1
-\ }
-let g:vimshell_enable_transient_user_prompt = 1
-let g:vimshell_max_command_history          = 10000
-let g:vimshell_scrollback_limit             = 10000
-let g:vimshell_split_command                = 'split'
-
-" Use current directory as vimshell prompt
-let g:vimshell_prompt_expr    = 'escape(fnamemodify(getcwd(), ":~") . "%", "\\[]()?! ") . " "'
-let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+% '
-
-"@See('autoload/vimshell/commands/{hereis,edit_places,places,reload_places}.vim')
-let g:vimshell_hereis_alias_prefix = 'p_'
-
-" }}}
 " --- foldCC --- {{{
 
 let g:foldCCtext_maxchars = 120
@@ -439,12 +419,6 @@ call submode#map('window_move', 'n', 's', '"', ':resize 5<CR>')
 set helplang=en,ja
 
 " }}}
-" --- vim-colors-solarized --- {{{
-
-" Use dark color
-let g:solarized_contrast = 'high'
-
-" }}}
 " --- aho-bakaup.vim --- {{{
 
 let g:bakaup_backup_dir  = g:vimrc['backupdir']
@@ -466,13 +440,6 @@ let g:vimconsole#no_default_key_mappings = 1
 " --- vim-textobj-indent --- {{{
 
 let g:textobj_indent_no_default_key_mappings = 1
-
-" }}}
-" --- unite-tag --- {{{
-
-" Fully showing name
-let g:unite_source_tag_max_name_length  = 100
-let g:unite_source_tag_max_fname_length = 100
 
 " }}}
 " --- deoplete.nvim --- {{{
@@ -1220,14 +1187,14 @@ digraph pi 960    " pi
 " plugins {{{
 
 " netrw
-nnoremap <silent> <leader>e         :<C-u>call vimrc#toggle_netrw_vexplorer()<CR>
+nnoremap <silent> <leader>e         :<C-u>call vimrc#toggle_explorer()<CR>
 nnoremap <silent> <leader><leader>e :<C-u>execute ':Sexplore' getcwd()<CR>
 nnoremap <silent> <leader>E         :<C-u>execute ':Explore' getcwd()<CR>
 nnoremap <silent> <leader><leader>E :<C-u>execute ':Texplore' getcwd()<CR>
-nnoremap <silent> 'e  :<C-u>call vimrc#execute_on_base_path(function('vimrc#toggle_netrw_vexplorer'))<CR>
-nnoremap <silent> ''e :<C-u>call vimrc#execute_on_base_path({ -> execute(':Sexplore ' . fnameescape(getcwd()))})<CR>
-nnoremap <silent> 'E  :<C-u>call vimrc#execute_on_base_path({ -> execute(':Explore ' . fnameescape(getcwd()))})<CR>
-nnoremap <silent> ''E :<C-u>call vimrc#execute_on_base_path({ -> execute(':Texplore ' . fnameescape(getcwd()))})<CR>
+nnoremap <silent> 'e  :<C-u>call vimrc#toggle_explorer(g:vimrc.path_at_started)<CR>
+nnoremap <silent> ''e :<C-u>execute ':Vexplore' g:vimrc.path_at_started<CR>
+nnoremap <silent> 'E  :<C-u>execute ':Explore' g:vimrc.path_at_started<CR>
+nnoremap <silent> ''E :<C-u>execute ':Texplore' g:vimrc.path_at_started<CR>
 
 " open-browser.vim
 nmap <leader>w <Plug>(openbrowser-open)

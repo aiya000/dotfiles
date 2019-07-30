@@ -128,30 +128,12 @@ function! vimrc#bufclose_filetype(filetypes)
 endfunction
 
 " Toggle open netrw explorer ( vertical split )
-function! vimrc#toggle_netrw_vexplorer()
+function! vimrc#toggle_explorer(...)
+  let path = get(a:000, 0, '')
   let closed = vimrc#bufclose_filetype(['netrw'])
   if !closed
-    call vimrc#netrw_wrapper('vertical')
+    execute ':Vexplore' path
   endif
-endfunction
-
-" Wrap netrw commands to avoid opening failure on :ternimal buffers
-function! vimrc#netrw_wrapper(open_method) abort
-  let open =
-    \ a:open_method ==# 'stay' ? 'enew' :
-    \ a:open_method ==# 'horizontal' ? 'new' :
-    \ a:open_method ==# 'vertical' ? 'vertical new' :
-    \ a:open_method ==# 'tabnew' ? 'tabnew' :
-      \ s:Msg.error(printf("'%s' is not expected", a:open_method))
-
-  let current_dir = fnameescape(getcwd())
-  try
-    execute ':lcd' fnameescape(getcwd())
-    execute open
-    Explore
-  finally
-    execute ':lcd' current_dir
-  endtry
 endfunction
 
 " Get a detail of <title> from + register
@@ -290,12 +272,11 @@ function! vimrc#move_tab_next()
   endif
 endfunction
 
-function! vimrc#execute_on_base_path(func, ...) abort
+function! vimrc#execute_on_base_path(f, ...) abort
   let current = getcwd()
   try
     execute ':lcd' g:vimrc.path_at_started
-    echo getcwd()
-    call call(a:func, a:000)
+    call call(a:f, a:000)
   finally
     execute ':lcd' current
   endtry
