@@ -293,7 +293,11 @@ let g:quickrun_config = {
     \ 'cmdopt': '-feature',
   \ },
   \ 'typescript': {
-    \ 'cmdopt': '--experimentalDecorators',
+    \ 'command': 'ts-node',
+    \ 'exec': ['%c %o %s'],
+    \ 'cmdopt': '',
+    \ 'tempfile': '%{tempname()}.ts',
+    \ 'hook/sweep/files': '%S:p:r.ts',
   \ },
   \ 'brainfuck': {
     \ 'command': 'brainfuck'
