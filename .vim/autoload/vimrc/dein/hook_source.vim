@@ -44,19 +44,19 @@ endfunction
 
 function! vimrc#dein#hook_source#gina() abort
   " TODO: Move to ftplugins
-  call gina#custom#mapping#nmap('status' , 'A'     , ':<C-u>call vimrc#dein#hook_source#gina_git_add_patch_this()<CR>'   , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , 'o'     , ':<C-u>call gina#action#call("edit")<CR>'                           , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , 'Q'     , ':<C-u>bdelete!<CR>'                                                , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , 'sa'    , ':<C-u>call vimrc#dein#hook_source#gina_git_stash_patch_this()<CR>' , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , 'sp'    , ':<C-u>Gina stash pop<CR>'                                          , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , 'cc'    , ':<C-u>Gina commit --verbose<CR>'                                   , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , 'ca'    , ':<C-u>Gina commit --verbose --amend<CR>'                           , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , 'cf'    , ':<C-u>GCommitFixup<Space>'                                                  , { 'noremap': 1 , 'silent': 0})
-  call gina#custom#mapping#nmap('status' , '<C-j>' , ':<C-u>call gina#action#call("diff:preview:bottom")<CR>'            , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , '<C-r>' , ':<C-u>Gina status<CR>'                                             , { 'noremap': 1 , 'silent': 1})
+  call gina#custom#mapping#nmap('status' , 'A'     , ':<C-u>call vimrc#dein#hook_source#gina_git_add_patch_this()<CR>'      , { 'noremap': 1 , 'silent': 1})
+  call gina#custom#mapping#nmap('status' , 'o'     , ':<C-u>call gina#action#call("edit")<CR>'                              , { 'noremap': 1 , 'silent': 1})
+  call gina#custom#mapping#nmap('status' , 'Q'     , ':<C-u>bdelete!<CR>'                                                   , { 'noremap': 1 , 'silent': 1})
+  call gina#custom#mapping#nmap('status' , 'sa'    , ':<C-u>call vimrc#dein#hook_source#gina_git_stash_patch_this()<CR>'    , { 'noremap': 1 , 'silent': 1})
+  call gina#custom#mapping#nmap('status' , 'sp'    , ':<C-u>Gina stash pop<CR>'                                             , { 'noremap': 1 , 'silent': 1})
+  call gina#custom#mapping#nmap('status' , 'cc'    , ':<C-u>call vimrc#dein#hook_source#gina_commit_very_verbose("")<CR>'        , { 'noremap': 1 , 'silent': 1})
+  call gina#custom#mapping#nmap('status' , 'ca'    , ':<C-u>call vimrc#dein#hook_source#gina_commit_very_verbose("--amend")<CR>' , { 'noremap': 1 , 'silent': 1})
+  call gina#custom#mapping#nmap('status' , 'cf'    , ':<C-u>GCommitFixup<Space>'                                            , { 'noremap': 1 , 'silent': 0})
+  call gina#custom#mapping#nmap('status' , '<C-j>' , ':<C-u>call gina#action#call("diff:preview:bottom")<CR>'               , { 'noremap': 1 , 'silent': 1})
+  call gina#custom#mapping#nmap('status' , '<C-r>' , ':<C-u>Gina status<CR>'                                                , { 'noremap': 1 , 'silent': 1})
 
-  call gina#custom#mapping#nmap('commit' , 'ZZ'    , ':<C-u>wq<CR>' , {'noremap': 1   , 'silent': 1}) " Avoid to failure commit
-  call gina#custom#mapping#nmap('commit' , '<C-j>' , 'o<Esc>'       , {'noremap': 1})
+  call gina#custom#mapping#nmap('commit' , 'ZZ' , ':<C-u>call vimrc#dein#hook_source#gina_commit_close()<CR>' , {'noremap': 1 , 'silent': 1})  " Avoid to failure commit
+  call gina#custom#mapping#nmap('commit' , '<C-j>' , 'o<Esc>' , {'noremap': 1})
 
   call gina#custom#mapping#nmap('branch' , 'Q' , ':<C-u>bdelete!<CR>' , {'noremap': 1 , 'silent': 1})
   call gina#custom#mapping#nmap('log'    , 'Q' , ':<C-u>bdelete!<CR>' , {'noremap': 1 , 'silent': 1})
@@ -82,27 +82,38 @@ function! vimrc#dein#hook_source#gina_git_stash_patch_this() abort
   call vimrc#open_terminal_as('', 'tabnew', git_stash, {'noclose': v:true})
 endfunction
 
-function! vimrc#dein#hook_source#LanguageClient_neovim() abort
-  augroup DeinHookSourceLanguageClient
-    autocmd!
-    " Please see vimrc#set#tabline_as_statusline() for g:vimrc.language_client_neovim
-    autocmd User LanguageClientStarted
-      \  let s:prev_completefunc = &completefunc
-      \| set completefunc=LanguageClient#complete
-      \| let g:vimrc['language_client_neovim'] = {'enabled': v:true}
-      \| redrawstatus
-      \| echo 'the language client started'
-    autocmd User LanguageClientStopped
-      \  let &completefunc = s:prev_completefunc
-      \| let g:vimrc['language_client_neovim'].enabled = v:false
-  augroup END
+function! vimrc#dein#hook_source#gina_commit_very_verbose(subcmd) abort
+  if len(tabpagebuflist()) isnot 1
+    quit
+    tabnew
+  endif
+
+  Gina diff -u --cached --no-color --no-ext-diff --group=gina-commit
+  vsplit
+  Gina status --group=gina-commit
+  split
+  execute 'Gina' 'commit' '--verbose' ' --group=gina-commit' a:subcmd
+  let b:gina_commit_very_verbose = v:true
+endfunction
+
+function! vimrc#dein#hook_source#gina_commit_close() abort
+  let gina_commit_very_verbose = get(b:, 'gina_commit_very_verbose', v:false)
+
+  wq
+  if gina_commit_very_verbose && tabpagenr('$') > 1
+    tabclose
+  elseif gina_commit_very_verbose
+    only
+  else
+    quit
+  endif
 endfunction
 
 function! vimrc#dein#hook_source#emmet() abort
   let g:user_emmet_install_global = 0
   let g:user_emmet_leader_key = '<C-g>'
 
-  augroup VimRc
+  augroup vimrc
     autocmd! FileType html,xml,markdown EmmetInstall
   augroup END
 endfunction

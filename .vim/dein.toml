@@ -64,7 +64,7 @@ repo = 'thinca/vim-visualstar'
 repo = 'vim-jp/autofmt'
 
 [[plugins]]
-repo = 'w0rp/ale'
+repo = 'dense-analysis/ale'
 
 [[plugins]]
 repo = 'vim-jp/vital.vim'

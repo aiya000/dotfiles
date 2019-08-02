@@ -674,6 +674,8 @@ augroup END
 
 let g:gina#command#blame#formatter#format = '%su%=on %ti by %au %ma%in'
 
+" Please see hook_source.vim for more informations
+
 " }}}
 " --- vim-altercmd --- {{{
 
