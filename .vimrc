@@ -930,26 +930,7 @@ nnoremap <silent> <C-k><C-o> :<C-u>EditOverridden %<CR>
 nnoremap <silent> <C-k>o :<C-u>EditOverridden! %<CR>
 nnoremap <silent> <leader>b :<C-u>call vimrc#open_scratch_buffer()<CR>
 nnoremap <silent> <leader>B :<C-u>sp ~/.backup/memo.md<CR>
-nnoremap <silent> <leader><leader>q :<C-u>call vimrc#bufclose_filetype(<C-r>=string(g:vimrc.auto_closing_filetypes)<CR>)<CR>
-let g:vimrc.auto_closing_filetypes = [
-  \ 'aref_web',
-  \ 'diff',
-  \ 'gina-branch',
-  \ 'gina-log',
-  \ 'gina-status',
-  \ 'gitdiffviewer',
-  \ 'gitlogviewer',
-  \ 'gitreflogviewer',
-  \ 'gitshowviewer',
-  \ 'help',
-  \ 'man',
-  \ 'netrw',
-  \ 'qf',
-  \ 'quickrun',
-  \ 'scratch',
-  \ 'denite',
-  \ 'denite-filter',
-\ ]
+nnoremap <silent> <leader><leader>q :<C-u>call vimrc#bufclose_auto()<CR>
 
 " folds
 nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'

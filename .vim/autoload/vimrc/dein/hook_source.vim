@@ -83,6 +83,7 @@ function! vimrc#dein#hook_source#gina_git_stash_patch_this() abort
 endfunction
 
 function! vimrc#dein#hook_source#gina_commit_very_verbose(subcmd) abort
+  call vimrc#bufclose_filetype(['diff'])
   if len(tabpagebuflist()) isnot 1
     quit
     tabnew
