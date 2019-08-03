@@ -100,6 +100,8 @@ for file in ~/.zsh/plugin/sh-hereis/{edit-places,hereis,place,reload-places,sh-h
     source "$file"
 done
 
+source_if_exists ~/.vim/bundle/repos/github.com/tyru/sync-term-cwd.vim/macros/synctermcwd.sh
+
 #}}}
 # zsh-dircolors-solarized {{{
 

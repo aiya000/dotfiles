@@ -38,9 +38,6 @@ let g:vimrc['undodir']    = g:vimrc['backupdir'] . '/undo'
 let g:vimrc['viewdir']    = g:vimrc['backupdir'] . '/view'
 let g:vimrc['sessiondir'] = g:vimrc['backupdir'] . '/session'
 
-" Please see ~/.sh_generic/aliases.sh
-let $I_AM_ON_VIM = 1
-
 " }}}
 
 
@@ -230,7 +227,7 @@ augroup END
 "---------"
 " Plugins "
 "---------"
-" --- netrw --- {{{
+" netrw {{{
 
 " Enable netrw previewing
 let g:netrw_preview = 1
@@ -242,7 +239,7 @@ let g:netrw_home = g:vimrc['vim_home']
 let g:netrw_bufsettings = 'relativenumber readonly nomodifiable nomodified nowrap nobuflisted'
 
 " }}}
-" --- vim-quickrun --- {{{
+" vim-quickrun {{{
 
 let g:quickrun_no_default_key_mappings = 0
 
@@ -377,7 +374,7 @@ if g:vimrc['is_windows']
 endif
 
 " }}}
-" --- TweetVim --- {{{
+" TweetVim {{{
 
 let g:tweetvim_async_post = 1
 let g:twibill_use_job     = 1
@@ -386,12 +383,12 @@ let g:twibill_use_job     = 1
 let g:tweetvim_config_dir = expand('~/.tweetvim')
 
 " }}}
-" --- foldCC --- {{{
+" foldCC {{{
 
 let g:foldCCtext_maxchars = 120
 
 " }}}
-" --- vim-submode --- {{{
+" vim-submode {{{
 
 let g:submode_timeout = 0
 
@@ -417,46 +414,46 @@ call submode#map('window_move', 'n', 'e', 'L', '"\<C-w>L" . (foldlevel(".") > 0 
 call submode#map('window_move', 'n', 's', '_', '<C-w>_')
 call submode#map('window_move', 'n', 's', '"', ':resize 5<CR>')
 " }}}
-" --- vimdoc-ja --- {{{
+" vimdoc-ja {{{
 
 " vimdoc-ja is secondary order
 set helplang=en,ja
 
 " }}}
-" --- aho-bakaup.vim --- {{{
+" aho-bakaup.vim {{{
 
 let g:bakaup_backup_dir  = g:vimrc['backupdir']
 let g:bakaup_auto_backup = 1
 
 " }}}
-" --- neosnippet.vim --- {{{
+" neosnippet.vim {{{
 
 let g:neosnippet#snippets_directory = g:vimrc['vim_home'] . '/neosnippets'
 let g:neosnippet#disable_select_select_mappings = 1
 
 " }}}
-" --- vimconsole.vim --- {{{
+" vimconsole.vim {{{
 
 let g:vimconsole#auto_redraw             = 1
 let g:vimconsole#no_default_key_mappings = 1
 
 " }}}
-" --- vim-textobj-indent --- {{{
+" vim-textobj-indent {{{
 
 let g:textobj_indent_no_default_key_mappings = 1
 
 " }}}
-" --- deoplete.nvim --- {{{
+" deoplete.nvim {{{
 
 let g:deoplete#enable_at_startup = 1
 
 " }}}
-" --- vim-visualstar --- {{{ 
+" vim-visualstar {{{ 
 " Do zzzv after execute visualstar
 let g:visualstar_extra_commands = 'zzzv'
 
 " }}}
-" --- vim-gista --- {{{
+" vim-gista {{{
 
 " Don't ask description for :Gista post
 let g:gista#command#post#interactive_description = 0
@@ -467,7 +464,7 @@ augroup vimrc
 augroup END
 
 "}}}
-" --- aref-web.vim --- {{{
+" aref-web.vim {{{
 
 let g:aref_web_buffer_opening = 'vsplit'
 
@@ -490,12 +487,12 @@ let g:aref_web_source = {
 \ }
 
 "}}}
-" --- autofmt ---" {{{
+" autofmt{{{
 
 set formatexpr=autofmt#japanese#formatexpr()
 
 "}}}
-" --- github-complete.vim --- {{{
+" github-complete.vim {{{
 
 " Use as emoji completer
 let g:github_complete_enable_issue_completion = 0
@@ -507,12 +504,12 @@ let g:github_complete_enable_neocomplete        = 1
 let g:github_complete_emoji_japanese_workaround = 1
 
 " }}}
-" --- vim-textobj-between --- {{{
+" vim-textobj-between {{{
 
 let g:textobj_between_no_default_key_mappings = 1
 
 " }}}
-" --- ale --- {{{
+" ale {{{
 
 let g:ale_vim_vint_show_style_issues = v:false
 
@@ -538,7 +535,7 @@ augroup vimrc
 augroup END
 
 " }}}
-" --- elm-vim --- {{{
+" elm-vim {{{
 
 let g:elm_browser_command    = g:vimrc['open_on_gui']
 let g:elm_format_autosave    = 1
@@ -547,12 +544,12 @@ let g:elm_make_show_warnings = 1
 let g:elm_setup_keybindings  = 0
 
 " }}}
-" --- vim-fakeclip --- {{{
+" vim-fakeclip {{{
 
 let g:fakeclip_provide_clipboard_key_mappings = g:vimrc['is_wsl']
 
 " }}}
-" --- denite.nvim --- {{{
+" denite.nvim {{{
 
 " Please see the ftplugin 'denite'
 
@@ -571,27 +568,27 @@ augroup vimrc
 augroup END
 
 " }}}
-" --- idris-vim --- {{{
+" idris-vim {{{
 
 let g:idris_vim_enable_keymappings_by_default = v:false
 
 " }}}
-" --- vim-textobj-clang --- {{{
+" vim-textobj-clang {{{
 
 let g:textobj_clang_more_mappings = 1
 
 " }}}
-" --- vim-operator-surround --- {{{
+" vim-operator-surround {{{
 
 " Please see hook_source.vim
 
 " }}}
-" --- vim-highlightedyank --- " {{{
+" vim-highlightedyank {{{
 
 let g:highlightedyank_highlight_duration = 200
 
 " }}}
-" --- vim-fmap --- " {{{
+" vim-fmap {{{
 
 let g:fmap_use_default_keymappings = v:false
 let g:fmap_escape_keys = ['', '', '']
@@ -606,12 +603,12 @@ augroup vimrc
 augroup END
 
 " }}}
-" --- vimhelpgenerator --- " {{{
+" vimhelpgenerator {{{
 
 let g:vimhelpgenerator_defaultlanguage = 'en'
 
 " }}}
-" --- vim-autoformat --- " {{{
+" vim-autoformat {{{
 
 let g:formatdef_dhall_format = '"dhall format"'
 let g:formatters_dhall = ['dhall_format']
@@ -628,7 +625,7 @@ if  filereadable(expand('~/bin/google-java-format-1.7-all-deps.jar'))
 endif
 
 " }}}
-" --- vim-indent-guides --- " {{{
+" vim-indent-guides {{{
 
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_start_level = 2
@@ -670,14 +667,14 @@ augroup vimrc
 augroup END
 
 " }}}
-" --- gina.vim --- " {{{
+" gina.vim {{{
 
 let g:gina#command#blame#formatter#format = '%su%=on %ti by %au %ma%in'
 
 " Please see hook_source.vim for more informations
 
 " }}}
-" --- vim-altercmd --- {{{
+" vim-altercmd {{{
 
 call altercmd#load()
 
@@ -688,51 +685,57 @@ AlterCommand ene[w] EnewOverridden
 AlterCommand tabnew TabnewOverridden
 
 " }}}
-" --- vim-lsp --- " {{{
+" vim-lsp {{{
 
 let g:lsp_diagnostics_enabled = v:false
 let g:lsp_async_completion = v:true
+
+function! s:find_root_uri_by_file(file) abort
+  return { _ ->
+    \ lsp#utils#path_to_uri(
+      \ lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), a:file)
+    \ )
+  \ }
+endfunction
 
 augroup vimrc
   autocmd User lsp_setup call lsp#register_server({
     \ 'name': 'language-server-stdio.js',
     \ 'cmd': { _ -> [&shell, &shellcmdflag, 'language-server-stdio.js'] },
-    \ 'root_uri': { _ -> lsp#utils#path_to_uri(
-      \ lsp#utils#find_nearest_parent_file_directory(
-        \ lsp#utils#get_buffer_path(),
-        \ 'tsconfig.json'
-      \ )
-    \ )},
+    \ 'root_uri': s:find_root_uri_by_file('tsconfig.json'),
     \ 'whitelist': ['javascript', 'typescript', 'typescript.tsx', 'vue'],
   \ })
 
   autocmd User lsp_setup call lsp#register_server({
     \ 'name': 'haskell-ide-engine',
     \ 'cmd': { _ -> [&shell, &shellcmdflag, 'hie-wrapper'] },
-    \ 'root_uri': { _ -> lsp#utils#path_to_uri(
-      \ lsp#utils#find_nearest_parent_file_directory(
-        \ lsp#utils#get_buffer_path(),
-        \ 'package.yaml'
-      \ )
-    \ )},
+    \ 'root_uri': s:find_root_uri_by_file('package.yaml'),
     \ 'whitelist': ['haskell', 'happy', 'alex'],
+  \ })
+
+  " TODO: うごいてくれ〜
+  autocmd User lsp_setup call lsp#register_server({
+    \ 'name': 'vim-language-server',
+    \ 'cmd': { _ -> [&shell, &shellcmdflag, 'vim-language-server --stdio'] },
+    \ 'root_uri': { _ -> g:vimrc.path_at_started },
+    \ 'whitelist': ['vim'],
   \ })
 augroup END
 
 " }}}
-" --- vim-ghcid-quickfix --- " {{{
+" vim-ghcid-quickfix {{{
 
 let g:ghcid_quickfix_showing = 'quickfix_on_error'
 
 " }}}
-" --- translate.vim --- {{{
+" translate.vim {{{
 
 let g:translate_source = 'en'
 let g:translate_target = 'ja'
 let g:translate_winsize = 10
 
 " }}}
-" --- vim-precious --- " {{{
+" vim-precious {{{
 
 let g:precious_enable_switch_CursorMoved = {
   \ '*': v:false,
@@ -760,6 +763,11 @@ function! s:dont_enter_vue_promise() abort
     call precious#switch('typescript')
   endif
 endfunction
+
+" }}}
+" sync-term-cwd.vim {{{
+
+let g:synctermcwd_cd_command = 'lcd'
 
 " }}}
 

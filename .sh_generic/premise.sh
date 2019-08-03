@@ -6,7 +6,7 @@
 #NOTE: I should rename this to have_i()
 # If I have it command, return 0. otherwise return 1.
 function i_have () {
-    which "$1" > /dev/null 2>&1
+    command -v "$1" > /dev/null 2>&1
 }
 
 # If I have a command what it is specified same as alias name,
@@ -19,5 +19,11 @@ function alias_of () {
     i_have "$name" && alias "$alias_detail"
 }
 
+function source_if_exists () {
+    if [[ -f $1 ]] ; then
+        # shellcheck disable=SC1090
+        source "$1"
+    fi
+}
 
 SH_GENERIC_PREMISE_LOADED=LOADED

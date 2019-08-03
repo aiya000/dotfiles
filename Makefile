@@ -28,7 +28,7 @@ install:
 ifeq ($(OS),Arch)
 install_package_managers:
 	$(YayUpdate)
-	$(YayInstall) --noconfirm --needed stack-static npm python-pip
+	$(YayInstall) --noconfirm --needed stack-static npm yarn python-pip
 endif
 ifeq ($(OS),Darwin)
 	echo Please define install_package_managers for haskell-stack > /dev/stderr
@@ -160,7 +160,10 @@ ifeq ($(OS),Windows)
 	echo Please define build-os-env
 endif
 
-# Here are not installed by make install
+# Here are not installed by default (all)
+
+install-vim:
+	yarn global add vim-language-server
 
 install-haskell:
 	stack install hasktags haskdogs hlint
@@ -220,8 +223,3 @@ install-gyazo-cli:
 install-antimicro:
 	$(YayInstall) antimicro-git
 endif
-
-install-gtran:
-	git clone https://github.com/skanehira/gtran ~/git/gtran
-	cd ~/git/gtran
-	go install

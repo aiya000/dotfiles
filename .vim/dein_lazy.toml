@@ -319,15 +319,6 @@ on_ft = [
 ]
 
 [[plugins]]
-repo = 'skanehira/translate.vim'
-on_cmd = [
-    'Translate',
-    'AutoTranslateModeToggle',
-    'AutoTranslateModeEnable',
-    'AutoTranslateModeDisable',
-]
-
-[[plugins]]
 repo = 'tyru/open-browser-github.vim'
 on_cmd = [
     'OpenGithubFile',
