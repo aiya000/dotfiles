@@ -294,7 +294,6 @@ let g:quickrun_config = {
     \ 'exec': ['%c %o %s'],
     \ 'cmdopt': '',
     \ 'tempfile': '%{tempname()}.ts',
-    \ 'hook/sweep/files': '%S:p:r.ts',
   \ },
   \ 'brainfuck': {
     \ 'command': 'brainfuck'

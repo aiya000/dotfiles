@@ -77,13 +77,13 @@ abbr finally {${0:here}}
 
 snippet import_as
 alias imq
-abbr import * as ${1:name} from '${0:here}'
-    import * as ${1:name} from '${0:here}'
+abbr import * as ${1} from '${0:here}'
+    import * as ${1} from '${0:here}'
 
 snippet import
 alias imp
-abbr import { ${1:here} } from '${0:here}'
-    import { ${1:here} } from '${0:here}'
+abbr import { ${1} } from '${0:here}'
+    import { ${1} } from '${0:here}'
 
 snippet export
 alias exp
@@ -200,6 +200,11 @@ alias pubre
 abbr public readonly
     public readonly
 
+snippet private_readonly
+alias prire
+abbr private readonly
+    private readonly
+
 snippet pub
 abbr public
     public
@@ -227,3 +232,13 @@ snippet public_set
 alias pubset
 abbr public set
     public set
+
+snippet private_get
+alias priget
+abbr private get
+    private get
+
+snippet private_set
+alias priset
+abbr private set
+    private set
