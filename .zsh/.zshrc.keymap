@@ -29,7 +29,7 @@ bindkey -M viins '^r' peco-history-find-backward
 bindkey -M viins '^n' down-line-or-history
 bindkey -M viins '^p' up-line-or-history
 bindkey -M viins '^a' beginning-of-line
-bindkey -M viins '^e' end-of-line
+bindkey -M viins '^e' end-of-line  # NOTE: This does it and autosuggest-accept
 bindkey -M viins '^b' backward-char
 bindkey -M viins '^f' forward-char
 bindkey -M viins '^k' kill-line
@@ -46,6 +46,3 @@ bindkey -M vicmd 'g_' vi-end-of-line
 bindkey -M viins '^l' vi-cmd-mode
 bindkey -M viins '^]' clear-screen
 bindkey -M vicmd '^v' edit-command-line
-
-# Others
-bindkey -M viins '^x^j' autosuggest-accept

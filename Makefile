@@ -66,10 +66,10 @@ ifeq ($(OS),Arch)
 		fontforge \
 		gimp \
 		git \
+		go \
 		graphicsmagick \
 		hub \
 		jq \
-		peco \
 		libnotify \
 		libxss \
 		light \
@@ -78,10 +78,11 @@ ifeq ($(OS),Arch)
 		mimi-git \
 		networkmanager \
 		nightshift \
-		noto-fonts-emoji \
 		noto-fonts-cjk \
+		noto-fonts-emoji \
 		openssh \
 		pavucontrol \
+		peco \
 		pkgfile \
 		progress \
 		pulseaudio \
@@ -98,8 +99,8 @@ ifeq ($(OS),Arch)
 		unzip-iconv \
 		vivaldi \
 		watchexec \
-		xf86-video-intel \
 		xf86-input-wacom \
+		xf86-video-intel \
 		xfce4-settings \
 		xinit-xsession \
 		xmonad \
@@ -107,7 +108,8 @@ ifeq ($(OS),Arch)
 		xorg-server \
 		xorg-xinit \
 		zathura \
-		zathura-pdf-mupdf
+		zathura-pdf-mupdf \
+		#
 	sudo systemctl enable NetworkManager
 	sudo systemctl start NetworkManager
 	sudo systemctl enable docker
@@ -164,6 +166,10 @@ endif
 
 install-vim:
 	yarn global add vim-language-server
+	#
+	git clone https://github.com/skanehira/gtran.git ~/git/gtran
+	cd ~/git/gtran
+	go install
 
 install-haskell:
 	stack install hasktags haskdogs hlint

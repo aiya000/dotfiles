@@ -1271,8 +1271,8 @@ vmap i* <Plug>(textobj-between-i)*
 omap a* <Plug>(textobj-between-a)*
 omap i* <Plug>(textobj-between-i)*
 
-" vim-open-googletranslate
-vnoremap <silent> <leader>k "zy:OpenGoogleTranslate <C-r>z<CR>
+" translate.vim
+vnoremap <silent> <leader>k "zy:Translate <C-r>z<CR>
 
 " ale
 nnoremap <silent> <C-k><C-a> :<C-u>ALEToggle<CR>

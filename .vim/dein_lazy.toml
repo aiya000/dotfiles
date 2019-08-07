@@ -156,11 +156,6 @@ repo  = 'udalov/kotlin-vim'
 on_ft = 'kotlin'
 
 [[plugins]]
-repo   = 'haya14busa/vim-open-googletranslate'
-on_cmd = 'OpenGoogleTranslate'
-on_map = '<Plug>(operator-open-googletranslate)'
-
-[[plugins]]
 repo     = 'ianks/vim-tsx'
 on_event = ['BufNewFile', 'BufRead']
 on_ft    = 'expand("%") =~# "\.tsx$"'
@@ -334,3 +329,12 @@ on_ft = ['json5']
 [[plugins]]
 repo  = 'itchyny/vim-haskell-sort-import'
 on_ft = ['haskell']
+
+[[plugins]]
+repo = 'skanehira/translate.vim'
+on_cmd = [
+    'Translate',
+    'AutoTranslateModeToggle',
+    'AutoTranslateModeEnable',
+    'AutoTranslateModeDisable',
+]

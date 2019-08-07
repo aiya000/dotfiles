@@ -352,8 +352,11 @@ endfunction
 function! vimrc#lcd_buffer_dir_or_base() abort
   try
     lcd %:p:h
-  catch /\(E344\|E472\)/ " the buffer has no file
-    execute ':lcd' g:vimrc.path_at_started
+  catch /\(E344\|E472\)/  " if the buffer has no file
+    if !s:List.has(term_list(), winbufnr('.'))
+      " NOTE: Delegate :lcd to sync-term-cwd.vim if this is a terminal buffer
+      execute ':lcd' g:vimrc.path_at_started
+    endif
   endtry
 endfunction
 
