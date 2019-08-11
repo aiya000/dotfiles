@@ -328,6 +328,11 @@ if i_have krita ; then
     alias kra=krita
 fi
 
+if i_have draw.io ; then
+    alias drawio=draw.io
+    alias drawio-export-png='draw.io -e -x -f png'
+fi
+
 # shellcheck disable=SC2139
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
 alias mount4u.vfat=mount4u.ntfs
