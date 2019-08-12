@@ -1176,6 +1176,7 @@ digraph \|^ 8593  " arrow up
 digraph \|v 8595  " arrow down
 digraph xx 215    " product
 digraph pi 960    " pi
+digraph ph 934    " phi
 
 " }}}
 " plugins {{{
@@ -1272,7 +1273,7 @@ omap a* <Plug>(textobj-between-a)*
 omap i* <Plug>(textobj-between-i)*
 
 " translate.vim
-vnoremap <silent> <leader>k "zy:Translate <C-r>z<CR>
+vnoremap <silent> <leader>k :Translate<CR>
 
 " ale
 nnoremap <silent> <C-k><C-a> :<C-u>ALEToggle<CR>
@@ -1377,7 +1378,6 @@ nnoremap <silent> <C-l> :<C-u>PreciousReset \| PreciousSwitch<CR>
 " }}}
 
 execute 'helptags' (g:vimrc['vim_home'] . '/doc')
-nohlsearch
 filetype plugin indent on
 syntax enable
 let g:vimrc['loaded'] = 1
