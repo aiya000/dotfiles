@@ -160,7 +160,11 @@ endfunction
 
 " Get a detail of <title> from + register
 function! vimrc#get_webpage_title() abort
-  return substitute(s:HTML.parseURL(@+).find('title').value(), '·', '-', 'g')
+  try
+    return substitute(s:HTML.parseURL(@+).find('title').value(), '·', '-', 'g')
+  catch
+    return 'vimrc#get_webpage_title(): something happened: ' . v:exception
+  endtry
 endfunction
 
 " :quit if only a window is existent,

@@ -1232,10 +1232,9 @@ nmap H :<C-u>Denite line<CR>i
 nmap M :<C-u>Denite file_mru<CR>i
 nmap L :<C-u>Denite buffer<CR>i
 
-" aref-web.vim
-nnoremap <leader>K :<C-u>Aref weblio <C-r>=expand('<cword>')<CR><CR>
-vnoremap <leader>K "zy:<C-u>Aref weblio <C-r>z<CR>
-vnoremap <leader>S "zy:<C-u>Aref stackage <C-r>z<CR>
+" vim-webpage
+nnoremap <leader>K :<C-u>Weblio <C-r>=expand('<cword>')<CR><CR>
+vnoremap <leader>K "zy:<C-u>Weblio <C-r>z<CR>
 
 " anzu-chan
 "" always n moves to forward / N moves to backward
