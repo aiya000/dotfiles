@@ -927,6 +927,15 @@ let &tags = &tags . ',' . join([
 nnoremap <C-c> <NOP>
 nnoremap <C-c><C-c> <C-c>
 
+" clear
+nnoremap <silent> <C-l> :<C-u>call <SID>normal_clear()<CR>
+
+function s:normal_clear() abort
+  call popup_clear()
+  PreciousReset
+  PreciousSwitch
+endfunction
+
 " listup
 nmap <silent> m: :<C-u>call vimrc#open_buffer_to_execute('marks')<CR>gh_
 nmap <silent> g: :<C-u>call vimrc#open_buffer_to_execute('buffers')<CR>gh_
@@ -1376,11 +1385,6 @@ omap 'f <Plug>(fmap-forward-f)
 omap 'F <Plug>(fmap-backward-f)
 omap 't <Plug>(fmap-forward-t)
 omap 'T <Plug>(fmap-backward-T)
-
-" vim-precious
-nnoremap <silent> <Esc> :<C-u>PreciousReset \| PreciousSwitch<CR>
-nnoremap <silent> <C-[> :<C-u>PreciousReset \| PreciousSwitch<CR>
-nnoremap <silent> <C-l> :<C-u>PreciousReset \| PreciousSwitch<CR>
 
 " }}}
 

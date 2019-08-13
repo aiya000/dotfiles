@@ -117,12 +117,8 @@ command! -bar TwitterPublic call vimrc#twitter_public()
 command! -bar TwitterPublicTab tabnew | TwitterPublic
 command! -bar TweetPublic call vimrc#tweet_public()
 
-" aref-web.vim
-command! -bar -nargs=+ Hoogle Aref hoogle <args>
-command! -bar -nargs=+ ShellCheck Aref shellcheck <args>
-command! -bar -nargs=+ Stackage Aref stackage <args>
-command! -bar -nargs=+ Weblio Aref weblio <args>
-command! -bar -nargs=+ ElmSearch Aref elm-search <args>
+" vim-webpage
+command! -bar -nargs=+ Weblio WebpageShow weblio <args>
 
 "" Others
 command! -bar -nargs=* Vim call vimrc#open_terminal_as('term-vim', 'stay', 'vim ' . <q-args>)
