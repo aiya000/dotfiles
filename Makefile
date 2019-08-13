@@ -28,7 +28,7 @@ install:
 ifeq ($(OS),Arch)
 install_package_managers:
 	$(YayUpdate)
-	$(YayInstall) --noconfirm --needed stack-static npm yarn python-pip
+	$(YayInstall) --noconfirm --needed stack-static npm yarn python-pip rust
 endif
 ifeq ($(OS),Darwin)
 	echo Please define install_package_managers for haskell-stack > /dev/stderr
@@ -166,10 +166,12 @@ endif
 
 install-vim:
 	yarn global add vim-language-server
-	#
+	# translate.vim
 	git clone https://github.com/skanehira/gtran.git ~/git/gtran
 	cd ~/git/gtran
 	go install
+	# vim-silicon
+	cargo install silicon
 
 install-haskell:
 	stack install hasktags haskdogs hlint

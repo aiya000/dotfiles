@@ -338,3 +338,10 @@ on_cmd = [
     'AutoTranslateModeEnable',
     'AutoTranslateModeDisable',
 ]
+
+[[plugins]]
+repo = 'segeljakt/vim-silicon'
+on_cmd = [
+    'Silicon',
+    'SiliconHighlight',
+]

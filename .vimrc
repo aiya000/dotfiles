@@ -769,6 +769,13 @@ endfunction
 let g:synctermcwd_cd_command = 'lcd'
 
 " }}}
+" vim-webpage {{{
+
+let g:webpage_source = #{
+  \ weblio: 'http://ejje.weblio.jp/content/%s',
+\ }
+
+" }}}
 
 call dein#end()
 
