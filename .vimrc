@@ -905,6 +905,8 @@ nnoremap <C-c> <NOP>
 nnoremap <C-c><C-c> <C-c>
 
 " clear
+nnoremap <silent> <C-[> :<C-u>call <SID>normal_clear()<CR>
+nnoremap <silent> <Esc> :<C-u>call <SID>normal_clear()<CR>
 nnoremap <silent> <C-l> :<C-u>call <SID>normal_clear()<CR>
 
 function s:normal_clear() abort
