@@ -15,24 +15,23 @@ let $MYGVIMRC = filereadable(expand('~/.dotfiles/.gvimrc'))
   \ : $MYGVIMRC
 
 " Global values
-let g:vimrc = get(g:, 'vimrc', {
-  \ 'loaded': 0,
-  \ 'vim_home': expand('~/.vim'),
-  \ 'path_at_started': getcwd(),
-  \ 'gui_editor': has('nvim') ? 'gonvim' : 'gvim',
-  \ 'backupdir': expand('~/.backup/vim-backup'),
-  \ 'is_unix': has('unix'),
-  \ 'is_macos': has('macunix'),
-  \ 'is_wsl': executable('uname') && (system('uname -a') =~# 'Microsoft'),
-  \ 'is_windows': has('win32'),
-  \ 'is_kaoriya': has('kaoriya'),
+let g:vimrc = get(g:, 'vimrc', #{
+  \ loaded: 0,
+  \ vim_home: expand('~/.vim'),
+  \ path_at_started: getcwd(),
+  \ gui_editor: has('nvim') ? 'gonvim' : 'gvim',
+  \ backupdir: expand('~/.backup/vim-backup'),
+  \ is_unix: has('unix'),
+  \ is_macos: has('macunix'),
+  \ is_wsl: executable('uname') && (system('uname -a') =~# 'Microsoft'),
+  \ is_windows: has('win32'),
+  \ is_kaoriya: has('kaoriya'),
 \ })
 
 let g:vimrc['open_on_gui'] =
   \ g:vimrc['is_macos']   ? 'open' :
   \ g:vimrc['is_windows'] ? 'start' :
-  \ g:vimrc['is_unix']    ? 'xdg-open' :
-    \ 'no method for GUI-open'
+  \ g:vimrc['is_unix']    ? 'xdg-open' : 'no method for GUI-open'
 let g:vimrc['directory']  = g:vimrc['backupdir'] . '/swp'
 let g:vimrc['undodir']    = g:vimrc['backupdir'] . '/undo'
 let g:vimrc['viewdir']    = g:vimrc['backupdir'] . '/view'
@@ -68,14 +67,13 @@ if g:vimrc['is_kaoriya'] && g:vimrc['is_windows']
   endif
 
   " Make base directories
-  "TODO: tmp for windows 10 env (over symlink)
-  if !filereadable(g:vimrc['vim_home'] . '/init.vim')  "!isdirectory(g:vimrc['vim_home'])
+  if !filereadable(g:vimrc['vim_home'] . '/init.vim')  " !isdirectory(g:vimrc['vim_home'])
     call mkdir(g:vimrc['vim_home'])
   endif
 
   " Enable kaoriya plugins
   let s:kaoriya_switch_dir = $VIM . '/switches/enabled/'
-  for s:kaoriya_plugin_flag in map(['utf-8.vim', 'vimdoc-ja.vim', 'vimproc.vim'], 's:kaoriya_switch_dir . v:val')
+  for s:kaoriya_plugin_flag in map(['utf-8.vim', 'vimdoc-ja.vim', 'vimproc.vim'], { _, x  -> s:kaoriya_switch_dir . x })
     if !filereadable(s:kaoriya_plugin_flag)
       call writefile([], s:kaoriya_plugin_flag)
     endif
@@ -171,7 +169,7 @@ call dein#add('Shougo/dein.vim', {'rtp': ''})
 " Local scripts "
 "---------------"
 " {{{
-"NOTE: This section must be put at between dein#begin() and dein#end()
+" NOTE: This section must be put at between dein#begin() and dein#end()
 
 if filereadable(expand('~/.vimrc_private'))
   source ~/.vimrc_private
@@ -296,10 +294,10 @@ let g:quickrun_config = {
     \ 'tempfile': '%{tempname()}.ts',
   \ },
   \ 'brainfuck': {
-    \ 'command': 'brainfuck'
+    \ 'command': 'brainfuck',
   \ },
   \ 'nico': {
-    \ 'command': 'nicorun'
+    \ 'command': 'nicorun',
   \ },
   \ 'haskell': {
     \ 'cmdopt': '--ghc-arg=-fprint-explicit-kinds',
@@ -364,7 +362,7 @@ let g:quickrun_config = {
     \ 'hook/sweep/files': '%S:p:r.png',
     \ 'outputter/error/error': 'quickfix',
     \ 'outputter/error/success': 'message',
-  \ }
+  \ },
 \ }
 
 " Append config of each environment
@@ -412,6 +410,7 @@ call submode#map('window_move', 'n', 'e', 'K', '"\<C-w>K" . (foldlevel(".") > 0 
 call submode#map('window_move', 'n', 'e', 'L', '"\<C-w>L" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
 call submode#map('window_move', 'n', 's', '_', '<C-w>_')
 call submode#map('window_move', 'n', 's', '"', ':resize 5<CR>')
+
 " }}}
 " vimdoc-ja {{{
 
@@ -447,7 +446,8 @@ let g:textobj_indent_no_default_key_mappings = 1
 let g:deoplete#enable_at_startup = 1
 
 " }}}
-" vim-visualstar {{{ 
+" vim-visualstar {{{
+
 " Do zzzv after execute visualstar
 let g:visualstar_extra_commands = 'zzzv'
 
@@ -461,29 +461,6 @@ let g:gista#command#post#allow_empty_description = 1
 augroup vimrc
   autocmd User GistaPost call vimrc#yank_gista_posted_url()
 augroup END
-
-"}}}
-" aref-web.vim {{{
-
-let g:aref_web_buffer_opening = 'vsplit'
-
-let g:aref_web_source = {
-  \ 'weblio': {
-    \ 'url': 'https://ejje.weblio.jp/content/%s',
-  \ },
-  \ 'stackage': {
-    \ 'url': 'https://www.stackage.org/lts-10.9/hoogle?q=%s&page=1',
-  \ },
-  \ 'hoogle': {
-    \ 'url': 'https://www.haskell.org/hoogle/?hoogle=%s',
-  \ },
-  \ 'shellcheck': {
-    \ 'url': 'https://github.com/koalaman/shellcheck/wiki/%s',
-  \ },
-  \ 'elm-search': {
-    \ 'url': 'http://klaftertief.github.io/elm-search/?q=%s',
-  \ },
-\ }
 
 "}}}
 " autofmt{{{
@@ -512,13 +489,13 @@ let g:textobj_between_no_default_key_mappings = 1
 
 let g:ale_vim_vint_show_style_issues = v:false
 
-let g:ale_linters = {
-  \ 'haskell': ['hlint', 'stack ghc'],
-  \ 'dhall' : ['dhall lint'],
-  \ 'html': ['htmlhint', 'tidy'],
-  \ 'css': ['csslint', 'stylelint'],
-  \ 'kotlin': ['ktlint'],
-  \ 'java': ['checkstyle', 'google-java-format', 'PMD'],
+let g:ale_linters = #{
+  \ haskell: ['hlint', 'stack ghc'],
+  \ dhall : ['dhall lint'],
+  \ html: ['htmlhint', 'tidy'],
+  \ css: ['csslint', 'stylelint'],
+  \ kotlin: ['ktlint'],
+  \ java: ['checkstyle', 'google-java-format', 'PMD'],
 \ }
 
 let g:ale_scala_scalastyle_config = $HOME . '/.dotfiles/scalastyle_config_default.xml'
@@ -557,13 +534,13 @@ let g:neomru#file_mru_ignore_pattern = '^gina://.*'
 
 augroup vimrc
   autocmd BufEnter,BufWinEnter *
-    \   call denite#custom#var('outline', 'command', ['ctags'])
-    \|  call denite#custom#var('outline', 'options', ['--sort=no'])
-    \|  call denite#custom#var('outline', 'file_opt', '-o')
+    \  call denite#custom#var('outline', 'command', ['ctags'])
+    \| call denite#custom#var('outline', 'options', ['--sort=no'])
+    \| call denite#custom#var('outline', 'file_opt', '-o')
   autocmd BufEnter,BufWinEnter *.hs
-    \   call denite#custom#var('outline', 'command', ['hasktags'])
-    \|  call denite#custom#var('outline', 'options', ['--ctags'])
-    \|  call denite#custom#var('outline', 'file_opt', '-f')
+    \  call denite#custom#var('outline', 'command', ['hasktags'])
+    \| call denite#custom#var('outline', 'options', ['--ctags'])
+    \| call denite#custom#var('outline', 'file_opt', '-f')
 augroup END
 
 " }}}
@@ -618,7 +595,7 @@ let g:formatters_typescript = ['typescript_format']
 " let g:formatdef_scalafmt = '"ng scalafmt --stdin"' " Please see Makefile for about `ng scalafmt`
 " let g:formatters_scala = ['scalafmt']
 
-if  filereadable(expand('~/bin/google-java-format-1.7-all-deps.jar'))
+if filereadable(expand('~/bin/google-java-format-1.7-all-deps.jar'))
   let g:formatdef_google_java_format = '"java -jar ~/bin/google-java-format-1.7-all-deps.jar -"'
   let g:formatters_java = ['google_java_format']
 endif
@@ -689,7 +666,7 @@ AlterCommand tabnew TabnewOverridden
 let g:lsp_diagnostics_enabled = v:false
 let g:lsp_async_completion = v:true
 
-function! s:find_root_uri_by_file(file) abort
+function s:find_root_uri_by_file(file) abort
   return { _ ->
     \ lsp#utils#path_to_uri(
       \ lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), a:file)
@@ -698,26 +675,26 @@ function! s:find_root_uri_by_file(file) abort
 endfunction
 
 augroup vimrc
-  autocmd User lsp_setup call lsp#register_server({
-    \ 'name': 'language-server-stdio.js',
-    \ 'cmd': { _ -> [&shell, &shellcmdflag, 'language-server-stdio.js'] },
-    \ 'root_uri': s:find_root_uri_by_file('tsconfig.json'),
-    \ 'whitelist': ['javascript', 'typescript', 'typescript.tsx', 'vue'],
+  autocmd User lsp_setup call lsp#register_server(#{
+    \ name: 'language-server-stdio.js',
+    \ cmd: { _ -> [&shell, &shellcmdflag, 'language-server-stdio.js'] },
+    \ root_uri: s:find_root_uri_by_file('tsconfig.json'),
+    \ whitelist: ['javascript', 'typescript', 'typescript.tsx', 'vue'],
   \ })
 
-  autocmd User lsp_setup call lsp#register_server({
-    \ 'name': 'haskell-ide-engine',
-    \ 'cmd': { _ -> [&shell, &shellcmdflag, 'hie-wrapper'] },
-    \ 'root_uri': s:find_root_uri_by_file('package.yaml'),
-    \ 'whitelist': ['haskell', 'happy', 'alex'],
+  autocmd User lsp_setup call lsp#register_server(#{
+    \ name: 'haskell-ide-engine',
+    \ cmd: { _ -> [&shell, &shellcmdflag, 'hie-wrapper'] },
+    \ root_uri: s:find_root_uri_by_file('package.yaml'),
+    \ whitelist: ['haskell', 'happy', 'alex'],
   \ })
 
   " TODO: うごいてくれ〜
-  autocmd User lsp_setup call lsp#register_server({
-    \ 'name': 'vim-language-server',
-    \ 'cmd': { _ -> [&shell, &shellcmdflag, 'vim-language-server --stdio'] },
-    \ 'root_uri': { _ -> g:vimrc.path_at_started },
-    \ 'whitelist': ['vim'],
+  autocmd User lsp_setup call lsp#register_server(#{
+    \ name: 'vim-language-server',
+    \ cmd: { _ -> [&shell, &shellcmdflag, 'vim-language-server --stdio'] },
+    \ root_uri: { _ -> g:vimrc.path_at_started },
+    \ whitelist: ['vim'],
   \ })
 augroup END
 
@@ -757,7 +734,7 @@ augroup vimrc
   autocmd WinEnter * PreciousSwitch
 augroup END
 
-function! s:dont_enter_vue_promise() abort
+function s:dont_enter_vue_promise() abort
   if context_filetype#get()['filetype'] =~# '^vue-'
     call precious#switch('typescript')
   endif
