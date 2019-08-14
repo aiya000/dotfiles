@@ -28,3 +28,6 @@
 [submodule ".zsh/plugin/zsh-autosuggestions"]
 	path = .zsh/plugin/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule ".vim/neosnippets/neosnippet-emoji"]
+	path = .vim/neosnippets/neosnippet-emoji
+	url = https://github.com/aiya000/neosnippet-emoji
