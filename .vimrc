@@ -753,6 +753,11 @@ let g:webpage_source = #{
 \ }
 
 " }}}
+" jumpy.vim {{{
+
+let g:jumpy_map = [']]]', '[[[']
+
+" }}}
 
 call dein#end()
 

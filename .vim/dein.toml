@@ -110,3 +110,6 @@ repo = 'osyo-manga/vim-precious'
 
 [[plugins]]  # NOTE: This plugin cannot be lazy because (maybe) global functions of ./plugin is not cached.
 repo = 'tyru/sync-term-cwd.vim'
+
+[[plugins]]
+repo = 'arp242/jumpy.vim'

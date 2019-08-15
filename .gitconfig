@@ -37,3 +37,5 @@
 	template = ~/.dotfiles/.gitmessage
 [rerere]
 	enabled = true
+[diff]
+	indentHeuristic = true
