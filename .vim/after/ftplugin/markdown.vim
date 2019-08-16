@@ -21,9 +21,6 @@ nmap <silent><buffer> <C-l> <C-[>:syntax sync fromstart<CR>
 
 vnoremap <silent><buffer> i{ :<C-u>call <SID>organize_this_table()<CR>
 
-" Disable deleting tail spaces
-nnoremap <buffer> <C-k><Space> <NOP>
-
 syntax sync fromstart
 
 function! s:open_grip() abort
