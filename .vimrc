@@ -758,6 +758,19 @@ let g:webpage_source = #{
 let g:jumpy_map = [']]]', '[[[']
 
 " }}}
+" context_filetype.vim {{{
+
+let g:context_filetype#filetypes = #{
+  \ review: [
+    \ #{
+      \ start: '//list\[[^]]\+\]\[[^]]\+\]\[\([^]]\+\)\]{',
+      \ end: '//}',
+      \ filetype: '\1',
+    \ },
+  \ ],
+\ }
+
+" }}}
 
 call dein#end()
 
@@ -1212,7 +1225,6 @@ nmap <C-k><C-t> :<C-u>Denite tag<CR>i
 nmap <C-k>T :<C-u>execute ':tselect' input('tag name: ')<CR>
 nmap <C-k><C-f> :<C-u>Denite outline<CR>i
 nmap <C-k>f :<C-u>Denite filetype<CR>i
-nmap H :<C-u>Denite line<CR>i
 nmap M :<C-u>Denite file_mru<CR>i
 nmap L :<C-u>Denite buffer<CR>i
 
