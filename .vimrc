@@ -755,7 +755,7 @@ let g:webpage_source = #{
 " }}}
 " jumpy.vim {{{
 
-let g:jumpy_map = [']]]', '[[[']
+let g:jumpy_map = [')', '(']
 
 " }}}
 " context_filetype.vim {{{
@@ -1382,6 +1382,9 @@ omap 'f <Plug>(fmap-forward-f)
 omap 'F <Plug>(fmap-backward-f)
 omap 't <Plug>(fmap-forward-t)
 omap 'T <Plug>(fmap-backward-T)
+
+" operator-camelize.vim
+vmap <leader><leader>c <Plug>(operator-camelize-toggle)
 
 " }}}
 

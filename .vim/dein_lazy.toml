@@ -345,3 +345,15 @@ on_cmd = [
     'Silicon',
     'SiliconHighlight',
 ]
+
+[[plugins]]
+repo   = 'aiya000/vim-webpage'
+on_cmd = ['Webpage']
+
+[[plugins]]
+repo = 'tyru/operator-camelize.vim'
+on_map = [
+    '<Plug>(operator-camelize)',
+    '<Plug>(operator-decamelize)',
+    '<Plug>(operator-camelize-toggle)',
+]
