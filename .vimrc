@@ -394,6 +394,8 @@ call submode#map('window_resize', 'n', '', 'j', '3<C-w>+')
 call submode#map('window_resize', 'n', '', 'k', '3<C-w>-')
 call submode#map('window_resize', 'n', '', 'h', '3<C-w><')
 call submode#map('window_resize', 'n', '', 'l', '3<C-w>>')
+call submode#map('window_resize', 'n', '', '<', '20<C-w><')
+call submode#map('window_resize', 'n', '', '>', '20<C-w>>')
 
 call submode#enter_with('tab_move', 'n', 's', '<C-s>n', ':<C-u>call vimrc#move_tab_next()<CR>')
 call submode#enter_with('tab_move', 'n', 's', '<C-s>p', ':<C-u>call vimrc#move_tab_prev()<CR>')
