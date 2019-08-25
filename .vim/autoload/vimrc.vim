@@ -194,12 +194,12 @@ function! vimrc#toggle_indent_guides()
 endfunction
 
 " Delete a surround `{ _ }` -> ` _ `
-function! vimrc#delete_mostly_inner() abort
+function! vimrc#delete_mostly_inner_surround() abort
   call dein#source('vim-operator-surround')
   let obj_keys = s:get_current_obj_keys()
-  call s:Optional.map(s:input_obj_key_on(obj_keys), { obj_key ->
-    \ s:normal('va' . obj_key . "\<Plug>(operator-surround-delete)")
-  \ })
+  let obj_key = s:input_obj_key_of(obj_keys)
+  execute 'normal' ('va' . obj_key . "\<Plug>(operator-surround-delete)")
+  call repeat#set("\<Plug>(vimrc-surround-delete-mostly-inner)" . obj_key)
 endfunction
 
 function! s:get_current_obj_keys() abort
@@ -208,41 +208,45 @@ function! s:get_current_obj_keys() abort
   return s:List.flatten(obj_keys)
 endfunction
 
-function! s:input_obj_key_on(obj_keys) abort
+function! s:input_obj_key_of(obj_keys) abort
   let stroke = ''
   while !s:List.has(a:obj_keys, stroke)
     let char = nr2char(getchar())
     if s:List.has(['', '', ''], char)
-      return s:Optional.none()
+      return v:null
     endif
     let stroke .= char
   endwhile
-  return s:Optional.new(stroke)
-endfunction
-
-" Avoids E930
-function! s:normal(stroke) abort
-  execute 'normal ' . a:stroke
+  return stroke
 endfunction
 
 " Replaces a surround to a surround `{ _ }` -> `[ _ ]`
-function! vimrc#replace_mostly_inner() abort
+function! vimrc#replace_mostly_inner_surround() abort
   call dein#source('vim-operator-surround')
   let obj_keys = s:get_current_obj_keys()
-  call s:Optional.map(s:input_obj_key_on(obj_keys), { from ->
-    \ s:Optional.map(s:input_obj_key_on(obj_keys), { to ->
-      \ s:normal(('va' . from  . "\<Plug>(operator-surround-replace)" . to))
-    \ })
-  \ })
+  let obj_key_from = s:input_obj_key_of(obj_keys)
+  let obj_key_to = s:input_obj_key_of(obj_keys)
+  execute 'normal' ('va' . obj_key_from  . "\<Plug>(operator-surround-replace)" . obj_key_to)
+  call repeat#set("\<Plug>(vimrc-surround-replace-mostly-inner)" . obj_key_from . obj_key_to)
 endfunction
 
 " a:visualizer: e.g. 'viw', 'viW'
-function! vimrc#append_surround(visualizer) abort
+function! s:append_choose_surround(visualizer) abort
   call dein#source('vim-operator-surround')
   let obj_keys = s:get_current_obj_keys()
-  call s:Optional.map(s:input_obj_key_on(obj_keys), { obj_key ->
-    \ s:normal(a:visualizer . "\<Plug>(operator-surround-append)" . obj_key)
-  \ })
+  let obj_key = s:input_obj_key_of(obj_keys)
+  execute 'normal' (a:visualizer . "\<Plug>(operator-surround-append)" . obj_key)
+  return obj_key
+endfunction
+
+function vimrc#append_choose_surround() abort
+  let obj_key = s:append_choose_surround('viw')
+  call repeat#set("\<Plug>(vimrc-surround-append-choice)" . obj_key)
+endfunction
+
+function vimrc#append_choose_surround_wide() abort
+  let obj_key = s:append_choose_surround('viW')
+  call repeat#set("\<Plug>(vimrc-surround-append-choice-wide)" . obj_key)
 endfunction
 
 " Puts a regsiter as stdin to the terminal buffer

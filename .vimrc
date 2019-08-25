@@ -1343,10 +1343,10 @@ vnoremap <silent> i= :Alignta => =/1<CR>
 " vim-operator-surround
 vmap ga <Plug>(operator-surround-append)
 omap ga <Plug>(operator-surround-append)
-nnoremap <silent> ga :<C-u>call vimrc#append_surround('viw')<CR>
-nnoremap <silent> gs :<C-u>call vimrc#append_surround('viW')<CR>
-nnoremap <silent> ds :<C-u>call vimrc#delete_mostly_inner()<CR>
-nnoremap <silent> cs :<C-u>call vimrc#replace_mostly_inner()<CR>
+nmap ga <Plug>(vimrc-surround-append-choice)
+nmap gs <Plug>(vimrc-surround-append-choice-wide)
+nmap ds <Plug>(vimrc-surround-delete-mostly-inner)
+nmap cs <Plug>(vimrc-surround-replace-mostly-inner)
 
 " vim-textobj-jabraces
 vmap ijp <Plug>(textobj-jabraces-parens-i)
@@ -1387,6 +1387,9 @@ omap 'T <Plug>(fmap-backward-T)
 
 " operator-camelize.vim
 vmap <leader><leader>c <Plug>(operator-camelize-toggle)
+
+" vim-repeat
+nmap . <Plug>(repeat-.)
 
 " }}}
 
