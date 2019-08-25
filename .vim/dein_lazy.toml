@@ -349,16 +349,3 @@ on_map = [
     '<Plug>(operator-decamelize)',
     '<Plug>(operator-camelize-toggle)',
 ]
-
-[[plugins]]
-repo = 'kana/vim-repeat'
-on_map = [
-    '<Plug>(repeat-.)',
-    '<Plug>(repeat-u)',
-    '<Plug>(repeat-U)',
-    '<Plug>(repeat-<C-r>)',
-    '<Plug>(repeat-g-)',
-    '<Plug>(repeat-g+)',
-]
-on_func = 'repeat#set'
-on_cmd = 'RepeatDefaultKeyMappings'
