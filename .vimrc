@@ -144,9 +144,9 @@ endif
 " }}}
 
 
-"---------"
-" Plugins "
-"---------"
+"----------"
+" dein.vim "
+"----------"
 " {{{
 
 call dein#load_toml('~/.vim/dein.toml',      {'lazy': 0})
@@ -783,44 +783,45 @@ call dein#end()
 " {{{
 
 set
-  \ number
-  \ relativenumber
-  \ nowrap
-  \ hlsearch
-  \ list
-  \ scrolloff=16
-  \ incsearch
-  \ textwidth=0
-  \ tabstop=4
-  \ shiftwidth=4
-  \ expandtab
-  \ breakindent
-  \ linebreak
   \ autoindent
-  \ cindent
-  \ nojoinspaces
-  \ previewheight=40
-  \ laststatus=2
-  \ wildmenu
-  \ wildignorecase
-  \ noruler
-  \ cmdheight=2
-  \ history=500
-  \ nowrapscan
-  \ visualbell
-  \ notimeout
-  \ path=.,,./**
-  \ shellslash
-  \ hidden
+  \ backspace=indent,eol,start
+  \ breakindent
   \ browsedir=buffer
+  \ cindent
+  \ cmdheight=2
+  \ completeopt-=preview
+  \ cursorline
+  \ expandtab
+  \ fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
+  \ hidden
+  \ history=500
+  \ hlsearch
+  \ incsearch
+  \ laststatus=2
+  \ linebreak
+  \ list
+  \ listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
+  \ matchpairs+=<:>,（:）,｛:｝,「:」,＜:＞,『:』
+  \ nojoinspaces
+  \ noruler
+  \ notimeout
+  \ nowrap
+  \ nowrapscan
+  \ number
+  \ path=.,,./**
+  \ previewheight=40
+  \ relativenumber
+  \ scrolloff=16
+  \ shellslash
+  \ shiftwidth=4
   \ spelllang=en_US,cjk
   \ suffixes=
   \ tabline=%!vimrc#tabline#make()
-  \ backspace=indent,eol,start
-  \ listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
-  \ fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
-  \ matchpairs+=<:>,（:）,｛:｝,「:」,＜:＞,『:』
-  \ completeopt-=preview
+  \ tabstop=4
+  \ textwidth=0
+  \ visualbell
+  \ wildignorecase
+  \ wildmenu
 
 if !has('nvim')
   set termwinkey=<F1>
@@ -1386,6 +1387,7 @@ omap 't <Plug>(fmap-forward-t)
 omap 'T <Plug>(fmap-backward-T)
 
 " operator-camelize.vim
+nmap <leader><leader>c viw<Plug>(operator-camelize-toggle)
 vmap <leader><leader>c <Plug>(operator-camelize-toggle)
 
 " vim-repeat
