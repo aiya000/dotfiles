@@ -733,7 +733,7 @@ augroup vimrc
   autocmd User PreciousFileType IndentGuidesToggle | IndentGuidesToggle
   autocmd User PreciousFileType call s:dont_enter_vue_promise()
   autocmd FileType vue-* setl syntax=typescript
-  autocmd WinEnter * PreciousSwitch
+  autocmd WinEnter,BufEnter,TabEnter * PreciousSwitch
 augroup END
 
 function s:dont_enter_vue_promise() abort
