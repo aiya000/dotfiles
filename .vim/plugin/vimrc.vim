@@ -111,12 +111,12 @@ command! -bar -nargs=* GBlame Gina blame <args>
 command! -bar -nargs=* Gist Gista post --stay <args>
 
 " Twitter
-command! -bar TwitterPrivate call vimrc#twitter_private()
+command! -bar TweetPrivate call vimrc#tweet(g:vimrc.twitter.private)
+command! -bar TweetPublic call vimrc#tweet(g:vimrc.twitter.public)
+command! -bar TwitterPrivate call vimrc#twitter(g:vimrc.twitter.private)
 command! -bar TwitterPrivateTab tabnew | TwitterPrivate
-command! -bar TweetPrivate call vimrc#tweet_private()
-command! -bar TwitterPublic call vimrc#twitter_public()
+command! -bar TwitterPublic call vimrc#twitter(g:vimrc.twitter.public)
 command! -bar TwitterPublicTab tabnew | TwitterPublic
-command! -bar TweetPublic call vimrc#tweet_public()
 
 " vim-webpage
 command! -bar -nargs=+ Weblio WebpageShow weblio <args>

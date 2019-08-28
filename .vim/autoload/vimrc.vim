@@ -461,58 +461,14 @@ function! vimrc#append_config_quickrun_windows() abort
 endfunction
 
 " Open tweetvim by private account
-function! vimrc#twitter_private() abort
-  if !exists('g:vimrc.private["twitter"]["private_account"]')
-    call s:Msg.error('Not set env variable => g:vimrc.private["twitter"]["private_account"]')
-    return
-  endif
-
-  execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['private_account']
-  let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['private_account']
-
+function! vimrc#twitter(account) abort
+  execute ':TweetVimSwitchAccount' a:account
   TweetVimHomeTimeline
 endfunction
 
-" Open tweetvim_say by private account
-function! vimrc#tweet_private() abort
-  if !exists('g:vimrc.private["twitter"]["private_account"]')
-    call s:Msg.error('Not set env variable => g:vimrc.private["twitter"]["private_account"]')
-    return
-  endif
-
-  execute ':TweetVimSwitchAccount' g:vimrc.private['twitter']['private_account']
+function! vimrc#tweet(account) abort
+  execute ':TweetVimSwitchAccount' a:account
   TweetVimSay
-endfunction
-
-" Open tweetvim by public account
-function! vimrc#twitter_public() abort
-  if !exists("g:vimrc.private['twitter']['public_account']")
-    call s:Msg.error("Not set env variable => g:vimrc.private['twitter']['public_account']")
-    return
-  endif
-
-  execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['public_account']
-  let g:vimrc.private['twitter']['curr_ac'] = g:vimrc.private['twitter']['public_account']
-
-  TweetVimHomeTimeline
-endfunction
-
-" Open tweetvim_say by public account
-function! vimrc#tweet_public(...) abort
-  if !exists('g:vimrc.private["twitter"]["public_account"]')
-    call s:Msg.error('Not set env variable => g:vimrc.private["twitter"]["public_account"]')
-    return
-  endif
-
-  execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['public_account']
-  if len(a:000) is 0
-    TweetVimSay
-  else
-    execute 'TweetVimCommandSay' join(a:000)
-  endif
-
-  "@Incomplete('wait here')
-  "execute ':TweetVimSwitchAccount ' g:vimrc.private['twitter']['curr_ac']
 endfunction
 
 " let s:read_to_quickfix_it {{{
@@ -525,6 +481,7 @@ let s:read_to_quickfix_it = { cmd ->
 \ }
 
 " }}}
+
 " TODO: Unify run_foo_quickfix to one
 function! vimrc#run_gradle_quickfix(gradle_subcmd) abort
   let current = getcwd()
