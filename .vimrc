@@ -1073,9 +1073,9 @@ inoremap <silent> <C-k><C-w> <C-o>:setl wrap! wrap?<CR>
 inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
 
 " fake digraphs
-inoremap <C-k>++ ＋
-inoremap <C-k>-- −
-inoremap <C-k>== ＝
+inoremap <C-k>\+ ＋
+inoremap <C-k>\- −
+inoremap <C-k>\= ＝
 inoremap <C-k>?= ≒
 inoremap <C-k>\N ℕ
 inoremap <C-k>\Z ℤ
@@ -1178,25 +1178,26 @@ tnoremap <C-]> <C-l>
 " }}}
 " digraph {{{
 
-digraph /= 8800   " not equal
 digraph (( 8834   " right includes left
 digraph )) 8835   " left includes right
+digraph /= 8800   " not equal
+digraph \*  215   " cartesian product
+digraph \. 9675   " compose
+digraph \/ 247    " div
+digraph \< 8804   " right more than left or equals
+digraph \= 8803   " equivalence relation
+digraph \> 8805   " left mode than right or equals
 digraph \A 8704   " forall
 digraph \E 8707   " exists
+digraph \U 8745   " intersect
 digraph \a 8743   " and
 digraph \o 8744   " or
-digraph \= 8803   " equivalence relation
-digraph \< 8804   " right more than left or equals
-digraph \> 8805   " left mode than right or equals
-digraph \. 9675   " compose
-digraph \*  215   " cartesian product
-digraph \U 8745   " intersect
 digraph \u 8746   " union
 digraph \|^ 8593  " arrow up
 digraph \|v 8595  " arrow down
-digraph xx 215    " product
-digraph pi 960    " pi
 digraph ph 934    " phi
+digraph pi 960    " pi
+digraph xx 215    " product
 
 " }}}
 " plugins {{{
