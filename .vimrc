@@ -43,7 +43,7 @@ let g:vimrc['sessiondir'] = g:vimrc['backupdir'] . '/session'
 "-----------"
 " Preparing "
 "-----------"
-" Set encodings {{{
+" Set encoding {{{
 
 if !g:vimrc['loaded']
   set fileencoding=utf-8 encoding=utf-8
@@ -61,7 +61,7 @@ if g:vimrc['is_kaoriya'] && g:vimrc['is_windows']
   let g:vimrc['vim_home'] = substitute($VIM, '\', '/', 'g') . '/vimfiles'
   let &runtimepath        = &runtimepath . ',' . g:vimrc['vim_home']
 
-  " Use cygwin's commands
+  " Use commands of cygwin
   if g:vimrc['has_cygwin']
     let $PATH = '/cygwin/bin;/cygwin/usr/bin;/cygwin/usr/sbin;' . $PATH
   endif
@@ -465,7 +465,7 @@ augroup vimrc
 augroup END
 
 "}}}
-" autofmt{{{
+" autofmt {{{
 
 set formatexpr=autofmt#japanese#formatexpr()
 
@@ -649,7 +649,7 @@ augroup END
 
 let g:gina#command#blame#formatter#format = '%su%=on %ti by %au %ma%in'
 
-" Please see hook_source.vim for more informations
+" Please see hook_source.vim for more information
 
 " }}}
 " vim-altercmd {{{
@@ -814,7 +814,9 @@ set
   \ scrolloff=16
   \ shellslash
   \ shiftwidth=4
-  \ spelllang=en_US,cjk
+  \ spell
+  \ spellfile=~/.dotfiles/.vim/en.utf-8.add
+  \ spelllang=en_us,cjk
   \ suffixes=
   \ tabline=%!vimrc#tabline#make()
   \ tabstop=4
@@ -827,7 +829,7 @@ if !has('nvim')
   set termwinkey=<F1>
 endif
 
-" See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer)
+" See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a natural number)
 let &statusline =
   \ '%1*[%F(%n)]%*' .
   \ '%2*[FT=%y]%*' .
@@ -846,7 +848,7 @@ set ambiwidth=double
 augroup vimrc
   autocmd ColorScheme * highlight EmSpace ctermbg=LightBlue guibg=LightBlue
   autocmd VimEnter,WinEnter * call matchadd('EmSpace', '　')
-  " git conflictions
+  " git conflict
   autocmd ColorScheme * highlight GitConflict ctermbg=Red guibg=Red
   autocmd VimEnter,WinEnter * call matchadd('GitConflict', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
 augroup END
@@ -864,7 +866,7 @@ if !g:vimrc['loaded']
   colorscheme lucariox
 endif
 
-" Tabline is always shown
+" The tabline is always shown
 set showtabline=2
 
 " Set the fold options
@@ -1237,7 +1239,7 @@ nmap L :<C-u>Denite buffer<CR>i
 nnoremap <leader>K :<C-u>Weblio <C-r>=expand('<cword>')<CR><CR>
 vnoremap <leader>K "zy:<C-u>Weblio <C-r>z<CR>
 
-" anzu-chan
+" vim-anzu
 "" always n moves to forward / N moves to backward
 nmap <expr> n (v:searchforward ? '<Plug>(anzu-n-with-echo)' : '<Plug>(anzu-N-with-echo)') . 'zv'
 nmap <expr> N (v:searchforward ? '<Plug>(anzu-N-with-echo)' : '<Plug>(anzu-n-with-echo)') . 'zv'
@@ -1335,11 +1337,6 @@ omap a;f i;f
 " vim-alignta
 vnoremap i: :Alignta =><Space>
 vnoremap <silent> i= :Alignta => =/1<CR>
-
-" vim-espeak-ng
-"nnoremap <silent> <C-g><C-w> :<C-u>EspeakNgSay <C-r>=expand('<cWORD>')<CR><CR>
-"nnoremap <silent> <C-g><C-g> :<C-u>EspeakNgSay <C-r>=getline('.')<CR><CR>:execute 'normal!' "\<C-g>"<CR>
-"nnoremap <silent> <C-g><C-k> :<C-u>EspeakNgDoesntSay<CR>
 
 " vim-operator-surround
 vmap ga <Plug>(operator-surround-append)
