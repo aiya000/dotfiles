@@ -1,6 +1,6 @@
 let s:List = vital#vimrc#import('Data.List')
 
-function! s:shorten_path_if_needed(path) abort
+function s:shorten_path_if_needed(path) abort
   let mettya_nagai = 60 | lockvar! mettya_nagai
   return len(a:path) > mettya_nagai
     \ ? pathshorten(a:path)
@@ -11,22 +11,22 @@ endfunction
 "
 " See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer),
 " and below augroup 'HighlightPref'.
-function! vimrc#tabline#make() abort
+function vimrc#tabline#make() abort
   let language_client_status =
     \ get(g:vimrc, 'language_client_neovim', {'enabled': v:false})['enabled']
       \ ? '%7*[lsp]%*'
       \ : ''
+
   return '%1*[%{tabpagenr("$")}]%* '
     \. s:tabs() . ' => '
     \. '%2*[PWD=%{vimrc#tabline#cwd_or_shorten()}]%*'
     \. '%3*%{vimrc#tabline#tags_if_present()}%*'
-    \. "%4*%{'[' . tabpagenr('$') . ']'}%*"
-    \. '%5*%{vimrc#tabline#marks_if_present()}%*'
-    \. '%6*%{vimrc#tabline#ale_if_present()}%*'
+    \. '%4*%{vimrc#tabline#marks_if_present()}%*'
+    \. '%5*%{vimrc#tabline#ale_if_present()}%*'
     \. language_client_status
 endfunction
 
-function! vimrc#tabline#tags_if_present() abort
+function vimrc#tabline#tags_if_present() abort
   let tags = tagfiles()
   return
     \ empty(tags)
@@ -36,14 +36,14 @@ function! vimrc#tabline#tags_if_present() abort
     \ ('[Tag=' . s:shorten_path_if_needed(tags[0]) . ' +]')
 endfunction
 
-function! vimrc#tabline#marks_if_present() abort
+function vimrc#tabline#marks_if_present() abort
   let marks = s:get_buf_marks()
   return empty(marks)
     \ ? ''
     \ : '[Mark=' . join(marks, '') . ']'
 endfunction
 
-function! s:get_buf_marks() abort
+function s:get_buf_marks() abort
   let lines       = split(execute(':marks'), "\n")[2:]  " List only the lines like ` a 30 48 let lines = split...`
   let all_marks   = map(lines, {_, x -> x[1]})
   let local_marks = filter(all_marks, {_, x -> match(x, '\l', 0, 0) is 0})
@@ -51,14 +51,14 @@ function! s:get_buf_marks() abort
 endfunction
 
 " NOTE: http://d.hatena.ne.jp/thinca/20111204/1322932585
-function! s:tabs()
+function s:tabs()
   let titles = map(range(1, tabpagenr('$')), { _, tabnr ->
     \ vimrc#tabline#tabpage_label(tabnr)
   \ })
   return join(titles) . '%#TabLineFill#%T'
 endfunction
 
-function! vimrc#tabline#tabpage_label(tabnr)
+function vimrc#tabline#tabpage_label(tabnr)
   let title = gettabvar(a:tabnr, 'title')
   if title !=# ''
     return title
@@ -83,17 +83,17 @@ function! vimrc#tabline#tabpage_label(tabnr)
 endfunction
 
 " Do you staying the specified tab?
-function! s:is_stayed_tab(tabnr) abort
+function s:is_stayed_tab(tabnr) abort
   return a:tabnr is tabpagenr()
 endfunction
 
 " Return '+' if the buffer of the specified window is modified
-function! s:get_mod_mark_for_window(winnr) abort
+function s:get_mod_mark_for_window(winnr) abort
   return getbufvar(winbufnr(a:winnr), '&modified') ? '+' : ''
 endfunction
 
 " Return '+' if one or more a modified non terminal buffer is existent in the taken tab
-function! s:get_mod_mark_for_tab(tabnr) abort
+function s:get_mod_mark_for_tab(tabnr) abort
   let term_buffers = term_list()
   let modified_buffer = s:List.find(tabpagebuflist(a:tabnr), v:null, { bufnr_at_tab ->
     \ !s:List.has(term_buffers, bufnr_at_tab) &&
@@ -102,11 +102,11 @@ function! s:get_mod_mark_for_tab(tabnr) abort
   return (modified_buffer is v:null) ? '' : '+'
 endfunction
 
-function! vimrc#tabline#cwd_or_shorten() abort
+function vimrc#tabline#cwd_or_shorten() abort
   return s:shorten_path_if_needed(getcwd())
 endfunction
 
-function! vimrc#tabline#ale_if_present() abort
+function vimrc#tabline#ale_if_present() abort
   let g_label = get(g:, 'ale_enabled', 1) ? '' : 'g'
   let b_label = get(b:, 'ale_enabled', 1) ? '' : 'b'
   return (g_label !=# '') || (b_label !=# '')

@@ -814,9 +814,6 @@ set
   \ scrolloff=16
   \ shellslash
   \ shiftwidth=4
-  \ spell
-  \ spellfile=~/.dotfiles/.vim/en.utf-8.add
-  \ spelllang=en_us,cjk
   \ suffixes=
   \ tabline=%!vimrc#tabline#make()
   \ tabstop=4
