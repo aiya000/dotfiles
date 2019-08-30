@@ -2,7 +2,8 @@ let b:undo_ftplugin = 'setl ' . join([
   \ 'tabstop<',
   \ 'shiftwidth<',
   \ 'expandtab<',
-  \ 'omnifunc',
+  \ 'omnifunc<',
+  \ 'nocindent<',
 \ ])
 
-setl tabstop=4 shiftwidth=4 expandtab omnifunc=
+setl tabstop=4 shiftwidth=4 expandtab omnifunc= nocindent

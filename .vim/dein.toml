@@ -116,3 +116,6 @@ repo = 'arp242/jumpy.vim'
 
 [[plugins]]
 repo = 'kana/vim-repeat'
+
+[[plugins]]
+repo = 'chip/vim-fat-finger'
