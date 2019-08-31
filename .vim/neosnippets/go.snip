@@ -1,27 +1,30 @@
 snippet func
-abbr    func () {}
+alias fun
+abbr func () {}
     func ${1:#:funcName}(${2})${3:#:int} {
         ${0:#:return}
     }
 
-snippet print
-abbr    fmt.Print()
-    fmt.Print(${0})
-
 snippet import
-alias   imp
-abbr    import ()
+alias imp
+abbr import ()
     import (
         "${1:fmt}"
         ${2}
     )
     ${0}
 
+snippet if
+abbr if ${1:cond} {${0:#:here}}
+    if ${1:cond} {${0:#:here}}
+
 snippet else
-abbr    else {}
+abbr else {}
     else {
         ${0}
     }
+
+# Expressions
 
 snippet fprint
 abbr    fmt.Fprint()
@@ -30,3 +33,8 @@ abbr    fmt.Fprint()
 snippet fprintln
 abbr    fmt.Fprintln()
     fmt.Fprintln(${1:os.Stderr}, ${2:err})
+
+snippet print
+alias pr
+abbr    fmt.Print()
+    fmt.Print(${0})

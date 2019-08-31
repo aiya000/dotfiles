@@ -573,6 +573,7 @@ let g:fmap_escape_keys = ['', '', '']
 
 augroup vimrc
   autocmd VimEnter * FNoreMap / ・
+  autocmd VimEnter * FNoreMap T ・
   autocmd VimEnter * FNoreMap tt …
   autocmd VimEnter * FNoreMap p （
   autocmd VimEnter * FNoreMap k 「
