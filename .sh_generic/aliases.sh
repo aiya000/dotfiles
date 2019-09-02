@@ -113,7 +113,7 @@ if i_have git ; then
     alias grmc='git rm --cached'
     alias gs='git status'
     alias gss='git stash'
-    alias gsss='git stash save'
+    alias gsss='git stash push'
     alias gssp='git stash pop'
     function gsssp () {
         git stash push --message "$1" --patch
