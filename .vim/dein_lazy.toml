@@ -349,3 +349,10 @@ on_map = [
     '<Plug>(operator-decamelize)',
     '<Plug>(operator-camelize-toggle)',
 ]
+
+[[plugins]]
+repo = 'uplus/vim-clurin'
+on_map = [
+    '<Plug>(clurin-next)',
+    '<Plug>(clurin-prev)',
+]

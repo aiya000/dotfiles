@@ -774,6 +774,29 @@ let g:context_filetype#filetypes = #{
 \ }
 
 " }}}
+" vim-clurin {{{
+
+function! s:ctrl_ax(count) abort
+  if a:count >= 0
+    execute 'normal!' a:count . "\<C-A>"
+  else
+    execute 'normal!' (-a:count) . "\<C-X>"
+  endif
+endfunction
+
+let g:clurin = {
+  \ '-': #{
+    \ nomatch: function('s:ctrl_ax'),
+    \ def: [
+      \ [
+        \ #{pattern: '\<true\>', replace: 'true'},
+        \ #{pattern: '\<false\>', replace: 'false'},
+      \ ],
+    \ ],
+  \ },
+\ }
+
+" }}}
 
 call dein#end()
 
@@ -1388,6 +1411,10 @@ vmap <leader><leader>c <Plug>(operator-camelize-toggle)
 
 " vim-repeat
 nmap . <Plug>(repeat-.)
+
+" vim-clurin
+nmap <C-a> <Plug>(clurin-next)
+nmap <C-x> <Plug>(clurin-prev)
 
 " }}}
 
