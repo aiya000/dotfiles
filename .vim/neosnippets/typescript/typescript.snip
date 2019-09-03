@@ -94,6 +94,11 @@ alias exp
 abbr export
     export
 
+snippet export_from
+alias re_export
+abbr export { ${1:#:stuff} } from '${0:module}'
+    export { ${1:#:stuff} } from '${0:module}'
+
 snippet const
 alias val
     const
