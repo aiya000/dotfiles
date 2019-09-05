@@ -136,6 +136,7 @@ on_ft = 'scala'
 
 [[plugins]]
 repo        = 'lambdalisue/gina.vim'
+rev         = '2e9de27914c3765c87dc28626af772ef6207375e'
 on_cmd      = 'Gina'
 hook_source = 'call vimrc#dein#hook_source#gina()'
 

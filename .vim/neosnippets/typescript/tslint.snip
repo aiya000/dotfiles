@@ -28,13 +28,14 @@ abbr // tslint:disable-line
     // tslint:disable-line
 
 snippet tslint_disable_line_rules
-alias tslint_disable_left_rules
+alias tslint_disable_left_rules tslint_suppress suppress_tslint
 abbr // tslint:disable-line:${0:rules_separated_by_space}
     // tslint:disable-line:${0:rules_separated_by_space}
 
 # Templates
 
 snippet tslint_ignore
+alias ignore_tslint
     /* tslint:disable:${1:rules_separated_by_space} */
     ${0}
     /* tslint:enable:$1 */

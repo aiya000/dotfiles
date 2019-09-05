@@ -33,7 +33,7 @@ repo = 'aiya000/aho-bakaup.vim'
 
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
-rev  = 'c9b41fe9b8cca4b6a11cc0cbe71eecb94fa8a30f'
+rev  = 'ed80ae8cee732d52eb841d509a95aca9c27ece7a'
 
 [[plugins]]
 repo    = 'kana/vim-textobj-indent'
@@ -47,7 +47,7 @@ repo = 'kana/vim-operator-user'
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-rev  = '3e22aabe7500317c5f269a6a552e95e4f8124152'
+rev  = 'cfa0a0028961a4f2b20edab5f8efe997b0988cff'
 
 [[plugins]]
 repo    = 'osyo-manga/vim-textobj-from_regexp'
@@ -77,6 +77,7 @@ repo = 'editorconfig/editorconfig-vim'
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
+rev = '161d4a7cd490dad3a708e8461e11f3bf2af2c0ea'
 
 [[plugins]]
 repo = 'kana/vim-textobj-jabraces'

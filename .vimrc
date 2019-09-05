@@ -818,7 +818,7 @@ let g:clurin = {
 " reply.vim {{{
 
 let g:reply_repls = #{
-  \ typescript: ['tsun'],
+  \ typescript: ['ts-node'],
 \ }
 
 " }}}
