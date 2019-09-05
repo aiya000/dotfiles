@@ -89,12 +89,11 @@ function! vimrc#dein#hook_source#gina_commit_very_verbose(subcmd) abort
     tabnew
   endif
 
-  Gina diff -u --cached --no-color --no-ext-diff --group=diff
-  Gina log --oneline --opener='bot split'
-  resize 10
-  Gina status --group=status --opener=vsplit
-  execute 'normal!' "\<C-w>H"
-  execute 'Gina' 'commit' '--verbose' ' --group=commit' '--opener=split' a:subcmd
+  Gina diff -u --cached --no-color --no-ext-diff --group=gina-commit
+  vsplit
+  Gina status --group=gina-commit
+  split
+  execute 'Gina' 'commit' '--verbose' ' --group=gina-commit' a:subcmd
   let b:gina_commit_very_verbose = v:true
 endfunction
 
