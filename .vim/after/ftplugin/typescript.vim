@@ -8,9 +8,11 @@ setl tabstop=2 shiftwidth=2 expandtab omnifunc=lsp#complete
 let &errorformat = '%f(%l\,%c): %m' " tsc
 
 nnoremap <buffer><silent> <localleader><localleader>r :<C-u>QuickfixRunYarn build<CR>
-nnoremap <buffer> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('', 'horizontal', 'yarn build', {'path': g:vimrc.path_at_started, 'noclose': v:true})<CR>
 nnoremap <buffer><silent> <localleader><localleader>w :<C-u>call <SID>start_quickfix()<CR>
 nnoremap <buffer><silent> <localleader><localleader>W :<C-u>call <SID>stop_quickfix()<CR>
+
+" TODO: Enable this if needed
+" nnoremap <buffer> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('', 'horizontal', 'yarn build', {'path': g:vimrc.path_at_started, 'noclose': v:true})<CR>
 
 augroup FtpluginTypeScript
   autocmd!

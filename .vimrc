@@ -815,6 +815,13 @@ let g:clurin = {
 \ }
 
 " }}}
+" reply.vim {{{
+
+let g:reply_repls = #{
+  \ typescript: ['tsun'],
+\ }
+
+" }}}
 
 call dein#end()
 
@@ -1256,10 +1263,8 @@ nmap <leader>w <Plug>(openbrowser-open)
 vmap <leader>w <Plug>(openbrowser-open)
 
 " vim-quickrun
-nmap              <leader>r <Plug>(quickrun)
-nnoremap <silent> <leader>R :<C-u>QuickRun -runner shell<CR>
-vmap              <leader>r <Plug>(quickrun)
-vnoremap <silent> <leader>R :QuickRun -runner shell<CR>
+nmap <leader>r <Plug>(quickrun)
+vmap <leader>r <Plug>(quickrun)
 
 " denite.nvim
 "" map i to do open_filter_buffer
@@ -1434,6 +1439,11 @@ nmap . <Plug>(repeat-.)
 " vim-clurin
 nmap <C-a> <Plug>(clurin-next)
 nmap <C-x> <Plug>(clurin-prev)
+
+" reply.vim
+nnoremap <silent> <leader><leader>R :<C-u>Repl<CR>
+nnoremap <silent> <leader><leader><leader>R :<C-u>ReplStop<CR>
+vnoremap <silent> <leader>R :ReplSend<CR>
 
 " }}}
 
