@@ -1423,8 +1423,8 @@ nmap <C-a> <Plug>(clurin-next)
 nmap <C-x> <Plug>(clurin-prev)
 
 " reply.vim
-nnoremap <silent> <leader><leader>R :<C-u>Repl<CR>
-nnoremap <silent> <leader><leader><leader>R :<C-u>ReplStop<CR>
+nnoremap <silent> <leader>R :<C-u>Repl<CR>
+nnoremap <silent> <leader><leader>R :<C-u>ReplStop<CR>
 vnoremap <silent> <leader>R :ReplSend<CR>
 
 " }}}
