@@ -784,29 +784,11 @@ function! s:ctrl_ax(count) abort
   endif
 endfunction
 
-function s:cycle_char(char, count) abort
-  let char = a:char
-  for _ in range(1, a:count)
-    if char ==# 'z'
-      let char = 'a'
-      continue
-    endif
-
-    let char = nr2char(char2nr(char) + 1)
-  endfor
-
-  return char
-endfunction
-
 let g:clurin = {
   \ '-': #{
     \ nomatch: function('s:ctrl_ax'),
     \ def: [
       \ [
-        \ #{
-          \ pattern: '\<\([a-z]\)\>',
-          \ replace: { alpha, count, _ -> s:cycle_char(alpha[0], count) }
-        \ },
         \ #{pattern: '\<true\>', replace: 'true'},
         \ #{pattern: '\<false\>', replace: 'false'},
       \ ],
