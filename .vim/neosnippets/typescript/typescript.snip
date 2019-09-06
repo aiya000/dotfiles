@@ -197,12 +197,22 @@ abbr /// <reference path='${0:d-ts-path}'/>
 snippet private_method
 alias primet
 abbr private ${1:name}(${2:#:args}): ${3:type} {${0:here}}
-    private ${1:name}(${2:#:args}): ${3:type} {${0:here}}
+    private ${1:name}(${2:#:args}): ${3:void} {${0:here}}
 
 snippet public_method
 alias pubmet
 abbr public ${1:name}(${2:#:args}): ${3:type} {${0:here}}
-    public ${1:name}(${2:#:args}): ${3:type} {${0:here}}
+    public ${1:name}(${2:#:args}): ${3:void} {${0:here}}
+
+snippet public_async_method
+alias pubamet
+abbr public async ${1:name}(${2:#:args}): ${3:type} {${0:here}}
+    public async ${1:name}(${2:#:args}): Promise<${3:void}> {${0:here}}
+
+snippet private_async_method
+alias priamet
+abbr private async ${1:name}(${2:#:args}): ${3:type} {${0:here}}
+    private async ${1:name}(${2:#:args}): Promise<${3:void}> {${0:here}}
 
 snippet public_readonly
 alias pubre

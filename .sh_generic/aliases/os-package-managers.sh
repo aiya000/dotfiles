@@ -12,6 +12,7 @@ elif i_have pacman ; then
     alias pau='sudo pacman -Sy'
 elif i_have brew ; then
     alias pai='brew install'
+    alias pau='brew upgrade'
     alias par='brew uninstall'
     alias pas='brew search'
 elif i_have apt ; then
