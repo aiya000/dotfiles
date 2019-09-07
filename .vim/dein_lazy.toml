@@ -24,7 +24,7 @@ on_cmd = [
 ]
 
 [[plugins]]
-repo   = 'mattn/favstar-vim'
+repo = 'mattn/favstar-vim'
 on_cmd = 'FavStar'
 
 [[plugins]]
@@ -34,10 +34,10 @@ repo = 'basyura/twibill.vim'
 repo = 'basyura/bitly.vim'
 
 [[plugins]]
-repo    = 'thinca/vim-quickrun'
+repo = 'thinca/vim-quickrun'
 depends = 'vimproc.vim'
-on_cmd  = 'QuickRun'
-on_map  = [
+on_cmd = 'QuickRun'
+on_map = [
     '<Plug>(quickrun)',
     '<Plug>(quickrun-op)',
 ]
@@ -60,8 +60,8 @@ on_ft = [
 ]
 
 [[plugins]]
-repo   = 'kannokanno/previm'
-on_ft  = 'markdown',
+repo = 'kannokanno/previm'
+on_ft = 'markdown',
 on_cmd = 'PrevimOpen'
 
 [[plugins]]
@@ -101,7 +101,7 @@ on_cmd = [
 ]
 
 [[plugins]]
-repo   = 'lambdalisue/vim-pager'
+repo = 'lambdalisue/vim-pager'
 on_cmd = 'PAGER'
 
 [[plugins]]
@@ -119,53 +119,53 @@ on_ft = [
 ]
 
 [[plugins]]
-repo   = 'lambdalisue/vim-gista'
+repo = 'lambdalisue/vim-gista'
 on_cmd = 'Gista'
 
 [[plugins]]
-repo  = 'cespare/vim-toml'
+repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
 [[plugins]]
-repo      = 'yomi322/neco-tweetvim'
+repo = 'yomi322/neco-tweetvim'
 on_source = 'TweetVim'
 
 [[plugins]]
-repo  = 'derekwyatt/vim-scala'
+repo = 'derekwyatt/vim-scala'
 on_ft = 'scala'
 
 [[plugins]]
-repo        = 'lambdalisue/gina.vim'
-rev         = '2e9de27914c3765c87dc28626af772ef6207375e'
-on_cmd      = 'Gina'
+repo = 'lambdalisue/gina.vim'
+rev = '2e9de27914c3765c87dc28626af772ef6207375e'
+on_cmd = 'Gina'
 hook_source = 'call vimrc#dein#hook_source#gina()'
 
 [[plugins]]
-repo  = 'itchyny/vim-haskell-indent'
+repo = 'itchyny/vim-haskell-indent'
 on_ft = 'haskell'
 
 [[plugins]]
-repo  = 'udalov/kotlin-vim'
+repo = 'udalov/kotlin-vim'
 on_ft = 'kotlin'
 
 [[plugins]]
-repo     = 'ianks/vim-tsx'
+repo = 'ianks/vim-tsx'
 on_event = ['BufNewFile', 'BufRead']
-on_ft    = 'expand("%") =~# "\.tsx$"'
+on_ft = 'expand("%") =~# "\.tsx$"'
 
 [[plugins]]
-repo  = 'vmchale/ghci-syntax'
+repo = 'vmchale/ghci-syntax'
 on_ft = 'dot-ghci'
 
 [[plugins]]
-repo   = 'aiya000/elm-vim'
-rev    = 'aiya000/use-command-bang'
-on_ft  = 'elm'
+repo = 'aiya000/elm-vim'
+rev = 'aiya000/use-command-bang'
+on_ft = 'elm'
 on_cmd = ['ElmFormat']
 
 [[plugins]]
 repo = 'aiya000/idris-vim'
-rev  = 'aiya000/can-be-disabled-keymappings'
+rev = 'aiya000/can-be-disabled-keymappings'
 on_ft = [
     'idris',
     'lidris',
@@ -173,19 +173,19 @@ on_ft = [
 
 # Now only for TweetVim
 [[plugins]]
-repo    = 'Shougo/unite.vim'
+repo = 'Shougo/unite.vim'
 depends = 'TweetVim'
-on_cmd  = 'Unite'
+on_cmd = 'Unite'
 
 [[plugins]]
-repo  = 'libclang-vim/libclang-vim'
+repo = 'libclang-vim/libclang-vim'
 build = 'make'
 on_ft = ['c', 'cpp']
 
 [[plugins]]
-repo    = 'libclang-vim/vim-textobj-clang'
+repo = 'libclang-vim/vim-textobj-clang'
 depends = 'libclang-vim'
-on_ft   = ['c', 'cpp']
+on_ft = ['c', 'cpp']
 
 [[plugins]]
 repo = 'haya14busa/incsearch.vim'
@@ -204,7 +204,7 @@ on_map = [
 ]
 
 [[plugins]]
-repo  = 'vim-scripts/alex.vim'
+repo = 'vim-scripts/alex.vim'
 on_ft = 'alex'
 
 [[plugins]]
@@ -215,8 +215,8 @@ on_map = [
 ]
 
 [[plugins]]
-repo        = 'rhysd/vim-operator-surround'
-depends     = 'vim-operator-user'
+repo = 'rhysd/vim-operator-surround'
+depends = 'vim-operator-user'
 hook_source = 'call vimrc#dein#hook_source#operator_surround()'
 on_map = [
     '<Plug>(operator-surround-append)',
@@ -225,7 +225,7 @@ on_map = [
 ]
 
 [[plugins]]
-repo        = 'mattn/emmet-vim'
+repo = 'mattn/emmet-vim'
 hook_source = 'call vimrc#dein#hook_source#emmet()'
 on_ft = [
     'xml',
@@ -234,11 +234,11 @@ on_ft = [
 ]
 
 [[plugins]]
-repo  = 'aiya000/vim-review'
+repo = 'aiya000/vim-review'
 on_ft = 'review'
 
 [[plugins]]
-repo   = 'aiya000/vim-fmap'
+repo = 'aiya000/vim-fmap'
 on_cmd = 'FNoreMap'
 on_map = [
     '<Plug>(fmap-forward-f)',
@@ -258,11 +258,11 @@ on_ft = [
 ]
 
 [[plugins]]
-repo  = 'rhysd/vim-gfm-syntax'
+repo = 'rhysd/vim-gfm-syntax'
 on_ft = ['markdown']
 
 [[plugins]]
-repo  = 'vmchale/dhall-vim'
+repo = 'vmchale/dhall-vim'
 on_ft = ['dhall']
 
 [[plugins]]
@@ -273,11 +273,11 @@ on_ft = [
 ]
 
 [[plugins]]
-repo   = 'haya14busa/dein-command.vim'
+repo = 'haya14busa/dein-command.vim'
 on_cmd = 'Dein'
 
 [[plugins]]
-repo  = 'posva/vim-vue'
+repo = 'posva/vim-vue'
 on_ft = ['vue']
 
 [[plugins]]
@@ -291,11 +291,11 @@ on_ft = [
 depends = ['async.vim']
 
 [[plugins]]
-repo      = 'prabirshrestha/async.vim'
+repo = 'prabirshrestha/async.vim'
 on_source = 'vim-lsp'
 
 [[plugins]]
-repo      = 'lighttiger2505/deoplete-vim-lsp'
+repo = 'lighttiger2505/deoplete-vim-lsp'
 on_source = 'vim-lsp'
 
 [[plugins]]
@@ -316,11 +316,11 @@ on_cmd = [
 ]
 
 [[plugins]]
-repo  = 'gutenye/json5.vim'
+repo = 'gutenye/json5.vim'
 on_ft = ['json5']
 
 [[plugins]]
-repo  = 'itchyny/vim-haskell-sort-import'
+repo = 'itchyny/vim-haskell-sort-import'
 on_ft = ['haskell']
 
 [[plugins]]
@@ -340,7 +340,7 @@ on_cmd = [
 ]
 
 [[plugins]]
-repo   = 'aiya000/vim-webpage'
+repo = 'aiya000/vim-webpage'
 on_cmd = 'Webpage'
 
 [[plugins]]

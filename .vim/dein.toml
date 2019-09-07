@@ -1,11 +1,11 @@
 [[plugins]]
 repo = 'tyru/open-browser.vim'
-rev  = '39e80649c739151673373bbaf3a56d126531467b'
+rev = '39e80649c739151673373bbaf3a56d126531467b'
 
 [[plugins]]
-repo  = 'Shougo/vimproc.vim'
+repo = 'Shougo/vimproc.vim'
 build = 'make'
-if    = '!(g:vimrc["is_kaoriya"] && g:vimrc["is_windows"])'
+if = '!(g:vimrc["is_kaoriya"] && g:vimrc["is_windows"])'
 
 [[plugins]]
 repo = 'LeafCage/foldCC'
@@ -33,10 +33,10 @@ repo = 'aiya000/aho-bakaup.vim'
 
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
-rev  = 'ed80ae8cee732d52eb841d509a95aca9c27ece7a'
+rev = 'ed80ae8cee732d52eb841d509a95aca9c27ece7a'
 
 [[plugins]]
-repo    = 'kana/vim-textobj-indent'
+repo = 'kana/vim-textobj-indent'
 depends = 'vim-textobj-user'
 
 [[plugins]]
@@ -47,14 +47,14 @@ repo = 'kana/vim-operator-user'
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-rev  = 'cfa0a0028961a4f2b20edab5f8efe997b0988cff'
+rev = 'cfa0a0028961a4f2b20edab5f8efe997b0988cff'
 
 [[plugins]]
-repo    = 'osyo-manga/vim-textobj-from_regexp'
+repo = 'osyo-manga/vim-textobj-from_regexp'
 depends = 'vim-textobj-user'
 
 [[plugins]]
-repo    = 'whatyouhide/vim-textobj-xmlattr'
+repo = 'whatyouhide/vim-textobj-xmlattr'
 depends = 'vim-textobj-user'
 
 [[plugins]]
