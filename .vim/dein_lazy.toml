@@ -368,3 +368,7 @@ on_cmd = [
     'ReplList',
     'ReplAuto',
 ]
+
+[[plugins]]
+repo = 'AndrewRadev/quickpeek.vim'
+on_ft = 'qf'
