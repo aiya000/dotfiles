@@ -18,7 +18,7 @@ nnoremap <buffer><silent> <localleader><localleader>B :<C-u>call vimrc#open_term
 nnoremap <buffer><silent> <localleader><localleader>w :<C-u>call <SID>ghcid_quickfix_start_on_path_started()<CR>
 nnoremap <buffer><silent> <localleader><localleader>W :<C-u>GhcidQuickfixStop<CR>
 nnoremap <buffer><silent> <localleader><localleader>T :<C-u>call <SID>stack_integrate_test_or_unit_or_both()<CR>
-nnoremap <buffer><silent> <localleader><localleader>t :<C-u>GhcidQuickfixStart '--command=stack ghci :tasty'<CR>
+nnoremap <buffer><silent> <localleader><localleader>t :<C-u>GhcidQuickfixStart "--command=stack ghci :tasty"<CR>
 nnoremap <buffer><silent> <localleader><localleader>s :<C-u>sp \| StackGhci<CR>
 nnoremap <buffer> <localleader>S :<C-u>Aref stackage <C-r>=expand('<cword>')<CR><CR>
 
