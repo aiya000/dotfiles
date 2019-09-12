@@ -1,4 +1,5 @@
 scriptencoding utf-8
+scriptversion 3
 
 let s:V = vital#vimrc#new()
 
@@ -10,15 +11,15 @@ let s:Optional = s:V.import('Data.Optional')
 
 " Clone dein.vim to target dir
 function! vimrc#fetch_dein(install_dirname)
-    if executable('git')
-        echo 'dein.vim was not installed yet.'
-        echo 'Installing dein.vim now.'
-        execute '!git clone https://github.com/Shougo/dein.vim' a:install_dirname
-    else
-        call s:Msg.error('Sorry, You do not have git command.')
-        call s:Msg.error('I cannot introduce dein.vim.')
-        throw 'FALIED: cloning deim.vim failed.'
-    endif
+  if executable('git')
+    echo 'dein.vim was not installed yet.'
+    echo 'Installing dein.vim now.'
+    execute '!git clone https://github.com/Shougo/dein.vim' a:install_dirname
+  else
+    call s:Msg.error('Sorry, You do not have git command.')
+    call s:Msg.error('I cannot introduce dein.vim.')
+    throw 'FALIED: cloning deim.vim failed.'
+  endif
 endfunction
 
 " NOTE: open_mode 'open' ってなんだっけ？

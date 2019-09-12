@@ -1,5 +1,8 @@
 " NOTE: Don't use the mark Z, because this is often used by my functions
 
+let s:V = vital#vimrc#new()
+let s:List = s:V.import('Data.List')
+
 "---------------"
 " Global values "
 "---------------"
@@ -19,6 +22,7 @@ let g:vimrc = get(g:, 'vimrc', #{
   \ loaded: 0,
   \ vim_home: expand('~/.vim'),
   \ path_at_started: getcwd(),
+  \ stay_path_at_started: v:true,
   \ gui_editor: has('nvim') ? 'gonvim' : 'gvim',
   \ backupdir: expand('~/.backup/vim-backup'),
   \ is_unix: has('unix'),
@@ -1056,6 +1060,27 @@ nnoremap <silent> <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
 nnoremap <silent> <C-h><C-l> :<C-u>setl list! list?<CR>
 nnoremap <silent> <C-h><C-n> :<C-u>setl number! number?<CR>
 nnoremap <silent> <C-h><C-s> :<C-u>if exists("g:syntax_on") \| syntax off \| else \| syntax on \| endif<CR>
+nnoremap <silent> <C-h><C-b> :<C-u>call <SID>change_base_directory()<CR>
+
+function s:change_base_directory() abort
+  let g:vimrc.stay_path_at_started = !g:vimrc.stay_path_at_started
+  let [new_base_directory, what_to_do] = g:vimrc.stay_path_at_started
+    \ ? [g:vimrc.path_at_started, ' (to do stay)']
+    \ : [expand('%:p:h'), ' (not to do stay)']
+
+  try
+    execute 'lcd' new_base_directory
+    echo 'cd: ' .. new_base_directory .. what_to_do
+  catch /\(E344\|E472\)/  " if the buffer has no file
+    if !s:List.has(term_list(), winbufnr('.'))
+      " NOTE: Delegate :lcd to sync-term-cwd.vim if this is a terminal buffer
+      return
+    endif
+
+    execute ':lcd' g:vimrc.path_at_started
+    echo 'cd: ' .. g:vimrc.path_at_started .. what_to_do
+  endtry
+endfunction
 
 " others
 nmap <C-j> <CR>
@@ -1085,7 +1110,7 @@ nnoremap <silent> <leader>o :<C-u>copen<CR>
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 nnoremap <expr> <C-k><C-s> printf(':%%s/\m\C\<%s\>/', expand('<cword>'))
 nnoremap <expr> <C-k>s printf(':%%s/\m\C\<%s\>/%s', expand('<cword>'), expand('<cword>'))
-" Don't noremap for fake-clip
+" NOTE: Don't use noremap to allow remap with fake-clip
 nmap 'p "+p
 nmap 'P "+P
 nmap 'y "+y
@@ -1354,6 +1379,9 @@ nnoremap <silent> <leader>gb :<C-u>GBrahcnAll<CR>
 nnoremap <silent> <leader>gt :<C-u>GLogTree<CR>
 nnoremap <silent> <leader>gT :<C-u>GLogTreeAll<CR>
 nnoremap <silent> 'gs :<C-u>tabnew \| GStatus<CR>
+nnoremap <silent> 'gl :<C-u>tabnew \| GLog<CR>
+nnoremap <silent> 'gL :<C-u>tabnew \| GLogPatch<CR>
+nnoremap <silent> 'go :<C-u>tabnew \| GLogOneline --pretty='%h %ad %s' --date='format:%Y-%m-%d %H:%M'<CR>
 
 " vim-textobj-clang
 " You are not i
