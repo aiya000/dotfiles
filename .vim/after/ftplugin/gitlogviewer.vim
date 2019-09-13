@@ -15,6 +15,8 @@ nnoremap <buffer><silent> S :<C-u>call <SID>show_show()<CR>
 nnoremap <buffer><silent> <C-r> :<C-u>GitLogViewer <C-r>=b:gitlogviewer_args<CR><CR>
 
 function s:show_show() abort
+  normal! [z
+  vsplit
   if s:List.has(split(b:gitlogviewer_args), '--oneline')
     normal! _"zyiw
   else
