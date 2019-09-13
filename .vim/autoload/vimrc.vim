@@ -49,7 +49,7 @@ function! vimrc#open_terminal_as(filetype, open_mode, command, ...) abort
   elseif a:open_mode ==# 'tabnew'
     tabnew
   else
-    throw 'undefined open_mode is detected: ' . string(a:open_mode)
+    throw 'undefined open_mode is detected: ' .. string(a:open_mode)
   endif
 
   execute ':lcd' get(options, 'path', getcwd())
@@ -142,7 +142,7 @@ function! vimrc#bufclose_filetype(filetypes)
   for w in range(1, winnr('$'))
     let buf_ft = getwinvar(w, '&filetype')
     if s:List.has(a:filetypes, buf_ft)
-      execute ':' . w . 'wincmd w'
+      execute ':' .. w .. 'wincmd w'
       quit
       let closed = 1
     endif
@@ -164,7 +164,7 @@ function! vimrc#get_webpage_title() abort
   try
     return substitute(s:HTML.parseURL(@+).find('title').value(), '·', '-', 'g')
   catch
-    return 'vimrc#get_webpage_title(): something happened: ' . v:exception
+    return 'vimrc#get_webpage_title(): something happened: ' .. v:exception
   endtry
 endfunction
 
@@ -199,8 +199,8 @@ function! vimrc#delete_mostly_inner_surround() abort
   call dein#source('vim-operator-surround')
   let obj_keys = s:get_current_obj_keys()
   let obj_key = s:input_obj_key_of(obj_keys)
-  execute 'normal' ('va' . obj_key . "\<Plug>(operator-surround-delete)")
-  call repeat#set("\<Plug>(vimrc-surround-delete-mostly-inner)" . obj_key)
+  execute 'normal' ('va' .. obj_key .. "\<Plug>(operator-surround-delete)")
+  call repeat#set("\<Plug>(vimrc-surround-delete-mostly-inner)" .. obj_key)
 endfunction
 
 function! s:get_current_obj_keys() abort
@@ -216,7 +216,7 @@ function! s:input_obj_key_of(obj_keys) abort
     if s:List.has(['', '', ''], char)
       return v:null
     endif
-    let stroke .= char
+    let stroke ..= char
   endwhile
   return stroke
 endfunction
@@ -227,8 +227,8 @@ function! vimrc#replace_mostly_inner_surround() abort
   let obj_keys = s:get_current_obj_keys()
   let obj_key_from = s:input_obj_key_of(obj_keys)
   let obj_key_to = s:input_obj_key_of(obj_keys)
-  execute 'normal' ('va' . obj_key_from  . "\<Plug>(operator-surround-replace)" . obj_key_to)
-  call repeat#set("\<Plug>(vimrc-surround-replace-mostly-inner)" . obj_key_from . obj_key_to)
+  execute 'normal' ('va' .. obj_key_from  .. "\<Plug>(operator-surround-replace)" .. obj_key_to)
+  call repeat#set("\<Plug>(vimrc-surround-replace-mostly-inner)" .. obj_key_from .. obj_key_to)
 endfunction
 
 " a:visualizer: e.g. 'viw', 'viW'
@@ -236,18 +236,18 @@ function! s:append_choose_surround(visualizer) abort
   call dein#source('vim-operator-surround')
   let obj_keys = s:get_current_obj_keys()
   let obj_key = s:input_obj_key_of(obj_keys)
-  execute 'normal' (a:visualizer . "\<Plug>(operator-surround-append)" . obj_key)
+  execute 'normal' (a:visualizer .. "\<Plug>(operator-surround-append)" .. obj_key)
   return obj_key
 endfunction
 
 function vimrc#append_choose_surround() abort
   let obj_key = s:append_choose_surround('viw')
-  call repeat#set("\<Plug>(vimrc-surround-append-choice)" . obj_key)
+  call repeat#set("\<Plug>(vimrc-surround-append-choice)" .. obj_key)
 endfunction
 
 function vimrc#append_choose_surround_wide() abort
   let obj_key = s:append_choose_surround('viW')
-  call repeat#set("\<Plug>(vimrc-surround-append-choice-wide)" . obj_key)
+  call repeat#set("\<Plug>(vimrc-surround-append-choice-wide)" .. obj_key)
 endfunction
 
 " Puts a regsiter as stdin to the terminal buffer
@@ -385,7 +385,7 @@ function! vimrc#rename_to(new_name) abort
     return
   endif
 
-  let new_file = fnamemodify(this_file, ':h') . '/' . new_name
+  let new_file = fnamemodify(this_file, ':h') .. '/' .. new_name
   let failed   = rename(this_file, new_file)
   if failed
     call s:Msg.error(printf('Rename %s to %s is failed', this_file, new_file))
@@ -410,21 +410,21 @@ function! vimrc#git_branch_session_save() abort
   let branch_name  = system(printf("cd %s ; git branch | sort | tail -1 | awk '{print $2}'", repo_path))  " Don't use double quote in awk
   let branch_name_ = substitute(branch_name, '\n', '', '')  " Remove tail line break
 
-  let session_name  = repo_name_ . '-' . branch_name_
+  let session_name  = repo_name_ .. '-' .. branch_name_
   let session_name_ = substitute(session_name, '/', '-', 'g')
   let session_name__ = substitute(session_name_, '#', '-', 'g')  "NOTE: '#' shouldn't be used as a file name
 
-  execute 'mksession!' (g:vimrc['sessiondir'] . '/' . session_name__ . '.vim')
+  execute 'mksession!' (g:vimrc['sessiondir'] .. '/' .. session_name__ .. '.vim')
 endfunction
 
 function! vimrc#increment_gui_fontsize() abort
   let g:vimrc.guifont.size += 1
-  let &guifont = 'RictyDiminished NF ' . g:vimrc.guifont.size
+  let &guifont = 'RictyDiminished NF ' .. g:vimrc.guifont.size
 endfunction
 
 function! vimrc#decrement_gui_fontsize() abort
   let g:vimrc.guifont.size -= 1
-  let &guifont = 'RictyDiminished NF ' . g:vimrc.guifont.size
+  let &guifont = 'RictyDiminished NF ' .. g:vimrc.guifont.size
 endfunction
 
 function! s:caddexpr_on_stdout(data) abort
@@ -551,7 +551,7 @@ endfunction
 function! vimrc#grep_those(...) abort
   CClear
   call s:List.map(a:000, { word ->
-    \ execute('grepadd ' . word . ' %', 'silent!')
+    \ execute('grepadd ' .. word .. ' %', 'silent!')
   \ })
   copen
 endfunction
