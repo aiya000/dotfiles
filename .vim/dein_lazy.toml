@@ -359,16 +359,10 @@ on_map = [
 ]
 
 [[plugins]]
-repo = 'rhysd/reply.vim'
-on_cmd = [
-    'Repl',
-    'ReplSend',
-    'ReplRecv',
-    'ReplStop',
-    'ReplList',
-    'ReplAuto',
-]
-
-[[plugins]]
 repo = 'AndrewRadev/quickpeek.vim'
 on_ft = 'qf'
+
+[[plugins]]
+repo = 'aiya000/vim-quickrepl'
+on_map = '<Plug>(quickrepl-open)'
+on_cmd = 'QuickReplOpen'

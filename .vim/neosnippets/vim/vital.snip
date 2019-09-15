@@ -1,9 +1,9 @@
 snippet vital_new
-    let ${1:s:V} = vital#${2:vital}#new()
+    const ${1:s:V} = vital#${2:vital}#new()
 
 snippet import
 alias imp
-    let ${1:Name} = ${2:s:V}.import('${3:Module}')
+    const ${1:Name} = ${2:s:V}.import('${3:Module}')
 
 snippet import_singleton
-    let ${1:Name} = vital#${2:vital}#import('${3:Module}')
+    const ${1:Name} = vital#${2:vital}#import('${3:Module}')

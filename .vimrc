@@ -801,11 +801,9 @@ let g:clurin = {
 \ }
 
 " }}}
-" reply.vim {{{
+" vim-quickrepl {{{
 
-let g:reply_repls = #{
-  \ typescript: ['ts-node'],
-\ }
+let g:quickrepl_use_default_key_mapping = v:true
 
 " }}}
 
@@ -1449,11 +1447,6 @@ nmap . <Plug>(repeat-.)
 " vim-clurin
 nmap <C-a> <Plug>(clurin-next)
 nmap <C-x> <Plug>(clurin-prev)
-
-" reply.vim
-nnoremap <silent> <leader>R :<C-u>Repl<CR>
-nnoremap <silent> <leader><leader>R :<C-u>ReplStop<CR>
-vnoremap <silent> <leader>R :ReplSend<CR>
 
 " }}}
 
