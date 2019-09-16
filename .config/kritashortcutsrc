@@ -1,0 +1,14 @@
+[Shortcuts]
+KisToolSelectContiguous=Shift+C
+KisToolSelectRectangular=S
+KisToolTransform=T
+KritaSelected/KisToolColorPicker=Q
+KritaShape/KisToolBrush=W
+KritaShape/KisToolMultiBrush=none
+KritaTransform/KisToolMove=V
+deselect=Ctrl+A
+edit_redo=Ctrl+Shift+Z; Ctrl+R
+merge_layer=Ctrl+D
+pathsegment-curve=none
+pathsegment-line=none
+select_all=Ctrl+Shift+A
