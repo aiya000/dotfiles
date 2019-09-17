@@ -75,23 +75,6 @@ function! s:terminal_at_started(filetype, command, ...) abort
     \ )
 endfunction
 
-"" REPLs
-command! -bar -nargs=? Ghci call s:terminal_at_started('term-stack-exec-ghci', 'stack exec ghci ' . <q-args>)
-command! -bar -nargs=? StackGhci call s:terminal_at_started('term-stack-ghci', 'stack ghci ' . <q-args>)
-command! -bar -nargs=? StackGhciTasty call s:terminal_at_started('term-stack-ghci', 'stack ghci :tasty ' . <q-args>)
-"command! -bar -nargs=? Ghcid call s:terminal_at_started('none', 'ghcid --command="stack ghci :tasty" ' . <q-args>)
-command! -bar -nargs=? IdrisRepl call s:terminal_at_started('term-idris', 'idris ' . <q-args>)
-command! -bar -nargs=? SbtRepl call s:terminal_at_started('term-sbt', 'cd "$(git rev-parse --show-toplevel)" ; sbt ' . (empty(<q-args>) ? '' : printf("'%s'", <q-args>)))
-command! -bar CLisp call s:terminal_at_started('none', 'clisp')
-command! -bar LeinRepl call s:terminal_at_started('none', 'lein repl')
-command! -bar ElmRepl call s:terminal_at_started('term-elm-repl', 'elm repl')
-command! -bar PythonRepl call s:terminal_at_started('none', 'PAGER=cat python')
-command! -bar IPyRepl call s:terminal_at_started('none', 'ipython')
-command! -bar SwiftRepl call s:terminal_at_started('none', 'swift')
-command! -bar KotlinRepl call s:terminal_at_started('none', 'kotlinc-jvm')
-command! -bar DhallRepl call s:terminal_at_started('none', 'dhall repl')
-command! -bar IrbRepl call s:terminal_at_started('none', 'irb')
-
 " Git commands
 command! -bar -nargs=* GStatus Gina status -s <args>
 command! -bar -nargs=* GLog GitLogViewer -100 --name-only <args>
@@ -111,8 +94,11 @@ command! -bar -nargs=* GBlame Gina blame <args>
 command! -bar -nargs=* Gist Gista post --stay <args>
 
 " Twitter
+command! -bar TweetNico call vimrc#tweet(g:vimrc.twitter.nico)
 command! -bar TweetPrivate call vimrc#tweet(g:vimrc.twitter.private)
 command! -bar TweetPublic call vimrc#tweet(g:vimrc.twitter.public)
+command! -bar TwitterNico call vimrc#twitter(g:vimrc.twitter.nico)
+command! -bar TwitterNicoTab tabnew | TwitterNico
 command! -bar TwitterPrivate call vimrc#twitter(g:vimrc.twitter.private)
 command! -bar TwitterPrivateTab tabnew | TwitterPrivate
 command! -bar TwitterPublic call vimrc#twitter(g:vimrc.twitter.public)
@@ -120,6 +106,7 @@ command! -bar TwitterPublicTab tabnew | TwitterPublic
 
 " vim-webpage
 command! -bar -nargs=+ Weblio WebpageShow weblio <args>
+command! -bar -nargs=+ Stackage WebpageShow stackage <args>
 
 "" Others
 command! -bar -nargs=* Vim call vimrc#open_terminal_as('term-vim', 'stay', 'vim ' . <q-args>)

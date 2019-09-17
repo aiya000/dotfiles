@@ -757,6 +757,7 @@ let g:synctermcwd_cd_command = 'lcd'
 
 let g:webpage_source = #{
   \ weblio: 'http://ejje.weblio.jp/content/%s',
+  \ stackage: 'https://www.stackage.org/lts-13.2/hoogle?q=%s',
 \ }
 
 " }}}
@@ -804,6 +805,7 @@ let g:clurin = {
 " vim-quickrepl {{{
 
 let g:quickrepl_use_default_key_mapping = v:true
+let g:quickrepl_enable_debug = v:true
 
 " }}}
 

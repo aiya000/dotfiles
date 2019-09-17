@@ -13,7 +13,7 @@ nnoremap <buffer><silent> o i:step<CR>:list<CR>
 nnoremap <buffer><silent> O i:list<CR>
 nnoremap <buffer><silent> A i:steplocal<CR>:list<CR>
 nnoremap <buffer><silent> <C-r> :<C-u>call vimrc#open_terminal_as('term-stack-ghci', 'horizontal', 'stack ghci', {'path': g:vimrc.path_at_started})<CR><C-w>p:quit<CR><C-w>p
-nnoremap <buffer> <localleader>S :<C-u>Aref stackage <C-r>=expand('<cword>')<CR><CR>
+nnoremap <buffer> <localleader>S :<C-u>Stackage <C-r>=expand('<cword>')<CR><CR>
 
 function! s:open_say_buffer() abort
   let s:ghci_bufnr = winbufnr('.')
