@@ -67,6 +67,32 @@ snippet constructor
 abbr constructor(${1:#:args}) {${0:here}}
     constructor(${1:#:args}) {${0:here}}
 
+snippet export_default
+abbr export default {${0:here}}
+    export default {${0:here}}
+
+# Expressions
+
+snippet print
+alias prlintln pr
+abbr console.log(${1:#:hello});
+    console.log(${1:#:hello});
+
+snippet equal
+alias eq
+abbr ===
+    ===
+
+snippet not_equal
+alias ne
+abbr !==
+    !==
+
+snippet throw_new_error
+alias throw
+abbr throw new Error(${0:here})
+    throw new Error(${0:here})
+
 # Templates
 
 snippet define_prototype_Array#map
@@ -76,12 +102,3 @@ snippet define_prototype_Array#map
         }
         return this;
     };
-
-snippet print
-alias prlintln pr
-abbr console.log(${1:#:hello});
-    console.log(${1:#:hello});
-
-snippet export_default
-abbr export default {${0:here}}
-    export default {${0:here}}
