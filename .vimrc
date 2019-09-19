@@ -804,6 +804,8 @@ let g:clurin = {
 " }}}
 " vim-quickrepl {{{
 
+let g:quickrepl_config = #{}
+
 let g:quickrepl_use_default_key_mapping = v:true
 let g:quickrepl_enable_debug = v:true
 
@@ -1455,4 +1457,4 @@ nmap <C-x> <Plug>(clurin-prev)
 execute 'helptags' (g:vimrc['vim_home'] . '/doc')
 filetype plugin indent on
 syntax enable
-let g:vimrc['loaded'] = 1
+let g:vimrc['loaded'] = v:true
