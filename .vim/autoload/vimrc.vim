@@ -543,7 +543,11 @@ function vimrc#run_make_quickfix(make_args) abort
   let current = getcwd()
   try
     CClear
-    let make_cmd = ['make'] + split(a:make_args, ' ')
+    let make_args = map(split(a:make_args, '  '), { _, x ->
+      \ substitute(x, '''', '', 'g')
+    \ })  " Please see ftplugin c.vim
+    let make_cmd = ['make'] + make_args
+    echomsg make_cmd
     execute ':lcd' g:vimrc.path_at_started
     call s:read_to_quickfix_it(make_cmd)
     copen

@@ -13,15 +13,13 @@ augroup FtpluginC
   autocmd BufWritePost *.c,*.h call s:exec_quickfix_if_available()
 augroup END
 
-let s:make_args = '-j4 -e CFLAGS="-g3 -O0"'
-
 function! s:run_quickfix() abort
-  execute 'QuickfixRunMake' s:make_args
+  QuickfixRunMake  -j4  -e  CFLAGS='-g3 -O0'  -Wall
 endfunction
 
 function! s:start_quickfix() abort
   let s:does_quickfix_watch = v:true
-  execute 'QuickfixRunMake' s:make_args
+  QuickfixRunMake  -j4  -e  CFLAGS='-g3 -O0'  -Wall
 endfunction
 
 function! s:stop_quickfix() abort
@@ -31,6 +29,6 @@ endfunction
 
 function! s:exec_quickfix_if_available() abort
   if get(s:, 'does_quickfix_watch', v:false)
-    execute 'QuickfixRunMake' s:make_args
+    QuickfixRunMake  -j4  -e  CFLAGS='-g3 -O0'  -Wall
   endif
 endfunction
