@@ -156,6 +156,7 @@ if i_have git ; then
     alias gtree='git log --graph --decorate --oneline'
     alias gtree-all='git log --graph --decorate --oneline --all'
     alias gw='git worktree'
+    alias gwa='git worktree add'
 
     function gwb () {
         local branch_name=$1
