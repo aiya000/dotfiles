@@ -22,7 +22,7 @@ let g:vimrc = get(g:, 'vimrc', #{
   \ loaded: 0,
   \ vim_home: expand('~/.vim'),
   \ path_at_started: getcwd(),
-  \ stay_path_at_started: v:true,
+  \ stay_path_at_started: v:false,
   \ gui_editor: has('nvim') ? 'gonvim' : 'gvim',
   \ backupdir: expand('~/.backup/vim-backup'),
   \ is_unix: has('unix'),
@@ -1067,8 +1067,8 @@ nnoremap <silent> <C-h><C-b> :<C-u>call <SID>change_base_directory()<CR>
 function s:change_base_directory() abort
   let g:vimrc.stay_path_at_started = !g:vimrc.stay_path_at_started
   let [new_base_directory, what_to_do] = g:vimrc.stay_path_at_started
-    \ ? [g:vimrc.path_at_started, ' (to do stay)']
-    \ : [expand('%:p:h'), ' (not to do stay)']
+    \ ? [g:vimrc.path_at_started, ' (to disable auto :cd)']
+    \ : [expand('%:p:h'), ' (to enable auto :cd)']
 
   try
     execute 'lcd' new_base_directory

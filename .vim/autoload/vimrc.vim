@@ -359,6 +359,10 @@ function! vimrc#visit_past_position()
 endfunction
 
 function! vimrc#lcd_buffer_dir_or_base() abort
+  if g:vimrc.stay_path_at_started
+    return
+  endif
+
   try
     lcd %:p:h
   catch /\(E344\|E472\)/  " if the buffer has no file

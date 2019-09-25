@@ -1,30 +1,51 @@
 snippet for
-abbr for (${1:var}; ${2:condition}; ${3:effect}) {${0:here}}
-    for (${1:#:var}; ${2:#:condition}; ${3:#:effect}) {${0:here}}
+abbr for (${1:var}; ${2:condition}; ${3:effect}) {${0}}
+    for (${1:#:var}; ${2:#:condition}; ${3:#:effect})
+    {
+        ${0}
+    }
 
 snippet if
-abbr if (${1:condition}) {${0:here}}
-    if (${1:condition}) {${0:here}}
+abbr if (${1:condition}) {${0}}
+    if (${1:condition})
+    {
+        ${0}
+    }
 
 snippet else
-abbr else {${0:here}}
-    else {${0:here}}
+abbr else {${0}}
+    else
+    {
+        ${0}
+    }
 
 snippet switch
-abbr switch (${1:target}) {${0:here}}
-    switch (${1:target}) {${0:here}}
+abbr switch (${1:target}) {${0}}
+    switch (${1:target})
+    {
+        ${0}
+    }
 
 snippet while
-abbr while (${1:condition}) {${0:here}}
-    while (${1:condition}) {${0:here}}
+abbr while (${1:condition}) {${0}}
+    while (${1:condition})
+    {
+        ${0}
+    }
 
 snippet struct
-abbr struct ${1:name} {${0:here}};
-    struct ${1:name} {${0:here}};
+abbr struct ${1:name} {${0}};
+    struct ${1:name}
+    {
+        ${0}
+    };
 
 snippet typedef_struct
-abbr typedef struct {${0:here}} ${1:name};
-    typedef struct {${0:here}} ${1:name};
+abbr typedef struct {${0}} ${1:name};
+    typedef struct
+    {
+        ${0}
+    } ${1:name};
 
 # Macros
 
@@ -42,12 +63,12 @@ abbr #include "{path}"
 
 snippet printf
 abbr printf("${1}"${2:#:here});${0}
-    printf("${1}"${2:#:here});${0}
+    printf("${1}"${0:#:here});
 
 snippet printf_ln
 alias pr
 abbr printf("${1}\n"${2:#:here});${0}
-    printf("${1}\n"${2:#:here});${0}
+    printf("${1}\n"${0:#:here});
 
 # Others
 

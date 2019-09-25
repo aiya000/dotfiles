@@ -13,18 +13,7 @@ augroup FtpluginC
   autocmd BufWritePost *.c,*.h call s:exec_quickfix_if_available()
 augroup END
 
-function! s:is_ready_to_ccache() abort
-  let directory_exists =
-    \ isdirectory(expand('~/hdd/.ccache')) ||
-    \ isdirectory(expand('~/.ccache'))
-
-  return directory_exists
-    \ && executable('ccache')
-endfunction
-
-let s:make_args = s:is_ready_to_ccache()
-  \ ? '-j4 -e CFLAGS="-g3 -O0"' . (' "' . 'CC="ccache gcc"' . '"')
-  \ : '-j4 -e CFLAGS="-g3 -O0"'
+let s:make_args = '-j4 -e CFLAGS="-g3 -O0"'
 
 function! s:run_quickfix() abort
   execute 'QuickfixRunMake' s:make_args
