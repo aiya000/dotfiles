@@ -10,7 +10,7 @@ let s:Msg = s:V.import('Vim.Message')
 let s:Optional = s:V.import('Data.Optional')
 
 " Clone dein.vim to target dir
-function! vimrc#fetch_dein(install_dirname)
+function vimrc#fetch_dein(install_dirname)
   if executable('git')
     echo 'dein.vim was not installed yet.'
     echo 'Installing dein.vim now.'
@@ -25,7 +25,7 @@ endfunction
 " NOTE: open_mode 'open' ってなんだっけ？
 " Absorbs the different of Vim and NeoVim.
 "   open_mode: 'vertical' | 'horizontal' | 'stay' | 'tabnew' | 'hidden' | 'open'
-function! vimrc#open_terminal_as(filetype, open_mode, command, ...) abort
+function vimrc#open_terminal_as(filetype, open_mode, command, ...) abort
   let options = get(a:000, 0, {})
   let terminal =
     \ (has('nvim') && !s:is_supported_by_neovim(a:open_mode))
@@ -59,20 +59,20 @@ function! vimrc#open_terminal_as(filetype, open_mode, command, ...) abort
   endif
 endfunction
 
-function! s:is_supported_by_neovim(open_mode) abort
+function s:is_supported_by_neovim(open_mode) abort
   return a:open_mode ==# 'vertical'
     \ || a:open_mode ==# 'horizontal'
     \ || a:open_mode ==# 'stay'
     \ || a:open_mode ==# 'tabnew'
 endfunction
 
-function! s:terminal_with_warn(unsupprted_open_mode) abort
+function s:terminal_with_warn(unsupprted_open_mode) abort
   call s:Msg.warn(printf('throw %s is not available for NeoVim, now do `:terminal` with no arguments instead.', a:unsupprted_open_mode))
   return ':terminal'
 endfunction
 
 " Compress continuous space
-function! vimrc#compress_spaces()
+function vimrc#compress_spaces()
   let recent_pattern = @/
   try
     execute 'substitute/\s\+/ /g'
@@ -84,7 +84,7 @@ function! vimrc#compress_spaces()
 endfunction
 
 " Clear all lines end space
-function! vimrc#clear_ends_space()
+function vimrc#clear_ends_space()
   let recent_pattern = @/
   let curpos = getcurpos()
   try
@@ -98,7 +98,7 @@ function! vimrc#clear_ends_space()
 endfunction
 
 " Toggle diffthis - diffoff
-function! vimrc#toggle_diff()
+function vimrc#toggle_diff()
   if &diff
     diffoff
     "NOTE: This restores a [c and ]c keymaps of .vimrc,
@@ -114,7 +114,7 @@ function! vimrc#toggle_diff()
   set diff?
 endfunction
 
-function! vimrc#bufclose_auto() abort
+function vimrc#bufclose_auto() abort
   call vimrc#bufclose_filetype([
     \ 'aref_web',
     \ 'diff',
@@ -137,7 +137,7 @@ function! vimrc#bufclose_auto() abort
 endfunction
 
 " If you has nofile buffer, close it.
-function! vimrc#bufclose_filetype(filetypes)
+function vimrc#bufclose_filetype(filetypes)
   let closed = 0
   for w in range(1, winnr('$'))
     let buf_ft = getwinvar(w, '&filetype')
@@ -151,7 +151,7 @@ function! vimrc#bufclose_filetype(filetypes)
 endfunction
 
 " Toggle open netrw explorer ( vertical split )
-function! vimrc#toggle_explorer(...)
+function vimrc#toggle_explorer(...)
   let path = get(a:000, 0, '')
   let closed = vimrc#bufclose_filetype(['netrw'])
   if !closed
@@ -160,7 +160,7 @@ function! vimrc#toggle_explorer(...)
 endfunction
 
 " Get a detail of <title> from + register
-function! vimrc#get_webpage_title() abort
+function vimrc#get_webpage_title() abort
   try
     return substitute(s:HTML.parseURL(@+).find('title').value(), '·', '-', 'g')
   catch
@@ -170,7 +170,7 @@ endfunction
 
 " :quit if only a window is existent,
 " :hide otherwise
-function! vimrc#hide_or_quit() abort
+function vimrc#hide_or_quit() abort
   let tabnum = tabpagenr('$')
   let winnum = tabpagewinnr(tabpagenr(), '$')
   if tabnum is 1 && winnum is 1
@@ -181,7 +181,7 @@ function! vimrc#hide_or_quit() abort
 endfunction
 
 " Toggle b:ale_enabled
-function! vimrc#toggle_ale_at_buffer() abort
+function vimrc#toggle_ale_at_buffer() abort
   let b:ale_enabled = !get(b:, 'ale_enabled', 1)
   " Refresh the state
   ALEToggle
@@ -189,13 +189,13 @@ function! vimrc#toggle_ale_at_buffer() abort
 endfunction
 
 " Toggle showing indent-guides with variable
-function! vimrc#toggle_indent_guides()
+function vimrc#toggle_indent_guides()
   let g:vimrc#indent_guides_enable = !get(g:, 'vimrc#indent_guides_enable', v:true)
   IndentGuidesToggle
 endfunction
 
 " Delete a surround `{ _ }` -> ` _ `
-function! vimrc#delete_mostly_inner_surround() abort
+function vimrc#delete_mostly_inner_surround() abort
   call dein#source('vim-operator-surround')
   let obj_keys = s:get_current_obj_keys()
   let obj_key = s:input_obj_key_of(obj_keys)
@@ -203,13 +203,13 @@ function! vimrc#delete_mostly_inner_surround() abort
   call repeat#set("\<Plug>(vimrc-surround-delete-mostly-inner)" .. obj_key)
 endfunction
 
-function! s:get_current_obj_keys() abort
+function s:get_current_obj_keys() abort
   let surrounds = g:operator#surround#blocks['-'] + get(g:operator#surround#blocks, &filetype, [])
   let obj_keys = map(surrounds, { _, x -> x.keys })
   return s:List.flatten(obj_keys)
 endfunction
 
-function! s:input_obj_key_of(obj_keys) abort
+function s:input_obj_key_of(obj_keys) abort
   let stroke = ''
   while !s:List.has(a:obj_keys, stroke)
     let char = nr2char(getchar())
@@ -222,7 +222,7 @@ function! s:input_obj_key_of(obj_keys) abort
 endfunction
 
 " Replaces a surround to a surround `{ _ }` -> `[ _ ]`
-function! vimrc#replace_mostly_inner_surround() abort
+function vimrc#replace_mostly_inner_surround() abort
   call dein#source('vim-operator-surround')
   let obj_keys = s:get_current_obj_keys()
   let obj_key_from = s:input_obj_key_of(obj_keys)
@@ -232,7 +232,7 @@ function! vimrc#replace_mostly_inner_surround() abort
 endfunction
 
 " a:visualizer: e.g. 'viw', 'viW'
-function! s:append_choose_surround(visualizer) abort
+function s:append_choose_surround(visualizer) abort
   call dein#source('vim-operator-surround')
   let obj_keys = s:get_current_obj_keys()
   let obj_key = s:input_obj_key_of(obj_keys)
@@ -251,13 +251,13 @@ function vimrc#append_choose_surround_wide() abort
 endfunction
 
 " Puts a regsiter as stdin to the terminal buffer
-function! vimrc#put_as_stdin(detail) abort
+function vimrc#put_as_stdin(detail) abort
   let current_bufnr = bufnr('%')
   call timer_start(0, { _ -> term_sendkeys(current_bufnr, a:detail) }, {'repeat': 1})
   return 'i'
 endfunction
 
-function! vimrc#move_window_forward()
+function vimrc#move_window_forward()
   let tabwin_num = len(tabpagebuflist())
   mark Z
   hide
@@ -274,7 +274,7 @@ function! vimrc#move_window_forward()
 endfunction
 
 " Current buffer move to next tab
-function! vimrc#move_window_backward()
+function vimrc#move_window_backward()
   mark Z
   hide
   tabprevious
@@ -287,7 +287,7 @@ function! vimrc#move_window_backward()
   normal! zz
 endfunction
 
-function! vimrc#move_tab_prev()
+function vimrc#move_tab_prev()
   if tabpagenr() is 1
     $tabmove
   else
@@ -295,7 +295,7 @@ function! vimrc#move_tab_prev()
   endif
 endfunction
 
-function! vimrc#move_tab_next()
+function vimrc#move_tab_next()
   if tabpagenr() is tabpagenr('$')
     0tabmove
   else
@@ -303,7 +303,7 @@ function! vimrc#move_tab_next()
   endif
 endfunction
 
-function! vimrc#execute_on_base_path(f, ...) abort
+function vimrc#execute_on_base_path(f, ...) abort
   let current = getcwd()
   try
     execute ':lcd' g:vimrc.path_at_started
@@ -313,7 +313,7 @@ function! vimrc#execute_on_base_path(f, ...) abort
   endtry
 endfunction
 
-function! vimrc#open_scratch_buffer() abort
+function vimrc#open_scratch_buffer() abort
   let file = s:find_fresh_scratch_file()
   if file is v:null
     call s:Msg.error('no fresh scratch file found.')
@@ -326,7 +326,7 @@ function! vimrc#open_scratch_buffer() abort
   resize 5
 endfunction
 
-function! s:find_fresh_scratch_file() abort
+function s:find_fresh_scratch_file() abort
   for i in range(0, 100000)
     let file = printf('/tmp/scratch%d.md', i)
     if !filereadable(expand(file))
@@ -336,7 +336,7 @@ function! s:find_fresh_scratch_file() abort
   return v:null
 endfunction
 
-function! vimrc#open_buffer_to_execute(cmd) abort
+function vimrc#open_buffer_to_execute(cmd) abort
   call vimrc#open_scratch_buffer()
   put=execute(a:cmd)
   normal! gg2dd
@@ -344,21 +344,21 @@ function! vimrc#open_buffer_to_execute(cmd) abort
 endfunction
 
 " Yank posted gist to clipboard
-function! vimrc#yank_gista_posted_url() abort
+function vimrc#yank_gista_posted_url() abort
   let gistid = g:gista#avars.gistid
   execute printf('Gista browse --yank --gistid=%s', gistid)
   let @+ = @"
 endfunction
 
 " Auto set cursor position in the file
-function! vimrc#visit_past_position()
+function vimrc#visit_past_position()
   let past_posit = line("'\"")
   if past_posit > 0 && past_posit <= line('$')
     execute 'normal! g`"'
   endif
 endfunction
 
-function! vimrc#lcd_buffer_dir_or_base() abort
+function vimrc#lcd_buffer_dir_or_base() abort
   if g:vimrc.stay_path_at_started
     return
   endif
@@ -374,7 +374,7 @@ function! vimrc#lcd_buffer_dir_or_base() abort
 endfunction
 
 " Rename the file of current buffer
-function! vimrc#rename_to(new_name) abort
+function vimrc#rename_to(new_name) abort
   let this_file = fnameescape(expand('%'))
   let new_name  = fnameescape(a:new_name)
 
@@ -405,7 +405,7 @@ endfunction
 
 " Make session_name from git repository
 " and Save current session by :UniteSessionSave
-function! vimrc#git_branch_session_save() abort
+function vimrc#git_branch_session_save() abort
   let repo_path = fnameescape(system('git rev-parse --show-toplevel'))
 
   let repo_name  = fnamemodify(repo_path, ':t')
@@ -421,17 +421,17 @@ function! vimrc#git_branch_session_save() abort
   execute 'mksession!' (g:vimrc['sessiondir'] .. '/' .. session_name__ .. '.vim')
 endfunction
 
-function! vimrc#increment_gui_fontsize() abort
+function vimrc#increment_gui_fontsize() abort
   let g:vimrc.guifont.size += 1
   let &guifont = 'RictyDiminished NF ' .. g:vimrc.guifont.size
 endfunction
 
-function! vimrc#decrement_gui_fontsize() abort
+function vimrc#decrement_gui_fontsize() abort
   let g:vimrc.guifont.size -= 1
   let &guifont = 'RictyDiminished NF ' .. g:vimrc.guifont.size
 endfunction
 
-function! s:caddexpr_on_stdout(data) abort
+function s:caddexpr_on_stdout(data) abort
   for line in a:data
     " NOTE:
     " On NeoVim v0.3.1, the job's on_stdout may take 『『『無』』』 as a line break and else.
@@ -454,7 +454,7 @@ function! s:caddexpr_on_stdout(data) abort
 endfunction
 
 " Append quickrun config for windows
-function! vimrc#append_config_quickrun_windows() abort
+function vimrc#append_config_quickrun_windows() abort
   " C#
   let g:quickrun_config.cs['command'] = 'csc.exe'
   let g:quickrun_config.cs['hook/output_encode/encoding'] = 'cp932:utf-8'
@@ -466,12 +466,12 @@ function! vimrc#append_config_quickrun_windows() abort
 endfunction
 
 " Open tweetvim by private account
-function! vimrc#twitter(account) abort
+function vimrc#twitter(account) abort
   execute ':TweetVimSwitchAccount' a:account
   TweetVimHomeTimeline
 endfunction
 
-function! vimrc#tweet(account) abort
+function vimrc#tweet(account) abort
   execute ':TweetVimSwitchAccount' a:account
   TweetVimSay
 endfunction
@@ -488,7 +488,7 @@ let s:read_to_quickfix_it = { cmd ->
 " }}}
 
 " TODO: Unify run_foo_quickfix to one
-function! vimrc#run_gradle_quickfix(gradle_subcmd) abort
+function vimrc#run_gradle_quickfix(gradle_subcmd) abort
   let current = getcwd()
   try
     CClear
@@ -508,7 +508,7 @@ function! vimrc#run_gradle_quickfix(gradle_subcmd) abort
 endfunction
 
 " NOTE: This requires to add sbt-launch.jar to $PATH
-function! vimrc#run_scala_compile_watch_quickfix(sbt_subcmd) abort
+function vimrc#run_scala_compile_watch_quickfix(sbt_subcmd) abort
   CClear
   call vimrc#stop_scala_compile_watch_quickfix() " Avoid running more processes
   " Run sbt directly for killing the sbt process (vimrc#stop_scala_compile_watch_quickfix)
@@ -518,7 +518,7 @@ function! vimrc#run_scala_compile_watch_quickfix(sbt_subcmd) abort
   copen
 endfunction
 
-function! vimrc#stop_scala_compile_watch_quickfix() abort
+function vimrc#stop_scala_compile_watch_quickfix() abort
   if get(s:, 'sbt_compile_watch_job', v:null) isnot v:null
     call s:sbt_compile_watch_job.stop()
     let s:sbt_compile_watch_job = v:null
@@ -526,7 +526,7 @@ function! vimrc#stop_scala_compile_watch_quickfix() abort
   endif
 endfunction
 
-function! vimrc#run_yarn_quickfix(yarn_subcmd) abort
+function vimrc#run_yarn_quickfix(yarn_subcmd) abort
   let current = getcwd()
   try
     CClear
@@ -539,7 +539,7 @@ function! vimrc#run_yarn_quickfix(yarn_subcmd) abort
   endtry
 endfunction
 
-function! vimrc#run_make_quickfix(make_args) abort
+function vimrc#run_make_quickfix(make_args) abort
   let current = getcwd()
   try
     CClear
@@ -552,7 +552,7 @@ function! vimrc#run_make_quickfix(make_args) abort
   endtry
 endfunction
 
-function! vimrc#grep_those(...) abort
+function vimrc#grep_those(...) abort
   CClear
   call s:List.map(a:000, { word ->
     \ execute('grepadd ' .. word .. ' %', 'silent!')
@@ -560,7 +560,7 @@ function! vimrc#grep_those(...) abort
   copen
 endfunction
 
-function! vimrc#open_this_file_in_gui() abort
+function vimrc#open_this_file_in_gui() abort
   let file = expand('%:p')
   call s:Job.start([g:vimrc.gui_editor, file])
 endfunction
