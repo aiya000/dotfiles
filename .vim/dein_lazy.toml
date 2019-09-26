@@ -352,13 +352,6 @@ on_map = [
 ]
 
 [[plugins]]
-repo = 'uplus/vim-clurin'
-on_map = [
-    '<Plug>(clurin-next)',
-    '<Plug>(clurin-prev)',
-]
-
-[[plugins]]
 repo = 'AndrewRadev/quickpeek.vim'
 on_ft = 'qf'
 
