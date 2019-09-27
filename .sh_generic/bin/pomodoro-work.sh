@@ -12,7 +12,7 @@ function increase_count () {
     touch "/tmp/pomodoro-$((count + 1))"
 }
 
-interval=$([[ -z "$1" ]] && echo 25 || echo "$1")
+interval=$([[ -z "$1" ]] && echo 20 || echo "$1")
 count=$(( $(read_count) + 1 )) # 1 based
 
 echo "Let's start the $count-th working"
