@@ -957,7 +957,6 @@ nmap <silent> q> :<C-u>call vimrc#open_buffer_to_execute('register')<CR>gh_
 nmap <silent> g> :<C-u>call vimrc#open_buffer_to_execute('messages')<CR>gh_
 
 " search
-nnoremap / /\v
 nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
 nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
 
