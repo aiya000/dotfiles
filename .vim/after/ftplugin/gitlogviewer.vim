@@ -10,10 +10,6 @@ let b:undo_ftplugin = 'setl ' . join([
 
 setl nolist cul
 
-nnoremap <buffer><silent> Q :<C-u>bdelete!<CR>
-nnoremap <buffer><silent> S :<C-u>call <SID>show_show()<CR>
-nnoremap <buffer><silent> <C-r> :<C-u>GitLogViewer <C-r>=b:gitlogviewer_args<CR><CR>
-
 function s:show_show() abort
   normal! [z
   vsplit
@@ -25,3 +21,7 @@ function s:show_show() abort
 
   execute 'GitShowViewer' @z
 endfunction
+
+nnoremap <buffer><silent> Q :<C-u>bdelete!<CR>
+nnoremap <buffer><silent> S :<C-u>call <SID>show_show()<CR>
+nnoremap <buffer><silent> <C-r> :<C-u>GitLogViewer <C-r>=b:gitlogviewer_args<CR><CR>

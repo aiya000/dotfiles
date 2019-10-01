@@ -15,12 +15,12 @@ abbr for (const ${1:x} of ${2:xs}) {${0}}
     for (const ${1:x} of ${2:xs}) {${0}}
 
 snippet while
-abbr while (${1:cond}) {${0:here}}
-    while (${1:cond}) {${0:here}}
+abbr while (${1:cond}) {${0:#:here}}
+    while (${1:cond}) {${0:#:here}}
 
 snippet switch
-abbr switch (${1:name}) {${0:here}}
-    switch (${1:name}) {${0:here}}
+abbr switch (${1:name}) {${0:#:here}}
+    switch (${1:name}) {${0:#:here}}
 
 snippet case
 abbr case ${1:constant}: ${0}
@@ -32,16 +32,16 @@ abbr break
 
 snippet throw_new_error
 alias throw
-abbr throw new Error(${0:here})
-    throw new Error(${0:here})
+abbr throw new Error(${0:#:here})
+    throw new Error(${0:#:here})
 
 snippet if
 abbr if (${1:#:cond}) {${0}}
     if (${1:#:cond}) {${0}}
 
 snippet else
-abbr else {${0:here}}
-    else {${0:here}}
+abbr else {${0:#:here}}
+    else {${0:#:here}}
 
 snippet function
 alias   func fun def
@@ -55,8 +55,8 @@ abbr (${1:args}) =>${0}
 
 snippet method
 alias met
-abbr ${1:name}(${2:#:args}): ${3:type} {${0:here}}
-    ${1:name}(${2:#:args}): ${3:type} {${0:here}}
+abbr ${1:name}(${2:#:args}): ${3:type} {${0:#:here}}
+    ${1:name}(${2:#:args}): ${3:type} {${0:#:here}}
 
 snippet interface
 alias inter
@@ -68,26 +68,31 @@ abbr type ${1:Name} = ${0}
     type ${1:Name} = ${0}
 
 snippet try
-abbr try {${0:here}}
-    try {${0:here}}
+abbr try {${0:#:here}}
+    try {${0:#:here}}
 
 snippet catch
-abbr catch (e) {${0:here}}
-    catch (e) {${0:here}}
+abbr catch (e) {${0:#:here}}
+    catch (e) {${0:#:here}}
 
 snippet finally
-abbr finally {${0:here}}
-    finally {${0:here}}
+abbr finally {${0:#:here}}
+    finally {${0:#:here}}
 
 snippet import_as
 alias imq
-abbr import * as ${1} from '${0:here}'
-    import * as ${1} from '${0:here}'
+abbr import * as ${1} from '${0:#:here}'
+    import * as ${1} from '${0:#:here}'
 
 snippet import
 alias imp
-abbr import { ${1} } from '${0:here}'
-    import { ${1} } from '${0:here}'
+abbr import { ${1} } from '${0:#:here}'
+    import { ${1} } from '${0:#:here}'
+
+snippet import_default_export
+alias import_default
+abbr import ${1} from '${0:#:here}'
+    import ${1} from '${0:#:here}'
 
 snippet export
 alias exp
@@ -146,24 +151,24 @@ abbr declare
     declare
 
 snippet get
-abbr get ${1:fieldName}(): ${2:type} {${0:here}}
-    get ${1:fieldName}(): ${2:type} {${0:here}}
+abbr get ${1:fieldName}(): ${2:type} {${0:#:here}}
+    get ${1:fieldName}(): ${2:type} {${0:#:here}}
 
 snippet set
-abbr set ${1:fieldName}(x: ${2:type}) {${0:here}}
-    set ${1:fieldName}(x: ${2:type}) {${0:here}}
+abbr set ${1:fieldName}(x: ${2:type}) {${0:#:here}}
+    set ${1:fieldName}(x: ${2:type}) {${0:#:here}}
 
 # Expressions
 
 snippet println
 alias pr
-abbr console.log(${0:here})
-    console.log(${0:here})
+abbr console.log(${0:#:here})
+    console.log(${0:#:here})
 
 snippet print_error_ln
 alias er
-abbr console.error(${0:here})
-    console.error(${0:here})
+abbr console.error(${0:#:here})
+    console.error(${0:#:here})
 
 snippet stripLineBreaks
 abbr .replace(/(?:\r\n|\r|\n)/g, '')
@@ -195,23 +200,23 @@ abbr /// <reference path='${0:d-ts-path}'/>
 
 snippet private_method
 alias primet
-abbr private ${1:name}(${2:#:args}): ${3:type} {${0:here}}
-    private ${1:name}(${2:#:args}): ${3:void} {${0:here}}
+abbr private ${1:name}(${2:#:args}): ${3:type} {${0:#:here}}
+    private ${1:name}(${2:#:args}): ${3:void} {${0:#:here}}
 
 snippet public_method
 alias pubmet
-abbr public ${1:name}(${2:#:args}): ${3:type} {${0:here}}
-    public ${1:name}(${2:#:args}): ${3:void} {${0:here}}
+abbr public ${1:name}(${2:#:args}): ${3:type} {${0:#:here}}
+    public ${1:name}(${2:#:args}): ${3:void} {${0:#:here}}
 
 snippet public_async_method
 alias pubamet
-abbr public async ${1:name}(${2:#:args}): ${3:type} {${0:here}}
-    public async ${1:name}(${2:#:args}): Promise<${3:void}> {${0:here}}
+abbr public async ${1:name}(${2:#:args}): ${3:type} {${0:#:here}}
+    public async ${1:name}(${2:#:args}): Promise<${3:void}> {${0:#:here}}
 
 snippet private_async_method
 alias priamet
-abbr private async ${1:name}(${2:#:args}): ${3:type} {${0:here}}
-    private async ${1:name}(${2:#:args}): Promise<${3:void}> {${0:here}}
+abbr private async ${1:name}(${2:#:args}): ${3:type} {${0:#:here}}
+    private async ${1:name}(${2:#:args}): Promise<${3:void}> {${0:#:here}}
 
 snippet public_readonly
 alias pubre
@@ -243,20 +248,20 @@ abbr !==
 
 snippet public_get
 alias pubget
-abbr public get
-    public get
+abbr public get ${1:fieldName}(): ${2:type} {${0:#:here}}
+    public get ${1:fieldName}(): ${2:type} {${0:#:here}}
 
 snippet public_set
 alias pubset
-abbr public set
-    public set
+abbr public set ${1:fieldName}(x: ${2:type}) {${0:#:here}}
+    public set ${1:fieldName}(x: ${2:type}) {${0:#:here}}
 
 snippet private_get
 alias priget
-abbr private get
-    private get
+abbr private get ${1:fieldName}(): ${2:type} {${0:#:here}}
+    private get ${1:fieldName}(): ${2:type} {${0:#:here}}
 
 snippet private_set
 alias priset
-abbr private set
-    private set
+abbr private set ${1:fieldName}(x: ${2:type}) {${0:#:here}}
+    private set ${1:fieldName}(x: ${2:type}) {${0:#:here}}

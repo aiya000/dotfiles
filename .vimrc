@@ -1072,7 +1072,7 @@ nnoremap ( (zv
 nnoremap ) )zv
 nnoremap zs zszh
 nnoremap g_ $
-nnoremap :: :%s/\v
+nnoremap :: :%s/
 nnoremap <C-n> gt
 nnoremap <C-p> gT
 nnoremap <C-m> o<Esc>
