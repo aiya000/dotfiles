@@ -155,6 +155,7 @@ ifeq ($(OS),Darwin)
 		cmigemo \ # vim-migemo
 		scalastyle \ # ale (vim)
 		graphviz plantuml \
+		git-secrets \
 		jq
 	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit # vim-textobj-clang
 endif

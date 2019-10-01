@@ -14,3 +14,5 @@ if [[ -z $(git config --local user.email) ]] ; then
     echo '       You must set user.email at local'
     exit 1
 fi
+
+git secrets --pre_commit_hook -- "$@"
