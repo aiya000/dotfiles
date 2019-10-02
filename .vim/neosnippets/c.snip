@@ -47,6 +47,22 @@ abbr typedef struct {${0}} ${1:name};
         ${0}
     } ${1:name};
 
+snippet function
+alias fun
+        ${1:return_type}
+    ${2:name}(${3:#:args)
+    {
+        ${0}
+    }
+
+snippet static_fun
+alias static_fun
+        static ${1:return_type}
+    ${2:name}(${3:#:args)
+    {
+        ${0}
+    }
+
 # Macros
 
 snippet include_library
