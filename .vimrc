@@ -1425,6 +1425,11 @@ vmap <leader><leader>c <Plug>(operator-camelize-toggle)
 nmap . <Plug>(repeat-.)
 
 " }}}
+" typo {{{
+
+inoreabbr reuslt result
+
+" }}}
 
 execute 'helptags' (g:vimrc['vim_home'] . '/doc')
 filetype plugin indent on
