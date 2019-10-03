@@ -359,3 +359,14 @@ on_ft = 'qf'
 repo = 'aiya000/vim-quickrepl'
 on_map = '<Plug>(quickrepl-open)'
 on_cmd = 'QuickReplOpen'
+
+[[plugins]]
+repo = 'LeafCage/yankround.vim'
+on_map = [
+    '<Plug>(yankround-p)',
+    '<Plug>(yankround-P)',
+    '<Plug>(yankround-gp)',
+    '<Plug>(yankround-gP)',
+    '<Plug>(yankround-prev)',
+    '<Plug>(yankround-next)',
+]

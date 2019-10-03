@@ -841,14 +841,16 @@ if !has('nvim')
 endif
 
 " See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a natural number)
-let &statusline =
-  \ '%1*[%F(%n)]%*' .
-  \ '%2*[FT=%y]%*' .
-  \ '[%l,%v]' .
-  \ '[Fenc=%{&fileencoding}]' .
-  \ '[Enc=%{&encoding}]' .
-  \ '%3*%m%*' .
-  \ '%4*%r%*'
+let &statusline = join([
+  \ '%1*[%F(%n)]%*',
+  \ '%2*[FT=%y]%*',
+  \ '[%l,%v]',
+  \ '[Fenc=%{&fileencoding}]',
+  \ '[Enc=%{&encoding}]',
+  \ '%3*%{yankround#is_active() ? "[yankround]" : ""}%*',
+  \ '%4*%m%*',
+  \ '%5*%r%*',
+\ ], '')
 
 " ☆
 set ambiwidth=double
@@ -1073,8 +1075,6 @@ nnoremap ) )zv
 nnoremap zs zszh
 nnoremap g_ $
 nnoremap :: :%s/
-nnoremap <C-n> gt
-nnoremap <C-p> gT
 nnoremap <C-m> o<Esc>
 nnoremap <C-]> g<C-]>
 nnoremap g<C-]> <C-]>
@@ -1423,6 +1423,17 @@ vmap <leader><leader>c <Plug>(operator-camelize-toggle)
 
 " vim-repeat
 nmap . <Plug>(repeat-.)
+
+" vim-yankround
+nmap <expr> <C-n> (yankround#is_active() ? "\<Plug>(yankround-next)" : 'gt')
+nmap <expr> <C-p> (yankround#is_active() ? "\<Plug>(yankround-prev)" : 'gT')
+nmap P <Plug>(yankround-P)
+nmap gP <Plug>(yankround-gP)
+nmap gp <Plug>(yankround-gp)
+nmap p <Plug>(yankround-p)
+
+xmap gp <Plug>(yankround-gp)
+xmap p <Plug>(yankround-p)
 
 " }}}
 " typo {{{
