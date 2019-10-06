@@ -1428,11 +1428,7 @@ nmap . <Plug>(repeat-.)
 nmap <expr> <C-n> (yankround#is_active() ? "\<Plug>(yankround-next)" : 'gt')
 nmap <expr> <C-p> (yankround#is_active() ? "\<Plug>(yankround-prev)" : 'gT')
 nmap P <Plug>(yankround-P)
-nmap gP <Plug>(yankround-gP)
-nmap gp <Plug>(yankround-gp)
 nmap p <Plug>(yankround-p)
-
-xmap gp <Plug>(yankround-gp)
 xmap p <Plug>(yankround-p)
 
 " }}}
