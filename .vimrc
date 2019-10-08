@@ -957,12 +957,8 @@ nmap <silent> g: :<C-u>call vimrc#open_buffer_to_execute('buffers')<CR>gh_
 nmap <silent> z: :<C-u>call vimrc#open_buffer_to_execute('tabs')<CR>gh_
 nmap <silent> q> :<C-u>call vimrc#open_buffer_to_execute('register')<CR>gh_
 nmap <silent> g> :<C-u>call vimrc#open_buffer_to_execute('messages')<CR>gh_
-
-" search
 nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
 nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
-
-" open/close
 nnoremap <silent> <C-k><C-o> :<C-u>EditOverridden %<CR>
 nnoremap <silent> <C-k>o :<C-u>EditOverridden! %<CR>
 nnoremap <silent> <leader>b :<C-u>call vimrc#open_scratch_buffer()<CR>
@@ -1062,6 +1058,17 @@ function s:change_base_directory() abort
   endtry
 endfunction
 
+" Visualize a last pasted range
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
+" NOTE: Don't use noremap to allow remap with fake-clip
+nmap 'p "+p
+nmap 'P "+P
+nmap 'y "+y
+nmap 'Y "+yg_
+nmap 'dd "+dd
+nmap 'x "+x
+
 " others
 nmap <C-j> <CR>
 nnoremap 'd "+d
@@ -1075,6 +1082,8 @@ nnoremap ) )zv
 nnoremap zs zszh
 nnoremap g_ $
 nnoremap :: :%s/
+nnoremap <C-n> gt
+nnoremap <C-p> gT
 nnoremap <C-m> o<Esc>
 nnoremap <C-]> g<C-]>
 nnoremap g<C-]> <C-]>
@@ -1084,17 +1093,8 @@ nnoremap <silent> <Space><Space> :<C-u>call vimrc#compress_spaces()<CR>
 nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
 nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
 nnoremap <silent> <leader>o :<C-u>copen<CR>
-"" Visual a last pasted range
-nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 nnoremap <expr> <C-k><C-s> printf(':%%s/\m\C\<%s\>/', expand('<cword>'))
 nnoremap <expr> <C-k>s printf(':%%s/\m\C\<%s\>/%s', expand('<cword>'), expand('<cword>'))
-" NOTE: Don't use noremap to allow remap with fake-clip
-nmap 'p "+p
-nmap 'P "+P
-nmap 'y "+y
-nmap 'Y "+yg_
-nmap 'dd "+dd
-nmap 'x "+x
 
 " }}}
 " insert mode {{{
@@ -1425,8 +1425,8 @@ vmap <leader><leader>c <Plug>(operator-camelize-toggle)
 nmap . <Plug>(repeat-.)
 
 " vim-yankround
-nmap <expr> <C-n> (yankround#is_active() ? "\<Plug>(yankround-next)" : 'gt')
-nmap <expr> <C-p> (yankround#is_active() ? "\<Plug>(yankround-prev)" : 'gT')
+nmap <silent><expr> ; (yankround#is_active() ? "\<Plug>(yankround-next)" : ":\<C-u>normal! ><CR>")
+nmap <silent><expr> , (yankround#is_active() ? "\<Plug>(yankround-prev)" : ":\<C-u>normal! <<CR>")
 nmap P <Plug>(yankround-P)
 nmap p <Plug>(yankround-p)
 xmap p <Plug>(yankround-p)
