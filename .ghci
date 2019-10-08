@@ -8,3 +8,5 @@
 :set -XFlexibleContexts
 :set -XNoMonomorphismRestriction
 :set -XTypeApplications
+
+import Prelude
