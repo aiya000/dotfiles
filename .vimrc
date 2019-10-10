@@ -1331,7 +1331,7 @@ nmap [c :<C-u>ALEPrevious<CR>
 nmap ]c :<C-u>ALENext<CR>
 
 " incsearch.vim
-nmap g/ <Plug>(incsearch-stay)\v
+nmap g/ <Plug>(incsearch-stay)
 IncSearchNoreMap <C-j> <CR>
 IncSearchNoreMap <C-b> <Left>
 IncSearchNoreMap <C-f> <Right>
