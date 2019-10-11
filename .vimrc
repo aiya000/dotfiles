@@ -1425,8 +1425,8 @@ vmap <leader><leader>c <Plug>(operator-camelize-toggle)
 nmap . <Plug>(repeat-.)
 
 " vim-yankround
-nmap <silent><expr> ; (yankround#is_active() ? "\<Plug>(yankround-next)" : ":\<C-u>normal! ;<CR>")
-nmap <silent><expr> , (yankround#is_active() ? "\<Plug>(yankround-prev)" : ":\<C-u>normal! ,<CR>")
+nmap <silent><expr> <C-p> (yankround#is_active() ? "\<Plug>(yankround-prev)" : 'gT')
+nmap <silent><expr> <C-n> (yankround#is_active() ? "\<Plug>(yankround-next)" : 'gt')
 nmap P <Plug>(yankround-P)
 nmap p <Plug>(yankround-p)
 xmap p <Plug>(yankround-p)
