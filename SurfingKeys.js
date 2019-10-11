@@ -39,7 +39,7 @@ mapkey('F', '', function () {
 });
 
 map('r', 'F5');
-map('b', 't');
+map('b', 'T');
 // map('o', ???);
 map('<Ctrl-p>', 'gT');
 map('<Ctrl-n>', 'gt');
