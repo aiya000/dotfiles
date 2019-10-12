@@ -947,6 +947,7 @@ nnoremap <silent> <C-l> :<C-u>call <SID>normal_clear()<CR>
 
 function s:normal_clear() abort
   call popup_clear()
+  call yankround#inactivate()
   PreciousReset
   PreciousSwitch
 endfunction
