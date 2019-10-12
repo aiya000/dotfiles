@@ -941,11 +941,11 @@ nnoremap <C-c> <NOP>
 nnoremap <C-c><C-c> <C-c>
 
 " clear
-nnoremap <silent> <C-[> :<C-u>call <SID>normal_clear()<CR>
-nnoremap <silent> <Esc> :<C-u>call <SID>normal_clear()<CR>
-nnoremap <silent> <C-l> :<C-u>call <SID>normal_clear()<CR>
+nnoremap <silent> <C-[> :<C-u>call <SID>clear()<CR>
+nnoremap <silent> <Esc> :<C-u>call <SID>clear()<CR>
+nnoremap <silent> <C-l> :<C-u>call <SID>clear()<CR>
 
-function s:normal_clear() abort
+function s:clear() abort
   call popup_clear()
   call yankround#inactivate()
   PreciousReset
@@ -1091,11 +1091,16 @@ nnoremap g<C-]> <C-]>
 nnoremap <silent> ! :!<CR>
 nnoremap <silent> <C-k><Space> :<C-u>call vimrc#clear_ends_space()<CR>
 nnoremap <silent> <Space><Space> :<C-u>call vimrc#compress_spaces()<CR>
-nnoremap <silent> <C-k><C-j> :<C-u>write<CR>
+nnoremap <silent> <C-k><C-j> :<C-u>call <SID>save_clear()<CR>
 nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
 nnoremap <silent> <leader>o :<C-u>copen<CR>
 nnoremap <expr> <C-k><C-s> printf(':%%s/\m\C\<%s\>/', expand('<cword>'))
 nnoremap <expr> <C-k>s printf(':%%s/\m\C\<%s\>/%s', expand('<cword>'), expand('<cword>'))
+
+function s:save_clear() abort
+  write
+  call yankround#inactivate()
+endfunction
 
 " }}}
 " insert mode {{{
