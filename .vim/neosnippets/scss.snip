@@ -14,8 +14,8 @@ abbr @mixin ${1:name}(${2:#:args}) {${0:here}}
 
 snippet include
 alias include_mixin
-abbr @include ${0:mixin_application};
-    @include ${0:mixin_application};
+abbr @include ${0:mixin_application}(${0:#:args});
+    @include ${1:mixin_application}(${0:#:args});
 
 snippet abstract
 abbr %${1:name} {${0:#:here}}
