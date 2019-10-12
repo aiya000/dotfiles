@@ -38,6 +38,14 @@ mapkey('F', '', function () {
   Hints.create('', dispatchMouseClick);
 });
 
+mapkey('H', '#4Go back in history', function() {
+    history.go(-1);
+}, {repeatIgnore: true});
+
+mapkey('L', '#4Go forward in history', function() {
+    history.go(1);
+}, {repeatIgnore: true});
+
 map('r', 'F5');
 map('b', 'T');
 // map('o', ???);
