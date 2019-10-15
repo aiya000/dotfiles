@@ -18,6 +18,10 @@ mapkey('gt', '', function () {
   RUNTIME('nextTab');
 });
 
+mapkey('gh', '', function () {
+  openLink('https://google.co.jp');
+});
+
 mapkey('gH', '', function () {
   tabOpenLink('https://google.co.jp');
 });
@@ -42,11 +46,11 @@ mapkey('F', '', function () {
   Hints.create('', dispatchMouseClick);
 });
 
-mapkey('H', '#4Go back in history', function() {
+mapkey('H', '#4Go back in history', function () {
   history.go(-1);
 }, {repeatIgnore: true});
 
-mapkey('L', '#4Go forward in history', function() {
+mapkey('L', '#4Go forward in history', function () {
   history.go(1);
 }, {repeatIgnore: true});
 
@@ -59,22 +63,28 @@ map('<Ctrl-n>', 'gt');
 /**
  * Insert mode
  */
-// imapkey('<Ctrl-l>', 
-// imapkey('<Ctrl-a>', 
-// imapkey('<Ctrl-e>', moveCusorEOL);
-// imapkey('<Ctrl-b>', 
-// imapkey('<Ctrl-f>', 
 
-imapkey('<Ctrl-f>', function() {
+imap('<Ctrl-[>', '<Esc>');
+imap('<Ctrl-l>', '<Esc>');
+imap('<Ctrl-a>', '<Home>');
+imap('<Ctrl-e>', '<End>');
+imap('<Ctrl-b>', '<Left>');
+imapkey('<Ctrl-f>', 'Move the cursor forward 1', function() {  // {{{
   var element = getRealEdit();
   if (element.setSelectionRange !== undefined) {
-    element.value = element.value.substr(element.selectionStart);
-    element.setSelectionRange(0, 0);
+    var pos = element.selectionStart + 1;
+    element.setSelectionRange(pos, pos);
   } else {
-    var selection = document.getSelection();
-    selection.focusNode.data = selection.focusNode.data.substr(selection.focusOffset);
+    // for contenteditable div
+    document.getSelection().modify('move', 'right', 'character');
   }
-})
+});
+
+// }}}
+imap('<Ctrl-w>', '<Alt-w>');
+imap('<Ctrl-h>', '<Alt-h>');
+// <Ctrl-u> is already registered
+imap('<Ctrl-k>', '<Alt-d>');
 
 /**
  * Styles
@@ -87,34 +97,48 @@ settings.theme = `
     background: #24272e;
     color: #abb2bf;
   }
+
   .sk_theme tbody {
     color: #fff;
   }
+
   .sk_theme input {
     color: #d0d0d0;
   }
+
   .sk_theme .url {
     color: #61afef;
   }
+
   .sk_theme .annotation {
     color: #56b6c2;
   }
+
   .sk_theme .omnibar_highlight {
     color: #528bff;
   }
+
   .sk_theme .omnibar_timestamp {
     color: #e5c07b;
   }
+
   .sk_theme .omnibar_visitcount {
     color: #98c379;
   }
-  .sk_theme #sk_omnibarSearchResult>ul>li:nth-child(odd) {
+
+  .sk_theme #sk_omnibarSearchResult > ul > li:nth-child(odd) {
     background: #303030;
   }
-  .sk_theme #sk_omnibarSearchResult>ul>li.focused {
+
+  .sk_theme #sk_omnibarSearchResult > ul > li.focused {
     background: #3e4452;
   }
+
   #sk_status, #sk_find {
     font-size: 20pt;
+  }
+
+  #sk_hints {
+    font-size: 30px;
   }
 `;
