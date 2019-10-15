@@ -1083,8 +1083,6 @@ nnoremap ) )zv
 nnoremap zs zszh
 nnoremap g_ $
 nnoremap :: :%s/
-nnoremap <C-n> gt
-nnoremap <C-p> gT
 nnoremap <C-m> o<Esc>
 nnoremap <C-]> g<C-]>
 nnoremap g<C-]> <C-]>
@@ -1431,8 +1429,8 @@ vmap <leader><leader>c <Plug>(operator-camelize-toggle)
 nmap . <Plug>(repeat-.)
 
 " vim-yankround
-nmap <silent><expr> <C-p> (yankround#is_active() ? "\<Plug>(yankround-prev)" : 'gT')
 nmap <silent><expr> <C-n> (yankround#is_active() ? "\<Plug>(yankround-next)" : 'gt')
+nmap <silent><expr> <C-p> (yankround#is_active() ? "\<Plug>(yankround-prev)" : 'gT')
 nmap P <Plug>(yankround-P)
 nmap p <Plug>(yankround-p)
 xmap p <Plug>(yankround-p)
