@@ -6,6 +6,10 @@ function dispatchMouseClick(element) {
   tabOpenLink(element.href);
 }
 
+/**
+ * Normal mode
+ */
+
 mapkey('gT', '', function () {
   RUNTIME('previousTab');
 });
@@ -39,11 +43,11 @@ mapkey('F', '', function () {
 });
 
 mapkey('H', '#4Go back in history', function() {
-    history.go(-1);
+  history.go(-1);
 }, {repeatIgnore: true});
 
 mapkey('L', '#4Go forward in history', function() {
-    history.go(1);
+  history.go(1);
 }, {repeatIgnore: true});
 
 map('r', 'F5');
@@ -51,6 +55,30 @@ map('b', 'T');
 // map('o', ???);
 map('<Ctrl-p>', 'gT');
 map('<Ctrl-n>', 'gt');
+
+/**
+ * Insert mode
+ */
+// imapkey('<Ctrl-l>', 
+// imapkey('<Ctrl-a>', 
+// imapkey('<Ctrl-e>', moveCusorEOL);
+// imapkey('<Ctrl-b>', 
+// imapkey('<Ctrl-f>', 
+
+imapkey('<Ctrl-f>', function() {
+  var element = getRealEdit();
+  if (element.setSelectionRange !== undefined) {
+    element.value = element.value.substr(element.selectionStart);
+    element.setSelectionRange(0, 0);
+  } else {
+    var selection = document.getSelection();
+    selection.focusNode.data = selection.focusNode.data.substr(selection.focusOffset);
+  }
+})
+
+/**
+ * Styles
+ */
 
 settings.theme = `
   .sk_theme {
