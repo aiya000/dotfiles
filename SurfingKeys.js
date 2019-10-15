@@ -1,12 +1,4 @@
 /**
- * Please see `dispatchMouseClick()` of Surfingkeys/content_scripts/hints.js
- */
-function dispatchMouseClick(element) {
-  Hints.flashPressedLink(element);
-  tabOpenLink(element.href);
-}
-
-/**
  * Normal mode
  */
 
@@ -42,10 +34,6 @@ mapkey('u', '#3Restore closed tab', function () {
   RUNTIME('openLast');
 });
 
-mapkey('F', '', function () {
-  Hints.create('', dispatchMouseClick);
-});
-
 mapkey('H', '#4Go back in history', function () {
   history.go(-1);
 }, {repeatIgnore: true});
@@ -54,6 +42,7 @@ mapkey('L', '#4Go forward in history', function () {
   history.go(1);
 }, {repeatIgnore: true});
 
+map('F', 'gf');
 map('r', 'F5');
 map('b', 'T');
 // map('o', ???);
@@ -66,6 +55,7 @@ map('<Ctrl-n>', 'gt');
 
 imap('<Ctrl-[>', '<Esc>');
 imap('<Ctrl-l>', '<Esc>');
+
 imap('<Ctrl-a>', '<Home>');
 imap('<Ctrl-e>', '<End>');
 imap('<Ctrl-b>', '<Left>');
@@ -81,10 +71,37 @@ imapkey('<Ctrl-f>', 'Move the cursor forward 1', function() {  // {{{
 });
 
 // }}}
+
 imap('<Ctrl-w>', '<Alt-w>');
 imap('<Ctrl-h>', '<Alt-h>');
-// <Ctrl-u> is already registered
-imap('<Ctrl-k>', '<Alt-d>');
+imapkey('<Ctrl-u>', '', killLineBefore);
+imapkey('<Ctrl-k>', '', killLineAfter);
+
+imapkey('<Ctrl-g>', '', showEditor);
+
+function killLineBefore() {
+  var element = getRealEdit();
+
+  if (element.value === '') {
+    return;
+  }
+
+  element.value = element.value.substr(element.selectionStart);
+  element.setSelectionRange(0, 0);
+}
+
+function killLineAfter() {
+  var element = getRealEdit();
+  element.value = element.value.substr(0, element.selectionStart);
+  element.setSelectionRange(element.selectionStart, 0);
+}
+
+function showEditor() {
+  var element = getRealEdit();
+  element.blur();
+  Insert.exit();
+  Front.showEditor(element);
+}
 
 /**
  * Styles
@@ -136,9 +153,5 @@ settings.theme = `
 
   #sk_status, #sk_find {
     font-size: 20pt;
-  }
-
-  #sk_hints {
-    font-size: 30px;
   }
 `;
