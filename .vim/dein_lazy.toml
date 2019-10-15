@@ -370,3 +370,13 @@ on_map = [
     '<Plug>(yankround-prev)',
     '<Plug>(yankround-next)',
 ]
+
+[[plugins]]
+repo = 'ap/vim-css-color'
+on_ft = [
+    'css',
+    'scss',
+    'sass',
+    'html',
+    'xml',
+]

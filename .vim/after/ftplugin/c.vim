@@ -2,7 +2,7 @@ let b:undo_ftplugin = 'setl ' . join([
   \ 'commentstring<',
 \ ])
 
-let &commentstring = ' /*%s*/'
+let &commentstring = '  // %s'
 
 nnoremap <buffer><silent> <localleader><localleader>r :<C-u>call <SID>run_quickfix()<CR>
 nnoremap <buffer><silent> <localleader><localleader>w :<C-u>call <SID>start_quickfix()<CR>

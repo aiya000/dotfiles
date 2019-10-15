@@ -1,9 +1,10 @@
 let b:undo_ftplugin = 'setl ' . join([
-    \ 'tabstop<',
-    \ 'shiftwidth<',
-    \ 'expandtab<'
+  \ 'commentstring<',
+  \ 'expandtab<',
+  \ 'omnifunc<',
+  \ 'shiftwidth<',
+  \ 'tabstop<',
 \ ])
 
-setl tabstop=2
-setl shiftwidth=2
-setl expandtab
+setl tabstop=2 shiftwidth=2 expandtab omnifunc=lsp#complete
+let &commentstring = '  // %s'
