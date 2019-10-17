@@ -43,7 +43,7 @@ mapkey('L', '#4Go forward in history', function () {
 }, { repeatIgnore: true });
 
 mapkey('F', '#1Open a link in non-active new tab', function () {
-  Hints.create(',' Hints.dispatchMouseClick, {
+  Hints.create(',', Hints.dispatchMouseClick, {
     tabbed: true,
     active: false
   });
@@ -135,25 +135,14 @@ cmap('<Ctrl-l>', '<Esc>');
 cmap('<Ctrl-a>', '<Home>');
 cmap('<Ctrl-e>', '<End>');
 cmap('<Ctrl-b>', '<Left>');
-cmapkey('<Ctrl-f>', 'Move the cursor forward 1', function () {  // {{{
-  var element = getRealEdit();
-  if (element.setSelectionRange !== undefined) {
-    var pos = element.selectionStart + 1;
-    element.setSelectionRange(pos, pos);
-  } else {
-    // for contenteditable div
-    document.getSelection().modify('move', 'right', 'character');
-  }
-});
-
-// }}}
+// cmap('<Ctrl-f>', 'Move the cursor forward 1', );
 
 cmap('<Ctrl-w>', '<Alt-w>');
 cmap('<Ctrl-h>', '<Alt-h>');
-cmapkey('<Ctrl-u>', '', killLineBefore);
-cmapkey('<Ctrl-k>', '', killLineAfter);
+// cmap('<Ctrl-u>', '', killLineBefore);
+// cmap('<Ctrl-k>', '', killLineAfter);
 
-cmapkey('<Ctrl-g>', '', showEditor);
+// cmap('<Ctrl-g>', '', showEditor);
 
 /**
  * Styles
