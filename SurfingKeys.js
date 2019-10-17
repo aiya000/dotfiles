@@ -1,4 +1,18 @@
 /**
+ * General
+ */
+Hints.characters = 'yjuopwertklhgfdsabnmvcxz';
+unmapAllExcept(chars('hjklfG0$/Tr').concat(['gg', 'yy']));
+
+function chars(str) {
+  var result = []
+  for (var i = 0; i < str.length; ++i) {
+    result.push(str[i])
+  }
+  return result
+}
+
+/**
  * Normal mode
  */
 
@@ -26,6 +40,10 @@ mapkey('<Ctrl-f>', '', function () {
   Normal.scroll('pageDown');
 });
 
+mapkey('t', '#3Close current tab', function () {
+  RUNTIME('closeTab');
+});
+
 mapkey('d', '#3Close current tab', function () {
   RUNTIME('closeTab');
 });
@@ -45,7 +63,7 @@ mapkey('L', '#4Go forward in history', function () {
 mapkey('F', '#1Open a link in non-active new tab', function () {
   Hints.create(',', Hints.dispatchMouseClick, {
     tabbed: true,
-    active: false
+    active: false,
   });
 });
 
@@ -53,7 +71,7 @@ mapkey('o', '#8Open a URL in current tab', function () {
   Front.openOmnibar({
     type: 'URLs',
     extra: 'getAllSites',
-    tabbed: false
+    tabbed: false,
   });
 });
 
@@ -62,14 +80,33 @@ mapkey('b', '#3Choose a tab', function () {
 });
 
 mapkey('gs', '#12View page source', function () {
-  RUNTIME("viewSource", {
-    tab: { tabbed: true }
+  RUNTIME('viewSource', {
+    tab: { tabbed: true },
   });
 });
 
-map('r', 'F5');
+mapkey('<', '', function () {
+  RUNTIME('moveTab', { step: -1 });
+})
+
+mapkey('>', '', function () {
+  RUNTIME('moveTab', { step: 1 });
+})
+
+mapkey('t', '#4Edit current URL with vim editor, and open in new tab', function () {
+  Front.openOmnibar({
+    type: 'URLs',
+    extra: 'getAllSites',
+    tabbed: true,
+  });
+});
+
 map('<Ctrl-p>', 'gT');
 map('<Ctrl-n>', 'gt');
+
+mapkey('Q', '#11Edit Settings', function () {
+  tabOpenLink('/pages/options.html');
+});
 
 /**
  * Insert mode
@@ -99,11 +136,10 @@ imap('<Ctrl-h>', '<Alt-h>');
 imapkey('<Ctrl-u>', '', killLineBefore);
 imapkey('<Ctrl-k>', '', killLineAfter);
 
-imapkey('<Ctrl-g>', '', showEditor);
+imapkey('<Ctrl-g>', '', editInEditor);
 
 function killLineBefore() {
   var element = getRealEdit();
-
   if (element.value === '') {
     return;
   }
@@ -118,7 +154,7 @@ function killLineAfter() {
   element.setSelectionRange(element.selectionStart, 0);
 }
 
-function showEditor() {
+function editInEditor() {
   var element = getRealEdit();
   element.blur();
   Insert.exit();
