@@ -36,16 +36,38 @@ mapkey('u', '#3Restore closed tab', function () {
 
 mapkey('H', '#4Go back in history', function () {
   history.go(-1);
-}, {repeatIgnore: true});
+}, { repeatIgnore: true });
 
 mapkey('L', '#4Go forward in history', function () {
   history.go(1);
-}, {repeatIgnore: true});
+}, { repeatIgnore: true });
 
-map('F', 'gf');
+mapkey('F', '#1Open a link in non-active new tab', function () {
+  Hints.create(',' Hints.dispatchMouseClick, {
+    tabbed: true,
+    active: false
+  });
+});
+
+mapkey('o', '#8Open a URL in current tab', function () {
+  Front.openOmnibar({
+    type: 'URLs',
+    extra: 'getAllSites',
+    tabbed: false
+  });
+});
+
+mapkey('b', '#3Choose a tab', function () {
+  Front.chooseTab();
+});
+
+mapkey('gs', '#12View page source', function () {
+  RUNTIME("viewSource", {
+    tab: { tabbed: true }
+  });
+});
+
 map('r', 'F5');
-map('b', 'T');
-// map('o', ???);
 map('<Ctrl-p>', 'gT');
 map('<Ctrl-n>', 'gt');
 
@@ -102,6 +124,36 @@ function showEditor() {
   Insert.exit();
   Front.showEditor(element);
 }
+
+/**
+ * Command mode
+ */
+
+cmap('<Ctrl-[>', '<Esc>');
+cmap('<Ctrl-l>', '<Esc>');
+
+cmap('<Ctrl-a>', '<Home>');
+cmap('<Ctrl-e>', '<End>');
+cmap('<Ctrl-b>', '<Left>');
+cmapkey('<Ctrl-f>', 'Move the cursor forward 1', function () {  // {{{
+  var element = getRealEdit();
+  if (element.setSelectionRange !== undefined) {
+    var pos = element.selectionStart + 1;
+    element.setSelectionRange(pos, pos);
+  } else {
+    // for contenteditable div
+    document.getSelection().modify('move', 'right', 'character');
+  }
+});
+
+// }}}
+
+cmap('<Ctrl-w>', '<Alt-w>');
+cmap('<Ctrl-h>', '<Alt-h>');
+cmapkey('<Ctrl-u>', '', killLineBefore);
+cmapkey('<Ctrl-k>', '', killLineAfter);
+
+cmapkey('<Ctrl-g>', '', showEditor);
 
 /**
  * Styles
