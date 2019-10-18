@@ -2,7 +2,14 @@
  * General
  */
 Hints.characters = 'yjuopwertklhgfdsabnmvcxz';
-unmapAllExcept(chars('hjklfG0$/Tr').concat(['gg', 'yy']));
+unmapAllExcept(chars('hjklfG0$/TrWm').concat([
+  '<End>',
+  '<Esc>',
+  '<Home>',
+  '<Left>',
+  'gg',
+  'yy',
+]));
 
 function chars(str) {
   var result = []
@@ -118,25 +125,26 @@ imap('<Ctrl-l>', '<Esc>');
 imap('<Ctrl-a>', '<Home>');
 imap('<Ctrl-e>', '<End>');
 imap('<Ctrl-b>', '<Left>');
-imapkey('<Ctrl-f>', 'Move the cursor forward 1', function() {  // {{{
-  var element = getRealEdit();
-  if (element.setSelectionRange !== undefined) {
-    var pos = element.selectionStart + 1;
-    element.setSelectionRange(pos, pos);
-  } else {
-    // for contenteditable div
-    document.getSelection().modify('move', 'right', 'character');
-  }
-});
+imapkey('<Ctrl-f>', 'Move the cursor forward 1', moveRight);
 
-// }}}
-
-imap('<Ctrl-w>', '<Alt-w>');
+imapkey('<Ctrl-w>', '', deleteLeftWord);
 imap('<Ctrl-h>', '<Alt-h>');
 imapkey('<Ctrl-u>', '', killLineBefore);
 imapkey('<Ctrl-k>', '', killLineAfter);
 
 imapkey('<Ctrl-g>', '', editInEditor);
+
+function moveRight() {
+  var element = getRealEdit();
+  if (element.setSelectionRange !== undefined) {
+    var pos = element.selectionStart + 1;
+    element.setSelectionRange(pos, pos);
+    return;
+  }
+
+  // for contenteditable div
+  document.getSelection().modify('move', 'right', 'character');
+}
 
 function killLineBefore() {
   var element = getRealEdit();
@@ -161,6 +169,25 @@ function editInEditor() {
   Front.showEditor(element);
 }
 
+function deleteLeftWord() {
+  var element = getRealEdit();
+
+  if (element.setSelectionRange !== undefined) {
+    var pos = deleteNextWord(element.value, -1, element.selectionStart);
+    element.value = pos[0];
+    element.setSelectionRange(pos[1], pos[1]);
+    return;
+  }
+
+  // for contenteditable div
+  var selection = document.getSelection();
+  var p0 = selection.focusOffset;
+  document.getSelection().modify('move', 'backward', 'word');
+  var v = selection.focusNode.data, p1 = selection.focusOffset;
+  selection.focusNode.data = v.substr(0, p1) + v.substr(p0);
+  selection.setPosition(selection.focusNode, p1);
+}
+
 /**
  * Command mode
  */
@@ -171,14 +198,12 @@ cmap('<Ctrl-l>', '<Esc>');
 cmap('<Ctrl-a>', '<Home>');
 cmap('<Ctrl-e>', '<End>');
 cmap('<Ctrl-b>', '<Left>');
-// cmap('<Ctrl-f>', 'Move the cursor forward 1', );
+cmap('<Ctrl-f>', 'Move the cursor forward 1', moveRight);
 
-cmap('<Ctrl-w>', '<Alt-w>');
+cmapkey('<Ctrl-w>', '', deleteLeftWord);
 cmap('<Ctrl-h>', '<Alt-h>');
-// cmap('<Ctrl-u>', '', killLineBefore);
-// cmap('<Ctrl-k>', '', killLineAfter);
-
-// cmap('<Ctrl-g>', '', showEditor);
+cmapkey('<Ctrl-u>', '', killLineBefore);
+cmapkey('<Ctrl-k>', '', killLineAfter);
 
 /**
  * Styles
