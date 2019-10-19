@@ -1,15 +1,20 @@
 /**
  * General
  */
-Hints.characters = 'yjuopwertklhgfdsabnmvcxz';
-unmapAllExcept(chars('hjklfG0$/TrWm').concat([
-  '<End>',
-  '<Esc>',
-  '<Home>',
-  '<Left>',
-  'gg',
-  'yy',
-]));
+
+try {
+  Hints.characters = 'yjuopwertklhgfdsabnmvcxz';
+  unmapAllExcept(chars('hjklfG0$/TrWm:v').concat([
+    '<End>',
+    '<Esc>',
+    '<Home>',
+    '<Left>',
+    'gg',
+    'yy',
+  ]));
+} catch (e) {
+  throw new Error(`In the section 'General': ${e}`)
+}
 
 function chars(str) {
   var result = []
@@ -22,117 +27,126 @@ function chars(str) {
 /**
  * Normal mode
  */
-
-mapkey('gT', '', function () {
-  RUNTIME('previousTab');
-});
-
-mapkey('gt', '', function () {
-  RUNTIME('nextTab');
-});
-
-mapkey('gh', '', function () {
-  openLink('https://google.co.jp');
-});
-
-mapkey('gH', '', function () {
-  tabOpenLink('https://google.co.jp');
-});
-
-mapkey('<Ctrl-b>', '', function () {
-  Normal.scroll('pageUp');
-});
-
-mapkey('<Ctrl-f>', '', function () {
-  Normal.scroll('pageDown');
-});
-
-mapkey('t', '#3Close current tab', function () {
-  RUNTIME('closeTab');
-});
-
-mapkey('d', '#3Close current tab', function () {
-  RUNTIME('closeTab');
-});
-
-mapkey('u', '#3Restore closed tab', function () {
-  RUNTIME('openLast');
-});
-
-mapkey('H', '#4Go back in history', function () {
-  history.go(-1);
-}, { repeatIgnore: true });
-
-mapkey('L', '#4Go forward in history', function () {
-  history.go(1);
-}, { repeatIgnore: true });
-
-mapkey('F', '#1Open a link in non-active new tab', function () {
-  Hints.create(',', Hints.dispatchMouseClick, {
-    tabbed: true,
-    active: false,
+try {
+  mapkey('gT', '', function () {
+    RUNTIME('previousTab');
   });
-});
 
-mapkey('o', '#8Open a URL in current tab', function () {
-  Front.openOmnibar({
-    type: 'URLs',
-    extra: 'getAllSites',
-    tabbed: false,
+  mapkey('gt', '', function () {
+    RUNTIME('nextTab');
   });
-});
 
-mapkey('b', '#3Choose a tab', function () {
-  Front.chooseTab();
-});
-
-mapkey('gs', '#12View page source', function () {
-  RUNTIME('viewSource', {
-    tab: { tabbed: true },
+  mapkey('gh', '', function () {
+    openLink('https://google.co.jp');
   });
-});
 
-mapkey('<', '', function () {
-  RUNTIME('moveTab', { step: -1 });
-})
-
-mapkey('>', '', function () {
-  RUNTIME('moveTab', { step: 1 });
-})
-
-mapkey('t', '#4Edit current URL with vim editor, and open in new tab', function () {
-  Front.openOmnibar({
-    type: 'URLs',
-    extra: 'getAllSites',
-    tabbed: true,
+  mapkey('gH', '', function () {
+    tabOpenLink('https://google.co.jp');
   });
-});
 
-map('<Ctrl-p>', 'gT');
-map('<Ctrl-n>', 'gt');
+  mapkey('<Ctrl-b>', '', function () {
+    Normal.scroll('pageUp');
+  });
 
-mapkey('Q', '#11Edit Settings', function () {
-  tabOpenLink('/pages/options.html');
-});
+  mapkey('<Ctrl-f>', '', function () {
+    Normal.scroll('pageDown');
+  });
+
+  mapkey('t', '#3Close current tab', function () {
+    RUNTIME('closeTab');
+  });
+
+  mapkey('d', '#3Close current tab', function () {
+    RUNTIME('closeTab');
+  });
+
+  mapkey('u', '#3Restore closed tab', function () {
+    RUNTIME('openLast');
+  });
+
+  mapkey('H', '#4Go back in history', function () {
+    history.go(-1);
+  }, { repeatIgnore: true });
+
+  mapkey('L', '#4Go forward in history', function () {
+    history.go(1);
+  }, { repeatIgnore: true });
+
+  mapkey('F', '#1Open a link in non-active new tab', function () {
+    Hints.create(',', Hints.dispatchMouseClick, {
+      tabbed: true,
+      active: false,
+    });
+  });
+
+  mapkey('o', '#8Open a URL in current tab', function () {
+    Front.openOmnibar({
+      type: 'URLs',
+      extra: 'getAllSites',
+      tabbed: false,
+    });
+  });
+
+  mapkey('b', '#3Choose a tab', function () {
+    Front.chooseTab();
+  });
+
+  mapkey('gs', '#12View page source', function () {
+    RUNTIME('viewSource', {
+      tab: { tabbed: true },
+    });
+  });
+
+  mapkey('<', '', function () {
+    RUNTIME('moveTab', { step: -1 });
+  })
+
+  mapkey('>', '', function () {
+    RUNTIME('moveTab', { step: 1 });
+  })
+
+  mapkey('t', '#4Edit current URL with vim editor, and open in new tab', function () {
+    Front.openOmnibar({
+      type: 'URLs',
+      extra: 'getAllSites',
+      tabbed: true,
+    });
+  });
+
+  map('g_', '$');
+  map('<Ctrl-p>', 'gT');
+  map('<Ctrl-n>', 'gt');
+
+  mapkey('Q', '#11Edit Settings', function () {
+    tabOpenLink('/pages/options.html');
+  });
+} catch (e) {
+  throw new Error(`In the section 'Normal mode': ${e}`)
+}
 
 /**
  * Insert mode
  */
 
-imap('<Ctrl-[>', '<Esc>');
-imap('<Ctrl-l>', '<Esc>');
+try {
+  imap('<Ctrl-[>', '<Esc>');
+  imap('<Ctrl-l>', '<Esc>');
 
-imap('<Ctrl-a>', '<Home>');
-imap('<Ctrl-e>', '<End>');
-imap('<Ctrl-b>', '<Left>');
-imapkey('<Ctrl-f>', 'Move the cursor forward 1', moveRight);
+  imap('<Ctrl-a>', '<Home>');
+  imap('<Ctrl-e>', '<End>');
+  imap('<Ctrl-b>', '<Left>');
+  imapkey('<Ctrl-f>', 'Move the cursor forward 1', moveRight);
 
-imapkey('<Ctrl-w>', '', deleteLeftWord);
-imap('<Ctrl-h>', '<Alt-h>');
-imapkey('<Ctrl-u>', '', killLineBefore);
-imapkey('<Ctrl-k>', '', killLineAfter);
+  imapkey('<Ctrl-w>', '', deleteLeftWord);
+  imap('<Ctrl-h>', '<Alt-h>');
+  // cmap('<Ctrl-d>', '?');
+  imapkey('<Ctrl-u>', '', killLineBefore);
+  imapkey('<Ctrl-k>', '', killLineAfter);
 
-imapkey('<Ctrl-g>', '', editInEditor);
+  imapkey('<Ctrl-g>', '', editInEditor);
+} catch (e) {
+  throw new Error(`In the section 'Insert mode': ${e}`)
+}
 
 function moveRight() {
   var element = getRealEdit();
@@ -192,18 +206,23 @@ function deleteLeftWord() {
  * Command mode
  */
 
-cmap('<Ctrl-[>', '<Esc>');
-cmap('<Ctrl-l>', '<Esc>');
+try {
+  cmap('<Ctrl-[>', '<Esc>');
+  cmap('<Ctrl-l>', '<Esc>');
 
-cmap('<Ctrl-a>', '<Home>');
-cmap('<Ctrl-e>', '<End>');
-cmap('<Ctrl-b>', '<Left>');
-cmap('<Ctrl-f>', 'Move the cursor forward 1', moveRight);
+  cmap('<Ctrl-a>', '<Home>');
+  cmap('<Ctrl-e>', '<End>');
+  cmap('<Ctrl-b>', '<Left>');
+  cmap('<Ctrl-f>', '<Right>');
 
-cmapkey('<Ctrl-w>', '', deleteLeftWord);
-cmap('<Ctrl-h>', '<Alt-h>');
-cmapkey('<Ctrl-u>', '', killLineBefore);
-cmapkey('<Ctrl-k>', '', killLineAfter);
+  cmap('<Ctrl-w>', '');
+  cmap('<Ctrl-h>', '<Alt-h>');
+  // cmap('<Ctrl-d>', '?');
+  cmap('<Ctrl-u>', '');
+  cmap('<Ctrl-k>', '');
+} catch (e) {
+  throw new Error(`In the section 'Command mode': ${e}`)
+}
 
 /**
  * Styles
