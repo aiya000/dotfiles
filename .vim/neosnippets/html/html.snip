@@ -1,18 +1,22 @@
-# This file was copied from https://raw.githubusercontent.com/Shougo/neosnippet-snippets/master/neosnippets/html.snip
-# and it was modified by me.
+# Syntax
 
-snippet script
-abbr <script type="text/javascript">${1:TARGET}</script>
-    <script type="text/javascript">${1:TARGET}</script>
-
-snippet script_load
-abbr    <script src="__"></script>
-    <script src="${1:TARGET}"></script>
-
-snippet single
-alias sin
+snippet tag_closed
+alias closed
 abbr <${1:name} />
     <${1:name} />
+
+snippet tag_opened
+alias tag opened
+abbr <${1:name
+    <${1:name}>${0:here}</$1>
+
+
+snippet comment
+alias com
+abbr <!-- {} -->
+    <!-- ${0:here} -->
+
+# Tags
 
 snippet a
 options word
@@ -30,19 +34,6 @@ snippet hr
 options word
     <hr/>
 
-snippet link
-alias css_load
-abbr    link stylesheet css
-    <link rel="${1:stylesheet}" href="${2:index.css}">
-
-snippet ahref
-options word
-    <a href="${1}">${2:TARGET}</a>
-
-snippet aname
-options word
-    <a name="${1}">${2:TARGET}</a>
-
 snippet ol
 options word
     <ol>${0:TARGET}</ol>
@@ -50,18 +41,6 @@ options word
 snippet li
 options word
     <li>${0:TARGET}</li>
-
-snippet id
-options word
-    id="${0:here}"
-
-snippet class
-options word
-    class="${0:here}"
-
-snippet name
-options word
-    name="${0:here}"
 
 snippet img
 options word
@@ -111,7 +90,44 @@ snippet h4
 abbr <h4>__</h4>
     <h4>${0}</h4>
 
-snippet comment
-alias com
-abbr <!--${0:here}-->
-    <!--${0:here}-->
+snippet details
+abbr <details>{}</details>
+    <details>${1:details}</details>
+
+snippet summary
+abbr <summary>{}</summary>
+    <summary>${1:summary}</summary>
+
+# Templates
+
+snippet script
+abbr <script type="text/javascript">${1:TARGET}</script>
+    <script type="text/javascript">${1:TARGET}</script>
+
+snippet script_load
+abbr    <script src="__"></script>
+    <script src="${1:TARGET}"></script>
+
+snippet link
+alias css_load
+abbr    link stylesheet css
+    <link rel="${1:stylesheet}" href="${2:index.css}">
+
+snippet ahref
+options word
+    <a href="${1}">${2:TARGET}</a>
+
+snippet aname
+options word
+    <a name="${1}">${2:TARGET}</a>
+
+snippet folding
+alias details_summary fold
+    <details>
+    <summary>${1:summary}</summary>
+    ${0}
+    </details>
+
+snippet revealjs_speaker_notes
+alias speaker_notes
+    <aside class="notes">${0:here}</aside>

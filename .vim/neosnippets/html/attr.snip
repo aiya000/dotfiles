@@ -1,11 +1,23 @@
 snippet colspan
 abbr    colspan=""
-    colspan="${1}"
+    colspan="${1}"${0}
 
 snippet class
 abbr    class=""
-    class="${1:name}"
+    class="${1:name}"${0}
 
 snippet id
 abbr    id=""
-    id="${1:name}"
+    id="${1:id}"${0}
+
+snippet height
+abbr    height=""
+    height="${1:64}"${0}
+
+snippet width
+abbr    width=""
+    width="${1:64}"${0}
+
+snippet name
+options word
+    name="${0:here}"

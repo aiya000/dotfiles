@@ -44,6 +44,14 @@ abbr case ${1:LABEL}:\n${0}\nbreak;
         ${0}
         break;
 
+snippet try
+abbr try {${0:here}}
+    try {${0:here}}
+
+snippet catch
+abbr catch (e) {${0:here}}
+    catch (e) {${0:here}}
+
 snippet function
 alias fun
 abbr function ${1}(${2}) {${0:here}}
