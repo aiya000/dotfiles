@@ -2,12 +2,12 @@
 
 list=$(nmcli device wifi)
 itemNum=$(echo $list | wc -l)
-selectedItem=$(echo $list | tail -n $(expr $itemNum - 1) | fzf --exit-0 | sed 's/^\*//' | awk '{print $1, $8}')
+selectedItem=$(echo $list | tail -n $(expr $itemNum - 1) | peco | sed 's/^\*//' | awk '{print $1, $8}')
 
-# If nmcli couldn't find AP
+# If nmcli find no APs
 if [ "$?" -ne 0 -o "$selectedItem" = '' ] ; then
     echo 'error :(' > /dev/stderr
-    echo 'You may interuppted fzf or hardware wifi switch is disabled' > /dev/stderr
+    echo 'You may interuppted peco or hardware wifi switch is disabled' > /dev/stderr
     exit 1
 fi
 
