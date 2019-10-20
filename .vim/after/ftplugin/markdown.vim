@@ -12,7 +12,7 @@ setl completefunc=github_complete#complete
 let &commentstring = '<!-- %s -->'
 set conceallevel=0
 
-nnoremap <silent><buffer> <localleader>R :<C-u>w<CR>:!doctoc %<CR>:edit %<CR>
+nnoremap <silent><buffer> <localleader>d :<C-u>w<CR>:!doctoc %<CR>:edit %<CR>
 nnoremap <silent><buffer> <localleader>r :<C-u>PrevimOpen<CR>
 nnoremap <silent><buffer> <localleader><localleader>r :<C-u>call <SID>open_grip()<CR>
 nnoremap <silent><buffer> <localleader><localleader>R :<C-u>silent !shiba % > /dev/null 2>&1 &<CR>
