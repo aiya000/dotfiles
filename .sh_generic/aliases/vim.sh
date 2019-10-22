@@ -69,6 +69,7 @@ function vimterm-open-parent-vim() {
 
 # If I'm on a shell on Vim
 if [[ "$VIM_TERMINAL" != '' ]] ; then
+    export PAGER=cat
     alias vim=vimterm-open-parent-vim
     cd "$(git rev-parse --show-toplevel 2> /dev/null)" \
         && xl \

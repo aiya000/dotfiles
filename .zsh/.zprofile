@@ -46,7 +46,7 @@ export BROWSER=vivaldi-stable
 export EDITOR=vim
 export GIT_EDITOR=vim
 export VISUAL=vim
-export PAGER='vim - +PAGER -c "setl nonu nornu ft=vim-pager | only"' # vim-pager
+export PAGER='vim - +PAGER' # vim-pager
 export MANPAGER='vim - +MANPAGER -c "setl nonu nornu ft=vim-pager | only"' # vim-manpager
 
 export GOPATH=~/.GoPath
