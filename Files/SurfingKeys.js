@@ -4,7 +4,6 @@
 
 try {
   Hints.characters = 'asdfhjkl';
-
   addSearchAlias('g', 'google', 'https://www.google.com/search?q=');
 } catch (e) {
   throw new Error(`In the section 'General': ${e}`)
@@ -96,8 +95,18 @@ try {
   imap('<Ctrl-[>', '<Esc>');
   imap('<Ctrl-l>', '<Esc>');
 
+  imap('<Ctrl-a>', '<Home>');
+  imap('<Ctrl-e>', '<End>');
+  imap('<Ctrl-b>', '<Left>');
   imapkey('<Ctrl-f>', 'Move the cursor forward 1', moveRight);
-  imapkey('<Ctrl-g>', '', editInEditor);
+
+  imapkey('<Ctrl-w>', '', deleteLeftWord);
+  imap('<Ctrl-h>', '<Alt-h>');
+  imapkey('<Ctrl-u>', '', killLineBefore);
+  imapkey('<Ctrl-k>', '', killLineAfter);
+  // cmap('<Ctrl-d>', '?');
+
+  imapkey('<Ctrl-g>', 'Edit in the editor', editInEditor);
 
   iunmap('<Ctrl-i>');
 } catch (e) {

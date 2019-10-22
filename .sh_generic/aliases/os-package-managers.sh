@@ -1,15 +1,17 @@
 #!/bin/bash
 
 if i_have yay ; then
-    alias pai='yay -S'
-    alias pas='yay -Ss'
-    alias par='yay -Rns'
-    alias pau='yay -Sy'
+    alias pai='yay -S'     # Install
+    alias pas='yay -Ss'    # Search
+    alias par='yay -Rns'   # Remove
+    alias pau='yay -Sy'    # Update
+    alias pasu='yay -Syu'  # System Update
 elif i_have pacman ; then
     alias pai='sudo pacman -S'
     alias pas='pacman -Ss'
     alias par='sudo pacman -Rns'
     alias pau='sudo pacman -Sy'
+    alias pasu='sudo pacman -Syu'
 elif i_have brew ; then
     alias pai='brew install'
     alias pau='brew upgrade'
