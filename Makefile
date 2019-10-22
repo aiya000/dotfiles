@@ -176,9 +176,11 @@ install-languages: install-vim install-haskell install-markdown install-text ins
 install-vim:
 	yarn global add vim-language-server
 	# translate.vim
-	git clone https://github.com/skanehira/gtran.git ~/git/gtran
-	cd ~/git/gtran
-	go install
+	if [ ! -d ~/git/gtran ] ; then \
+		git clone https://github.com/skanehira/gtran.git ~/git/gtran ; \
+		cd ~/git/gtran ; \
+		go install ; \
+	fi
 	# vim-silicon
 	cargo install silicon
 
