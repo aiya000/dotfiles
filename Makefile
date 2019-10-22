@@ -20,10 +20,10 @@ prepare:
 	fi
 
 install:
-	make prepare
-	make install_package_managers
-	make build-os-env
-	make install-by-pip
+	$(MAKE) prepare
+	$(MAKE) install_package_managers
+	$(MAKE) build-os-env
+	$(MAKE) install-by-pip
 
 ifeq ($(OS),Arch)
 install_package_managers:
@@ -44,15 +44,18 @@ endif
 install-by-pip:
 	pip install neovim grip
 
+
+noconfirm ?= --noconfirm
+
 build-os-env:
 ifeq ($(OS),Arch)
-	# xmonad: needed by xmonad-config --restart and --replace
-	$(YayInstall) --noconfirm --needed \
+	# You may need `$ make noconfirm='' install` after/if `$ make install` failed
+	# - xmonad: needed by xmonad-config --restart and --replace
+	$(YayInstall) $(noconfirm) --needed \
 		alsa-utils \
 		arandr \
 		asciinema \
 		autoconf \
-		bluez bluez-utils \
 		conky \
 		dmenu \
 		dunst \
@@ -64,7 +67,6 @@ ifeq ($(OS),Arch)
 		fcitx-im \
 		fcitx-mozc \
 		fontforge \
-		gimp \
 		git \
 		go \
 		graphicsmagick \
@@ -77,7 +79,6 @@ ifeq ($(OS),Arch)
 		lxdm \
 		mimi-git \
 		networkmanager \
-		nightshift \
 		noto-fonts-cjk \
 		noto-fonts-emoji \
 		openssh \
@@ -86,7 +87,6 @@ ifeq ($(OS),Arch)
 		pkgfile \
 		progress \
 		pulseaudio \
-		redshift \
 		ristretto \
 		rsync \
 		slock \
@@ -95,7 +95,7 @@ ifeq ($(OS),Arch)
 		thunar \
 		tmux \
 		tmux-mem-cpu-load \
-		universal-ctags-git \
+		universal-ctags \
 		unzip-iconv \
 		vivaldi \
 		watchexec \
@@ -110,29 +110,32 @@ ifeq ($(OS),Arch)
 		zathura \
 		zathura-pdf-mupdf \
 		#
+	sudo systemctl enable lxdm
 	sudo systemctl enable NetworkManager
 	sudo systemctl start NetworkManager
-	sudo systemctl enable docker
-	sudo systemctl start docker
-	sudo gpasswd -a aiya000 docker
 	sudo gpasswd -a aiya000 audio
-	sudo modprobe btusb
-	sudo systemctl enable bluetooth
-	sudo systemctl start bluetooth
-	# Fix East Asian Ambiguous character width problems
-	git clone https://github.com/fumiyas/wcwidth-cjk ~/git/wcwidth-cjk
-	cd ~/git/wcwidth-cjk
+	$(MAKE) install-wcwidth-cjk
+	$(MAKE) install-fcitx-imlist
+	$(MAKE) install-rictydiminished
+
+# Fix East Asian Ambiguous character width problems
+install-wcwidth-cjk:
+	git clone https://github.com/fumiyas/wcwidth-cjk /tmp/wcwidth-cjk
+	cd /tmp/wcwidth-cjk
 	autoreconf --install
 	./configure --prefix=/usr/local/
 	make
 	sudo make install
-	#
-	git clone https://github.com/kenhys/fcitx-imlist ~/git/fc itx-imlist
-	cd ~/git/fcitx-imlist
+
+install-fcitx-imlist:
+	git clone https://github.com/kenhys/fcitx-imlist /tmp/fcitx-imlist
+	cd /tmp/fcitx-imlist
 	./autogen.sh
 	./configure
 	make
 	sudo make install
+
+install-rictydiminished:
 	# I refered to https://qiita.com/nechinechi/items/27f541849db04123ea15
 	# NOTE: This cloning needs to wait a while
 	git clone https://github.com/edihbrandon/RictyDiminished ~/git/RictyDiminished
@@ -165,6 +168,11 @@ endif
 
 # Here are not installed by default (all)
 
+install-sub-all: install-languages install-tools
+
+install-languages: install-vim install-haskell install-markdown install-text install-typescript install-html install-css install-xml install-java install-sh
+# languages {{{
+
 install-vim:
 	yarn global add vim-language-server
 	# translate.vim
@@ -186,14 +194,14 @@ install-text:
 install-typescript:
 	npm install -g typescript tslint tsfmt
 
-install-html-css:
-	npm install -g htmlhint csslint
+install-html:
+	npm install -g htmlhint
+
+install-css:
+	npm install -g csslint
 
 install-xml:
 	npm install -g pretty-xml
-
-install-lice:
-	npm install -g lice
 
 ifeq ($(OS),Arch)
 install-java:
@@ -206,6 +214,22 @@ install-sh:
 
 install-ruby:
 	$(YayInstall) ruby ruby-irb
+endif
+
+# }}}
+
+install-tools: install-lice install-bluetooth install-drawio install-audio-player install-dropbox install-audacity install-gyazo-cli install-antimicro
+# tools {{{
+
+install-lice:
+	npm install -g lice
+
+ifeq ($(OS),Arch)
+install-bluetooth:
+	$(YayInstall) bluez bluez-utils
+	sudo modprobe btusb
+	# sudo systemctl enable bluetooth
+	# sudo systemctl start bluetooth
 
 install-drawio:
 	$(YayInstall) drawio-desktop
@@ -215,6 +239,7 @@ install-audio-player:
 
 install-docker:
 	$(YayInstall) docker docker-compose
+	sudo gpasswd -a aiya000 docker
 
 install-dropbox:
 	$(YayInstall) dropbox-cli
@@ -232,3 +257,5 @@ install-gyazo-cli:
 install-antimicro:
 	$(YayInstall) antimicro-git
 endif
+
+# }}}
