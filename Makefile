@@ -49,13 +49,16 @@ noconfirm ?= --noconfirm
 
 build-os-env:
 ifeq ($(OS),Arch)
-	# You may need `$ make noconfirm='' install` after/if `$ make install` failed
+	# Install my better GUI/CLI environment
 	# - xmonad: needed by xmonad-config --restart and --replace
+	# NOTE: You may need `$ make noconfirm='' install` after/if `$ make install` failed
 	$(YayInstall) $(noconfirm) --needed \
-		alsa-utils \
 		arandr \
 		asciinema \
 		autoconf \
+		base \
+		base-devel \
+		compton \
 		conky \
 		dmenu \
 		dunst \
@@ -68,19 +71,20 @@ ifeq ($(OS),Arch)
 		fcitx-mozc \
 		fontforge \
 		git \
+		git-secret \
 		go \
-		graphicsmagick \
 		hub \
 		jq \
+		libnm \
 		libnotify \
 		libxss \
 		light \
 		linux-headers \
+		mlocate \
 		lxdm \
+		man-db \
 		mimi-git \
 		networkmanager \
-		noto-fonts-cjk \
-		noto-fonts-emoji \
 		openssh \
 		pavucontrol \
 		peco \
@@ -89,6 +93,7 @@ ifeq ($(OS),Arch)
 		pulseaudio \
 		ristretto \
 		rsync \
+		salsa-utils \
 		slock \
 		sox \
 		termite \
@@ -108,12 +113,12 @@ ifeq ($(OS),Arch)
 		xorg-server \
 		xorg-xinit \
 		zathura \
-		zathura-pdf-mupdf \
-		#
+		zathura-pdf-mupdf
 	sudo systemctl enable lxdm
 	sudo systemctl enable NetworkManager
 	sudo systemctl start NetworkManager
 	sudo gpasswd -a aiya000 audio
+	sudo pkgfile -u
 	$(MAKE) install-wcwidth-cjk
 	$(MAKE) install-fcitx-imlist
 	$(MAKE) install-rictydiminished
@@ -170,19 +175,8 @@ endif
 
 install-sub-all: install-languages install-tools
 
-install-languages: install-vim install-haskell install-markdown install-text install-typescript install-html install-css install-xml install-java install-sh
+install-languages: install-haskell install-markdown install-text install-typescript install-html install-css install-xml install-java install-sh
 # languages {{{
-
-install-vim:
-	yarn global add vim-language-server
-	# translate.vim
-	if [ ! -d ~/git/gtran ] ; then \
-		git clone https://github.com/skanehira/gtran.git ~/git/gtran ; \
-		cd ~/git/gtran ; \
-		go install ; \
-	fi
-	# vim-silicon
-	cargo install silicon
 
 install-haskell:
 	stack install hasktags haskdogs hlint
@@ -220,24 +214,41 @@ endif
 
 # }}}
 
-install-tools: install-lice install-bluetooth install-drawio install-audio-player install-dropbox install-audacity install-gyazo-cli install-antimicro
+install-tools: install-lice install-vim install-vim-deps install-bluetooth install-drawio install-audio install-graphics install-dropbox install-gyazo-cli install-antimicro install-fonts install-power-managers install-displaylink install-cd-ripper
 # tools {{{
 
 install-lice:
 	npm install -g lice
 
 ifeq ($(OS),Arch)
+install-vim:
+	yarn global add vim-language-server
+	# translate.vim
+	git clone https://github.com/skanehira/gtran.git /tmp/gtran ; \
+	cd /tmp/gtran
+	go install
+	# vim-silicon
+	cargo install silicon
+	$(YayInstall) xclip
+
+# To build vim
+install-vim-deps:
+	$(YayInstall) --needed python2 ruby ruby-irb lua luajit
+
 install-bluetooth:
 	$(YayInstall) bluez bluez-utils
 	sudo modprobe btusb
 	# sudo systemctl enable bluetooth
 	# sudo systemctl start bluetooth
 
-install-drawio:
-	$(YayInstall) drawio-desktop
+install-audio:
+	$(YayInstall) mpg123 audacity
 
-install-audio-player:
-	$(YayInstall) mpg123
+install-graphics:
+	$(YayInstall) drawio-desktop-bin graphicsmagick
+
+install-fonts:
+	$(YayInstall) noto-fonts-cjk noto-fonts-emoji
 
 install-docker:
 	$(YayInstall) docker docker-compose
@@ -245,9 +256,6 @@ install-docker:
 
 install-dropbox:
 	$(YayInstall) dropbox-cli
-
-install-audacity:
-	$(YayInstall) audacity
 
 install-gyazo-cli:
 	$(YayInstall) --needed dep
@@ -258,6 +266,15 @@ install-gyazo-cli:
 # Mapping from joypad strokes to keyboard strokes
 install-antimicro:
 	$(YayInstall) antimicro-git
+
+install-power-managers:
+	$(YayInstall) acpid powertop tlp
+
+install-displaylink:
+	$(YayInstall) displaylink evdi-git
+
+install-cd-ripper:
+	$(YayInstall) asunder
 endif
 
 # }}}
