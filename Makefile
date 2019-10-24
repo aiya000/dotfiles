@@ -44,12 +44,11 @@ endif
 install-by-pip:
 	pip install neovim grip
 
-
 noconfirm ?= --noconfirm
 
 build-os-env:
 ifeq ($(OS),Arch)
-	# Install my better GUI/CLI environment
+	# Install my better GUI/CLI environment{{{
 	# - xmonad: needed by xmonad-config --restart and --replace
 	# NOTE: You may need `$ make noconfirm='' install` after/if `$ make install` failed
 	$(YayInstall) $(noconfirm) --needed \
@@ -149,34 +148,35 @@ install-rictydiminished:
 	fontforge -script ./font-patcher \
 		~/git/RictyDiminished/RictyDiminished-Regular.ttf \
 		-w --fontawesome --fontlinux --octicons --pomicons --powerline --powerlineextra
-	(echo 'RictyDiminished with nerd-font patch was generated to ~/git/nerd-fonts, please rename it to "RictyDiminished NF" and install it to your OS manually!' | tee $(logfile))
+	(echo 'RictyDiminished with nerd-font patch was generated to ~/git/nerd-fonts, please rename it to "RictyDiminished NF" and install it to your OS manually!' | tee $(logfile))# }}}
 endif
 ifeq ($(OS),Ubuntu)
-	git clone https://github.com/peco/peco ~/git/peco
+	git clone https://github.com/peco/peco ~/git/peco# {{{
 	cd ~/git/peco
 	make build
-	cp ./releases/peco_linux_amd64/peco ~/bin
+	cp ./releases/peco_linux_amd64/peco ~/bin# }}}
 endif
 ifeq ($(OS),Darwin)
-	brew install \
+	brew install \# {{{
 		font-forge \ # for making nerd-fonts for vim-devicons
 		cmigemo \ # vim-migemo
 		scalastyle \ # ale (vim)
 		graphviz plantuml \
 		git-secrets \
 		jq
-	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit # vim-textobj-clang
+	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit # vim-textobj-clang}}}
 endif
 ifeq ($(OS),Windows)
 	echo Please define build-os-env
 endif
 
-# Here are not installed by default (all)
+# Below are not installed by default
 
 install-sub-all: install-languages install-tools
 
 install-languages: install-haskell install-markdown install-text install-typescript install-html install-css install-xml install-java install-sh
 # languages {{{
+#
 
 install-haskell:
 	stack install hasktags haskdogs hlint
@@ -224,57 +224,57 @@ ifeq ($(OS),Arch)
 install-vim:
 	yarn global add vim-language-server
 	# translate.vim
-	git clone https://github.com/skanehira/gtran.git /tmp/gtran ; \
-	cd /tmp/gtran
+	git clone https://github.com/skanehira/gtran.git /tmp/gtran && \
+	cd /tmp/gtran && \
 	go install
 	# vim-silicon
 	cargo install silicon
-	$(YayInstall) xclip
+	$(YayInstall) $(noconfirm) xclip
 
 # To build vim
 install-vim-deps:
-	$(YayInstall) --needed python2 ruby ruby-irb lua luajit
+	$(YayInstall) $(noconfirm) --needed python2 ruby ruby-irb lua luajit
 
 install-bluetooth:
-	$(YayInstall) bluez bluez-utils
+	$(YayInstall) $(noconfirm) bluez bluez-utils
 	sudo modprobe btusb
 	# sudo systemctl enable bluetooth
 	# sudo systemctl start bluetooth
 
 install-audio:
-	$(YayInstall) mpg123 audacity
+	$(YayInstall) $(noconfirm) mpg123 audacity
 
 install-graphics:
-	$(YayInstall) drawio-desktop-bin graphicsmagick
+	$(YayInstall) $(noconfirm) drawio-desktop-bin graphicsmagick
 
 install-fonts:
-	$(YayInstall) noto-fonts-cjk noto-fonts-emoji
+	$(YayInstall) $(noconfirm) noto-fonts-cjk noto-fonts-emoji
 
 install-docker:
-	$(YayInstall) docker docker-compose
+	$(YayInstall) $(noconfirm) docker docker-compose
 	sudo gpasswd -a aiya000 docker
 
 install-dropbox:
-	$(YayInstall) dropbox-cli
+	$(YayInstall) $(noconfirm) dropbox-cli
 
 install-gyazo-cli:
-	$(YayInstall) --needed dep
+	$(YayInstall) $(noconfirm) --needed dep
 	go get -d github.com/Tomohiro/gyazo-cli
 	cd $GOPATH/src/github.com/Tomohiro/gyazo-cli
 	make install
 
 # Mapping from joypad strokes to keyboard strokes
 install-antimicro:
-	$(YayInstall) antimicro-git
+	$(YayInstall) $(noconfirm) antimicro-git
 
 install-power-managers:
-	$(YayInstall) acpid powertop tlp
+	$(YayInstall) $(noconfirm) acpid powertop tlp
 
 install-displaylink:
-	$(YayInstall) displaylink evdi-git
+	$(YayInstall) $(noconfirm) displaylink evdi-git
 
 install-cd-ripper:
-	$(YayInstall) asunder
+	$(YayInstall) $(noconfirm) asunder
 endif
 
 # }}}
