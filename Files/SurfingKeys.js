@@ -173,6 +173,16 @@ function deleteLeftWord() {
 }
 
 /**
+ * Visual mode
+ */
+try {
+  vmap('<Ctrl-[>', '<Esc>');
+  vmap('<Ctrl-l>', '<Esc>');
+} catch (e) {
+  throw new Error(`In the section 'Visual mode': ${e}`)
+}
+
+/**
  * Command mode
  */
 
