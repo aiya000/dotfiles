@@ -114,9 +114,9 @@ try {
 }
 
 function moveRight() {
-  var element = getRealEdit();
+  const element = getRealEdit();
   if (element.setSelectionRange !== undefined) {
-    var pos = element.selectionStart + 1;
+    const pos = element.selectionStart + 1;
     element.setSelectionRange(pos, pos);
     return;
   }
@@ -126,7 +126,7 @@ function moveRight() {
 }
 
 function killLineBefore() {
-  var element = getRealEdit();
+  const element = getRealEdit();
   if (element.value === '') {
     return;
   }
@@ -136,33 +136,33 @@ function killLineBefore() {
 }
 
 function killLineAfter() {
-  var element = getRealEdit();
+  const element = getRealEdit();
   element.value = element.value.substr(0, element.selectionStart);
   element.setSelectionRange(element.selectionStart, 0);
 }
 
 function editInEditor() {
-  var element = getRealEdit();
+  const element = getRealEdit();
   element.blur();
   Insert.exit();
   Front.showEditor(element);
 }
 
 function deleteLeftWord() {
-  var element = getRealEdit();
+  const element = getRealEdit();
 
   if (element.setSelectionRange !== undefined) {
-    var pos = deleteNextWord(element.value, -1, element.selectionStart);
+    const pos = deleteNextWord(element.value, -1, element.selectionStart);
     element.value = pos[0];
     element.setSelectionRange(pos[1], pos[1]);
     return;
   }
 
   // for contenteditable div
-  var selection = document.getSelection();
-  var p0 = selection.focusOffset;
+  const selection = document.getSelection();
+  const p0 = selection.focusOffset;
   document.getSelection().modify('move', 'backward', 'word');
-  var v = selection.focusNode.data, p1 = selection.focusOffset;
+  const v = selection.focusNode.data, p1 = selection.focusOffset;
   selection.focusNode.data = v.substr(0, p1) + v.substr(p0);
   selection.setPosition(selection.focusNode, p1);
 }
