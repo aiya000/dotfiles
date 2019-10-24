@@ -137,8 +137,13 @@ function killLineBefore() {
 
 function killLineAfter() {
   const element = getRealEdit();
-  element.value = element.value.substr(0, element.selectionStart);
-  element.setSelectionRange(element.selectionStart, 0);
+  const firstHalf = element.value.substr(0, element.selectionStart);
+
+  const thisLineBreak = element.value.indexOf('\n', element.selectionStart);
+  const lastHalf = element.value.substr(thisLineBreak);
+
+  element.value = firstHalf + lastHalf;
+  element.setSelectionRange(firstHalf.length - 1, 0);
 }
 
 function editInEditor() {
