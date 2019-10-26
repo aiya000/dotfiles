@@ -3,7 +3,7 @@
  */
 
 try {
-  Hints.characters = 'asdfhjkl';
+  Hints.characters = 'wertyuiopasdfghjklzxcvbnm';
   addSearchAlias('g', 'google', 'https://www.google.com/search?q=');
 } catch (e) {
   throw new Error(`In the section 'General': ${e}`)
@@ -44,20 +44,23 @@ try {
     history.go(1);
   }, { repeatIgnore: true });  // }}}
   mapkey('F', '#1Open a link in non-active new tab', function () {  // {{{
-    Hints.create(',', Hints.dispatchMouseClick, {  // {{{
+    Hints.create(',', Hints.dispatchMouseClick, {
       tabbed: true,
       active: false,
-    });  // }}}
+    });
   });  // }}}
   mapkey('o', '#8Open a URL in current tab', function () {  // {{{
-    Front.openOmnibar({  // {{{
+    Front.openOmnibar({
       type: 'URLs',
       extra: 'getAllSites',
       tabbed: false,
-    });  // }}}
+    });
   });  // }}}
   mapkey('b', '#3Choose a tab', function () {  // {{{
-    Front.chooseTab();
+    Front.openOmnibar({
+      type: 'URLs',
+      extra: 'getAllSites',
+    });
   });  // }}}
   mapkey('gs', '#12View page source', function () {  // {{{
     RUNTIME('viewSource', {  // {{{
@@ -77,12 +80,15 @@ try {
       tabbed: true,
     });
   });  // }}}
-  map('g_', '$');
-  map('<Ctrl-p>', 'gT');
-  map('<Ctrl-n>', 'gt');
   mapkey('Q', '#11Edit Settings', function () {  // {{{
     tabOpenLink('/pages/options.html');
   });  // }}}
+  mapkey('R', '#4Reload the page', function () {  // {{{
+    RUNTIME('reloadTab', { nocache: true });
+  });  // }}}
+  map('g_', '$');
+  map('<Ctrl-p>', 'gT');
+  map('<Ctrl-n>', 'gt');
 } catch (e) {
   throw new Error(`In the section 'Normal mode': ${e}`)
 }
