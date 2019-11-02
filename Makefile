@@ -222,13 +222,25 @@ install-lice:
 
 ifeq ($(OS),Arch)
 install-vim:
+	$(MAKE) install-vim-language-server
+	$(MAKE) install-gtran
+	$(MAKE) install-silicon
+	$(MAKE) install-xclip
+
+install-vim-language-server:
 	yarn global add vim-language-server
+
+install-gtran:
 	# translate.vim
 	git clone https://github.com/skanehira/gtran.git /tmp/gtran && \
 	cd /tmp/gtran && \
 	go install
+
+install-silicon:
 	# vim-silicon
 	cargo install silicon
+
+install-xclip:
 	$(YayInstall) $(noconfirm) xclip
 
 # To build vim
