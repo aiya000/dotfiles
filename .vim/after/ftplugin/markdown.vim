@@ -24,9 +24,8 @@ vnoremap <silent><buffer> i{ :<C-u>call <SID>organize_this_table()<CR>
 syntax sync fromstart
 
 function! s:open_grip() abort
-    let cmd = printf('grip --user %s --pass %s --browser %s',
-        \ g:vimrc.github.username,
-        \ g:vimrc.github.password,
+    let cmd = printf('grip --pass %s --browser %s',
+        \ g:vimrc.github.access_token,
         \ expand('%:p'),
     \ )
     call vimrc#open_terminal_as('none', 'horizontal', cmd)
