@@ -27,6 +27,9 @@ install:
 	$(MAKE) build-os-env
 	$(MAKE) install-by-pip
 
+install-without-confirm:
+	$(MAKE) install noconfirm='--noconfirm'
+
 ifeq ($(OS),Arch)
 install_package_managers:
 	$(MAKE) install-yay
@@ -151,7 +154,9 @@ install-rictydiminished:
 	fontforge -script ./font-patcher \
 		~/git/RictyDiminished/RictyDiminished-Regular.ttf \
 		-w --fontawesome --fontlinux --octicons --pomicons --powerline --powerlineextra
-	(echo 'RictyDiminished with nerd-font patch was generated to ~/git/nerd-fonts, please rename it to "RictyDiminished NF" and install it to your OS manually!' | tee $(logfile))# }}}
+	(echo 'RictyDiminished with nerd-font patch was generated to ~/git/nerd-fonts, please rename it to "RictyDiminished NF" and install it to your OS manually!' | tee $(logfile))
+
+# }}}
 endif
 ifeq ($(OS),Ubuntu)
 	# {{{
@@ -181,11 +186,13 @@ endif
 
 install-sub-all: install-languages install-tools
 
-install-languages: install-haskell install-markdown install-text install-typescript install-html install-css install-xml install-java install-sh
+install-languages: install-haskell install-markdown install-text install-typescript install-html install-css install-xml install-sh
 # languages {{{
 
 install-haskell:
-	stack install hasktags haskdogs hlint
+	which hasktags || stack install hasktags
+	which haskdogs || stack install haskdogs
+	which hlint || stack install hlint
 
 install-markdown:
 	which doctoc || npm install -g doctoc
@@ -197,7 +204,7 @@ install-text:
 install-typescript:
 	which typescript || npm install -g typescript
 	which tslint || npm install -g tslint
-	which tsfmt || npm install -g tsfmt
+	which typescript-formatter || npm install -g typescript-formatter
 
 install-html:
 	which htmlhint || npm install -g htmlhint
@@ -209,11 +216,6 @@ install-xml:
 	which xml || npm install -g pretty-xml
 
 ifeq ($(OS),Arch)
-install-java:
-	$(YayInstall) jdk
-	wget https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7.jar -O ~/bin/google-java-format-1.7.jar
-	wget https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7-all-deps.jar -O ~/bin/google-java-format-1.7-all-deps.jar
-
 install-sh:
 	$(YayInstall) shellcheck
 
@@ -223,7 +225,7 @@ endif
 
 # }}}
 
-install-tools: install-cli-optional-deps install-gui-optional-deps install-lice install-vim-deps install-vim-build-deps install-xmonad-deps install-bluetooth install-drawio install-audio install-graphics install-dropbox install-gyazo-cli install-antimicro install-fonts install-power-managers install-displaylink install-cd-ripper
+install-tools: install-cli-optional-deps install-gui-optional-deps install-lice install-vim-deps install-vim-build-deps install-xmonad-deps install-bluetooth install-audio install-graphics install-dropbox install-gyazo-cli install-antimicro install-fonts install-power-managers install-cd-ripper
 # tools {{{
 
 install-lice:
@@ -231,14 +233,15 @@ install-lice:
 
 install-silicon:
 	# vim-silicon
-	cargo install silicon || true
+	which silicon || cargo install silicon
 
 install-gtran:
 	# translate.vim
-	which gtran || \
-	git clone https://github.com/skanehira/gtran.git /tmp/gtran && \
-	cd /tmp/gtran && \
-	go install
+	if ! which gtran ; then \
+		git clone https://github.com/skanehira/gtran.git /tmp/gtran ; \
+		cd /tmp/gtran ; \
+		go install ; \
+	fi
 
 ifeq ($(OS),Arch)
 install-cli-optional-deps:
@@ -276,7 +279,7 @@ install-xmonad-deps:
 	$(YayInstall) xfce4-screenshooter
 
 install-bluetooth:
-	$(YayInstall) bluez bluez-utils
+	$(YayInstall) bluez bluez-utils && \
 	sudo modprobe btusb
 	# sudo systemctl enable bluetooth
 	# sudo systemctl start bluetooth
@@ -310,11 +313,18 @@ install-antimicro:
 install-power-managers:
 	$(YayInstall) acpid powertop tlp
 
-install-displaylink:
-	$(YayInstall) displaylink evdi-git
-
 install-cd-ripper:
 	$(YayInstall) asunder
 endif
 
 # }}}
+
+# Below is very optional
+
+install-java:
+	$(YayInstall) jdk
+	wget https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7.jar -O ~/bin/google-java-format-1.7.jar
+	wget https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7-all-deps.jar -O ~/bin/google-java-format-1.7-all-deps.jar
+
+install-displaylink:
+	$(YayInstall) displaylink evdi-git
