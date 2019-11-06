@@ -11,15 +11,16 @@ source ~/.sh_generic/premise.sh
 
 # Override existed name {{{
 
-alias ls='ls --color=auto --group-directories-first'
-alias sl=ls
-alias rm=dust # no more cry
-alias mv='mv -i'
 alias cp='cp -i'
 alias dd='dd status=progress'
 alias df='df -h'
+alias dmesg='dmesg --ctime'
 alias du='du -h'
 alias free='free -h'
+alias ls='ls --color=auto --group-directories-first'
+alias mv='mv -i'
+alias rm=dust  # no more cry
+alias sl=ls
 
 # NOTE: Who did define the original - ?
 function - () {
@@ -29,10 +30,6 @@ function - () {
 
 alias_of sudo='sudo '  # Enable aliases on sudo
 alias_of mysql='mysql --pager="less -r -S -n -i -F -X"'
-alias_of hoe='stack exec --silent -- hoe'
-alias_of hawk='stack exec -- hawk'
-# shellcheck disable=SC2139
-alias_of sk="sk $SKIM_DEFAULT_OPTS"
 
 i_have say || alias say=espeak
 
