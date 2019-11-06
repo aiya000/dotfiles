@@ -48,7 +48,7 @@ noconfirm ?= --noconfirm
 
 build-os-env:
 ifeq ($(OS),Arch)
-	# Install my better GUI/CLI environment{{{
+	# Install my better GUI/CLI environment {{{
 	# - xmonad: needed by xmonad-config --restart and --replace
 	# NOTE: You may need `$ make noconfirm='' install` after/if `$ make install` failed
 	$(YayInstall) $(noconfirm) --needed \
@@ -214,7 +214,7 @@ endif
 
 # }}}
 
-install-tools: install-lice install-vim install-vim-deps install-bluetooth install-drawio install-audio install-graphics install-dropbox install-gyazo-cli install-antimicro install-fonts install-power-managers install-displaylink install-cd-ripper
+install-tools: install-lice install-vim install-vim-deps install-xmonad-deps install-bluetooth install-drawio install-audio install-graphics install-dropbox install-gyazo-cli install-antimicro install-fonts install-power-managers install-displaylink install-cd-ripper
 # tools {{{
 
 install-lice:
@@ -246,6 +246,9 @@ install-xclip:
 # To build vim
 install-vim-deps:
 	$(YayInstall) $(noconfirm) --needed python2 ruby ruby-irb lua luajit
+
+install-xmonad-deps:
+	$(YayInstall) $(noconfirm) --needed xfce4-screenshooter
 
 install-bluetooth:
 	$(YayInstall) $(noconfirm) bluez bluez-utils
