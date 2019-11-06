@@ -57,7 +57,7 @@ ifeq ($(OS),Arch)
 	# Install my better GUI/CLI environment {{{
 	# - xmonad: needed by xmonad-config --restart and --replace
 	# NOTE: You may need `$ make noconfirm='' install` after/if `$ make install` failed
-	$(YayInstall) --needed \
+	$(YayInstall) \
 		alsa-utils \
 		autoconf \
 		base \
@@ -188,22 +188,25 @@ install-haskell:
 	stack install hasktags haskdogs hlint
 
 install-markdown:
-	npm install -g doctoc shiba
+	which doctoc || npm install -g doctoc
+	which shiba || npm install -g shiba
 
 install-text:
-	npm install -g textlint
+	which textlint || npm install -g textlint
 
 install-typescript:
-	npm install -g typescript tslint tsfmt
+	which typescript || npm install -g typescript
+	which tslint || npm install -g tslint
+	which tsfmt || npm install -g tsfmt
 
 install-html:
-	npm install -g htmlhint
+	which htmlhint || npm install -g htmlhint
 
 install-css:
-	npm install -g csslint
+	which csslint || npm install -g csslint
 
 install-xml:
-	npm install -g pretty-xml
+	which xml || npm install -g pretty-xml
 
 ifeq ($(OS),Arch)
 install-java:
@@ -220,14 +223,11 @@ endif
 
 # }}}
 
-install-tools: install-cli-optional-deps install-gui-optional-deps install-lice install-vim-deps install-build-vim-deps install-xmonad-deps install-bluetooth install-drawio install-audio install-graphics install-dropbox install-gyazo-cli install-antimicro install-fonts install-power-managers install-displaylink install-cd-ripper
+install-tools: install-cli-optional-deps install-gui-optional-deps install-lice install-vim-deps install-vim-build-deps install-xmonad-deps install-bluetooth install-drawio install-audio install-graphics install-dropbox install-gyazo-cli install-antimicro install-fonts install-power-managers install-displaylink install-cd-ripper
 # tools {{{
 
 install-lice:
-	npm install -g lice || true
-
-install-vim-language-server:
-	yarn global add vim-language-server || true
+	which lice || npm install -g lice
 
 install-silicon:
 	# vim-silicon
@@ -235,30 +235,32 @@ install-silicon:
 
 install-gtran:
 	# translate.vim
+	which gtran || \
 	git clone https://github.com/skanehira/gtran.git /tmp/gtran && \
 	cd /tmp/gtran && \
 	go install
 
 ifeq ($(OS),Arch)
 install-cli-optional-deps:
+	# From official
 	$(YayInstall) \
 		asciinema \
 		extundelete \
-		git-secret \
 		hub \
 		jq \
 		linux-lts-headers \
 		universal-ctags \
 		watchexec
+	# From AUR
+	which git-secret || $(YayInstall) git-secret
 
 install-gui-optional-deps:
-	$(YayInstall) \
-		arandr \
-		vivaldi \
-		xfce4-settings
+	# From official
+	$(YayInstall) arandr xfce4-settings ffmpeg
+	# From AUR
+	which vivaldi-stable || $(YayInstall) vivaldi
 
 install-vim-deps:
-	$(MAKE) install-vim-language-server
 	$(MAKE) install-gtran
 	$(MAKE) install-silicon
 	$(MAKE) install-xclip
