@@ -4,19 +4,21 @@ logfile = ./dotfiles-MakeFile.log
 
 # TODO: Detect auto
 OS = Arch
-YayInstall = yay -S
+
+noconfirm ?= --noconfirm
+YayInstall = yay -S --needed $(noconfirm)
 YayUpdate = yay -Sy
 
 prepare:
-	if [ ! -d ~/bin ] ; then\
-		mkdir ~/bin ;\
+	if [ ! -d ~/bin ] ; then \
+		mkdir ~/bin ; \
 	fi
-	if [ ! -d ~/git ] ; then\
-		mkdir ~/git ;\
+	if [ ! -d ~/git ] ; then \
+		mkdir ~/git ; \
 	fi
 	# Please see .npmrc
-	if [ ! -d ~/.npm-prefix ] ; then\
-		mkdir ~/.npm-prefix ;\
+	if [ ! -d ~/.npm-prefix ] ; then \
+		mkdir ~/.npm-prefix ; \
 	fi
 
 install:
@@ -27,8 +29,14 @@ install:
 
 ifeq ($(OS),Arch)
 install_package_managers:
+	$(MAKE) install-yay
 	$(YayUpdate)
-	$(YayInstall) --noconfirm --needed stack-static npm yarn python-pip rust
+	$(YayInstall) stack-static npm yarn python-pip rust
+
+install-yay:
+	git clone https://aur.archlinux.org/yay.git /tmp/yay && \
+	cd /tmp/yay && \
+	makepkg -si
 endif
 ifeq ($(OS),Darwin)
 	echo Please define install_package_managers for haskell-stack > /dev/stderr
@@ -44,46 +52,37 @@ endif
 install-by-pip:
 	pip install neovim grip
 
-noconfirm ?= --noconfirm
-
 build-os-env:
 ifeq ($(OS),Arch)
 	# Install my better GUI/CLI environment {{{
 	# - xmonad: needed by xmonad-config --restart and --replace
 	# NOTE: You may need `$ make noconfirm='' install` after/if `$ make install` failed
-	$(YayInstall) $(noconfirm) --needed \
-		arandr \
-		asciinema \
+	$(YayInstall) --needed \
+		alsa-utils \
 		autoconf \
 		base \
 		base-devel \
 		compton \
 		conky \
+		dhcpcd \
 		dmenu \
 		dunst \
 		dzen2 \
-		extundelete \
 		fcitx \
-		fcitx-configtool \
 		fcitx-configtool \
 		fcitx-im \
 		fcitx-mozc \
 		fontforge \
 		git \
-		git-secret \
 		go \
-		hub \
-		jq \
-		libnm \
 		libnotify \
 		libxss \
 		light \
-		linux-headers \
-		mlocate \
 		lxdm \
 		man-db \
 		mimi-git \
-		networkmanager \
+		mlocate \
+		netctl \
 		openssh \
 		pavucontrol \
 		peco \
@@ -92,20 +91,15 @@ ifeq ($(OS),Arch)
 		pulseaudio \
 		ristretto \
 		rsync \
-		salsa-utils \
 		slock \
 		sox \
 		termite \
 		thunar \
 		tmux \
 		tmux-mem-cpu-load \
-		universal-ctags \
 		unzip-iconv \
-		vivaldi \
-		watchexec \
 		xf86-input-wacom \
 		xf86-video-intel \
-		xfce4-settings \
 		xinit-xsession \
 		xmonad \
 		xorg-apps \
@@ -114,37 +108,47 @@ ifeq ($(OS),Arch)
 		zathura \
 		zathura-pdf-mupdf
 	sudo systemctl enable lxdm
-	sudo systemctl enable NetworkManager
-	sudo systemctl start NetworkManager
+	$(MAKE) network-config
 	sudo gpasswd -a aiya000 audio
 	sudo pkgfile -u
 	$(MAKE) install-wcwidth-cjk
 	$(MAKE) install-fcitx-imlist
 	$(MAKE) install-rictydiminished
 
+network-config:
+	sudo systemctl enable dhcpcd
+	sudo systemctl enable systemd-resolved
+	sudo systemctl enable systemd-networkd
+	echo 'name_servers=8.8.8.8' | sudo tee -a /etc/resolvconf.conf
+	sudo resolvconf -u
+
 # Fix East Asian Ambiguous character width problems
 install-wcwidth-cjk:
-	git clone https://github.com/fumiyas/wcwidth-cjk /tmp/wcwidth-cjk
-	cd /tmp/wcwidth-cjk
-	autoreconf --install
-	./configure --prefix=/usr/local/
-	make
+	git clone https://github.com/fumiyas/wcwidth-cjk /tmp/wcwidth-cjk && \
+	cd /tmp/wcwidth-cjk && \
+	autoreconf --install && \
+	./configure --prefix=/usr/local/ && \
+	make && \
 	sudo make install
 
 install-fcitx-imlist:
-	git clone https://github.com/kenhys/fcitx-imlist /tmp/fcitx-imlist
-	cd /tmp/fcitx-imlist
-	./autogen.sh
-	./configure
-	make
+	git clone https://github.com/kenhys/fcitx-imlist /tmp/fcitx-imlist && \
+	cd /tmp/fcitx-imlist && \
+	./autogen.sh && \
+	./configure && \
+	make && \
 	sudo make install
 
 install-rictydiminished:
 	# I refered to https://qiita.com/nechinechi/items/27f541849db04123ea15
 	# NOTE: This cloning needs to wait a while
-	git clone https://github.com/edihbrandon/RictyDiminished ~/git/RictyDiminished
-	git clone https://github.com/ryanoasis/nerd-fonts ~/git/nerd-fonts
-	cd ~/git/nerd-fonts
+	if [ ! -d ~/git/RictyDiminished ] ; then \
+		git clone https://github.com/edihbrandon/RictyDiminished ~/git/RictyDiminished ; \
+	fi
+	if [ ! -d ~/git/nerd-fonts ] ; then \
+		git clone https://github.com/ryanoasis/nerd-fonts ~/git/nerd-fonts ; \
+	fi
+	cd ~/git/nerd-fonts && \
 	fontforge -script ./font-patcher \
 		~/git/RictyDiminished/RictyDiminished-Regular.ttf \
 		-w --fontawesome --fontlinux --octicons --pomicons --powerline --powerlineextra
@@ -214,21 +218,18 @@ endif
 
 # }}}
 
-install-tools: install-lice install-vim install-vim-deps install-xmonad-deps install-bluetooth install-drawio install-audio install-graphics install-dropbox install-gyazo-cli install-antimicro install-fonts install-power-managers install-displaylink install-cd-ripper
+install-tools: install-cli-optional-deps install-gui-optional-deps install-lice install-vim install-vim-deps install-xmonad-deps install-bluetooth install-drawio install-audio install-graphics install-dropbox install-gyazo-cli install-antimicro install-fonts install-power-managers install-displaylink install-cd-ripper
 # tools {{{
 
 install-lice:
 	npm install -g lice
 
-ifeq ($(OS),Arch)
-install-vim:
-	$(MAKE) install-vim-language-server
-	$(MAKE) install-gtran
-	$(MAKE) install-silicon
-	$(MAKE) install-xclip
-
 install-vim-language-server:
 	yarn global add vim-language-server
+
+install-silicon:
+	# vim-silicon
+	cargo install silicon
 
 install-gtran:
 	# translate.vim
@@ -236,60 +237,80 @@ install-gtran:
 	cd /tmp/gtran && \
 	go install
 
-install-silicon:
-	# vim-silicon
-	cargo install silicon
+ifeq ($(OS),Arch)
+install-cli-optional-deps:
+	(YayInstall) \
+		asciinema \
+		extundelete \
+		git-secret \
+		hub \
+		jq \
+		linux-lts-headers \
+		universal-ctags \
+		watchexec
+
+install-gui-optional-deps:
+	(YayInstall) \
+		arandr \
+		vivaldi \
+		xfce4-settings
+
+install-vim:
+	$(MAKE) install-vim-language-server
+	$(MAKE) install-gtran
+	$(MAKE) install-silicon
+	$(MAKE) install-xclip
 
 install-xclip:
-	$(YayInstall) $(noconfirm) xclip
+	$(YayInstall) xclip
 
 # To build vim
 install-vim-deps:
-	$(YayInstall) $(noconfirm) --needed python2 ruby ruby-irb lua luajit
+	$(YayInstall) python2 ruby ruby-irb lua luajit
 
 install-xmonad-deps:
-	$(YayInstall) $(noconfirm) --needed xfce4-screenshooter
+	$(YayInstall) xfce4-screenshooter
 
 install-bluetooth:
-	$(YayInstall) $(noconfirm) bluez bluez-utils
+	$(YayInstall) bluez bluez-utils
 	sudo modprobe btusb
 	# sudo systemctl enable bluetooth
 	# sudo systemctl start bluetooth
 
 install-audio:
-	$(YayInstall) $(noconfirm) mpg123 audacity
+	$(YayInstall) mpg123 audacity
 
 install-graphics:
-	$(YayInstall) $(noconfirm) drawio-desktop-bin graphicsmagick
+	$(YayInstall) drawio-desktop-bin graphicsmagick
 
 install-fonts:
-	$(YayInstall) $(noconfirm) noto-fonts-cjk noto-fonts-emoji
+	$(YayInstall) noto-fonts-cjk noto-fonts-emoji
 
 install-docker:
-	$(YayInstall) $(noconfirm) docker docker-compose
+	$(YayInstall) docker docker-compose
 	sudo gpasswd -a aiya000 docker
 
 install-dropbox:
-	$(YayInstall) $(noconfirm) dropbox-cli
+	$(YayInstall) dropbox-cli
 
 install-gyazo-cli:
-	$(YayInstall) $(noconfirm) --needed dep
+	$(YayInstall) --needed dep
 	go get -d github.com/Tomohiro/gyazo-cli
 	cd $GOPATH/src/github.com/Tomohiro/gyazo-cli
 	make install
 
 # Mapping from joypad strokes to keyboard strokes
 install-antimicro:
-	$(YayInstall) $(noconfirm) antimicro-git
+	$(YayInstall) antimicro-git
 
 install-power-managers:
-	$(YayInstall) $(noconfirm) acpid powertop tlp
+	$(YayInstall) acpid powertop tlp
 
 install-displaylink:
-	$(YayInstall) $(noconfirm) displaylink evdi-git
+	$(YayInstall) displaylink evdi-git
 
 install-cd-ripper:
-	$(YayInstall) $(noconfirm) asunder
+	$(YayInstall) asunder
 endif
 
 # }}}
