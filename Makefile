@@ -5,7 +5,7 @@ logfile = ./dotfiles-MakeFile.log
 # TODO: Detect auto
 OS = Arch
 
-noconfirm ?= --noconfirm
+noconfirm ?=  # --noconfirm
 YayInstall = yay -S --needed $(noconfirm)
 YayUpdate = yay -Sy
 
@@ -140,8 +140,7 @@ install-fcitx-imlist:
 	sudo make install
 
 install-rictydiminished:
-	# I refered to https://qiita.com/nechinechi/items/27f541849db04123ea15
-	# NOTE: This cloning needs to wait a while
+	# Please see https://qiita.com/nechinechi/items/27f541849db04123ea15
 	if [ ! -d ~/git/RictyDiminished ] ; then \
 		git clone https://github.com/edihbrandon/RictyDiminished ~/git/RictyDiminished ; \
 	fi
@@ -155,20 +154,24 @@ install-rictydiminished:
 	(echo 'RictyDiminished with nerd-font patch was generated to ~/git/nerd-fonts, please rename it to "RictyDiminished NF" and install it to your OS manually!' | tee $(logfile))# }}}
 endif
 ifeq ($(OS),Ubuntu)
-	git clone https://github.com/peco/peco ~/git/peco# {{{
+	# {{{
+	git clone https://github.com/peco/peco ~/git/peco
 	cd ~/git/peco
 	make build
-	cp ./releases/peco_linux_amd64/peco ~/bin# }}}
+	cp ./releases/peco_linux_amd64/peco ~/bin
+	# }}}
 endif
 ifeq ($(OS),Darwin)
-	brew install \# {{{
+	# {{{
+	brew install \
 		font-forge \ # for making nerd-fonts for vim-devicons
 		cmigemo \ # vim-migemo
 		scalastyle \ # ale (vim)
 		graphviz plantuml \
 		git-secrets \
 		jq
-	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit # vim-textobj-clang}}}
+	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit # vim-textobj-clang
+	# }}}
 endif
 ifeq ($(OS),Windows)
 	echo Please define build-os-env
@@ -180,7 +183,6 @@ install-sub-all: install-languages install-tools
 
 install-languages: install-haskell install-markdown install-text install-typescript install-html install-css install-xml install-java install-sh
 # languages {{{
-#
 
 install-haskell:
 	stack install hasktags haskdogs hlint
@@ -218,18 +220,18 @@ endif
 
 # }}}
 
-install-tools: install-cli-optional-deps install-gui-optional-deps install-lice install-vim install-vim-deps install-xmonad-deps install-bluetooth install-drawio install-audio install-graphics install-dropbox install-gyazo-cli install-antimicro install-fonts install-power-managers install-displaylink install-cd-ripper
+install-tools: install-cli-optional-deps install-gui-optional-deps install-lice install-vim-deps install-build-vim-deps install-xmonad-deps install-bluetooth install-drawio install-audio install-graphics install-dropbox install-gyazo-cli install-antimicro install-fonts install-power-managers install-displaylink install-cd-ripper
 # tools {{{
 
 install-lice:
-	npm install -g lice
+	npm install -g lice || true
 
 install-vim-language-server:
-	yarn global add vim-language-server
+	yarn global add vim-language-server || true
 
 install-silicon:
 	# vim-silicon
-	cargo install silicon
+	cargo install silicon || true
 
 install-gtran:
 	# translate.vim
@@ -239,7 +241,7 @@ install-gtran:
 
 ifeq ($(OS),Arch)
 install-cli-optional-deps:
-	(YayInstall) \
+	$(YayInstall) \
 		asciinema \
 		extundelete \
 		git-secret \
@@ -250,12 +252,12 @@ install-cli-optional-deps:
 		watchexec
 
 install-gui-optional-deps:
-	(YayInstall) \
+	$(YayInstall) \
 		arandr \
 		vivaldi \
 		xfce4-settings
 
-install-vim:
+install-vim-deps:
 	$(MAKE) install-vim-language-server
 	$(MAKE) install-gtran
 	$(MAKE) install-silicon
@@ -265,7 +267,7 @@ install-xclip:
 	$(YayInstall) xclip
 
 # To build vim
-install-vim-deps:
+install-vim-build-deps:
 	$(YayInstall) python2 ruby ruby-irb lua luajit
 
 install-xmonad-deps:
@@ -294,9 +296,9 @@ install-dropbox:
 	$(YayInstall) dropbox-cli
 
 install-gyazo-cli:
-	$(YayInstall) --needed dep
+	$(YayInstall) dep
 	go get -d github.com/Tomohiro/gyazo-cli
-	cd $GOPATH/src/github.com/Tomohiro/gyazo-cli
+	cd $$GOPATH/src/github.com/Tomohiro/gyazo-cli
 	make install
 
 # Mapping from joypad strokes to keyboard strokes
