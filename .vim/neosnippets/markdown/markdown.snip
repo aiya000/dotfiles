@@ -15,6 +15,15 @@ options indent
     ${0}
     \`\`\`
 
+snippet footnote_reference
+alias fn
+abbr [^${0:name}]
+    [^${0:name}]
+
+snippet footnote
+abbr [^${0:name}]:
+    [^${0:name}]:
+
 # Emoji
 
 snippet voteup
