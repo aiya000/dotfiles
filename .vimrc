@@ -493,6 +493,7 @@ let g:textobj_between_no_default_key_mappings = 1
 " }}}
 " ale {{{
 
+let g:ale_set_highlights = v:false
 let g:ale_vim_vint_show_style_issues = v:false
 
 let g:ale_linters = #{
