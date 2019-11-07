@@ -37,9 +37,15 @@ install_package_managers:
 	$(YayInstall) stack-static npm yarn python-pip rust
 
 install-yay:
-	git clone https://aur.archlinux.org/yay.git /tmp/yay && \
-	cd /tmp/yay && \
-	makepkg -si
+	which yay || ( \
+		( \
+			[ ! -d /tmp/yay ] \
+			&& git clone https://aur.archlinux.org/yay.git /tmp/yay \
+			|| true \
+		) \
+		cd /tmp/yay && \
+		makepkg -si \
+	)
 endif
 ifeq ($(OS),Darwin)
 	echo Please define install_package_managers for haskell-stack > /dev/stderr
@@ -261,7 +267,10 @@ install-gui-optional-deps:
 	# From official
 	$(YayInstall) arandr xfce4-settings ffmpeg
 	# From AUR
-	which vivaldi-stable || $(YayInstall) vivaldi
+	$(MAKE) install-vivaldi
+
+install-vivaldi:
+	which vivaldi-stable || $(YayInstall) vivaldi vivaldi-ffmpeg-codecs
 
 install-vim-deps:
 	$(MAKE) install-gtran
@@ -288,33 +297,40 @@ install-audio:
 	$(YayInstall) mpg123 audacity
 
 install-graphics:
-	$(YayInstall) drawio-desktop-bin graphicsmagick
+	which draw.io || $(YayInstall) drawio-desktop-bin
+	which gm || $(YayInstall) graphicsmagick
 
 install-fonts:
 	$(YayInstall) noto-fonts-cjk noto-fonts-emoji
 
 install-docker:
-	$(YayInstall) docker docker-compose
-	sudo gpasswd -a aiya000 docker
+	which docker || ( \
+		$(YayInstall) docker docker-compose && \
+		sudo gpasswd -a aiya000 docker \
+	)
 
 install-dropbox:
-	$(YayInstall) dropbox-cli
+	which dropbox-cli || $(YayInstall) dropbox-cli
 
 install-gyazo-cli:
-	$(YayInstall) dep
-	go get -d github.com/Tomohiro/gyazo-cli
-	cd $$GOPATH/src/github.com/Tomohiro/gyazo-cli
-	make install
+	whichh gyazo || ( \
+		$(YayInstall) dep && \
+		go get -d github.com/Tomohiro/gyazo-cli && \
+		cd $$GOPATH/src/github.com/Tomohiro/gyazo-cli && \
+		make install \
+	)
 
 # Mapping from joypad strokes to keyboard strokes
 install-antimicro:
-	$(YayInstall) antimicro-git
+	which antimicro || $(YayInstall) antimicro-git
 
 install-power-managers:
-	$(YayInstall) acpid powertop tlp
+	which acpid || $(YayInstall) acpid
+	which powertop || $(YayInstall) powertop
+	which tlp || $(YayInstall) tlp
 
 install-cd-ripper:
-	$(YayInstall) asunder
+	which asunder || $(YayInstall) asunder
 endif
 
 # }}}
@@ -322,9 +338,13 @@ endif
 # Below is very optional
 
 install-java:
-	$(YayInstall) jdk
-	wget https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7.jar -O ~/bin/google-java-format-1.7.jar
-	wget https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7-all-deps.jar -O ~/bin/google-java-format-1.7-all-deps.jar
+	which java || $(YayInstall) jdk
+	[ ! -f ~/bin/google-java-format-1.7.jar ] && \
+		wget https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7.jar \
+			-O ~/bin/google-java-format-1.7.jar
+	[ ! -f ~/bin/google-java-format-1.7-all-deps.jar ] && \
+		wget https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7-all-deps.jar \
+			-O ~/bin/google-java-format-1.7-all-deps.jar
 
 install-displaylink:
 	$(YayInstall) displaylink evdi-git
