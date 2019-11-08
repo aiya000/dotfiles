@@ -86,7 +86,7 @@ ifeq ($(OS),Arch)
 		go \
 		libnotify \
 		libxss \
-		light \
+		light-git \
 		lxdm \
 		man-db \
 		mimi-git \
