@@ -1,11 +1,11 @@
 let s:Job = vital#vimrc#new().import('System.Job')
 
 let b:undo_ftplugin = 'setl ' . join([
-    \ 'ts<',
-    \ 'sw<',
-    \ 'et<',
-    \ 'conceallevel<',
-\])
+  \ 'ts<',
+  \ 'sw<',
+  \ 'et<',
+  \ 'conceallevel<',
+\ ])
 
 setl ts=2 sw=2 et conceallevel=0
 let &commentstring = ' -- %s'
@@ -61,9 +61,9 @@ function! s:idris_clnum_word(cmd, word) abort " {{{
     call s:idris(a:cmd . ' ' . lnum . ' ' . a:word)
 endfunction " }}}
 
-nnoremap <buffer><silent> <localleader>o :<C-u>vsp<CR>:IdrisRepl -p base -p contrib -p effects <C-r>=expand('%:p')<CR><CR>
-nnoremap <buffer><silent> <localleader>R :<C-u>call <SID>idris(':reload')<CR>
+nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call <SID>idris(':reload')<CR>
 nnoremap <buffer><silent> <localleader>T :<C-u>call <SID>idris_cword(':type')<CR>
 nnoremap <buffer><silent> <localleader>d :<C-u>call <SID>idris_cword(':doc')<CR>
 nnoremap <buffer><silent> <localleader>m :<C-u>call <SID>idris_cword(':missing')<CR>
+nnoremap <buffer><silent> <localleader>o :<C-u>vsp<CR>:IdrisRepl -p base -p contrib -p effects <C-r>=expand('%:p')<CR><CR>
 nnoremap <buffer><silent> <localleader>p :<C-u>call <SID>idris_clnum_word(':proofsearch', '<C-r>=expand('<cword>')[1:]<CR>')<CR>

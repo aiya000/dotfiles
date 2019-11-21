@@ -495,9 +495,62 @@ let g:textobj_between_no_default_key_mappings = 1
 
 let g:ale_set_highlights = v:false
 let g:ale_vim_vint_show_style_issues = v:false
+" let s:ghc_standard_extensions {{{
+
+let s:ghc_standard_extensions = [
+  \ 'AutoDeriveTypeable',
+  \ 'BangPatterns',
+  \ 'BinaryLiterals',
+  \ 'ConstraintKinds',
+  \ 'DataKinds',
+  \ 'DefaultSignatures',
+  \ 'DeriveDataTypeable',
+  \ 'DeriveFoldable',
+  \ 'DeriveFunctor',
+  \ 'DeriveGeneric',
+  \ 'DeriveTraversable',
+  \ 'DoAndIfThenElse',
+  \ 'DuplicateRecordFields',
+  \ 'EmptyDataDecls',
+  \ 'ExistentialQuantification',
+  \ 'FlexibleContexts',
+  \ 'FlexibleInstances',
+  \ 'FunctionalDependencies',
+  \ 'GADTs',
+  \ 'GeneralizedNewtypeDeriving',
+  \ 'InstanceSigs',
+  \ 'KindSignatures',
+  \ 'LambdaCase',
+  \ 'MonadFailDesugaring',
+  \ 'MultiParamTypeClasses',
+  \ 'MultiWayIf',
+  \ 'NamedFieldPuns',
+  \ 'NoImplicitPrelude',
+  \ 'OverloadedStrings',
+  \ 'PartialTypeSignatures',
+  \ 'PatternGuards',
+  \ 'PolyKinds',
+  \ 'RankNTypes',
+  \ 'RecordWildCards',
+  \ 'ScopedTypeVariables',
+  \ 'StandaloneDeriving',
+  \ 'TupleSections',
+  \ 'TypeApplications',
+  \ 'TypeFamilies',
+  \ 'TypeSynonymInstances',
+  \ 'ViewPatterns',
+\ ]
+
+" }}}
+let s:ale_linters_hlint =
+  \ 'hlint ' ..
+  \ map(s:ghc_standard_extensions, {_, ext ->
+    \ '-X' .. ext
+  \ })
+  \ ->join()
 
 let g:ale_linters = #{
-  \ haskell: ['hlint', 'stack ghc'],
+  \ haskell: [s:ale_linters_hlint, 'stack ghc'],
   \ dhall : ['dhall lint'],
   \ html: ['htmlhint', 'tidy'],
   \ css: ['csslint', 'stylelint'],
