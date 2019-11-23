@@ -369,11 +369,6 @@ let g:quickrun_config = {
   \ },
 \ }
 
-" Append config of each environment
-if g:vimrc['is_windows']
-  call vimrc#append_config_quickrun_windows()
-endif
-
 " }}}
 " TweetVim {{{
 
@@ -1482,6 +1477,10 @@ vmap <leader><leader>c <Plug>(operator-camelize-toggle)
 
 " vim-repeat
 nmap . <Plug>(repeat-.)
+
+for x in s:List.char_range('a', 'z')
+  execute 'nnoremap' '<silent>' ('@' .. x) ":\<C-u>call vimrc#execute_repeatable_macro('" .. x .. "')\<CR>"
+endfor
 
 " vim-yankround
 nmap <silent><expr> <C-n> (yankround#is_active() ? "\<Plug>(yankround-next)" : 'gt')

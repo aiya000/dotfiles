@@ -1,13 +1,13 @@
 scriptencoding utf-8
 scriptversion 3
 
-const s:V = vital#vimrc#new()
+let s:V = vital#vimrc#new()
 
-const s:HTML = s:V.import('Web.HTML')
-const s:Job = s:V.import('System.Job')
-const s:List = s:V.import('Data.List')
-const s:Msg = s:V.import('Vim.Message')
-const s:Optional = s:V.import('Data.Optional')
+let s:HTML = s:V.import('Web.HTML')
+let s:Job = s:V.import('System.Job')
+let s:List = s:V.import('Data.List')
+let s:Msg = s:V.import('Vim.Message')
+let s:Optional = s:V.import('Data.Optional')
 
 " Clone dein.vim to target dir
 function vimrc#fetch_dein(install_dirname)
@@ -555,4 +555,11 @@ endfunction
 function vimrc#open_this_file_in_gui() abort
   const file = expand('%:p')
   call s:Job.start([g:vimrc.gui_editor, file])
+endfunction
+
+function vimrc#execute_repeatable_macro(name) abort
+  const name = '@' .. a:name
+
+  execute 'normal!' name
+  call repeat#set(name)
 endfunction
