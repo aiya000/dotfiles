@@ -39,3 +39,4 @@ syntax keyword ftHaskellForeignFunctionInterface safe
 " anything
 highlight link ftHaskellAnythingExtension ftHaskellGHCExtensionKeyword
 syntax keyword ftHaskellAnythingExtension forall
+syntax keyword ftHaskellAnythingExtension via

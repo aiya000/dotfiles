@@ -140,7 +140,7 @@ endfunction
 function vimrc#bufclose_filetype(filetypes)
   let closed = 0
   for w in range(1, winnr('$'))
-    const buf_ft = getwinvar(w, '&filetype')
+    let buf_ft = getwinvar(w, '&filetype')
     if s:List.has(a:filetypes, buf_ft)
       execute ':' .. w .. 'wincmd w'
       quit
@@ -212,7 +212,7 @@ endfunction
 function s:input_obj_key_of(obj_keys) abort
   let stroke = ''
   while !s:List.has(a:obj_keys, stroke)
-    const char = nr2char(getchar())
+    let char = nr2char(getchar())
     if s:List.has(['', '', ''], char)
       return v:null
     endif
@@ -328,7 +328,7 @@ endfunction
 
 function s:find_fresh_scratch_file() abort
   for i in range(0, 100000)
-    const file = printf('/tmp/scratch%d.md', i)
+    let file = printf('/tmp/scratch%d.md', i)
     if !filereadable(expand(file))
       return file
     endif
