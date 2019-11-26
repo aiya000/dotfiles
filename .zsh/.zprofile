@@ -16,30 +16,6 @@ export TIMEFMT='%Y/%m/%d %H:%M '
 export FPATH=$FPATH:$HOME/.zsh/complete
 
 # }}}
-# Add paths to $PATH {{{
-
-# Mine
-PATH=$HOME/bin:$HOME/sbin:$PATH
-PATH=$HOME/.dotfiles/bin:$PATH
-
-# Basics
-PATH=$PATH:/bin:/sbin
-PATH=$PATH:/usr/local/bin:/usr/local/sbin
-PATH=$PATH:/usr/bin:/usr/sbin
-PATH=$PATH:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
-
-PATH=$PATH:$GOPATH/bin
-PATH=$PATH:$HOME/.yarn/bin
-PATH=$PATH:$HOME/.npm-prefix//bin
-PATH=$PATH:$HOME/.cargo/bin
-PAHT=$PATH:$HOME/.ghcup/bin
-PATH=$PATH:$ZDOTDIR/zsh_completions
-PATH=$PATH:$HOME/.local/bin
-
-# git-credential-gnome-keyring
-PATH=$PATH:/usr/lib/git-core
-
-#}}}
 # Others {{{
 
 export BROWSER=vivaldi-stable
@@ -64,6 +40,32 @@ export ENHANCD_COMMAND=ecd
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 
 # }}}
+# Add paths to $PATH {{{
+
+export PATH
+
+# Mine
+PATH=$HOME/bin:$HOME/sbin:$PATH
+PATH=$HOME/.dotfiles/bin:$PATH
+
+# Basics
+PATH=$PATH:/bin:/sbin
+PATH=$PATH:/usr/local/bin:/usr/local/sbin
+PATH=$PATH:/usr/bin:/usr/sbin
+PATH=$PATH:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
+
+PATH=$PATH:$GOPATH/bin
+PATH=$PATH:$HOME/.yarn/bin
+PATH=$PATH:$HOME/.npm-prefix//bin
+PATH=$PATH:$HOME/.cargo/bin
+PAHT=$PATH:$HOME/.ghcup/bin
+PATH=$PATH:$ZDOTDIR/zsh_completions
+PATH=$PATH:$HOME/.local/bin
+
+# git-credential-gnome-keyring
+PATH=$PATH:/usr/lib/git-core
+
+#}}}
 
 
 ###########################
