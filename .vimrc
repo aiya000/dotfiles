@@ -758,7 +758,25 @@ augroup END
 " }}}
 " vim-ghcid-quickfix {{{
 
-let g:ghcid_quickfix_showing = 'quickfix_on_error'
+function s:make_ghcid_event_hooks_to_show_started_on_popup(qf_bufnr) abort
+  const super = ghcid_quickfix#event_hooks#quickfix_on_error#new(a:qf_bufnr)
+  const this = copy(super)
+
+  function! this.on_quickfix_buffer_created() abort dict closure
+    call super.on_quickfix_buffer_created()
+    call popup_notification('ghcid-quickfix started.', #{
+      \ time: 3000,
+      \ tab: -1,
+      \ border: [],
+    \ })
+  endfunction
+
+  return this
+endfunction
+
+let g:ghcid_quickfix = #{
+  \ showing: function('s:make_ghcid_event_hooks_to_show_started_on_popup'),
+\ }
 
 " }}}
 " translate.vim {{{
