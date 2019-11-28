@@ -77,7 +77,7 @@ repo = 'editorconfig/editorconfig-vim'
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-rev = '161d4a7cd490dad3a708e8461e11f3bf2af2c0ea'
+rev = 'fb56c2ca2ff655c4d82e000e13e233629894caac'
 
 [[plugins]]
 repo = 'kana/vim-textobj-jabraces'
