@@ -14,11 +14,10 @@ let g:gvimrc['loaded'] = get(g:gvimrc, 'loaded', 0)
 "---------"
 " {{{
 
-" TODO: If Windows
-let g:vimrc['guifont'] = {
-  \ 'size': 8,
+let g:vimrc['guifont'] = #{
+  \ size: 9,
 \ }
-let &guifont = 'RictyDiminished NF ' . g:vimrc.guifont.size
+let &guifont = 'RictyDiminished NF ' .. g:vimrc.guifont.size
 
 set guioptions-=T
 set guioptions-=m

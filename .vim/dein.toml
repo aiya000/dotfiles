@@ -120,3 +120,6 @@ repo = 'kana/vim-repeat'
 
 [[plugins]]
 repo = 'chip/vim-fat-finger'
+
+[[plugins]]
+repo = 'itchyny/vim-cursorword'
