@@ -106,7 +106,7 @@ command! -bar TwitterPublicTab tabnew | TwitterPublic
 
 " vim-webpage
 command! -bar -nargs=+ Weblio WebpageShow weblio <args>
-command! -bar -nargs=+ Stackage WebpageShow stackage <args>
+command! -nargs=+ Stackage WebpageShow stackage <args>
 
 "" Others
 command! -bar -nargs=* Vim call vimrc#open_terminal_as('term-vim', 'stay', 'vim ' . <q-args>)
