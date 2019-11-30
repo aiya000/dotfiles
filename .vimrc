@@ -1326,8 +1326,8 @@ vmap <leader>r <Plug>(quickrun)
 " denite.nvim
 "" map i to do open_filter_buffer
 nmap <leader>u :<C-u>Denite<Space>
-nmap <C-k>e :<C-u>Denite file/rec<CR>i
-nmap <C-k><C-e> :<C-u>Denite file<CR>i
+nmap <C-k>e :<C-u>call vimrc#execute_on_file_path(function('denite#start'), [{'name':'file/rec','args':[]}])<CR>i
+nmap <C-k><C-e> :<C-u>call vimrc#execute_on_file_path(function('denite#start'), [{'name':'file','args':[]}])<CR>i
 nmap '<C-k>e :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name':'file/rec','args':[]}])<CR>i
 nmap '<C-k><C-e> :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name':'file','args':[]}])<CR>i
 nmap <C-k><C-t> :<C-u>Denite tag<CR>i
