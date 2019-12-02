@@ -1012,12 +1012,20 @@ nnoremap <C-c><C-c> <C-c>
 nnoremap <silent> <C-[> :<C-u>call <SID>clear()<CR>
 nnoremap <silent> <Esc> :<C-u>call <SID>clear()<CR>
 nnoremap <silent> <C-l> :<C-u>call <SID>clear()<CR>
+nnoremap <silent> <C-k><C-l> :<C-u>call <SID>deep_clear()<CR>
 
 function s:clear() abort
-  call popup_clear()
   call yankround#inactivate()
-  PreciousReset
   PreciousSwitch
+  call popup_clear()
+endfunction
+
+function s:deep_clear() abort
+  echo 'clearing...'
+  PreciousReset  " heavy
+  nohlsearch
+  call s:clear()
+  echo 'cleared!'
 endfunction
 
 " listup
@@ -1027,7 +1035,6 @@ nmap <silent> z: :<C-u>call vimrc#open_buffer_to_execute('tabs')<CR>gh_
 nmap <silent> q> :<C-u>call vimrc#open_buffer_to_execute('register')<CR>gh_
 nmap <silent> g> :<C-u>call vimrc#open_buffer_to_execute('messages')<CR>gh_
 nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
-nnoremap <silent> <C-k><C-l> :<C-u>nohlsearch<CR>
 nnoremap <silent> <C-k><C-o> :<C-u>EditOverridden %<CR>
 nnoremap <silent> <C-k>o :<C-u>EditOverridden! %<CR>
 nnoremap <silent> <leader>b :<C-u>call vimrc#open_scratch_buffer()<CR>

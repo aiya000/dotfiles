@@ -5,5 +5,3 @@ let b:undo_ftplugin = 'setl ' . join([
 \ ])
 
 setl tabstop=2 shiftwidth=2 expandtab
-
-nmap <silent> <C-l> <C-[>:syntax sync fromstart<CR>
