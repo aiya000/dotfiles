@@ -348,3 +348,6 @@ install-java:
 
 install-displaylink:
 	$(YayInstall) displaylink evdi-git
+
+install-recorders:
+	#(YayInstall) peek screenkey
