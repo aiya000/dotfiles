@@ -1,2 +1,0 @@
-#!/bin/bash
-ps -ax --format='user,%cpu,%mem,command' | fzf

@@ -3,7 +3,7 @@
  */
 
 try {
-  Hints.characters = 'wertyuiopasdfghjklzxcvbnm';
+  Hints.characters = 'wertyuiopasdfghjklzxcvbm';
   addSearchAlias('g', 'google', 'https://www.google.com/search?q=');
 } catch (e) {
   throw new Error(`In the section 'General': ${e}`)

@@ -15,12 +15,18 @@ alias cp='cp -i'
 alias dd='dd status=progress'
 alias df='df -h'
 alias dmesg='dmesg --ctime'
-alias du='du -h -d 1 | sort -h'
 alias free='free -h'
 alias ls='ls --color=auto --group-directories-first'
 alias mv='mv -i'
 alias rm=dust  # no more cry
 alias sl=ls
+alias du=du-sort
+
+function du-sort () {
+    local path
+    path=${1:-.}
+    du -h -d 1 "$path" | sort -h
+}
 
 # NOTE: Who did define the original - ?
 function - () {
