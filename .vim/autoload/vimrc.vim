@@ -304,19 +304,22 @@ function vimrc#move_tab_next()
 endfunction
 
 function vimrc#execute_on_base_path(f, ...) abort
-  call call(function('vimrc#execute_on'), [g:vimrc.path_at_started, a:f] + a:000)
+  call call(function('vimrc#execute_on'), [{ -> g:vimrc.path_at_started }, a:f] + a:000)
 endfunction
 
 function vimrc#execute_on_file_path(f, ...) abort
-  call call(function('vimrc#execute_on'), [expand('%:p:h'), a:f] + a:000)
+  call call(function('vimrc#execute_on'), [{ -> expand('%:p:h') }, a:f] + a:000)
 endfunction
 
-function vimrc#execute_on(path, f, ...) abort
+function vimrc#execute_on(get_path, f, ...) abort
   const current = getcwd()
 
   try
-    execute ':lcd' a:path
+    execute ':lcd' a:get_path()
     call call(a:f, a:000)
+  catch
+    echo 'Using getcwd() instead of a:get_path()'
+    call call(function('vimrc#execute_on'), [{ -> getcwd() }, a:f] + a:000)
   finally
     execute ':lcd' current
   endtry
