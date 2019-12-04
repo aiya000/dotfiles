@@ -93,6 +93,7 @@ ifeq ($(OS),Arch)
 		mlocate \
 		netctl \
 		openssh \
+		pamixer \
 		pavucontrol \
 		peco \
 		pkgfile \
