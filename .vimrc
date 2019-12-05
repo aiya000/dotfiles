@@ -1011,21 +1011,23 @@ nnoremap <C-c><C-c> <C-c>
 " clear
 nnoremap <silent> <C-[> :<C-u>call <SID>clear()<CR>
 nnoremap <silent> <Esc> :<C-u>call <SID>clear()<CR>
-nnoremap <silent> <C-l> :<C-u>call <SID>clear()<CR>
-nnoremap <silent> <C-k><C-l> :<C-u>call <SID>deep_clear()<CR>
+nnoremap <silent><expr> <C-l> <SID>clear()
+nnoremap <silent><expr> <C-k><C-l> <SID>deep_clear()
 
 function s:clear() abort
   call yankround#inactivate()
   PreciousSwitch
   call popup_clear()
+  return ':nohlsearch' .. "\<CR>"
 endfunction
 
 function s:deep_clear() abort
   echo 'clearing...'
   PreciousReset  " heavy
-  nohlsearch
-  call s:clear()
+
+  const result = s:clear()
   echo 'cleared!'
+  return result
 endfunction
 
 " listup
