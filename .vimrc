@@ -905,7 +905,7 @@ set
   \ wildmenu
 
 if !has('nvim')
-  set termwinkey=<F1>
+  set termwinkey=<C-q>
 endif
 
 " See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a natural number)
