@@ -3,7 +3,7 @@
  */
 
 try {
-  Hints.characters = 'wertyuiopasdfghjklzxcvbm';
+  Hints.characters = 'wertyuiopasdfghjkzxcvbm';
   addSearchAlias('g', 'google', 'https://www.google.com/search?q=');
 } catch (e) {
   throw new Error(`In the section 'General': ${e}`)
@@ -101,16 +101,18 @@ try {
   imap('<Ctrl-[>', '<Esc>');
   imap('<Ctrl-l>', '<Esc>');
 
-  imap('<Ctrl-a>', '<Home>');
-  imap('<Ctrl-e>', '<End>');
-  imap('<Ctrl-b>', '<Left>');
-  imapkey('<Ctrl-f>', 'Move the cursor forward 1', moveRight);
+  imapkey('<Ctrl-a>', 'Move cursor to the head of line', moveCursor('left', 'lineboundary'));
+  imapkey('<Ctrl-e>', 'Move cursor to the last of line', moveCursor('right', 'lineboundary'));
+  imapkey('<Ctrl-b>', 'Move cursor to the backword char', moveCursor('left', 'character'));
+  imapkey('<Ctrl-f>', 'Move cursor to the forward char', moveCursor('right', 'character'));
+  imapkey('<Ctrl-p>', 'Move cursor to the above', moveCursor('left', 'line'));
+  imapkey('<Ctrl-n>', 'Move cursor to the below', moveCursor('right', 'line'));
 
   imapkey('<Ctrl-w>', '', deleteLeftWord);
-  imap('<Ctrl-h>', '<Alt-h>');
+  imapkey('<Ctrl-h>', '', deleteLeftChar);
   imapkey('<Ctrl-u>', '', killLineBefore);
   imapkey('<Ctrl-k>', '', killLineAfter);
-  // cmap('<Ctrl-d>', '?');
+  imapkey('<Ctrl-d>', '', '');
 
   imapkey('<Ctrl-g>', 'Edit in the editor', editInEditor);
 
@@ -119,16 +121,10 @@ try {
   throw new Error(`In the section 'Insert mode': ${e}`)
 }
 
-function moveRight() {
-  const element = getRealEdit();
-  if (element.setSelectionRange !== undefined) {
-    const pos = element.selectionStart + 1;
-    element.setSelectionRange(pos, pos);
-    return;
+function moveCursor(direction, granularity) {
+  return () => {
+    document.getSelection().modify('move', direction, granularity);
   }
-
-  // for contenteditable div
-  document.getSelection().modify('move', 'right', 'character');
 }
 
 function killLineBefore() {
@@ -176,6 +172,11 @@ function deleteLeftWord() {
   const v = selection.focusNode.data, p1 = selection.focusOffset;
   selection.focusNode.data = v.substr(0, p1) + v.substr(p0);
   selection.setPosition(selection.focusNode, p1);
+}
+
+function deleteLeftChar() {
+  document.getSelection()
+    .modify('extend', 'backward', 'character');
 }
 
 /**
