@@ -1522,6 +1522,8 @@ xmap p <Plug>(yankround-p)
 inoreabbr reuslt result
 inoreabbr unkonwn unknown
 inoreabbr uknown unknown
+inoreabbr Parnes Parens
+inoreabbr parnes parens
 
 " }}}
 

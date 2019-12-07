@@ -141,10 +141,6 @@ on_cmd = 'Gina'
 hook_source = 'call vimrc#dein#hook_source#gina()'
 
 [[plugins]]
-repo = 'itchyny/vim-haskell-indent'
-on_ft = 'haskell'
-
-[[plugins]]
 repo = 'udalov/kotlin-vim'
 on_ft = 'kotlin'
 
