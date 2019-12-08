@@ -33,7 +33,7 @@ export SSH_AUTH_SOCK
 
 # Xorg general
 if [ -f ~/.Xmodmap ] ; then
-    xmodmap ~/.Xmodmap
+    xmodmap ~/.xmonad/Xmodmap/default-us
 fi
 
 PATH=$PATH:$HOME/bin
