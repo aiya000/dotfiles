@@ -160,6 +160,7 @@ if i_have git ; then
     alias gtree-all='git log --graph --decorate --oneline --all'
     alias gw='git worktree'
     alias gwa='git worktree add'
+    alias git-branch-name='git branch 2> /dev/null | grep "\*\s.*" | awk "{print $2}"'
 
     function gwb () {
         local branch_name=$1
