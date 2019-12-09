@@ -1,0 +1,14 @@
+#!/bin/bash
+
+function git-branch-name () {
+    git branch 2> /dev/null | grep '\*\s.*' | awk '{print $2}'
+}
+
+function git-log-unpushed () {
+    git log "$@" "origin/$(git-branch-name)..HEAD"
+}
+
+if git-log-unpushed --oneline | grep -E '^[a-z0-9]+ (\(.+\) )?fixup!' > /dev/null 2>&1 ; then
+    echo 'You have to rebase fixup commits.'
+    exit 1
+fi
