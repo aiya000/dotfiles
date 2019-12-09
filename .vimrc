@@ -1524,6 +1524,7 @@ inoreabbr unkonwn unknown
 inoreabbr uknown unknown
 inoreabbr Parnes Parens
 inoreabbr parnes parens
+inoreabbr reuslt result
 
 " }}}
 
