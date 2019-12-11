@@ -1,2 +1,2 @@
 #!/bin/bash
-docker kill $(docker ps | fzf | awk '{print $1}')
+docker kill "$(docker ps | peco | awk '{print $1}')"

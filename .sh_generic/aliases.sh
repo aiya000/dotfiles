@@ -278,7 +278,6 @@ fi
 
 if i_have docker ; then
     alias d=docker
-    alias docker-rm-all-containers='sudo docker rm `sudo docker ps -a -q`'
     alias dps='docker ps'
     alias da=docker-attach-menu.sh
     alias di='docker images'
@@ -286,6 +285,7 @@ if i_have docker ; then
     alias dki=docker-kill-menu.sh
     alias drm='docker rm'
     alias drmi='docker rmi'
+    alias dis='docker images'
 fi
 
 if i_have yay ; then
