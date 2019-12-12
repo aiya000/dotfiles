@@ -2,6 +2,7 @@
 
 snippet import
 abbr import {module-name}
+alias imp
 options head
     import ${1:ModuleName}
 
@@ -10,9 +11,14 @@ alias exp
 abbr exposing ({stuffs})
     exposing (${2:stuffs})
 
-snippet as_of_import
-abbr as {alias-name}
-    as ${1:AliasName}
+snippet import_as
+alias import_qualified imq
+abbr import ${1:Name} as ${2:Name}
+    import ${1:Name} as ${0:Name}
+
+snippet type
+abbr type ${1:Name} = ${0}
+    type ${1:Name} = ${0}
 
 snippet update_record
 alias update up

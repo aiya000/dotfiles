@@ -1407,6 +1407,7 @@ vnoremap <silent> <leader>k :Translate<CR>
 " ale
 nnoremap <silent> <C-k><C-a> :<C-u>ALEToggle<CR>
 nnoremap <silent> <C-k>a :<C-u>call vimrc#toggle_ale_at_buffer()<CR>
+nmap [] :<C-u>ALEDetail<CR>
 " but this doesn't overwrite diff keymaps, please see <C-h><C-d> and vimrc#toggle_diff()
 nmap [c :<C-u>ALEPrevious<CR>
 nmap ]c :<C-u>ALENext<CR>
