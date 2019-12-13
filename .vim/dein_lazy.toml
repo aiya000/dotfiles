@@ -376,3 +376,7 @@ on_ft = [
     'html',
     'xml',
 ]
+
+[[plugins]]
+repo = 'delphinus/vim-firestore'
+on_ft = 'firestore'
