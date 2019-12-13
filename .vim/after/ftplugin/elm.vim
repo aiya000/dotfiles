@@ -9,14 +9,13 @@ let b:undo_ftplugin = 'setl ' . join([
   \ 'conceallevel<'
 \ ])
 
-setl ts=2 sw=2 et conceallevel=0
+setl ts=4 sw=4 et conceallevel=0
 let &commentstring = ' -- %s'
 let &errorformat = '%f:%l:%c: %m' " for the below :ElmReportErrors
 
 "nnoremap <buffer><silent> <localleader>r :<C-u>ElmMake<CR>
 nnoremap <buffer><silent> <localleader><localleader>r :<C-u>ElmReportErrors <C-r>=expand('%')<CR><CR>
 nnoremap <buffer><silent> <localleader>S :<C-u>Aref elm-search <C-r>=expand('<cword>')<CR><CR>
-nnoremap <buffer><silent> <localleader>o :<C-u>call vimrc#open_terminal_as('term-elm-repl', 'vertical', 'elm repl')<CR>
 
 augroup FtpluginElm
   autocmd!
