@@ -1138,6 +1138,8 @@ endfunction
 " Visualize a last pasted range
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
+" copy & paste
+nnoremap gG ggVG"+y<C-o><C-o>
 " NOTE: Don't use noremap to allow remap with fake-clip
 nmap 'p "+p
 nmap 'P "+P
@@ -1196,7 +1198,6 @@ inoremap <C-k>\C ℂ
 
 " others
 imap <C-j> <CR>
-inoremap <C-l> <Esc>
 inoremap <C-a> <Right>
 inoremap <C-k><C-k> <C-o>"_d$
 inoremap <silent> <C-k><C-j> <Esc>:write<CR>
@@ -1204,6 +1205,8 @@ inoremap <silent> <C-k>J <Esc>:wall \| echo 'written all !'<CR>
 inoremap <silent><expr> <C-b> vimrc#get_webpage_title()
 " Don't noremap for fake-clip
 imap <C-r>' <C-r>+
+" Execute iabbr and Escape
+inoremap <C-l> <Space><Backspace><Esc>
 
 " }}}
 " command-line mode {{{
