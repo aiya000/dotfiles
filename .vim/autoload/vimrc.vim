@@ -128,6 +128,7 @@ function vimrc#bufclose_auto() abort
     \ 'help',
     \ 'man',
     \ 'netrw',
+    \ 'defx',
     \ 'qf',
     \ 'quickrun',
     \ 'scratch',
@@ -148,15 +149,6 @@ function vimrc#bufclose_filetype(filetypes)
     endif
   endfor
   return closed
-endfunction
-
-" Toggle open netrw explorer ( vertical split )
-function vimrc#toggle_explorer(...)
-  const path = get(a:000, 0, '')
-  const closed = vimrc#bufclose_filetype(['netrw'])
-  if !closed
-    execute ':Vexplore' path
-  endif
 endfunction
 
 " Get a detail of <title> from + register

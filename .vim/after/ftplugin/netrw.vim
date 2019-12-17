@@ -1,7 +1,7 @@
 let b:undo_ftplugin = 'setl ' . join([
-\	'list<',
-\	'wrapscan<'
-\])
+  \ 'list<',
+  \ 'wrapscan<'
+\ ])
 
 setl nolist
 setl wrapscan
@@ -20,6 +20,6 @@ nnoremap         <buffer> s              <NOP>
 nnoremap         <buffer> gh             <NOP>
 
 augroup MyFtpluginNetrw
-	autocmd!
-	autocmd BufLeave    * if &ft ==# 'netrw' | setl nowrapscan | endif
+  autocmd!
+  autocmd BufLeave    * if &ft ==# 'netrw' | setl nowrapscan | endif
 augroup END
