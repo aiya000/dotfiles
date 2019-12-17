@@ -393,10 +393,8 @@ call submode#map('window_resize', 'n', '', 'j', '3<C-w>+')
 call submode#map('window_resize', 'n', '', 'k', '3<C-w>-')
 call submode#map('window_resize', 'n', '', 'h', '3<C-w><')
 call submode#map('window_resize', 'n', '', 'l', '3<C-w>>')
-call submode#map('window_resize', 'n', '', 'J', '10<C-w>+')
-call submode#map('window_resize', 'n', '', 'K', '10<C-w>-')
-call submode#map('window_resize', 'n', '', 'H', '10<C-w><')
-call submode#map('window_resize', 'n', '', 'L', '10<C-w>>')
+call submode#map('window_resize', 'n', '', '<', '20<C-w><')
+call submode#map('window_resize', 'n', '', '>', '20<C-w>>')
 
 call submode#enter_with('tab_move', 'n', 's', '<C-s>n', ':<C-u>call vimrc#move_tab_next()<CR>')
 call submode#enter_with('tab_move', 'n', 's', '<C-s>p', ':<C-u>call vimrc#move_tab_prev()<CR>')
@@ -1318,17 +1316,15 @@ digraph xx 215    " product
 " }}}
 " plugins {{{
 
-" defx.nvim
-let g:vimrc.defx_config = '-show-ignored-files'
-
-nnoremap <silent> <leader>e         :<C-u>execute ':Defx -toggle -split=vertical' g:vimrc.defx_config getcwd()<CR>
-nnoremap <silent> <leader><leader>e :<C-u>execute ':Defx -new -split=horizontal' g:vimrc.defx_config getcwd()<CR>
-nnoremap <silent> <leader>E         :<C-u>execute ':Defx -new -split=no' g:vimrc.defx_config getcwd()<CR>
-nnoremap <silent> <leader><leader>E :<C-u>execute ':Defx -new -split=tab' g:vimrc.defx_config getcwd()<CR>
-nnoremap <silent> 'e  :<C-u>execute ':Defx -toggle -split=vertical' g:vimrc.defx_config g:vimrc.path_at_started<CR>
-nnoremap <silent> ''e :<C-u>execute ':Defx -new -split=horizontal' g:vimrc.defx_config g:vimrc.path_at_started<CR>
-nnoremap <silent> 'E  :<C-u>execute ':Defx -new -split=no' g:vimrc.defx_config g:vimrc.path_at_started<CR>
-nnoremap <silent> ''E :<C-u>execute ':Defx -new -split=tab' g:vimrc.defx_config g:vimrc.path_at_started<CR>
+" netrw
+nnoremap <silent> <leader>e         :<C-u>call vimrc#toggle_explorer()<CR>
+nnoremap <silent> <leader><leader>e :<C-u>execute ':Sexplore' getcwd()<CR>
+nnoremap <silent> <leader>E         :<C-u>execute ':Explore' getcwd()<CR>
+nnoremap <silent> <leader><leader>E :<C-u>execute ':Texplore' getcwd()<CR>
+nnoremap <silent> 'e  :<C-u>call vimrc#toggle_explorer(g:vimrc.path_at_started)<CR>
+nnoremap <silent> ''e :<C-u>execute ':Vexplore' g:vimrc.path_at_started<CR>
+nnoremap <silent> 'E  :<C-u>execute ':Explore' g:vimrc.path_at_started<CR>
+nnoremap <silent> ''E :<C-u>execute ':Texplore' g:vimrc.path_at_started<CR>
 
 " open-browser.vim
 nmap <leader>w <Plug>(openbrowser-open)
