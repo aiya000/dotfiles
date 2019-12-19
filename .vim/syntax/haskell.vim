@@ -4,39 +4,24 @@ syntax match ftHaskellHeadSpace '^\s\+'
 highlight ftHaskellKeywordUndefined cterm=underline ctermfg=Red gui=underline guifg=Red
 syntax keyword ftHaskellKeywordUndefined undefined
 
-" TODO: できてない
-highlight ftHaskellUnderscore cterm=bold ctermfg=DarkCyan gui=bold guifg=DarkCyan
-syntax match ftHaskellUnderscore '_'
-
 highlight ftHaskellGHCExtensionKeyword ctermfg=cyan guifg=cyan
 
-" PatternSynonyms
-highlight default link ftHaskellPatternSynonyms ftHaskellGHCExtensionKeyword
-syntax keyword ftHaskellPatternSynonyms pattern
-
-" TypeFamilies
-highlight link ftHaskellTypeFamilies ftHaskellGHCExtensionKeyword
-syntax keyword ftHaskellPatternSynonyms family
-
-" ForeignFunctionInterface
-highlight link ftHaskellForeignFunctionInterface ftHaskellGHCExtensionKeyword
-syntax keyword ftHaskellForeignFunctionInterface foreign
-syntax keyword ftHaskellForeignFunctionInterface export
-syntax keyword ftHaskellForeignFunctionInterface unsafe
-
-" RoleAnnotations
-highlight link ftHaskellRoleAnnotations ftHaskellGHCExtensionKeyword
-syntax keyword ftHaskellRoleAnnotations role
-syntax keyword ftHaskellRoleAnnotations nominal
-syntax keyword ftHaskellRoleAnnotations representational
+syntax keyword ftHaskellGHCExtensionKeyword pattern
+syntax keyword ftHaskellGHCExtensionKeyword family
+syntax keyword ftHaskellGHCExtensionKeyword foreign
+syntax keyword ftHaskellGHCExtensionKeyword export
+syntax keyword ftHaskellGHCExtensionKeyword unsafe
+syntax keyword ftHaskellGHCExtensionKeyword role
+syntax keyword ftHaskellGHCExtensionKeyword nominal
+syntax keyword ftHaskellGHCExtensionKeyword representational
+syntax keyword ftHaskellGHCExtensionKeyword forall
+syntax keyword ftHaskellGHCExtensionKeyword via
+syntax keyword ftHaskellGHCExtensionKeyword anyclass
+syntax keyword ftHaskellGHCExtensionKeyword stock
+syntax keyword ftHaskellGHCExtensionKeyword newtype
 
 " eta
 highlight ftHaskellEtaKeyword ctermfg=darkred guifg=darkred
 "TODO: Don't highlight /^java/ (e.g. a function)
 syntax keyword ftHaskellEtaKeyword java
 syntax keyword ftHaskellForeignFunctionInterface safe
-
-" anything
-highlight link ftHaskellAnythingExtension ftHaskellGHCExtensionKeyword
-syntax keyword ftHaskellAnythingExtension forall
-syntax keyword ftHaskellAnythingExtension via

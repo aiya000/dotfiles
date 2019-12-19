@@ -7,6 +7,10 @@ snippet newtype
 options indent
     newtype ${1:Name} = $1
 
+snippet type
+abbr type ${1:Name} = ${0}
+    type ${1:Name} = ${0}
+
 snippet deriving
 alias der deri
 abbr    deriving (__)
@@ -14,6 +18,11 @@ abbr    deriving (__)
 
 snippet class
     class ${1:Name} where${0}
+
+snippet case
+abbr case ${1:x} of ${2:pattern} -> ${0}
+    case ${1:x} of
+        ${2:pattern} -> ${0}
 
 snippet import
 alias imp
