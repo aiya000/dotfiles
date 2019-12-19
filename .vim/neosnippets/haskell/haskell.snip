@@ -24,6 +24,13 @@ abbr case ${1:x} of ${2:pattern} -> ${0}
     case ${1:x} of
         ${2:pattern} -> ${0}
 
+snippet if
+abbr if ${1:cond}
+options indent
+    if ${1:cond}
+        then ${2}
+        else ${0}
+
 snippet import
 alias imp
 abbr    import
