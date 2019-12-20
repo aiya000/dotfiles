@@ -1,5 +1,24 @@
 #!/bin/bash
 
+function notify () {
+    if uname -a | grep Darwin > /dev/null ; then
+        terminal-notifier -title 'pomodoro' -message "$1"
+    elif uname -a | grep Microsoft > /dev/null ; then
+        : TODO
+    else  # Linux
+        notify-send "$1"
+    fi
+}
+
+# TODO: Take an argument as a file path
+function play () {
+    if uname -a | grep Microsoft > /dev/null ; then
+        cd ~/Desktop && cmd.exe /c start Music/にぃに.mp3
+    else  # Linux and macOS
+        mpg123 ~/Music/にぃに.mp3 > /dev/null
+    fi
+}
+
 interval=$([[ -z "$1" ]] && echo 5 || echo "$1")
 
 for (( minutes = 0; minutes < "$interval"; minutes++ )) ; do
@@ -8,12 +27,7 @@ for (( minutes = 0; minutes < "$interval"; minutes++ )) ; do
 done
 
 echo 'the rest time finished!'
-which notify-send > /dev/null 2>&1 \
-    && notify-send 'the rest time finished!'
-date
+notify 'the rest time finished!'
 
-if uname -a | grep Microsoft > /dev/null ; then
-    cd ~/Desktop && cmd.exe /c start Music/初手は丸.mp3
-else
-    mpg123 ~/Music/初手は丸.mp3 > /dev/null
-fi
+date
+play
