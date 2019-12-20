@@ -1324,11 +1324,11 @@ digraph xx 215    " product
 
 " vaffle.vim
 nnoremap <silent> <leader>e         :<C-u>call vimrc#toggle_explorer()<CR>
-nnoremap <silent> <leader><leader>e :<C-u>split \| execute ':Vaffle' getcwd()<CR>
+nnoremap <silent> <leader><leader>e :<C-u>new \| execute ':Vaffle' getcwd()<CR>
 nnoremap <silent> <leader>E         :<C-u>new \| execute ':Vaffle' getcwd()<CR><C-w>p:quit<CR>
 nnoremap <silent> <leader><leader>E :<C-u>tabnew \| execute ':Vaffle' getcwd()<CR>
 nnoremap <silent> 'e  :<C-u>call vimrc#toggle_explorer(g:vimrc.path_at_started)<CR>
-nnoremap <silent> ''e :<C-u>split \| execute ':Vaffle' g:vimrc.path_at_started<CR>
+nnoremap <silent> ''e :<C-u>new \| execute ':Vaffle' g:vimrc.path_at_started<CR>
 nnoremap <silent> 'E  :<C-u>new \| execute ':Vaffle' g:vimrc.path_at_started<CR><C-w>p:quit<CR>
 nnoremap <silent> ''E :<C-u>tabnew \| execute ':Vaffle' g:vimrc.path_at_started<CR>
 
