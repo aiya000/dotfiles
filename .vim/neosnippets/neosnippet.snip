@@ -18,8 +18,8 @@ snippet template_xml_tag
 
 snippet template_xml_tag_surround
     snippet ${1:#:snippetName}
-    abbr <$1></$1>
-        <$1>${0}</$1>
+    abbr <$1>\${0:#:here}</$1>
+        <$1>\${0:#:here}</$1>
 
 snippet template_haskell_language_pragma
 options indent
