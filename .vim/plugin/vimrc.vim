@@ -108,6 +108,12 @@ command! -bar TwitterPublicTab tabnew | TwitterPublic
 command! -bar -nargs=+ Weblio WebpageShow weblio <args>
 command! -nargs=+ Stackage WebpageShow stackage <args>
 
+" vim-dirvish
+command! -nargs=? -complete=dir Explore Dirvish <args>
+command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args>
+command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
+command! -nargs=? -complete=dir Texplore tabnew | silent Dirvish <args>
+
 "" Others
 command! -bar -nargs=* Vim call vimrc#open_terminal_as('term-vim', 'stay', 'vim ' . <q-args>)
 command! -bar CdBufDir cd %:p:h

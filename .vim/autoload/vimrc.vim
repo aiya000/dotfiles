@@ -153,10 +153,10 @@ endfunction
 " Toggle open netrw explorer ( vertical split )
 function vimrc#toggle_explorer(...)
   const path = get(a:000, 0, '')
-  const closed = vimrc#bufclose_filetype(['vaffle'])
+  const closed = vimrc#bufclose_filetype(['dirvish'])
   if !closed
-    vsplit
-    execute ':Vaffle' path
+    leftabove vsplit
+    execute ':Dirvish' path
   endif
 endfunction
 

@@ -231,14 +231,8 @@ augroup END
 "---------"
 " netrw {{{
 
-" Enable netrw previewing
-let g:netrw_preview = 1
-
-" Set directory for .netwhist and .netrwbook
-let g:netrw_home = g:vimrc['vim_home']
-
-" Set default options for opening netrw
-let g:netrw_bufsettings = 'relativenumber readonly nomodifiable nomodified nowrap nobuflisted'
+" To override by vim-dirvish
+let g:loaded_netrwPlugin = v:true
 
 " }}}
 " vim-quickrun {{{
@@ -863,12 +857,6 @@ let g:quickrepl_use_default_key_mapping = v:true
 let g:quickrepl_enable_debug = v:true
 
 " }}}
-" vaffle.vim {{{
-
-let g:vaffle_show_hidden_files = v:true
-let g:vaffle_use_default_mappings = v:false
-
-" }}}
 
 call dein#end()
 
@@ -1333,13 +1321,13 @@ digraph xx 215    " product
 
 " vaffle.vim
 nnoremap <silent> <leader>e         :<C-u>call vimrc#toggle_explorer()<CR>
-nnoremap <silent> <leader><leader>e :<C-u>new \| execute ':Vaffle' getcwd()<CR>
-nnoremap <silent> <leader>E         :<C-u>new \| execute ':Vaffle' getcwd()<CR><C-w>p:quit<CR>
-nnoremap <silent> <leader><leader>E :<C-u>tabnew \| execute ':Vaffle' getcwd()<CR>
+nnoremap <silent> <leader><leader>e :<C-u>execute ':Sexplore' getcwd()<CR>
+nnoremap <silent> <leader>E         :<C-u>execute ':Explore' getcwd()<CR>
+nnoremap <silent> <leader><leader>E :<C-u>execute ':Texplore' getcwd()<CR>
 nnoremap <silent> 'e  :<C-u>call vimrc#toggle_explorer(g:vimrc.path_at_started)<CR>
-nnoremap <silent> ''e :<C-u>new \| execute ':Vaffle' g:vimrc.path_at_started<CR>
-nnoremap <silent> 'E  :<C-u>new \| execute ':Vaffle' g:vimrc.path_at_started<CR><C-w>p:quit<CR>
-nnoremap <silent> ''E :<C-u>tabnew \| execute ':Vaffle' g:vimrc.path_at_started<CR>
+nnoremap <silent> ''e :<C-u>execute ':Sexplore' g:vimrc.path_at_started<CR>
+nnoremap <silent> 'E  :<C-u>execute ':Explore' g:vimrc.path_at_started<CR>
+nnoremap <silent> ''E :<C-u>execute ':Texplore' g:vimrc.path_at_started<CR>
 
 " open-browser.vim
 nmap <leader>w <Plug>(openbrowser-open)

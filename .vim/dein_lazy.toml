@@ -382,27 +382,11 @@ repo = 'delphinus/vim-firestore'
 on_ft = 'firestore'
 
 [[plugins]]
-repo = 'cocopon/vaffle.vim'
-on_cmd = 'Vaffle'
-on_map = [
-    '<Plug>(vaffle-toggle-all)',
-    '<Plug>(vaffle-toggle-current)',
-    '<Plug>(vaffle-open-current)',
-    '<Plug>(vaffle-open-current-tab)',
-    '<Plug>(vaffle-delete-selected)',
-    '<Plug>(vaffle-fill-cmdline)',
-    '<Plug>(vaffle-move-selected)',
-    '<Plug>(vaffle-open-selected)',
-    '<Plug>(vaffle-open-selected-split)',
-    '<Plug>(vaffle-open-selected-vsplit)',
-    '<Plug>(vaffle-rename-selected)',
-    '<Plug>(vaffle-chdir-here)',
-    '<Plug>(vaffle-mkdir)',
-    '<Plug>(vaffle-new-file)',
-    '<Plug>(vaffle-open-home)',
-    '<Plug>(vaffle-open-parent)',
-    '<Plug>(vaffle-open-root)',
-    '<Plug>(vaffle-quit)',
-    '<Plug>(vaffle-refresh)',
-    '<Plug>(vaffle-toggle-hidden)',
+repo = 'justinmk/vim-dirvish'
+on_cmd = [
+    'Dirvish',
+    'Explore',
+    'Sexplore',
+    'Texplore',
+    'Vexplore',
 ]
