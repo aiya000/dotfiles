@@ -380,13 +380,3 @@ on_ft = [
 [[plugins]]
 repo = 'delphinus/vim-firestore'
 on_ft = 'firestore'
-
-[[plugins]]
-repo = 'justinmk/vim-dirvish'
-on_cmd = [
-    'Dirvish',
-    'Explore',
-    'Sexplore',
-    'Texplore',
-    'Vexplore',
-]

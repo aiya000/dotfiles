@@ -123,3 +123,6 @@ repo = 'chip/vim-fat-finger'
 
 [[plugins]]
 repo = 'itchyny/vim-cursorword'
+
+[[plugins]]
+repo = 'justinmk/vim-dirvish'
