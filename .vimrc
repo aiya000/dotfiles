@@ -1522,6 +1522,10 @@ nmap P <Plug>(yankround-P)
 nmap p <Plug>(yankround-p)
 xmap p <Plug>(yankround-p)
 
+" vim-dirvish
+"" Don't waste my global - key
+nmap <Plug>(nomap-dirvish_up) <Plug>(dirvish_up)
+
 " }}}
 " typo {{{
 
