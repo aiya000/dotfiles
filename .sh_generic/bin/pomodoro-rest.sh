@@ -13,9 +13,9 @@ function notify () {
 # TODO: Take an argument as a file path
 function play () {
     if uname -a | grep Microsoft > /dev/null ; then
-        cd ~/Desktop && cmd.exe /c start Music/にぃに.mp3
+        cd ~/Desktop && cmd.exe /c start Music/初手は丸.mp3
     else  # Linux and macOS
-        mpg123 ~/Music/にぃに.mp3 > /dev/null
+        mpg123 ~/Music/初手は丸.mp3 > /dev/null
     fi
 }
 
