@@ -357,7 +357,7 @@ on_map = '<Plug>(quickrepl-open)'
 on_cmd = 'QuickReplOpen'
 
 [[plugins]]
-repo = 'LeafCage/yankround.vim'
+repo = 'aiya000/yankround.vim'
 on_map = [
     '<Plug>(yankround-p)',
     '<Plug>(yankround-P)',
