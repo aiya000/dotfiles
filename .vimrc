@@ -395,16 +395,16 @@ call submode#enter_with('tab_move', 'n', 's', '<C-s>p', ':<C-u>call vimrc#move_t
 call submode#map('tab_move', 'n', 's', 'n', ':<C-u>call vimrc#move_tab_next()<CR>')
 call submode#map('tab_move', 'n', 's', 'p', ':<C-u>call vimrc#move_tab_prev()<CR>')
 
-call submode#enter_with('window_move', 'n', 's', '<C-s>N', ':<C-u>call vimrc#move_window_forward()<CR>')
-call submode#enter_with('window_move', 'n', 's', '<C-s>P', ':<C-u>call vimrc#move_window_backward()<CR>')
-call submode#map('window_move', 'n', 's', 'N', ':<C-u>call vimrc#move_window_forward()<CR>')
-call submode#map('window_move', 'n', 's', 'P', ':<C-u>call vimrc#move_window_backward()<CR>')
-call submode#map('window_move', 'n', 'e', 'H', '"\<C-w>H" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
-call submode#map('window_move', 'n', 'e', 'J', '"\<C-w>J" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
-call submode#map('window_move', 'n', 'e', 'K', '"\<C-w>K" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
-call submode#map('window_move', 'n', 'e', 'L', '"\<C-w>L" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
-call submode#map('window_move', 'n', 's', '_', '<C-w>_')
-call submode#map('window_move', 'n', 's', '"', ':resize 5<CR>')
+call submode#enter_with('win_move', 'n', 's', '<C-s>N', ':<C-u>call vimrc#move_window_forward()<CR>')
+call submode#enter_with('win_move', 'n', 's', '<C-s>P', ':<C-u>call vimrc#move_window_backward()<CR>')
+call submode#map('win_move', 'n', 's', 'N', ':<C-u>call vimrc#move_window_forward()<CR>')
+call submode#map('win_move', 'n', 's', 'P', ':<C-u>call vimrc#move_window_backward()<CR>')
+call submode#map('win_move', 'n', 'e', 'H', '"\<C-w>H" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
+call submode#map('win_move', 'n', 'e', 'J', '"\<C-w>J" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
+call submode#map('win_move', 'n', 'e', 'K', '"\<C-w>K" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
+call submode#map('win_move', 'n', 'e', 'L', '"\<C-w>L" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
+call submode#map('win_move', 'n', 's', '_', '<C-w>_')
+call submode#map('win_move', 'n', 's', '"', ':resize 5<CR>')
 
 " }}}
 " vimdoc-ja {{{
