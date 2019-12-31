@@ -380,32 +380,23 @@ let g:foldCCtext_maxchars = 120
 " }}}
 " vim-submode {{{
 
-" TODO: Workaround of unknown E474. This appeared after Vim updated. Why?
-function s:submode_enter_with(name, mode, options, lhs, ...) abort
-  try
-    call function('submode#enter_with', [a:name, a:mode, a:options, a:lhs] + a:000)
-  catch
-    " Ignore
-  endtry
-endfunction
-
 let g:submode_timeout = 0
 
-call s:submode_enter_with('window_resize', 'n', '', '<C-s>w')
-call submode#map('window_resize', 'n', '', 'j', '3<C-w>+')
-call submode#map('window_resize', 'n', '', 'k', '3<C-w>-')
-call submode#map('window_resize', 'n', '', 'h', '3<C-w><')
-call submode#map('window_resize', 'n', '', 'l', '3<C-w>>')
-call submode#map('window_resize', 'n', '', '<', '20<C-w><')
-call submode#map('window_resize', 'n', '', '>', '20<C-w>>')
+call submode#enter_with('win_resize', 'n', '', '<C-s>w')
+call submode#map('win_resize', 'n', '', 'j', '3<C-w>+')
+call submode#map('win_resize', 'n', '', 'k', '3<C-w>-')
+call submode#map('win_resize', 'n', '', 'h', '3<C-w><')
+call submode#map('win_resize', 'n', '', 'l', '3<C-w>>')
+call submode#map('win_resize', 'n', '', '<', '20<C-w><')
+call submode#map('win_resize', 'n', '', '>', '20<C-w>>')
 
-call s:submode_enter_with('tab_move', 'n', 's', '<C-s>n', ':<C-u>call vimrc#move_tab_next()<CR>')
-call s:submode_enter_with('tab_move', 'n', 's', '<C-s>p', ':<C-u>call vimrc#move_tab_prev()<CR>')
+call submode#enter_with('tab_move', 'n', 's', '<C-s>n', ':<C-u>call vimrc#move_tab_next()<CR>')
+call submode#enter_with('tab_move', 'n', 's', '<C-s>p', ':<C-u>call vimrc#move_tab_prev()<CR>')
 call submode#map('tab_move', 'n', 's', 'n', ':<C-u>call vimrc#move_tab_next()<CR>')
 call submode#map('tab_move', 'n', 's', 'p', ':<C-u>call vimrc#move_tab_prev()<CR>')
 
-call s:submode_enter_with('window_move', 'n', 's', '<C-s>N', ':<C-u>call vimrc#move_window_forward()<CR>')
-call s:submode_enter_with('window_move', 'n', 's', '<C-s>P', ':<C-u>call vimrc#move_window_backward()<CR>')
+call submode#enter_with('window_move', 'n', 's', '<C-s>N', ':<C-u>call vimrc#move_window_forward()<CR>')
+call submode#enter_with('window_move', 'n', 's', '<C-s>P', ':<C-u>call vimrc#move_window_backward()<CR>')
 call submode#map('window_move', 'n', 's', 'N', ':<C-u>call vimrc#move_window_forward()<CR>')
 call submode#map('window_move', 'n', 's', 'P', ':<C-u>call vimrc#move_window_backward()<CR>')
 call submode#map('window_move', 'n', 'e', 'H', '"\<C-w>H" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')

@@ -11,7 +11,7 @@ if = '!(g:vimrc["is_kaoriya"] && g:vimrc["is_windows"])'
 repo = 'LeafCage/foldCC'
 
 [[plugins]]
-repo = 'kana/vim-submode'
+repo = 'aiya000/vim-submode'
 
 [[plugins]]
 repo = 'osyo-manga/vim-anzu'
