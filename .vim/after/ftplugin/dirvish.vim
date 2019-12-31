@@ -3,7 +3,7 @@ nnoremap <buffer> / /
 nnoremap <buffer> ? ?
 nnoremap <buffer> Q :<C-u>quit<CR>
 nnoremap <buffer> % :e<Space>
-nnoremap <buffer> d :!mkdir<Space>
+nnoremap <buffer><nowait> d :!mkdir<Space>
 nnoremap <buffer><silent> D :<C-u>call <SID>delete_a_file_or_a_dir()<CR>
 
 " Redraw
