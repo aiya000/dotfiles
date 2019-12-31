@@ -137,6 +137,7 @@ if i_have git ; then
     alias gp='git push'
     alias gpu='git push -u'
     alias gpuo='git push -u origin'
+    alias gpua='git push -u aiya000'
     alias gpf='git push --force-with-lease'
     alias gpull='git pull --rebase'
     function gtake () {
