@@ -117,6 +117,6 @@ endfunction
 
 function vimrc#tabline#show_status_staying_path_at_started() abort
   return g:vimrc.stay_path_at_started
-    \ ? ''
-    \ : '[no-stay]'
+    \ ? '[no-auto-lcd]'
+    \ : '[auto-lcd]'
 endfunction
