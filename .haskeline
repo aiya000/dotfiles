@@ -1,1 +1,4 @@
+bind: ctrl-n down
+bind: ctrl-p up
+editMode: Vi
 maxhistorysize: Just 100000
