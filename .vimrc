@@ -1517,6 +1517,10 @@ xmap p <Plug>(yankround-p)
 "" Don't waste my global - key
 nmap <Plug>(nomap-dirvish_up) <Plug>(dirvish_up)
 
+" vim-quickrepl
+nmap <leader>R <Plug>(quickrepl-open)
+
+
 " }}}
 " typo {{{
 
