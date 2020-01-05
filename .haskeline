@@ -1,4 +1,9 @@
 bind: ctrl-n down
 bind: ctrl-p up
+bind: ctrl-b left
+bind: ctrl-f right
+bind: ctrl-a home
+bind: ctrl-e end
+
 editMode: Vi
 maxhistorysize: Just 100000
