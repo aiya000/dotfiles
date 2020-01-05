@@ -191,6 +191,22 @@ endif
 "----------"
 " {{{
 
+" Avoids nmap onto unterminal buffer
+function s:nmap_p_to_put_if_on_terminal() abort
+  if !s:List.has(term_list(), winbufnr('.'))
+    return
+  endif
+  nnoremap <buffer><expr> p vimrc#put_as_stdin(@")
+endfunction
+
+" Simular to s:nmap_p_to_put_if_on_terminal()
+function s:nmap_plus_p_to_put_if_on_terminal() abort
+  if !s:List.has(term_list(), winbufnr('.'))
+    return
+  endif
+  nnoremap <buffer><expr> "+p vimrc#put_as_stdin(@+)
+endfunction
+
 augroup vimrc
   autocmd!
 
@@ -205,8 +221,8 @@ augroup vimrc
 
   if !has('nvim')
     " TODO: for any registers
-    autocmd TerminalOpen * nnoremap <buffer><expr> p vimrc#put_as_stdin(@")
-    autocmd TerminalOpen * nnoremap <buffer><expr> "+p vimrc#put_as_stdin(@+)
+    autocmd TerminalOpen * call s:nmap_p_to_put_if_on_terminal()
+    autocmd TerminalOpen * call s:nmap_plus_p_to_put_if_on_terminal()
     autocmd TerminalOpen * nmap <buffer> 'p "+p
   endif
 
