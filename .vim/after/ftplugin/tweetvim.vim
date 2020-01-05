@@ -16,5 +16,5 @@ nnoremap <silent><buffer> <localleader>n :<C-u>split \| EditOverridden ~/.tmp/tw
 nnoremap <silent><buffer> Q :<C-u>bdelete<CR>
 nnoremap <silent><buffer> s :<C-u>TweetVimSay<CR>
 nnoremap <silent><buffer><nowait> t :<C-u>Denite unite:tweetvim<CR>
-nunmap <buffer> bb
-nunmap <buffer> ff
+nnoremap <buffer><nowait> b b
+nnoremap <buffer><nowait> f f
