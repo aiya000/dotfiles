@@ -128,6 +128,7 @@ function vimrc#bufclose_auto() abort
     \ 'help',
     \ 'man',
     \ 'netrw',
+    \ 'dirvish',
     \ 'qf',
     \ 'quickrun',
     \ 'scratch',
