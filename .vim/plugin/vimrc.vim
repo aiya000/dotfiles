@@ -1,3 +1,6 @@
+scriptencoding utf-8
+scriptversion 3
+
 nnoremap <silent> <Plug>(vimrc-surround-append-choice) :<C-u>call vimrc#append_choose_surround()<CR>
 nnoremap <silent> <Plug>(vimrc-surround-append-choice-wide) :<C-u>call vimrc#append_choose_surround_wide()<CR>
 nnoremap <silent> <Plug>(vimrc-surround-delete-mostly-inner) :<C-u>call vimrc#delete_mostly_inner_surround()<CR>
@@ -129,9 +132,10 @@ command! -bar TodoList Grep TODO FIXME XXX
 function! Tapi_Tabnew(_, args) abort
   let pwd = a:args[0]
   let files = a:args[1:]
-  let paths = map(files, { _, file ->
-    \ fnameescape(pwd . '/' . file)
-  \ })
+  let paths =
+    \ map(files, { _, file ->
+      \ fnameescape(pwd .. '/' .. file)
+    \ })
 
   for path in paths
     execute 'tabnew' path

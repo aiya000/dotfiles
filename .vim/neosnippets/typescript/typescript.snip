@@ -2,8 +2,8 @@
 
 snippet traditional_for
 alias for_traditional
-abbr for (${1:#:let}; ${2:#:cond}; ${3:#:eff}) {${0}}
-    for (${1:#:let}; ${2:#:cond}; ${3:#:eff}) {${0}}
+abbr for (${1:let i = 0}; ${2:i < x}; ${3:++i}) {${0}}
+    for (${1:let i = 0}; ${2:i < x}; ${3:++i}) {${0}}
 
 snippet for_in
 abbr for (const ${1:i} in ${2:xs}) {${0}}
