@@ -236,9 +236,9 @@ augroup vimrc
   autocmd VimEnter,BufNew * if empty(&ft) | setf none | endif
 
   " Please see vimrc#open_scratch_buffer()
-  autocmd WinEnter,BufEnter,InsertLeave,Winleave,BufLeave
-    \  if bufname() !~# 'gista://'
-      \| scratch*.md w
+  autocmd WinEnter,BufEnter,InsertLeave,Winleave,BufLeave scratch*.md
+    \  if bufname('%') !~# 'gista://'
+      \| write
     \| endif
 augroup END
 

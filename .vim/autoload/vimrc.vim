@@ -336,6 +336,7 @@ function vimrc#open_scratch_buffer() abort
 
   execute 'silent' 'sp' file
   silent write
+  setl noswapfile
   normal! ggVG"_d
   resize 5
 endfunction
