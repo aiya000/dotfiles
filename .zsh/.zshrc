@@ -59,6 +59,11 @@ stty start undef
 function zle-line-init zle-keymap-select {
     # This function maybe loaded at below procedures with ~/.zsh/zshrc/prompt.sh
     zshrc::prompt::main
+
+    if [[ "$VIM_TERMINAL" ]] ; then
+        printf '\e]51;["call","Tapi_SyncTermCwd","%s"]\x07' "$PWD"
+    fi
+
     zle reset-prompt
 }
 zle -N zle-line-init
@@ -99,8 +104,6 @@ source ~/.zsh/plugin/zsh-autosuggestions/zsh-autosuggestions.zsh
 for file in ~/.zsh/plugin/sh-hereis/{edit-places,hereis,place,reload-places,sh-hereis}.sh ; do
     source "$file"
 done
-
-source_if_exists ~/.vim/bundle/repos/github.com/tyru/sync-term-cwd.vim/macros/synctermcwd.sh
 
 #}}}
 # zsh-dircolors-solarized {{{
