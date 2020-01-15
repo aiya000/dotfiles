@@ -126,3 +126,6 @@ repo = 'itchyny/vim-cursorword'
 
 [[plugins]]
 repo = 'justinmk/vim-dirvish'
+
+[[plugins]]
+repo = 'mattn/vim-ale-icons'

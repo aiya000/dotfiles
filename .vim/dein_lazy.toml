@@ -380,3 +380,11 @@ on_ft = [
 [[plugins]]
 repo = 'delphinus/vim-firestore'
 on_ft = 'firestore'
+
+[[plugins]]
+repo = 'chikatoike/concealedyank.vim'
+on_source = 'gina.vim'
+
+[[plugins]]
+repo = 'mattn/vim-lsp-icons'
+on_source = 'vim-lsp'
