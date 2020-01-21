@@ -501,10 +501,18 @@ let g:textobj_between_no_default_key_mappings = 1
 " }}}
 " ale {{{
 
+" ======
+" Common
+" ======
+
 let g:ale_set_highlights = v:false
 let g:ale_vim_vint_show_style_issues = v:false
-" let s:ghc_standard_extensions {{{
 
+" =======
+" Linters
+" =======
+
+" let s:ghc_standard_extensions {{{
 let s:ghc_standard_extensions = [
   \ 'AutoDeriveTypeable',
   \ 'BangPatterns',
@@ -548,7 +556,6 @@ let s:ghc_standard_extensions = [
   \ 'TypeSynonymInstances',
   \ 'ViewPatterns',
 \ ]
-
 " }}}
 let s:ale_linters_hlint =
   \ 'hlint ' ..
@@ -577,6 +584,17 @@ augroup vimrc
       \| echomsg 'a scalastyle config loaded: ' . g:ale_scala_scalastyle_config
     \| endif
 augroup END
+
+" ==========
+" Formatters
+" ==========
+
+let g:ale_fix_on_save = v:true
+
+let g:ale_fixers = #{
+  \ typescript: ['prettier'],
+  \ vue: ['prettier'],
+\ }
 
 " }}}
 " elm-vim {{{
