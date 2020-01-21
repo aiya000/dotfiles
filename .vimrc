@@ -672,23 +672,6 @@ augroup END
 let g:vimhelpgenerator_defaultlanguage = 'en'
 
 " }}}
-" vim-autoformat {{{
-
-let g:formatdef_dhall_format = '"dhall format"'
-let g:formatters_dhall = ['dhall_format']
-
-let g:formatdef_typescript_format = '"tsfmt --stdin"'
-let g:formatters_typescript = ['typescript_format']
-
-" let g:formatdef_scalafmt = '"ng scalafmt --stdin"' " Please see Makefile for about `ng scalafmt`
-" let g:formatters_scala = ['scalafmt']
-
-if filereadable(expand('~/bin/google-java-format-1.7-all-deps.jar'))
-  let g:formatdef_google_java_format = '"java -jar ~/bin/google-java-format-1.7-all-deps.jar -"'
-  let g:formatters_java = ['google_java_format']
-endif
-
-" }}}
 " vim-indent-guides {{{
 
 let g:indent_guides_enable_on_vim_startup = 1

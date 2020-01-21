@@ -340,12 +340,6 @@ endif
 
 install-java:
 	which java || $(YayInstall) jdk
-	[ ! -f ~/bin/google-java-format-1.7.jar ] && \
-		wget https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7.jar \
-			-O ~/bin/google-java-format-1.7.jar
-	[ ! -f ~/bin/google-java-format-1.7-all-deps.jar ] && \
-		wget https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7-all-deps.jar \
-			-O ~/bin/google-java-format-1.7-all-deps.jar
 
 install-displaylink:
 	$(YayInstall) displaylink evdi-git

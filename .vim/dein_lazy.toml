@@ -244,16 +244,6 @@ on_map = [
 ]
 
 [[plugins]]
-repo = 'Chiel92/vim-autoformat'
-on_ft = [
-    'haskell',
-    'dhall',
-    'scala',
-    'java',
-    'typescript',
-]
-
-[[plugins]]
 repo = 'rhysd/vim-gfm-syntax'
 on_ft = ['markdown']
 
