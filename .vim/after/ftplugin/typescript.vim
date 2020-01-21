@@ -22,7 +22,6 @@ nmap <silent><buffer> <C-l> <C-[>:syntax sync fromstart<CR>
 
 augroup FtpluginTypeScript
   autocmd!
-  autocmd BufWritePre *.ts Autoformat
   autocmd BufWritePost *.ts,*.tsx call s:exec_quickfix_if_available()
 augroup END
 

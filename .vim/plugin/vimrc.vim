@@ -113,8 +113,8 @@ command! -nargs=+ Stackage WebpageShow stackage <args>
 
 " vim-dirvish
 command! -nargs=? -complete=dir Explore Dirvish <args>
-command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args>
-command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
+command! -nargs=? -complete=dir Sexplore split | silent Dirvish <args>
+command! -nargs=? -complete=dir Vexplore vsplit | silent Dirvish <args>
 command! -nargs=? -complete=dir Texplore tabnew | silent Dirvish <args>
 
 "" Others
