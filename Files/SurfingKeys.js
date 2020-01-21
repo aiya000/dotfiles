@@ -86,6 +86,9 @@ try {
   mapkey('R', '#4Reload the page', function () {  // {{{
     RUNTIME('reloadTab', { nocache: true });
   });  // }}}
+  mapkey('W', '#3New window with current tab',  function() {  // {{{
+    RUNTIME('newWindow');
+  });  // }}}
   map('g_', '$');
   map('<Ctrl-p>', 'gT');
   map('<Ctrl-n>', 'gt');
