@@ -129,3 +129,19 @@ repo = 'justinmk/vim-dirvish'
 
 [[plugins]]
 repo = 'mattn/vim-ale-icons'
+
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+depends = ['async.vim']
+
+[[plugins]]
+repo = 'prabirshrestha/async.vim'
+
+[[plugins]]
+repo = 'lighttiger2505/deoplete-vim-lsp'
+
+[[plugins]]
+repo = 'mattn/vim-lsp-icons'
+
+[[plugins]]
+repo = 'mattn/vim-lsp-settings'

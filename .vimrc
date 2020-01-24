@@ -746,25 +746,10 @@ endfunction
 
 augroup vimrc
   autocmd User lsp_setup call lsp#register_server(#{
-    \ name: 'language-server-stdio.js',
-    \ cmd: { _ -> [&shell, &shellcmdflag, 'language-server-stdio.js'] },
-    \ root_uri: s:find_root_uri_by_file('tsconfig.json'),
-    \ whitelist: ['javascript', 'typescript', 'typescript.tsx', 'vue'],
-  \ })
-
-  autocmd User lsp_setup call lsp#register_server(#{
     \ name: 'haskell-ide-engine',
     \ cmd: { _ -> [&shell, &shellcmdflag, 'hie-wrapper'] },
     \ root_uri: s:find_root_uri_by_file('package.yaml'),
     \ whitelist: ['haskell', 'happy', 'alex'],
-  \ })
-
-  " TODO: うごいてくれ〜
-  autocmd User lsp_setup call lsp#register_server(#{
-    \ name: 'vim-language-server',
-    \ cmd: { _ -> [&shell, &shellcmdflag, 'vim-language-server --stdio'] },
-    \ root_uri: { _ -> g:vimrc.path_at_started },
-    \ whitelist: ['vim'],
   \ })
 augroup END
 

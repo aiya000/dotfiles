@@ -267,24 +267,6 @@ repo = 'posva/vim-vue'
 on_ft = ['vue']
 
 [[plugins]]
-repo = 'prabirshrestha/vim-lsp'
-on_ft = [
-    'haskell',
-    'javascript',
-    'typescript',
-    'typescript.tsx',
-]
-depends = ['async.vim']
-
-[[plugins]]
-repo = 'prabirshrestha/async.vim'
-on_source = 'vim-lsp'
-
-[[plugins]]
-repo = 'lighttiger2505/deoplete-vim-lsp'
-on_source = 'vim-lsp'
-
-[[plugins]]
 repo = 'aiya000/vim-ghcid-quickfix'
 on_ft = [
     'haskell',
@@ -374,7 +356,3 @@ on_ft = 'firestore'
 [[plugins]]
 repo = 'chikatoike/concealedyank.vim'
 on_source = 'gina.vim'
-
-[[plugins]]
-repo = 'mattn/vim-lsp-icons'
-on_source = 'vim-lsp'
