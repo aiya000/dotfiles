@@ -342,8 +342,8 @@ if i_have krita ; then
 fi
 
 if i_have draw.io ; then
-    alias drawio=draw.io
-    alias drawio-export-png='draw.io -e -x -f png'
+    alias drio=draw.io
+    alias drio-export-png='draw.io -e -x -f png'
 fi
 
 # shellcheck disable=SC2139
