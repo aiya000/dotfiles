@@ -58,6 +58,10 @@ snippet strong
 snippet href
     @<href>{${1:URL}, ${0:content}}
 
+snippet href_same
+abbr @<href>{${1:URL}, $1}
+    @<href>{${1:URL}, $1}
+
 snippet list_inline
 alias inline_list ilist
     @<list>{${0:here}}
