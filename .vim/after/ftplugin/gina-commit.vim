@@ -6,3 +6,5 @@ let b:undo_ftplugin = 'setl ' . join([
 \ ])
 
 setl number relativenumber syntax=gina-commit filetype=markdown
+
+normal! gg

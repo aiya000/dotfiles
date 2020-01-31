@@ -265,3 +265,10 @@ snippet private_set
 alias priset
 abbr private set ${1:fieldName}(x: ${2:type}) {${0:#:here}}
     private set ${1:fieldName}(x: ${2:type}) {${0:#:here}}
+
+# Expressions
+
+snippet check_typed_property_existent
+alias typeof_optional_property
+abbr typeof (${1:x} as { ${2:propName}?: ${3:primitive} }).$2 === '$3'${0}
+    typeof (${1:x} as { ${2:propName}?: ${3:primitive} }).$2 === '$3'${0}
