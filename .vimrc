@@ -187,7 +187,7 @@ endif
 
 
 "----------"
-" Autocmds "
+" Augroups "
 "----------"
 " {{{
 
@@ -851,6 +851,14 @@ let g:quickrepl_config = #{}
 
 let g:quickrepl_use_default_key_mapping = v:true
 let g:quickrepl_enable_debug = v:true
+
+" }}}
+" vim-cursorword {{{
+
+augroup vimrc
+  autocmd VimEnter,ColorScheme * highlight CursorWord0 ctermbg=LightGray ctermfg=Black
+  autocmd VimEnter,ColorScheme * highlight CursorWord1 ctermbg=LightGray ctermfg=Black
+augroup END
 
 " }}}
 

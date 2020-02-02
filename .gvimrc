@@ -47,26 +47,46 @@ command! OpenThisFileInNewWindow call s:open_this_file_in_new_window()
 " }}}
 
 
+"----------"
+" Augroups "
+"----------"
+" {{{
+
+augroup gvimrc
+  autocmd!
+augroup END
+
+" }}}
+
+
 "---------"
 " Plugins "
 "---------"
-" --- TweetVim --- {{{
+" TweetVim {{{
 
 let g:tweetvim_display_username = 1
 let g:tweetvim_display_icon     = 1
 
 " }}}
-" --- J6uil --- {{{
+" J6uil {{{
 
 let g:J6uil_display_icon = 1
 
 " }}}
-" --- vim-suvmode --- {{{
+" vim-suvmode {{{
 
 call submode#enter_with('font_size', 'n', 's', '<C-s>+', ':<C-u>call vimrc#increment_gui_fontsize()<CR>')
 call submode#enter_with('font_size', 'n', 's', '<C-s>-', ':<C-u>call vimrc#decrement_gui_fontsize()<CR>')
 call submode#map('font_size', 'n', 's', '+', ':<C-u>call vimrc#increment_gui_fontsize()<CR>')
 call submode#map('font_size', 'n', 's', '-', ':<C-u>call vimrc#decrement_gui_fontsize()<CR>')
+
+" }}}
+" vim-cursorword {{{
+
+augroup gvimrc
+  autocmd VimEnter,ColorScheme * highlight CursorWord0 gui=bold guibg=#66cdaa guifg=#006400
+  autocmd VimEnter,ColorScheme * highlight CursorWord1 gui=bold guibg=#66cdaa guifg=#191970
+augroup END
 
 " }}}
 
