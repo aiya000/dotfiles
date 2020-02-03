@@ -266,6 +266,11 @@ alias priset
 abbr private set ${1:fieldName}(x: ${2:type}) {${0:#:here}}
     private set ${1:fieldName}(x: ${2:type}) {${0:#:here}}
 
+snippet async_function
+alias async_fun afun
+abbr async function ${1:#:name}(${2:#:args}): Promise<${3:void}> {${0}}
+    async function ${1:#:name}(${2:#:args}): Promise<${3:void}> {${0}}
+
 # Expressions
 
 snippet check_typed_property_existent
