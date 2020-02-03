@@ -4,7 +4,7 @@ let b:undo_ftplugin = 'setl ' . join([
 
 setl cursorline
 
-function s:force_show_git_stash_size_into_top(gina_status_bufnr, _) abort
+function s:force_show_git_stash_size_onto_top(gina_status_bufnr, _) abort
   let current_bufnr = winbufnr(0)
 
   try
@@ -13,13 +13,13 @@ function s:force_show_git_stash_size_into_top(gina_status_bufnr, _) abort
 
     if s:is_gina_status_never_loaded_yet(status)
       " Retry later
-      call timer_start(50, function('s:force_show_git_stash_size_into_top', [a:gina_status_bufnr]))
+      call timer_start(50, function('s:force_show_git_stash_size_onto_top', [a:gina_status_bufnr]))
       return
     elseif s:has_stash_size(status)
       return
     endif
 
-    let size = system("git stash list | wc -l")[:-2]
+    let size = system('git stash list | wc -l')[:-2]
     if size ==# '0'
       return
     endif
@@ -45,4 +45,4 @@ function s:force_show(topline, size) abort
   setl nomodifiable
 endfunction
 
-call timer_start(50, function('s:force_show_git_stash_size_into_top', [winbufnr(0)]))
+call timer_start(50, function('s:force_show_git_stash_size_onto_top', [winbufnr(0)]))
