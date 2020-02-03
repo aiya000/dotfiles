@@ -4,9 +4,10 @@
 
 try {
   Hints.characters = 'wertyuiopasdfghjkzxcvbm';
+  settings.hintAlign = 'left';
   addSearchAlias('g', 'google', 'https://www.google.com/search?q=');
 } catch (e) {
-  throw new Error(`In the section 'General': ${e}`)
+  throw new Error(`In the section 'General': ${e}`);
 }
 
 /**
@@ -93,7 +94,7 @@ try {
   map('<Ctrl-p>', 'gT');
   map('<Ctrl-n>', 'gt');
 } catch (e) {
-  throw new Error(`In the section 'Normal mode': ${e}`)
+  throw new Error(`In the section 'Normal mode': ${e}`);
 }
 
 /**
@@ -121,7 +122,7 @@ try {
 
   iunmap('<Ctrl-i>');
 } catch (e) {
-  throw new Error(`In the section 'Insert mode': ${e}`)
+  throw new Error(`In the section 'Insert mode': ${e}`);
 }
 
 function moveCursor(direction, granularity) {
@@ -189,7 +190,7 @@ try {
   vmap('<Ctrl-[>', '<Esc>');
   vmap('<Ctrl-l>', '<Esc>');
 } catch (e) {
-  throw new Error(`In the section 'Visual mode': ${e}`)
+  throw new Error(`In the section 'Visual mode': ${e}`);
 }
 
 /**
@@ -211,7 +212,7 @@ try {
   cmap('<Ctrl-u>', '');
   cmap('<Ctrl-k>', '');
 } catch (e) {
-  throw new Error(`In the section 'Command mode': ${e}`)
+  throw new Error(`In the section 'Command mode': ${e}`);
 }
 
 /**
