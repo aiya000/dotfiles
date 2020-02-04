@@ -26,7 +26,7 @@ function! vimrc#dein#hook_source#operator_surround() abort
       \ { 'block' : ['＜', '＞'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['『', ' 』', 'j<', 'j>'] },
     \ ] + basic_between,
     \ 'review' : [
-      \ { 'block' : ['@<b>{', '}'], 'motionwise' : ['char'], 'keys' : ['[b'] },
+      \ { 'block' : ['@<b>{', '}'], 'motionwise' : ['char'], 'keys' : ['[b', 'B'] },
       \ { 'block' : ['@<i>{', '}'], 'motionwise' : ['char'], 'keys' : ['[i'] },
       \ { 'block' : ['@<u>{', '}'], 'motionwise' : ['char'], 'keys' : ['[u'] },
       \ { 'block' : ['@<tt>{', '}'], 'motionwise' : ['char'], 'keys' : ['[tt'] },

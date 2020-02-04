@@ -7,5 +7,5 @@ let b:undo_ftplugin = 'setl ' . join([
 
 setl sw=4 ts=4 et nospell
 
-vmap <expr> ix textobj#from_regexp#mapexpr('@<[a-z]\+>{\zs.*\ze}')
-vmap <expr> ax textobj#from_regexp#mapexpr('@<[a-z]\+>{.*}')
+vmap <expr> is textobj#from_regexp#mapexpr('@<[a-z]\+>{\zs.*\ze}')
+vmap <expr> as textobj#from_regexp#mapexpr('@<[a-z]\+>{.*}')
