@@ -128,9 +128,6 @@ repo = 'itchyny/vim-cursorword'
 repo = 'justinmk/vim-dirvish'
 
 [[plugins]]
-repo = 'mattn/vim-ale-icons'
-
-[[plugins]]
 repo = 'prabirshrestha/vim-lsp'
 depends = ['async.vim']
 

@@ -754,6 +754,14 @@ augroup vimrc
 augroup END
 
 " }}}
+" vim-lsp-settings {{{
+
+" ruby lsp is temporary disabled because it occurs error at runtime
+let g:lsp_settings = #{
+  \ ruby: #{ disable: 1 },
+\ }
+
+" }}}
 " vim-ghcid-quickfix {{{
 
 function s:make_ghcid_event_hooks_to_show_started_on_popup(qf_bufnr) abort
