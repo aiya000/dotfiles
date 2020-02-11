@@ -1303,6 +1303,7 @@ tnoremap <C-l> <C-\><C-n>
 tnoremap <C-\><C-n> <Esc>
 tnoremap <C-[> <Esc>
 tnoremap <C-]> <C-l>
+tnoremap <C-q><C-v> <C-q><C-n><C-w>H
 
 " }}}
 " digraph {{{
