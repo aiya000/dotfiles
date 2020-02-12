@@ -758,7 +758,7 @@ augroup END
 
 " ruby lsp is temporary disabled because it occurs error at runtime
 let g:lsp_settings = #{
-  \ ruby: #{ disable: 1 },
+  \ ruby-languageserver: #{ disable: 1 },
 \ }
 
 " }}}
