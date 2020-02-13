@@ -799,13 +799,7 @@ let g:precious_enable_switch_CursorMoved = {
 \ }
 
 let g:precious_enable_switch_CursorMoved_i = g:precious_enable_switch_CursorMoved
-
-let g:precious_enable_switchers = {
-  \ 'help': {
-    \ 'setfiletype': v:false,
-  \ },
-\ }
-
+let g:precious_enable_switchers = #{}
 let g:textobj_precious_no_default_key_mappings = v:true
 
 augroup vimrc
@@ -820,6 +814,19 @@ function s:dont_enter_vue_promise() abort
     call precious#switch('typescript')
   endif
 endfunction
+
+" }}}
+" context_filetype.vim {{{
+
+let g:context_filetype#filetypes = #{
+  \ review: [
+    \ #{
+      \ start: '//list\[[^]]\+\]\[[^]]\+\]\[\([^]]\+\)\]{',
+      \ end: '//}',
+      \ filetype: '\1',
+    \ },
+  \ ],
+\ }
 
 " }}}
 " sync-term-cwd.vim {{{
@@ -838,19 +845,6 @@ let g:webpage_source = #{
 " jumpy.vim {{{
 
 let g:jumpy_map = [')', '(']
-
-" }}}
-" context_filetype.vim {{{
-
-let g:context_filetype#filetypes = #{
-  \ review: [
-    \ #{
-      \ start: '//list\[[^]]\+\]\[[^]]\+\]\[\([^]]\+\)\]{',
-      \ end: '//}',
-      \ filetype: '\1',
-    \ },
-  \ ],
-\ }
 
 " }}}
 " vim-quickrepl {{{
