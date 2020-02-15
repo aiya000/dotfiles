@@ -756,9 +756,9 @@ augroup END
 " }}}
 " vim-lsp-settings {{{
 
-" ruby lsp is temporary disabled because it occurs error at runtime
+" solargraph is temporary disabled because it occurs error at runtime (dein.vim?)
 let g:lsp_settings = #{
-  \ ruby-languageserver: #{ disable: 1 },
+  \ solargraph: #{ disabled: 1 },
 \ }
 
 " }}}
