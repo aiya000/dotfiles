@@ -5,30 +5,30 @@ options indent
     abbr $2
         ${2}${0}
 
-snippet template_xml_attr
+snippet snippet_template_xml_attr
 options head indent
     snippet ${1:#:snippetName}
     abbr $1="\${0:here}"
         $1="\${0:here}"
 
-snippet template_xml_tag
+snippet snippet_template_xml_tag
     snippet ${1:#:snippetName}
     abbr <$1/>
         <$1/>
 
-snippet template_xml_tag_surround
+snippet snippet_template_xml_tag_surround
     snippet ${1:#:snippetName}
     abbr <$1>\${0:#:here}</$1>
         <$1>\${0:#:here}</$1>
 
-snippet template_haskell_language_pragma
+snippet snippet_template_haskell_language_pragma
 options indent
     snippet pragma_language_${1:name}
     abbr {-# LANGUAGE ${2:Name} #-}
     options head
         {-# LANGUAGE $2 #-}
 
-snippet template_idris_language_directive
+snippet snippet_template_idris_language_directive
 options indent
     snippet directive_language_${1:name}
     alias language_$1
@@ -36,8 +36,15 @@ options indent
     options head
         %language $2
 
-snippet template_jsx_attr
+snippet snippet_template_jsx_attr
 options head indent
     snippet ${1:#:snippetName}
     abbr $1={stuff}
         $1=${0}
+
+snippet snippet_template_bootstrap4
+options indent
+    snippet bootstrap4_${1:name}
+    alias bs4_$1
+    abbr $2
+        ${2:here}
