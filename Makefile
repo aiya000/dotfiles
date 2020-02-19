@@ -88,6 +88,7 @@ ifeq ($(OS),Arch)
 		libxss \
 		light-git \
 		lxdm \
+		pulseaudio-alsa \
 		man-db \
 		mimi-git \
 		mlocate \
@@ -289,7 +290,7 @@ install-xmonad-deps:
 	$(YayInstall) xfce4-screenshooter
 
 install-bluetooth:
-	$(YayInstall) bluez bluez-utils && \
+	$(YayInstall) bluez bluez-utils bluez-libs bluez-firmware pulseaudio-bluetooth
 	sudo modprobe btusb
 	# sudo systemctl enable bluetooth
 	# sudo systemctl start bluetooth
