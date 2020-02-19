@@ -923,7 +923,7 @@ let &statusline = join([
   \ '[%l,%v]',
   \ '[Fenc=%{&fileencoding}]',
   \ '[Enc=%{&encoding}]',
-  \ '%3*%{yankround#is_active() ? "[yankround]" : ""}%*',
+  \ '%3*%{vimrc#statusline#is_yankround_active() ? "[yankround]" : ""}%*',
   \ '%4*%m%*',
   \ '%5*%r%*',
 \ ], '')
