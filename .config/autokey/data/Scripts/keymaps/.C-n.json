@@ -1,11 +1,11 @@
 {
     "type": "script",
-    "description": "C-d",
+    "description": "C-n",
     "store": {},
     "modes": [
         3
     ],
-    "usageCount": 0,
+    "usageCount": 3,
     "prompt": false,
     "omitTrigger": false,
     "showInTrayMenu": false,
@@ -21,7 +21,7 @@
         "modifiers": [
             "<ctrl>"
         ],
-        "hotKey": "d"
+        "hotKey": "n"
     },
     "filter": {
         "regex": "[^(termite.Termite|gvim.Gvim)]",

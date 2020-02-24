@@ -24,7 +24,7 @@
         "hotKey": "j"
     },
     "filter": {
-        "regex": "[^(termite.Termite)]",
+        "regex": "[^(termite.Termite|gvim.Gvim)]",
         "isRecursive": false
     }
 }
