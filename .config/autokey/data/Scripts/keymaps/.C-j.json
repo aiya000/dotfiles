@@ -24,7 +24,7 @@
         "hotKey": "j"
     },
     "filter": {
-        "regex": null,
+        "regex": "[^(termite.Termite)]",
         "isRecursive": false
     }
 }
