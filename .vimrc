@@ -9,22 +9,22 @@ let s:List = s:V.import('Data.List')
 " {{{
 
 " Open in preference to an entity
-let $MYVIMRC = filereadable(expand('~/.dotfiles/.vimrc'))
-  \ ? expand('~/.dotfiles/.vimrc')
+let $MYVIMRC = filereadable($'${$HOME}/.dotfiles/.vimrc')
+  \ ? $'${$HOME}/.dotfiles/.vimrc'
   \ : $MYVIMRC
 
-let $MYGVIMRC = filereadable(expand('~/.dotfiles/.gvimrc'))
-  \ ? expand('~/.dotfiles/.gvimrc')
+let $MYGVIMRC = filereadable($'${$HOME}/.dotfiles/.gvimrc')
+  \ ? $'${$HOME}/.dotfiles/.gvimrc'
   \ : $MYGVIMRC
 
 " Global values
 let g:vimrc = get(g:, 'vimrc', #{
   \ loaded: 0,
-  \ vim_home: expand('~/.vim'),
+  \ vim_home: $'${$HOME}/.vim',
   \ path_at_started: getcwd(),
   \ stay_path_at_started: v:false,
   \ gui_editor: has('nvim') ? 'gonvim' : 'gvim',
-  \ backupdir: expand('~/.backup/vim-backup'),
+  \ backupdir: $'${$HOME}/.backup/vim-backup',
   \ is_unix: has('unix'),
   \ is_macos: has('macunix'),
   \ is_wsl: executable('uname') && (system('uname -a') =~# 'Microsoft'),
@@ -36,10 +36,10 @@ let g:vimrc['open_on_gui'] =
   \ g:vimrc['is_macos']   ? 'open' :
   \ g:vimrc['is_windows'] ? 'start' :
   \ g:vimrc['is_unix']    ? 'xdg-open' : 'no method for GUI-open'
-let g:vimrc['directory']  = g:vimrc['backupdir'] . '/swp'
-let g:vimrc['undodir']    = g:vimrc['backupdir'] . '/undo'
-let g:vimrc['viewdir']    = g:vimrc['backupdir'] . '/view'
-let g:vimrc['sessiondir'] = g:vimrc['backupdir'] . '/session'
+let g:vimrc['directory']  = $'${g:vimrc['backupdir']}/swp'
+let g:vimrc['undodir']    = $'${g:vimrc['backupdir']}/undo'
+let g:vimrc['viewdir']    = $'${g:vimrc['backupdir']}/view'
+let g:vimrc['sessiondir'] = $'${g:vimrc['backupdir']}/session'
 
 " }}}
 
@@ -59,15 +59,15 @@ scriptencoding utf-8
 " Prepare dein.vim {{{
 
 " Start dein.vim
-let s:dein_dirname = g:vimrc['vim_home'] . '/bundle/repos/github.com/Shougo/dein.vim'
-let &runtimepath   = &runtimepath . ',' . s:dein_dirname
+let s:dein_dirname = $'${g:vimrc['vim_home']}/bundle/repos/github.com/Shougo/dein.vim'
+let &runtimepath   = $'${&runtimepath},${s:dein_dirname}'
 
 try
-  call dein#begin(expand('~/.vim/bundle'))
+  call dein#begin($'${$HOME}/.vim/bundle')
 catch /E117/  " If dein.vim is not found
   try
     call vimrc#fetch_dein(s:dein_dirname)
-    call dein#begin(expand('~/.vim/bundle'))
+    call dein#begin($'${$HOME}/.vim/bundle')
     echo 'dein.vim installation was completed.'
     echo 'Please execute :call dein#install(),'
     echo 'and restart your vim.'
@@ -78,8 +78,8 @@ catch /E117/  " If dein.vim is not found
 endtry
 
 " Copy the dein.vim's document
-let s:dein_doc_from = s:dein_dirname . '/doc/dein.txt'
-let s:dein_doc_to   = g:vimrc['vim_home'] . '/doc/dein.txt'
+let s:dein_doc_from = $'${s:dein_dirname}/doc/dein.txt'
+let s:dein_doc_to   = $'${g:vimrc['vim_home']}/doc/dein.txt'
 if filereadable(s:dein_doc_from) && !filereadable(s:dein_doc_to)
   call writefile(readfile(s:dein_doc_from), s:dein_doc_to)
 endif
@@ -92,17 +92,17 @@ unlet s:dein_dirname
 
 if !isdirectory(g:vimrc.directory)
   call mkdir(g:vimrc.directory, 'p', 0700)
-  call system(printf("chown -R '%s:%s' '%s'", $USER, $GROUP, g:vimrc.directory))
+  call system($"chown -R '${$USER}:${$GROUP}' '${g:vimrc.directory}'")
 endif
 
 if !isdirectory(g:vimrc.undodir)
   call mkdir(g:vimrc.undodir, '', 0700)
-  call system(printf("chown -R '%s:%s' '%s'", $USER, $GROUP, g:vimrc.undodir))
+  call system($"chown -R '${$USER}:${$GROUP}' '${g:vimrc.undodir}'")
 endif
 
 if !isdirectory(g:vimrc.sessiondir)
   call mkdir(g:vimrc.sessiondir, '', 0700)
-  call system(printf("chown -R '%s:%s' '%s'", $USER, $GROUP, g:vimrc.sessiondir))
+  call system($"chown -R '${$USER}:${$GROUP}' '${g:vimrc.sessiondir}'")
 endif
 
 " }}}
@@ -113,7 +113,7 @@ endif
 "----------"
 " {{{
 
-call dein#load_toml('~/.vim/dein.toml',      {'lazy': 0})
+call dein#load_toml('~/.vim/dein.toml', {'lazy': 0})
 call dein#load_toml('~/.vim/dein_lazy.toml', {'lazy': 1})
 
 if has('nvim')
@@ -135,11 +135,11 @@ call dein#add('Shougo/dein.vim', {'rtp': ''})
 " {{{
 " NOTE: This section must be put at between dein#begin() and dein#end()
 
-if filereadable(expand('~/.vimrc_private'))
+if filereadable($'${$HOME}/.vimrc_private')
   source ~/.vimrc_private
 endif
 
-if filereadable(expand('~/.vimrc_env'))
+if filereadable($'${$HOME}/.vimrc_env')
   source ~/.vimrc_env
 endif
 
