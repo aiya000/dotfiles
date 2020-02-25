@@ -1163,6 +1163,7 @@ nnoremap 'd "+d
 nnoremap 'D "+D
 nnoremap Q gQ
 nnoremap Y yg_
+nnoremap L :<C-u>buffer<Space>
 nnoremap { {zv
 nnoremap } }zv
 nnoremap ( (zv
@@ -1356,7 +1357,7 @@ nmap <C-k>T :<C-u>tselect<Space>
 nmap <C-k><C-f> :<C-u>Denite outline<CR>i
 nmap <C-k>f :<C-u>Denite filetype<CR>i
 nmap M :<C-u>Denite file_mru<CR>i
-nmap L :<C-u>Denite buffer<CR>i
+nmap <leader>L :<C-u>Denite buffer<CR>i
 
 " vim-webpage
 nnoremap <leader>K :<C-u>Weblio <C-r>=expand('<cword>')<CR><CR>
