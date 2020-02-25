@@ -56,46 +56,6 @@ endif
 scriptencoding utf-8
 
 " }}}
-" Build environment for Kaoriya Vim {{{
-
-if g:vimrc['is_kaoriya'] && g:vimrc['is_windows']
-  " Set environments
-  let $HOME               = $VIM
-  let $PATH               = $HOME . '/bin;' . $PATH
-  let g:vimrc['vim_home'] = substitute($VIM, '\', '/', 'g') . '/vimfiles'
-  let &runtimepath        = &runtimepath . ',' . g:vimrc['vim_home']
-
-  " Use commands of cygwin
-  if g:vimrc['has_cygwin']
-    let $PATH = '/cygwin/bin;/cygwin/usr/bin;/cygwin/usr/sbin;' . $PATH
-  endif
-
-  " Make base directories
-  if !filereadable(g:vimrc['vim_home'] . '/init.vim')  " !isdirectory(g:vimrc['vim_home'])
-    call mkdir(g:vimrc['vim_home'])
-  endif
-
-  " Enable kaoriya plugins
-  let s:kaoriya_switch_dir = $VIM . '/switches/enabled/'
-  for s:kaoriya_plugin_flag in map(['utf-8.vim', 'vimdoc-ja.vim', 'vimproc.vim'], { _, x  -> s:kaoriya_switch_dir . x })
-    if !filereadable(s:kaoriya_plugin_flag)
-      call writefile([], s:kaoriya_plugin_flag)
-    endif
-  endfor
-  unlet s:kaoriya_switch_dir s:kaoriya_plugin_flag
-
-  " Unset kaoriya default preference
-  set noignorecase nosmartcase
-
-  " Disable plugins/kaoriya/plugin/{cmdex,scrnmode}.vim
-  let g:plugin_cmdex_disable    = 1
-  let g:plugin_scrnmode_disable = 1
-
-  " You must open the vimrc by the utf-8
-  autocmd FileEvent BufRead $MYVIMRC setl enc=utf8 fenc=utf8
-endif
-
-" }}}
 " Prepare dein.vim {{{
 
 " Start dein.vim
