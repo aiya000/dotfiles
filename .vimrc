@@ -67,7 +67,7 @@ try
 catch /E117/  " If dein.vim is not found
   try
     call vimrc#fetch_dein(s:dein_dirname)
-    call dein#begin($'${$HOME}/.vim/bundle')
+    call dein#begin(expand('~/.vim/bundle'))
     echo 'dein.vim installation was completed.'
     echo 'Please execute :call dein#install(),'
     echo 'and restart your vim.'
@@ -90,20 +90,21 @@ unlet s:dein_dirname
 " }}}
 " Check backup directories {{{
 
-if !isdirectory(g:vimrc.directory)
-  call mkdir(g:vimrc.directory, 'p', 0700)
-  call system($"chown -R '${$USER}:${$GROUP}' '${g:vimrc.directory}'")
-endif
-
-if !isdirectory(g:vimrc.undodir)
-  call mkdir(g:vimrc.undodir, '', 0700)
-  call system($"chown -R '${$USER}:${$GROUP}' '${g:vimrc.undodir}'")
-endif
-
-if !isdirectory(g:vimrc.sessiondir)
-  call mkdir(g:vimrc.sessiondir, '', 0700)
-  call system($"chown -R '${$USER}:${$GROUP}' '${g:vimrc.sessiondir}'")
-endif
+" TODO: Enable this
+" if !isdirectory(g:vimrc.directory)
+"   call mkdir(g:vimrc.directory, 'p', 0700)
+"   call system($"chown -R '${$USER}:${$GROUP}' '${g:vimrc.directory}'")
+" endif
+" 
+" if !isdirectory(g:vimrc.undodir)
+"   call mkdir(g:vimrc.undodir, '', 0700)
+"   call system($"chown -R '${$USER}:${$GROUP}' '${g:vimrc.undodir}'")
+" endif
+" 
+" if !isdirectory(g:vimrc.sessiondir)
+"   call mkdir(g:vimrc.sessiondir, '', 0700)
+"   call system($"chown -R '${$USER}:${$GROUP}' '${g:vimrc.sessiondir}'")
+" endif
 
 " }}}
 
