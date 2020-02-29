@@ -67,7 +67,7 @@ try
 catch /E117/  " If dein.vim is not found
   try
     call vimrc#fetch_dein(s:dein_dirname)
-    call dein#begin(expand('~/.vim/bundle'))
+    call dein#begin($'${$HOME}/.vim/bundle')
     echo 'dein.vim installation was completed.'
     echo 'Please execute :call dein#install(),'
     echo 'and restart your vim.'
@@ -90,21 +90,20 @@ unlet s:dein_dirname
 " }}}
 " Check backup directories {{{
 
-" TODO: Enable this
-" if !isdirectory(g:vimrc.directory)
-"   call mkdir(g:vimrc.directory, 'p', 0700)
-"   call system($"chown -R '${$USER}:${$GROUP}' '${g:vimrc.directory}'")
-" endif
-" 
-" if !isdirectory(g:vimrc.undodir)
-"   call mkdir(g:vimrc.undodir, '', 0700)
-"   call system($"chown -R '${$USER}:${$GROUP}' '${g:vimrc.undodir}'")
-" endif
-" 
-" if !isdirectory(g:vimrc.sessiondir)
-"   call mkdir(g:vimrc.sessiondir, '', 0700)
-"   call system($"chown -R '${$USER}:${$GROUP}' '${g:vimrc.sessiondir}'")
-" endif
+if !isdirectory(g:vimrc.directory)
+  call mkdir(g:vimrc.directory, 'p', 0700)
+  call system($"chown -R '${$USER}:${$GROUP}' '${g:vimrc.directory}'")
+endif
+
+if !isdirectory(g:vimrc.undodir)
+  call mkdir(g:vimrc.undodir, '', 0700)
+  call system($"chown -R '${$USER}:${$GROUP}' '${g:vimrc.undodir}'")
+endif
+
+if !isdirectory(g:vimrc.sessiondir)
+  call mkdir(g:vimrc.sessiondir, '', 0700)
+  call system($"chown -R '${$USER}:${$GROUP}' '${g:vimrc.sessiondir}'")
+endif
 
 " }}}
 
@@ -243,7 +242,7 @@ let g:quickrun_config = {
     \ 'command' : 'themis',
     \ 'cmdopt'  : '--runtimepath ".."',
     \ 'exec'    : '%c %o %s:p | tr -d "\r"',
-    \ 'tempfile':  printf('%s/{tempname()}.vimspec', $TMP),
+    \ 'tempfile':  $'${$TMP}/{tempname()}.vimspec',
   \ },
   \ 'html': {
     \ 'command': g:vimrc['open_on_gui'],
@@ -316,7 +315,7 @@ let g:quickrun_config = {
     \ 'cmdopt': '--warn',
     \ 'exec': [
       \ '%c %s %o --output /tmp/vim-quickrun-elm.html',
-      \ g:vimrc['open_on_gui'] . ' /tmp/vim-quickrun-elm.html',
+      \  $'${g:vimrc['open_on_gui']} /tmp/vim-quickrun-elm.html',
     \ ],
     \ 'tempfile': '%{tempname()}.elm',
   \ },
@@ -335,7 +334,7 @@ let g:quickrun_config = {
     \ 'runner': 'vimproc',
     \ 'exec': [
       \ 'dot -T png %o %s -o %s.png',
-      \ g:vimrc['open_on_gui'] . ' %s.png',
+      \ $'${g:vimrc['open_on_gui']} %s.png',
     \ ],
     \ 'hook/sweep/files': '%S:p:r.png',
     \ 'outputter/error/error': 'quickfix',
@@ -350,7 +349,7 @@ let g:tweetvim_async_post = 1
 let g:twibill_use_job     = 1
 
 " Avoid unite-tweetvim lazy loading error
-let g:tweetvim_config_dir = expand('~/.tweetvim')
+let g:tweetvim_config_dir = $'${$HOME}/.tweetvim'
 
 " }}}
 " foldCC {{{
@@ -401,7 +400,7 @@ let g:bakaup_auto_backup = 1
 " }}}
 " neosnippet.vim {{{
 
-let g:neosnippet#snippets_directory = g:vimrc['vim_home'] . '/neosnippets'
+let g:neosnippet#snippets_directory = $'${g:vimrc['vim_home']}/neosnippets'
 let g:neosnippet#disable_select_select_mappings = 1
 
 " }}}
@@ -521,7 +520,7 @@ let s:ghc_standard_extensions = [
 let s:ale_linters_hlint =
   \ 'hlint ' ..
   \ map(s:ghc_standard_extensions, {_, ext ->
-    \ '-X' .. ext
+    \ '-X ' .. ext
   \ })
   \ ->join()
 
@@ -534,15 +533,15 @@ let g:ale_linters = #{
   \ java: ['checkstyle', 'google-java-format', 'PMD'],
 \ }
 
-let g:ale_scala_scalastyle_config = $HOME . '/.dotfiles/scalastyle_config_default.xml'
+let g:ale_scala_scalastyle_config = $'${$HOME}/.dotfiles/scalastyle_config_default.xml'
 
 augroup vimrc
   autocmd ColorScheme * highlight ALEError ctermbg=gray ctermfg=black
 
   autocmd VimEnter *
     \  if filereadable('./scalastyle_config.xml') && (input('locally scalastyle_config.xml was found, Do you want to load? (y/n)') == 'y')
-      \| let g:ale_scala_scalastyle_config = execute('pwd')[:-1] . '/scalastyle-config.xml'
-      \| echomsg 'a scalastyle config loaded: ' . g:ale_scala_scalastyle_config
+    \| let g:ale_scala_scalastyle_config = $'${execute('pwd')[:-1]}/scalastyle-config.xml'
+      \| echomsg $'a scalastyle config loaded: ${g:ale_scala_scalastyle_config}'
     \| endif
 augroup END
 
