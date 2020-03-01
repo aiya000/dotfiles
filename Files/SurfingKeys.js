@@ -104,22 +104,9 @@ try {
 try {
   imap('<Ctrl-[>', '<Esc>');
   imap('<Ctrl-l>', '<Esc>');
-
-  imapkey('<Ctrl-a>', 'Move cursor to the head of line', moveCursor('left', 'lineboundary'));
-  imapkey('<Ctrl-e>', 'Move cursor to the last of line', moveCursor('right', 'lineboundary'));
-  imapkey('<Ctrl-b>', 'Move cursor to the backword char', moveCursor('left', 'character'));
-  imapkey('<Ctrl-f>', 'Move cursor to the forward char', moveCursor('right', 'character'));
   imapkey('<Ctrl-p>', 'Move cursor to the above', moveCursor('left', 'line'));
   imapkey('<Ctrl-n>', 'Move cursor to the below', moveCursor('right', 'line'));
-
-  imapkey('<Ctrl-w>', '', deleteLeftWord);
-  imapkey('<Ctrl-h>', '', deleteLeftChar);
-  imapkey('<Ctrl-u>', '', killLineBefore);
-  imapkey('<Ctrl-k>', '', killLineAfter);
-  imapkey('<Ctrl-d>', '', '');
-
   imapkey('<Ctrl-g>', 'Edit in the editor', editInEditor);
-
   iunmap('<Ctrl-i>');
 } catch (e) {
   throw new Error(`In the section 'Insert mode': ${e}`);
