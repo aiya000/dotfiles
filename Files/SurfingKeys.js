@@ -104,6 +104,8 @@ try {
 try {
   imap('<Ctrl-[>', '<Esc>');
   imap('<Ctrl-l>', '<Esc>');
+  imapkey('<Ctrl-b>', 'Move cursor to the backword char', moveCursor('left', 'character'));
+  imapkey('<Ctrl-f>', 'Move cursor to the forward char', moveCursor('right', 'character'));
   imapkey('<Ctrl-p>', 'Move cursor to the above', moveCursor('left', 'line'));
   imapkey('<Ctrl-n>', 'Move cursor to the below', moveCursor('right', 'line'));
   imapkey('<Ctrl-g>', 'Edit in the editor', editInEditor);
