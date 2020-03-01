@@ -1,13 +1,10 @@
 {
-    "type": "script",
-    "description": "C-d",
-    "store": {},
+    "type": "folder",
+    "title": "keymaps",
     "modes": [
         3
     ],
     "usageCount": 0,
-    "prompt": false,
-    "omitTrigger": false,
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [],
@@ -21,10 +18,10 @@
         "modifiers": [
             "<ctrl>"
         ],
-        "hotKey": "d"
+        "hotKey": "<f7>"
     },
     "filter": {
-        "regex": "[^(termite.Termite|gvim.Gvim)]",
+        "regex": null,
         "isRecursive": false
     }
 }
