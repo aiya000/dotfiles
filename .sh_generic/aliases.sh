@@ -142,7 +142,6 @@ if i_have git ; then
     alias gpull='git pull --rebase'
     alias greflog='git reflog'
     alias gshow='git show'
-    alias gbackstep='git reset --soft HEAD~'
     alias gclone='git clone --recursive'
     alias gtag-list='git tag | xargs echo'
     alias gtag-add='git tag -a'
