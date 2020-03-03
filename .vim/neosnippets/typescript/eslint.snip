@@ -1,0 +1,36 @@
+snippet eslint_disable_lines
+    /* eslint-disable ${1:name} */
+    ${0}
+    /* eslint-enable $1 */
+
+snippet eslint_disable
+options indent
+abbr /* eslint ${1:name}: 0 */
+    /* eslint ${1:name}: 0 */
+
+snippet eslint_enable_warn
+options indent
+abbr /* eslint ${1:name}: 1 */
+    /* eslint ${1:name}: 1 */
+
+snippet eslint_enable_error
+options indent
+abbr /* eslint ${1:name}: 2 */
+    /* eslint ${1:name}: 2 */
+
+snippet eslint_ignore_next
+abbr // eslint-disable-next-line ${0}
+    // eslint-disable-next-line ${0}
+
+snippet eslint_ignore_previous
+alias eslint_ignore
+abbr // eslint-disable-line ${0}
+    // eslint-disable-line ${0}
+
+snippet eslint_ignore_no_unused_vars
+abbr // eslint-disable-line no-unused-vars
+    // eslint-disable-line no-unused-vars
+
+snippet eslint_ignore_no_unused_expressions
+abbr // eslint-disable-line no-unused-expressions
+    // eslint-disable-line no-unused-expressions
