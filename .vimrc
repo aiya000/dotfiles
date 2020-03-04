@@ -520,7 +520,7 @@ let s:ghc_standard_extensions = [
 let s:ale_linters_hlint =
   \ 'hlint ' ..
   \ map(s:ghc_standard_extensions, {_, ext ->
-    \ '-X ' .. ext
+    \ $'-X ${ext}'
   \ })
   \ ->join()
 
@@ -960,8 +960,8 @@ let &tags = &tags . ',' . join([
   \ '../../.git/tags',
   \ '../../../.git/tags',
   \ '../../../../.git/tags',
-  \ g:vimrc.path_at_started . '/tags',
-  \ g:vimrc.path_at_started . '/.git/tags',
+  \ $'${g:vimrc.path_at_started}/tags',
+  \ $'${g:vimrc.path_at_started}/.git/tags',
 \ ], ',')
 
 " }}}
@@ -1092,7 +1092,7 @@ function s:change_base_directory() abort
 
   try
     execute 'lcd' new_base_directory
-    echo 'cd: ' .. new_base_directory .. what_to_do
+    echo $'cd: ${new_base_directory} ${what_to_do}'
   catch /\(E344\|E472\)/  " if the buffer has no file
     if !s:List.has(term_list(), winbufnr('.'))
       " NOTE: Delegate :lcd to sync-term-cwd.vim if this is a terminal buffer
@@ -1100,7 +1100,7 @@ function s:change_base_directory() abort
     endif
 
     execute ':lcd' g:vimrc.path_at_started
-    echo 'cd: ' .. g:vimrc.path_at_started .. what_to_do
+    echo $'cd: ${g:vimrc.path_at_started} ${what_to_do}'
   endtry
 endfunction
 
@@ -1480,7 +1480,7 @@ vmap <leader><leader>c <Plug>(operator-camelize-toggle)
 nmap . <Plug>(repeat-.)
 
 for x in s:List.char_range('a', 'z')
-  execute 'nnoremap' '<silent>' ('@' .. x) ":\<C-u>call vimrc#execute_repeatable_macro('" .. x .. "')\<CR>"
+  execute 'nnoremap' '<silent>' $'@${x}' $":\<C-u>call vimrc#execute_repeatable_macro('${x}')\<CR>"
 endfor
 
 " vim-yankround
@@ -1497,7 +1497,6 @@ nmap <Plug>(nomap-dirvish_up) <Plug>(dirvish_up)
 " vim-quickrepl
 nmap <leader>R <Plug>(quickrepl-open)
 
-
 " }}}
 " typo {{{
 
@@ -1512,7 +1511,7 @@ inoreabbr encrpyt encrypt
 
 " }}}
 
-execute 'helptags' (g:vimrc['vim_home'] . '/doc')
+execute 'helptags' $'${g:vimrc['vim_home']}/doc'
 filetype plugin indent on
 syntax enable
 let g:vimrc['loaded'] = v:true
