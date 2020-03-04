@@ -167,7 +167,7 @@ if i_have git ; then
     }
 
     alias gwl='git worktree list'
-    alias gw-prune='git worktree prune'
+    alias gwp='git worktree prune'
     alias gw-erase-removed='git worktree prune'
     unset git_taking_limit
 
@@ -185,7 +185,7 @@ if i_have git ; then
     alias gpw=gp-wip
 
     function _gre () {
-        echo -n "(at \`$(git rev-parse --show-toplevel)\`) Do you really force reset the git index tree? (y/n)"
+        echo -n "(at '$(git rev-parse --show-toplevel)') Do you really force reset the git index tree? (y/n)"
         if read -rq _  ; then
             echo
             git reset --hard HEAD
@@ -218,9 +218,12 @@ alias la='ls -a --color=auto --group-directories-first'
 alias ll='ls -l --color=auto --group-directories-first'
 alias llh='ls -lh --color=auto --group-directories-first'
 alias lla='ls -la --color=auto --group-directories-first'
+
 # shellcheck disable=SC2139
 alias e="$EDITOR"
 alias g=gvim
+alias gS='ls -fA $VIM_SESSION | peco | xargs -I {} gvim -S $VIM_SESSION/{}'
+
 alias m=mount
 alias t=vterminal
 alias um=umount
