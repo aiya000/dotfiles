@@ -34,6 +34,8 @@ function! vimrc#dein#hook_source#operator_surround() abort
       \ { 'block' : ['@<ruby>{', ', ruby}'], 'motionwise' : ['char'], 'keys' : ['r'] },
       \ { 'block' : ['@<code>{', '}'], 'motionwise' : ['char'], 'keys' : ['c'] },
       \ { 'block' : ['@<mathcode>{', '}'], 'motionwise' : ['char'], 'keys' : ['m'] },
+      \ { 'block' : ['@<img>{', '}'], 'motionwise' : ['char'], 'keys' : ['[i'] },
+      \ { 'block' : ['@<list>{', '}'], 'motionwise' : ['char'], 'keys' : ['[l'] },
     \ ],
     \ 'markdown' : [
       \ { 'block' : ['**', '**'], 'motionwise' : ['char'], 'keys' : ['B'] },
