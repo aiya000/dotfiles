@@ -1,6 +1,5 @@
 snippet daily_report
 alias report
-options indent
     Daily Report(`strftime('%Y/%m/%d')`) `get(g:, 'report_my_name', 'input_your_name_here')`
     # 勤務時間
 
@@ -20,3 +19,12 @@ options indent
     # その他連絡事項
 
     ${6:特になし}
+
+snippet report_setulab
+alias tweet_setulab setulab_tweet
+options indent
+    【数学入門・圏論】
+
+    ${0}
+
+    #技術書典 #圏論 #進捗ノート
