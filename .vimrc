@@ -1004,6 +1004,10 @@ nmap <silent> g: :<C-u>call vimrc#open_buffer_to_execute('buffers')<CR>gh_
 nmap <silent> z: :<C-u>call vimrc#open_buffer_to_execute('tabs')<CR>gh_
 nmap <silent> q> :<C-u>call vimrc#open_buffer_to_execute('register')<CR>gh_
 nmap <silent> g> :<C-u>call vimrc#open_buffer_to_execute('messages')<CR>gh_
+nnoremap <silent> * "zyiw/\m\C\<<C-r>z\><CR>
+nnoremap <silent> <leader>* *
+nnoremap <silent> # "zyiw?\m\C\<<C-r>z\><CR>
+nnoremap <silent> <leader># #
 nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
 nnoremap <silent> <C-k><C-o> :<C-u>EditOverridden %<CR>
 nnoremap <silent> <C-k>o :<C-u>EditOverridden! %<CR>
