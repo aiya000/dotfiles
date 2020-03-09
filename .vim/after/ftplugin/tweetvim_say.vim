@@ -1,14 +1,14 @@
 if bufname('%') ==# 'tweetvim_say'
-    resize 10
+  resize 10
 endif
 
 let b:undo_ftplugin = 'setl ' . join([
-    \ 'number<',
-    \ 'relativenumber<',
-    \ 'tabstop<',
-    \ 'shiftwidth<',
-    \ 'expandtab<'
-\])
+  \ 'number<',
+  \ 'relativenumber<',
+  \ 'tabstop<',
+  \ 'shiftwidth<',
+  \ 'expandtab<'
+\ ])
 
 setl nonumber
 setl norelativenumber
