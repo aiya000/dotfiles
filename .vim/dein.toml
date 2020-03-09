@@ -47,7 +47,7 @@ repo = 'kana/vim-operator-user'
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-rev = 'cfa0a0028961a4f2b20edab5f8efe997b0988cff'
+rev = '53bd725a82b78a36704876aa79b5d38dee771ae1'
 
 [[plugins]]
 repo = 'osyo-manga/vim-textobj-from_regexp'
@@ -77,7 +77,7 @@ repo = 'editorconfig/editorconfig-vim'
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-rev = 'fb56c2ca2ff655c4d82e000e13e233629894caac'
+rev = '53bd725a82b78a36704876aa79b5d38dee771ae1'
 
 [[plugins]]
 repo = 'kana/vim-textobj-jabraces'
