@@ -231,6 +231,7 @@ alias lla='ls -la --color=auto --group-directories-first'
 
 # shellcheck disable=SC2139
 alias e="$EDITOR"
+alias eS='ls -fA $VIM_SESSION | peco | xargs -I {} vim -S $VIM_SESSION/{}'
 alias g=gvim
 alias gS='ls -fA $VIM_SESSION | peco | xargs -I {} gvim -S $VIM_SESSION/{}'
 
