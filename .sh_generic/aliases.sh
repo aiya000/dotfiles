@@ -79,7 +79,6 @@ if i_have git ; then
     alias gcf='git commit --fixup'
     alias gco='git checkout'
     alias gcob='git checkout -b'
-    alias gco-='git-checkout-to-a-revision-menu.sh'
     alias gd='git diff'
     alias gdh='git diff HEAD~..HEAD'
     alias gds='git diff --staged'
@@ -302,6 +301,7 @@ if i_have stack ; then
     alias si='stack install'
     alias srunghc='stack runghc --'
     alias sghci='stack ghci --'
+    alias stack-haddock-gen='stack haddock .'
     alias shaddock-gen='stack haddock .'
     alias shaddock-gen-open='stack haddock --open .'
     function stack-new-default() {
