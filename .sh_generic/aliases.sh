@@ -110,7 +110,7 @@ if i_have git ; then
     alias gri~~~~~~~~='git rebase --interactive --autosquash HEAD~~~~~~~~'
     alias gri~~~~~~~~~='git rebase --interactive --autosquash HEAD~~~~~~~~~'
     alias gri~~~~~~~~~~='git rebase --interactive --autosquash HEAD~~~~~~~~~~'
-    alias gri_='git rebase --interactive'
+    alias gr-onto='git rebase --onto'
     alias grev='git revert'
     alias grev~='git revert HEAD~'
     alias grev~~='git revert HEAD~~'
