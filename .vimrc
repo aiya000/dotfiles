@@ -999,22 +999,22 @@ function s:deep_clear() abort
 endfunction
 
 " listup
-nmap <silent> m: :<C-u>call vimrc#open_buffer_to_execute('marks')<CR>gh_
 nmap <silent> g: :<C-u>call vimrc#open_buffer_to_execute('buffers')<CR>gh_
-nmap <silent> z: :<C-u>call vimrc#open_buffer_to_execute('tabs')<CR>gh_
-nmap <silent> y: :<C-u>Denite unite:yankround<CR>
-nmap <silent> q> :<C-u>call vimrc#open_buffer_to_execute('register')<CR>gh_
 nmap <silent> g> :<C-u>call vimrc#open_buffer_to_execute('messages')<CR>gh_
-nnoremap <silent> * "zyiw/\m\C\<<C-r>z\><CR>
-nnoremap <silent> <leader>* *
+nmap <silent> m: :<C-u>call vimrc#open_buffer_to_execute('marks')<CR>gh_
+nmap <silent> q> :<C-u>call vimrc#open_buffer_to_execute('register')<CR>gh_
+nmap <silent> y: :<C-u>Denite unite:yankround<CR>
+nmap <silent> z: :<C-u>call vimrc#open_buffer_to_execute('tabs')<CR>gh_
 nnoremap <silent> # "zyiw?\m\C\<<C-r>z\><CR>
-nnoremap <silent> <leader># #
-nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
+nnoremap <silent> * "zyiw/\m\C\<<C-r>z\><CR>
 nnoremap <silent> <C-k><C-o> :<C-u>EditOverridden %<CR>
 nnoremap <silent> <C-k>o :<C-u>EditOverridden! %<CR>
-nnoremap <silent> <leader>b :<C-u>call vimrc#open_scratch_buffer()<CR>
-nnoremap <silent> <leader>B :<C-u>sp ~/.backup/memo.md<CR>
+nnoremap <silent> <leader># #
+nnoremap <silent> <leader>* *
 nnoremap <silent> <leader><leader>q :<C-u>call vimrc#bufclose_auto()<CR>
+nnoremap <silent> <leader>B :<C-u>sp ~/.backup/memo.md<CR>
+nnoremap <silent> <leader>b :<C-u>call vimrc#open_scratch_buffer()<CR>
+nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
 
 " folds
 nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
@@ -1124,29 +1124,30 @@ nmap 'x "+x
 
 " others
 nmap <C-j> <CR>
-nnoremap 'd "+d
 nnoremap 'D "+D
-nnoremap Q gQ
-nnoremap Y yg_
-nnoremap L :<C-u>buffer<Space>
-nnoremap { {zv
-nnoremap } }zv
+nnoremap 'd "+d
 nnoremap ( (zv
 nnoremap ) )zv
-nnoremap zs zszh
-nnoremap g_ $
 nnoremap :: :%s/
-nnoremap <C-m> o<Esc>
 nnoremap <C-]> g<C-]>
-nnoremap g<C-]> <C-]>
-nnoremap <silent> ! :!<CR>
-nnoremap <silent> <C-k><Space> :<C-u>call vimrc#clear_ends_space()<CR>
-nnoremap <silent> <Space><Space> :<C-u>call vimrc#compress_spaces()<CR>
-nnoremap <silent> <C-k><C-j> :<C-u>call <SID>save_clear()<CR>
-nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
-nnoremap <silent> <leader>o :<C-u>copen<CR>
+nnoremap <C-k>T :<C-u>tselect<Space>
+nnoremap <C-m> o<Esc>
 nnoremap <expr> <C-k><C-s> printf(':%%s/\m\C\<%s\>/', expand('<cword>'))
 nnoremap <expr> <C-k>s printf(':%%s/\m\C\<%s\>/%s', expand('<cword>'), expand('<cword>'))
+nnoremap <silent> ! :!<CR>
+nnoremap <silent> <C-k><C-j> :<C-u>call <SID>save_clear()<CR>
+nnoremap <silent> <C-k><Space> :<C-u>call vimrc#clear_ends_space()<CR>
+nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
+nnoremap <silent> <Space><Space> :<C-u>call vimrc#compress_spaces()<CR>
+nnoremap <silent> <leader>o :<C-u>copen<CR>
+nnoremap L :<C-u>buffer<Space>
+nnoremap Q gQ
+nnoremap Y yg_
+nnoremap g<C-]> <C-]>
+nnoremap g_ $
+nnoremap zs zszh
+nnoremap { {zv
+nnoremap } }zv
 
 function s:save_clear() abort
   write
@@ -1312,17 +1313,17 @@ vmap <leader>r <Plug>(quickrun)
 
 " denite.nvim
 "" map i to do open_filter_buffer
-nmap <leader>u :<C-u>Denite<Space>
-nmap <C-k>e :<C-u>call vimrc#execute_on_file_path(function('denite#start'), [{'name':'file/rec','args':[]}])<CR>i
-nmap <C-k><C-e> :<C-u>call vimrc#execute_on_file_path(function('denite#start'), [{'name':'file','args':[]}])<CR>i
-nmap '<C-k>e :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name':'file/rec','args':[]}])<CR>i
-nmap '<C-k><C-e> :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name':'file','args':[]}])<CR>i
-nmap <C-k><C-t> :<C-u>Denite tag<CR>i
-nmap <C-k>T :<C-u>tselect<Space>
 nmap <C-k><C-f> :<C-u>Denite outline<CR>i
+nmap <C-k><C-t> :<C-u>Denite tag<CR>i
 nmap <C-k>f :<C-u>Denite filetype<CR>i
-nmap M :<C-u>Denite file_mru<CR>i
+nmap <leader>H :<C-u>Denite line<CR>i
 nmap <leader>L :<C-u>Denite buffer<CR>i
+nmap M :<C-u>Denite file_mru<CR>i
+nnoremap '<C-k><C-e> :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name':'file','args':[]}])<CR>i
+nnoremap '<C-k>e :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name':'file/rec','args':[]}])<CR>i
+nnoremap <C-k><C-e> :<C-u>call vimrc#execute_on_file_path(function('denite#start'), [{'name':'file','args':[]}])<CR>i
+nnoremap <C-k>e :<C-u>call vimrc#execute_on_file_path(function('denite#start'), [{'name':'file/rec','args':[]}])<CR>i
+nnoremap <leader>u :<C-u>Denite<Space>
 
 " vim-webpage
 nnoremap <leader>K :<C-u>Weblio <C-r>=expand('<cword>')<CR><CR>
