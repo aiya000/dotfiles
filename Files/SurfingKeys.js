@@ -3,7 +3,7 @@
  */
 
 try {
-  Hints.characters = 'wertyuiopasdfghjkzxcvbm';
+  Hints.characters = 'wertuiopasdfghjkzxcvbm';
   settings.hintAlign = 'left';
   addSearchAlias('g', 'google', 'https://www.google.com/search?q=');
 } catch (e) {
