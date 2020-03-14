@@ -194,7 +194,16 @@ endif
 
 install-sub-all: install-languages install-tools
 
-install-languages: install-haskell install-markdown install-text install-typescript install-html install-css install-xml install-sh
+install-languages: \
+	install-haskell \
+	install-markdown \
+	install-text \
+	install-typescript \
+	install-html \
+	install-css \
+	install-xml \
+	install-sh
+
 # languages {{{
 
 install-haskell:
@@ -233,7 +242,24 @@ endif
 
 # }}}
 
-install-tools: install-cli-optional-deps install-gui-optional-deps install-lice install-vim-deps install-vim-build-deps install-xmonad-deps install-bluetooth install-audio install-graphics install-dropbox install-gyazo-cli install-antimicro install-fonts install-power-managers install-cd-ripper
+install-tools: \
+	install-antimicro \
+	install-audio \
+	install-bluetooth \
+	install-cd-ripper
+	install-cli-optional-deps \
+	install-dropbox \
+	install-fonts \
+	install-graphics \
+	install-gui-optional-deps \
+	install-gyazo-cli \
+	install-lice \
+	install-media-player \
+	install-power-managers \
+	install-vim-build-deps \
+	install-vim-deps \
+	install-xmonad-deps \
+
 # tools {{{
 
 install-lice:
@@ -301,6 +327,9 @@ install-audio:
 install-graphics:
 	which draw.io || $(YayInstall) drawio-desktop-bin
 	which gm || $(YayInstall) graphicsmagick
+
+install-media-player:
+	which vls || $(YayInstall) vls
 
 install-fonts:
 	$(YayInstall) noto-fonts-cjk noto-fonts-emoji
