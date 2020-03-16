@@ -124,7 +124,7 @@ if i_have git ; then
     alias grmc='git rm --cached'
     alias gs='git status'
     alias gss='git stash'
-    alias gsss='git stash push'
+    alias gsssm='git stash push -m'
     alias gssp='git stash pop'
     function gsssp () {
         git stash push --message "$1" --patch
@@ -220,6 +220,28 @@ if i_have git ; then
 fi
 
 # }}}
+# Docker {{{
+
+if i_have docker ; then
+    alias d=docker
+    alias da=docker-attach-menu.sh
+    alias dis='docker images'
+    alias dki=docker-kill-menu.sh
+    alias dkill='docker kill'
+    alias dps='docker ps'
+    alias drm='docker rm'
+    alias drmi='docker rmi'
+    alias drun='docker run'
+
+    function docker-run-bash () {
+        local image_name
+        image_name=$1
+        docker run -it "$image_name" /bin/bash
+    }
+fi
+
+
+# }}}
 # Others {{{
 
 alias la='ls -a --color=auto --group-directories-first'
@@ -278,18 +300,6 @@ if i_have ctags ; then
 
     alias ctags-kotlin-auto="ctags-auto '--exclude=*.java' '--exclude=*.html' '--exclude=*.css'"
     alias ctags-typescript-auto="ctags-auto '--exclude=*.js' '--exclude=*.json'"
-fi
-
-if i_have docker ; then
-    alias d=docker
-    alias dps='docker ps'
-    alias da=docker-attach-menu.sh
-    alias di='docker images'
-    alias dkill='docker kill'
-    alias dki=docker-kill-menu.sh
-    alias drm='docker rm'
-    alias drmi='docker rmi'
-    alias dis='docker images'
 fi
 
 if i_have yay ; then
