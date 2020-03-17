@@ -779,6 +779,8 @@ endfunction
 " context_filetype.vim {{{
 
 let g:context_filetype#filetypes = #{
+  \ vue: [],
+  \ html: [],
   \ review: [
     \ #{
       \ start: '//list\[[^]]\+\]\[[^]]\+\]\[\([^]]\+\)\]{',
