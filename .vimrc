@@ -811,7 +811,9 @@ let g:jumpy_map = [')', '(']
 " }}}
 " vim-quickrepl {{{
 
-let g:quickrepl_config = #{}
+let g:quickrepl_config = #{
+  \ vue: ['ts-node'],
+\ }
 
 let g:quickrepl_use_default_key_mapping = v:true
 let g:quickrepl_enable_debug = v:true
