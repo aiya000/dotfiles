@@ -1347,8 +1347,6 @@ nnoremap <silent> <C-h><C-i> :<C-u>call vimrc#toggle_indent_guides()<CR>
 " deoplete.nvim
 inoremap <CR> <CR>
 inoremap <Tab> <Tab>
-inoremap <expr> <C-y> deoplete#mappings#cancel_popup() . '<C-y>'
-inoremap <expr> <C-e> deoplete#mappings#cancel_popup() . '<C-e>'
 imap <expr> <C-k><C-i> deoplete#toggle() ? '' : ''
 
 " vim-visualstar
