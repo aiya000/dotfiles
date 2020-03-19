@@ -19,11 +19,10 @@ function vimrc#tabline#make() abort
 
   return '%1*[%{tabpagenr("$")}]%* '
     \. s:tabs() . ' => '
-    \. '%2*%{vimrc#tabline#show_status_staying_path_at_started()}%*'
-    \. '%3*[PWD=%{vimrc#tabline#cwd_or_shorten()}]%*'
-    \. '%4*%{vimrc#tabline#tags_if_present()}%*'
-    \. '%5*%{vimrc#tabline#marks_if_present()}%*'
-    \. '%6*%{vimrc#tabline#ale_if_present()}%*'
+    \. '%2*[PWD=%{vimrc#tabline#cwd_or_shorten()}]%*'
+    \. '%3*%{vimrc#tabline#tags_if_present()}%*'
+    \. '%4*%{vimrc#tabline#marks_if_present()}%*'
+    \. '%5*%{vimrc#tabline#ale_if_present()}%*'
     \. language_client_status
 endfunction
 
@@ -113,10 +112,4 @@ function vimrc#tabline#ale_if_present() abort
   return (g_label !=# '') || (b_label !=# '')
     \ ? ('[ale_disabled:' . g_label . b_label . ']')
     \ : '[ale]'
-endfunction
-
-function vimrc#tabline#show_status_staying_path_at_started() abort
-  return g:vimrc.stay_path_at_started
-    \ ? '[no-auto-lcd]'
-    \ : '[auto-lcd]'
 endfunction

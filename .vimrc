@@ -22,7 +22,6 @@ let g:vimrc = get(g:, 'vimrc', #{
   \ loaded: 0,
   \ vim_home: $'${$HOME}/.vim',
   \ path_at_started: getcwd(),
-  \ stay_path_at_started: v:false,
   \ gui_editor: has('nvim') ? 'gonvim' : 'gvim',
   \ backupdir: $'${$HOME}/.backup/vim-backup',
   \ is_unix: has('unix'),
@@ -174,9 +173,9 @@ augroup vimrc
   autocmd BufReadPost * call vimrc#visit_past_position()
 
   if has('nvim')
-    autocmd BufNew,TermOpen,BufEnter,WinEnter * call vimrc#lcd_buffer_dir_or_base()
+    autocmd BufNew,TermOpen,BufEnter,WinEnter * call vimrc#lcd_base_dir()
   else
-    autocmd BufNew,TerminalOpen,BufEnter,WinEnter * call vimrc#lcd_buffer_dir_or_base()
+    autocmd BufNew,TerminalOpen,BufEnter,WinEnter * call vimrc#lcd_base_dir()
   endif
 
   if !has('nvim')
@@ -1090,28 +1089,6 @@ nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline! cursorline?<CR>
 nnoremap <silent> <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
 nnoremap <silent> <C-h><C-l> :<C-u>setl list! list?<CR>
 nnoremap <silent> <C-h><C-n> :<C-u>setl number! number?<CR>
-nnoremap <silent> <C-h><C-s> :<C-u>if exists("g:syntax_on") \| syntax off \| else \| syntax on \| endif<CR>
-nnoremap <silent> <C-h><C-b> :<C-u>call <SID>change_base_directory()<CR>
-
-function s:change_base_directory() abort
-  let g:vimrc.stay_path_at_started = !g:vimrc.stay_path_at_started
-  let [new_base_directory, what_to_do] = g:vimrc.stay_path_at_started
-    \ ? [g:vimrc.path_at_started, ' (to disable auto :cd)']
-    \ : [expand('%:p:h'), ' (to enable auto :cd)']
-
-  try
-    execute 'lcd' new_base_directory
-    echo $'cd: ${new_base_directory} ${what_to_do}'
-  catch /\(E344\|E472\)/  " if the buffer has no file
-    if !s:List.has(term_list(), winbufnr('.'))
-      " NOTE: Delegate :lcd to sync-term-cwd.vim if this is a terminal buffer
-      return
-    endif
-
-    execute ':lcd' g:vimrc.path_at_started
-    echo $'cd: ${g:vimrc.path_at_started} ${what_to_do}'
-  endtry
-endfunction
 
 " Visualize a last pasted range
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
