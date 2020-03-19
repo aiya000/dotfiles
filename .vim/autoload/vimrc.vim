@@ -153,7 +153,7 @@ endfunction
 
 " Toggle open netrw explorer ( vertical split )
 function vimrc#toggle_explorer(...)
-  const path = get(a:000, 0, '')
+  const path = get(a:000, 0, expand('%:p:h'))
   const closed = vimrc#bufclose_filetype(['dirvish'])
   if !closed
     leftabove vsplit
@@ -371,17 +371,6 @@ function vimrc#visit_past_position()
   if past_posit > 0 && past_posit <= line('$')
     execute 'normal! g`"'
   endif
-endfunction
-
-function vimrc#lcd_base_dir() abort
-  try
-    lcd %:p:h
-  catch /\(E344\|E472\)/  " if the buffer has no file
-    if !s:List.has(term_list(), winbufnr('.'))
-      " NOTE: Delegate :lcd to sync-term-cwd.vim if this is a terminal buffer
-      execute ':lcd' g:vimrc.path_at_started
-    endif
-  endtry
 endfunction
 
 " Rename the file of current buffer

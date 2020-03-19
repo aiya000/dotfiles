@@ -172,12 +172,6 @@ augroup vimrc
   " Auto set cursor position in the file
   autocmd BufReadPost * call vimrc#visit_past_position()
 
-  if has('nvim')
-    autocmd BufNew,TermOpen,BufEnter,WinEnter * call vimrc#lcd_base_dir()
-  else
-    autocmd BufNew,TerminalOpen,BufEnter,WinEnter * call vimrc#lcd_base_dir()
-  endif
-
   if !has('nvim')
     " TODO: for any registers
     autocmd TerminalOpen * call s:nmap_p_to_put_if_on_terminal()
@@ -1071,14 +1065,14 @@ nnoremap <C-w>v <NOP>
 nnoremap gh <NOP>
 
 " :terminal
-nnoremap <silent> <leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell)<CR>
-nnoremap <silent> <leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell)<CR>
-nnoremap <silent> <leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell)<CR>
-nnoremap <silent> <leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell)<CR>
-nnoremap <silent> 'v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, {'path': g:vimrc.path_at_started})<CR>
-nnoremap <silent> ''v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, {'path': g:vimrc.path_at_started})<CR>
-nnoremap <silent> 'V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, {'path': g:vimrc.path_at_started})<CR>
-nnoremap <silent> ''V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, {'path': g:vimrc.path_at_started})<CR>
+nnoremap <silent> <leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, #{ path: expand('%:p:h') })<CR>
+nnoremap <silent> <leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, #{ path: expand('%:p:h') })<CR>
+nnoremap <silent> <leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, #{ path: expand('%:p:h') })<CR>
+nnoremap <silent> <leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, #{ path: expand('%:p:h') })<CR>
+nnoremap <silent> 'v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, #{path: g:vimrc.path_at_started})<CR>
+nnoremap <silent> ''v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, #{path: g:vimrc.path_at_started})<CR>
+nnoremap <silent> 'V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, #{path: g:vimrc.path_at_started})<CR>
+nnoremap <silent> ''V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, #{path: g:vimrc.path_at_started})<CR>
 
 " set
 nnoremap <silent> <C-h><C-d> :<C-u>call vimrc#toggle_diff()<CR>
@@ -1276,9 +1270,9 @@ digraph xx 215    " product
 
 " vaffle.vim
 nnoremap <silent> <leader>e         :<C-u>call vimrc#toggle_explorer()<CR>
-nnoremap <silent> <leader><leader>e :<C-u>execute ':Sexplore' getcwd()<CR>
-nnoremap <silent> <leader>E         :<C-u>execute ':Explore' getcwd()<CR>
-nnoremap <silent> <leader><leader>E :<C-u>execute ':Texplore' getcwd()<CR>
+nnoremap <silent> <leader><leader>e :<C-u>execute ':Sexplore' expand('%:p:h')<CR>
+nnoremap <silent> <leader>E         :<C-u>execute ':Explore' expand('%:p:h')<CR>
+nnoremap <silent> <leader><leader>E :<C-u>execute ':Texplore' expand('%:p:h')<CR>
 nnoremap <silent> 'e  :<C-u>call vimrc#toggle_explorer(g:vimrc.path_at_started)<CR>
 nnoremap <silent> ''e :<C-u>execute ':Sexplore' g:vimrc.path_at_started<CR>
 nnoremap <silent> 'E  :<C-u>execute ':Explore' g:vimrc.path_at_started<CR>
