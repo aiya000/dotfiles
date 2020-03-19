@@ -52,7 +52,12 @@ function vimrc#open_terminal_as(filetype, open_mode, command, ...) abort
     throw 'undefined open_mode is detected: ' .. string(a:open_mode)
   endif
 
-  execute ':lcd' get(options, 'path', getcwd())
+  try
+    execute ':lcd' get(options, 'path', getcwd())
+  catch
+    " Don't cd if options.path (or getcewd()) is not existent.
+  endtry
+
   execute terminal a:command
   if a:filetype !=# ''
     execute 'setf' a:filetype
@@ -156,9 +161,26 @@ function vimrc#toggle_explorer(...)
   const path = get(a:000, 0, expand('%:p:h'))
   const closed = vimrc#bufclose_filetype(['dirvish'])
   if !closed
-    leftabove vsplit
-    execute ':Dirvish' path
+    call vimrc#open_explorer('vsplit', path)
   endif
+endfunction
+
+function vimrc#open_explorer(split, ...) abort
+  const path = get(a:000, 0, expand('%:p:h'))
+  const cmd =
+    \ a:split ==# 'stay'  ? ':Explore' :
+    \ a:split ==# 'split' ? ':Sexplore' :
+    \ a:split ==# 'vsplit' ? ':Vexplore' :
+    \ a:split ==# 'tabnew' ? ':Texplore' :
+      \ execute($'throw "an unexpected way to open the explorer: ${a:split}"')
+
+  if !isdirectory(path)
+    " :silent to ignore an error message. Because opening seems success.
+    silent execute cmd
+    return
+  endif
+
+  execute cmd path
 endfunction
 
 " Get a detail of <title> from + register

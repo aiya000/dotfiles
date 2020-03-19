@@ -772,6 +772,7 @@ endfunction
 " context_filetype.vim {{{
 
 let g:context_filetype#filetypes = #{
+  \ help: [],
   \ vue: [],
   \ html: [],
   \ review: [
@@ -1270,13 +1271,13 @@ digraph xx 215    " product
 
 " vaffle.vim
 nnoremap <silent> <leader>e         :<C-u>call vimrc#toggle_explorer()<CR>
-nnoremap <silent> <leader><leader>e :<C-u>execute ':Sexplore' expand('%:p:h')<CR>
-nnoremap <silent> <leader>E         :<C-u>execute ':Explore' expand('%:p:h')<CR>
-nnoremap <silent> <leader><leader>E :<C-u>execute ':Texplore' expand('%:p:h')<CR>
+nnoremap <silent> <leader><leader>e :<C-u>call vimrc#open_explorer('split')<CR>
+nnoremap <silent> <leader>E         :<C-u>call vimrc#open_explorer('stay')<CR>
+nnoremap <silent> <leader><leader>E :<C-u>call vimrc#open_explorer('tabnew')<CR>
 nnoremap <silent> 'e  :<C-u>call vimrc#toggle_explorer(g:vimrc.path_at_started)<CR>
-nnoremap <silent> ''e :<C-u>execute ':Sexplore' g:vimrc.path_at_started<CR>
-nnoremap <silent> 'E  :<C-u>execute ':Explore' g:vimrc.path_at_started<CR>
-nnoremap <silent> ''E :<C-u>execute ':Texplore' g:vimrc.path_at_started<CR>
+nnoremap <silent> ''e :<C-u>call vimrc#open_explorer('split', g:vimrc.path_at_started)<CR>
+nnoremap <silent> 'E  :<C-u>call vimrc#open_explorer('stay', g:vimrc.path_at_started)<CR>
+nnoremap <silent> ''E :<C-u>call vimrc#open_explorer('tabnew', g:vimrc.path_at_started)<CR>
 
 " open-browser.vim
 nmap <leader>w <Plug>(openbrowser-open)
