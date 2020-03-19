@@ -1,3 +1,5 @@
 keyboard.send_keys("<menu>")
 time.sleep(0.1)
 keyboard.send_keys("p")
+time.sleep(0.1)
+keyboard.send_keys("<enter>")
