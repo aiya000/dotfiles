@@ -794,7 +794,7 @@ let g:synctermcwd_cd_command = 'lcd'
 
 let g:webpage_source = #{
   \ weblio: 'http://ejje.weblio.jp/content/%s',
-  \ stackage: 'https://www.stackage.org/lts-13.2/hoogle?q=%s',
+  \ stackage: 'https://www.stackage.org/lts-15.4/hoogle?q=%s',
 \ }
 
 " }}}

@@ -1,8 +1,10 @@
 nmap <buffer> H <Plug>(dirvish_up)
+nnoremap <buffer> % :e<Space>
 nnoremap <buffer> / /
+nnoremap <buffer> <C-n> gT
+nnoremap <buffer> <C-n> gt
 nnoremap <buffer> ? ?
 nnoremap <buffer> Q :<C-u>quit<CR>
-nnoremap <buffer> % :e<Space>
 nnoremap <buffer><nowait> d :!mkdir<Space>
 nnoremap <buffer><silent> D :<C-u>call <SID>delete_a_file_or_a_dir()<CR>
 
@@ -25,3 +27,11 @@ function s:delete_a_file_or_a_dir() abort
   call system('rm ' .. file_or_dir_name)
   echomsg "Deleted a file '" .. file_or_dir_name .. "' !"
 endfunction
+
+augroup FtpluginDirvish
+  autocmd!
+  autocmd BufNew,BufEnter,WinEnter *
+    \  if &ft ==# 'dirvish'
+      \| execute ':lcd' expand('%:p:h')
+    \| endif
+augroup END
