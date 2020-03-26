@@ -218,6 +218,16 @@ alias priamet
 abbr private async ${1:name}(${2:#:args}): ${3:type} {${0:#:here}}
     private async ${1:name}(${2:#:args}): Promise<${3:void}> {${0:#:here}}
 
+snippet public_static_async_method
+alias pubsamet
+abbr public static async ${1:name}(${2:#:args}): ${3:type} {${0:#:here}}
+    public static async ${1:name}(${2:#:args}): Promise<${3:void}> {${0:#:here}}
+
+snippet private_static_async_method
+alias prisamet
+abbr private static async ${1:name}(${2:#:args}): ${3:type} {${0:#:here}}
+    private static async ${1:name}(${2:#:args}): Promise<${3:void}> {${0:#:here}}
+
 snippet public_readonly
 alias pubre
 abbr public readonly
