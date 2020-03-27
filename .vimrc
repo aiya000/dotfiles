@@ -856,6 +856,7 @@ set
   \ nowrap
   \ nowrapscan
   \ number
+  \ omnifunc=lsp#complete
   \ path=.,,./*
   \ previewheight=40
   \ relativenumber

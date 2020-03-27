@@ -135,9 +135,6 @@ depends = ['async.vim']
 repo = 'prabirshrestha/async.vim'
 
 [[plugins]]
-repo = 'lighttiger2505/deoplete-vim-lsp'
-
-[[plugins]]
 repo = 'mattn/vim-lsp-icons'
 
 [[plugins]]
