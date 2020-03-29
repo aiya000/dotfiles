@@ -258,6 +258,7 @@ install-tools: \
 	install-power-managers \
 	install-vim-build-deps \
 	install-vim-deps \
+	install-vnc \
 	install-xmonad-deps \
 
 # tools {{{
@@ -362,6 +363,10 @@ install-power-managers:
 
 install-cd-ripper:
 	which asunder || $(YayInstall) asunder
+
+install-vnc:
+	which vncserver || $(YayInstall) tigervnc
+	which x11vnc || $(YayInstall) x11vnc
 endif
 
 # }}}
