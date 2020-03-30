@@ -712,6 +712,7 @@ augroup END
 " solargraph is temporary disabled because it occurs error at runtime (dein.vim?)
 let g:lsp_settings = #{
   \ solargraph: #{ disabled: 1 },
+  \ vim-language-server: #{ disabled: 1 },
 \ }
 
 " }}}

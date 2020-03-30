@@ -55,6 +55,9 @@ function! vimrc#dein#hook_source#operator_surround() abort
       \ { 'block' : ['<li>', '</li>'], 'motionwise' : ['char'], 'keys' : ['[li'] },
     \ ],
   \ }
+
+  let g:operator#surround#blocks.vue = g:operator#surround#blocks.html
+
   " NOTE: Can operator-surround allow <localleader> by some way?
 endfunction
 

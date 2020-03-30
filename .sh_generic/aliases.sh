@@ -154,6 +154,7 @@ if i_have git ; then
     alias gtag-list='git tag | xargs echo'
     alias gtag-add='git tag -a'
     alias gf='git fetch'
+    alias gfo='git fetch origin'
     alias gbi='git bisect'
     alias gtag='git tag | xargs echo'
     alias gtree='git log --graph --decorate --oneline'
