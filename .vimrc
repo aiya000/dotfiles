@@ -891,7 +891,7 @@ let &statusline = join([
 " ☆
 set ambiwidth=double
 
-" Define my highlight colors
+" Define my highlight and colors
 " {{{
 
 augroup vimrc
@@ -900,9 +900,7 @@ augroup vimrc
   " git conflict
   autocmd ColorScheme * highlight GitConflict ctermbg=Red guibg=Red
   autocmd VimEnter,WinEnter * call matchadd('GitConflict', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
-augroup END
 
-augroup vimrc
   autocmd InsertEnter * highlight StatusLine ctermfg=231 ctermbg=64
   autocmd InsertLeave * highlight StatusLine ctermfg=231 ctermbg=60
 augroup END
