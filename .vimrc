@@ -1045,8 +1045,8 @@ nnoremap ghH <C-w>H
 nnoremap ghJ <C-w>J
 nnoremap ghK <C-w>K
 nnoremap ghL <C-w>L
-nnoremap ghs :<C-u>split<CR>
-nnoremap ghv :<C-u>vsplit<CR>
+nnoremap <silent> ghs :<C-u>split<CR>
+nnoremap <silent> ghv :<C-u>botright vsplit<CR>
 nnoremap <silent><expr> gH  ('mZ:tabnew<CR>`Zzz'          . (foldlevel('.') > 0 ? 'zo' : ''))
 nnoremap <silent><expr> ghh ('mZ:hide<CR>:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : ''))
 " Disable defaults
