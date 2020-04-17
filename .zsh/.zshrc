@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 #zmodload zsh/zprof && zprof
 
-# The order of the loading
+# The order of loading
 # 1. ~/.zsh/.zprofile
 # 2. ~/.zsh/.zshrc
 # 3. ~/.zshrc_env
