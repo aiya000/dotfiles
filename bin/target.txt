@@ -18,10 +18,7 @@
 .stack
 .tmux.conf
 .vim
-.vimperatorrc
 .vimrc
-.vimshrc
-.vrapperrc
 .vsvimrc
 .xinitrc
 .xmobarrc
