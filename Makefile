@@ -5,9 +5,14 @@ logfile = ./dotfiles-MakeFile.log
 # TODO: Detect auto
 OS = Arch
 
-noconfirm ?=  # --noconfirm
+noconfirm ?=  # e.g. --noconfirm (arch) , -y (ubuntu)
+
 YayInstall = yay -S --needed $(noconfirm)
 YayUpdate = yay -Sy
+
+AptInstall = sudo apt install $(noconfirm)
+AptUpdate = sudo apt update
+AptBuildDep = sudo apt build-dep
 
 prepare:
 	if [ ! -d ~/bin ] ; then \
@@ -25,7 +30,7 @@ install:
 	$(MAKE) prepare
 	$(MAKE) install_package_managers
 	$(MAKE) build-os-env
-	$(MAKE) install-by-pip
+	$(MAKE) install-by-pip3
 
 install-without-confirm:
 	$(MAKE) install noconfirm='--noconfirm'
@@ -58,8 +63,8 @@ ifeq ($(OS),Windows)
 	echo Please define install_package_managers for pip > /dev/stderr
 endif
 
-install-by-pip:
-	pip install neovim grip
+install-by-pip3:
+	pip3 install neovim grip
 
 build-os-env:
 ifeq ($(OS),Arch)
@@ -166,12 +171,38 @@ install-rictydiminished:
 
 # }}}
 endif
-ifeq ($(OS),Ubuntu)
+ifeq ($(OS),WSL2)
 	# {{{
-	git clone https://github.com/peco/peco ~/git/peco
-	cd ~/git/peco
-	make build
-	cp ./releases/peco_linux_amd64/peco ~/bin
+	$(AptInstall) \
+		conky \
+		dmenu \
+		dunst \
+		dzen2 \
+		fcitx \
+		fcitx-configtool \
+		fcitx-im \
+		fcitx-mozc \
+		git \
+		go \
+		libnotify \
+		man-db \
+		mimi-git \
+		mlocate \
+		openssh \
+		peco \
+		progress \
+		ristretto \
+		rsync \
+		termite \
+		thunar \
+		tmux \
+		tmux-mem-cpu-load \
+		unzip-iconv \
+		x11-apps \
+		xmonad \
+		zathura \
+		zathura-pdf-mupdf
+	$(AptBuildDep) vim
 	# }}}
 endif
 ifeq ($(OS),Darwin)
