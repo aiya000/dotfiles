@@ -3,17 +3,16 @@
 function notify () {
     if uname -a | grep Darwin > /dev/null ; then
         terminal-notifier -title 'pomodoro' -message "$1"
-    elif uname -a | grep Microsoft > /dev/null ; then
+    elif command -v wsl.exe > /dev/null ; then
         : TODO
     else  # Linux
         notify-send "$1"
     fi
 }
 
-# TODO: Take an argument as a file path
 function play () {
-    if uname -a | grep Microsoft > /dev/null ; then
-        cd ~/Desktop && cmd.exe /c start Music/にぃに.mp3
+    if command -v wsl.exe > /dev/null ; then
+        cd ~/Windows && cmd.exe /c start Music/にぃに.mp3
     else  # Linux and macOS
         mpg123 ~/Music/にぃに.mp3 > /dev/null
     fi
