@@ -5,7 +5,7 @@ logfile = ./dotfiles-MakeFile.log
 # TODO: Detect auto
 OS = Arch
 
-noconfirm ?=  # e.g. --noconfirm (arch) , -y (ubuntu)
+noconfirm ?=  # e.g. `--noconfirm` (Arch) , `-y` (Ubuntu)
 
 YayInstall = yay -S --needed $(noconfirm)
 YayUpdate = yay -Sy
