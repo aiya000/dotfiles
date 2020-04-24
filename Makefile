@@ -47,7 +47,7 @@ install-yay:
 			[ ! -d /tmp/yay ] \
 			&& git clone https://aur.archlinux.org/yay.git /tmp/yay \
 			|| true \
-		) \
+		) && \
 		cd /tmp/yay && \
 		makepkg -si \
 	)
