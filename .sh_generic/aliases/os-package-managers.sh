@@ -17,6 +17,11 @@ elif i_have brew ; then
     alias pau='brew upgrade'
     alias par='brew uninstall'
     alias pas='brew search'
+elif i_have apt-fast ; then
+    alias pai='sudo apt-fast install'
+    alias par='sudo apt-fast purge'
+    alias pas='apt-fast search'
+    alias pau='sudo apt-fast update'
 elif i_have apt ; then
     alias pai='sudo apt install'
     alias par='sudo apt purge'
