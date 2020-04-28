@@ -205,9 +205,11 @@ alias look lk
 #      |]
 snippet trimMargins
 alias stripMargins
-abbr trimMargins :: String -> String
+options indent
+    trimMargins :: String -> String
     trimMargins = trim . unlines . map trim . lines
-    trim = reverse . dropWhile (== ' ') . reverse . dropWhile (== ' ')
+      where
+        trim = reverse . dropWhile (== ' ') . reverse . dropWhile (== ' ')
 
 snippet flattenMargins
 abbr flattenMargins :: String -> String
