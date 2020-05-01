@@ -102,6 +102,7 @@ ifeq ($(OS),Arch)
 		mimi-git \
 		mlocate \
 		netctl \
+		networkmanager \
 		openssh \
 		pamixer \
 		pavucontrol \
@@ -137,10 +138,7 @@ ifeq ($(OS),Arch)
 
 network-config:
 	sudo systemctl enable dhcpcd
-	sudo systemctl enable systemd-resolved
-	sudo systemctl enable systemd-networkd
-	echo 'name_servers=8.8.8.8' | sudo tee -a /etc/resolvconf.conf
-	sudo resolvconf -u
+	sudo systemctl enable NetworkManager
 
 # Fix East Asian Ambiguous character width problems
 install-wcwidth-cjk:
