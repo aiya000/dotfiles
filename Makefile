@@ -39,7 +39,11 @@ ifeq ($(OS),Arch)
 install_package_managers:
 	$(MAKE) install-yay
 	$(YayUpdate)
-	$(YayInstall) stack-static npm yarn python-pip rust
+	which stack || $(YayInstall) stack-static
+	which npm || $(YayInstall) npm
+	which yarn || $(YayInstall) yarn
+	which pip || $(YayInstall) python-pip
+	which cargo || $(YayInstall) rust
 
 install-yay:
 	which yay || ( \
@@ -129,7 +133,7 @@ ifeq ($(OS),Arch)
 	sudo pkgfile -u
 	$(MAKE) install-wcwidth-cjk
 	$(MAKE) install-fcitx-imlist
-	$(MAKE) install-rictydiminished
+	#$(MAKE) install-rictydiminished
 
 network-config:
 	sudo systemctl enable dhcpcd
