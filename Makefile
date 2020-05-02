@@ -311,6 +311,7 @@ install-cli-recommended:
 		watchexec
 	# From AUR
 	which git-secrets || $(YayInstall) git-secret
+	which downgrade || $(YayInstall) downgrade
 
 install-gui-recommended:
 	# From official
