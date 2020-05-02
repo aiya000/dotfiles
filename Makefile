@@ -83,6 +83,7 @@ ifeq ($(OS),Arch)
 		compton \
 		conky \
 		dhcpcd \
+		linux-lts-headers \
 		dmenu \
 		dunst \
 		dzen2 \
@@ -134,7 +135,7 @@ ifeq ($(OS),Arch)
 	sudo pkgfile -u
 	$(MAKE) install-wcwidth-cjk
 	$(MAKE) install-fcitx-imlist
-	#$(MAKE) install-rictydiminished
+	$(MAKE) install-rictydiminished
 
 network-config:
 	sudo systemctl enable dhcpcd
@@ -276,28 +277,15 @@ endif
 # }}}
 
 install-tools: \
-	install-antimicro \
-	install-audio \
-	install-bluetooth \
-	install-cd-ripper
-	install-cli-optional-deps \
-	install-dropbox \
-	install-fonts \
-	install-graphics \
-	install-gui-optional-deps \
-	install-gyazo-cli \
-	install-lice \
-	install-media-player \
-	install-power-managers \
 	install-vim-build-deps \
-	install-vim-deps \
-	install-vnc \
-	install-xmonad-deps \
+	install-vim-runtime-deps \
+	install-xmonad-runtime-deps \
+	install-fonts \
+	install-audio-players \
+	install-cli-recommended \
+	install-gui-recommended \
 
 # tools {{{
-
-install-lice:
-	which lice || npm install -g lice
 
 install-silicon:
 	# vim-silicon
@@ -312,29 +300,32 @@ install-gtran:
 	fi
 
 ifeq ($(OS),Arch)
-install-cli-optional-deps:
+install-cli-recommended:
 	# From official
 	$(YayInstall) \
 		asciinema \
 		extundelete \
 		hub \
 		jq \
-		linux-lts-headers \
 		universal-ctags \
 		watchexec
 	# From AUR
-	which git-secret || $(YayInstall) git-secret
+	which git-secrets || $(YayInstall) git-secret
 
-install-gui-optional-deps:
+install-gui-recommended:
 	# From official
 	$(YayInstall) arandr xfce4-settings ffmpeg
 	# From AUR
 	$(MAKE) install-vivaldi
+	$(MAKE) install-autokey
 
 install-vivaldi:
 	which vivaldi-stable || $(YayInstall) vivaldi vivaldi-ffmpeg-codecs
 
-install-vim-deps:
+install-autokey:
+	which autokey-gtk || $(YayInstall) autokey
+
+install-vim-runtime-deps:
 	$(MAKE) install-gtran
 	$(MAKE) install-silicon
 	$(MAKE) install-xclip
@@ -346,8 +337,30 @@ install-xclip:
 install-vim-build-deps:
 	$(YayInstall) python2 ruby ruby-irb lua luajit
 
-install-xmonad-deps:
+install-xmonad-runtime-deps:
 	$(YayInstall) xfce4-screenshooter
+
+install-fonts:
+	$(YayInstall) noto-fonts-cjk noto-fonts-emoji
+
+endif
+
+# }}}
+
+# Below is very optional
+
+install-lice:
+	which lice || npm install -g lice
+
+install-java:
+	which java || $(YayInstall) jdk
+
+ifeq ($(OS),Arch)
+install-displaylink:
+	$(YayInstall) displaylink evdi-git
+
+install-recorders:
+	$(YayInstall) peek screenkey
 
 install-bluetooth:
 	$(YayInstall) bluez bluez-utils bluez-libs bluez-firmware pulseaudio-bluetooth
@@ -355,18 +368,16 @@ install-bluetooth:
 	# sudo systemctl enable bluetooth
 	# sudo systemctl start bluetooth
 
-install-audio:
-	$(YayInstall) mpg123 audacity
-
-install-graphics:
+install-graphic-editors:
 	which draw.io || $(YayInstall) drawio-desktop-bin
 	which gm || $(YayInstall) graphicsmagick
 
-install-media-player:
+install-media-players:
 	which vls || $(YayInstall) vls
 
-install-fonts:
-	$(YayInstall) noto-fonts-cjk noto-fonts-emoji
+install-audio-players:
+	# From official
+	$(YayInstall) mpg123
 
 install-docker:
 	which docker || ( \
@@ -376,14 +387,6 @@ install-docker:
 
 install-dropbox:
 	which dropbox-cli || $(YayInstall) dropbox-cli
-
-install-gyazo-cli:
-	whichh gyazo || ( \
-		$(YayInstall) dep && \
-		go get -d github.com/Tomohiro/gyazo-cli && \
-		cd $$GOPATH/src/github.com/Tomohiro/gyazo-cli && \
-		make install \
-	)
 
 # Mapping from joypad strokes to keyboard strokes
 install-antimicro:
@@ -400,17 +403,7 @@ install-cd-ripper:
 install-vnc:
 	which vncserver || $(YayInstall) tigervnc
 	which x11vnc || $(YayInstall) x11vnc
+
+install-audio-editors:
+	$(YayInstall) audacity
 endif
-
-# }}}
-
-# Below is very optional
-
-install-java:
-	which java || $(YayInstall) jdk
-
-install-displaylink:
-	$(YayInstall) displaylink evdi-git
-
-install-recorders:
-	#(YayInstall) peek screenkey
