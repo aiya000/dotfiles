@@ -15,6 +15,12 @@ AptUpdate = sudo apt update
 AptBuildDep = sudo apt build-dep
 
 prepare:
+	if [ ! -d ~/.config ] ; then \
+		mkdir ~/.config ; \
+	fi
+	if [ ! -d ~/.cache ] ; then \
+		mkdir ~/.cache ; \
+	fi
 	if [ ! -d ~/bin ] ; then \
 		mkdir ~/bin ; \
 	fi
@@ -81,12 +87,8 @@ ifeq ($(OS),Arch)
 		base \
 		base-devel \
 		compton \
-		conky \
 		dhcpcd \
-		linux-lts-headers \
-		dmenu \
 		dunst \
-		dzen2 \
 		fcitx \
 		fcitx-configtool \
 		fcitx-im \
@@ -96,13 +98,11 @@ ifeq ($(OS),Arch)
 		go \
 		libnotify \
 		libxss \
-		light-git \
+		linux-lts-headers \
 		lxdm \
-		pulseaudio-alsa \
 		man-db \
 		mimi-git \
 		mlocate \
-		netctl \
 		networkmanager \
 		openssh \
 		pamixer \
@@ -111,16 +111,15 @@ ifeq ($(OS),Arch)
 		pkgfile \
 		progress \
 		pulseaudio \
+		pulseaudio-alsa \
 		ristretto \
 		rsync \
-		slock \
 		sox \
 		termite \
 		thunar \
 		tmux \
 		tmux-mem-cpu-load \
 		unzip-iconv \
-		xf86-input-wacom \
 		xf86-video-intel \
 		xinit-xsession \
 		xmonad \
@@ -224,6 +223,10 @@ ifeq ($(OS),Windows)
 	echo Please define build-os-env
 endif
 
+##
+# NOTE: execute `which foo || $(YayInstall) foo` for AUR packages, because AUR packages may not support --needed.
+##
+
 # Below are not installed by default
 
 install-sub-all: install-languages install-tools
@@ -236,7 +239,7 @@ install-languages: \
 	install-html \
 	install-css \
 	install-xml \
-	install-sh
+	install-sh \
 
 # languages {{{
 
@@ -315,7 +318,7 @@ install-cli-recommended:
 
 install-gui-recommended:
 	# From official
-	$(YayInstall) arandr xfce4-settings ffmpeg
+	$(YayInstall) arandr xfce4-settings ffmpeg xf86-input-wacom
 	# From AUR
 	$(MAKE) install-vivaldi
 	$(MAKE) install-autokey
@@ -339,7 +342,11 @@ install-vim-build-deps:
 	$(YayInstall) python2 ruby ruby-irb lua luajit
 
 install-xmonad-runtime-deps:
-	$(YayInstall) xfce4-screenshooter
+	$(YayInstall) \
+		conky \
+		xfce4-screenshooter \
+		dmenu \
+		dzen2 \
 
 install-fonts:
 	$(YayInstall) noto-fonts-cjk noto-fonts-emoji
@@ -407,4 +414,19 @@ install-vnc:
 
 install-audio-editors:
 	$(YayInstall) audacity
+
+install-for-laptops:
+	# From official
+	$(YayInstall) slock
+	# From AUR
+	which light || $(YayInstall) light-git
+
+install-for-virtualbox-vms:
+	$(YayInstall) \
+		virtualbox-guest-utils \
+		virtualbox-guest-dkms \
+	sudo systemctl enable vboxservice
+	sudo systemctl start vboxservice
+	sudo VBoxClient-all
+
 endif
