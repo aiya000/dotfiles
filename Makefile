@@ -382,14 +382,16 @@ install-graphic-editors:
 	which krita || $(YayInstall) krita-appimage
 
 install-media-players:
-	which vls || $(YayInstall) vls
+	which vlc || $(YayInstall) vlc
 
 install-audio-players:
 	# From official
 	$(YayInstall) mpg123
 
 install-docker:
-	which docker || ( \
+	which docker || \
+	which docker-compose || \
+	( \
 		$(YayInstall) docker docker-compose && \
 		sudo gpasswd -a aiya000 docker \
 	)
