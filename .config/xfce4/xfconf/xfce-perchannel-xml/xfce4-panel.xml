@@ -18,9 +18,9 @@
       <property name="nrows" type="uint" value="1"/>
       <property name="background-style" type="uint" value="1"/>
       <property name="background-rgba" type="array">
-        <value type="double" value="0.307432"/>
-        <value type="double" value="0.750000"/>
-        <value type="double" value="0.250000"/>
+        <value type="double" value="0.000000"/>
+        <value type="double" value="0.000000"/>
+        <value type="double" value="0.000000"/>
         <value type="double" value="1.000000"/>
       </property>
     </property>
