@@ -379,6 +379,7 @@ install-bluetooth:
 install-graphic-editors:
 	which draw.io || $(YayInstall) drawio-desktop-bin
 	which gm || $(YayInstall) graphicsmagick
+	which krita || $(YayInstall) krita-appimage
 
 install-media-players:
 	which vls || $(YayInstall) vls
@@ -428,5 +429,7 @@ install-for-virtualbox-vms:
 	sudo systemctl enable vboxservice
 	sudo systemctl start vboxservice
 	sudo VBoxClient-all
+	# To automatic login
+	echo 'autologin=aiya000' | sudo tee -a /etc/lxdm/lxdm.conf
 
 endif
