@@ -59,6 +59,18 @@ augroup END
 " }}}
 
 
+"---------------"
+" Local scripts "
+"---------------"
+" {{{
+
+if filereadable($'${$HOME}/.gvimrc_env')
+  source ~/.gvimrc_env
+endif
+
+" }}}
+
+
 "---------"
 " Plugins "
 "---------"
