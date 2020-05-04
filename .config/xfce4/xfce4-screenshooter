@@ -1,7 +1,7 @@
 delay=0
 region=1
 show_mouse=0
-screenshot_dir=file:///home/aiya000/Picture
+screenshot_dir=file:/home/aiya000/Picture
 app=ristretto
 last_user=
 action=1
