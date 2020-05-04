@@ -1,0 +1,36 @@
+#!/usr/bin/env zsh
+
+# This is not .zshenv, cannot be used instead of it
+
+export VIM_SESSION=$HOME/.backup/vim-backup/session
+
+export QT_SCALE_FACTOR=1.0
+
+zsh_had_started_flag_file='/tmp/aiya000-ZSH_HAS_STARTED_AFTER_BOOTED'
+tmux_had_started_flag_file='/tmp/aiya000-TMUX_HAS_STARTED_AFTER_BOOTED'
+
+# $LD_PRELOAD
+eval "$(/usr/local/bin/wcwidth-cjk --sh-init)"
+
+# When a parent zsh is started
+if [[ -z $ZSHRC_ENV_LOADED_ONCE ]] ; then
+    export ZSHRC_ENV_LOADED_ONCE=1
+fi
+
+# If zsh is never started once after this machine is booted
+if [[ ! -f $zsh_had_started_flag_file ]] ; then
+    touch "$zsh_had_started_flag_file"
+
+    # To run after the window manager started up
+    pulseaudio --daemonize=true --start
+    ~/.dotfiles/MetalManArch/bin/dzen2statusbar.sh
+    exec tmux
+fi
+
+# If tmux is never started once after this machine is booted
+if [[ ! -f $tmux_had_started_flag_file ]] ; then
+    touch "$tmux_had_started_flag_file"
+
+    cd ~/.dotfiles
+    t
+fi
