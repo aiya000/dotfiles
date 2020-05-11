@@ -10,7 +10,6 @@ alias imp
 abbr import ()
     import (
         "${1:fmt}"
-        ${2}
     )
     ${0}
 
@@ -23,6 +22,10 @@ abbr else {}
     else {
         ${0}
     }
+
+snippet val
+abbr ${1:varName} := ${0}
+    ${1:varName} := ${0}
 
 # Expressions
 
