@@ -19,6 +19,9 @@ export MOZ_USE_XINPUT2=1
 # For krita on my bigger LG display
 export QT_SCALE_FACTOR=1.5
 
+# Fix a VirtualBox's choppy audio issue
+export PULSE_LATENCY_MSEC=60
+
 # Xorg general
 if [ -f ~/.Xmodmap ] ; then
     xmodmap ~/.xmonad/Xmodmap/default-us
