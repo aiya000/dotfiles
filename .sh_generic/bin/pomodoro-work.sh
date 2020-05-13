@@ -14,7 +14,7 @@ function play () {
     if command -v wsl.exe > /dev/null ; then
         cd ~/Windows && cmd.exe /c start Music/にぃに.mp3
     else  # Linux and macOS
-        mpg123 ~/Music/にぃに.mp3 > /dev/null
+        mpg123 ~/Music/にぃに.mp3
     fi
 }
 
