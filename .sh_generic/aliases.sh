@@ -358,7 +358,14 @@ fi
 
 if i_have draw.io ; then
     alias drio=draw.io
-    alias drio-export-png='draw.io -e -x -f png'
+
+    # NOTE: Before, draw.io exports foo.xml.png for foo.xml, but the backward compatility broke.
+    function drio-export-png () {
+        local xml_name
+        xml_name=$1
+
+        draw.io --embed-diagram --export --format png "$xml_name" --output "${xml_name}.png"
+    }
 fi
 
 # shellcheck disable=SC2139
