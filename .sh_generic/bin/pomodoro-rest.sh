@@ -1,24 +1,7 @@
 #!/bin/bash
 
-function notify () {
-    echo "$1"
-
-    if uname -a | grep Darwin > /dev/null ; then
-        terminal-notifier -title 'pomodoro' -message "$1"
-    elif command -v wsl.exe > /dev/null ; then
-        : TODO
-    else  # Linux
-        notify-send "$1"
-    fi
-}
-
-function play () {
-    if command -v wsl.exe > /dev/null ; then
-        cd ~/Windows && cmd.exe /c start Music/初手は丸.mp3
-    else  # Linux and macOS
-        mpg123 ~/Music/初手は丸.mp3
-    fi
-}
+# shellcheck disable=SC1090
+source "$(dirname "$0")"/pomodoro-utils.sh
 
 interval=$([[ -z "$1" ]] && echo 5 || echo "$1")
 
@@ -29,4 +12,4 @@ done
 
 date
 notify 'the rest time finished!'
-play
+play ~/Music/初手は丸.mp3

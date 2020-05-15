@@ -283,7 +283,7 @@ install-tools: \
 	install-vim-runtime-deps \
 	install-xmonad-runtime-deps \
 	install-fonts \
-	install-audio-players \
+	install-media-players \
 	install-cli-recommended \
 	install-gui-recommended \
 
@@ -381,10 +381,6 @@ install-graphic-editors:
 
 install-media-players:
 	which vlc || $(YayInstall) vlc
-
-install-audio-players:
-	# From official
-	$(YayInstall) mpg123
 
 install-docker:
 	which docker || \

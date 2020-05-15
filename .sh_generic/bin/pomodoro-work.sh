@@ -1,24 +1,7 @@
 #!/bin/bash
 
-function notify () {
-    echo "$1"
-
-    if uname -a | grep Darwin > /dev/null ; then
-        terminal-notifier -title 'pomodoro' -message "$1"
-    elif command -v wsl.exe > /dev/null ; then
-        : TODO
-    else  # Linux
-        notify-send "$1"
-    fi
-}
-
-function play () {
-    if command -v wsl.exe > /dev/null ; then
-        cd ~/Windows && cmd.exe /c start Music/にぃに.mp3
-    else  # Linux and macOS
-        mpg123 ~/Music/にぃに.mp3
-    fi
-}
+# shellcheck disable=SC1090
+source "$(dirname "$0")"/pomodoro-utils.sh
 
 function read_count () {
     ( find /tmp/ 2> /dev/null | grep -Eo '/tmp/pomodoro-([0-9]+)' || echo '/tmp/pomodoro-0' ) | sed -r 's;/tmp/pomodoro-([0-9]+);\1;'
@@ -45,4 +28,4 @@ date
 notify "the $count-th working time finished!"
 
 increase_count
-play
+play ~/Music/にぃに.mp3
