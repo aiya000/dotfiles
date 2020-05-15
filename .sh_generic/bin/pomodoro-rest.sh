@@ -1,6 +1,8 @@
 #!/bin/bash
 
 function notify () {
+    echo "$1"
+
     if uname -a | grep Darwin > /dev/null ; then
         terminal-notifier -title 'pomodoro' -message "$1"
     elif command -v wsl.exe > /dev/null ; then
@@ -25,8 +27,6 @@ for (( minutes = 0; minutes < "$interval"; minutes++ )) ; do
     sleep 1m
 done
 
-echo 'the rest time finished!'
-notify 'the rest time finished!'
-
 date
+notify 'the rest time finished!'
 play

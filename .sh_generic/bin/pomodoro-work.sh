@@ -1,6 +1,8 @@
 #!/bin/bash
 
 function notify () {
+    echo "$1"
+
     if uname -a | grep Darwin > /dev/null ; then
         terminal-notifier -title 'pomodoro' -message "$1"
     elif command -v wsl.exe > /dev/null ; then
@@ -40,7 +42,6 @@ for (( minutes = 0; minutes < "$interval"; minutes++ )) ; do
 done
 
 date
-echo "a $count-th working time finished!"
 notify "the $count-th working time finished!"
 
 increase_count
