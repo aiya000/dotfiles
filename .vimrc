@@ -862,7 +862,7 @@ set
   \ previewheight=40
   \ relativenumber
   \ scrolloff=16
-  \ sessionoptions=buffers
+  \ sessionoptions=buffers,curdir
   \ shellslash
   \ shiftwidth=4
   \ suffixes=
