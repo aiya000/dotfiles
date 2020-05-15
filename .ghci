@@ -45,4 +45,3 @@
 :set -XViewPatterns
 
 :load ~/.dotfiles/ghci.hs
-:module +Preset
