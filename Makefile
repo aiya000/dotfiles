@@ -309,7 +309,7 @@ install-cli-recommended:
 		extundelete \
 		hub \
 		jq \
-		universal-ctags \
+		universal-ctags-git \
 		watchexec
 	# From AUR
 	which downgrade || $(YayInstall) downgrade
