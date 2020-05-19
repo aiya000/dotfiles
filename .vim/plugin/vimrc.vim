@@ -126,6 +126,7 @@ command! -bar LcdBufDir lcd %:p:h
 command! -bar LcdStarted execute ':lcd' g:vimrc.path_at_started
 command! -bar LcdGitRoot execute ':lcd' system('git rev-parse --show-toplevel')
 command! -bar StartedCdBufDir let g:vimrc.path_at_started = expand('%:p:h')
+command! -bar StartedCdCurrentDir let g:vimrc.path_at_started = getcwd()
 command! -bar -nargs=+ Grep call vimrc#grep_those(<f-args>)
 command! -bar TodoList Grep TODO FIXME XXX
 
