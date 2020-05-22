@@ -119,14 +119,15 @@ command! -nargs=? -complete=dir Texplore tabnew | silent Dirvish <args>
 
 "" Others
 command! -bar -nargs=* Vim call vimrc#open_terminal_as('term-vim', 'stay', 'vim ' . <q-args>)
-command! -bar CdBufDir cd %:p:h
+command! -bar CdBufDir  cd %:p:h
 command! -bar CdStarted execute ':cd' g:vimrc.path_at_started
 command! -bar CdGitRoot execute ':cd' system('git rev-parse --show-toplevel')
-command! -bar LcdBufDir lcd %:p:h
+command! -bar LcdBufDir  lcd %:p:h
 command! -bar LcdStarted execute ':lcd' g:vimrc.path_at_started
 command! -bar LcdGitRoot execute ':lcd' system('git rev-parse --show-toplevel')
-command! -bar StartedCdBufDir let g:vimrc.path_at_started = expand('%:p:h')
-command! -bar StartedCdCurrentDir let g:vimrc.path_at_started = getcwd()
+command! -bar ScdBufDir     let g:vimrc.path_at_started = expand('%:p:h')
+command! -bar ScdCurrentDir let g:vimrc.path_at_started = getcwd()
+command! -bar ScdGitRoot    let g:vimrc.path_at_started = system('git rev-parse --show-toplevel')
 command! -bar -nargs=+ Grep call vimrc#grep_those(<f-args>)
 command! -bar TodoList Grep TODO FIXME XXX
 
