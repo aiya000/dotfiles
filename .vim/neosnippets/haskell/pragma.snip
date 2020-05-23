@@ -20,6 +20,10 @@ snippet pragma_noinline
 alias noinline
     {-# NOINLINE ${0:funcName} #-}
 
+snippet pragma_rules
+abbr {-# RULES "${1:name}" ${0:expr} #-}
+    {-# RULES "${1:name}" ${0:expr} #-}
+
 snippet pragma_language
 abbr    {-# LANGUAGE __ #-}
 options head

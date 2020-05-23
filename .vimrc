@@ -169,6 +169,8 @@ endfunction
 augroup vimrc
   autocmd!
 
+  autocmd VimEnter * ScdCurrentDir
+
   " Auto set cursor position in the file
   autocmd BufReadPost * call vimrc#visit_past_position()
 
