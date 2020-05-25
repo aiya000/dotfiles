@@ -12,21 +12,27 @@ endfunction
 " See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer),
 " and below augroup 'HighlightPref'.
 function vimrc#tabline#make() abort
-  let running_lsp_servers = execute(':LspStatus')
-    \ ->split('\n')
-    \ ->filter({ _, x ->
-      \ x !~# 'not running$'
-    \ })
-    \ ->map({ _, x -> x->split(':')[0] })
-    \ ->join(', ')
-
   return '%1*[%{tabpagenr("$")}]%* '
     \. s:tabs() . ' => '
     \. '%2*[PWD=%{vimrc#tabline#cwd_or_shorten()}]%*'
     \. '%3*%{vimrc#tabline#tags_if_present()}%*'
     \. '%4*%{vimrc#tabline#marks_if_present()}%*'
     \. '%5*%{vimrc#tabline#ale_if_present()}%*'
-    \. $'%6*[${running_lsp_servers}]%*'
+    \. '%6*%{vimrc#tabline#running_lsp_servers()}%*'
+endfunction
+
+function vimrc#tabline#running_lsp_servers() abort
+  const servers = execute(':LspStatus')
+    \ ->split('\n')
+    \ ->filter({ _, x ->
+      \ split(x, ' ')[1] ==# 'running'
+    \ })
+    \ ->map({ _, x ->
+      \ split(x, ':')[0]
+    \ })
+    \ ->join(', ')
+
+  return $'[${servers}]'
 endfunction
 
 function vimrc#tabline#tags_if_present() abort
