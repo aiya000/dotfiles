@@ -44,4 +44,5 @@
 :set -XTypeSynonymInstances
 :set -XViewPatterns
 
+:set -package text
 :load ~/.dotfiles/ghci.hs
