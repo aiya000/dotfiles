@@ -701,8 +701,8 @@ endfunction
 
 augroup vimrc
   autocmd User lsp_setup call lsp#register_server(#{
-    \ name: 'haskell-ide-engine',
-    \ cmd: { _ -> [&shell, &shellcmdflag, 'hie-wrapper'] },
+    \ name: 'haskell-language-server',
+    \ cmd: { _ -> [&shell, &shellcmdflag, 'haskell-language-server-wrapper'] },
     \ root_uri: s:find_root_uri_by_file('package.yaml'),
     \ whitelist: ['haskell', 'happy', 'alex'],
   \ })
