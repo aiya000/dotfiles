@@ -10,11 +10,6 @@ setl ts=2 sw=2 et tw=0
 vnoremap <buffer><silent> i{ :<C-u>call <SID>align()<CR>
 
 function! s:align() abort
-  const begin = 'Alignta <<1:0 {'
-  const fix = 's/{\([^%]\)/{ \1/'
-  const end = 'Alignta <<1 }'
-
-  execute ":'<,'>" . begin
-  execute ":'<,'>" . fix
-  execute ":'<,'>" . end
+  '<,'>Alignta => {\(\s\|%\)
+  '<,'>Alignta => \s}
 endfunction
