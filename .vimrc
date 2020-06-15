@@ -1101,8 +1101,12 @@ nmap 'Y "+yg_
 nmap 'dd "+dd
 nmap 'x "+x
 
-" others
+" cr
 nmap <C-j> <CR>
+nmap <C-m> <CR>
+nnoremap <CR> o<Esc>
+
+" others
 nnoremap 'D "+D
 nnoremap 'd "+d
 nnoremap ( (zv
@@ -1110,7 +1114,6 @@ nnoremap ) )zv
 nnoremap :: :%s/
 nnoremap <C-]> g<C-]>
 nnoremap <C-k>T :<C-u>tselect<Space>
-nnoremap <C-m> o<Esc>
 nnoremap <expr> <C-k><C-s> printf(':%%s/\m\C\<%s\>/', expand('<cword>'))
 nnoremap <expr> <C-k>s printf(':%%s/\m\C\<%s\>/%s', expand('<cword>'), expand('<cword>'))
 nnoremap <silent> ! :!<CR>

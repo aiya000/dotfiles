@@ -20,7 +20,7 @@ setl expandtab
 nnoremap <buffer> <C-j> o<Esc>
 nnoremap <buffer> <localleader>a :<C-u>TweetVimSwitchAccount<Space>
 nmap <buffer> <C-o> <Plug>(tweetvim_say_show_history)
-nmap <buffer> <C-i> <Plug>(tweetvim_say_post_buffer)
+nmap <buffer> <C-m> <Plug>(tweetvim_say_post_buffer)
 
 inoremap <buffer> <C-i> <Tab>
 imap <buffer> <C-b> <C-o>:TweetVimBitly<CR><C-r>+
