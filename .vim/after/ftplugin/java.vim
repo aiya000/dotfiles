@@ -19,7 +19,6 @@ syntax sync fromstart
 
 augroup FtpluginJava
   autocmd!
-  autocmd BufWritePre *.java Autoformat
   autocmd BufWritePost *.java call s:exec_quickfix_if_available()
 augroup END
 
