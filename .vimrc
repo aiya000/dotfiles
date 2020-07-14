@@ -203,12 +203,6 @@ augroup END
 "---------"
 " Plugins "
 "---------"
-" netrw {{{
-
-" To override by vim-dirvish
-let g:loaded_netrwPlugin = v:true
-
-" }}}
 " vim-quickrun {{{
 
 let g:quickrun_no_default_key_mappings = 0

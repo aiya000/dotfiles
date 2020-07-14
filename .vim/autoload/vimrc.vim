@@ -168,10 +168,10 @@ endfunction
 function vimrc#open_explorer(split, ...) abort
   const path = get(a:000, 0, expand('%:p:h'))
   const cmd =
-    \ a:split ==# 'stay'  ? ':Explore' :
-    \ a:split ==# 'split' ? ':Sexplore' :
-    \ a:split ==# 'vsplit' ? ':Vexplore' :
-    \ a:split ==# 'tabnew' ? ':Texplore' :
+    \ a:split ==# 'stay'  ? ':Dirvish' :
+    \ a:split ==# 'split' ? ':split | silent Dirvish' :
+    \ a:split ==# 'vsplit' ? ':vsplit | silent Dirvish' :
+    \ a:split ==# 'tabnew' ? ':tabnew | silent Dirvish' :
       \ execute($'throw "an unexpected way to open the explorer: ${a:split}"')
 
   if !isdirectory(path)
