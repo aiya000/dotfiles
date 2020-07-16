@@ -45,6 +45,15 @@ snippet rescue
 abbr rescue${0}end
     rescue${0}end
 
+snippet do
+abbr do${0:here}end
+    do${0:here}end
+
+snippet do_with_params
+alias dp
+abbr do |${1:params}|${0:here}end
+    do |${1:params}|${0:here}end
+
 snippet q
 abbr %Q(${0:here})
     %Q(${0:here})
@@ -72,3 +81,9 @@ snippet require
 alias import imp
 abbr require '${0:here}'
     require '${0:here}'
+
+# Expressions
+
+snippet pr
+abbr puts ${0}
+    puts ${0}
