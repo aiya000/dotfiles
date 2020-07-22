@@ -1147,6 +1147,7 @@ inoremap <C-k>\Z ℤ
 inoremap <C-k>\R ℝ
 inoremap <C-k>\Q ℚ
 inoremap <C-k>\C ℂ
+inoremap <C-k>.. ◉
 
 " others
 imap <C-j> <CR>
@@ -1250,7 +1251,7 @@ digraph (( 8834   " right includes left
 digraph )) 8835   " left includes right
 digraph /= 8800   " not equal
 digraph \*  215   " cartesian product
-digraph \. 9675   " compose
+digraph \. 9675   " composite
 digraph \/ 247    " div
 digraph \< 8804   " right more than left or equals
 digraph \= 8803   " equivalence relation
