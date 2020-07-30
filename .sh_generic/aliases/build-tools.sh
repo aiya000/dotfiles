@@ -43,5 +43,12 @@ function xl () {
         alias xi='./gradlew install'
         alias xr='./gradlew run'
         alias xx=./gradlew
+    elif [[ -e ./Gemfile ]] ; then
+        # alias xb=''
+        # alias xc=''
+        alias xi='bundle install'
+        alias xr='bundle exec ruby'
+        alias xe='bundle exec'
+        alias xx=bundle
     fi
 }
