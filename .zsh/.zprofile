@@ -33,6 +33,7 @@ export NVIM_PYTHON_LOG_FILE=$HOME/.vim/.log/nvim_python.log
 
 # Mine
 export MY_GUI_EDITOR=gvim
+export ZSHRC_PROMPT_GIT_STATUS_DISABLE=0
 
 # Plugins
 export HEREIS_ALIAS_PREFIX=p-

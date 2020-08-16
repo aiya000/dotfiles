@@ -28,7 +28,7 @@ function zshrc::prompt::sub_status () {
 
     function get_git_stash_status () {
         local item_num=$({git stash list 2> /dev/null || echo -n ''} | wc -l)
-        if [ "$item_num" -ge 1 ] ; then
+        if [[ $item_num -ge 1 ]] ; then
             echo "%{$bg[cyan]$fg[black]%}[stash:${item_num}]%{$reset_color%}"
         fi
     }
@@ -60,7 +60,14 @@ function zshrc::prompt::sub_status () {
         fi
     }
 
-    echo "$(get_git_changes)$(get_git_commits)$(get_git_stash_status)$(get_git_branch_name)$(get_zle_mode)$(get_virtualenv_availability)"
+    local git_statuses
+    if [[ $ZSHRC_PROMPT_GIT_STATUS_DISABLE -ne 0 ]] ; then
+        git_statuses='[GitStatus Disabled]'
+    else
+        git_statuses=$(get_git_changes)$(get_git_commits)$(get_git_stash_status)$(get_git_branch_name)
+    fi
+
+    echo "${git_statuses}$(get_zle_mode)$(get_virtualenv_availability)"
 }
 
 # Run once to start up
