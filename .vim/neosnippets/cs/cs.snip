@@ -1,4 +1,5 @@
-# Syntax
+# Syntaxes
+
 snippet if
 abbr if (__) {__}
 options indent
@@ -81,20 +82,33 @@ snippet constructor
 abbr    ClassName(__) {__}
     `expand('%:t:r')`(${1:#:Parameter}) {${0}}
 
-delete println
+snippet method
+alias met
+abbr func function
+    ${1:void} ${2:Name}(${3:#:args}) ${0}
+
+snippet public_method
+alias pubmet
+abbr public ${1:void} ${2:Name}(${3:#:args})
+    public ${1:void} ${2:Name}(${3:#:args}) ${0}
+
+snippet private_method
+alias primet
+abbr private ${1:void} ${2:Name}(${3:#:args})
+    private ${1:void} ${2:Name}(${3:#:args}) ${0}
+
+# Expressions
+
 snippet println
+alias pr
 abbr    Console.WriteLine(__)
-options word
     Console.WriteLine(${0})
 
 snippet readln
 abbr    Console.ReadLine()
-options word
     Console.ReadLine()
 
-snippet method
-abbr func function
-    ${1:void} ${2:#:Name}(${3:args}) ${0}
+# Document comments
 
 snippet summary
 abbr <summary>__</summary>
