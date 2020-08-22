@@ -14,6 +14,11 @@ options indent
         ${0:TARGET}
     }
 
+snippet foreach
+alias for
+abbr foreach (var ${1:x} in ${2:xs}) {${0:here}}
+    foreach (var ${1:x} in ${2:xs}) {${0:here}}
+
 snippet switch
 abbr switch (__) {__}
 options indent
