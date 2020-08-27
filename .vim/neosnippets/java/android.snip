@@ -1,7 +1,12 @@
 snippet log_debug
 alias logd
-    Log.d(${1:"poi"}, ${2});
+    Log.d(${1:TAG}, ${2});
 
 snippet log_error
 alias loge
-    Log.e(${1:"poi"}, ${2});
+    Log.e(${1:TAG}, ${2});
+
+snippet log_verbose
+alias logv
+abbr Log.v(${1:TAG}, ${2});
+    Log.v(${1:TAG}, ${2});
