@@ -37,7 +37,7 @@ export MY_GUI_EDITOR=gvim
 if [[ $ZSHRC_PROMPT_GIT_STATUS_DISABLE != '' ]] ; then
     export ZSHRC_PROMPT_GIT_STATUS_DISABLE
 else
-    export ZSHRC_PROMPT_GIT_STATUS_DISABLE=1
+    export ZSHRC_PROMPT_GIT_STATUS_DISABLE=0
 fi
 
 # Plugins
