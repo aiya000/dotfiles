@@ -78,6 +78,7 @@ if i_have git ; then
     alias gcf='git commit --fixup'
     alias gsw='git switch'
     alias gswc='git switch --create'
+    alias gswd='git switch --detach'
     alias gres='git restore'
     alias gd='git diff'
     alias gdh='git diff HEAD~..HEAD'
