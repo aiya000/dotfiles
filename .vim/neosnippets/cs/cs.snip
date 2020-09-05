@@ -82,6 +82,7 @@ options indent
     }
 
 snippet class
+alias cla
 abbr class __ {__}
 options indent
     class ${1:#:Name} {
@@ -106,6 +107,11 @@ snippet private_method
 alias primet
 abbr private ${1:void} ${2:Name}(${3:#:args})
     private ${1:void} ${2:Name}(${3:#:args}) ${0}
+
+snippet import
+alias imp
+abbr using ${0};
+    using ${0};
 
 # Expressions
 
@@ -148,3 +154,8 @@ abbr <example>__</example>
 snippet code
 abbr <code>__</code>
     <code>${0}</code>
+
+snippet doc
+    /// <summary>
+    /// ${0}
+    /// </summary>
