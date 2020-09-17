@@ -284,8 +284,6 @@ alias e-current-session="vim-current-session $EDITOR"
 # shellcheck disable=SC2139
 alias g-current-session="vim-current-session $MY_GUI_EDITOR"
 
-alias watch-packet=packet-watch
-
 i_have tmux && alias tm=tmux && alias ta='tmux attach'
 i_have rsync && alias cp-with-progress='rsync --partial --progress'
 i_have watch && alias wifi-hardware-check='watch -n1 rfkill list all'
@@ -377,11 +375,6 @@ alias mount4u.ext2='sudo mount -o iocharset=utf8'
 alias mount4u.ext3=mount4u.ext2
 alias mount4u.ext4=mount4u.ext2
 
-# TODO: Add the completion
-function cat-which () {
-    cat "$(command -v "$1")"
-}
-
 function virtualenv-activate () {
     if [[ -f ./.venv/bin/activate ]] ; then
         # shellcheck disable=SC1091
@@ -390,6 +383,10 @@ function virtualenv-activate () {
         echo './.venv/bin/activate was not found, please load it yourself...' > /dev/stderr
         return 1
     fi
+}
+
+function grepall () {
+    find . -type f -print0 | xargs -0 -I {} bash -c "grep $* {} && (echo '{}' ; echo '- - - - - - - - - -')"
 }
 
 # }}}
