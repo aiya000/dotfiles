@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # shellcheck disable=SC1090
-source ~/.sh_generic/premise.sh
+source ~/.dotfiles/.sh_generic/premise.sh
 
 #
 # This file define the aliases and functions
@@ -22,8 +22,7 @@ alias rm=dust  # no more cry
 alias sl=ls
 
 function du-sort () {
-    local paths
-    paths=${1:-.}
+    local paths=${1:-.}
     du -h -d 1 "$paths" | sort -h
 }
 

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-##########################
-# Config the environment #
-##########################
-# Set the bash variables {{{
+#############################
+# Configure the environment #
+#############################
+# Set bash variables {{{
 
 export ZDOTDIR=~/.zsh
 export HISTSIZE=10000
@@ -23,12 +23,12 @@ PATH=$PATH:$ZDOTDIR/zsh_completions
 # Others {{{
 
 # My favorite editor
-export EDITOR=nvim
-export VISUAL=nvim
+export EDITOR=vim
+export VISUAL=vim
 
-# Use 'vim-pager' and 'vim-manpager'
-export PAGER='nvim - +PAGER -c "setl nonu nornu ft=vim-pager | only"'
-export MANPAGER='nvim - +MANPAGER -c "setl nonu nornu ft=vim-pager | only"'
+# To use 'vim-pager' and 'vim-manpager'
+export PAGER='vim - +PAGER -c "setl nonu nornu ft=vim-pager | only"'
+export MANPAGER='vim - +MANPAGER -c "setl nonu nornu ft=vim-pager | only"'
 
 # Languages
 export GOPATH=~/.GoPath
@@ -39,10 +39,10 @@ export CCACHE_DISABLE=1
 # }}}
 
 
-###################
-# Manage Plugins  #
-###################
-# Configurate the plugin variables {{{
+##################
+# Manage plugins #
+##################
+# Define plugin variables {{{
 
 # sh-hereis
 export HEREIS_ALIAS_PREFIX=p-
@@ -50,8 +50,5 @@ export HEREIS_ALIAS_PREFIX=p-
 # }}}
 
 
-###########################
-# Mark the end of loading #
-###########################
-# Export Loaded Archive
+# Expose to mark .bash_profile is loaded
 alias pr_loaded='echo "pr_loaded"'

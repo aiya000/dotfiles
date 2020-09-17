@@ -1,12 +1,11 @@
 #!/bin/bash
-# This makes the aliases with both vim and neovim
+# To make commands with vim
 
-# Vim
 alias vi='vim -u NONE --noplugin'
-alias vime='vim -c ":bufdo tab split" +q'
+alias vterminal='vim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell)"'
+alias gvterminal='gvim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell)"'
 
-# :SessionSaveInGitBranch compatibled command. (it is defined in dotfiles/.vim/plugin/vimrc.vim)
-# Open the session which is associated the current git branch
+# Opens a session
 function vim-current-session () {
     local sessions_dir=~/.backup/vim-backup/session repo_name session_name editor branch_name branch_name_ branch_name__
 
@@ -25,14 +24,6 @@ function vim-current-session () {
     session_name="${repo_name}-${branch_name__}.vim"
     "$editor" -S "$sessions_dir/$session_name"
 }
-
-# NeoVim
-alias nvime='nvim -c ":bufdo tab split" +q'
-
-## :terminal
-alias vterminal='vim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell)"'
-alias gvterminal='gvim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell)"'
-alias nterminal='nvim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell)"'
 
 function vim-fix-plugins-for-dein-update () {
     local plugin_names plugin_dir
@@ -56,7 +47,7 @@ function vim-get-latest-git-hashes () {
     done
 }
 
-# See .vim/autoload/vimrc/autocmd.vim
+# Please see ~/.dotfiles/.vim/autoload/vimrc/autocmd.vim
 function vimterm-quote-args() {
     for a in "$@" ; do
         echo ", \"$a\""
