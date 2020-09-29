@@ -1,5 +1,5 @@
 snippet fun
-alias def
+alias def public_method pubmet
 abbr fun \funcName\(\#:args\)_
 options indent
     fun ${1:funcName}(${2:#:args})${0}
@@ -242,7 +242,7 @@ snippet abstract_fun
     abstract fun ${1:funcName}(${2:#:args})${0}
 
 snippet private_fun
-alias prifun
+alias prifun primet
     private fun ${1:funcName}(${2:#:args})${0}
 
 snippet override_to_string
