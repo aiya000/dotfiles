@@ -18,11 +18,8 @@ alias print_errror_ln err_println
     System.err.println(${1:here})
 
 snippet class
+alias cla class_without_constructor
     class ${1:Name} {${0:here}}
-
-snippet class_without_constructor
-abbr class __ {__}
-    class ${1:Name} {${0}}
 
 snippet class_with_constructor
 abbr class __(__) {__}
