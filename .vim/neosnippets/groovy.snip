@@ -1,3 +1,42 @@
+## Syntaxes
+
+snippet if
+abbr if (${1:cond}) {${0:here}}
+    if (${1:cond}) {${0:here}}
+
+snippet switch
+abbr switch (${1:x}) {${0:here}}
+    switch (${1:x}) {${0:here}}
+
+snippet case
+options indent
+    case ${1:name}:
+        ${0}
+        break
+
+snippet default
+options indent
+    default:
+        ${0}
+        break
+
+snippet final_variable
+alias val
+abbr final ${1:x} = ${0}
+    final ${1:x} = ${0}
+
+## Templates
+
+snippet println
+alias pr
+abbr println
+    println
+
+snippet throw_new_exception
+alias throw
+abbr throw new Exception(${0:here})
+    throw new Exception(${0:here})
+
 snippet install_kotlin_dokka
 alias dokka
     // Put this to buildscript.dependencies
