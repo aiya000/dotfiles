@@ -1,5 +1,9 @@
 ## Syntaxes
 
+snippet fun
+abbr ${1:Type} ${2:f}(${3:#:x}) {${0:here}}
+    ${1:Type} ${2:f}(${3:#:x}) {${0:here}}
+
 snippet if
 abbr if (${1:cond}) {${0:here}}
     if (${1:cond}) {${0:here}}
@@ -9,16 +13,12 @@ abbr switch (${1:x}) {${0:here}}
     switch (${1:x}) {${0:here}}
 
 snippet case
-options indent
-    case ${1:name}:
-        ${0}
-        break
+abbr case ${0}:
+    case ${0}:
 
 snippet default
-options indent
+abbr default:
     default:
-        ${0}
-        break
 
 snippet final_variable
 alias val
@@ -29,13 +29,25 @@ abbr final ${1:x} = ${0}
 
 snippet println
 alias pr
-abbr println
-    println
+abbr println ${0}
+    println ${0}
 
 snippet throw_new_exception
 alias throw
 abbr throw new Exception(${0:here})
     throw new Exception(${0:here})
+
+snippet case_break
+options indent
+    case ${1:name}:
+        ${0}
+        break
+
+snippet default_break
+options indent
+    default:
+        ${0}
+        break
 
 snippet install_kotlin_dokka
 alias dokka
