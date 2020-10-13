@@ -1,16 +1,20 @@
 ## Syntaxes
 
 snippet fun
-abbr ${1:Type} ${2:f}(${3:#:x}) {${0:here}}
-    ${1:Type} ${2:f}(${3:#:x}) {${0:here}}
+abbr ${1:Type} ${2:f}(${3:#:x}) {${0:#:here}}
+    ${1:Type} ${2:f}(${3:#:x}) {${0:#:here}}
+
+snippet class
+abbr class ${1:Name} {${0:#:here}}
+    class ${1:Name} {${0:#:here}}
 
 snippet if
-abbr if (${1:cond}) {${0:here}}
-    if (${1:cond}) {${0:here}}
+abbr if (${1:cond}) {${0:#:here}}
+    if (${1:cond}) {${0:#:here}}
 
 snippet switch
-abbr switch (${1:x}) {${0:here}}
-    switch (${1:x}) {${0:here}}
+abbr switch (${1:x}) {${0:#:here}}
+    switch (${1:x}) {${0:#:here}}
 
 snippet case
 abbr case ${0}:
@@ -34,8 +38,8 @@ abbr println ${0}
 
 snippet throw_new_exception
 alias throw
-abbr throw new Exception(${0:here})
-    throw new Exception(${0:here})
+abbr throw new Exception(${0:#:here})
+    throw new Exception(${0:#:here})
 
 snippet case_break
 options indent
