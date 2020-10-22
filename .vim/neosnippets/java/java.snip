@@ -1,110 +1,112 @@
-# Syntax
+# Syntaxes
 
 snippet class
-    class ${1:Name} {${0:here}}
+alias cla
+abbr class ${1:Name} {${0:#:here}}
+    class ${1:Name} {${0:#:here}}
 
 snippet function
 alias func fun
 abbr    static void func() {}
-    static ${1:void} ${2:#:func}(${3:#:args}) {${0:here}}
+    static ${1:void} ${2:#:func}(${3:#:args}) {${0:#:here}}
 
 snippet method
 alias met
 abbr    void method() {}
-    ${1:void} ${2:#:method}(${3:#:args}) {${0:here}}
+    ${1:void} ${2:#:method}(${3:#:args}) {${0:#:here}}
 
 snippet try
 abbr try {}
-    try {
-        ${0}
-    }
+    try {${0}}
 
 snippet catch
 abbr catch ({exception}) {}
 options indent
-    catch (${1:exception}) {
-        ${0}
-    }
+    catch (${1:exception}) {${0}}
 
 snippet finally
 abbr finally {}
-    finally {
-        ${0}
-    }
+    finally {${0}}
 
 snippet try_with_resource
 abbr    try () {}
-    try (${1:#:resource}) {
-        ${0:TARGET}
-    }
+    try (${1:#:resource}) {${0:#:here}}
 
 snippet if
 abbr if ({cond}) {}
 options indent
-    if (${1:condition}) {
-        ${0}
-    }
+    if (${1:condition}) {${0}}
 
 snippet else
 abbr    else {}
 options indent
-    else {
-        ${0:TARGET}
-    }
+    else {${0:#:here}}
 
 snippet for_each
 alias   for
 abbr    for ({type} {x} : {xs}) {}
-    for (${1:type} ${2:x} : ${3:xs}) {
-        ${0:TARGET}
-    }
+    for (${1:type} ${2:x} : ${3:xs}) {${0:#:here}}
 
 snippet for_with_index
 alias for_traditional
 abbr    for ({var}; {cond}; {effect}) {}
-    for (${1:var}; ${2:condition}; ${3:effect}) {
-        ${0:TARGET}
-    }
+    for (${1:var}; ${2:condition}; ${3:effect}) {${0:#:here}}
 
 snippet switch
-    switch (${1:var}) {
-        ${0}
-    }
+    switch (${1:var}) {${0}}
 
 snippet case
     case ${1:Label}:${0}
 
 snippet enum
-    enum ${1:Name} {
-        ${0}
-    }
+    enum ${1:Name} {${0}}
 
 snippet import
 alias imp
 abbr import ${0}
     import ${0}
 
+# Templates
+
 snippet public_static
 abbr public static
     public static
 
+snippet public_function
+alias pubfun
+abbr public static ${1:void} ${2:#:methodName}(${3:#:args}) {${0:#:here}}
+    public static ${1:void} ${2:#:methodName}(${3:#:args}) {${0:#:here}}
+
+snippet public_method
+alias pubmet
+abbr public ${1:void} ${2:#:method}(${3:#:args}) {${0:#:here}}
+    public ${1:void} ${2:#:method}(${3:#:args}) {${0:#:#here}}
+
 snippet private_function
 alias prifun
-abbr private static ${1:void} ${2:#:methodName}(${3:#:args}) {${0:here}}
-    private static ${1:void} ${2:#:methodName}(${3:#:args}) {${0:here}}
+abbr private static ${1:void} ${2:#:methodName}(${3:#:args}) {${0:#:here}}
+    private static ${1:void} ${2:#:methodName}(${3:#:args}) {${0:#:here}}
 
 snippet private_method
 alias primet
-abbr private ${1:void} ${2:#:methodName}(${3:#:args}) {${0:here}}
-    private ${1:void} ${2:#:methodName}(${3:#:args}) {${0:here}}
+abbr private ${1:void} ${2:#:methodName}(${3:#:args}) {${0:#:here}}
+    private ${1:void} ${2:#:methodName}(${3:#:args}) {${0:#:here}}
 
 snippet override_to_string
     @Override
-    public String toString() {${0:here}}
+    public String toString() {${0:#:here}}
 
 snippet override_equals
     @Override
-    public boolean equals(${1:X x}) {${0:here}}
+    public boolean equals(${1:X x}) {${0:#:here}}
+
+snippet main
+abbr    public static void main(String[] args) {}
+options head
+    public static void main(String[] args) {${0:#:here}}
+
+snippet public_static_final
+    public static final
 
 # Annotation
 
@@ -121,7 +123,7 @@ abbr @SafeVarargs
 
 snippet annoration_suppress_warnings
 alias suppress_warnings
-    @SuppressWarnings("${0:here}")
+    @SuppressWarnings("${0:#:here}")
 
 snippet annoration_suppress_warnings_serial
 alias suppress_warnings_serial
@@ -140,19 +142,9 @@ abbr System.out.print(__);
 
 # Other
 
-snippet main
-abbr    public static void main(String[] args) {}
-options head
-    public static void main(String[] args) {
-        ${0:TARGET}
-    }
-
-snippet public_static_final
-    public static final
-
 snippet precode
-abbr <pre><code>${0:here}</code></pre>
-    <pre><code>${0:here}</code></pre>
+abbr <pre><code>${0:#:here}</code></pre>
+    <pre><code>${0:#:here}</code></pre>
 
 snippet br
 abbr <br>
