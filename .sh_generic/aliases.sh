@@ -228,7 +228,6 @@ fi
 if i_have docker ; then
     alias d=docker
     alias da=docker-attach-menu.sh
-    alias dis='docker images'
     alias dki=docker-kill-menu.sh
     alias dkill='docker kill'
     alias dps='docker ps'
@@ -236,13 +235,17 @@ if i_have docker ; then
     alias drmi='docker rmi'
     alias drun='docker run'
 
-    function docker-run-bash () {
-        local image_name
-        image_name=$1
-        docker run -it "$image_name" /bin/bash
+    alias docker-force-remove-all-containers='docker rm -f $(docker ps -a -q)'
+    alias docker-force-remove-all-images='docker rmi -f $(docker images -q)'
+    # shellcheck disable=SC2142
+    alias docker-force-clean-volumes='docker volume rm $(docker volume ls | awk "{print $2}")'
+
+    function docker-force-remove-all-all () {
+        docker-force-remove-all-containers
+        docker-force-remove-all-images
+        docker-force-clean-volumes
     }
 fi
-
 
 # }}}
 # Others {{{
