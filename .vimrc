@@ -1493,6 +1493,10 @@ inoreabbr encrpyt encrypt
 
 " }}}
 
+if filereadable($'${$HOME}/.vimrc_env_post')
+  source ~/.vimrc_env_post
+endif
+
 execute 'helptags' $'${g:vimrc['vim_home']}/doc'
 filetype plugin indent on
 syntax enable
