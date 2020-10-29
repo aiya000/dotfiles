@@ -97,9 +97,12 @@ command! -bar -nargs=* GBlame Gina blame <args>
 command! -bar -nargs=* Gist Gista post --stay <args>
 
 " Twitter
+command! -bar TweetVRChat call vimrc#tweet(g:vimrc.twitter.vrchat)
 command! -bar TweetNico call vimrc#tweet(g:vimrc.twitter.nico)
 command! -bar TweetPrivate call vimrc#tweet(g:vimrc.twitter.private)
 command! -bar TweetPublic call vimrc#tweet(g:vimrc.twitter.public)
+command! -bar TwitterVRChat call vimrc#twitter(g:vimrc.twitter.vrchat)
+command! -bar TwitterVRChatTab tabnew | TwitterVRChat
 command! -bar TwitterNico call vimrc#twitter(g:vimrc.twitter.nico)
 command! -bar TwitterNicoTab tabnew | TwitterNico
 command! -bar TwitterPrivate call vimrc#twitter(g:vimrc.twitter.private)
