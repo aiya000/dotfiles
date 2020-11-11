@@ -110,6 +110,7 @@ try {
   imapkey('<Ctrl-n>', 'Move cursor to the below', moveCursor('right', 'line'));
   imapkey('<Ctrl-g>', 'Edit in the editor', editInEditor);
   iunmap('<Ctrl-i>');
+  iunmap(':');  // Emoji completion
 } catch (e) {
   throw new Error(`In the section 'Insert mode': ${e}`);
 }
