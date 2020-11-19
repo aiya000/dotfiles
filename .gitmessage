@@ -1,8 +1,8 @@
 
 
 # ==== Emojis ====
-# 👍 :+1:       Improve
 # 🐛 :bug:      Fix bugs
-# ♻️  :recycle:  Refactor / Fix code styles and lint errors with no behavior changing
+# ♻️  :recycle:  With no behavior changing - Refactor / Fix code styles / Fix lint errors
 # 🆙 :up:       Update dependencies
-# 🎉 :tada:     Update the version of the app/the compiler/the processor
+# 🎉 :tada:     Update the app version
+# 👍 :+1:       Other
