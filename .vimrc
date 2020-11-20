@@ -542,6 +542,7 @@ let g:ale_fix_on_save = v:true
 
 let g:ale_fixers = #{
   \ typescript: ['prettier'],
+  \ javascript: ['prettier'],
   \ vue: ['prettier'],
 \ }
 
