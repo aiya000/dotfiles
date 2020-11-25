@@ -76,6 +76,7 @@ if i_have git ; then
     alias gcm='git commit -m'
     alias gcf='git commit --fixup'
     alias gaacm='git add -A && git commit -m'
+    alias gaacamm='git add -A && git commit --amend -m'
     alias gco='git checkout'
     alias gsw='git switch'
     alias gswc='git switch --create'
