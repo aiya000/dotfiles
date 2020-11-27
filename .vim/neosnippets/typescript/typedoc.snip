@@ -2,10 +2,39 @@ snippet typedoc_param
 alias param
     @param ${1:varName} ${2:description}
 
+snippet typedoc_type_param
+alias type_param
+abbr @typeParam
+    @typeParam
+
 snippet typedoc_returns
 alias returns
-abbr @returns ${0}
-    @returns ${0}
+abbr @returns
+    @returns
+
+snippet typedoc_event
+abbr @event
+    @event
+
+snippet typedoc_hidden
+alias hidden
+abbr @hidden
+    @hidden
+
+snippet typedoc_ignore
+alias ignore
+abbr @ignore
+    @ignore
+
+snippet typedoc_internal
+alias internal
+abbr @internal
+    @internal
+
+snippet typedoc_category
+alias category
+abbr @category
+    @category
 
 snippet see
 abbr [[${0:name}]]
@@ -17,3 +46,27 @@ options indent
     /**
      * ${0}
      */
+
+snippet block_markdown
+alias blm
+    \`\`\`
+    * ${0}
+    * \`\`\`
+
+# ?
+
+snippet typedoc_example
+alias example
+abbr @example
+    @example
+
+snippet tsdoc_testify_block
+   @example
+   * \`\`\`
+   * import { equal } from 'assert'
+   * ${1}
+   * equal(
+   *  ${2:actual},
+   *  ${3:expected},
+   * )
+   * \`\`\`
