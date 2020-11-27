@@ -1101,6 +1101,10 @@ nmap <C-j> <CR>
 nmap <C-m> <CR>
 nnoremap <CR> o<Esc>
 
+" informations
+nnoremap <silent> <C-g><C-o> :<C-u>LspHover<CR>
+nnoremap <C-g><C-g> <C-g>
+
 " others
 nnoremap 'D "+D
 nnoremap 'd "+d
