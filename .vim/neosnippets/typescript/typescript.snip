@@ -289,9 +289,11 @@ abbr ${1:#:name}(${2:#:args}): ${3:void} {${0}}
 # Expressions
 
 snippet check_typed_property_existent
-alias typeof_optional_property
-abbr typeof (${1:x} as { ${2:propName}?: ${3:primitive} }).$2 === '$3'${0}
-    typeof (${1:x} as { ${2:propName}?: ${3:primitive} }).$2 === '$3'${0}
+abbr typeof (${1:x} as { ${2:propName}?: ${3:primitive} }).$2 === '$3'
+    typeof (${1:x} as { ${2:propName}?: ${3:primitive} }).$2 === '$3'
+
+snippet check_optional_is_foo
+    ${4:isFoo}((${1:x} as { ${2:propName}?: ${3:Type} }).$2)
 
 snippet debugger
 alias break_point

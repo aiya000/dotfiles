@@ -61,12 +61,14 @@ abbr @example
     @example
 
 snippet tsdoc_testify_block
+alias testify
    @example
    * \`\`\`
-   * import { equal } from 'assert'
-   * ${1}
-   * equal(
-   *  ${2:actual},
-   *  ${3:expected},
+   * import { ${1:deepEqual} } from 'assert'
+   *
+   * ${2}
+   * $1(
+   *  ${3:actual},
+   *  ${4:expected},
    * )
    * \`\`\`
