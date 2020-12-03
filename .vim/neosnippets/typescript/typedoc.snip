@@ -36,6 +36,11 @@ alias category
 abbr @category
     @category
 
+snippet typedoc_package_documentation
+alias package_documentation
+abbr @packageDocumentation
+    @packageDocumentation
+
 snippet see
 abbr [[${0:name}]]
     [[${0:name}]]
@@ -65,8 +70,8 @@ alias testify
    @example
    * \`\`\`
    * import { ${1:deepEqual} } from 'assert'
-   *
    * ${2}
+   *
    * $1(
    *  ${3:actual},
    *  ${4:expected},
