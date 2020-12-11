@@ -25,10 +25,12 @@ function xl () {
     elif i_have yarn && [[ -e package.json ]] && [[ -e yarn.lock ]] ; then
         alias xi='yarn install'
         alias xr='yarn run'
+        alias xb='yarn run build'
         alias xx=yarn
     elif i_have npm && [[ -e package.json ]] ; then
         alias xi='npm install'
         alias xr='npm run'
+        alias xb='npm run build'
         alias xx=npm
     elif i_have gradle && false ; then
         # TODO
