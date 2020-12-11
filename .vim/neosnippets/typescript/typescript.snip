@@ -2,17 +2,17 @@
 
 snippet for_traditional
 alias fort
-abbr for (${1:let i = 0}; ${2:i < x}; ${3:i++}) {${0}}
-    for (${1:let i = 0}; ${2:i < x}; ${3:i++}) {${0}}
+abbr for (${1:let i = 0}; ${2:i < x}; ${3:i++}) {${0:#:here}}
+    for (${1:let i = 0}; ${2:i < x}; ${3:i++}) {${0:#:here}}
 
 snippet for_in
-abbr for (const ${1:i} in ${2:xs}) {${0}}
-    for (const ${1:i} in ${2:xs}) {${0}}
+abbr for (const ${1:i} in ${2:xs}) {${0:#:here}}
+    for (const ${1:i} in ${2:xs}) {${0:#:here}}
 
 snippet for_of
 alias for
-abbr for (const ${1:x} of ${2:xs}) {${0}}
-    for (const ${1:x} of ${2:xs}) {${0}}
+abbr for (const ${1:x} of ${2:xs}) {${0:#:here}}
+    for (const ${1:x} of ${2:xs}) {${0:#:here}}
 
 snippet while
 abbr while (${1:cond}) {${0:#:here}}
@@ -36,8 +36,8 @@ abbr throw new Error(${0:#:here})
     throw new Error(${0:#:here})
 
 snippet if
-abbr if (${1:#:cond}) {${0}}
-    if (${1:#:cond}) {${0}}
+abbr if (${1:#:cond}) {${0:#:here}}
+    if (${1:#:cond}) {${0:#:here}}
 
 snippet else
 abbr else {${0:#:here}}
@@ -45,8 +45,8 @@ abbr else {${0:#:here}}
 
 snippet function
 alias   func fun def
-abbr function ${1:#:name}(${2:#:args}): ${3:void} {${0}}
-    function ${1:#:name}(${2:#:args}): ${3:void} {${0}}
+abbr function ${1:#:name}(${2:#:args}): ${3:void} {${0:#:here}}
+    function ${1:#:name}(${2:#:args}): ${3:void} {${0:#:here}}
 
 snippet arrow_function
 alias arrow ar
@@ -60,8 +60,8 @@ abbr ${1:name}(${2:#:args}): ${3:type} {${0:#:here}}
 
 snippet interface
 alias inter
-abbr interface ${1:Name} {${0}}
-    interface ${1:Name} {${0}}
+abbr interface ${1:Name} {${0:#:here}}
+    interface ${1:Name} {${0:#:here}}
 
 snippet type
 abbr type ${1:Name} = ${0}
@@ -127,24 +127,24 @@ snippet readonly
     readonly
 
 snippet enum
-abbr enum ${1:Name} {${0}}
-    enum ${1:Name} {${0}}
+abbr enum ${1:Name} {${0:#:here}}
+    enum ${1:Name} {${0:#:here}}
 
 snippet class
 alias cla
-abbr class ${1:Name} {${0}}
-    class ${1:Name} {${0}}
+abbr class ${1:Name} {${0:#:here}}
+    class ${1:Name} {${0:#:here}}
 
 snippet constructor
-    constructor(${1:#:args}) {${0}}
+    constructor(${1:#:args}) {${0:#:here}}
 
 snippet namespace
-abbr namespace ${1:Name} {${0}}
-    namespace ${1:Name} {${0}}
+abbr namespace ${1:Name} {${0:#:here}}
+    namespace ${1:Name} {${0:#:here}}
 
 snippet module
-abbr module ${1:Name} {${0}}
-    module ${1:Name} {${0}}
+abbr module ${1:Name} {${0:#:here}}
+    module ${1:Name} {${0:#:here}}
 
 snippet declare
 alias decl
@@ -279,12 +279,16 @@ abbr private set ${1:fieldName}(x: ${2:type}) {${0:#:here}}
 
 snippet async_function
 alias async_fun afun
-abbr async function ${1:#:name}(${2:#:args}): Promise<${3:void}> {${0}}
-    async function ${1:#:name}(${2:#:args}): Promise<${3:void}> {${0}}
+abbr async function ${1:#:name}(${2:#:args}): Promise<${3:void}> {${0:#:here}}
+    async function ${1:#:name}(${2:#:args}): Promise<${3:void}> {${0:#:here}}
 
 snippet property_method
-abbr ${1:#:name}(${2:#:args}): ${3:void} {${0}}
-    ${1:#:name}(${2:#:args}): ${3:void} {${0}}
+abbr ${1:#:name}(${2:#:args}): ${3:void} {${0:#:here}}
+    ${1:#:name}(${2:#:args}): ${3:void} {${0:#:here}}
+
+snippet elvis_operator
+abbr ??
+    ??
 
 # Expressions
 
