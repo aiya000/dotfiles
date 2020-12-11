@@ -22,7 +22,7 @@ function xl () {
         alias xc='etlas clean'
         alias xr='etlas run'
         alias xx=etlas
-    elif i_have yarn && [[ -e package.json ]] ; then
+    elif i_have yarn && [[ -e package.json ]] && [[ -e yarn.lock ]] ; then
         alias xi='yarn install'
         alias xr='yarn run'
         alias xx=yarn
