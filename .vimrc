@@ -9,21 +9,21 @@ let s:List = s:V.import('Data.List')
 " {{{
 
 " Open in preference to an entity
-let $MYVIMRC = filereadable($'${$HOME}/.dotfiles/.vimrc')
-  \ ? $'${$HOME}/.dotfiles/.vimrc'
+let $MYVIMRC = filereadable($HOME .. '/.dotfiles/.vimrc')
+  \ ? $HOME .. '/.dotfiles/.vimrc'
   \ : $MYVIMRC
 
-let $MYGVIMRC = filereadable($'${$HOME}/.dotfiles/.gvimrc')
-  \ ? $'${$HOME}/.dotfiles/.gvimrc'
+let $MYGVIMRC = filereadable($HOME .. '/.dotfiles/.gvimrc')
+  \ ? $HOME .. '/.dotfiles/.gvimrc'
   \ : $MYGVIMRC
 
 " Global values
 let g:vimrc = get(g:, 'vimrc', #{
   \ loaded: 0,
-  \ vim_home: $'${$HOME}/.vim',
+  \ vim_home: $HOME .. '/.vim',
   \ path_at_started: getcwd(),
   \ gui_editor: has('nvim') ? 'gonvim' : 'gvim',
-  \ backupdir: $'${$HOME}/.backup/vim-backup',
+  \ backupdir: $HOME .. '/.backup/vim-backup',
   \ is_unix: has('unix'),
   \ is_macos: has('macunix'),
   \ is_wsl: executable('uname') && (system('uname -a') =~# 'Microsoft'),
@@ -35,10 +35,10 @@ let g:vimrc['open_on_gui'] =
   \ g:vimrc['is_macos']   ? 'open' :
   \ g:vimrc['is_windows'] ? 'start' :
   \ g:vimrc['is_unix']    ? 'xdg-open' : 'no method for GUI-open'
-let g:vimrc['directory']  = $'${g:vimrc['backupdir']}/swp'
-let g:vimrc['undodir']    = $'${g:vimrc['backupdir']}/undo'
-let g:vimrc['viewdir']    = $'${g:vimrc['backupdir']}/view'
-let g:vimrc['sessiondir'] = $'${g:vimrc['backupdir']}/session'
+let g:vimrc['directory']  = g:vimrc['backupdir'] .. '/swp'
+let g:vimrc['undodir']    = g:vimrc['backupdir'] .. '/undo'
+let g:vimrc['viewdir']    = g:vimrc['backupdir'] .. '/view'
+let g:vimrc['sessiondir'] = g:vimrc['backupdir'] .. '/session'
 
 " }}}
 
@@ -58,15 +58,15 @@ scriptencoding utf-8
 " Prepare dein.vim {{{
 
 " Start dein.vim
-let s:dein_dirname = $'${g:vimrc['vim_home']}/bundle/repos/github.com/Shougo/dein.vim'
-let &runtimepath   = $'${&runtimepath},${s:dein_dirname}'
+let s:dein_dirname = g:vimrc['vim_home'] .. '/bundle/repos/github.com/Shougo/dein.vim'
+let &runtimepath   = &runtimepath .. ',' .. s:dein_dirname
 
 try
-  call dein#begin($'${$HOME}/.vim/bundle')
+  call dein#begin($HOME .. '/.vim/bundle')
 catch /E117/  " If dein.vim is not found
   try
     call vimrc#fetch_dein(s:dein_dirname)
-    call dein#begin($'${$HOME}/.vim/bundle')
+    call dein#begin($HOME .. '/.vim/bundle')
     echo 'dein.vim installation was completed.'
     echo 'Please execute :call dein#install(),'
     echo 'and restart your vim.'
@@ -77,8 +77,8 @@ catch /E117/  " If dein.vim is not found
 endtry
 
 " Copy the dein.vim's document
-let s:dein_doc_from = $'${s:dein_dirname}/doc/dein.txt'
-let s:dein_doc_to   = $'${g:vimrc['vim_home']}/doc/dein.txt'
+let s:dein_doc_from = s:dein_dirname .. '/doc/dein.txt'
+let s:dein_doc_to   = g:vimrc['vim_home'] .. '/doc/dein.txt'
 if filereadable(s:dein_doc_from) && !filereadable(s:dein_doc_to)
   call writefile(readfile(s:dein_doc_from), s:dein_doc_to)
 endif
@@ -134,11 +134,11 @@ call dein#add('Shougo/dein.vim', {'rtp': ''})
 " {{{
 " NOTE: This section must be put at between dein#begin() and dein#end()
 
-if filereadable($'${$HOME}/.vimrc_private')
+if filereadable($HOME .. '/.vimrc_private')
   source ~/.vimrc_private
 endif
 
-if filereadable($'${$HOME}/.vimrc_env')
+if filereadable($HOME .. '/.vimrc_env')
   source ~/.vimrc_env
 endif
 
@@ -231,7 +231,7 @@ let g:quickrun_config = {
     \ 'command' : 'themis',
     \ 'cmdopt'  : '--runtimepath ".."',
     \ 'exec'    : '%c %o %s:p | tr -d "\r"',
-    \ 'tempfile':  $'${$TMP}/{tempname()}.vimspec',
+    \ 'tempfile':  $TMP .. '/{tempname()}.vimspec',
   \ },
   \ 'html': {
     \ 'command': g:vimrc['open_on_gui'],
@@ -304,7 +304,7 @@ let g:quickrun_config = {
     \ 'cmdopt': '--warn',
     \ 'exec': [
       \ '%c %s %o --output /tmp/vim-quickrun-elm.html',
-      \  $'${g:vimrc['open_on_gui']} /tmp/vim-quickrun-elm.html',
+      \  g:vimrc['open_on_gui'] .. ' /tmp/vim-quickrun-elm.html',
     \ ],
     \ 'tempfile': '%{tempname()}.elm',
   \ },
@@ -323,7 +323,7 @@ let g:quickrun_config = {
     \ 'runner': 'vimproc',
     \ 'exec': [
       \ 'dot -T png %o %s -o %s.png',
-      \ $'${g:vimrc['open_on_gui']} %s.png',
+      \ g:vimrc['open_on_gui'] .. ' %s.png',
     \ ],
     \ 'hook/sweep/files': '%S:p:r.png',
     \ 'outputter/error/error': 'quickfix',
@@ -338,7 +338,7 @@ let g:tweetvim_async_post = 1
 let g:twibill_use_job     = 1
 
 " Avoid unite-tweetvim lazy loading error
-let g:tweetvim_config_dir = $'${$HOME}/.tweetvim'
+let g:tweetvim_config_dir = $HOME .. '/.tweetvim'
 
 " }}}
 " foldCC {{{
@@ -389,7 +389,7 @@ let g:bakaup_auto_backup = 1
 " }}}
 " neosnippet.vim {{{
 
-let g:neosnippet#snippets_directory = $'${g:vimrc['vim_home']}/neosnippets'
+let g:neosnippet#snippets_directory = g:vimrc['vim_home'] .. '/neosnippets'
 let g:neosnippet#disable_select_select_mappings = 1
 
 " }}}
@@ -509,7 +509,7 @@ let s:ghc_standard_extensions = [
 let s:ale_linters_hlint =
   \ 'hlint ' ..
   \ map(s:ghc_standard_extensions, {_, ext ->
-    \ $'-X ${ext}'
+    \ '-X ' .. ext
   \ })
   \ ->join()
 
@@ -522,15 +522,15 @@ let g:ale_linters = #{
   \ java: ['checkstyle', 'google-java-format', 'PMD'],
 \ }
 
-let g:ale_scala_scalastyle_config = $'${$HOME}/.dotfiles/scalastyle_config_default.xml'
+let g:ale_scala_scalastyle_config = $HOME .. '/.dotfiles/scalastyle_config_default.xml'
 
 augroup vimrc
   autocmd ColorScheme * highlight ALEError ctermbg=gray ctermfg=black
 
   autocmd VimEnter *
     \  if filereadable('./scalastyle_config.xml') && (input('locally scalastyle_config.xml was found, Do you want to load? (y/n)') == 'y')
-    \| let g:ale_scala_scalastyle_config = $'${execute('pwd')[:-1]}/scalastyle-config.xml'
-      \| echomsg $'a scalastyle config loaded: ${g:ale_scala_scalastyle_config}'
+    \| let g:ale_scala_scalastyle_config = execute('pwd')[:-1] .. '/scalastyle-config.xml'
+      \| echomsg 'a scalastyle config loaded: ' .. g:ale_scala_scalastyle_config
     \| endif
 augroup END
 
@@ -956,8 +956,8 @@ let &tags = &tags . ',' . join([
   \ '../../.git/tags',
   \ '../../../.git/tags',
   \ '../../../../.git/tags',
-  \ $'${g:vimrc.path_at_started}/tags',
-  \ $'${g:vimrc.path_at_started}/.git/tags',
+  \ g:vimrc.path_at_started .. '/tags',
+  \ g:vimrc.path_at_started .. '/.git/tags',
 \ ], ',')
 
 " }}}
@@ -1467,7 +1467,7 @@ vmap <leader><leader>c <Plug>(operator-camelize-toggle)
 nmap . <Plug>(repeat-.)
 
 for x in s:List.char_range('a', 'z')
-  execute 'nnoremap' '<silent>' $'@${x}' $":\<C-u>call vimrc#execute_repeatable_macro('${x}')\<CR>"
+  execute 'nnoremap' '<silent>' ('@' .. x) (":\<C-u>call vimrc#execute_repeatable_macro('" .. x .. "')\<CR>")
 endfor
 
 " vim-yankround
@@ -1498,11 +1498,11 @@ inoreabbr encrpyt encrypt
 
 " }}}
 
-if filereadable($'${$HOME}/.vimrc_env_post')
+if filereadable($HOME .. '/.vimrc_env_post')
   source ~/.vimrc_env_post
 endif
 
-execute 'helptags' $'${g:vimrc['vim_home']}/doc'
+execute 'helptags' (g:vimrc['vim_home'] .. '/doc')
 filetype plugin indent on
 syntax enable
 let g:vimrc['loaded'] = v:true
