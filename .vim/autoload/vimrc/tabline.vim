@@ -32,7 +32,7 @@ function vimrc#tabline#running_lsp_servers() abort
     \ })
     \ ->join(', ')
 
-  return $'[${servers}]'
+  return '[' .. servers .. ']'
 endfunction
 
 function vimrc#tabline#tags_if_present() abort
