@@ -7,4 +7,4 @@ let b:undo_ftplugin = 'setl ' . join([
 \ ])
 
 let &commentstring = ' /*%s*/'
-setl cinkeys-=0# sw=4 ts=4 et
+setl cinkeys-=0# sw=2 ts=2 et

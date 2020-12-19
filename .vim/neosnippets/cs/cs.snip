@@ -108,6 +108,16 @@ alias primet
 abbr private ${1:void} ${2:Name}(${3:#:args})
     private ${1:void} ${2:Name}(${3:#:args}) ${0}
 
+snippet public_static_method
+alias public_function pubfun
+abbr public static ${1:void} ${2:Name}(${3:#:args}) ${0}
+    public static ${1:void} ${2:Name}(${3:#:args}) ${0}
+
+snippet private_static_method
+alias private_function prifun
+abbr private static ${1:void} ${2:Name}(${3:#:args}) ${0}
+    private static ${1:void} ${2:Name}(${3:#:args}) ${0}
+
 snippet import
 alias imp
 abbr using ${0};
