@@ -4,29 +4,36 @@ let b:undo_ftplugin = 'setl ' . join([
 
 setl cursorline
 
+const s:refresh_rate_to_show_stash = 100
+
 function s:force_show_git_stash_size_onto_top(gina_status_bufnr, _) abort
-  let current_bufnr = winbufnr(0)
+  const current_pos = getpos('.')
 
   try
     execute ':buffer' a:gina_status_bufnr
-    let status = getline(1)
 
-    if s:is_gina_status_never_loaded_yet(status)
-      " Retry later
-      call timer_start(50, function('s:force_show_git_stash_size_onto_top', [a:gina_status_bufnr]))
-      return
-    elseif s:has_stash_size(status)
+    const status = getline(1)
+    if s:has_stash_size(status)
       return
     endif
 
-    let size = system('git stash list | wc -l')[:-2]
+    if s:is_gina_status_never_loaded_yet(status)
+      " Retry later
+      call timer_start(
+        \ s:refresh_rate_to_show_stash,
+        \ function('s:force_show_git_stash_size_onto_top', [a:gina_status_bufnr])
+        \ )
+      return
+    endif
+
+    const size = system('git stash list | wc -l')[:-2]
     if size ==# '0'
       return
     endif
 
     call s:force_show(status, size)
   finally
-    execute ':buffer' current_bufnr
+    call setpos('.', current_pos)
   endtry
 endfunction
 
@@ -39,10 +46,14 @@ function s:has_stash_size(topline) abort
 endfunction
 
 function s:force_show(topline, size) abort
-  let status = a:topline .. ' ' .. printf('[stash %s]', a:size)
+  const status = a:topline .. ' ' .. printf('[stash %s]', a:size)
   setl modifiable
   call setline(1, status)
   setl nomodifiable
 endfunction
 
-call timer_start(50, function('s:force_show_git_stash_size_onto_top', [winbufnr(0)]))
+call timer_start(
+  \ s:refresh_rate_to_show_stash,
+  \ function('s:force_show_git_stash_size_onto_top',
+  \ [winbufnr(0)])
+  \ )
