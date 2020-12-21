@@ -172,7 +172,7 @@ function vimrc#open_explorer(split, ...) abort
     \ a:split ==# 'split' ? ':split | silent Dirvish' :
     \ a:split ==# 'vsplit' ? ':vsplit | silent Dirvish' :
     \ a:split ==# 'tabnew' ? ':tabnew | silent Dirvish' :
-      \ execute($'throw "an unexpected way to open the explorer: ${a:split}"')
+      \ execute('throw "an unexpected way to open the explorer: ' .. a:split .. '"')
 
   if !isdirectory(path)
     " :silent to ignore an error message. Because opening seems success.
@@ -229,7 +229,7 @@ endfunction
 
 function s:get_current_obj_keys() abort
   const surrounds = g:operator#surround#blocks['-'] + get(g:operator#surround#blocks, &filetype, [])
-  const obj_keys = map(surrounds, { _, x -> x.keys })
+  const obj_keys = s:List.map(surrounds, { x -> x.keys })
   return s:List.flatten(obj_keys)
 endfunction
 
