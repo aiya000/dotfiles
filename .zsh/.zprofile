@@ -30,6 +30,7 @@ export LICE_USER=aiya000
 export CCACHE_DISABLE=1
 export THEMIS_HOME="$HOME/.vim/bundle/repos/github.com/thinca/vim-themis"
 export NVIM_PYTHON_LOG_FILE=$HOME/.vim/.log/nvim_python.log
+export PYENV_ROOT=$HOME/.pyenv
 
 # Mine
 export MY_GUI_EDITOR=gvim
@@ -50,9 +51,10 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 
 export PATH
 
-# Mine
+# High
 PATH=$HOME/bin:$HOME/sbin:$PATH
 PATH=$HOME/.dotfiles/bin:$PATH
+PATH=$PYENV_ROOT/bin:$PATH
 
 # Basics
 PATH=$PATH:/bin:/sbin
