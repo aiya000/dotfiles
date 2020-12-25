@@ -5,7 +5,6 @@ configure=$(cat << EOS
     --enable-fail-if-missing \
     --enable-multibyte \
     --enable-perlinterp \
-    --enable-pythoninterp \
     --enable-python3interp \
     --enable-rubyinterp \
     --enable-luainterp \
@@ -13,6 +12,7 @@ configure=$(cat << EOS
     --enable-fontset \
     --with-luajit \
     --with-lua-prefix=/usr/local/Cellar/luajit/2.0.5 \
+    --with-python3-command=/usr/local/Cellar/python@3.8/3.8.6_2/bin/python3.8 \
     --with-features=huge \
     --with-compiledby=aiya000 \
     --enable-terminal
