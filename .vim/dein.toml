@@ -113,9 +113,6 @@ repo = 'osyo-manga/vim-precious'
 repo = 'tyru/sync-term-cwd.vim'
 
 [[plugins]]
-repo = 'arp242/jumpy.vim'
-
-[[plugins]]
 repo = 'kana/vim-repeat'
 
 [[plugins]]
