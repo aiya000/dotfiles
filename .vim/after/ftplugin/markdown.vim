@@ -12,6 +12,11 @@ setl completefunc=github_complete#complete
 let &commentstring = '<!-- %s -->'
 set conceallevel=0
 
+let s:git_root = system('git rev-parse --show-toplevel')[:-2]
+if filereadable(s:git_root .. '/.textlintrc')
+  let g:ale_fixers['markdown'] = ['textlint']
+endif
+
 nnoremap <silent><buffer> <localleader>d :<C-u>w<CR>:!doctoc %<CR>:edit %<CR>
 nnoremap <silent><buffer> <localleader>r :<C-u>PrevimOpen<CR>
 nnoremap <silent><buffer> <localleader><localleader>r :<C-u>call <SID>open_grip()<CR>
