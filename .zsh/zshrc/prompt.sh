@@ -19,7 +19,8 @@ function zshrc::prompt::sub_status () {
     }
 
     function get_git_commits () {
-        local commits=$(git status --short 2> /dev/null | head -1 | grep -o '\[.*\]')
+        local commits
+        commits=$(git status --short 2> /dev/null | head -1 | grep -o '\[.*\]')
         if [ "$?" -eq 0 ] ; then
             echo "%{$bg[red]$fg[black]%}${commits}%{$reset_color%}"
         fi
@@ -33,7 +34,8 @@ function zshrc::prompt::sub_status () {
     }
 
     function get_git_branch_name () {
-        local branch=$(git branch --show-current 2> /dev/null)
+        local branch
+        branch=$(git branch --show-current 2> /dev/null)
         if [ "$?" -ne 0 ] ; then
             echo '[NO REPO]'
             exit
