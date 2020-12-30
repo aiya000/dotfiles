@@ -34,13 +34,14 @@ function zshrc::prompt::sub_status () {
     }
 
     function get_git_branch_name () {
-        local branch
-        branch=$(git branch --show-current 2> /dev/null)
+        local branches
+        branches=$(git branch 2> /dev/null)
         if [ "$?" -ne 0 ] ; then
             echo '[NO REPO]'
             exit
         fi
-        echo "%{$bg[green]$fg[black]%}[${branch}]%{$reset_color%}"
+        local branch_name=$(echo $branches | grep '\*\s.*' | awk '{print $2}')
+        echo "%{$bg[green]$fg[black]%}[${branch_name}]%{$reset_color%}"
     }
 
     function get_zle_mode () {
