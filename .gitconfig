@@ -21,6 +21,7 @@
 	quotepath = false
 [init]
 	templatedir = ~/.git_templates
+	defaultBranch = main
 [status]
 	short = true
 	branch = true
