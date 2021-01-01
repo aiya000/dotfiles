@@ -1,0 +1,53 @@
+#---------------#
+#    Options    #
+#---------------#
+# Systems
+set-option -g default-shell /bin/bash
+set-option -g default-command /bin/bash
+set-option -g history-limit 10000
+#set-window-option -g utf8 on
+set-option -g escape-time 10
+
+# Keys
+set-option -g prefix C-g
+set-option -g status-keys emacs
+set-window-option -g mode-keys vi
+bind C-g send-prefix
+
+# Interface
+set-option -g default-terminal "screen-256color"
+set-option -g status-style bg=blue
+set-window-option -g window-status-current-style bg=black,fg=white
+set-window-option -g window-status-style fg=cyan
+
+#---------------#
+#    KeyBind    #
+#---------------#
+# Unset default prefix
+unbind C-b
+
+# Set vim like window operator
+unbind l
+bind -r h select-pane -L
+bind -r j select-pane -D
+bind -r k select-pane -U
+bind -r l select-pane -R
+
+# Change horizon split key
+unbind '"'
+bind s split-window -v
+
+# Change virtical split key
+unbind %
+bind v split-window -h
+
+# Yank Keys
+bind -t vi-copy v begin-selection
+bind -t vi-copy y copy-selection
+bind -t vi-copy _ back-to-indentation
+
+# Others
+bind * choose-session
+
+# Set reload configure
+bind r source-file ~/.tmux.conf \; display-message ">> .tmux.conf reloaded"
