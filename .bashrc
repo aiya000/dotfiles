@@ -63,6 +63,10 @@ if [[ -d ~/.rbenv ]] ; then
     eval "$("$HOME/.rbenv/bin/rbenv" init -)"
 fi
 
+if [[ -d ~/.nvm ]] ; then
+    source $NVM_DIR/nvm.sh
+fi
+
 # ruby-build
 if [[ -d ~/.rbenv/plugins/ruby-build/bin ]] ; then
     PATH=$PATH:$HOME/.rbenv/plugins/ruby-build/bin
@@ -108,3 +112,4 @@ fi
 
 # Expose to mark .bashrc is loaded
 alias rc_loaded='echo "rc_loaded"'
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

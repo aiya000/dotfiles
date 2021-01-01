@@ -80,12 +80,19 @@ source ~/.zsh/zshrc/prompt.sh
 ###################
 # Define Commands #
 ###################
-# {{{
+# Aliases {{{
 
 alias history='fc -li 1'
 alias hist=history
 alias reload=". $ZDOTDIR/.zshrc && . $ZDOTDIR/.zprofile && echo '>> the zsh configrations are reloaded'"
 alias rel=reload
+
+# }}}
+# General plugins {{{
+
+if [[ -f $NVM_DIR/nvm.sh ]] ; then
+    source $NVM_DIR/nvm.sh
+fi
 
 # }}}
 

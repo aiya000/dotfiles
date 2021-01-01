@@ -31,6 +31,7 @@ export CCACHE_DISABLE=1
 export THEMIS_HOME="$HOME/.vim/bundle/repos/github.com/thinca/vim-themis"
 export NVIM_PYTHON_LOG_FILE=$HOME/.vim/.log/nvim_python.log
 export PYENV_ROOT=$HOME/.pyenv
+export NVM_DIR=$HOME/.nvm
 
 # Mine
 export MY_GUI_EDITOR=gvim
@@ -64,11 +65,15 @@ PATH=$PATH:/opt/bin:/opt/sbin:/opt/local/sbin:/opt/local/bin
 
 PATH=$PATH:$GOPATH/bin
 PATH=$PATH:$HOME/.yarn/bin
-PATH=$PATH:$HOME/.npm-prefix//bin
+PATH=$PATH:$HOME/.npm-prefix/bin
 PATH=$PATH:$HOME/.cargo/bin
 PAHT=$PATH:$HOME/.ghcup/bin
-PATH=$PATH:$ZDOTDIR/zsh_completions
 PATH=$PATH:$HOME/.local/bin
+
+
+# completions
+PATH=$PATH:$ZDOTDIR/zsh_completions
+PATH=$PATH:$NVM_DIR  # ~/.nvm/bash_completion
 
 # git-credential-gnome-keyring
 PATH=$PATH:/usr/lib/git-core
