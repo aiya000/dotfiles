@@ -129,13 +129,9 @@ command! -bar -nargs=+ Grep call vimrc#grep_those(<f-args>)
 command! -bar TodoList Grep TODO FIXME XXX
 
 " Tapis
-function! Tapi_Tabnew(_, args) abort
-  let pwd = a:args[0]
-  let files = a:args[1:]
-  let paths =
-    \ map(files, { _, file ->
-      \ fnameescape(pwd .. '/' .. file)
-    \ })
+function Tapi_Tabnew(_, args) abort
+  const files = a:args[1:]
+  const paths = map(files, { _, file -> fnameescape(file) })
 
   for path in paths
     execute 'tabnew' path
