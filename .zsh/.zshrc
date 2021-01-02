@@ -91,7 +91,7 @@ alias rel=reload
 # General plugins {{{
 
 if [[ -f $NVM_DIR/nvm.sh ]] ; then
-    source $NVM_DIR/nvm.sh
+    source $NVM_DIR/nvm.sh > ~/my-nvm.log 2>&1  # Don't output anoying 'nvm:21: bad floating point constant'
 fi
 
 # }}}
