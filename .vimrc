@@ -187,6 +187,12 @@ augroup vimrc
 
   autocmd InsertEnter * call deoplete#enable()
 
+  " Please see vimrc#open_scratch_buffer()
+  autocmd WinEnter,BufEnter,InsertLeave,Winleave,BufLeave scratch*.md
+    \  if bufname('%') !~# 'gista://'
+      \| write
+    \| endif
+
   " Set the 'none' filetype to the empty filetype
   autocmd VimEnter,BufNew * if empty(&ft) | setf none | endif
 augroup END
