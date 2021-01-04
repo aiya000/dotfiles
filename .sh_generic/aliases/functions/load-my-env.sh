@@ -12,6 +12,7 @@ function load-my-env () {
         load-my-env bash
         load-my-env travis
         load-my-env ccache
+        load-my-env linuxbrew
         ;;
     haskell)
         if [ -d ~/.stack ] ; then
@@ -85,6 +86,9 @@ function load-my-env () {
             export CCACHE_DIR=~/.ccache
             echo export CCACHE_DIR=~/.ccache
         fi
+        ;;
+    linuxbrew)
+        eval $(~/.linuxbrew/bin/brew shellenv)
         ;;
     *)
         echo "You may haven't $target_name" > /dev/stderr

@@ -69,6 +69,7 @@ PATH=$PATH:$HOME/.npm-prefix/bin
 PATH=$PATH:$HOME/.cargo/bin
 PAHT=$PATH:$HOME/.ghcup/bin
 PATH=$PATH:$HOME/.local/bin
+PATH=$PATH:$HOME/.linuxbrew/bin
 
 
 # completions
