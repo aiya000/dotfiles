@@ -1,6 +1,8 @@
 scriptencoding utf-8
 scriptversion 3
 
+let s:List = vital#vimrc#import('Data.List')
+
 nnoremap <silent> <Plug>(vimrc-surround-append-choice) :<C-u>call vimrc#append_choose_surround()<CR>
 nnoremap <silent> <Plug>(vimrc-surround-append-choice-wide) :<C-u>call vimrc#append_choose_surround_wide()<CR>
 nnoremap <silent> <Plug>(vimrc-surround-delete-mostly-inner) :<C-u>call vimrc#delete_mostly_inner_surround()<CR>
@@ -131,7 +133,7 @@ command! -bar TodoList Grep TODO FIXME XXX
 " Tapis
 function Tapi_Tabnew(_, args) abort
   const files = a:args[1:]
-  const paths = map(files, { _, file -> fnameescape(file) })
+  const paths = s:List.map(files, { file -> fnameescape(file) })
 
   for path in paths
     execute 'tabnew' path
