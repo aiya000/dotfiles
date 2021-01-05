@@ -1,8 +1,14 @@
 #!/bin/bash
 
-now_dir="$HOME/.backup/dustbox/$(date +'%Y-%m-%d')/$(date +'%H:%M:%S')"
+deleting_files="$*"
+dust_dir="$HOME/.backup/dustbox"
 
-if [[ ! -d $now_dir ]] ; then
-    mkdir -p "$now_dir"
-fi
-mv "$@" "$now_dir"
+for file in ${deleting_files[$i]} ; do
+  maybeExt=${file##*.}
+  ext=$([[ "$file" != "$maybeExt" ]] && echo ".$maybeExt" || echo '')
+
+  new_name=$(echo "${file}_$(date +'%Y-%m-%d')_$(date +'%H:%M:%S')$ext" | sed 's;/;+;g')
+
+  echo mv "$file" "$dust_dir/$new_name"
+  mv "$file" "$dust_dir/$new_name"
+done
