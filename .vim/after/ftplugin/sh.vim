@@ -1,9 +1,9 @@
 let b:undo_ftplugin = 'setl ' . join([
-\	'commentstring<',
-\	'ts<',
-\	'sw<',
-\	'et<',
-\])
+  \ 'commentstring<',
+  \ 'ts<',
+  \ 'sw<',
+  \ 'et<',
+\ ])
 
 let &commentstring = ' # %s'
-setl ts=4 sw=4 et
+setl ts=2 sw=2 et
