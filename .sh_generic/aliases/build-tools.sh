@@ -23,9 +23,11 @@ function xl () {
         alias xr='etlas run'
         alias xx=etlas
     elif i_have yarn && [[ -e package.json ]] && [[ -e yarn.lock ]] ; then
-        alias xi='yarn install'
+        alias xi='yarn add'
+        alias xid='yarn add --dev'
         alias xr='yarn run'
-        alias xb='yarn run build'
+        alias xb='yarn build'
+        alias xt='yarn test'
         alias xx=yarn
     elif i_have npm && [[ -e package.json ]] ; then
         alias xi='npm install'
