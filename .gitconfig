@@ -42,5 +42,3 @@
 	indentHeuristic = true
 [rebase]
 	autostash = true
-[credential "https://github.com"]
-	helper = !gh auth git-credential
