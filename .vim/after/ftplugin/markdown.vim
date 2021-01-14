@@ -28,10 +28,6 @@ vnoremap <silent><buffer> i{ :<C-u>call <SID>organize_this_table()<CR>
 
 syntax sync fromstart
 
-augroup FtpluginMarkdown
-  autocmd!
-augroup END
-
 function s:open_grip() abort
   let cmd = printf(
     \ 'grip --pass %s --browser %s',
@@ -51,25 +47,3 @@ function! s:organize_this_table() abort
   execute 's/[^\|]/-/g'
   normal! k
 endfunction
-
-function s:setup_markdown2ctags_if_ctags_is_not_latest(stdout, _stderr) abort
-  for lang in a:stdout
-    if lang ==# 'Markdown'
-      return
-    endif
-  endfor
-
-  augroup FtpluginMarkdown
-    autocmd BufEnter,BufWinEnter *.md
-      \  call denite#custom#var('outline', 'command', ['markdown2ctags.py'])
-      \| call denite#custom#var('outline', 'options', ['--sort=no'])
-      \| call denite#custom#var('outline', 'file_opt', '-f')
-  augroup END
-endfunction
-
-call job_start(
-  \ ['ctags', '--list-languages'],
-  \ vimrc#job#get_basic_options_completes_with(
-    \ function('s:setup_markdown2ctags_if_ctags_is_not_latest')
-  \ )
-\ )

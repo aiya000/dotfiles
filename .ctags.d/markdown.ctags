@@ -1,0 +1,7 @@
+--langdef=Markdown
+--langmap=markdown:.md
+--regex-Markdown=/^\# (.+)$/# \1/1,h1/
+--regex-Markdown=/^\## (.+)$/## \1/2,h2/
+--regex-Markdown=/^\### (.+)$/### \1/3,h3/
+--regex-Markdown=/^\#### (.+)$/#### \1/4,h4/
+--regex-Markdown=/^\##### (.+)$/##### \1/5,h5/

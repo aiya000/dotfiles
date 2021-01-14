@@ -1,5 +1,13 @@
 " Utility functions for job_start()
 
+" Example:
+" call job_start(
+"   \ ['xxx'],
+"   \ vimrc#job#get_basic_options_completes_with(
+"     \ function('s:foo')
+"   \ )
+" \ )
+
 let s:Message = vital#vimrc#import('Vim.Message')
 
 function vimrc#job#on_stdout(stdout, _channel, msg) abort
