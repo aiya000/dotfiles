@@ -61,6 +61,10 @@ snippet template_case
         ${3:echo "$$1 Didn't match anything"}
     esac
 
+snippet array_length
+abbr ${#${1:array_name}[@]}${0}
+    ${#${1:array_name}[@]}${0}
+
 # Magics
 
 snippet shellcheck_disable
