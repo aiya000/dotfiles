@@ -31,3 +31,6 @@
 [submodule ".vim/neosnippets/neosnippet-emoji"]
 	path = .vim/neosnippets/neosnippet-emoji
 	url = https://github.com/aiya000/neosnippet-emoji
+[submodule ".vim/neosnippets/neosnippet-kaomoji"]
+	path = .vim/neosnippets/neosnippet-kaomoji
+	url = https://github.com/aiya000/neosnippet-kaomoji
