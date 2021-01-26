@@ -973,10 +973,13 @@ nnoremap <C-c> <NOP>
 nnoremap <C-c><C-c> <C-c>
 
 " clear
-nnoremap <silent> <C-[> :<C-u>call <SID>clear()<CR>
-nnoremap <silent> <Esc> :<C-u>call <SID>clear()<CR>
-nnoremap <silent><expr> <C-l> <SID>clear()
-nnoremap <silent><expr> <C-k><C-l> <SID>deep_clear()
+nnoremap <expr> <Plug>(vimrc-clear) <SID>clear()
+nnoremap <expr> <Plug>(vimrc-clear-deep) <SID>clear_deep()
+
+nmap <C-[> <Plug>(vimrc-clear)
+nmap <Esc> <Plug>(vimrc-clear)
+nmap <C-l> <Plug>(vimrc-clear)
+nmap <C-k><C-l> <Plug>(vimrc-clear-deep)
 
 function s:clear() abort
   call yankround#inactivate()
@@ -985,7 +988,7 @@ function s:clear() abort
   return ':nohlsearch' .. "\<CR>"
 endfunction
 
-function s:deep_clear() abort
+function s:clear_deep() abort
   echo 'clearing...'
   PreciousReset  " heavy
 

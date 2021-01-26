@@ -22,7 +22,7 @@ nnoremap <silent><buffer> <localleader><localleader>d :<C-u>w<CR>:!doctoc %<CR>:
 nnoremap <silent><buffer> <localleader><localleader>r :<C-u>call <SID>open_grip()<CR>
 nnoremap <silent><buffer> <localleader><localleader>R :<C-u>silent !shiba % > /dev/null 2>&1 &<CR>
 "nnoremap <silent><buffer> <localleader>f :<C-u>!textlint --fix <C-r>=expand('%:p')<CR><CR>
-nmap <silent><buffer> <C-l> <C-[>:syntax sync fromstart<CR>
+" nmap <silent><buffer> <C-l> <C-[>:syntax sync fromstart<CR>
 
 vnoremap <silent><buffer> i{ :<C-u>call <SID>organize_this_table()<CR>
 
