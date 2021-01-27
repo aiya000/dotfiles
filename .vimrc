@@ -1365,7 +1365,7 @@ omap a* <Plug>(textobj-between-a)*
 omap i* <Plug>(textobj-between-i)*
 
 " translate.vim
-vnoremap <silent> <leader>k :Translate<CR>
+vnoremap <silent> <leader>k "zy:Translate<Space><C-r>z<CR>
 
 " ale
 nnoremap <silent> <C-k><C-a> :<C-u>ALEToggle<CR>
