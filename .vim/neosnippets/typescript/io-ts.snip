@@ -1,0 +1,7 @@
+snippet io_ts_interface
+abbr const ${1:name} = T.type({${0:#:here})
+    const ${1:name} = T.type({${0:#:here}})
+
+snippet io_ts_type_typeof_it
+abbr type ${1:Name} = T.TypeOf<typeof ${2:name}>${0}
+    type ${1:Name} = T.TypeOf<typeof ${2:name}>${0}

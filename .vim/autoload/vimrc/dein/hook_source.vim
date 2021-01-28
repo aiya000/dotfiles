@@ -24,6 +24,7 @@ function! vimrc#dein#hook_source#operator_surround() abort
       \ { 'block' : ['〈', '〉'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['〈', ' 〉', 'jK'] },
       \ { 'block' : ['『', '』'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['『', ' 』', 'j-k'] },
       \ { 'block' : ['＜', '＞'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['『', ' 』', 'j<', 'j>'] },
+      \ { 'block' : ['**', '**'], 'motionwise' : ['char'], 'keys' : ['B'] },
     \ ] + basic_between,
     \ 'review' : [
       \ { 'block' : ['@<b>{', '}'], 'motionwise' : ['char'], 'keys' : ['B'] },
@@ -36,9 +37,6 @@ function! vimrc#dein#hook_source#operator_surround() abort
       \ { 'block' : ['@<mathcode>{', '}'], 'motionwise' : ['char'], 'keys' : ['m'] },
       \ { 'block' : ['@<img>{', '}'], 'motionwise' : ['char'], 'keys' : ['[i'] },
       \ { 'block' : ['@<list>{', '}'], 'motionwise' : ['char'], 'keys' : ['[l'] },
-    \ ],
-    \ 'markdown' : [
-      \ { 'block' : ['**', '**'], 'motionwise' : ['char'], 'keys' : ['B'] },
     \ ],
     \ 'html' : [
       \ { 'block' : ['<p>', '</p>'], 'motionwise' : ['char'], 'keys' : ['[p'] },

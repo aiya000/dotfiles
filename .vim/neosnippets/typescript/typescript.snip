@@ -311,3 +311,7 @@ abbr new Promise((resolve, reject) => ${0:here}
 snippet use_logger_immediately
 abbr import(${1:'@/data/logger'}).then(x => ${2:x.default.log}(${0:#:here}))
     import(${1:'@/data/logger'}).then(x => ${2:x.default.log}(${0:#:here}))
+
+snippet throw_definitely_here_is_not_passed
+abbr throw new Error('Definitely here is not passed, because here is in a never context.')
+    throw new Error('Definitely here is not passed, because here is in a never context.')

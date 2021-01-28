@@ -1,8 +1,16 @@
 include html/*
 delete class cl cla
 
+snippet class_html_attr
+abbr class=""
+    class="${0:name}"
+
 include scss.snip
 delete class cl cla
+
+snippet class_scss
+abbr .${1:name} {${0:#:here}}
+    .${1:name} {${0:#:here}}
 
 include typescript/*
 delete tr  # For 'try'
