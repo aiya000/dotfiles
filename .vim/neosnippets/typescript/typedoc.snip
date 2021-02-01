@@ -69,11 +69,17 @@ snippet tsdoc_testify_block
 alias testify
    * @example
    * \`\`\`
-   * import { ${1:deepEqual} } from 'assert'
-   * ${2}
-   *
-   * $1(
-   *  ${3:actual},
-   *  ${4:expected},
-   * )
+    import { ${1:deepEqual} } from 'assert'
+    ${2}
+
+    $1(
+     ${3:actual},
+     ${4:expected},
+    )
+   * \`\`\`
+
+snippet tsdoc_testify_block_dummy
+   * @example
+   * \`\`\`
+   * // dummy
    * \`\`\`
