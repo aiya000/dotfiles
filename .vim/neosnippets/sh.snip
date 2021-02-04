@@ -62,8 +62,22 @@ snippet template_case
     esac
 
 snippet array_length
+alias array_size
 abbr ${#${1:array_name}[@]}${0}
     ${#${1:array_name}[@]}${0}
+
+snippet array_whole
+abbr ${${1:array_name}[@]}${0}
+    ${${1:array_name}[@]}${0}
+
+snippet args_length
+alias args_size
+abbr $#
+    $#
+
+snippet args_whole
+abbr $@
+    $@
 
 # Magics
 
