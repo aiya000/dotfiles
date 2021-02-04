@@ -75,6 +75,7 @@ if i_have git ; then
   alias gbm='git branch -m'
   alias gc='git commit --verbose'
   alias gcam='git commit --verbose --amend'
+  alias gcamm='git commit --verbose --amend -m'
   alias gcm='git commit -m'
   alias gcf='git commit --fixup'
   alias gaacm='git add -A && git commit -m'
@@ -166,7 +167,19 @@ if i_have git ; then
   alias gtree='git log --graph --decorate --oneline'
   alias gtree-all='git log --graph --decorate --oneline --all'
   alias gw='git worktree'
-  alias gwa='git worktree add'
+
+  function gwa () {
+    : Makes both the new branch and the new directory.
+    target_branch=$1
+    git worktree add "${target_branch//\#/}" "$target_branch"
+  }
+
+  function gwab () {
+    : Makes the new branch basing on a base branch.
+    new_branch=$1
+    base_branch=$2
+    git worktree add -b "$new_branch" "${new_branch//\#/}" "$base_branch"
+  }
 
   function _grs_n () {
     git reset --soft "HEAD~${1}"
