@@ -3,16 +3,14 @@
 
 # Must set user.name at local
 if [[ -z $(git config --local user.name) ]] ; then
-    echo 'fatal: user.name is not set locally'
-    echo '       You must set user.name at local'
-    exit 1
+  echo 'fatal: user.name is not set locally'
+  echo '       You must set user.name at local'
+  exit 1
 fi
 
 # Must set user.email at local
 if [[ -z $(git config --local user.email) ]] ; then
-    echo 'fatal: user.email is not set locally'
-    echo '       You must set user.email at local'
-    exit 1
+  echo 'fatal: user.email is not set locally'
+  echo '       You must set user.email at local'
+  exit 1
 fi
-
-git secrets --pre_commit_hook -- "$@"
