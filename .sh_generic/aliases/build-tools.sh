@@ -31,6 +31,7 @@ function xl () {
         alias xx=yarn
     elif i_have npm && [[ -e package.json ]] ; then
         alias xi='npm install'
+        alias xid='npm install --save-dev'
         alias xr='npm run'
         alias xb='npm run build'
         alias xx=npm
