@@ -356,3 +356,7 @@ on_ft = 'firestore'
 [[plugins]]
 repo = 'chikatoike/concealedyank.vim'
 on_source = 'gina.vim'
+
+[[plugins]]
+repo = 'jparise/vim-graphql'
+on_ft = ['graphql']
