@@ -119,10 +119,6 @@ on_ft = [
 ]
 
 [[plugins]]
-repo = 'lambdalisue/vim-gista'
-on_cmd = 'Gista'
-
-[[plugins]]
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
@@ -360,3 +356,8 @@ on_source = 'gina.vim'
 [[plugins]]
 repo = 'jparise/vim-graphql'
 on_ft = ['graphql']
+
+[[plugins]]
+repo = 'mattn/vim-gist'
+on_cmd = 'Gist'
+depends = ['webapi-vim']

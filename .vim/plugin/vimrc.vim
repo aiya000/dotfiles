@@ -96,7 +96,6 @@ command! -bar -nargs=* GTree Gina log --graph --decorate --oneline <args>
 command! -bar -nargs=* GTreeAll Gina log --graph --decorate --oneline --all <args>
 command! -bar -nargs=* GBrahcnAll Gina branch --all <args>
 command! -bar -nargs=* GBlame Gina blame <args>
-command! -bar -nargs=* Gist Gista post --stay <args>
 
 " Twitter
 command! -bar TweetVRChat call vimrc#tweet(g:vimrc.twitter.vrchat)
