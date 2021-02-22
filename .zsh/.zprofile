@@ -71,6 +71,8 @@ PAHT=$PATH:$HOME/.ghcup/bin
 PATH=$PATH:$HOME/.local/bin
 PATH=$PATH:$HOME/.linuxbrew/bin
 
+# Plugins
+PATH=$PATH:$ZDOTDIR/plugin/sh-git-lfs-install-append
 
 # completions
 PATH=$PATH:$ZDOTDIR/zsh_completions
