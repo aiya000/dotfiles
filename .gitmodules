@@ -34,3 +34,6 @@
 [submodule ".vim/neosnippets/neosnippet-kaomoji"]
 	path = .vim/neosnippets/neosnippet-kaomoji
 	url = https://github.com/aiya000/neosnippet-kaomoji
+[submodule ".zsh/plugin/sh-git-lfs-install-append"]
+	path = .zsh/plugin/sh-git-lfs-install-append
+	url = https://github.com/aiya000/sh-git-lfs-install-append.git
