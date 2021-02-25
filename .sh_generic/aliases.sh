@@ -158,15 +158,21 @@ if i_have git ; then
   alias greflog='git reflog'
   alias gshow='git show'
   alias gclone='git clone --recurse-submodules'
-  alias gtag-list='git tag | xargs echo'
-  alias gtag-add='git tag -a'
   alias gf='git fetch'
   alias gfo='git fetch origin'
   alias gbi='git bisect'
-  alias gtag='git tag | xargs echo'
+  alias gtag='git tag'
+  alias gtagam='gtag-add-m'
+  alias gtag-delete='git tag --delete'
+  alias gtagd='git tag --delete'
   alias gtree='git log --graph --decorate --oneline'
   alias gtree-all='git log --graph --decorate --oneline --all'
   alias gw='git worktree'
+
+  function gtag-add-m () {
+    local tag_name=$1 message=$2
+    git tag --annotate "$tag_name" --message "$message"
+  }
 
   function gwa () {
     : Makes both the new branch and the new directory.
