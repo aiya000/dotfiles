@@ -20,6 +20,7 @@
 	pager = cat
 	quotepath = false
 	excludesfile = ~/.gitignore_global
+	commentchar = $  # To use the GitHub's refering syntax
 [init]
 	templatedir = ~/.git_templates
 	defaultBranch = main
