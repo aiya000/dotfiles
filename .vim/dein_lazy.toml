@@ -361,3 +361,7 @@ on_ft = ['graphql']
 repo = 'mattn/vim-gist'
 on_cmd = 'Gist'
 depends = ['webapi-vim']
+
+[[plugins]]
+repo = 'vim-scripts/ShaderHighLight'
+on_ft = 'shaderlab'
