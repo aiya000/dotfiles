@@ -380,13 +380,6 @@ function vimrc#open_buffer_to_execute(cmd) abort
   silent write
 endfunction
 
-" Yank posted gist to clipboard
-function vimrc#yank_gista_posted_url() abort
-  const gistid = g:gista#avars.gistid
-  execute printf('Gista browse --yank --gistid=%s', gistid)
-  let @+ = @"
-endfunction
-
 " Auto set cursor position in the file
 function vimrc#visit_past_position()
   const past_posit = line("'\"")

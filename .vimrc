@@ -415,17 +415,6 @@ let g:deoplete#enable_at_startup = 1
 let g:visualstar_extra_commands = 'zzzv'
 
 " }}}
-" vim-gista {{{
-
-" Don't ask description for :Gista post
-let g:gista#command#post#interactive_description = 0
-let g:gista#command#post#allow_empty_description = 1
-
-augroup vimrc
-  autocmd User GistaPost call vimrc#yank_gista_posted_url()
-augroup END
-
-"}}}
 " autofmt {{{
 
 set formatexpr=autofmt#japanese#formatexpr()
@@ -817,6 +806,11 @@ augroup vimrc
   autocmd VimEnter,ColorScheme * highlight CursorWord0 ctermbg=LightGray ctermfg=Black
   autocmd VimEnter,ColorScheme * highlight CursorWord1 ctermbg=LightGray ctermfg=Black
 augroup END
+
+" }}}
+" gist.vim {{{
+
+let g:gist_clip_command = 'clip.exe'
 
 " }}}
 
