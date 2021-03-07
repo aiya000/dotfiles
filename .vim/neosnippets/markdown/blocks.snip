@@ -13,9 +13,16 @@ options indent
     \`\`\`
 
 snippet block_shell_session
-alias blsh blcl block_console
+alias blsh
 options indent
     \`\`\`shell-session
+    ${0}
+    \`\`\`
+
+snippet block_console
+alias blcl block_console
+options indent
+    \`\`\`console
     ${0}
     \`\`\`
 
@@ -25,3 +32,11 @@ options indent
     \`\`\`vim
     ${0}
     \`\`\`
+
+snippet block_typescript
+alias blts
+options indent
+    \`\`\`typescript
+    ${0}
+    \`\`\`
+
