@@ -1100,6 +1100,10 @@ nnoremap <CR> o<Esc>
 
 " informations
 nnoremap <silent> <C-g><C-o> :<C-u>LspHover<CR>
+nnoremap <silent> <C-g><C-a> :<C-u>LspCodeAction<CR>
+nnoremap <silent> <C-g><C-d> :<C-u>LspDefinition<CR>
+nnoremap <silent> <C-g><C-i> :<C-u>LspPeekImplementation<CR>
+nnoremap <silent> <C-g><C-t> :<C-u>LspPeekTypeDefinition<CR>
 nnoremap <C-g><C-g> <C-g>
 
 " others
