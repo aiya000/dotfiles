@@ -85,6 +85,8 @@ if i_have git ; then
   alias gswc='git switch --create'
   alias gswd='git switch --detach'
   alias gres='git restore'
+  alias gres-select-ours-for-conflict='git restore --ours'
+  alias gres-select-theirs-for-conflict='git restore --theirs'
   alias gd='git diff'
   alias gdh='git diff HEAD~..HEAD'
   alias gds='git diff --staged'
