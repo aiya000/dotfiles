@@ -4,7 +4,7 @@ let b:undo_ftplugin = 'setl ' . join([
 
 setl cursorline
 
-const s:refresh_rate_to_show_stash = 50
+let s:refresh_rate_to_show_stash = 50
 
 function s:force_show_git_stash_size_onto_top(gina_status_bufnr, _) abort
   const current_pos = getpos('.')
