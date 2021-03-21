@@ -672,8 +672,14 @@ AlterCommand tabnew TabnewOverridden
 " }}}
 " vim-lsp {{{
 
-let g:lsp_diagnostics_enabled = v:false
-let g:lsp_async_completion = v:true
+let g:lsp_document_code_action_signs_enabled = 0
+let g:lsp_diagnostics_enabled = 0
+let g:lsp_async_completion = 1
+
+augroup vimrc
+  " TODO: What's the f!?!?
+  autocmd BufNew,BufEnter * let g:lsp_document_code_action_signs_enabled = 0
+augroup END
 
 function s:find_root_uri_by_file(file) abort
   return { _ ->
