@@ -18,7 +18,6 @@ export FPATH=$FPATH:$HOME/.zsh/complete
 # }}}
 # Others {{{
 
-export BROWSER=vivaldi-stable
 export EDITOR=vim
 export GIT_EDITOR=vim
 export VISUAL=vim
