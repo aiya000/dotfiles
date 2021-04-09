@@ -86,3 +86,7 @@ alias disable_shellcheck
     # shellcheck disable=${1:SC1090}
 
 # Templates
+
+snippet array_from_string
+abbr IFS='${1: }' read -ra followings_array <<< "$x"${0}
+    IFS='${1: }' read -ra followings_array <<< "$x"${0}
