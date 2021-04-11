@@ -27,6 +27,7 @@ let g:vimrc = get(g:, 'vimrc', #{
   \ is_unix: has('unix'),
   \ is_macos: has('macunix'),
   \ is_wsl: executable('uname') && (system('uname -a') =~# 'Microsoft'),
+  \ is_wsl2: executable('uname') && (system('uname -a') =~# 'microsoft-standard'),
   \ is_windows: has('win32'),
   \ is_kaoriya: has('kaoriya'),
 \ })
@@ -547,7 +548,7 @@ let g:elm_setup_keybindings  = 0
 " }}}
 " vim-fakeclip {{{
 
-let g:fakeclip_provide_clipboard_key_mappings = g:vimrc['is_wsl']
+let g:fakeclip_provide_clipboard_key_mappings = g:vimrc['is_wsl'] || g:vimrc['is_wsl2']
 
 " }}}
 " denite.nvim {{{
