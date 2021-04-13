@@ -1,0 +1,25 @@
+snippet doc
+abbr """${0:#:here}"""
+    """${0:#:here}"""
+
+snippet doc_attributes
+    Attributes
+    ----------
+
+snippet doc_attribute
+alias doc_attr attr doc_parameter doc_param param
+    ${1:field_name} : ${2:type}
+        ${0:description}
+
+snippet doc_methods
+    Methods
+    -------
+
+snippet doc_method
+    ${1:method_name}(${2:#:args}
+        ${0:description}
+
+snippet doc_parameters
+alias params
+    Parameters
+    ----------
