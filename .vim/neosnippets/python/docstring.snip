@@ -1,25 +1,33 @@
 snippet doc
 abbr """${0:#:here}"""
+options indent
     """${0:#:here}"""
 
 snippet doc_attributes
+alias attrs
+options indent
     Attributes
     ----------
 
 snippet doc_attribute
 alias doc_attr attr doc_parameter doc_param param
+options indent
     ${1:field_name} : ${2:type}
         ${0:description}
 
 snippet doc_methods
+alias methods
+options indent
     Methods
     -------
 
 snippet doc_method
+options indent
     ${1:method_name}(${2:#:args}
         ${0:description}
 
 snippet doc_parameters
-alias params
+alias parameters params
+options indent
     Parameters
     ----------

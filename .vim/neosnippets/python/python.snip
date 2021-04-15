@@ -37,3 +37,8 @@ snippet class
 alias cla
 abbr class ${1:Name}${2:#:(Super)}:${0}
     class ${1:Name}${2:#:(Super)}:${0}
+
+snippet conditional_operator
+alias cond
+abbr ${1:value_if_true} if ${2:cond} else ${0:value_if_false}
+    ${1:value_if_true} if ${2:cond} else ${0:value_if_false}
