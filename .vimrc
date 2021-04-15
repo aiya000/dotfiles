@@ -116,6 +116,10 @@ endif
 call dein#load_toml('~/.vim/dein.toml', {'lazy': 0})
 call dein#load_toml('~/.vim/dein_lazy.toml', {'lazy': 1})
 
+if filereadable(expand('~/dein_env.toml'))
+  call dein#load_toml('~/dein_env.toml', {'lazy': 0})
+endif
+
 if has('nvim')
   call dein#load_toml('~/.vim/dein-neovim.toml', {'lazy': 0})
 endif
