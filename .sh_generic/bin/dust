@@ -3,7 +3,7 @@
 deleting_files="$*"
 dust_dir="$HOME/.backup/dustbox"
 
-for file in ${deleting_files[$i]} ; do
+for file in "${deleting_files[@]}" ; do
   maybeExt=${file##*.}
   ext=$([[ "$file" != "$maybeExt" ]] && echo ".$maybeExt" || echo '')
 
