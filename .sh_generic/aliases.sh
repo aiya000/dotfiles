@@ -171,6 +171,11 @@ if i_have git ; then
   alias gtree-all='git log --graph --decorate --oneline --all'
   alias gw='git worktree'
 
+  function gaacmp () {
+    git add -A || return 1
+    git commit -m ":+1: $@"
+  }
+
   function gtag-add-m () {
     local tag_name=$1 message=$2
     git tag --annotate "$tag_name" --message "$message"
