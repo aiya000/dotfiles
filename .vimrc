@@ -212,7 +212,6 @@ augroup END
 
 let g:quickrun_no_default_key_mappings = 0
 
-" For *nix environments
 let g:quickrun_config = {
   \ '_': {
     \ 'split': '',
@@ -333,6 +332,9 @@ let g:quickrun_config = {
     \ 'hook/sweep/files': '%S:p:r.png',
     \ 'outputter/error/error': 'quickfix',
     \ 'outputter/error/success': 'message',
+  \ },
+  \ 'python': {
+    \ 'command': 'python3',
   \ },
 \ }
 
