@@ -5,6 +5,11 @@ alias imp
 abbr import ${0:module}
     import ${0:module}
 
+snippet import_as
+alias import_qualified imq
+abbr import ${1:module} as ${0:alias}
+    import ${1:module} as ${0:alias}
+
 snippet from
 abbr from ${1:stuff} import ${0:module}
     from ${1:module} import ${0:stuff}
@@ -53,9 +58,16 @@ abbr def __init__(self{, ...}) -> None:
  def __init__(self${1:#:, x}) -> None:
     ${0}
 
+snippet __post_init__
+alias post_init
+abbr def __post_init__(self{, ...}) -> None:
+ def __post_init__(self${1:#:, x}) -> None:
+    ${0}
+
 snippet __str__
+alias __str
 abbr def __str__(self) -> str:
- def __str__(self):
+ def __str__(self) -> str:
     ${0}
 
 snippet if_name_is_main
