@@ -578,3 +578,8 @@ function vimrc#execute_repeatable_macro(name) abort
   execute 'normal!' name
   call repeat#set(name)
 endfunction
+
+function vimrc#operator_camelize_toggle_current_word_with_setting_repeatable() abort
+  execute 'normal' "viw\<Plug>(operator-camelize-toggle)"
+  call repeat#set("viw\<Plug>(operator-camelize-toggle)")
+endfunction

@@ -1474,7 +1474,7 @@ omap 't <Plug>(fmap-forward-t)
 omap 'T <Plug>(fmap-backward-T)
 
 " operator-camelize.vim
-nmap <leader><leader>c viw<Plug>(operator-camelize-toggle)
+nmap <silent> <leader><leader>c :<C-u>call vimrc#operator_camelize_toggle_current_word_with_setting_repeatable()<CR>
 vmap <leader><leader>c <Plug>(operator-camelize-toggle)
 
 " vim-repeat
