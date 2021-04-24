@@ -139,8 +139,8 @@ call dein#add('Shougo/dein.vim', {'rtp': ''})
 " {{{
 " NOTE: This section must be put at between dein#begin() and dein#end()
 
-if filereadable($HOME .. '/.vimrc_private')
-  source ~/.vimrc_private
+if filereadable($HOME .. '/.dotfiles/.private/.vimrc_private')
+  source ~/.dotfiles/.private/.vimrc_private
 endif
 
 if filereadable($HOME .. '/.vimrc_env')
