@@ -44,29 +44,46 @@ snippet var_array
 abbr var ${1:varName} [${2:size}]${0:TypeName}
     var ${1:varName} [${2:size}]${0:TypeName}
 
+snippet type
+abbr type ${0:Name}
+    type ${0:Name}
+
 snippet struct
-alias str
-abbr type ${1:Name} struct {${0:#:here}}
-    type ${1:Name} struct {${0:#:here}}
+alias str stru
+abbr struct {${0:#:here}}
+    struct {${0:#:here}}
 
 snippet type_assert
 abbr ${1:extractedVarName}, ${2:isItExpectedType} := ${3:varName}.(${0:expectedType})
     ${1:extractedVarName}, ${2:isItExpectedType} := ${3:varName}.(${0:expectedType})
 
+snippet defer
+abbr defer ${0:expr}
+    defer ${0:expr}
+
+snippet for
+abbr for ${1:_}, ${2:name} := range ${2:array} {${0:#:here}}
+    for ${1:_}, ${2:name} := range ${2:array} {${0:#:here}}
+
 # Expressions
 
 snippet fprint
-abbr    fmt.Fprint()
+abbr fmt.Fprint(${1:os.Stderr}, ${2:err})
     fmt.Fprint(${1:os.Stderr}, ${2:err})
 
 snippet fprintln
-abbr    fmt.Fprintln()
+abbr fmt.Fprintln(${1:os.Stderr}, ${2:err})
     fmt.Fprintln(${1:os.Stderr}, ${2:err})
 
 snippet println
 alias pr
-abbr    fmt.Println()
-    fmt.Println(${0})
+abbr fmt.Println(${0:#:here})
+    fmt.Println(${0:#:here})
+
+snippet log_println
+alias log
+abbr log.Println(${0:#:here})
+    log.Println(${0:#:here})
 
 # Others
 
@@ -75,3 +92,8 @@ alias doc
     /**
      * ${0}
      */
+
+snippet if_err
+alias err
+    ${1:varName}, err := ${2:expr}
+    if err != nil {${0:#:here}}

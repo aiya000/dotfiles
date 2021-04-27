@@ -540,6 +540,7 @@ let g:ale_fixers = #{
   \ typescript: ['prettier'],
   \ javascript: ['prettier'],
   \ vue: ['prettier'],
+  \ go: ['gofmt', 'goimports'],
 \ }
 
 " }}}
