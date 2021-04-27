@@ -1,3 +1,8 @@
+snippet package
+alias pack
+abbr package ${1:packageName}
+    package ${1:packageName}
+
 snippet func
 alias fun
 abbr func () {}
@@ -18,14 +23,35 @@ abbr if ${1:cond} {${0:#:here}}
     if ${1:cond} {${0:#:here}}
 
 snippet else
-abbr else {}
-    else {
-        ${0}
-    }
+abbr else {${0:#:here}}
+    else {${0:#:here}}
+
+snippet array_type
+abbr []${0:TypeName}
+    []${0:TypeName}
+
+snippet array_constant
+alias array
+abbr []${1:TypeName}{${0:here}}
+    []${1:TypeName}{${0:here}}
 
 snippet val
+alias const
 abbr ${1:varName} := ${0}
     ${1:varName} := ${0}
+
+snippet var_array
+abbr var ${1:varName} [${2:size}]${0:TypeName}
+    var ${1:varName} [${2:size}]${0:TypeName}
+
+snippet struct
+alias str
+abbr type ${1:Name} struct {${0:#:here}}
+    type ${1:Name} struct {${0:#:here}}
+
+snippet type_assert
+abbr ${1:extractedVarName}, ${2:isItExpectedType} := ${3:varName}.(${0:expectedType})
+    ${1:extractedVarName}, ${2:isItExpectedType} := ${3:varName}.(${0:expectedType})
 
 # Expressions
 
@@ -37,10 +63,10 @@ snippet fprintln
 abbr    fmt.Fprintln()
     fmt.Fprintln(${1:os.Stderr}, ${2:err})
 
-snippet print
+snippet println
 alias pr
-abbr    fmt.Print()
-    fmt.Print(${0})
+abbr    fmt.Println()
+    fmt.Println(${0})
 
 # Others
 
