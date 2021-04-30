@@ -50,6 +50,7 @@ setopt share_history
 setopt transient_rprompt
 setopt ignore_eof
 setopt auto_cd
+setopt no_beep
 
 # Don't use screen stopping
 stty stop  undef
