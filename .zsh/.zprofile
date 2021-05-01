@@ -51,10 +51,11 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 
 export PATH
 
-# High
+# Higher order
 PATH=$HOME/bin:$HOME/sbin:$PATH
 PATH=$HOME/.dotfiles/bin:$PATH
 PATH=$PYENV_ROOT/bin:$PATH
+PATH=$HOME/.rbenv/bin:$PATH
 
 # Basics
 PATH=$PATH:/bin:/sbin
@@ -66,7 +67,7 @@ PATH=$PATH:$GOPATH/bin
 PATH=$PATH:$HOME/.yarn/bin
 PATH=$PATH:$HOME/.npm-prefix/bin
 PATH=$PATH:$HOME/.cargo/bin
-PAHT=$PATH:$HOME/.ghcup/bin
+PATH=$PATH:$HOME/.ghcup/bin
 PATH=$PATH:$HOME/.local/bin
 PATH=$PATH:$HOME/.linuxbrew/bin
 
