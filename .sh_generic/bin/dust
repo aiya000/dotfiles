@@ -1,9 +1,12 @@
 #!/bin/bash
 
-deleting_files="$*"
 dust_dir="$HOME/.backup/dustbox"
 
-for file in "${deleting_files[@]}" ; do
+if [[ ! -d $dust_dir ]] ; then
+  mkdir -p "$dust_dir"
+fi
+
+for file in "$@" ; do
   maybeExt=${file##*.}
   ext=$([[ "$file" != "$maybeExt" ]] && echo ".$maybeExt" || echo '')
 
