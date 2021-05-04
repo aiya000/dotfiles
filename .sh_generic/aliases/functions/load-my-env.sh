@@ -9,6 +9,7 @@ function load-my-env () {
       load-my-env cabal
       load-my-env pkgsrc
       load-my-env rbenv
+      load-my-env nvm
       load-my-env travis
       load-my-env ccache
       load-my-env linuxbrew
@@ -46,9 +47,20 @@ function load-my-env () {
 
       if [[ -d ~/.rbenv/plugins/ruby-build/bin ]] ; then
         PATH=$PATH:$HOME/.rbenv/plugins/ruby-build/bin
+        return
       else
         echo "$HOME/.rbenv/plugins/ruby-build/bin is not found." > /dev/stderr
       fi
+      ;;
+
+    nvm)
+      if [[ -f $NVM_DIR/nvm.sh ]] ; then
+        [[ ! -f ~/my-nvm.log ]] && touch ~/.dotfiles/nvm.log
+        # shellcheck disable=SC1090
+        source "$NVM_DIR/nvm.sh" >> ~/.dotfiles/nvm.log 2>&1  # Don't output anoying 'nvm:21: bad floating point constant'
+        return
+      fi
+      echo "$NVM_DIR/nvm.sh is not found." > /dev/stderr
       ;;
 
     travis)
