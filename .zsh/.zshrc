@@ -107,9 +107,7 @@ alias rel=reload
 # Load zsh plugins {{{
 
 fpath=(~/.zsh/plugin/zsh-completions/src $fpath)
-source ~/.zsh/plugin/zsh-dircolors-solarized/zsh-dircolors-solarized.zsh
 source ~/.zsh/plugin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.zsh/plugin/enhancd/init.sh
 source ~/.zsh/plugin/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 for file in ~/.zsh/plugin/sh-hereis/{edit-places,hereis,place,reload-places,sh-hereis}.sh ; do
@@ -117,12 +115,6 @@ for file in ~/.zsh/plugin/sh-hereis/{edit-places,hereis,place,reload-places,sh-h
 done
 
 #}}}
-# zsh-dircolors-solarized {{{
-
-# Use dircolors.ansi-light theme
-setupsolarized dircolors.ansi-light
-
-# }}}
 
 
 # Load keymaps
@@ -144,5 +136,5 @@ fi
 alias zsh_rc_loaded='echo "rc_loaded"'
 
 # if (which zprof > /dev/null) ; then
-#   zprof >! zprof.log
+#   zprof >! ~/.dotfiles/zprof.log
 # fi

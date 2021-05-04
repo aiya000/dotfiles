@@ -44,30 +44,11 @@ function zshrc::prompt::sub_status () {
     echo "%{$bg[green]$fg[black]%}[${branch_name}]%{$reset_color%}"
   }
 
-  function get_zle_mode () {
-    local expected_normal_mode='vicmd'
-    local keymap_name="$(echo $KEYMAP | sed -r 's/^(.)/\U\1/')"
-    local color ; [[ $KEYMAP == $expected_normal_mode ]] && color=red || color=blue
-    echo "%{$bg[${color}]%}[${keymap_name}]%{$reset_color%}"
-  }
-
-  function get_virtualenv_availability () {
-    if [ -n "$VIRTUAL_ENV" ] ; then
-      local env_name=$(echo "$VIRTUAL_ENV" | sed -r 's;^/.*/(.*)/\.venv$;\1;')
-      echo "%{$bg[yellow]$fg[black]%}[${env_name}]%{$reset_color%}"
-    elif [ -d "$(pwd)/.venv" ] ; then
-      echo "%{$bg[red]$fg[black]%}[./.venv was found]%{$reset_color%}"
-    fi
-  }
-
-  local git_statuses
   if [[ $ZSHRC_PROMPT_GIT_STATUS_DISABLE -ne 0 ]] ; then
-    git_statuses='[GitStatus Disabled]'
-  else
-    git_statuses=$(get_git_changes)$(get_git_commits)$(get_git_stash_status)$(get_git_branch_name)
+    echo '[GitStatus Disabled]'
+    return
   fi
-
-  echo "${git_statuses}$(get_zle_mode)$(get_virtualenv_availability)"
+  echo $(get_git_changes)$(get_git_commits)$(get_git_stash_status)$(get_git_branch_name)
 }
 
 # Run once to start up

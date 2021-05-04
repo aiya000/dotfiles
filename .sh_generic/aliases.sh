@@ -32,8 +32,8 @@ function - () {
     cd -
 }
 
-alias_of sudo='sudo '  # Enable aliases on sudo
-alias_of mysql='mysql --pager="less -r -S -n -i -F -X"'
+alias_of sudo 'sudo '  # Enable aliases on sudo
+alias_of mysql 'mysql --pager="less -r -S -n -i -F -X"'
 
 i_have say || alias say=espeak
 
@@ -271,25 +271,7 @@ fi
 # Docker {{{
 
 if i_have docker ; then
-  alias d=docker
-  alias da=docker-attach-menu.sh
-  alias dki=docker-kill-menu.sh
-  alias dkill='docker kill'
-  alias dps='docker ps'
-  alias drm='docker rm'
-  alias drmi='docker rmi'
-  alias drun='docker run'
-
-  alias docker-force-remove-all-containers='docker rm -f $(docker ps -a -q)'
-  alias docker-force-remove-all-images='docker rmi -f $(docker images -q)'
-  # shellcheck disable=SC2142
-  alias docker-force-clean-volumes='docker volume rm $(docker volume ls | awk "{print $2}")'
-
-  function docker-force-remove-all-all () {
-    docker-force-remove-all-containers
-    docker-force-remove-all-images
-    docker-force-clean-volumes
-  }
+  load-my-env docker
 fi
 
 # }}}
@@ -319,7 +301,7 @@ alias ki=killing-art
 # ...
 function aliases::define_cd_to_parents () {
   local name
-  for (( i = 2; i <= 20; ++i )) ; do
+  for (( i = 2; i <= 10; ++i )) ; do
     name=$(eval "printf '.%.0s' {1..$i}")
     dir=$(eval "printf '../%.0s' {2..$i}")
     eval "alias $name='cd $dir'"
@@ -332,89 +314,17 @@ alias e-current-session="vim-current-session $EDITOR"
 # shellcheck disable=SC2139
 alias g-current-session="vim-current-session $MY_GUI_EDITOR"
 
-i_have tmux && alias tm=tmux && alias ta='tmux attach'
-i_have rsync && alias cp-with-progress='rsync --partial --progress'
-i_have watch && alias wifi-hardware-check='watch -n1 rfkill list all'
+alias_of yay 'yay --color always'
+
+i_have tmux && alias ta='tmux attach'
 i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have unzip && alias unzip-cp932='unzip -O cp932'
-i_have xdg-open && alias x=xdg-open
 
-if i_have ctags ; then
-  function ctags-auto () {
-    local root
-    root=$(git rev-parse --show-toplevel 2> /dev/null || pwd)
-    dest=$([[ -d $root/.git ]] && echo "$root/.git/tags" || echo "$root/tags")
-    ctags -f "$dest" --tag-relative=never --recurse --sort=yes "$@"
-  }
-
-  alias ctags-kotlin-auto="ctags-auto '--exclude=*.java' '--exclude=*.html' '--exclude=*.css'"
-  alias ctags-typescript-auto="ctags-auto '--exclude=*.js' '--exclude=*.json'"
-fi
-
-if i_have yay ; then
-  alias yay='yay --color always'
-fi
-
-if i_have stack ; then
-  alias si='stack install'
-  alias srunghc='stack runghc --'
-  alias sghci='stack ghci --'
-  alias stack-haddock-gen='stack haddock .'
-  alias shaddock-gen='stack haddock .'
-  alias shaddock-gen-open='stack haddock --open .'
-  function stack-new-default() {
-    stack new "$1" simple
-  }
-  alias stack-build-profile='stack build --profile'
-  alias make-new-package-yaml='cp ~/.dotfiles/Files/package.yaml .'
-
-  alias cabal-sdit='stack exec -- cabal sdist'
-  function cabal-upload() {
-    stack exec -- cabal upload "$1"
-  }
-fi
-
-if i_have cabal ; then
-  alias ci='cabal new-install'
-fi
-
-if i_have idris ; then
-  function run-idris() {
-    if idris "$1" -o "/tmp/$1.idris-run-output" && "/tmp/$1.idris-run-output" ; then
-      # shellcheck disable=SC2028
-      # shellcheck disable=SC1117
-      echo "\n>>> run-idris is succeed"
-    else
-      # shellcheck disable=SC2028
-      # shellcheck disable=SC1117
-      echo "\n>>> run-idris is failed"
-    fi
-    if [[ -f $1 ]] ; then
-      rm "/tmp/$1.idris-run-output"
-    fi
-  }
-alias runidris=run-idris
-fi
-
-if [[ -e ./gradlew ]] ; then
-  alias grwj='./gradlew jar'
-fi
-
-if i_have krita ; then
-  alias kra=krita
-fi
-
-if i_have draw.io ; then
-  alias drio=draw.io
-
-  # NOTE: Before, draw.io exports foo.xml.png for foo.xml, but the backward compatility broke.
-  function drio-export-png () {
-    local xml_name
-    xml_name=$1
-
-    draw.io --embed-diagram --export --format png "$xml_name" --output "${xml_name}.png"
-  }
-fi
+i_have ctags && load-my-env ctags
+i_have stack && load-my-env stack
+i_have idris && load-my-env idris
+i_have draw.io && load-my-env drawio
+i_have krita && alias kra=krita
 
 # shellcheck disable=SC2139
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
@@ -423,20 +333,6 @@ alias mount4u.ext2='sudo mount -o iocharset=utf8'
 alias mount4u.ext3=mount4u.ext2
 alias mount4u.ext4=mount4u.ext2
 
-function virtualenv-activate () {
-  if [[ -f ./.venv/bin/activate ]] ; then
-    # shellcheck disable=SC1091
-    . ./.venv/bin/activate
-  else
-    echo './.venv/bin/activate was not found, please load it yourself...' > /dev/stderr
-    return 1
-  fi
-}
-
-function grepall () {
-  find . -type f -print0 | xargs -0 -I {} bash -c "grep $* {} && (echo '{}' ; echo '- - - - - - - - - -')"
-}
-
 # }}}
 
-export PATH=$PATH:~/.sh_generic/bin
+export PATH=$PATH:$HOME/.sh_generic/bin
