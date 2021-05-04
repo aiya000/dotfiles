@@ -173,7 +173,7 @@ if i_have git ; then
 
   function gaacmp () {
     git add -A || return 1
-    git commit -m ":+1: $@"
+    git commit -m ":+1: $*"
   }
 
   function gtag-add-m () {
