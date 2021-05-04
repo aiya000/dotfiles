@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
-zmodload zsh/zprof && zprof
+
+# To enable zprof, comment out this and a 'if' function of a bottom.
+# zmodload zsh/zprof && zprof
 
 # The order of loading
 # 1. ~/.zsh/.zprofile
@@ -12,7 +14,7 @@ zmodload zsh/zprof && zprof
 ###################
 # The counterplan for if .zprofile never loaded
 if [ -z "$(alias | grep zsh_pr_loaded)" ] ; then
-    source $ZDOTDIR/.zprofile
+  source $ZDOTDIR/.zprofile
 fi
 
 source ~/.sh_generic/vars.sh
@@ -22,10 +24,10 @@ source ~/.sh_generic/aliases.sh
 
 # For each environment
 case $(uname) in
-Linux )
+  Linux )
     source ~/.sh_generic/linux.sh
     ;;
-Darwin )
+  Darwin )
     source ~/.sh_generic/macOS.sh
 esac
 
@@ -58,14 +60,14 @@ stty start undef
 
 # Redraw $PROMPT with viins and vicmd
 function zle-line-init zle-keymap-select {
-    # This function maybe loaded at below procedures with ~/.zsh/zshrc/prompt.sh
-    zshrc::prompt::main
+# This function maybe loaded at below procedures with ~/.zsh/zshrc/prompt.sh
+zshrc::prompt::main
 
-    if [[ "$VIM_TERMINAL" ]] ; then
-        printf '\e]51;["call","Tapi_SyncTermCwd","%s"]\x07' "$PWD"
-    fi
+if [[ "$VIM_TERMINAL" ]] ; then
+  printf '\e]51;["call","Tapi_SyncTermCwd","%s"]\x07' "$PWD"
+fi
 
-    zle reset-prompt
+zle reset-prompt
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
@@ -111,7 +113,7 @@ source ~/.zsh/plugin/enhancd/init.sh
 source ~/.zsh/plugin/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 for file in ~/.zsh/plugin/sh-hereis/{edit-places,hereis,place,reload-places,sh-hereis}.sh ; do
-    source "$file"
+  source "$file"
 done
 
 #}}}
@@ -131,16 +133,16 @@ force-unexport TMUX
 
 # If it exists, load environment config
 if [ -f ~/.zshrc_env ] ; then
-    source ~/.zshrc_env
+  source ~/.zshrc_env
 fi
 
 if [ -f ~/.zshrc_private ] ; then
-    source ~/.zshrc_private
+  source ~/.zshrc_private
 fi
 
 # Export Loaded Archive
 alias zsh_rc_loaded='echo "rc_loaded"'
 
-if (which zprof > /dev/null) ; then
-  zprof >! zprof.log
-fi
+# if (which zprof > /dev/null) ; then
+#   zprof >! zprof.log
+# fi
