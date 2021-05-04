@@ -12,8 +12,18 @@ export HISTFILE=$ZDOTDIR/history
 export HISTORY_IGNORE=''
 export HISTSIZE=1000000
 export SAVEHIST=1000000
-export TIMEFMT='%Y/%m/%d %H:%M '
 export FPATH=$FPATH:$HOME/.zsh/complete
+
+# For a command 'time'
+export TIMEFMT=$'
+========================
+Program : %J
+CPU     : %P
+user    : %*Us
+system  : %*Ss
+total   : %*Es
+========================
+'
 
 # }}}
 # Others {{{

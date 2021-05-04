@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-#zmodload zsh/zprof && zprof
+zmodload zsh/zprof && zprof
 
 # The order of loading
 # 1. ~/.zsh/.zprofile
@@ -91,14 +91,10 @@ alias rel=reload
 # }}}
 # General plugins {{{
 
-if [[ -f $NVM_DIR/nvm.sh ]] ; then
-    [[ ! -f ~/my-nvm.log ]] && touch ~/my-nvm.log
-    source $NVM_DIR/nvm.sh >> ~/my-nvm.log 2>&1  # Don't output anoying 'nvm:21: bad floating point constant'
-fi
+# I don't load heavy plugins at here.
+#   e.g. nvm, rbenv, etc.
 
-if [[ -f ~/.rbenv/bin/rbenv ]] ; then
-    eval "$(rbenv init -)"
-fi
+# Please see ~/.sh_generic/aliases/functions/load-my-env.sh
 
 # }}}
 
@@ -145,6 +141,6 @@ fi
 # Export Loaded Archive
 alias zsh_rc_loaded='echo "rc_loaded"'
 
-#if (which zprof > /dev/null) ;then
-#  zprof | less
-#fi
+if (which zprof > /dev/null) ; then
+  zprof >! zprof.log
+fi
