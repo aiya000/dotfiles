@@ -41,8 +41,9 @@ abbr ${1:varName} := ${0}
     ${1:varName} := ${0}
 
 snippet var_array
-abbr var ${1:varName} [${2:size}]${0:TypeName}
-    var ${1:varName} [${2:size}]${0:TypeName}
+alias var_slice
+abbr var ${1:varName} [${2:#:size}]${0:TypeName}
+    var ${1:varName} [${2:#:size}]${0:TypeName}
 
 snippet type
 abbr type ${0:Name}
@@ -62,8 +63,8 @@ abbr defer ${0:expr}
     defer ${0:expr}
 
 snippet for
-abbr for ${1:_}, ${2:name} := range ${2:array} {${0:#:here}}
-    for ${1:_}, ${2:name} := range ${2:array} {${0:#:here}}
+abbr for ${1:_}, ${2:name} := range ${3:array} {${0:#:here}}
+    for ${1:_}, ${2:name} := range ${3:array} {${0:#:here}}
 
 # Expressions
 
@@ -85,6 +86,10 @@ alias log
 abbr log.Println(${0:#:here})
     log.Println(${0:#:here})
 
+snippet make
+abbr make([]${1:type}, ${0:len})
+    make([]${1:type}, ${0:len})
+
 # Others
 
 snippet document_comment
@@ -95,5 +100,4 @@ alias doc
 
 snippet if_err
 alias err
-    ${1:varName}, err := ${2:expr}
-    if err != nil {${0:#:here}}
+    if ${1:varName, }err := ${2:expr}; err != nil {${0:#:here}}
