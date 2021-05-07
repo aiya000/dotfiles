@@ -170,10 +170,15 @@ if i_have git ; then
   alias gtree='git log --graph --decorate --oneline'
   alias gtree-all='git log --graph --decorate --oneline --all'
   alias gw='git worktree'
+  alias gaacmp='git add -A && gcmp'
+  alias gaacmu='git add -A && gcmu'
 
-  function gaacmp () {
-    git add -A || return 1
+  function gcmp () {
     git commit -m ":+1: $*"
+  }
+
+  function gcmu () {
+    git commit -m ":up: $*"
   }
 
   function gtag-add-m () {
