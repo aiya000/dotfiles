@@ -172,6 +172,8 @@ if i_have git ; then
   alias gw='git worktree'
   alias gaacmp='git add -A && gcmp'
   alias gaacmu='git add -A && gcmu'
+  alias gaacmb='git add -A && gcmb'
+  alias gaacmr='git add -A && gcmr'
 
   function gcmp () {
     git commit -m ":+1: $*"
@@ -179,6 +181,14 @@ if i_have git ; then
 
   function gcmu () {
     git commit -m ":up: $*"
+  }
+
+  function gcmb () {
+    git commit -m ":bug: $*"
+  }
+
+  function gcmr () {
+    git commit -m ":recycle: $*"
   }
 
   function gtag-add-m () {

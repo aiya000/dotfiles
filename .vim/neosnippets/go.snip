@@ -66,6 +66,14 @@ snippet for
 abbr for ${1:_}, ${2:name} := range ${3:array} {${0:#:here}}
     for ${1:_}, ${2:name} := range ${3:array} {${0:#:here}}
 
+snippet switch
+abbr switch ${1:x} {${0:#:here}}
+    switch ${1:x} {${0:#:here}}
+
+snippet case
+abbr case ${1:pattern}:${0}
+    case ${1:pattern}:${0}
+
 # Expressions
 
 snippet fprint
@@ -99,5 +107,9 @@ alias doc
      */
 
 snippet if_err
-alias err
-    if ${1:varName, }err := ${2:expr}; err != nil {${0:#:here}}
+alias ife
+    if err != nil {${0:#:here}}
+
+snippet append
+abbr ${1:xs} = append($1, ${0})
+    ${1:xs} = append($1, ${0})
