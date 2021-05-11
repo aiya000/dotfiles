@@ -808,6 +808,7 @@ let g:jumpy_map = [')', '(']
 
 let g:quickrepl_config = #{
   \ vue: ['ts-node'],
+  \ go: ['gore'],
 \ }
 
 let g:quickrepl_use_default_key_mapping = v:true
