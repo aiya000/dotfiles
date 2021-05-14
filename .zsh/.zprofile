@@ -41,14 +41,15 @@ export THEMIS_HOME="$HOME/.vim/bundle/repos/github.com/thinca/vim-themis"
 export NVIM_PYTHON_LOG_FILE=$HOME/.vim/.log/nvim_python.log
 export PYENV_ROOT=$HOME/.pyenv
 export NVM_DIR=$HOME/.nvm
+export DENO_INSTALL="$HOME/.deno"
 
 # Mine
 export MY_GUI_EDITOR=gvim
 
 if [[ $ZSHRC_PROMPT_GIT_STATUS_DISABLE != '' ]] ; then
-    export ZSHRC_PROMPT_GIT_STATUS_DISABLE
+  export ZSHRC_PROMPT_GIT_STATUS_DISABLE
 else
-    export ZSHRC_PROMPT_GIT_STATUS_DISABLE=0
+  export ZSHRC_PROMPT_GIT_STATUS_DISABLE=0
 fi
 
 # Plugins
@@ -62,10 +63,11 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 export PATH
 
 # Higher order
-PATH=$HOME/bin:$HOME/sbin:$PATH
-PATH=$HOME/.dotfiles/bin:$PATH
 PATH=$PYENV_ROOT/bin:$PATH
+PATH=$DENO_INSTALL/bin:$PATH
 PATH=$HOME/.rbenv/bin:$PATH
+PATH=$HOME/.dotfiles/bin:$PATH
+PATH=$HOME/bin:$HOME/sbin:$PATH
 
 # Basics
 PATH=$PATH:/bin:/sbin

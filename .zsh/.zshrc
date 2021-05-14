@@ -60,14 +60,14 @@ stty start undef
 
 # Redraw $PROMPT with viins and vicmd
 function zle-line-init zle-keymap-select {
-# This function maybe loaded at below procedures with ~/.zsh/zshrc/prompt.sh
-zshrc::prompt::main
+  # This function maybe loaded at below procedures with ~/.zsh/zshrc/prompt.sh
+  zshrc::prompt::main
 
-if [[ "$VIM_TERMINAL" ]] ; then
-  printf '\e]51;["call","Tapi_SyncTermCwd","%s"]\x07' "$PWD"
-fi
+  if [[ "$VIM_TERMINAL" ]] ; then
+    printf '\e]51;["call","Tapi_SyncTermCwd","%s"]\x07' "$PWD"
+  fi
 
-zle reset-prompt
+  zle reset-prompt
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
