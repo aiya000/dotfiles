@@ -29,7 +29,7 @@ function vimrc#job#on_exit(stdout, stderr, on_succeed, _job, exit_code) abort
   call a:on_succeed(a:stdout, a:stderr)
 endfunction
 
-" param: `on_exit` `(stdout: Array<string>, stderr: Array<string>) => void` called with succeed
+" param: `on_succeed` `(stdout: Array<string>, stderr: Array<string>) => void` called with succeed
 function vimrc#job#get_basic_options_completes_with(on_succeed) abort
   let stdout = []
   let stderr = []

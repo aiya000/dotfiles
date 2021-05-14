@@ -256,8 +256,7 @@ install-text:
 
 install-typescript:
 	which typescript || npm install -g typescript
-	which tslint || npm install -g tslint
-	which typescript-formatter || npm install -g typescript-formatter
+	which typescript-language-server || npm install -g typescript-language-server typescript-deno-plugin
 
 install-html:
 	which htmlhint || npm install -g htmlhint
