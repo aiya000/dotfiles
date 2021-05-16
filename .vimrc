@@ -704,48 +704,7 @@ augroup vimrc
     \ root_uri: s:find_root_uri_by_file('package.yaml'),
     \ whitelist: ['haskell', 'happy', 'alex'],
   \ })
-
-  autocmd User lsp_setup call s:register_on_npm_root(function('s:register_deno_lsp_if_necessary'))
-  " autocmd User lsp_setup call lsp#register_server(#{
-  "   \ name: 'deno lsp',
-  "   \ cmd: { server_info -> ['deno', 'lsp'] },
-  "   \ root_uri: s:find_root_uri_by_file('enable-deno-for-vim'),
-  "   \ allowlist: ['typescript', 'typescript.tsx'],
-  "   \ initialization_options: #{
-  "     \ enable: v:true,
-  "     \ lint: v:true,
-  "     \ unstable: v:true,
-  "   \ },
-  " \ })
 augroup END
-
-
-function s:register_on_npm_root(cont) abort
-  call job_start(
-    \ ['npm', 'root', '--global'],
-    \ vimrc#job#get_basic_options_completes_with({ root, _ -> a:cont(root) })
-  \ )
-endfunction
-
-function s:register_deno_lsp_if_necessary(npm_root) abort
-  const npm_root = a:npm_root->join('')
-  const plugins = isdirectory(npm_root .. '/typescript-deno-plugin')
-    \ ? [#{ name: 'typescript-deno-plugin', location: npm_root }]
-    \ : []
-
-  call lsp#register_server(#{
-    \ name: 'typescript-language-server',
-    \ cmd: { _ -> ['typescript-language-server', '--stdio'] },
-    \ root_uri: s:find_root_uri_by_file('tsconfig.json'),
-    \ allowlist: ['typescript', 'typescript.tsx'],
-    \ initialization_options: #{
-      \ plugins: plugins,
-      \ enable: v:true,
-      \ lint: v:true,
-      \ unstable: v:true,
-    \ },
-  \ })
-endfunction
 
 " }}}
 " vim-lsp-settings {{{
