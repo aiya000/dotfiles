@@ -50,6 +50,15 @@ snippet raise
 abbr raise ${1:Exception}(${2:msg})
     raise ${1:Exception}(${2:msg})
 
+snippet try
+abbr try:
+    try:
+
+snippet except
+alias catch handle
+abbr except${1:#: ErrorType}:${0}
+    except${1:#: ErrorType}:${0}
+
 snippet list_comprehension
 alias list
 abbr [${0:result} for ${1:var} in ${2:source}]
