@@ -1,7 +1,6 @@
 # Syntaxes
 
-snippet import
-alias imp
+snippet import_single
 abbr import ${0:module}
     import ${0:module}
 
@@ -11,6 +10,7 @@ abbr import ${1:module} as ${0:alias}
     import ${1:module} as ${0:alias}
 
 snippet from
+alias import imp
 abbr from ${1:stuff} import ${0:module}
     from ${1:module} import ${0:stuff}
 
