@@ -104,6 +104,16 @@
   /::SendInput ^f
 #IfWinActive
 
+#IfWinActive, ahk_class SUMATRA_PDF_FRAME
+  h::SendInput {Left}
+  j::SendInput {Down}
+  k::SendInput {Up}
+  l::SendInput {Right}
+  ^b::SendInput {PgUp}
+  ^f::SendInput {PgDn}
+  /::SendInput ^f
+#IfWinActive
+
 #IfWinActive, ahk_class Notepad
   ^p::SendInput {Up}
   ^n::SendInput {Down}
