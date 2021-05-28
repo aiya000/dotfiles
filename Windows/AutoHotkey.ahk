@@ -95,15 +95,34 @@
 
 ; Adobe Reader
 #IfWinActive, ahk_class AcrobatSDIWindow
-  ; Easily vimnize
   h::SendInput {Left}
   j::SendInput {Down}
   k::SendInput {Up}
   l::SendInput {Right}
+  ^b::SendInput {PgUp}
+  ^f::SendInput {PgDn}
+  /::SendInput ^f
 #IfWinActive
 
-; Notepad
 #IfWinActive, ahk_class Notepad
+  ^p::SendInput {Up}
+  ^n::SendInput {Down}
+  ^f::SendInput {Right}
+  ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
+  ^,::SendInput +{Left}
+  ^.::SendInput +{Right}
+  ^[::SendInput +{Up}
+  ^]::SendInput +{Down}
+#IfWinActive
+
+#IfWinActive, ahk_class Comipo_MainWindow
   ^p::SendInput {Up}
   ^n::SendInput {Down}
   ^f::SendInput {Right}
