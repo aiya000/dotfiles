@@ -1,18 +1,12 @@
 # Syntaxes
 
 snippet if
-abbr if (__) {__}
 options indent
-    if (${1:#:cond}) {
-        ${0}
-    }
+    if (${1:#:cond}) {${0:#:here}}
 
 snippet else
-abbr    else {}
 options indent
-    else {
-        ${0:TARGET}
-    }
+    else {${0:#:here}}
 
 snippet foreach
 alias for
@@ -25,69 +19,46 @@ abbr for (var ${1:i} = ${2:0}; ${3:condition}; ${4:i++}) {${0:here}}
     for (var ${1:i} = ${2:0}; ${3:condition}; ${4:i++}) {${0:here}}
 
 snippet switch
-abbr switch (__) {__}
 options indent
-    switch (${1:#:var}) {
-    ${0}
-    }
+    switch (${1:#:var}) {${0:#:here}}
 
 snippet try
-abbr try {__}
 options indent
-    try {
-        ${0}
-    }
+    try {${0:#:here}}
 
 snippet catch
-abbr catch (__) {__}
 options indent
-    catch (${1:Exception} e) {
-        ${0}
-    }
+    catch (${1:Exception} e) {${0:#:here}}
 
 snippet finally
-abbr finally {__}
 options indent
-    finally {
-        ${0}
-    }
+    finally {${0:#:here}}
 
 snippet using_resources
 alias using
-abbr using (__) {__}
 options indent
-    using (${1:#:var resource}) {
-        ${0}
-    }
+    using (${1:#:var resource}) {${0:#:here}}
 
 snippet get
 abbr get {__}
 options indent
-    get {
-        ${0}
-    }
+    get {${0:#:here}}
 
 snippet set
 abbr set {__}
 options indent
-    set {
-        ${0}
-    }
+    set {${0:#:here}}
 
 snippet namespace
 abbr namespace __ {__}
 options indent
-    namespace ${1:#:Name} {
-        ${0}
-    }
+    namespace ${1:#:Name} {${0:#:here}}
 
 snippet class
 alias cla
 abbr class __ {__}
 options indent
-    class ${1:#:Name} {
-        ${0}
-    }
+    class ${1:#:Name} {${0:#:here}}
 
 snippet constructor
 abbr    ClassName(__) {__}
@@ -138,6 +109,10 @@ snippet debug_log
 alias d
 abbr Debug.Log(${0:#:here})
     Debug.Log(${0:#:here})
+
+snippet list
+abbr new [] {${0:#:here}}
+    new [] {${0:#:here}}
 
 # Document comments
 
