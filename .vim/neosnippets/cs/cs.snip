@@ -49,6 +49,11 @@ abbr set {__}
 options indent
     set {${0:#:here}}
 
+snippet index
+alias class_index this_index
+abbr ${1:Type} this[${2:int index}] {${0:getter_and_setter}}
+    ${1:Type} this[${2:int index}] {${0:getter_and_setter}}
+
 snippet namespace
 abbr namespace __ {__}
 options indent
@@ -106,7 +111,7 @@ abbr    Console.ReadLine()
     Console.ReadLine()
 
 snippet debug_log
-alias d
+alias d log
 abbr Debug.Log(${0:#:here})
     Debug.Log(${0:#:here})
 
