@@ -51,7 +51,7 @@ function s:stack_test_doctest() abort
   call s:stack_test(':doctest')
 endfunction
 
-function! s:ghcid_quickfix_start_on_path_started() abort
+function s:ghcid_quickfix_start_on_path_started() abort
   let current = getcwd()
   copen
   LcdStarted
@@ -59,7 +59,7 @@ function! s:ghcid_quickfix_start_on_path_started() abort
   execute 'lcd' current
 endfunction
 
-function! s:stack_integrate_test_or_unit_or_both() abort
+function s:stack_integrate_test_or_unit_or_both() abort
   echon join([
     \ 'a: do tasty-test (default)',
     \ 'b: do doctest',
