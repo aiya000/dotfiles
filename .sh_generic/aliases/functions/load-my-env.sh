@@ -200,7 +200,7 @@ function load-my-env () {
       ;;
 
     *)
-      echo "You may haven't $target_name" > /dev/stderr
+      echo "Undefined env: $target_name" > /dev/stderr
       ;;
   esac
 }

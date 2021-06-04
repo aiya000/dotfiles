@@ -1,13 +1,20 @@
 #compdef load-my-env
 
 function _load-my-env {
-    _values \
-        'load-my-env' \
-        haskell \
-        haskel-legacy \
-        pkgsrc \
-        ruby \
-        zsh \
-        ccache \
-        all
+  _values \
+    load-my-env \
+    ctags \
+    docker \
+    linuxbrew \
+    ccache \
+    stack \
+    cabal \
+    idris \
+    pkgsrc \
+    rbenv \
+    nvm \
+    virtualenv \
+    gradlew \
+    travis \
+    drawio
 }
