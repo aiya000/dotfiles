@@ -1,0 +1,439 @@
+2021-01-31 02:48:56.3313|INFO|PowerLauncher.App.Dispose|
+	Message: Start PowerToys Run Exit----------------------------------------------------  
+	Area: PowerLauncher.App.Dispose
+	Source Path: S:\src\modules\launcher\PowerLauncher\App.xaml.cs::179
+
+2021-01-31 02:48:56.5452|INFO|Wox.Infrastructure.Storage.WoxJsonStorage`1[[PowerLauncher.Storage.QueryHistory, PowerLauncher, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\QueryHistory.json>
+	Area: Wox.Infrastructure.Storage.WoxJsonStorage`1[PowerLauncher.Storage.QueryHistory].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-01-31 02:48:56.5616|INFO|Wox.Infrastructure.Storage.WoxJsonStorage`1[[PowerLauncher.Storage.UserSelectedRecord, PowerLauncher, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\UserSelectedRecord.json>
+	Area: Wox.Infrastructure.Storage.WoxJsonStorage`1[PowerLauncher.Storage.UserSelectedRecord].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-01-31 02:48:56.5680|INFO|Wox.Infrastructure.Storage.WoxJsonStorage`1[[PowerLauncher.Storage.TopMostRecord, PowerLauncher, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\TopMostRecord.json>
+	Area: Wox.Infrastructure.Storage.WoxJsonStorage`1[PowerLauncher.Storage.TopMostRecord].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-01-31 02:48:56.5921|INFO|Wox.Infrastructure.Storage.WoxJsonStorage`1[[Wox.Infrastructure.UserSettings.PowerToysRunSettings, Wox.Infrastructure, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\PowerToysRunSettings.json>
+	Area: Wox.Infrastructure.Storage.WoxJsonStorage`1[Wox.Infrastructure.UserSettings.PowerToysRunSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-01-31 02:48:56.6104|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Folder.FolderSettings, Microsoft.Plugin.Folder, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Folder\FolderSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Folder.FolderSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-01-31 02:48:56.6276|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Indexer.IndexerSettings, Microsoft.Plugin.Indexer, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Indexer\IndexerSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Indexer.IndexerSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-01-31 02:48:56.6473|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Program.ProgramPluginSettings, Microsoft.Plugin.Program, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Program\ProgramPluginSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Program.ProgramPluginSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-01-31 02:48:56.6473|INFO|PowerLauncher.App.Dispose|
+	Message: Start PowerToys Run Exit----------------------------------------------------  
+	Area: PowerLauncher.App.Dispose
+	Source Path: S:\src\modules\launcher\PowerLauncher\App.xaml.cs::179
+
+2021-01-31 02:48:56.6649|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Shell.ShellPluginSettings, Microsoft.Plugin.Shell, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Shell\ShellPluginSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Shell.ShellPluginSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-01-31 02:48:56.6649|INFO|Wox.Infrastructure.Storage.WoxJsonStorage`1[[Wox.Infrastructure.UserSettings.PowerToysRunSettings, Wox.Infrastructure, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\PowerToysRunSettings.json>
+	Area: Wox.Infrastructure.Storage.WoxJsonStorage`1[Wox.Infrastructure.UserSettings.PowerToysRunSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-01-31 02:48:56.6795|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Uri.UriSettings, Microsoft.Plugin.Uri, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Uri\UriSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Uri.UriSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-01-31 02:48:56.6795|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Folder.FolderSettings, Microsoft.Plugin.Folder, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Folder\FolderSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Folder.FolderSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-01-31 02:48:56.6901|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Indexer.IndexerSettings, Microsoft.Plugin.Indexer, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Indexer\IndexerSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Indexer.IndexerSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-01-31 02:48:56.6901|INFO|Wox.Infrastructure.Storage.BinaryStorage`1[[System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Cache\Image.cache>
+	Area: Wox.Infrastructure.Storage.BinaryStorage`1[System.Collections.Generic.Dictionary`2[System.String,System.Int32]].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\BinaryStorage`1.cs::153
+
+2021-01-31 02:48:56.6901|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Program.ProgramPluginSettings, Microsoft.Plugin.Program, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Program\ProgramPluginSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Program.ProgramPluginSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-01-31 02:48:56.7052|INFO|PowerLauncher.App.Dispose|
+	Message: End PowerToys Run Exit ----------------------------------------------------  
+	Area: PowerLauncher.App.Dispose
+	Source Path: S:\src\modules\launcher\PowerLauncher\App.xaml.cs::199
+
+2021-01-31 02:48:56.7052|INFO|Wox.Infrastructure.Stopwatch.Normal|
+	Message: |App.OnExit|Exit cost <401ms>
+	Area: Wox.Infrastructure.Stopwatch.Normal
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Stopwatch.cs::50
+
+2021-01-31 02:48:56.7052|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Shell.ShellPluginSettings, Microsoft.Plugin.Shell, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Shell\ShellPluginSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Shell.ShellPluginSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-01-31 02:48:56.7248|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Uri.UriSettings, Microsoft.Plugin.Uri, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Uri\UriSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Uri.UriSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-01-31 02:48:56.7358|INFO|Wox.Infrastructure.Storage.BinaryStorage`1[[System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Cache\Image.cache>
+	Area: Wox.Infrastructure.Storage.BinaryStorage`1[System.Collections.Generic.Dictionary`2[System.String,System.Int32]].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\BinaryStorage`1.cs::153
+
+2021-01-31 02:48:56.7358|INFO|PowerLauncher.App.Dispose|
+	Message: End PowerToys Run Exit ----------------------------------------------------  
+	Area: PowerLauncher.App.Dispose
+	Source Path: S:\src\modules\launcher\PowerLauncher\App.xaml.cs::199
+
+2021-01-31 21:11:11.5395|INFO|PowerLauncher.App.OnStartup|
+	Message: Begin PowerToys Run startup ----------------------------------------------------
+	Area: PowerLauncher.App.OnStartup
+	Source Path: S:\src\modules\launcher\PowerLauncher\App.xaml.cs::83
+
+2021-01-31 21:11:11.5768|INFO|PowerLauncher.App.OnStartup|
+	Message: Runtime info:
+Version: 0.29.3.0
+OS Version: Microsoft Windows NT 10.0.19041.0
+IntPtr Length: 8
+x64: True
+	Area: PowerLauncher.App.OnStartup
+	Source Path: S:\src\modules\launcher\PowerLauncher\App.xaml.cs::84
+
+2021-01-31 21:11:12.7043|INFO|Wox.Infrastructure.Stopwatch.Normal|
+	Message: |ImageLoader.Initialize|Preload images cost <413ms>
+	Area: Wox.Infrastructure.Stopwatch.Normal
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Stopwatch.cs::50
+
+2021-01-31 21:11:12.7256|INFO|Wox.Infrastructure.Image.ImageLoader+<>c.Initialize|
+	Message: Number of preload images is <8>, Images Number: 12, Unique Items 12
+	Area: Wox.Infrastructure.Image.ImageLoader+<>c.Initialize
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Image\ImageLoader.cs::74
+
+2021-01-31 21:11:13.3371|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Message: 	Error status: KNOWN
+		Program path: C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム
+		Exception thrown in called method: IntPtr CreateDirectoryHandle(System.String, Boolean)
+		Possible interpretation of the error: |Permission denied when trying to load programs from C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム
+		Possible resolution: Can be ignored and Wox should still continue, however the program may not be loaded
+	Area: Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths
+	Source Path: S:\src\modules\launcher\Plugins\Microsoft.Plugin.Program\Programs\Win32Program.cs::662
+
+2021-01-31 21:11:13.3672|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|-------------------------- Begin exception --------------------------
+2021-01-31 21:11:13.3814|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Message:
+	 	Error status: KNOWN
+		Program path: C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム
+		Exception thrown in called method: IntPtr CreateDirectoryHandle(System.String, Boolean)
+		Possible interpretation of the error: |Permission denied when trying to load programs from C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム
+		Possible resolution: Can be ignored and Wox should still continue, however the program may not be loaded
+2021-01-31 21:11:13.4646|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Exception full name:
+	 <System.UnauthorizedAccessException>
+	Exception message:
+	 <Access to the path 'C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム' is denied.>
+	Exception stack trace:
+	 <   at System.IO.Enumeration.FileSystemEnumerator`1.CreateDirectoryHandle(String path, Boolean ignoreNotFound)
+   at System.IO.Enumeration.FileSystemEnumerator`1.Init()
+   at System.IO.Enumeration.FileSystemEnumerator`1..ctor(String directory, Boolean isNormalized, EnumerationOptions options)
+   at System.IO.Enumeration.FileSystemEnumerable`1..ctor(String directory, FindTransform transform, EnumerationOptions options, Boolean isNormalized)
+   at System.IO.Enumeration.FileSystemEnumerableFactory.UserFiles(String directory, String expression, EnumerationOptions options)
+   at System.IO.Directory.InternalEnumeratePaths(String path, String searchPattern, SearchTarget searchTarget, EnumerationOptions options)
+   at Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths(String directory, IList`1 suffixes, Boolean recursiveSearch)>
+	Exception source:
+	 <System.IO.FileSystem>
+	Exception target site:
+	 <IntPtr CreateDirectoryHandle(System.String, Boolean)>
+	Exception HResult:
+	 <-2147024891>
+2021-01-31 21:11:13.4705|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|-------------------------- End exception --------------------------
+2021-01-31 21:11:13.4895|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Message: 	Error status: KNOWN
+		Program path: C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム
+		Exception thrown in called method: IntPtr CreateDirectoryHandle(System.String, Boolean)
+		Possible interpretation of the error: |Permission denied when trying to load programs from C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム
+		Possible resolution: Can be ignored and Wox should still continue, however the program may not be loaded
+	Area: Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths
+	Source Path: S:\src\modules\launcher\Plugins\Microsoft.Plugin.Program\Programs\Win32Program.cs::684
+
+2021-01-31 21:11:13.4895|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|-------------------------- Begin exception --------------------------
+2021-01-31 21:11:13.4895|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Message:
+	 	Error status: KNOWN
+		Program path: C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム
+		Exception thrown in called method: IntPtr CreateDirectoryHandle(System.String, Boolean)
+		Possible interpretation of the error: |Permission denied when trying to load programs from C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム
+		Possible resolution: Can be ignored and Wox should still continue, however the program may not be loaded
+2021-01-31 21:11:13.5067|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Exception full name:
+	 <System.UnauthorizedAccessException>
+	Exception message:
+	 <Access to the path 'C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム' is denied.>
+	Exception stack trace:
+	 <   at System.IO.Enumeration.FileSystemEnumerator`1.CreateDirectoryHandle(String path, Boolean ignoreNotFound)
+   at System.IO.Enumeration.FileSystemEnumerator`1.Init()
+   at System.IO.Enumeration.FileSystemEnumerator`1..ctor(String directory, Boolean isNormalized, EnumerationOptions options)
+   at System.IO.Enumeration.FileSystemEnumerable`1..ctor(String directory, FindTransform transform, EnumerationOptions options, Boolean isNormalized)
+   at System.IO.Enumeration.FileSystemEnumerableFactory.UserDirectories(String directory, String expression, EnumerationOptions options)
+   at System.IO.Directory.InternalEnumeratePaths(String path, String searchPattern, SearchTarget searchTarget, EnumerationOptions options)
+   at Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths(String directory, IList`1 suffixes, Boolean recursiveSearch)>
+	Exception source:
+	 <System.IO.FileSystem>
+	Exception target site:
+	 <IntPtr CreateDirectoryHandle(System.String, Boolean)>
+	Exception HResult:
+	 <-2147024891>
+2021-01-31 21:11:13.5067|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|-------------------------- End exception --------------------------
+2021-01-31 21:11:13.5250|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Message: 	Error status: KNOWN
+		Program path: C:\ProgramData\Microsoft\Windows\Start Menu\プログラム
+		Exception thrown in called method: IntPtr CreateDirectoryHandle(System.String, Boolean)
+		Possible interpretation of the error: |Permission denied when trying to load programs from C:\ProgramData\Microsoft\Windows\Start Menu\プログラム
+		Possible resolution: Can be ignored and Wox should still continue, however the program may not be loaded
+	Area: Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths
+	Source Path: S:\src\modules\launcher\Plugins\Microsoft.Plugin.Program\Programs\Win32Program.cs::662
+
+2021-01-31 21:11:13.5513|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|-------------------------- Begin exception --------------------------
+2021-01-31 21:11:13.5838|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Message:
+	 	Error status: KNOWN
+		Program path: C:\ProgramData\Microsoft\Windows\Start Menu\プログラム
+		Exception thrown in called method: IntPtr CreateDirectoryHandle(System.String, Boolean)
+		Possible interpretation of the error: |Permission denied when trying to load programs from C:\ProgramData\Microsoft\Windows\Start Menu\プログラム
+		Possible resolution: Can be ignored and Wox should still continue, however the program may not be loaded
+2021-01-31 21:11:13.5838|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Exception full name:
+	 <System.UnauthorizedAccessException>
+	Exception message:
+	 <Access to the path 'C:\ProgramData\Microsoft\Windows\Start Menu\プログラム' is denied.>
+	Exception stack trace:
+	 <   at System.IO.Enumeration.FileSystemEnumerator`1.CreateDirectoryHandle(String path, Boolean ignoreNotFound)
+   at System.IO.Enumeration.FileSystemEnumerator`1.Init()
+   at System.IO.Enumeration.FileSystemEnumerator`1..ctor(String directory, Boolean isNormalized, EnumerationOptions options)
+   at System.IO.Enumeration.FileSystemEnumerable`1..ctor(String directory, FindTransform transform, EnumerationOptions options, Boolean isNormalized)
+   at System.IO.Enumeration.FileSystemEnumerableFactory.UserFiles(String directory, String expression, EnumerationOptions options)
+   at System.IO.Directory.InternalEnumeratePaths(String path, String searchPattern, SearchTarget searchTarget, EnumerationOptions options)
+   at Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths(String directory, IList`1 suffixes, Boolean recursiveSearch)>
+	Exception source:
+	 <System.IO.FileSystem>
+	Exception target site:
+	 <IntPtr CreateDirectoryHandle(System.String, Boolean)>
+	Exception HResult:
+	 <-2147024891>
+2021-01-31 21:11:13.5956|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|-------------------------- End exception --------------------------
+2021-01-31 21:11:13.6157|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Message: 	Error status: KNOWN
+		Program path: C:\ProgramData\Microsoft\Windows\Start Menu\プログラム
+		Exception thrown in called method: IntPtr CreateDirectoryHandle(System.String, Boolean)
+		Possible interpretation of the error: |Permission denied when trying to load programs from C:\ProgramData\Microsoft\Windows\Start Menu\プログラム
+		Possible resolution: Can be ignored and Wox should still continue, however the program may not be loaded
+	Area: Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths
+	Source Path: S:\src\modules\launcher\Plugins\Microsoft.Plugin.Program\Programs\Win32Program.cs::684
+
+2021-01-31 21:11:13.6157|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|-------------------------- Begin exception --------------------------
+2021-01-31 21:11:13.6270|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Message:
+	 	Error status: KNOWN
+		Program path: C:\ProgramData\Microsoft\Windows\Start Menu\プログラム
+		Exception thrown in called method: IntPtr CreateDirectoryHandle(System.String, Boolean)
+		Possible interpretation of the error: |Permission denied when trying to load programs from C:\ProgramData\Microsoft\Windows\Start Menu\プログラム
+		Possible resolution: Can be ignored and Wox should still continue, however the program may not be loaded
+2021-01-31 21:11:13.6270|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Exception full name:
+	 <System.UnauthorizedAccessException>
+	Exception message:
+	 <Access to the path 'C:\ProgramData\Microsoft\Windows\Start Menu\プログラム' is denied.>
+	Exception stack trace:
+	 <   at System.IO.Enumeration.FileSystemEnumerator`1.CreateDirectoryHandle(String path, Boolean ignoreNotFound)
+   at System.IO.Enumeration.FileSystemEnumerator`1.Init()
+   at System.IO.Enumeration.FileSystemEnumerator`1..ctor(String directory, Boolean isNormalized, EnumerationOptions options)
+   at System.IO.Enumeration.FileSystemEnumerable`1..ctor(String directory, FindTransform transform, EnumerationOptions options, Boolean isNormalized)
+   at System.IO.Enumeration.FileSystemEnumerableFactory.UserDirectories(String directory, String expression, EnumerationOptions options)
+   at System.IO.Directory.InternalEnumeratePaths(String path, String searchPattern, SearchTarget searchTarget, EnumerationOptions options)
+   at Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths(String directory, IList`1 suffixes, Boolean recursiveSearch)>
+	Exception source:
+	 <System.IO.FileSystem>
+	Exception target site:
+	 <IntPtr CreateDirectoryHandle(System.String, Boolean)>
+	Exception HResult:
+	 <-2147024891>
+2021-01-31 21:11:13.6270|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|-------------------------- End exception --------------------------
+2021-01-31 21:11:14.4823|INFO|Wox.Infrastructure.Stopwatch.Normal|
+	Message: |Microsoft.Plugin.Program.Main|Package index cost <1174ms>
+	Area: Wox.Infrastructure.Stopwatch.Normal
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Stopwatch.cs::50
+
+2021-01-31 21:11:14.4883|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|
+	Message: |Failed to fetch description for C:\WINDOWS\syswow64\odbcad32.exe, エラーを特定できません
+
+'NVIDIA Control Panel' が、'\bms-resource:.{1,256}' の 'pattern' 制約に違反しています。
+
+	Area: Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath
+	Source Path: S:\src\modules\launcher\Plugins\Microsoft.Plugin.Program\Programs\ShellLinkHelper.cs::172
+
+2021-01-31 21:11:14.5526|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|-------------------------- Begin exception --------------------------
+2021-01-31 21:11:14.5681|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|
+	Message:
+	 |Failed to fetch description for C:\WINDOWS\syswow64\odbcad32.exe, エラーを特定できません
+
+'NVIDIA Control Panel' が、'\bms-resource:.{1,256}' の 'pattern' 制約に違反しています。
+
+2021-01-31 21:11:14.5681|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.LnkProgram|
+	Message: 	Error status: UNKNOWN
+		Program path: C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk
+		Exception thrown in called method: Void Resolve(Accessibility._RemotableHandle ByRef, SLR_FLAGS)
+		Possible interpretation of the error: |An unexpected error occurred in the calling method LnkProgram at C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk
+		Possible resolution: Not yet known
+	Area: Microsoft.Plugin.Program.Programs.Win32Program.LnkProgram
+	Source Path: S:\src\modules\launcher\Plugins\Microsoft.Plugin.Program\Programs\Win32Program.cs::511
+
+2021-01-31 21:11:14.5681|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|
+	Message: |Failed to fetch description for C:\PROGRA~2\WINDOW~4\wmplayer.exe, エラーを特定できません
+
+'GbftComFactory' が、'\bms-resource:.{1,256}' の 'pattern' 制約に違反しています。
+
+	Area: Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath
+	Source Path: S:\src\modules\launcher\Plugins\Microsoft.Plugin.Program\Programs\ShellLinkHelper.cs::172
+
+2021-01-31 21:11:14.5846|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|
+	Exception full name:
+	 <System.Runtime.InteropServices.COMException>
+	Exception message:
+	 <エラーを特定できません
+
+'NVIDIA Control Panel' が、'\bms-resource:.{1,256}' の 'pattern' 制約に違反しています。
+>
+	Exception stack trace:
+	 <   at Microsoft.Plugin.Program.Programs.ShellLinkHelper.IShellLinkW.GetDescription(StringBuilder pszName, Int32 cchMaxName)
+   at Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath(String path)>
+	Exception source:
+	 <>
+	Exception target site:
+	 <Void GetDescription(System.Text.StringBuilder, Int32)>
+	Exception HResult:
+	 <-2147467259>
+2021-01-31 21:11:14.6181|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.LnkProgram|-------------------------- Begin exception --------------------------
+2021-01-31 21:11:15.1512|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|-------------------------- Begin exception --------------------------
+2021-01-31 21:11:15.3478|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|-------------------------- End exception --------------------------
+2021-01-31 21:11:15.5034|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.LnkProgram|
+	Message:
+	 	Error status: UNKNOWN
+		Program path: C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk
+		Exception thrown in called method: Void Resolve(Accessibility._RemotableHandle ByRef, SLR_FLAGS)
+		Possible interpretation of the error: |An unexpected error occurred in the calling method LnkProgram at C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk
+		Possible resolution: Not yet known
+2021-01-31 21:11:15.5910|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|
+	Message:
+	 |Failed to fetch description for C:\PROGRA~2\WINDOW~4\wmplayer.exe, エラーを特定できません
+
+'GbftComFactory' が、'\bms-resource:.{1,256}' の 'pattern' 制約に違反しています。
+
+2021-01-31 21:11:15.6535|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.LnkProgram|
+	Exception full name:
+	 <System.IO.FileNotFoundException>
+	Exception message:
+	 <エラーを特定できません
+
+'Music Store Legacy Phone Actions' が、'\bms-resource:.{1,256}' の 'pattern' 制約に違反しています。
+>
+	Exception stack trace:
+	 <   at Microsoft.Plugin.Program.Programs.ShellLinkHelper.IShellLinkW.Resolve(_RemotableHandle& hwnd, SLR_FLAGS fFlags)
+   at Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath(String path)
+   at Microsoft.Plugin.Program.Programs.Win32Program.LnkProgram(String path)>
+	Exception source:
+	 <>
+	Exception target site:
+	 <Void Resolve(Accessibility._RemotableHandle ByRef, SLR_FLAGS)>
+	Exception HResult:
+	 <-2147024894>
+2021-01-31 21:11:15.6673|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|
+	Exception full name:
+	 <System.Runtime.InteropServices.COMException>
+	Exception message:
+	 <エラーを特定できません
+
+'GbftComFactory' が、'\bms-resource:.{1,256}' の 'pattern' 制約に違反しています。
+>
+	Exception stack trace:
+	 <   at Microsoft.Plugin.Program.Programs.ShellLinkHelper.IShellLinkW.GetDescription(StringBuilder pszName, Int32 cchMaxName)
+   at Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath(String path)>
+	Exception source:
+	 <>
+	Exception target site:
+	 <Void GetDescription(System.Text.StringBuilder, Int32)>
+	Exception HResult:
+	 <-2147467259>
+2021-01-31 21:11:15.6810|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.LnkProgram|-------------------------- End exception --------------------------
+2021-01-31 21:11:15.7105|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|-------------------------- End exception --------------------------
+2021-01-31 21:11:34.4748|INFO|Wox.Infrastructure.Stopwatch.Normal|
+	Message: |Microsoft.Plugin.Program.Main|Win32Program index cost <21166ms>
+	Area: Wox.Infrastructure.Stopwatch.Normal
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Stopwatch.cs::50
+
+2021-01-31 21:11:36.0342|INFO|PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins|
+	Message: Total init cost for <Shell> is <17ms>
+	Area: PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins
+	Source Path: S:\src\modules\launcher\PowerLauncher\Plugin\PluginManager.cs::112
+
+2021-01-31 21:11:36.0342|INFO|PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins|
+	Message: Total init cost for <Window Walker> is <49ms>
+	Area: PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins
+	Source Path: S:\src\modules\launcher\PowerLauncher\Plugin\PluginManager.cs::112
+
+2021-01-31 21:11:36.0342|INFO|PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins|
+	Message: Total init cost for <Calculator> is <4ms>
+	Area: PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins
+	Source Path: S:\src\modules\launcher\PowerLauncher\Plugin\PluginManager.cs::112
+
+2021-01-31 21:11:36.0342|INFO|PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins|
+	Message: Total init cost for <Windows Uri Handler> is <3ms>
+	Area: PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins
+	Source Path: S:\src\modules\launcher\PowerLauncher\Plugin\PluginManager.cs::112
+
+2021-01-31 21:11:36.0342|INFO|PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins|
+	Message: Total init cost for <Windows Indexer> is <10ms>
+	Area: PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins
+	Source Path: S:\src\modules\launcher\PowerLauncher\Plugin\PluginManager.cs::112
+
+2021-01-31 21:11:36.0342|INFO|PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins|
+	Message: Total init cost for <Folder> is <22ms>
+	Area: PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins
+	Source Path: S:\src\modules\launcher\PowerLauncher\Plugin\PluginManager.cs::112
+
+2021-01-31 21:11:36.5082|INFO|PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins|
+	Message: Total init cost for <Program> is <21936ms>
+	Area: PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins
+	Source Path: S:\src\modules\launcher\PowerLauncher\Plugin\PluginManager.cs::112
+
+2021-01-31 21:11:36.6823|INFO|PowerLauncher.App.OnStartup|
+	Message: End PowerToys Run startup ----------------------------------------------------  
+	Area: PowerLauncher.App.OnStartup
+	Source Path: S:\src\modules\launcher\PowerLauncher\App.xaml.cs::119
+
+2021-01-31 21:11:36.6907|INFO|Wox.Infrastructure.Stopwatch.Normal|
+	Message: |App.OnStartup|Startup cost <25315ms>
+	Area: Wox.Infrastructure.Stopwatch.Normal
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Stopwatch.cs::50
+

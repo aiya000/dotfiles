@@ -1,0 +1,323 @@
+2021-02-20 22:37:40.4961|INFO|PowerLauncher.App.OnStartup|
+	Message: Begin PowerToys Run startup ----------------------------------------------------
+	Area: PowerLauncher.App.OnStartup
+	Source Path: S:\src\modules\launcher\PowerLauncher\App.xaml.cs::84
+
+2021-02-20 22:37:40.5269|INFO|PowerLauncher.App.OnStartup|
+	Message: Runtime info:
+Version: 0.31.2.0
+OS Version: Microsoft Windows NT 10.0.19041.0
+IntPtr Length: 8
+x64: True
+	Area: PowerLauncher.App.OnStartup
+	Source Path: S:\src\modules\launcher\PowerLauncher\App.xaml.cs::85
+
+2021-02-20 22:37:41.2151|INFO|Wox.Infrastructure.Stopwatch.Normal|
+	Message: |ImageLoader.Initialize|Preload images cost <66ms>
+	Area: Wox.Infrastructure.Stopwatch.Normal
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Stopwatch.cs::50
+
+2021-02-20 22:37:41.2478|INFO|Wox.Infrastructure.Image.ImageLoader+<>c.Initialize|
+	Message: Number of preload images is <0>, Images Number: 4, Unique Items 4
+	Area: Wox.Infrastructure.Image.ImageLoader+<>c.Initialize
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Image\ImageLoader.cs::74
+
+2021-02-20 22:37:41.8671|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Message: 	Error status: KNOWN
+		Program path: C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム
+		Exception thrown in called method: IntPtr CreateDirectoryHandle(System.String, Boolean)
+		Possible interpretation of the error: |Permission denied when trying to load programs from C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム
+		Possible resolution: Can be ignored and Wox should still continue, however the program may not be loaded
+	Area: Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths
+	Source Path: S:\src\modules\launcher\Plugins\Microsoft.Plugin.Program\Programs\Win32Program.cs::662
+
+2021-02-20 22:37:41.8671|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|-------------------------- Begin exception --------------------------
+2021-02-20 22:37:41.8671|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Message:
+	 	Error status: KNOWN
+		Program path: C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム
+		Exception thrown in called method: IntPtr CreateDirectoryHandle(System.String, Boolean)
+		Possible interpretation of the error: |Permission denied when trying to load programs from C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム
+		Possible resolution: Can be ignored and Wox should still continue, however the program may not be loaded
+2021-02-20 22:37:41.9299|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Exception full name:
+	 <System.UnauthorizedAccessException>
+	Exception message:
+	 <Access to the path 'C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム' is denied.>
+	Exception stack trace:
+	 <   at System.IO.Enumeration.FileSystemEnumerator`1.CreateDirectoryHandle(String path, Boolean ignoreNotFound)
+   at System.IO.Enumeration.FileSystemEnumerator`1.Init()
+   at System.IO.Enumeration.FileSystemEnumerator`1..ctor(String directory, Boolean isNormalized, EnumerationOptions options)
+   at System.IO.Enumeration.FileSystemEnumerable`1..ctor(String directory, FindTransform transform, EnumerationOptions options, Boolean isNormalized)
+   at System.IO.Enumeration.FileSystemEnumerableFactory.UserFiles(String directory, String expression, EnumerationOptions options)
+   at System.IO.Directory.InternalEnumeratePaths(String path, String searchPattern, SearchTarget searchTarget, EnumerationOptions options)
+   at Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths(String directory, IList`1 suffixes, Boolean recursiveSearch)>
+	Exception source:
+	 <System.IO.FileSystem>
+	Exception target site:
+	 <IntPtr CreateDirectoryHandle(System.String, Boolean)>
+	Exception HResult:
+	 <-2147024891>
+2021-02-20 22:37:41.9618|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|-------------------------- End exception --------------------------
+2021-02-20 22:37:41.9618|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Message: 	Error status: KNOWN
+		Program path: C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム
+		Exception thrown in called method: IntPtr CreateDirectoryHandle(System.String, Boolean)
+		Possible interpretation of the error: |Permission denied when trying to load programs from C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム
+		Possible resolution: Can be ignored and Wox should still continue, however the program may not be loaded
+	Area: Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths
+	Source Path: S:\src\modules\launcher\Plugins\Microsoft.Plugin.Program\Programs\Win32Program.cs::684
+
+2021-02-20 22:37:41.9751|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|-------------------------- Begin exception --------------------------
+2021-02-20 22:37:41.9751|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Message:
+	 	Error status: KNOWN
+		Program path: C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム
+		Exception thrown in called method: IntPtr CreateDirectoryHandle(System.String, Boolean)
+		Possible interpretation of the error: |Permission denied when trying to load programs from C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム
+		Possible resolution: Can be ignored and Wox should still continue, however the program may not be loaded
+2021-02-20 22:37:41.9751|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Exception full name:
+	 <System.UnauthorizedAccessException>
+	Exception message:
+	 <Access to the path 'C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\プログラム' is denied.>
+	Exception stack trace:
+	 <   at System.IO.Enumeration.FileSystemEnumerator`1.CreateDirectoryHandle(String path, Boolean ignoreNotFound)
+   at System.IO.Enumeration.FileSystemEnumerator`1.Init()
+   at System.IO.Enumeration.FileSystemEnumerator`1..ctor(String directory, Boolean isNormalized, EnumerationOptions options)
+   at System.IO.Enumeration.FileSystemEnumerable`1..ctor(String directory, FindTransform transform, EnumerationOptions options, Boolean isNormalized)
+   at System.IO.Enumeration.FileSystemEnumerableFactory.UserDirectories(String directory, String expression, EnumerationOptions options)
+   at System.IO.Directory.InternalEnumeratePaths(String path, String searchPattern, SearchTarget searchTarget, EnumerationOptions options)
+   at Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths(String directory, IList`1 suffixes, Boolean recursiveSearch)>
+	Exception source:
+	 <System.IO.FileSystem>
+	Exception target site:
+	 <IntPtr CreateDirectoryHandle(System.String, Boolean)>
+	Exception HResult:
+	 <-2147024891>
+2021-02-20 22:37:41.9922|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|-------------------------- End exception --------------------------
+2021-02-20 22:37:41.9922|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Message: 	Error status: KNOWN
+		Program path: C:\ProgramData\Microsoft\Windows\Start Menu\プログラム
+		Exception thrown in called method: IntPtr CreateDirectoryHandle(System.String, Boolean)
+		Possible interpretation of the error: |Permission denied when trying to load programs from C:\ProgramData\Microsoft\Windows\Start Menu\プログラム
+		Possible resolution: Can be ignored and Wox should still continue, however the program may not be loaded
+	Area: Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths
+	Source Path: S:\src\modules\launcher\Plugins\Microsoft.Plugin.Program\Programs\Win32Program.cs::662
+
+2021-02-20 22:37:42.0105|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|-------------------------- Begin exception --------------------------
+2021-02-20 22:37:42.0105|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Message:
+	 	Error status: KNOWN
+		Program path: C:\ProgramData\Microsoft\Windows\Start Menu\プログラム
+		Exception thrown in called method: IntPtr CreateDirectoryHandle(System.String, Boolean)
+		Possible interpretation of the error: |Permission denied when trying to load programs from C:\ProgramData\Microsoft\Windows\Start Menu\プログラム
+		Possible resolution: Can be ignored and Wox should still continue, however the program may not be loaded
+2021-02-20 22:37:42.0231|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Exception full name:
+	 <System.UnauthorizedAccessException>
+	Exception message:
+	 <Access to the path 'C:\ProgramData\Microsoft\Windows\Start Menu\プログラム' is denied.>
+	Exception stack trace:
+	 <   at System.IO.Enumeration.FileSystemEnumerator`1.CreateDirectoryHandle(String path, Boolean ignoreNotFound)
+   at System.IO.Enumeration.FileSystemEnumerator`1.Init()
+   at System.IO.Enumeration.FileSystemEnumerator`1..ctor(String directory, Boolean isNormalized, EnumerationOptions options)
+   at System.IO.Enumeration.FileSystemEnumerable`1..ctor(String directory, FindTransform transform, EnumerationOptions options, Boolean isNormalized)
+   at System.IO.Enumeration.FileSystemEnumerableFactory.UserFiles(String directory, String expression, EnumerationOptions options)
+   at System.IO.Directory.InternalEnumeratePaths(String path, String searchPattern, SearchTarget searchTarget, EnumerationOptions options)
+   at Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths(String directory, IList`1 suffixes, Boolean recursiveSearch)>
+	Exception source:
+	 <System.IO.FileSystem>
+	Exception target site:
+	 <IntPtr CreateDirectoryHandle(System.String, Boolean)>
+	Exception HResult:
+	 <-2147024891>
+2021-02-20 22:37:42.0231|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|-------------------------- End exception --------------------------
+2021-02-20 22:37:42.0231|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Message: 	Error status: KNOWN
+		Program path: C:\ProgramData\Microsoft\Windows\Start Menu\プログラム
+		Exception thrown in called method: IntPtr CreateDirectoryHandle(System.String, Boolean)
+		Possible interpretation of the error: |Permission denied when trying to load programs from C:\ProgramData\Microsoft\Windows\Start Menu\プログラム
+		Possible resolution: Can be ignored and Wox should still continue, however the program may not be loaded
+	Area: Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths
+	Source Path: S:\src\modules\launcher\Plugins\Microsoft.Plugin.Program\Programs\Win32Program.cs::684
+
+2021-02-20 22:37:42.0394|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|-------------------------- Begin exception --------------------------
+2021-02-20 22:37:42.0394|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Message:
+	 	Error status: KNOWN
+		Program path: C:\ProgramData\Microsoft\Windows\Start Menu\プログラム
+		Exception thrown in called method: IntPtr CreateDirectoryHandle(System.String, Boolean)
+		Possible interpretation of the error: |Permission denied when trying to load programs from C:\ProgramData\Microsoft\Windows\Start Menu\プログラム
+		Possible resolution: Can be ignored and Wox should still continue, however the program may not be loaded
+2021-02-20 22:37:42.0394|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|
+	Exception full name:
+	 <System.UnauthorizedAccessException>
+	Exception message:
+	 <Access to the path 'C:\ProgramData\Microsoft\Windows\Start Menu\プログラム' is denied.>
+	Exception stack trace:
+	 <   at System.IO.Enumeration.FileSystemEnumerator`1.CreateDirectoryHandle(String path, Boolean ignoreNotFound)
+   at System.IO.Enumeration.FileSystemEnumerator`1.Init()
+   at System.IO.Enumeration.FileSystemEnumerator`1..ctor(String directory, Boolean isNormalized, EnumerationOptions options)
+   at System.IO.Enumeration.FileSystemEnumerable`1..ctor(String directory, FindTransform transform, EnumerationOptions options, Boolean isNormalized)
+   at System.IO.Enumeration.FileSystemEnumerableFactory.UserDirectories(String directory, String expression, EnumerationOptions options)
+   at System.IO.Directory.InternalEnumeratePaths(String path, String searchPattern, SearchTarget searchTarget, EnumerationOptions options)
+   at Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths(String directory, IList`1 suffixes, Boolean recursiveSearch)>
+	Exception source:
+	 <System.IO.FileSystem>
+	Exception target site:
+	 <IntPtr CreateDirectoryHandle(System.String, Boolean)>
+	Exception HResult:
+	 <-2147024891>
+2021-02-20 22:37:42.0572|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.ProgramPaths|-------------------------- End exception --------------------------
+2021-02-20 22:37:42.4608|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.LnkProgram|
+	Message: 	Error status: UNKNOWN
+		Program path: C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk
+		Exception thrown in called method: Void Resolve(Accessibility._RemotableHandle ByRef, SLR_FLAGS)
+		Possible interpretation of the error: |An unexpected error occurred in the calling method LnkProgram at C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk
+		Possible resolution: Not yet known
+	Area: Microsoft.Plugin.Program.Programs.Win32Program.LnkProgram
+	Source Path: S:\src\modules\launcher\Plugins\Microsoft.Plugin.Program\Programs\Win32Program.cs::511
+
+2021-02-20 22:37:42.4775|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.LnkProgram|-------------------------- Begin exception --------------------------
+2021-02-20 22:37:42.4775|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.LnkProgram|
+	Message:
+	 	Error status: UNKNOWN
+		Program path: C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk
+		Exception thrown in called method: Void Resolve(Accessibility._RemotableHandle ByRef, SLR_FLAGS)
+		Possible interpretation of the error: |An unexpected error occurred in the calling method LnkProgram at C:\Users\udong\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk
+		Possible resolution: Not yet known
+2021-02-20 22:37:42.4982|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.LnkProgram|
+	Exception full name:
+	 <System.IO.FileNotFoundException>
+	Exception message:
+	 <指定されたファイルが見つかりません。 (0x80070002)>
+	Exception stack trace:
+	 <   at Microsoft.Plugin.Program.Programs.ShellLinkHelper.IShellLinkW.Resolve(_RemotableHandle& hwnd, SLR_FLAGS fFlags)
+   at Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath(String path)
+   at Microsoft.Plugin.Program.Programs.Win32Program.LnkProgram(String path)>
+	Exception source:
+	 <Microsoft.Plugin.Program>
+	Exception target site:
+	 <Void Resolve(Accessibility._RemotableHandle ByRef, SLR_FLAGS)>
+	Exception HResult:
+	 <-2147024894>
+2021-02-20 22:37:42.5067|ERROR|Microsoft.Plugin.Program.Programs.Win32Program.LnkProgram|-------------------------- End exception --------------------------
+2021-02-20 22:37:42.6790|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|
+	Message: |Failed to fetch description for C:\PROGRA~2\WINDOW~4\wmplayer.exe, Error HRESULT E_FAIL has been returned from a call to a COM component.
+	Area: Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath
+	Source Path: S:\src\modules\launcher\Plugins\Microsoft.Plugin.Program\Programs\ShellLinkHelper.cs::172
+
+2021-02-20 22:37:42.6790|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|-------------------------- Begin exception --------------------------
+2021-02-20 22:37:42.6947|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|
+	Message:
+	 |Failed to fetch description for C:\PROGRA~2\WINDOW~4\wmplayer.exe, Error HRESULT E_FAIL has been returned from a call to a COM component.
+2021-02-20 22:37:42.6947|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|
+	Exception full name:
+	 <System.Runtime.InteropServices.COMException>
+	Exception message:
+	 <Error HRESULT E_FAIL has been returned from a call to a COM component.>
+	Exception stack trace:
+	 <   at Microsoft.Plugin.Program.Programs.ShellLinkHelper.IShellLinkW.GetDescription(StringBuilder pszName, Int32 cchMaxName)
+   at Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath(String path)>
+	Exception source:
+	 <Microsoft.Plugin.Program>
+	Exception target site:
+	 <Void GetDescription(System.Text.StringBuilder, Int32)>
+	Exception HResult:
+	 <-2147467259>
+2021-02-20 22:37:42.6947|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|-------------------------- End exception --------------------------
+2021-02-20 22:37:43.3660|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|
+	Message: |Failed to fetch description for C:\WINDOWS\syswow64\odbcad32.exe, Error HRESULT E_FAIL has been returned from a call to a COM component.
+	Area: Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath
+	Source Path: S:\src\modules\launcher\Plugins\Microsoft.Plugin.Program\Programs\ShellLinkHelper.cs::172
+
+2021-02-20 22:37:43.4087|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|-------------------------- Begin exception --------------------------
+2021-02-20 22:37:43.4162|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|
+	Message:
+	 |Failed to fetch description for C:\WINDOWS\syswow64\odbcad32.exe, Error HRESULT E_FAIL has been returned from a call to a COM component.
+2021-02-20 22:37:43.4162|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|
+	Exception full name:
+	 <System.Runtime.InteropServices.COMException>
+	Exception message:
+	 <Error HRESULT E_FAIL has been returned from a call to a COM component.>
+	Exception stack trace:
+	 <   at Microsoft.Plugin.Program.Programs.ShellLinkHelper.IShellLinkW.GetDescription(StringBuilder pszName, Int32 cchMaxName)
+   at Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath(String path)>
+	Exception source:
+	 <Microsoft.Plugin.Program>
+	Exception target site:
+	 <Void GetDescription(System.Text.StringBuilder, Int32)>
+	Exception HResult:
+	 <-2147467259>
+2021-02-20 22:37:43.4303|ERROR|Microsoft.Plugin.Program.Programs.ShellLinkHelper.RetrieveTargetPath|-------------------------- End exception --------------------------
+2021-02-20 22:37:46.5698|INFO|Wox.Infrastructure.Stopwatch.Normal|
+	Message: |Microsoft.Plugin.Program.Main|Package index cost <4776ms>
+	Area: Wox.Infrastructure.Stopwatch.Normal
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Stopwatch.cs::50
+
+2021-02-20 22:37:57.3760|INFO|Wox.Infrastructure.Stopwatch.Normal|
+	Message: |Microsoft.Plugin.Program.Main|Win32Program index cost <15582ms>
+	Area: Wox.Infrastructure.Stopwatch.Normal
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Stopwatch.cs::50
+
+2021-02-20 22:38:01.1648|INFO|PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins|
+	Message: Total init cost for <Window Walker> is <4ms>
+	Area: PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins
+	Source Path: S:\src\modules\launcher\PowerLauncher\Plugin\PluginManager.cs::112
+
+2021-02-20 22:38:01.1648|INFO|PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins|
+	Message: Total init cost for <System Commands> is <16ms>
+	Area: PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins
+	Source Path: S:\src\modules\launcher\PowerLauncher\Plugin\PluginManager.cs::112
+
+2021-02-20 22:38:01.1648|INFO|PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins|
+	Message: Total init cost for <Registry> is <25ms>
+	Area: PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins
+	Source Path: S:\src\modules\launcher\PowerLauncher\Plugin\PluginManager.cs::112
+
+2021-02-20 22:38:01.1648|INFO|PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins|
+	Message: Total init cost for <Windows Uri Handler> is <22ms>
+	Area: PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins
+	Source Path: S:\src\modules\launcher\PowerLauncher\Plugin\PluginManager.cs::112
+
+2021-02-20 22:38:01.1648|INFO|PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins|
+	Message: Total init cost for <Service> is <13ms>
+	Area: PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins
+	Source Path: S:\src\modules\launcher\PowerLauncher\Plugin\PluginManager.cs::112
+
+2021-02-20 22:38:01.1648|INFO|PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins|
+	Message: Total init cost for <Shell> is <38ms>
+	Area: PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins
+	Source Path: S:\src\modules\launcher\PowerLauncher\Plugin\PluginManager.cs::112
+
+2021-02-20 22:38:01.1648|INFO|PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins|
+	Message: Total init cost for <Windows Indexer> is <14ms>
+	Area: PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins
+	Source Path: S:\src\modules\launcher\PowerLauncher\Plugin\PluginManager.cs::112
+
+2021-02-20 22:38:01.1773|INFO|PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins|
+	Message: Total init cost for <Folder> is <29ms>
+	Area: PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins
+	Source Path: S:\src\modules\launcher\PowerLauncher\Plugin\PluginManager.cs::112
+
+2021-02-20 22:38:01.1648|INFO|PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins|
+	Message: Total init cost for <Calculator> is <20ms>
+	Area: PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins
+	Source Path: S:\src\modules\launcher\PowerLauncher\Plugin\PluginManager.cs::112
+
+2021-02-20 22:38:01.8437|INFO|PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins|
+	Message: Total init cost for <Program> is <16389ms>
+	Area: PowerLauncher.Plugin.PluginManager+<>c__DisplayClass24_0.InitializePlugins
+	Source Path: S:\src\modules\launcher\PowerLauncher\Plugin\PluginManager.cs::112
+
+2021-02-20 22:38:02.7133|INFO|PowerLauncher.App.OnStartup|
+	Message: End PowerToys Run startup ----------------------------------------------------  
+	Area: PowerLauncher.App.OnStartup
+	Source Path: S:\src\modules\launcher\PowerLauncher\App.xaml.cs::120
+
+2021-02-20 22:38:02.7664|INFO|Wox.Infrastructure.Stopwatch.Normal|
+	Message: |App.OnStartup|Startup cost <22438ms>
+	Area: Wox.Infrastructure.Stopwatch.Normal
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Stopwatch.cs::50
+

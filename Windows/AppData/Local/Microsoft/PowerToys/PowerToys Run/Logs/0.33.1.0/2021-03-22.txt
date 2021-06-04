@@ -1,0 +1,54 @@
+[2021-03-22 00:34:38.2617] [INFO] [S:\src\modules\launcher\PowerLauncher\App.xaml.cs::182]
+Start PowerToys Run Exit----------------------------------------------------  
+
+[2021-03-22 00:34:38.3899] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\QueryHistory.json>
+
+[2021-03-22 00:34:38.4467] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\UserSelectedRecord.json>
+
+[2021-03-22 00:34:38.4912] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\PowerToysRunSettings.json>
+
+[2021-03-22 00:34:38.5095] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Folder\FolderSettings.json>
+
+[2021-03-22 00:34:38.5095] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Indexer\IndexerSettings.json>
+
+[2021-03-22 00:34:38.5421] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Program\ProgramPluginSettings.json>
+
+[2021-03-22 00:34:38.5558] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Shell\ShellPluginSettings.json>
+
+[2021-03-22 00:34:38.5558] [INFO] [S:\src\modules\launcher\PowerLauncher\App.xaml.cs::182]
+Start PowerToys Run Exit----------------------------------------------------  
+
+[2021-03-22 00:34:38.5712] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Uri\UriSettings.json>
+
+[2021-03-22 00:34:38.5712] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\PowerToysRunSettings.json>
+
+[2021-03-22 00:34:38.5841] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Folder\FolderSettings.json>
+
+[2021-03-22 00:34:38.5841] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\BinaryStorage`1.cs::153]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Cache\Image.cache>
+
+[2021-03-22 00:34:38.5841] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Indexer\IndexerSettings.json>
+
+[2021-03-22 00:34:38.6014] [INFO] [S:\src\modules\launcher\PowerLauncher\App.xaml.cs::202]
+End PowerToys Run Exit ----------------------------------------------------  
+
+[2021-03-22 00:34:38.6014] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Stopwatch.cs::50]
+App.OnExit - Exit cost <352ms>
+
+[2021-03-22 00:34:38.6014] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Program\ProgramPluginSettings.json>
+
+[2021-03-22 00:34:38.6303] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Shell\ShellPluginSettings.json>
+

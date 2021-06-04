@@ -1,0 +1,36 @@
+[2021-05-13 01:34:59.3938] [INFO] [S:\src\modules\launcher\PowerLauncher\App.xaml.cs::182]
+Start PowerToys Run Exit----------------------------------------------------  
+
+[2021-05-13 01:34:59.5107] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\QueryHistory.json>
+
+[2021-05-13 01:34:59.5107] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\UserSelectedRecord.json>
+
+[2021-05-13 01:34:59.6574] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\PowerToysRunSettings.json>
+
+[2021-05-13 01:34:59.6624] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Folder\FolderSettings.json>
+
+[2021-05-13 01:34:59.6624] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Indexer\IndexerSettings.json>
+
+[2021-05-13 01:34:59.6624] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Program\ProgramPluginSettings.json>
+
+[2021-05-13 01:34:59.6624] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Shell\ShellPluginSettings.json>
+
+[2021-05-13 01:34:59.6624] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Uri\UriSettings.json>
+
+[2021-05-13 01:34:59.6866] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Storage\BinaryStorage`1.cs::153]
+Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Cache\Image.cache>
+
+[2021-05-13 01:34:59.6866] [INFO] [S:\src\modules\launcher\PowerLauncher\App.xaml.cs::202]
+End PowerToys Run Exit ----------------------------------------------------  
+
+[2021-05-13 01:34:59.6990] [INFO] [S:\src\modules\launcher\Wox.Infrastructure\Stopwatch.cs::50]
+App.OnExit - Exit cost <306ms>
+

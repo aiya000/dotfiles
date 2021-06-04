@@ -1,0 +1,180 @@
+2021-02-03 02:21:52.0958|INFO|PowerLauncher.App.Dispose|
+	Message: Start PowerToys Run Exit----------------------------------------------------  
+	Area: PowerLauncher.App.Dispose
+	Source Path: S:\src\modules\launcher\PowerLauncher\App.xaml.cs::179
+
+2021-02-03 02:21:52.2796|INFO|PowerLauncher.App.Dispose|
+	Message: Start PowerToys Run Exit----------------------------------------------------  
+	Area: PowerLauncher.App.Dispose
+	Source Path: S:\src\modules\launcher\PowerLauncher\App.xaml.cs::179
+
+2021-02-03 02:21:52.7823|INFO|Wox.Infrastructure.Storage.WoxJsonStorage`1[[PowerLauncher.Storage.QueryHistory, PowerLauncher, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\QueryHistory.json>
+	Area: Wox.Infrastructure.Storage.WoxJsonStorage`1[PowerLauncher.Storage.QueryHistory].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-02-03 02:21:52.8378|ERROR|Wox.Infrastructure.Storage.WoxJsonStorage`1[[PowerLauncher.Storage.QueryHistory, PowerLauncher, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Error in saving data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\QueryHistory.json>
+	Area: Wox.Infrastructure.Storage.WoxJsonStorage`1[PowerLauncher.Storage.QueryHistory].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::137
+
+2021-02-03 02:21:52.8419|ERROR|Wox.Infrastructure.Storage.WoxJsonStorage`1[[PowerLauncher.Storage.QueryHistory, PowerLauncher, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|-------------------------- Begin exception --------------------------
+2021-02-03 02:21:52.8419|ERROR|Wox.Infrastructure.Storage.WoxJsonStorage`1[[PowerLauncher.Storage.QueryHistory, PowerLauncher, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message:
+	 Error in saving data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\QueryHistory.json>
+2021-02-03 02:21:52.9331|INFO|Wox.Infrastructure.Storage.WoxJsonStorage`1[[PowerLauncher.Storage.UserSelectedRecord, PowerLauncher, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\UserSelectedRecord.json>
+	Area: Wox.Infrastructure.Storage.WoxJsonStorage`1[PowerLauncher.Storage.UserSelectedRecord].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-02-03 02:21:52.9331|INFO|Wox.Infrastructure.Storage.WoxJsonStorage`1[[PowerLauncher.Storage.TopMostRecord, PowerLauncher, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\TopMostRecord.json>
+	Area: Wox.Infrastructure.Storage.WoxJsonStorage`1[PowerLauncher.Storage.TopMostRecord].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-02-03 02:21:53.0840|ERROR|Wox.Infrastructure.Storage.WoxJsonStorage`1[[PowerLauncher.Storage.QueryHistory, PowerLauncher, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Exception full name:
+	 <System.IO.IOException>
+	Exception message:
+	 <The process cannot access the file 'C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\QueryHistory.json' because it is being used by another process.>
+	Exception stack trace:
+	 <   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamWriter..ctor(String path)
+   at System.IO.File.WriteAllText(String path, String contents)
+   at System.IO.Abstractions.FileWrapper.WriteAllText(String path, String contents)
+   at Wox.Infrastructure.Storage.JsonStorage`1.Save()>
+	Exception source:
+	 <System.Private.CoreLib>
+	Exception target site:
+	 <Microsoft.Win32.SafeHandles.SafeFileHandle ValidateFileHandle(Microsoft.Win32.SafeHandles.SafeFileHandle)>
+	Exception HResult:
+	 <-2147024864>
+2021-02-03 02:21:53.0890|ERROR|Wox.Infrastructure.Storage.WoxJsonStorage`1[[PowerLauncher.Storage.QueryHistory, PowerLauncher, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|-------------------------- End exception --------------------------
+2021-02-03 02:21:53.0890|INFO|Wox.Infrastructure.Storage.WoxJsonStorage`1[[Wox.Infrastructure.UserSettings.PowerToysRunSettings, Wox.Infrastructure, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\PowerToysRunSettings.json>
+	Area: Wox.Infrastructure.Storage.WoxJsonStorage`1[Wox.Infrastructure.UserSettings.PowerToysRunSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-02-03 02:21:53.0890|INFO|Wox.Infrastructure.Storage.WoxJsonStorage`1[[PowerLauncher.Storage.UserSelectedRecord, PowerLauncher, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\UserSelectedRecord.json>
+	Area: Wox.Infrastructure.Storage.WoxJsonStorage`1[PowerLauncher.Storage.UserSelectedRecord].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-02-03 02:21:53.1069|INFO|Wox.Infrastructure.Storage.WoxJsonStorage`1[[PowerLauncher.Storage.TopMostRecord, PowerLauncher, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\TopMostRecord.json>
+	Area: Wox.Infrastructure.Storage.WoxJsonStorage`1[PowerLauncher.Storage.TopMostRecord].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-02-03 02:21:53.1069|INFO|Wox.Infrastructure.Storage.WoxJsonStorage`1[[Wox.Infrastructure.UserSettings.PowerToysRunSettings, Wox.Infrastructure, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\PowerToysRunSettings.json>
+	Area: Wox.Infrastructure.Storage.WoxJsonStorage`1[Wox.Infrastructure.UserSettings.PowerToysRunSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-02-03 02:21:53.1304|ERROR|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Folder.FolderSettings, Microsoft.Plugin.Folder, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Error in saving data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Folder\FolderSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Folder.FolderSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::137
+
+2021-02-03 02:21:53.1304|ERROR|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Folder.FolderSettings, Microsoft.Plugin.Folder, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|-------------------------- Begin exception --------------------------
+2021-02-03 02:21:53.1304|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Folder.FolderSettings, Microsoft.Plugin.Folder, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Folder\FolderSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Folder.FolderSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-02-03 02:21:53.1394|ERROR|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Folder.FolderSettings, Microsoft.Plugin.Folder, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message:
+	 Error in saving data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Folder\FolderSettings.json>
+2021-02-03 02:21:53.1394|ERROR|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Folder.FolderSettings, Microsoft.Plugin.Folder, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Exception full name:
+	 <System.IO.IOException>
+	Exception message:
+	 <The process cannot access the file 'C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Folder\FolderSettings.json' because it is being used by another process.>
+	Exception stack trace:
+	 <   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamWriter..ctor(String path)
+   at System.IO.File.WriteAllText(String path, String contents)
+   at System.IO.Abstractions.FileWrapper.WriteAllText(String path, String contents)
+   at Wox.Infrastructure.Storage.JsonStorage`1.Save()>
+	Exception source:
+	 <System.Private.CoreLib>
+	Exception target site:
+	 <Microsoft.Win32.SafeHandles.SafeFileHandle ValidateFileHandle(Microsoft.Win32.SafeHandles.SafeFileHandle)>
+	Exception HResult:
+	 <-2147024864>
+2021-02-03 02:21:53.1520|ERROR|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Folder.FolderSettings, Microsoft.Plugin.Folder, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|-------------------------- End exception --------------------------
+2021-02-03 02:21:53.1394|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Indexer.IndexerSettings, Microsoft.Plugin.Indexer, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Indexer\IndexerSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Indexer.IndexerSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-02-03 02:21:53.1520|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Indexer.IndexerSettings, Microsoft.Plugin.Indexer, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Indexer\IndexerSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Indexer.IndexerSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-02-03 02:21:53.2238|ERROR|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Program.ProgramPluginSettings, Microsoft.Plugin.Program, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Error in saving data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Program\ProgramPluginSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Program.ProgramPluginSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::137
+
+2021-02-03 02:21:53.2238|ERROR|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Program.ProgramPluginSettings, Microsoft.Plugin.Program, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|-------------------------- Begin exception --------------------------
+2021-02-03 02:21:53.2320|ERROR|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Program.ProgramPluginSettings, Microsoft.Plugin.Program, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message:
+	 Error in saving data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Program\ProgramPluginSettings.json>
+2021-02-03 02:21:53.2238|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Program.ProgramPluginSettings, Microsoft.Plugin.Program, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Program\ProgramPluginSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Program.ProgramPluginSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-02-03 02:21:53.2320|ERROR|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Program.ProgramPluginSettings, Microsoft.Plugin.Program, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Exception full name:
+	 <System.IO.IOException>
+	Exception message:
+	 <The process cannot access the file 'C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Program\ProgramPluginSettings.json' because it is being used by another process.>
+	Exception stack trace:
+	 <   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamWriter..ctor(String path)
+   at System.IO.File.WriteAllText(String path, String contents)
+   at System.IO.Abstractions.FileWrapper.WriteAllText(String path, String contents)
+   at Wox.Infrastructure.Storage.JsonStorage`1.Save()>
+	Exception source:
+	 <System.Private.CoreLib>
+	Exception target site:
+	 <Microsoft.Win32.SafeHandles.SafeFileHandle ValidateFileHandle(Microsoft.Win32.SafeHandles.SafeFileHandle)>
+	Exception HResult:
+	 <-2147024864>
+2021-02-03 02:21:53.2320|ERROR|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Program.ProgramPluginSettings, Microsoft.Plugin.Program, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|-------------------------- End exception --------------------------
+2021-02-03 02:21:53.2451|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Shell.ShellPluginSettings, Microsoft.Plugin.Shell, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Shell\ShellPluginSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Shell.ShellPluginSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-02-03 02:21:53.2451|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Shell.ShellPluginSettings, Microsoft.Plugin.Shell, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Shell\ShellPluginSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Shell.ShellPluginSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-02-03 02:21:53.2451|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Uri.UriSettings, Microsoft.Plugin.Uri, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Uri\UriSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Uri.UriSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-02-03 02:21:53.2451|INFO|Wox.Infrastructure.Storage.PluginJsonStorage`1[[Microsoft.Plugin.Uri.UriSettings, Microsoft.Plugin.Uri, Version=0.29.3.0, Culture=neutral, PublicKeyToken=null]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Microsoft.Plugin.Uri\UriSettings.json>
+	Area: Wox.Infrastructure.Storage.PluginJsonStorage`1[Microsoft.Plugin.Uri.UriSettings].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\JsonStorage`1.cs::133
+
+2021-02-03 02:21:53.4128|INFO|Wox.Infrastructure.Storage.BinaryStorage`1[[System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].Save|
+	Message: Saving cached data at <C:\Users\udong\AppData\Local\Microsoft\PowerToys\PowerToys Run\Cache\Image.cache>
+	Area: Wox.Infrastructure.Storage.BinaryStorage`1[System.Collections.Generic.Dictionary`2[System.String,System.Int32]].Save
+	Source Path: S:\src\modules\launcher\Wox.Infrastructure\Storage\BinaryStorage`1.cs::153
+

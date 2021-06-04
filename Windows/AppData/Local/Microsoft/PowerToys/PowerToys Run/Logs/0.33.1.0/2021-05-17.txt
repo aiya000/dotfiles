@@ -1,0 +1,3 @@
+[2021-05-17 18:36:34.9762] [ERROR] [S:\src\modules\launcher\Wox.Infrastructure\Storage\ListRepository`1.cs::54]
+Item Already Exists <draw.io.lnk>
+

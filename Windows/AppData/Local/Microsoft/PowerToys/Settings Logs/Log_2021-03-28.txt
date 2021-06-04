@@ -1,0 +1,10 @@
+ERROR: 22:50:07.0769458
+    [Method]: LoadProfile [Class]: KeyboardManagerViewModel
+    Exception encountered when loading Keyboard Manager profile
+Object reference not set to an instance of an object.
+Inner exception: 
+
+Stack trace: 
+   at Microsoft.PowerToys.Settings.UI.Views.KeyboardManagerPage.CombineRemappings(List`1 remapKeysList, UInt32 leftKey, UInt32 rightKey, UInt32 combinedKey)
+   at Microsoft.PowerToys.Settings.UI.Views.KeyboardManagerPage.FilterRemapKeysList(List`1 remapKeysList)
+   at Microsoft.PowerToys.Settings.UI.Library.ViewModels.KeyboardManagerViewModel.LoadProfile()

@@ -1,0 +1,3 @@
+INFO: 16:11:26.3206834
+    [Method]: LoadSettingsFromJson [Class]: UserSettings
+    ColorPicker settings.json was missing, creating a new one
