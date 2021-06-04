@@ -3,7 +3,6 @@ scriptversion 3
 
 let s:V = vital#vimrc#new()
 
-let s:HTML = s:V.import('Web.HTML')
 let s:Job = s:V.import('System.Job')
 let s:List = s:V.import('Data.List')
 let s:Msg = s:V.import('Vim.Message')
@@ -184,9 +183,13 @@ function vimrc#open_explorer(split, ...) abort
 endfunction
 
 " Get a detail of <title> from + register
-function vimrc#get_webpage_title() abort
+function! vimrc#get_webpage_title() abort
   try
-    return substitute(s:HTML.parseURL(@+).find('title').value(), '·', '-', 'g')
+    echo 'fetching now...'
+    const raw_title = system('curl --silent ' .. @+ .. ' | pup --plain "title json{}" | jq -r ".[0].text"')
+    echomsg @+
+    echomsg split(raw_title)
+    return split(raw_title)[0]
   catch
     return 'vimrc#get_webpage_title(): something happened: ' .. v:exception
   endtry

@@ -69,6 +69,7 @@ ifeq ($(OS),Windows)
 	echo Please define install_package_managers for haskell-stack > /dev/stderr
 	echo Please define install_package_managers for npm > /dev/stderr
 	echo Please define install_package_managers for pip > /dev/stderr
+	echo Please define install_package_managers for go > /dev/stderr
 endif
 
 install-by-pip3:
@@ -191,6 +192,10 @@ ifeq ($(OS),WSL2)
 	$(AptInstall) libssl-dev
 
 	$(AptBuildDep) vim
+
+	# To bridge between Windows10 and WSL2 Vim
+	go get github.com/atotto/clipboard/cmd/gocopy
+	go get github.com/atotto/clipboard/cmd/gopaste
 	# }}}
 endif
 ifeq ($(OS),Darwin)
