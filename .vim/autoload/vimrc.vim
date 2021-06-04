@@ -183,13 +183,11 @@ function vimrc#open_explorer(split, ...) abort
 endfunction
 
 " Get a detail of <title> from + register
-function! vimrc#get_webpage_title() abort
+function vimrc#get_webpage_title() abort
   try
     echo 'fetching now...'
-    const raw_title = system('curl --silent ' .. @+ .. ' | pup --plain "title json{}" | jq -r ".[0].text"')
-    echomsg @+
-    echomsg split(raw_title)
-    return split(raw_title)[0]
+    const clipboard_content = g:vimrc.is_wsl2 ? system('gopaste') : @+
+    return system('curl --silent ' .. clipboard_content .. ' | pup --plain "title json{}" | jq -r ".[0].text"')
   catch
     return 'vimrc#get_webpage_title(): something happened: ' .. v:exception
   endtry
