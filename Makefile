@@ -3,14 +3,12 @@ all: install
 logfile = ./dotfiles-MakeFile.log
 
 # TODO: Detect auto
-OS = Arch
+OS = WSL2
 
-noconfirm ?=  # e.g. `--noconfirm` (Arch) , `-y` (Ubuntu)
-
-YayInstall = yay -S --needed $(noconfirm)
+YayInstall = yay -S --needed --noconfirm
 YayUpdate = yay -Sy
 
-AptInstall = sudo apt install $(noconfirm)
+AptInstall = sudo apt install -y
 AptUpdate = sudo apt update
 AptBuildDep = sudo apt build-dep
 
@@ -176,34 +174,22 @@ endif
 ifeq ($(OS),WSL2)
 	# {{{
 	$(AptInstall) \
-		conky \
-		dmenu \
-		dunst \
-		dzen2 \
-		fcitx \
-		fcitx-configtool \
-		fcitx-im \
-		fcitx-mozc \
 		git \
 		go \
-		libnotify \
 		man-db \
 		mimi-git \
 		mlocate \
 		openssh \
 		peco \
 		progress \
-		ristretto \
 		rsync \
-		termite \
-		thunar \
 		tmux \
 		tmux-mem-cpu-load \
-		unzip-iconv \
-		x11-apps \
-		xmonad \
-		zathura \
-		zathura-pdf-mupdf
+		unzip-iconv
+
+	# To make ruby via rbenv
+	$(AptInstall) libssl-dev
+
 	$(AptBuildDep) vim
 	# }}}
 endif
