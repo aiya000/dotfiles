@@ -10,6 +10,25 @@ function zshrc::prompt::main () {
 }
 
 function zshrc::prompt::sub_status () {
+  if [[ $ZSHRC_PROMPT_GIT_ENABLE -ne 0 ]] ; then
+    zshrc::prompt::sub_status::show
+    return
+  fi
+
+  if [[ $ZSHRC_PROMPT_GIT_DISABLE -ne 0 ]] ; then
+    echo '[git on prompt is disabled] (env var)'
+    return
+  fi
+
+  if declare -f should_not_prompt_show_git_status > /dev/null 2>&1 && should_not_prompt_show_git_status ; then
+    echo '[git on prompt is disabled (func)]'
+    return
+  fi
+
+  zshrc::prompt::sub_status::show
+}
+
+function zshrc::prompt::sub_status::show () {
   function get_git_changes () {
     # Subtract a head line minute
     local changes=$(( $(git status --short 2> /dev/null | wc -l) - 1 ))
@@ -44,10 +63,6 @@ function zshrc::prompt::sub_status () {
     echo "%{$bg[green]$fg[black]%}[${branch_name}]%{$reset_color%}"
   }
 
-  if [[ $ZSHRC_PROMPT_GIT_STATUS_DISABLE -ne 0 ]] ; then
-    echo '[GitStatus Disabled]'
-    return
-  fi
   echo $(get_git_changes)$(get_git_commits)$(get_git_stash_status)$(get_git_branch_name)
 }
 
