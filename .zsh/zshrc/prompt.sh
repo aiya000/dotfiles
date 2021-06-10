@@ -10,7 +10,7 @@ function zshrc::prompt::main () {
 }
 
 function zshrc::prompt::sub_status () {
-  if [[ $ZSHRC_PROMPT_GIT_ENABLE -ne 0 ]] ; then
+  if [[ -n $ZSHRC_PROMPT_GIT_ENABLE ]] && [[ $ZSHRC_PROMPT_GIT_ENABLE -ne 0 ]] ; then
     zshrc::prompt::sub_status::show
     return
   fi
