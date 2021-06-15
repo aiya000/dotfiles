@@ -16,6 +16,9 @@ abbr .${1:name} {${0:#:here}}
 
 include html/*
 
+# html
+## Tags
+
 snippet template
 abbr <template>${0}</template>
     <template>${0}</template>
@@ -39,3 +42,9 @@ abbr <style lang="sass" scoped>${0:here}</style>
 snippet style_lang_sass_module
 abbr <style lang="sass" module>${0:here}</style>
     <style lang="sass" module>${0:here}</style>
+
+## Attributes
+
+snippet click
+abbr @click="${0:expr}"
+    @click="${0:expr}"
