@@ -1,10 +1,14 @@
+; ^ = Ctrl
+; ! = Alt
+; # = Super
+; + = Shift
+
 #h::SendInput #{Left}
 #j::SendInput #{Down}
 #k::SendInput #{Up}
-#l::SendInput #{Right}  ; TODO: doesn't work
+#l::SendInput #{Right}
 
-^!c::SendInput !{F4}
-^!i::SendInput !{Tab}
+^!d::SendInput #{Tab}
 
 ; cmd prompt
 #IfWinActive, ahk_class ConsoleWindowClass
@@ -109,8 +113,10 @@
   j::SendInput {Down}
   k::SendInput {Up}
   l::SendInput {Right}
-  ^b::SendInput {PgUp}
-  ^f::SendInput {PgDn}
+  ; ^b::SendInput {PgUp}
+  ; ^f::SendInput {PgDn}
+  ^b::SendInput {Left}
+  ^f::SendInput {Right}
   /::SendInput ^f
 #IfWinActive
 
@@ -148,4 +154,9 @@
   ^.::SendInput +{Right}
   ^[::SendInput +{Up}
   ^]::SendInput +{Down}
+#IfWinActive
+
+#IfWinActive, ahk_exe draw.io.exe
+  ; Cancel 'ahk_class Chrome_WidgetWin_1' keymaps
+  ^a::SendInput ^a
 #IfWinActive
