@@ -828,6 +828,19 @@ augroup END
 let g:gist_clip_command = 'clip.exe'
 
 " }}}
+" open-browser.vim {{{
+
+if g:vimrc.is_wsl2
+  " Copied from the help of open-browser.vim
+  let g:openbrowser_browser_commands = [
+    \ #{
+      \ name: 'wslview',
+      \ args: ['{browser}', '{uri}'],
+    \ },
+  \ ]
+endif
+
+" }}}
 
 call dein#end()
 
