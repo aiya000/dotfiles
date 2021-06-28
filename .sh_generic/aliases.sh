@@ -283,13 +283,6 @@ if i_have git ; then
 fi
 
 # }}}
-# Docker {{{
-
-if i_have docker ; then
-  load-my-env docker
-fi
-
-# }}}
 # Others {{{
 
 alias la='ls -a --color=auto --group-directories-first'
