@@ -22,14 +22,14 @@ alias rm=dust  # no more cry
 alias sl=ls
 
 function du-sort () {
-    local paths=${1:-.}
-    du -h -d 1 "$paths" | sort -h
+  local paths=${1:-.}
+  du -h -d 1 "$paths" | sort -h
 }
 
 # NOTE: Who did define the original - ?
 function - () {
-    # shellcheck disable=SC2164
-    cd -
+  # shellcheck disable=SC2164
+  cd -
 }
 
 alias_of sudo 'sudo '  # Enable aliases on sudo
@@ -41,7 +41,7 @@ i_have say || alias say=espeak
 # Load ./aliases/** {{{
 
 for script in ~/.sh_generic/aliases/functions/*.sh ; do
-    source "$script"
+  source "$script"
 done
 source ~/.sh_generic/aliases/build-tools.sh
 source ~/.sh_generic/aliases/os-package-managers.sh
