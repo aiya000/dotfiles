@@ -9,6 +9,12 @@
 #l::SendInput #{Right}
 
 ^!d::SendInput #{Tab}
+!^c::SendInput !{F4}
+
+; With bug.n
+;; To avoid broke window arranging
+EnvGet, Home, HOME
+#d::Run explorer.exe %Home%\Desktop
 
 ; cmd prompt
 #IfWinActive, ahk_class ConsoleWindowClass
