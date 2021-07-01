@@ -319,3 +319,7 @@ abbr import(${1:'@/data/logger'}).then(x => ${2:x.default.log}(${0:#:here}))
 snippet throw_definitely_here_is_not_passed
 abbr process.exit(1)
     process.exit(1)
+
+snippet regex_email_validation
+abbr /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_\`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
