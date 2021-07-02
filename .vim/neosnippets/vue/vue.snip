@@ -1,3 +1,11 @@
+include scss.snip
+delete class cl cla import imp
+
+snippet class_scss
+alias sc_class sc_cla
+abbr .${1:name} {${0:#:here}}
+    .${1:name} {${0:#:here}}
+
 include typescript/*
 delete tr class cl cla
 
@@ -5,14 +13,6 @@ snippet class_typescript
 alias ts_class ts_cla
 abbr class=""
     class="${0:name}"
-
-include scss.snip
-delete class cl cla
-
-snippet class_scss
-alias sc_class sc_cla
-abbr .${1:name} {${0:#:here}}
-    .${1:name} {${0:#:here}}
 
 include html/*
 
