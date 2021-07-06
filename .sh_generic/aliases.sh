@@ -150,6 +150,7 @@ if i_have git ; then
   alias gsmui='git submodule update --init'
   alias gsmuir='git submodule update --init --recursive'
   alias gch='git cherry-pick'
+  alias gchc='git cherry-pick --continue'
   alias _gclean='git clean -fd'
   alias gp='git push'
   alias gpu='git push -u'
