@@ -58,12 +58,23 @@ function vimterm-open-parent-vim() {
     echo -e "\e]51;[\"call\", \"Tapi_Tabnew\", [\"$PWD\" $(vimterm-quote-args "$@")]]\x07"
 }
 
+function cd-to-git-root () {
+  local root
+  root=$(git rev-parse --show-toplevel 2> /dev/null || exit 1)
+
+  if ! cd "$root" && command -v wslpath > /dev/null 2>&1 ; then
+    root=$(wslpath "$root")
+    echo "Using wslpath: $root"
+    cd "$root" || exit 1
+  fi
+}
+
 # If I'm on a shell on Vim
-if [[ "$VIM_TERMINAL" != '' ]] ; then
-    export PAGER=cat
-    alias vim=vimterm-open-parent-vim
-    cd "$(git rev-parse --show-toplevel 2> /dev/null)" \
-        && xl \
-        && cd - > /dev/null \
-        || return
+if [[ $VIM_TERMINAL != '' ]] ; then
+  export PAGER=cat
+  alias vim=vimterm-open-parent-vim
+  cd-to-git-root \
+    && xl \
+    && cd - > /dev/null \
+    || return
 fi
