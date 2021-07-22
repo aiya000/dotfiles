@@ -59,20 +59,25 @@ function vimterm-open-parent-vim() {
 }
 
 function cd-to-git-root () {
-  local root
+  local root simple
   root=$(git rev-parse --show-toplevel 2> /dev/null || exit 1)
 
-  if ! cd "$root" && command -v wslpath > /dev/null 2>&1 ; then
+  # Try recover with wslpath if simple is failed
+  if ! simple=$(cd "$root" 2>&1) && command -v wslpath > /dev/null 2>&1 ; then
     root=$(wslpath "$root")
-    echo "Using wslpath: $root"
+    echo "cd-to-git-root: Using wslpath: $root"
     cd "$root" || exit 1
+    return
   fi
+
+  echo "$simple"
 }
 
 # If I'm on a shell on Vim
 if [[ $VIM_TERMINAL != '' ]] ; then
   export PAGER=cat
   alias vim=vimterm-open-parent-vim
+
   cd-to-git-root \
     && xl \
     && cd - > /dev/null \

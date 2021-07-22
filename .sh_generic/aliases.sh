@@ -272,9 +272,11 @@ if i_have git ; then
   function github-change-remote-from-git-to-https () {
     local remote https_url
     remote=${1:-origin}
-    https_url=$(git remote get-url "$remote" \
+    https_url=$( \
+      git remote get-url "$remote" \
       | sed -r 's/git@([^:]+):([^\/]+)\/(.*)/https:\/\/\1\/\2\/\3/' \
-      | sed -r 's/\.git$//')
+      | sed -r 's/\.git$//' \
+    )
     git remote set-url "$remote" "$https_url"
     git remote get-url "$remote"
   }
