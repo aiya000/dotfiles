@@ -336,7 +336,14 @@ let g:quickrun_config = {
   \ 'python': {
     \ 'command': 'python3',
   \ },
+  \ 'ps1': {
+    \ 'command': 'powershell.exe',
+  \ }
 \ }
+
+if g:vimrc.is_wsl2
+  let g:quickrun_config.ps1.exec = ['%c `wslpath -m %s`']
+endif
 
 " }}}
 " TweetVim {{{

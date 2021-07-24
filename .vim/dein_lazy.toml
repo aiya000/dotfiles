@@ -365,3 +365,7 @@ depends = ['webapi-vim']
 [[plugins]]
 repo = 'vim-scripts/ShaderHighLight'
 on_ft = 'shaderlab'
+
+[[plugins]]
+repo = 'PProvost/vim-ps1'
+on_ft = 'ps1'
