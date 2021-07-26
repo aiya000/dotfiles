@@ -32,14 +32,14 @@ let g:vimrc = get(g:, 'vimrc', #{
   \ is_kaoriya: has('kaoriya'),
 \ })
 
-let g:vimrc['open_on_gui'] =
-  \ g:vimrc['is_macos']   ? 'open' :
-  \ g:vimrc['is_windows'] ? 'start' :
-  \ g:vimrc['is_unix']    ? 'xdg-open' : 'no method for GUI-open'
-let g:vimrc['directory']  = g:vimrc['backupdir'] .. '/swp'
-let g:vimrc['undodir']    = g:vimrc['backupdir'] .. '/undo'
-let g:vimrc['viewdir']    = g:vimrc['backupdir'] .. '/view'
-let g:vimrc['sessiondir'] = g:vimrc['backupdir'] .. '/session'
+let g:vimrc.open_on_gui =
+  \ g:vimrc.is_macos   ? 'open' :
+  \ g:vimrc.is_windows ? 'start' :
+  \ g:vimrc.is_unix    ? 'xdg-open' : 'no method for GUI-open'
+let g:vimrc.directory  = g:vimrc.backupdir .. '/swp'
+let g:vimrc.undodir    = g:vimrc.backupdir .. '/undo'
+let g:vimrc.viewdir    = g:vimrc.backupdir .. '/view'
+let g:vimrc.sessiondir = g:vimrc.backupdir .. '/session'
 
 " }}}
 
@@ -49,7 +49,7 @@ let g:vimrc['sessiondir'] = g:vimrc['backupdir'] .. '/session'
 "-----------"
 " Set encoding {{{
 
-if !g:vimrc['loaded']
+if !g:vimrc.loaded
   set fileencoding=utf-8 encoding=utf-8
 endif
 
@@ -59,7 +59,7 @@ scriptencoding utf-8
 " Prepare dein.vim {{{
 
 " Start dein.vim
-let s:dein_dirname = g:vimrc['vim_home'] .. '/bundle/repos/github.com/Shougo/dein.vim'
+let s:dein_dirname = g:vimrc.vim_home .. '/bundle/repos/github.com/Shougo/dein.vim'
 let &runtimepath   = &runtimepath .. ',' .. s:dein_dirname
 
 try
@@ -79,7 +79,7 @@ endtry
 
 " Copy the dein.vim's document
 let s:dein_doc_from = s:dein_dirname .. '/doc/dein.txt'
-let s:dein_doc_to   = g:vimrc['vim_home'] .. '/doc/dein.txt'
+let s:dein_doc_to   = g:vimrc.vim_home .. '/doc/dein.txt'
 if filereadable(s:dein_doc_from) && !filereadable(s:dein_doc_to)
   call writefile(readfile(s:dein_doc_from), s:dein_doc_to)
 endif
@@ -124,7 +124,7 @@ if has('nvim')
   call dein#load_toml('~/.vim/dein-neovim.toml', {'lazy': 0})
 endif
 
-if g:vimrc['is_wsl']
+if g:vimrc.is_wsl || g:vimrc.is_wsl2
   call dein#load_toml('~/.vim/dein-wsl.toml', {'lazy': 0})
 endif
 
@@ -562,7 +562,7 @@ let g:elm_setup_keybindings  = 0
 " }}}
 " vim-fakeclip {{{
 
-let g:fakeclip_provide_clipboard_key_mappings = g:vimrc['is_wsl'] || g:vimrc['is_wsl2']
+let g:fakeclip_provide_clipboard_key_mappings = g:vimrc.is_wsl || g:vimrc.is_wsl2
 
 " }}}
 " denite.nvim {{{
@@ -935,7 +935,7 @@ augroup END
 " }}}
 
 " Set the colorscheme, but it is set only once
-if !g:vimrc['loaded']
+if !g:vimrc.loaded
   set background=dark
   colorscheme lucariox
 endif
@@ -1538,7 +1538,7 @@ if filereadable($HOME .. '/.vimrc_env_post')
   source ~/.vimrc_env_post
 endif
 
-execute 'helptags' (g:vimrc['vim_home'] .. '/doc')
+execute 'helptags' (g:vimrc.vim_home .. '/doc')
 filetype plugin indent on
 syntax enable
-let g:vimrc['loaded'] = v:true
+let g:vimrc.loaded = v:true
