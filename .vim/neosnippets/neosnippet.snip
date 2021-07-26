@@ -5,6 +5,18 @@ options indent
     abbr $2
         ${2}${0}
 
+snippet snippet_block_syntax
+options head indent
+    snippet ${1:syntaxName}
+    abbr $1 {\${0:#:here}}
+        $1 {\${0:#:here}}
+
+snippet snippet_parens_and_block_syntax
+options head indent
+    snippet ${1:syntaxName}
+    abbr $1 (\${1:${2:kind}}) {\${0:#:here}}
+        $1 (\${1:$2}) {\${0:#:here}}
+
 snippet snippet_template_xml_attr
 options head indent
     snippet ${1:#:snippetName}

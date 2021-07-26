@@ -1,0 +1,104 @@
+snippet import
+alias imp
+abbr Import-Module ${0:ModuleName} -ErrorAction Stop
+    Import-Module ${0:ModuleName} -ErrorAction Stop
+
+snippet var
+abbr [${1:Type}] $${2:varName} = ${0}
+    [${1:Type}] $${2:varName} = ${0}
+
+snippet function
+alias fun
+abbr function ${1:Func-Name}(${2:#:$Args}) {${0:#:here}}
+    function ${1:Func-Name}(${2:#:$Args}) {${0:#:here}}
+
+snippet println
+alias pr
+abbr Write-Output ${0:string}
+    Write-Output ${0:string}
+
+snippet throw
+abbr throw ${0}
+    throw ${0}
+
+snippet try
+abbr try {${0:#:here}}
+    try {${0:#:here}}
+
+snippet catch
+abbr catch {${0:#:here}}
+    catch {${0:#:here}}
+
+snippet catch_typed
+abbr catch [${1:ExceptionType] {${0:#:here}}
+    catch [${1:ExceptionType] {${0:#:here}}
+
+snippet finally
+abbr finally {${0:#:here}}
+    finally {${0:#:here}}
+
+snippet error_action_stop
+abbr -ErrorAction Stop
+    -ErrorAction Stop
+
+snippet true
+abbr $true
+    $true
+
+snippet false
+abbr $false
+    $false
+
+snippet null
+abbr $null
+    $null
+
+snippet string_multi_line
+    @'
+    ${0}
+    '@
+
+snippet string_interpolation
+abbr @(${0:expr})
+    @(${0:expr})
+
+snippet if
+abbr if (${1:cond}) {${0:#:here}}
+    if (${1:cond}) {${0:#:here}}
+
+snippet elseif
+abbr elseif (${1:cond}) {${0:#:here}}
+    elseif (${1:cond}) {${0:#:here}}
+
+snippet else
+abbr else {${0:#:here}}
+    else {${0:#:here}}
+
+snippet equal
+alias eq
+abbr -eq
+    -eq
+
+snippet not_equal
+alias ne
+abbr -ne
+    -ne
+
+snippet like
+alias wildcard_match
+abbr -like '${0:wildcard}'
+    -like '${0:wildcard}'
+
+snippet match
+abbr -match '${0:regex}'
+    -match '${0:regex}'
+
+snippet is
+alias is_type_of
+abbr -is [${0:TypeName}]
+    -is [${0:TypeName}]
+
+snippet is_not
+alias is_not_type_of
+abbr -isnot [${0:TypeName}]
+    -isnot [${0:TypeName}]
