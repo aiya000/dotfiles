@@ -120,14 +120,6 @@ if filereadable(expand('~/dein_env.toml'))
   call dein#load_toml('~/dein_env.toml', {'lazy': 0})
 endif
 
-if has('nvim')
-  call dein#load_toml('~/.vim/dein-neovim.toml', {'lazy': 0})
-endif
-
-if g:vimrc.is_wsl || g:vimrc.is_wsl2
-  call dein#load_toml('~/.vim/dein-wsl.toml', {'lazy': 0})
-endif
-
 call dein#add('Shougo/dein.vim', {'rtp': ''})
 
 " }}}

@@ -5,7 +5,7 @@ rev = '39e80649c739151673373bbaf3a56d126531467b'
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
 build = 'make'
-if = '!(g:vimrc["is_kaoriya"] && g:vimrc["is_windows"])'
+if = '!g:vimrc.is_kaoriya && !g:vimrc.is_windows'
 
 [[plugins]]
 repo = 'LeafCage/foldCC'
@@ -139,3 +139,7 @@ repo = 'mattn/vim-lsp-settings'
 
 [[plugins]]
 repo = 'lighttiger2505/deoplete-vim-lsp'
+
+[[plugins]]
+repo = 'kana/vim-fakeclip'
+if = 'g:vimrc.is_wsl || g:vimrc.is_wsl2'
