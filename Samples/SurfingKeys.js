@@ -3,9 +3,9 @@
  */
 
 try {
-  Hints.characters = 'wertuiopasdfghjkzxcvbm';
-  settings.hintAlign = 'left';
-  addSearchAlias('g', 'google', 'https://www.google.com/search?q=');
+  Hints.characters = "wertuiopasdfghjkzxcvbm";
+  settings.hintAlign = "left";
+  addSearchAlias("g", "google", "https://www.google.com/search?q=");
 } catch (e) {
   throw new Error(`In the section 'General': ${e}`);
 }
@@ -14,85 +14,116 @@ try {
  * Normal mode
  */
 try {
-  mapkey('gT', 'previous tab', function () {  // {{{
-    RUNTIME('previousTab');
-  });  // }}}
-  mapkey('gt', 'next tab', function () {  // {{{
-    RUNTIME('nextTab');
-  });  // }}}
-  mapkey('gh', 'open link google', function () {  // {{{
-    openLink('https://google.co.jp');
-  });  // }}}
-  mapkey('gH', 'tab open link google', function () {  // {{{
-    tabOpenLink('https://google.co.jp');
-  });  // }}}
-  mapkey('<Ctrl-b>', 'page up', function () {  // {{{
-    Normal.scroll('pageUp');
-  });  // }}}
-  mapkey('<Ctrl-f>', 'page down', function () {  // {{{
-    Normal.scroll('pageDown');
-  });  // }}}
-  mapkey('d', '#3Close current tab', function () {  // {{{
-    RUNTIME('closeTab');
-  });  // }}}
-  mapkey('u', '#3Restore closed tab', function () {  // {{{
-    RUNTIME('openLast');
-  });  // }}}
-  mapkey('H', '#4Go back in history', function () {  // {{{
-    history.go(-1);
-  }, { repeatIgnore: true });  // }}}
-  mapkey('L', '#4Go forward in history', function () {  // {{{
-    history.go(1);
-  }, { repeatIgnore: true });  // }}}
-  mapkey('F', '#1Open a link in non-active new tab', function () {  // {{{
-    Hints.create(',', Hints.dispatchMouseClick, {
+  mapkey("gT", "previous tab", function () {
+    // {{{
+    RUNTIME("previousTab");
+  }); // }}}
+  mapkey("gt", "next tab", function () {
+    // {{{
+    RUNTIME("nextTab");
+  }); // }}}
+  mapkey("gh", "open link google", function () {
+    // {{{
+    openLink("https://google.co.jp");
+  }); // }}}
+  mapkey("gH", "tab open link google", function () {
+    // {{{
+    tabOpenLink("https://google.co.jp");
+  }); // }}}
+  mapkey("<Ctrl-b>", "page up", function () {
+    // {{{
+    Normal.scroll("pageUp");
+  }); // }}}
+  mapkey("<Ctrl-f>", "page down", function () {
+    // {{{
+    Normal.scroll("pageDown");
+  }); // }}}
+  mapkey("d", "#3Close current tab", function () {
+    // {{{
+    RUNTIME("closeTab");
+  }); // }}}
+  mapkey("u", "#3Restore closed tab", function () {
+    // {{{
+    RUNTIME("openLast");
+  }); // }}}
+  mapkey(
+    "H",
+    "#4Go back in history",
+    function () {
+      // {{{
+      history.go(-1);
+    },
+    { repeatIgnore: true }
+  ); // }}}
+  mapkey(
+    "L",
+    "#4Go forward in history",
+    function () {
+      // {{{
+      history.go(1);
+    },
+    { repeatIgnore: true }
+  ); // }}}
+  mapkey("F", "#1Open a link in non-active new tab", function () {
+    // {{{
+    Hints.create(",", Hints.dispatchMouseClick, {
       tabbed: true,
       active: false,
     });
-  });  // }}}
-  mapkey('o', '#8Open a URL in current tab', function () {  // {{{
+  }); // }}}
+  mapkey("o", "#8Open a URL in current tab", function () {
+    // {{{
     Front.openOmnibar({
-      type: 'URLs',
-      extra: 'getAllSites',
+      type: "URLs",
+      extra: "getAllSites",
       tabbed: false,
     });
-  });  // }}}
-  mapkey('b', '#3Choose a tab', function () {  // {{{
+  }); // }}}
+  mapkey("b", "#3Choose a tab", function () {
+    // {{{
     Front.openOmnibar({
-      type: 'URLs',
-      extra: 'getAllSites',
+      type: "URLs",
+      extra: "getAllSites",
     });
-  });  // }}}
-  mapkey('gs', '#12View page source', function () {  // {{{
-    RUNTIME('viewSource', {  // {{{
+  }); // }}}
+  mapkey("gs", "#12View page source", function () {
+    // {{{
+    RUNTIME("viewSource", {
+      // {{{
       tab: { tabbed: true },
-    });  // }}}
-  });  // }}}
-  mapkey('<', 'move tab -1', function () {  // {{{
-    RUNTIME('moveTab', { step: -1 });
-  });  // }}}
-  mapkey('>', 'move tab +1', function () {  // {{{
-    RUNTIME('moveTab', { step: 1 });
-  });  // }}}
-  mapkey('t', '#4Edit current URL with vim editor, and open in new tab', function () {  // {{{
-    Front.openOmnibar({
-      type: 'URLs',
-      extra: 'getAllSites',
-      tabbed: true,
-    });
-  });  // }}}
-  mapkey('Q', '#11Edit Settings', function () {  // {{{
-    tabOpenLink('/pages/options.html');
-  });  // }}}
-  mapkey('R', '#4Reload the page', function () {  // {{{
-    RUNTIME('reloadTab', { nocache: true });
-  });  // }}}
-  mapkey('W', '#3New window with current tab',  function() {  // {{{
-    RUNTIME('newWindow');
-  });  // }}}
-  map('g_', '$');
-  map('<Ctrl-p>', 'gT');
-  map('<Ctrl-n>', 'gt');
+    }); // }}}
+  }); // }}}
+  mapkey("<", "move tab -1", function () {
+    // {{{
+    RUNTIME("moveTab", { step: -1 });
+  }); // }}}
+  mapkey(">", "move tab +1", function () {
+    // {{{
+    RUNTIME("moveTab", { step: 1 });
+  }); // }}}
+  mapkey(
+    "t",
+    "#4Edit current URL with vim editor, and open in new tab",
+    function () {
+      // {{{
+      Front.openOmnibar({
+        type: "URLs",
+        extra: "getAllSites",
+        tabbed: true,
+      });
+    }
+  ); // }}}
+  mapkey("Q", "#11Edit Settings", function () {
+    // {{{
+    tabOpenLink("/pages/options.html");
+  }); // }}}
+  mapkey("R", "#4Reload the page", function () {
+    // {{{
+    RUNTIME("reloadTab", { nocache: true });
+  }); // }}}
+  map("g_", "$");
+  map("<Ctrl-p>", "gT");
+  map("<Ctrl-n>", "gt");
 } catch (e) {
   throw new Error(`In the section 'Normal mode': ${e}`);
 }
@@ -102,28 +133,36 @@ try {
  */
 
 try {
-  imap('<Ctrl-[>', '<Esc>');
-  imap('<Ctrl-l>', '<Esc>');
-  imapkey('<Ctrl-b>', 'Move cursor to the backword char', moveCursor('left', 'character'));
-  imapkey('<Ctrl-f>', 'Move cursor to the forward char', moveCursor('right', 'character'));
-  imapkey('<Ctrl-p>', 'Move cursor to the above', moveCursor('left', 'line'));
-  imapkey('<Ctrl-n>', 'Move cursor to the below', moveCursor('right', 'line'));
-  imapkey('<Ctrl-g>', 'Edit in the editor', editInEditor);
-  iunmap('<Ctrl-i>');
-  iunmap(':');  // Emoji completion
+  imap("<Ctrl-[>", "<Esc>");
+  imap("<Ctrl-l>", "<Esc>");
+  imapkey(
+    "<Ctrl-b>",
+    "Move cursor to the backword char",
+    moveCursor("left", "character")
+  );
+  imapkey(
+    "<Ctrl-f>",
+    "Move cursor to the forward char",
+    moveCursor("right", "character")
+  );
+  imapkey("<Ctrl-p>", "Move cursor to the above", moveCursor("left", "line"));
+  imapkey("<Ctrl-n>", "Move cursor to the below", moveCursor("right", "line"));
+  imapkey("<Ctrl-g>", "Edit in the editor", editInEditor);
+  iunmap("<Ctrl-i>");
+  iunmap(":"); // Emoji completion
 } catch (e) {
   throw new Error(`In the section 'Insert mode': ${e}`);
 }
 
 function moveCursor(direction, granularity) {
   return () => {
-    document.getSelection().modify('move', direction, granularity);
-  }
+    document.getSelection().modify("move", direction, granularity);
+  };
 }
 
 function killLineBefore() {
   const element = getRealEdit();
-  if (element.value === '') {
+  if (element.value === "") {
     return;
   }
 
@@ -135,7 +174,7 @@ function killLineAfter() {
   const element = getRealEdit();
   const firstHalf = element.value.substr(0, element.selectionStart);
 
-  const thisLineBreak = element.value.indexOf('\n', element.selectionStart);
+  const thisLineBreak = element.value.indexOf("\n", element.selectionStart);
   const lastHalf = element.value.substr(thisLineBreak);
 
   element.value = firstHalf + lastHalf;
@@ -162,23 +201,23 @@ function deleteLeftWord() {
   // for contenteditable div
   const selection = document.getSelection();
   const p0 = selection.focusOffset;
-  document.getSelection().modify('move', 'backward', 'word');
-  const v = selection.focusNode.data, p1 = selection.focusOffset;
+  document.getSelection().modify("move", "backward", "word");
+  const v = selection.focusNode.data,
+    p1 = selection.focusOffset;
   selection.focusNode.data = v.substr(0, p1) + v.substr(p0);
   selection.setPosition(selection.focusNode, p1);
 }
 
 function deleteLeftChar() {
-  document.getSelection()
-    .modify('extend', 'backward', 'character');
+  document.getSelection().modify("extend", "backward", "character");
 }
 
 /**
  * Visual mode
  */
 try {
-  vmap('<Ctrl-[>', '<Esc>');
-  vmap('<Ctrl-l>', '<Esc>');
+  vmap("<Ctrl-[>", "<Esc>");
+  vmap("<Ctrl-l>", "<Esc>");
 } catch (e) {
   throw new Error(`In the section 'Visual mode': ${e}`);
 }
@@ -188,19 +227,19 @@ try {
  */
 
 try {
-  cmap('<Ctrl-[>', '<Esc>');
-  cmap('<Ctrl-l>', '<Esc>');
+  cmap("<Ctrl-[>", "<Esc>");
+  cmap("<Ctrl-l>", "<Esc>");
 
-  cmap('<Ctrl-a>', '<Home>');
-  cmap('<Ctrl-e>', '<End>');
-  cmap('<Ctrl-b>', '<Left>');
-  cmap('<Ctrl-f>', '<Right>');
+  cmap("<Ctrl-a>", "<Home>");
+  cmap("<Ctrl-e>", "<End>");
+  cmap("<Ctrl-b>", "<Left>");
+  cmap("<Ctrl-f>", "<Right>");
 
-  cmap('<Ctrl-w>', '');
-  cmap('<Ctrl-h>', '<Alt-h>');
+  cmap("<Ctrl-w>", "");
+  cmap("<Ctrl-h>", "<Alt-h>");
   // cmap('<Ctrl-d>', '?');
-  cmap('<Ctrl-u>', '');
-  cmap('<Ctrl-k>', '');
+  cmap("<Ctrl-u>", "");
+  cmap("<Ctrl-k>", "");
 } catch (e) {
   throw new Error(`In the section 'Command mode': ${e}`);
 }
@@ -209,11 +248,11 @@ try {
  * The vim editor
  */
 
-aceVimMap('<Ctrl-j><Ctrl-k>', ':w<CR>', 'normal');
+aceVimMap("<Ctrl-j><Ctrl-k>", ":w<CR>", "normal");
 
-aceVimMap('<Ctrl-[>', '<Esc>', 'insert');
-aceVimMap('<Ctrl-j><Ctrl-k>', '<Esc>:w<CR>', 'insert');
-aceVimMap('<Ctrl-l>', '<Esc>', 'insert');
+aceVimMap("<Ctrl-[>", "<Esc>", "insert");
+aceVimMap("<Ctrl-j><Ctrl-k>", "<Esc>:w<CR>", "insert");
+aceVimMap("<Ctrl-l>", "<Esc>", "insert");
 
 /**
  * Styles
