@@ -2,6 +2,7 @@
 
 let s:V = vital#vimrc#new()
 let s:List = s:V.import('Data.List')
+let s:Msg = s:V.import('Vim.Message')
 
 "---------------"
 " Global values "
@@ -23,19 +24,21 @@ let g:vimrc = get(g:, 'vimrc', #{
   \ vim_home: $HOME .. '/.vim',
   \ path_at_started: getcwd(),
   \ gui_editor: has('nvim') ? 'gonvim' : 'gvim',
-  \ backupdir: $HOME .. '/.backup/vim-backup',
   \ is_unix: has('unix'),
   \ is_macos: has('macunix'),
-  \ is_wsl: executable('uname') && (system('uname -a') =~# 'Microsoft'),
-  \ is_wsl2: executable('uname') && (system('uname -a') =~# 'microsoft-standard'),
   \ is_windows: has('win32'),
   \ is_kaoriya: has('kaoriya'),
 \ })
 
+let g:vimrc.is_wsl2 = executable('uname') && (system('uname -a') =~# 'microsoft-standard')
+let g:vimrc.is_wsl = g:vimrc.is_wsl2 || executable('uname') && (system('uname -a') =~# 'Microsoft')
+
 let g:vimrc.open_on_gui =
   \ g:vimrc.is_macos   ? 'open' :
   \ g:vimrc.is_windows ? 'start' :
-  \ g:vimrc.is_unix    ? 'xdg-open' : 'no method for GUI-open'
+  \ g:vimrc.is_unix    ? 'xdg-open' : s:Msg.warn('no method for GUI-open')
+
+let g:vimrc.backupdir  = $HOME .. '/.backup/vim-backup',
 let g:vimrc.directory  = g:vimrc.backupdir .. '/swp'
 let g:vimrc.undodir    = g:vimrc.backupdir .. '/undo'
 let g:vimrc.viewdir    = g:vimrc.backupdir .. '/view'
@@ -554,7 +557,7 @@ let g:elm_setup_keybindings  = 0
 " }}}
 " vim-fakeclip {{{
 
-let g:fakeclip_provide_clipboard_key_mappings = g:vimrc.is_wsl || g:vimrc.is_wsl2
+let g:fakeclip_provide_clipboard_key_mappings = g:vimrc.is_wsl
 
 " }}}
 " denite.nvim {{{
@@ -812,6 +815,10 @@ let g:quickrepl_config = #{
 
 let g:quickrepl_use_default_key_mapping = v:true
 let g:quickrepl_enable_debug = v:true
+
+if g:vimrc.is_wsl
+  let g:quickrepl_config.ps1 = 'powershell.exe'
+endif
 
 " }}}
 " vim-cursorword {{{
