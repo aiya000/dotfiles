@@ -37,6 +37,7 @@ snippet finally
 abbr finally {${0:#:here}}
     finally {${0:#:here}}
 
+# Without this, PowerShell continues even if an exception is thrown.
 snippet error_action_stop
 abbr -ErrorAction Stop
     -ErrorAction Stop
@@ -79,10 +80,21 @@ alias eq
 abbr -eq
     -eq
 
+snippet equal_null
+abbr $null -eq ${0}
+    $null -eq ${0}
+
 snippet not_equal
 alias ne
 abbr -ne
     -ne
+
+
+# Why the left hand is $null because:
+# https://docs.microsoft.com/ja-jp/powershell/scripting/learn/deep-dives/everything-about-if?view=powershell-7.1#checking-for-null
+snippet not_equal_null
+abbr $null -ne ${0}
+    $null -ne ${0}
 
 snippet like
 alias wildcard_match
