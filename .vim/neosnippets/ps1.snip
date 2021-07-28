@@ -1,25 +1,63 @@
+# Syntax
+
 snippet import
 alias imp
 abbr Import-Module ${0:ModuleName} -ErrorAction Stop
     Import-Module ${0:ModuleName} -ErrorAction Stop
 
+snippet import_as
+alias imq
+abbr Import-Module ${1:ModuleName} -Prefix ${0:Alias}. -ErrorAction Stop
+    Import-Module ${1:ModuleName} -Prefix ${0:Alias}. -ErrorAction Stop
+
+snippet using_namespace
+alias using
+abbr using namespace ${0:System.IO}
+    using namespace ${0:System.IO}
+
 snippet var
 abbr [${1:Type}] $${2:varName} = ${0}
     [${1:Type}] $${2:varName} = ${0}
+
+snippet type
+alias cast
+abbr [${1:TypeName}]
+    [${1:TypeName}]
+
+snippet void
+alias ignore_result
+abbr [void]
+    [void]
 
 snippet function
 alias fun
 abbr function ${1:Func-Name}(${2:#:$Args}) {${0:#:here}}
     function ${1:Func-Name}(${2:#:$Args}) {${0:#:here}}
 
-snippet println
-alias pr
-abbr Write-Output ${0:string}
-    Write-Output ${0:string}
+snippet param
+abbr param(${0:#:params})
+  param(${0:#:params})
+
+snippet require_passing_argument
+abbr [Parameter(Mandatory)]
+  [Parameter(Mandatory)]
+
+snippet cmdlet
+options indent
+    function ${1:Cmdlet-Name} {
+        [CmdletBinding()]
+        param(${1:#:params})
+
+        process {${0:#:syntax}}
+    }
 
 snippet throw
-abbr throw ${0}
-    throw ${0}
+abbr throw "${0:#:here}"
+    throw "${0:#:here}"
+
+snippet throw_exception
+abbr throw [${1:System.IO.FileNotFoundException}] ${0}
+    throw [${1:System.IO.FileNotFoundException}] "${0:#:here}"
 
 snippet try
 abbr try {${0:#:here}}
@@ -29,7 +67,7 @@ snippet catch
 abbr catch {${0:#:here}}
     catch {${0:#:here}}
 
-snippet catch_typed
+snippet catch_exception
 abbr catch [${1:ExceptionType] {${0:#:here}}
     catch [${1:ExceptionType] {${0:#:here}}
 
@@ -39,29 +77,13 @@ abbr finally {${0:#:here}}
 
 # Without this, PowerShell continues even if an exception is thrown.
 snippet error_action_stop
+alias stop
 abbr -ErrorAction Stop
     -ErrorAction Stop
 
-snippet true
-abbr $true
-    $true
-
-snippet false
-abbr $false
-    $false
-
-snippet null
-abbr $null
-    $null
-
-snippet string_multi_line
-    @'
-    ${0}
-    '@
-
-snippet string_interpolation
-abbr @(${0:expr})
-    @(${0:expr})
+snippet for
+abbr foreach (${1:$x} in ${2:$xs}) {${0:#:here}}
+    foreach (${1:$x} in ${2:$xs}) {${0:#:here}}
 
 snippet if
 abbr if (${1:cond}) {${0:#:here}}
@@ -75,12 +97,39 @@ snippet else
 abbr else {${0:#:here}}
     else {${0:#:here}}
 
+snippet and
+abbr -and
+  -and
+
+snippet or
+abbr -or
+  -or
+
 snippet equal
 alias eq
 abbr -eq
     -eq
 
+snippet in
+abbr -in
+  -in
+
+snippet notin
+abbr -notin
+  -notin
+
+snippet contains
+abbr -contains
+  -contains
+
+snippet not_contains
+abbr -notcontains
+  -notcontains
+
+# Why the left hand is $null because:
+# https://docs.microsoft.com/ja-jp/powershell/scripting/learn/deep-dives/everything-about-if?view=powershell-7.1#checking-for-null
 snippet equal_null
+alias null_equal
 abbr $null -eq ${0}
     $null -eq ${0}
 
@@ -88,11 +137,8 @@ snippet not_equal
 alias ne
 abbr -ne
     -ne
-
-
-# Why the left hand is $null because:
-# https://docs.microsoft.com/ja-jp/powershell/scripting/learn/deep-dives/everything-about-if?view=powershell-7.1#checking-for-null
 snippet not_equal_null
+alias null_not_equal
 abbr $null -ne ${0}
     $null -ne ${0}
 
@@ -114,3 +160,86 @@ snippet is_not
 alias is_not_type_of
 abbr -isnot [${0:TypeName}]
     -isnot [${0:TypeName}]
+
+snippet comment
+alias com
+abbr <#${0:#:here}#>
+  <#${0:#:here}#>
+
+# Expression
+
+snippet true
+abbr $true
+    $true
+
+snippet false
+abbr $false
+    $false
+
+snippet null
+abbr $null
+    $null
+
+snippet ps_items
+abbr $_
+  $_
+
+snippet string_multi_line
+    @'
+    ${0}
+    '@
+
+snippet string_interpolation
+abbr $(${0:expr})
+    $(${0:expr})
+
+snippet array
+abbr @(${0:#:elements})
+    @(${0:#:elements})
+
+snippet range
+abbr ${1:0}..${0:10}
+    ${1:0}..${0:10}
+
+snippet hash
+abbr @{${0:#:Members}}
+    @{${0:#:Members}}
+
+snippet object
+alias obj
+abbr [PSCustomObject]@{${0:#:Members}}
+    [PSCustomObject]@{${0:#:Members}}
+
+snippet new
+alias call_constructor
+abbr [${1:ClassName}]::new(${0:#:args})
+    [${1:ClassName}]::new(${0:#:args})
+
+# Template
+
+snippet println
+alias pr
+abbr Write-Output ${0:string}
+    Write-Output ${0:string}
+
+snippet dump
+abbr Get-Member
+    Get-Member
+
+snippet function_help
+abbr Get-Help
+    Get-Help
+
+snippet where_object
+alias filter_object
+abbr Where-Object {${0:#:here}}
+    Where-Object {${0:#:here}}
+
+snippet foreach_object
+alias map_object
+abbr ForEach-Object {${0:#:here}}
+    ForEach-Object {${0:#:here}}
+
+snippet select_object
+abbr Select-Object {${0:#:here}}
+    Select-Object {${0:#:here}}

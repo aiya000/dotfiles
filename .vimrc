@@ -30,15 +30,16 @@ let g:vimrc = get(g:, 'vimrc', #{
   \ is_kaoriya: has('kaoriya'),
 \ })
 
+let g:vimrc.is_wsl1 = executable('uname') && (system('uname -a') =~# 'Microsoft')
 let g:vimrc.is_wsl2 = executable('uname') && (system('uname -a') =~# 'microsoft-standard')
-let g:vimrc.is_wsl = g:vimrc.is_wsl2 || executable('uname') && (system('uname -a') =~# 'Microsoft')
+let g:vimrc.is_wsl  = g:vimrc.is_wsl1 || g:vimrc.is_wsl2
 
 let g:vimrc.open_on_gui =
   \ g:vimrc.is_macos   ? 'open' :
   \ g:vimrc.is_windows ? 'start' :
   \ g:vimrc.is_unix    ? 'xdg-open' : s:Msg.warn('no method for GUI-open')
 
-let g:vimrc.backupdir  = $HOME .. '/.backup/vim-backup',
+let g:vimrc.backupdir  = $HOME .. '/.backup/vim-backup'
 let g:vimrc.directory  = g:vimrc.backupdir .. '/swp'
 let g:vimrc.undodir    = g:vimrc.backupdir .. '/undo'
 let g:vimrc.viewdir    = g:vimrc.backupdir .. '/view'
@@ -331,13 +332,14 @@ let g:quickrun_config = {
   \ 'python': {
     \ 'command': 'python3',
   \ },
-  \ 'ps1': {
-    \ 'command': 'powershell.exe',
-  \ }
 \ }
 
 if g:vimrc.is_wsl2
-  let g:quickrun_config.ps1.exec = ['%c `wslpath -m %s`']
+  let g:quickrun_config.ps1 = #{
+    \ command: 'powershell.exe',
+    \ exec: ['%c `wslpath -m %s`'],
+    \ tempfile: '%{tempname()}.ps1',
+  \ }
 endif
 
 " }}}
@@ -811,14 +813,11 @@ let g:jumpy_map = [')', '(']
 let g:quickrepl_config = #{
   \ vue: ['ts-node'],
   \ go: ['gore'],
+  \ ps1: ['powrshell', 'powershell.exe'],
 \ }
 
 let g:quickrepl_use_default_key_mapping = v:true
 let g:quickrepl_enable_debug = v:true
-
-if g:vimrc.is_wsl
-  let g:quickrepl_config.ps1 = 'powershell.exe'
-endif
 
 " }}}
 " vim-cursorword {{{
@@ -865,7 +864,6 @@ set
   \ cmdheight=2
   \ completeopt-=preview
   \ cursorline
-  \ expandtab
   \ fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
   \ hidden
   \ history=500
@@ -889,10 +887,11 @@ set
   \ scrolloff=16
   \ sessionoptions=buffers,curdir
   \ shellslash
-  \ shiftwidth=4
   \ suffixes=
   \ tabline=%!vimrc#tabline#make()
-  \ tabstop=4
+  \ expandtab
+  \ shiftwidth=2
+  \ tabstop=2
   \ textwidth=0
   \ visualbell
   \ wildignorecase
