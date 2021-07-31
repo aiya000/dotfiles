@@ -7,8 +7,12 @@ abbr Import-Module ${0:ModuleName} -ErrorAction Stop
 
 snippet import_as
 alias imq
-abbr Import-Module ${1:ModuleName} -Prefix ${0:Alias}. -ErrorAction Stop
     Import-Module ${1:ModuleName} -Prefix ${0:Alias}. -ErrorAction Stop
+
+# pwsh exports only specified items when one or more this is declared.
+snippet export_module_member
+abbr Export-ModuleMember ${0}
+  Export-ModuleMember ${0}
 
 snippet using_namespace
 alias using
@@ -216,19 +220,7 @@ abbr [${1:ClassName}]::new(${0:#:args})
     [${1:ClassName}]::new(${0:#:args})
 
 # Template
-
-snippet println
-alias pr
-abbr Write-Output ${0:string}
-    Write-Output ${0:string}
-
-snippet dump
-abbr Get-Member
-    Get-Member
-
-snippet function_help
-abbr Get-Help
-    Get-Help
+## Query
 
 snippet where_object
 alias filter_object
@@ -243,3 +235,43 @@ abbr ForEach-Object {${0:#:here}}
 snippet select_object
 abbr Select-Object {${0:#:here}}
     Select-Object {${0:#:here}}
+
+## Other
+
+snippet write_output
+alias println pr
+abbr Write-Output ${0:string}
+    Write-Output ${0:string}
+
+snippet get_member
+alias dump
+abbr Get-Member
+    Get-Member
+
+snippet get_help
+alias help function_help
+abbr Get-Help
+    Get-Help
+
+snippet convert_path
+alias pwd
+abbr Convert-Path ${0:.}
+  Convert-Path ${0:.}
+
+# Usage
+# ```shell-session
+# $ mkdir Foo
+# $ mv $somewhere/Foo.psm1 ./Foo
+# ```
+#
+# ```ps1
+# $env:PSModulePath += ";$(Convert-Path .)"
+# Import-Module Foo -ErrorAction Stop  # OK
+# ```
+#
+# Please see http://taeisheauton4programming.blogspot.com/2018/07/powershellfunction.html
+#
+# Windows's separator is ';'.
+# macOS's it is ':'.
+snippet allow_to_import_a_module_under_the_current_dir
+  $env:PSModulePath += "${0:;}$(Convert-Path .)"
