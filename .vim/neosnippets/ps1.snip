@@ -39,12 +39,24 @@ abbr function ${1:Func-Name}(${2:#:$Args}) {${0:#:here}}
     function ${1:Func-Name}(${2:#:$Args}) {${0:#:here}}
 
 snippet param
+alias function_param
 abbr param(${0:#:params})
-  param(${0:#:params})
+    param(${0:#:params})
 
-snippet require_passing_argument
+snippet parameter_mandatory
+alias function_require_passing_argument require_passing_argument
 abbr [Parameter(Mandatory)]
-  [Parameter(Mandatory)]
+    [Parameter(Mandatory)]
+
+snippet parameter_mandatory_value_from_pipeline
+alias function_parameter_mandatory_value_from_pipeline value_from_pipeline
+abbr [Parameter(Mandatory)]
+    [Parameter(Mandatory, ValueFromPipeline)]
+
+snippet validate_not_null_or_empty
+alias function_validate_not_null_or_empty
+abbr [ValidateNotNullOrEmpty()]
+    [ValidateNotNullOrEmpty()]
 
 snippet cmdlet
 options indent
@@ -72,8 +84,8 @@ abbr catch {${0:#:here}}
     catch {${0:#:here}}
 
 snippet catch_exception
-abbr catch [${1:ExceptionType] {${0:#:here}}
-    catch [${1:ExceptionType] {${0:#:here}}
+abbr catch [${1:ExceptionType}] {${0:#:here}}
+    catch [${1:ExceptionType}] {${0:#:here}}
 
 snippet finally
 abbr finally {${0:#:here}}
@@ -193,10 +205,15 @@ snippet string_multi_line
     ${0}
     '@
 
+# Also these are valid: $var ${var} in "..."
 snippet string_interpolation
 abbr $(${0:expr})
     $(${0:expr})
 
+# @(x, y, z) or,
+# these are valid:
+# - simply `x, y, z`
+# - wrapping above `(x, y, z)`
 snippet array
 abbr @(${0:#:elements})
     @(${0:#:elements})
@@ -220,7 +237,7 @@ abbr [${1:ClassName}]::new(${0:#:args})
     [${1:ClassName}]::new(${0:#:args})
 
 # Template
-## Query
+## Query (Like LINQ)
 
 snippet where_object
 alias filter_object
@@ -256,7 +273,7 @@ abbr Get-Help
 snippet convert_path
 alias pwd
 abbr Convert-Path ${0:.}
-  Convert-Path ${0:.}
+    Convert-Path ${0:.}
 
 # Usage
 # ```shell-session
@@ -274,4 +291,11 @@ abbr Convert-Path ${0:.}
 # Windows's separator is ';'.
 # macOS's it is ':'.
 snippet allow_to_import_a_module_under_the_current_dir
-  $env:PSModulePath += "${0:;}$(Convert-Path .)"
+    $env:PSModulePath += "${0:;}$(Convert-Path .)"
+
+# Put this to top of the code
+snippet output_encoding_utf8
+abbr $OutputEncoding = 'utf-8'
+  $OutputEncoding = 'utf-8'
+
+# : setl ts=4 sw=4 et
