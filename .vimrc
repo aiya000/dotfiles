@@ -987,6 +987,9 @@ let &tags = &tags . ',' . join([
   \ g:vimrc.path_at_started .. '/.git/tags',
 \ ], ',')
 
+let mapleader = '['
+let maplocalleader = '['
+
 " }}}
 
 

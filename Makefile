@@ -32,15 +32,15 @@ prepare:
 
 install:
 	$(MAKE) prepare
-	$(MAKE) install_package_managers
+	$(MAKE) install-package-managers
 	$(MAKE) build-os-env
 	$(MAKE) install-by-pip3
 
 install-without-confirm:
 	$(MAKE) install noconfirm='--noconfirm'
 
-ifeq ($(OS),Arch)
-install_package_managers:
+install-package-managers:
+ifeq ($(OS),Arch)  # {{{
 	$(MAKE) install-yay
 	$(YayUpdate)
 	which stack || $(YayInstall) stack-static
@@ -59,25 +59,28 @@ install-yay:
 		cd /tmp/yay && \
 		makepkg -si \
 	)
-endif
-ifeq ($(OS),Darwin)
-	echo Please define install_package_managers for haskell-stack > /dev/stderr
-	echo Please define install_package_managers for npm > /dev/stderr
-	echo Please define install_package_managers for pip > /dev/stderr
-endif
-ifeq ($(OS),Windows)
-	echo Please define install_package_managers for haskell-stack > /dev/stderr
-	echo Please define install_package_managers for npm > /dev/stderr
-	echo Please define install_package_managers for pip > /dev/stderr
-	echo Please define install_package_managers for go > /dev/stderr
-endif
+endif  # }}}
+ifeq ($(OS),WSL2)  # {{{
+install-package-managers:
+	# $(AptUpdate)
+	$(AptInstall) python3-pip golang-go
+	echo Please define install-package-managers for haskell-stack > /dev/stderr
+	echo Please define install-package-managers for npm > /dev/stderr
+	echo Please define install-package-managers for pip > /dev/stderr
+endif  # }}}
+ifeq ($(OS),Darwin)  # {{{
+	echo Please define install-package-managers for haskell-stack > /dev/stderr
+	echo Please define install-package-managers for npm > /dev/stderr
+	echo Please define install-package-managers for pip > /dev/stderr
+endif  # }}}
 
 install-by-pip3:
+	# For deoplete.nvim
 	pip3 install neovim grip
 
 build-os-env:
-ifeq ($(OS),Arch)
-	# Install my better GUI/CLI environment {{{
+# Install my better GUI/CLI environment
+ifeq ($(OS),Arch)  # {{{
 	# - xmonad: needed by xmonad-config --restart and --replace
 	# NOTE: You may need `$ make noconfirm='' install` after/if `$ make install` failed
 	$(YayInstall) \
@@ -169,37 +172,27 @@ install-rictydiminished:
 		~/git/RictyDiminished/RictyDiminished-Regular.ttf \
 		-w --fontawesome --fontlinux --octicons --pomicons --powerline --powerlineextra
 	(echo 'RictyDiminished with nerd-font patch was generated to ~/git/nerd-fonts, please rename it to "RictyDiminished NF" and install it to your OS manually!' | tee $(logfile))
-
-# }}}
-endif
-ifeq ($(OS),WSL2)
-	# {{{
+endif  # }}}
+ifeq ($(OS),WSL2)  # {{{
+	# - libssl-dev: To make ruby via rbenv
 	$(AptInstall) \
 		git \
-		go \
+		libssl-dev \
 		man-db \
-		mimi-git \
 		mlocate \
-		openssh \
 		peco \
 		progress \
 		rsync \
 		tmux \
-		tmux-mem-cpu-load \
-		unzip-iconv
-
-	# To make ruby via rbenv
-	$(AptInstall) libssl-dev
+		zsh
 
 	$(AptBuildDep) vim
 
 	# To bridge between Windows10 and WSL2 Vim
 	go get github.com/atotto/clipboard/cmd/gocopy
 	go get github.com/atotto/clipboard/cmd/gopaste
-	# }}}
-endif
-ifeq ($(OS),Darwin)
-	# {{{
+endif  # }}}
+ifeq ($(OS),Darwin)  # {{{
 	brew install \
 		font-forge \ # for making nerd-fonts for vim-devicons
 		cmigemo \ # vim-migemo
@@ -207,11 +200,7 @@ ifeq ($(OS),Darwin)
 		graphviz plantuml \
 		jq
 	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit # vim-textobj-clang
-	# }}}
-endif
-ifeq ($(OS),Windows)
-	echo Please define build-os-env
-endif
+endif  # }}}
 
 ##
 # NOTE: execute `which foo || $(YayInstall) foo` for AUR packages, because AUR packages may not support --needed.
@@ -279,6 +268,9 @@ install-tools: \
 
 # tools {{{
 
+install-linuxbrew:
+	bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
 install-silicon:
 	# vim-silicon
 	which silicon || cargo install silicon
@@ -297,7 +289,6 @@ install-cli-recommended:
 	$(YayInstall) \
 		asciinema \
 		extundelete \
-		hub \
 		jq \
 		universal-ctags-git \
 		watchexec
