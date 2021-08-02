@@ -145,7 +145,8 @@ function load-my-env () {
       ;;
 
     linuxbrew)
-      eval "$(~/.linuxbrew/bin/brew shellenv)"
+      eval "$(~/.linuxbrew/bin/brew shellenv)" ||
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
       ;;
 
     docker)

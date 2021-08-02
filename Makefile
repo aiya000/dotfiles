@@ -283,11 +283,11 @@ install-gtran:
 		go install ; \
 	fi
 
-ifeq ($(OS),Arch)
+ifeq ($(OS),Arch)  # {{{
+
 install-cli-recommended:
 	# From official
 	$(YayInstall) \
-		asciinema \
 		extundelete \
 		jq \
 		universal-ctags-git \
@@ -329,6 +329,15 @@ install-xmonad-runtime-deps:
 
 install-fonts:
 	$(YayInstall) noto-fonts-cjk noto-fonts-emoji
+
+endif  # }}}
+ifeq ($(OS),WSL2)  # {{{
+
+install-cli-recommended:
+	brew install gh
+	$(AptInstall) \
+		jq \
+		universal-ctags
 
 endif
 
