@@ -334,7 +334,9 @@ endif  # }}}
 ifeq ($(OS),WSL2)  # {{{
 
 install-cli-recommended:
-	brew install gh
+	brew install \
+		gh \
+		tmux-mem-cpu-load
 	$(AptInstall) \
 		jq \
 		universal-ctags
