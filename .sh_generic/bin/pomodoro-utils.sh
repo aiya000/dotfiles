@@ -6,22 +6,25 @@ function notify () {
   if uname -a | grep Darwin > /dev/null ; then
     terminal-notifier -title 'pomodoro' -message "$1"
   elif command -v wsl.exe > /dev/null ; then
-    # TODO
-    echo 'NOTICE: notify is never implemented yet for WSL.'
+    : Not necessary because 
   else  # Linux
     notify-send "$1"
   fi
 }
 
 function play () {
-  if command -v wsl.exe > /dev/null && [[ -f ~/Windows/Music/にぃに.mp3 ]] ; then
-    echo 'Using ~/Windows/Music/にぃに.mp3 instead of the specified argument.'
-    cd ~/Windows && cmd.exe /c start Music/にぃに.mp3 || exit 1
+  if (command -v wsl.exe > /dev/null) && (command -v wslview > /dev/null) ; then
+    # WSL2
+    wslview "$1"
   elif command -v wsl.exe > /dev/null ; then
+    # WSL
     explorer.exe .  # Anyway, notify it.
   elif uname -a | grep Darwin > /dev/null ; then
+    # macOS
+    # TODO: Take the monitor focus forcely
     mpg123 "$1"
-  else  # Linux
+  else
+    # Linux
     vlc "$1" &
   fi
 }

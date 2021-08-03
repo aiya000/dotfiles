@@ -302,6 +302,16 @@ install-gtran:
 		go install ; \
 	fi
 
+ifeq ($(OS),WSL2)  # {{{
+
+install-w3m:
+	$(AptInstall) w3m
+
+endif
+
+# }}}
+
+
 ifeq ($(OS),Arch)  # {{{
 
 install-cli-recommended:
