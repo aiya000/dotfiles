@@ -10,29 +10,54 @@
 
 ^!d::SendInput #{Tab}
 !^c::SendInput !{F4}
+; !+4::SendInput +#s
+
+; Vars
+EnvGet, Home, HOME
 
 ; With bug.n
 ;; To avoid broke window arranging
-EnvGet, Home, HOME
 #d::Run explorer.exe %Home%\Desktop
 
-; cmd prompt
-#IfWinActive, ahk_class ConsoleWindowClass
-  ; Emulate *NIX Shell
-  ^p::SendInput {Up}
-  ^n::SendInput {Down}
-  ^f::SendInput {Right}
-  ^b::SendInput {Left}
+; OpenVR-AdvanceSettings keyboardOne
+^+m::Run powershell.exe %Home%\Desktop\Repository\OneTouch-To-RecordReplay\Record-Replay.ps1
+
+#IfWinActive, ahk_exe vivaldi.exe
+  ; ^p::SendInput {Up}
+  ; ^n::SendInput {Down}
+  ; ^f::SendInput {Right}
+  ; ^b::SendInput {Left}
   ^a::SendInput {Home}
   ^e::SendInput {End}
-  ^d::SendInput {Delete}
   ^j::SendInput {Enter}
-  ^k::SendInput {F4}{Space}
-  ^u::SendInput {Esc}  ; TODO: incomplete
-  ^l::SendInput {Esc}cls{Enter}
-  ;
-  ^w::SendInput {NOP}  ; TODO: emulate C-w
-  ^v::SendInput !{Space}ep
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
+  ^,::SendInput +{Left}
+  ^.::SendInput +{Right}
+  ^[::SendInput +{Up}
+  ^]::SendInput +{Down}
+  !j::SendInput ^{Enter}
+#IfWinActive
+
+#IfWinActive, ahk_class ConsoleWindowClass
+  ; ^p::SendInput {Up}
+  ; ^n::SendInput {Down}
+  ; ^f::SendInput {Right}
+  ; ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
+  ^,::SendInput +{Left}
+  ^.::SendInput +{Right}
+  ^[::SendInput +{Up}
+  ^]::SendInput +{Down}
+  !j::SendInput ^{Enter}
 #IfWinActive
 
 ; Adobe Reader
@@ -56,4 +81,13 @@ EnvGet, Home, HOME
   ^b::SendInput {Left}
   ^f::SendInput {Right}
   /::SendInput ^f
+#IfWinActive
+
+#IfWinActive, ahk_class UnityContainerWndClass
+  ^e::SendInput {End}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^f::SendInput +{Left}
+  ^b::SendInput +{Right}
 #IfWinActive
