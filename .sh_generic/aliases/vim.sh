@@ -58,21 +58,6 @@ function vimterm-open-parent-vim() {
     echo -e "\e]51;[\"call\", \"Tapi_Tabnew\", [\"$PWD\" $(vimterm-quote-args "$@")]]\x07"
 }
 
-function cd-to-git-root () {
-  local root simple
-  root=$(git rev-parse --show-toplevel 2> /dev/null || exit 1)
-
-  # Try recover with wslpath if simple is failed
-  if ! simple=$(cd "$root" 2>&1) && command -v wslpath > /dev/null 2>&1 ; then
-    root=$(wslpath "$root")
-    echo "cd-to-git-root: Using wslpath: $root"
-    cd "$root" || exit 1
-    return
-  fi
-
-  echo "$simple"
-}
-
 # If I'm on a shell on Vim
 if [[ $VIM_TERMINAL != '' ]] ; then
   export PAGER=cat

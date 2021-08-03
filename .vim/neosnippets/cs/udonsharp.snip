@@ -1,3 +1,19 @@
 snippet udon_synced_none
+alias udonsharp_synced_none
 abbr [UdonSynced(UdonSyncMode.None)]
-    [UdonSynced(UdonSyncMode.None)]
+        [UdonSynced(UdonSyncMode.None)]
+
+# Import this before using below items
+snippet using vrc_udon_common_interfaces;
+alias using_udonsharp_network_namespace
+abbr using VRC.Udon.Common.Interfaces;
+    using VRC.Udon.Common.Interfaces;
+
+snippet udonsharp_networking_player
+abbr Networking.LocalPlayer
+    Networking.LocalPlayer
+
+snippet udonsharp_set_owner
+alias udonsharp_set_game_object_owner
+abbr Networking.SetOwner(${1:Networking.LocalPlayer}, ${0:gameObject});
+    Networking.SetOwner(${1:Networking.LocalPlayer}, ${0:gameObject});
