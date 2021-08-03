@@ -12,6 +12,8 @@ AptInstall = sudo apt install -y
 AptUpdate = sudo apt update
 AptBuildDep = sudo apt build-dep
 
+NodeInstall = yarn global add
+
 prepare:
 	if [ ! -d ~/.config ] ; then \
 		mkdir ~/.config ; \
@@ -40,14 +42,20 @@ install-without-confirm:
 	$(MAKE) install noconfirm='--noconfirm'
 
 install-package-managers:
+# Install
+#   - haskell: stack
+#   - nodejs: nvm, yarn
+#   - python: pip3
+#   - golang: go
 ifeq ($(OS),Arch)  # {{{
 	$(MAKE) install-yay
 	$(YayUpdate)
 	which stack || $(YayInstall) stack-static
-	which npm || $(YayInstall) npm
 	which yarn || $(YayInstall) yarn
 	which pip || $(YayInstall) python-pip
 	which cargo || $(YayInstall) rust
+	echo Please define install-package-managers for go > /dev/stderr
+	echo Please define install-package-managers for npm and yarn by nvm > /dev/stderr
 
 install-yay:
 	which yay || ( \
@@ -64,15 +72,24 @@ ifeq ($(OS),WSL2)  # {{{
 install-package-managers:
 	# $(AptUpdate)
 	$(AptInstall) python3-pip golang-go
+
+	$(MAKE) install-nvm
+	export NVM_DIR="$$HOME/.nvm"
+	source "$$NVM_DIR/nvm.sh"
+	nvm install node
+	nvm use node
+	npm install --global yarn
+
 	echo Please define install-package-managers for haskell-stack > /dev/stderr
-	echo Please define install-package-managers for npm > /dev/stderr
-	echo Please define install-package-managers for pip > /dev/stderr
 endif  # }}}
 ifeq ($(OS),Darwin)  # {{{
 	echo Please define install-package-managers for haskell-stack > /dev/stderr
-	echo Please define install-package-managers for npm > /dev/stderr
-	echo Please define install-package-managers for pip > /dev/stderr
+	echo Please define install-package-managers for nvm, npm and yarn > /dev/stderr
+	echo Please define install-package-managers for pip3 > /dev/stderr
 endif  # }}}
+
+install-nvm:
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 
 install-by-pip3:
 	# For deoplete.nvim
@@ -129,7 +146,8 @@ ifeq ($(OS),Arch)  # {{{
 		xorg-server \
 		xorg-xinit \
 		zathura \
-		zathura-pdf-mupdf
+		zathura-pdf-mupdf \
+
 	sudo systemctl enable lxdm
 	$(MAKE) network-config
 	sudo gpasswd -a aiya000 audio
@@ -184,7 +202,7 @@ ifeq ($(OS),WSL2)  # {{{
 		progress \
 		rsync \
 		tmux \
-		zsh
+		zsh \
 
 	$(AptBuildDep) vim
 
@@ -198,7 +216,8 @@ ifeq ($(OS),Darwin)  # {{{
 		cmigemo \ # vim-migemo
 		scalastyle \ # ale (vim)
 		graphviz plantuml \
-		jq
+		jq \
+
 	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit # vim-textobj-clang
 endif  # }}}
 
@@ -228,24 +247,23 @@ install-haskell:
 	which hlint || stack install hlint
 
 install-markdown:
-	which doctoc || npm install -g doctoc
-	which shiba || npm install -g shiba
+	which doctoc || $(NodeInstall) doctoc
 
 install-text:
-	which textlint || npm install -g textlint
+	which textlint || $(NodeInstall) textlint
 
 install-typescript:
-	which typescript || npm install -g typescript
-	which typescript-language-server || npm install -g typescript-language-server typescript-deno-plugin
+	which typescript || $(NodeInstall) typescript
+	which typescript-language-server || $(NodeInstall)
 
 install-html:
-	which htmlhint || npm install -g htmlhint
+	which htmlhint || $(NodeInstall) htmlhint
 
 install-css:
-	which csslint || npm install -g csslint
+	which csslint || $(NodeInstall) csslint
 
 install-xml:
-	which xml || npm install -g pretty-xml
+	which xml || $(NodeInstall) pretty-xml
 
 ifeq ($(OS),Arch)
 install-sh:
@@ -261,6 +279,7 @@ install-tools: \
 	install-vim-build-deps \
 	install-vim-runtime-deps \
 	install-xmonad-runtime-deps \
+	install-nvm \
 	install-fonts \
 	install-media-players \
 	install-cli-recommended \
@@ -348,7 +367,7 @@ endif
 # Below is very optional
 
 install-lice:
-	which lice || npm install -g lice
+	which lice || $(NodeInstall) lice
 
 install-java:
 	which java || $(YayInstall) jdk
