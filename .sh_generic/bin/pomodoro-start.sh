@@ -20,7 +20,7 @@ function increase_count () {
 function play () {
   if command -v wsl.exe > /dev/null ; then
     # WSL
-    '/mnt/c/Program Files (x86)/Windows Media Player/wmplayer.exe' "$1"
+    '/mnt/c/Program Files (x86)/Windows Media Player/wmplayer.exe' "$1" &
   elif uname -a | grep Darwin > /dev/null ; then
     # macOS
     # TODO: Take the monitor focus forcely
@@ -35,9 +35,9 @@ function get_notification_sound () {
   if [[ -f $DOTFILES_SH_POMODORO_NOTIFY_SOUND ]] ; then
     echo "$DOTFILES_SH_POMODORO_NOTIFY_SOUND"
   elif command -v wsl.exe > /dev/null ; then
-   wslpath -m ~/Windows/Music/notify.mp3
- else
-   echo ~/.dotfiles/Music/notify.mp3
+    wslpath -m ~/Windows/Music/notify.mp3
+  else
+    echo ~/.dotfiles/Music/notify.mp3
   fi
 }
 
