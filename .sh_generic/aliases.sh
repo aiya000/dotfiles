@@ -287,6 +287,34 @@ if i_have git ; then
 fi
 
 # }}}
+# GitLab {{{
+
+function gitlab-clone () {
+  if [[ -z $DOTFILES_GITLAB_ACCESS_TOKEN ]] ; then
+    # shellcheck disable=SC2016
+    {
+      echo 'Please create a personal access token on https://gitlab.com/-/profile/two_factor_auth:'
+      echo 'and add:'
+      echo '  export DOTFILES_GITLAB_ACCESS_TOKEN_NAME=it'
+      echo '  export DOTFILES_GITLAB_ACCESS_TOKEN_VALUE=it'
+      echo 'into ~/.zshrc_private'
+      echo '(Please also see ~/.dotfiles/.private/.zshrc_private)'
+    } > /dev/stderr
+    exit 1
+  fi
+
+  if [[ $# -lt 1 ]] ; then
+    {
+      echo 'expected an argument like:'
+      echo "  $0 aiya000/repository-name"
+    } > /dev/stderr
+    exit 1
+  fi
+
+  gclone "https://$DOTFILES_GITLAB_ACCESS_TOKEN_NAME:$DOTFILES_GITLAB_ACCESS_TOKEN_VALUE@$1"
+}
+
+# }}}
 # Docker {{{
 
 if i_have docker ; then
