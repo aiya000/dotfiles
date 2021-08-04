@@ -1,8 +1,5 @@
 #!/bin/bash
 
-interval=$([[ -z "$1" ]] && echo 25 || echo "$1")
-count=$(( $(read_count) + 1 )) # `+ 1` to count by 1 based
-
 function read_count () {
   ( \
     find /tmp/ 2> /dev/null \
@@ -44,6 +41,9 @@ function get_notification_sound () {
   fi
 }
 
+interval=$([[ -z "$1" ]] && echo 25 || echo "$1")
+count=$(( $(read_count) + 1 )) # `+ 1` to count by 1 based
+
 echo "Let's start the $count-th working"
 for (( minutes = 0; minutes < "$interval"; minutes++ )) ; do
   echo "$((minutes + 1)) minutes / $interval"
@@ -54,4 +54,4 @@ date
 echo "the $count-th working time finished!"
 increase_count
 
-play
+play "$(get_notification_sound)"

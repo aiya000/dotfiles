@@ -31,6 +31,10 @@ prepare:
 	if [ ! -d ~/.npm-prefix ] ; then \
 		mkdir ~/.npm-prefix ; \
 	fi
+ifeq ($(OS),WSL2)  # {{{
+	echo 'Please link your windows home (e.g. C:\\Users\\aiya000) to ~/Windows'
+	bash -c "read -rp 'Continue to press any key.' _"
+endif  # }}}
 
 install:
 	$(MAKE) prepare
@@ -54,8 +58,8 @@ ifeq ($(OS),Arch)  # {{{
 	which yarn || $(YayInstall) yarn
 	which pip || $(YayInstall) python-pip
 	which cargo || $(YayInstall) rust
-	echo Please define install-package-managers for go > /dev/stderr
-	echo Please define install-package-managers for npm and yarn by nvm > /dev/stderr
+	echo 'Please define install-package-managers for go' > /dev/stderr
+	echo 'Please define install-package-managers for npm and yarn by nvm' > /dev/stderr
 
 install-yay:
 	which yay || ( \
@@ -80,12 +84,12 @@ install-package-managers:
 	nvm use node
 	npm install --global yarn
 
-	echo Please define install-package-managers for haskell-stack > /dev/stderr
+	echo 'Please define install-package-managers for haskell-stack' > /dev/stderr
 endif  # }}}
 ifeq ($(OS),Darwin)  # {{{
-	echo Please define install-package-managers for haskell-stack > /dev/stderr
-	echo Please define install-package-managers for nvm, npm and yarn > /dev/stderr
-	echo Please define install-package-managers for pip3 > /dev/stderr
+	echo 'Please define install-package-managers for haskell-stack' > /dev/stderr
+	echo 'Please define install-package-managers for nvm, npm and yarn' > /dev/stderr
+	echo 'Please define install-package-managers for pip3' > /dev/stderr
 endif  # }}}
 
 install-nvm:
