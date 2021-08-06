@@ -6,7 +6,7 @@
 [github]
 	user = aiya000
 [include]
-	path = ~/.gitconfig.env
+	path = ~/.gitconfig_env
 [push]
 	default = simple
 [alias]
