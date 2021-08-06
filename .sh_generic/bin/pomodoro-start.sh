@@ -41,7 +41,7 @@ function get_notification_sound () {
   fi
 }
 
-interval=$([[ -z "$1" ]] && echo 25 || echo "$1")
+interval=$([[ -z "$1" ]] && echo 90 || echo "$1")
 count=$(( $(read_count) + 1 )) # `+ 1` to count by 1 based
 
 echo "Let's start the $count-th working"

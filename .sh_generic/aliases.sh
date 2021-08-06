@@ -300,7 +300,7 @@ function gitlab-clone () {
       echo 'into ~/.zshrc_private'
       echo '(Please also see ~/.dotfiles/.private/.zshrc_private)'
     } > /dev/stderr
-    exit 1
+    return 1
   fi
 
   if [[ $# -lt 1 ]] ; then
@@ -308,7 +308,7 @@ function gitlab-clone () {
       echo 'expected an argument like:'
       echo "  $0 aiya000/repository-name"
     } > /dev/stderr
-    exit 1
+    return 1
   fi
 
   gclone "https://$DOTFILES_GITLAB_ACCESS_TOKEN_NAME:$DOTFILES_GITLAB_ACCESS_TOKEN_VALUE@$1"
@@ -328,6 +328,47 @@ alias la='ls -a --color=auto --group-directories-first'
 alias ll='ls -l --color=auto --group-directories-first'
 alias llh='ls -lh --color=auto --group-directories-first'
 alias lla='ls -la --color=auto --group-directories-first'
+
+alias date-simple='date "+%Y-%m-%d %H:%M"'
+
+function date-diff-seconds () {
+  : Usage example
+  : date-diff-seconds '08-05 21:47' '08-05 22:33'
+
+  if [[ $# -lt 2 ]] ; then
+    {
+      echo "help:"
+      declare -f "$0" | head
+    } > /dev/stderr
+    return 1
+  fi
+
+  local this_year from from_raw now now_raw
+
+  this_year=$(date '+%Y')
+  from="$this_year-$2"
+  now="$this_year-$1"
+
+  from_raw=$(date --date "$from" '+%s')
+  now_raw=$(date --date "$now" '+%s')
+
+  echo "$(( ($from_raw - $now_raw) / 60))"
+}
+
+function date-diff-seconds-now () {
+  : Usage example
+  : date-diff-seconds-now '08-05 21:47'
+
+  if [[ $# -lt 1 ]] ; then
+    {
+      echo "help:"
+      declare -f "$0" | head
+    } > /dev/stderr
+    return 1
+  fi
+
+  date-diff-seconds "$1" "$(date '+%m-%d %H:%M')"
+}
 
 # shellcheck disable=SC2139
 alias e="$EDITOR"
