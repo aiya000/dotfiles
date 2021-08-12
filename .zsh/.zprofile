@@ -81,7 +81,7 @@ PATH=$PATH:$HOME/.npm-prefix/bin
 PATH=$PATH:$HOME/.cargo/bin
 PATH=$PATH:$HOME/.ghcup/bin
 PATH=$PATH:$HOME/.local/bin
-PATH=$PATH:$HOME/.linuxbrew/bin
+PATH=$PATH:$HOME/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/bin
 
 # Plugins
 PATH=$PATH:$ZDOTDIR/plugin/sh-git-lfs-install-append
