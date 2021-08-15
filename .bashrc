@@ -1,14 +1,11 @@
 #!/bin/bash
 
-# shellcheck disable=SC1090
-source ~/.dotfiles/.sh_generic/aliases.sh
-
 #######################
 # Check .bash_profile #
 #######################
 # Load it if it is never loaded
 if ! alias | grep -q pr_loaded ; then
-    source ~/.bash_profile
+  source ~/.bash_profile
 fi
 
 ##################################
@@ -44,46 +41,6 @@ bind -m vi-insert  '"\C-]": clear-screen'
 bind -m vi-command -x '"\C-k\C-r": . ~/.bashrc && echo ">> bash source reloaded"'
 
 # }}}
-# Set language tools {{{
-
-# cabal
-if [[ -d ~/.cabal ]] ; then
-    PATH=$PATH:$HOME/.cabal/bin:./.cabal-sandbox/bin
-fi
-
-# pkgsrc
-if [[ -d ~/pkg ]] ; then
-    PATH=$PATH:$HOME/pkg/bin:$HOME/pkg/sbin
-fi
-
-# rbenv
-if [[ -d ~/.rbenv ]] ; then
-    PATH=$PATH:$HOME/.rbenv/bin
-    PATH=$PATH:$HOME/.rbenv/versions/$(cat ~/.rbenv/version)/bin
-    eval "$("$HOME/.rbenv/bin/rbenv" init -)"
-fi
-
-if [[ -d ~/.nvm ]] ; then
-    source $NVM_DIR/nvm.sh
-fi
-
-# ruby-build
-if [[ -d ~/.rbenv/plugins/ruby-build/bin ]] ; then
-    PATH=$PATH:$HOME/.rbenv/plugins/ruby-build/bin
-fi
-
-# virtualenv with virtualenvwrapper
-if i_have virtualenvwrapper.sh ; then
-    export WORKON_HOME=$HOME/.virtualenvs
-    source "$(command -v virtualenvwrapper.sh)"
-fi
-
-# anything
-if [[ -d ~/.local ]] ; then
-    PATH=$PATH:$HOME/.local/bin
-fi
-
-# }}}
 
 
 ###################
@@ -96,20 +53,9 @@ alias rel=reload
 
 # }}}
 
-
-case $(uname) in
-Linux )
-    source ~/.dotfiles/.sh_generic/linux.sh
-    ;;
-Darwin )
-    source ~/.dotfiles/.sh_generic/macOS.sh
-    ;;
-esac
-
 if [ -f ~/.bashrc_env ] ; then
-    source ~/.bashrc_env
+  source ~/.bashrc_env
 fi
 
 # Expose to mark .bashrc is loaded
 alias rc_loaded='echo "rc_loaded"'
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

@@ -11,16 +11,10 @@
 .git_templates
 .gitconfig
 .gvimrc
-.lein
 .sh_generic
-.sshrc
-.sshrc.d
 .stack
 .tmux.conf
 .vim
 .vimrc
-.vsvimrc
 .xinitrc
-.xmobarrc
-.xmonad
 .zsh

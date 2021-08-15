@@ -269,13 +269,21 @@ install-css:
 install-xml:
 	which xml || $(NodeInstall) pretty-xml
 
-ifeq ($(OS),Arch)
+ifeq ($(OS),Arch) # {{{
+
 install-sh:
 	$(YayInstall) shellcheck
 
 install-ruby:
 	$(YayInstall) ruby ruby-irb
-endif
+
+endif # }}}
+ifeq ($(OS),WSL2) # {{{
+
+install-sh:
+	$(AptInstall) shellcheck
+
+endif # }}}
 
 # }}}
 

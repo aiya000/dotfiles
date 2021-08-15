@@ -1,5 +1,7 @@
 let b:undo_ftplugin = 'setl ' . join([
-\   'noexpandtab<',
-\])
+  \ 'noexpandtab<',
+  \ 'ts=4<',
+  \ 'sw=4<',
+\ ])
 
-setl noexpandtab
+setl noexpandtab ts=4 sw=4
