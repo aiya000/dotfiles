@@ -8,8 +8,10 @@
 #k::SendInput #{Up}
 #l::SendInput #{Right}
 
-^!d::SendInput #{Tab}
+!^d::SendInput #{Tab}
 !^c::SendInput !{F4}
+
+!+r::Reload
 ; !+4::SendInput +#s
 !+4::Run SnippingTool.exe
 
@@ -91,4 +93,19 @@ EnvGet, Home, HOME
   ^h::SendInput {BS}
   ^f::SendInput +{Left}
   ^b::SendInput +{Right}
+#IfWinActive
+
+; Excel
+#IfWinActive, ahk_class XLMAIN
+  ^p::SendInput {Up}
+  ^n::SendInput {Down}
+  ^f::SendInput {Right}
+  ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
 #IfWinActive
