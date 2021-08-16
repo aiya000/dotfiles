@@ -5,13 +5,11 @@
 #######################
 # Load it if it is never loaded
 if ! alias | grep -q pr_loaded ; then
+  # shellcheck disable=SC1090
   source ~/.bash_profile
 fi
 
-##################################
-# Configure bash with conditions #
-##################################
-# Set the bash options {{{
+# options {{{
 
 set -o ignoreeof  # Disable logoff by Ctrl + D
 set -o vi         # Set vi style keymapping mode
@@ -19,7 +17,7 @@ stty stop  undef  # unbind C-s that is stop viewing inputs to screen
 stty start undef  # unbind C-q that is start viewing inputs to screen
 
 # }}}
-# Set the bash key-mappings {{{
+# key-mappings {{{
 
 # Vim nize
 bind -m vi-command '"_": beginning-of-line'
@@ -41,19 +39,18 @@ bind -m vi-insert  '"\C-]": clear-screen'
 bind -m vi-command -x '"\C-k\C-r": . ~/.bashrc && echo ">> bash source reloaded"'
 
 # }}}
+# aliases {{{
 
-
-###################
-# Define Commands #
-###################
-# Define specified aliases for bash {{{
+alias ll='ls -l'
+alias la='ls --all'
 
 alias reload='source ~/.bashrc && source ~/.bash_profile && echo ">> the bash configurations are reloaded"'
 alias rel=reload
 
 # }}}
 
-if [ -f ~/.bashrc_env ] ; then
+if [[ -f ~/.bashrc_env ]] ; then
+  # shellcheck disable=SC1090
   source ~/.bashrc_env
 fi
 
