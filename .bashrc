@@ -9,7 +9,7 @@ if ! alias | grep -q pr_loaded ; then
   source ~/.bash_profile
 fi
 
-# options {{{
+# Options {{{
 
 set -o ignoreeof  # Disable logoff by Ctrl + D
 set -o vi         # Set vi style keymapping mode
@@ -17,7 +17,7 @@ stty stop  undef  # unbind C-s that is stop viewing inputs to screen
 stty start undef  # unbind C-q that is start viewing inputs to screen
 
 # }}}
-# key-mappings {{{
+# Keymappings {{{
 
 # Vim nize
 bind -m vi-command '"_": beginning-of-line'
@@ -38,13 +38,29 @@ bind -m vi-insert  '"\C-l": "\e"'
 bind -m vi-insert  '"\C-]": clear-screen'
 bind -m vi-command -x '"\C-k\C-r": . ~/.bashrc && echo ">> bash source reloaded"'
 
+# From https://qiita.com/comuttun/items/f54e755f22508a6c7d78
+function peco-select-history () {
+  declare l
+  l=$( \
+    HISTTIMEFORMAT=$( \
+      history \
+      | sort -k1,1nr \
+      | perl -ne 'BEGIN { my @lines = (); } s/^\s*\d+\s*//; $in=$_; if (!(grep {$in eq $_} @lines)) { push(@lines, $in); print $in; }' \
+      | peco --layout=bottom-up --initial-filter Regexp --select-1 --query "$READLINE_LINE" \
+    ) \
+  )
+  READLINE_LINE="$l"
+  READLINE_POINT=${#l}
+}
+# bind -x '"\C-r": peco-select-history'
+
 # }}}
-# aliases {{{
+# Aliases {{{
 
 alias ll='ls -l'
 alias la='ls --all'
 
-alias reload='source ~/.bashrc && source ~/.bash_profile && echo ">> the bash configurations are reloaded"'
+alias reload='source ~/.bashrc && source ~/.bash_profile && echo ">> bash prefs reloaded"'
 alias rel=reload
 
 # }}}
