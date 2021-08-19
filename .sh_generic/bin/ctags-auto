@@ -1,0 +1,26 @@
+#!/bin/bash
+
+function get_dest () {
+  local git_root
+
+  # Make a path like 'repo/.git/tags'.
+  if git_root=$(git rev-parse --show-toplevel 2> /dev/null) ; then
+    if ! is_windows_path "$git_root" && (command -v wslpath > /dev/null 2>&1) ; then
+      # Try to recover a wsl path from the windows path
+      git_root=$(wslpath "$git_root")
+    fi
+    echo "$git_root/.git/tags"
+    return
+  fi
+
+  # Use the current directory instead.
+  echo "$PWD/tags"
+}
+
+function is_windows_path () {
+  [[ ! $1 =~ '^/' ]]
+}
+
+dest=$(get_dest)
+echo "ctags-auto: generating to '$dest'"
+ctags -f "$dest" --tag-relative=never --recurse --sort=yes "$@"

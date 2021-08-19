@@ -89,3 +89,7 @@ snippet prompt
 alias prompt_for_input ask_for_input
 abbr read -rp '${1:message}' ${0:var}
     read -rp '${1:message}' ${0:var}
+
+snippet source_script_on_this_dir
+abbr source "$(dirname $0)/${0:utils.sh}"
+  source "$(dirname "$0")/${0:utils.sh}"

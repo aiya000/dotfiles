@@ -128,6 +128,7 @@ command! -bar ScdCurrentDir let g:vimrc.path_at_started = getcwd()
 command! -bar ScdGitRoot    let g:vimrc.path_at_started = system('git rev-parse --show-toplevel')
 command! -bar -nargs=+ Grep call vimrc#grep_those(<f-args>)
 command! -bar TodoList Grep TODO FIXME XXX
+command! -bar DailyReport call vimrc#open_daily_report()
 
 " Tapis
 function Tapi_Tabnew(_, args) abort

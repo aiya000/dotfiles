@@ -331,45 +331,6 @@ alias lla='ls -la --color=auto --group-directories-first'
 
 alias date-simple='date "+%Y-%m-%d %H:%M"'
 
-function date-diff-seconds () {
-  : Usage example
-  : date-diff-seconds '08-05 21:47' '08-05 22:33'
-
-  if [[ $# -lt 2 ]] ; then
-    {
-      echo "help:"
-      declare -f "$0" | head
-    } > /dev/stderr
-    return 1
-  fi
-
-  local this_year from from_raw now now_raw
-
-  this_year=$(date '+%Y')
-  from="$this_year-$2"
-  now="$this_year-$1"
-
-  from_raw=$(date --date "$from" '+%s')
-  now_raw=$(date --date "$now" '+%s')
-
-  echo "$(( ($from_raw - $now_raw) / 60))"
-}
-
-function date-diff-seconds-now () {
-  : Usage example
-  : date-diff-seconds-now '08-05 21:47'
-
-  if [[ $# -lt 1 ]] ; then
-    {
-      echo "help:"
-      declare -f "$0" | head
-    } > /dev/stderr
-    return 1
-  fi
-
-  date-diff-seconds "$1" "$(date '+%m-%d %H:%M')"
-}
-
 # shellcheck disable=SC2139
 alias e="$EDITOR"
 alias eS='ls -A $VIM_SESSION | peco | xargs -I {} vim -S $VIM_SESSION/{}'
@@ -382,6 +343,9 @@ alias um=umount
 alias ei=exit
 alias cdp=cd-finddir
 alias ki=killing-art
+
+alias ctags-kotlin-auto="ctags-auto '--exclude=*.java' '--exclude=*.html' '--exclude=*.css'"
+alias ctags-typescript-auto="ctags-auto '--exclude=*.js' '--exclude=*.json'"
 
 # alias ..='cd ../'
 # alias ...='cd ../../'
@@ -408,7 +372,6 @@ i_have tmux && alias ta='tmux attach'
 i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have unzip && alias unzip-cp932='unzip -O cp932'
 
-i_have ctags && load-my-env ctags
 i_have stack && load-my-env stack
 i_have idris && load-my-env idris
 i_have draw.io && load-my-env drawio

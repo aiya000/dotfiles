@@ -8,7 +8,7 @@
 "   \ )
 " \ )
 
-let s:Message = vital#vimrc#import('Vim.Message')
+let s:Msg = vital#vimrc#import('Vim.Msg')
 
 function vimrc#job#on_stdout(stdout, _channel, msg) abort
   call add(a:stdout, a:msg)
@@ -20,9 +20,9 @@ endfunction
 
 function vimrc#job#on_exit(stdout, stderr, on_succeed, _job, exit_code) abort
   if a:exit_code isnot 0
-    call s:Message.error('a job exited with ' .. a:exit_code)
-    call s:Message.error('stdout: ' .. string(a:stdout))
-    call s:Message.error('stderr: ' .. string(a:stderr))
+    call s:Msg.error('a job exited with ' .. a:exit_code)
+    call s:Msg.error('stdout: ' .. string(a:stdout))
+    call s:Msg.error('stderr: ' .. string(a:stderr))
     return
   endif
 

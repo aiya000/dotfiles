@@ -5,7 +5,6 @@ function load-my-env () {
 
   case "$target_name" in
     all)
-      load-my-env ctags
       load-my-env docker
       load-my-env linuxbrew
       load-my-env ccache
@@ -19,18 +18,6 @@ function load-my-env () {
       load-my-env gradlew
       load-my-env travis
       load-my-env drawio
-      ;;
-
-    ctags)
-      function ctags-auto () {
-        local root
-        root=$(git rev-parse --show-toplevel 2> /dev/null || pwd)
-        dest=$([[ -d $root/.git ]] && echo "$root/.git/tags" || echo "$root/tags")
-        ctags -f "$dest" --tag-relative=never --recurse --sort=yes "$@"
-      }
-
-      alias ctags-kotlin-auto="ctags-auto '--exclude=*.java' '--exclude=*.html' '--exclude=*.css'"
-      alias ctags-typescript-auto="ctags-auto '--exclude=*.js' '--exclude=*.json'"
       ;;
 
     stack)

@@ -584,3 +584,14 @@ function vimrc#operator_camelize_toggle_current_word_with_setting_repeatable() a
   execute 'normal' "viw\<Plug>(operator-camelize-toggle)"
   call repeat#set("viw\<Plug>(operator-camelize-toggle)")
 endfunction
+
+function vimrc#open_daily_report() abort
+  const report_dir = $HOME .. '/Desktop/DailyReport'
+  if !isdirectory(report_dir)
+    call s:Msg.error('Please mkdir there before using this: ' .. report_dir)
+    return
+  endif
+
+  const report_file = printf('%s/%s.md', report_dir, strftime('%Y-%m-%d'))
+  execute 'edit' report_file
+endfunction

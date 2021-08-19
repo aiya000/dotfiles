@@ -45,6 +45,8 @@ let g:vimrc.undodir    = g:vimrc.backupdir .. '/undo'
 let g:vimrc.viewdir    = g:vimrc.backupdir .. '/view'
 let g:vimrc.sessiondir = g:vimrc.backupdir .. '/session'
 
+let $X = 'hi'
+
 " }}}
 
 
