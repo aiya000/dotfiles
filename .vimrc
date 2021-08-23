@@ -7,16 +7,7 @@ let s:Msg = s:V.import('Vim.Message')
 "---------------"
 " Global values "
 "---------------"
-" {{{
-
-" Open in preference to an entity
-let $MYVIMRC = filereadable($HOME .. '/.dotfiles/.vimrc')
-  \ ? $HOME .. '/.dotfiles/.vimrc'
-  \ : $MYVIMRC
-
-let $MYGVIMRC = filereadable($HOME .. '/.dotfiles/.gvimrc')
-  \ ? $HOME .. '/.dotfiles/.gvimrc'
-  \ : $MYGVIMRC
+" g:vimrc {{{
 
 " Global values
 let g:vimrc = get(g:, 'vimrc', #{
@@ -45,7 +36,31 @@ let g:vimrc.undodir    = g:vimrc.backupdir .. '/undo'
 let g:vimrc.viewdir    = g:vimrc.backupdir .. '/view'
 let g:vimrc.sessiondir = g:vimrc.backupdir .. '/session'
 
-let $X = 'hi'
+" params:
+"   stdout: Array<string>
+"   stderr: Array<string>
+function s:set_git_root(stdout, stderr) abort
+  const git_root = join(a:stdout, '')
+  echomsg 'vimrc: a git root detected: ' .. git_root
+  let g:vimrc.git_root = git_root
+endfunction
+
+call vimrc#job#start_simply(
+  \ ['git', 'rev-parse', '--show-toplevel'],
+  \ function('s:set_git_root'),
+\ )
+
+" }}}
+" Environment Variables {{{
+
+" Open in preference to an entity
+let $MYVIMRC = filereadable($HOME .. '/.dotfiles/.vimrc')
+  \ ? $HOME .. '/.dotfiles/.vimrc'
+  \ : $MYVIMRC
+
+let $MYGVIMRC = filereadable($HOME .. '/.dotfiles/.gvimrc')
+  \ ? $HOME .. '/.dotfiles/.gvimrc'
+  \ : $MYGVIMRC
 
 " }}}
 
@@ -1289,6 +1304,24 @@ tnoremap <C-q><C-v> <C-q><C-n><C-w>H
 tnoremap <C-q><C-s> <C-q><C-n>
 
 " }}}
+" abbr {{{
+
+cabbr eg e<Space><C-r>=g:vimrc.git_root<CR>/
+
+" typo {{{
+
+inoreabbr reuslt result
+inoreabbr unkonwn unknown
+inoreabbr uknown unknown
+inoreabbr Parnes Parens
+inoreabbr parnes parens
+inoreabbr reuslt result
+inoreabbr Encrpyt Encrypt
+inoreabbr encrpyt encrypt
+
+" }}}
+
+" }}}
 " digraph {{{
 
 digraph (( 8834   " right includes left
@@ -1522,18 +1555,6 @@ nmap <Plug>(nomap-dirvish_up) <Plug>(dirvish_up)
 
 " vim-quickrepl
 nmap <leader>R <Plug>(quickrepl-open)
-
-" }}}
-" typo {{{
-
-inoreabbr reuslt result
-inoreabbr unkonwn unknown
-inoreabbr uknown unknown
-inoreabbr Parnes Parens
-inoreabbr parnes parens
-inoreabbr reuslt result
-inoreabbr Encrpyt Encrypt
-inoreabbr encrpyt encrypt
 
 " }}}
 

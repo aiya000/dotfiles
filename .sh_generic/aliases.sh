@@ -119,16 +119,16 @@ if i_have git ; then
   alias gri~~~~~~~~~~='git rebase --interactive --autosquash HEAD~~~~~~~~~~'
   alias gr-onto='git rebase --onto'
   alias grev='git revert'
-  alias grev~='git revert HEAD~'
-  alias grev~~='git revert HEAD~~'
-  alias grev~~~='git revert HEAD~~~'
-  alias grev~~~~='git revert HEAD~~~~'
-  alias grev~~~~~='git revert HEAD~~~~~'
-  alias grev~~~~~~='git revert HEAD~~~~~~'
-  alias grev~~~~~~~='git revert HEAD~~~~~~~'
-  alias grev~~~~~~~~='git revert HEAD~~~~~~~~'
-  alias grev~~~~~~~~~='git revert HEAD~~~~~~~~~'
-  alias grev~~~~~~~~~~='git revert HEAD~~~~~~~~~~'
+  alias grev~='git revert HEAD'
+  alias grev~~='git revert HEAD~'
+  alias grev~~~='git revert HEAD~~'
+  alias grev~~~~='git revert HEAD~~~'
+  alias grev~~~~~='git revert HEAD~~~~'
+  alias grev~~~~~~='git revert HEAD~~~~~'
+  alias grev~~~~~~~='git revert HEAD~~~~~~'
+  alias grev~~~~~~~~='git revert HEAD~~~~~~~'
+  alias grev~~~~~~~~~='git revert HEAD~~~~~~~~'
+  alias grev~~~~~~~~~~='git revert HEAD~~~~~~~~~'
   alias grm='git rm'
   alias grmc='git rm --cached'
   alias gs='git status'
@@ -179,19 +179,19 @@ if i_have git ; then
   alias gaacmr='git add -A && gcmr'
 
   function gcmp () {
-    git commit -m ":+1: $*"
+    git commit -m "$DOTFILES_GIT_COMMIT_PREFIX_IMPROVEMENT $*"
   }
 
   function gcmu () {
-    git commit -m ":up: $*"
+    git commit -m "$DOTFILES_GIT_COMMIT_PREFIX_UPDATE $*"
   }
 
   function gcmb () {
-    git commit -m ":bug: $*"
+    git commit -m "$DOTFILES_GIT_COMMIT_PREFIX_BUGFIX $*"
   }
 
   function gcmr () {
-    git commit -m ":recycle: $*"
+    git commit -m "$DOTFILES_GIT_COMMIT_PREFIX_REFACTOR $*"
   }
 
   function gtag-add-m () {

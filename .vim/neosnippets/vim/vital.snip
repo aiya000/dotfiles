@@ -7,3 +7,7 @@ alias imp
 
 snippet import_singleton
     let ${1:Name} = vital#${2:vital}#import('${3:Module}')
+
+snippet echo_error
+abbr call s:${1:Msg}.error('${0:here}')
+  call s:${1:Msg}.error('${0:here}')
