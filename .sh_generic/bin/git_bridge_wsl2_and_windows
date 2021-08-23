@@ -1,0 +1,70 @@
+#!/bin/bash
+
+: git_bridge_wsl2_and_windows
+: :
+: Currently on NTFS, WSL2\'s git is too heavy.
+: This is a workaround for that.
+
+sub_cmd=$1
+
+function main () {
+  if [[ $(is_needing_auth) = true ]] ; then
+    git_wsl2 "$@"
+  elif [[ $(should_use_windows_git) = true ]] ; then
+    git_windows "$@"
+  else
+    # By default
+    git_wsl2 "$@"
+  fi
+}
+
+function git_wsl2 () {
+  echo_debug 'Using WSL2 git'
+  echo_debug "is_needing_auth: $(is_needing_auth)"
+  echo_debug "should_use_windows_git: $(should_use_windows_git)"
+  echo_debug "/usr/bin/git $*"
+  /usr/bin/git "$@"
+}
+
+function git_windows () {
+  echo_debug 'Using Windows git'
+  echo_debug "is_needing_auth: $(is_needing_auth)"
+  echo_debug "should_use_windows_git: $(should_use_windows_git)"
+  echo_debug "git.exe $*"
+  git.exe "$@"
+}
+
+function should_use_windows_git () {
+  if \
+    [[ $PWD =~ '^/mnt/' ]] \
+    || [[ $PWD =~ '/home/aiya000/Windows' ]] \
+    || [[ $PWD =~ '/home/aiya000/Desktop' ]] ; \
+  then
+    echo true
+  else
+    echo false
+  fi
+}
+
+function is_needing_auth () {
+  local command_needs_auth=(push pull fetch) cmd
+
+  for cmd in "${command_needs_auth[@]}" ; do
+    if [[ $sub_cmd = "$cmd" ]] ; then
+      echo true
+      return
+    fi
+  done
+
+  echo false
+}
+
+function echo_debug () {
+  local debug=false
+
+  if [[ $debug = true ]] ; then
+    echo "git_bridge_wsl2_and_windows: $*"
+  fi
+}
+
+main "$@"
