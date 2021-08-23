@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DEBUG=true
+
 : git_bridge_wsl2_and_windows
 : :
 : Currently on NTFS, WSL2\'s git is too heavy.
@@ -67,9 +69,7 @@ function is_needing_auth () {
 }
 
 function echo_debug () {
-  local debug=true
-
-  if [[ $debug = true ]] ; then
+  if [[ $DEBUG = true ]] ; then
     echo "git_bridge_wsl2_and_windows: $*"
   fi
 }
