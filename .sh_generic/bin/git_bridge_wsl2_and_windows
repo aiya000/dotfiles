@@ -4,6 +4,8 @@
 : :
 : Currently on NTFS, WSL2\'s git is too heavy.
 : This is a workaround for that.
+: :
+: Recommend: ln -s git_bridge_wsl2_and_windows ~/bin/git
 
 sub_cmd=$1
 
