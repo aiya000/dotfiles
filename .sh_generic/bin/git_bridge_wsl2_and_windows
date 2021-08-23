@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEBUG=true
+DEBUG=false
 
 : git_bridge_wsl2_and_windows
 : :
