@@ -37,8 +37,13 @@ function git_windows () {
 }
 
 function should_use_windows_git () {
+  # FIXME: Why this is falsy on /mnt/d/Repository/Unity/repo when I use this?
+  # [[ $PWD =~ '^/mnt/' ]] \
+  # || [[ $PWD =~ '^/home/aiya000/Windows' ]] \
+  # || [[ $PWD =~ '^/home/aiya000/Desktop' ]] ; \
+
   if \
-    [[ $PWD =~ '^/mnt/' ]] \
+    [[ $PWD =~ '/mnt/' ]] \
     || [[ $PWD =~ '/home/aiya000/Windows' ]] \
     || [[ $PWD =~ '/home/aiya000/Desktop' ]] ; \
   then
@@ -62,7 +67,7 @@ function is_needing_auth () {
 }
 
 function echo_debug () {
-  local debug=false
+  local debug=true
 
   if [[ $debug = true ]] ; then
     echo "git_bridge_wsl2_and_windows: $*"
