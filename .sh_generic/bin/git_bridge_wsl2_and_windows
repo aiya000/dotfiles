@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEBUG=false
+DEBUG=0
 
 : git_bridge_wsl2_and_windows
 : :
@@ -31,23 +31,32 @@ function git_wsl2 () {
 }
 
 function git_windows () {
+  local args=()
+
   echo_debug 'Using Windows git'
   echo_debug "is_needing_auth: $(is_needing_auth)"
   echo_debug "should_use_windows_git: $(should_use_windows_git)"
   echo_debug "git.exe $*"
-  git.exe "$@"
+
+  for x in "$@"; do
+    if [[ $x =~ ^/ ]] ; then
+      # TODO: Remove this disabling
+      # shellcheck disable=SC2207
+      args+=($(wslpath -w "$x" | sed -r 's/\\/\\\\/g' ))
+      continue
+    fi
+
+    args+=("$x")
+  done
+
+  eval "git.exe ${args[*]}"
 }
 
 function should_use_windows_git () {
-  # FIXME: Why this is falsy on /mnt/d/Repository/Unity/repo when I use this?
-  # [[ $PWD =~ '^/mnt/' ]] \
-  # || [[ $PWD =~ '^/home/aiya000/Windows' ]] \
-  # || [[ $PWD =~ '^/home/aiya000/Desktop' ]] ; \
-
   if \
-    [[ $PWD =~ '/mnt/' ]] \
-    || [[ $PWD =~ '/home/aiya000/Windows' ]] \
-    || [[ $PWD =~ '/home/aiya000/Desktop' ]] ; \
+    [[ $PWD =~ ^/mnt ]] \
+    || [[ $PWD =~ ^/home/$USER/Windows ]] \
+    || [[ $PWD =~ ^/home/$USER/Desktop ]] ; \
   then
     echo true
   else
@@ -69,7 +78,7 @@ function is_needing_auth () {
 }
 
 function echo_debug () {
-  if [[ $DEBUG = true ]] ; then
+  if [[ $DEBUG -eq 1 ]] ; then
     echo "git_bridge_wsl2_and_windows: $*"
   fi
 }
