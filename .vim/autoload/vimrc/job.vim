@@ -20,7 +20,7 @@ endfunction
 
 function vimrc#job#on_exit(stdout, stderr, on_succeed, on_failed, _job, exit_code) abort
   if a:exit_code isnot 0
-    call a:on_failed(a:stdout, a:stderr a:exit_code)
+    call a:on_failed(a:stdout, a:stderr, a:exit_code)
     return
   endif
 
@@ -37,7 +37,7 @@ function vimrc#job#get_basic_options_completes_with(...) abort
   if OnSucceed is v:null
     throw 'vimrc#job#start_simply: 1 or 2 args required'
   endif
-  const OnFailed = get(a:000, 1, { _, __, ___ -> '' })
+  const OnFailed = get(a:000, 1, { _1, _2, _3 -> 0 })
 
   const stdout = []
   const stderr = []
