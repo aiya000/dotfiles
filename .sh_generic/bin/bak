@@ -1,17 +1,21 @@
-#!/bin/sh
+#!/bin/bash
+
 # Toggle file extensions
-if [ -z "$1" ] ; then
-	echo 'error: require 1 argument' 1>&2
-	return 1
+
+if [[ -z $1 ]] ; then
+  echo 'error: require 1 argument' 1>&2
+  return 1
 fi
-if [ ! -e "$1" ] ; then
-	echo "error: not found file '${1}'" 1>&2
-	return 1
+
+if [[ ! -e $1 ]] ; then
+  echo "error: not found file '${1}'" 1>&2
+  return 1
 fi
-if [ -n "`echo \"${1}\" | grep 'bak$'`" ] ; then
-	# Remove extension '.bak'
-	mv "$1" "${1%.*}"
+
+if echo "$1" | grep 'bak$' > /dev/null 2>&1 ; then
+  # Remove extension '.bak'
+  mv "$1" "${1%.*}"
 else
-	# Append extension '.bak'
-	mv "$1" "${1}.bak"
+  # Append extension '.bak'
+  mv "$1" "${1}.bak"
 fi

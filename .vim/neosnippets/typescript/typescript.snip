@@ -213,6 +213,11 @@ alias pubmet
 abbr public ${1:name}(${2:#:args}): ${3:type} {${0:#:here}}
     public ${1:name}(${2:#:args}): ${3:void} {${0:#:here}}
 
+snippet async_method
+alias amet
+abbr async ${1:name}(${2:#:args}): ${3:type} {${0:#:here}}
+    async ${1:name}(${2:#:args}): Promise<${3:void}> {${0:#:here}}
+
 snippet public_async_method
 alias pubamet
 abbr public async ${1:name}(${2:#:args}): ${3:type} {${0:#:here}}

@@ -27,6 +27,12 @@ prepare:
 	if [ ! -d ~/git ] ; then \
 		mkdir ~/git ; \
 	fi
+	# Please see .vimrc and .sh_generic
+	if [ ! -d ~/.backup ] ; then \
+		mkdir -p ~/.backup/dustbox ; \
+		mkdir -p ~/.backup/temporary-store ; \
+		mkdir -p ~/.backup/vim-backup/{swp,session,undo} ; \
+	fi
 	# Please see .npmrc
 	if [ ! -d ~/.npm-prefix ] ; then \
 		mkdir ~/.npm-prefix ; \
@@ -84,7 +90,7 @@ install-package-managers:
 	nvm use node
 	npm install --global yarn
 
-	echo 'Please define install-package-managers for haskell-stack' > /dev/stderr
+	$(MAKE) install-haskell-stack
 endif  # }}}
 ifeq ($(OS),Darwin)  # {{{
 	echo 'Please define install-package-managers for haskell-stack' > /dev/stderr
@@ -94,6 +100,9 @@ endif  # }}}
 
 install-nvm:
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+
+install-haskell-stack:
+	curl -sSL https://get.haskellstack.org/ | sh
 
 install-by-pip3:
 	# For deoplete.nvim

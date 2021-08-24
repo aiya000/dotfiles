@@ -1,6 +1,6 @@
 let b:undo_ftplugin = 'setl ' . join([
-\	'wrap<'
-\])
+  \ 'wrap<'
+\ ])
 
 setl wrap
 
