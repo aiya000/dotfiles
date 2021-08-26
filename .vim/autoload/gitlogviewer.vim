@@ -1,6 +1,7 @@
 " Inspired by ujihisa's vimrc
 " And deris's code (http://deris.hatenablog.jp/entry/2013/05/10/003430)
-function! gitlogviewer#git_log_viewer(args)
+
+function gitlogviewer#git_log_viewer(args) abort
   enew!
   setl buftype=nofile
   let b:gitlogviewer_args = a:args
@@ -11,17 +12,17 @@ function! gitlogviewer#git_log_viewer(args)
   setl foldtext=FoldTextOfGitLog()
 endfunction
 
-function! s:read_git_log(args)
-  put!=system('git log ' . a:args)
+function s:read_git_log(args) abort
+  put!=system('git log ' .. a:args)
   normal! gg
 endfunction
 
-function! FoldExprOfGitLog(lnum)
+function FoldExprOfGitLog(lnum) abort
   return getline(a:lnum)     =~# '^commit' ? '>1'
     \  : getline(a:lnum + 1) =~# '^commit' ? '<1' : '='
 endfunction
 
-function! FoldTextOfGitLog()
+function FoldTextOfGitLog() abort
   let month_map = #{
     \ Jan: '01',
     \ Feb: '02',

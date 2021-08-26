@@ -17,8 +17,12 @@ snippet test
 abbr [[ ${0} ]]
     [[ ${0} ]]
 
+snippet test_regex
+abbr [[ ${1} =~ ${0} ]]
+  [[ ${1} =~ ${0} ]]
+
 snippet for
-    for ${1:i} in ${2:#:var} ; do
+    for ${1:x} in ${2:#:var} ; do
         ${0}
     done
 
