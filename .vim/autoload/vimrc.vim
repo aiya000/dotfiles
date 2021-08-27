@@ -8,7 +8,92 @@ let s:List = s:V.import('Data.List')
 let s:Msg = s:V.import('Vim.Message')
 let s:Optional = s:V.import('Data.Optional')
 
-" Clone dein.vim to target dir
+" Allows to reuse `self`.
+" {{{
+"
+" Params:
+"   self: A
+"   f: (self: A) -> B
+"
+" Result: B
+"
+" Example:
+"   join(a:stdout, '')->vimrc#let({ result ->
+"     \ result ==# foo
+"       \ ? bar
+"       \ : result
+"    \ })
+"
+" }}}
+function vimrc#let(self, f) abort
+  return a:f(a:self)
+endfunction
+
+" Applies `f` if `p(value)`.
+" {{{
+"
+" Params:
+"   value: A
+"   p: (value: A) -> Bool
+"   f: (value: A) -> B
+"
+" Result: A | B
+"
+" Example:
+"   let git_root = fnameescape(join(a:stdout, ''))->vimrc#apply_if(
+"     \ { git_root -> (git_root !~# '^/') && executable('wslpath') },
+"     \ { git_root_windows -> fnameescape(system("wslpath '%s'", git_root_windows)) },
+"   \ )
+"
+" }}}
+function vimrc#apply_if(value, p, f) abort
+  return a:value->vimrc#let({ value ->
+    \ a:p(value) ? a:f(value) : value
+  \ })
+endfunction
+
+function vimrc#identity(x) abort
+  return a:x
+endfunction
+
+" Converts from a Windows path to the WSL2 path if you are on WSL2.
+"
+" Params:
+"   cont: (git_root: string) -> A
+"   stdout: Array<string> | string
+"   stderr: Array<string> | string
+function s:parse_git_root(cont, stdout, stderr) abort
+  if type(a:stderr) is type([]) && a:stderr !=# []
+    throw join(a:stderr)
+  endif
+  if type(a:stderr) is type('') && a:stderr !=# ''
+    throw a:stderr
+  endif
+
+  let stdout = type(a:stdout) is type([])
+    \ ? join(a:stdout, '')
+    \ : a:stdout
+
+  " Replace to the wsl2's path if git_root is a windows path (by git.exe)
+  " NOTE: -2 removes the trailing line break
+  let git_root = fnameescape(stdout)->vimrc#apply_if(
+    \ { git_root -> (git_root !~# '^/') && executable('wslpath') },
+    \ { git_root_windows -> fnameescape(system(printf("wslpath %s", git_root_windows)))[:-3] },
+  \ )
+  " ^^ TODO: Use timer_start() instead of system()
+
+  return a:cont(git_root)
+endfunction
+
+" Async
+function vimrc#read_git_root(cont) abort
+  call vimrc#job#start_simply(
+    \ ['git', 'rev-parse', '--show-toplevel'],
+    \ function('s:parse_git_root', [a:cont]),
+  \ )
+endfunction
+
+" Clone dein.vim to target dir.
 function vimrc#fetch_dein(install_dirname)
   if executable('git')
     echo 'dein.vim was not installed yet.'
@@ -406,7 +491,7 @@ function vimrc#rename_to(new_name) abort
   endif
 
   const new_file = fnamemodify(this_file, ':h') .. '/' .. new_name
-  const failed   = rename(this_file, new_file)
+  const failed = rename(this_file, new_file)
   if failed
     call s:Msg.error(printf('Rename %s to %s is failed', this_file, new_file))
     return
@@ -419,22 +504,24 @@ function vimrc#rename_to(new_name) abort
   echo printf('Renamed %s to %s', this_file, new_file)
 endfunction
 
-" Make session_name from git repository
-" and Save current session by :UniteSessionSave
+function s:git_branch_session_save(repo_path) abort
+  const repo_name = fnamemodify(a:repo_path, ':t')
+  const branch_name = system(printf("cd %s ; git branch | sort | tail -1 | awk '{print $2}'", a:repo_path))[:-2]
+
+  " Remove '#' because '#' shouldn't be used as a file name
+  const session_name =
+    \ (repo_name .. '-' .. branch_name)
+    \ ->substitute('/', '-', 'g')
+    \ ->substitute('#', '-', 'g')
+
+  const session_path = fnameescape(printf('%s/%s.vim', g:vimrc['sessiondir'], session_name))
+  execute 'mksession!' session_path
+  echomsg 'The session saved!: ' .. session_path
+endfunction
+
+" Makes a session by reading the name of the current git repository.
 function vimrc#git_branch_session_save() abort
-  const repo_path = fnameescape(system('git rev-parse --show-toplevel'))
-
-  const repo_name  = fnamemodify(repo_path, ':t')
-  const repo_name_ = substitute(repo_name, '\n', '', '')  " Remove tail line break
-
-  const branch_name  = system(printf("cd %s ; git branch | sort | tail -1 | awk '{print $2}'", repo_path))  " Don't use double quote in awk
-  const branch_name_ = substitute(branch_name, '\n', '', '')  " Remove tail line break
-
-  const session_name  = repo_name_ .. '-' .. branch_name_
-  const session_name_ = substitute(session_name, '/', '-', 'g')
-  const session_name__ = substitute(session_name_, '#', '-', 'g')  "NOTE: '#' shouldn't be used as a file name
-
-  execute 'mksession!' (g:vimrc['sessiondir'] .. '/' .. session_name__ .. '.vim')
+  call vimrc#read_git_root(function('s:git_branch_session_save'))
 endfunction
 
 function vimrc#increment_gui_fontsize() abort

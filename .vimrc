@@ -36,19 +36,12 @@ let g:vimrc.undodir    = g:vimrc.backupdir .. '/undo'
 let g:vimrc.viewdir    = g:vimrc.backupdir .. '/view'
 let g:vimrc.sessiondir = g:vimrc.backupdir .. '/session'
 
-" params:
-"   stdout: Array<string>
-"   stderr: Array<string>
-function s:set_git_root(stdout, stderr) abort
-  const git_root = join(a:stdout, '')
-  echomsg 'vimrc: a git root detected: ' .. git_root
-  let g:vimrc.git_root = git_root
+function s:set_git_root(git_root) abort
+  echomsg 'vimrc: a git root detected: ' .. a:git_root
+  let g:vimrc.git_root = a:git_root
 endfunction
 
-call vimrc#job#start_simply(
-  \ ['git', 'rev-parse', '--show-toplevel'],
-  \ function('s:set_git_root'),
-\ )
+call vimrc#read_git_root(function('s:set_git_root'))
 
 " }}}
 " Environment Variables {{{

@@ -4,7 +4,7 @@ function get_dest () {
   local git_root
 
   # Make a path like 'repo/.git/tags'.
-  if git_root=$(git rev-parse --show-toplevel 2> /dev/null) ; then
+  if git_root=$(git rev-parse --show-toplevel 2> /dev/null) && [[ -d $git_root/.git ]] ; then
     if ! is_windows_path "$git_root" && (command -v wslpath > /dev/null 2>&1) ; then
       # Try to recover a wsl path from the windows path
       git_root=$(wslpath "$git_root")
