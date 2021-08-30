@@ -130,9 +130,7 @@ function vimrc#dein#hook_source#gina_commit_very_verbose(subcmd) abort
   catch
     echomsg 'Opening terminal instead of `:Gina commit` because:'
     echomsg v:exception
-    call vimrc#open_terminal_as('term-shell', 'stay', &shell, #{ path: g:vimrc.git_root })
-    const current_bufnr = bufnr('%')
-    call timer_start(0, { _ -> term_sendkeys(current_bufnr, "gcmp ''\<Left>") }, {'repeat': 1})
+    call s:open_term_to_commit()
   endtry
 
   let b:gina_commit_very_verbose = v:true
@@ -158,4 +156,10 @@ function vimrc#dein#hook_source#emmet() abort
   augroup vimrc
     autocmd! FileType html,xml,markdown EmmetInstall
   augroup END
+endfunction
+
+function s:open_term_to_commit() abort
+  call vimrc#open_terminal_as('term-shell', 'stay', &shell, #{ path: g:vimrc.git_root })
+  const current_bufnr = bufnr('%')
+  call timer_start(1000, { _ -> term_sendkeys(current_bufnr, "git commit\<CR>i:sparkles:\<Space>") }, {'repeat': 1})
 endfunction
