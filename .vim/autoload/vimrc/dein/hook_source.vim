@@ -1,7 +1,9 @@
 scriptencoding utf-8
 
 let s:V = vital#vimrc#new()
+
 let s:List = s:V.import('Data.List')
+let s:Msg = s:V.import('Vim.Message')
 
 function vimrc#dein#hook_source#operator_surround() abort
   " Exclude brackets () [] {} and ` for unique mappings ('keys')
@@ -122,7 +124,17 @@ function vimrc#dein#hook_source#gina_commit_very_verbose(subcmd) abort
   Gina log --oneline --opener='bot split'
   resize 10
   execute 'normal!' "\<C-w>H"
-  execute 'Gina' 'commit' '--verbose' '--group=commit' '--opener=split' a:subcmd
+
+  try
+    execute 'Gina' 'commit' '--verbose' '--group=commit' '--opener=split' a:subcmd
+  catch
+    echomsg 'Opening terminal instead of `:Gina commit` because:'
+    echomsg v:exception
+    call vimrc#open_terminal_as('term-shell', 'stay', &shell, #{ path: g:vimrc.git_root })
+    const current_bufnr = bufnr('%')
+    call timer_start(0, { _ -> term_sendkeys(current_bufnr, "gcmp ''\<Left>") }, {'repeat': 1})
+  endtry
+
   let b:gina_commit_very_verbose = v:true
 endfunction
 
