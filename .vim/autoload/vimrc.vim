@@ -682,3 +682,8 @@ function vimrc#open_daily_report() abort
   const report_file = printf('%s/%s.md', report_dir, strftime('%Y-%m-%d'))
   execute 'edit' report_file
 endfunction
+
+" Useful to check we can do `:tabclose`.
+function vimrc#has_two_or_more_tabpages() abort
+  return tabpagenr('$') > 1
+endfunction

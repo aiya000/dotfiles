@@ -1,6 +1,6 @@
-" For sh, bash, zsh, or else
+" For `:terminal bash` and `:terminal zsh`
 
-let b:undo_ftplugin = 'setl ' . join([
+let b:undo_ftplugin = 'setl ' .. join([
   \ 'nolist<',
   \ 'nonumber<',
   \ 'norelativenumber<',
