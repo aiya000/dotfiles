@@ -1,5 +1,15 @@
 #!/bin/bash
 
+is_rest_time=false
+interval=30
+
+if [[ $1 = --rest ]] ; then
+  is_rest_time=true
+  interval=5
+elif [[ -n $1 ]] ; then
+  interval=$1
+fi
+
 function read_count () {
   ( \
     find /tmp/ 2> /dev/null \
@@ -41,17 +51,26 @@ function get_notification_sound () {
   fi
 }
 
-interval=$([[ -z "$1" ]] && echo 90 || echo "$1")
 count=$(( $(read_count) + 1 )) # `+ 1` to count by 1 based
 
-echo "Let's start the $count-th working"
+if [[ $is_rest_time = true ]] ; then
+  echo $'It\'s time to rest. Good job!'
+else
+  echo "Let's start $count-th working"
+fi
+
 for (( minutes = 0; minutes < "$interval"; minutes++ )) ; do
   echo "$((minutes + 1)) minutes / $interval"
   sleep 1m
 done
 
 date
-echo "the $count-th working time finished!"
-increase_count
+
+if [[ $is_rest_time = true ]] ; then
+  echo $'Let\'s do work :D'
+else
+  echo "$count-th working time finished!"
+  increase_count
+fi
 
 play "$(get_notification_sound)"

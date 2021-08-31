@@ -985,14 +985,6 @@ let g:tex_flavor = 'latex'
 let &tags = &tags . ',' . join([
   \ 'tags',
   \ '.git/tags',
-  \ '../tags',
-  \ '../../tags',
-  \ '../../../tags',
-  \ '../../../../tags',
-  \ '../.git/tags',
-  \ '../../.git/tags',
-  \ '../../../.git/tags',
-  \ '../../../../.git/tags',
   \ g:vimrc.path_at_started .. '/tags',
   \ g:vimrc.path_at_started .. '/.git/tags',
 \ ], ',')
