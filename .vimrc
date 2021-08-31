@@ -36,12 +36,7 @@ let g:vimrc.undodir    = g:vimrc.backupdir .. '/undo'
 let g:vimrc.viewdir    = g:vimrc.backupdir .. '/view'
 let g:vimrc.sessiondir = g:vimrc.backupdir .. '/session'
 
-function s:set_git_root(git_root) abort
-  echomsg 'vimrc: a git root detected: ' .. a:git_root
-  let g:vimrc.git_root = a:git_root
-endfunction
-
-call vimrc#read_git_root(function('s:set_git_root'))
+call vimrc#read_to_set_git_root()
 
 " }}}
 " Environment Variables {{{

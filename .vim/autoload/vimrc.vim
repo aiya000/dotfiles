@@ -93,6 +93,15 @@ function vimrc#read_git_root(cont) abort
   \ )
 endfunction
 
+function s:set_git_root_to_gvimrc(git_root) abort
+  echomsg 'vimrc: a git root detected: ' .. a:git_root
+  let g:vimrc.git_root = a:git_root
+endfunction
+
+function vimrc#read_to_set_git_root() abort
+  call vimrc#read_git_root(function('s:set_git_root_to_gvimrc'))
+endfunction
+
 " Clone dein.vim to target dir.
 function vimrc#fetch_dein(install_dirname)
   if executable('git')
