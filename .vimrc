@@ -890,7 +890,7 @@ set
   \ previewheight=40
   \ relativenumber
   \ scrolloff=16
-  \ sessionoptions=buffers,curdir
+  \ sessionoptions=buffers,curdir,tabpages
   \ shellslash
   \ suffixes=
   \ tabline=%!vimrc#tabline#make()
@@ -1287,6 +1287,7 @@ tnoremap <C-q><C-s> <C-q><C-n>
 " abbr {{{
 
 cabbr eg e<Space><C-r>=g:vimrc.git_root<CR>/
+cabbr eb e<Space><C-r>=expand('%:p:h')<CR>/
 
 " typo {{{
 

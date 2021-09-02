@@ -12,10 +12,6 @@ setl completefunc=github_complete#complete
 let &commentstring = '<!-- %s -->'
 set conceallevel=0
 
-if filereadable(g:vimrc.git_root .. '/.textlintrc')
-  let g:ale_fixers['markdown'] = ['textlint']
-endif
-
 nnoremap <silent><buffer> <localleader>r :<C-u>PrevimOpen<CR>
 nnoremap <silent><buffer> <localleader><localleader>d :<C-u>w<CR>:!doctoc %<CR>:edit %<CR>
 nnoremap <silent><buffer> <localleader><localleader>r :<C-u>call <SID>open_grip()<CR>
@@ -26,6 +22,10 @@ nnoremap <silent><buffer> <localleader><localleader>R :<C-u>silent !shiba % > /d
 vnoremap <silent><buffer> i{ :<C-u>call <SID>organize_this_table()<CR>
 
 syntax sync fromstart
+
+if g:vimrc->has_key('git_root') && filereadable(g:vimrc.git_root .. '/.textlintrc')
+  let g:ale_fixers['markdown'] = ['textlint']
+endif
 
 function s:open_grip() abort
   let cmd = printf(
