@@ -890,7 +890,7 @@ set
   \ previewheight=40
   \ relativenumber
   \ scrolloff=16
-  \ sessionoptions=buffers,curdir,tabpages
+  \ sessionoptions=buffers,curdir,tabpages,localoptions
   \ shellslash
   \ suffixes=
   \ tabline=%!vimrc#tabline#make()

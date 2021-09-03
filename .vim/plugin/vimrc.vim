@@ -128,6 +128,8 @@ command! -bar ScdCurrentDir let g:vimrc.path_at_started = getcwd()
 command! -bar ScdGitRoot    let g:vimrc.path_at_started = system('git rev-parse --show-toplevel')
 command! -bar -nargs=+ Grep call vimrc#grep_those(<f-args>)
 command! -bar TodoList Grep TODO FIXME XXX
+command! -bar -nargs=+ SetTabTitle let t:vimrc_tabtitle = <q-args>
+command! -bar UnsetTabTitle unlet t:vimrc_tabtitle
 """
 command! -bar GitReadRoot call vimrc#read_to_set_git_root()
 command! -bar ReadGitRoot call vimrc#read_to_set_git_root()

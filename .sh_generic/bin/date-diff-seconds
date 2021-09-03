@@ -12,16 +12,13 @@ if [[ $# -lt 2 ]] ; then
   return 1
 fi
 
-# shellcheck disable=SC1090
-source "$(dirname "$0")/date-diff-seconds-utils.sh"
-
 this_year=$(date +%Y)
 this_month=$(date +%m-%d)
 
 function get_fully_qualified_date () {
   local text=$1
 
-  if [[ $text =~ '^\d\d-\d\ ' ]] ; then
+  if [[ $text =~ ^[0-9][0-9]-[0-9][0-9] ]] ; then
     # If a day is specified.
     echo "$this_year-$text"
   else

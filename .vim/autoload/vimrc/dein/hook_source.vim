@@ -131,7 +131,7 @@ function vimrc#dein#hook_source#gina_commit_very_verbose(subcmd) abort
   catch
     echomsg 'Opening terminal instead of `:Gina commit` because:'
     echomsg v:exception
-    call s:open_term_to_commit()
+    call s:open_term_to_commit(a:subcmd)
   endtry
 endfunction
 
@@ -161,12 +161,12 @@ function vimrc#dein#hook_source#emmet() abort
   augroup END
 endfunction
 
-function s:open_term_to_commit() abort
+function s:open_term_to_commit(subcmd) abort
   call vimrc#open_terminal_as('term-shell-git-commit', 'stay', &shell, #{ path: g:vimrc.git_root })
 
   const current_bufnr = bufnr('%')
   const sleeping_time_to_wait_spawning_terminal = 1500
   call timer_start(sleeping_time_to_wait_spawning_terminal, { _ ->
-    \ term_sendkeys(current_bufnr, "git commit\<CR>i:sparkles:\<Space>")
+    \ term_sendkeys(current_bufnr, 'git commit ' .. a:subcmd .. "\<CR>i:sparkles:\<Space>")
   \ }, #{ repeat: 1 })
 endfunction

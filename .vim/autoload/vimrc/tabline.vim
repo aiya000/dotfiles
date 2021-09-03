@@ -1,24 +1,28 @@
 let s:List = vital#vimrc#import('Data.List')
 
 function s:shorten_path_if_needed(path) abort
-  let mettya_nagai = 60 | lockvar! mettya_nagai
+  const mettya_nagai = 60 | lockvar! mettya_nagai
   return len(a:path) > mettya_nagai
     \ ? pathshorten(a:path)
     \ : a:path
 endfunction
 
-" Maybe this is specified to 'tabline' with a pattern like `set tabline=%!this_function()`.
+function s:shorten_bufname(buf_name) abort
+  return a:buf_name[0:7] .. '...' .. a:buf_name[-10:-1]
+endfunction
+
+" Shows tab-titles and some statuses
 "
 " See ':h hl-User1..9' for what is the pattern of '%n*string%*' (n is a naturalnumer),
 " and below augroup 'HighlightPref'.
 function vimrc#tabline#make() abort
   return '%1*[%{tabpagenr("$")}]%* '
-    \. s:tabs() . ' => '
-    \. '%2*[PWD=%{vimrc#tabline#cwd_or_shorten()}]%*'
-    \. '%3*%{vimrc#tabline#tags_if_present()}%*'
-    \. '%4*%{vimrc#tabline#marks_if_present()}%*'
-    \. '%5*%{vimrc#tabline#ale_if_present()}%*'
-    \. '%6*%{vimrc#tabline#running_lsp_servers()}%*'
+    \ .. s:tabs() .. ' => '
+    \ .. '%2*[PWD=%{vimrc#tabline#cwd_or_shorten()}]%*'
+    \ .. '%3*%{vimrc#tabline#tags_if_present()}%*'
+    \ .. '%4*%{vimrc#tabline#marks_if_present()}%*'
+    \ .. '%5*%{vimrc#tabline#ale_if_present()}%*'
+    \ .. '%6*%{vimrc#tabline#running_lsp_servers()}%*'
 endfunction
 
 function vimrc#tabline#running_lsp_servers() abort
@@ -36,69 +40,81 @@ function vimrc#tabline#running_lsp_servers() abort
 endfunction
 
 function vimrc#tabline#tags_if_present() abort
-  let tags = tagfiles()
+  const tags = tagfiles()
   return
-    \ empty(tags)
-      \ ? '' :
-    \ len(tags) is 1
-      \ ? ('[Tag=' . s:shorten_path_if_needed(tags[0]) . ']') :
-    \ ('[Tag=' . s:shorten_path_if_needed(tags[0]) . ' +]')
+    \ empty(tags) ? '' :
+    \ len(tags) is 1 ? ('[Tag=' .. s:shorten_path_if_needed(tags[0]) .. ']') :
+    \ '[Tag=' .. s:shorten_path_if_needed(tags[0]) .. ' +]'
 endfunction
 
 function vimrc#tabline#marks_if_present() abort
-  let marks = s:get_buf_marks()
+  const marks = s:get_buf_mark_chars()
   return empty(marks)
     \ ? ''
-    \ : '[Mark=' . join(marks, '') . ']'
+    \ : '[Mark=' .. join(marks, '') .. ']'
 endfunction
 
-function s:get_buf_marks() abort
-  let lines       = split(execute(':marks'), "\n")[2:]  " List only the lines like ` a 30 48 let lines = split...`
-  let all_marks   = map(lines, {_, x -> x[1]})
-  let local_marks = filter(all_marks, {_, x -> match(x, '\l', 0, 0) is 0})
-  return local_marks
+function s:get_buf_mark_chars() abort
+  const mark_chars = execute(':marks')
+    \ ->split("\n")[2:]
+    \ ->map({_, x -> x[1]})
+
+  return
+    \ filter(mark_chars, {_, x ->
+      \ match(x, '\l', 0, 0) is 0
+    \ })
 endfunction
 
-" NOTE: http://d.hatena.ne.jp/thinca/20111204/1322932585
 function s:tabs()
-  let titles = map(range(1, tabpagenr('$')), { _, tabnr ->
+  const labels = map(range(1, tabpagenr('$')), { _, tabnr ->
     \ vimrc#tabline#tabpage_label(tabnr)
   \ })
-  return join(titles) . '%#TabLineFill#%T'
+  return join(labels) .. '%#TabLineFill#%T'
 endfunction
 
+" Returns: string
 function vimrc#tabline#tabpage_label(tabnr)
-  let title = gettabvar(a:tabnr, 'title')
+  const title = gettabvar(a:tabnr, 'vimrc_tabtitle')
   if title !=# ''
-    return title
+    return s:get_qualified(a:tabnr, printf(" '%s'", title))
   endif
-  let focused_winnr = tabpagewinnr(a:tabnr)
-  let curbufnr = tabpagebuflist(a:tabnr)[focused_winnr - 1]
-  let file_name = fnamemodify(bufname(curbufnr), ':t')
-  let file_name =
-    \ (file_name == '')
-      \ ? '[NoName]' :
-    \ (len(file_name) > 20)
-      \ ? (file_name[0:7] . '...' . file_name[-10:-1]) :
-    \ file_name
+  return s:get_file_label(a:tabnr)
+endfunction
 
-  " Please see `:h TabLineSel` and `:h TabLine`
-  let window_num = '[' . len(tabpagebuflist(a:tabnr)) . ']'
-  let label_of_a_buf = s:is_stayed_tab(a:tabnr)
-    \ ? ('%#TabLineSel#[* ' . s:get_mod_mark_for_window(focused_winnr) . window_num . file_name . ' *]')
-    \ : ('%#TabLine#[' . s:get_mod_mark_for_tab(a:tabnr) . window_num . file_name . ']')
+function s:get_file_label(tabnr) abort
+  const focused_winnr = tabpagewinnr(a:tabnr)
+  const curbufnr = tabpagebuflist(a:tabnr)[focused_winnr - 1]
+  const file_name = fnamemodify(bufname(curbufnr), ':t')->vimrc#let({ buf_name ->
+    \ (buf_name ==# '') ? '[NoName]' :
+    \ (len(buf_name) > 20) ? s:shorten_bufname(buf_name) :
+    \ buf_name
+  \ })
 
-  return '%' . a:tabnr . 'T' . label_of_a_buf . '%T%#TabLineFill#'
+  return s:get_qualified(a:tabnr, file_name)
+endfunction
+
+" Returns '+' if the buffer of the specified window is modified.
+function s:get_mod_mark_for_window(winnr) abort
+  return getbufvar(winbufnr(a:winnr), '&modified') ? '+' : ''
+endfunction
+
+" Colorizes by it either a current tab or an another window.
+" Please see `:h TabLineSel` and `:h TabLine`
+function s:get_qualified(tabnr, title) abort
+  const winnr = tabpagewinnr(a:tabnr)
+  const window_num = '[' .. len(tabpagebuflist(a:tabnr)) .. ']'
+
+  const another_or_focused_buf_label = s:is_stayed_tab(a:tabnr)
+    \ ? '%#TabLineSel#[* ' .. (s:get_mod_mark_for_window(winnr) .. window_num .. a:title) .. ' *]'
+    \ : '%#TabLine#[' .. (s:get_mod_mark_for_tab(a:tabnr) .. window_num .. a:title) .. ']'
+  const terminated = '%' .. a:tabnr .. 'T' .. another_or_focused_buf_label .. '%T%#TabLineFill#'
+
+  return terminated
 endfunction
 
 " Do you staying the specified tab?
 function s:is_stayed_tab(tabnr) abort
   return a:tabnr is tabpagenr()
-endfunction
-
-" Return '+' if the buffer of the specified window is modified
-function s:get_mod_mark_for_window(winnr) abort
-  return getbufvar(winbufnr(a:winnr), '&modified') ? '+' : ''
 endfunction
 
 " Return '+' if one or more a modified non terminal buffer is existent in the taken tab
