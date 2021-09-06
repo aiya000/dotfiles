@@ -1146,6 +1146,8 @@ nnoremap gG ggVG
 nnoremap ( (zv
 nnoremap ) )zv
 nnoremap :: :%s/
+nnoremap :eg :<C-u>EditOverridden<Space><C-r>=g:vimrc.git_root<CR>/
+nnoremap :eb :<C-u>EditOverridden<Space><C-r>=expand('%:p:h')<CR>/
 nnoremap <C-]> g<C-]>
 nnoremap <C-k>t :<C-u>tselect<Space>
 nnoremap <expr> <C-k><C-s> printf(":%%s/\\m\\C\\<%s\\>//g\<Left>\<Left>", expand('<cword>'))
@@ -1285,9 +1287,6 @@ tnoremap <C-q><C-s> <C-q><C-n>
 
 " }}}
 " abbr {{{
-
-cabbr eg e<Space><C-r>=g:vimrc.git_root<CR>/
-cabbr eb e<Space><C-r>=expand('%:p:h')<CR>/
 
 " typo {{{
 

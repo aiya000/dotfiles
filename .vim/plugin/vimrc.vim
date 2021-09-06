@@ -116,23 +116,22 @@ command! -bar -nargs=+ Weblio WebpageShow weblio <args>
 command! -nargs=+ Stackage WebpageShow stackage <args>
 
 "" Others
-command! -bar -nargs=* Vim call vimrc#open_terminal_as('term-vim', 'stay', 'vim ' . <q-args>)
-command! -bar CdBufDir  execute ':cd' fnameescape(expand('%:p:h'))
+command! -bar CdBufDir execute ':cd' fnameescape(expand('%:p:h'))
 command! -bar CdStarted execute ':cd' g:vimrc.path_at_started
-command! -bar CdGitRoot execute ':cd' system('git rev-parse --show-toplevel')
-command! -bar LcdBufDir  execute ':lcd' fnameescape(expand('%:p:h'))
+command! -bar CdGitRoot call vimrc#cd_git_root(':cd')
+command! -bar LcdBufDir execute ':lcd' fnameescape(expand('%:p:h'))
 command! -bar LcdStarted execute ':lcd' g:vimrc.path_at_started
-command! -bar LcdGitRoot execute ':lcd' system('git rev-parse --show-toplevel')
-command! -bar ScdBufDir     let g:vimrc.path_at_started = expand('%:p:h')
+command! -bar LcdGitRoot call vimrc#cd_git_root(':lcd')
+command! -bar ScdBufDir let g:vimrc.path_at_started = expand('%:p:h')
 command! -bar ScdCurrentDir let g:vimrc.path_at_started = getcwd()
-command! -bar ScdGitRoot    let g:vimrc.path_at_started = system('git rev-parse --show-toplevel')
+command! -bar ScdGitRoot call vimrc#cd_git_root_with_gvimrc_path_at_started()
+command! -bar GitReadRoot call vimrc#read_to_set_git_root()
+command! -bar ReadGitRoot call vimrc#read_to_set_git_root()
+"""
 command! -bar -nargs=+ Grep call vimrc#grep_those(<f-args>)
 command! -bar TodoList Grep TODO FIXME XXX
 command! -bar -nargs=+ SetTabTitle let t:vimrc_tabtitle = <q-args>
 command! -bar UnsetTabTitle unlet t:vimrc_tabtitle
-"""
-command! -bar GitReadRoot call vimrc#read_to_set_git_root()
-command! -bar ReadGitRoot call vimrc#read_to_set_git_root()
 
 " Tapis
 function Tapi_Tabnew(_, args) abort

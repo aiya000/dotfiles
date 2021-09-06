@@ -696,3 +696,32 @@ endfunction
 function vimrc#has_two_or_more_tabpages() abort
   return tabpagenr('$') > 1
 endfunction
+
+function s:cd_git_root(cd, git_root) abort
+  echo 'vimrc: The current directory changed to: ' .. a:git_root
+
+  if type(a:cd) is type('')
+    execute a:cd a:git_root
+    return
+  endif
+
+  call a:cd(a:git_root)
+endfunction
+
+" Params
+"   cd: string | (git_root: string) -> void
+"     a cd command. e.g. ':cd' or ':lcd'.
+function vimrc#cd_git_root(cd) abort
+  call vimrc#read_git_root(function('s:cd_git_root', [a:cd]))
+endfunction
+
+function s:set_gvimrc_path_at_started_to_git_root(git_root) abort
+  let g:vimrc.path_at_started = a:git_root
+endfunction
+
+function vimrc#cd_git_root_with_gvimrc_path_at_started() abort
+  call vimrc#read_git_root(
+    \ function('s:cd_git_root'),
+    \ [function('s:set_gvimrc_path_at_started_to_git_root')],
+  \ )
+endfunction
