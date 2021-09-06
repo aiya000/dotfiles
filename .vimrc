@@ -383,10 +383,10 @@ call submode#enter_with('win_move', 'n', 's', '<C-s>N', ':<C-u>call vimrc#move_w
 call submode#enter_with('win_move', 'n', 's', '<C-s>P', ':<C-u>call vimrc#move_window_backward()<CR>')
 call submode#map('win_move', 'n', 's', 'N', ':<C-u>call vimrc#move_window_forward()<CR>')
 call submode#map('win_move', 'n', 's', 'P', ':<C-u>call vimrc#move_window_backward()<CR>')
-call submode#map('win_move', 'n', 'e', 'H', '"\<C-w>H" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
-call submode#map('win_move', 'n', 'e', 'J', '"\<C-w>J" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
-call submode#map('win_move', 'n', 'e', 'K', '"\<C-w>K" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
-call submode#map('win_move', 'n', 'e', 'L', '"\<C-w>L" . (foldlevel(".") > 0 ? "zO" : "") . "zz"')
+call submode#map('win_move', 'n', 'e', 'H', '"\<C-w>H" .. (foldlevel(".") > 0 ? "zO" : "") .. "zz"')
+call submode#map('win_move', 'n', 'e', 'J', '"\<C-w>J" .. (foldlevel(".") > 0 ? "zO" : "") .. "zz"')
+call submode#map('win_move', 'n', 'e', 'K', '"\<C-w>K" .. (foldlevel(".") > 0 ? "zO" : "") .. "zz"')
+call submode#map('win_move', 'n', 'e', 'L', '"\<C-w>L" .. (foldlevel(".") > 0 ? "zO" : "") .. "zz"')
 call submode#map('win_move', 'n', 's', '_', '<C-w>_')
 call submode#map('win_move', 'n', 's', '"', ':resize 5<CR>')
 
@@ -977,7 +977,7 @@ set iminsert=0
 let g:tex_flavor = 'latex'
 
 " Reference tags of ctags
-let &tags = &tags . ',' . join([
+let &tags = &tags .. ',' .. join([
   \ 'tags',
   \ '.git/tags',
   \ g:vimrc.path_at_started .. '/tags',
@@ -1075,8 +1075,8 @@ nnoremap ghK <C-w>K
 nnoremap ghL <C-w>L
 nnoremap <silent> ghs :<C-u>split<CR>
 nnoremap <silent> ghv :<C-u>vsplit<CR>
-nnoremap <silent><expr> gH  ('mZ:tabnew<CR>`Zzz'          . (foldlevel('.') > 0 ? 'zo' : ''))
-nnoremap <silent><expr> ghh ('mZ:hide<CR>:tabnew<CR>`Zzz' . (foldlevel('.') > 0 ? 'zo' : ''))
+nnoremap <silent><expr> gH  ('mZ:tabnew<CR>`Zzz'          .. (foldlevel('.') > 0 ? 'zo' : ''))
+nnoremap <silent><expr> ghh ('mZ:hide<CR>:tabnew<CR>`Zzz' .. (foldlevel('.') > 0 ? 'zo' : ''))
 " Disable defaults
 nnoremap <C-w>q <NOP>
 nnoremap <C-w>c <NOP>
@@ -1105,8 +1105,8 @@ nnoremap <silent> ''V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', 
 
 " set
 nnoremap <silent> <C-h><C-d> :<C-u>call vimrc#toggle_diff()<CR>
-nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' . (&virtualedit ==# '' ? 'all' : '') . ' virtualedit?<CR>'
-nnoremap <silent><expr> zm ':setl foldmethod=' . (&foldmethod ==# 'marker' ? 'syntax' : 'marker') . ' foldmethod?<CR>'
+nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' .. (&virtualedit ==# '' ? 'all' : '') .. ' virtualedit?<CR>'
+nnoremap <silent><expr> zm ':setl foldmethod=' .. (&foldmethod ==# 'marker' ? 'syntax' : 'marker') .. ' foldmethod?<CR>'
 nnoremap <silent> <C-h><C-w> :<C-u>setl wrap! wrap?<CR>
 nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline! cursorline?<CR>
 nnoremap <silent> <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
@@ -1114,16 +1114,18 @@ nnoremap <silent> <C-h><C-l> :<C-u>setl list! list?<CR>
 nnoremap <silent> <C-h><C-n> :<C-u>setl number! number?<CR>
 
 " Visualize a last pasted range
-nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+nnoremap <expr> gp '`[' .. strpart(getregtype(), 0, 1) .. '`]'
 
 " copy & paste
-nnoremap gG ggVG"+y<C-o><C-o>
-" NOTE: Don't use noremap to allow remap with fake-clip
+"" clipboard
+"" NOTE: Don't use noremap to allow remap with fake-clip
 nmap 'p "+p
 nmap 'P "+P
 nmap 'y "+y
 nmap 'Y "+yg_
 nmap 'dd "+dd
+nmap 'D "+D
+nmap 'd "+d
 nmap 'x "+x
 
 " cr
@@ -1140,16 +1142,14 @@ nnoremap <silent> <C-g><C-t> :<C-u>LspPeekTypeDefinition<CR>
 nnoremap <C-g><C-g> <C-g>
 
 " others
-nnoremap 'D "+D
-nnoremap 'd "+d
+nnoremap gG ggVG
 nnoremap ( (zv
 nnoremap ) )zv
 nnoremap :: :%s/
 nnoremap <C-]> g<C-]>
-nnoremap <C-k>T :<C-u>tselect<Space>
-nnoremap <expr> <C-k><C-s> printf(':%%s/\m\C\<%s\>/', expand('<cword>'))
-nnoremap <expr> <C-k>s printf(':%%s/\m\C\<%s\>/%s', expand('<cword>'), expand('<cword>'))
-nnoremap <silent> ! :!<CR>
+nnoremap <C-k>t :<C-u>tselect<Space>
+nnoremap <expr> <C-k><C-s> printf(":%%s/\\m\\C\\<%s\\>//g\<Left>\<Left>", expand('<cword>'))
+nnoremap <expr> <C-k>s printf(":%%s/\\m\\C\\<%s\\>/%s/g\<Left>\<Left>", expand('<cword>'), expand('<cword>'))
 nnoremap <silent> <C-k><C-j> :<C-u>call <SID>save_clear()<CR>
 nnoremap <silent> <C-k><Space> :<C-u>call vimrc#clear_ends_space()<CR>
 nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
@@ -1367,8 +1367,8 @@ vnoremap <leader>K "zy:<C-u>Weblio <C-r>z<CR>
 
 " vim-anzu
 "" always n moves to forward / N moves to backward
-nmap <expr> n (v:searchforward ? '<Plug>(anzu-n-with-echo)' : '<Plug>(anzu-N-with-echo)') . 'zv'
-nmap <expr> N (v:searchforward ? '<Plug>(anzu-N-with-echo)' : '<Plug>(anzu-n-with-echo)') . 'zv'
+nmap <expr> n (v:searchforward ? '<Plug>(anzu-n-with-echo)' : '<Plug>(anzu-N-with-echo)') .. 'zv'
+nmap <expr> N (v:searchforward ? '<Plug>(anzu-N-with-echo)' : '<Plug>(anzu-n-with-echo)') .. 'zv'
 nmap * <Plug>(anzu-star-with-echo)zv
 nmap # <Plug>(anzu-sharp-with-echo)zv
 
