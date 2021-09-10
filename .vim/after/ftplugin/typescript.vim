@@ -10,6 +10,10 @@ setl tabstop=2 shiftwidth=2 expandtab
 let &commentstring = '  // %s'
 let &errorformat = '%f(%l\,%c): %m'  " tsc
 
+" TODO: Do this only when lsp started
+" To lighten the completion performance
+set complete-=t
+
 nnoremap <buffer><silent> <localleader><localleader>r :<C-u>QuickfixRunYarn build<CR>
 nnoremap <buffer><silent> <localleader><localleader>w :<C-u>call <SID>start_quickfix()<CR>
 nnoremap <buffer><silent> <localleader><localleader>W :<C-u>call <SID>stop_quickfix()<CR>

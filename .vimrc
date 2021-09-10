@@ -694,7 +694,7 @@ let g:lsp_diagnostics_enabled = 0
 let g:lsp_async_completion = 1
 
 augroup vimrc
-  " TODO: What's the f!?!?
+  " TODO: What's the!?!?
   autocmd BufNew,BufEnter * let g:lsp_document_code_action_signs_enabled = 0
 augroup END
 
