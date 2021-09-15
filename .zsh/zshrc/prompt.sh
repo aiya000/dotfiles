@@ -10,11 +10,6 @@ function zshrc::prompt::main () {
 }
 
 function zshrc::prompt::sub_status () {
-  if [[ -n $ZSHRC_PROMPT_GIT_ENABLE ]] && [[ $ZSHRC_PROMPT_GIT_ENABLE -ne 0 ]] ; then
-    zshrc::prompt::sub_status::show
-    return
-  fi
-
   if [[ $ZSHRC_PROMPT_GIT_DISABLE -ne 0 ]] ; then
     echo '[git on prompt is disabled] (env var)'
     return

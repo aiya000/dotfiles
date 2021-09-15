@@ -14,8 +14,7 @@ let &errorformat   = '%f:%l:%c:%m' " a format for stack build and stack test
 nnoremap <buffer><silent> <localleader><localleader>R :<C-u>call <SID>stack_test_tasty()<CR>
 nnoremap <buffer><silent> <localleader><localleader><localleader>R :<C-u>call <SID>stack_test_doctest()<CR>
 " NOTE: v  This is useful for that is building happy codes and show its warnings/errors on vim-ghcid-quickfix
-nnoremap <buffer><silent> <localleader><localleader>b :<C-u>call vimrc#open_terminal_as('stack_build', 'hidden', 'stack build --fast', {'path': g:vimrc.path_at_started})<CR>
-nnoremap <buffer><silent> <localleader><localleader>B :<C-u>call vimrc#open_terminal_as('stack_build', 'vertical', 'stack build --fast', {'noclose': v:true, 'path': g:vimrc.path_at_started})<CR>
+nnoremap <buffer><silent> <localleader><localleader>b :<C-u>call vimrc#open_terminal_as('stack_build', 'vertical', 'stack build --fast', {'noclose': v:true, 'path': g:vimrc.path_at_started})<CR>
 nnoremap <buffer><silent> <localleader><localleader>w :<C-u>call <SID>ghcid_quickfix_start_on_path_started()<CR>
 nnoremap <buffer><silent> <localleader><localleader>W :<C-u>GhcidQuickfixStop<CR>
 nnoremap <buffer><silent> <localleader><localleader>T :<C-u>call <SID>stack_integrate_test_or_unit_or_both()<CR>
