@@ -321,6 +321,10 @@ snippet new_promise
 abbr new Promise((resolve, reject) => ${0:here}
     new Promise((resolve, reject) => ${0:here})
 
+snippet sleep_promise
+abbr const sleep = msec => new Promise(resolve => setTimeout(resolve, msec))
+  const sleep = msec => new Promise(resolve => setTimeout(resolve, msec))
+
 snippet use_logger_immediately
 abbr import(${1:'@/data/logger'}).then(x => ${2:x.default.log}(${0:#:here}))
     import(${1:'@/data/logger'}).then(x => ${2:x.default.log}(${0:#:here}))
