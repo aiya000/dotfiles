@@ -1300,12 +1300,6 @@ inoreabbr Encrpyt Encrypt
 inoreabbr encrpyt encrypt
 
 " }}}
-" unabbr {{{
-
-" vim-fat-finger
-iunabbr ok
-
-" }}}
 
 " }}}
 " digraph {{{
