@@ -307,6 +307,15 @@ snippet tuple_type_to_union_type
 abbr ${0:XTuple}[number]
   ${0:XTuple}[number]
 
+# Maps Type.K of all Type props to Type[K]
+snippet mapped_type
+abbr [${2:K} in ${1:keyof Type}]: ${0:Type[K]}
+  [${2:K} in ${1:keyof Type}]: ${0:Type[K]}
+
+snippet mapped_type_object
+abbr { [${2:K} in ${1:keyof Type}]: ${0:Type[K]} }
+  { [${2:K} in ${1:keyof Type}]: ${0:Type[K]} }
+
 # Expressions
 
 snippet check_typed_property_existent
