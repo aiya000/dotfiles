@@ -699,19 +699,23 @@ augroup vimrc
 augroup END
 
 function s:find_root_uri_by_file(file) abort
-  return { _ ->
-    \ lsp#utils#path_to_uri(
-      \ lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), a:file)
+  return lsp#utils#path_to_uri(
+    \ lsp#utils#find_nearest_parent_file_directory(
+      \ lsp#utils#get_buffer_path(),
+      \ a:file
     \ )
-  \ }
+  \ )
 endfunction
 
 augroup vimrc
   autocmd User lsp_setup call lsp#register_server(#{
     \ name: 'haskell-language-server',
     \ cmd: { _ -> [&shell, &shellcmdflag, 'haskell-language-server-wrapper'] },
-    \ root_uri: s:find_root_uri_by_file('package.yaml'),
     \ whitelist: ['haskell', 'happy', 'alex'],
+    \ root_uri: { _ -> vimrc#catch(
+      \ function('vimrc#read_git_root_sync'),
+      \ s:find_root_uri_by_file('package.yaml')
+    \ ) },
   \ })
 augroup END
 

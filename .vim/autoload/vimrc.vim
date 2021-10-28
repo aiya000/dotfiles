@@ -56,6 +56,15 @@ function vimrc#identity(x) abort
   return a:x
 endfunction
 
+" Returns a:alt if f() throws an exception.
+function vimrc#catch(f, alt) abort
+  try
+    call a:f()
+  catch
+    return a:alt
+  endtry
+endfunction
+
 " Converts from a Windows path to the WSL2 path if you are on WSL2.
 "
 " Params:
@@ -100,6 +109,16 @@ endfunction
 
 function vimrc#read_to_set_git_root() abort
   call vimrc#read_git_root(function('s:set_git_root_to_gvimrc'))
+endfunction
+
+function vimrc#read_git_root_sync() abort
+  const result = system('git rev-parse --show-toplevel')
+
+  if v:shell_error
+    throw 'Failed to read a git root directory'
+  endif
+
+  return result
 endfunction
 
 " Clone dein.vim to target dir.
