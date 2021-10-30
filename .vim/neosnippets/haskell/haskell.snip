@@ -1,11 +1,18 @@
 # Syntaxes
 
 snippet data
-    data ${1:Name} = ${0}
+    data ${1:Name} = $1${0}
+      deriving (Show, Eq)
+
+snippet prod
+    data ${1:Name} = $1${2}
+      { ${0}
+      } deriving (Show, Eq)
 
 snippet newtype
-options indent
-    newtype ${1:Name} = $1
+    newtype ${1:Name} = $1${2}
+      { ${0}
+      } deriving (Show, Eq)
 
 snippet type
 abbr type ${1:Name} = ${0}
