@@ -10,9 +10,9 @@ function vim-current-session () {
   local sessions_dir=~/.backup/vim-backup/session repo_name session_name editor branch_name branch_name_ branch_name__
 
   editor=$([[ -n $1 ]] && echo "$1" || echo vim)
-  if branch_name=$(git branch 2> /dev/null | sort | tail -1 | awk '{print $2}') ; then
+  if ! branch_name=$(git branch 2> /dev/null | sort | tail -1 | awk '{print $2}') ; then
     echo 'Is here the git branch ?' > /dev/stderr
-    exit
+    return 1
   fi
 
   repo_name="$(git rev-parse --show-toplevel | sed -r 's;.*/(.*);\1;')"
