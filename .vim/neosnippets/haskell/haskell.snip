@@ -36,11 +36,14 @@ abbr deriving newtype (${0:here})
     deriving newtype (${0:here})
 
 snippet deriving_via
-abbr derinving ${1} via ${0}
-    derinving ${1} via ${0}
+abbr deriving ${1} via ${0}
+    deriving ${1} via ${0}
 
 snippet class
     class ${1:Name} where${0}
+
+snippet instance
+    instance ${1:Class} ${2:Name} where${0}
 
 snippet case
 abbr case ${1:x} of ${2:pattern} -> ${0}
