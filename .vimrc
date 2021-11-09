@@ -56,6 +56,7 @@ let g:vimrc.temporary_buftypes = [
   \ 'scratch',
   \ 'denite',
   \ 'denite-filter',
+  \ 'stack_build'
 \ ]
 
 call vimrc#read_to_set_git_root()
