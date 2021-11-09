@@ -231,29 +231,6 @@ function vimrc#toggle_diff()
   set diff?
 endfunction
 
-function vimrc#bufclose_auto() abort
-  call vimrc#bufclose_filetype([
-    \ 'aref_web',
-    \ 'diff',
-    \ 'gina-branch',
-    \ 'gina-log',
-    \ 'gina-status',
-    \ 'gitdiffviewer',
-    \ 'gitlogviewer',
-    \ 'gitreflogviewer',
-    \ 'gitshowviewer',
-    \ 'help',
-    \ 'man',
-    \ 'netrw',
-    \ 'dirvish',
-    \ 'qf',
-    \ 'quickrun',
-    \ 'scratch',
-    \ 'denite',
-    \ 'denite-filter',
-  \ ])
-endfunction
-
 " If you has nofile buffer, close it.
 function vimrc#bufclose_filetype(filetypes)
   let closed = 0

@@ -36,6 +36,28 @@ let g:vimrc.undodir    = g:vimrc.backupdir .. '/undo'
 let g:vimrc.viewdir    = g:vimrc.backupdir .. '/view'
 let g:vimrc.sessiondir = g:vimrc.backupdir .. '/session'
 
+" Please see 'nmap <leader><leader>q'.
+let g:vimrc.temporary_buftypes = [
+  \ 'aref_web',
+  \ 'diff',
+  \ 'gina-branch',
+  \ 'gina-log',
+  \ 'gina-status',
+  \ 'gitdiffviewer',
+  \ 'gitlogviewer',
+  \ 'gitreflogviewer',
+  \ 'gitshowviewer',
+  \ 'help',
+  \ 'man',
+  \ 'netrw',
+  \ 'dirvish',
+  \ 'qf',
+  \ 'quickrun',
+  \ 'scratch',
+  \ 'denite',
+  \ 'denite-filter',
+\ ]
+
 call vimrc#read_to_set_git_root()
 
 " }}}
@@ -1041,10 +1063,11 @@ nnoremap <silent> <C-k><C-o> :<C-u>EditOverridden %<CR>
 nnoremap <silent> <C-k>o :<C-u>EditOverridden! %<CR>
 nnoremap <silent> <leader># #
 nnoremap <silent> <leader>* *
-nnoremap <silent> <leader><leader>q :<C-u>call vimrc#bufclose_auto()<CR>
 nnoremap <silent> <leader>B :<C-u>sp ~/.backup/memo.md<CR>
 nnoremap <silent> <leader>b :<C-u>call vimrc#open_scratch_buffer()<CR>
 nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
+
+nnoremap <silent> <leader><leader>q :<C-u>call vimrc#bufclose_filetype(g:vimrc.temporary_buftypes)<CR>
 
 " folds
 nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
