@@ -15,25 +15,11 @@ function load-my-env () {
       echo '  - pkgsrc'
       echo '  - rbenv'
       echo '  - nvm'
+      echo '  - npm'
       echo '  - virtualenv'
       echo '  - gradlew'
       echo '  - travis'
       echo '  - drawio'
-      ;;
-    all)
-      load-my-env docker
-      load-my-env linuxbrew
-      load-my-env ccache
-      load-my-env stack
-      load-my-env cabal
-      load-my-env idris
-      load-my-env pkgsrc
-      load-my-env rbenv
-      load-my-env nvm
-      load-my-env virtualenv
-      load-my-env gradlew
-      load-my-env travis
-      load-my-env drawio
       ;;
 
     stack)
@@ -107,6 +93,9 @@ function load-my-env () {
       fi
       ;;
 
+    # NOTE:
+    # This is slower a little.
+    # For performance, add $HOME/.nvm/versions/node/<version>/bin into $PATH instead.
     nvm)
       if [[ -f $NVM_DIR/nvm.sh ]] ; then
         # shellcheck disable=SC1090
@@ -115,6 +104,13 @@ function load-my-env () {
       fi
       echo "$NVM_DIR/nvm.sh is not found." > /dev/stderr
       return 1
+      ;;
+
+    npm)
+      alias ni='npm install'
+      alias nig='npm install --global'
+      alias nid='npm install --save-dev'
+      alias nr='npm run'
       ;;
 
     travis)

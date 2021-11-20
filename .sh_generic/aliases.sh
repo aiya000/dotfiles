@@ -371,11 +371,15 @@ alias_of yay 'yay --color always'
 i_have tmux && alias ta='tmux attach'
 i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have unzip && alias unzip-cp932='unzip -O cp932'
+i_have krita && alias kra=krita
 
 i_have stack && load-my-env stack
-i_have idris && load-my-env idris
 i_have draw.io && load-my-env drawio
-i_have krita && alias kra=krita
+
+# NOTE:
+# At this point, maybe npm is not found in $PATH.
+# But for performance, load this before `load-my-env nvm`.
+load-my-env npm
 
 # shellcheck disable=SC2139
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
