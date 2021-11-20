@@ -4,6 +4,22 @@ function load-my-env () {
   local target_name="$1"
 
   case "$target_name" in
+    help)
+      echo 'Available:'
+      echo '  - docker'
+      echo '  - linuxbrew'
+      echo '  - ccache'
+      echo '  - stack'
+      echo '  - cabal'
+      echo '  - idris'
+      echo '  - pkgsrc'
+      echo '  - rbenv'
+      echo '  - nvm'
+      echo '  - virtualenv'
+      echo '  - gradlew'
+      echo '  - travis'
+      echo '  - drawio'
+      ;;
     all)
       load-my-env docker
       load-my-env linuxbrew
@@ -93,9 +109,8 @@ function load-my-env () {
 
     nvm)
       if [[ -f $NVM_DIR/nvm.sh ]] ; then
-        [[ ! -f ~/my-nvm.log ]] && touch ~/.dotfiles/nvm.log
         # shellcheck disable=SC1090
-        source "$NVM_DIR/nvm.sh" >> ~/.dotfiles/nvm.log 2>&1  # Don't output anoying 'nvm:21: bad floating point constant'
+        source "$NVM_DIR/nvm.sh"
         return
       fi
       echo "$NVM_DIR/nvm.sh is not found." > /dev/stderr
