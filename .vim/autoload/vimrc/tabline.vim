@@ -60,7 +60,7 @@ function s:get_buf_mark_chars() abort
     \ ->map({_, x -> x[1]})
 
   return
-    \ filter(mark_chars, {_, x ->
+    \ s:List.filter(mark_chars, { x ->
       \ match(x, '\l', 0, 0) is 0
     \ })
 endfunction

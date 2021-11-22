@@ -39,8 +39,8 @@ function vimrc#job#get_basic_options_completes_with(...) abort
   endif
   const OnFailed = get(a:000, 1, { _1, _2, _3 -> 0 })
 
-  const stdout = []
-  const stderr = []
+  let stdout = []
+  let stderr = []
 
   return #{
     \ out_cb: function('vimrc#job#on_stdout', [stdout]),
