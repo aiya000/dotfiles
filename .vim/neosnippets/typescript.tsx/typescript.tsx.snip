@@ -14,18 +14,41 @@ abbr class __ extends Component<__, __> { render() { return (__); } }
       }
     }
 
+# Components & Tags
+
 snippet fragment
 alias frag
 abbr <>${0:#:here}</>
   <>${0:#:here}</>
-
-snippet class_name
-alias cn
-abbr className="${0:here}"
-    className="${0:here}"
 
 delete link
 snippet link_a
 alias link
 abbr <Link href="/${1:#:path}"><a>${0:here}</a></Link>
   <Link href="/${1:#:path}"><a>${0:here}</a></Link>
+
+snippet container
+abbr <div className="container${1: mx-auto p-4}">${0:#:here}</div>
+  <div className="container${1: mx-auto p-4}">${0:#:here}</div>
+
+# Attributes
+
+snippet class_name
+alias cn
+abbr className="${0:here}"
+    className="${0:here}"
+
+# Others
+
+# For react/jsx-no-comment-textnodes:
+delete comment com
+snippet comment
+alias com
+abbr {/* ${0:here */}
+  {/* ${0:here */}
+
+snippet Props_with_className
+options indent
+    interface Props {
+      className: string${0}
+    }
