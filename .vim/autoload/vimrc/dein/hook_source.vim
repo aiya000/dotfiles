@@ -77,7 +77,7 @@ function vimrc#dein#hook_source#gina() abort
   call gina#custom#mapping#nmap('status' , '<C-j>' , ':<C-u>call gina#action#call("diff:preview:bottom")<CR>'                           , { 'noremap': 1 , 'silent': 1})
   call gina#custom#mapping#nmap('status' , '<C-r>' , ':<C-u>Gina status<CR>'                                                            , { 'noremap': 1 , 'silent': 1})
 
-  call gina#custom#mapping#nmap('commit' , 'ZZ' , ':<C-u>call vimrc#dein#hook_source#gina_commit_close()<CR>' , {'noremap': 1 , 'silent': 1})  " Avoid to failure commit
+  call gina#custom#mapping#nmap('commit' , 'ZZ' , ':<C-u>call vimrc#dein#hook_source#gina_commit_close()<CR>' , {'noremap': 1 , 'silent': 1})
   call gina#custom#mapping#nmap('commit' , '<C-j>' , 'o<Esc>' , {'noremap': 1})
 
   call gina#custom#mapping#nmap('branch' , 'Q' , ':<C-u>bdelete!<CR>' , {'noremap': 1 , 'silent': 1})
