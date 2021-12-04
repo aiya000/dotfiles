@@ -27,10 +27,6 @@ alias link
 abbr <Link href="/${1:#:path}"><a>${0:here}</a></Link>
   <Link href="/${1:#:path}"><a>${0:here}</a></Link>
 
-snippet container
-abbr <div className="container${1: mx-auto p-4}">${0:#:here}</div>
-  <div className="container${1: mx-auto p-4}">${0:#:here}</div>
-
 # Attributes
 
 snippet class_name
@@ -50,5 +46,5 @@ abbr {/* ${0:here} */}
 snippet Props_with_className
 options indent
     interface Props {
-      className: string${0}
+      className?: string${0}
     }
