@@ -316,6 +316,12 @@ snippet mapped_type_object
 abbr { [${2:K} in ${1:keyof Type}]: ${0:Type[K]} }
   { [${2:K} in ${1:keyof Type}]: ${0:Type[K]} }
 
+# Types
+
+snippet record_like_object
+abbr Record<string, unknown>
+  Record<string, unknown>
+
 # Expressions
 
 snippet check_typed_property_existent
