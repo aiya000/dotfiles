@@ -343,6 +343,7 @@ on_ft = [
     'sass',
     'html',
     'xml',
+    'typescript.tsx',
 ]
 
 [[plugins]]

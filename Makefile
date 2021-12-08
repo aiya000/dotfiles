@@ -314,6 +314,8 @@ install-linuxbrew:
 install-silicon:
 	# vim-silicon
 	which silicon || cargo install silicon
+	# Or you can:
+	# brew install silicon
 
 install-gtran:
 	# translate.vim
