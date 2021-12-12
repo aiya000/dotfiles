@@ -3,7 +3,8 @@ all: install
 logfile = ./dotfiles-MakeFile.log
 
 # TODO: Detect auto
-OS = WSL2
+OS = Ubuntu
+WSL2 = no # 'no' or 'yes'
 
 YayInstall = yay -S --needed --noconfirm
 YayUpdate = yay -Sy
@@ -12,7 +13,7 @@ AptInstall = sudo apt install -y
 AptUpdate = sudo apt update
 AptBuildDep = sudo apt build-dep
 
-NodeInstall = yarn global add
+NodeInstall = npm install --global
 
 prepare:
 	if [ ! -d ~/.config ] ; then \
@@ -37,35 +38,32 @@ prepare:
 	if [ ! -d ~/.npm-prefix ] ; then \
 		mkdir ~/.npm-prefix ; \
 	fi
-ifeq ($(OS),WSL2)  # {{{
+	# core dependencies
+	$(AptInstall) curl
+ifeq ($(WSL2),yes)  # {{{
 	echo 'Please link your windows home (e.g. C:\\Users\\aiya000) to ~/Windows'
 	bash -c "read -rp 'Continue to press any key.' _"
 endif  # }}}
 
 install:
 	$(MAKE) prepare
-	$(MAKE) install-package-managers
+	$(MAKE) install-core-package-managers
 	$(MAKE) build-os-env
 	$(MAKE) install-by-pip3
 
 install-without-confirm:
 	$(MAKE) install noconfirm='--noconfirm'
 
-install-package-managers:
-# Install
-#   - haskell: stack
-#   - nodejs: nvm, yarn
-#   - python: pip3
-#   - golang: go
+# Package managers that core packages depends.
+install-core-package-managers:
 ifeq ($(OS),Arch)  # {{{
 	$(MAKE) install-yay
 	$(YayUpdate)
 	which stack || $(YayInstall) stack-static
-	which yarn || $(YayInstall) yarn
 	which pip || $(YayInstall) python-pip
 	which cargo || $(YayInstall) rust
-	echo 'Please define install-package-managers for go' > /dev/stderr
-	echo 'Please define install-package-managers for npm and yarn by nvm' > /dev/stderr
+	echo 'Please define install-core-package-managers for go' > /dev/stderr
+	echo 'Please define install-core-package-managers for npm by nvm' > /dev/stderr
 
 install-yay:
 	which yay || ( \
@@ -78,24 +76,17 @@ install-yay:
 		makepkg -si \
 	)
 endif  # }}}
-ifeq ($(OS),WSL2)  # {{{
-install-package-managers:
+ifeq ($(OS),Ubuntu)  # {{{
+
+install-core-package-managers:
 	# $(AptUpdate)
 	$(AptInstall) python3-pip golang-go
 
-	$(MAKE) install-nvm
-	export NVM_DIR="$$HOME/.nvm"
-	source "$$NVM_DIR/nvm.sh"
-	nvm install node
-	nvm use node
-	npm install --global yarn
-
-	$(MAKE) install-haskell-stack
 endif  # }}}
 ifeq ($(OS),Darwin)  # {{{
-	echo 'Please define install-package-managers for haskell-stack' > /dev/stderr
-	echo 'Please define install-package-managers for nvm, npm and yarn' > /dev/stderr
-	echo 'Please define install-package-managers for pip3' > /dev/stderr
+	echo 'Please define install-core-package-managers for haskell-stack' > /dev/stderr
+	echo 'Please define install-core-package-managers for nvm, npm' > /dev/stderr
+	echo 'Please define install-core-package-managers for pip3' > /dev/stderr
 endif  # }}}
 
 install-nvm:
@@ -106,7 +97,7 @@ install-haskell-stack:
 
 install-by-pip3:
 	# For deoplete.nvim
-	pip3 install neovim grip
+	pip3 install neovim
 
 build-os-env:
 # Install my better GUI/CLI environment
@@ -204,7 +195,7 @@ install-rictydiminished:
 		-w --fontawesome --fontlinux --octicons --pomicons --powerline --powerlineextra
 	(echo 'RictyDiminished with nerd-font patch was generated to ~/git/nerd-fonts, please rename it to "RictyDiminished NF" and install it to your OS manually!' | tee $(logfile))
 endif  # }}}
-ifeq ($(OS),WSL2)  # {{{
+ifeq ($(OS),Ubuntu)  # {{{
 	# - libssl-dev: To make ruby via rbenv
 	$(AptInstall) \
 		git \
@@ -215,13 +206,14 @@ ifeq ($(OS),WSL2)  # {{{
 		progress \
 		rsync \
 		tmux \
+		vim \
 		zsh \
 
-	$(AptBuildDep) vim
-
 	# To bridge between Windows10 and WSL2 Vim
+ifeq ($(WSL2),yes)
 	go get github.com/atotto/clipboard/cmd/gocopy
 	go get github.com/atotto/clipboard/cmd/gopaste
+endif
 endif  # }}}
 ifeq ($(OS),Darwin)  # {{{
 	brew install \
@@ -243,6 +235,7 @@ endif  # }}}
 install-sub-all: install-languages install-tools
 
 install-languages: \
+	install-nodejs \
 	install-haskell \
 	install-markdown \
 	install-text \
@@ -255,9 +248,15 @@ install-languages: \
 # languages {{{
 
 install-haskell:
+	$(MAKE) install-haskell-stack
 	which hasktags || stack install hasktags
 	which haskdogs || stack install haskdogs
 	which hlint || stack install hlint
+
+install-nodejs:
+	$(MAKE) install-nvm
+	echo "close this, and do below:"
+	echo 'export NVM_DIR="$$HOME/.nvm" && source "$$NVM_DIR/nvm.sh" && nvm install node && nvm use node'
 
 install-markdown:
 	which doctoc || $(NodeInstall) doctoc
@@ -287,7 +286,7 @@ install-ruby:
 	$(YayInstall) ruby ruby-irb
 
 endif # }}}
-ifeq ($(OS),WSL2) # {{{
+ifeq ($(OS),Ubuntu) # {{{
 
 install-sh:
 	$(AptInstall) shellcheck
@@ -300,6 +299,7 @@ install-tools: \
 	install-vim-build-deps \
 	install-vim-runtime-deps \
 	install-xmonad-runtime-deps \
+	install-brew \
 	install-nvm \
 	install-fonts \
 	install-media-players \
@@ -311,11 +311,14 @@ install-tools: \
 install-linuxbrew:
 	bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
+install-vim-runtime-deps:
+	$(MAKE) install-gtran
+	$(MAKE) install-silicon
+	$(MAKE) install-xclip
+
 install-silicon:
 	# vim-silicon
-	which silicon || cargo install silicon
-	# Or you can:
-	# brew install silicon
+	which silicon || brew install silicon
 
 install-gtran:
 	# translate.vim
@@ -325,7 +328,7 @@ install-gtran:
 		go install ; \
 	fi
 
-ifeq ($(OS),WSL2)  # {{{
+ifeq ($(OS),Ubuntu)  # {{{
 
 install-w3m:
 	$(AptInstall) w3m
@@ -333,8 +336,6 @@ install-w3m:
 endif
 
 # }}}
-
-
 ifeq ($(OS),Arch)  # {{{
 
 install-cli-recommended:
@@ -360,11 +361,6 @@ install-vivaldi:
 install-autokey:
 	which autokey-gtk || $(YayInstall) autokey
 
-install-vim-runtime-deps:
-	$(MAKE) install-gtran
-	$(MAKE) install-silicon
-	$(MAKE) install-xclip
-
 install-xclip:
 	$(YayInstall) xclip
 
@@ -383,7 +379,11 @@ install-fonts:
 	$(YayInstall) noto-fonts-cjk noto-fonts-emoji
 
 endif  # }}}
-ifeq ($(OS),WSL2)  # {{{
+ifeq ($(OS),Ubuntu)  # {{{
+
+install-brew:
+	$(AptInstall) build-essential procps file git
+	bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 install-cli-recommended:
 	brew install \
@@ -392,6 +392,13 @@ install-cli-recommended:
 	$(AptInstall) \
 		jq \
 		universal-ctags
+
+# TODO: Check this make to able to build vim
+install-vim-build-deps:
+	$(AptBuildDep) vim
+
+install-xclip:
+	$(AptInstall) xclip
 
 endif
 
