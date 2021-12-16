@@ -357,3 +357,13 @@ abbr process.exit(1)
 snippet regex_email_validation
 abbr /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     /^[a-zA-Z0-9.!#$%&'*+/=?^_\`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+
+# Syntax templates
+
+snippet const_function
+abbr const ${1:funcName}: ${2:Type} = (${3:#:args}) => ${0}
+  const ${1:funcName}: ${2:Type} = (${3:#:args}) => ${0}
+
+snippet export_default
+abbr export default
+  export default
