@@ -5,7 +5,7 @@ let s:V = vital#vimrc#new()
 let s:List = s:V.import('Data.List')
 let s:Msg = s:V.import('Vim.Message')
 
-function! vimrc#dein#hook_source#operator_surround() abort
+function vimrc#dein#hook_source#operator_surround() abort
   const basic_symbols = s:List.char_range('!', "'") + ['*', '&', '_', '|', '~', ':', '/'] " Excluding brackets () [] {} and ` for unique mappings ('keys')
   const basic_between = s:List.map(basic_symbols, { char ->
     \ #{ block: [char, char], motionwise: ['char', 'line', 'block'], keys: [char] }
