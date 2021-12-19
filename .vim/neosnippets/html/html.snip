@@ -54,10 +54,6 @@ snippet div
 options word
     <div>${0:TARGET}</div>
 
-snippet div_close
-abbr </div>
-    </div>
-
 snippet span
 abbr    <span>__</span>
     <span>${0}</span>
@@ -182,3 +178,11 @@ alias details_summary fold
 snippet revealjs_speaker_notes
 alias speaker_notes
     <aside class="notes">${0:here}</aside>
+
+snippet tag_close
+abbr </${0:name}>
+  </${0:name}>
+
+snippet div_close
+abbr </div>
+    </div>
