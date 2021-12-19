@@ -388,7 +388,8 @@ install-brew:
 install-cli-recommended:
 	brew install \
 		gh \
-		tmux-mem-cpu-load
+		tmux-mem-cpu-load \
+		watchexec
 	$(AptInstall) \
 		jq \
 		universal-ctags
