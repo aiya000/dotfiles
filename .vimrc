@@ -1490,9 +1490,8 @@ omap a;m i;m
 vmap a;f i;f
 omap a;f i;f
 
-" vim-alignta
-vnoremap i: :Alignta =><Space>
-vnoremap <silent> i= :Alignta => =/1<CR>
+" vim-easy-align
+xmap i: <Plug>(EasyAlign)
 
 " vim-operator-surround
 vmap ga <Plug>(operator-surround-append)

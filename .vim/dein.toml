@@ -17,9 +17,6 @@ repo = 'kana/vim-submode'
 repo = 'osyo-manga/vim-anzu'
 
 [[plugins]]
-repo = 'h1mesuke/vim-alignta'
-
-[[plugins]]
 repo = 'deris/vim-shot-f'
 
 [[plugins]]
