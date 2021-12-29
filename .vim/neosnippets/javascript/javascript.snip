@@ -6,13 +6,18 @@ abbr 'use strict';
 
 snippet import
 alias imp
-abbr import { ${1:objects} } from '${0:module-name}'
-    import { ${1:objects} } from '${0:module-name}'
+abbr import { ${0:objects} } from '${1:module-name}'
+    import { ${0:objects} } from '${1:module-name}'
+
+snippet import_default
+alias imd
+abbr import ${0:object} from '${1:module-name}'
+    import ${0:object} from '${1:module-name}'
 
 snippet import_as
 alias import_qualified imq
-abbr import * as ${1:name} from '${0:module-name}'
-    import * as ${1:name} from '${0:module-name}'
+abbr import * as ${0:name} from '${1:module-name}'
+    import * as ${0:name} from '${1:module-name}'
 
 snippet for_traditional
 abbr for (${1:#:var}; ${2:#:condition}; ${3:#:effect}) {${0:here}}
@@ -74,6 +79,11 @@ abbr class ${1:Class} {${0:#:here}}
 snippet constructor
 abbr constructor(${1:#:args}) {${0:here}}
     constructor(${1:#:args}) {${0:here}}
+
+snippet export
+alias exp
+abbr export
+  export
 
 snippet export_default
 abbr export default {${0:here}}
