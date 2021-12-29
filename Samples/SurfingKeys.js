@@ -1,3 +1,26 @@
+const {
+  aceVimMap,
+  mapkey,
+  imap,
+  iunmap,
+  imapkey,
+  getClickableElements,
+  vmap,
+  vmapkey,
+  map,
+  unmap,
+  cmap,
+  addSearchAlias,
+  removeSearchAlias,
+  tabOpenLink,
+  readText,
+  Clipboard,
+  Front,
+  Hints,
+  Visual,
+  RUNTIME,
+} = api;
+
 /**
  * General
  */
@@ -5,127 +28,76 @@
 try {
   Hints.characters = "wertuiopasdfghjkzxcvbm";
   settings.hintAlign = "left";
-  addSearchAlias("g", "google", "https://www.google.com/search?q=");
 } catch (e) {
-  throw new Error(`In the section 'General': ${e}`);
+  Front.showPopup(`In the section 'General': ${e}`);
 }
 
 /**
  * Normal mode
  */
+
 try {
-  mapkey("gT", "previous tab", function () {
-    // {{{
-    RUNTIME("previousTab");
-  }); // }}}
-  mapkey("gt", "next tab", function () {
-    // {{{
-    RUNTIME("nextTab");
-  }); // }}}
-  mapkey("gh", "open link google", function () {
-    // {{{
-    openLink("https://google.co.jp");
-  }); // }}}
-  mapkey("gH", "tab open link google", function () {
-    // {{{
-    tabOpenLink("https://google.co.jp");
-  }); // }}}
-  mapkey("<Ctrl-b>", "page up", function () {
-    // {{{
-    Normal.scroll("pageUp");
-  }); // }}}
-  mapkey("<Ctrl-f>", "page down", function () {
-    // {{{
-    Normal.scroll("pageDown");
-  }); // }}}
-  mapkey("d", "#3Close current tab", function () {
-    // {{{
-    RUNTIME("closeTab");
-  }); // }}}
-  mapkey("u", "#3Restore closed tab", function () {
-    // {{{
-    RUNTIME("openLast");
-  }); // }}}
-  mapkey(
-    "H",
-    "#4Go back in history",
-    function () {
-      // {{{
-      history.go(-1);
-    },
-    { repeatIgnore: true }
-  ); // }}}
-  mapkey(
-    "L",
-    "#4Go forward in history",
-    function () {
-      // {{{
-      history.go(1);
-    },
-    { repeatIgnore: true }
-  ); // }}}
-  mapkey("F", "#1Open a link in non-active new tab", function () {
-    // {{{
+  /**
+   * Noremaps
+   */
+  map("<Ctrl-b>", "u");
+  map("<Ctrl-f>", "d");
+
+  mapkey("gT", "previous tab", () => RUNTIME("previousTab"));
+  mapkey("gt", "next tab", () => RUNTIME("nextTab"));
+  mapkey("gh", "open link google", () => openLink("https://google.co.jp"));
+  mapkey("gH", "tab open link google", () =>
+    tabOpenLink("https://google.co.jp")
+  );
+  mapkey("d", "#3Close current tab", () => RUNTIME("closeTab"));
+  mapkey("u", "#3Restore closed tab", () => RUNTIME("openLast"));
+  mapkey("H", "#4Go back in history", () => history.go(-1), {
+    repeatIgnore: true,
+  });
+  mapkey("L", "#4Go forward in history", () => history.go(1), {
+    repeatIgnore: true,
+  });
+  mapkey("F", "#1Open a link in non-active new tab", () =>
     Hints.create(",", Hints.dispatchMouseClick, {
       tabbed: true,
       active: false,
-    });
-  }); // }}}
-  mapkey("o", "#8Open a URL in current tab", function () {
-    // {{{
+    })
+  );
+  mapkey("o", "#8Open a URL in current tab", () =>
     Front.openOmnibar({
       type: "URLs",
       extra: "getAllSites",
       tabbed: false,
-    });
-  }); // }}}
-  mapkey("b", "#3Choose a tab", function () {
-    // {{{
+    })
+  );
+  mapkey("b", "#3Choose a tab", () =>
     Front.openOmnibar({
       type: "URLs",
       extra: "getAllSites",
-    });
-  }); // }}}
-  mapkey("gs", "#12View page source", function () {
-    // {{{
-    RUNTIME("viewSource", {
-      // {{{
-      tab: { tabbed: true },
-    }); // }}}
-  }); // }}}
-  mapkey("<", "move tab -1", function () {
-    // {{{
-    RUNTIME("moveTab", { step: -1 });
-  }); // }}}
-  mapkey(">", "move tab +1", function () {
-    // {{{
-    RUNTIME("moveTab", { step: 1 });
-  }); // }}}
-  mapkey(
-    "t",
-    "#4Edit current URL with vim editor, and open in new tab",
-    function () {
-      // {{{
-      Front.openOmnibar({
-        type: "URLs",
-        extra: "getAllSites",
-        tabbed: true,
-      });
-    }
-  ); // }}}
-  mapkey("Q", "#11Edit Settings", function () {
-    // {{{
-    tabOpenLink("/pages/options.html");
-  }); // }}}
-  mapkey("R", "#4Reload the page", function () {
-    // {{{
-    RUNTIME("reloadTab", { nocache: true });
-  }); // }}}
-  map("g_", "$");
-  map("<Ctrl-p>", "gT");
+    })
+  );
+  mapkey("<", "move tab -1", () => RUNTIME("moveTab", { step: -1 }));
+  mapkey(">", "move tab +1", () => RUNTIME("moveTab", { step: 1 }));
+  mapkey("t", "#4Edit current URL with vim editor, and open in new tab", () =>
+    Front.openOmnibar({
+      type: "URLs",
+      extra: "getAllSites",
+      tabbed: true,
+    })
+  );
+  mapkey("Q", "#11Edit Settings", () => tabOpenLink("/pages/options.html"));
+  mapkey("R", "#4Reload the page", () =>
+    RUNTIME("reloadTab", { nocache: true })
+  );
+
+  /**
+   * Remaps
+   */
   map("<Ctrl-n>", "gt");
+  map("<Ctrl-p>", "gT");
+  map("g_", "$");
 } catch (e) {
-  throw new Error(`In the section 'Normal mode': ${e}`);
+  Front.showPopup(`In the section 'Normal mode': ${e}`);
 }
 
 /**
@@ -151,7 +123,7 @@ try {
   iunmap("<Ctrl-i>");
   iunmap(":"); // Emoji completion
 } catch (e) {
-  throw new Error(`In the section 'Insert mode': ${e}`);
+  Front.showPopup(`In the section 'Insert mode': ${e}`);
 }
 
 function moveCursor(direction, granularity) {
@@ -202,8 +174,8 @@ function deleteLeftWord() {
   const selection = document.getSelection();
   const p0 = selection.focusOffset;
   document.getSelection().modify("move", "backward", "word");
-  const v = selection.focusNode.data,
-    p1 = selection.focusOffset;
+  const v = selection.focusNode.data;
+  const p1 = selection.focusOffset;
   selection.focusNode.data = v.substr(0, p1) + v.substr(p0);
   selection.setPosition(selection.focusNode, p1);
 }
@@ -216,10 +188,11 @@ function deleteLeftChar() {
  * Visual mode
  */
 try {
-  vmap("<Ctrl-[>", "<Esc>");
-  vmap("<Ctrl-l>", "<Esc>");
+  // TODO: Enable this when api to be providing this.
+  // vmap("<Ctrl-[>", "<Esc>");
+  // vmap("<Ctrl-l>", "<Esc>");
 } catch (e) {
-  throw new Error(`In the section 'Visual mode': ${e}`);
+  Front.showPopup(`In the section 'Visual mode': ${e}`);
 }
 
 /**
@@ -241,7 +214,7 @@ try {
   cmap("<Ctrl-u>", "");
   cmap("<Ctrl-k>", "");
 } catch (e) {
-  throw new Error(`In the section 'Command mode': ${e}`);
+  Front.showPopup(`In the section 'Command mode': ${e}`);
 }
 
 /**
