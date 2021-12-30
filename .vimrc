@@ -842,10 +842,11 @@ let g:jumpy_map = [')', '(']
 " }}}
 " vim-quickrepl {{{
 
-let g:quickrepl_config = #{
-  \ vue: ['ts-node'],
-  \ go: ['gore'],
-  \ ps1: ['powrshell', 'powershell.exe'],
+let g:quickrepl_config = {
+  \ 'vue': ['ts-node'],
+  \ 'typescript.tsx': ['ts-node'],
+  \ 'go': ['gore'],
+  \ 'ps1': ['powrshell', 'powershell.exe'],
 \ }
 
 let g:quickrepl_use_default_key_mapping = v:true
