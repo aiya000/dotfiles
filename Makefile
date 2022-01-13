@@ -209,8 +209,8 @@ ifeq ($(OS),Ubuntu)  # {{{
 		vim \
 		zsh \
 
-	# To bridge between Windows10 and WSL2 Vim
 ifeq ($(WSL2),yes)
+	# To bridge between Windows10 and WSL2 Vim
 	go get github.com/atotto/clipboard/cmd/gocopy
 	go get github.com/atotto/clipboard/cmd/gopaste
 endif
@@ -313,12 +313,9 @@ install-linuxbrew:
 
 install-vim-runtime-deps:
 	$(MAKE) install-gtran
-	$(MAKE) install-silicon
 	$(MAKE) install-xclip
-
-install-silicon:
-	# vim-silicon
 	which silicon || brew install silicon
+	which pup || go get github.com/ericchiang/pup
 
 install-gtran:
 	# translate.vim
