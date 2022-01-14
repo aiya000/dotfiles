@@ -879,6 +879,14 @@ if g:vimrc.is_wsl2
 endif
 
 " }}}
+" previm {{{
+
+if g:vimrc.is_wsl
+  let g:previm_wsl_mode = v:true
+  let g:previm_open_cmd = $HOME .. '/Windows/AppData/Local/Vivaldi/Application/vivaldi.exe'
+endif
+
+" }}}
 
 call dein#end()
 
