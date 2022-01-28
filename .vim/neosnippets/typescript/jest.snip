@@ -2,9 +2,21 @@ snippet test
 abbr test('${1:does_something}', () => {${0}})
     test('${1:#:does_something}', () => {${0}})
 
+snippet describe
+abbr describe('${1:what}', () => {${0}})
+    describe('${1:#:what}', () => {${0}})
+
 snippet it
 abbr it('${1:does_something}', () => {${0}})
     it('${1:#:does_something}', () => {${0}})
+
+snippet beforeAll
+abbr beforeAll(() => {${0:#:here}})
+    beforeAll(() => {${0:#:here}})
+
+snippet afterAll
+abbr afterAll(() => {${0:#:here}})
+    afterAll(() => {${0:#:here}})
 
 snippet expect_toBe
 abbr expect(${1:actual}).toBe(${0:expected})
