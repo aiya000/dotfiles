@@ -1,7 +1,13 @@
+include css/*
+
 snippet import
 alias imp
 abbr @import '${0:path}';
     @import '${0:path}';
+
+snippet use
+abbr @use '${0:path}';
+    @use '${0:path}';
 
 snippet extend
 abbr @extend ${0:name};
@@ -20,19 +26,6 @@ abbr @include ${0:mixin_application}(${0:#:args});
 snippet abstract
 abbr %${1:name} {${0:#:here}}
     %${1:name} {${0:#:here}}
-
-snippet class
-alias cla cl scss_class
-abbr .${1:name} {${0:#:here}}
-    .${1:name} {${0:#:here}}
-
-snippet id
-abbr #${1:name} {${0:#:here}}
-    #${1:name} {${0:#:here}}
-
-snippet tag
-abbr ${1:name} {${0:#:here}}
-    ${1:name} {${0:#:here}}
 
 snippet doc
     /// ${0}

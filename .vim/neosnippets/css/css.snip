@@ -1,14 +1,52 @@
-snippet media
-    @media screen and (max-width: ${1:1024px}) {
-        ${0}
-    }
+# Syntaxes
 
-snippet media_tablet
-    @media screen and (max-width: 1024px) {
-        ${0}
-    }
+snippet class
+alias cla cl scss_class
+abbr .${1:name} {${0:#:here}}
+    .${1:name} {${0:#:here}}
 
-snippet media_mobile
-    @media screen and (max-width: 575px) {
-        ${0}
-    }
+snippet id
+abbr #${1:name} {${0:#:here}}
+    #${1:name} {${0:#:here}}
+
+snippet tag
+abbr ${1:name} {${0:#:here}}
+    ${1:name} {${0:#:here}}
+
+snippet regex_wildcard
+abbr [${1:class}*='${2:heading}'] {${0:#:here}}
+  [${1:class}*='${2:heading}'] {${0:#:here}}
+
+snippet media_query
+abbr @media screen and (max-width: ${1:1024px}) {${0:#:here}}
+    @media screen and (max-width: ${1:1024px}) {${0:#:here}}
+
+# Templates
+
+snippet media_query_tablet
+abbr @media screen and (max-width: 1024px) {${0:#:here}}
+    @media screen and (max-width: 1024px) {${0:#:here}}
+
+snippet media_query_mobile
+abbr @media screen and (max-width: 575px) {${0:#:here}}
+    @media screen and (max-width: 575px) {${0:#:here}}
+
+snippet display_flex
+abbr display: flex;
+  display: flex;
+
+snippet flex_direction
+abbr flex-direction: ${0:column};
+  flex-direction: ${0:column};
+
+snippet justify_content
+abbr justify-content: ${0:center};
+  justify-content: ${0:center};
+
+snippet align_items
+abbr align-items: ${0:center}
+  align-items: ${0:center};
+
+snippet align_self
+abbr align-self: ${0:center};
+  align-self: ${0:center};
