@@ -60,6 +60,13 @@ abbr @click="${0:expr}"
 
 ## Templates
 
+snippet defineComponent
+options indent
+abbr defineComponent({${0:#:here}})
+  defineComponent({
+    name: '${0}',
+  })
+
 snippet setup
 abbr setup(${1:#:_}) {${0:#:here}}
   setup(${1:#:_}) {${0:#:here}}
