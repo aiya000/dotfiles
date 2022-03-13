@@ -125,7 +125,6 @@ ifeq ($(OS),Arch)  # {{{
 		lxdm \
 		man-db \
 		mimi-git \
-		mlocate \
 		networkmanager \
 		openssh \
 		pamixer \
