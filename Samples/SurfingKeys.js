@@ -42,6 +42,7 @@ try {
    */
   map("<Ctrl-b>", "u");
   map("<Ctrl-f>", "d");
+  map("F", "af");
 
   mapkey("gT", "previous tab", () => RUNTIME("previousTab"));
   mapkey("gt", "next tab", () => RUNTIME("nextTab"));
@@ -57,12 +58,6 @@ try {
   mapkey("L", "#4Go forward in history", () => history.go(1), {
     repeatIgnore: true,
   });
-  mapkey("F", "#1Open a link in non-active new tab", () =>
-    Hints.create(",", Hints.dispatchMouseClick, {
-      tabbed: true,
-      active: false,
-    })
-  );
   mapkey("o", "#8Open a URL in current tab", () =>
     Front.openOmnibar({
       type: "URLs",
