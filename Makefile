@@ -4,7 +4,7 @@ logfile = ./dotfiles-MakeFile.log
 
 # TODO: Detect auto
 OS = Ubuntu
-WSL2 = no # 'no' or 'yes'
+WSL2 = yes # 'no' or 'yes'
 
 YayInstall = yay -S --needed --noconfirm
 YayUpdate = yay -Sy
