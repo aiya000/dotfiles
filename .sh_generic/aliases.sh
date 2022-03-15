@@ -77,6 +77,7 @@ if i_have git ; then
   alias gcam='git commit --verbose --amend'
   alias gcamm='git commit --verbose --amend -m'
   alias gcm='git commit -m'
+  alias gcem='git commit --allow-empty -m'
   alias gcf='git commit --fixup'
   alias gaacm='git add -A && git commit -m'
   alias gaacamm='git add -A && git commit --amend -m'

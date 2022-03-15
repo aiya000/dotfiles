@@ -740,6 +740,16 @@ augroup vimrc
       \ s:find_root_uri_by_file('package.yaml')
     \ ) },
   \ })
+
+  autocmd User lsp_setup call lsp#register_server(#{
+    \ name: 'volar-server',
+    \ cmd: { _ -> [&shell, &shellcmdflag, 'volar-server', '--stdio'] },
+    \ whitelist: ['vue'],
+    \ root_uri: { _ -> vimrc#catch(
+      \ function('vimrc#read_git_root_sync'),
+      \ s:find_root_uri_by_file('package.json')
+    \ ) },
+  \ })
 augroup END
 
 " }}}
