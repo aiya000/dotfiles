@@ -200,7 +200,6 @@ ifeq ($(OS),Ubuntu)  # {{{
 		git \
 		libssl-dev \
 		man-db \
-		mlocate \
 		peco \
 		progress \
 		rsync \
