@@ -1,0 +1,8 @@
+snippet zod_interface
+abbr const ${1:name} = z.object({${0:#:here})
+    const ${1:name} = z.object({${0:#:here}})
+
+snippet zod_type
+alias zod_infer
+abbr type %ucfirst($1) = z.infer<typeof ${1:name}>${0}
+  type %ucfirst($1) = z.infer<typeof ${1:name}>${0}
