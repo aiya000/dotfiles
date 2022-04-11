@@ -1,4 +1,4 @@
-" NOTE: Don't use the mark Z, because this is often used by my functions
+" NOTE: Don't use the mark Z, this is reserved by some my functions.
 
 let s:V = vital#vimrc#new()
 let s:List = s:V.import('Data.List')
@@ -712,9 +712,13 @@ AlterCommand tabnew TabnewOverridden
 " }}}
 " vim-lsp {{{
 
-let g:lsp_document_code_action_signs_enabled = 0
-let g:lsp_diagnostics_enabled = 0
 let g:lsp_async_completion = 1
+let g:lsp_diagnostics_enabled = 0
+let g:lsp_document_code_action_signs_enabled = 0
+
+" NOTE: To debug
+" let g:lsp_log_file = expand('~/vim-lsp.log')
+" let g:lsp_log_verbose = 1
 
 augroup vimrc
   " TODO: What's the!?!?
