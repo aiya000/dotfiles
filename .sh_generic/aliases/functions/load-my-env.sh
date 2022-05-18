@@ -15,7 +15,6 @@ function load-my-env () {
       echo '  - pkgsrc'
       echo '  - rbenv'
       echo '  - nvm'
-      echo '  - npm'
       echo '  - virtualenv'
       echo '  - gradlew'
       echo '  - travis'
@@ -104,13 +103,6 @@ function load-my-env () {
       fi
       echo "$NVM_DIR/nvm.sh is not found." > /dev/stderr
       return 1
-      ;;
-
-    npm)
-      alias ni='npm install'
-      alias nig='npm install --global'
-      alias nid='npm install --save-dev'
-      alias nr='npm run'
       ;;
 
     travis)
