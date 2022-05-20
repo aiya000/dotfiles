@@ -88,7 +88,7 @@ PATH=$PATH:$ZDOTDIR/plugin/sh-git-lfs-install-append
 
 # completions
 PATH=$PATH:$ZDOTDIR/zsh_completions
-PATH=$PATH:$NVM_DIR  # ~/.nvm/bash_completion
+PATH=$PATH:$NVM_DIR  # for ~/.nvm/bash_completion
 
 # git-credential-gnome-keyring
 PATH=$PATH:/usr/lib/git-core

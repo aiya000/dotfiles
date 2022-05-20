@@ -316,13 +316,6 @@ function gitlab-clone () {
 }
 
 # }}}
-# Docker {{{
-
-if i_have docker ; then
-  load-my-env docker
-fi
-
-# }}}
 # Others {{{
 
 alias la='ls -a --color=auto --group-directories-first'
@@ -373,14 +366,6 @@ i_have tmux && alias ta='tmux attach'
 i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have unzip && alias unzip-cp932='unzip -O cp932'
 i_have krita && alias kra=krita
-
-i_have stack && load-my-env stack
-i_have draw.io && load-my-env drawio
-
-# NOTE:
-# At this point, maybe npm is not found in $PATH.
-# But for performance, load this before `load-my-env nvm`.
-load-my-env npm
 
 # shellcheck disable=SC2139
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
