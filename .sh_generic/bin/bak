@@ -2,20 +2,45 @@
 
 # Toggle file extensions
 
-if [[ -z $1 ]] ; then
-  echo 'error: require 1 argument' 1>&2
+if [[ $# -lt 1 ]] ; then
+  echo 'error: require 1 or more arguments' 1>&2
   return 1
 fi
 
-if [[ ! -e $1 ]] ; then
-  echo "error: not found file '${1}'" 1>&2
-  return 1
-fi
+function mv_exact () {
+  local old_file_name=$1
+  local new_file_name=$2
 
-if echo "$1" | grep 'bak$' > /dev/null 2>&1 ; then
-  # Remove extension '.bak'
-  mv "$1" "${1%.*}"
-else
-  # Append extension '.bak'
-  mv "$1" "${1}.bak"
+  if [[ -e $new_file_name ]] ; then
+    echo "A file is already existent: '$new_file_name'"
+  fi
+
+  mv "$old_file_name" "$new_file_name"
+}
+
+function toggle_bak () {
+  : Removes extension '.bak' or
+  : Appends extension '.bak'
+
+  if echo "$1" | grep 'bak$' > /dev/null 2>&1 ; then
+    mv_exact "$1" "${1%.*}"
+  else
+    mv_exact "$1" "$1.bak"
+  fi
+}
+
+have_error=0
+
+for file_name in $@ ; do
+  if [[ ! -e $file_name ]] ; then
+    echo "error: A file not found '${1}'" 1>&2
+    have_error=1
+    continue
+  fi
+
+  toggle_bak "$file_name"
+done
+
+if [[ $have_error -ne 0 ]] ; then
+  return 1
 fi
