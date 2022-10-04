@@ -13,7 +13,7 @@ AptInstall = sudo apt install -y
 AptUpdate = sudo apt update
 AptBuildDep = sudo apt build-dep
 
-NodeInstall = npm install --global
+NodeInstall = npm install --global --user
 
 prepare:
 	if [ ! -d ~/.config ] ; then \
@@ -264,7 +264,6 @@ install-text:
 
 install-typescript:
 	which typescript || $(NodeInstall) typescript
-	which typescript-language-server || $(NodeInstall) typescript-language-server
 	which ts-node || $(NodeInstall) ts-node
 
 install-html:
