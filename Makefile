@@ -264,7 +264,8 @@ install-text:
 
 install-typescript:
 	which typescript || $(NodeInstall) typescript
-	which typescript-language-server || $(NodeInstall)
+	which typescript-language-server || $(NodeInstall) typescript-language-server
+	which ts-node || $(NodeInstall) ts-node
 
 install-html:
 	which htmlhint || $(NodeInstall) htmlhint
