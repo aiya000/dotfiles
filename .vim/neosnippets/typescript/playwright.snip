@@ -1,0 +1,19 @@
+snippet test_describe
+abbr test.describe('${1:what}', () => {${0}})
+    test.describe('${1:#:what}', () => {${0}})
+
+snippet beforeAll
+abbr test.beforeAll(({ ${1:page} }) => {${0:#:here}})
+    test.beforeAll(({ ${1:page} }) => {${0:#:here}})
+
+snippet beforeAll_async
+abbr test.beforeAll(async ({ ${1:page} }) => {${0:#:here}})
+    test.beforeAll(async ({ ${1:page} }) => {${0:#:here}})
+
+snippet afterAll
+abbr test.afterAll(({ ${1:page} }) => {${0:#:here}})
+    test.afterAll(({ ${1:page} }) => {${0:#:here}})
+
+snippet afterAll_async
+abbr test.afterAll(async ({ ${1:page} }) => {${0:#:here}})
+    test.afterAll(async ({ ${1:page} }) => {${0:#:here}})
