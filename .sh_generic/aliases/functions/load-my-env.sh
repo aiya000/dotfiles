@@ -16,6 +16,7 @@ function load-my-env () {
       echo '  - rbenv'
       echo '  - nvm'
       echo '  - virtualenv'
+      echo '  - conda'
       echo '  - gradlew'
       echo '  - travis'
       echo '  - drawio'
@@ -197,6 +198,20 @@ function load-my-env () {
         echo './.venv/bin/activate was not found, please load it yourself...' > /dev/stderr
         return 1
       }
+      ;;
+
+    conda)
+      __conda_setup=$("$HOME/.anaconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)
+      if [[ $? -eq 0 ]] ; then
+        eval "$__conda_setup"
+      else
+        if [[ -f $HOME/.anaconda3/etc/profile.d/conda.sh ]]; then
+          source "$HOME/.anaconda3/etc/profile.d/conda.sh"
+        else
+          PATH="$HOME/.anaconda3/bin:$PATH"
+        fi
+      fi
+      unset __conda_setup
       ;;
 
     *)

@@ -3,7 +3,6 @@
 function _load-my-env {
   _values \
     load-my-env \
-    ctags \
     docker \
     linuxbrew \
     ccache \
@@ -16,5 +15,6 @@ function _load-my-env {
     virtualenv \
     gradlew \
     travis \
-    drawio
+    drawio \
+    conda \
 }
