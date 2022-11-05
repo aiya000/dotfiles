@@ -248,13 +248,6 @@ repo = 'vmchale/dhall-vim'
 on_ft = ['dhall']
 
 [[plugins]]
-repo = 'fszymanski/deoplete-emoji'
-on_ft = [
-    'markdown',
-    'gitcommit',
-]
-
-[[plugins]]
 repo = 'haya14busa/dein-command.vim'
 on_cmd = 'Dein'
 
