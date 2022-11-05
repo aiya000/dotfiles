@@ -370,7 +370,3 @@ on_ft = 'shaderlab'
 [[plugins]]
 repo = 'PProvost/vim-ps1'
 on_ft = 'ps1'
-
-[[plugins]]
-repo = 'junegunn/vim-easy-align'
-on_map = ['<Plug>(EasyAlign)']

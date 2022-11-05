@@ -1515,7 +1515,7 @@ vmap a;f i;f
 omap a;f i;f
 
 " vim-easy-align
-xmap i: <Plug>(EasyAlign)
+xmap i: :<C-u>Align<Space>
 
 " vim-operator-surround
 vmap ga <Plug>(operator-surround-append)

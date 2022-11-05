@@ -140,3 +140,6 @@ repo = 'lighttiger2505/deoplete-vim-lsp'
 [[plugins]]
 repo = 'kana/vim-fakeclip'
 if = 'g:vimrc.is_wsl || g:vimrc.is_wsl2'
+
+[[plugins]]
+repo = 'vim-scripts/Align'
