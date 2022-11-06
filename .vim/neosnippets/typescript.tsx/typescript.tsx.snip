@@ -5,17 +5,6 @@ include html/html.snip
 include neosnippet-emoji/neosnippets/emoji.snip
 include neosnippet-kaomoji/neosnippets/kaomoji.snip
 
-delete Component_template
-snippet Component_template
-abbr class __ extends Component<__, __> { render() { return (__); } }
-    class ${1:Name} extends Component<${2:Props}, ${3:{}}> {
-      render() {
-        return (
-            ${0:#:JSX}
-        );
-      }
-    }
-
 # Components & Tags
 
 snippet fragment
@@ -23,9 +12,12 @@ alias frag
 abbr <>${0:#:here}</>
   <>${0:#:here}</>
 
+snippet link
+abbr <Link href="/${1:#:path}">${0:here}</Link>
+  <Link href="/${1:#:path}">${0:here}</Link>
+
 delete link
 snippet link_a
-alias link
 abbr <Link href="/${1:#:path}"><a>${0:here}</a></Link>
   <Link href="/${1:#:path}"><a>${0:here}</a></Link>
 
@@ -37,6 +29,21 @@ abbr className="${0:here}"
     className="${0:here}"
 
 # Others
+
+delete Component_template
+snippet Component_template
+abbr class __ extends Component<__, __> { render() { return (__); } }
+    class ${1:Name} extends Component<${2:Props}, ${3:{}}> {
+      render() {
+        return (
+            ${0:#:JSX}
+        );
+      }
+    }
+
+snippet import_react
+abbr import React from 'react'
+  import React from 'react'
 
 # For react/jsx-no-comment-textnodes:
 delete comment com
