@@ -206,11 +206,11 @@ ifeq ($(OS),Ubuntu)  # {{{
 		tmux \
 		vim \
 		zsh \
-
 ifeq ($(WSL2),yes)
 	# To bridge between Windows10 and WSL2 Vim
 	go get github.com/atotto/clipboard/cmd/gocopy
 	go get github.com/atotto/clipboard/cmd/gopaste
+	go get github.com/ericchiang/pup
 endif
 endif  # }}}
 ifeq ($(OS),Darwin)  # {{{
