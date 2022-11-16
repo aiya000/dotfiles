@@ -1,6 +1,3 @@
-[submodule "dotfiles-private"]
-	path = .private
-	url = https://aiya000@bitbucket.org/aiya000/dotfiles-private.git
 [submodule "xmonad-config"]
 	path = .xmonad
 	url = https://github.com/aiya000/xmonad-mycontrib
