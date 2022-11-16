@@ -4,7 +4,7 @@ let b:undo_ftplugin = 'setl ' . join([
   \ 'expandtab<',
 \ ])
 
-setl tabstop=4 shiftwidth=4 expandtab
+setl tabstop=2 shiftwidth=2 expandtab
 
 vnoremap <buffer><silent> i{ :call <SID>arrange_html_attribute_to_sass_attribute()<CR>
 

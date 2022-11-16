@@ -569,11 +569,19 @@ augroup END
 let g:ale_fix_on_save = v:true
 
 let g:ale_fixers = #{
-  \ typescript: ['prettier'],
-  \ javascript: ['prettier'],
-  \ vue: ['prettier'],
   \ go: ['gofmt', 'goimports'],
 \ }
+
+let s:typescript_variants = [
+  \ 'typescript',
+  \ 'javascript',
+  \ 'vue',
+  \ 'typescript.tsx',
+  \ 'javascript.tsx',
+\ ]
+for s:ts in s:typescript_variants
+  let g:ale_fixers[s:ts] = ['prettier', 'eslint']
+endfor
 
 " }}}
 " elm-vim {{{
