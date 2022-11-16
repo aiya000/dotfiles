@@ -31,3 +31,6 @@
 [submodule "Windows/Samples/bug.n"]
 	path = Windows/Samples/bug.n
 	url = https://github.com/aiya000/bug.n
+[submodule ".private"]
+	path = .private
+	url = https://github.com/aiya000/dotfiles-private.git
