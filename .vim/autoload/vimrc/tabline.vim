@@ -26,6 +26,8 @@ function vimrc#tabline#make() abort
 endfunction
 
 function vimrc#tabline#running_lsp_servers() abort
+  const IsNotePc = { -> &columns < 160 }
+
   const servers = execute(':LspStatus')
     \ ->split('\n')
     \ ->filter({ _, x ->
@@ -34,9 +36,16 @@ function vimrc#tabline#running_lsp_servers() abort
     \ ->map({ _, x ->
       \ split(x, ':')[0]
     \ })
-    \ ->join(', ')
 
-  return '[' .. servers .. ']'
+  const full = '[' .. join(servers, ', ') .. ']'
+  if IsNotePc() || len(full) < 30
+    return full
+  endif
+
+  const shorten_servers = servers
+    \ ->map({_, x -> x[:8] .. '..' })
+    \ ->join(', ')
+  return '[' .. shorten_servers .. ']'
 endfunction
 
 function vimrc#tabline#tags_if_present() abort

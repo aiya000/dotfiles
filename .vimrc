@@ -1088,7 +1088,7 @@ nmap <silent> g> :<C-u>call vimrc#open_buffer_to_execute('messages')<CR>gh_
 nmap <silent> m: :<C-u>call vimrc#open_buffer_to_execute('marks')<CR>gh_
 nmap <silent> q> :<C-u>call vimrc#open_buffer_to_execute('register')<CR>gh_
 nmap <silent> y: :<C-u>Denite unite:yankround<CR>
-nmap <silent> z: :<C-u>call vimrc#open_buffer_to_execute('tabs')<CR>gh_
+nmap <silent> z: :<C-u>tabs<CR>
 nnoremap <silent> # "zyiw?\m\C\<<C-r>z\><CR>
 nnoremap <silent> * "zyiw/\m\C\<<C-r>z\><CR>
 nnoremap <silent> <C-k><C-o> :<C-u>EditOverridden %<CR>
