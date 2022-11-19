@@ -361,6 +361,10 @@ abbr /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
 # Syntax templates
 
+snippet const
+abbr const ${1:x} = ${0}
+  const ${1:x} = ${0}
+
 snippet const_function
 alias constfun
 abbr const ${1:funcName} = (${2:#:args}): ${3:Type} => ${0}
