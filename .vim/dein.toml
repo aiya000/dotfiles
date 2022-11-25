@@ -20,9 +20,6 @@ repo = 'osyo-manga/vim-anzu'
 repo = 'deris/vim-shot-f'
 
 [[plugins]]
-repo = 'tyru/vim-altercmd'
-
-[[plugins]]
 repo = 'Shougo/neomru.vim'
 
 [[plugins]]
@@ -127,9 +124,6 @@ depends = ['async.vim']
 
 [[plugins]]
 repo = 'prabirshrestha/async.vim'
-
-[[plugins]]
-repo = 'mattn/vim-lsp-icons'
 
 [[plugins]]
 repo = 'mattn/vim-lsp-settings'

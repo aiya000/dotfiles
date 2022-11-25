@@ -707,17 +707,6 @@ let g:gina#command#blame#formatter#format = '%su%=on %ti by %au %ma%in'
 " Please see hook_source.vim for more information
 
 " }}}
-" vim-altercmd {{{
-
-call altercmd#load()
-
-AlterCommand new NewOverridden
-AlterCommand e[dit] EditOverridden
-AlterCommand vne[w] VnewOverridden
-AlterCommand ene[w] EnewOverridden
-AlterCommand tabnew TabnewOverridden
-
-" }}}
 " vim-lsp {{{
 
 let g:lsp_async_completion = 1

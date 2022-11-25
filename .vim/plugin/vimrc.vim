@@ -9,12 +9,6 @@ nnoremap <silent> <Plug>(vimrc-surround-delete-mostly-inner) :<C-u>call vimrc#de
 nnoremap <silent> <Plug>(vimrc-surround-replace-mostly-inner) :<C-u>call vimrc#replace_mostly_inner_surround()<CR>
 
 " Vim common
-"" buffer open commands with filetype 'none'
-command! -bar -bang NewOverridden new<bang> | if empty(&ft) | setf none | endif
-command! -bar -bang -complete=file -nargs=? EditOverridden e<bang> <args> | if empty(&ft) | setf none | endif
-command! -bar -bang -complete=file -nargs=? VnewOverridden vnew<bang> <args> | if empty(&ft) | setf none | endif
-command! -bar -bang -complete=file -nargs=? EnewOverridden enew<bang> <args> | if empty(&ft) | setf none | endif
-command! -bar -bang -complete=file -nargs=? TabnewOverridden tabnew<bang> <args> | if empty(&ft) | setf none | endif
 "" Scripts
 command! -bar -nargs=? -complete=filetype FtpluginEditAfter
     \ execute ':edit' printf('%s/after/ftplugin/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
