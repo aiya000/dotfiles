@@ -193,6 +193,7 @@ install-rictydiminished:
 		~/git/RictyDiminished/RictyDiminished-Regular.ttf \
 		-w --fontawesome --fontlinux --octicons --pomicons --powerline --powerlineextra
 	(echo 'RictyDiminished with nerd-font patch was generated to ~/git/nerd-fonts, please rename it to "RictyDiminished NF" and install it to your OS manually!' | tee $(logfile))
+
 endif  # }}}
 ifeq ($(OS),Ubuntu)  # {{{
 	# - libssl-dev: To make ruby via rbenv
@@ -205,11 +206,7 @@ ifeq ($(OS),Ubuntu)  # {{{
 		rsync \
 		tmux \
 		vim \
-		zsh \
-	# To bridge between Windows10 and WSL2 Vim
-	go get github.com/atotto/clipboard/cmd/gocopy
-	go get github.com/atotto/clipboard/cmd/gopaste
-	go get github.com/ericchiang/pup
+		zsh
 endif  # }}}
 ifeq ($(OS),Darwin)  # {{{
 	brew install \
@@ -474,3 +471,15 @@ install-for-virtualbox-vms:
 	echo 'autologin=aiya000' | sudo tee -a /etc/lxdm/lxdm.conf
 
 endif
+
+# }}}
+
+install-wsl-deps:
+	sudo add-apt-repository ppa:wslutilities/wslu
+	$(AptUpdate)
+	$(AptInstall) wslu
+	# To bridge between Windows10 and WSL2 Vim
+	go get github.com/atotto/clipboard/cmd/gocopy
+	go get github.com/atotto/clipboard/cmd/gopaste
+	#
+	go get github.com/ericchiang/pup
