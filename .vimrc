@@ -1194,9 +1194,9 @@ nnoremap gG ggVG
 nnoremap ( (zv
 nnoremap ) )zv
 nnoremap :: :%s/
-nnoremap :ev :<C-u>EditOverridden<Space><C-r>=g:vimrc.path_at_started<CR>/
-nnoremap :eg :<C-u>EditOverridden<Space><C-r>=g:vimrc.git_root<CR>/
-nnoremap :eb :<C-u>EditOverridden<Space><C-r>=expand('%:p:h')<CR>/
+nnoremap :ev :<C-u>e<Space><C-r>=g:vimrc.path_at_started<CR>/
+nnoremap :eg :<C-u>e<Space><C-r>=g:vimrc.git_root<CR>/
+nnoremap :eb :<C-u>e<Space><C-r>=expand('%:p:h')<CR>/
 nnoremap <C-]> g<C-]>
 nnoremap <C-k>t :<C-u>tselect<Space>
 nnoremap <expr> <C-k><C-s> printf(":%%s/\\m\\C\\<%s\\>//g\<Left>\<Left>", expand('<cword>'))
