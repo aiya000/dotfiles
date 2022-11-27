@@ -112,11 +112,12 @@ abbr export { ${1:#:stuff} } from '${0:module}'
     export { ${1:#:stuff} } from '${0:module}'
 
 snippet const
-alias val
-    const
+abbr const ${1:x} = ${0}
+  const ${1:x} = ${0}
 
 snippet let
-    let
+abbr let ${1:x} = ${0}
+  let ${1:x} = ${0}
 
 snippet instanceof
     instanceof
@@ -360,10 +361,6 @@ abbr /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     /^[a-zA-Z0-9.!#$%&'*+/=?^_\`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
 # Syntax templates
-
-snippet const
-abbr const ${1:x} = ${0}
-  const ${1:x} = ${0}
 
 snippet const_function
 alias constfun
