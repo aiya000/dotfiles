@@ -1080,8 +1080,7 @@ nmap <silent> y: :<C-u>Denite unite:yankround<CR>
 nmap <silent> z: :<C-u>tabs<CR>
 nnoremap <silent> # "zyiw?\m\C\<<C-r>z\><CR>
 nnoremap <silent> * "zyiw/\m\C\<<C-r>z\><CR>
-nnoremap <silent> <C-k><C-o> :<C-u>EditOverridden %<CR>
-nnoremap <silent> <C-k>o :<C-u>EditOverridden! %<CR>
+nnoremap <silent> <C-k>o :<C-u>e! %<CR>
 nnoremap <silent> <leader># #
 nnoremap <silent> <leader>* *
 nnoremap <silent> <leader>B :<C-u>sp ~/.backup/memo.md<CR>
