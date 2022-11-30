@@ -90,7 +90,7 @@ ifeq ($(OS),Darwin)  # {{{
 endif  # }}}
 
 install-nvm:
-	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 
 install-haskell-stack:
 	curl -sSL https://get.haskellstack.org/ | sh
