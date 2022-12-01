@@ -203,13 +203,13 @@ if i_have git ; then
   function gwa () {
     : Makes both the new branch and the new directory.
     target_branch=$1
-    git worktree add "${target_branch//\#/}" "$target_branch"
+    git worktree add "$target_branch" "${target_branch//\#/}"
   }
 
   function gwab () {
     : Makes the new branch basing on a base branch.
-    new_branch=$1
-    base_branch=$2
+    base_branch=$1
+    new_branch=$2
     git worktree add -b "$new_branch" "${new_branch//\#/}" "$base_branch"
   }
 
