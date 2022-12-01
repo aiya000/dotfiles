@@ -301,14 +301,11 @@ install-tools: \
 
 # tools {{{
 
-install-linuxbrew:
-	bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
 install-vim-runtime-deps:
 	$(MAKE) install-gtran
 	$(MAKE) install-xclip
 	which silicon || brew install silicon
-	which pup || go get github.com/ericchiang/pup
+	which pup || go install github.com/ericchiang/pup@latest
 
 install-gtran:
 	# translate.vim
@@ -387,9 +384,6 @@ install-cli-recommended:
 # TODO: Check this make to able to build vim
 install-vim-build-deps:
 	$(AptBuildDep) vim
-
-install-xclip:
-	$(AptInstall) xclip
 
 endif
 
@@ -479,7 +473,5 @@ install-wsl-deps:
 	$(AptUpdate)
 	$(AptInstall) wslu
 	# To bridge between Windows10 and WSL2 Vim
-	go get github.com/atotto/clipboard/cmd/gocopy
-	go get github.com/atotto/clipboard/cmd/gopaste
-	#
-	go get github.com/ericchiang/pup
+	go install github.com/atotto/clipboard/cmd/gocopy
+	go install github.com/atotto/clipboard/cmd/gopaste
