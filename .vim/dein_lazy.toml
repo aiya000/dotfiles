@@ -108,7 +108,6 @@ on_cmd = 'PAGER'
 repo = 'lambdalisue/vim-manpager'
 on_cmd = [
     'Man',
-    'MANPAGER',
 ]
 
 [[plugins]]
