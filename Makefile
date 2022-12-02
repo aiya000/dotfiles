@@ -475,3 +475,6 @@ install-wsl-deps:
 	# To bridge between Windows10 and WSL2 Vim
 	go install github.com/atotto/clipboard/cmd/gocopy
 	go install github.com/atotto/clipboard/cmd/gopaste
+
+fix-wsl-git-clone:
+	sudo ip link set eth0 mtu 1400
