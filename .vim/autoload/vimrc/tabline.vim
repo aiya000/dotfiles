@@ -38,11 +38,11 @@ function vimrc#tabline#running_lsp_servers() abort
     \ })
 
   const full = '[' .. join(servers, ', ') .. ']'
-  if IsNotePc() || len(full) < 30
+  if !IsNotePc()
     return full
   endif
 
-  const shorten_servers = servers
+  const shorten_servers = copy(servers)
     \ ->map({_, x -> x[:8] .. '..' })
     \ ->join(', ')
   return '[' .. shorten_servers .. ']'
