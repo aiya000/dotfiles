@@ -478,3 +478,8 @@ install-wsl-deps:
 
 fix-wsl-git-clone:
 	sudo ip link set eth0 mtu 1400
+
+install-apt-fast:
+	sudo add-apt-repository ppa:apt-fast/stable
+	sudo apt-get update
+	sudo apt-get -y install apt-fast
