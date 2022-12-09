@@ -6,7 +6,6 @@ configure=$(cat << EOS
     --enable-gui=yes \
     --enable-multibyte=yes \
     --enable-perlinterp=yes \
-    --enable-pythoninterp=yes \
     --enable-python3interp=yes \
     --enable-rubyinterp=yes \
     --enable-luainterp=dynamic \
