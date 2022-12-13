@@ -1,7 +1,0 @@
-#!/bin/bash
-
-if [[ ! -d ~/.backup/store-temporary ]] ; then
-  mkdir ~/.backup/store-temporary
-fi
-
-mv "$1" ~/.backup/store-temporary
