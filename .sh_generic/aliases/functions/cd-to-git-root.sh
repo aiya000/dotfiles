@@ -1,10 +1,10 @@
 #!/bin/bash
 
 function cd-to-git-root () {
-  local root simple
+  local root
   root=$(git rev-parse --show-toplevel 2> /dev/null || return 1)
   # shellcheck disable=SC2164
-  simple=-$(cd "$root" 2>&1)
+  cd "$root"
 
   # Try recover with wslpath if simple is failed
   # shellcheck disable=SC2181
@@ -15,5 +15,5 @@ function cd-to-git-root () {
     return
   fi
 
-  echo "$simple"
+  echo "$root"
 }
