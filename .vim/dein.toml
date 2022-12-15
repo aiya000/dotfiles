@@ -132,6 +132,9 @@ repo = 'mattn/vim-lsp-settings'
 repo = 'lighttiger2505/deoplete-vim-lsp'
 
 [[plugins]]
+repo = 'rhysd/vim-lsp-ale'
+
+[[plugins]]
 repo = 'kana/vim-fakeclip'
 if = 'g:vimrc.is_wsl || g:vimrc.is_wsl2'
 
