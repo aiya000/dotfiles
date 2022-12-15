@@ -485,6 +485,14 @@ let g:textobj_between_no_default_key_mappings = 1
 let g:ale_set_highlights = v:false
 let g:ale_vim_vint_show_style_issues = v:false
 
+let s:typescript_variants = [
+  \ 'typescript',
+  \ 'javascript',
+  \ 'vue',
+  \ 'typescript.tsx',
+  \ 'javascript.jsx',
+\ ]
+
 " =======
 " Linters
 " =======
@@ -550,6 +558,10 @@ let g:ale_linters = #{
   \ java: ['checkstyle', 'google-java-format', 'PMD'],
 \ }
 
+for s:ts in s:typescript_variants
+  let g:ale_linters[s:ts] = ['prettier', 'eslint', 'vim-lsp']
+endfor
+
 let g:ale_scala_scalastyle_config = $HOME .. '/.dotfiles/scalastyle_config_default.xml'
 
 augroup vimrc
@@ -572,13 +584,6 @@ let g:ale_fixers = #{
   \ go: ['gofmt', 'goimports'],
 \ }
 
-let s:typescript_variants = [
-  \ 'typescript',
-  \ 'javascript',
-  \ 'vue',
-  \ 'typescript.tsx',
-  \ 'javascript.jsx',
-\ ]
 for s:ts in s:typescript_variants
   let g:ale_fixers[s:ts] = ['prettier', 'eslint']
 endfor
