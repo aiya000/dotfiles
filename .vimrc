@@ -577,7 +577,7 @@ let s:typescript_variants = [
   \ 'javascript',
   \ 'vue',
   \ 'typescript.tsx',
-  \ 'javascript.tsx',
+  \ 'javascript.jsx',
 \ ]
 for s:ts in s:typescript_variants
   let g:ale_fixers[s:ts] = ['prettier', 'eslint']

@@ -8,6 +8,3 @@ let b:undo_ftplugin = 'setl ' . join([
 
 setl tabstop=2 shiftwidth=2 expandtab omnifunc=lsp#complete
 let &commentstring = '  // %s'
-
-" Why vue forget this line of .vimrc??
-let g:ale_fixers['vue'] = ['prettier']
