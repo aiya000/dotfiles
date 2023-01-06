@@ -19,6 +19,7 @@ let g:vimrc = get(g:, 'vimrc', #{
   \ is_macos: has('macunix'),
   \ is_windows: has('win32'),
   \ is_kaoriya: has('kaoriya'),
+  \ memo_path: expand('~/.backup/memo.md'),
 \ })
 
 let g:vimrc.is_wsl1 = executable('uname') && (system('uname -a') =~# 'Microsoft')
@@ -1088,7 +1089,7 @@ nnoremap <silent> * "zyiw/\m\C\<<C-r>z\><CR>
 nnoremap <silent> <C-k>o :<C-u>e! %<CR>
 nnoremap <silent> <leader># #
 nnoremap <silent> <leader>* *
-nnoremap <silent> <leader>B :<C-u>sp ~/.backup/memo.md<CR>
+nnoremap <silent> <leader>B :<C-u>sp <C-r>=g:vimrc.memo_path<CR><CR>
 nnoremap <silent> <leader>b :<C-u>call vimrc#open_scratch_buffer()<CR>
 nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
 
