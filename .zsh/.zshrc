@@ -109,6 +109,7 @@ alias rel=reload
 fpath=(~/.zsh/plugin/zsh-completions/src $fpath)
 source ~/.zsh/plugin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/plugin/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/plugin/enhancd/init.sh
 
 for file in ~/.zsh/plugin/sh-hereis/{edit-places,hereis,place,reload-places,sh-hereis}.sh ; do
   source "$file"

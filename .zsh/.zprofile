@@ -54,7 +54,6 @@ fi
 
 # Plugins
 export HEREIS_ALIAS_PREFIX=p-
-export ENHANCD_COMMAND=ecd
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 
 # }}}
