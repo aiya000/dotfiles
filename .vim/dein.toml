@@ -140,3 +140,6 @@ if = 'g:vimrc.is_wsl || g:vimrc.is_wsl2'
 
 [[plugins]]
 repo = 'vim-scripts/Align'
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
