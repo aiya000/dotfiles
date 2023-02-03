@@ -20,6 +20,7 @@ alias ls='ls --color=auto --group-directories-first'
 alias mv='mv -i'
 alias rm=dust  # no more cry
 alias sl=ls
+alias z='cd -'
 
 function du-sort () {
   local paths=${1:-.}
