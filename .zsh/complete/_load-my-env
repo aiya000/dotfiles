@@ -1,20 +1,20 @@
 #compdef load-my-env
-
 function _load-my-env {
   _values \
-    load-my-env \
-    docker \
-    linuxbrew \
-    ccache \
-    stack \
     cabal \
+    ccache \
+    conda \
+    docker \
+    drawio \
+    gcloud \
+    gradlew \
     idris \
+    linuxbrew \
+    load-my-env \
+    nvm \
     pkgsrc \
     rbenv \
-    nvm \
-    virtualenv \
-    gradlew \
+    stack \
     travis \
-    drawio \
-    conda \
+    virtualenv \
 }

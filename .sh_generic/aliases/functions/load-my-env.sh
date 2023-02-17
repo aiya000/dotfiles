@@ -4,22 +4,26 @@ function load-my-env () {
   local target_name="$1"
 
   case "$target_name" in
+    # Also please update /.zsh/complete/_load-my-env when update here.
     help)
       echo 'Available:'
-      echo '  - docker'
-      echo '  - linuxbrew'
-      echo '  - ccache'
-      echo '  - stack'
+
       echo '  - cabal'
+      echo '  - ccache'
+      echo '  - conda'
+      echo '  - docker'
+      echo '  - drawio'
+      echo '  - gcloud'
+      echo '  - gradlew'
       echo '  - idris'
+      echo '  - linuxbrew'
+      echo '  - nvm'
       echo '  - pkgsrc'
       echo '  - rbenv'
-      echo '  - nvm'
-      echo '  - virtualenv'
-      echo '  - conda'
-      echo '  - gradlew'
+      echo '  - stack'
       echo '  - travis'
-      echo '  - drawio'
+      echo '  - virtualenv'
+
       ;;
 
     stack)
@@ -104,6 +108,17 @@ function load-my-env () {
       fi
       echo "$NVM_DIR/nvm.sh is not found." > /dev/stderr
       return 1
+      ;;
+
+    gcloud)
+      if [[ -f $HOME/bin/google-cloud-sdk/path.zsh.inc ]] ; then
+        # shellcheck disable=SC1090
+        source "$HOME/bin/google-cloud-sdk/path.zsh.inc"
+      fi
+      if [[ -f $HOME/bin/google-cloud-sdk/completion.zsh.inc ]] ; then
+        # shellcheck disable=SC1090
+        source "$HOME/bin/google-cloud-sdk/completion.zsh.inc"
+      fi
       ;;
 
     travis)
