@@ -60,6 +60,7 @@ let g:vimrc.temporary_buftypes = [
   \ 'stack_build'
 \ ]
 
+let g:vimrc.git_root = v:null
 call vimrc#read_to_set_git_root()
 
 " }}}

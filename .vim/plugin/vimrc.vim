@@ -118,7 +118,7 @@ command! -bar LcdStarted execute ':lcd' g:vimrc.path_at_started
 command! -bar LcdGitRoot call vimrc#cd_git_root(':lcd')
 command! -bar ScdBufDir let g:vimrc.path_at_started = expand('%:p:h')
 command! -bar ScdCurrentDir let g:vimrc.path_at_started = getcwd()
-command! -bar ScdGitRoot call vimrc#cd_git_root_with_gvimrc_path_at_started()
+command! -bar ScdGitRoot let g:vimrc.path_at_started = g:vimrc.git_root
 command! -bar GitReadRoot call vimrc#read_to_set_git_root()
 command! -bar ReadGitRoot call vimrc#read_to_set_git_root()
 """
