@@ -120,7 +120,7 @@ repo = 'justinmk/vim-dirvish'
 
 [[plugins]]
 repo = 'prabirshrestha/vim-lsp'
-depends = ['async.vim']
+depends = 'async.vim'
 
 [[plugins]]
 repo = 'prabirshrestha/async.vim'
@@ -143,3 +143,24 @@ repo = 'vim-scripts/Align'
 
 [[plugins]]
 repo = 'cohama/lexima.vim'
+
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+
+[[plugins]]
+repo = 'vim-denops/denops-helloworld.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-ui-ff'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_substring'
+
+[[plugins]]
+repo = 'Shougo/ddu-kind-file'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file_rec'
