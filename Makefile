@@ -251,6 +251,9 @@ install-nodejs:
 	echo "close this, and do below:"
 	echo 'export NVM_DIR="$$HOME/.nvm" && source "$$NVM_DIR/nvm.sh" && nvm install node && nvm use node'
 
+install-deno:
+	which deno || brew install deno
+
 install-markdown:
 	which doctoc || $(NodeInstall) doctoc
 
@@ -302,9 +305,11 @@ install-tools: \
 # tools {{{
 
 install-vim-runtime-deps:
+	$(MAKE) install-deno
 	$(MAKE) install-gtran
 	$(MAKE) install-xclip
 	which silicon || brew install silicon
+	which jsonpp || brew install jsonpp
 	which pup || go install github.com/ericchiang/pup@latest
 
 install-gtran:
