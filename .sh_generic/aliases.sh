@@ -339,6 +339,17 @@ alias ei=exit
 alias cdp=cd-finddir
 alias ki=killing-art
 
+function ff () {
+  : Find a file by taken fuzzy name.
+  f . "$1"
+}
+
+function f () {
+  base_path=$1
+  fuzzy_name=$2
+  find "$base_path" -name "*$fuzzy_name*"
+}
+
 alias ctags-kotlin-auto="ctags-auto '--exclude=*.java' '--exclude=*.html' '--exclude=*.css'"
 alias ctags-typescript-auto="ctags-auto '--exclude=*.js' '--exclude=*.json'"
 
