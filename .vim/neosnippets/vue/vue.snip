@@ -83,3 +83,19 @@ abbr setup(${1:#:_}) {${0:#:here}}
 snippet computed
 abbr computed(() => ${0:#:here})
   computed(() => ${0:#:here})
+
+snippet const_props_defineProps
+abbr const props = defineProps<{${0:here}()
+  const props = defineProps<{${0:here}}>()
+
+snippet const_props_withDefaults_defineProps
+abbr const props = withDefaults(defineProps<{}>, {})
+options indent
+  const props = withDefaults(
+    defineProps<{
+      ${0}
+    }>(),
+    {
+      ${1}
+    }
+  )
