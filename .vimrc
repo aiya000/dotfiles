@@ -909,19 +909,29 @@ endif
 
 call ddu#custom#patch_global(#{
   \ ui: 'ff',
-\ })
-
-call ddu#custom#patch_global(#{
   \ kindOptions: #{
     \ file: #{ defaultAction: 'open' },
   \ },
+  \ sourceOptions: #{
+    \ _: #{
+      \ matchers: ['matcher_substring'],
+      \ ignoreCase: v:true,
+    \ },
+  \ },
+  \ sources: [
+    \ #{
+      \ name: 'file_rec',
+      \ params: #{
+        \ path: g:vimrc.path_at_started,
+        \ ignoredDirectories: ['.git', 'node_modules'],
+      \ },
+    \ },
+  \ ],
 \ })
 
-call ddu#custom#patch_global(#{
-  \ sourceOptions: #{
-    \ _: #{ matchers: ['matcher_substring'] },
-  \ }
-\ })
+"  \ uiParams: #{
+"    \ ff: #{ startFilter: v:true }
+"  \ },
 
 " }}}
 " lexima.vim {{{
@@ -1432,14 +1442,11 @@ vmap <leader>r <Plug>(quickrun)
 "" map i to do open_filter_buffer
 nmap <C-k><C-f> :<C-u>Denite outline<CR>i
 nmap <C-k><C-t> :<C-u>Denite tag<CR>i
-nmap <C-k>f :<C-u>Denite filetype<CR>i
-nmap <leader>H :<C-u>Denite line<CR>i
-nmap <leader>L :<C-u>Denite buffer<CR>i
 nmap M :<C-u>Denite file_mru<CR>i
-nnoremap <leader>u :<C-u>Denite<Space>
 
-" nnoremap <C-k><C-e> :<C-u>call ddu#start(#{ sources: [ #{ name: 'file_rec', params: #{ path: g:vimrc.path_at_started } } ] })<CR>
-nnoremap <C-k><C-e> :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name': 'file/rec', 'args': []}])<CR>
+" ddu.vim
+nnoremap <C-k><C-e> :<C-u>call ddu#start({})<CR>
+" nnoremap <C-k><C-e> :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name': 'file/rec', 'args': []}])<CR>
 " nnoremap '<C-k><C-e> :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name': 'file', 'args': []}])<CR>i
 " nnoremap '<C-k>e :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name': 'file/rec', 'args': []}])<CR>i
 " nnoremap <C-k><C-e> :<C-u>call vimrc#execute_on_file_path(function('denite#start'), [{'name': 'file', 'args': []}])<CR>i
