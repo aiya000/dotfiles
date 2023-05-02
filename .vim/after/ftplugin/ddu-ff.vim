@@ -1,7 +1,9 @@
+" call deoplete#custom#buffer_option('auto_complete', v:false)
+
+" Avoids below error on calling ddu#ui#ff#do_action('itemAction')
+"   [ddu] Error: Failed to call 'call' with ["denops#api#cmd",] ...
 function s:open_file() abort
-  " NOTE: Avoids below error
   execute 'normal' "vil\"zy:e\<Space>\<C-r>z\<CR>"
-  " [ddu] Error: Failed to call 'call' with ["denops#api#cmd",] ...
   " call ddu#ui#ff#do_action('itemAction')
 endfunction
 

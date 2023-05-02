@@ -447,7 +447,9 @@ let g:textobj_indent_no_default_key_mappings = 1
 " }}}
 " deoplete.nvim {{{
 
-let g:deoplete#enable_at_startup = 1
+" Disable because ddu.vim to obstruct.
+" Don't worry, deoplete.nvim starts on enter insert-mode.
+" let g:deoplete#enable_at_startup = 1
 
 " }}}
 " vim-visualstar {{{
@@ -461,18 +463,6 @@ let g:visualstar_extra_commands = 'zzzv'
 set formatexpr=autofmt#japanese#formatexpr()
 
 "}}}
-" github-complete.vim {{{
-
-" Use as emoji completer
-let g:github_complete_enable_issue_completion = 0
-let g:github_complete_enable_user_completion  = 0
-let g:github_complete_enable_repo_completion  = 0
-let g:github_complete_include_issue_title     = 0
-
-let g:github_complete_enable_neocomplete        = 1
-let g:github_complete_emoji_japanese_workaround = 1
-
-" }}}
 " vim-textobj-between {{{
 
 let g:textobj_between_no_default_key_mappings = 1
