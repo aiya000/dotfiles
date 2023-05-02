@@ -61,12 +61,6 @@ repo = 'vim-jp/autofmt'
 repo = 'dense-analysis/ale'
 
 [[plugins]]
-repo = 'vim-jp/vital.vim'
-
-[[plugins]]
-repo = 'lambdalisue/vital-Whisky'
-
-[[plugins]]
 repo = 'editorconfig/editorconfig-vim'
 
 [[plugins]]

@@ -1,9 +1,5 @@
 " NOTE: Don't use the mark Z, this is reserved by some my functions.
 
-let s:V = vital#vimrc#new()
-let s:List = s:V.import('Data.List')
-let s:Msg = s:V.import('Vim.Message')
-
 "---------------"
 " Global values "
 "---------------"
@@ -157,6 +153,11 @@ endif
 call dein#add('Shougo/dein.vim', {'rtp': ''})
 
 " }}}
+
+let s:V = vital#vimrc#new()
+let s:List = s:V.import('Data.List')
+let s:Msg = s:V.import('Vim.Message')
+let s:Promise = s:V.import('Async.Promise')
 
 
 "---------------"
@@ -897,31 +898,45 @@ endif
 " }}}
 " ddu.vim {{{
 
-call ddu#custom#patch_global(#{
-  \ ui: 'ff',
-  \ kindOptions: #{
-    \ file: #{ defaultAction: 'open' },
-  \ },
-  \ sourceOptions: #{
-    \ _: #{
-      \ matchers: ['matcher_substring'],
-      \ ignoreCase: v:true,
+let s:get_ddu_config = { path ->
+  \ #{
+    \ ui: 'ff',
+    \ kindOptions: #{
+      \ file: #{ defaultAction: 'open' },
     \ },
-  \ },
-  \ sources: [
-    \ #{
-      \ name: 'file_rec',
-      \ params: #{
-        \ path: g:vimrc.path_at_started,
-        \ ignoredDirectories: ['.git', 'node_modules'],
+    \ sourceOptions: #{
+      \ _: #{
+        \ matchers: ['matcher_substring'],
+        \ ignoreCase: v:true,
       \ },
     \ },
-  \ ],
-\ })
+    \ sources: [
+      \ #{
+        \ name: 'file_rec',
+        \ params: #{
+          \ path: path,
+          \ ignoredDirectories: ['.git', 'node_modules'],
+        \ },
+      \ },
+    \ ],
+  \ }
+\ }
 
 "  \ uiParams: #{
 "    \ ff: #{ startFilter: v:true }
 "  \ },
+
+call ddu#custom#patch_global(s:get_ddu_config(g:vimrc.path_at_started))
+
+function s:resolve_git_root() abort
+  if g:vimrc.git_root !=# v:null
+    call ddu#custom#patch_global(s:get_ddu_config(g:vimrc.git_root))
+    echomsg 'vimrc: g:vimrc.git_root loaded for ddu.vim.'
+    return s:Promise.resolve()
+  endif
+  call vimrc#wait(2000).then({ -> s:resolve_git_root() })
+endfunction
+call s:resolve_git_root()
 
 " }}}
 " lexima.vim {{{
@@ -929,6 +944,13 @@ call ddu#custom#patch_global(#{
 call lexima#add_rule(#{char: '<', input_after: '>'})
 " call lexima#add_rule(#{char: '<', at: '\%#\>', leave: 1})
 " call lexima#add_rule(#{char: '<BS>', at: '\<\%#\>', delete: 1})
+
+" }}}
+" vital.vim {{{
+
+" If you want to :Vitalize,
+" do `make install-vital-vim` first,
+" then add installed vital.vim and plugins onto &rutimepath using `set rtp+=`.
 
 " }}}
 

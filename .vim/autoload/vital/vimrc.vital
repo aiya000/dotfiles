@@ -1,5 +1,5 @@
 vimrc
-9b584074f2d64bc538d635e21fb67f71a00b2b2a
+acad3005279616237fe0963f30ab661a1201e203
 
 Data.List
 Data.String
@@ -12,4 +12,4 @@ Data.Optional
 Data.Closure
 Math
 System.Job
-Dhall
+Async.Promise

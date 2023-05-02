@@ -6,6 +6,7 @@ let s:V = vital#vimrc#new()
 let s:Job = s:V.import('System.Job')
 let s:List = s:V.import('Data.List')
 let s:Msg = s:V.import('Vim.Message')
+let s:Promise = s:V.import('Async.Promise')
 let s:Optional = s:V.import('Data.Optional')
 
 " Allows to reuse `self`.
@@ -720,4 +721,9 @@ function vimrc#cd_git_root_with_gvimrc_path_at_started() abort
     \ function('s:cd_git_root'),
     \ [function('s:set_gvimrc_path_at_started_to_git_root')],
   \ )
+endfunction
+
+" :h Vital.Async.Promise-example-timer
+function vimrc#wait(ms)
+  return s:Promise.new({resolve -> timer_start(a:ms, resolve)})
 endfunction

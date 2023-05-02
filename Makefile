@@ -311,6 +311,11 @@ install-vim-runtime-deps:
 	which silicon || brew install silicon
 	which jsonpp || brew install jsonpp
 	which pup || go install github.com/ericchiang/pup@latest
+	make install-vital-vim
+
+install-vital-vim:
+	git clone https://github.com/vim-jp/vital.vim ~/git/vital.vim
+	git clone https://github.com/lambdalisue/vital-Whisky ~/git/vital-Whisky
 
 install-gtran:
 	# translate.vim
