@@ -53,7 +53,9 @@ let g:vimrc.temporary_buftypes = [
   \ 'scratch',
   \ 'denite',
   \ 'denite-filter',
-  \ 'stack_build'
+  \ 'ddu-ff',
+  \ 'ddu-filter',
+  \ 'stack_build',
 \ ]
 
 let g:vimrc.git_root = v:null

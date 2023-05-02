@@ -3,7 +3,7 @@
 " Avoids below error on calling ddu#ui#ff#do_action('itemAction')
 "   [ddu] Error: Failed to call 'call' with ["denops#api#cmd",] ...
 function s:open_file() abort
-  execute 'normal' "vil\"zy:e\<Space>\<C-r>z\<CR>"
+  execute 'normal' "vil\"zy\<C-w>p:e\<Space>\<C-r>z\<CR>\<C-w>p:close\<CR>"
   " call ddu#ui#ff#do_action('itemAction')
 endfunction
 
