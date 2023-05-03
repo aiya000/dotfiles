@@ -897,6 +897,11 @@ endif
 let s:get_ddu_config = { path ->
   \ #{
     \ ui: 'ff',
+    \ uiParams: #{
+      \ ff: #{
+        \ startFilter: v:true,
+      \ },
+    \ },
     \ kindOptions: #{
       \ file: #{ defaultAction: 'open' },
     \ },
@@ -917,11 +922,6 @@ let s:get_ddu_config = { path ->
     \ ],
   \ }
 \ }
-
-"  \ uiParams: #{
-"    \ ff: #{ startFilter: v:true }
-"  \ },
-
 call ddu#custom#patch_global(s:get_ddu_config(g:vimrc.path_at_started))
 
 function s:resolve_git_root() abort
