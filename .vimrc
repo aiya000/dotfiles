@@ -219,7 +219,7 @@ augroup vimrc
   autocmd BufEnter,WinEnter * if &number | setl relativenumber | end
   autocmd BufLeave,Winleave * setl norelativenumber
 
-  autocmd InsertEnter * call deoplete#enable()
+  autocmd InsertEnter * call ddc#enable()
 
   " Please see vimrc#open_scratch_buffer()
   autocmd WinEnter,BufEnter,InsertLeave,Winleave,BufLeave scratch*.md
@@ -446,13 +446,6 @@ let g:vimconsole#no_default_key_mappings = 1
 " vim-textobj-indent {{{
 
 let g:textobj_indent_no_default_key_mappings = 1
-
-" }}}
-" deoplete.nvim {{{
-
-" Disable because ddu.vim to obstruct.
-" Don't worry, deoplete.nvim starts on enter insert-mode.
-" let g:deoplete#enable_at_startup = 1
 
 " }}}
 " vim-visualstar {{{
@@ -900,6 +893,7 @@ endif
 " }}}
 " ddu.vim {{{
 
+" TODO: Refactor
 let s:get_ddu_config = { path ->
   \ #{
     \ ui: 'ff',
@@ -941,9 +935,31 @@ endfunction
 call s:resolve_git_root()
 
 " }}}
+" ddc.vim {{{
+
+call ddc#custom#patch_global(#{
+  \ ui: 'native',
+  \ sources: ['vim-lsp', 'around'],
+  \ sourceOptions: #{
+    \ _: #{
+      \ matchers: ['matcher_head'],
+      \ sorters: ['sorter_rank'],
+      \ ignoreCase: v:true,
+    \ },
+    \ vim-lsp: #{
+      \ matchers: ['matcher_head'],
+      \ mark: 'lsp',
+      \ ignoreCase: v:true,
+    \ },
+  \ },
+  \ keywordPattern: '[a-zA-Z_]\w*',
+\ })
+
+" }}}
 " lexima.vim {{{
 
 call lexima#add_rule(#{char: '<', input_after: '>'})
+"
 " call lexima#add_rule(#{char: '<', at: '\%#\>', leave: 1})
 " call lexima#add_rule(#{char: '<BS>', at: '\<\%#\>', delete: 1})
 
@@ -1484,9 +1500,9 @@ nnoremap <silent> <leader>U :<C-u>UndotreeToggle<CR>
 nnoremap <silent> <C-h><C-i> :<C-u>call vimrc#toggle_indent_guides()<CR>
 
 " deoplete.nvim
-inoremap <CR> <CR>
-inoremap <Tab> <Tab>
-imap <expr> <C-k><C-i> deoplete#toggle() ? '' : ''
+" inoremap <CR> <CR>
+" inoremap <Tab> <Tab>
+" imap <expr> <C-k><C-i> deoplete#toggle() ? '' : ''
 
 " vim-visualstar
 vmap g* <Plug>(visualstar-*)Nzz

@@ -27,7 +27,7 @@ repo = 'aiya000/aho-bakaup.vim'
 
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
-rev = 'ed80ae8cee732d52eb841d509a95aca9c27ece7a'
+rev = 'b7c241fb5737c50bf09cf1e26298492c3fc0457a'
 
 [[plugins]]
 repo = 'kana/vim-textobj-indent'
@@ -38,10 +38,6 @@ repo = 'kana/vim-textobj-user'
 
 [[plugins]]
 repo = 'kana/vim-operator-user'
-
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-rev = 'd21aef18a1297e4a1a2a451ed03c515b4af0fd81'
 
 [[plugins]]
 repo = 'osyo-manga/vim-textobj-from_regexp'
@@ -59,6 +55,7 @@ repo = 'vim-jp/autofmt'
 
 [[plugins]]
 repo = 'dense-analysis/ale'
+rev = '9fe9f115213d7e7bf52d06ebdc69c6df38b1120b'
 
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
@@ -123,9 +120,6 @@ repo = 'prabirshrestha/async.vim'
 repo = 'mattn/vim-lsp-settings'
 
 [[plugins]]
-repo = 'lighttiger2505/deoplete-vim-lsp'
-
-[[plugins]]
 repo = 'rhysd/vim-lsp-ale'
 
 [[plugins]]
@@ -137,6 +131,7 @@ repo = 'vim-scripts/Align'
 
 [[plugins]]
 repo = 'cohama/lexima.vim'
+rev = '36781e59099b9b46eed564283b95938f90cd852d'
 
 [[plugins]]
 repo = 'vim-denops/denops.vim'
@@ -158,3 +153,21 @@ repo = 'Shougo/ddu-kind-file'
 
 [[plugins]]
 repo = 'Shougo/ddu-source-file_rec'
+
+[[plugins]]
+repo = 'Shougo/ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-ui-native'
+
+[[plugins]]
+repo = 'Shougo/ddc-source-around'
+
+[[plugins]]
+repo = 'Shougo/ddc-matcher_head'
+
+[[plugins]]
+repo = 'Shougo/ddc-sorter_rank'
+
+[[plugins]]
+repo = 'shun/ddc-source-vim-lsp'

@@ -40,7 +40,7 @@ function vim-get-latest-git-hashes () {
   for name in "${plugin_names[@]}" ; do
     cd ~/.vim/bundle/repos || exit 1
     plugin_dir=$(bash -c "find . -type d -name '$name'")
-    cd "$plugin_dir" || exit 1
+    cd "$plugin_dir" || return 1
     echo "$name: $(git log | head -1 | awk '{print $2}')"
   done
 }
