@@ -159,7 +159,6 @@ call dein#add('Shougo/dein.vim', {'rtp': ''})
 let s:V = vital#vimrc#new()
 let s:List = s:V.import('Data.List')
 let s:Msg = s:V.import('Vim.Message')
-let s:Promise = s:V.import('Async.Promise')
 
 
 "---------------"
@@ -893,46 +892,19 @@ endif
 " }}}
 " ddu.vim {{{
 
-" TODO: Refactor
-let s:get_ddu_config = { path ->
-  \ #{
-    \ ui: 'ff',
-    \ uiParams: #{
-      \ ff: #{
-        \ startFilter: v:true,
-      \ },
+" .sources is in s:get_ddu_config_sources().
+call ddu#custom#patch_global(#{
+  \ ui: 'ff',
+  \ kindOptions: #{
+    \ file: #{ defaultAction: 'open' },
+  \ },
+  \ sourceOptions: #{
+    \ _: #{
+      \ matchers: ['matcher_substring'],
+      \ ignoreCase: v:true,
     \ },
-    \ kindOptions: #{
-      \ file: #{ defaultAction: 'open' },
-    \ },
-    \ sourceOptions: #{
-      \ _: #{
-        \ matchers: ['matcher_substring'],
-        \ ignoreCase: v:true,
-      \ },
-    \ },
-    \ sources: [
-      \ #{
-        \ name: 'file_rec',
-        \ params: #{
-          \ path: path,
-          \ ignoredDirectories: ['.git', 'node_modules'],
-        \ },
-      \ },
-    \ ],
-  \ }
-\ }
-call ddu#custom#patch_global(s:get_ddu_config(g:vimrc.path_at_started))
-
-function s:resolve_git_root() abort
-  if g:vimrc.git_root !=# v:null
-    call ddu#custom#patch_global(s:get_ddu_config(g:vimrc.git_root))
-    echomsg 'vimrc: g:vimrc.git_root loaded for ddu.vim.'
-    return s:Promise.resolve()
-  endif
-  call vimrc#wait(2000).then({ -> s:resolve_git_root() })
-endfunction
-call s:resolve_git_root()
+  \ },
+\ })
 
 " }}}
 " ddc.vim {{{
@@ -1159,7 +1131,6 @@ nmap <silent> g: :<C-u>call vimrc#open_buffer_to_execute('buffers')<CR>gh_
 nmap <silent> g> :<C-u>call vimrc#open_buffer_to_execute('messages')<CR>gh_
 nmap <silent> m: :<C-u>call vimrc#open_buffer_to_execute('marks')<CR>gh_
 nmap <silent> q> :<C-u>call vimrc#open_buffer_to_execute('register')<CR>gh_
-" TODO: y:が機能してない
 nmap <silent> y: :<C-u>Denite unite:yankround<CR>
 nmap <silent> z: :<C-u>tabs<CR>
 nnoremap <silent> # "zyiw?\m\C\<<C-r>z\><CR>
@@ -1289,7 +1260,6 @@ nnoremap <silent> <C-k><Space> :<C-u>call vimrc#clear_ends_space()<CR>
 nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
 nnoremap <silent> <Space><Space> :<C-u>call vimrc#compress_spaces()<CR>
 nnoremap <silent> <leader>o :<C-u>copen<CR>
-nnoremap L :<C-u>buffer<Space>
 nnoremap Q gQ
 nnoremap Y yg_
 nnoremap g<C-]> <C-]>
@@ -1482,10 +1452,30 @@ vmap <leader>r <Plug>(quickrun)
 "" map i to do open_filter_buffer
 nmap <C-k><C-f> :<C-u>Denite outline<CR>i
 nmap <C-k><C-t> :<C-u>Denite tag<CR>i
-nmap M :<C-u>Denite file_mru<CR>i
+nnoremap L :<C-u>call ddu#start(#{
+  \ sources: [#{ name: 'buffer' }],
+\ })<CR>
+nnoremap M :<C-u>call ddu#start(#{
+  \ sources: [#{ name: 'file_old' }],
+\ })<CR>
 
 " ddu.vim
-nnoremap <C-k><C-e> :<C-u>call ddu#start({})<CR>
+nnoremap <C-k><C-e> :<C-u>call ddu#start(#{
+  \ sources: [
+    \ #{
+      \ name: 'file_rec',
+      \ params: #{
+        \ path: g:vimrc.git_root ==# v:null ? g:vimrc.path_at_started : g:vimrc.git_root,
+        \ ignoredDirectories: ['.git', 'node_modules'],
+      \ },
+    \ },
+  \ ],
+  \ uiParams: #{
+    \ ff: #{
+      \ startFilter: v:true,
+    \ },
+  \ }
+\ })<CR>
 " nnoremap <C-k><C-e> :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name': 'file/rec', 'args': []}])<CR>
 " nnoremap '<C-k><C-e> :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name': 'file', 'args': []}])<CR>i
 " nnoremap '<C-k>e :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name': 'file/rec', 'args': []}])<CR>i

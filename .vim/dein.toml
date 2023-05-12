@@ -174,3 +174,9 @@ repo = 'shun/ddc-source-vim-lsp'
 
 [[plugins]]
 repo = 'LumaKernel/ddc-source-file'
+
+[[plugins]]
+repo = 'shun/ddu-source-buffer'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file_old'
