@@ -939,7 +939,7 @@ call s:resolve_git_root()
 
 call ddc#custom#patch_global(#{
   \ ui: 'native',
-  \ sources: ['vim-lsp', 'around'],
+  \ sources: ['vim-lsp', 'around', 'neosnippet', 'file'],
   \ sourceOptions: #{
     \ _: #{
       \ matchers: ['matcher_head'],
@@ -951,6 +951,16 @@ call ddc#custom#patch_global(#{
       \ mark: 'lsp',
       \ ignoreCase: v:true,
     \ },
+    \ around: #{ mark: 'A' },
+    \ neosnippet: #{ mark: 'ns', dup: v:true },
+    \ file: #{
+      \ mark: 'F',
+      \ isVolatile: v:true,
+      \ forceCompletionPattern: '\S/\S*',
+    \ },
+  \ },
+  \ sourceParams: #{
+    \ around: #{ maxSize: 500 },
   \ },
   \ keywordPattern: '[a-zA-Z_]\w*',
 \ })

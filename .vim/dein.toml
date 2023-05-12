@@ -171,3 +171,6 @@ repo = 'Shougo/ddc-sorter_rank'
 
 [[plugins]]
 repo = 'shun/ddc-source-vim-lsp'
+
+[[plugins]]
+repo = 'LumaKernel/ddc-source-file'
