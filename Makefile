@@ -308,6 +308,7 @@ install-vim-runtime-deps:
 	$(MAKE) install-deno
 	$(MAKE) install-gtran
 	$(MAKE) install-xclip
+	which rg || $(AptInstall) ripgrep
 	which silicon || brew install silicon
 	which jsonpp || brew install jsonpp
 	which pup || go install github.com/ericchiang/pup@latest

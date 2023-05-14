@@ -122,8 +122,24 @@ command! -bar ScdGitRoot let g:vimrc.path_at_started = g:vimrc.git_root
 command! -bar GitReadRoot call vimrc#read_to_set_git_root()
 command! -bar ReadGitRoot call vimrc#read_to_set_git_root()
 """
-command! -bar -nargs=+ Grep call vimrc#grep_those(<f-args>)
-command! -bar TodoList Grep TODO FIXME XXX
+command! -bar Grep call ddu#start(#{
+  \ sources: [#{
+    \ name: 'rg',
+    \ options: #{
+      \ matchers: [],
+      \ volatile: v:true,
+    \ },
+  \ }],
+  \ uiParams: #{
+    \ ff: #{
+      \ startFilter: v:true,
+      \ ignoreEmpty: v:false,
+      \ autoResize: v:false,
+    \ },
+  \ },
+\ })
+command! -bar -nargs=+ GrepIt call vimrc#grep_those(<f-args>)
+command! -bar TodoList GrepIt TODO FIXME XXX
 command! -bar -nargs=+ SetTabTitle let t:vimrc_tabtitle = <q-args>
 command! -bar UnsetTabTitle unlet t:vimrc_tabtitle
 

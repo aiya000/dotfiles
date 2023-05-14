@@ -186,3 +186,6 @@ repo = 'tani/ddc-fuzzy'
 
 [[plugins]]
 repo = 'matsui54/ddu-source-help'
+
+[[plugins]]
+repo = 'shun/ddu-source-rg'
