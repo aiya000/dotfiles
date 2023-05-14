@@ -8,7 +8,7 @@
 " Global values
 let g:vimrc = get(g:, 'vimrc', #{
   \ loaded: 0,
-  \ vim_home: $HOME .. '/.vim',
+  \ vim_home: $'{$HOME}/.vim',
   \ path_at_started: getcwd(),
   \ gui_editor: has('nvim') ? 'gonvim' : 'gvim',
   \ is_unix: has('unix'),
@@ -27,11 +27,11 @@ let g:vimrc.open_on_gui =
   \ g:vimrc.is_windows ? 'start' :
   \ g:vimrc.is_unix    ? 'xdg-open' : s:Msg.warn('no method for GUI-open')
 
-let g:vimrc.backupdir  = $HOME .. '/.backup/vim-backup'
-let g:vimrc.directory  = g:vimrc.backupdir .. '/swp'
-let g:vimrc.undodir    = g:vimrc.backupdir .. '/undo'
-let g:vimrc.viewdir    = g:vimrc.backupdir .. '/view'
-let g:vimrc.sessiondir = g:vimrc.backupdir .. '/session'
+let g:vimrc.backupdir  = $'{$HOME}/.backup/vim-backup'
+let g:vimrc.directory  = $'{g:vimrc.backupdir}/swp'
+let g:vimrc.undodir    = $'{g:vimrc.backupdir}/undo'
+let g:vimrc.viewdir    = $'{g:vimrc.backupdir}/view'
+let g:vimrc.sessiondir = $'{g:vimrc.backupdir}/session'
 
 " Please see 'nmap <leader><leader>q'.
 let g:vimrc.temporary_buftypes = [
@@ -65,12 +65,12 @@ call vimrc#read_to_set_git_root()
 " Environment Variables {{{
 
 " Open in preference to an entity
-let $MYVIMRC = filereadable($HOME .. '/.dotfiles/.vimrc')
-  \ ? $HOME .. '/.dotfiles/.vimrc'
+let $MYVIMRC = filereadable($'{$HOME}/.dotfiles/.vimrc')
+  \ ? $'{$HOME}/.dotfiles/.vimrc'
   \ : $MYVIMRC
 
-let $MYGVIMRC = filereadable($HOME .. '/.dotfiles/.gvimrc')
-  \ ? $HOME .. '/.dotfiles/.gvimrc'
+let $MYGVIMRC = filereadable($'{$HOME}/.dotfiles/.gvimrc')
+  \ ? $'{$HOME}/.dotfiles/.gvimrc'
   \ : $MYGVIMRC
 
 " }}}
@@ -91,15 +91,15 @@ scriptencoding utf-8
 " Prepare dein.vim {{{
 
 " Start dein.vim
-let s:dein_dirname = g:vimrc.vim_home .. '/bundle/repos/github.com/Shougo/dein.vim'
-let &runtimepath   = &runtimepath .. ',' .. s:dein_dirname
+let s:dein_dirname = $'{g:vimrc.vim_home}/bundle/repos/github.com/Shougo/dein.vim'
+let &runtimepath   = $'{&runtimepath},{s:dein_dirname}'
 
 try
-  call dein#begin($HOME .. '/.vim/bundle')
+  call dein#begin($'{$HOME}/.vim/bundle')
 catch /E117/  " If dein.vim is not found
   try
     call vimrc#fetch_dein(s:dein_dirname)
-    call dein#begin($HOME .. '/.vim/bundle')
+    call dein#begin($'{$HOME}/.vim/bundle')
     echo 'dein.vim installation was completed.'
     echo 'Please execute :call dein#install(),'
     echo 'and restart your vim.'
@@ -110,8 +110,8 @@ catch /E117/  " If dein.vim is not found
 endtry
 
 " Copy the dein.vim's document
-let s:dein_doc_from = s:dein_dirname .. '/doc/dein.txt'
-let s:dein_doc_to   = g:vimrc.vim_home .. '/doc/dein.txt'
+let s:dein_doc_from = $'{s:dein_dirname}/doc/dein.txt'
+let s:dein_doc_to   = $'{g:vimrc.vim_home}/doc/dein.txt'
 if filereadable(s:dein_doc_from) && !filereadable(s:dein_doc_to)
   call writefile(readfile(s:dein_doc_from), s:dein_doc_to)
 endif
@@ -124,17 +124,17 @@ unlet s:dein_dirname
 
 if !isdirectory(g:vimrc.directory)
   call mkdir(g:vimrc.directory, 'p', 0700)
-  call system(printf('chown -R "%s:%s" "%s"', $USER, $GROUP, g:vimrc.directory))
+  call system($'chown -R "{$USER}:{$GROUP}" "{g:vimrc.directory}"')
 endif
 
 if !isdirectory(g:vimrc.undodir)
   call mkdir(g:vimrc.undodir, '', 0700)
-  call system(printf('chown -R "%s:%s" "%s"', $USER, $GROUP, g:vimrc.undodir))
+  call system($'chown -R "{$USER}:{$GROUP}" "{g:vimrc.undodir}"')
 endif
 
 if !isdirectory(g:vimrc.sessiondir)
   call mkdir(g:vimrc.sessiondir, '', 0700)
-  call system(printf('chown -R "%s:%s" "%s"', $USER, $GROUP, g:vimrc.sessiondir))
+  call system($'chown -R "{$USER}:{$GROUP}" "{g:vimrc.sessiondir}"')
 endif
 
 " }}}
@@ -148,7 +148,7 @@ endif
 call dein#load_toml('~/.vim/dein.toml', {'lazy': 0})
 call dein#load_toml('~/.vim/dein_lazy.toml', {'lazy': 1})
 
-if filereadable(expand('~/dein_env.toml'))
+if filereadable($'{$HOME}/dein_env.toml')
   call dein#load_toml('~/dein_env.toml', {'lazy': 0})
 endif
 
@@ -167,11 +167,11 @@ let s:Msg = s:V.import('Vim.Message')
 " {{{
 " NOTE: This section must be put at between dein#begin() and dein#end()
 
-if filereadable($HOME .. '/.dotfiles/.private/.vimrc_private')
+if filereadable($'{$HOME}/.dotfiles/.private/.vimrc_private')
   source ~/.dotfiles/.private/.vimrc_private
 endif
 
-if filereadable($HOME .. '/.vimrc_env')
+if filereadable($'{$HOME}/.vimrc_env')
   source ~/.vimrc_env
 endif
 
@@ -336,7 +336,7 @@ let g:quickrun_config = {
     \ 'cmdopt': '--warn',
     \ 'exec': [
       \ '%c %s %o --output /tmp/vim-quickrun-elm.html',
-      \  g:vimrc['open_on_gui'] .. ' /tmp/vim-quickrun-elm.html',
+      \  $'{g:vimrc.open_on_gui}  /tmp/vim-quickrun-elm.html',
     \ ],
     \ 'tempfile': '%{tempname()}.elm',
   \ },
@@ -355,7 +355,7 @@ let g:quickrun_config = {
     \ 'runner': 'vimproc',
     \ 'exec': [
       \ 'dot -T png %o %s -o %s.png',
-      \ g:vimrc['open_on_gui'] .. ' %s.png',
+      \  $'{g:vimrc.open_on_gui} %s.png',
     \ ],
     \ 'hook/sweep/files': '%S:p:r.png',
     \ 'outputter/error/error': 'quickfix',
@@ -381,7 +381,7 @@ let g:tweetvim_async_post = 1
 let g:twibill_use_job     = 1
 
 " Avoid unite-tweetvim lazy loading error
-let g:tweetvim_config_dir = $HOME .. '/.tweetvim'
+let g:tweetvim_config_dir = $'{$HOME}/.tweetvim'
 
 " }}}
 " foldCC {{{
@@ -432,7 +432,7 @@ let g:bakaup_auto_backup = 1
 " }}}
 " neosnippet.vim {{{
 
-let g:neosnippet#snippets_directory = g:vimrc['vim_home'] .. '/neosnippets'
+let g:neosnippet#snippets_directory = $'{g:vimrc.vim_home}/neosnippets'
 let g:neosnippet#disable_select_select_mappings = 1
 
 " }}}
@@ -549,15 +549,17 @@ for s:ts in s:typescript_variants
   let g:ale_linters[s:ts] = ['prettier', 'eslint', 'vim-lsp']
 endfor
 
-let g:ale_scala_scalastyle_config = $HOME .. '/.dotfiles/scalastyle_config_default.xml'
+let g:ale_scala_scalastyle_config = $'{$HOME}/.dotfiles/scalastyle_config_default.xml'
 
 augroup vimrc
   autocmd ColorScheme * highlight ALEError ctermbg=gray ctermfg=black
 
   autocmd VimEnter *
-    \  if filereadable('./scalastyle_config.xml') && (input('locally scalastyle_config.xml was found, Do you want to load? (y/n)') == 'y')
-      \| let g:ale_scala_scalastyle_config = execute('pwd')[:-1] .. '/scalastyle-config.xml'
-      \| echomsg 'a scalastyle config loaded: ' .. g:ale_scala_scalastyle_config
+    \  if
+        \ filereadable('./scalastyle_config.xml') &&
+        \ input('locally scalastyle_config.xml was found, Do you want to load? (y/n)') == 'y'
+      \| let g:ale_scala_scalastyle_config =  $'{execute("pwd")[:-1]}/scalastyle-config.xml'
+      \| echomsg $'a scalastyle config loaded: {g:ale_scala_scalastyle_config}'
     \| endif
 augroup END
 
@@ -886,7 +888,7 @@ endif
 
 if g:vimrc.is_wsl
   let g:previm_wsl_mode = v:true
-  let g:previm_open_cmd = $HOME .. '/Windows/AppData/Local/Vivaldi/Application/vivaldi.exe'
+  let g:previm_open_cmd = $'{$HOME}/Windows/AppData/Local/Vivaldi/Application/vivaldi.exe'
 endif
 
 " }}}
@@ -914,18 +916,22 @@ call ddc#custom#patch_global(#{
   \ sources: ['vim-lsp', 'around', 'neosnippet', 'file'],
   \ sourceOptions: #{
     \ _: #{
-      \ matchers: ['matcher_head'],
-      \ sorters: ['sorter_rank'],
+      \ matchers: ['matcher_fuzzy'],
+      \ sorters: ['sorter_fuzzy'],
+      \ converters: ['converter_fuzzy'],
       \ ignoreCase: v:true,
     \ },
     \ vim-lsp: #{
       \ matchers: ['matcher_head'],
+      \ sorters: ['sorter_rank'],
       \ mark: 'lsp',
       \ ignoreCase: v:true,
     \ },
     \ around: #{ mark: 'A' },
     \ neosnippet: #{ mark: 'ns', dup: v:true },
     \ file: #{
+      \ matchers: ['matcher_head'],
+      \ sorters: ['sorter_rank'],
       \ mark: 'F',
       \ isVolatile: v:true,
       \ forceCompletionPattern: '\S/\S*',
@@ -1082,8 +1088,8 @@ let g:tex_flavor = 'latex'
 let &tags = &tags .. ',' .. join([
   \ 'tags',
   \ '.git/tags',
-  \ g:vimrc.path_at_started .. '/tags',
-  \ g:vimrc.path_at_started .. '/.git/tags',
+  \ $'{g:vimrc.path_at_started}/tags',
+  \ $'{g:vimrc.path_at_started}/.git/tags',
 \ ], ',')
 
 let mapleader = '['
@@ -1276,10 +1282,6 @@ endfunction
 " }}}
 " insert mode {{{
 
-" set
-inoremap <silent> <C-k><C-w> <C-o>:setl wrap! wrap?<CR>
-inoremap <silent> <C-k><C-e> <C-o>:setl expandtab! expandtab?<CR>
-
 " fake digraphs
 inoremap <C-k>\+ ＋
 inoremap <C-k>\- −
@@ -1297,7 +1299,7 @@ imap <C-j> <CR>
 inoremap <C-a> <Right>
 inoremap <C-k><C-k> <C-o>"_d$
 inoremap <silent> <C-k><C-j> <Esc>:write<CR>
-inoremap <silent> <C-k>J <Esc>:wall \| echo 'written all !'<CR>
+inoremap <silent> <C-k>J <Esc>:wall \| echo 'written all!'<CR>
 inoremap <silent><expr> <C-b> vimrc#get_webpage_title()
 " Don't noremap for fake-clip
 imap <C-r>' <C-r>+
@@ -1430,7 +1432,7 @@ digraph xx 215    " product
 " }}}
 " plugins {{{
 
-" vaffle.vim
+" vim-dirvish
 nnoremap <silent> <leader>e         :<C-u>call vimrc#toggle_explorer()<CR>
 nnoremap <silent> <leader><leader>e :<C-u>call vimrc#open_explorer('split')<CR>
 nnoremap <silent> <leader>E         :<C-u>call vimrc#open_explorer('stay')<CR>
@@ -1452,21 +1454,6 @@ vmap <leader>r <Plug>(quickrun)
 "" map i to do open_filter_buffer
 nmap <C-k><C-f> :<C-u>Denite outline<CR>i
 nmap <C-k><C-t> :<C-u>Denite tag<CR>i
-nnoremap L :<C-u>call ddu#start(#{
-  \ sources: [#{ name: 'buffer' }],
-  \ uiParams: #{
-    \ ff: #{
-      \ startFilter: v:true,
-    \ },
-  \ },
-\ })<CR>
-nnoremap M :<C-u>call ddu#start(#{
-  \ sources: [#{ name: 'file_old' }],
-  \ uiParams: #{
-    \ ff: #{
-      \ startFilter: v:true,
-    \ },
-\ })<CR>
 
 " ddu.vim
 nnoremap <C-k><C-e> :<C-u>call ddu#start(#{
@@ -1484,6 +1471,23 @@ nnoremap <C-k><C-e> :<C-u>call ddu#start(#{
       \ startFilter: v:true,
     \ },
   \ }
+\ })<CR>
+"
+nnoremap L :<C-u>call ddu#start(#{
+  \ sources: [#{ name: 'buffer' }],
+  \ uiParams: #{
+    \ ff: #{
+      \ startFilter: v:true,
+    \ },
+  \ },
+\ })<CR>
+"
+nnoremap M :<C-u>call ddu#start(#{
+  \ sources: [#{ name: 'file_old' }],
+  \ uiParams: #{
+    \ ff: #{
+      \ startFilter: v:true,
+    \ },
 \ })<CR>
 " nnoremap <C-k><C-e> :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name': 'file/rec', 'args': []}])<CR>
 " nnoremap '<C-k><C-e> :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name': 'file', 'args': []}])<CR>i
@@ -1649,7 +1653,7 @@ vmap <leader><leader>c <Plug>(operator-camelize-toggle)
 nmap . <Plug>(repeat-.)
 
 for x in s:List.char_range('a', 'z')
-  execute 'nnoremap' '<silent>' ('@' .. x) (":\<C-u>call vimrc#execute_repeatable_macro('" .. x .. "')\<CR>")
+  execute 'nnoremap' '<silent>' $'@{x}' (":\<C-u>" .. $'call vimrc#execute_repeatable_macro("{x}")\<CR>')
 endfor
 
 " vim-yankround
@@ -1668,11 +1672,11 @@ nmap <leader>R <Plug>(quickrepl-open)
 
 " }}}
 
-if filereadable($HOME .. '/.vimrc_env_post')
+if filereadable($'{$HOME}/.vimrc_env_post')
   source ~/.vimrc_env_post
 endif
 
-execute 'helptags' (g:vimrc.vim_home .. '/doc')
+execute 'helptags' $'{g:vimrc.vim_home}/doc'
 filetype plugin indent on
 syntax enable
 let g:vimrc.loaded = v:true

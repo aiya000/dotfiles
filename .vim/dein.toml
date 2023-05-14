@@ -180,3 +180,6 @@ repo = 'shun/ddu-source-buffer'
 
 [[plugins]]
 repo = 'Shougo/ddu-source-file_old'
+
+[[plugins]]
+repo = 'tani/ddc-fuzzy'
