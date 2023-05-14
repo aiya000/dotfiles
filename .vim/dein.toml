@@ -183,3 +183,6 @@ repo = 'Shougo/ddu-source-file_old'
 
 [[plugins]]
 repo = 'tani/ddc-fuzzy'
+
+[[plugins]]
+repo = 'matsui54/ddu-source-help'

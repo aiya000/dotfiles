@@ -899,6 +899,7 @@ call ddu#custom#patch_global(#{
   \ ui: 'ff',
   \ kindOptions: #{
     \ file: #{ defaultAction: 'open' },
+    \ help: #{ defaultAction: 'open' },
   \ },
   \ sourceOptions: #{
     \ _: #{
@@ -1472,7 +1473,7 @@ nnoremap <C-k><C-e> :<C-u>call ddu#start(#{
     \ },
   \ }
 \ })<CR>
-"
+
 nnoremap L :<C-u>call ddu#start(#{
   \ sources: [#{ name: 'buffer' }],
   \ uiParams: #{
@@ -1481,7 +1482,7 @@ nnoremap L :<C-u>call ddu#start(#{
     \ },
   \ },
 \ })<CR>
-"
+
 nnoremap M :<C-u>call ddu#start(#{
   \ sources: [#{ name: 'file_old' }],
   \ uiParams: #{
@@ -1489,6 +1490,16 @@ nnoremap M :<C-u>call ddu#start(#{
       \ startFilter: v:true,
     \ },
 \ })<CR>
+
+nnoremap :h :<C-u>call ddu#start(#{
+  \ sources: [#{ name: 'help' }],
+  \ uiParams: #{
+    \ ff: #{
+      \ startFilter: v:true,
+    \ },
+  \ },
+\ })<CR>
+
 " nnoremap <C-k><C-e> :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name': 'file/rec', 'args': []}])<CR>
 " nnoremap '<C-k><C-e> :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name': 'file', 'args': []}])<CR>i
 " nnoremap '<C-k>e :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name': 'file/rec', 'args': []}])<CR>i
