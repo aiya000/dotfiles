@@ -7,7 +7,6 @@ let s:Job = s:V.import('System.Job')
 let s:List = s:V.import('Data.List')
 let s:Msg = s:V.import('Vim.Message')
 let s:Promise = s:V.import('Async.Promise')
-let s:Optional = s:V.import('Data.Optional')
 
 " Allows to reuse `self`.
 " {{{
