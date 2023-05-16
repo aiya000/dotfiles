@@ -159,6 +159,7 @@ call dein#add('Shougo/dein.vim', {'rtp': ''})
 let s:V = vital#vimrc#new()
 let s:List = s:V.import('Data.List')
 let s:Msg = s:V.import('Vim.Message')
+let s:Promise = s:V.import('Async.Promise')
 
 
 "---------------"
@@ -589,7 +590,18 @@ let g:elm_setup_keybindings  = 0
 " }}}
 " vim-fakeclip {{{
 
-let g:fakeclip_provide_clipboard_key_mappings = g:vimrc.is_wsl
+if g:vimrc.is_wsl
+  let g:fakeclip_provide_clipboard_key_mappings = v:true
+
+  function s:configure_fakeclip(_, __) abort
+    let g:fakeclip_force_override_clip_command = 'gocopy'
+  endfunction
+
+  call vimrc#job#start_simply(
+    \ ['/bin/which', 'gocopy'],
+    \ function('s:configure_fakeclip'),
+  \ )
+endif
 
 " }}}
 " denite.nvim {{{
@@ -1227,7 +1239,7 @@ nnoremap <expr> gp '`[' .. strpart(getregtype(), 0, 1) .. '`]'
 
 " copy & paste
 "" clipboard
-"" NOTE: Don't use noremap to allow remap with fake-clip
+"" NOTE: Don't use noremap to allow remap with fakeclip
 nmap 'p "+p
 nmap 'P "+P
 nmap 'y "+y
