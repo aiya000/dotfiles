@@ -189,3 +189,6 @@ repo = 'matsui54/ddu-source-help'
 
 [[plugins]]
 repo = 'shun/ddu-source-rg'
+
+[[plugins]]
+repo = 'matsui54/ddc-buffer'

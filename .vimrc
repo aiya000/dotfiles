@@ -926,7 +926,7 @@ call ddu#custom#patch_global(#{
 
 call ddc#custom#patch_global(#{
   \ ui: 'native',
-  \ sources: ['vim-lsp', 'around', 'neosnippet', 'file'],
+  \ sources: ['vim-lsp', 'around', 'neosnippet', 'file', 'buffer'],
   \ sourceOptions: #{
     \ _: #{
       \ matchers: ['matcher_fuzzy'],
@@ -949,9 +949,16 @@ call ddc#custom#patch_global(#{
       \ isVolatile: v:true,
       \ forceCompletionPattern: '\S/\S*',
     \ },
+    \ buffer: #{ mark: 'B' },
   \ },
   \ sourceParams: #{
     \ around: #{ maxSize: 500 },
+    \ buffer: #{
+      \ requireSameFiletype: v:false,
+      \ limitBytes: 5000000,
+      \ fromAltBuf: v:true,
+      \ forceCollect: v:true,
+    \ },
   \ },
   \ keywordPattern: '[a-zA-Z_]\w*',
 \ })
