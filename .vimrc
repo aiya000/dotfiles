@@ -906,7 +906,6 @@ endif
 " }}}
 " ddu.vim {{{
 
-" .sources is in s:get_ddu_config_sources().
 call ddu#custom#patch_global(#{
   \ ui: 'ff',
   \ kindOptions: #{
@@ -1518,12 +1517,6 @@ nnoremap :h :<C-u>call ddu#start(#{
     \ },
   \ },
 \ })<CR>
-
-" nnoremap <C-k><C-e> :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name': 'file/rec', 'args': []}])<CR>
-" nnoremap '<C-k><C-e> :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name': 'file', 'args': []}])<CR>i
-" nnoremap '<C-k>e :<C-u>call vimrc#execute_on_base_path(function('denite#start'), [{'name': 'file/rec', 'args': []}])<CR>i
-" nnoremap <C-k><C-e> :<C-u>call vimrc#execute_on_file_path(function('denite#start'), [{'name': 'file', 'args': []}])<CR>i
-" nnoremap <C-k>e :<C-u>call vimrc#execute_on_file_path(function('denite#start'), [{'name': 'file/rec', 'args': []}])<CR>i
 
 " vim-webpage
 nnoremap <leader>K :<C-u>Weblio <C-r>=expand('<cword>')<CR><CR>
