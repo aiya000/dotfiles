@@ -3,27 +3,45 @@
 ; # = Super
 ; + = Shift
 
+; http://ahkwiki.net/MsgBox
+; MsgBox, 0x1000, Title, Text, 400
+
 #h::SendInput #{Left}
 #j::SendInput #{Down}
 #k::SendInput #{Up}
 #l::SendInput #{Right}
 
-!^d::SendInput #{Tab}
+^!d::SendInput #{Tab}
 !^c::SendInput !{F4}
+!+4::SendInput +#s
+; !+4::Run SnippingTool.exe
 
-!+r::Reload
-; !+4::SendInput +#s
-!+4::Run SnippingTool.exe
+; http://ahkwiki.net/Reload
+!^r::
+  MsgBox, 0x1000, AutoHotKey, Will reload, 400
+  Reload
+  WinWait,ahk_class #32770,Error at line ,2
+  If ErrorLevel = 0
+  {
+    ControlGetText,v,Static1
+    StringGetPos,p,v,.
+    p -= 14
+    StringMid,line,v,15,%p%
+    MsgBox, 0x1000, Error, %line%, 400
+    WinWaitNotActive
+    WinActivate
+  }
+  Return
 
 ; Vars
 EnvGet, Home, HOME
 
 ; With bug.n
-;; To avoid broke window arranging
+;; To avoid broke window arrangment
 #d::Run explorer.exe %Home%\Desktop
 
 ; OpenVR-AdvanceSettings keyboardOne
-^+m::Run powershell.exe %Home%\Desktop\Repository\OneTouch-To-RecordReplay\Record-Replay.ps1
+^+m::Run powershell.exe -ExecutionPolicy RemoteSigned -File C:\Users\aiya0\Desktop\Repository\OneTouch-To-RecordReplay\Record-Replay.ps1
 
 #IfWinActive, ahk_exe vivaldi.exe
   ; ^p::SendInput {Up}
@@ -44,7 +62,7 @@ EnvGet, Home, HOME
   !j::SendInput ^{Enter}
 #IfWinActive
 
-#IfWinActive, ahk_exe Discord.exe
+#IfWinActive, ahk_class Chrome_WidgetWin_1
   ^p::SendInput {Up}
   ^n::SendInput {Down}
   ^f::SendInput {Right}
