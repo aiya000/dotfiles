@@ -62,7 +62,8 @@ EnvGet, Home, HOME
   !j::SendInput ^{Enter}
 #IfWinActive
 
-#IfWinActive, ahk_class Chrome_WidgetWin_1
+; Vivaldiに完全なbashキーマップを与えたくないので、exeを指定している
+#IfWinActive, ahk_exe Discord.exe
   ^p::SendInput {Up}
   ^n::SendInput {Down}
   ^f::SendInput {Right}
