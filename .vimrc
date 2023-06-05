@@ -595,7 +595,7 @@ if g:vimrc.is_wsl
   let g:fakeclip_provide_clipboard_key_mappings = v:true
 
   function s:configure_fakeclip(_, __) abort
-    let g:fakeclip_force_override_clip_command = 'gocopy'
+    let g:fakeclip_force_override_clip_command = 'nkf -s | gocopy'
   endfunction
 
   call vimrc#job#start_simply(
