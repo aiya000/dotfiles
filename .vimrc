@@ -1693,6 +1693,10 @@ nmap <Plug>(nomap-dirvish_up) <Plug>(dirvish_up)
 " vim-quickrepl
 nmap <leader>R <Plug>(quickrepl-open)
 
+" kensaku-search.vim
+cmap <C-j> <CR>
+cnoremap <CR> <Plug>(kensaku-search-replace)<CR>
+
 " }}}
 
 if filereadable($'{$HOME}/.vimrc_env_post')

@@ -192,3 +192,9 @@ repo = 'shun/ddu-source-rg'
 
 [[plugins]]
 repo = 'matsui54/ddc-buffer'
+
+[[plugins]]
+repo = 'lambdalisue/kensaku.vim'
+
+[[plugins]]
+repo = 'lambdalisue/kensaku-search.vim'
