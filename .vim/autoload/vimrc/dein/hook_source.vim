@@ -84,10 +84,11 @@ function vimrc#dein#hook_source#gina() abort
   call gina#custom#mapping#nmap('log'    , 'Q' , ':<C-u>bdelete!<CR>' , {'noremap': 1 , 'silent': 1})
 endfunction
 
-function vimrc#dein#hook_source#gina_git_add_patch_this() abort
+function! vimrc#dein#hook_source#gina_git_add_patch_this() abort
   " TODO: This may fail if the file name contains spaces
   let file = split(getline('.'), ' ')[1]
-  let git_add = 'git add --patch ' .. file
+  let root = system('git rev-parse --show-toplevel')
+  let git_add = $'git add --patch {root}/{file}'
   CdGitRoot
   call vimrc#open_terminal_as('', 'tabnew', git_add)
 endfunction
