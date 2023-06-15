@@ -1507,6 +1507,7 @@ nnoremap M :<C-u>call ddu#start(#{
     \ ff: #{
       \ startFilter: v:true,
     \ },
+  \ },
 \ })<CR>
 
 nnoremap :h :<C-u>call ddu#start(#{

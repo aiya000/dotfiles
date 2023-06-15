@@ -95,12 +95,11 @@ endfunction
 
 " TODO: Don't open the window. Refresh instead.
 " someones: '--ours' or '--theirs'
-function vimrc#dein#hook_source#gina_git_restore_someones_this(someones) abort
+function! vimrc#dein#hook_source#gina_git_restore_someones_this(someones) abort
   " TODO: This may fail if the file name contains spaces
   let file = split(getline('.'), ' ')[1]
-  let git_restore = 'git restore ' .. a:someones .. ' ' .. file
   CdGitRoot
-  call vimrc#open_terminal_as('', 'tabnew', git_restore)
+  execute 'Gina' $'restore {a:someones} {file}'
 endfunction
 
 function vimrc#dein#hook_source#gina_git_stash_patch_this() abort

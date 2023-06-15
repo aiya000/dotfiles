@@ -63,7 +63,7 @@ EnvGet, Home, HOME
 #IfWinActive
 
 ; Vivaldiに完全なbashキーマップを与えたくないので、exeを指定している
-#IfWinActive, ahk_exe Discord.exe
+#IfWinActive, ahk_exe Discord.exe ; {{{
   ^p::SendInput {Up}
   ^n::SendInput {Down}
   ^f::SendInput {Right}
@@ -80,7 +80,25 @@ EnvGet, Home, HOME
   ^[::SendInput +{Up}
   ^]::SendInput +{Down}
   !j::SendInput ^{Enter}
-#IfWinActive
+#IfWinActive ; }}}
+#IfWinActive, ahk_exe slack.exe ; {{{
+  ^p::SendInput {Up}
+  ^n::SendInput {Down}
+  ^f::SendInput {Right}
+  ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
+  ^,::SendInput +{Left}
+  ^.::SendInput +{Right}
+  ^[::SendInput +{Up}
+  ^]::SendInput +{Down}
+  !j::SendInput ^{Enter}
+#IfWinActive ; }}}
 
 #IfWinActive, ahk_class ConsoleWindowClass
   ; ^p::SendInput {Up}
