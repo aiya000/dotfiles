@@ -1475,22 +1475,30 @@ nmap <C-k><C-f> :<C-u>Denite outline<CR>i
 nmap <C-k><C-t> :<C-u>Denite tag<CR>i
 
 " ddu.vim
-nnoremap <C-k><C-e> :<C-u>call ddu#start(#{
-  \ sources: [
-    \ #{
-      \ name: 'file_rec',
-      \ params: #{
-        \ path: g:vimrc.git_root ==# v:null ? g:vimrc.path_at_started : g:vimrc.git_root,
-        \ ignoredDirectories: ['.git', 'node_modules'],
+function s:ddu_start_file_rec(in_current_directory) abort
+  call ddu#custom#patch_global('sourceOptions', #{
+    \ file_rec: #{
+      \ path:
+        \ a:in_current_directory ? expand('%:p:h') :
+        \ g:vimrc.git_root !=# v:null ? g:vimrc.git_root :
+        \ g:vimrc.path_at_started
+    \ },
+  \ })
+
+  call ddu#start(#{
+    \ sources: [
+      \ #{
+        \ name: 'file_rec',
+        \ params: #{ ignoredDirectories: ['.git', 'node_modules'] },
       \ },
-    \ },
-  \ ],
-  \ uiParams: #{
-    \ ff: #{
-      \ startFilter: v:true,
-    \ },
-  \ }
-\ })<CR>
+    \ ],
+    \ uiParams: #{
+      \ ff: #{ startFilter: v:true },
+    \ }
+  \ })
+endfunction
+nnoremap <C-k><C-e> :<C-u>call <SID>ddu_start_file_rec(v:false)<CR>
+nnoremap <C-k>e :<C-u>call <SID>ddu_start_file_rec(v:true)<CR>
 
 nnoremap L :<C-u>call ddu#start(#{
   \ sources: [#{ name: 'buffer' }],
