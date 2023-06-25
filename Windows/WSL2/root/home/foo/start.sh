@@ -7,4 +7,4 @@ rm /tmp/zsh-has-loaded 2> /dev/null || true
 source "$HOME/.dotfiles/root/etc/profile.d/zdotroot.sh"
 
 cd || exit 1
-tmux
+exec tmux
