@@ -13,7 +13,7 @@ AptInstall = sudo apt install -y
 AptUpdate = sudo apt update
 AptBuildDep = sudo apt build-dep
 
-NodeInstall = npm install --global --user
+NPMInstall = npm install --global --user
 
 prepare:
 	if [ ! -d ~/.config ] ; then \
@@ -255,23 +255,23 @@ install-deno:
 	which deno || brew install deno
 
 install-markdown:
-	which doctoc || $(NodeInstall) doctoc
+	which doctoc || $(NPMInstall) doctoc
 
 install-text:
-	which textlint || $(NodeInstall) textlint
+	which textlint || $(NPMInstall) textlint
 
 install-typescript:
-	which typescript || $(NodeInstall) typescript
-	which ts-node || $(NodeInstall) ts-node
+	which typescript || $(NPMInstall) typescript
+	which ts-node || $(NPMInstall) ts-node
 
 install-html:
-	which htmlhint || $(NodeInstall) htmlhint
+	which htmlhint || $(NPMInstall) htmlhint
 
 install-css:
-	which csslint || $(NodeInstall) csslint
+	which csslint || $(NPMInstall) csslint
 
 install-xml:
-	which xml || $(NodeInstall) pretty-xml
+	which xml || $(NPMInstall) pretty-xml
 
 ifeq ($(OS),Arch) # {{{
 
@@ -403,7 +403,7 @@ endif
 # Below is very optional
 
 install-lice:
-	which lice || $(NodeInstall) lice
+	which lice || $(NPMInstall) lice
 
 install-java:
 	which java || $(YayInstall) jdk
@@ -421,10 +421,17 @@ install-bluetooth:
 	# sudo systemctl enable bluetooth
 	# sudo systemctl start bluetooth
 
+ifeq ($(OS),Arch)
 install-graphic-editors:
 	which draw.io || $(YayInstall) drawio-desktop-bin
 	which gm || $(YayInstall) graphicsmagick
 	which krita || $(YayInstall) krita-appimage
+endif
+ifeq ($(OS),Ubuntu)
+install-graphic-editors:
+	which drawio || $(NPMInstall) drawio
+	# TODO: Other packages
+endif
 
 install-media-players:
 	which vlc || $(YayInstall) vlc
