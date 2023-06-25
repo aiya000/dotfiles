@@ -1500,30 +1500,31 @@ endfunction
 nnoremap <C-k><C-e> :<C-u>call <SID>ddu_start_file_rec(v:false)<CR>
 nnoremap <C-k>e :<C-u>call <SID>ddu_start_file_rec(v:true)<CR>
 
+nnoremap H :<C-u>call ddu#start(#{
+  \ sources: [#{ name: 'line' }],
+  \ uiParams: #{
+    \ ff: #{ startFilter: v:true },
+  \ },
+\ })<CR>
+
 nnoremap L :<C-u>call ddu#start(#{
   \ sources: [#{ name: 'buffer' }],
   \ uiParams: #{
-    \ ff: #{
-      \ startFilter: v:true,
-    \ },
+    \ ff: #{ startFilter: v:true },
   \ },
 \ })<CR>
 
 nnoremap M :<C-u>call ddu#start(#{
   \ sources: [#{ name: 'file_old' }],
   \ uiParams: #{
-    \ ff: #{
-      \ startFilter: v:true,
-    \ },
+    \ ff: #{ startFilter: v:true },
   \ },
 \ })<CR>
 
 nnoremap :h :<C-u>call ddu#start(#{
   \ sources: [#{ name: 'help' }],
   \ uiParams: #{
-    \ ff: #{
-      \ startFilter: v:true,
-    \ },
+    \ ff: #{ startFilter: v:true },
   \ },
 \ })<CR>
 
