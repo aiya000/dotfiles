@@ -430,6 +430,8 @@ endif
 ifeq ($(OS),Ubuntu)
 install-graphic-editors:
 	which drawio || $(NPMInstall) drawio
+	which gm || $(AptInstall) graphicsmagick
+	which krita || $(AptInstall) krita
 	# TODO: Other packages
 endif
 
