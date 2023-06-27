@@ -201,3 +201,6 @@ repo = 'lambdalisue/kensaku-search.vim'
 
 [[plugins]]
 repo = 'Shougo/ddu-source-line'
+
+[[plugins]]
+repo = 'lambdalisue/fern.vim'
