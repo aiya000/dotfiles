@@ -1157,7 +1157,8 @@ nmap <silent> g> :<C-u>call vimrc#open_buffer_to_execute('messages')<CR>gh_
 nmap <silent> m: :<C-u>call vimrc#open_buffer_to_execute('marks')<CR>gh_
 nmap <silent> q> :<C-u>call vimrc#open_buffer_to_execute('register')<CR>gh_
 nmap <silent> y: :<C-u>Denite unite:yankround<CR>
-nmap <silent> z: :<C-u>tabs<CR>
+nnoremap <silent> z: :<C-u>tabs<CR>
+nnoremap q: gQ
 nnoremap <silent> # "zyiw?\m\C\<<C-r>z\><CR>
 nnoremap <silent> * "zyiw/\m\C\<<C-r>z\><CR>
 nnoremap <silent> <C-k>o :<C-u>e! %<CR>
@@ -1167,7 +1168,7 @@ nnoremap <silent> <leader>B :<C-u>sp <C-r>=g:vimrc.memo_path<CR><CR>
 nnoremap <silent> <leader>b :<C-u>call vimrc#open_scratch_buffer()<CR>
 nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
 
-nnoremap <silent> <leader><leader>q :<C-u>call vimrc#bufclose_filetype(g:vimrc.temporary_buftypes)<CR>
+nnoremap <silent> Q :<C-u>call vimrc#bufclose_filetype(g:vimrc.temporary_buftypes)<CR>
 
 " folds
 nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
@@ -1285,7 +1286,6 @@ nnoremap <silent> <C-k><Space> :<C-u>call vimrc#clear_ends_space()<CR>
 nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
 nnoremap <silent> <Space><Space> :<C-u>call vimrc#compress_spaces()<CR>
 nnoremap <silent> <leader>o :<C-u>copen<CR>
-nnoremap Q gQ
 nnoremap Y yg_
 nnoremap g<C-]> <C-]>
 nnoremap g_ $
