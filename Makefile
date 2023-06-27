@@ -312,6 +312,7 @@ install-vim-runtime-deps:
 	which silicon || brew install silicon
 	which jsonpp || brew install jsonpp
 	which pup || go install github.com/ericchiang/pup@latest
+	which gomi || brew install b4b4r07/tap/gomi
 	make install-vital-vim
 
 install-vital-vim:
