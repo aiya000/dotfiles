@@ -1259,6 +1259,8 @@ nmap 'dd "+dd
 nmap 'D "+D
 nmap 'd "+d
 nmap 'x "+x
+nnoremap "%p :<C-u>put=$'{expand('%:p')}'<CR>
+nnoremap "%P :<C-u>put!=$'{expand('%:p')}'<CR>
 
 " cr
 nmap <C-j> <CR>
