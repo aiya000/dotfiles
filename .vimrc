@@ -33,7 +33,7 @@ let g:vimrc.undodir    = $'{g:vimrc.backupdir}/undo'
 let g:vimrc.viewdir    = $'{g:vimrc.backupdir}/view'
 let g:vimrc.sessiondir = $'{g:vimrc.backupdir}/session'
 
-" Please see 'nmap <leader><leader>q'.
+" Please see 'vimrc#bufclose_filetype()'.
 let g:vimrc.temporary_buftypes = [
   \ 'aref_web',
   \ 'diff',
@@ -51,8 +51,6 @@ let g:vimrc.temporary_buftypes = [
   \ 'qf',
   \ 'quickrun',
   \ 'scratch',
-  \ 'denite',
-  \ 'denite-filter',
   \ 'ddu-ff',
   \ 'ddu-filter',
   \ 'stack_build',
@@ -606,25 +604,6 @@ if g:vimrc.is_wsl
 endif
 
 " }}}
-" denite.nvim {{{
-
-" Please see the ftplugin 'denite'
-
-" NOTE: How I can ignore it without this DEPRECATED value
-let g:neomru#file_mru_ignore_pattern = '^gina://.*'
-
-augroup vimrc
-  autocmd BufEnter,BufWinEnter *
-    \  call denite#custom#var('outline', 'command', ['ctags'])
-    \| call denite#custom#var('outline', 'options', ['--sort=no'])
-    \| call denite#custom#var('outline', 'file_opt', '-o')
-  autocmd BufEnter,BufWinEnter *.hs
-    \  call denite#custom#var('outline', 'command', ['hasktags'])
-    \| call denite#custom#var('outline', 'options', ['--ctags'])
-    \| call denite#custom#var('outline', 'file_opt', '-f')
-augroup END
-
-" }}}
 " idris-vim {{{
 
 let g:idris_vim_enable_keymappings_by_default = v:false
@@ -941,8 +920,6 @@ call ddc#custom#patch_global(#{
       \ mark: 'lsp',
       \ ignoreCase: v:true,
     \ },
-    \ around: #{ mark: 'A' },
-    \ neosnippet: #{ mark: 'ns', dup: v:true },
     \ file: #{
       \ matchers: ['matcher_head'],
       \ sorters: ['sorter_rank'],
@@ -951,6 +928,8 @@ call ddc#custom#patch_global(#{
       \ forceCompletionPattern: '\S/\S*',
     \ },
     \ buffer: #{ mark: 'B' },
+    \ around: #{ mark: 'A' },
+    \ neosnippet: #{ mark: 'ns', dup: v:true },
   \ },
   \ sourceParams: #{
     \ around: #{ maxSize: 500 },
@@ -981,6 +960,11 @@ call lexima#add_rule(#{char: '【', input_after: '】'})
 " If you want to :Vitalize,
 " do `make install-vital-vim` first,
 " then add installed vital.vim and plugins onto &rutimepath using `set rtp+=`.
+
+" }}}
+" quickpeek.vim {{{
+
+let g:quickpeek_auto = v:true
 
 " }}}
 
@@ -1160,7 +1144,8 @@ nmap <silent> g: :<C-u>call vimrc#open_buffer_to_execute('buffers')<CR>gh_
 nmap <silent> g> :<C-u>call vimrc#open_buffer_to_execute('messages')<CR>gh_
 nmap <silent> m: :<C-u>call vimrc#open_buffer_to_execute('marks')<CR>gh_
 nmap <silent> q> :<C-u>call vimrc#open_buffer_to_execute('register')<CR>gh_
-nmap <silent> y: :<C-u>Denite unite:yankround<CR>
+" TODO: Alternative.
+" nmap <silent> y: :<C-u>Denite unite:yankround<CR>
 nnoremap <silent> z: :<C-u>tabs<CR>
 nnoremap q: gQ
 nnoremap <silent> # "zyiw?\m\C\<<C-r>z\><CR>
@@ -1476,10 +1461,11 @@ vmap <leader>w <Plug>(openbrowser-open)
 nmap <leader>r <Plug>(quickrun)
 vmap <leader>r <Plug>(quickrun)
 
+" TODO: Alternative.
 " denite.nvim
 "" map i to do open_filter_buffer
-nmap <C-k><C-f> :<C-u>Denite outline<CR>i
-nmap <C-k><C-t> :<C-u>Denite tag<CR>i
+" nmap <C-k><C-f> :<C-u>Denite outline<CR>i
+" nmap <C-k><C-t> :<C-u>Denite tag<CR>i
 
 " ddu.vim
 function s:ddu_start_file_rec(in_current_directory) abort

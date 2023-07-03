@@ -1,55 +1,10 @@
 [[plugins]]
-repo = 'basyura/TweetVim'
-depends = [
-    'open-browser.vim',
-    'twibill.vim',
-    'bitly.vim',
-    'favstar-vim',
-    'unite.vim',
-]
-on_cmd = [
-    'TweetVimVersion',
-    'TweetVimAddAccount',
-    'TweetVimSwitchAccount',
-    'TweetVimHomeTimeline',
-    'TweetVimMentions',
-    'TweetVimUserTimeline',
-    'TweetVimListStatuses',
-    'TweetVimSearch',
-    'TweetVimSay',
-    'TweetVimUserStream',
-    'TweetVimCommandSay',
-    'TweetVimCurrentLineSay',
-    'TweetVimClearIcon',
-]
-
-[[plugins]]
-repo = 'mattn/favstar-vim'
-on_cmd = 'FavStar'
-
-[[plugins]]
-repo = 'basyura/twibill.vim'
-
-[[plugins]]
-repo = 'basyura/bitly.vim'
-
-[[plugins]]
 repo = 'thinca/vim-quickrun'
 depends = 'vimproc.vim'
 on_cmd = 'QuickRun'
 on_map = [
     '<Plug>(quickrun)',
     '<Plug>(quickrun-op)',
-]
-
-[[plugins]]
-repo = 'mattn/webapi-vim'
-
-[[plugins]]
-repo = 'Shougo/vinarise.vim'
-on_cmd = [
-    'Vinarise',
-    'VinariseDump',
 ]
 
 [[plugins]]
@@ -82,25 +37,6 @@ on_cmd = [
 ]
 
 [[plugins]]
-repo = 'LeafCage/vimhelpgenerator'
-on_cmd = [
-    'VimHelpGenerator',
-    'VimHelpGeneratorVirtual',
-    'HelpIntoMarkdown',
-]
-
-[[plugins]]
-repo = 'rbtnn/vimconsole.vim'
-on_cmd = [
-    'VimConsoleLog',
-    'VimConsoleOpen',
-    'VimConsoleClose',
-    'VimConsoleToggle',
-    'VimConsoleClear',
-    'VimConsoleRedraw',
-]
-
-[[plugins]]
 repo = 'lambdalisue/vim-pager'
 on_cmd = 'PAGER'
 
@@ -122,16 +58,11 @@ repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
 [[plugins]]
-repo = 'yomi322/neco-tweetvim'
-on_source = 'TweetVim'
-
-[[plugins]]
 repo = 'derekwyatt/vim-scala'
 on_ft = 'scala'
 
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
-rev = '2e9de27914c3765c87dc28626af772ef6207375e'
 on_cmd = 'Gina'
 hook_source = 'call vimrc#dein#hook_source#gina()'
 
@@ -161,22 +92,6 @@ on_ft = [
     'idris',
     'lidris',
 ]
-
-# Now only for TweetVim
-[[plugins]]
-repo = 'Shougo/unite.vim'
-depends = 'TweetVim'
-on_cmd = 'Unite'
-
-[[plugins]]
-repo = 'libclang-vim/libclang-vim'
-build = 'make'
-on_ft = ['c', 'cpp']
-
-[[plugins]]
-repo = 'libclang-vim/vim-textobj-clang'
-depends = 'libclang-vim'
-on_ft = ['c', 'cpp']
 
 [[plugins]]
 repo = 'haya14busa/incsearch.vim'
@@ -213,15 +128,6 @@ on_map = [
     '<Plug>(operator-surround-append)',
     '<Plug>(operator-surround-delete)',
     '<Plug>(operator-surround-replace)',
-]
-
-[[plugins]]
-repo = 'mattn/emmet-vim'
-hook_source = 'call vimrc#dein#hook_source#emmet()'
-on_ft = [
-    'xml',
-    'html',
-    'markdown',
 ]
 
 [[plugins]]
@@ -349,6 +255,9 @@ on_source = 'gina.vim'
 [[plugins]]
 repo = 'jparise/vim-graphql'
 on_ft = ['graphql']
+
+[[plugins]]
+repo = 'mattn/webapi-vim'
 
 [[plugins]]
 repo = 'mattn/vim-gist'

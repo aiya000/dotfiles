@@ -28,16 +28,13 @@ repo = 'aiya000/aho-bakaup.vim'
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
 rev = 'b7c241fb5737c50bf09cf1e26298492c3fc0457a'
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+
 
 [[plugins]]
 repo = 'kana/vim-textobj-indent'
 depends = 'vim-textobj-user'
-
-[[plugins]]
-repo = 'kana/vim-textobj-user'
-
-[[plugins]]
-repo = 'kana/vim-operator-user'
 
 [[plugins]]
 repo = 'osyo-manga/vim-textobj-from_regexp'
@@ -48,6 +45,9 @@ repo = 'whatyouhide/vim-textobj-xmlattr'
 depends = 'vim-textobj-user'
 
 [[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
 repo = 'thinca/vim-visualstar'
 
 [[plugins]]
@@ -55,14 +55,9 @@ repo = 'vim-jp/autofmt'
 
 [[plugins]]
 repo = 'dense-analysis/ale'
-rev = '9fe9f115213d7e7bf52d06ebdc69c6df38b1120b'
 
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
-
-[[plugins]]
-repo = 'Shougo/denite.nvim'
-rev = 'db1ee51242b4b0c8ae3dee58be8cf7f82fb3e74a'
 
 [[plugins]]
 repo = 'kana/vim-textobj-jabraces'
@@ -77,16 +72,7 @@ repo = 'machakann/vim-highlightedyank'
 repo = 'andymass/vim-matchup'
 
 [[plugins]]
-repo = 'ryanoasis/vim-devicons'
-
-[[plugins]]
 repo = 'nathanaelkane/vim-indent-guides'
-
-[[plugins]]
-repo = 'roxma/vim-hug-neovim-rpc'
-
-[[plugins]]
-repo = 'roxma/nvim-yarp'
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
