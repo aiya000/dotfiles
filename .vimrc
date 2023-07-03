@@ -418,12 +418,6 @@ call submode#map('win_move', 'n', 's', '_', '<C-w>_')
 call submode#map('win_move', 'n', 's', '"', ':resize 5<CR>')
 
 " }}}
-" vimdoc-ja {{{
-
-" vimdoc-ja is secondary order
-set helplang=en,ja
-
-" }}}
 " aho-bakaup.vim {{{
 
 let g:bakaup_backup_dir  = g:vimrc['backupdir']
@@ -434,12 +428,6 @@ let g:bakaup_auto_backup = 1
 
 let g:neosnippet#snippets_directory = $'{g:vimrc.vim_home}/neosnippets'
 let g:neosnippet#disable_select_select_mappings = 1
-
-" }}}
-" vimconsole.vim {{{
-
-let g:vimconsole#auto_redraw             = 1
-let g:vimconsole#no_default_key_mappings = 1
 
 " }}}
 " vim-textobj-indent {{{
@@ -609,11 +597,6 @@ endif
 let g:idris_vim_enable_keymappings_by_default = v:false
 
 " }}}
-" vim-textobj-clang {{{
-
-let g:textobj_clang_more_mappings = 1
-
-" }}}
 " vim-operator-surround {{{
 
 " Please see hook_source.vim
@@ -639,11 +622,6 @@ augroup vimrc
   autocmd VimEnter * FNoreMap K 〈
   autocmd VimEnter * FNoreMap -k 『
 augroup END
-
-" }}}
-" vimhelpgenerator {{{
-
-let g:vimhelpgenerator_defaultlanguage = 'en'
 
 " }}}
 " vim-indent-guides {{{
@@ -861,7 +839,9 @@ augroup END
 " }}}
 " gist.vim {{{
 
-let g:gist_clip_command = 'clip.exe'
+if g:vimrc.is_wsl
+  let g:gist_clip_command = 'clip.exe'
+endif
 
 " }}}
 " open-browser.vim {{{
@@ -1016,6 +996,7 @@ set
   \ visualbell
   \ wildignorecase
   \ wildmenu
+  \ helplang=en,ja
 
 if !has('nvim')
   set termwinkey=<C-q>

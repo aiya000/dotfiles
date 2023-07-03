@@ -17,5 +17,9 @@ nnoremap <silent><buffer> <localleader><localleader>r <Cmd>call vimrc#open_termi
 syntax sync fromstart
 
 if g:vimrc->has_key('git_root') && filereadable($'{g:vimrc.git_root}/.textlintrc')
+  if !g:ale_fixers->has_key('markdown')
+    let g:ale_fixers.markdown = []
+  endif
+
   call add(g:ale_fixers.markdown, 'textlint')
 endif
