@@ -1264,6 +1264,8 @@ nnoremap g_ $
 nnoremap zs zszh
 nnoremap { {zv
 nnoremap } }zv
+nnoremap <C-x><C-n> <C-n>
+nnoremap <C-x><C-p> <C-p>
 
 function s:save_clear() abort
   write
