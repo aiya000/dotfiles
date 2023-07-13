@@ -1425,8 +1425,8 @@ digraph pi 960    " π pi
 " }}}
 " plugins {{{
 
-" filers
-nnoremap <silent> <leader>gg :<C-u>Fern . -drawer<CR>
+" {filer}
+nnoremap <silent> <leader><leader>g :<C-u>Fern . -drawer<CR>
 nnoremap <silent> <leader>e         :<C-u>call vimrc#toggle_explorer()<CR>
 nnoremap <silent> <leader><leader>e :<C-u>call vimrc#open_explorer('split')<CR>
 nnoremap <silent> <leader>E         :<C-u>call vimrc#open_explorer('stay')<CR>
