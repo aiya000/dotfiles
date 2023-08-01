@@ -947,6 +947,11 @@ call lexima#add_rule(#{char: '【', input_after: '】'})
 let g:quickpeek_auto = v:true
 
 " }}}
+" fern.vim {{{
+
+let g:fern#default_hidden = 1
+
+" }}}
 
 call dein#end()
 
