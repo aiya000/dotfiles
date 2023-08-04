@@ -378,6 +378,7 @@ i_have tmux && alias ta='tmux attach'
 i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have unzip && alias unzip-cp932='unzip -O cp932'
 i_have krita && alias kra=krita
+i_have batcat && alias bat=batcat
 
 # shellcheck disable=SC2139
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
