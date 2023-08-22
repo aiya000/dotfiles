@@ -12,7 +12,7 @@ let &errorformat = '%f(%l\,%c): %m'  " tsc
 
 " TODO: Do this only when lsp started
 " To lighten the completion performance
-set complete-=t
+" setl complete-=t
 
 nnoremap <buffer><silent> <localleader><localleader>r :<C-u>QuickfixRunYarn build<CR>
 nnoremap <buffer><silent> <localleader><localleader>w :<C-u>call <SID>start_quickfix()<CR>
