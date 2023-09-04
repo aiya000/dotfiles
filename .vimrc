@@ -1149,7 +1149,7 @@ nnoremap <silent> Q :<C-u>call vimrc#bufclose_filetype(g:vimrc.temporary_buftype
 nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
 nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
 nnoremap zj zjzo
-nnoremap zk zkzo
+nnoremap zk zkzo[zzt
 
 " windows
 " <Space> prefix
