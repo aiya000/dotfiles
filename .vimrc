@@ -203,6 +203,8 @@ augroup vimrc
   autocmd!
 
   autocmd VimEnter * ScdCurrentDir
+  " NOTE: Wait 1ms to show correctly
+  autocmd VimEnter * call vimrc#wait(1).then({ -> execute(':Fern . -drawer') })
 
   " Auto set cursor position in the file
   autocmd BufReadPost * call vimrc#visit_past_position()
@@ -1680,6 +1682,7 @@ if filereadable($'{$HOME}/.vimrc_env_post')
   source ~/.vimrc_env_post
 endif
 
+execute 'helptags' $'{g:vimrc.vim_home}/doc'
 filetype plugin indent on
 syntax enable
 let g:vimrc.loaded = v:true
