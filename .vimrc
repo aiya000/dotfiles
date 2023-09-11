@@ -220,7 +220,7 @@ augroup vimrc
 
   autocmd InsertEnter * call ddc#enable()
 
-  " Please see vimrc#open_scratch_buffer()
+  " Please also see vimrc#open_scratch_buffer()
   autocmd WinEnter,BufEnter,InsertLeave,Winleave,BufLeave scratch*.md
     \  if bufname('%') !~# 'gista://'
       \| write
@@ -228,6 +228,16 @@ augroup vimrc
 
   " Set the 'none' filetype to the empty filetype
   autocmd VimEnter,BufNew * if empty(&ft) | setf none | endif
+
+  " Colors
+  autocmd ColorScheme * highlight EmSpace ctermbg=LightBlue guibg=LightBlue
+  autocmd VimEnter,WinEnter * call matchadd('EmSpace', '　')
+  " git conflicts
+  autocmd ColorScheme * highlight GitConflict ctermbg=Red guibg=Red
+  autocmd VimEnter,WinEnter * call matchadd('GitConflict', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
+  " StatusLine
+  autocmd InsertEnter * highlight StatusLine ctermfg=231 ctermbg=64
+  autocmd InsertLeave * highlight StatusLine ctermfg=231 ctermbg=60
 augroup END
 
 " }}}
@@ -724,7 +734,6 @@ augroup END
 " solargraph is temporary disabled because it occurs error at runtime (dein.vim?)
 let g:lsp_settings = #{
   \ solargraph: #{ disabled: 1 },
-  \ vim-language-server: #{ disabled: 1 },
 \ }
 
 " }}}
@@ -1022,27 +1031,8 @@ let &statusline = join([
 " ☆
 set ambiwidth=double
 
-" Define my highlight and colors
-" {{{
-
-augroup vimrc
-  autocmd ColorScheme * highlight EmSpace ctermbg=LightBlue guibg=LightBlue
-  autocmd VimEnter,WinEnter * call matchadd('EmSpace', '　')
-  " git conflict
-  autocmd ColorScheme * highlight GitConflict ctermbg=Red guibg=Red
-  autocmd VimEnter,WinEnter * call matchadd('GitConflict', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
-
-  autocmd InsertEnter * highlight StatusLine ctermfg=231 ctermbg=64
-  autocmd InsertLeave * highlight StatusLine ctermfg=231 ctermbg=60
-augroup END
-
-" }}}
-
-" Set the colorscheme, but it is set only once
-if !g:vimrc.loaded
-  set background=dark
-  colorscheme lucariox
-endif
+set background=dark
+colorscheme lucariox
 
 " The tabline is always shown
 set showtabline=2
@@ -1063,10 +1053,6 @@ let &undodir = g:vimrc.undodir
 
 " Use aho-bakaup.vim's the backup functions
 set nobackup
-
-" TODO: This option doesn't work finely (?)
-" Disable auto commentalize new line
-set formatoptions-=ro
 
 " Always I use the ignorecase
 set ignorecase noinfercase
@@ -1694,7 +1680,6 @@ if filereadable($'{$HOME}/.vimrc_env_post')
   source ~/.vimrc_env_post
 endif
 
-execute 'helptags' $'{g:vimrc.vim_home}/doc'
 filetype plugin indent on
 syntax enable
 let g:vimrc.loaded = v:true
