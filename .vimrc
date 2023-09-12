@@ -1,5 +1,10 @@
 " NOTE: Don't use the mark Z, this is reserved by some my functions.
 
+let s:V = vital#vimrc#new()
+let s:List = s:V.import('Data.List')
+let s:Msg = s:V.import('Vim.Message')
+let s:Promise = s:V.import('Async.Promise')
+
 "---------------"
 " Global values "
 "---------------"
@@ -154,11 +159,6 @@ endif
 call dein#add('Shougo/dein.vim', {'rtp': ''})
 
 " }}}
-
-let s:V = vital#vimrc#new()
-let s:List = s:V.import('Data.List')
-let s:Msg = s:V.import('Vim.Message')
-let s:Promise = s:V.import('Async.Promise')
 
 
 "---------------"
@@ -385,15 +385,6 @@ if g:vimrc.is_wsl2
     \ tempfile: '%{tempname()}.ps1',
   \ }
 endif
-
-" }}}
-" TweetVim {{{
-
-let g:tweetvim_async_post = 1
-let g:twibill_use_job     = 1
-
-" Avoid unite-tweetvim lazy loading error
-let g:tweetvim_config_dir = $'{$HOME}/.tweetvim'
 
 " }}}
 " foldCC {{{
