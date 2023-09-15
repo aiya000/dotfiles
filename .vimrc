@@ -66,7 +66,7 @@ let g:vimrc.git_root = v:null
 call vimrc#read_to_set_git_root()
 
 " }}}
-" Environment Variables {{{
+" Others {{{
 
 " Open in preference to an entity
 let $MYVIMRC = filereadable($'{$HOME}/.dotfiles/.vimrc')
@@ -76,6 +76,14 @@ let $MYVIMRC = filereadable($'{$HOME}/.dotfiles/.vimrc')
 let $MYGVIMRC = filereadable($'{$HOME}/.dotfiles/.gvimrc')
   \ ? $'{$HOME}/.dotfiles/.gvimrc'
   \ : $MYGVIMRC
+
+let s:typescript_variants = [
+  \ 'typescript',
+  \ 'javascript',
+  \ 'vue',
+  \ 'typescript.tsx',
+  \ 'javascript.jsx',
+\ ]
 
 " }}}
 
@@ -203,11 +211,10 @@ augroup vimrc
   autocmd!
 
   autocmd VimEnter * ScdCurrentDir
+  autocmd BufReadPost * call vimrc#visit_past_position()
+
   " NOTE: Wait 1ms to show correctly
   autocmd VimEnter * call vimrc#wait(1).then({ -> execute(':Fern . -drawer') })
-
-  " Auto set cursor position in the file
-  autocmd BufReadPost * call vimrc#visit_past_position()
 
   if !has('nvim')
     " TODO: for any registers
@@ -216,7 +223,7 @@ augroup vimrc
     autocmd TerminalOpen * nmap <buffer> 'p "+p
   endif
 
-  " RelativeNumber is used current window only
+  " relative number
   autocmd BufEnter,WinEnter * if &number | setl relativenumber | end
   autocmd BufLeave,Winleave * setl norelativenumber
 
@@ -464,14 +471,6 @@ let g:ale_set_highlights = v:false
 let g:ale_vim_vint_show_style_issues = v:false
 let g:ale_virtualtext_cursor = 'current'
 
-let s:typescript_variants = [
-  \ 'typescript',
-  \ 'javascript',
-  \ 'vue',
-  \ 'typescript.tsx',
-  \ 'javascript.jsx',
-\ ]
-
 " =======
 " Linters
 " =======
@@ -572,11 +571,11 @@ endfor
 " }}}
 " elm-vim {{{
 
-let g:elm_browser_command    = g:vimrc['open_on_gui']
-let g:elm_format_autosave    = 1
-let g:elm_make_output_file   = '/tmp/elm-vim-output.html'
+let g:elm_browser_command = g:vimrc['open_on_gui']
+let g:elm_format_autosave = 1
+let g:elm_make_output_file = '/tmp/elm-vim-output.html'
 let g:elm_make_show_warnings = 1
-let g:elm_setup_keybindings  = 0
+let g:elm_setup_keybindings = 0
 
 " }}}
 " vim-fakeclip {{{
@@ -685,11 +684,6 @@ let g:lsp_document_code_action_signs_enabled = 0
 " let g:lsp_log_file = expand('~/vim-lsp.log')
 " let g:lsp_log_verbose = 1
 
-augroup vimrc
-  " TODO: What's the!?!?
-  autocmd BufNew,BufEnter * let g:lsp_document_code_action_signs_enabled = 0
-augroup END
-
 function s:find_root_uri_by_file(file) abort
   return lsp#utils#path_to_uri(
     \ lsp#utils#find_nearest_parent_file_directory(
@@ -700,6 +694,9 @@ function s:find_root_uri_by_file(file) abort
 endfunction
 
 augroup vimrc
+  " TODO: What's the!?!?
+  autocmd BufNew,BufEnter * let g:lsp_document_code_action_signs_enabled = 0
+
   autocmd User lsp_setup call lsp#register_server(#{
     \ name: 'haskell-language-server',
     \ cmd: { _ -> [&shell, &shellcmdflag, 'haskell-language-server-wrapper'] },
@@ -772,16 +769,8 @@ let g:textobj_precious_no_default_key_mappings = v:true
 
 augroup vimrc
   autocmd User PreciousFileType IndentGuidesToggle | IndentGuidesToggle
-  autocmd User PreciousFileType call s:dont_enter_vue_promise()
-  autocmd FileType vue-* setl syntax=typescript
   autocmd WinEnter,BufEnter,TabEnter * PreciousSwitch
 augroup END
-
-function s:dont_enter_vue_promise() abort
-  if context_filetype#get()['filetype'] =~# '^vue-'
-    call precious#switch('typescript')
-  endif
-endfunction
 
 " }}}
 " context_filetype.vim {{{
@@ -790,6 +779,7 @@ let g:context_filetype#filetypes = #{
   \ help: [],
   \ vue: [],
   \ html: [],
+  \ erb: [],
   \ review: [
     \ #{
       \ start: '//list\[[^]]\+\]\[[^]]\+\]\[\([^]]\+\)\]{',
@@ -929,7 +919,6 @@ call ddc#custom#patch_global(#{
 " lexima.vim {{{
 
 call lexima#add_rule(#{char: '<', input_after: '>'})
-"
 " call lexima#add_rule(#{char: '<', at: '\%#\>', leave: 1})
 " call lexima#add_rule(#{char: '<BS>', at: '\<\%#\>', delete: 1})
 call lexima#add_rule(#{char: '「', input_after: '」'})
