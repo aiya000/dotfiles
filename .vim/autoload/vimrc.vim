@@ -218,20 +218,20 @@ endfunction
 function vimrc#toggle_diff()
   if &diff
     diffoff
-    "NOTE: This restores a [c and ]c keymaps of .vimrc,
-    "NOTE: please see [c, ]c, [ale-previous], and [ale-next] at .vimrc.
+    "NOTE: This restores [c and ]c of .vimrc,
+    "NOTE: Please see [c, ]c, [ale-previous], and [ale-next] in .vimrc.
     nmap <buffer> [c [ale-previous]
     nmap <buffer> ]c [ale-next]
   else
     diffthis
-    " Get the origin
+    " Get original
     nnoremap <buffer> [c [c
     nnoremap <buffer> ]c ]c
   endif
   set diff?
 endfunction
 
-" If you has nofile buffer, close it.
+" If you have nofile buffer, close it.
 function vimrc#bufclose_filetype(filetypes)
   let closed = 0
   for w in range(1, winnr('$'))
@@ -245,7 +245,7 @@ function vimrc#bufclose_filetype(filetypes)
   return closed
 endfunction
 
-" Toggle open netrw explorer ( vertical split )
+" Toggle a file explorer ( vertical split )
 function vimrc#toggle_explorer(...)
   const path = get(a:000, 0, expand('%:p:h'))
   const closed = vimrc#bufclose_filetype(['dirvish'])
@@ -277,14 +277,14 @@ function vimrc#get_webpage_title() abort
   try
     echo 'fetching now...'
     const clipboard_content = g:vimrc.is_wsl2 ? system('gopaste') : @+
-    return system('curl --silent ' .. clipboard_content .. ' | pup --plain "title json{}" | jq -r ".[0].text"')
+    return system($'curl --silent {clipboard_content} | pup --plain "title json{}" | jq -r ".[0].text"')
   catch
-    return 'vimrc#get_webpage_title(): something happened: ' .. v:exception
+    return $'vimrc#get_webpage_title(): something happened: {v:exception}'
   endtry
 endfunction
 
-" :quit if only a window is existent,
-" :hide otherwise
+" :quit if only a window is existent.
+" :hide otherwise.
 function vimrc#hide_or_quit() abort
   const tabnum = tabpagenr('$')
   const winnum = tabpagewinnr(tabpagenr(), '$')
@@ -303,13 +303,13 @@ function vimrc#toggle_ale_at_buffer() abort
   ALEToggle
 endfunction
 
-" Toggle showing indent-guides with variable
+" Toggle indent-guides
 function vimrc#toggle_indent_guides()
   let g:vimrc#indent_guides_enable = !get(g:, 'vimrc#indent_guides_enable', v:true)
   IndentGuidesToggle
 endfunction
 
-" Delete a surround `{ _ }` -> ` _ `
+" Delete the surround of `{ _ }` -> ` _ `
 function vimrc#delete_mostly_inner_surround() abort
   call dein#source('vim-operator-surround')
   const obj_keys = s:get_current_obj_keys()
@@ -336,7 +336,7 @@ function s:input_obj_key_of(obj_keys) abort
   return stroke
 endfunction
 
-" Replaces a surround to a surround `{ _ }` -> `[ _ ]`
+" Replaces a surround to the surround of `{ _ }` -> `[ _ ]`
 function vimrc#replace_mostly_inner_surround() abort
   call dein#source('vim-operator-surround')
   const obj_keys = s:get_current_obj_keys()
@@ -365,7 +365,7 @@ function vimrc#append_choose_surround_wide() abort
   call repeat#set("\<Plug>(vimrc-surround-append-choice-wide)" .. obj_key)
 endfunction
 
-" Puts a regsiter as stdin to the terminal buffer
+" Puts a regsiter as stdin into the terminal buffer
 function vimrc#put_as_stdin(detail) abort
   const current_bufnr = bufnr('%')
   call timer_start(0, { _ -> term_sendkeys(current_bufnr, a:detail) }, {'repeat': 1})
@@ -388,7 +388,7 @@ function vimrc#move_window_forward()
   normal! zz
 endfunction
 
-" Current buffer move to next tab
+" Moves a current buffer to the next tab.
 function vimrc#move_window_backward()
   mark Z
   hide
@@ -471,7 +471,7 @@ function vimrc#open_buffer_to_execute(cmd) abort
   silent write
 endfunction
 
-" Auto set cursor position in the file
+" Moves the cursor position to the last position of a file.
 function vimrc#visit_past_position()
   const past_posit = line("'\"")
   if past_posit > 0 && past_posit <= line('$')
@@ -479,7 +479,7 @@ function vimrc#visit_past_position()
   endif
 endfunction
 
-" Rename the file of current buffer
+" Renames a file name of the current buffer.
 function vimrc#rename_to(new_name) abort
   const this_file = fnameescape(expand('%'))
   const new_name  = fnameescape(a:new_name)
@@ -498,7 +498,7 @@ function vimrc#rename_to(new_name) abort
   const new_file = fnamemodify(this_file, ':h') .. '/' .. new_name
   const failed = rename(this_file, new_file)
   if failed
-    call s:Msg.error(printf('Rename %s to %s is failed', this_file, new_file))
+    call s:Msg.error($'Rename {this_file} to {new_file} is failed')
     return
   endif
 
@@ -511,7 +511,7 @@ endfunction
 
 function s:git_branch_session_save(repo_path) abort
   const repo_name = fnamemodify(a:repo_path, ':t')
-  const branch_name = system(printf("cd %s ; git branch | sort | tail -1 | awk '{print $2}'", a:repo_path))[:-2]
+  const branch_name = system("cd {a:repo_path} ; git branch | sort | tail -1 | awk '{print $2}'")[:-2]
 
   " Remove '#' because '#' shouldn't be used as a file name
   const session_name =
@@ -519,24 +519,14 @@ function s:git_branch_session_save(repo_path) abort
     \ ->substitute('/', '-', 'g')
     \ ->substitute('#', '-', 'g')
 
-  const session_path = fnameescape(printf('%s/%s.vim', g:vimrc['sessiondir'], session_name))
+  const session_path = fnameescape($'{g:vimrc.sessiondir}/{session_name}.vim')
   execute 'mksession!' session_path
-  echomsg 'The session saved!: ' .. session_path
+  echomsg $'The session saved!: {session_path}'
 endfunction
 
-" Makes a session by reading the name of the current git repository.
+" Makes a session by reading the name of a current git repository.
 function vimrc#git_branch_session_save() abort
   call vimrc#read_git_root(function('s:git_branch_session_save'))
-endfunction
-
-function vimrc#increment_gui_fontsize() abort
-  let g:vimrc.guifont.size += 1
-  let &guifont = 'RictyDiminished NF ' .. g:vimrc.guifont.size
-endfunction
-
-function vimrc#decrement_gui_fontsize() abort
-  let g:vimrc.guifont.size -= 1
-  let &guifont = 'RictyDiminished NF ' .. g:vimrc.guifont.size
 endfunction
 
 function s:caddexpr_on_stdout(data) abort
@@ -561,7 +551,7 @@ function s:caddexpr_on_stdout(data) abort
   endfor
 endfunction
 
-" Open tweetvim by private account
+" Opens tweetvim' buffer with a private account.
 function vimrc#twitter(account) abort
   execute ':TweetVimSwitchAccount' a:account
   TweetVimHomeTimeline
@@ -572,16 +562,12 @@ function vimrc#tweet(account) abort
   TweetVimSay
 endfunction
 
-" const s:read_to_quickfix_it {{{
-
 const s:read_to_quickfix_it = { cmd ->
   \ s:Job.start(cmd, {
     \ 'on_stdout': function('s:caddexpr_on_stdout'),
     \ 'on_stderr': function('s:caddexpr_on_stdout'),
   \ })
 \ }
-
-" }}}
 
 " TODO: Unify run_foo_quickfix to one
 function vimrc#run_gradle_quickfix(gradle_subcmd) abort
@@ -650,14 +636,6 @@ function vimrc#run_make_quickfix(make_args) abort
   finally
     execute ':lcd' current
   endtry
-endfunction
-
-function vimrc#grep_those(...) abort
-  CClear
-  call s:List.map(a:000, { word ->
-    \ execute('grepadd ' .. word .. ' %', 'silent!')
-  \ })
-  copen
 endfunction
 
 function vimrc#open_this_file_in_gui() abort
