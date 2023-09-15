@@ -1,12 +1,10 @@
 scriptencoding utf-8
 scriptversion 3
 
-let s:V = vital#vimrc#new()
-
-let s:Job = s:V.import('System.Job')
-let s:List = s:V.import('Data.List')
-let s:Msg = s:V.import('Vim.Message')
-let s:Promise = s:V.import('Async.Promise')
+let s:Job = vital#vimrc#import('System.Job')
+let s:List = vital#vimrc#import('Data.List')
+let s:Msg = vital#vimrc#import('Vim.Message')
+let s:Promise = vital#vimrc#import('Async.Promise')
 
 " Allows to reuse `self`.
 " {{{
@@ -30,6 +28,7 @@ function vimrc#let(self, f) abort
 endfunction
 
 " Applies `f` if `p(value)`.
+" To re-use a:value.
 " {{{
 "
 " Params:
@@ -87,7 +86,7 @@ function s:parse_git_root(cont, stdout, stderr) abort
   " NOTE: -2 removes the trailing line break
   let git_root = fnameescape(stdout)->vimrc#apply_if(
     \ { git_root -> (git_root !~# '^/') && executable('wslpath') },
-    \ { git_root_windows -> fnameescape(system(printf("wslpath %s", git_root_windows)))[:-3] },
+    \ { git_root_windows -> fnameescape(system('wslpath "git_root_windows"'))[:-3] },
   \ )
   " ^^ TODO: Use timer_start() instead of system()
 
@@ -121,7 +120,7 @@ function vimrc#read_git_root_sync() abort
   return result
 endfunction
 
-" Clone dein.vim to target dir.
+" git-clones dein.vim to a:install_dirname.
 function vimrc#fetch_dein(install_dirname)
   if executable('git')
     echo 'dein.vim was not installed yet.'
@@ -184,15 +183,15 @@ function s:is_supported_by_neovim(open_mode) abort
 endfunction
 
 function s:terminal_with_warn(unsupprted_open_mode) abort
-  call s:Msg.warn(printf('throw %s is not available for NeoVim, now do `:terminal` with no arguments instead.', a:unsupprted_open_mode))
+  call s:Msg.warn($'throw {a:unsupprted_open_mode} is not available for NeoVim, now do `:terminal` with no arguments instead.')
   return ':terminal'
 endfunction
 
-" Compress continuous space
+" Compresses continuously spaces to a space.
 function vimrc#compress_spaces()
   const recent_pattern = @/
   try
-    execute 'substitute/\s\+/ /g'
+    execute 's/\s\+/ /g'
     normal! ==
   finally
     let @/ = recent_pattern
@@ -200,12 +199,12 @@ function vimrc#compress_spaces()
   nohlsearch
 endfunction
 
-" Clear all lines end space
-function vimrc#clear_ends_space()
+" Removes trailing spaces of all lines.
+function vimrc#remove_trailing_spaces()
   const recent_pattern = @/
   const curpos = getcurpos()
   try
-    execute '%substitute/\s*\?$//g'
+    execute '%s/\s*\?$//g'
   catch /E486/
     echo 'nothing todo'
   finally
@@ -214,7 +213,7 @@ function vimrc#clear_ends_space()
   endtry
 endfunction
 
-" Toggle diffthis - diffoff
+" Toggles diffthis and diffoff with some keymappings.
 function vimrc#toggle_diff()
   if &diff
     diffoff
@@ -231,7 +230,7 @@ function vimrc#toggle_diff()
   set diff?
 endfunction
 
-" If you have nofile buffer, close it.
+" Closes buffers of a specified filetypes.
 function vimrc#bufclose_filetype(filetypes)
   let closed = 0
   for w in range(1, winnr('$'))
@@ -245,7 +244,7 @@ function vimrc#bufclose_filetype(filetypes)
   return closed
 endfunction
 
-" Toggle a file explorer ( vertical split )
+" Toggles a file explorer
 function vimrc#toggle_explorer(...)
   const path = get(a:000, 0, expand('%:p:h'))
   const closed = vimrc#bufclose_filetype(['dirvish'])
@@ -261,7 +260,7 @@ function vimrc#open_explorer(split, ...) abort
     \ a:split ==# 'split' ? ':split | silent Dirvish' :
     \ a:split ==# 'vsplit' ? ':vsplit | silent Dirvish' :
     \ a:split ==# 'tabnew' ? ':tabnew | silent Dirvish' :
-      \ execute('throw "an unexpected way to open the explorer: ' .. a:split .. '"')
+      \ execute($'throw "an unexpected way to open the explorer: {a:split}"')
 
   if !isdirectory(path)
     " :silent to ignore an error message. Because opening seems success.
@@ -295,7 +294,6 @@ function vimrc#hide_or_quit() abort
   endif
 endfunction
 
-" Toggle b:ale_enabled
 function vimrc#toggle_ale_at_buffer() abort
   let b:ale_enabled = !get(b:, 'ale_enabled', 1)
   " Refresh the state
@@ -303,13 +301,13 @@ function vimrc#toggle_ale_at_buffer() abort
   ALEToggle
 endfunction
 
-" Toggle indent-guides
+" Toggles indent-guides
 function vimrc#toggle_indent_guides()
   let g:vimrc#indent_guides_enable = !get(g:, 'vimrc#indent_guides_enable', v:true)
   IndentGuidesToggle
 endfunction
 
-" Delete the surround of `{ _ }` -> ` _ `
+" Deletes the surround of `{ _ }` -> ` _ `
 function vimrc#delete_mostly_inner_surround() abort
   call dein#source('vim-operator-surround')
   const obj_keys = s:get_current_obj_keys()
@@ -336,7 +334,7 @@ function s:input_obj_key_of(obj_keys) abort
   return stroke
 endfunction
 
-" Replaces a surround to the surround of `{ _ }` -> `[ _ ]`
+" Replaces a surround to the surround of `{ _ }` -> `[ _ ]`.
 function vimrc#replace_mostly_inner_surround() abort
   call dein#source('vim-operator-surround')
   const obj_keys = s:get_current_obj_keys()
@@ -365,13 +363,14 @@ function vimrc#append_choose_surround_wide() abort
   call repeat#set("\<Plug>(vimrc-surround-append-choice-wide)" .. obj_key)
 endfunction
 
-" Puts a regsiter as stdin into the terminal buffer
+" Puts a regsiter as stdin into the terminal buffer.
 function vimrc#put_as_stdin(detail) abort
   const current_bufnr = bufnr('%')
   call timer_start(0, { _ -> term_sendkeys(current_bufnr, a:detail) }, {'repeat': 1})
   return 'i'
 endfunction
 
+" Moves a current buffer to left of tab.
 function vimrc#move_window_forward()
   const tabwin_num = len(tabpagebuflist())
   mark Z
@@ -388,7 +387,7 @@ function vimrc#move_window_forward()
   normal! zz
 endfunction
 
-" Moves a current buffer to the next tab.
+" Moves a current buffer to right of tab.
 function vimrc#move_window_backward()
   mark Z
   hide
@@ -402,6 +401,7 @@ function vimrc#move_window_backward()
   normal! zz
 endfunction
 
+" Moves tab to left.
 function vimrc#move_tab_prev()
   if tabpagenr() is 1
     $tabmove
@@ -410,6 +410,7 @@ function vimrc#move_tab_prev()
   endif
 endfunction
 
+" Moves tab to right.
 function vimrc#move_tab_next()
   if tabpagenr() is tabpagenr('$')
     0tabmove

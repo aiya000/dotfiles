@@ -1,9 +1,8 @@
 " NOTE: Don't use the mark Z, this is reserved by some my functions.
 
-let s:V = vital#vimrc#new()
-let s:List = s:V.import('Data.List')
-let s:Msg = s:V.import('Vim.Message')
-let s:Promise = s:V.import('Async.Promise')
+let s:List = vital#vimrc#import('Data.List')
+let s:Msg = vital#vimrc#import('Vim.Message')
+let s:Promise = vital#vimrc#import('Async.Promise')
 
 "---------------"
 " Global values "
@@ -1227,7 +1226,7 @@ nnoremap <C-k>t :<C-u>tselect<Space>
 nnoremap <expr> <C-k><C-s> printf(":%%s/\\m\\C\\<%s\\>//g\<Left>\<Left>", expand('<cword>'))
 nnoremap <expr> <C-k>s printf(":%%s/\\m\\C\\<%s\\>/%s/g\<Left>\<Left>", expand('<cword>'), expand('<cword>'))
 nnoremap <silent> <C-k><C-j> :<C-u>call <SID>save_clear()<CR>
-nnoremap <silent> <C-k><Space> :<C-u>call vimrc#clear_ends_space()<CR>
+nnoremap <silent> <C-k><Space> :<C-u>call vimrc#remove_trailing_spaces()<CR>
 nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
 nnoremap <silent> <Space><Space> :<C-u>call vimrc#compress_spaces()<CR>
 nnoremap <silent> <leader>o :<C-u>copen<CR>
