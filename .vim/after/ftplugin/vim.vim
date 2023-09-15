@@ -6,7 +6,7 @@ let b:undo_ftplugin = 'setl ' . join([
   \ 'commentstring<',
 \ ])
 
-setl tw=0 ts=2 sw=2 et omnifunc=lsp#complete
+setl tw=0 ts=2 sw=2 et
 let &commentstring = ' " %s'
 
 nnoremap <buffer><silent> <leader><leader>o :<C-u>VimConsoleOpen<CR>
