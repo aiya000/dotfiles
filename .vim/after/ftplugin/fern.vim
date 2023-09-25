@@ -2,6 +2,7 @@ nnoremap <buffer> n n
 nnoremap <buffer> N N
 nnoremap <buffer> / /
 nnoremap <buffer> ? ?
+nunmap <buffer> <C-k>
 
 nmap <buffer> + <Plug>(fern-action-zoom)
 nmap <buffer> - <Plug>(fern-action-zoom:reset)
