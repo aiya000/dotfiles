@@ -213,7 +213,10 @@ augroup vimrc
   autocmd BufReadPost * call vimrc#visit_past_position()
 
   " NOTE: Wait 1ms to show correctly
-  autocmd VimEnter * call vimrc#wait(1).then({ -> execute(':Fern . -drawer') })
+  autocmd VimEnter * call vimrc#wait(1).then({ -> [
+    \ execute(':Fern . -drawer'),
+    \ execute('normal! ' .. "\<C-w>p"),
+  \ ] })
 
   if !has('nvim')
     " TODO: for any registers
