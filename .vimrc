@@ -1255,6 +1255,7 @@ inoremap <C-k>\+ ＋
 inoremap <C-k>\- −
 inoremap <C-k>\= ＝
 inoremap <C-k>?= ≒
+inoremap <C-k>=~ ≅
 inoremap <C-k>\N ℕ
 inoremap <C-k>\Z ℤ
 inoremap <C-k>\R ℝ
