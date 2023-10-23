@@ -1208,7 +1208,7 @@ nmap <C-j> <CR>
 nmap <C-m> <CR>
 nnoremap <CR> o<Esc>
 
-" informations
+" lsp
 nnoremap <silent> <C-g><C-o> :<C-u>LspHover<CR>
 nnoremap <silent> <C-g><C-a> :<C-u>LspCodeAction<CR>
 nnoremap <silent> <C-g><C-d> :<C-u>LspDefinition<CR>
