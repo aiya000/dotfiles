@@ -1262,6 +1262,7 @@ inoremap <C-k>\R ℝ
 inoremap <C-k>\Q ℚ
 inoremap <C-k>\C ℂ
 inoremap <C-k>.. ◉
+inoremap <C-k>\|> ↦
 
 " others
 imap <C-j> <CR>
