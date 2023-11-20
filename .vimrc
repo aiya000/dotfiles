@@ -2,7 +2,6 @@
 
 let s:List = vital#vimrc#import('Data.List')
 let s:Msg = vital#vimrc#import('Vim.Message')
-let s:Promise = vital#vimrc#import('Async.Promise')
 
 "---------------"
 " Global values "
