@@ -9,8 +9,6 @@ configure=$(cat << EOS
     --enable-python3interp=yes \
     --enable-rubyinterp=yes \
     --enable-luainterp=dynamic \
-    --with-lua-prefix=/usr \
-    --with-luajit \
     --enable-cscope=yes \
     --enable-gpm \
     --enable-cscope \
