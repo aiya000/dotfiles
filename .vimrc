@@ -587,6 +587,7 @@ if g:vimrc.is_wsl
 
   call vimrc#job#start_simply(
     \ ['/bin/which', 'nkf'],
+    \ v:null,
     \ { _, __ -> s:Msg.warn('nkf is not found.') }
   \ )
 endif

@@ -57,11 +57,13 @@ endfunction
 "     called with failed
 function vimrc#job#start_simply(...) abort
   const command = get(a:000, 0, v:null)
-  const OnSucceed = get(a:000, 1, v:null)
-  if command is v:null || OnSucceed is v:null
-    throw 'vimrc#job#start_simply: 2 or 3 args required'
+  if command is v:null
+    throw 'vimrc#job#start_simply: 1 or more args required'
   endif
 
+  const OnSucceed = get(a:000, 1, v:null) is v:null
+    \ ? { _, __ -> '' }
+    \ : get(a:000, 1, v:null) " Expect a:1 to a function
   const OnFailed = get(a:000, 2, { _, __, ___ -> '' })
   call job_start(command, vimrc#job#get_basic_options_completes_with(OnSucceed, OnFailed))
 endfunction
