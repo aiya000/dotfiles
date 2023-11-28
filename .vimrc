@@ -584,6 +584,11 @@ let g:elm_setup_keybindings = 0
 if g:vimrc.is_wsl
   let g:fakeclip_provide_clipboard_key_mappings = v:true
   let g:fakeclip_force_override_clip_command = 'nkf -s | clip.exe'
+
+  call vimrc#job#start_simply(
+    \ ['/bin/which', 'nkf'],
+    \ { _, __ -> s:Msg.warn('nkf is not found.') }
+  \ )
 endif
 
 " }}}
