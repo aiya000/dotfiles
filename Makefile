@@ -49,7 +49,6 @@ install:
 	$(MAKE) prepare
 	$(MAKE) install-core-package-managers
 	$(MAKE) build-os-env
-	$(MAKE) install-by-pip3
 
 install-without-confirm:
 	$(MAKE) install noconfirm='--noconfirm'
@@ -94,10 +93,6 @@ install-nvm:
 
 install-haskell-stack:
 	curl -sSL https://get.haskellstack.org/ | sh
-
-install-by-pip3:
-	# For deoplete.nvim
-	pip3 install neovim
 
 build-os-env:
 # Install my better GUI/CLI environment
@@ -392,7 +387,8 @@ install-cli-recommended:
 		watchexec
 	$(AptInstall) \
 		jq \
-		universal-ctags
+		universal-ctags \
+		bat
 
 # TODO: Check this make to able to build vim
 install-vim-build-deps:
