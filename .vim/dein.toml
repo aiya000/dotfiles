@@ -27,10 +27,9 @@ repo = 'aiya000/aho-bakaup.vim'
 
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
-rev = 'b7c241fb5737c50bf09cf1e26298492c3fc0457a'
+
 [[plugins]]
 repo = 'kana/vim-textobj-user'
-
 
 [[plugins]]
 repo = 'kana/vim-textobj-indent'
