@@ -189,3 +189,6 @@ repo = 'Shougo/ddu-source-line'
 
 [[plugins]]
 repo = 'lambdalisue/fern.vim'
+
+[[plugins]]
+repo = 'github/copilot.vim'

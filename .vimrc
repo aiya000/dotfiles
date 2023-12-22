@@ -1659,6 +1659,9 @@ nmap <leader>R <Plug>(quickrepl-open)
 cmap <C-j> <CR>
 cnoremap <CR> <Plug>(kensaku-search-replace)<CR>
 
+" copilot.vim
+imap <C-]> <Plug>(copilot-next)
+
 " }}}
 
 if filereadable($'{$HOME}/.vimrc_env_post')
