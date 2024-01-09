@@ -18,7 +18,6 @@ alias dmesg='dmesg --ctime'
 alias free='free -h'
 alias ls='ls --color=auto --group-directories-first'
 alias mv='mv -i'
-alias rm=dust  # no more cry
 alias sl=ls
 alias z='cd -'
 
@@ -379,6 +378,7 @@ i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have unzip && alias unzip-cp932='unzip -O cp932'
 i_have krita && alias kra=krita
 i_have batcat && alias bat=batcat
+i_have gomi && alias rm=gomi || alias rm=dust  # no more cry
 
 # shellcheck disable=SC2139
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
