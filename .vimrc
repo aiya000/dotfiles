@@ -942,6 +942,11 @@ let g:quickpeek_auto = v:true
 let g:fern#default_hidden = 1
 
 " }}}
+" copilot.vim {{{
+
+let g:copilot_no_tab_map = v:true
+
+" }}}
 
 call dein#end()
 
@@ -1660,6 +1665,7 @@ cmap <C-j> <CR>
 cnoremap <CR> <Plug>(kensaku-search-replace)<CR>
 
 " copilot.vim
+imap <silent><script><expr> <C-g><Tab> copilot#Accept("\<CR>")
 imap <C-]> <Plug>(copilot-next)
 
 " }}}
