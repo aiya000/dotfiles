@@ -863,6 +863,7 @@ call ddu#custom#patch_global(#{
   \ kindOptions: #{
     \ file: #{ defaultAction: 'open' },
     \ help: #{ defaultAction: 'open' },
+    \ lsp: #{ defaultAction: 'open' },
   \ },
   \ sourceOptions: #{
     \ _: #{
@@ -945,6 +946,11 @@ let g:fern#default_hidden = 1
 " copilot.vim {{{
 
 let g:copilot_no_tab_map = v:true
+
+" }}}
+" ddu-source-lsp {{{
+
+let g:ddu_source_lsp_clientName = 'vim-lsp'
 
 " }}}
 
@@ -1482,6 +1488,19 @@ nnoremap :h :<C-u>call ddu#start(#{
   \ sources: [#{ name: 'help' }],
   \ uiParams: #{
     \ ff: #{ startFilter: v:true },
+  \ },
+\ })<CR>
+
+nnoremap <C-k><C-f> :<C-u>call ddu#start(#{
+  \ sources: [#{ name: 'lsp_documentSymbol' }],
+  \ sourceOptions: #{
+    \ lsp: #{ volatile: v:true },
+  \ },
+  \ uiParams: #{
+    \ ff: #{
+      \ immediateAction: 'open',
+      \ ignoreEmpty: v:false,
+    \ },
   \ },
 \ })<CR>
 
