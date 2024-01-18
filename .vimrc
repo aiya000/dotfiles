@@ -1465,6 +1465,11 @@ nnoremap <C-k>e :<C-u>call <SID>ddu_start_file_rec(v:true)<CR>
 
 nnoremap H :<C-u>call ddu#start(#{
   \ sources: [#{ name: 'line' }],
+  \ sourceOptions: #{
+    \ _: #{
+      \ matchers: ['matcher_regex'],
+    \ },
+  \ },
   \ uiParams: #{
     \ ff: #{ startFilter: v:true },
   \ },
@@ -1498,6 +1503,7 @@ nnoremap <C-k><C-f> :<C-u>call ddu#start(#{
   \ },
   \ uiParams: #{
     \ ff: #{
+      \ displayTree: v:true,
       \ immediateAction: 'open',
       \ ignoreEmpty: v:false,
     \ },

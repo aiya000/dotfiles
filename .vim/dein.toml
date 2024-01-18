@@ -195,3 +195,6 @@ repo = 'github/copilot.vim'
 
 [[plugins]]
 repo = 'uga-rosa/ddu-source-lsp'
+
+[[plugins]]
+repo = 'kamecha/ddu-filter-matcher_regex'
