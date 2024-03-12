@@ -912,7 +912,6 @@ call ddc#custom#patch_global(#{
       \ forceCollect: v:true,
     \ },
   \ },
-  \ keywordPattern: '[a-zA-Z_]\w*',
 \ })
 
 " }}}
@@ -1455,9 +1454,6 @@ function s:ddu_start_file_rec(in_current_directory) abort
         \ params: #{ ignoredDirectories: ['.git', 'node_modules'] },
       \ },
     \ ],
-    \ uiParams: #{
-      \ ff: #{ startFilter: v:true },
-    \ }
   \ })
 endfunction
 nnoremap <C-k><C-e> :<C-u>call <SID>ddu_start_file_rec(v:false)<CR>
@@ -1470,30 +1466,18 @@ nnoremap H :<C-u>call ddu#start(#{
       \ matchers: ['matcher_regex'],
     \ },
   \ },
-  \ uiParams: #{
-    \ ff: #{ startFilter: v:true },
-  \ },
 \ })<CR>
 
 nnoremap L :<C-u>call ddu#start(#{
   \ sources: [#{ name: 'buffer' }],
-  \ uiParams: #{
-    \ ff: #{ startFilter: v:true },
-  \ },
 \ })<CR>
 
 nnoremap M :<C-u>call ddu#start(#{
   \ sources: [#{ name: 'file_old' }],
-  \ uiParams: #{
-    \ ff: #{ startFilter: v:true },
-  \ },
 \ })<CR>
 
 nnoremap :h :<C-u>call ddu#start(#{
   \ sources: [#{ name: 'help' }],
-  \ uiParams: #{
-    \ ff: #{ startFilter: v:true },
-  \ },
 \ })<CR>
 
 nnoremap <C-k><C-f> :<C-u>call ddu#start(#{
