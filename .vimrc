@@ -725,6 +725,8 @@ let g:lsp_settings = #{
   \ solargraph: #{ disabled: 1 },
 \ }
 
+let g:lsp_settings_filetype_vue = ['typescript-language-server', 'volar-server']
+
 " }}}
 " vim-ghcid-quickfix {{{
 

@@ -103,6 +103,7 @@ repo = 'prabirshrestha/async.vim'
 
 [[plugins]]
 repo = 'mattn/vim-lsp-settings'
+rev = 'b93c195d521ea4d6559880eb8d18f5a503e946d9'
 
 [[plugins]]
 repo = 'rhysd/vim-lsp-ale'
