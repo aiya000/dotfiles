@@ -965,6 +965,11 @@ let g:copilot_no_tab_map = v:true
 let g:ddu_source_lsp_clientName = 'vim-lsp'
 
 " }}}
+" rainbow {{{
+
+let g:rainbow_active = 1
+
+" }}}
 
 call dein#end()
 
