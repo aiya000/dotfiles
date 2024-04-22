@@ -122,7 +122,7 @@ command! -bar ScdGitRoot let g:vimrc.path_at_started = g:vimrc.git_root
 command! -bar GitReadRoot call vimrc#read_to_set_git_root()
 command! -bar ReadGitRoot call vimrc#read_to_set_git_root()
 """
-command! -bar Grep call ddu#start(#{
+command! -bar Grep call vimrc#ddu_start_from_insert(#{
   \ sources: [#{
     \ name: 'rg',
     \ options: #{

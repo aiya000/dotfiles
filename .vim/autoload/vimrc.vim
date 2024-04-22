@@ -693,3 +693,11 @@ endfunction
 function vimrc#wait(ms)
   return s:Promise.new({resolve -> timer_start(a:ms, resolve)})
 endfunction
+
+" Starts ddu from filter mode
+function vimrc#ddu_start_from_insert(options) abort
+  " Please see .vimrc what is this
+  let g:vimrc_ddu_start_with_insert_next = v:true
+
+  call ddu#start(a:options)
+endfunction

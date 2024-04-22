@@ -875,14 +875,14 @@ call ddu#custom#patch_global(#{
   \ },
 \ })
 
-let s:ddu_start_with_insert_next = v:false
+let g:vimrc_ddu_start_with_insert_next = v:false
 
 " When the next ddu ready, ddu starts from insert
 augroup vimrc
   autocmd user Ddu:uiReady
-    \  if s:ddu_start_with_insert_next
-      \| execute 'normal i'
-      \| let s:ddu_start_with_insert_next = v:false
+    \  if g:vimrc_ddu_start_with_insert_next
+      \| call feedkeys('i')
+      \| let g:vimrc_ddu_start_with_insert_next = v:false
     \| endif
 augroup END
 
@@ -1450,11 +1450,6 @@ vmap <leader>r <Plug>(quickrun)
 " nmap <C-k><C-t> :<C-u>Denite tag<CR>i
 
 " ddu.vim
-function s:ddu_start_from_insert(options) abort
-  let s:ddu_start_with_insert_next = v:true
-  call ddu#start(a:options)
-endfunction
-
 function s:ddu_start_file_rec(in_current_directory) abort
   call ddu#custom#patch_global('sourceOptions', #{
     \ file_rec: #{
@@ -1465,7 +1460,7 @@ function s:ddu_start_file_rec(in_current_directory) abort
     \ },
   \ })
 
-  call s:ddu_start_from_insert(#{
+  call vimrc#ddu_start_from_insert(#{
     \ sources: [
       \ #{
         \ name: 'file_rec',
@@ -1487,7 +1482,7 @@ nnoremap H :<C-u>call ddu#start(#{
   \ },
 \ })<CR>
 
-nnoremap L :<C-u>call <SID>ddu_start_from_insert(#{
+nnoremap L :<C-u>call vimrc#ddu_start_from_insert(#{
   \ sources: [#{ name: 'buffer' }],
 \ })<CR>
 
@@ -1495,7 +1490,7 @@ nnoremap M :<C-u>call ddu#start(#{
   \ sources: [#{ name: 'file_old' }],
 \ })<CR>
 
-nnoremap :h :<C-u>call <SID>ddu_start_from_insert(#{
+nnoremap :h :<C-u>call vimrc#ddu_start_from_insert(#{
   \ sources: [#{ name: 'help' }],
 \ })<CR>
 
