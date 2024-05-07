@@ -10,8 +10,8 @@
 export ZDOTDIR=~/.zsh
 export HISTFILE=$ZDOTDIR/history
 export HISTORY_IGNORE=''
-export HISTSIZE=1000000
-export SAVEHIST=1000000
+export HISTSIZE=1000000000
+export SAVEHIST=1000000000
 export FPATH=$FPATH:$HOME/.zsh/complete
 
 # For a command 'time'
