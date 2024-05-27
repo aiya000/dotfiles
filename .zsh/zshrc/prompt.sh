@@ -1,12 +1,14 @@
 #!/usr/bin/env zsh
 
+PROMPT_HEAD_CHAR=$
+
 function zshrc::prompt::main () {
   # A maid represents a status of the exit code
   local feature="%(?.%{${fg_bold[green]}%}.%{${fg_bold[blue]}%})%(?!(*^-^)!(;^-^%))%{${reset_color}%}"
   local current_dir="%{$fg[yellow]%}%~%{$reset_color%}"
 
   export PROMPT="${feature} ${current_dir}%{$reset_color%} | $(zshrc::prompt::sub_status)
-%{$fg[cyan]%}>>> %{$reset_color%}"
+%{$fg[cyan]%}$PROMPT_HEAD_CHAR %{$reset_color%}"
 }
 
 function zshrc::prompt::sub_status () {
