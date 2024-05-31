@@ -248,6 +248,11 @@ if i_have git ; then
 
   unset git_taking_limit
 
+  function git-push-u-origin-branch () {
+    git push -u origin $(git branch --show-current)
+  }
+  alias gpuob=git-push-u-origin-branch
+
   function git-push-wip () {
     local wip_name=wip-current-unique-unique-yazawa-nico
     git branch -D "$wip_name"
