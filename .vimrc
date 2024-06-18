@@ -211,12 +211,6 @@ augroup vimrc
   autocmd VimEnter * ScdCurrentDir
   autocmd BufReadPost * call vimrc#visit_past_position()
 
-  " NOTE: Wait 1ms to show correctly
-  autocmd VimEnter * call vimrc#wait(1).then({ -> [
-    \ execute(':Fern . -drawer'),
-    \ execute('normal! ' .. "\<C-w>p"),
-  \ ] })
-
   if !has('nvim')
     " TODO: for any registers
     autocmd TerminalOpen * call s:nmap_p_to_put_if_on_terminal()
