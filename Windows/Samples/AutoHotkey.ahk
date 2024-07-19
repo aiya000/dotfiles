@@ -15,6 +15,7 @@
 !^c::SendInput !{F4}
 ; !+4::SendInput +#s
 !+4::Run SnippingTool.exe
+!+s::Run SnippingTool.exe
 
 ; http://ahkwiki.net/Reload
 !^r::
