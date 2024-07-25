@@ -1083,15 +1083,17 @@ let maplocalleader = get(g:, 'maplocalleader', '[')
 "---------"
 " Keymaps "
 "---------"
+" variables {{{
+
+nnoremap <expr> <Plug>(vimrc-clear) <SID>clear()
+nnoremap <expr> <Plug>(vimrc-clear-deep) <SID>clear_deep()
+
+" }}}
 " normal mode {{{
 
 " Allow keymaps like <C-c>{foo}, and {bar}<C-c>
 nnoremap <C-c> <NOP>
 nnoremap <C-c><C-c> <C-c>
-
-" clear
-nnoremap <expr> <Plug>(vimrc-clear) <SID>clear()
-nnoremap <expr> <Plug>(vimrc-clear-deep) <SID>clear_deep()
 
 nmap <C-[> <Plug>(vimrc-clear)
 nmap <Esc> <Plug>(vimrc-clear)
@@ -1192,10 +1194,10 @@ nnoremap <silent> <leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'ver
 nnoremap <silent> <leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, #{ path: expand('%:p:h') })<CR>
 nnoremap <silent> <leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, #{ path: expand('%:p:h') })<CR>
 nnoremap <silent> <leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, #{ path: expand('%:p:h') })<CR>
-nnoremap <silent> 'v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, #{path: g:vimrc.path_at_started})<CR>
-nnoremap <silent> ''v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, #{path: g:vimrc.path_at_started})<CR>
-nnoremap <silent> 'V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, #{path: g:vimrc.path_at_started})<CR>
-nnoremap <silent> ''V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, #{path: g:vimrc.path_at_started})<CR>
+nnoremap <silent> \v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, #{path: g:vimrc.path_at_started})<CR>
+nnoremap <silent> \\v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, #{path: g:vimrc.path_at_started})<CR>
+nnoremap <silent> \V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, #{path: g:vimrc.path_at_started})<CR>
+nnoremap <silent> \\V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, #{path: g:vimrc.path_at_started})<CR>
 
 " set
 nnoremap <silent> <C-h><C-d> :<C-u>call vimrc#toggle_diff()<CR>
@@ -1213,14 +1215,14 @@ nnoremap <expr> gp '`[' .. strpart(getregtype(), 0, 1) .. '`]'
 " copy & paste
 "" clipboard
 "" NOTE: Don't use noremap to allow remap with fakeclip
-nmap 'p "+p
-nmap 'P "+P
-nmap 'y "+y
-nmap 'Y "+yg_
-nmap 'dd "+dd
-nmap 'D "+D
-nmap 'd "+d
-nmap 'x "+x
+nmap <leader>p "+p
+nmap <leader>P "+P
+nmap <leader>y "+y
+nmap <leader>Y "+yg_
+nmap <leader>dd "+dd
+nmap <leader>D "+D
+nmap <leader>d "+d
+nmap <leader>x "+x
 nnoremap "%p :<C-u>put=$'{expand('%:p')}'<CR>
 nnoremap "%P :<C-u>put!=$'{expand('%:p')}'<CR>
 
@@ -1262,6 +1264,7 @@ nnoremap { {zv
 nnoremap } }zv
 nnoremap <C-x><C-n> <C-n>
 nnoremap <C-x><C-p> <C-p>
+nnoremap " '
 
 function s:save_clear() abort
   write
@@ -1597,10 +1600,10 @@ nnoremap <silent> <leader>gd :<C-u>GDiff<CR>
 nnoremap <silent> <leader>gb :<C-u>GBrahcnAll<CR>
 nnoremap <silent> <leader>gt :<C-u>GLogTree<CR>
 nnoremap <silent> <leader>gT :<C-u>GLogTreeAll<CR>
-nnoremap <silent> 'gs :<C-u>tabnew \| GStatus<CR>
-nnoremap <silent> 'gl :<C-u>tabnew \| GLog<CR>
-nnoremap <silent> 'gL :<C-u>tabnew \| GLogPatch<CR>
-nnoremap <silent> 'go :<C-u>tabnew \| GLogOneline --pretty='%h %ad %s' --date='format:%Y-%m-%d %H:%M'<CR>
+nnoremap <silent> \gs :<C-u>tabnew \| GStatus<CR>
+nnoremap <silent> \gl :<C-u>tabnew \| GLog<CR>
+nnoremap <silent> \gL :<C-u>tabnew \| GLogPatch<CR>
+nnoremap <silent> \go :<C-u>tabnew \| GLogOneline --pretty='%h %ad %s' --date='format:%Y-%m-%d %H:%M'<CR>
 
 " vim-textobj-clang
 " You are not i
