@@ -1426,16 +1426,15 @@ digraph pi 960    " π pi
 " }}}
 " plugins {{{
 
-" {filer}
-nnoremap <silent> <leader><leader>g :<C-u>Fern . -drawer<CR>
+" Some explorer
 nnoremap <silent> <leader>e         :<C-u>call vimrc#toggle_explorer()<CR>
 nnoremap <silent> <leader><leader>e :<C-u>call vimrc#open_explorer('split')<CR>
 nnoremap <silent> <leader>E         :<C-u>call vimrc#open_explorer('stay')<CR>
 nnoremap <silent> <leader><leader>E :<C-u>call vimrc#open_explorer('tabnew')<CR>
-nnoremap <silent> 'e  :<C-u>call vimrc#toggle_explorer(g:vimrc.path_at_started)<CR>
-nnoremap <silent> ''e :<C-u>call vimrc#open_explorer('split', g:vimrc.path_at_started)<CR>
-nnoremap <silent> 'E  :<C-u>call vimrc#open_explorer('stay', g:vimrc.path_at_started)<CR>
-nnoremap <silent> ''E :<C-u>call vimrc#open_explorer('tabnew', g:vimrc.path_at_started)<CR>
+nnoremap <silent> \e  :<C-u>call vimrc#toggle_explorer(g:vimrc.path_at_started)<CR>
+nnoremap <silent> \\e :<C-u>call vimrc#open_explorer('split', g:vimrc.path_at_started)<CR>
+nnoremap <silent> \E  :<C-u>call vimrc#open_explorer('stay', g:vimrc.path_at_started)<CR>
+nnoremap <silent> \\E :<C-u>call vimrc#open_explorer('tabnew', g:vimrc.path_at_started)<CR>
 
 " open-browser.vim
 nmap <leader>w <Plug>(openbrowser-open)
