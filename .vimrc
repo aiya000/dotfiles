@@ -1133,9 +1133,6 @@ nnoremap <silent> <leader>* *
 nnoremap <silent> <leader>B :<C-u>sp <C-r>=g:vimrc.memo_path<CR><CR>
 nnoremap <silent> <leader>b :<C-u>call vimrc#open_scratch_buffer()<CR>
 nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
-" Windows Terminal takes over my <C-v>. ******!!!!!!!!!
-nnoremap <C-x> <C-v>
-
 nnoremap <silent> Q :<C-u>call vimrc#bufclose_filetype(g:vimrc.temporary_buftypes)<CR>
 
 " folds
