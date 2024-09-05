@@ -63,97 +63,6 @@ function vimrc#dein#hook_source#operator_surround() abort
   " NOTE: Can operator-surround allow <localleader> by some way?
 endfunction
 
-function vimrc#dein#hook_source#gina() abort
-  " TODO: Move to ftplugins
-  call gina#custom#mapping#nmap('status' , 'A'     , ':<C-u>call vimrc#dein#hook_source#gina_git_add_patch_this()<CR>'                  , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , 'o'     , ':<C-u>call gina#action#call("edit")<CR>'                                          , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , 'Q'     , ':<C-u>bdelete!<CR>'                                                               , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , 'sa'    , ':<C-u>call vimrc#dein#hook_source#gina_git_stash_patch_this()<CR>'                , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , 'sp'    , ':<C-u>Gina stash pop<CR>'                                                         , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , 'cc'    , ':<C-u>call vimrc#dein#hook_source#gina_commit_very_verbose("")<CR>'               , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , 'ca'    , ':<C-u>call vimrc#dein#hook_source#gina_commit_very_verbose("--amend")<CR>'        , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , 'cf'    , ':<C-u>GCommitFixup<Space>'                                                        , { 'noremap': 1 , 'silent': 0})
-  call gina#custom#mapping#nmap('status' , 'co'    , ':<C-u>call vimrc#dein#hook_source#gina_git_restore_someones_this("--ours")<CR>'   , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , 'ct'    , ':<C-u>call vimrc#dein#hook_source#gina_git_restore_someones_this("--theirs")<CR>' , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , '<C-j>' , ':<C-u>call gina#action#call("diff:preview:bottom")<CR>'                           , { 'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('status' , '<C-r>' , ':<C-u>Gina status<CR>'                                                            , { 'noremap': 1 , 'silent': 1})
-
-  call gina#custom#mapping#nmap('commit' , 'ZZ' , ':<C-u>call vimrc#dein#hook_source#gina_commit_close()<CR>' , {'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('commit' , '<C-j>' , 'o<Esc>' , {'noremap': 1})
-
-  call gina#custom#mapping#nmap('branch' , 'Q' , ':<C-u>bdelete!<CR>' , {'noremap': 1 , 'silent': 1})
-  call gina#custom#mapping#nmap('log'    , 'Q' , ':<C-u>bdelete!<CR>' , {'noremap': 1 , 'silent': 1})
-endfunction
-
-function! vimrc#dein#hook_source#gina_git_add_patch_this() abort
-  " TODO: This may fail if the file name contains spaces
-  let file = split(getline('.'), ' ')[1]
-  let root = system('git rev-parse --show-toplevel')
-  let git_add = $'git add --patch {root}/{file}'
-  CdGitRoot
-  call vimrc#open_terminal_as('', 'tabnew', git_add)
-endfunction
-
-" TODO: Don't open the window. Refresh instead.
-" someones: '--ours' or '--theirs'
-function! vimrc#dein#hook_source#gina_git_restore_someones_this(someones) abort
-  " TODO: This may fail if the file name contains spaces
-  let file = split(getline('.'), ' ')[1]
-  CdGitRoot
-  execute 'Gina' $'restore {a:someones} {file}'
-endfunction
-
-function vimrc#dein#hook_source#gina_git_stash_patch_this() abort
-  "TODO: This may fail if the file name contains spaces
-  let name = input('stash name: ')
-  if empty(name)
-    return
-  endif
-  let file = split(getline('.'))[2]
-  let git_stash = 'git stash push -m ' .. shellescape(name) .. ' --patch ' .. file
-  CdGitRoot
-  call vimrc#open_terminal_as('', 'tabnew', git_stash, {'noclose': v:true})
-endfunction
-
-function vimrc#dein#hook_source#gina_commit_very_verbose(subcmd) abort
-  call vimrc#bufclose_filetype(['diff'])
-  if len(tabpagebuflist()) isnot 1
-    quit
-    tabnew
-  endif
-
-  Gina diff -u --cached --no-color --no-ext-diff --group=diff
-  Gina log --oneline --opener='bot split'
-  resize 10
-  execute 'normal!' "\<C-w>H"
-
-  try
-    execute 'Gina' 'commit' '--verbose' '--group=commit' '--opener=split' a:subcmd
-    let b:gina_commit_very_verbose = v:true
-  catch
-    echomsg 'Opening terminal instead of `:Gina commit` because:'
-    echomsg v:exception
-    call s:open_term_to_commit(a:subcmd)
-  endtry
-endfunction
-
-function vimrc#dein#hook_source#gina_commit_close() abort
-  let gina_commit_very_verbose = get(b:, 'gina_commit_very_verbose', v:false)
-  wq
-
-  if !gina_commit_very_verbose
-    quit
-    return
-  endif
-
-  if vimrc#has_two_or_more_tabpages()
-    tabclose
-    return
-  endif
-
-  only
-endfunction
-
 function vimrc#dein#hook_source#emmet() abort
   let g:user_emmet_install_global = 0
   let g:user_emmet_leader_key = '<C-g>'
@@ -161,14 +70,4 @@ function vimrc#dein#hook_source#emmet() abort
   augroup vimrc
     autocmd! FileType html,xml,markdown EmmetInstall
   augroup END
-endfunction
-
-function s:open_term_to_commit(subcmd) abort
-  call vimrc#open_terminal_as('term-shell-git-commit', 'stay', &shell, #{ path: g:vimrc.git_root })
-
-  const current_bufnr = bufnr('%')
-  const sleeping_time_to_wait_spawning_terminal = 3000
-  call timer_start(sleeping_time_to_wait_spawning_terminal, { _ ->
-    \ term_sendkeys(current_bufnr, 'git commit ' .. a:subcmd .. "\<CR>i:sparkles:\<Space>")
-  \ }, #{ repeat: 1 })
 endfunction

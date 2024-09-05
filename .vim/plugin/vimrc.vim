@@ -75,7 +75,7 @@ function! s:terminal_at_started(filetype, command, ...) abort
 endfunction
 
 " Git commands
-command! -bar -nargs=* GStatus Gina status -s <args>
+command! -bar -nargs=* GStatus GinStatus <args>
 command! -bar -nargs=* GLog GitLogViewer -100 --name-only <args>
 command! -bar -nargs=* GLogPatch GitLogViewer --patch -100 <args>
 command! -bar -nargs=* GLogOneline GitLogViewer --oneline <args>

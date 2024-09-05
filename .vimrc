@@ -40,9 +40,9 @@ let g:vimrc.sessiondir = $'{g:vimrc.backupdir}/session'
 let g:vimrc.temporary_buftypes = [
   \ 'aref_web',
   \ 'diff',
-  \ 'gina-branch',
-  \ 'gina-log',
-  \ 'gina-status',
+  \ 'gin-branch',
+  \ 'gin-log',
+  \ 'gin-status',
   \ 'gitdiffviewer',
   \ 'gitlogviewer',
   \ 'gitreflogviewer',
@@ -658,13 +658,6 @@ augroup vimrc
       \| IndentGuidesDisable
     \| endif
 augroup END
-
-" }}}
-" gina.vim {{{
-
-let g:gina#command#blame#formatter#format = '%su%=on %ti by %au %ma%in'
-
-" Please see hook_source.vim for more information
 
 " }}}
 " vim-lsp {{{
@@ -1582,7 +1575,7 @@ IncSearchNoreMap <C-l> <C-c>
 IncSearchNoreMap <C-o> <Up>
 IncSearchNoreMap <C-y> <Down>
 
-" gina.vim (and .vim/plugin/vimrc.vim)
+" git (also see .vim/plugin/vimrc.vim)
 nnoremap <silent> <leader>gs :<C-u>GStatus<CR>
 nnoremap <silent> <leader>gS :<C-u>GitShowViewer<CR>
 nnoremap <silent> <leader>gc :<C-u>GCommit<CR>
