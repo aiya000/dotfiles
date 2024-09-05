@@ -42,11 +42,11 @@ function s:open_term_to_commit(subcmd) abort
   \ }, #{ repeat: 1 })
 endfunction
 
-function s:force_show_git_stash_size_onto_top(gina_status_bufnr, _) abort
+function s:force_show_git_stash_size_onto_top(gin_status_bufnr, _) abort
   const current_pos = getpos('.')
 
   try
-    execute ':buffer' a:gina_status_bufnr
+    execute ':buffer' a:gin_status_bufnr
 
     const status = getline(1)
     if s:has_stash_size(status)
@@ -57,7 +57,7 @@ function s:force_show_git_stash_size_onto_top(gina_status_bufnr, _) abort
       " Retry later
       call timer_start(
         \ s:refresh_rate_to_show_stash,
-        \ function('s:force_show_git_stash_size_onto_top', [a:gina_status_bufnr])
+        \ function('s:force_show_git_stash_size_onto_top', [a:gin_status_bufnr])
         \ )
       return
     endif
@@ -88,8 +88,9 @@ function s:force_show(topline, size) abort
   setl nomodifiable
 endfunction
 
-call timer_start(
-  \ s:refresh_rate_to_show_stash,
-  \ function('s:force_show_git_stash_size_onto_top',
-  \ [winbufnr(0)])
-  \ )
+" TODO: Enable this when you want to use this, and update this
+" call timer_start(
+"   \ s:refresh_rate_to_show_stash,
+"   \ function('s:force_show_git_stash_size_onto_top',
+"   \ [winbufnr(0)])
+"   \ )
