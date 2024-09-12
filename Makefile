@@ -501,3 +501,9 @@ install-apt-fast:
 	sudo add-apt-repository ppa:apt-fast/stable
 	sudo apt-get update
 	sudo apt-get -y install apt-fast
+
+install-wsltty-emoji:
+	cd "$(wslpath "$APPDATA/wsltty/emojis")"
+	./getemojis -d
+	echo "Don't forget, set Options.Text.Emojis.Style to google."
+	echo 'Please also see: https://kemasoft.net/index.php?mr/mintty%E3%82%84wsltty%E3%81%A7%E3%82%AB%E3%83%A9%E3%83%BC%E7%B5%B5%E6%96%87%E5%AD%97'

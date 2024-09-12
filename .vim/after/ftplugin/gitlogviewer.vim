@@ -35,4 +35,5 @@ endfunction
 
 nnoremap <buffer><silent> Q :<C-u>bdelete!<CR>
 nnoremap <buffer><silent> S :<C-u>call <SID>try_show_git_show()<CR>
+nnoremap <buffer><silent> p :<C-u>call <SID>try_show_git_show()<CR>
 nnoremap <buffer><silent> <C-r> :<C-u>GitLogViewer <C-r>=b:gitlogviewer_args<CR><CR>
