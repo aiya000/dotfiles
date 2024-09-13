@@ -13,7 +13,9 @@ nnoremap <buffer><silent> ca <Cmd>call <SID>commit_verbose('--amend')<CR>
 nnoremap <buffer><silent> cf <Cmd>GCommitFixup<Space>
 nmap <buffer> <: <Plug>(gin-action-restore:ours)
 nmap <buffer> >: <Plug>(gin-action-restore:theirs)
-nnoremap <buffer><silent> <C-r> <Cmd>GStatus<Space>
+nmap <buffer> -- <Plug>(gin-action-restore:theirs)
+" Use gin's builtin reload action
+" nnoremap <buffer><silent> <C-r> <Cmd>GStatus<Space>
 
 let s:refresh_rate_to_show_stash = 50
 
