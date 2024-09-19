@@ -15,7 +15,6 @@ const {
   tabOpenLink,
   readText,
   Clipboard,
-  Front,
   Hints,
   Visual,
   RUNTIME,
@@ -29,7 +28,7 @@ try {
   Hints.characters = "wertuiopasdfghjkzxcvbm";
   settings.hintAlign = "left";
 } catch (e) {
-  Front.showPopup(`In the section 'General': ${e}`);
+  alert(`In the section 'General': ${e}`);
 }
 
 /**
@@ -92,7 +91,7 @@ try {
   map("<Ctrl-p>", "gT");
   map("g_", "$");
 } catch (e) {
-  Front.showPopup(`In the section 'Normal mode': ${e}`);
+  alert(`In the section 'Normal mode': ${e}`);
 }
 
 /**
@@ -118,7 +117,7 @@ try {
   iunmap("<Ctrl-i>");
   iunmap(":"); // Emoji completion
 } catch (e) {
-  Front.showPopup(`In the section 'Insert mode': ${e}`);
+  alert(`In the section 'Insert mode': ${e}`);
 }
 
 function moveCursor(direction, granularity) {
@@ -187,7 +186,7 @@ try {
   // vmap("<Ctrl-[>", "<Esc>");
   // vmap("<Ctrl-l>", "<Esc>");
 } catch (e) {
-  Front.showPopup(`In the section 'Visual mode': ${e}`);
+  alert(`In the section 'Visual mode': ${e}`);
 }
 
 /**
@@ -209,7 +208,7 @@ try {
   cmap("<Ctrl-u>", "");
   cmap("<Ctrl-k>", "");
 } catch (e) {
-  Front.showPopup(`In the section 'Command mode': ${e}`);
+  alert(`In the section 'Command mode': ${e}`);
 }
 
 /**
