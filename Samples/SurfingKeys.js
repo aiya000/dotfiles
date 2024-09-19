@@ -43,14 +43,14 @@ try {
   map("<Ctrl-b>", "u");
   map("<Ctrl-f>", "d");
   map("F", "af");
+  map("d", "x");
 
   mapkey("gT", "previous tab", () => RUNTIME("previousTab"));
   mapkey("gt", "next tab", () => RUNTIME("nextTab"));
   mapkey("gh", "open link google", () => openLink("https://google.co.jp"));
   mapkey("gH", "tab open link google", () =>
-    tabOpenLink("https://google.co.jp")
+    tabOpenLink("https://google.co.jp"),
   );
-  mapkey("d", "#3Close current tab", () => RUNTIME("closeTab"));
   mapkey("u", "#3Restore closed tab", () => RUNTIME("openLast"));
   mapkey("H", "#4Go back in history", () => history.go(-1), {
     repeatIgnore: true,
@@ -63,13 +63,13 @@ try {
       type: "URLs",
       extra: "getAllSites",
       tabbed: false,
-    })
+    }),
   );
   mapkey("b", "#3Choose a tab", () =>
     Front.openOmnibar({
       type: "URLs",
       extra: "getAllSites",
-    })
+    }),
   );
   mapkey("<", "move tab -1", () => RUNTIME("moveTab", { step: -1 }));
   mapkey(">", "move tab +1", () => RUNTIME("moveTab", { step: 1 }));
@@ -78,11 +78,11 @@ try {
       type: "URLs",
       extra: "getAllSites",
       tabbed: true,
-    })
+    }),
   );
   mapkey("Q", "#11Edit Settings", () => tabOpenLink("/pages/options.html"));
   mapkey("R", "#4Reload the page", () =>
-    RUNTIME("reloadTab", { nocache: true })
+    RUNTIME("reloadTab", { nocache: true }),
   );
 
   /**
@@ -105,12 +105,12 @@ try {
   imapkey(
     "<Ctrl-b>",
     "Move cursor to the backword char",
-    moveCursor("left", "character")
+    moveCursor("left", "character"),
   );
   imapkey(
     "<Ctrl-f>",
     "Move cursor to the forward char",
-    moveCursor("right", "character")
+    moveCursor("right", "character"),
   );
   imapkey("<Ctrl-p>", "Move cursor to the above", moveCursor("left", "line"));
   imapkey("<Ctrl-n>", "Move cursor to the below", moveCursor("right", "line"));
