@@ -143,12 +143,24 @@ command! -bar TodoList GrepIt TODO FIXME XXX
 command! -bar -nargs=+ SetTabTitle let t:vimrc_tabtitle = <q-args>
 command! -bar UnsetTabTitle unlet t:vimrc_tabtitle
 
+"
 " Tapis
+"
+
 function Tapi_Tabnew(_, args) abort
   const files = a:args[1:]
   const paths = s:List.map(files, { file -> fnameescape(file) })
 
   for path in paths
     execute 'tabnew' path
+  endfor
+endfunction
+
+function Tapi_Verticalnew(_, args) abort
+  const files = a:args[1:]
+  const paths = s:List.map(files, { file -> fnameescape(file) })
+
+  for path in paths
+    execute 'vertical' 'new' path
   endfor
 endfunction

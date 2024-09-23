@@ -56,10 +56,15 @@ function vimterm-open-parent-vim() {
   echo -e "\e]51;[\"call\", \"Tapi_Tabnew\", [\"$PWD\" $(vimterm-quote-args "$@")]]\x07"
 }
 
+function vimterm-open-parent-vim-vertical() {
+  echo -e "\e]51;[\"call\", \"Tapi_Verticalnew\", [\"$PWD\" $(vimterm-quote-args "$@")]]\x07"
+}
+
 # If I'm on a shell on Vim
 if [[ $VIM_TERMINAL != '' ]] ; then
   export PAGER=cat
   alias vim=vimterm-open-parent-vim
+  alias v=vimterm-open-parent-vim-vertical
 
   cd-to-git-root \
     && xl \

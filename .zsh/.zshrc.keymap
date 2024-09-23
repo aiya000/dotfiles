@@ -45,4 +45,4 @@ bindkey -M vicmd 'g_' vi-end-of-line
 # I like
 bindkey -M viins '^l' vi-cmd-mode
 bindkey -M viins '^]' clear-screen
-bindkey -M vicmd '^x' edit-command-line
+bindkey -M vicmd '^v' edit-command-line
