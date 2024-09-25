@@ -8,33 +8,26 @@ nnoremap <buffer><silent> Q <Cmd>bdelete!<CR>
 nmap <buffer><silent><nowait> p <Plug>(gin-action-diff:smart:vsplit)
 nmap <buffer><silent> sa <Plug>(gin-action-stash)
 nnoremap <buffer><silent> sp <Cmd>Gin stash pop<CR>
-nnoremap <buffer><silent> cc <Cmd>call <SID>commit_verbose('')<CR>
-nnoremap <buffer><silent> ca <Cmd>call <SID>commit_verbose('--amend')<CR>
-nnoremap <buffer><silent> cf <Cmd>GCommitFixup<Space>
+nnoremap <buffer><silent> cc <Cmd>call <SID>open_commit_buffer('')<CR>
+nnoremap <buffer><silent> ca <Cmd>call <SID>open_commit_buffer('--amend')<CR>
+nnoremap <buffer> cf :<C-u>GCommitFixup<Space>
 nmap <buffer> <: <Plug>(gin-action-restore:ours)
 nmap <buffer> >: <Plug>(gin-action-restore:theirs)
 nmap <buffer> -- <Plug>(gin-action-restore:theirs)
-" Use gin's builtin reload action
-" nnoremap <buffer><silent> <C-r> <Cmd>GStatus<Space>
 
 let s:refresh_rate_to_show_stash = 50
 
-" TODO: Open GinDiff after the buffer of Gin commit opened
-function s:commit_verbose(subcmd) abort
+function s:open_commit_buffer(subcmd) abort
   try
     execute 'Gin' 'commit' '--verbose' a:subcmd
-    " let b:gina_commit_very_verbose = v:true " See ftplugin/gin-commit.vim
   catch
     echomsg $'Opening terminal instead of `:Gin commit` because: {v:exception}'
-    call s:open_term_to_commit(a:subcmd)
+    call s:open_term_commit_buffer(a:subcmd)
     return
   endtry
-
-  " TODO
-  " GinDiff -u --cached --no-color --no-ext-diff ++opener=vsplit
 endfunction
 
-function s:open_term_to_commit(subcmd) abort
+function s:open_term_commit_buffer(subcmd) abort
   call vimrc#open_terminal_as('term-shell-git-commit', 'stay', &shell, #{ path: g:vimrc.git_root })
 
   const current_bufnr = bufnr('%')

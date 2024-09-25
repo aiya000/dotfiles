@@ -957,6 +957,11 @@ let g:ddu_source_lsp_clientName = 'vim-lsp'
 let g:rainbow_active = 1
 
 " }}}
+" gin.vim {{{
+
+let g:gin_proxy_editor_opener = 'vsplit'
+
+" }}}
 
 call dein#end()
 
