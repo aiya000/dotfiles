@@ -82,14 +82,14 @@ command! -bar -nargs=* GLogOneline GitLogViewer --oneline <args>
 command! -bar -nargs=* GDiff GitDiffViewer <args>
 command! -bar -nargs=* GDS GitDiffViewer --staged <args>
 command! -bar -nargs=* GDH GitDiffViewer HEAD~ <args>
-command! -bar -nargs=* GCommit Gina commit --verbose <args>
-command! -bar -nargs=* GCommitAmmend Gina commit --verbose --amend <args>
+command! -bar -nargs=* GCommit Gin commit --verbose <args>
+command! -bar -nargs=* GCommitAmmend Gin commit --verbose --amend <args>
 command! -bar -nargs=1 GCommitFixup echomsg system('git commit --fixup ' .. <q-args>)
 command! -bar -nargs=* GAddPatch terminal git add -p <args>
-command! -bar -nargs=* GTree Gina log --graph --decorate --oneline <args>
-command! -bar -nargs=* GTreeAll Gina log --graph --decorate --oneline --all <args>
-command! -bar -nargs=* GBrahcnAll Gina branch --all <args>
-command! -bar -nargs=* GBlame Gina blame <args>
+command! -bar -nargs=* GTree GinLog --graph --decorate --oneline <args>
+command! -bar -nargs=* GTreeAll GinLog --graph --decorate --oneline --all <args>
+command! -bar -nargs=* GBrahcnAll GinBranch --all <args>
+command! -bar -nargs=* GBlame Gin blame <args>
 
 " Twitter
 command! -bar TweetVRChat call vimrc#tweet(g:vimrc.twitter.vrchat)
