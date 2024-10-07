@@ -37,12 +37,12 @@
 ; Vars
 EnvGet, Home, HOME
 
-; With bug.n
-;; To avoid broke window arrangment
-#d::Run explorer.exe %Home%\Desktop
-
 ; OpenVR-AdvanceSettings keyboardOne
 ^+m::Run powershell.exe -ExecutionPolicy RemoteSigned -File C:\Users\aiya0\Desktop\Repository\OneTouch-To-RecordReplay\Record-Replay.ps1
+
+#v::
+  Run C:\Program Files\Ditto\Ditto.exe /Open
+Return
 
 #IfWinActive, ahk_exe vivaldi.exe
   ; ^p::SendInput {Up}
