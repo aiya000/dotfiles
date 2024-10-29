@@ -13,7 +13,6 @@ nnoremap <buffer><silent> ca <Cmd>call <SID>open_commit_buffer('--amend')<CR>
 nnoremap <buffer> cf :<C-u>GCommitFixup<Space>
 nmap <buffer> <: <Plug>(gin-action-restore:ours)
 nmap <buffer> >: <Plug>(gin-action-restore:theirs)
-nmap <buffer> -- <Plug>(gin-action-restore:theirs)
 
 let s:refresh_rate_to_show_stash = 50
 
