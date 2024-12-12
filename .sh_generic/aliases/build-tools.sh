@@ -29,6 +29,20 @@ function xl () {
     alias xr='etlas run'
     alias xx=etlas
     xl::echo 'etlas loaded.'
+  elif i_have bun && [[ -e package.json ]] && [[ -e bun.lockb ]] ; then
+    function xi () {
+      if [[ -z $1 ]] ; then
+        bun install
+      else
+        bun add $*
+      fi
+    }
+    alias xid='bun add --dev'
+    alias xr='bun run'
+    alias xb='bun run build'
+    alias xt='bun run test'
+    alias xx=bun
+    xl::echo 'bun loaded.'
   elif i_have yarn && [[ -e package.json ]] && [[ -e yarn.lock ]] ; then
     alias xi='yarn add'
     alias xid='yarn add --dev'
