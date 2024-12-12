@@ -18,6 +18,8 @@ const {
   Hints,
   Visual,
   RUNTIME,
+  Front,
+  Insert,
 } = api;
 
 /**
@@ -64,23 +66,19 @@ try {
       tabbed: false,
     }),
   );
-  mapkey("b", "#3Choose a tab", () =>
-    Front.openOmnibar({
-      type: "URLs",
-      extra: "getAllSites",
-    }),
-  );
-  mapkey("<", "move tab -1", () => RUNTIME("moveTab", { step: -1 }));
-  mapkey(">", "move tab +1", () => RUNTIME("moveTab", { step: 1 }));
-  mapkey("t", "#4Edit current URL with vim editor, and open in new tab", () =>
+  mapkey("b", "Select tabs", () =>
     Front.openOmnibar({
       type: "URLs",
       extra: "getAllSites",
       tabbed: true,
     }),
   );
-  mapkey("Q", "#11Edit Settings", () => tabOpenLink("/pages/options.html"));
-  mapkey("R", "#4Reload the page", () =>
+  mapkey("<", "move tab -1", () => RUNTIME("moveTab", { step: -1 }));
+  mapkey(">", "move tab +1", () => RUNTIME("moveTab", { step: 1 }));
+  mapkey("Q", "Open SurfingKeys settings", () =>
+    tabOpenLink("/pages/options.html")
+  );
+  mapkey("R", "Reload with nocache", () =>
     RUNTIME("reloadTab", { nocache: true }),
   );
 
