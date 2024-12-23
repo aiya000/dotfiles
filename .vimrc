@@ -667,8 +667,8 @@ let g:lsp_diagnostics_enabled = 0
 let g:lsp_document_code_action_signs_enabled = 0
 
 " NOTE: To debug
-" let g:lsp_log_file = expand('~/vim-lsp.log')
-" let g:lsp_log_verbose = 1
+let g:lsp_log_file = expand('~/vim-lsp.log')
+let g:lsp_log_verbose = 1
 
 function s:find_root_uri_by_file(file) abort
   return lsp#utils#path_to_uri(
@@ -678,31 +678,6 @@ function s:find_root_uri_by_file(file) abort
     \ )
   \ )
 endfunction
-
-augroup vimrc
-  " TODO: What's the!?!?
-  autocmd BufNew,BufEnter * let g:lsp_document_code_action_signs_enabled = 0
-
-  autocmd User lsp_setup call lsp#register_server(#{
-    \ name: 'haskell-language-server',
-    \ cmd: { _ -> [&shell, &shellcmdflag, 'haskell-language-server-wrapper'] },
-    \ whitelist: ['haskell', 'happy', 'alex'],
-    \ root_uri: { _ -> vimrc#catch(
-      \ function('vimrc#read_git_root_sync'),
-      \ s:find_root_uri_by_file('package.yaml')
-    \ ) },
-  \ })
-
-  autocmd User lsp_setup call lsp#register_server(#{
-    \ name: 'volar-server',
-    \ cmd: { _ -> [&shell, &shellcmdflag, 'volar-server', '--stdio'] },
-    \ whitelist: ['vue'],
-    \ root_uri: { _ -> vimrc#catch(
-      \ function('vimrc#read_git_root_sync'),
-      \ s:find_root_uri_by_file('package.json')
-    \ ) },
-  \ })
-augroup END
 
 " }}}
 " vim-lsp-settings {{{
