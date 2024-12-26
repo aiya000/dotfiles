@@ -5,6 +5,7 @@ let b:undo_ftplugin = 'setl ' . join([
 setl cursorline
 
 nnoremap <buffer><silent> Q <Cmd>bdelete!<CR>
+nnoremap <buffer><silent> <C-r> <Cmd>GinStatus<CR>
 nmap <buffer><silent><nowait> p <Plug>(gin-action-diff:smart:vsplit)
 nmap <buffer><silent> sa <Plug>(gin-action-stash)
 nnoremap <buffer><silent> sp <Cmd>Gin stash pop<CR>
