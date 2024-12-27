@@ -383,6 +383,7 @@ i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have unzip && alias unzip-cp932='unzip -O cp932'
 i_have krita && alias kra=krita
 i_have batcat && alias bat=batcat
+i_have fdfind && alias fd=fdfind
 i_have gomi && alias rm=gomi || alias rm=dust  # no more cry
 
 # shellcheck disable=SC2139
