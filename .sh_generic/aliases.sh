@@ -349,9 +349,14 @@ function ff () {
 }
 
 function f () {
-  base_path=$1
-  fuzzy_name=$2
-  find "$base_path" -name "*$fuzzy_name*"
+  : Find a file on a directory by taken fuzzy name.
+  local base_path=$1 fuzzy_name=$2
+
+  if i_have fd ; then
+    fd "$fuzzy_name" "$base_path"
+  else
+    find "$base_path" -name "*$fuzzy_name*"
+  fi
 }
 
 alias ctags-kotlin-auto="ctags-auto '--exclude=*.java' '--exclude=*.html' '--exclude=*.css'"
@@ -362,7 +367,7 @@ alias ctags-typescript-auto="ctags-auto '--exclude=*.js' '--exclude=*.json'"
 # alias ....='cd ../../../'
 # ...
 function aliases::define_cd_to_parents () {
-  local name
+  local name dir
   for (( i = 2; i <= 10; ++i )) ; do
     name=$(eval "printf '.%.0s' {1..$i}")
     dir=$(eval "printf '../%.0s' {2..$i}")
