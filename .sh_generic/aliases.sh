@@ -352,8 +352,8 @@ function f () {
   : Find a file on a directory by taken fuzzy name.
   local base_path=$1 fuzzy_name=$2
 
-  if i_have fd ; then
-    fd "$fuzzy_name" "$base_path"
+  if i_have fdfind ; then
+    fdfind "$base_path" "$fuzzy_name"
   else
     find "$base_path" -name "*$fuzzy_name*"
   fi
