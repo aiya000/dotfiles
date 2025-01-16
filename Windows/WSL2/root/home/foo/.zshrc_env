@@ -1,37 +1,18 @@
 #!/usr/bin/env zsh
 
-#export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
+windows_username=$(whoami.exe | sed 's/.*\\//')
+
+# export NODE_OPTIONS=--max-old-space-size=16384
+# export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
 # PATH=$PATH:/usr/share/bash-completion/completions
 # PATH=$PATH:$HOME/.nvm/versions/node/v15.5.0/bin
-PATH=$PATH:/home/aiya000/.nvm/versions/node/v12.20.0/bin
+PATH=$PATH:/home/aiya000/.nvm/versions/node/v20.13.1/bin/pnpm
+PATH="$PATH:/mnt/c/Users/$windows_username/AppData/Local/Programs/Microsoft VS Code"
 
-export ZSHRC_PROMPT_GIT_ENABLE=1
-
-alias pbcopy=clip.exe
-alias x=wslview
-alias tbash="vim +\"call vimrc#open_terminal_as('term-shell', 'stay', '/mnt/c/Program\ Files/Git/bin/bash.exe')\""
-
-i_have apt-file && alias pkgfile='apt-file search'
-
-# Currently, WSL2's git is too heavy.
-function git () {
-  if [[ -z $ZSH_ENV_USE_WSL_GIT ]] && should_use_windows_git ; then
-    git.exe "$@"
-  else
-    /usr/bin/git "$@"
-  fi
-}
-
-function should_use_windows_git () {
-  [[ $PWD =~ '^/mnt/' ]] \
-  || [[ $PWD =~ '/home/aiya000/Windows' ]] \
-  || [[ $PWD =~ '/home/aiya000/Desktop' ]]
-}
-
-if [[ ! -f /tmp/zsh-has-loaded ]] ; then
-  touch /tmp/zsh-has-loaded
-
-  cd ~/.dotfiles
-  # export ZSHRC_PROMPT_GIT_DISABLE=0
-  vterminal
+if [[ -f /tmp/zsh-has-loaded ]] ; then
+  return
 fi
+touch /tmp/zsh-has-loaded
+
+cd ~/.dotfiles || exit 1
+vterminal
