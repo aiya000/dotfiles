@@ -353,7 +353,7 @@ function f () {
   local base_path=$1 fuzzy_name=$2
 
   if i_have fdfind ; then
-    fdfind "$base_path" "$fuzzy_name"
+    fdfind "$fuzzy_name" "$base_path"
   else
     find "$base_path" -name "*$fuzzy_name*"
   fi
