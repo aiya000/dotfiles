@@ -1286,6 +1286,8 @@ cnoremap <C-g> '<,'>
 cnoremap <C-o> <Up>
 cnoremap <C-y> <Down>
 cnoremap <C-r>' <C-r>+
+" Meaning "n"ame
+cnoremap <C-r>n <C-r>=expand('%:t')<CR>
 
 " }}}
 " visual/operator mode {{{
@@ -1350,7 +1352,8 @@ tnoremap <C-\><C-n> <Esc>
 tnoremap <C-[> <Esc>
 tnoremap <C-]> <C-l>
 tnoremap <C-q><C-v> <C-q><C-n><C-w>H
-tnoremap <C-q><C-s> <C-q><C-n>
+" tnoremap <C-q><C-s> <C-q><C-n>
+tnoremap <C-q><C-s> <C-q><C-n><Cmd>GLogOneline --pretty='%h %ad %s' --date='format:%Y-%m-%d %H:%M'<CR><Cmd>resize 5<CR>
 
 " }}}
 " abbr {{{

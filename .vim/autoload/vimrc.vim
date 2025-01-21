@@ -701,3 +701,8 @@ function vimrc#ddu_start_from_insert(options) abort
 
   call ddu#start(a:options)
 endfunction
+
+function vimrc#get_file_name() abort
+  " -2 removes line break
+  return expand('#')
+endfunction
