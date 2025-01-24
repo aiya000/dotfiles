@@ -1,8 +1,10 @@
 #!/bin/bash
 
+: 'Calculates minutes of $2 - $1'
+
 : Usage example
-: date-diff-seconds '08-05 21:47' '08-05 22:33'
-: date-diff-seconds 21:47 22:33  # Infer both times is today's
+: $ date-diff-seconds '08-05 21:47' '08-05 22:33'
+: $ date-diff-seconds 21:47 22:33  -- "Infer both times is today's"
 
 if [[ $# -lt 2 ]] ; then
   {

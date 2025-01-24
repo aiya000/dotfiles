@@ -1,5 +1,11 @@
 #!/bin/bash
 
+: Starts pomodoro timer.
+: Notify after counting specified n-minutes.
+
+: Usage Example
+: $ pomodoro-start.sh 60
+
 is_rest_time=false
 interval=30
 
