@@ -712,6 +712,7 @@ function vimrc#get_file_name() abort
   return expand('#')
 endfunction
 
+" TODO: Do async
 function vimrc#deepl_translate(start_line, end_line, target_lang, source_lang, method) abort
   " NOTE: なんで動かないねん😡
   " let translated_lines = getline(a:start_line, a:end_line)->map({ line ->
@@ -726,6 +727,7 @@ function vimrc#deepl_translate(start_line, end_line, target_lang, source_lang, m
 
   if a:method ==# 'yank'
     let @" = result
+    echo result
   elseif a:method ==# 'echo'
     echo result
   else
