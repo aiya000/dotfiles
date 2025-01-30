@@ -706,3 +706,24 @@ function vimrc#get_file_name() abort
   " -2 removes line break
   return expand('#')
 endfunction
+
+function vimrc#deepl_translate(start_line, end_line, target_lang, source_lang, method) abort
+  " NOTE: なんで動かないねん😡
+  " let translated_lines = getline(a:start_line, a:end_line)->map({ line ->
+  "   \ deepl#translate(line, a:target_lang, a:source_lang)
+  " \ })
+
+  let translated_lines = []
+  for line in getline(a:start_line, a:end_line)
+    call add(translated_lines, deepl#translate(line, a:target_lang, a:source_lang))
+  endfor
+  const result = translated_lines->join("\n")
+
+  if a:method ==# 'yank'
+    let @" = result
+  elseif a:method ==# 'echo'
+    echo result
+  else
+    throw $'Unknown method: {a:method}'
+  endif
+endfunction

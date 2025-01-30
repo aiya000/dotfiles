@@ -937,6 +937,11 @@ let g:rainbow_active = 1
 let g:gin_proxy_editor_opener = 'vsplit'
 
 " }}}
+" deepl.vim {{{
+
+let g:deepl#endpoint = 'https://api-free.deepl.com/v2/translate'
+
+" }}}
 
 call dein#end()
 

@@ -204,3 +204,6 @@ repo = 'luochen1990/rainbow'
 
 [[plugins]]
 repo = 'lambdalisue/vim-gin'
+
+[[plugins]]
+repo = 'ryicoh/deepl.vim'
