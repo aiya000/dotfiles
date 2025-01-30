@@ -837,13 +837,24 @@ call ddu#custom#patch_global(#{
   \ },
 \ })
 
+" boolean | string
 let g:vimrc_ddu_start_with_insert_next = v:false
+
+function s:get_feedkeys_for_ddu_start() abort
+  if type(g:vimrc_ddu_start_with_insert_next) ==# type('')
+    return 'i' .. g:vimrc_ddu_start_with_insert_next
+  endif
+  if g:vimrc_ddu_start_with_insert_next
+    return 'i'
+  endif
+  throw 'Nothing feedkeys'
+endfunction
 
 " When the next ddu ready, ddu starts from insert
 augroup vimrc
   autocmd user Ddu:uiReady
-    \  if g:vimrc_ddu_start_with_insert_next
-      \| call feedkeys('i')
+    \ if g:vimrc_ddu_start_with_insert_next !=# v:false
+      \| call feedkeys(s:get_feedkeys_for_ddu_start())
       \| let g:vimrc_ddu_start_with_insert_next = v:false
     \| endif
 augroup END

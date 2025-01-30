@@ -696,9 +696,14 @@ endfunction
 
 " Starts ddu from filter mode
 function vimrc#ddu_start_from_insert(options) abort
-  " Please see .vimrc what is this
-  let g:vimrc_ddu_start_with_insert_next = v:true
+  let g:vimrc_ddu_start_with_insert_next = v:true " Please see .vimrc what is this
+  call ddu#start(a:options)
+endfunction
 
+" Similar to `vimrc#ddu_start_from_insert()`, but opens with a word instead (if a word is taken)
+function vimrc#ddu_start_from_input(options, ...) abort
+  let search_word = get(a:000, 0, '')
+  let g:vimrc_ddu_start_with_insert_next = search_word !=# '' ? search_word : v:true
   call ddu#start(a:options)
 endfunction
 
