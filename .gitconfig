@@ -19,7 +19,7 @@
 [core]
 	pager = cat
 	quotepath = false
-	excludesfile = ~/.gitignore_global
+	excludesfile = ~/.dotfiles/.gitignore_global
 [init]
 	templatedir = ~/.git_templates
 	defaultBranch = main
