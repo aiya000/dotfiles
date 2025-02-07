@@ -207,3 +207,6 @@ repo = 'lambdalisue/vim-gin'
 
 [[plugins]]
 repo = 'ryicoh/deepl.vim'
+
+[[plugins]]
+repo = 'machakann/vim-highlightedundo'

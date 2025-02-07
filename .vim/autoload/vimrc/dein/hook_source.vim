@@ -5,7 +5,7 @@ let s:V = vital#vimrc#new()
 let s:List = s:V.import('Data.List')
 let s:Msg = s:V.import('Vim.Message')
 
-function vimrc#dein#hook_source#operator_surround() abort
+function! vimrc#dein#hook_source#operator_surround() abort
   const basic_symbols = s:List.char_range('!', "'") + ['*', '&', '_', '|', '~', ':', '/'] " Excluding brackets () [] {} and ` for unique mappings ('keys')
   const basic_between = s:List.map(basic_symbols, { char ->
     \ #{ block: [char, char], motionwise: ['char', 'line', 'block'], keys: [char] }
@@ -40,8 +40,6 @@ function vimrc#dein#hook_source#operator_surround() abort
       \ #{ block: ['〈', '〉'], motionwise: ['char', 'line', 'block'], keys: ['〈', ' 〉', 'jK'] },
       \ #{ block: ['『', '』'], motionwise: ['char', 'line', 'block'], keys: ['『', ' 』', 'j-k'] },
       \ #{ block: ['＜', '＞'], motionwise: ['char', 'line', 'block'], keys: ['『', ' 』', 'j<', 'j>'] },
-      \ #{ block: ['**', '**'], motionwise: ['char'], keys: ['B'] },
-      \ #{ block: ['~~', '~~'], motionwise: ['char'], keys: ['~'] },
     \ ] + basic_between,
     \ 'review': [
       \ #{ block: ['@<b>{', '}'], motionwise: ['char'], keys: ['B'] },
@@ -55,19 +53,14 @@ function vimrc#dein#hook_source#operator_surround() abort
       \ #{ block: ['@<img>{', '}'], motionwise: ['char'], keys: ['[i'] },
       \ #{ block: ['@<list>{', '}'], motionwise: ['char'], keys: ['[l'] },
     \ ],
+    \ 'markdown': [
+      \ #{ block: ['**', '**'], motionwise: ['char'], keys: ['*', 'B'] },
+      \ #{ block: ['~~', '~~'], motionwise: ['char'], keys: ['~'] },
+    \ ],
     \ 'html': basic_html_tags,
     \ 'vue': basic_html_tags,
     \ 'typescript.tsx': basic_html_tags,
   \ }
 
   " NOTE: Can operator-surround allow <localleader> by some way?
-endfunction
-
-function vimrc#dein#hook_source#emmet() abort
-  let g:user_emmet_install_global = 0
-  let g:user_emmet_leader_key = '<C-g>'
-
-  augroup vimrc
-    autocmd! FileType html,xml,markdown EmmetInstall
-  augroup END
 endfunction

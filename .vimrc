@@ -594,7 +594,7 @@ let g:idris_vim_enable_keymappings_by_default = v:false
 " }}}
 " vim-operator-surround {{{
 
-" Please see hook_source.vim
+" Please see ~/.vim/autoload/vimrc/dein/hook_source.vim
 
 " }}}
 " vim-highlightedyank {{{
