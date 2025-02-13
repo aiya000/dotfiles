@@ -54,13 +54,14 @@ function! vimrc#dein#hook_source#operator_surround() abort
       \ #{ block: ['@<list>{', '}'], motionwise: ['char'], keys: ['[l'] },
     \ ],
     \ 'markdown': [
-      \ #{ block: ['**', '**'], motionwise: ['char'], keys: ['*', 'B'] },
-      \ #{ block: ['~~', '~~'], motionwise: ['char'], keys: ['~'] },
+      \ #{ block: ['**', '**'], motionwise: ['char', 'block'], keys: ['B'] },
+      \ #{ block: ['~~', '~~'], motionwise: ['char', 'block'], keys: ['~'] },
     \ ],
     \ 'html': basic_html_tags,
     \ 'vue': basic_html_tags,
     \ 'typescript.tsx': basic_html_tags,
   \ }
 
+  " TODO: `g:operator#surround#blocks.markdown[0].keys[1]` (`'B'`) does not work
   " NOTE: Can operator-surround allow <localleader> by some way?
 endfunction

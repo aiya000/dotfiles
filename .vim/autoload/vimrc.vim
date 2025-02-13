@@ -309,8 +309,22 @@ endfunction
 " Deletes the surround of `{ _ }` -> ` _ `
 function vimrc#delete_mostly_inner_surround() abort
   call dein#source('vim-operator-surround')
+
   const obj_keys = s:get_current_obj_keys()
   const obj_key = s:input_obj_key_of(obj_keys)
+  if obj_key ==# v:null
+    echo 'Cancelled'
+    return
+  endif
+
+  " TODO: Workaround. For some reason 'B' ('**foo**') cannot be deleted
+  if obj_key ==# 'B'
+    execute 'normal' $"d\<Plug>(textobj-between-i)*"
+    execute $'s/\*\*\*\*/{@"}/'
+    echo '**deleted**'
+    return
+  endif
+
   execute 'normal' ('va' .. obj_key .. "\<Plug>(operator-surround-delete)")
   call repeat#set("\<Plug>(vimrc-surround-delete-mostly-inner)" .. obj_key)
 endfunction
