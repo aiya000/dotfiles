@@ -73,6 +73,7 @@ if i_have git ; then
   alias _gbd='git branch -D'
   alias _gbdf='git branch --delete --force'
   alias gbm='git branch -m'
+  alias gbc='git branch --show-current'
   alias gc='git commit --verbose'
   alias gcam='git commit --verbose --amend'
   alias gcamm='git commit --verbose --amend -m'
@@ -286,6 +287,8 @@ if i_have git ; then
     git remote set-url "$remote" "$https_url"
     git remote get-url "$remote"
   }
+
+  alias git-root='git rev-parse --show-toplevel'
 
   # Set casual user.name and user.email at local
   alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
