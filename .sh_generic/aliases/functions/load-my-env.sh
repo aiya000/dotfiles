@@ -9,6 +9,7 @@ function load-my-env () {
       echo 'Available:'
 
       echo '  - cabal'
+      echo '  - cargo'
       echo '  - ccache'
       echo '  - conda'
       echo '  - docker'
@@ -227,6 +228,16 @@ function load-my-env () {
         fi
       fi
       unset __conda_setup
+      ;;
+
+    cargo)
+      if [[ -f ~/.cargo/env ]] ; then
+        # shellcheck disable=SC1090
+        source ~/.cargo/env
+        return
+      fi
+      echo '~/.cargo/env is not found.' > /dev/stderr
+      return 1
       ;;
 
     *)
