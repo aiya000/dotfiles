@@ -1209,8 +1209,11 @@ nmap <leader>dd "+dd
 nmap <leader>D "+D
 nmap <leader>d "+d
 nmap <leader>x "+x
-nnoremap "%p :<C-u>put=$'{expand('%:p')}'<CR>
-nnoremap "%P :<C-u>put!=$'{expand('%:p')}'<CR>
+" nnoremap "%p <Cmd>put=expand('%:p')<CR>
+" nnoremap "%P <Cmd>put!=expand('%:p')<CR>
+"" Put the relative path of a current file
+nnoremap "gp <Cmd>put=system($'git ls-files --full-name {expand('%')}')<CR>
+nnoremap "gP <Cmd>put!=system($'git ls-files --full-name {expand('%')}')<CR>
 
 " cr
 nmap <C-j> <CR>
@@ -1284,6 +1287,9 @@ inoremap <silent><expr> <C-b> vimrc#get_webpage_title()
 imap <C-r>' <C-r>+
 " Execute iabbr and Escape
 inoremap <C-l> <Space><Backspace><Esc>
+
+" Meaning "n"ame
+inoremap <C-r>n <C-r>=expand('%:t')<CR>
 
 " }}}
 " command-line mode {{{
