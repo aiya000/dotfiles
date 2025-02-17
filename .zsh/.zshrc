@@ -63,7 +63,7 @@ function zle-line-init zle-keymap-select {
   # This function maybe loaded at below procedures with ~/.zsh/zshrc/prompt.sh
   zshrc::prompt::main
 
-  if [[ "$VIM_TERMINAL" ]] ; then
+  if [[ $VIM_TERMINAL ]] ; then
     printf '\e]51;["call","Tapi_SyncTermCwd","%s"]\x07' "$PWD"
   fi
 
@@ -125,12 +125,43 @@ source $ZDOTDIR/.zshrc.keymap
 force-unexport TMUX
 
 # If it exists, load environment config
-if [ -f ~/.zshrc_env ] ; then
+if [[ -f ~/.zshrc_env ]] ; then
   source ~/.zshrc_env
 fi
 
-if [ -f ~/.zshrc_private ] ; then
+if [[ -f ~/.zshrc_private ]] ; then
   source ~/.zshrc_private
+fi
+
+export AUTO_LOADED_ENVS=()
+function autoload-my-env () {
+  if contains_value "${AUTO_LOADED_ENVS[@]}" nvm ; then
+    return
+  fi
+  if [[ ! -e package.json ]] ; then
+    return
+  fi
+
+  load-my-env nvm
+  echo '> load-my-env nvm'
+
+  # e.g. `export NVM_NODE_VERSION_I_WANT_USE=v20.13.1`
+  local node_version
+  if [[ $NVM_NODE_VERSION_I_WANT_USE ]] ; then
+    node_version=$NVM_NODE_VERSION_I_WANT_USE
+  else
+    node_version=$(ls "$NVM_DIR/versions/node" | sort | tail -1)
+  fi
+  nvm use "$node_version"
+
+  AUTO_LOADED_ENVS+=(nvm)
+}
+
+if [[ -z $VIM_TERMINAL ]] ; then
+  # Be called when `cd` executed
+  function chpwd () {
+    autoload-my-env
+  }
 fi
 
 # Export Loaded Archive
