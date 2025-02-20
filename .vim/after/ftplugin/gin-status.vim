@@ -19,8 +19,6 @@ nmap <buffer> <: <Plug>(gin-action-restore:ours)
 nmap <buffer> >: <Plug>(gin-action-restore:theirs)
 nmap <buffer> == <Plug>(gin-action-reset)
 
-let s:refresh_rate_to_show_stash = 50
-
 function! s:git_stash_message(file_to_save) abort
   const message = input('Stash message: ')
   call vimrc#job#start_simply(
@@ -55,55 +53,18 @@ function! s:open_term_commit_buffer(subcmd) abort
   \ }, #{ repeat: 1 })
 endfunction
 
-function! s:force_show_git_stash_size_onto_top(gin_status_bufnr, _) abort
-  const current_pos = getpos('.')
+function! s:force_show_stash_size() abort
+  const size = system('git stash list | wc -l')[:-2]
+  if size ==# '0'
+    return
+  endif
 
-  try
-    execute ':buffer' a:gin_status_bufnr
+  const topline = getline(1)
+  const new_topline = $'{topline} [stash:{size}]'
 
-    const status = getline(1)
-    if s:has_stash_size(status)
-      return
-    endif
-
-    if s:is_gina_status_never_loaded_yet(status)
-      " Retry later
-      call timer_start(
-        \ s:refresh_rate_to_show_stash,
-        \ function!('s:force_show_git_stash_size_onto_top', [a:gin_status_bufnr])
-        \ )
-      return
-    endif
-
-    const size = system('git stash list | wc -l')[:-2]
-    if size ==# '0'
-      return
-    endif
-
-    call s:force_show(status, size)
-  finally
-    call setpos('.', current_pos)
-  endtry
-endfunction
-
-function! s:is_gina_status_never_loaded_yet(topline) abort
-  return a:topline ==# ''
-endfunction
-
-function! s:has_stash_size(topline) abort
-  return a:topline =~# '\[stash [0-9]\+\]$'
-endfunction
-
-function! s:force_show(topline, size) abort
-  const status = a:topline .. ' ' .. printf('[stash %s]', a:size)
   setl modifiable
-  call setline(1, status)
+  call setline(1, new_topline)
   setl nomodifiable
 endfunction
 
-" TODO: Enable this when you want to use this, and update this
-" call timer_start(
-"   \ s:refresh_rate_to_show_stash,
-"   \ function('s:force_show_git_stash_size_onto_top',
-"   \ [winbufnr(0)])
-"   \ )
+call s:force_show_stash_size()
