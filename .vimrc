@@ -1689,13 +1689,6 @@ cnoremap <CR> <Plug>(kensaku-search-replace)<CR>
 imap <silent><script><expr> <C-g><Tab> copilot#Accept("\<CR>")
 imap <C-]> <Plug>(copilot-next)
 
-" vim-highlightedundo
-nmap u <Plug>(highlightedundo-undo)
-nmap <C-r> <Plug>(highlightedundo-redo)
-nmap U <Plug>(highlightedundo-Undo)
-nmap g- <Plug>(highlightedundo-gminus)
-nmap g+ <Plug>(highlightedundo-gplus)
-
 " }}}
 
 if filereadable($'{$HOME}/.vimrc_env_post')
