@@ -688,6 +688,8 @@ let g:lsp_settings = #{
 \ }
 
 let g:lsp_settings_filetype_vue = ['typescript-language-server', 'volar-server']
+let g:lsp_settings_filetype_typescript = ['typescript-language-server', 'deno']
+let g:lsp_settings_filetype_javascript = ['typescript-language-server', 'deno']
 
 " }}}
 " vim-ghcid-quickfix {{{
