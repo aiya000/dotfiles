@@ -36,46 +36,22 @@ snippet style_lang_scss_scoped
 abbr <script setup lang="ts">${0:here}</script>
   <style lang="scss" scoped>${0:here}</style>
 
-## Attributes
-
-snippet click
-abbr @click="${0:expr}"
-    @click="${0:expr}"
+snippet suspense_template
+  <Suspense>
+    <template #default>
+      ${1:#:here}
+    </template>
+    <template #fallback>
+      ${0:#:here}
+    </template>
+  </Suspense>
 
 ## Templates
-
-snippet template_v_if
-alias v_if_block vifbl
-abbr <template v-if="${1:cond}">${0:here}</template>
-  <template v-if="${1:cond}">${0:here}</template>
-
-snippet defineComponent
-options indent
-abbr defineComponent({${0:#:here}})
-  defineComponent({
-    name: '${0}',
-  })
-
-snippet setup
-abbr setup(${1:#:_}) {${0:#:here}}
-  setup(${1:#:_}) {${0:#:here}}
 
 snippet computed
 abbr computed(() => ${0:#:here})
   computed(() => ${0:#:here})
 
-snippet const_props_defineProps
-abbr const props = defineProps<{${0:here}()
-  const props = defineProps<{${0:here}}>()
-
-snippet const_props_withDefaults_defineProps
-abbr const props = withDefaults(defineProps<{}>, {})
-options indent
-  const props = withDefaults(
-    defineProps<{
-      ${0}
-    }>(),
-    {
-      ${1}
-    }
-  )
+snippet define_props
+abbr defineProps<{${0:here}()
+  defineProps<{${0:here}}>()

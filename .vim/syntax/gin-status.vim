@@ -1,5 +1,5 @@
 highlight StartBranch ctermfg=Green guifg=Green
-syntax match StartBranch /^## [A-Za-z\/]\+/hs=s+2
+syntax match StartBranch /^## [A-Za-z\/\-]\+/hs=s+2
 
 highlight EndBranch ctermfg=Red guifg=Red
 syntax match EndBranch /\.\.\.[A-Za-z\/]\+/hs=s+3

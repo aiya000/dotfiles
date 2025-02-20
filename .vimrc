@@ -1291,6 +1291,7 @@ imap <C-r>' <C-r>+
 inoremap <C-l> <Space><Backspace><Esc>
 
 " Meaning "n"ame
+"" TODO: For some reason I have to hit `<C-r>=expand('%:t')<CR>` once manually to get out with `<C-r>n`
 inoremap <C-r>n <C-r>=expand('%:t')<CR>
 
 " }}}
@@ -1687,6 +1688,13 @@ cnoremap <CR> <Plug>(kensaku-search-replace)<CR>
 " copilot.vim
 imap <silent><script><expr> <C-g><Tab> copilot#Accept("\<CR>")
 imap <C-]> <Plug>(copilot-next)
+
+" vim-highlightedundo
+nmap u <Plug>(highlightedundo-undo)
+nmap <C-r> <Plug>(highlightedundo-redo)
+nmap U <Plug>(highlightedundo-Undo)
+nmap g- <Plug>(highlightedundo-gminus)
+nmap g+ <Plug>(highlightedundo-gplus)
 
 " }}}
 
