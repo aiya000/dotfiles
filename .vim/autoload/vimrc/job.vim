@@ -8,17 +8,15 @@
 "   \ )
 " \ )
 
-let s:Msg = vital#vimrc#import('Vim.Message')
-
-function vimrc#job#on_stdout(stdout, _channel, msg) abort
+function! vimrc#job#on_stdout(stdout, _channel, msg) abort
   call add(a:stdout, a:msg)
 endfunction
 
-function vimrc#job#on_stderr(stderr, _channel, msg) abort
+function! vimrc#job#on_stderr(stderr, _channel, msg) abort
   call add(a:stderr, a:msg)
 endfunction
 
-function vimrc#job#on_exit(stdout, stderr, on_succeed, on_failed, _job, exit_code) abort
+function! vimrc#job#on_exit(stdout, stderr, on_succeed, on_failed, _job, exit_code) abort
   if a:exit_code isnot 0
     call a:on_failed(a:stdout, a:stderr, a:exit_code)
     return
@@ -32,10 +30,10 @@ endfunction
 "     called with succeed
 "   on_failed: (stdout: Array<string>, stderr: Array<string>, exit_code: int) => void
 "     called with failed
-function vimrc#job#get_basic_options_completes_with(...) abort
+function! vimrc#job#get_basic_options_completes_with(...) abort
   const OnSucceed = get(a:000, 0, v:null)
   if OnSucceed is v:null
-    throw 'vimrc#job#start_simply: 1 or 2 args required'
+    throw 'vimrc#job#get_basic_options_completes_with: 1 or 2 args required'
   endif
   const OnFailed = get(a:000, 1, { _1, _2, _3 -> 0 })
 
@@ -55,7 +53,7 @@ endfunction
 "     called with succeed
 "   OnFailed: (stdout: Array<string>, stderr: Array<string>, exit_code: int) => void
 "     called with failed
-function vimrc#job#start_simply(...) abort
+function! vimrc#job#start_simply(...) abort
   const command = get(a:000, 0, v:null)
   if command is v:null
     throw 'vimrc#job#start_simply: 1 or more args required'

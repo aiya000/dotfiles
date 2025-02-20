@@ -1,3 +1,5 @@
+let s:Msg = vital#vimrc#import('Vim.Message')
+
 let b:undo_ftplugin = 'setl ' . join([
   \ 'cursorline<',
 \ ])
@@ -8,6 +10,7 @@ nnoremap <buffer><silent> Q <Cmd>bdelete!<CR>
 nnoremap <buffer><silent> <C-r> <Cmd>GinStatus<CR>
 nmap <buffer><silent><nowait> p <Plug>(gin-action-diff:smart:vsplit)
 nmap <buffer><silent> sa <Plug>(gin-action-stash)
+nmap <buffer><silent> ss yy<Cmd>call <SID>git_stash_message(@")<CR>
 nnoremap <buffer><silent> sp <Cmd>Gin stash pop<CR>
 nnoremap <buffer><silent> cc <Cmd>call <SID>open_commit_buffer('')<CR>
 nnoremap <buffer><silent> ca <Cmd>call <SID>open_commit_buffer('--amend')<CR>
@@ -18,7 +21,21 @@ nmap <buffer> == <Plug>(gin-action-reset)
 
 let s:refresh_rate_to_show_stash = 50
 
-function s:open_commit_buffer(subcmd) abort
+function! s:git_stash_message(file_to_save) abort
+  const message = input('Stash message: ')
+  call vimrc#job#start_simply(
+    \ $'git stash push --message "{message}" -- "{a:file_to_save}"',
+    \ { stdout, stderr -> [
+      \ s:Msg.echo('Normal', stdout->join("\n")),
+      \ len(stderr) is 0 ? 'Nothing to do' : s:Msg.error(stderr->join("\n"))
+    \ ]},
+    \ { stdout, stderr, exit_code ->
+      \ s:Msg.error($'{'{'}exit_code: {exit_code}, stdout: {string(stdout)}, stderr: {string(stderr)}, {'}'}')
+    \ }
+  \ )
+endfunction
+
+function! s:open_commit_buffer(subcmd) abort
   try
     execute 'Gin' 'commit' '--verbose' a:subcmd
   catch
@@ -28,7 +45,7 @@ function s:open_commit_buffer(subcmd) abort
   endtry
 endfunction
 
-function s:open_term_commit_buffer(subcmd) abort
+function! s:open_term_commit_buffer(subcmd) abort
   call vimrc#open_terminal_as('term-shell-git-commit', 'stay', &shell, #{ path: g:vimrc.git_root })
 
   const current_bufnr = bufnr('%')
@@ -38,7 +55,7 @@ function s:open_term_commit_buffer(subcmd) abort
   \ }, #{ repeat: 1 })
 endfunction
 
-function s:force_show_git_stash_size_onto_top(gin_status_bufnr, _) abort
+function! s:force_show_git_stash_size_onto_top(gin_status_bufnr, _) abort
   const current_pos = getpos('.')
 
   try
@@ -53,7 +70,7 @@ function s:force_show_git_stash_size_onto_top(gin_status_bufnr, _) abort
       " Retry later
       call timer_start(
         \ s:refresh_rate_to_show_stash,
-        \ function('s:force_show_git_stash_size_onto_top', [a:gin_status_bufnr])
+        \ function!('s:force_show_git_stash_size_onto_top', [a:gin_status_bufnr])
         \ )
       return
     endif
@@ -69,15 +86,15 @@ function s:force_show_git_stash_size_onto_top(gin_status_bufnr, _) abort
   endtry
 endfunction
 
-function s:is_gina_status_never_loaded_yet(topline) abort
+function! s:is_gina_status_never_loaded_yet(topline) abort
   return a:topline ==# ''
 endfunction
 
-function s:has_stash_size(topline) abort
+function! s:has_stash_size(topline) abort
   return a:topline =~# '\[stash [0-9]\+\]$'
 endfunction
 
-function s:force_show(topline, size) abort
+function! s:force_show(topline, size) abort
   const status = a:topline .. ' ' .. printf('[stash %s]', a:size)
   setl modifiable
   call setline(1, status)
