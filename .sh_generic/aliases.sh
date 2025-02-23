@@ -21,6 +21,10 @@ alias mv='mv -i'
 alias sl=ls
 alias rm=dust  # no more cry
 
+i_have batcat && alias batcat-with-default-options='batcat $DOTFILES_BATCAT_DEFAULT_OPTIONS'
+i_have batcat && alias bat=batcat-with-default-options
+i_have batcat && alias cat=batcat-with-default-options
+
 function du-sort () {
   local paths=${1:-.}
   du -h -d 1 "$paths" | sort -h
@@ -392,9 +396,6 @@ i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have unzip && alias unzip-cp932='unzip -O cp932'
 i_have krita && alias kra=krita
 i_have fdfind && alias fd=fdfind
-
-i_have batcat && alias batcat-with-default-options='batcat $DOTFILES_BATCAT_DEFAULT_OPTIONS'
-i_have batcat && alias bat=batcat-with-default-options
 
 # shellcheck disable=SC2139
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"

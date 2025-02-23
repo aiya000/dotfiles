@@ -9,9 +9,9 @@ WSL2 = yes # 'no' or 'yes'
 YayInstall = yay -S --needed --noconfirm
 YayUpdate = yay -Sy
 
-AptInstall = sudo apt install -y
-AptUpdate = sudo apt update
-AptBuildDep = sudo apt build-dep
+AptInstall = sudo apt-fast install -y
+AptUpdate = sudo apt-fast update
+AptBuildDep = sudo apt-fast build-dep
 
 NPMInstall = npm install --global --user
 
@@ -39,10 +39,14 @@ prepare:
 		mkdir ~/.npm-prefix ; \
 	fi
 	# core dependencies
+	$(MAKE) install-apt-fast
+	$(AptUpdate)
 	$(AptInstall) curl
 ifeq ($(WSL2),yes)  # {{{
-	echo 'Please link your windows home (e.g. C:\\Users\\aiya000) to ~/Windows'
-	bash -c "read -rp 'Continue to press any key.' _"
+	WinUserName := $(/mnt/c/Windows/system32/whoami.exe | tr -d '\r\n' | cut -d '\' -f 2)
+	ln -s /mnt/c/Users/$(WinUserName) ~/Windows
+	ln -s /mnt/c/Users/$(WinUserName)/Desktop ~/Desktop
+	ln -s /mnt/c/Users/$(WinUserName)/Download ~/Download
 endif  # }}}
 
 install:
@@ -52,6 +56,11 @@ install:
 
 install-without-confirm:
 	$(MAKE) install noconfirm='--noconfirm'
+
+install-apt-fast:
+	sudo add-apt-repository ppa:apt-fast/stable
+	sudo apt update
+	sudo apt -y install apt-fast
 
 # Package managers that core packages depends.
 install-core-package-managers:
@@ -202,6 +211,7 @@ ifeq ($(OS),Ubuntu)  # {{{
 		tmux \
 		vim \
 		zsh
+	$(MAKE) install-clamav
 endif  # }}}
 ifeq ($(OS),Darwin)  # {{{
 	brew install \
@@ -213,6 +223,23 @@ ifeq ($(OS),Darwin)  # {{{
 
 	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit # vim-textobj-clang
 endif  # }}}
+
+install-clamav:
+	$(AptInstall) clamav clamav-daemon
+	sudo systemctl start clamav-daemon.service
+	sudo systemctl start clamav-freshclam.service
+	# See https://zenn.dev/aiya000/articles/install-clamav-into-wsl2
+	sudo chmod 666 /var/log/clamav/freshclam.log
+	sudo pkill freshclam
+	sudo chown clamav:clamav /var/log/clamav/freshclam.log
+	# - - -
+	echo 'ExcludePath ^/proc' >> /etc/clamav/clamd.conf
+	echo 'ExcludePath ^/sys'  >> /etc/clamav/clamd.conf
+	echo 'ExcludePath ^/run'  >> /etc/clamav/clamd.conf
+	echo 'ExcludePath ^/dev'  >> /etc/clamav/clamd.conf
+	echo 'ExcludePath ^/snap' >> /etc/clamav/clamd.conf
+	echo 'ExcludePath ^/mnt'  >> /etc/clamav/clamd.conf
+	sudo freshclam
 
 ##
 # NOTE: execute `which foo || $(YayInstall) foo` for AUR packages, because AUR packages may not support --needed.
@@ -497,13 +524,15 @@ install-wsl-deps:
 fix-wsl-git-clone:
 	sudo ip link set eth0 mtu 1400
 
-install-apt-fast:
-	sudo add-apt-repository ppa:apt-fast/stable
-	sudo apt-get update
-	sudo apt-get -y install apt-fast
-
-install-wsltty-emoji:
-	cd "$(wslpath "$APPDATA/wsltty/emojis")"
-	./getemojis -d
-	echo "Don't forget, set Options.Text.Emojis.Style to google."
-	echo 'Please also see: https://kemasoft.net/index.php?mr/mintty%E3%82%84wsltty%E3%81%A7%E3%82%AB%E3%83%A9%E3%83%BC%E7%B5%B5%E6%96%87%E5%AD%97'
+install-wsl-hello-sudo:
+	echo '次のように入力してください。'
+	echo '> /mnt/c/Users/{you}/AppData/Local/Programs/wsl-hello-sudo does not exist. Create it? [Y/n]: y'
+	echo '> Installation is done! Do you want to enable the pam module now? [y/N]: y'
+	echo '準備はいいですか？ Enterを押してください。インストールを始めます。'
+	bash -c "read -rp 'Continue to press any key.' _"
+	cd /tmp
+	wget http://github.com/nullpo-head/WSL-Hello-sudo/releases/latest/download/release.tar.gz
+	tar xvf release.tar.gz
+	./install.sh
+	rm release.tar.gz
+	cd -
