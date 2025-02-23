@@ -13,10 +13,10 @@ autoload -U edit-command-line && zle -N edit-command-line
 # Define keymaps #
 ##################
 function peco-history-find-backward () {
-    local selected
-    selected=$(fc -ln 1 | tac | peco --initial-filter Regexp --select-1 --query "$LBUFFER" | sed 's/\\n/\n/g')
-    BUFFER="$selected"
-    CURSOR=${#BUFFER}
+  local selected
+  selected=$(fc -ln 1 | tac | peco --initial-filter Regexp --select-1 --query "$LBUFFER" | sed 's/\\n/\n/g')
+  BUFFER="$selected"
+  CURSOR=${#BUFFER}
 }
 zle -N peco-history-find-backward
 

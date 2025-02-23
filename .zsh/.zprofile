@@ -26,36 +26,14 @@ total   : %*Es
 '
 
 # }}}
+# Plugins {{{
+
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
+
+# }}}
 # Others {{{
 
-export EDITOR=vim
-export GIT_EDITOR=vim
-export VISUAL=vim
-export PAGER='vim - +PAGER' # vim-pager
-export MANPAGER='vim - +MANPAGER -c "setl nonu nornu ft=vim-pager | only"' # vim-manpager
-
-export GOPATH=~/.GoPath
-export LICE_USER=aiya000
-export CCACHE_DISABLE=1
-export THEMIS_HOME=$HOME/.vim/bundle/repos/github.com/thinca/vim-themis
-export NVIM_PYTHON_LOG_FILE=$HOME/.vim/.log/nvim_python.log
-export PYENV_ROOT=$HOME/.pyenv
-export NVM_DIR=$HOME/.nvm
-export DENO_INSTALL=$HOME/.deno
-export ANDROID_HOME=$HOME/Android/Sdk
-
-# Mine
-export MY_GUI_EDITOR=gvim
-
-if [[ $ZSHRC_PROMPT_GIT_STATUS_DISABLE != '' ]] ; then
-  export ZSHRC_PROMPT_GIT_STATUS_DISABLE
-else
-  export ZSHRC_PROMPT_GIT_STATUS_DISABLE=0
-fi
-
-# Plugins
-export HEREIS_ALIAS_PREFIX=p-
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
+# For variables that is not related to zsh, see ~/.dotfiles/.sh_generic/vars.sh
 
 # }}}
 # Add paths to $PATH {{{

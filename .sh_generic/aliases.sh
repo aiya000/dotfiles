@@ -19,7 +19,7 @@ alias free='free -h'
 alias ls='ls --color=auto --group-directories-first'
 alias mv='mv -i'
 alias sl=ls
-alias z='cd -'
+alias rm=dust  # no more cry
 
 function du-sort () {
   local paths=${1:-.}
@@ -341,6 +341,7 @@ alias gS='ls -A $VIM_SESSION | peco | xargs -I {} gvim -S $VIM_SESSION/{}'
 
 alias m=mount
 alias t=vterminal
+alias z='cd -'
 alias um=umount
 alias ei=exit
 alias cdp=cd-finddir
@@ -391,7 +392,6 @@ i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have unzip && alias unzip-cp932='unzip -O cp932'
 i_have krita && alias kra=krita
 i_have fdfind && alias fd=fdfind
-i_have gomi && alias rm=gomi || alias rm=dust  # no more cry
 
 i_have batcat && alias batcat-with-default-options='batcat $DOTFILES_BATCAT_DEFAULT_OPTIONS'
 i_have batcat && alias bat=batcat-with-default-options
