@@ -11,8 +11,10 @@ nnoremap <silent><buffer> <localleader><localleader>d <Cmd>w<CR>:!doctoc %<CR>:e
 nnoremap <silent><buffer> <localleader><localleader>r <Cmd>call vimrc#open_terminal_as(
   \ 'none',
   \ 'horizontal',
-  \ $'grip --pass {g:vimrc.github.access_token} --browser "{expand("%:p")}"'
+  \ 'grip',
 \ )<CR>
+" TODO: Doesn't work well
+" \ $'grip --pass {g:vimrc.github.access_token} --browser "{expand("%:p")}"'
 
 syntax sync fromstart
 

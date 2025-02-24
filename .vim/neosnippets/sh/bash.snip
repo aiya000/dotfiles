@@ -1,0 +1,35 @@
+snippet function
+alias func fun
+    function ${1:#:name} () {
+        ${0:TARGET}
+    }
+
+snippet test
+abbr [[ ${0} ]]
+    [[ ${0} ]]
+
+snippet test_regex
+abbr [[ ${1} =~ ${0} ]]
+  [[ ${1} =~ ${0} ]]
+
+# Can use variables in 'pattern_str' and 'replaced', such as `${var/$foo/$bar}`
+snippet var_replace_only_first
+abbr ${${1:varname}/${2:pattern_str}/${3:replaced}}${0}
+  ${${1:varname}/${2:pattern_str}/${3:replaced}}${0}
+
+snippet var_replace_all
+abbr ${${1:varname}/${2:pattern_str}/${3:replaced}}${0}
+  ${${1:varname}//${2:pattern_str}/${3:replaced}}${0}
+
+snippet var_replace_head
+abbr ${${1:varname}/#${2:pattern_str}/${3:replaced}}${0}
+  ${${1:varname}/#${2:pattern_str}/${3:replaced}}${0}
+
+snippet var_replace_tail
+abbr ${${1:varname}/%${2:pattern_str}/${3:replaced}}${0}
+  ${${1:varname}/%${2:pattern_str}/${3:replaced}}${0}
+
+snippet array_slice
+alias slice
+abbr ${${1:array}[@]:${2:start}:${3:end}}${0}
+  ${${1:array}[@]:${2:start}:${3:end}}${0}

@@ -1121,7 +1121,7 @@ nnoremap <silent> <C-k>o :<C-u>e! %<CR>
 nnoremap <silent> <leader># #
 nnoremap <silent> <leader>* *
 nnoremap <silent> <leader>B :<C-u>sp <C-r>=g:vimrc.memo_path<CR><CR>
-nnoremap <silent> <leader>b :<C-u>call vimrc#open_scratch_buffer()<CR>
+nnoremap <silent> <leader>b :<C-u>call scratch_buffer#open('md', 'sp', 5)<CR>
 nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
 nnoremap <silent> Q :<C-u>call vimrc#bufclose_filetype(g:vimrc.temporary_buftypes)<CR>
 
@@ -1283,7 +1283,7 @@ inoremap <C-a> <Right>
 inoremap <C-k><C-k> <C-o>"_d$
 inoremap <silent> <C-k><C-j> <Esc>:write<CR>
 inoremap <silent> <C-k>J <Esc>:wall \| echo 'written all!'<CR>
-inoremap <silent><expr> <C-b> vimrc#get_webpage_title()
+inoremap <silent><expr> <C-b> vimrc#get_webpage_title(@+)
 " Don't noremap for fake-clip
 imap <C-r>' <C-r>+
 " Execute iabbr and Escape

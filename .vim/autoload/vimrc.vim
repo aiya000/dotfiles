@@ -271,11 +271,11 @@ function! vimrc#open_explorer(split, ...) abort
   execute cmd path
 endfunction
 
-" Get a detail of <title> from + register
-function! vimrc#get_webpage_title() abort
+" Fetches a detail of <title> from a URL
+function! vimrc#get_webpage_title(url) abort
   try
     echo 'fetching now...'
-    return system($'curl --silent {@+} | pup --plain "title json{{}}" | jq -r ".[0].text"')
+    return system($'curl --silent {a:url} | pup --plain "title json{{}}" | jq -r ".[0].text"')
   catch
     return $'vimrc#get_webpage_title(): something happened: {v:exception}'
   endtry
@@ -452,37 +452,6 @@ function! vimrc#execute_on(get_path, f, ...) abort
   finally
     execute ':lcd' current
   endtry
-endfunction
-
-function! vimrc#open_scratch_buffer() abort
-  const file = s:find_fresh_scratch_file()
-  if file is v:null
-    call s:Msg.error('no fresh scratch file found.')
-    return
-  endif
-
-  execute 'silent' 'sp' file
-  silent write
-  setl noswapfile
-  normal! ggVG"_d
-  resize 5
-endfunction
-
-function! s:find_fresh_scratch_file() abort
-  for i in range(0, 100000)
-    let file = printf('/tmp/scratch%d.md', i)
-    if !filereadable(expand(file))
-      return file
-    endif
-  endfor
-  return v:null
-endfunction
-
-function! vimrc#open_buffer_to_execute(cmd) abort
-  call vimrc#open_scratch_buffer()
-  put=execute(a:cmd)
-  normal! gg2dd
-  silent write
 endfunction
 
 " Moves the cursor position to the last position of a file.
@@ -739,4 +708,12 @@ function! vimrc#deepl_translate(line_count, start_line, end_line, target_lang, s
   else
     throw $'Unknown method: {a:method}'
   endif
+endfunction
+
+function! vimrc#open_buffer_to_execute(cmd) abort
+  const full_size = 100
+  call scratch_buffer#open('md', 'sp', full_size)
+  put=execute(a:cmd)
+  normal! gg2dd
+  silent write
 endfunction

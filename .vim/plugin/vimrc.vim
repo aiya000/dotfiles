@@ -34,9 +34,6 @@ command! -bar SessionSaveInGitBranch call vimrc#git_branch_session_save()
 " Rename a file of the current buffer
 command! -bar -nargs=1 -complete=file Rename call vimrc#rename_to(<q-args>)
 
-" Pull and Insert <title>\(.*\)</title>
-command! -bar -nargs=1 InsertWebPageTitle execute 'normal! i' . vimrc#pull_webpage_title(<q-args>)
-
 " Haskell
 command! -bar HaskDogs call vimrc#execute_haskdogs_async()
 command! -bar EtaDogs call vimrc#execute_haskdogs_in_eta_async()

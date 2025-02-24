@@ -13,14 +13,6 @@ snippet elif
     elif ${1:#:condition} ; then
         ${0:TARGET}
 
-snippet test
-abbr [[ ${0} ]]
-    [[ ${0} ]]
-
-snippet test_regex
-abbr [[ ${1} =~ ${0} ]]
-  [[ ${1} =~ ${0} ]]
-
 snippet for
     for ${1:x} in ${2:#:var} ; do
         ${0}
@@ -35,12 +27,6 @@ snippet while
     while ${1:#:condition} ; do
         ${0:TARGET}
     done
-
-snippet function
-alias func fun
-    function ${1:#:name} () {
-        ${0:TARGET}
-    }
 
 snippet case
     case ${1} in
@@ -83,11 +69,6 @@ snippet args_whole
 abbr $@
     $@
 
-snippet which
-alias command_v
-abbr command -v ${1:cmd} > /dev/null 2>&1
-  command -v ${1:cmd} > /dev/null 2>&1
-
 # Templates
 
 snippet array_from_string
@@ -102,3 +83,8 @@ abbr read -rp '${1:message}' ${0:var}
 snippet source_script_on_this_dir
 abbr source "$(dirname "$0")/${0:utils.sh}"
   source "$(dirname "$0")/${0:utils.sh}"
+
+snippet which
+alias command_v
+abbr command -v ${1:cmd} > /dev/null 2>&1
+  command -v ${1:cmd} > /dev/null 2>&1
