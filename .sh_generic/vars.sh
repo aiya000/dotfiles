@@ -3,8 +3,7 @@
 export EDITOR=vim
 export GIT_EDITOR=vim
 export VISUAL=vim
-export PAGER='vim - +PAGER' # vim-pager
-export MANPAGER='vim - +MANPAGER -c "setl nonu nornu ft=vim-pager | only"' # vim-manpager
+export MANPAGER='vim - +MANPAGER -c "setl nonu nornu nolist ft=man | only"' # vim-manpager
 
 export VIM_SESSION=$HOME/.backup/vim-backup/session
 export DUSTBOX=$HOME/.backup/dustbox

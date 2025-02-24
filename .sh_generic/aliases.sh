@@ -23,9 +23,11 @@ alias mv='mv -i'
 alias sl=ls
 alias rm=dust  # no more cry
 
-i_have batcat && alias batcat-with-default-options='batcat $DOTFILES_BATCAT_DEFAULT_OPTIONS'
-i_have batcat && alias bat=batcat-with-default-options
-i_have batcat && alias cat=batcat-with-default-options
+if i_have batcat ; then
+  alias batcat-with-default-options='batcat $DOTFILES_BATCAT_DEFAULT_OPTIONS'
+  alias bat=batcat-with-default-options
+  alias cat=batcat-with-default-options
+fi
 
 function du-sort () {
   local paths=${1:-.}

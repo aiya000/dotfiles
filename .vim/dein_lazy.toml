@@ -3,15 +3,15 @@ repo = 'thinca/vim-quickrun'
 depends = 'vimproc.vim'
 on_cmd = 'QuickRun'
 on_map = [
-    '<Plug>(quickrun)',
-    '<Plug>(quickrun-op)',
+  '<Plug>(quickrun)',
+  '<Plug>(quickrun-op)',
 ]
 
 [[plugins]]
 repo = 'thinca/vim-themis'
 on_ft = [
-    'vim',
-    'vimspec',
+  'vim',
+  'vimspec',
 ]
 
 [[plugins]]
@@ -22,35 +22,31 @@ on_cmd = 'PrevimOpen'
 [[plugins]]
 repo = 'mbbill/undotree'
 on_cmd = [
-    'UndotreeToggle',
-    'UndotreeFocus',
-    'UndotreeShow',
-    'UndotreeHide',
+  'UndotreeToggle',
+  'UndotreeFocus',
+  'UndotreeShow',
+  'UndotreeHide',
 ]
 
 [[plugins]]
 repo = 'aiya000/adrone.vim'
 on_cmd = [
-    'AdroneHome',
-    'AdroneSay',
-    'AdroneVersion',
+  'AdroneHome',
+  'AdroneSay',
+  'AdroneVersion',
 ]
-
-[[plugins]]
-repo = 'lambdalisue/vim-pager'
-on_cmd = 'PAGER'
 
 [[plugins]]
 repo = 'lambdalisue/vim-manpager'
 on_cmd = [
-    'Man',
+  'Man',
 ]
 
 [[plugins]]
 repo = 'thinca/vim-ft-clojure'
 on_ft = [
-    'clojure',
-    'lisp',  # Please see ~/.vim/syntax/lisp.vim
+  'clojure',
+  'lisp',  # Please see ~/.vim/syntax/lisp.vim
 ]
 
 [[plugins]]
@@ -84,24 +80,24 @@ on_cmd = ['ElmFormat']
 repo = 'aiya000/idris-vim'
 rev = 'aiya000/can-be-disabled-keymappings'
 on_ft = [
-    'idris',
-    'lidris',
+  'idris',
+  'lidris',
 ]
 
 [[plugins]]
 repo = 'haya14busa/incsearch.vim'
 on_map = [
-    '<Plug>(incsearch-forward)',
-    '<Plug>(incsearch-backward)',
-    '<Plug>(incsearch-stay)',
-    '<Plug>(incsearch-nohl)',
-    '<Plug>(incsearch-nohl0)',
-    '<Plug>(incsearch-nohl-n)',
-    '<Plug>(incsearch-nohl-N)',
-    '<Plug>(incsearch-nohl-*)',
-    '<Plug>(incsearch-nohl-#)',
-    '<Plug>(incsearch-nohl-g*)',
-    '<Plug>(incsearch-nohl-g#)',
+  '<Plug>(incsearch-forward)',
+  '<Plug>(incsearch-backward)',
+  '<Plug>(incsearch-stay)',
+  '<Plug>(incsearch-nohl)',
+  '<Plug>(incsearch-nohl0)',
+  '<Plug>(incsearch-nohl-n)',
+  '<Plug>(incsearch-nohl-N)',
+  '<Plug>(incsearch-nohl-*)',
+  '<Plug>(incsearch-nohl-#)',
+  '<Plug>(incsearch-nohl-g*)',
+  '<Plug>(incsearch-nohl-g#)',
 ]
 
 [[plugins]]
@@ -111,8 +107,8 @@ on_ft = 'alex'
 [[plugins]]
 repo = 'thinca/vim-textobj-between'
 on_map = [
-    '<Plug>(textobj-between-a)',
-    '<Plug>(textobj-between-i)',
+  '<Plug>(textobj-between-a)',
+  '<Plug>(textobj-between-i)',
 ]
 
 [[plugins]]
@@ -120,9 +116,9 @@ repo = 'rhysd/vim-operator-surround'
 depends = 'vim-operator-user'
 hook_source = 'call vimrc#dein#hook_source#operator_surround()'
 on_map = [
-    '<Plug>(operator-surround-append)',
-    '<Plug>(operator-surround-delete)',
-    '<Plug>(operator-surround-replace)',
+  '<Plug>(operator-surround-append)',
+  '<Plug>(operator-surround-delete)',
+  '<Plug>(operator-surround-replace)',
 ]
 
 [[plugins]]
@@ -133,10 +129,10 @@ on_ft = 'review'
 repo = 'aiya000/vim-fmap'
 on_cmd = 'FNoreMap'
 on_map = [
-    '<Plug>(fmap-forward-f)',
-    '<Plug>(fmap-backward-f)',
-    '<Plug>(fmap-forward-t)',
-    '<Plug>(fmap-backward-t)',
+  '<Plug>(fmap-forward-f)',
+  '<Plug>(fmap-backward-f)',
+  '<Plug>(fmap-forward-t)',
+  '<Plug>(fmap-backward-t)',
 ]
 
 [[plugins]]
@@ -158,18 +154,18 @@ on_ft = ['vue']
 [[plugins]]
 repo = 'aiya000/vim-ghcid-quickfix'
 on_ft = [
-    'haskell',
-    'happy',
-    'alex',
+  'haskell',
+  'happy',
+  'alex',
 ]
 
 [[plugins]]
 repo = 'tyru/open-browser-github.vim'
 on_cmd = [
-    'OpenGithubFile',
-    'OpenGithubIssue',
-    'OpenGithubPullReq',
-    'OpenGithubProject',
+  'OpenGithubFile',
+  'OpenGithubIssue',
+  'OpenGithubPullReq',
+  'OpenGithubProject',
 ]
 
 [[plugins]]
@@ -183,17 +179,17 @@ on_ft = ['haskell']
 [[plugins]]
 repo = 'skanehira/translate.vim'
 on_cmd = [
-    'Translate',
-    'AutoTranslateModeToggle',
-    'AutoTranslateModeEnable',
-    'AutoTranslateModeDisable',
+  'Translate',
+  'AutoTranslateModeToggle',
+  'AutoTranslateModeEnable',
+  'AutoTranslateModeDisable',
 ]
 
 [[plugins]]
 repo = 'segeljakt/vim-silicon'
 on_cmd = [
-    'Silicon',
-    'SiliconHighlight',
+  'Silicon',
+  'SiliconHighlight',
 ]
 
 [[plugins]]
@@ -203,9 +199,9 @@ on_cmd = 'Webpage'
 [[plugins]]
 repo = 'tyru/operator-camelize.vim'
 on_map = [
-    '<Plug>(operator-camelize)',
-    '<Plug>(operator-decamelize)',
-    '<Plug>(operator-camelize-toggle)',
+  '<Plug>(operator-camelize)',
+  '<Plug>(operator-decamelize)',
+  '<Plug>(operator-camelize-toggle)',
 ]
 
 [[plugins]]
@@ -220,23 +216,23 @@ on_cmd = 'QuickReplOpen'
 [[plugins]]
 repo = 'aiya000/yankround.vim'
 on_map = [
-    '<Plug>(yankround-p)',
-    '<Plug>(yankround-P)',
-    '<Plug>(yankround-gp)',
-    '<Plug>(yankround-gP)',
-    '<Plug>(yankround-prev)',
-    '<Plug>(yankround-next)',
+  '<Plug>(yankround-p)',
+  '<Plug>(yankround-P)',
+  '<Plug>(yankround-gp)',
+  '<Plug>(yankround-gP)',
+  '<Plug>(yankround-prev)',
+  '<Plug>(yankround-next)',
 ]
 
 [[plugins]]
 repo = 'ap/vim-css-color'
 on_ft = [
-    'css',
-    'scss',
-    'sass',
-    'html',
-    'xml',
-    'typescript.tsx',
+  'css',
+  'scss',
+  'sass',
+  'html',
+  'xml',
+  'typescript.tsx',
 ]
 
 [[plugins]]
