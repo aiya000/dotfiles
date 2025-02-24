@@ -35,9 +35,8 @@ function! s:stash_message(file_to_save) abort
 endfunction
 
 function! s:open_commit_buffer(subcmd_list) abort
-  const subcmd = a:subcmd_list->map({ _, x -> $"'{x}'" })->join(' ')
   try
-    execute 'Gin' 'commit' '--verbose' subcmd
+    execute 'Gin' 'commit' '--verbose' a:subcmd_list->join(' ')
   catch
     echomsg $'Opening terminal instead of `:Gin commit` because: {v:exception}'
     call s:open_terminal_commit_buffer(a:subcmd_list)
