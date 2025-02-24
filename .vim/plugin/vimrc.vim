@@ -3,78 +3,56 @@ scriptversion 3
 
 let s:List = vital#vimrc#import('Data.List')
 
+" Virtual keymaps
 nnoremap <silent> <Plug>(vimrc-surround-append-choice) :<C-u>call vimrc#append_choose_surround()<CR>
 nnoremap <silent> <Plug>(vimrc-surround-append-choice-wide) :<C-u>call vimrc#append_choose_surround_wide()<CR>
 nnoremap <silent> <Plug>(vimrc-surround-delete-mostly-inner) :<C-u>call vimrc#delete_mostly_inner_surround()<CR>
 nnoremap <silent> <Plug>(vimrc-surround-replace-mostly-inner) :<C-u>call vimrc#replace_mostly_inner_surround()<CR>
 
-" Vim common
+" Vim systems
 "" Scripts
 command! -bar -nargs=? -complete=filetype FtpluginEditAfter
     \ execute ':edit' printf('%s/after/ftplugin/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
-
 command! -bar -nargs=? -complete=filetype FtDictionaryEdit
     \ execute ':edit' printf('%s/dict/filetype/%s.dict', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
-
 command! -bar -nargs=? -complete=filetype SyntaxEdit
     \ execute ':edit' printf('%s/syntax/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
-
 command! -bar -nargs=? -complete=filetype IndentEdit
     \ execute ':edit' printf('%s/indent/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
-
 command! -bar -nargs=? -complete=filetype FtDetectEdit
     \ execute ':edit' printf('%s/ftdetect/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
-
 command! -bar -nargs=? -complete=filetype PluginEdit
     \ execute ':edit' printf('%s/plugin/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
-
 command! -bar -nargs=? -complete=filetype AutoloadEdit
     \ execute ':edit' printf('%s/autoload/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
-"" Others
-command! -bar GUI call vimrc#open_this_file_in_gui()
-command! -bar ReverseLines !tac
-
 "" Clear quickfix
 command! -bar CClear call setqflist([])
-
-"" Rename a file of the current buffer
-command! -bar -nargs=1 -complete=file Rename call vimrc#rename_to(<q-args>)
-
-"" Pull and Insert <title>\(.*\)</title>
-command! -bar -nargs=1 InsertWebPageTitle execute 'normal! i' . vimrc#pull_webpage_title(<q-args>)
-
 "" Save session and specify session name automatically
 command! -bar SessionSaveInGitBranch call vimrc#git_branch_session_save()
 
-"" Haskell
+
+" Rename a file of the current buffer
+command! -bar -nargs=1 -complete=file Rename call vimrc#rename_to(<q-args>)
+
+" Pull and Insert <title>\(.*\)</title>
+command! -bar -nargs=1 InsertWebPageTitle execute 'normal! i' . vimrc#pull_webpage_title(<q-args>)
+
+" Haskell
 command! -bar HaskDogs call vimrc#execute_haskdogs_async()
 command! -bar EtaDogs call vimrc#execute_haskdogs_in_eta_async()
 
-"" Kotlin
+" Kotlin
 command! -bar KtlintAutoFix call system('ktlint --format ' . fnameescape(expand('%'))) | edit %
 command! -bar -nargs=* QuickfixRunGradle call vimrc#run_gradle_quickfix(<q-args>)
 
-"" Scala
+" Scala
 command! -bar -nargs=* QuickfixRunSbtCompileWatch call vimrc#run_scala_compile_watch_quickfix(<q-args>)
 command! -bar QuickfixStopSbtCompileWatch call vimrc#stop_scala_compile_watch_quickfix()
 
-"" TypeScript
-command! -bar -nargs=* QuickfixRunYarn call vimrc#run_yarn_quickfix(<q-args>)
-
-"" Make
+" Make
 command! -bar -nargs=* QuickfixRunMake call vimrc#run_make_quickfix(<q-args>)
 
-function! s:terminal_at_started(filetype, command, ...) abort
-  let options = get(a:, 1, {})
-  return vimrc#open_terminal_as(
-    \ a:filetype,
-    \ 'stay',
-    \ a:command,
-    \ extend(options, {'path': g:vimrc.path_at_started})
-    \ )
-endfunction
-
-" Git commands
+" Git commands (cushion)
 command! -bar -nargs=* GStatus GinStatus <args>
 command! -bar -nargs=* GLog GitLogViewer -100 --name-only <args>
 command! -bar -nargs=* GLogPatch GitLogViewer --patch -100 <args>
@@ -91,25 +69,11 @@ command! -bar -nargs=* GTreeAll GinLog --graph --decorate --oneline --all <args>
 command! -bar -nargs=* GBrahcnAll GinBranch --all <args>
 command! -bar -nargs=* GBlame Gin blame <args>
 
-" Twitter
-command! -bar TweetVRChat call vimrc#tweet(g:vimrc.twitter.vrchat)
-command! -bar TweetNico call vimrc#tweet(g:vimrc.twitter.nico)
-command! -bar TweetPrivate call vimrc#tweet(g:vimrc.twitter.private)
-command! -bar TweetPublic call vimrc#tweet(g:vimrc.twitter.public)
-command! -bar TwitterVRChat call vimrc#twitter(g:vimrc.twitter.vrchat)
-command! -bar TwitterVRChatTab tabnew | TwitterVRChat
-command! -bar TwitterNico call vimrc#twitter(g:vimrc.twitter.nico)
-command! -bar TwitterNicoTab tabnew | TwitterNico
-command! -bar TwitterPrivate call vimrc#twitter(g:vimrc.twitter.private)
-command! -bar TwitterPrivateTab tabnew | TwitterPrivate
-command! -bar TwitterPublic call vimrc#twitter(g:vimrc.twitter.public)
-command! -bar TwitterPublicTab tabnew | TwitterPublic
-
 " vim-webpage
 command! -bar -nargs=+ Weblio WebpageShow weblio <args>
 command! -nargs=+ Stackage WebpageShow stackage <args>
 
-"" Others
+" Others
 command! -bar CdBufDir execute ':cd' fnameescape(expand('%:p:h'))
 command! -bar CdStarted execute ':cd' g:vimrc.path_at_started
 command! -bar CdGitRoot call vimrc#cd_git_root(':cd')
@@ -121,7 +85,7 @@ command! -bar ScdCurrentDir let g:vimrc.path_at_started = getcwd()
 command! -bar ScdGitRoot let g:vimrc.path_at_started = g:vimrc.git_root
 command! -bar GitReadRoot call vimrc#read_to_set_git_root()
 command! -bar ReadGitRoot call vimrc#read_to_set_git_root()
-"""
+""
 command! -bar -nargs=? Grep call vimrc#ddu_start_from_input(#{
   \ sources: [#{
     \ name: 'rg',
@@ -140,6 +104,7 @@ command! -bar -nargs=? Grep call vimrc#ddu_start_from_input(#{
 \ }, <f-args>)
 command! -bar -nargs=+ SetTabTitle let t:vimrc_tabtitle = <q-args>
 command! -bar UnsetTabTitle unlet t:vimrc_tabtitle
+command! -bar ReverseLines !tac
 
 " deepl.vim
 command! -bar -range=% DeeplTranslateToEn call vimrc#deepl_translate(<count>, <line1>, <line2>, 'EN', 'JA', 'yank')
