@@ -88,7 +88,8 @@ ifeq ($(OS),Ubuntu)  # {{{
 
 install-core-package-managers:
 	# $(AptUpdate)
-	$(AptInstall) python3-pip golang-go
+	$(AptInstall) golang-go
+	$(MAKE) install-python3
 
 endif  # }}}
 ifeq ($(OS),Darwin)  # {{{
@@ -388,7 +389,7 @@ install-xclip:
 
 # To build vim
 install-vim-build-deps:
-	$(YayInstall) python2 ruby ruby-irb lua luajit
+	$(YayInstall) ruby ruby-irb lua luajit
 
 install-xmonad-runtime-deps:
 	$(YayInstall) \
@@ -432,6 +433,9 @@ install-lice:
 
 install-java:
 	which java || $(YayInstall) jdk
+
+install-python3:
+	$(AptInstall) python3 python3-pip python-is-python3 python3-venv
 
 ifeq ($(OS),Arch)
 install-displaylink:
