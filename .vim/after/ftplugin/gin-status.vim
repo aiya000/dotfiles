@@ -7,19 +7,20 @@ let b:undo_ftplugin = 'setl ' . join([
 setl cursorline
 
 nnoremap <buffer><silent> Q <Cmd>bdelete!<CR>
+nmap <buffer><silent> A yy<Cmd>call <SID>open_terminal_add_patch_buffer(@"[:-1])<CR>
 nnoremap <buffer><silent> <C-r> <Cmd>GinStatus<CR>
 nmap <buffer><silent><nowait> p <Plug>(gin-action-diff:smart:vsplit)
 nmap <buffer><silent> sa <Plug>(gin-action-stash)
-nmap <buffer><silent> ss yy<Cmd>call <SID>git_stash_message(@")<CR>
+nmap <buffer><silent> ss yy<Cmd>call <SID>stash_message(@")<CR>
 nnoremap <buffer><silent> sp <Cmd>Gin stash pop<CR>
-nnoremap <buffer><silent> cc <Cmd>call <SID>open_commit_buffer('')<CR>
-nnoremap <buffer><silent> ca <Cmd>call <SID>open_commit_buffer('--amend')<CR>
+nnoremap <buffer><silent> cc <Cmd>call <SID>open_commit_buffer([])<CR>
+nnoremap <buffer><silent> ca <Cmd>call <SID>open_commit_buffer(['--amend'])<CR>
 nnoremap <buffer> cf :<C-u>GCommitFixup<Space>
 nmap <buffer> <: <Plug>(gin-action-restore:ours)
 nmap <buffer> >: <Plug>(gin-action-restore:theirs)
 nmap <buffer> == <Plug>(gin-action-reset)
 
-function! s:git_stash_message(file_to_save) abort
+function! s:stash_message(file_to_save) abort
   const message = input('Stash message: ')
   call vimrc#job#start_simply(
     \ $'git stash push --message "{message}" -- "{a:file_to_save}"',
@@ -33,24 +34,34 @@ function! s:git_stash_message(file_to_save) abort
   \ )
 endfunction
 
-function! s:open_commit_buffer(subcmd) abort
+function! s:open_commit_buffer(subcmd_list) abort
+  const subcmd = a:subcmd_list->map({ _, x -> $"'{x}'" })->join(' ')
   try
-    execute 'Gin' 'commit' '--verbose' a:subcmd
+    execute 'Gin' 'commit' '--verbose' subcmd
   catch
     echomsg $'Opening terminal instead of `:Gin commit` because: {v:exception}'
-    call s:open_term_commit_buffer(a:subcmd)
+    call s:open_terminal_commit_buffer(a:subcmd_list)
     return
   endtry
 endfunction
 
-function! s:open_term_commit_buffer(subcmd) abort
-  call vimrc#open_terminal_as('term-shell-git-commit', 'stay', &shell, #{ path: g:vimrc.git_root })
+function! s:open_terminal_git_buffer(filetype, subcmd_list) abort
+  call vimrc#open_terminal_as(a:filetype, 'stay', &shell)
+  const subcmd = a:subcmd_list->map({ _, x -> $"'{x}'" })->join(' ')
 
   const current_bufnr = bufnr('%')
-  const sleeping_time_to_wait_spawning_terminal = 3000
+  const sleeping_time_to_wait_spawning_terminal = 1000
   call timer_start(sleeping_time_to_wait_spawning_terminal, { _ ->
-    \ term_sendkeys(current_bufnr, $"git commit {a:subcmd} \<CR>i:sparkles:\<Space>")
-  \ }, #{ repeat: 1 })
+    \ term_sendkeys(current_bufnr, $"git {subcmd}\<CR>")
+  \ })
+endfunction
+
+function! s:open_terminal_commit_buffer(subcmd_list) abort
+  call s:open_terminal_git_buffer('term-shell-git-commit', ['commit', a:subcmd])
+endfunction
+
+function! s:open_terminal_add_patch_buffer(file) abort
+  call s:open_terminal_git_buffer('term-shell-git-commit', ['add', '--patch', a:file])
 endfunction
 
 function! s:force_show_stash_size() abort
