@@ -44,6 +44,7 @@ export PATH
 PATH=$PYENV_ROOT/bin:$PATH
 PATH=$HOME/.rbenv/bin:$PATH
 PATH=$HOME/.dotfiles/bin:$PATH
+PATH=$HOME/.dotfiles/bash-toys/bin:$PATH
 PATH=$HOME/bin:$HOME/sbin:$PATH
 # PATH=$DENO_INSTALL/bin:$PATH  # Disabling to unknown errors on npm projects
 

@@ -83,6 +83,11 @@ snippet args_whole
 abbr $@
     $@
 
+snippet which
+alias command_v
+abbr command -v ${1:cmd} > /dev/null 2>&1
+  command -v ${1:cmd} > /dev/null 2>&1
+
 # Templates
 
 snippet array_from_string

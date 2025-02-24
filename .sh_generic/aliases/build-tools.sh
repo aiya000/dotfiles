@@ -34,7 +34,7 @@ function xl () {
       if [[ -z $1 ]] ; then
         bun install
       else
-        bun add $*
+        bun add "$@"
       fi
     }
     alias xid='bun add --dev'

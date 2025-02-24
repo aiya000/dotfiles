@@ -1,2 +1,0 @@
-#!/bin/bash
-systemctl list-units | grep -iE '(net|dhcp|wpa|conn|wicd)'

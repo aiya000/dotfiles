@@ -1,9 +1,0 @@
-#!/bin/bash
-
-if command -v batcat > /dev/null 2>&1 ; then
-  cat="batcat $DOTFILES_BATCAT_DEFAULT_OPTIONS"
-else
-  cat=cat
-fi
-
-$cat $(which $1)

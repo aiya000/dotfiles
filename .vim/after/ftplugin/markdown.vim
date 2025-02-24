@@ -12,7 +12,7 @@ nnoremap <silent><buffer> <localleader><localleader>r <Cmd>call vimrc#open_termi
   \ 'none',
   \ 'horizontal',
   \ $'grip --pass {g:vimrc.github.access_token} --browser "{expand("%:p")}"'
-\ ) \| hide<CR>
+\ )<CR>
 
 syntax sync fromstart
 

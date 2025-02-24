@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# shellcheck disable=SC1090
-source ~/.dotfiles/.sh_generic/premise.sh
+for script in ~/.dotfiles/bash-toys/functions/*.sh ; do
+  # shellcheck disable=SC1090
+  source "$script"
+done
 
 #
 # This file define the aliases and functions
@@ -44,9 +46,6 @@ i_have say || alias say=espeak
 # }}}
 # Load ./aliases/** {{{
 
-for script in ~/.sh_generic/aliases/functions/*.sh ; do
-  source "$script"
-done
 source ~/.sh_generic/aliases/build-tools.sh
 source ~/.sh_generic/aliases/os-package-managers.sh
 source ~/.sh_generic/aliases/vim.sh
@@ -254,7 +253,7 @@ if i_have git ; then
   unset git_taking_limit
 
   function git-push-u-origin-branch () {
-    git push -u origin $(git branch --show-current)
+    git push -u origin "$(git branch --show-current)"
   }
   alias gpuob=git-push-u-origin-branch
 
@@ -291,8 +290,6 @@ if i_have git ; then
     git remote set-url "$remote" "$https_url"
     git remote get-url "$remote"
   }
-
-  alias git-root='git rev-parse --show-toplevel'
 
   # Set casual user.name and user.email at local
   alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
