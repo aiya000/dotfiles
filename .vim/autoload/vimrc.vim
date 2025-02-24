@@ -23,7 +23,7 @@ let s:Promise = vital#vimrc#import('Async.Promise')
 "    \ })
 "
 " }}}
-function vimrc#let(self, f) abort
+function! vimrc#let(self, f) abort
   return a:f(a:self)
 endfunction
 
@@ -45,18 +45,18 @@ endfunction
 "   \ )
 "
 " }}}
-function vimrc#apply_if(value, p, f) abort
+function! vimrc#apply_if(value, p, f) abort
   return a:value->vimrc#let({ value ->
     \ a:p(value) ? a:f(value) : value
   \ })
 endfunction
 
-function vimrc#identity(x) abort
+function! vimrc#identity(x) abort
   return a:x
 endfunction
 
 " Returns a:alt if f() throws an exception.
-function vimrc#catch(f, alt) abort
+function! vimrc#catch(f, alt) abort
   try
     call a:f()
   catch
@@ -70,7 +70,7 @@ endfunction
 "   cont: (git_root: string) -> A
 "   stdout: Array<string> | string
 "   stderr: Array<string> | string
-function s:parse_git_root(cont, stdout, stderr) abort
+function! s:parse_git_root(cont, stdout, stderr) abort
   if type(a:stderr) is type([]) && a:stderr !=# []
     throw join(a:stderr)
   endif
@@ -94,23 +94,23 @@ function s:parse_git_root(cont, stdout, stderr) abort
 endfunction
 
 " Async
-function vimrc#read_git_root(cont) abort
+function! vimrc#read_git_root(cont) abort
   call vimrc#job#start_simply(
     \ ['git', 'rev-parse', '--show-toplevel'],
     \ function('s:parse_git_root', [a:cont]),
   \ )
 endfunction
 
-function s:set_git_root_to_gvimrc(git_root) abort
+function! s:set_git_root_to_gvimrc(git_root) abort
   echomsg 'vimrc: a git root detected: ' .. a:git_root
   let g:vimrc.git_root = a:git_root
 endfunction
 
-function vimrc#read_to_set_git_root() abort
+function! vimrc#read_to_set_git_root() abort
   call vimrc#read_git_root(function('s:set_git_root_to_gvimrc'))
 endfunction
 
-function vimrc#read_git_root_sync() abort
+function! vimrc#read_git_root_sync() abort
   const result = system('git rev-parse --show-toplevel')
 
   if v:shell_error
@@ -121,7 +121,7 @@ function vimrc#read_git_root_sync() abort
 endfunction
 
 " git-clones dein.vim to a:install_dirname.
-function vimrc#fetch_dein(install_dirname)
+function! vimrc#fetch_dein(install_dirname)
   if executable('git')
     echo 'dein.vim was not installed yet.'
     echo 'Installing dein.vim now.'
@@ -136,7 +136,7 @@ endfunction
 " NOTE: open_mode 'open' ってなんだっけ？
 " Absorbs the different of Vim and NeoVim.
 "   open_mode: 'vertical' | 'horizontal' | 'stay' | 'tabnew' | 'hidden' | 'open'
-function vimrc#open_terminal_as(filetype, open_mode, command, ...) abort
+function! vimrc#open_terminal_as(filetype, open_mode, command, ...) abort
   const options = get(a:000, 0, {})
   const terminal =
     \ (has('nvim') && !s:is_supported_by_neovim(a:open_mode))
@@ -175,20 +175,20 @@ function vimrc#open_terminal_as(filetype, open_mode, command, ...) abort
   endif
 endfunction
 
-function s:is_supported_by_neovim(open_mode) abort
+function! s:is_supported_by_neovim(open_mode) abort
   return a:open_mode ==# 'vertical'
     \ || a:open_mode ==# 'horizontal'
     \ || a:open_mode ==# 'stay'
     \ || a:open_mode ==# 'tabnew'
 endfunction
 
-function s:terminal_with_warn(unsupprted_open_mode) abort
+function! s:terminal_with_warn(unsupprted_open_mode) abort
   call s:Msg.warn($'throw {a:unsupprted_open_mode} is not available for NeoVim, now do `:terminal` with no arguments instead.')
   return ':terminal'
 endfunction
 
 " Compresses continuously spaces to a space.
-function vimrc#compress_spaces()
+function! vimrc#compress_spaces()
   const recent_pattern = @/
   try
     execute 's/\s\+/ /g'
@@ -200,7 +200,7 @@ function vimrc#compress_spaces()
 endfunction
 
 " Removes trailing spaces of all lines.
-function vimrc#remove_trailing_spaces()
+function! vimrc#remove_trailing_spaces()
   const recent_pattern = @/
   const curpos = getcurpos()
   try
@@ -214,7 +214,7 @@ function vimrc#remove_trailing_spaces()
 endfunction
 
 " Toggles diffthis and diffoff with some keymappings.
-function vimrc#toggle_diff()
+function! vimrc#toggle_diff()
   if &diff
     diffoff
     "NOTE: This restores [c and ]c of .vimrc,
@@ -231,7 +231,7 @@ function vimrc#toggle_diff()
 endfunction
 
 " Closes buffers of a specified filetypes.
-function vimrc#bufclose_filetype(filetypes)
+function! vimrc#bufclose_filetype(filetypes)
   let closed = 0
   for w in range(1, winnr('$'))
     let buf_ft = getwinvar(w, '&filetype')
@@ -245,7 +245,7 @@ function vimrc#bufclose_filetype(filetypes)
 endfunction
 
 " Toggles a file explorer
-function vimrc#toggle_explorer(...)
+function! vimrc#toggle_explorer(...)
   const path = get(a:000, 0, expand('%:p:h'))
   const closed = vimrc#bufclose_filetype(['dirvish'])
   if !closed
@@ -253,7 +253,7 @@ function vimrc#toggle_explorer(...)
   endif
 endfunction
 
-function vimrc#open_explorer(split, ...) abort
+function! vimrc#open_explorer(split, ...) abort
   const path = get(a:000, 0, expand('%:p:h'))
   const cmd =
     \ a:split ==# 'stay'  ? ':Dirvish' :
@@ -272,7 +272,7 @@ function vimrc#open_explorer(split, ...) abort
 endfunction
 
 " Get a detail of <title> from + register
-function vimrc#get_webpage_title() abort
+function! vimrc#get_webpage_title() abort
   try
     echo 'fetching now...'
     return system($'curl --silent {@+} | pup --plain "title json{{}}" | jq -r ".[0].text"')
@@ -283,7 +283,7 @@ endfunction
 
 " :quit if only a window is existent.
 " :hide otherwise.
-function vimrc#hide_or_quit() abort
+function! vimrc#hide_or_quit() abort
   const tabnum = tabpagenr('$')
   const winnum = tabpagewinnr(tabpagenr(), '$')
   if tabnum is 1 && winnum is 1
@@ -293,7 +293,7 @@ function vimrc#hide_or_quit() abort
   endif
 endfunction
 
-function vimrc#toggle_ale_at_buffer() abort
+function! vimrc#toggle_ale_at_buffer() abort
   let b:ale_enabled = !get(b:, 'ale_enabled', 1)
   " Refresh the state
   ALEToggle
@@ -301,13 +301,13 @@ function vimrc#toggle_ale_at_buffer() abort
 endfunction
 
 " Toggles indent-guides
-function vimrc#toggle_indent_guides()
+function! vimrc#toggle_indent_guides()
   let g:vimrc#indent_guides_enable = !get(g:, 'vimrc#indent_guides_enable', v:true)
   IndentGuidesToggle
 endfunction
 
 " Deletes the surround of `{ _ }` -> ` _ `
-function vimrc#delete_mostly_inner_surround() abort
+function! vimrc#delete_mostly_inner_surround() abort
   call dein#source('vim-operator-surround')
 
   const obj_keys = s:get_current_obj_keys()
@@ -329,13 +329,13 @@ function vimrc#delete_mostly_inner_surround() abort
   call repeat#set("\<Plug>(vimrc-surround-delete-mostly-inner)" .. obj_key)
 endfunction
 
-function s:get_current_obj_keys() abort
+function! s:get_current_obj_keys() abort
   const surrounds = g:operator#surround#blocks['-'] + get(g:operator#surround#blocks, &filetype, [])
   const obj_keys = s:List.map(surrounds, { x -> x.keys })
   return s:List.flatten(obj_keys)
 endfunction
 
-function s:input_obj_key_of(obj_keys) abort
+function! s:input_obj_key_of(obj_keys) abort
   let stroke = ''
   while !s:List.has(a:obj_keys, stroke)
     let char = nr2char(getchar())
@@ -348,7 +348,7 @@ function s:input_obj_key_of(obj_keys) abort
 endfunction
 
 " Replaces a surround to the surround of `{ _ }` -> `[ _ ]`.
-function vimrc#replace_mostly_inner_surround() abort
+function! vimrc#replace_mostly_inner_surround() abort
   call dein#source('vim-operator-surround')
   const obj_keys = s:get_current_obj_keys()
   const obj_key_from = s:input_obj_key_of(obj_keys)
@@ -358,7 +358,7 @@ function vimrc#replace_mostly_inner_surround() abort
 endfunction
 
 " a:visualizer: e.g. 'viw', 'viW'
-function s:append_choose_surround(visualizer) abort
+function! s:append_choose_surround(visualizer) abort
   call dein#source('vim-operator-surround')
   const obj_keys = s:get_current_obj_keys()
   const obj_key = s:input_obj_key_of(obj_keys)
@@ -366,25 +366,25 @@ function s:append_choose_surround(visualizer) abort
   return obj_key
 endfunction
 
-function vimrc#append_choose_surround() abort
+function! vimrc#append_choose_surround() abort
   const obj_key = s:append_choose_surround('viw')
   call repeat#set("\<Plug>(vimrc-surround-append-choice)" .. obj_key)
 endfunction
 
-function vimrc#append_choose_surround_wide() abort
+function! vimrc#append_choose_surround_wide() abort
   const obj_key = s:append_choose_surround('viW')
   call repeat#set("\<Plug>(vimrc-surround-append-choice-wide)" .. obj_key)
 endfunction
 
 " Puts a regsiter as stdin into the terminal buffer.
-function vimrc#put_as_stdin(detail) abort
+function! vimrc#put_as_stdin(detail) abort
   const current_bufnr = bufnr('%')
   call timer_start(0, { _ -> term_sendkeys(current_bufnr, a:detail) }, {'repeat': 1})
   return 'i'
 endfunction
 
 " Moves a current buffer to left of tab.
-function vimrc#move_window_forward()
+function! vimrc#move_window_forward()
   const tabwin_num = len(tabpagebuflist())
   mark Z
   hide
@@ -401,7 +401,7 @@ function vimrc#move_window_forward()
 endfunction
 
 " Moves a current buffer to right of tab.
-function vimrc#move_window_backward()
+function! vimrc#move_window_backward()
   mark Z
   hide
   tabprevious
@@ -415,7 +415,7 @@ function vimrc#move_window_backward()
 endfunction
 
 " Moves tab to left.
-function vimrc#move_tab_prev()
+function! vimrc#move_tab_prev()
   if tabpagenr() is 1
     $tabmove
   else
@@ -424,7 +424,7 @@ function vimrc#move_tab_prev()
 endfunction
 
 " Moves tab to right.
-function vimrc#move_tab_next()
+function! vimrc#move_tab_next()
   if tabpagenr() is tabpagenr('$')
     0tabmove
   else
@@ -432,15 +432,15 @@ function vimrc#move_tab_next()
   endif
 endfunction
 
-function vimrc#execute_on_base_path(f, ...) abort
+function! vimrc#execute_on_base_path(f, ...) abort
   call call(function('vimrc#execute_on'), [{ -> g:vimrc.path_at_started }, a:f] + a:000)
 endfunction
 
-function vimrc#execute_on_file_path(f, ...) abort
+function! vimrc#execute_on_file_path(f, ...) abort
   call call(function('vimrc#execute_on'), [{ -> expand('%:p:h') }, a:f] + a:000)
 endfunction
 
-function vimrc#execute_on(get_path, f, ...) abort
+function! vimrc#execute_on(get_path, f, ...) abort
   const current = getcwd()
 
   try
@@ -454,7 +454,7 @@ function vimrc#execute_on(get_path, f, ...) abort
   endtry
 endfunction
 
-function vimrc#open_scratch_buffer() abort
+function! vimrc#open_scratch_buffer() abort
   const file = s:find_fresh_scratch_file()
   if file is v:null
     call s:Msg.error('no fresh scratch file found.')
@@ -468,7 +468,7 @@ function vimrc#open_scratch_buffer() abort
   resize 5
 endfunction
 
-function s:find_fresh_scratch_file() abort
+function! s:find_fresh_scratch_file() abort
   for i in range(0, 100000)
     let file = printf('/tmp/scratch%d.md', i)
     if !filereadable(expand(file))
@@ -478,7 +478,7 @@ function s:find_fresh_scratch_file() abort
   return v:null
 endfunction
 
-function vimrc#open_buffer_to_execute(cmd) abort
+function! vimrc#open_buffer_to_execute(cmd) abort
   call vimrc#open_scratch_buffer()
   put=execute(a:cmd)
   normal! gg2dd
@@ -486,7 +486,7 @@ function vimrc#open_buffer_to_execute(cmd) abort
 endfunction
 
 " Moves the cursor position to the last position of a file.
-function vimrc#visit_past_position()
+function! vimrc#visit_past_position()
   const past_posit = line("'\"")
   if past_posit > 0 && past_posit <= line('$')
     execute 'normal! g`"'
@@ -494,7 +494,7 @@ function vimrc#visit_past_position()
 endfunction
 
 " Renames a file name of the current buffer.
-function vimrc#rename_to(new_name) abort
+function! vimrc#rename_to(new_name) abort
   const this_file = fnameescape(expand('%'))
   const new_name  = fnameescape(a:new_name)
 
@@ -523,7 +523,7 @@ function vimrc#rename_to(new_name) abort
   echo printf('Renamed %s to %s', this_file, new_file)
 endfunction
 
-function s:git_branch_session_save(repo_path) abort
+function! s:git_branch_session_save(repo_path) abort
   const repo_name = fnamemodify(a:repo_path, ':t')
   const branch_name = system("cd {a:repo_path} ; git branch | sort | tail -1 | awk '{print $2}'")[:-2]
 
@@ -539,11 +539,11 @@ function s:git_branch_session_save(repo_path) abort
 endfunction
 
 " Makes a session by reading the name of a current git repository.
-function vimrc#git_branch_session_save() abort
+function! vimrc#git_branch_session_save() abort
   call vimrc#read_git_root(function('s:git_branch_session_save'))
 endfunction
 
-function s:caddexpr_on_stdout(data) abort
+function! s:caddexpr_on_stdout(data) abort
   for line in a:data
     " NOTE:
     " On NeoVim v0.3.1, the job's on_stdout may take 『『『無』』』 as a line break and else.
@@ -566,12 +566,12 @@ function s:caddexpr_on_stdout(data) abort
 endfunction
 
 " Opens tweetvim' buffer with a private account.
-function vimrc#twitter(account) abort
+function! vimrc#twitter(account) abort
   execute ':TweetVimSwitchAccount' a:account
   TweetVimHomeTimeline
 endfunction
 
-function vimrc#tweet(account) abort
+function! vimrc#tweet(account) abort
   execute ':TweetVimSwitchAccount' a:account
   TweetVimSay
 endfunction
@@ -584,7 +584,7 @@ const s:read_to_quickfix_it = { cmd ->
 \ }
 
 " TODO: Unify run_foo_quickfix to one
-function vimrc#run_gradle_quickfix(gradle_subcmd) abort
+function! vimrc#run_gradle_quickfix(gradle_subcmd) abort
   const current = getcwd()
   try
     CClear
@@ -604,7 +604,7 @@ function vimrc#run_gradle_quickfix(gradle_subcmd) abort
 endfunction
 
 " NOTE: This requires to add sbt-launch.jar to $PATH
-function vimrc#run_scala_compile_watch_quickfix(sbt_subcmd) abort
+function! vimrc#run_scala_compile_watch_quickfix(sbt_subcmd) abort
   CClear
   call vimrc#stop_scala_compile_watch_quickfix() " Avoid running more processes
   " Run sbt directly for killing the sbt process (vimrc#stop_scala_compile_watch_quickfix)
@@ -614,7 +614,7 @@ function vimrc#run_scala_compile_watch_quickfix(sbt_subcmd) abort
   copen
 endfunction
 
-function vimrc#stop_scala_compile_watch_quickfix() abort
+function! vimrc#stop_scala_compile_watch_quickfix() abort
   if get(s:, 'sbt_compile_watch_job', v:null) isnot v:null
     call s:sbt_compile_watch_job.stop()
     let s:sbt_compile_watch_job = v:null
@@ -622,7 +622,7 @@ function vimrc#stop_scala_compile_watch_quickfix() abort
   endif
 endfunction
 
-function vimrc#run_yarn_quickfix(yarn_subcmd) abort
+function! vimrc#run_yarn_quickfix(yarn_subcmd) abort
   const current = getcwd()
   try
     CClear
@@ -635,7 +635,7 @@ function vimrc#run_yarn_quickfix(yarn_subcmd) abort
   endtry
 endfunction
 
-function vimrc#run_make_quickfix(make_args) abort
+function! vimrc#run_make_quickfix(make_args) abort
   const current = getcwd()
   try
     CClear
@@ -652,29 +652,29 @@ function vimrc#run_make_quickfix(make_args) abort
   endtry
 endfunction
 
-function vimrc#open_this_file_in_gui() abort
+function! vimrc#open_this_file_in_gui() abort
   const file = expand('%:p')
   call s:Job.start([g:vimrc.gui_editor, file])
 endfunction
 
-function vimrc#execute_repeatable_macro(name) abort
+function! vimrc#execute_repeatable_macro(name) abort
   const name = '@' .. a:name
 
   execute 'normal!' name
   call repeat#set(name)
 endfunction
 
-function vimrc#operator_camelize_toggle_current_word_with_setting_repeatable() abort
+function! vimrc#operator_camelize_toggle_current_word_with_setting_repeatable() abort
   execute 'normal' "viw\<Plug>(operator-camelize-toggle)"
   call repeat#set("viw\<Plug>(operator-camelize-toggle)")
 endfunction
 
 " Useful to check we can do `:tabclose`.
-function vimrc#has_two_or_more_tabpages() abort
+function! vimrc#has_two_or_more_tabpages() abort
   return tabpagenr('$') > 1
 endfunction
 
-function s:cd_git_root(cd, git_root) abort
+function! s:cd_git_root(cd, git_root) abort
   echo 'vimrc: The current directory changed to: ' .. a:git_root
 
   if type(a:cd) is type('')
@@ -688,15 +688,15 @@ endfunction
 " Params
 "   cd: string | (git_root: string) -> void
 "     a cd command. e.g. ':cd' or ':lcd'.
-function vimrc#cd_git_root(cd) abort
+function! vimrc#cd_git_root(cd) abort
   call vimrc#read_git_root(function('s:cd_git_root', [a:cd]))
 endfunction
 
-function s:set_gvimrc_path_at_started_to_git_root(git_root) abort
+function! s:set_gvimrc_path_at_started_to_git_root(git_root) abort
   let g:vimrc.path_at_started = a:git_root
 endfunction
 
-function vimrc#cd_git_root_with_gvimrc_path_at_started() abort
+function! vimrc#cd_git_root_with_gvimrc_path_at_started() abort
   call vimrc#read_git_root(
     \ function('s:cd_git_root'),
     \ [function('s:set_gvimrc_path_at_started_to_git_root')],
@@ -704,37 +704,42 @@ function vimrc#cd_git_root_with_gvimrc_path_at_started() abort
 endfunction
 
 " :h Vital.Async.Promise-example-timer
-function vimrc#wait(ms)
+function! vimrc#wait(ms)
   return s:Promise.new({resolve -> timer_start(a:ms, resolve)})
 endfunction
 
 " Starts ddu from filter mode
-function vimrc#ddu_start_from_insert(options) abort
+function! vimrc#ddu_start_from_insert(options) abort
   let g:vimrc_ddu_start_with_insert_next = v:true " Please see .vimrc what is this
   call ddu#start(a:options)
 endfunction
 
 " Similar to `vimrc#ddu_start_from_insert()`, but opens with a word instead (if a word is taken)
-function vimrc#ddu_start_from_input(options, ...) abort
+function! vimrc#ddu_start_from_input(options, ...) abort
   let search_word = get(a:000, 0, '')
   let g:vimrc_ddu_start_with_insert_next = search_word !=# '' ? search_word : v:true
   call ddu#start(a:options)
 endfunction
 
-function vimrc#get_file_name() abort
+function! vimrc#get_file_name() abort
   " -2 removes line break
   return expand('#')
 endfunction
 
 " TODO: Do async
-function vimrc#deepl_translate(start_line, end_line, target_lang, source_lang, method) abort
+function! vimrc#deepl_translate(line_count, start_line, end_line, target_lang, source_lang, method) abort
   " NOTE: なんで動かないねん😡
   " let translated_lines = getline(a:start_line, a:end_line)->map({ line ->
   "   \ deepl#translate(line, a:target_lang, a:source_lang)
   " \ })
 
+  " If range is not specified, translate the current line, or translate the specified range
+  const lines = a:line_count is -1
+    \ ? [getline('.')]
+    \ : getline(a:start_line, a:end_line)
+
   let translated_lines = []
-  for line in getline(a:start_line, a:end_line)
+  for line in lines
     call add(translated_lines, deepl#translate(line, a:target_lang, a:source_lang))
   endfor
   const result = translated_lines->join("\n")

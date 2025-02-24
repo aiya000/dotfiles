@@ -142,10 +142,10 @@ command! -bar -nargs=+ SetTabTitle let t:vimrc_tabtitle = <q-args>
 command! -bar UnsetTabTitle unlet t:vimrc_tabtitle
 
 " deepl.vim
-command! -bar -range=% DeeplTranslateToEn call vimrc#deepl_translate(<line1>, <line2>, 'EN', 'JA', 'yank')
-command! -bar -range=% DeeplTranslateToJa call vimrc#deepl_translate(<line1>, <line2>, 'JA', 'EN', 'yank')
-command! -bar -range=% DeeplTranslateToEnEcho call vimrc#deepl_translate(<line1>, <line2>, 'EN', 'JA', 'echo')
-command! -bar -range=% DeeplTranslateToJaEcho call vimrc#deepl_translate(<line1>, <line2>, 'JA', 'EN', 'echo')
+command! -bar -range=% DeeplTranslateToEn call vimrc#deepl_translate(<count>, <line1>, <line2>, 'EN', 'JA', 'yank')
+command! -bar -range=% DeeplTranslateToJa call vimrc#deepl_translate(<count>, <line1>, <line2>, 'JA', 'EN', 'yank')
+command! -bar -range=% DeeplTranslateToEnEcho call vimrc#deepl_translate(<count>, <line1>, <line2>, 'EN', 'JA', 'echo')
+command! -bar -range=% DeeplTranslateToJaEcho call vimrc#deepl_translate(<count>, <line1>, <line2>, 'JA', 'EN', 'echo')
 
 "
 " Tapis
