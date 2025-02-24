@@ -1,6 +1,6 @@
 let s:Math = vital#vimrc#import('Math')
 
-let b:undo_ftplugin = 'setl ' . join([
+let b:undo_ftplugin = 'setl ' .. join([
   \ 'statusline<',
   \ 'nonumber<',
   \ 'norelativenumber<',
@@ -13,12 +13,13 @@ setl statusline+=\ %L
 setl nonumber norelativenumber
 setl cursorline nolist wrap
 
-nnoremap <buffer> Q :<C-u>bdelete<CR>
+nnoremap <buffer> Q <Cmd>bdelete<CR>
 nnoremap <buffer> <C-j> <CR>
+nnoremap <buffer> <C-r> <Cmd>call setqflist([])<CR>
 nnoremap <buffer><silent> <expr> <C-a> <SID>go_to_errorformat(v:count1)
 nnoremap <buffer><silent> <expr> <C-x> <SID>go_to_errorformat(-v:count1)
 
-" Thanks thinca for teaching this
+" Thanks thinca
 function! s:go_to_errorformat(motion)
   let max = line('$')
   let list = getloclist(0)

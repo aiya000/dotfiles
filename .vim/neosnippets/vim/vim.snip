@@ -85,3 +85,15 @@ snippet assert_report
 alias asr assert_failure
 abbr call assert_report(${0:msg})
     call assert_report(${0:msg})
+
+# Others
+
+snippet print
+alias pr
+abbr caddexpr
+  caddexpr
+
+snippet print_poi
+alias poi
+abbr caddexpr $'poi: {${0:#:here}}'
+  caddexpr $'poi: {${0:#:here}}'
