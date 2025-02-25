@@ -999,6 +999,7 @@ set
   \ wildignorecase
   \ wildmenu
   \ helplang=en,ja
+  \ cursorline
 
 if !has('nvim')
   set termwinkey=<C-q>

@@ -1,7 +1,6 @@
 #!/usr/bin/env zsh
 
 export WINDOWS_USER=$(whoami.exe | tr -d '\r\n' | cut -d '\' -f 2)
-export NVM_NODE_VERSION_I_WANT_USE=v20.13.1
 
 # export NODE_OPTIONS=--max-old-space-size=16384
 # export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
@@ -11,7 +10,6 @@ PATH=$PATH:/home/aiya000/.nvm/versions/node/v20.13.1/bin/pnpm
 PATH="$PATH:/mnt/c/Users/$WINDOWS_USER/AppData/Local/Programs/Microsoft VS Code"
 PATH="$PATH:/mnt/c/Program Files/Rancher Desktop/resources/resources/linux/bin"
 
-
 if ! i_have code && i_have Code.exe ; then
   alias code=Code.exe
 fi
@@ -20,6 +18,16 @@ if [[ -f /tmp/zsh-has-loaded ]] ; then
   return
 fi
 touch /tmp/zsh-has-loaded
+
+# shellcheck disable=SC1090
+source ~/.dotfiles/bash-toys/functions/load-my-env.sh
+
+load-my-env nvm
+node_version=v20.13.1
+if ls "$NVM_DIR/versions/node/$node_version" > /dev/null 2>&1 ; then
+  node_version=$(ls "$NVM_DIR/versions/node" | sort | tail -1)
+fi
+nvm use "$node_version"
 
 cd ~/.dotfiles || exit 1
 vterminal

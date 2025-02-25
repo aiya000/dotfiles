@@ -131,37 +131,6 @@ if [[ -f ~/.zshrc_private ]] ; then
   source ~/.zshrc_private
 fi
 
-export AUTO_LOADED_ENVS=()
-function autoload-my-env () {
-  if contains_value "${AUTO_LOADED_ENVS[@]}" nvm ; then
-    return
-  fi
-  if [[ ! -e package.json ]] ; then
-    return
-  fi
-
-  load-my-env nvm
-  echo '> load-my-env nvm'
-
-  # e.g. `export NVM_NODE_VERSION_I_WANT_USE=v20.13.1`
-  local node_version
-  if [[ $NVM_NODE_VERSION_I_WANT_USE ]] ; then
-    node_version=$NVM_NODE_VERSION_I_WANT_USE
-  else
-    node_version=$(ls "$NVM_DIR/versions/node" | sort | tail -1)
-  fi
-  nvm use "$node_version"
-
-  AUTO_LOADED_ENVS+=(nvm)
-}
-
-if [[ -z $VIM_TERMINAL ]] ; then
-  # Be called when `cd` executed
-  function chpwd () {
-    autoload-my-env
-  }
-fi
-
 # Export Loaded Archive
 alias zsh_rc_loaded='echo "rc_loaded"'
 
