@@ -397,6 +397,12 @@ i_have unzip && alias unzip-cp932='unzip -O cp932'
 i_have krita && alias kra=krita
 i_have fdfind && alias fd=fdfind
 
+if i_have notifu.exe && ! i_have notify-send ; then
+  function notify-send () {
+    (notifu.exe /p WSL /m "$1" &) &> /dev/null
+  }
+fi
+
 # shellcheck disable=SC2139
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
 alias mount4u.vfat=mount4u.ntfs

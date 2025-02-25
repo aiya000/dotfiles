@@ -553,3 +553,9 @@ build-surfingkeys:
 	echo '2. Enable developer mode'
 	echo '3. Select ~/Desktop/Programs/Surfingkeys by パッケージ化されていない拡張機能を読み込む'
 	echo '4. Copy Samples/SurfingKeys.js & Paste to Surfingkeys Settings'
+
+# WSL's notify-send
+install-notifu:
+	wget https://github.com/ixe013/notifu/releases/download/1.7.1/notifu-1.7.1.zip -O /tmp/notifu.zip
+	unzip /tmp/notifu.zip notifu.exe -d ~/bin
+	chmod +x ~/bin/notifu.exe
