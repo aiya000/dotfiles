@@ -33,3 +33,7 @@ snippet array_slice
 alias slice
 abbr ${${1:array}[@]:${2:start}:${3:end}}${0}
   ${${1:array}[@]:${2:start}:${3:end}}${0}
+
+snippet assign_sliced_array
+abbr ${1:new_array}=("${${2:old_array}[@]:${3:start}:${4:end}}")${0}
+  ${1:new_array}=("${${2:old_array}[@]:${3:start}:${4:end}}")${0}

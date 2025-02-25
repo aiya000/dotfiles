@@ -60,6 +60,19 @@ snippet array_whole
 abbr ${${1:array_name}[@]}${0}
     ${${1:array_name}[@]}${0}
 
+snippet array_index
+abbr ${${1:array_name}[${2:0}]}
+  ${${1:array_name}[${2:0}]}
+
+snippet array_append
+alias array_push array_add
+abbr ${1:array}+=("${0}")
+  ${1:array}+=("${0}")
+
+snippet array_join
+  ${1:new_array}="$(printf "%s${2:separator}" "${${1:old_array}[@]}")"
+  $1=${$1%$2}${0}
+
 snippet args_length
 alias args_size
 abbr $#
@@ -72,8 +85,14 @@ abbr $@
 # Templates
 
 snippet array_from_string
-abbr IFS='${1: }' read -ra followings_array <<< "$x"${0}
-    IFS='${1: }' read -ra followings_array <<< "$x"${0}
+abbr IFS='${2: }' read -ra ${1:var_name} <<< "${3:str_split_by_ifs}"${0}
+    IFS='${2: }' read -ra ${1:var_name} <<< "${3:str_split_by_ifs}"${0}
+
+snippet array_from_cmd_lines
+    ${1:array}=()
+    while IFS='' read -r line ; do
+      $1+=("$line") ;
+    done < <(${2:cmd})${0}
 
 snippet prompt
 alias prompt_for_input ask_for_input
