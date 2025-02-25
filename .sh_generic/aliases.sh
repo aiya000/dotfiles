@@ -404,6 +404,8 @@ alias mount4u.ext2='sudo mount -o iocharset=utf8'
 alias mount4u.ext3=mount4u.ext2
 alias mount4u.ext4=mount4u.ext2
 
+alias cdn=cd-to-node-root
+
 # }}}
 
 export PATH=$PATH:$HOME/.sh_generic/bin
