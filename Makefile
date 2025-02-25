@@ -537,3 +537,19 @@ install-wsl-hello-sudo:
 	./install.sh
 	rm release.tar.gz
 	cd -
+
+build-surfingkeys:
+	git clone https://github.com/brookhong/Surfingkeys ~/git/Surfingkeys
+	cd ~/git/Surfingkeys
+	git switch --detach 7f6cc57
+	npm install
+	npm run build
+	mkdir ~/Desktop/Programs 2> /dev/null || true
+	mv dist/production/chrome ~/Desktop/Programs/Surfingkeys
+	cd -
+	echo 'Done building Surfingkeys'
+	echo 'Please install it to your browser manually'
+	echo '1. Open chrome://extensions/'
+	echo '2. Enable developer mode'
+	echo '3. Select ~/Desktop/Programs/Surfingkeys by パッケージ化されていない拡張機能を読み込む'
+	echo '4. Copy Samples/SurfingKeys.js & Paste to Surfingkeys Settings'
