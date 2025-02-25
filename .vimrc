@@ -810,6 +810,8 @@ endif
 " previm {{{
 
 let g:previm_code_language_show = 1
+let g:previm_hard_line_break = 1
+
 if g:vimrc.is_wsl
   let g:previm_wsl_mode = v:true
   let g:previm_open_cmd = 'wslview'
