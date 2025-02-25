@@ -131,6 +131,45 @@ if [[ -f ~/.zshrc_private ]] ; then
   source ~/.zshrc_private
 fi
 
+# Load language environments automatically
+# {{{
+
+function zshrc::autoload-nvm () {
+  if contains_value "${DOTFILES_ZSHRC_AUTO_LOADED_ENVS[@]}" nvm ; then
+    return
+  fi
+  if [[ ! -e package.json ]] ; then
+    return
+  fi
+
+  load-my-env nvm
+  echo '> load-my-env nvm'
+
+  # e.g. `export DOTFILES_ZSHRC_NVM_NODE_VERSION=v20.13.1`
+  local node_version
+  if [[ $DOTFILES_ZSHRC_NVM_NODE_VERSION ]] ; then
+    node_version=$DOTFILES_ZSHRC_NVM_NODE_VERSION
+  else
+    node_version=$(ls "$NVM_DIR/versions/node" | sort | tail -1)
+  fi
+  nvm use "$node_version"
+
+  DOTFILES_ZSHRC_AUTO_LOADED_ENVS+=(nvm)
+}
+
+function zshrc::autoload-my-env () {
+  zshrc::autoload-nvm
+}
+
+if [[ -z $VIM_TERMINAL ]] ; then
+  # Be called when `cd` executed
+  function chpwd () {
+    zshrc::autoload-my-env
+  }
+fi
+
+# }}}
+
 # Export Loaded Archive
 alias zsh_rc_loaded='echo "rc_loaded"'
 

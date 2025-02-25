@@ -42,6 +42,7 @@ function - () {
 
 alias_of sudo 'sudo '  # Enable aliases on sudo
 alias_of mysql 'mysql --pager="less -r -S -n -i -F -X"'
+alias_of rg 'rg --color always --hidden'
 
 i_have say || alias say=espeak
 

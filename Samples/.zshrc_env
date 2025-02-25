@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 export WINDOWS_USER=$(whoami.exe | tr -d '\r\n' | cut -d '\' -f 2)
+export DOTFILES_ZSHRC_NVM_NODE_VERSION=v20.13.1
 
 # export NODE_OPTIONS=--max-old-space-size=16384
 # export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
@@ -19,15 +20,35 @@ if [[ -f /tmp/zsh-has-loaded ]] ; then
 fi
 touch /tmp/zsh-has-loaded
 
+# - - -
+# The following will only be executed the first time zsh is invoked
+# - - -
+
 # shellcheck disable=SC1090
 source ~/.dotfiles/bash-toys/functions/load-my-env.sh
-
 load-my-env nvm
-node_version=v20.13.1
-if ls "$NVM_DIR/versions/node/$node_version" > /dev/null 2>&1 ; then
-  node_version=$(ls "$NVM_DIR/versions/node" | sort | tail -1)
-fi
-nvm use "$node_version"
+
+# Load the specified version of Node.js or the latest version
+function zshrc_env::find_nodejs_to_load () {
+  if \
+    [[ -n $DOTFILES_ZSHRC_NVM_NODE_VERSION ]] \
+    && ls "$NVM_DIR/versions/node/$DOTFILES_ZSHRC_NVM_NODE_VERSION" > /dev/null 2>&1
+  then
+    # If the specified version node.js is found
+    node_version=$DOTFILES_ZSHRC_NVM_NODE_VERSION
+  elif [[ -n $DOTFILES_ZSHRC_NVM_NODE_VERSION ]] ; then
+    # If the specified version node.js is not found
+    node_version=$(ls "$NVM_DIR/versions/node" | sort | tail -1)
+    echo "Node.js version $DOTFILES_ZSHRC_NVM_NODE_VERSION not found. Using $node_version instead."
+  fi
+
+  if [[ -n $node_version ]] ; then
+    nvm use "$node_version"
+  else
+    echo 'No Node.js versions found.'
+  fi
+}
+zshrc_env::find_nodejs_to_load
 
 cd ~/.dotfiles || exit 1
 vterminal
