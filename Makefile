@@ -517,13 +517,10 @@ endif
 
 # }}}
 
-install-wsl-deps:
+install-wslu:
 	sudo add-apt-repository ppa:wslutilities/wslu
 	$(AptUpdate)
 	$(AptInstall) wslu
-	# To bridge between Windows10 and WSL2 Vim
-	go install github.com/atotto/clipboard/cmd/gocopy@latest
-	go install github.com/atotto/clipboard/cmd/gopaste@latest
 
 fix-wsl-git-clone:
 	sudo ip link set eth0 mtu 1400

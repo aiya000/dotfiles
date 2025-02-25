@@ -5,7 +5,6 @@ rev = '39e80649c739151673373bbaf3a56d126531467b'
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
 build = 'make'
-if = '!g:vimrc.is_kaoriya && !g:vimrc.is_windows'
 
 [[plugins]]
 repo = 'LeafCage/foldCC'

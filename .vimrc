@@ -10,25 +10,19 @@ let s:Msg = vital#vimrc#import('Vim.Message')
 
 " Global values
 let g:vimrc = get(g:, 'vimrc', #{
-  \ loaded: 0,
+  \ loaded: v:false,
   \ vim_home: $'{$HOME}/.vim',
   \ path_at_started: getcwd(),
-  \ gui_editor: has('nvim') ? 'gonvim' : 'gvim',
+  \ is_wsl: executable('uname') && (system('uname -a') =~# 'microsoft-standard'),
   \ is_unix: has('unix'),
   \ is_macos: has('macunix'),
-  \ is_windows: has('win32'),
-  \ is_kaoriya: has('kaoriya'),
   \ memo_path: expand('~/.backup/memo.md'),
 \ })
 
-let g:vimrc.is_wsl1 = executable('uname') && (system('uname -a') =~# 'Microsoft')
-let g:vimrc.is_wsl2 = executable('uname') && (system('uname -a') =~# 'microsoft-standard')
-let g:vimrc.is_wsl  = g:vimrc.is_wsl1 || g:vimrc.is_wsl2
-
 let g:vimrc.open_on_gui =
-  \ g:vimrc.is_macos   ? 'open' :
-  \ g:vimrc.is_windows ? 'start' :
-  \ g:vimrc.is_unix    ? 'xdg-open' : s:Msg.warn('no method for GUI-open')
+  \ g:vimrc.is_macos ? 'open' :
+  \ g:vimrc.is_wsl ? 'wslview' :
+  \ g:vimrc.is_unix ? 'xdg-open' : s:Msg.warn('no method for GUI-open')
 
 let g:vimrc.backupdir  = $'{$HOME}/.backup/vim-backup'
 let g:vimrc.directory  = $'{g:vimrc.backupdir}/swp'
@@ -379,7 +373,7 @@ let g:quickrun_config = {
   \ },
 \ }
 
-if g:vimrc.is_wsl2
+if g:vimrc.is_wsl
   let g:quickrun_config.ps1 = #{
     \ command: 'powershell.exe',
     \ exec: ['%c `wslpath -m %s`'],
@@ -802,7 +796,7 @@ endif
 " }}}
 " open-browser.vim {{{
 
-if g:vimrc.is_wsl2
+if g:vimrc.is_wsl
   " Copied from the help of open-browser.vim
   let g:openbrowser_browser_commands = [
     \ #{
@@ -815,9 +809,10 @@ endif
 " }}}
 " previm {{{
 
+let g:previm_code_language_show = 1
 if g:vimrc.is_wsl
   let g:previm_wsl_mode = v:true
-  let g:previm_open_cmd = $'{$HOME}/Windows/AppData/Local/Vivaldi/Application/vivaldi.exe'
+  let g:previm_open_cmd = 'wslview'
 endif
 
 " }}}
