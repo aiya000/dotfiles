@@ -15,40 +15,22 @@ if ! i_have code && i_have Code.exe ; then
   alias code=Code.exe
 fi
 
-if [[ -f /tmp/zsh-has-loaded ]] ; then
-  return
+# shellcheck disable=SC1090
+source ~/.dotfiles/bash-toys/functions/load-my-env.sh
+load-my-env nvm
+
+if [[ $VIM_TERMINAL == '' ]] ; then
+  dotfiles::find_nodejs_to_load
 fi
-touch /tmp/zsh-has-loaded
 
 # - - -
 # The following will only be executed the first time zsh is invoked
 # - - -
 
-# shellcheck disable=SC1090
-source ~/.dotfiles/bash-toys/functions/load-my-env.sh
-load-my-env nvm
-
-# Load the specified version of Node.js or the latest version
-function zshrc_env::find_nodejs_to_load () {
-  if \
-    [[ -n $DOTFILES_ZSHRC_NVM_NODE_VERSION ]] \
-    && ls "$NVM_DIR/versions/node/$DOTFILES_ZSHRC_NVM_NODE_VERSION" > /dev/null 2>&1
-  then
-    # If the specified version node.js is found
-    node_version=$DOTFILES_ZSHRC_NVM_NODE_VERSION
-  elif [[ -n $DOTFILES_ZSHRC_NVM_NODE_VERSION ]] ; then
-    # If the specified version node.js is not found
-    node_version=$(ls "$NVM_DIR/versions/node" | sort | tail -1)
-    echo "Node.js version $DOTFILES_ZSHRC_NVM_NODE_VERSION not found. Using $node_version instead."
-  fi
-
-  if [[ -n $node_version ]] ; then
-    nvm use "$node_version"
-  else
-    echo 'No Node.js versions found.'
-  fi
-}
-zshrc_env::find_nodejs_to_load
+if [[ -f /tmp/zsh-has-loaded ]] ; then
+  return
+fi
+touch /tmp/zsh-has-loaded
 
 cd ~/.dotfiles || exit 1
 vterminal

@@ -406,6 +406,31 @@ alias mount4u.ext4=mount4u.ext2
 
 alias cdn=cd-to-node-root
 
+# Load the specified version of Node.js or the latest version
+# Please also see ~/.zshrc_env
+function dotfiles::find_nodejs_to_load () {
+  if \
+    [[ -n $DOTFILES_ZSHRC_NVM_NODE_VERSION ]] \
+    && ls "$NVM_DIR/versions/node/$DOTFILES_ZSHRC_NVM_NODE_VERSION" > /dev/null 2>&1
+  then
+    # If the specified version node.js is found
+    node_version=$DOTFILES_ZSHRC_NVM_NODE_VERSION
+  elif [[ -n $DOTFILES_ZSHRC_NVM_NODE_VERSION ]] ; then
+    # If the specified version node.js is not found
+    # TODO: Don't disable shellcheck
+    # shellcheck disable=SC2012
+    node_version=$(ls "$NVM_DIR/versions/node" | sort | tail -1)
+    echo "Node.js version $DOTFILES_ZSHRC_NVM_NODE_VERSION not found. Using $node_version instead."
+  fi
+
+  if [[ -n $node_version ]] ; then
+    nvm use "$node_version"
+  else
+    echo 'No Node.js versions found.'
+    return 1
+  fi
+}
+
 # }}}
 
 export PATH=$PATH:$HOME/.sh_generic/bin
