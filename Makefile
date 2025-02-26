@@ -87,8 +87,7 @@ endif  # }}}
 ifeq ($(OS),Ubuntu)  # {{{
 
 install-core-package-managers:
-	# $(AptUpdate)
-	$(AptInstall) golang-go
+	$(MAKE) install-golang
 	$(MAKE) install-python3
 
 endif  # }}}
@@ -559,3 +558,8 @@ install-notifu:
 	wget https://github.com/ixe013/notifu/releases/download/1.7.1/notifu-1.7.1.zip -O /tmp/notifu.zip
 	unzip /tmp/notifu.zip notifu.exe -d ~/bin
 	chmod +x ~/bin/notifu.exe
+
+install-golang:
+	sudo add-apt-repository ppa:longsleep/golang-backports
+	$(AptUpdate)
+	$(AptInstall) golang-go
