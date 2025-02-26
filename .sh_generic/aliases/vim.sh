@@ -2,7 +2,7 @@
 # To make commands with vim
 
 alias vi='vim -u NONE --noplugin'
-alias vterminal=$'vim +"call term_start(&shell, #{ term_finish: \'close\', curwin: v:true })"'
+alias vterminal=$'vim +"call term_start(&shell, #{ term_finish: \'close\', curwin: v:true })" +"set filetype="'
 
 # Opens a session
 function vim-current-session () {
@@ -64,9 +64,4 @@ if [[ $VIM_TERMINAL != '' ]] ; then
   export PAGER=cat
   alias vim=vimterm-open-parent-vim
   alias v=vimterm-open-parent-vim-vertical
-
-  cd-to-git-root \
-    && xl \
-    && cd - > /dev/null \
-    || return
 fi

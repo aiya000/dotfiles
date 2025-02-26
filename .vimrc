@@ -218,9 +218,6 @@ augroup vimrc
       \| write
     \| endif
 
-  " Set the 'none' filetype to the empty filetype
-  autocmd VimEnter,BufNew * if empty(&ft) | setf none | endif
-
   " Colors
   autocmd ColorScheme * highlight EmSpace ctermbg=LightBlue guibg=LightBlue
   autocmd VimEnter,WinEnter * call matchadd('EmSpace', '　')
@@ -1179,7 +1176,7 @@ let g:vimrc.default_term_options = #{
 nnoremap <silent> <leader>v <Cmd>call term_start(&shell, g:vimrc.default_term_options->extend(#{
   \ cwd: vimrc#get_current_buffer_dir(),
 \ }))<CR>
-nnoremap <silent> <leader><leader>v <Cmd>all term_start(&shell, g:vimrc.default_term_options->extend(#{
+nnoremap <silent> <leader><leader>v <Cmd>call term_start(&shell, g:vimrc.default_term_options->extend(#{
   \ cwd: vimrc#get_current_buffer_dir(),
   \ vertical: v:false,
 \ }))<CR>
