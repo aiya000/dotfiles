@@ -14,10 +14,9 @@ options indent
 
 snippet test
 options indent
-    @test '${1:description}' {
-      run ${2:cmd}
-      [ "$output" == ${3:expected} ]
-    }${0}
+    @test '\`${1:cli}\` ${2:description}' {
+      ${0}
+    }
 
 snippet run
 abbr run ${0:cmd}
