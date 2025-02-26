@@ -7,6 +7,10 @@ while IFS='' read -r line ; do
   staged_files+=("$line") ;
 done < <(git diff --cached --name-only)
 
+if [[ ${#staged_files} -eq 0 ]] ; then
+  exit
+fi
+
 commit_msg_lines=()
 while IFS='' read -r line ; do
   commit_msg_lines+=("$line") ;

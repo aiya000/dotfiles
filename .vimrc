@@ -549,6 +549,7 @@ augroup END
 let g:ale_fix_on_save = v:true
 
 let g:ale_fixers = #{
+  \ sh: ['shfmt'],
   \ go: ['gofmt', 'goimports'],
 \ }
 
@@ -1002,6 +1003,7 @@ set
   \ wildmenu
   \ helplang=en,ja
   \ cursorline
+  \ viminfo='400,<50,s10,h
 
 if !has('nvim')
   set termwinkey=<C-q>
@@ -1581,22 +1583,22 @@ IncSearchNoreMap <C-o> <Up>
 IncSearchNoreMap <C-y> <Down>
 
 " git (also see .vim/plugin/vimrc.vim)
-nnoremap <silent> <leader>gs :<C-u>GStatus<CR>
-nnoremap <silent> <leader>gS :<C-u>GitShowViewer<CR>
-nnoremap <silent> <leader>gc :<C-u>GCommit<CR>
-nnoremap <silent> <leader>gC :<C-u>GCommitAmmend<CR>
-nnoremap <silent> <leader>ga :<C-u>GAddPatch<CR>
-nnoremap <silent> <leader>gl :<C-u>GLog<CR>
-nnoremap <silent> <leader>gL :<C-u>GLogPatch<CR>
-nnoremap <silent> <leader>go :<C-u>GLogOneline --pretty='%h %ad %s' --date='format:%Y-%m-%d %H:%M'<CR>
-nnoremap <silent> <leader>gd :<C-u>GDiff<CR>
-nnoremap <silent> <leader>gb :<C-u>GBrahcnAll<CR>
-nnoremap <silent> <leader>gt :<C-u>GLogTree<CR>
-nnoremap <silent> <leader>gT :<C-u>GLogTreeAll<CR>
-nnoremap <silent> \gs :<C-u>tabnew \| GStatus<CR>
-nnoremap <silent> \gl :<C-u>tabnew \| GLog<CR>
-nnoremap <silent> \gL :<C-u>tabnew \| GLogPatch<CR>
-nnoremap <silent> \go :<C-u>tabnew \| GLogOneline --pretty='%h %ad %s' --date='format:%Y-%m-%d %H:%M'<CR>
+nnoremap <silent> <leader>gs <Cmd>GStatus<CR>
+nnoremap <silent> <leader>gS <Cmd>GitShowViewer<CR>
+nnoremap <silent> <leader>gc <Cmd>GCommit<CR>
+nnoremap <silent> <leader>gC <Cmd>GCommitAmmend<CR>
+nnoremap <silent> <leader>ga <Cmd>GAddPatch<CR>
+nnoremap <silent> <leader>gl <Cmd>GLog<CR>
+nnoremap <silent> <leader>gL <Cmd>GLogPatch<CR>
+nnoremap <silent> <leader>go <Cmd>GLogOneline --pretty='%h %ad %s' --date='format:%Y-%m-%d %H:%M'<CR>
+nnoremap <silent> <leader>gd <Cmd>GDiff<CR>
+nnoremap <silent> <leader>gb <Cmd>GBrahcnAll<CR>
+nnoremap <silent> <leader>gt <Cmd>GLogTree<CR>
+nnoremap <silent> <leader>gT <Cmd>GLogTreeAll<CR>
+nnoremap <silent> \gs <Cmd>tabnew \| GStatus<CR>
+nnoremap <silent> \gl <Cmd>tabnew \| GLog<CR>
+nnoremap <silent> \gL <Cmd>tabnew \| GLogPatch<CR>
+nnoremap <silent> \go <Cmd>tabnew \| GLogOneline --pretty='%h %ad %s' --date='format:%Y-%m-%d %H:%M'<CR>
 
 " vim-textobj-clang
 " You are not i

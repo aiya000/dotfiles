@@ -15,8 +15,6 @@ if ! i_have code && i_have Code.exe ; then
   alias code=Code.exe
 fi
 
-# shellcheck disable=SC1090
-source ~/.dotfiles/bash-toys/functions/load-my-env.sh
 load-my-env nvm
 
 if [[ $VIM_TERMINAL == '' ]] ; then

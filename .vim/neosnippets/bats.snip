@@ -1,0 +1,45 @@
+include sh/*.snip
+
+snippet setup
+options indent
+    setup () {
+      ${0}
+    }
+
+snippet teardown
+options indent
+    teardown () {
+      ${0}
+    }
+
+snippet test
+options indent
+    @test '${1:description}' {
+      run ${2:cmd}
+      [ "$output" == ${3:expected} ]
+    }${0}
+
+snippet run
+abbr run ${0:cmd}
+  run ${0:cmd}
+
+snippet expect_run_output
+alias expect
+abbr [ "$output" == ${0:expected} ]
+  [ "$output" == ${0:expected} ]
+
+snippet expect_run_status
+abbr [ "$status" -eq ${0:expected} ]
+  [ "$status" -eq ${0:expected} ]
+
+snippet result
+abbr result=$(${0:here})
+  result=$(${0:here})
+
+snippet expect_result
+abbr [ "$result" ${0} ]
+  [ "$result" ${0} ]
+
+snippet expect_status
+abbr [ "$?" == ${0:expected} ]
+  [ "$?" -eq ${0:expected} ]

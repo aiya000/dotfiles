@@ -1,3 +1,13 @@
+snippet bash_shebang
+alias shebang shebang_bash
+abbr #!/bin/bash
+  #!/bin/bash
+
+snippet bats_shebang
+alias shebang_bats
+abbr #!/usr/bin/env bats
+  #!/usr/bin/env bats
+
 # Syntaxes
 
 snippet if
@@ -107,3 +117,7 @@ snippet which
 alias command_v
 abbr command -v ${1:cmd} > /dev/null 2>&1
   command -v ${1:cmd} > /dev/null 2>&1
+
+snippet define_sourced_dir
+abbr ${0:dir}="$(cd -- "$(dirname -- "${BASH_SOURCE:-$0}")" && pwd || exit 1)"
+  ${0:dir}="$(cd -- "$(dirname -- "${BASH_SOURCE:-\$0}")" && pwd || exit 1)"

@@ -1,9 +1,7 @@
 #!/bin/bash
 
-for script in ~/.dotfiles/bash-toys/functions/*.sh ; do
-  # shellcheck disable=SC1090
-  source "$script"
-done
+# shellcheck disable=SC1090
+source ~/.dotfiles/bash-toys/source-all.sh
 
 #
 # This file define the aliases and functions
