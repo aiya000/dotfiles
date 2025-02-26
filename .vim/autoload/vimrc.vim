@@ -133,60 +133,6 @@ function! vimrc#fetch_dein(install_dirname)
   endif
 endfunction
 
-" NOTE: open_mode 'open' ってなんだっけ？
-" Absorbs the different of Vim and NeoVim.
-"   open_mode: 'vertical' | 'horizontal' | 'stay' | 'tabnew' | 'hidden' | 'open'
-function! vimrc#open_terminal_as(filetype, open_mode, command, ...) abort
-  const options = get(a:000, 0, {})
-  const terminal =
-    \ (has('nvim') && !s:is_supported_by_neovim(a:open_mode))
-      \ ? s:terminal_with_warn(a:open_mode)
-    \ : has('nvim')
-      \ ? ':terminal'
-    \ : (a:open_mode ==# 'hidden')
-      \ ? ':terminal ++hidden'
-    \ : (a:open_mode ==# 'open')
-      \ ? ':terminal ++curwin ++close ++open'
-    \ : get(options, 'noclose', v:false)
-      \ ? ':terminal ++curwin'
-      \ : ':terminal ++curwin ++close'
-
-  if a:open_mode ==# 'vertical'
-    vnew
-  elseif a:open_mode ==# 'horizontal'
-    new
-  elseif a:open_mode ==# 'stay'
-    enew!
-  elseif a:open_mode ==# 'tabnew'
-    tabnew
-  else
-    throw 'undefined open_mode is detected: ' .. string(a:open_mode)
-  endif
-
-  try
-    execute ':lcd' get(options, 'path', getcwd())
-  catch
-    " Don't cd if options.path (or getcewd()) is not existent.
-  endtry
-
-  execute terminal a:command
-  if a:filetype !=# ''
-    execute 'setf' a:filetype
-  endif
-endfunction
-
-function! s:is_supported_by_neovim(open_mode) abort
-  return a:open_mode ==# 'vertical'
-    \ || a:open_mode ==# 'horizontal'
-    \ || a:open_mode ==# 'stay'
-    \ || a:open_mode ==# 'tabnew'
-endfunction
-
-function! s:terminal_with_warn(unsupprted_open_mode) abort
-  call s:Msg.warn($'throw {a:unsupprted_open_mode} is not available for NeoVim, now do `:terminal` with no arguments instead.')
-  return ':terminal'
-endfunction
-
 " Compresses continuously spaces to a space.
 function! vimrc#compress_spaces()
   const recent_pattern = @/
@@ -608,11 +554,6 @@ function! vimrc#run_make_quickfix(make_args) abort
   endtry
 endfunction
 
-function! vimrc#open_this_file_in_gui() abort
-  const file = expand('%:p')
-  call s:Job.start([g:vimrc.gui_editor, file])
-endfunction
-
 function! vimrc#execute_repeatable_macro(name) abort
   const name = '@' .. a:name
 
@@ -677,11 +618,6 @@ function! vimrc#ddu_start_from_input(options, ...) abort
   call ddu#start(a:options)
 endfunction
 
-function! vimrc#get_file_name() abort
-  " -2 removes line break
-  return expand('#')
-endfunction
-
 " TODO: Do async
 function! vimrc#deepl_translate(line_count, start_line, end_line, target_lang, source_lang, method) abort
   " NOTE: なんで動かないねん😡
@@ -716,4 +652,14 @@ function! vimrc#open_buffer_to_execute(cmd) abort
   put=execute(a:cmd)
   normal! gg2dd
   silent write
+endfunction
+
+function! vimrc#get_current_buffer_dir(...) abort
+  const dir = expand('%:p:h')
+  const alt_dir = get(a:000, 0, v:null)
+  return (dir !=# '')
+    \ ? dir
+    \ : (alt_dir !=# v:null)
+      \ ? alt_dir
+      \ : execute('throw "The current buffer directory does not exist and an altlter directory is not specified"')
 endfunction

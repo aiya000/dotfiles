@@ -59,14 +59,9 @@ call vimrc#read_to_set_git_root()
 " }}}
 " Others {{{
 
-" Open in preference to an entity
-let $MYVIMRC = filereadable($'{$HOME}/.dotfiles/.vimrc')
-  \ ? $'{$HOME}/.dotfiles/.vimrc'
-  \ : $MYVIMRC
-
-let $MYGVIMRC = filereadable($'{$HOME}/.dotfiles/.gvimrc')
-  \ ? $'{$HOME}/.dotfiles/.gvimrc'
-  \ : $MYGVIMRC
+" TODO: Remove this after https://github.com/aiya000/bash-toys/issues/12 fixed
+" Please see https://github.com/aiya000/bash-toys
+let $BASH_TOYS_DUSTBOX_DIR = $'{$HOME}/.backup/dustbox'
 
 let s:typescript_variants = [
   \ 'typescript',
@@ -1001,7 +996,7 @@ set
   \ visualbell
   \ wildignorecase
   \ wildmenu
-  \ helplang=en,ja
+  \ helplang=ja,en
   \ cursorline
   \ viminfo='400,<50,s10,h
 
@@ -1177,14 +1172,25 @@ nnoremap <C-w>v <NOP>
 nnoremap gh <NOP>
 
 " :terminal
-nnoremap <silent> <leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell)<CR>
-nnoremap <silent> <leader><leader>v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell)<CR>
-nnoremap <silent> <leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell)<CR>
-nnoremap <silent> <leader><leader>V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell)<CR>
-nnoremap <silent> \v :<C-u>call vimrc#open_terminal_as('term-shell', 'vertical', &shell, #{path: g:vimrc.path_at_started})<CR>
-nnoremap <silent> \\v :<C-u>call vimrc#open_terminal_as('term-shell', 'horizontal', &shell, #{path: g:vimrc.path_at_started})<CR>
-nnoremap <silent> \V :<C-u>call vimrc#open_terminal_as('term-shell', 'stay', &shell, #{path: g:vimrc.path_at_started})<CR>
-nnoremap <silent> \\V :<C-u>call vimrc#open_terminal_as('term-shell', 'tabnew', &shell, #{path: g:vimrc.path_at_started})<CR>
+let g:vimrc.default_term_options = #{
+  \ term_finish: 'close',
+  \ vertical: v:true,
+\ }
+nnoremap <silent> <leader>v <Cmd>call term_start(&shell, g:vimrc.default_term_options->extend(#{
+  \ cwd: vimrc#get_current_buffer_dir(),
+\ }))<CR>
+nnoremap <silent> <leader><leader>v <Cmd>all term_start(&shell, g:vimrc.default_term_options->extend(#{
+  \ cwd: vimrc#get_current_buffer_dir(),
+  \ vertical: v:false,
+\ }))<CR>
+nnoremap <silent> <leader>V <Cmd>call term_start(&shell, g:vimrc.default_term_options->extend(#{
+  \ cwd: vimrc#get_current_buffer_dir(),
+  \ curwin: v:true,
+\ }))<CR>
+nnoremap <silent> <leader><leader>V <Cmd>tabnew \| call term_start(&shell, g:vimrc.default_term_options->extend(#{
+  \ cwd: vimrc#get_current_buffer_dir(),
+  \ curwin: v:true,
+\ }))<CR>
 
 " set
 nnoremap <silent> <C-h><C-d> :<C-u>call vimrc#toggle_diff()<CR>

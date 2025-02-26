@@ -1,4 +1,4 @@
-let b:undo_ftplugin = 'setl ' . join([
+let b:undo_ftplugin = 'setl ' .. join([
   \ 'commentstring<',
   \ 'ts<',
   \ 'sw<',

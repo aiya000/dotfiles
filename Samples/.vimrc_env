@@ -1,0 +1,19 @@
+let mapleader = "'"
+let maplocalleader = "'"
+
+let g:vimrc.memo_path = '/mnt/p/memo.md'
+
+" Don't forget
+" :helptags ~/git/vital.vim
+let &rtp = [
+  \ $'{$HOME}/Repository/vim-scratch-buffer',
+  \ $'{$HOME}/git/vital.vim',
+  \ &rtp,
+\ ]->join(',')
+
+function! s:use_locally_instead(name) abort
+  call dein#disable(a:name)
+  let &rtp = $'{$HOME}/Repository/{a:name},{&rtp}'
+endfunction
+
+" call s:use_locally_instead('vim-gin')

@@ -38,8 +38,6 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 # }}}
 # Add paths to $PATH {{{
 
-export PATH
-
 # Higher order
 PATH=$PYENV_ROOT/bin:$PATH
 PATH=$HOME/.rbenv/bin:$PATH
@@ -74,6 +72,8 @@ PATH=$PATH:/usr/lib/git-core
 
 # AndroidStudio
 PATH=$PATH:$ANDROID_HOME/platform-tools
+
+export PATH
 
 #}}}
 

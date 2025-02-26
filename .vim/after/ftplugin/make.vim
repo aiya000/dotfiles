@@ -1,4 +1,4 @@
-let b:undo_ftplugin = 'setl ' . join([
+let b:undo_ftplugin = 'setl ' .. join([
   \ 'noexpandtab<',
   \ 'ts=4<',
   \ 'sw=4<',

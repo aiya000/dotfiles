@@ -113,7 +113,7 @@ command! -bar -range=% DeeplTranslateToJaEcho call vimrc#deepl_translate(<count>
 " Tapis
 "
 
-function Tapi_Tabnew(_, args) abort
+function! Tapi_Tabnew(_, args) abort
   const files = a:args[1:]
   const paths = s:List.map(files, { file -> fnameescape(file) })
 
@@ -122,7 +122,7 @@ function Tapi_Tabnew(_, args) abort
   endfor
 endfunction
 
-function Tapi_Verticalnew(_, args) abort
+function! Tapi_Verticalnew(_, args) abort
   const files = a:args[1:]
   const paths = s:List.map(files, { file -> fnameescape(file) })
 

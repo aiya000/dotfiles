@@ -2,8 +2,7 @@
 # To make commands with vim
 
 alias vi='vim -u NONE --noplugin'
-alias vterminal='vim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell)"'
-alias gvterminal='gvim +"call vimrc#open_terminal_as(\"term-shell\", \"stay\", &shell)"'
+alias vterminal=$'vim +"call term_start(&shell, #{ term_finish: \'close\', curwin: v:true })"'
 
 # Opens a session
 function vim-current-session () {
