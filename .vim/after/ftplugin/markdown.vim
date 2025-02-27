@@ -1,7 +1,16 @@
-setl tabstop=4 shiftwidth=4 expandtab
-setl completefunc=github_complete#complete
-let &commentstring = '<!-- %s -->'
-set conceallevel=0
+let b:undo_ftplugin = 'setl ' .. join([
+  \ 'tabstop<',
+  \ 'shiftwidth<',
+  \ 'conceallevel<',
+  \ 'commentstring<',
+  \ 'completefunc<',
+\ ])
+setl
+  \ tabstop=4
+  \ shiftwidth=4
+  \ conceallevel=0
+  \ commentstring=<!--\ %s\ -->
+  \ completefunc=github_complete#complete
 
 nnoremap <silent><buffer> <localleader>r <Cmd>PrevimOpen<CR>
 nnoremap <silent><buffer> <localleader><localleader>d <Cmd>w<CR>:!doctoc %<CR>:edit %<CR>

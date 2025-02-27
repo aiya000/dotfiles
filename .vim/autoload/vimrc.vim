@@ -93,7 +93,6 @@ function! s:parse_git_root(cont, stdout, stderr) abort
   return a:cont(git_root)
 endfunction
 
-" Async
 function! vimrc#read_git_root(cont) abort
   call vimrc#job#start_simply(
     \ ['git', 'rev-parse', '--show-toplevel'],
@@ -101,13 +100,13 @@ function! vimrc#read_git_root(cont) abort
   \ )
 endfunction
 
-function! s:set_git_root_to_gvimrc(git_root) abort
+function! s:set_git_root_to_g_vimrc(git_root) abort
   echomsg 'vimrc: a git root detected: ' .. a:git_root
   let g:vimrc.git_root = a:git_root
 endfunction
 
-function! vimrc#read_to_set_git_root() abort
-  call vimrc#read_git_root(function('s:set_git_root_to_gvimrc'))
+function! vimrc#read_git_root_to_set_g_vimrc_async() abort
+  call vimrc#read_git_root(function('s:set_git_root_to_g_vimrc'))
 endfunction
 
 function! vimrc#read_git_root_sync() abort
@@ -655,9 +654,12 @@ function! vimrc#open_buffer_to_execute(cmd) abort
 endfunction
 
 function! vimrc#get_current_buffer_dir(...) abort
-  const dir = expand('%:p:h')
+  const dir =
+    \ &buftype !=# 'terminal'
+      \ ? expand('%:p:h')
+      \ : g:vimrc.git_root
   const alt_dir = get(a:000, 0, v:null)
-  return (dir !=# '')
+  return (dir !=# '' && dir !=# v:null)
     \ ? dir
     \ : (alt_dir !=# v:null)
       \ ? alt_dir

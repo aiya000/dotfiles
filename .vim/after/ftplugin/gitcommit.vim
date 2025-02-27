@@ -1,7 +1,6 @@
-let b:undo_ftplugin = 'setl ' . join([
-  \ 'expandtab<',
+let b:undo_ftplugin = 'setl ' .. join([
   \ 'tabstop<',
-  \ 'shiftwidth<'
+  \ 'shiftwidth<',
+  \ 'textwidth<',
 \ ])
-
-setl et ts=8 sw=8
+setl tabstop=4 shiftwidth=4 textwidth=0

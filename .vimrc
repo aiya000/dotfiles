@@ -16,8 +16,10 @@ let g:vimrc = get(g:, 'vimrc', #{
   \ is_wsl: executable('uname') && (system('uname -a') =~# 'microsoft-standard'),
   \ is_unix: has('unix'),
   \ is_macos: has('macunix'),
+  \ git_root: v:null,
   \ memo_path: expand('~/.backup/memo.md'),
 \ })
+call vimrc#read_git_root_to_set_g_vimrc_async()
 
 let g:vimrc.open_on_gui =
   \ g:vimrc.is_macos ? 'open' :
@@ -52,9 +54,6 @@ let g:vimrc.temporary_buftypes = [
   \ 'stack_build',
   \ 'fern',
 \ ]
-
-let g:vimrc.git_root = v:null
-call vimrc#read_to_set_git_root()
 
 " }}}
 " Others {{{
@@ -989,7 +988,6 @@ set
   \ expandtab
   \ shiftwidth=2
   \ tabstop=2
-  \ textwidth=0
   \ visualbell
   \ wildignorecase
   \ wildmenu
@@ -1174,18 +1172,18 @@ let g:vimrc.default_term_options = #{
   \ vertical: v:true,
 \ }
 nnoremap <silent> <leader>v <Cmd>call term_start(&shell, g:vimrc.default_term_options->extendnew(#{
-  \ cwd: vimrc#get_current_buffer_dir(),
+\ cwd: vimrc#get_current_buffer_dir(#{ alt_dir: g:vimrc.git_root }),
 \ }))<CR>
 nnoremap <silent> <leader><leader>v <Cmd>call term_start(&shell, g:vimrc.default_term_options->extendnew(#{
-  \ cwd: vimrc#get_current_buffer_dir(),
+  \ cwd: vimrc#get_current_buffer_dir(#{ alt_dir: g:vimrc.git_root }),
   \ vertical: v:false,
 \ }))<CR>
 nnoremap <silent> <leader>V <Cmd>call term_start(&shell, g:vimrc.default_term_options->extendnew(#{
-  \ cwd: vimrc#get_current_buffer_dir(),
+  \ cwd: vimrc#get_current_buffer_dir(#{ alt_dir: g:vimrc.git_root }),
   \ curwin: v:true,
 \ }))<CR>
 nnoremap <silent> <leader><leader>V <Cmd>tabnew \| call term_start(&shell, g:vimrc.default_term_options->extendnew(#{
-  \ cwd: vimrc#get_current_buffer_dir(),
+  \ cwd: vimrc#get_current_buffer_dir(#{ alt_dir: g:vimrc.git_root }),
   \ curwin: v:true,
 \ }))<CR>
 
