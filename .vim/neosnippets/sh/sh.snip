@@ -121,3 +121,7 @@ abbr command -v ${1:cmd} > /dev/null 2>&1
 snippet define_sourced_dir
 abbr ${0:dir}="$(cd -- "$(dirname -- "${BASH_SOURCE:-$0}")" && pwd || exit 1)"
   ${0:dir}="$(cd -- "$(dirname -- "${BASH_SOURCE:-\$0}")" && pwd || exit 1)"
+
+snippet assign_array
+abbr ${1:new_array}=("${0:source_array}")
+  ${1:new_array}=("${0:source_array}")
