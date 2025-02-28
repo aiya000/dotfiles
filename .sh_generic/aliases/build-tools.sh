@@ -1,11 +1,19 @@
 #!/bin/bash
 
+# TODO: Rename this file to x-load-build-tools.sh
+# TODO: Rename xl function to x-load-build-tools and helper functions.
+# TODO: `alias xl=x-load-build-tools`
+
+# Defines aliases "x[bceirst]" at a runtime
+# ```shell-session
+# TODO: Write an example
+# ```
+
 function xl::echo () {
   echo "build-tools.sh>> $1"
 }
 
-# Defines aliases "x[bceirst]" at a runtime
-function xl () {
+function xl::define () {
   if i_have stack && [[ -f ./stack.yaml ]] ; then
     alias xb='stack build'
     alias xc='stack clean'
@@ -86,3 +94,39 @@ function xl () {
     return 1
   fi
 }
+
+function xl () {
+  local git_root
+  git_root=$(git rev-parse --show-toplevel 2> /dev/null)
+  if [[ $git_root != '' ]] ; then
+    pushd "$git_root" > /dev/null || exit 1
+  fi
+
+  xl::define
+
+  if [[ $git_root != '' ]] ; then
+    popd > /dev/null || exit 1
+  fi
+}
+
+# The MIT License (MIT)
+#
+# Copyright (c) 2025- aiya000
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.

@@ -17,6 +17,7 @@ let g:vimrc = get(g:, 'vimrc', #{
   \ is_unix: has('unix'),
   \ is_macos: has('macunix'),
   \ git_root: v:null,
+  \ indent_guides_enable: v:true,
   \ memo_path: expand('~/.backup/memo.md'),
 \ })
 call vimrc#read_git_root_to_set_g_vimrc_async()
@@ -197,6 +198,8 @@ augroup vimrc
 
   autocmd VimEnter * ScdCurrentDir
   autocmd BufReadPost * call vimrc#visit_past_position()
+  autocmd InsertEnter * call ddc#enable()
+  autocmd WinEnter,BufEnter,InsertLeave,Winleave,BufLeave vim-scratch-buffer-*.md write
 
   if !has('nvim')
     " TODO: for any registers
@@ -205,27 +208,39 @@ augroup vimrc
     autocmd TerminalOpen * nmap <buffer> 'p "+p
   endif
 
-  " relative number
+  " Show simply for terminal buffers
+  autocmd TerminalOpen * setlocal nolist nonumber norelativenumber
+  autocmd BufEnter,WinEnter *
+    \  if &buftype ==# 'terminal'
+      \| IndentGuidesDisable
+    \| endif
+  autocmd BufLeave,Winleave * setl norelativenumber
+
+  " Show relative numbers only on the current window
   autocmd BufEnter,WinEnter * if &number | setl relativenumber | end
   autocmd BufLeave,Winleave * setl norelativenumber
 
-  autocmd InsertEnter * call ddc#enable()
-
-  " Please also see vimrc#open_scratch_buffer()
-  autocmd WinEnter,BufEnter,InsertLeave,Winleave,BufLeave scratch*.md
-    \  if bufname('%') !~# 'gista://'
-      \| write
-    \| endif
-
-  " Colors
+  " Show full-width spaces
   autocmd ColorScheme * highlight EmSpace ctermbg=LightBlue guibg=LightBlue
   autocmd VimEnter,WinEnter * call matchadd('EmSpace', '　')
-  " git conflicts
+
+  " Colorize git conflicts
   autocmd ColorScheme * highlight GitConflict ctermbg=Red guibg=Red
   autocmd VimEnter,WinEnter * call matchadd('GitConflict', '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$')
+
   " StatusLine
   autocmd InsertEnter * highlight StatusLine ctermfg=231 ctermbg=64
   autocmd InsertLeave * highlight StatusLine ctermfg=231 ctermbg=60
+
+  " vim-indent-guides
+  autocmd VimEnter,ColorScheme * highlight IndentGuidesOdd ctermbg=60 guibg=#468F8C
+  autocmd VimEnter,ColorScheme * highlight IndentGuidesEven ctermbg=60 guibg=#468F8C
+  " autocmd WinEnter,BufWinEnter *
+  "   \  if g:vimrc.indent_guides_enable && get(b:, 'vimrc_indent_guides_enable', v:true)
+  "     \| IndentGuidesEnable
+  "   \| else
+  "     \| IndentGuidesDisable
+  "   \| endif
 augroup END
 
 " }}}
@@ -614,8 +629,6 @@ let g:indent_guides_auto_colors = 0
 let g:indent_guides_tab_guides = 0
 let g:indent_guides_exclude_filetypes = [
   \ 'aref_web',
-  \ 'term-shell',
-  \ 'term-sbt',
   \ 'gitcommit',
   \ 'review',
   \ 'markdown',
@@ -628,21 +641,6 @@ let g:indent_guides_exclude_filetypes = [
   \ 'stack_test',
   \ 'adrone_home',
 \ ]
-
-" Define colors
-augroup vimrc
-  autocmd VimEnter,ColorScheme * highlight IndentGuidesOdd ctermbg=60 guibg=#468F8C
-  autocmd VimEnter,ColorScheme * highlight IndentGuidesEven ctermbg=60 guibg=#468F8C
-augroup END
-
-augroup vimrc
-  autocmd WinEnter,BufWinEnter *
-    \  if get(g:, 'vimrc#indent_guides_enable', v:true)
-      \| IndentGuidesEnable
-    \| else
-      \| IndentGuidesDisable
-    \| endif
-augroup END
 
 " }}}
 " vim-lsp {{{
