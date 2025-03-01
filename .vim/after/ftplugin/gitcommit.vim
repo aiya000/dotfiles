@@ -4,3 +4,5 @@ let b:undo_ftplugin = 'setl ' .. join([
   \ 'textwidth<',
 \ ])
 setl tabstop=4 shiftwidth=4 textwidth=0
+
+normal! gg

@@ -109,18 +109,20 @@ alias prompt_for_input ask_for_input
 abbr read -rp '${1:message}' ${0:var}
     read -rp '${1:message}' ${0:var}
 
-snippet source_script_on_this_dir
-abbr source "$(dirname "$0")/${0:utils.sh}"
-  source "$(dirname "$0")/${0:utils.sh}"
+# NOTE: Deprecated. Use `define_sourced_dir` instead.
+# snippet source_script_on_this_dir
+# abbr source "$(dirname "$0")/${0:utils.sh}"
+#   source "$(dirname "$0")/${0:utils.sh}"
 
 snippet which
 alias command_v
-abbr command -v ${1:cmd} > /dev/null 2>&1
-  command -v ${1:cmd} > /dev/null 2>&1
+abbr command -v ${1:cmd} &> /dev/null
+  command -v ${1:cmd} &> /dev/null
 
 snippet define_sourced_dir
-abbr ${0:dir}="$(cd -- "$(dirname -- "${BASH_SOURCE:-$0}")" && pwd || exit 1)"
-  ${0:dir}="$(cd -- "$(dirname -- "${BASH_SOURCE:-\$0}")" && pwd || exit 1)"
+alias define_this_script_dir
+abbr ${0:this_script_dir}="$(cd -- "$(dirname -- "${BASH_SOURCE:-$0}")" && pwd || exit 1)"
+  ${0:this_script_dir}="$(cd -- "$(dirname -- "${BASH_SOURCE:-\$0}")" && pwd || exit 1)"
 
 snippet assign_array
 abbr ${1:new_array}=("${0:source_array}")

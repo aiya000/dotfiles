@@ -960,7 +960,7 @@ set
   \ completeopt-=preview
   \ fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
   \ hidden
-  \ history=500
+  \ history=1000
   \ hlsearch
   \ incsearch
   \ laststatus=2
@@ -1237,7 +1237,6 @@ nnoremap :ev :<C-u>e<Space><C-r>=g:vimrc.path_at_started<CR>/
 nnoremap :eg :<C-u>e<Space><C-r>=g:vimrc.git_root<CR>/
 nnoremap :eb :<C-u>e<Space><C-r>=expand('%:p:h')<CR>/
 nnoremap <C-]> g<C-]>
-nnoremap <C-k>t :<C-u>tselect<Space>
 nnoremap <expr> <C-k><C-s> printf(":%%s/\\m\\C\\<%s\\>//g\<Left>\<Left>", expand('<cword>'))
 nnoremap <expr> <C-k>s printf(":%%s/\\m\\C\\<%s\\>/%s/g\<Left>\<Left>", expand('<cword>'), expand('<cword>'))
 nnoremap <silent> <C-k><C-j> :<C-u>call <SID>save_clear()<CR>
@@ -1305,7 +1304,6 @@ cnoremap <C-e> <End>
 cnoremap <C-k><C-k> <C-\>e getcmdpos() < 2 ? '' : getcmdline()[ : getcmdpos() - 2]<CR>
 " TODO: Escape from ex
 cnoremap <C-l> <C-c>
-cnoremap <C-g> '<,'>
 cnoremap <C-o> <Up>
 cnoremap <C-y> <Down>
 cnoremap <C-r>' <C-r>+
@@ -1466,8 +1464,8 @@ function s:ddu_start_file_rec(in_current_directory) abort
   \ })
 endfunction
 
-nnoremap <C-k><C-e> :<C-u>call <SID>ddu_start_file_rec(v:false)<CR>
-nnoremap <C-k>e :<C-u>call <SID>ddu_start_file_rec(v:true)<CR>
+nnoremap <C-k><C-e> <Cmd>call <SID>ddu_start_file_rec(v:true)<CR>
+nnoremap <C-k>e <Cmd>call <SID>ddu_start_file_rec(v:false)<CR>
 
 nnoremap H :<C-u>call ddu#start(#{
   \ sources: [#{ name: 'line' }],

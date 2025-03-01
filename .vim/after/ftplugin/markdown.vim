@@ -1,3 +1,6 @@
+let s:V = vital#vimrc#new()
+let s:Promise = s:V.import('Async.Promise')
+
 let b:undo_ftplugin = 'setl ' .. join([
   \ 'tabstop<',
   \ 'shiftwidth<',
@@ -17,13 +20,10 @@ nnoremap <silent><buffer> <localleader><localleader>d <Cmd>w<CR>:!doctoc %<CR>:e
 " nnoremap <silent><buffer> <localleader>f <Cmd>!textlint --fix <C-r>=expand('%:p')<CR><CR>
 " nmap <silent><buffer> <C-l> <C-[>:syntax sync fromstart<CR>
 
-nnoremap <silent><buffer> <localleader><localleader>r <Cmd>call vimrc#open_terminal_as(
-  \ 'none',
-  \ 'horizontal',
-  \ 'grip',
-\ )<CR>
-" TODO: Doesn't work well
-" \ $'grip --pass {g:vimrc.github.access_token} --browser "{expand("%:p")}"'
+nnoremap <silent><buffer> <localleader><localleader>r <Cmd>call term_start(
+  \ $'glow {fnameescape(expand('%:p'))}',
+  \ #{ vertical: v:true }
+\ )<CR>gg
 
 syntax sync fromstart
 
