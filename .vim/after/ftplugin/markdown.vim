@@ -1,6 +1,3 @@
-let s:V = vital#vimrc#new()
-let s:Promise = s:V.import('Async.Promise')
-
 let b:undo_ftplugin = 'setl ' .. join([
   \ 'tabstop<',
   \ 'shiftwidth<',
@@ -20,10 +17,11 @@ nnoremap <silent><buffer> <localleader><localleader>d <Cmd>w<CR>:!doctoc %<CR>:e
 " nnoremap <silent><buffer> <localleader>f <Cmd>!textlint --fix <C-r>=expand('%:p')<CR><CR>
 " nmap <silent><buffer> <C-l> <C-[>:syntax sync fromstart<CR>
 
+" TODO: Do 'gg' after glow finished
 nnoremap <silent><buffer> <localleader><localleader>r <Cmd>call term_start(
   \ $'glow {fnameescape(expand('%:p'))}',
   \ #{ vertical: v:true }
-\ )<CR>gg
+\ )<CR>
 
 syntax sync fromstart
 

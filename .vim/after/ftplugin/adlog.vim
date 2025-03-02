@@ -1,1 +1,5 @@
-set ts=26 sw=26 et
+let b:undo_ftplugin = 'setl ' .. join([
+  \ 'tabstop<',
+  \ 'shiftwidth<',
+\ ])
+setl tabstop=26 shiftwidth=26

@@ -1685,6 +1685,9 @@ cnoremap <CR> <Plug>(kensaku-search-replace)<CR>
 imap <silent><script><expr> <C-g><Tab> copilot#Accept("\<CR>")
 imap <C-]> <Plug>(copilot-next)
 
+" deepl.vim
+vnoremap <silent> <leader><leader>k :DeeplTranslateToJaOpenBuffer<CR>
+
 " }}}
 
 if filereadable($'{$HOME}/.vimrc_env_post')

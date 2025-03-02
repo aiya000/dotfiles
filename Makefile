@@ -278,6 +278,7 @@ install-deno:
 
 install-markdown:
 	which doctoc || $(NPMInstall) doctoc
+	which glow || brew install glow
 
 install-text:
 	which textlint || $(NPMInstall) textlint
