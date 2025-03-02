@@ -104,10 +104,10 @@ command! -bar UnsetTabTitle unlet t:vimrc_tabtitle
 command! -bar ReverseLines !tac
 
 " deepl.vim
-command! -bar -range=% DeeplTranslateToEn call vimrc#deepl_translate(<count>, <line1>, <line2>, 'EN', 'JA', 'yank')
-command! -bar -range=% DeeplTranslateToJa call vimrc#deepl_translate(<count>, <line1>, <line2>, 'JA', 'EN', 'yank')
-command! -bar -range=% DeeplTranslateToEnEcho call vimrc#deepl_translate(<count>, <line1>, <line2>, 'EN', 'JA', 'echo')
-command! -bar -range=% DeeplTranslateToJaEcho call vimrc#deepl_translate(<count>, <line1>, <line2>, 'JA', 'EN', 'echo')
+command! -bar -range=% DeeplTranslateToEn call vimrc#deepl_translate(<count>, <line1>, <line2>, 'EN', 'JA', ['yank', 'echo'])
+command! -bar -range=% DeeplTranslateToJa call vimrc#deepl_translate(<count>, <line1>, <line2>, 'JA', 'EN', ['yank', 'echo'])
+command! -bar -range=% DeeplTranslateToEnOpenBuffer call vimrc#deepl_translate(<count>, <line1>, <line2>, 'EN', 'JA', ['yank', 'buffer'])
+command! -bar -range=% DeeplTranslateToJaOpenBuffer call vimrc#deepl_translate(<count>, <line1>, <line2>, 'JA', 'EN', ['yank', 'buffer'])
 
 "
 " Tapis

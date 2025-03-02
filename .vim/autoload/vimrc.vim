@@ -617,8 +617,7 @@ function! vimrc#ddu_start_from_input(options, ...) abort
   call ddu#start(a:options)
 endfunction
 
-" TODO: Do async
-function! vimrc#deepl_translate(line_count, start_line, end_line, target_lang, source_lang, method) abort
+function! vimrc#deepl_translate(line_count, start_line, end_line, target_lang, source_lang, methods) abort
   " NOTE: なんで動かないねん😡
   " let translated_lines = getline(a:start_line, a:end_line)->map({ line ->
   "   \ deepl#translate(line, a:target_lang, a:source_lang)
@@ -629,20 +628,26 @@ function! vimrc#deepl_translate(line_count, start_line, end_line, target_lang, s
     \ ? [getline('.')]
     \ : getline(a:start_line, a:end_line)
 
-  let translated_lines = []
-  for line in lines
-    call add(translated_lines, deepl#translate(line, a:target_lang, a:source_lang))
-  endfor
-  const result = translated_lines->join("\n")
+  const result = deepl#translate(lines->join("\n"), a:target_lang, a:source_lang) " NOTE: Removing this variable and directly `add(translated_lines, deepl#translate(...))` breaks the syntax highlighting in this file for some reason
+  const func = #{
+    \ yank: { -> execute($'let @" = "{result}"') },
+    \ echo: { -> s:Msg.echo('Normal', result) },
+    \ buffer: function('s:deepl_traslate_open_buffer', [result]),
+  \ }
 
-  if a:method ==# 'yank'
-    let @" = result
-    echo result
-  elseif a:method ==# 'echo'
-    echo result
-  else
-    throw $'Unknown method: {a:method}'
-  endif
+  for method in a:methods
+    if !func->has_key(method)
+      throw $'Unknown method: {a:method}'
+    endif
+    call func[method]()
+  endfor
+endfunction
+
+function! s:deepl_traslate_open_buffer(result) abort
+  ScratchBufferOpen md sp
+  put=a:result
+  normal! gg
+  normal! "zdd
 endfunction
 
 function! vimrc#open_buffer_to_execute(cmd) abort
@@ -650,7 +655,6 @@ function! vimrc#open_buffer_to_execute(cmd) abort
   call scratch_buffer#open('md', 'sp', full_size)
   put=execute(a:cmd)
   normal! gg2dd
-  silent write
 endfunction
 
 function! vimrc#get_current_buffer_dir(...) abort

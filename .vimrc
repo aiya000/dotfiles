@@ -199,7 +199,7 @@ augroup vimrc
   autocmd VimEnter * ScdCurrentDir
   autocmd BufReadPost * call vimrc#visit_past_position()
   autocmd InsertEnter * call ddc#enable()
-  autocmd WinEnter,BufEnter,InsertLeave,Winleave,BufLeave vim-scratch-buffer-*.md write
+  " autocmd WinEnter,BufEnter,InsertLeave,Winleave,BufLeave vim-scratch-buffer-*.md write
 
   if !has('nvim')
     " TODO: for any registers

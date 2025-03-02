@@ -25,11 +25,9 @@ function! vimrc#job#on_exit(stdout, stderr, on_succeed, on_failed, _job, exit_co
   call a:on_succeed(a:stdout, a:stderr)
 endfunction
 
-" params:
-"   on_succeed: (stdout: Array<string>, stderr: Array<string>) => void
-"     called with succeed
-"   on_failed: (stdout: Array<string>, stderr: Array<string>, exit_code: int) => void
-"     called with failed
+" Params:
+" - on_succeed {(stdout: Array<string>, stderr: Array<string>) => void} called with succeed
+" - on_failed {(stdout: Array<string>, stderr: Array<string>, exit_code: int) => void} called with failed
 function! vimrc#job#get_basic_options_completes_with(...) abort
   const OnSucceed = get(a:000, 0, v:null)
   if OnSucceed is v:null
@@ -47,12 +45,10 @@ function! vimrc#job#get_basic_options_completes_with(...) abort
   \ }
 endfunction
 
-" params:
-"   command: Array<string>
-"   OnSucceed: (stdout: Array<string>, stderr: Array<string>) => void
-"     called with succeed
-"   OnFailed: (stdout: Array<string>, stderr: Array<string>, exit_code: int) => void
-"     called with failed
+" Params:
+" - command {Array<string>}
+" - OnSucceed {(stdout: Array<string>, stderr: Array<string>) => void} called with succeed
+" - OnFailed {(stdout: Array<string>, stderr: Array<string>, exit_code: int) => void} called with failed
 function! vimrc#job#start_simply(...) abort
   const command = get(a:000, 0, v:null)
   if command is v:null
