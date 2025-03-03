@@ -199,7 +199,7 @@ augroup vimrc
   autocmd VimEnter * ScdCurrentDir
   autocmd BufReadPost * call vimrc#visit_past_position()
   autocmd InsertEnter * call ddc#enable()
-  " autocmd WinEnter,BufEnter,InsertLeave,Winleave,BufLeave vim-scratch-buffer-*.md write
+  autocmd WinEnter,BufEnter,InsertLeave,Winleave,BufLeave vim-scratch-buffer-*.md silent! write
 
   if !has('nvim')
     " TODO: for any registers
@@ -1108,8 +1108,8 @@ nnoremap <silent> * "zyiw/\m\C\<<C-r>z\><CR>
 nnoremap <silent> <C-k>o :<C-u>e! %<CR>
 nnoremap <silent> <leader># #
 nnoremap <silent> <leader>* *
-nnoremap <silent> <leader>B :<C-u>sp <C-r>=g:vimrc.memo_path<CR><CR>
-nnoremap <silent> <leader>b :<C-u>call scratch_buffer#open('md', 'sp', 5)<CR>
+nnoremap <silent> <leader>B <Cmd>sp <C-r>=g:vimrc.memo_path<CR><CR>
+nnoremap <silent> <leader>b <Cmd>ScratchBufferOpenFile md sp<CR>
 nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
 nnoremap <silent> Q :<C-u>call vimrc#bufclose_filetype(g:vimrc.temporary_buftypes)<CR>
 
