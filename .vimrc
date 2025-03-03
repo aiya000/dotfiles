@@ -210,11 +210,14 @@ augroup vimrc
 
   " Show simply for terminal buffers
   autocmd TerminalOpen * setlocal nolist nonumber norelativenumber
+  " TODO: When I move to another window, the terminal buffer also becomes IndentGuidesEnable in the autocmd below
   autocmd BufEnter,WinEnter *
     \  if &buftype ==# 'terminal'
       \| IndentGuidesDisable
     \| endif
-  autocmd BufLeave,Winleave * setl norelativenumber
+  autocmd BufLeave,Winleave *
+    \  setl norelativenumber
+    \| IndentGuidesEnable
 
   " Show relative numbers only on the current window
   autocmd BufEnter,WinEnter * if &number | setl relativenumber | end
@@ -235,6 +238,7 @@ augroup vimrc
   " vim-indent-guides
   autocmd VimEnter,ColorScheme * highlight IndentGuidesOdd ctermbg=60 guibg=#468F8C
   autocmd VimEnter,ColorScheme * highlight IndentGuidesEven ctermbg=60 guibg=#468F8C
+  " TODO: Enable this
   " autocmd WinEnter,BufWinEnter *
   "   \  if g:vimrc.indent_guides_enable && get(b:, 'vimrc_indent_guides_enable', v:true)
   "     \| IndentGuidesEnable

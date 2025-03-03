@@ -1,0 +1,18 @@
+## Coding
+
+### MOST IMPORTANT RULES - NEVER BREAK THESE
+
+- NEVER replace special characters
+    - e.g., `execute '%s/\s*\?$//g'`, `s:List.has(['', '', ''], char)`
+
+### Others
+
+- Use `const` instead of `let` if available
+- Don't `l:` to define local variables unless necessary
+- Use the conditional operator `foo ? bar : baz` instead of `if` when it is more readable
+- Use the conditional operator `foo ? bar : baz` when it is more readable than `if`
+- Define the name if use optional arguments. e.g., `a:0`, `a:1`, ...
+    - For example: `const filetype = get(a:000, 0, v:null)`
+- Don't use `==`. Use `==#` instead
+- Make the tests if you add new features
+- Don't define unnecessary `-nargs=0` in the command definition

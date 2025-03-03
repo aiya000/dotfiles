@@ -618,28 +618,25 @@ function! vimrc#ddu_start_from_input(options, ...) abort
 endfunction
 
 function! vimrc#deepl_translate(line_count, start_line, end_line, target_lang, source_lang, methods) abort
-  " NOTE: なんで動かないねん😡
-  " let translated_lines = getline(a:start_line, a:end_line)->map({ line ->
-  "   \ deepl#translate(line, a:target_lang, a:source_lang)
-  " \ })
-
   " If range is not specified, translate the current line, or translate the specified range
   const lines = a:line_count is -1
     \ ? [getline('.')]
     \ : getline(a:start_line, a:end_line)
 
-  const result = deepl#translate(lines->join("\n"), a:target_lang, a:source_lang) " NOTE: Removing this variable and directly `add(translated_lines, deepl#translate(...))` breaks the syntax highlighting in this file for some reason
   const func = #{
-    \ yank: { -> execute($'let @" = "{result}"') },
-    \ echo: { -> s:Msg.echo('Normal', result) },
-    \ buffer: function('s:deepl_traslate_open_buffer', [result]),
+    \ yank: { result -> execute($'let @" = "{escape(result, '"')}"') },
+    \ echo: { result -> s:Msg.echo('Normal', result) },
+    \ buffer: { result -> s:deepl_traslate_open_buffer(result) },
   \ }
+  const result = lines
+    \ ->join("\n")
+    \ ->deepl#translate(a:target_lang, a:source_lang)
 
   for method in a:methods
     if !func->has_key(method)
       throw $'Unknown method: {a:method}'
     endif
-    call func[method]()
+    call func[method](result)
   endfor
 endfunction
 
