@@ -632,18 +632,16 @@ let g:indent_guides_guide_size = 1
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_tab_guides = 0
 let g:indent_guides_exclude_filetypes = [
+  \ '',
+  \ 'adrone_home',
   \ 'aref_web',
   \ 'gitcommit',
-  \ 'review',
-  \ 'markdown',
-  \ 'haskell',
   \ 'happy',
-  \ 'tweetvim',
-  \ 'tweetvim_say',
+  \ 'haskell',
   \ 'help',
   \ 'man',
-  \ 'stack_test',
-  \ 'adrone_home',
+  \ 'markdown',
+  \ 'review',
 \ ]
 
 " }}}
