@@ -1112,7 +1112,8 @@ nnoremap <silent> * "zyiw/\m\C\<<C-r>z\><CR>
 nnoremap <silent> <C-k>o :<C-u>e! %<CR>
 nnoremap <silent> <leader># #
 nnoremap <silent> <leader>* *
-nnoremap <silent> <leader>B <Cmd>sp <C-r>=g:vimrc.memo_path<CR><CR>
+" NOTE: ? <Cmd> instead of :<C-u> is doesn't work
+nnoremap <silent> <leader>B :<C-u>sp <C-r>=g:vimrc.memo_path<CR><CR>
 nnoremap <silent> <leader>b <Cmd>ScratchBufferOpenFile md sp<CR>
 nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
 nnoremap <silent> Q :<C-u>call vimrc#bufclose_filetype(g:vimrc.temporary_buftypes)<CR>

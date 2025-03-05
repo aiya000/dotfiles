@@ -127,3 +127,7 @@ abbr ${0:this_script_dir}="$(cd -- "$(dirname -- "${BASH_SOURCE:-$0}")" && pwd |
 snippet assign_array
 abbr ${1:new_array}=("${0:source_array}")
   ${1:new_array}=("${0:source_array}")
+
+snippet export_function
+abbr export -f ${0:func_name}
+  export -f ${0:func_name}
