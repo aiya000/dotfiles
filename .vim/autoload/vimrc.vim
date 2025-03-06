@@ -666,3 +666,21 @@ function! vimrc#get_current_buffer_dir(...) abort
       \ ? alt_dir
       \ : execute('throw "The current buffer directory does not exist and an altlter directory is not specified"')
 endfunction
+
+" Returns: 'bun', 'yarn', 'npm', or v:null
+function! vimrc#check_node_project_manager(base_dir) abort
+  const base_dir = system($'realpath {fnameescape(a:base_dir)}')[:-2]
+  if base_dir ==# '/'
+    return v:null
+  endif
+
+  const is_package_json_existent = filereadable($'{base_dir}/package.json')
+  if !is_package_json_existent
+    return vimrc#check_node_project_manager($'{base_dir}/..')
+  endif
+
+  return
+    \ filereadable($'{base_dir}/bun.lockb') ? 'bun' :
+    \ filereadable($'{base_dir}/yarn.lock') ? 'yarn' :
+    \ 'npm'
+endfunction

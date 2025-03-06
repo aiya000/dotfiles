@@ -1242,11 +1242,12 @@ nnoremap :eb :<C-u>e<Space><C-r>=expand('%:p:h')<CR>/
 nnoremap <C-]> g<C-]>
 nnoremap <expr> <C-k><C-s> printf(":%%s/\\m\\C\\<%s\\>//g\<Left>\<Left>", expand('<cword>'))
 nnoremap <expr> <C-k>s printf(":%%s/\\m\\C\\<%s\\>/%s/g\<Left>\<Left>", expand('<cword>'), expand('<cword>'))
-nnoremap <silent> <C-k><C-j> :<C-u>call <SID>save_clear()<CR>
-nnoremap <silent> <C-k><Space> :<C-u>call vimrc#remove_trailing_spaces()<CR>
+nnoremap <silent> <C-k><C-j> <Cmd>call <SID>save_clear()<CR>
+nnoremap <silent> <C-k><Space> <Cmd>call vimrc#remove_trailing_spaces()<CR>
 nnoremap <silent> <C-k>J :<C-u>wall \| echo 'written all !'<CR>
-nnoremap <silent> <Space><Space> :<C-u>call vimrc#compress_spaces()<CR>
-nnoremap <silent> <leader>o :<C-u>copen<CR>
+nnoremap <silent> <Space><Space> <Cmd>call vimrc#compress_spaces()<CR>
+nnoremap <silent> <leader>q <Cmd>copen<CR>
+nnoremap <silent> <leader><leader>q <Cmd>cclose<CR>
 nnoremap Y yg_
 nnoremap g<C-]> <C-]>
 nnoremap g_ $

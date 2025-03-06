@@ -1,3 +1,6 @@
+"NOTE: ? Prevent appearing the character '«' at the beginning of a line when opened
+normal! 0
+
 nmap <buffer> H <Plug>(dirvish_up)
 nnoremap <buffer> % :e<Space>
 nnoremap <buffer> / /

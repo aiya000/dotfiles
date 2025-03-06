@@ -4,11 +4,38 @@ let b:undo_ftplugin = 'setl ' . join([
   \ 'expandtab<',
   \ 'shiftwidth<',
   \ 'tabstop<',
+  \ 'makeprg<',
 \ ])
 
-setl tabstop=2 shiftwidth=2 expandtab
+setlocal tabstop=2 shiftwidth=2 expandtab
 let &commentstring = '  // %s'
 let &errorformat = '%f(%l\,%c): %m'  " tsc
+
+" Use git root dir if available to support bun workspace
+try
+  let project_root = vimrc#read_git_root_sync()
+catch
+  let project_root = expand('%:p:h')
+endtry
+let manager = vimrc#check_node_project_manager(project_root)
+if manager !=# v:null
+  let &makeprg = $'{manager} typecheck'
+endif
+
+" TODO: Check this working and fix this
+function! s:run_yarn_quickfix(yarn_subcmd) abort
+  const current = getcwd()
+  try
+    CClear
+    const yarn_cmd = ['yarn'] + split(a:yarn_subcmd, ' ')
+    execute ':lcd' g:vimrc.path_at_started
+    call s:read_to_quickfix_it(yarn_cmd)
+    copen
+  finally
+    execute ':lcd' current
+  endtry
+endfunction
+
 
 " TODO: Do this only when lsp started
 " To lighten the completion performance
@@ -26,19 +53,3 @@ augroup FtpluginTypeScript
   autocmd!
   autocmd BufWritePost *.ts,*.tsx call s:exec_quickfix_if_available()
 augroup END
-
-function! s:start_quickfix() abort
-  let s:does_quickfix_watch = v:true
-  QuickfixRunYarn build
-endfunction
-
-function! s:stop_quickfix() abort
-  let s:does_quickfix_watch = v:false
-  cclose
-endfunction
-
-function! s:exec_quickfix_if_available() abort
-  if get(s:, 'does_quickfix_watch', v:false)
-    QuickfixRunYarn build
-  endif
-endfunction
