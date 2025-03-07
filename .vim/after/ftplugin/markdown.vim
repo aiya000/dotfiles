@@ -1,15 +1,15 @@
-let b:undo_ftplugin = 'setl ' .. join([
+let b:undo_ftplugin = 'setlocal ' .. join([
   \ 'tabstop<',
   \ 'shiftwidth<',
   \ 'conceallevel<',
   \ 'commentstring<',
   \ 'completefunc<',
 \ ])
-setl
+setlocal
   \ tabstop=4
   \ shiftwidth=4
   \ conceallevel=0
-  \ commentstring=<!--\ %s\ -->
+  \ commentstring=\ <!--\ %s\ -->
   \ completefunc=github_complete#complete
 
 nnoremap <silent><buffer> <localleader>r <Cmd>PrevimOpen<CR>
