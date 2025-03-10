@@ -1,13 +1,9 @@
-let b:undo_ftplugin = 'setl ' . join([
+let b:undo_ftplugin = 'setlolcal ' .. join([
   \ 'commentstring<',
   \ 'errorformat<',
-  \ 'expandtab<',
-  \ 'shiftwidth<',
-  \ 'tabstop<',
   \ 'makeprg<',
 \ ])
 
-setlocal tabstop=2 shiftwidth=2 expandtab
 let &commentstring = '  // %s'
 let &errorformat = '%f(%l\,%c): %m'  " tsc
 
@@ -49,7 +45,7 @@ nmap <silent><buffer> <C-l> <C-[>:syntax sync fromstart<CR>
 " TODO: Enable this if needed
 " nnoremap <buffer> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('', 'horizontal', 'yarn build', {'path': g:vimrc.path_at_started, 'noclose': v:true})<CR>
 
-augroup FtpluginTypeScript
-  autocmd!
-  autocmd BufWritePost *.ts,*.tsx call s:exec_quickfix_if_available()
-augroup END
+" augroup FtpluginTypeScript
+"   autocmd!
+"   autocmd BufWritePost *.ts,*.tsx call s:exec_quickfix_if_available()
+" augroup END

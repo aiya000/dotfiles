@@ -17,8 +17,7 @@ let g:vimrc = get(g:, 'vimrc', #{
   \ is_unix: has('unix'),
   \ is_macos: has('macunix'),
   \ git_root: v:null,
-  \ indent_guides_enable: v:true,
-  \ memo_path: expand('~/.backup/memo.md'),
+  \ memo_path: '~/.backup/memo.md',
 \ })
 call vimrc#read_git_root_to_set_g_vimrc_async()
 
@@ -193,13 +192,28 @@ function s:nmap_plus_p_to_put_if_on_terminal() abort
   nnoremap <buffer><expr> "+p vimrc#put_as_stdin(@+)
 endfunction
 
+function! s:setup_cmdwin() abort
+  nnoremap <buffer><silent> Q <Cmd>q<CR>
+  nnoremap <buffer><silent> ghq <Cmd>q<CR>
+  nnoremap <buffer><silent> ghQ <Cmd>qall<CR>
+  nnoremap <buffer><silent> <C-l> <Cmd>q<CR>
+  nnoremap <buffer><silent> <Esc> <Cmd>q<CR>
+  nnoremap <buffer> <C-j> <C-c><End>
+  nnoremap <buffer> <CR> <C-c><End>
+
+  if getcmdwintype() ==# ':'
+    inoremap <buffer><expr> <C-n> pumvisible() ? '<C-n>' : '<C-x><C-v>'
+    inoremap <buffer><expr> <C-p> pumvisible() ? '<C-p>' : '<C-x><C-v><C-p><C-p>'
+  endif
+endfunction
+
 augroup vimrc
   autocmd!
 
   autocmd VimEnter * ScdCurrentDir
   autocmd BufReadPost * call vimrc#visit_past_position()
   autocmd InsertEnter * call ddc#enable()
-  autocmd WinEnter,BufEnter,InsertLeave,Winleave,BufLeave vim-scratch-buffer-*.md silent! write
+  autocmd CmdwinEnter * call s:setup_cmdwin()
 
   if !has('nvim')
     " TODO: for any registers
@@ -238,13 +252,6 @@ augroup vimrc
   " vim-indent-guides
   autocmd VimEnter,ColorScheme * highlight IndentGuidesOdd ctermbg=60 guibg=#468F8C
   autocmd VimEnter,ColorScheme * highlight IndentGuidesEven ctermbg=60 guibg=#468F8C
-  " TODO: Enable this
-  " autocmd WinEnter,BufWinEnter *
-  "   \  if g:vimrc.indent_guides_enable && get(b:, 'vimrc_indent_guides_enable', v:true)
-  "     \| IndentGuidesEnable
-  "   \| else
-  "     \| IndentGuidesDisable
-  "   \| endif
 augroup END
 
 " }}}
@@ -943,6 +950,13 @@ let g:gin_proxy_editor_opener = 'vsplit'
 let g:deepl#endpoint = 'https://api-free.deepl.com/v2/translate'
 
 " }}}
+" vim-scatch-buffer {{{
+
+let g:scratch_buffer_default_file_ext = 'md'
+let g:scratch_buffer_use_default_keymappings = v:true
+
+
+" }}}
 
 call dein#end()
 
@@ -959,8 +973,12 @@ set
   \ browsedir=buffer
   \ cindent
   \ cmdheight=2
+  \ cmdwinheight=20
   \ completeopt-=preview
+  \ cursorline
+  \ expandtab
   \ fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
+  \ helplang=ja,en
   \ hidden
   \ history=1000
   \ hlsearch
@@ -969,7 +987,7 @@ set
   \ linebreak
   \ list
   \ listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
-  \ matchpairs+=<:>,（:）,｛:｝,「:」,＜:＞,『:』
+  \ matchpairs+=<:>,（:）,｛:｝,「:」,＜:＞,『:』,【:】
   \ nojoinspaces
   \ noruler
   \ notimeout
@@ -983,17 +1001,14 @@ set
   \ scrolloff=16
   \ sessionoptions=buffers,tabpages,localoptions,winsize,winpos
   \ shellslash
+  \ shiftwidth=2
   \ suffixes=
   \ tabline=%!vimrc#tabline#make()
-  \ expandtab
-  \ shiftwidth=2
   \ tabstop=2
+  \ viminfo='400,<50,s10,h
   \ visualbell
   \ wildignorecase
   \ wildmenu
-  \ helplang=ja,en
-  \ cursorline
-  \ viminfo='400,<50,s10,h
 
 if !has('nvim')
   set termwinkey=<C-q>
@@ -1103,16 +1118,12 @@ nmap <silent> m: :<C-u>call vimrc#open_buffer_to_execute('marks')<CR>gh_
 nmap <silent> q> :<C-u>call vimrc#open_buffer_to_execute('register')<CR>gh_
 " TODO: Alternative.
 " nmap <silent> y: :<C-u>Denite unite:yankround<CR>
-nnoremap <silent> z: :<C-u>tabs<CR>
-nnoremap q: gQ
-nnoremap <silent> # "zyiw?\m\C\<<C-r>z\><CR>
-nnoremap <silent> * "zyiw/\m\C\<<C-r>z\><CR>
+" nnoremap <silent> # "zyiw?\m\C\<<C-r>z\><CR>
+" nnoremap <silent> * "zyiw/\m\C\<<C-r>z\><CR>
 nnoremap <silent> <C-k>o :<C-u>e! %<CR>
-nnoremap <silent> <leader># #
-nnoremap <silent> <leader>* *
-" NOTE: ? <Cmd> instead of :<C-u> is doesn't work
-nnoremap <silent> <leader>B :<C-u>sp <C-r>=g:vimrc.memo_path<CR><CR>
-nnoremap <silent> <leader>b <Cmd>ScratchBufferOpenFile md sp<CR>
+nnoremap <leader><leader>b :<C-u>ScratchBufferOpenFile<Space>
+"" NOTE: ? <Cmd> instead of :<C-u> doesn't work
+nnoremap <silent> <leader><leader>B :<C-u>sp <C-r>=g:vimrc.memo_path<CR><CR>
 nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
 nnoremap <silent> Q :<C-u>call vimrc#bufclose_filetype(g:vimrc.temporary_buftypes)<CR>
 
