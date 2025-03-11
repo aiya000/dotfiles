@@ -46,12 +46,27 @@ abbr else {${0:#:here}}
     else {${0:#:here}}
 
 snippet function
-alias   func fun def
-abbr function ${1:#:name}(${2:#:args}): ${3:void} {${0:#:here}}
-    function ${1:#:name}(${2:#:args}): ${3:void} {${0:#:here}}
+alias   fun
+abbr function ${1:#:name}(${2:#:args}) {${0:#:here}}
+    function ${1:#:name}(${2:#:args}) {${0:#:here}}
+
+snippet async_function
+alias afun
+abbr async function ${1:#:name}(${2:#:args}) {${0:#:here}}
+    async function ${1:#:name}(${2:#:args}) {${0:#:here}}
+
+snippet generator_function
+alias gfun
+abbr function* ${1:#:name}(${2:#:args}) {${0:#:here}}
+  function* ${1:#:name}(${2:#:args}) {${0:#:here}}
+
+snippet async_generator_function
+alias agfun
+abbr async function* ${1:#:name}(${2:#:args}) {${0:#:here}}
+  async function* ${1:#:name}(${2:#:args}) {${0:#:here}}
 
 snippet arrow_function
-alias arrow ar
+alias ar
 abbr (${1:#:args}) =>${0}
     (${1:#:args}) =>${0}
 
@@ -62,8 +77,8 @@ abbr async (${1:#:args}) =>${0}
 
 snippet method
 alias met
-abbr ${1:name}(${2:#:args}): ${3:type} {${0:#:here}}
-    ${1:name}(${2:#:args}): ${3:type} {${0:#:here}}
+abbr ${1:name}(${2:#:args}) {${0:#:here}}
+    ${1:name}(${2:#:args}) {${0:#:here}}
 
 snippet interface
 alias inter
@@ -298,11 +313,6 @@ snippet private_set
 alias priset
 abbr private set ${1:fieldName}(x: ${2:type}) {${0:#:here}}
     private set ${1:fieldName}(x: ${2:type}) {${0:#:here}}
-
-snippet async_function
-alias async_fun afun
-abbr async function ${1:#:name}(${2:#:args}): Promise<${3:void}> {${0:#:here}}
-    async function ${1:#:name}(${2:#:args}): Promise<${3:void}> {${0:#:here}}
 
 snippet property_method
 abbr ${1:#:name}(${2:#:args}): ${3:void} {${0:#:here}}
