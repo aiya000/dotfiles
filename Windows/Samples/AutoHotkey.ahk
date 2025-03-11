@@ -99,6 +99,8 @@ Return
   ^[::SendInput +{Up}
   ^]::SendInput +{Down}
   !j::SendInput ^{Enter}
+  ; メッセージのタイプ中に間違えてページリロードすることが多いので、無効にする
+  ^r::Return
 #IfWinActive ; }}}
 #IfWinActive, ahk_exe slack.exe ; {{{
   ^p::SendInput {Up}
