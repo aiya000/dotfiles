@@ -1,4 +1,4 @@
-let b:undo_ftplugin = 'setlolcal ' .. join([
+let b:undo_ftplugin = 'setlocal ' .. join([
   \ 'commentstring<',
   \ 'errorformat<',
   \ 'makeprg<',
