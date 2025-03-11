@@ -584,20 +584,6 @@ let g:elm_make_show_warnings = 1
 let g:elm_setup_keybindings = 0
 
 " }}}
-" vim-fakeclip {{{
-
-if g:vimrc.is_wsl
-  let g:fakeclip_provide_clipboard_key_mappings = v:true
-  let g:fakeclip_force_override_clip_command = 'nkf -s | clip.exe'
-
-  call vimrc#job#start_simply(
-    \ ['/bin/which', 'nkf'],
-    \ v:null,
-    \ { _, __ -> s:Msg.warn('nkf is not found.') }
-  \ )
-endif
-
-" }}}
 " idris-vim {{{
 
 let g:idris_vim_enable_keymappings_by_default = v:false
@@ -1214,15 +1200,14 @@ nnoremap <expr> gp '`[' .. strpart(getregtype(), 0, 1) .. '`]'
 
 " copy & paste
 "" clipboard
-"" NOTE: Don't use noremap to allow remap with fakeclip
-nmap <leader>p "+p
-nmap <leader>P "+P
-nmap <leader>y "+y
-nmap <leader>Y "+yg_
-nmap <leader>dd "+dd
-nmap <leader>D "+D
-nmap <leader>d "+d
-nmap <leader>x "+x
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+nnoremap <leader>y "+y
+nnoremap <leader>Y "+yg_
+nnoremap <leader>dd "+dd
+nnoremap <leader>D "+D
+nnoremap <leader>d "+d
+nnoremap <leader>x "+x
 " nnoremap "%p <Cmd>put=expand('%:p')<CR>
 " nnoremap "%P <Cmd>put!=expand('%:p')<CR>
 "" Put the relative path of a current file

@@ -107,10 +107,6 @@ repo = 'mattn/vim-lsp-settings'
 repo = 'rhysd/vim-lsp-ale'
 
 [[plugins]]
-repo = 'aiya000/vim-fakeclip'
-if = 'g:vimrc.is_wsl || g:vimrc.is_wsl2'
-
-[[plugins]]
 repo = 'vim-scripts/Align'
 
 [[plugins]]
