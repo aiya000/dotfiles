@@ -964,7 +964,8 @@ let g:deepl#endpoint = 'https://api-free.deepl.com/v2/translate'
 " }}}
 " vim-scatch-buffer {{{
 
-let g:scratch_buffer_default_file_ext = 'md'
+let g:scratch_buffer_default_open_method = 'vsp'
+let g:scratch_buffer_default_buffer_size = v:null
 let g:scratch_buffer_use_default_keymappings = v:false
 
 
