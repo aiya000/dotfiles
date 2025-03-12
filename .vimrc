@@ -1111,7 +1111,6 @@ nmap <silent> q> :<C-u>call vimrc#open_buffer_to_execute('register')<CR>gh_
 " nnoremap <silent> # "zyiw?\m\C\<<C-r>z\><CR>
 " nnoremap <silent> * "zyiw/\m\C\<<C-r>z\><CR>
 nnoremap <silent> <C-k>o :<C-u>e! %<CR>
-nnoremap <leader><leader>b :<C-u>ScratchBufferOpenFile<Space>
 "" NOTE: ? <Cmd> instead of :<C-u> doesn't work
 nnoremap <silent> <leader><leader>B :<C-u>sp <C-r>=g:vimrc.memo_path<CR><CR>
 nnoremap <silent> g* :<C-u>execute 'silent! normal! *<C-o>'<CR>
@@ -1691,6 +1690,11 @@ imap <C-]> <Plug>(copilot-next)
 
 " deepl.vim
 vnoremap <silent> <leader><leader>k :DeeplTranslateToJaOpenBuffer<CR>
+
+" vim-scratch-buffer
+nnoremap <silent> <leader>b <Cmd>ScratchBufferOpen<CR>
+nnoremap <silent> <leader>B <Cmd>ScratchBufferOpenFile<CR>
+nnoremap <leader><leader>b :<C-u>ScratchBufferOpenFile<Space>
 
 " }}}
 
