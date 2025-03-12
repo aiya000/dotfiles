@@ -192,6 +192,23 @@ function s:nmap_plus_p_to_put_if_on_terminal() abort
   nnoremap <buffer><expr> "+p vimrc#put_as_stdin(@+)
 endfunction
 
+" See a below autocmd that this is called
+let s:backedup_buftype = ''
+
+function! s:backup_buftype() abort
+  if &buftype ==# 'nofile'
+    let s:backedup_buftype = 'nofile'
+    setlocal buftype=
+  endif
+endfunction
+
+function! s:restore_buftype()
+  if s:backedup_buftype ==# 'nofile'
+    let s:backedup_buftype = ''
+    setlocal buftype=nofile
+  endif
+endfunction
+
 function! s:setup_cmdwin() abort
   nnoremap <buffer><silent> Q <Cmd>q<CR>
   nnoremap <buffer><silent> ghq <Cmd>q<CR>
@@ -215,6 +232,10 @@ augroup vimrc
   autocmd InsertEnter * call ddc#enable()
   autocmd CmdwinEnter * call s:setup_cmdwin()
 
+  " To avoid ddc is disabled on `setlocal buftype=nofile` buffers
+  autocmd InsertEnter * call s:backup_buftype()
+  autocmd InsertLeave * call s:restore_buftype()
+
   if !has('nvim')
     " TODO: for any registers
     autocmd TerminalOpen * call s:nmap_p_to_put_if_on_terminal()
@@ -230,12 +251,12 @@ augroup vimrc
       \| IndentGuidesDisable
     \| endif
   autocmd BufLeave,Winleave *
-    \  setl norelativenumber
+    \  setlocal norelativenumber
     \| IndentGuidesEnable
 
   " Show relative numbers only on the current window
-  autocmd BufEnter,WinEnter * if &number | setl relativenumber | end
-  autocmd BufLeave,Winleave * setl norelativenumber
+  autocmd BufEnter,WinEnter * if &number | setlocal relativenumber | end
+  autocmd BufLeave,Winleave * setlocal norelativenumber
 
   " Show full-width spaces
   autocmd ColorScheme * highlight EmSpace ctermbg=LightBlue guibg=LightBlue
@@ -1190,13 +1211,13 @@ nnoremap <silent> <leader><leader>V <Cmd>tabnew \| call term_start(&shell, g:vim
 
 " set
 nnoremap <silent> <C-h><C-d> :<C-u>call vimrc#toggle_diff()<CR>
-nnoremap <silent><expr> <C-h><C-v> ':setl virtualedit=' .. (&virtualedit ==# '' ? 'all' : '') .. ' virtualedit?<CR>'
-nnoremap <silent><expr> zm ':setl foldmethod=' .. (&foldmethod ==# 'marker' ? 'syntax' : 'marker') .. ' foldmethod?<CR>'
-nnoremap <silent> <C-h><C-w> :<C-u>setl wrap! wrap?<CR>
-nnoremap <silent> <C-h><C-c> :<C-u>setl cursorline! cursorline?<CR>
-nnoremap <silent> <C-h><C-r> :<C-u>setl relativenumber! relativenumber?<CR>
-nnoremap <silent> <C-h><C-l> :<C-u>setl list! list?<CR>
-nnoremap <silent> <C-h><C-n> :<C-u>setl number! number?<CR>
+nnoremap <silent><expr> <C-h><C-v> ':setlocal virtualedit=' .. (&virtualedit ==# '' ? 'all' : '') .. ' virtualedit?<CR>'
+nnoremap <silent><expr> zm ':setlocal foldmethod=' .. (&foldmethod ==# 'marker' ? 'syntax' : 'marker') .. ' foldmethod?<CR>'
+nnoremap <silent> <C-h><C-w> :<C-u>setlocal wrap! wrap?<CR>
+nnoremap <silent> <C-h><C-c> :<C-u>setlocal cursorline! cursorline?<CR>
+nnoremap <silent> <C-h><C-r> :<C-u>setlocal relativenumber! relativenumber?<CR>
+nnoremap <silent> <C-h><C-l> :<C-u>setlocal list! list?<CR>
+nnoremap <silent> <C-h><C-n> :<C-u>setlocal number! number?<CR>
 
 " Visualize a last pasted range
 nnoremap <expr> gp '`[' .. strpart(getregtype(), 0, 1) .. '`]'
