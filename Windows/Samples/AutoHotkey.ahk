@@ -11,12 +11,16 @@
 #k::SendInput #{Up}
 #l::SendInput #{Right}
 
+; Select All。テキスト入力を多用するアプリケーションでは、`Ctrl + a`を`Home`に割り当ててしまうので。
+#a::Send ^a
+
 ^!d::SendInput #{Tab}
 !^c::SendInput !{F4}
 ; !+4::SendInput +#s
 !+4::Run SnippingTool.exe
 !+s::Run SnippingTool.exe
 
+; TODO: 多分全く動いてない
 ; http://ahkwiki.net/Reload
 !^r::
   MsgBox, 0x1000, AutoHotKey, Will reload, 400

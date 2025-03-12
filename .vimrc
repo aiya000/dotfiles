@@ -198,8 +198,8 @@ function! s:setup_cmdwin() abort
   nnoremap <buffer><silent> ghQ <Cmd>qall<CR>
   nnoremap <buffer><silent> <C-l> <Cmd>q<CR>
   nnoremap <buffer><silent> <Esc> <Cmd>q<CR>
-  nnoremap <buffer> <C-j> <C-c><End>
-  nnoremap <buffer> <CR> <C-c><End>
+  nnoremap <buffer> <C-j> <C-c><CR>
+  nnoremap <buffer> <CR> <C-c><CR>
 
   if getcmdwintype() ==# ':'
     inoremap <buffer><expr> <C-n> pumvisible() ? '<C-n>' : '<C-x><C-v>'
@@ -252,6 +252,11 @@ augroup vimrc
   " vim-indent-guides
   autocmd VimEnter,ColorScheme * highlight IndentGuidesOdd ctermbg=60 guibg=#468F8C
   autocmd VimEnter,ColorScheme * highlight IndentGuidesEven ctermbg=60 guibg=#468F8C
+
+  " Hightlight cursors of another windows
+  autocmd BufEnter,WinEnter * setlocal nocursorline
+  autocmd BufLeave,WinLeave * setlocal cursorline
+  autocmd VimEnter,ColorScheme * highlight CursorLine ctermbg=60
 augroup END
 
 " }}}
@@ -939,7 +944,7 @@ let g:deepl#endpoint = 'https://api-free.deepl.com/v2/translate'
 " vim-scatch-buffer {{{
 
 let g:scratch_buffer_default_file_ext = 'md'
-let g:scratch_buffer_use_default_keymappings = v:true
+let g:scratch_buffer_use_default_keymappings = v:false
 
 
 " }}}
@@ -961,7 +966,6 @@ set
   \ cmdheight=2
   \ cmdwinheight=20
   \ completeopt-=preview
-  \ cursorline
   \ expandtab
   \ fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
   \ helplang=ja,en
@@ -1480,7 +1484,7 @@ nnoremap L :<C-u>call vimrc#ddu_start_from_insert(#{
   \ sources: [#{ name: 'buffer' }],
 \ })<CR>
 
-nnoremap M :<C-u>call ddu#start(#{
+nnoremap M :<C-u>call vimrc#ddu_start_from_insert(#{
   \ sources: [#{ name: 'file_old' }],
 \ })<CR>
 
