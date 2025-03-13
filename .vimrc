@@ -213,8 +213,6 @@ function! s:setup_cmdwin() abort
   nnoremap <buffer><silent> Q <Cmd>q<CR>
   nnoremap <buffer><silent> ghq <Cmd>q<CR>
   nnoremap <buffer><silent> ghQ <Cmd>qall<CR>
-  nnoremap <buffer><silent> <C-l> <Cmd>q<CR>
-  nnoremap <buffer><silent> <Esc> <Cmd>q<CR>
   nnoremap <buffer> <C-j> <C-c><CR>
   nnoremap <buffer> <CR> <C-c><CR>
 
@@ -968,6 +966,11 @@ let g:scratch_buffer_default_open_method = 'vsp'
 let g:scratch_buffer_default_buffer_size = v:null
 let g:scratch_buffer_use_default_keymappings = v:false
 
+" }}}
+" vim-session {{{
+
+let g:session_directory = g:vimrc.sessiondir
+let g:session_autosave = 'no'
 
 " }}}
 

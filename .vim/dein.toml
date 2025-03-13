@@ -205,3 +205,10 @@ repo = 'ryicoh/deepl.vim'
 
 [[plugins]]
 repo = 'aliou/bats.vim'
+
+[[plugins]]
+repo = 'xolox/vim-session'
+depends = 'vim-misc'
+
+[[plugins]]
+repo = 'xolox/vim-misc'

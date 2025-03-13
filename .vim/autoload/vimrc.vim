@@ -437,26 +437,6 @@ function! vimrc#rename_to(new_name) abort
   echo printf('Renamed %s to %s', this_file, new_file)
 endfunction
 
-function! s:git_branch_session_save(repo_path) abort
-  const repo_name = fnamemodify(a:repo_path, ':t')
-  const branch_name = system("cd {a:repo_path} ; git branch | sort | tail -1 | awk '{print $2}'")[:-2]
-
-  " Remove '#' because '#' shouldn't be used as a file name
-  const session_name =
-    \ (repo_name .. '-' .. branch_name)
-    \ ->substitute('/', '-', 'g')
-    \ ->substitute('#', '-', 'g')
-
-  const session_path = fnameescape($'{g:vimrc.sessiondir}/{session_name}.vim')
-  execute 'mksession!' session_path
-  echomsg $'The session saved!: {session_path}'
-endfunction
-
-" Makes a session by reading the name of a current git repository.
-function! vimrc#git_branch_session_save() abort
-  call vimrc#read_git_root(function('s:git_branch_session_save'))
-endfunction
-
 function! s:caddexpr_on_stdout(data) abort
   for line in a:data
     " NOTE:

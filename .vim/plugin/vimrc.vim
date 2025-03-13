@@ -27,8 +27,6 @@ command! -bar -nargs=? -complete=filetype AutoloadEdit
     \ execute ':edit' printf('%s/autoload/%s.vim', g:vimrc['vim_home'], (empty(<q-args>) ? &filetype : <q-args>))
 "" Clear quickfix
 command! -bar CClear call setqflist([])
-"" Save session and specify session name automatically
-command! -bar SessionSaveInGitBranch call vimrc#git_branch_session_save()
 
 
 " Rename a file of the current buffer

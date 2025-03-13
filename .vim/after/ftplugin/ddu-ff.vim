@@ -1,4 +1,7 @@
-set cursorline
+let b:undo_ftplugin = 'setlocal ' .. join([
+  \ 'cursorline<',
+\ ])
+setlocal cursorline
 
 nnoremap <buffer><silent> <CR> <Cmd>call ddu#ui#do_action('itemAction')<CR>
 nnoremap <buffer><silent> <Space> <Cmd>call ddu#ui#do_action('toggleSelectItem')<CR>
