@@ -974,6 +974,13 @@ let g:session_autosave = 'no'
 let g:session_autoload = 'no'
 
 " }}}
+" asyncrun.vim {{{
+
+augroup vimrc
+  autocmd User AsyncRunStop call vimrc#popup_atcursor(':AsyncRun finished')
+augroup END
+
+" }}}
 
 call dein#end()
 

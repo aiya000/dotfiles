@@ -4,7 +4,7 @@ let b:undo_ftplugin = 'setlocal ' .. join([
   \ 'makeprg<',
 \ ])
 
-let &commentstring = '  // %s'
+let &commentstring = ' // %s'
 let &errorformat = '%f(%l\,%c): %m'  " tsc
 
 " Use git root dir if available to support bun workspace
@@ -17,6 +17,8 @@ let manager = vimrc#check_node_project_manager(project_root)
 if manager !=# v:null
   let &makeprg = $'{manager} typecheck'
 endif
+
+command! -bar Make execute ':AsyncRun' &makeprg | copen
 
 " TODO: Check this working and fix this
 function! s:run_yarn_quickfix(yarn_subcmd) abort

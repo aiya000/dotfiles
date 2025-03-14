@@ -664,3 +664,14 @@ function! vimrc#check_node_project_manager(base_dir) abort
     \ filereadable($'{base_dir}/yarn.lock') ? 'yarn' :
     \ 'npm'
 endfunction
+
+" Shows a popup window by `popup_atcursor()` with good options
+function! vimrc#popup_atcursor(message) abort
+  return popup_atcursor(a:message, #{
+    \ pos: 'topleft',
+    \ line: 'cursor-2',
+    \ border: [1, 1, 1, 1],
+    \ borderchars: ['-', '|', '-', '|', '+', '+', '+', '+'],
+    \ moved: [0, 0, 0],
+  \ })
+endfunction
