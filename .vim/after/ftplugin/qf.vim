@@ -16,8 +16,8 @@ setl cursorline nolist wrap
 nnoremap <buffer> Q <Cmd>bdelete<CR>
 nnoremap <buffer> <C-j> <CR>
 nnoremap <buffer> <C-r> <Cmd>call setqflist([])<CR>
-nnoremap <buffer><silent> <expr> <C-a> <SID>go_to_errorformat(v:count1)
-nnoremap <buffer><silent> <expr> <C-x> <SID>go_to_errorformat(-v:count1)
+nnoremap <buffer><silent> <expr> <C-a><C-a> <SID>go_to_errorformat(v:count1)
+nnoremap <buffer><silent> <expr> <C-x><C-x> <SID>go_to_errorformat(-v:count1)
 
 " Thanks thinca
 function! s:go_to_errorformat(motion)

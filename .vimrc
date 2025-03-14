@@ -971,6 +971,7 @@ let g:scratch_buffer_use_default_keymappings = v:false
 
 let g:session_directory = g:vimrc.sessiondir
 let g:session_autosave = 'no'
+let g:session_autoload = 'no'
 
 " }}}
 
@@ -1310,8 +1311,7 @@ inoremap <C-k><C-k> <C-o>"_d$
 inoremap <silent> <C-k><C-j> <Esc>:write<CR>
 inoremap <silent> <C-k>J <Esc>:wall \| echo 'written all!'<CR>
 inoremap <silent><expr> <C-b> vimrc#get_webpage_title(@+)
-" Don't noremap for fake-clip
-imap <C-r>' <C-r>+
+inoremap <C-r>' <C-r>+
 " Execute iabbr and Escape
 inoremap <C-l> <Space><Backspace><Esc>
 
@@ -1379,14 +1379,13 @@ onoremap iK i<
 
 " others
 vnoremap <C-l> <Esc>
-vnoremap <leader>s :sort<CR>
+vnoremap <leader><leader>s :sort<CR>
 vnoremap g_ $
-" Don't noremap for fake-clip
-vmap 'p "+p
-vmap 'P "+P
-vmap 'y "+y
-vmap 'd "+d
-vmap 'x "+x
+vnoremap 'p "+p
+vnoremap 'P "+P
+vnoremap 'y "+y
+vnoremap 'd "+d
+vnoremap 'x "+x
 
 " }}}
 " select mode {{{
@@ -1546,11 +1545,6 @@ nnoremap <silent> <leader>U :<C-u>UndotreeToggle<CR>
 
 " vim-indent-guides
 nnoremap <silent> <C-h><C-i> :<C-u>call vimrc#toggle_indent_guides()<CR>
-
-" deoplete.nvim
-" inoremap <CR> <CR>
-" inoremap <Tab> <Tab>
-" imap <expr> <C-k><C-i> deoplete#toggle() ? '' : ''
 
 " vim-visualstar
 vmap g* <Plug>(visualstar-*)Nzz

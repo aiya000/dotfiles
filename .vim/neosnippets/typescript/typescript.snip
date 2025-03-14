@@ -382,9 +382,14 @@ abbr /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 # Syntax templates
 
 snippet const_function
-alias constfun cfun
+alias cfun
 abbr const ${1:funcName} = (${2:#:args}) => ${0}
   const ${1:funcName} = (${2:#:args}) => ${0}
+
+snippet const_arrow_function
+alias acfun cafun
+abbr const ${1:funcName} = async (${2:#:args}) => ${0}
+  const ${1:funcName} = async (${2:#:args}) => ${0}
 
 snippet export_default
 alias exd

@@ -212,3 +212,6 @@ depends = 'vim-misc'
 
 [[plugins]]
 repo = 'xolox/vim-misc'
+
+[[plugins]]
+repo = 'skywind3000/asyncrun.vim'
