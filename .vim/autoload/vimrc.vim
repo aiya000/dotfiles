@@ -621,7 +621,7 @@ function! vimrc#deepl_translate(line_count, start_line, end_line, target_lang, s
 endfunction
 
 function! s:deepl_traslate_open_buffer(result) abort
-  ScratchBufferOpen md sp
+  ScratchBufferOpenNext md sp
   put=a:result
   normal! gg
   normal! "zdd
@@ -636,7 +636,7 @@ endfunction
 
 function! vimrc#get_current_buffer_dir(...) abort
   const dir =
-    \ &buftype !=# 'terminal'
+    \ &buftype !=# 'terminal' && &buftype !=# 'nofile'
       \ ? expand('%:p:h')
       \ : g:vimrc.git_root
   const alt_dir = get(a:000, 0, v:null)

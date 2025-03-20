@@ -999,6 +999,7 @@ set
   \ cmdheight=2
   \ cmdwinheight=20
   \ completeopt-=preview
+  \ conceallevel=1
   \ expandtab
   \ fileencodings=ucs-bom,utf-8,sjis,euc-jp,cp932,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,ucs-bom,latin1,default
   \ helplang=ja,en

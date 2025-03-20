@@ -1,19 +1,17 @@
 if &readonly
-    let b:undo_ftplugin = 'setl ' . join([
-    \   'nolist<',
-    \   'nonumber<',
-    \   'norelativenumber<',
-    \])
-    setl nolist nonumber norelativenumber
+  let b:undo_ftplugin = 'setlocal ' .. join([
+    \ 'nolist<',
+    \ 'nonumber<',
+    \ 'norelativenumber<',
+  \ ])
+  setlocal nolist nonumber norelativenumber
+  nnoremap <silent><buffer> Q :<C-u>helpclose<CR>
 else
-    let b:undo_ftplugin = 'setl ' . join([
-    \   'tabstop<',
-    \   'shiftwidth<',
-    \   'expandtab<',
-    \   'conceallevel<',
-    \])
-    setl tabstop=8 shiftwidth=8 noexpandtab
-    setl conceallevel=0
+  let b:undo_ftplugin = 'setlocal ' .. join([
+    \ 'tabstop<',
+    \ 'shiftwidth<',
+    \ 'expandtab<',
+    \ 'conceallevel<',
+  \ ])
+  setlocal tabstop=8 shiftwidth=8 noexpandtab conceallevel=1
 endif
-
-nnoremap <silent><buffer> Q :<C-u>helpclose<CR>

@@ -1,4 +1,7 @@
-snippet vimconsolelog
+snippet themis_log
 alias log
-options word
-    VimConsoleLog ${0}
+    call themis#log(${0:here})
+
+snippet themis_poi
+alias tpoi
+    call themis#log($'poi: {${0:here}}')
