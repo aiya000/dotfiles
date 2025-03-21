@@ -1034,6 +1034,8 @@ set
   \ wildignorecase
   \ wildmenu
 
+" TODO: Add git-root to 'path'
+
 if !has('nvim')
   set termwinkey=<C-q>
 endif
