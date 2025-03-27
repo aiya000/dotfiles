@@ -647,8 +647,10 @@ function! vimrc#get_current_buffer_dir(...) abort
       \ : execute('throw "The current buffer directory does not exist and an altlter directory is not specified"')
 endfunction
 
-" Returns: 'bun', 'yarn', 'npm', or v:null
-function! vimrc#check_node_project_manager(base_dir) abort
+" Finds a node root directory.
+" This means 'Find a project root directory or a (bun) workspace directory'.
+" Returns v:null if no package.json found.
+function! vimrc#read_node_root_dir(base_dir) abort
   const base_dir = system($'realpath {fnameescape(a:base_dir)}')[:-2]
   if base_dir ==# '/'
     return v:null
@@ -656,12 +658,19 @@ function! vimrc#check_node_project_manager(base_dir) abort
 
   const is_package_json_existent = filereadable($'{base_dir}/package.json')
   if !is_package_json_existent
-    return vimrc#check_node_project_manager($'{base_dir}/..')
+    return vimrc#read_node_root_dir($'{base_dir}/..')
   endif
 
+  return base_dir
+endfunction
+
+" Returns: 'bun', 'yarn', 'npm', or v:null
+function! vimrc#check_node_project_manager(base_dir) abort
+  const node_root = vimrc#read_node_root_dir(a:base_dir)
   return
-    \ filereadable($'{base_dir}/bun.lockb') ? 'bun' :
-    \ filereadable($'{base_dir}/yarn.lock') ? 'yarn' :
+    \ node_root ==# v:null ? v:null :
+    \ filereadable($'{node_root}/bun.lockb') ? 'bun' :
+    \ filereadable($'{node_root}/yarn.lock') ? 'yarn' :
     \ 'npm'
 endfunction
 

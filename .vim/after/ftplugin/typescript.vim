@@ -5,20 +5,43 @@ let b:undo_ftplugin = 'setlocal ' .. join([
 \ ])
 
 let &commentstring = ' // %s'
-let &errorformat = '%f(%l\,%c): %m'  " tsc
 
-" Use git root dir if available to support bun workspace
-try
-  let project_root = vimrc#read_git_root_sync()
-catch
-  let project_root = expand('%:p:h')
-endtry
-let manager = vimrc#check_node_project_manager(project_root)
-if manager !=# v:null
-  let &makeprg = $'{manager} typecheck'
-endif
+function! s:run_script(subcmd, errorformat) abort
+  let &errorformat = a:errorformat
 
-command! -bar Make execute ':AsyncRun' &makeprg | copen
+  " Use git root dir if available to support bun workspace
+  try
+    const project_root = vimrc#read_node_root_dir(expand('%:p:h'))
+  catch
+    const project_root = expand('%:p:h')
+  endtry
+  const manager = vimrc#check_node_project_manager(project_root)
+  if manager !=# v:null
+    let &makeprg = $'{manager} run {a:subcmd}'
+  endif
+
+  " echo $':AsyncRun -cwd={project_root} {&makeprg}'
+  execute ':AsyncRun' $'-cwd={project_root}' &makeprg
+  copen
+endfunction
+
+function! s:run_typecheck() abort
+  call s:run_script('typecheck', '%f(%l\,%c): %m')  " tsc's errorformat
+endfunction
+
+" eslintは逐次出力をせずに、最後に一気に出力するので、焦らずに待とう
+function! s:run_lint() abort
+  call s:run_script('lint', 'TODO: efm-langserverが使える？')
+endfunction
+
+function! s:run_all() abort
+  call s:run_typecheck()
+  call s:run_lint()
+endfunction
+
+command! -bar RunTypeCheck call s:run_typecheck()
+command! -bar RunEslint execute ':AsyncRun bun eslint' | copen
+command! -bar Make call s:run_all()
 
 " TODO: Check this working and fix this
 function! s:run_yarn_quickfix(yarn_subcmd) abort
