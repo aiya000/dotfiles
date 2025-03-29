@@ -1,12 +1,5 @@
-let b:undo_ftplugin = 'setl ' . join([
-  \ 'tw<',
-  \ 'ts<',
-  \ 'sw<',
-  \ 'et<',
+let b:undo_ftplugin = 'setlocal ' .. join([
   \ 'commentstring<',
 \ ])
 
-setl tw=0 ts=2 sw=2 et
 let &commentstring = ' " %s'
-
-nnoremap <buffer><silent> <leader><leader>o :<C-u>VimConsoleOpen<CR>

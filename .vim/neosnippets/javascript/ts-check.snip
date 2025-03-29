@@ -1,0 +1,67 @@
+# Reference:
+# - https://docs.deno.com/runtime/fundamentals/typescript/
+
+snippet ts_check
+alias enable_ts_check
+abbr // @ts-check
+  // @ts-check
+
+snippet document_comment
+alias doc
+    /**
+     * ${0}
+     */
+
+snippet document_comment_oneline
+alias docline
+abbr /** ${0} */
+  /** ${0} */
+
+snippet typedef
+options indent
+  /**
+   * @typedef {${1:type}} ${0:name}
+   */
+
+snippet property
+abbr @property {${1:type}} ${2:name}
+  @property {${1:type}} ${2:name}
+
+snippet property_optional
+alias opt_prop
+abbr @property {${1:type}} [${2:name}]
+  @property {${1:type}} [${2:name}]
+
+snippet type
+abbr /** @type {${0:type}} */
+  /** @type {${0:type}} */
+
+snippet template
+alias generic generics
+  @template ${0:T}
+
+snippet template_default
+alias generic_default generics_default
+  @template [${1:T}=${2:Default}]
+
+snippet param
+abbr @param ${1:name} {${2:type}}
+  @param ${1:name} {${2:type}}
+
+snippet param_optional
+alias opt opt_param
+abbr @param [${1:name}] {${2:type}}
+  @param [${1:name}] {${2:type}}
+
+snippet returns
+alias return
+abbr @returns {${0:type}}
+ @returns {${0:type}}
+
+snippet ts_expect_error
+abbr // @ts-expect-error
+  // @ts-expect-error
+
+snippet unk
+abbr unknown
+  unknown

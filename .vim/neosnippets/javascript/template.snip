@@ -23,3 +23,12 @@ snippet template_electron_main_js
             mainWindow = null;
         });
     });
+
+
+snippet define_prototype_Array#map
+    Array.prototype.map = function (f) {
+        for (var i = 0; i < this.length; ++i) {
+            this[i] = f(i);
+        }
+        return this;
+    };

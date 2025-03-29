@@ -1,7 +1,5 @@
 include eslint.snip
 
-# Syntax
-
 snippet use_strict
 abbr 'use strict';
     'use strict';
@@ -91,8 +89,6 @@ snippet export_default
 abbr export default {${0:here}}
     export default {${0:here}}
 
-# Expressions
-
 snippet print
 alias prlintln pr
 abbr console.log(${1:#:hello});
@@ -113,20 +109,7 @@ alias throw
 abbr throw new Error(${0:here})
     throw new Error(${0:here})
 
-# Templates
-
-snippet define_prototype_Array#map
-    Array.prototype.map = function (f) {
-        for (var i = 0; i < this.length; ++i) {
-            this[i] = f(i);
-        }
-        return this;
-    };
-
-# Others
-
-snippet document_comment
-alias doc
-    /**
-     * ${0}
-     */
+snippet const_function
+alias cfun
+abbr const ${1:funcName} = (${2:#:args}) => ${0}
+  const ${1:funcName} = (${2:#:args}) => ${0}

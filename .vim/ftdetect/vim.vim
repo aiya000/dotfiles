@@ -1,3 +1,4 @@
-autocmd! BufNewFile,BufRead .vimperatorrc setl ft=vim
-autocmd! BufNewFile,BufRead .vrapperrc    setl ft=vim
-autocmd! BufNewFile,BufRead .vsvimrc      setl ft=vim
+autocmd! BufNewFile,BufRead .vimperatorrc setlocal filetype=vim
+autocmd! BufNewFile,BufRead .vrapperrc setlocal filetype=vim
+autocmd! BufNewFile,BufRead .vsvimrc setlocal filetype=vim
+autocmd! BufNewFile,BufRead vimium-c-keymaps setlocal filetype=vim
