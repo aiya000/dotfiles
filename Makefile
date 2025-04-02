@@ -70,8 +70,8 @@ ifeq ($(OS),Arch)  # {{{
 	which stack || $(YayInstall) stack-static
 	which pip || $(YayInstall) python-pip
 	which cargo || $(YayInstall) rust
-	echo 'Please define install-core-package-managers for go' > /dev/stderr
-	echo 'Please define install-core-package-managers for npm by nvm' > /dev/stderr
+	@echo 'Please define install-core-package-managers for go' > /dev/stderr
+	@echo 'Please define install-core-package-managers for npm by nvm' > /dev/stderr
 
 install-yay:
 	which yay || ( \
@@ -520,21 +520,19 @@ install-wslu:
 	$(AptUpdate)
 	$(AptInstall) wslu
 
+install-fd:
+	$(AptInstall) fd-find
+
 fix-wsl-git-clone:
 	sudo ip link set eth0 mtu 1400
 
+# Input this > Installation is done! Do you want to enable the pam module now? [y/N]: y
 install-wsl-hello-sudo:
-	echo '次のように入力してください。'
-	echo '> /mnt/c/Users/{you}/AppData/Local/Programs/wsl-hello-sudo does not exist. Create it? [Y/n]: y'
-	echo '> Installation is done! Do you want to enable the pam module now? [y/N]: y'
-	echo '準備はいいですか？ Enterを押してください。インストールを始めます。'
-	bash -c "read -rp 'Continue to press any key.' _"
-	cd /tmp
-	wget http://github.com/nullpo-head/WSL-Hello-sudo/releases/latest/download/release.tar.gz
-	tar xvf release.tar.gz
-	./install.sh
-	rm release.tar.gz
-	cd -
+	cd /tmp ; \
+		wget http://github.com/nullpo-head/WSL-Hello-sudo/releases/latest/download/release.tar.gz ; \
+		tar xvf release.tar.gz
+	cd /tmp/release ; ./install.sh
+	rm /tmp/release /tmp/release.tar.gz
 
 build-surfingkeys:
 	git clone https://github.com/brookhong/Surfingkeys ~/git/Surfingkeys
@@ -545,12 +543,12 @@ build-surfingkeys:
 	mkdir ~/Desktop/Programs 2> /dev/null || true
 	mv dist/production/chrome ~/Desktop/Programs/Surfingkeys
 	cd -
-	echo 'Done building Surfingkeys'
-	echo 'Please install it to your browser manually'
-	echo '1. Open chrome://extensions/'
-	echo '2. Enable developer mode'
-	echo '3. Select ~/Desktop/Programs/Surfingkeys by パッケージ化されていない拡張機能を読み込む'
-	echo '4. Copy Samples/SurfingKeys.js & Paste to Surfingkeys Settings'
+	@echo 'Done building Surfingkeys'
+	@echo 'Please install it to your browser manually'
+	@echo '1. Open chrome://extensions/'
+	@echo '2. Enable developer mode'
+	@echo '3. Select ~/Desktop/Programs/Surfingkeys by パッケージ化されていない拡張機能を読み込む'
+	@echo '4. Copy Samples/SurfingKeys.js & Paste to Surfingkeys Settings'
 
 # WSL's notify-send
 install-notifu:

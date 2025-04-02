@@ -215,3 +215,6 @@ repo = 'xolox/vim-misc'
 
 [[plugins]]
 repo = 'skywind3000/asyncrun.vim'
+
+[[plugins]]
+repo = 'aiya000/vim-scratch-buffer'
