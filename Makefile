@@ -270,8 +270,10 @@ install-haskell:
 
 install-nodejs:
 	$(MAKE) install-nvm
-	echo "close this, and do below:"
-	echo 'export NVM_DIR="$$HOME/.nvm" && source "$$NVM_DIR/nvm.sh" && nvm install node && nvm use node'
+	$(MAKE) install-bun
+
+install-bun:
+	which bun || brew install oven-sh/bun/bun
 
 install-deno:
 	which deno || brew install deno
