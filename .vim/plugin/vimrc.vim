@@ -68,16 +68,22 @@ command! -bar -nargs=* GBlame Gin blame <args>
 command! -bar -nargs=+ Weblio WebpageShow weblio <args>
 command! -nargs=+ Stackage WebpageShow stackage <args>
 
-" Others
+" :cd
 command! -bar CdBufDir execute ':cd' fnameescape(expand('%:p:h'))
 command! -bar CdStarted execute ':cd' g:vimrc.path_at_started
 command! -bar CdGitRoot call vimrc#cd_git_root(':cd')
 command! -bar LcdBufDir execute ':lcd' fnameescape(expand('%:p:h'))
 command! -bar LcdStarted execute ':lcd' g:vimrc.path_at_started
 command! -bar LcdGitRoot call vimrc#cd_git_root(':lcd')
+command! -bar TcdBufDir execute ':tcd' fnameescape(expand('%:p:h'))
+command! -bar TcdStarted execute ':tcd' g:vimrc.path_at_started
+command! -bar TcdGitRoot call vimrc#cd_git_root(':tcd')
+""
 command! -bar ScdBufDir let g:vimrc.path_at_started = expand('%:p:h')
 command! -bar ScdCurrentDir let g:vimrc.path_at_started = getcwd()
 command! -bar ScdGitRoot let g:vimrc.path_at_started = g:vimrc.git_root
+
+" Others
 command! -bar GitReadRoot call vimrc#read_to_set_git_root()
 command! -bar ReadGitRoot call vimrc#read_to_set_git_root()
 ""

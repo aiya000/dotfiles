@@ -569,13 +569,24 @@ for s:ts in s:typescript_variants
   let g:ale_linters[s:ts] = ['prettier', 'eslint', 'vim-lsp']
 endfor
 
+function! s:read_deno_local_tsconfig() abort
+  const local_tsconfig = $'{getcwd()}/tsconfig.json'
+  if filereadable(local_tsconfig)
+    let g:ale_javascript_deno_lint_options = $'--config {local_tsconfig}'
+  endif
+endfunction
+
+augroup vimrc
+  autocmd FileType typescript,javascript call s:read_deno_local_tsconfig()
+augroup END
+
 let g:ale_scala_scalastyle_config = $'{$HOME}/.dotfiles/scalastyle_config_default.xml'
 
 augroup vimrc
   autocmd ColorScheme * highlight ALEError ctermbg=gray ctermfg=black
 
   autocmd VimEnter *
-    \  if
+    \ if
         \ filereadable('./scalastyle_config.xml') &&
         \ input('locally scalastyle_config.xml was found, Do you want to load? (y/n)') == 'y'
       \| let g:ale_scala_scalastyle_config =  $'{execute("pwd")[:-1]}/scalastyle-config.xml'
@@ -1012,6 +1023,7 @@ set
   \ list
   \ listchars=tab:»_,trail:_,extends:»,precedes:«,nbsp:%,eol:↲
   \ matchpairs+=<:>,（:）,｛:｝,「:」,＜:＞,『:』,【:】
+  \ nofoldenable
   \ nojoinspaces
   \ noruler
   \ notimeout
