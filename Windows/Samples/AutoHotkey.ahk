@@ -12,10 +12,16 @@
 #l::SendInput #{Right}
 
 ; Select All。テキスト入力を多用するアプリケーションでは、`Ctrl + a`を`Home`に割り当ててしまうので。
-#a::Send ^a
+#a::SendInput ^a
 
-^!d::SendInput #{Tab}
+; Kill Window
+#c::SendInput !{F4}
 !^c::SendInput !{F4}
+
+; Show Windows
+^!d::SendInput #{Tab}
+
+; Snip
 ; !+4::SendInput +#s
 !+4::Run SnippingTool.exe
 !+s::Run SnippingTool.exe
@@ -48,44 +54,7 @@ EnvGet, Home, HOME
   Run C:\Program Files\Ditto\Ditto.exe /Open
 Return
 
-#IfWinActive, ahk_exe vivaldi.exe
-  ; ^p::SendInput {Up}
-  ; ^n::SendInput {Down}
-  ; ^f::SendInput {Right}
-  ; ^b::SendInput {Left}
-  ^a::SendInput {Home}
-  ^e::SendInput {End}
-  ^j::SendInput {Enter}
-  ^u::SendInput +{Home}{BS}
-  ^k::SendInput +{End}{BS}
-  ^h::SendInput {BS}
-  ^d::SendInput {Del}
-  ^,::SendInput +{Left}
-  ^.::SendInput +{Right}
-  ^[::SendInput +{Up}
-  ^]::SendInput +{Down}
-  !j::SendInput ^{Enter}
-#IfWinActive
-
-; Vivaldiに完全なbashキーマップを与えたくないので、exeを指定している
-#IfWinActive, ahk_exe Chrome.exe ; {{{
-  ^p::SendInput {Up}
-  ^n::SendInput {Down}
-  ^f::SendInput {Right}
-  ^b::SendInput {Left}
-  ^a::SendInput {Home}
-  ^e::SendInput {End}
-  ^j::SendInput {Enter}
-  ^u::SendInput +{Home}{BS}
-  ^k::SendInput +{End}{BS}
-  ^h::SendInput {BS}
-  ^d::SendInput {Del}
-  ^,::SendInput +{Left}
-  ^.::SendInput +{Right}
-  ^[::SendInput +{Up}
-  ^]::SendInput +{Down}
-  !j::SendInput ^{Enter}
-#IfWinActive ; }}}
+; bashライクキーマッピング
 #IfWinActive, ahk_exe Discord.exe ; {{{
   ^p::SendInput {Up}
   ^n::SendInput {Down}
@@ -153,6 +122,50 @@ Return
   ^u::SendInput +{Home}{BS}
   ^k::SendInput +{End}{BS}
   ^h::SendInput {BS}
+  ^,::SendInput +{Left}
+  ^.::SendInput +{Right}
+  ^[::SendInput +{Up}
+  ^]::SendInput +{Down}
+  !j::SendInput ^{Enter}
+#IfWinActive ; }}}
+#IfWinActive, ahk_exe Chrome.exe ; {{{
+  ^p::SendInput {Up}
+  ^n::SendInput {Down}
+  ^f::SendInput {Right}
+  ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
+  ^,::SendInput +{Left}
+  ^.::SendInput +{Right}
+  ^[::SendInput +{Up}
+  ^]::SendInput +{Down}
+  !j::SendInput ^{Enter}
+#IfWinActive ; }}}
+
+; bashライクキーマッピング。
+; ただし常用のWebブラウザにはできるだけSurfingKeysに制御をして欲しいので、アプリケーション内部レイヤーではどうしようもないところだけキーマッピングする。
+; Chromeは業務でデバッグに使用しているので、除外。
+#IfWinActive, ahk_class MozillaWindowClass ; {{{
+  ^a::SendInput {Home}
+  ^,::SendInput +{Left}
+  ^.::SendInput +{Right}
+  ^[::SendInput +{Up}
+  ^]::SendInput +{Down}
+#IfWinActive ; }}}
+#IfWinActive, ahk_exe vivaldi.exe ; {{{
+  ; Vivaldiの更新でSurfingKeysが色々動かなくなって、こちら側でなんとかしていたので、いくつかキーマッピングが多い
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
   ^,::SendInput +{Left}
   ^.::SendInput +{Right}
   ^[::SendInput +{Up}
