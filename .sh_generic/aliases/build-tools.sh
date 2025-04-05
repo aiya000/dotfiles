@@ -37,7 +37,7 @@ function xl::define () {
     alias xr='etlas run'
     alias xx=etlas
     xl::echo 'etlas loaded.'
-  elif i_have bun && [[ -e package.json ]] && [[ -e bun.lockb ]] ; then
+  elif i_have bun && [[ -e package.json ]] && [[ -e bun.lockb || -e bun.lock ]] ; then
     function xi () {
       if [[ -z $1 ]] ; then
         bun install

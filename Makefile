@@ -98,7 +98,7 @@ ifeq ($(OS),Darwin)  # {{{
 endif  # }}}
 
 install-nvm:
-	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
 
 install-haskell-stack:
 	curl -sSL https://get.haskellstack.org/ | sh
@@ -270,6 +270,7 @@ install-haskell:
 
 install-nodejs:
 	$(MAKE) install-nvm
+	nvm ls-remote
 	$(MAKE) install-bun
 
 install-bun:
