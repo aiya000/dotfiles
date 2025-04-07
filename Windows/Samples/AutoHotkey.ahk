@@ -6,6 +6,7 @@
 ; http://ahkwiki.net/MsgBox
 ; MsgBox, 0x1000, Title, Text, 400
 
+; ウィンドウを配置
 #h::SendInput #{Left}
 #j::SendInput #{Down}
 #k::SendInput #{Up}
@@ -13,6 +14,9 @@
 
 ; Select All。テキスト入力を多用するアプリケーションでは、`Ctrl + a`を`Home`に割り当ててしまうので。
 #a::SendInput ^a
+
+; Clip
+#x::SendInput #+s
 
 ; Kill Window
 #c::SendInput !{F4}
