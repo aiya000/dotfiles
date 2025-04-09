@@ -393,7 +393,7 @@ i_have tmux && alias ta='tmux attach'
 i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have unzip && alias unzip-cp932='unzip -O cp932'
 i_have krita && alias kra=krita
-i_have fdfind && alias fd=fdfind
+i_have fdfind && alias fd='fdfind --hidden' # Include '.' prefixed files
 
 if i_have notifu.exe && ! i_have notify-send ; then
   function notify-send () {
