@@ -1,6 +1,12 @@
 # Cline系への指示用。
 # - 英語で指示をしたい場合は、別途deepl-cliなどを使ってください。
 
+snippet cline_read_your_prompt_first
+options indent
+  まずタスクを始める前に、あなたのプロンプトに記述した内容を熟読し、今後の振る舞いを遵守してください。
+  では、本題に入ります。
+  ${0}
+
 snippet cline_check_repository_malicious_and_vulnerability
 options indent
   以下のリポジトリのソースコードに悪意のあるコード・脆弱性がないか、コードレビュー・や依存関係をチェックして、確認してください。

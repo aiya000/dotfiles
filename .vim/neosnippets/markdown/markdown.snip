@@ -11,6 +11,10 @@ alias ch
 abbr - [ ]
   - [ ] ${0}
 
+snippet checked
+abbr - [x] ${0}
+  - [x] ${0}
+
 snippet bar
 abbr - - - - -
     - - - - -
@@ -21,6 +25,10 @@ options indent
     \`\`\`${1:#:type}
     ${0}
     \`\`\`
+
+snippet link
+abbr [${1:visible_text}](${2:URL})${0}
+  [${1:visible_text}](${2:URL})${0}
 
 snippet footnote_reference
 alias fn
@@ -56,3 +64,15 @@ abbr :recycle:
 snippet niconiconi
 abbr 🤟🙄🤟
     🤟🙄🤟
+
+# Others
+
+snippet id
+alias anchor
+abbr <a id="${0:section_name}">
+  <a id="${0:section_name}">
+
+snippet link_reference
+alias ref
+abbr [${1:visible_text}](#${2:section_name})${0}
+  [${1:visible_text}](#${2:section_name})${0}
