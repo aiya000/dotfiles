@@ -15,10 +15,14 @@ if ! i_have code && i_have Code.exe ; then
   alias code=Code.exe
 fi
 
+# To enable GitHub Copilot (copilot.vim)
 load-my-env nvm
-
 if [[ $VIM_TERMINAL == '' ]] ; then
   dotfiles::find_nodejs_to_load
+fi
+
+if [[ $VIM_TERMINAL != '' ]] ; then
+  xl
 fi
 
 # - - -
