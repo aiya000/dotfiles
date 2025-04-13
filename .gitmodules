@@ -37,3 +37,6 @@
 [submodule "bash-toys"]
 	path = bash-toys
 	url = https://github.com/aiya000/bash-toys
+[submodule "Preferences/Surfingkeys.js"]
+	path = Preferences/Surfingkeys.js
+	url = https://github.com/aiya000/Surfingkeys.js
