@@ -1,0 +1,6 @@
+{
+  "// prettierrc for SurfingKeys.js": "",
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "es5"
+}

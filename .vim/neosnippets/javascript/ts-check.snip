@@ -20,17 +20,18 @@ abbr /** ${0} */
 snippet typedef
 options indent
   /**
-   * @typedef {${1:type}} ${0:name}
+   * @typedef {${2:type}} ${1:name}
    */
 
 snippet property
-abbr @property {${1:type}} ${2:name}
-  @property {${1:type}} ${2:name}
+alias prop
+abbr @property {${2:type}} ${1:name}
+  @property {${2:type}} ${1:name}
 
 snippet property_optional
 alias opt_prop
-abbr @property {${1:type}} [${2:name}]
-  @property {${1:type}} [${2:name}]
+abbr @property {${2:type}} [${1:name}]
+  @property {${2:type}} [${1:name}]
 
 snippet type
 abbr /** @type {${0:type}} */
