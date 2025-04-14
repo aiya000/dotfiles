@@ -22,15 +22,15 @@ abbr import * as ${0:name} from '${1:module-name}'
 
 snippet for_traditional
 abbr for (${1:#:var}; ${2:#:condition}; ${3:#:effect}) {${0:here}}
-    for (${1:#:var}; ${2:#:condition}; ${3:#:effect}) {${0:here}}
+    for (let ${1:#:var}; ${2:#:condition}; ${3:#:effect}) {${0:here}}
 
 snippet for_of
 alias for for_each
-    for (${2:x} of ${3:#:xs}) {${0:here}}
+    for (const ${2:x} of ${3:#:xs}) {${0:here}}
 
 snippet for_in
 alias for_each_propeties
-    for (${2:x} in ${3:#:xs}) {${0:here}}
+    for (const ${2:x} in ${3:#:xs}) {${0:here}}
 
 snippet if
 abbr if (${1:cond}) {${0:here}}

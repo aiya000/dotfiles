@@ -1731,6 +1731,7 @@ imap <C-]> <Plug>(copilot-next)
 
 " deepl.vim
 vnoremap <silent> <leader><leader>k :DeeplTranslateToJaOpenBuffer<CR>
+vnoremap <silent> <leader><leader>K :DeeplTranslateToEnOpenBuffer<CR>
 
 " vim-scratch-buffer
 nnoremap <silent> <leader>b <Cmd>ScratchBufferOpen<CR>

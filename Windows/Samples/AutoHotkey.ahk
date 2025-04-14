@@ -155,11 +155,29 @@ Return
 ; ただし常用のWebブラウザにはできるだけSurfingKeysに制御をして欲しいので、アプリケーション内部レイヤーではどうしようもないところだけキーマッピングする。
 ; Chromeは業務でデバッグに使用しているので、除外。
 #IfWinActive, ahk_class MozillaWindowClass ; {{{
+  ; TODO: tmp. 下記コメント参照
+  ^p::SendInput {Up}
+  ^n::SendInput {Down}
+  ^f::SendInput {Right}
+  ^b::SendInput {Left}
   ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
   ^,::SendInput +{Left}
   ^.::SendInput +{Right}
   ^[::SendInput +{Up}
   ^]::SendInput +{Down}
+  !j::SendInput ^{Enter}
+  ; TODO: Surfingkeysが設定できるまで、上記キーマップを使用し、本来の以下を一時的にコメントアウトしている。Surfingkeysが設定できたら、元に戻す
+  ; ^a::SendInput {Home}
+  ; ^,::SendInput +{Left}
+  ; ^.::SendInput +{Right}
+  ; ^[::SendInput +{Up}
+  ; ^]::SendInput +{Down}
 #IfWinActive ; }}}
 #IfWinActive, ahk_exe vivaldi.exe ; {{{
   ; Vivaldiの更新でSurfingKeysが色々動かなくなって、こちら側でなんとかしていたので、いくつかキーマッピングが多い
