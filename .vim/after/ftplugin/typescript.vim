@@ -2,9 +2,13 @@ let b:undo_ftplugin = 'setlocal ' .. join([
   \ 'commentstring<',
   \ 'errorformat<',
   \ 'makeprg<',
+  \ 'omnifunc<',
 \ ])
 
 let &commentstring = ' // %s'
+
+" .vimrcでも同じ内容を設定しているものの、なぜかemptyになるので、設定
+setlocal omnifunc=lsp#complete
 
 function! s:run_script(subcmd, errorformat) abort
   let &errorformat = a:errorformat
