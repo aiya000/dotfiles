@@ -1,0 +1,41 @@
+# いつかVim scriptにts-checkみたいなものが来ることを願って
+
+snippet typedef
+abbr @typedef {${2:type}} ${1:name}
+   @typedef {${2:type}} ${1:name}
+
+snippet property
+alias prop
+abbr @property {${2:type}} ${1:name}
+  @property {${2:type}} ${1:name}
+
+snippet property_optional
+alias opt_prop
+abbr @property {${2:type}} [${1:name}]
+  @property {${2:type}} [${1:name}]
+
+snippet type
+abbr @type {${0:type}}
+  @type {${0:type}}
+
+snippet template
+alias generic generics
+  @template ${0:T}
+
+snippet template_default
+alias generic_default generics_default
+  @template [${1:T}=${2:Default}]
+
+snippet param
+abbr @param ${1:name} {${2:type}}
+  @param ${1:name} {${2:type}}
+
+snippet param_optional
+alias opt opt_param
+abbr @param [${1:name}] {${2:type}}
+  @param [${1:name}] {${2:type}}
+
+snippet returns
+alias return
+abbr @returns {${0:type}}
+ @returns {${0:type}}

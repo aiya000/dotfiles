@@ -12,11 +12,15 @@
 #k::SendInput #{Up}
 #l::SendInput #{Right}
 
-; Select All。テキスト入力を多用するアプリケーションでは、`Ctrl + a`を`Home`に割り当ててしまうので。
+; Select all
+; NOTE: テキスト入力を多用するアプリケーションに対しては、`Ctrl + a`に`Home`へのキーマップを割り当てるため、代わりにこちらを使う
 #a::SendInput ^a
 
 ; Clip
 #x::SendInput #+s
+
+; Select captured texts
+#t::SendInput #+t
 
 ; Kill Window
 #c::SendInput !{F4}

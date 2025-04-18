@@ -7,6 +7,7 @@ let g:vimrc.memo_path = '/mnt/p/memo.md'
 " :helptags ~/git/vital.vim
 let &rtp = [
   \ $'{$HOME}/Repository/vim-scratch-buffer',
+  \ $'{$HOME}/Repository/vim-write-sync',
   \ $'{$HOME}/git/vital.vim',
   \ &rtp,
 \ ]->join(',')
@@ -17,3 +18,8 @@ function! s:use_locally_instead(name) abort
 endfunction
 
 " call s:use_locally_instead('vim-gin')
+
+" augroup vimrc
+"   autocmd FileType haskell set tags+=~/git/eta/.git/tags,~/.vim/my-nvim-hs/tags
+"   autocmd FileType idris set tags+=~/Repository/Idris-dev/libs/tags
+" augroup END
