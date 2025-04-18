@@ -1,0 +1,23 @@
+" 自分が開発している前提のとき用
+function! s:add_to_runtime_path(path) abort
+  let &rtp = $'{a:path},{&rtp}'
+
+  " 開発がWIPだとdocがなかったりするので
+  const doc = $'{a:path}/doc'
+  if isdirectory(doc)
+    execute ':helptags' doc
+  endif
+endfunction
+
+call s:add_to_runtime_path($'{$HOME}/git/vital.vim')
+" call s:add_to_runtime_path($'{$HOME}/git/scratch.vim')
+call s:add_to_runtime_path($'{$HOME}/Repository/vim-scratch-buffer')
+call s:add_to_runtime_path($'{$HOME}/Repository/vim-write-sync')
+
+" PR出すときだけ有効にする（dein.tomlには書いておくとき）用
+function! s:use_locally_instead(name) abort
+  call dein#disable(a:name)
+  let &rtp = $'{$HOME}/Repository/{a:name},{&rtp}'
+endfunction
+
+" call s:use_locally_instead('vim-gin')
