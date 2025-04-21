@@ -17,12 +17,13 @@ abbr .${1:name} {${0:#:here}}
 include html/*
 delete type
 
-# html
-## Tags
-
 snippet template
 abbr <template>${0}</template>
     <template>${0}</template>
+
+snippet keep_alive
+abbr <KeepAlive>${0}</KeepAlive>
+  <KeepAlive>${0}</KeepAlive>
 
 snippet i18n_lang_yaml
 abbr <i18n lang="yaml">${0:#:here}</i18n>
@@ -46,15 +47,9 @@ snippet suspense_template
     </template>
   </Suspense>
 
-## Templates
-
 snippet computed
 abbr computed(() => ${0:#:here})
   computed(() => ${0:#:here})
-
-snippet watch
-abbr watch(${1:sources}, () => ${0})
-  watch(${1:sources}, () => ${0})
 
 snippet define_props
 abbr const { ${1:props} } = defineProps<{${2:here}}>()${0}
@@ -63,3 +58,19 @@ abbr const { ${1:props} } = defineProps<{${2:here}}>()${0}
 snippet define_emits
 abbr const emit = defineEmits<{${0:here}}>()
   const emit = defineEmits<{${0:here}}>()
+
+snippet watch
+abbr watch(${1:sources}, () => ${0})
+  watch(${1:sources}, () => ${0})
+
+snippet watchEffect
+abbr watchEffect(() => ${0})
+  watchEffect(() => ${0})
+
+snippet onMounted
+abbr onMounted(() => ${0})
+  onMounted(() => ${0})
+
+snippet onUnmounted
+abbr onUnmounted(() => ${0})
+  onUnmounted(() => ${0})

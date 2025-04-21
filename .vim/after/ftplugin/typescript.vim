@@ -27,7 +27,7 @@ function! s:run_script(subcmd, errorformat) abort
 
   " echo $':AsyncRun -cwd={project_root} {&makeprg}'
   execute ':AsyncRun' $'-cwd={project_root}' &makeprg
-  copen
+  vertical copen 120
 endfunction
 
 function! s:run_typecheck() abort

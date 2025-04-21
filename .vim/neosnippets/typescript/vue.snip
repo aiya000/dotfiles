@@ -1,9 +1,12 @@
-snippet annotation_component
-alias component
-abbr @Component
-    @Component
+# TODO: ${2}を入力せず、算出したい。`substitute('$1', '^\u', '\l&', '')`や`substitute('$1', '^\\u', '\\l&', '')`と書いてもだめだった
+snippet composable
+options indent
+    export const use${1:Something} = () => {
+      return {
+          ${0}
+      }
+    }
 
-snippet annotation_prop
-alias prop
-abbr @Prop(${1:#:here})${0}
-    @Prop(${1:#:here})${0}
+    export type $1Composable = ReturnType<typeof use$1>
+    export const ${2:something}InjectionKey: InjectionKey<$1Composable>
+      = Symbol('$2')
