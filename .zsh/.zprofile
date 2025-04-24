@@ -73,6 +73,9 @@ PATH=$PATH:/usr/lib/git-core
 # AndroidStudio
 PATH=$PATH:$ANDROID_HOME/platform-tools
 
+# Windows
+PATH=$PATH:'/mnt/c/Program Files/Google/Chrome/Application'
+
 export PATH
 
 #}}}

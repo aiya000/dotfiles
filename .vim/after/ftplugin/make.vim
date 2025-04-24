@@ -1,7 +1,5 @@
-let b:undo_ftplugin = 'setl ' .. join([
+let b:undo_ftplugin = 'setlocal ' .. join([
   \ 'noexpandtab<',
-  \ 'ts=4<',
-  \ 'sw=4<',
 \ ])
 
-setl noexpandtab ts=4 sw=4
+setlocal noexpandtab

@@ -563,3 +563,10 @@ install-golang:
 	sudo add-apt-repository ppa:longsleep/golang-backports
 	$(AptUpdate)
 	$(AptInstall) golang-go
+
+install-pandoc:
+	which pandoc || brew install pandoc
+
+install-pdf-viewer:
+	@echo 'ここからインストールしる'
+	xdg-open https://www.sumatrapdfreader.org/free-pdf-reader
