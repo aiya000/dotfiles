@@ -789,8 +789,8 @@ let g:jumpy_map = [')', '(']
 " vim-quickrepl {{{
 
 let g:quickrepl_config = {
-  \ 'vue': ['ts-node'],
-  \ 'typescript.tsx': ['ts-node'],
+  \ 'vue': ['tsx'],
+  \ 'typescript.tsx': ['tsx'],
   \ 'go': ['gore'],
   \ 'ps1': ['powrshell', 'powershell.exe'],
 \ }
