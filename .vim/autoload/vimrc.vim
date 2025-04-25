@@ -629,7 +629,7 @@ endfunction
 
 function! vimrc#open_buffer_to_execute(cmd) abort
   const full_size = 100
-  call scratch_buffer#open('md', 'sp', full_size)
+  call scratch_buffer#open(v:true, 'md', 'sp', full_size)
   put=execute(a:cmd)
   normal! gg2dd
 endfunction
