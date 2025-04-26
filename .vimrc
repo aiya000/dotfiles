@@ -996,7 +996,11 @@ augroup END
 
 let g:write_sync_echo_success_on_write = v:true
 let g:write_sync_lists = [
-  \ [ '~/tmp/x', '~/tmp/y', '~/tmp/z' ],
+  \ [
+    \ '~/.dotfiles/Preferences/VSCode/settings.json',
+    \ '~/Windows/AppData/Roaming/Code/User/settings.json',
+    \ '~/Windows/AppData/Roaming/Code - Insiders/User/settings.json',
+  \ ],
 \ ]
 
 " }}}

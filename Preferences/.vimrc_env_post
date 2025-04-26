@@ -11,13 +11,18 @@ endfunction
 
 call s:add_to_runtime_path($'{$HOME}/git/vital.vim')
 " call s:add_to_runtime_path($'{$HOME}/git/scratch.vim')
-call s:add_to_runtime_path($'{$HOME}/Repository/vim-scratch-buffer')
-call s:add_to_runtime_path($'{$HOME}/Repository/vim-write-sync')
+" call s:add_to_runtime_path($'{$HOME}/Repository/vim-scratch-buffer')
+" call s:add_to_runtime_path($'{$HOME}/Repository/vim-write-sync')
 
 " PR出すときだけ有効にする（dein.tomlには書いておくとき）用
-function! s:use_locally_instead(name) abort
+function! s:use_locally_instead(name, ...) abort
   call dein#disable(a:name)
-  let &rtp = $'{$HOME}/Repository/{a:name},{&rtp}'
+
+  const worktree = get(a:000, 0, v:null)
+  const plugin_dir = $'{$HOME}/Repository/{a:name}{worktree ==# v:null ? '' : ('/' .. worktree)}'
+  let &rtp = $'{plugin_dir},{&rtp}'
 endfunction
 
 " call s:use_locally_instead('vim-gin')
+call s:use_locally_instead('vim-write-sync')
+call s:use_locally_instead('vim-scratch-buffer', 'feature/tmp-file-pattern-when-tmp-buffer-and-when-file-buffer')

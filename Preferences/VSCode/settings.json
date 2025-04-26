@@ -1,0 +1,10 @@
+{
+  "github.copilot.chat.localeOverride": "ja",
+  "github.copilot.chat.agent.thinkingTool": true,
+  "github.copilot.chat.commitMessageGeneration.instructions": [],
+  "github.copilot.chat.codeGeneration.instructions": [
+    {
+      "file": "/home/aiya000/.dotfiles/Preferences/cline/clinerules_global.md"
+    }
+  ],
+}
