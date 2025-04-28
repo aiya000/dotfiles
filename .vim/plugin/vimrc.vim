@@ -106,6 +106,7 @@ command! -bar -nargs=? Grep call vimrc#ddu_start_from_input(#{
 command! -bar -nargs=+ SetTabTitle let t:vimrc_tabtitle = <q-args>
 command! -bar UnsetTabTitle unlet t:vimrc_tabtitle
 command! -bar ReverseLines !tac
+command! -bar -range ReplaceListSign '<,'>s/\(\s*\)- /\1・ /
 
 " deepl.vim
 command! -bar -range=% DeeplTranslateToEn call vimrc#deepl_translate(<count>, <line1>, <line2>, 'EN', 'JA', ['yank', 'echo'])
