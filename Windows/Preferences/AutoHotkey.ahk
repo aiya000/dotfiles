@@ -34,7 +34,6 @@
 !+4::Run SnippingTool.exe
 !+s::Run SnippingTool.exe
 
-; TODO: 多分全く動いてない
 ; http://ahkwiki.net/Reload
 !^r::
   MsgBox, 0x1000, AutoHotKey, Will reload, 400
@@ -176,7 +175,7 @@ Return
 ; bashライクキーマッピング。
 ; ただし常用のWebブラウザにはできるだけSurfingKeysに制御をして欲しいので、アプリケーション内部レイヤーではどうしようもないところだけキーマッピングする。
 ; Chromeは業務でデバッグに使用しているので、除外。
-#IfWinActive, ahk_class MozillaWindowClass ; {{{
+#IfWinActive, ahk_exe floorp.exe ; {{{
   ; TODO: tmp. 下記コメント参照
   ^p::SendInput {Up}
   ^n::SendInput {Down}
