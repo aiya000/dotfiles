@@ -570,3 +570,6 @@ install-pandoc:
 install-pdf-viewer:
 	@echo 'ここからインストールしる'
 	xdg-open https://www.sumatrapdfreader.org/free-pdf-reader
+
+install-neovim:
+	which nvim || brew install neovim
