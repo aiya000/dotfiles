@@ -976,6 +976,9 @@ let g:deepl#endpoint = 'https://api-free.deepl.com/v2/translate'
 let g:scratch_buffer_default_open_method = 'vsp'
 let g:scratch_buffer_default_buffer_size = v:null
 let g:scratch_buffer_use_default_keymappings = v:false
+let g:scratch_buffer_file_pattern = #{
+  \ when_file_buffer: expand('~/tmp/scratch-%d')
+\ }
 
 " }}}
 " vim-session {{{
@@ -995,7 +998,14 @@ augroup END
 " vim-write-sync {{{
 
 let g:write_sync_echo_success_on_write = v:true
+
+" `['~/tmp/a', '~/tmp/b', '~/tmp/c']` for test
 let g:write_sync_lists = [
+  \ ['~/tmp/a', '~/tmp/b', '~/tmp/c'],
+  \ [
+    \ '~/.dotfiles/Windows/Preferences/AutoHotkey.ahk',
+    \ '~/Desktop/AutoHotkey.ahk',
+  \ ],
   \ [
     \ '~/.dotfiles/Preferences/VSCode/settings.json',
     \ '~/Windows/AppData/Roaming/Code/User/settings.json',

@@ -51,6 +51,10 @@ snippet lambda
 alias lam
     {${1:x} -> ${2:expr}}
 
+snippet throw
+abbr throw '${0}'
+  throw '${0}'
+
 snippet equals
 alias eq
 abbr ==#
@@ -91,9 +95,16 @@ abbr call assert_report(${0:msg})
 snippet print
 alias pr
 abbr caddexpr
-  caddexpr
+    caddexpr
 
 snippet print_poi
 alias poi
 abbr caddexpr $'poi: {${0:#:here}}'
-  caddexpr $'poi: {${0:#:here}}'
+    caddexpr $'poi: {${0:#:here}}'
+
+snippet measure_time
+alias time_span performance time
+options indent
+    let start_time = reltime()
+    ${0}
+    caddexpr $'poi: Elapsed time: {reltimestr(reltime(start_time))} (secs)'

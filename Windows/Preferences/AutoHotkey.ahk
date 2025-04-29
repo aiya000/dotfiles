@@ -175,6 +175,7 @@ Return
 ; bashライクキーマッピング。
 ; ただし常用のWebブラウザにはできるだけSurfingKeysに制御をして欲しいので、アプリケーション内部レイヤーではどうしようもないところだけキーマッピングする。
 ; Chromeは業務でデバッグに使用しているので、除外。
+;
 #IfWinActive, ahk_exe floorp.exe ; {{{
   ; TODO: tmp. 下記コメント参照
   ^p::SendInput {Up}
