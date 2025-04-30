@@ -573,3 +573,17 @@ install-pdf-viewer:
 
 install-neovim:
 	which nvim || brew install neovim
+
+install-systemctl-for-wsl:
+	$(AptInstall) systemd systemd-sysv
+
+install-open-commit-and-ollama:
+	curl -fsSL https://ollama.com/install.sh | sh
+	systemctl enable ollama
+	systemctl start ollama
+	ollama run mistral
+	$(NPMInstall) opencommit
+	oco config set OCO_AI_PROVIDER='ollama'
+	oco config set OCO_API_URL='http://localhost:11434/api/chat'
+	oco config set OCO_GITPUSH=false
+	oco config set OCO_LANGUAGE=en
