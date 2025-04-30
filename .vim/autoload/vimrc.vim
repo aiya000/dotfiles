@@ -675,8 +675,9 @@ function! vimrc#check_node_project_manager(base_dir) abort
 endfunction
 
 " Shows a popup window by `popup_atcursor()` with good options
-function! vimrc#popup_atcursor(message) abort
-  return popup_atcursor(a:message, #{
+" @param messages {Array<string> | string} -- messages or a message. See `popup_create()`
+function! vimrc#popup_atcursor(messages) abort
+  return popup_atcursor(a:messages, #{
     \ pos: 'topleft',
     \ line: 'cursor-2',
     \ border: [1, 1, 1, 1],

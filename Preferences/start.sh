@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Original file: ~/.dotfiles/Preferences/start.sh
+
 rm /tmp/pomodoro-* 2> /dev/null || true
 rm /tmp/zsh-has-loaded 2> /dev/null || true
 
@@ -15,6 +17,10 @@ fi
 
 if [[ $(service cron status) = ' * cron is not running' ]] ; then
   sudo service cron start
+fi
+
+if ! /usr/local/bin/ollama ps ; then
+  ~/.dotfiles/bash-toys/bin/start ollama serve
 fi
 
 cd || exit 1

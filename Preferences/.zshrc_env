@@ -1,13 +1,13 @@
 #!/usr/bin/env zsh
 
+# Original files: ~/.dotfiles/Preferences/.zshrc_env
+
 export WINDOWS_USER=$(whoami.exe | tr -d '\r\n' | cut -d '\' -f 2)
-export DOTFILES_ZSHRC_NVM_NODE_VERSION=v20.13.1
+export DOTFILES_ZSHRC_NVM_NODE_VERSION=v22.14.0
 
 # export NODE_OPTIONS=--max-old-space-size=16384
-# export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
 # PATH=$PATH:/usr/share/bash-completion/completions
-# PATH=$PATH:$HOME/.nvm/versions/node/v15.5.0/bin
-PATH=$PATH:/home/aiya000/.nvm/versions/node/v20.13.1/bin/pnpm
+PATH=$PATH:~/.nvm/versions/node/$DOTFILES_ZSHRC_NVM_NODE_VERSION/bin
 PATH="$PATH:/mnt/c/Users/$WINDOWS_USER/AppData/Local/Programs/Microsoft VS Code"
 PATH="$PATH:/mnt/c/Program Files/Rancher Desktop/resources/resources/linux/bin"
 
@@ -15,7 +15,7 @@ if ! i_have code && i_have Code.exe ; then
   alias code=Code.exe
 fi
 
-# To enable GitHub Copilot (copilot.vim)
+# To enable npm and GitHub Copilot (copilot.vim)
 load-my-env nvm
 if [[ $VIM_TERMINAL == '' ]] ; then
   dotfiles::find_nodejs_to_load
