@@ -15,7 +15,8 @@ nmap <buffer><silent><nowait> p <Plug>(gin-action-diff:smart:vsplit)
 nmap <buffer><silent> sa <Plug>(gin-action-stash)
 nmap <buffer><silent> S yy<Cmd>call <SID>stash_message(@")<CR>
 nnoremap <buffer><silent> sp <Cmd>Gin stash pop<CR>
-nnoremap <buffer><silent> cc <Cmd>call <SID>open_commit_buffer([])<CR>
+nnoremap <buffer><silent> cc <Cmd>call <SID>commit_by_oco()<CR>
+nnoremap <buffer><silent> cC <Cmd>call <SID>open_commit_buffer([])<CR>
 nnoremap <buffer><silent> ca <Cmd>call <SID>open_commit_buffer(['--amend'])<CR>
 nnoremap <buffer> cf :<C-u>GCommitFixup<Space>
 nmap <buffer> <: <Plug>(gin-action-restore:ours)
@@ -48,6 +49,13 @@ function! s:stash_message(file_to_save) abort
   \ )
 endfunction
 
+function! s:commit_by_oco() abort
+  call term_start('oco', #{
+    \ close_cb: { _job -> vimrc#popup_atcursor('oco finished') },
+    \ err_cb: { _job, data -> vimrc#popup_atcursor(data) },
+  \ })
+endfunction
+
 function! s:open_commit_buffer(subcmd_list) abort
   try
     execute 'Gin' 'commit' '--verbose' a:subcmd_list->join(' ')
@@ -61,7 +69,7 @@ function! s:open_commit_buffer(subcmd_list) abort
 endfunction
 
 function! s:open_terminal_git_buffer(filetype, subcmd_list) abort
-  call term_start(&shell, a:filetype, 'stay', )
+  call term_start(&shell, #{ curwin: v:true })
   const subcmd = a:subcmd_list->map({ _, x -> $"'{x}'" })->join(' ')
 
   const current_bufnr = bufnr('%')
