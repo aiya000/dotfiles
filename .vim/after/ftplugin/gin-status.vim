@@ -51,9 +51,17 @@ endfunction
 
 function! s:commit_by_oco() abort
   call term_start('oco', #{
-    \ close_cb: { _job -> vimrc#popup_atcursor('oco finished') },
+    \ vertical: v:true,
+    \ out_cb: function('s:notify_when_generating_commit_message_finished_by_oco'),
     \ err_cb: { _job, data -> vimrc#popup_atcursor(data) },
   \ })
+  nnoremap <buffer> Q <Cmd>bwipe<CR>
+endfunction
+
+function! s:notify_when_generating_commit_message_finished_by_oco(_job, data) abort
+  if a:data =~# 'Generated commit message:'
+    call vimrc#popup_atcursor('commit message generated')
+  endif
 endfunction
 
 function! s:open_commit_buffer(subcmd_list) abort
