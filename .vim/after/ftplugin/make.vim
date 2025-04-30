@@ -1,5 +1,6 @@
 let b:undo_ftplugin = 'setlocal ' .. join([
   \ 'noexpandtab<',
+  \ 'tabstop<',
 \ ])
 
-setlocal noexpandtab
+setlocal noexpandtab tabstop=4
