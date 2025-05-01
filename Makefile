@@ -578,12 +578,26 @@ install-systemctl-for-wsl:
 	$(AptInstall) systemd systemd-sysv
 
 install-open-commit-and-ollama:
+	$(MAKE) install install-ollama || exit 1
+	$(MAKE) install install-open-commit || exit 1
+
+install-ollama:
+	if which ollama ; then \
+		echo 'ollama is already installed' ; \
+		exit 1 ; \
+	fi
 	curl -fsSL https://ollama.com/install.sh | sh
 	systemctl enable ollama
 	systemctl start ollama
 	ollama run mistral
+
+install-open-commit:
+	if which opencommit ; then \
+		echo 'opencommit is already installed' ; \
+		exit 1 ; \
+	fi
 	$(NPMInstall) opencommit
-	oco config set OCO_AI_PROVIDER='ollama'
+	oco config set OCO_AI_PROVIDER='ollama' OCO_MODEL='mistral'
 	oco config set OCO_API_URL='http://localhost:11434/api/chat'
 	oco config set OCO_GITPUSH=false
 	oco config set OCO_LANGUAGE=en
