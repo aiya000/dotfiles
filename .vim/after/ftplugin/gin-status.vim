@@ -52,15 +52,17 @@ endfunction
 function! s:commit_by_oco() abort
   let local = {}
 
-  function! local.notify_when_generated(data) abort dict
-    if a:data =~# 'Successfully committed'
+  " Notify result when oco is finished if Vim had leaved from the buffer of oco
+  function! local.notify_when_generated(oco_bufnr, data) abort dict
+    const current_bufnr = bufnr('%')
+    if current_bufnr !=# a:oco_bufnr && a:data =~# 'Successfully committed'
       call vimrc#popup_atcursor('commit finished')
     endif
   endfunction
 
-  call term_start('oco --yes', #{
+  const oco_bufnr = term_start('oco --yes', #{
     \ vertical: v:true,
-    \ out_cb: { _job, data -> local.notify_when_generated(data) },
+    \ out_cb: { _job, data -> local.notify_when_generated(oco_bufnr, data) },
     \ err_cb: { _job, data -> vimrc#popup_atcursor(data) },
   \ })
   nnoremap <buffer> Q <Cmd>bwipe<CR>
