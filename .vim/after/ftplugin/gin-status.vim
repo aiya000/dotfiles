@@ -50,18 +50,20 @@ function! s:stash_message(file_to_save) abort
 endfunction
 
 function! s:commit_by_oco() abort
-  call term_start('oco', #{
+  let local = {}
+
+  function! local.notify_when_generated(data) abort dict
+    if a:data =~# 'Successfully committed'
+      call vimrc#popup_atcursor('commit finished')
+    endif
+  endfunction
+
+  call term_start('oco --yes', #{
     \ vertical: v:true,
-    \ out_cb: function('s:notify_when_generating_commit_message_finished_by_oco'),
+    \ out_cb: { _job, data -> local.notify_when_generated(data) },
     \ err_cb: { _job, data -> vimrc#popup_atcursor(data) },
   \ })
   nnoremap <buffer> Q <Cmd>bwipe<CR>
-endfunction
-
-function! s:notify_when_generating_commit_message_finished_by_oco(_job, data) abort
-  if a:data =~# 'Generated commit message:'
-    call vimrc#popup_atcursor('commit message generated')
-  endif
 endfunction
 
 function! s:open_commit_buffer(subcmd_list) abort
