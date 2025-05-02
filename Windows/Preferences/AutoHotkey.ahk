@@ -6,14 +6,14 @@
 ; http://ahkwiki.net/MsgBox
 ; MsgBox, 0x1000, Title, Text, 400
 
-; ウィンドウを配置
+; Arrange windows
 #h::SendInput #{Left}
 #j::SendInput #{Down}
 #k::SendInput #{Up}
 #l::SendInput #{Right}
 
 ; Select all
-; NOTE: テキスト入力を多用するアプリケーションに対しては、`Ctrl + a`に`Home`へのキーマップを割り当てるため、代わりにこちらを使う
+; NOTE: For applications that heavily use text input, Ctrl + a is remapped to Home, so use this instead
 #a::SendInput ^a
 
 ; Clip
@@ -57,11 +57,13 @@ EnvGet, Home, HOME
 ; OpenVR-AdvanceSettings keyboardOne
 ^+m::Run powershell.exe -ExecutionPolicy RemoteSigned -File C:\Users\aiya0\Desktop\Repository\OneTouch-To-RecordReplay\Record-Replay.ps1
 
+; Replace the Windows default clipboard manager
+; because it cannot paste contents to Windows Terminal
 #v::
   Run C:\Program Files\Ditto\Ditto.exe /Open
 Return
 
-; bashライクキーマッピング
+; Bash-like key mapping
 #IfWinActive, ahk_exe Discord.exe ; {{{
   ^p::SendInput {Up}
   ^n::SendInput {Down}
@@ -79,7 +81,7 @@ Return
   ^[::SendInput +{Up}
   ^]::SendInput +{Down}
   !j::SendInput ^{Enter}
-  ; メッセージのタイプ中に間違えてページリロードすることが多いので、無効にする
+  ; Disable accidentally triggering page reload while typing messages
   ^r::Return
 #IfWinActive ; }}}
 #IfWinActive, ahk_exe slack.exe ; {{{
@@ -172,12 +174,12 @@ Return
   !j::SendInput ^{Enter}
 #IfWinActive ; }}}
 
-; bashライクキーマッピング。
-; ただし常用のWebブラウザにはできるだけSurfingKeysに制御をして欲しいので、アプリケーション内部レイヤーではどうしようもないところだけキーマッピングする。
-; Chromeは業務でデバッグに使用しているので、除外。
+; Bash-like key mapping.
+; However, for default browsers, let SurfingKeys handle as much as possible, and only map keys that cannot be overridden internally.
+; Chrome is excluded as it is used for debugging at work.
 ;
 #IfWinActive, ahk_exe floorp.exe ; {{{
-  ; TODO: tmp. 下記コメント参照
+  ; TODO: Temporary. Refer to the comment below.
   ^p::SendInput {Up}
   ^n::SendInput {Down}
   ^f::SendInput {Right}
@@ -194,7 +196,7 @@ Return
   ^[::SendInput +{Up}
   ^]::SendInput +{Down}
   !j::SendInput ^{Enter}
-  ; TODO: Surfingkeysが設定できるまで、上記キーマップを使用し、本来の以下を一時的にコメントアウトしている。Surfingkeysが設定できたら、元に戻す
+  ; TODO: Until SurfingKeys can be configured, use the above keymap and temporarily comment out the following original mappings. Once SurfingKeys is set up, restore them.
   ; ^a::SendInput {Home}
   ; ^,::SendInput +{Left}
   ; ^.::SendInput +{Right}
@@ -202,7 +204,7 @@ Return
   ; ^]::SendInput +{Down}
 #IfWinActive ; }}}
 #IfWinActive, ahk_exe vivaldi.exe ; {{{
-  ; Vivaldiの更新でSurfingKeysが色々動かなくなって、こちら側でなんとかしていたので、いくつかキーマッピングが多い
+  ; Due to updates in Vivaldi, SurfingKeys stopped working properly, requiring several key mappings on this side
   ^a::SendInput {Home}
   ^e::SendInput {End}
   ^j::SendInput {Enter}
