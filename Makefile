@@ -597,7 +597,7 @@ install-open-commit:
 		exit 1 ; \
 	fi
 	$(NPMInstall) opencommit
-	oco config set OCO_AI_PROVIDER='ollama' OCO_MODEL='mistral'
+	oco config set OCO_AI_PROVIDER='ollama' OCO_MODEL='llama3.2'
 	oco config set OCO_API_URL='http://localhost:11434/api/chat'
 	oco config set OCO_GITPUSH=false
 	oco config set OCO_LANGUAGE=en
