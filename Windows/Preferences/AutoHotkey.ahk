@@ -177,31 +177,12 @@ Return
 ; Bash-like key mapping.
 ; However, for default browsers, let SurfingKeys handle as much as possible, and only map keys that cannot be overridden internally.
 ; Chrome is excluded as it is used for debugging at work.
-;
 #IfWinActive, ahk_exe floorp.exe ; {{{
-  ; TODO: Temporary. Refer to the comment below.
-  ^p::SendInput {Up}
-  ^n::SendInput {Down}
-  ^f::SendInput {Right}
-  ^b::SendInput {Left}
   ^a::SendInput {Home}
-  ^e::SendInput {End}
-  ^j::SendInput {Enter}
-  ^u::SendInput +{Home}{BS}
-  ^k::SendInput +{End}{BS}
-  ^h::SendInput {BS}
-  ^d::SendInput {Del}
   ^,::SendInput +{Left}
   ^.::SendInput +{Right}
   ^[::SendInput +{Up}
   ^]::SendInput +{Down}
-  !j::SendInput ^{Enter}
-  ; TODO: Until SurfingKeys can be configured, use the above keymap and temporarily comment out the following original mappings. Once SurfingKeys is set up, restore them.
-  ; ^a::SendInput {Home}
-  ; ^,::SendInput +{Left}
-  ; ^.::SendInput +{Right}
-  ; ^[::SendInput +{Up}
-  ; ^]::SendInput +{Down}
 #IfWinActive ; }}}
 #IfWinActive, ahk_exe vivaldi.exe ; {{{
   ; Due to updates in Vivaldi, SurfingKeys stopped working properly, requiring several key mappings on this side
