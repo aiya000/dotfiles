@@ -8,8 +8,8 @@ nmap <buffer> + <Plug>(fern-action-zoom)
 nmap <buffer> - <Plug>(fern-action-zoom:reset)
 nmap <buffer> o <Plug>(fern-action-open:vsplit)
 nmap <buffer> O <Plug>(fern-action-open:tabedit)
+nmap <buffer> <CR> <Plug>(fern-action-open:tabedit)
 nmap <buffer> D <Plug>(fern-action-trash=)y<CR>
 nmap <buffer> E <Plug>(fern-action-new-file=)
-nmap <buffer> ?? <Plug>(fern-action-help)>
+nmap <buffer> ?? <Plug>(fern-action-help)
 nmap <buffer> <C-r> <Plug>(fern-action-reload)
-nnoremap <buffer> ? ?
