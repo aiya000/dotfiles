@@ -8,9 +8,9 @@ abbr // @ts-check
 
 snippet document_comment
 alias doc
-    /**
-     * ${0}
-     */
+  /**
+   * ${0}
+   */
 
 snippet document_comment_oneline
 alias docline
@@ -59,6 +59,18 @@ alias return
 abbr @returns {${0:type}}
  @returns {${0:type}}
 
+snippet see
+abbr @see
+  @see
+
+snippet link
+abbr {@link ${0}}
+  {@link ${0}}
+
+snippet see_link
+abbr @see {@link ${0}}
+  @see {@link ${0}}
+
 snippet ts_expect_error
 abbr // @ts-expect-error
   // @ts-expect-error
@@ -66,3 +78,10 @@ abbr // @ts-expect-error
 snippet unk
 abbr unknown
   unknown
+
+snippet exhaustive
+alias check_unreachable satisfied
+options indent
+  /** @type {never} */
+  const satisfied = ${0:var}
+  throw new Error(\`unreachable: ${satisfied}\`)
