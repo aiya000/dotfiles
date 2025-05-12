@@ -435,6 +435,13 @@ function dotfiles::find_nodejs_to_load () {
   fi
 }
 
+function kill-vue-lsp-servers () {
+  ps aux | grep 'node\|volar' # TODO: なぜかこれを挟まないとkillできない。できるなら挟まないようにする
+  ps aux | grep 'volar-server\|typescript-language-server' | grep -v grep | awk '{print $2 }' | xargs kill \
+    && echo killed \
+    || echo failed
+}
+
 # }}}
 
 export PATH=$PATH:$HOME/.sh_generic/bin
