@@ -1,5 +1,5 @@
 include scss.snip
-delete class cl cla import imp
+delete class cl cla import imp link
 
 include typescript/*
 delete tr class cl cla
@@ -24,6 +24,10 @@ abbr <template>${0}</template>
 snippet keep_alive
 abbr <KeepAlive>${0}</KeepAlive>
   <KeepAlive>${0}</KeepAlive>
+
+snippet teleport
+abbr <Teleport to="${1:body}">${0}</Teleport>
+  <Teleport to="${1:body}">${0}</Teleport>
 
 snippet i18n_lang_yaml
 abbr <i18n lang="yaml">${0:#:here}</i18n>
