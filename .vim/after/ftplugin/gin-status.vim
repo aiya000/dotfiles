@@ -15,8 +15,8 @@ nmap <buffer><silent><nowait> p <Plug>(gin-action-diff:smart:vsplit)
 nmap <buffer><silent> sa <Plug>(gin-action-stash)
 nmap <buffer><silent> S yy<Cmd>call <SID>stash_message(@")<CR>
 nnoremap <buffer><silent> sp <Cmd>Gin stash pop<CR>
-nnoremap <buffer><silent> cc <Cmd>call <SID>commit_by_oco()<CR>
-nnoremap <buffer><silent> cC <Cmd>call <SID>open_commit_buffer([])<CR>
+nnoremap <buffer><silent> cC <Cmd>call <SID>commit_by_oco()<CR>
+nnoremap <buffer><silent> cc <Cmd>call <SID>open_commit_buffer([])<CR>
 nnoremap <buffer><silent> ca <Cmd>call <SID>open_commit_buffer(['--amend'])<CR>
 nnoremap <buffer> cf :<C-u>GCommitFixup<Space>
 nmap <buffer> <: <Plug>(gin-action-restore:ours)
