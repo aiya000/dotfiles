@@ -2,6 +2,7 @@ scriptencoding utf-8
 scriptversion 3
 
 let s:List = vital#vimrc#import('Data.List')
+let s:Msg = vital#vimrc#import('Vim.Message')
 
 " Virtual keymaps
 nnoremap <silent> <Plug>(vimrc-surround-append-choice) :<C-u>call vimrc#append_choose_surround()<CR>
@@ -68,20 +69,28 @@ command! -bar -nargs=* GBlame Gin blame <args>
 command! -bar -nargs=+ Weblio WebpageShow weblio <args>
 command! -nargs=+ Stackage WebpageShow stackage <args>
 
-" :cd
+" Change directory
+"" :cd
 command! -bar CdBufDir execute ':cd' fnameescape(expand('%:p:h'))
 command! -bar CdStarted execute ':cd' g:vimrc.path_at_started
 command! -bar CdGitRoot call vimrc#cd_git_root(':cd')
+command! -bar CdNodeRoot call vimrc#cd_node_root(':cd')
+"" :lcd
 command! -bar LcdBufDir execute ':lcd' fnameescape(expand('%:p:h'))
 command! -bar LcdStarted execute ':lcd' g:vimrc.path_at_started
 command! -bar LcdGitRoot call vimrc#cd_git_root(':lcd')
+command! -bar LcdNodeRoot call vimrc#cd_node_root(':lcd')
+"" :tcd
 command! -bar TcdBufDir execute ':tcd' fnameescape(expand('%:p:h'))
 command! -bar TcdStarted execute ':tcd' g:vimrc.path_at_started
 command! -bar TcdGitRoot call vimrc#cd_git_root(':tcd')
-""
+command! -bar TcdNodeRoot call vimrc#cd_node_root(':tcd')
+
+" g:vimrc.path_at_started assignment
 command! -bar ScdBufDir let g:vimrc.path_at_started = expand('%:p:h')
 command! -bar ScdCurrentDir let g:vimrc.path_at_started = getcwd()
 command! -bar ScdGitRoot let g:vimrc.path_at_started = g:vimrc.git_root
+command! -bar ScdNodeRoot call s:Msg.error('Not implemented yet')
 
 " Others
 command! -bar GitReadRoot call vimrc#read_to_set_git_root()

@@ -674,6 +674,24 @@ function! vimrc#check_node_project_manager(base_dir) abort
     \ 'npm'
 endfunction
 
+" :cd to the directory that have a package.json, closest to the current child directory.
+" NOTE:
+" In some cases, this does not mean the npm root or bun root.
+" If you hit a child workspace of npm workspaces or bun workspaces, :cd there.
+" @param a:cd {string}
+" @param [a:1] {string}
+" @returns {string}
+" @throws nothing
+function! vimrc#cd_node_root(cd, ...) abort
+  const base_dir = get(a:000, 0, expand('%:p:h'))
+  const node_dir = vimrc#read_node_root_dir(base_dir) abort
+  if node_dir ==# v:null
+    call s:Msg.error('No node directory found')
+    return
+  endif
+  execute a:cd node_dir
+endfunction
+
 " Shows a popup window by `popup_atcursor()` with good options
 " @param messages {Array<string> | string} -- messages or a message. See `popup_create()`
 function! vimrc#popup_atcursor(messages) abort
