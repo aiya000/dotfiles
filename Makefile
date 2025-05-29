@@ -523,8 +523,15 @@ install-wslu:
 	$(AptUpdate)
 	$(AptInstall) wslu
 
+install-rg:
+	which rg || $(AptInstall) ripgrep
+
 install-fd:
-	$(AptInstall) fd-find
+	which fd || $(AptInstall) fd-find
+
+# sed alternative
+install-sd:
+	which sd || cargo install sd
 
 fix-wsl-git-clone:
 	sudo ip link set eth0 mtu 1400
