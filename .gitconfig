@@ -47,3 +47,5 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/home/linuxbrew/.linuxbrew/bin/gh auth git-credential
+[commit]
+	template = ~/.dotfiles/.gitmessage
