@@ -280,7 +280,13 @@ install-deno:
 	which deno || brew install deno
 
 install-markdown:
+	$(MAKE) install-doctoc
+	$(MAKE) install-glow
+
+install-doctoc:
 	which doctoc || $(NPMInstall) doctoc
+
+install-glow:
 	which glow || brew install glow
 
 install-text:
