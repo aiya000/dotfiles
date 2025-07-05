@@ -35,9 +35,13 @@ if g:vimrc->has_key('git_root') && filereadable($'{g:vimrc.git_root}/.textlintrc
 endif
 
 function! s:start_grip() abort
+  const token_option = $DOTFILES_PRIVATE_GITHUB_GRIP_TOKEN ==# ''
+    \ ? ''
+    \ : $'--pass {$DOTFILES_PRIVATE_GITHUB_GRIP_TOKEN}'
+
   try
     call term_start(
-      \ $'grip {fnameescape(expand('%:p'))} 25252',
+      \ $'grip {token_option} {fnameescape(expand('%:p'))} 25252',
       \ #{
         \ vertical: v:true,
         \ hidden: v:true,
