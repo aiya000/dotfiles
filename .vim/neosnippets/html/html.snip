@@ -168,7 +168,17 @@ options word
     <a name="${1}">${2:TARGET}</a>
 
 snippet folding
-alias details_summary fold
+alias details_summary
+options indent
+    <details>
+    <summary>${1:summary}</summary> <!-- {{{ -->
+    ${0}
+    <!-- }}} -->
+    </details>
+
+snippet folding_without_folding
+alias details_summary_without_folding
+options indent
     <details>
     <summary>${1:summary}</summary>
     ${0}
