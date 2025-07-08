@@ -38,10 +38,11 @@ function! s:start_grip() abort
   const token_option = $DOTFILES_PRIVATE_GITHUB_GRIP_TOKEN ==# ''
     \ ? ''
     \ : $'--pass {$DOTFILES_PRIVATE_GITHUB_GRIP_TOKEN}'
+  const port = s:find_free_port(25252)
 
   try
     call term_start(
-      \ $'grip {token_option} {fnameescape(expand('%:p'))} 25252',
+      \ $'grip {token_option} {fnameescape(expand('%:p'))} {port}',
       \ #{
         \ vertical: v:true,
         \ hidden: v:true,
@@ -55,5 +56,12 @@ function! s:start_grip() abort
     echomsg $'grip error: {v:exception}'
   endtry
 
-  call system($'{g:vimrc.open_on_gui} http://localhost:25252')
+  call system($'{g:vimrc.open_on_gui} http://localhost:{port}')
+endfunction
+
+function! s:find_free_port(port) abort
+  if trim(system($"ss -tuln | grep ':{a:port}' | wc -l")) ==# '0'
+    return a:port
+  endif
+  return s:find_free_port(a:port + 1)
 endfunction
