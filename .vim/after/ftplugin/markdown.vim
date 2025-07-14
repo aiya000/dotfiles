@@ -24,6 +24,9 @@ nnoremap <silent><buffer> <localleader><localleader>R <Cmd>call term_start(
   \ #{ vertical: v:true }
 \ )<CR>
 
+" TODO: ちゃんと.vimrcと同様に、lsp_documentSymbolあたりを使う。可能ならここで<C-k><C-f>を押すとオーバーライドするよりも、lspを導入することで済むなら、そちらの方がよい
+nnoremap <silent><buffer> <C-k><C-f> :<C-u>call <SID>open_ddu_section_list()<CR>
+
 syntax sync fromstart
 
 if g:vimrc->has_key('git_root') && filereadable($'{g:vimrc.git_root}/.textlintrc')
@@ -64,4 +67,22 @@ function! s:find_free_port(port) abort
     return a:port
   endif
   return s:find_free_port(a:port + 1)
+endfunction
+
+function! s:open_ddu_section_list() abort
+  " TODO: なんかここ効いてないので直す
+  normal! gg
+  try
+    call vimrc#ddu_start_from_input(#{
+      \ sources: [#{ name: 'line' }],
+      \ sourceOptions: #{
+        \ _: #{
+          \ matchers: ['matcher_regex'],
+        \ },
+      \ },
+    \ }, '^#+ ')
+  finally
+    " TODO: なんかここ効いてないので直す
+    execute 'normal!' "\<C-o>"
+  endtry
 endfunction
