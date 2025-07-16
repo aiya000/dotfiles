@@ -63,6 +63,7 @@ EnvGet, Home, HOME
   Run C:\Program Files\Ditto\Ditto.exe /Open
 Return
 
+; TODO: Use loop
 ; Bash-like key mapping
 #IfWinActive, ahk_exe Discord.exe ; {{{
   ^p::SendInput {Up}
@@ -173,8 +174,26 @@ Return
   ^]::SendInput +{Down}
   !j::SendInput ^{Enter}
 #IfWinActive ; }}}
+#IfWinActive, ahk_exe soffice.bin ; {{{
+  ^p::SendInput {Up}
+  ^n::SendInput {Down}
+  ^f::SendInput {Right}
+  ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
+  ^,::SendInput +{Left}
+  ^.::SendInput +{Right}
+  ^[::SendInput +{Up}
+  ^]::SendInput +{Down}
+  !j::SendInput ^{Enter}
+#IfWinActive ; }}}
 
-; Bash-like key mapping.
+; "A part of" Bash-like key mapping.
 ; However, for default browsers, let SurfingKeys handle as much as possible, and only map keys that cannot be overridden internally.
 ; Chrome is excluded as it is used for debugging at work.
 #IfWinActive, ahk_exe floorp.exe ; {{{
