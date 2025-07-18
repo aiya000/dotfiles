@@ -136,6 +136,7 @@ repo = 'Shougo/ddu-source-file_rec'
 
 [[plugins]]
 repo = 'Shougo/ddc.vim'
+hook_source = 'let g:vimrc.is_ddc_enabled = v:true'
 
 [[plugins]]
 repo = 'Shougo/ddc-ui-native'
