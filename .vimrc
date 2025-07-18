@@ -18,8 +18,10 @@ let g:vimrc = get(g:, 'vimrc', #{
   \ is_macos: has('macunix'),
   \ git_root: v:null,
   \ memo_path: '~/.backup/memo.md',
+  \ is_ddc_enabled: v:null,
 \ })
 call vimrc#read_git_root_to_set_g_vimrc_async()
+" See ~/.dotfiles/.vim/dein.toml for g:vimrc.is_ddc_enabled
 
 let g:vimrc.open_on_gui =
   \ g:vimrc.is_macos ? 'open' :
@@ -222,15 +224,15 @@ function! s:setup_cmdwin() abort
   endif
 endfunction
 
+" NOTE: 特定のプラグインに関連する操作をここに書かないでください。我々はこれによって、繰り返し失敗してきました
 augroup vimrc
   autocmd!
 
   autocmd VimEnter * ScdCurrentDir
   autocmd BufReadPost * call vimrc#visit_past_position()
-  autocmd InsertEnter * call ddc#enable()
   autocmd CmdwinEnter * call s:setup_cmdwin()
 
-  " To avoid ddc is disabled on `setlocal buftype=nofile` buffers
+  " `buftype=nofile`でddcを動かすと何かが起こったので（なんだっけ？）、一時的に`buftype=`にする
   autocmd InsertEnter * call s:backup_buftype()
   autocmd InsertLeave * call s:restore_buftype()
 
@@ -243,14 +245,6 @@ augroup vimrc
 
   " Show simply for terminal buffers
   autocmd TerminalOpen * setlocal nolist nonumber norelativenumber
-  " TODO: When I move to another window, the terminal buffer also becomes IndentGuidesEnable in the autocmd below
-  autocmd BufEnter,WinEnter *
-    \  if &buftype ==# 'terminal'
-      \| IndentGuidesDisable
-    \| endif
-  autocmd BufLeave,Winleave *
-    \  setlocal norelativenumber
-    \| IndentGuidesEnable
 
   " Show relative numbers only on the current window
   autocmd BufEnter,WinEnter * if &number | setlocal relativenumber | end
@@ -267,10 +261,6 @@ augroup vimrc
   " StatusLine
   autocmd InsertEnter * highlight StatusLine ctermfg=231 ctermbg=64
   autocmd InsertLeave * highlight StatusLine ctermfg=231 ctermbg=60
-
-  " vim-indent-guides
-  autocmd VimEnter,ColorScheme * highlight IndentGuidesOdd ctermbg=60 guibg=#468F8C
-  autocmd VimEnter,ColorScheme * highlight IndentGuidesEven ctermbg=60 guibg=#468F8C
 
   " Hightlight cursors of another windows
   autocmd BufEnter,WinEnter * setlocal nocursorline
@@ -672,6 +662,20 @@ let g:indent_guides_exclude_filetypes = [
   \ 'review',
 \ ]
 
+augroup vimrc
+  autocmd VimEnter,ColorScheme * highlight IndentGuidesOdd ctermbg=60 guibg=#468F8C
+  autocmd VimEnter,ColorScheme * highlight IndentGuidesEven ctermbg=60 guibg=#468F8C
+
+  " TODO: When I move to another window, the terminal buffer also becomes IndentGuidesEnable in the autocmd below
+  autocmd BufEnter,WinEnter *
+    \  if &buftype ==# 'terminal'
+      \| IndentGuidesDisable
+    \| endif
+  autocmd BufLeave,Winleave *
+    \  setlocal norelativenumber
+    \| IndentGuidesEnable
+augroup END
+
 " }}}
 " vim-lsp {{{
 
@@ -879,6 +883,22 @@ augroup END
 
 " }}}
 " ddc.vim {{{
+
+" 自然言語を書いているとddcが重すぎるので、一時的に無効化する
+let s:natural_language_filetypes = [
+  \ '',
+  \ 'markdown',
+  \ 'txt',
+\ ]
+
+augroup vimrc
+  autocmd BufEnter,WinEnter *
+    \  if s:List.has(s:natural_language_filetypes, &filetype)
+      \| call ddc#disable()
+    \| else
+      \| call ddc#enable()
+    \| endif
+augroup END
 
 call ddc#custom#patch_global(#{
   \ ui: 'native',
