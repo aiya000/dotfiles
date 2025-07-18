@@ -395,6 +395,10 @@ i_have unzip && alias unzip-cp932='unzip -O cp932'
 i_have krita && alias kra=krita
 i_have fdfind && alias fd='fdfind --hidden --ignore-case' # --hidden to include '.' prefixed files
 
+# TODO: nvmのロードタイミングのせいだと思うけど、ここで分岐させると、うまく定義できない。直す
+# i_have claude && alias c=claude
+alias c=claude
+
 if i_have notifu.exe && ! i_have notify-send ; then
   function notify-send () {
     (notifu.exe /p WSL /m "$1" &) &> /dev/null
