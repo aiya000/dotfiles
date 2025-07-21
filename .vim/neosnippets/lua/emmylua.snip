@@ -1,0 +1,97 @@
+snippet document_comment
+alias doc
+abbr --- ${0}
+  --- ${0}
+
+snippet param
+abbr @param ${1:var} ${2:type} ${0:description}
+  @param ${1:var} ${2:type} ${0:description}
+
+snippet return
+abbr @return ${1:type} ${0:description}
+  @return ${1:type} ${0:description}
+
+# Usage:
+# ```lua
+# --- A person class
+# --- @class Person
+# --- @field name string
+# --- @field age number
+#
+# --- @param person Person
+# function f(person)
+# end
+# ```
+snippet type_define_class
+alias define_class
+  --- @class ${1:ClassName}
+  --- @field ${2:prop_name} ${0:type}
+
+snippet type_class
+abbr @class ${0:ClassName}
+  @class ${0:ClassName}
+
+snippet type_field
+abbr @field ${1:field_name} ${0:type}
+  @field ${1:field_name} ${0:type}
+
+snippet type_string
+abbr string
+  string
+
+snippet type_number
+abbr number
+  number
+
+snippet type_boolean
+abbr boolean
+  boolean
+
+snippet type_table
+abbr table
+  table
+
+snippet type_function
+abbr function
+  function
+
+snippet type_any
+abbr any
+  any
+
+snippet type_nil
+abbr nil
+  nil
+
+snippet type_void
+abbr void
+  void
+
+# Example:
+# fun(x: number): string
+# fun(x: number): string, boolean
+snippet type_fun
+abbr fun
+  fun(${1:#:args}): ${0:type}
+
+snippet type_array
+abbr ${0:type}[]
+  ${0:type}[]
+
+# Example:
+# { x: string, y: number }
+snippet type_object
+abbr { ${1:prop}: ${0:type} }
+  { ${1:prop}: ${0:type} }
+
+snippet type_union
+abbr ${1:type} | ${2:type}
+  ${1:type} | ${2:type}
+
+snippet type_optional
+abbr ${0:type}?
+  ${0:type}?
+
+snippet type_varargs
+abbr ...${0:type}
+  ...${0:type}

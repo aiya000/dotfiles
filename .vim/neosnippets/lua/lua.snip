@@ -1,0 +1,72 @@
+snippet if
+options indent
+  if ${1:cond} then
+    ${0}
+  end
+
+snippet for
+  for ${1:x} in ${2:xs} do
+    ${0}
+  end
+
+snippet function
+alias fun
+  function ${1:f}(${2:#:args})
+    ${0}
+  end
+
+snippet lambda
+alias lam
+abbr function(${1:#:args})${0}end
+  function(${1:#:args})${0}end
+
+snippet array_length
+alias len
+abbr #${0:array}
+  #${0:array}
+
+snippet multi_line_comment
+alias comment com
+options indent
+  --[[
+  ${0}
+  --]]
+
+snippet import
+alias imp
+abbr local ${1:name} = require('${0:module}')
+  local ${1:name} = require('${0:module}')
+
+snippet require
+abbr require('${0:here}')
+  require('${0:here}')
+
+snippet print
+alias pr
+abbr print(${0:#:here})
+  print(${0:#:here})
+
+# TODO: 再帰させて、深くpretty-printする
+snippet define_print_table
+alias define_print_object define_print_dict
+  local function print_table(t)
+    print('{')
+    for k, v in pairs(t) do
+      print('  ' .. k, '=', v .. ',')
+    end
+    print('}')
+  end
+
+snippet print_table
+alias prt pt
+abbr print_table(${0:var})
+  print_table(${0:var})
+
+snippet define_module
+alias module
+options indent
+  local M = {}
+
+  ${0}
+
+  return M
