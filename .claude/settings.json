@@ -9,6 +9,11 @@
       "Bash(cd:*)",
       "Bash(mkdir:*)",
       "Bash(find:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git diff:*)",
+      "Bash(git status:*)",
+      "Bash(git reflog:*)",
       "Bash(gh issue list:*)",
       "Bash(gh issue view:*)",
       "Bash(gh issue create:*)",
@@ -16,7 +21,8 @@
       "Bash(gh pr view:*)",
       "Bash(gh pr create:*)",
       "Bash(gh run list:*)",
-      "Bash(gh run view:*)"
+      "Bash(gh run view:*)",
+      "Read(~/.config/nvim)"
     ],
     "deny": [
       "Bash(git commit:*)",
