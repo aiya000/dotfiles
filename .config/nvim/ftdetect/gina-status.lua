@@ -1,0 +1,1 @@
+-- You may should see ~/.config/nvim/.../hook_source.lua for setup ft/gina-status

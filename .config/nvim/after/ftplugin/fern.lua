@@ -1,0 +1,16 @@
+vim.keymap.set('n', "n", "n", { buffer = true })
+vim.keymap.set('n', "N", "N", { buffer = true })
+vim.keymap.set('n', "/", "/", { buffer = true })
+vim.keymap.set('n', "?", "?", { buffer = true })
+vim.cmd("nunmap <buffer> <C-k>")
+
+vim.cmd("nmap <buffer> + <Plug>(fern-action-zoom)")
+vim.cmd("nmap <buffer> - <Plug>(fern-action-zoom:reset)")
+vim.cmd("nmap <buffer> o <Plug>(fern-action-open:vsplit)")
+vim.cmd("nmap <buffer> O <Plug>(fern-action-open:tabedit)")
+vim.cmd("nmap <buffer> <CR> <Plug>(fern-action-open:tabedit)")
+vim.cmd("nmap <buffer> E <Plug>(fern-action-new-file=)")
+vim.cmd("nmap <buffer> ?? <Plug>(fern-action-help)")
+vim.cmd("nmap <buffer> <C-r> <Plug>(fern-action-reload)")
+-- Delete
+vim.cmd("nmap <buffer> D <Plug>(fern-action-trash=)y<CR>")
