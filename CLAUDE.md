@@ -179,3 +179,11 @@ Successfully converted:
 - 3 autoload files → lua modules
 
 Total: 183 files migrated from Vimscript to Lua
+
+## Neovim Configuration Notes
+
+### Directory Creation Issues
+
+- NEVER create a directory named `v:null` in `.config/nvim/`
+- This directory is unnecessary and should be avoided during Neovim configuration modifications
+- If created accidentally, remove it with `rmdir`
