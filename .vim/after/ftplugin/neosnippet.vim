@@ -4,4 +4,4 @@ let b:undo_ftplugin = 'setl ' . join([
   \ 'et<',
 \ ])
 
-setl ts=4 sw=4 et
+setl ts=2 sw=2 et
