@@ -8,6 +8,7 @@
       "Bash(touch:*)",
       "Bash(cd:*)",
       "Bash(mkdir:*)",
+      "Bash(find:*)",
       "Bash(gh issue list:*)",
       "Bash(gh issue view:*)",
       "Bash(gh issue create:*)",
@@ -21,7 +22,22 @@
       "Bash(git commit:*)",
       "Bash(git push:*)",
       "Bash(sudo:*)",
+      "Bash(find * -exec *)",
+      "Bash(find * -delete *)",
+      "Bash(find * -ok *)",
       "Read(.env.*)"
+    ]
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "notifu.exe /p 'Claude Code' /m 'Requested' || true"
+          }
+        ]
+      }
     ]
   }
 }
