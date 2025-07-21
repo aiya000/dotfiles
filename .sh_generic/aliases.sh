@@ -398,6 +398,7 @@ i_have fdfind && alias fd='fdfind --hidden --ignore-case' # --hidden to include 
 # TODO: nvmのロードタイミングのせいだと思うけど、ここで分岐させると、うまく定義できない。直す
 # i_have claude && alias c=claude
 alias c=claude
+alias ccommit='claude "gitのインデックスツリーの各変更を事柄ごとにgit-addして、その事柄ごとにgit-commitをしてください。必要があれば`git add --patch`を使ってください。"'
 
 if i_have notifu.exe && ! i_have notify-send ; then
   function notify-send () {
