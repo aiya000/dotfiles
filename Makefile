@@ -615,3 +615,6 @@ install-open-commit:
 	oco config set OCO_API_URL='http://localhost:11434/api/chat'
 	oco config set OCO_GITPUSH=false
 	oco config set OCO_LANGUAGE=en
+
+install-stylua:
+	which stylua || cargo install stylua
