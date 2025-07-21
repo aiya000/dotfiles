@@ -1,5 +1,8 @@
 -- NOTE: Don't use the mark Z, this is reserved by some my functions.
 
+local git = require('git')
+local vimrc = require('vimrc')
+
 -------------------
 -- Global values --
 -------------------
@@ -20,8 +23,7 @@ vim.g.vimrc = vim.g.vimrc
 
 -- Call git root setup function (delayed to avoid startup slowdown)
 vim.defer_fn(function()
-  local vimrc = require('vimrc')
-  vimrc.read_git_root_to_set_g_vimrc_async()
+  git.read_git_root_to_set_g_vimrc_async()
 end, 100)
 
 vim.g.vimrc.open_on_gui = vim.g.vimrc.is_macos and 'open'
@@ -64,7 +66,7 @@ vim.g.vimrc.temporary_buftypes = {
 
 -- TODO: Remove this after https://github.com/aiya000/bash-toys/issues/12 fixed
 -- Please see https://github.com/aiya000/bash-toys
-vim.env.BASH_TOYS_DUSTBOX_DIR = vim.fn.expand('$HOME/.backup/dustbox')
+vim.env.BASH_TOYS_DUSTBOX_DIR = vim.fn.expand('~/.backup/dustbox')
 
 local typescript_variants = {
   'typescript',
@@ -103,8 +105,14 @@ ensure_directory(vim.g.vimrc.sessiondir)
 
 -- }}}
 
+
+-------------------
+-- Local scripts --
+-------------------
+-- {{{
+
 -- Load private configuration
-local private_vimrc = vim.fn.expand('$HOME/.dotfiles/.private/.vimrc_private')
+local private_vimrc = vim.fn.expand('~/.dotfiles/.private/nvim_init_private.lua')
 if vim.fn.filereadable(private_vimrc) == 1 then
   vim.cmd('source ' .. private_vimrc)
 end
@@ -114,7 +122,38 @@ if vim.fn.filereadable(env_vimrc) == 1 then
   vim.cmd('source ' .. env_vimrc)
 end
 
--- Options
+-- }}}
+
+
+-----------
+-- dein.vim --
+-----------
+-- {{{
+
+-- TODO: Future migration to lazy.nvim
+-- For now, we'll keep the existing dein.vim setup until the basic conversion is complete
+
+-- Prepare dein.vim (keeping original logic for compatibility)
+local dein_dirname = vim.g.vimrc.vim_home .. '/bundle/repos/github.com/Shougo/dein.vim'
+vim.opt.runtimepath:append(dein_dirname)
+
+-- Try to initialize dein.vim
+local dein_ok = pcall(function()
+  vim.cmd('call dein#begin("' .. vim.fn.expand('$HOME/.vim/bundle') .. '")')
+end)
+
+if not dein_ok then
+  -- If dein.vim is not found, we'll continue without plugins for now
+  print('Note: dein.vim not found. Continuing without plugin manager.')
+end
+
+-- }}}
+
+
+-----------
+-- Options --
+-----------
+-- {{{
 vim.opt.autoindent = true
 vim.opt.backspace = { 'indent', 'eol', 'start' }
 vim.opt.breakindent = true
@@ -254,22 +293,8 @@ vim.opt.tags:append({
 vim.g.mapleader = '['
 vim.g.maplocalleader = '['
 
--- TODO: Future migration to lazy.nvim
--- For now, we'll keep the existing dein.vim setup until the basic conversion is complete
+-- }}}
 
--- Prepare dein.vim (keeping original logic for compatibility)
-local dein_dirname = vim.g.vimrc.vim_home .. '/bundle/repos/github.com/Shougo/dein.vim'
-vim.opt.runtimepath:append(dein_dirname)
-
--- Try to initialize dein.vim
-local dein_ok = pcall(function()
-  vim.cmd('call dein#begin("' .. vim.fn.expand('$HOME/.vim/bundle') .. '")')
-end)
-
-if not dein_ok then
-  -- If dein.vim is not found, we'll continue without plugins for now
-  print('Note: dein.vim not found. Continuing without plugin manager.')
-end
 
 -- Load configuration modules
 -- Plugin config will be loaded later when we migrate to lazy.nvim
@@ -283,8 +308,6 @@ require('autocmds')
 --   vim.cmd('source ' .. env_post_vimrc)
 -- end
 
--- Enable filetype plugin and syntax
 vim.cmd('filetype plugin indent on')
 vim.cmd('syntax enable')
-
 vim.g.vimrc.loaded = true
