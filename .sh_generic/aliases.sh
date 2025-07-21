@@ -27,6 +27,9 @@ if i_have batcat ; then
   alias cat=batcat-with-default-options
 fi
 
+alias du='du -h'
+alias du-sum='du -hs'
+
 function du-sort () {
   local paths=${1:-.}
   du -h -d 1 "$paths" | sort -h
