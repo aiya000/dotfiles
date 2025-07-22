@@ -1,0 +1,114 @@
+snippet try_catch
+alias try catch
+options indent
+  local ok, ${2:result} = pcall(${1:func_name})
+  if not ok then
+    ${0:catching}
+  end
+snippet define_module
+
+alias module
+options indent
+  local M = {}
+
+  ${0}
+
+  return M
+
+snippet import
+alias imp
+abbr local ${1:name} = require('${0:module}')
+  local ${1:name} = require('${0:module}')
+
+# TODO: 再帰させて、深くpretty-printする
+snippet define_print_table
+alias define_print_object define_print_dict
+options indent
+  local function print_table(t)
+    print('{')
+    for k, v in pairs(t) do
+      print('  ' .. k, '=', v .. ',')
+    end
+    print('}')
+  end
+
+
+snippet print_table
+alias prt pt
+abbr print_table(${0:var})
+  print_table(${0:var})
+
+# Example:
+# ```lua
+# local result = pipe('hello')
+#   :map(string.upper)
+#   :map(function(s) return s .. '!' end)
+#   :get()  -- 'HELLO!'
+# ```
+snippet define_pipe
+options indent
+  local function pipe(value)
+    return {
+      value = value,
+      let = function(self, f)
+        return pipe(f(self.value))
+      end,
+      get = function(self)
+        return self.value
+      end
+    }
+  end
+
+snippet pipe
+abbr pipe(${0:expr})
+  pipe(${0:expr})
+
+
+# Example:
+# ```lua
+# local f = compose(
+#   string.upper,
+#   function(s) return s .. '!' end
+# )
+# f('hello')  -- 'HELLO!'
+# ```
+snippet define_compose
+options indent
+  local function compose(...)
+    local fs = {...}
+    return function(value)
+      for i = 1, #fs do
+        value = fs[i](value)
+      end
+      return value
+    end
+  end
+
+snippet compose
+alias comp
+abbr compose(${0:functions, })
+  compose(${0:functions, })
+
+# Example:
+# ```lua
+# local name = 'Alice'
+# local age = 30
+# local msg = s('Hello ${name}! Next year you'll be ${age + 1}.', {
+#   name = name,
+#   age = age,
+# })
+# ```
+snippet define_s
+alias define_template_string
+options indent
+  local function s(text, env)
+    return text:gsub('${([^}]+)}', function(expr)
+      local f = load('return'  .. expr, nil, nil, env)
+      return f and f() or '${' .. expr .. '}'
+    end)
+  end
+
+snippet s
+alias template_string
+abbr s(${1:string}, {${0:interpolated_variables}})
+  s(${1:string}, {${0:interpolated_variables}})
