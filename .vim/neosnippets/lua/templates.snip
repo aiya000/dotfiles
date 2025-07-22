@@ -93,7 +93,7 @@ abbr compose(${0:functions, })
 # ```lua
 # local name = 'Alice'
 # local age = 30
-# local msg = s('Hello ${name}! Next year you'll be ${age + 1}.', {
+# local msg = s('Hello {name}! Next year you'll be {age + 1}.', {
 #   name = name,
 #   age = age,
 # })
@@ -102,9 +102,9 @@ snippet define_s
 alias define_template_string
 options indent
   local function s(text, env)
-    return text:gsub('${([^}]+)}', function(expr)
+    return text:gsub('{([^}]+)}', function(expr)
       local f = load('return'  .. expr, nil, nil, env)
-      return f and f() or '${' .. expr .. '}'
+      return f and f() or '{' .. expr .. '}'
     end)
   end
 
@@ -112,3 +112,8 @@ snippet s
 alias template_string
 abbr s(${1:string}, {${0:interpolated_variables}})
   s(${1:string}, {${0:interpolated_variables}})
+
+snippet vim_system
+alias system
+abbr vim.system({ '${0:command}' }, { text = true })
+  vim.system({'${0:command}'}, { text = true })

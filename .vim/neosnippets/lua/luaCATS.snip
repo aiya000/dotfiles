@@ -1,0 +1,140 @@
+# Reference: https://luals.github.io/wiki/annotations/
+
+snippet document_comment
+alias doc
+abbr ---
+  ---
+
+snippet param
+abbr ---@param ${1:var} ${2:type}${0:#:description}
+  ---@param ${1:var} ${2:type}${0:#:--description}
+
+snippet return
+abbr @return ${1:type}${0:#:description}
+  ---@return ${1:type}${0:#:--description}
+
+snippet alias
+alias type_alias
+abbr @alias ${1:NewName} ${0:type}
+  ---@alias ${1:NewName} ${0:type}
+
+# Usage:
+# ```lua
+# --- A person class
+# ---@class Person
+# ---@field name string
+# ---@field age number
+#
+# ---@param person Person
+# function f(person)
+# end
+# ```
+snippet type_define_class
+alias define_class
+  ---@class ${1:ClassName}
+  ---@field ${2:prop_name} ${0:type}
+
+snippet type_class
+abbr @class ${0:ClassName}
+  ---@class ${0:ClassName}
+
+snippet type_field
+abbr @field ${1:field_name} ${0:type}
+  ---@field ${1:field_name} ${0:type}
+
+# Example:
+# ```lua
+# ---@type (string | integer)[]
+# local xs = {}
+# ```
+snippet type
+abbr ---@type ${0:VarType}
+  ---@type ${0:VarType}
+
+# Example:
+# ```lua
+# f(x --[[@as string]])
+# ```
+snippet as
+abbr ---[[@as ${0:CoercedType}]]
+  --[[@as ${0:CoercedType}]]
+
+snippet as_array
+abbr --[=[@as ${0:ElementType}[]]=]
+  --[=[@as ${0:ElementType}[]]=]
+
+snippet type_string
+abbr string
+  string
+
+snippet type_number
+abbr number
+  number
+
+snippet type_integer
+alias type_int int
+abbr integer
+  integer
+
+snippet type_boolean
+abbr boolean
+  boolean
+
+snippet type_table
+abbr table
+  table
+
+snippet type_function
+abbr function
+  function
+
+snippet type_any
+abbr any
+  any
+
+snippet type_nil
+abbr nil
+  nil
+
+# voidはnil
+snippet type_void
+abbr nil
+  nil
+
+# Example:
+# fun(x: number): string
+# fun(x: number): string, boolean
+snippet type_fun
+alias tfun
+abbr fun
+  fun(${1:#:args}): ${0:type}
+
+snippet type_array
+abbr ${0:type}[]
+  ${0:type}[]
+
+snippet type_table
+abbr table<${1:KeyType}, ${0:ValueType
+  table<${1:KeyType}, ${0:ValueType}>
+
+# Example:
+# { x: string, y: number }
+snippet type_object
+abbr { ${1:prop}: ${0:type} }
+  { ${1:prop}: ${0:type} }
+
+snippet type_tuple
+abbr [${0:types, }]
+  [${0:types, }]
+
+snippet type_union
+abbr ${1:type} | ${2:type}
+  ${1:type} | ${2:type}
+
+snippet type_optional
+abbr ${0:type}?
+  ${0:type}?
+
+snippet type_varargs
+abbr ...${0:type}
+  ...${0:type}

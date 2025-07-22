@@ -44,7 +44,7 @@ alias lfun
   end
 
 snippet function_in_module
-alias funm
+alias mfun
   function M.${1:f}(${2:#:args})
     ${0}
   end
@@ -79,10 +79,3 @@ snippet error
 alias panic
 abbr error(${0:here})
   error(${0:here})
-
-snippet try_catch
-alias try catch
-  local ok, ${2:result} = pcall(${1:func_name})
-  if not ok then
-    ${0:catching}
-  end
