@@ -1,0 +1,21 @@
+snippet snippet
+alias snip
+options indent
+  snippet ${1:name}
+  abbr $2
+    ${2}${0}
+
+snippet snippet_indent
+alias snip_indent
+options indent
+  snippet ${1:name}
+  options indent
+    ${0}
+
+snippet comment_example
+alias example
+options indent
+  # Example:
+  # \`\`\`${1:lang}
+  # ${0}
+  # \`\`\`
