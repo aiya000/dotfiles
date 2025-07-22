@@ -1,4 +1,4 @@
--- Main vimrc module (replacement for autoload/vimrc.vim)
+-- Functions for init.lua
 
 local list_util = require('utils.list')
 local msg_util = require('utils.message')
@@ -43,17 +43,27 @@ function M.catch(f, alt)
   return ok and result or alt
 end
 
--- git-clones dein.vim to install_dirname.
-function M.fetch_dein(install_dirname)
-  if vim.fn.executable('git') == 1 then
-    print('dein.vim was not installed yet.')
-    print('Installing dein.vim now.')
-    vim.cmd('!git clone https://github.com/Shougo/dein.vim ' .. install_dirname)
-  else
-    msg_util.error('Sorry, You do not have git command.')
-    msg_util.error('I cannot introduce dein.vim.')
-    error('FAILED: cloning dein.vim failed.')
+---@param install_dir_path string --ここのディレクトリパスにdein.vimをgit-cloneする
+function M.install_dein_if_not_installed(install_dir_path)
+  if vim.fn.isdirectory(install_dir_path) then
+    return
   end
+
+  if vim.fn.executable('git') == 0 then
+    error('git required to install dein.vim, but git is not executable.')
+  end
+
+  print('Installing dein.vim...')
+  vim.system({'git', 'clone', 'https://github.com/Shougo/dein.vim', install_dir_path}, {
+    text = true,
+    stdout = true,
+    stderr = true,
+  }, function(result)
+    if result.code ~= 0 then
+      error('Failed to install dein.vim')
+    end
+  end)
+  print('Done!')
 end
 
 -- Compresses continuously spaces to a space.
@@ -114,7 +124,7 @@ end
 -- Toggles a file explorer
 function M.toggle_explorer(path)
   path = path or vim.fn.expand('%:p:h')
-  local closed = M.bufclose_filetype({'dirvish'})
+  local closed = M.bufclose_filetype({ 'dirvish' })
   if not closed then
     M.open_explorer('vsplit', path)
   end
@@ -122,12 +132,11 @@ end
 
 function M.open_explorer(split, path)
   path = path or vim.fn.expand('%:p:h')
-  local cmd =
-    split == 'stay' and ':Dirvish' or
-    split == 'split' and ':split | silent Dirvish' or
-    split == 'vsplit' and ':vsplit | silent Dirvish' or
-    split == 'tabnew' and ':tabnew | silent Dirvish' or
-    error('an unexpected way to open the explorer: ' .. split)
+  local cmd = split == 'stay' and ':Dirvish'
+    or split == 'split' and ':split | silent Dirvish'
+    or split == 'vsplit' and ':vsplit | silent Dirvish'
+    or split == 'tabnew' and ':tabnew | silent Dirvish'
+    or error('an unexpected way to open the explorer: ' .. split)
 
   if vim.fn.isdirectory(path) == 0 then
     -- :silent to ignore an error message. Because opening seems success.
@@ -276,8 +285,7 @@ end
 -- Get current buffer directory with fallback
 function M.get_current_buffer_dir(options)
   options = options or {}
-  local dir = vim.bo.buftype ~= 'terminal' and vim.bo.buftype ~= 'nofile'
-    and vim.fn.expand('%:p:h')
+  local dir = vim.bo.buftype ~= 'terminal' and vim.bo.buftype ~= 'nofile' and vim.fn.expand('%:p:h')
     or vim.g.vimrc.git_root
 
   local alt_dir = options.alt_dir

@@ -1,7 +1,8 @@
 -- NOTE: Don't use the mark Z, this is reserved by some my functions.
 
+local init_lua = require('init_lua')
 local git = require('git')
-local vimrc = require('vimrc')
+local fn = require('utils.functions')
 
 -------------------
 -- Global values --
@@ -21,9 +22,12 @@ vim.g.vimrc = vim.g.vimrc
     is_ddc_enabled = nil,
   }
 
--- Call git root setup function (delayed to avoid startup slowdown)
+-- Delayed to avoid startup slowdown
 vim.defer_fn(function()
-  git.read_git_root_to_set_g_vimrc_async()
+  git.read_git_root(function(git_root)
+    vim.g.vimrc.git_root = git_root
+    io.write('vimrc: a git root detected: ' .. git_root)
+  end)
 end, 100)
 
 vim.g.vimrc.open_on_gui = vim.g.vimrc.is_macos and 'open'
@@ -31,7 +35,7 @@ vim.g.vimrc.open_on_gui = vim.g.vimrc.is_macos and 'open'
   or vim.g.vimrc.is_unix and 'xdg-open'
   or 'echo "no method for GUI-open"'
 
-local backupdir = vim.fn.expand('$HOME/.backup/vim-backup')
+local backupdir = vim.fn.expand('~/.backup/vim-backup')
 vim.g.vimrc.backupdir = backupdir
 vim.g.vimrc.directory = backupdir .. '/swp'
 vim.g.vimrc.undodir = backupdir .. '/undo'
@@ -57,7 +61,6 @@ vim.g.vimrc.temporary_buftypes = {
   'scratch',
   'ddu-ff',
   'ddu-filter',
-  'stack_build',
   'fern',
 }
 
@@ -78,7 +81,6 @@ local typescript_variants = {
 
 -- }}}
 
-
 -------------
 -- Prepare --
 -------------
@@ -90,12 +92,41 @@ if not vim.g.vimrc.loaded then
 end
 
 -- }}}
+-- Prepare dein.vim {{{
+
+-- TODO: Future migration to lazy.nvim
+-- For now, we'll keep the existing dein.vim setup until the basic conversion is complete
+
+local dein_dir = vim.g.vimrc.vim_home .. '/bundle/repos/github.com/Shougo/dein.vim'
+init_lua.install_dein_if_not_installed(dein_dir)
+vim.opt.runtimepath:append(dein_dir)
+
+local bundle_dir = vim.g.vimrc.vim_home .. '/bundle'
+vim.call('dein#begin', bundle_dir)
+
+-- TODO: Generate dein.vim doc by :helptags
+
+-- }}}
 -- Prepare backup directories {{{
 
+---@param dir string
 local function ensure_directory(dir)
   if vim.fn.isdirectory(dir) == 0 then
-    vim.fn.mkdir(dir, 'p', 0x1c0) -- 0700 in octal
-    vim.fn.system(string.format('chown -R "%s:%s" "%s"', vim.env.USER or '', vim.env.GROUP or '', dir))
+    if vim.env.USER == nil then
+      error('$USER is not provided')
+    end
+    if vim.env.GROUP == nil then
+      error('$GROUP is not provided')
+    end
+
+    vim.fn.mkdir(dir, 'p', '700')
+    vim.fn.system(
+      s('chown -R "{user}:{group}" "{dir}"', {
+        user = user,
+        group = group,
+        dir = dir,
+      })
+    )
   end
 end
 
@@ -105,6 +136,16 @@ ensure_directory(vim.g.vimrc.sessiondir)
 
 -- }}}
 
+--------------
+-- dein.vim --
+--------------
+-- {{{
+
+vim.call('dein#load_toml', '~/.config/dein.toml', { lazy = false })
+vim.call('dein#load_toml', '~/.config/dein_lazy.toml', { lazy = true })
+vim.call('dein#add', 'Shougo/dein.vim', { rtp = '' })
+
+-- }}}
 
 -------------------
 -- Local scripts --
@@ -112,43 +153,17 @@ ensure_directory(vim.g.vimrc.sessiondir)
 -- {{{
 
 -- Load private configuration
-local private_vimrc = vim.fn.expand('~/.dotfiles/.private/nvim_init_private.lua')
-if vim.fn.filereadable(private_vimrc) == 1 then
-  vim.cmd('source ' .. private_vimrc)
+local init_private_lua = vim.fn.expand('~/.dotfiles/.private/nvim_init_private.lua')
+if vim.fn.filereadable(init_private_lua) == 1 then
+  vim.cmd('source ' .. init_private_lua)
 end
 
-local env_vimrc = vim.fn.expand('$HOME/.vimrc_env')
-if vim.fn.filereadable(env_vimrc) == 1 then
-  vim.cmd('source ' .. env_vimrc)
-end
-
--- }}}
-
-
------------
--- dein.vim --
------------
--- {{{
-
--- TODO: Future migration to lazy.nvim
--- For now, we'll keep the existing dein.vim setup until the basic conversion is complete
-
--- Prepare dein.vim (keeping original logic for compatibility)
-local dein_dirname = vim.g.vimrc.vim_home .. '/bundle/repos/github.com/Shougo/dein.vim'
-vim.opt.runtimepath:append(dein_dirname)
-
--- Try to initialize dein.vim
-local dein_ok = pcall(function()
-  vim.cmd('call dein#begin("' .. vim.fn.expand('$HOME/.vim/bundle') .. '")')
-end)
-
-if not dein_ok then
-  -- If dein.vim is not found, we'll continue without plugins for now
-  print('Note: dein.vim not found. Continuing without plugin manager.')
+local init_env_lua = vim.fn.expand('~/.config/nvim/init_env.lua')
+if vim.fn.filereadable(init_env_lua) == 1 then
+  vim.cmd('source ' .. init_env_lua)
 end
 
 -- }}}
-
 
 -----------
 -- Options --
@@ -294,7 +309,6 @@ vim.g.mapleader = '['
 vim.g.maplocalleader = '['
 
 -- }}}
-
 
 -- Load configuration modules
 -- Plugin config will be loaded later when we migrate to lazy.nvim
