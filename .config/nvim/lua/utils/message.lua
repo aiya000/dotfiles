@@ -9,12 +9,12 @@ function M.error(message)
   vim.cmd('echohl None')
 end
 
--- Display warning message  
+-- Display warning message
 function M.warn(message)
   vim.cmd('echohl WarningMsg')
   vim.cmd('echo ' .. vim.fn.string(message))
   vim.cmd('echohl None')
-  return message  -- Return message for chaining like original
+  return message -- Return message for chaining like original
 end
 
 -- Display info message
@@ -36,7 +36,7 @@ end
 
 -- Display confirmation dialog
 function M.confirm(message, choices, default)
-  choices = choices or "&Yes\n&No"
+  choices = choices or '&Yes\n&No'
   default = default or 1
   return vim.fn.confirm(message, choices, default)
 end

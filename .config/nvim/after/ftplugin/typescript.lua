@@ -1,8 +1,7 @@
-
-vim.opt.commentstring = " // %s"
+vim.opt.commentstring = ' // %s'
 
 -- .vimrcでも同じ内容を設定しているものの、なぜかemptyになるので、設定
-vim.opt_local.omnifunc = "lsp#complete"
+vim.opt_local.omnifunc = 'lsp#complete'
 
 vim.cmd([[
 function! s:run_script(subcmd, errorformat) abort
@@ -56,12 +55,12 @@ function! s:run_all() abort
 endfunction
 ]])
 
-vim.cmd("command! -bar RunTypeCheck call s:run_typecheck()")
-vim.cmd("command! -bar RunLint call s:run_typecheck() | copen")
-vim.cmd("command! -bar RunAll call s:run_all()")
+vim.cmd('command! -bar RunTypeCheck call s:run_typecheck()')
+vim.cmd('command! -bar RunLint call s:run_typecheck() | copen')
+vim.cmd('command! -bar RunAll call s:run_all()')
 -- TODO: Ansi Colorが削除できない
 -- command! -bar -nargs=? Make call s:run_dev(<q-args>)
-vim.cmd("command! -bar Make RunAll")
+vim.cmd('command! -bar Make RunAll')
 
 -- TODO: Check this working and fix this
 vim.cmd([[
@@ -83,10 +82,16 @@ endfunction
 -- To lighten the completion performance
 -- setl complete-=t
 
-vim.keymap.set('n', "r", function() vim.cmd("<C-u>QuickfixRunYarn build") end, { buffer = true, silent = true })
-vim.keymap.set('n', "w", function() vim.call("<SID>start_quickfix()") end, { buffer = true, silent = true })
-vim.keymap.set('n', "W", function() vim.call("<SID>stop_quickfix()") end, { buffer = true, silent = true })
-vim.cmd("nmap <silent><buffer> <C-l> <C-[>:syntax sync fromstart<CR>")
+vim.keymap.set('n', 'r', function()
+  vim.cmd('<C-u>QuickfixRunYarn build')
+end, { buffer = true, silent = true })
+vim.keymap.set('n', 'w', function()
+  vim.call('<SID>start_quickfix()')
+end, { buffer = true, silent = true })
+vim.keymap.set('n', 'W', function()
+  vim.call('<SID>stop_quickfix()')
+end, { buffer = true, silent = true })
+vim.cmd('nmap <silent><buffer> <C-l> <C-[>:syntax sync fromstart<CR>')
 
 -- TODO: Enable this if needed
 -- nnoremap <buffer> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('', 'horizontal', 'yarn build', {'path': g:vimrc.path_at_started, 'noclose': v:true})<CR>

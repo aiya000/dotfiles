@@ -3,10 +3,30 @@
 -- let s:Msg = vital#vimrc#import('Vim.Message')
 
 -- Virtual keymaps
-vim.keymap.set('n', '<Plug>(vimrc-surround-append-choice)', '<Cmd>call vimrc#append_choose_surround()<CR>', { silent = true })
-vim.keymap.set('n', '<Plug>(vimrc-surround-append-choice-wide)', '<Cmd>call vimrc#append_choose_surround_wide()<CR>', { silent = true })
-vim.keymap.set('n', '<Plug>(vimrc-surround-delete-mostly-inner)', '<Cmd>call vimrc#delete_mostly_inner_surround()<CR>', { silent = true })
-vim.keymap.set('n', '<Plug>(vimrc-surround-replace-mostly-inner)', '<Cmd>call vimrc#replace_mostly_inner_surround()<CR>', { silent = true })
+vim.keymap.set(
+  'n',
+  '<Plug>(vimrc-surround-append-choice)',
+  '<Cmd>call vimrc#append_choose_surround()<CR>',
+  { silent = true }
+)
+vim.keymap.set(
+  'n',
+  '<Plug>(vimrc-surround-append-choice-wide)',
+  '<Cmd>call vimrc#append_choose_surround_wide()<CR>',
+  { silent = true }
+)
+vim.keymap.set(
+  'n',
+  '<Plug>(vimrc-surround-delete-mostly-inner)',
+  '<Cmd>call vimrc#delete_mostly_inner_surround()<CR>',
+  { silent = true }
+)
+vim.keymap.set(
+  'n',
+  '<Plug>(vimrc-surround-replace-mostly-inner)',
+  '<Cmd>call vimrc#replace_mostly_inner_surround()<CR>',
+  { silent = true }
+)
 
 -- Vim systems
 -- Scripts
@@ -238,16 +258,16 @@ vim.api.nvim_create_user_command('ReadGitRoot', function()
 end, { bar = true })
 
 vim.api.nvim_create_user_command('Grep', function(...)
-  local args = {...}
+  local args = { ... }
   -- TODO: Implement ddu_start_from_input equivalent
   vim.fn['vimrc#ddu_start_from_input']({
-    sources = {{
+    sources = { {
       name = 'rg',
       options = {
         matchers = {},
         volatile = true,
       },
-    }},
+    } },
     uiParams = {
       ff = {
         startFilter = true,
@@ -274,35 +294,35 @@ end, { range = true, bar = true })
 
 -- deepl.vim
 vim.api.nvim_create_user_command('DeeplTranslateToEn', function(opts)
-  vim.fn['vimrc#deepl_translate'](opts.count, opts.line1, opts.line2, 'EN', 'JA', {'yank', 'echo'})
+  vim.fn['vimrc#deepl_translate'](opts.count, opts.line1, opts.line2, 'EN', 'JA', { 'yank', 'echo' })
 end, { range = '%', bar = true })
 
 vim.api.nvim_create_user_command('DeeplTranslateToJa', function(opts)
-  vim.fn['vimrc#deepl_translate'](opts.count, opts.line1, opts.line2, 'JA', 'EN', {'yank', 'echo'})
+  vim.fn['vimrc#deepl_translate'](opts.count, opts.line1, opts.line2, 'JA', 'EN', { 'yank', 'echo' })
 end, { range = '%', bar = true })
 
 vim.api.nvim_create_user_command('DeeplTranslateToEnOpenBuffer', function(opts)
-  vim.fn['vimrc#deepl_translate'](opts.count, opts.line1, opts.line2, 'EN', 'JA', {'yank', 'buffer'})
+  vim.fn['vimrc#deepl_translate'](opts.count, opts.line1, opts.line2, 'EN', 'JA', { 'yank', 'buffer' })
 end, { range = '%', bar = true })
 
 vim.api.nvim_create_user_command('DeeplTranslateToJaOpenBuffer', function(opts)
-  vim.fn['vimrc#deepl_translate'](opts.count, opts.line1, opts.line2, 'JA', 'EN', {'yank', 'buffer'})
+  vim.fn['vimrc#deepl_translate'](opts.count, opts.line1, opts.line2, 'JA', 'EN', { 'yank', 'buffer' })
 end, { range = '%', bar = true })
 
 -- Tapis functions
 function Tapi_Tabnew(_, args)
-  local files = vim.list_slice(args, 2)  -- Skip first element (equivalent to args[1:])
+  local files = vim.list_slice(args, 2) -- Skip first element (equivalent to args[1:])
   local paths = vim.tbl_map(vim.fn.fnameescape, files)
-  
+
   for _, path in ipairs(paths) do
     vim.cmd('tabnew ' .. path)
   end
 end
 
 function Tapi_Verticalnew(_, args)
-  local files = vim.list_slice(args, 2)  -- Skip first element (equivalent to args[1:])
+  local files = vim.list_slice(args, 2) -- Skip first element (equivalent to args[1:])
   local paths = vim.tbl_map(vim.fn.fnameescape, files)
-  
+
   for _, path in ipairs(paths) do
     vim.cmd('vertical new ' .. path)
   end

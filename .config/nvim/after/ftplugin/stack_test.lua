@@ -1,6 +1,11 @@
 vim.cmd("execute 'source' (g:vimrc['vim_home'] . '/after/ftplugin/stack_build.vim')")
 
-vim.keymap.set('n', "<buffer><silent>", "<C-r> :<C-u>call <SID>reopen_stack_test()<CR>", { buffer = true, silent = true })
+vim.keymap.set(
+  'n',
+  '<buffer><silent>',
+  '<C-r> :<C-u>call <SID>reopen_stack_test()<CR>',
+  { buffer = true, silent = true }
+)
 
 vim.cmd([[
 function s:reopen_stack_test() abort

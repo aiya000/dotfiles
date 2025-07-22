@@ -1,1 +1,1 @@
-vim.cmd("nmap <buffer> Q q")
+vim.cmd('nmap <buffer> Q q')

@@ -1,6 +1,6 @@
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-  pattern = "*.xaml",
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  pattern = '*.xaml',
   callback = function()
-    vim.bo.filetype = "xaml"
+    vim.bo.filetype = 'xaml'
   end,
 })

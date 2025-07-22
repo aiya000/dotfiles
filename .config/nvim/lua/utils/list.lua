@@ -46,7 +46,7 @@ end
 function M.map_with_index(list, func)
   local result = {}
   for i, item in ipairs(list) do
-    result[i] = func(i - 1, item)  -- 0-indexed to match Vim behavior
+    result[i] = func(i - 1, item) -- 0-indexed to match Vim behavior
   end
   return result
 end
@@ -56,11 +56,11 @@ function M.char_range(start_char, end_char)
   local result = {}
   local start_code = string.byte(start_char)
   local end_code = string.byte(end_char)
-  
+
   for code = start_code, end_code do
     table.insert(result, string.char(code))
   end
-  
+
   return result
 end
 
@@ -81,14 +81,14 @@ end
 function M.uniq(list)
   local seen = {}
   local result = {}
-  
+
   for _, item in ipairs(list) do
     if not seen[item] then
       seen[item] = true
       table.insert(result, item)
     end
   end
-  
+
   return result
 end
 

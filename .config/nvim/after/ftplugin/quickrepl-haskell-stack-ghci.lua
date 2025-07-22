@@ -1,15 +1,18 @@
-
 vim.opt_local.number = false
 vim.opt_local.relativenumber = false
 vim.opt_local.list = false
 
-vim.keymap.set('n', "r", "i<End><C-u>:reload<CR>", { buffer = true })
-vim.keymap.set('n', "s", function() vim.call("<SID>open_say_buffer()<CR>i") end, { buffer = true })
-vim.keymap.set('n', "S", "i:show breaks<CR>", { buffer = true, silent = true })
-vim.keymap.set('n', "o", "i:step<CR>:list<CR>", { buffer = true, silent = true })
-vim.keymap.set('n', "O", "i:list<CR>", { buffer = true, silent = true })
-vim.keymap.set('n', "A", "i:steplocal<CR>:list<CR>", { buffer = true, silent = true })
-vim.keymap.set('n', "S", function() vim.cmd("<C-u>Stackage <C-r>=expand('<cword>')<CR>") end, { buffer = true })
+vim.keymap.set('n', 'r', 'i<End><C-u>:reload<CR>', { buffer = true })
+vim.keymap.set('n', 's', function()
+  vim.call('<SID>open_say_buffer()<CR>i')
+end, { buffer = true })
+vim.keymap.set('n', 'S', 'i:show breaks<CR>', { buffer = true, silent = true })
+vim.keymap.set('n', 'o', 'i:step<CR>:list<CR>', { buffer = true, silent = true })
+vim.keymap.set('n', 'O', 'i:list<CR>', { buffer = true, silent = true })
+vim.keymap.set('n', 'A', 'i:steplocal<CR>:list<CR>', { buffer = true, silent = true })
+vim.keymap.set('n', 'S', function()
+  vim.cmd("<C-u>Stackage <C-r>=expand('<cword>')<CR>")
+end, { buffer = true })
 
 vim.cmd([[
 function! s:open_say_buffer() abort

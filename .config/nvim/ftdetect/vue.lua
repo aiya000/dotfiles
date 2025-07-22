@@ -1,6 +1,6 @@
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-  pattern = "*.vue",
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  pattern = '*.vue',
   callback = function()
-    vim.bo.filetype = "vue"
+    vim.bo.filetype = 'vue'
   end,
 })

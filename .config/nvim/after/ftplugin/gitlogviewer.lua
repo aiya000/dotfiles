@@ -1,8 +1,7 @@
 -- This filetype was presented by plugin/gitlogviewer.vim
 
-vim.cmd("let s:V = vital#vimrc#new()")
+vim.cmd('let s:V = vital#vimrc#new()')
 vim.cmd("let s:List = s:V.import('Data.List')")
-
 
 vim.opt_local.list = false
 vim.opt_local.cul = true
@@ -34,7 +33,18 @@ function s:show_git_show() abort
 endfunction
 ]])
 
-vim.keymap.set('n', "Q", function() vim.cmd("<C-u>bdelete!") end, { buffer = true, silent = true })
-vim.keymap.set('n', "S", function() vim.call("<SID>try_show_git_show()") end, { buffer = true, silent = true })
-vim.keymap.set('n', "p", function() vim.call("<SID>try_show_git_show()") end, { buffer = true, silent = true })
-vim.keymap.set('n', "<buffer><silent>", "<C-r> :<C-u>GitLogViewer <C-r>=b:gitlogviewer_args<CR><CR>", { buffer = true, silent = true })
+vim.keymap.set('n', 'Q', function()
+  vim.cmd('<C-u>bdelete!')
+end, { buffer = true, silent = true })
+vim.keymap.set('n', 'S', function()
+  vim.call('<SID>try_show_git_show()')
+end, { buffer = true, silent = true })
+vim.keymap.set('n', 'p', function()
+  vim.call('<SID>try_show_git_show()')
+end, { buffer = true, silent = true })
+vim.keymap.set(
+  'n',
+  '<buffer><silent>',
+  '<C-r> :<C-u>GitLogViewer <C-r>=b:gitlogviewer_args<CR><CR>',
+  { buffer = true, silent = true }
+)

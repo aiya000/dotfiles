@@ -1,6 +1,6 @@
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-  pattern = "*.plist",
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  pattern = '*.plist',
   callback = function()
-    vim.bo.filetype = "plist"
+    vim.bo.filetype = 'plist'
   end,
 })

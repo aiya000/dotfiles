@@ -1,6 +1,6 @@
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-  pattern = {"*.lua", "conky.conf"},
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  pattern = { '*.lua', 'conky.conf' },
   callback = function()
-    vim.bo.filetype = "lua"
+    vim.bo.filetype = 'lua'
   end,
 })

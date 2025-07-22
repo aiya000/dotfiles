@@ -1,6 +1,6 @@
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-  pattern = "*.dhall",
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  pattern = '*.dhall',
   callback = function()
-    vim.bo.filetype = "dhall"
+    vim.bo.filetype = 'dhall'
   end,
 })

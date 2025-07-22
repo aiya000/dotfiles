@@ -1,24 +1,33 @@
 vim.cmd("let s:Msg = vital#vimrc#import('Vim.Message')")
 
-
 vim.opt_local.cursorline = true
 
-vim.keymap.set('n', "Q", function() vim.cmd("bdelete!") end, { buffer = true, silent = true })
+vim.keymap.set('n', 'Q', function()
+  vim.cmd('bdelete!')
+end, { buffer = true, silent = true })
 vim.cmd("nmap <buffer><silent> A yy<Cmd>call term_start(['git', 'add','--patch', @\"[:-1]], #{")
-  vim.cmd("\\ term_finish: 'close',")
-vim.cmd("\\ })<CR>")
-vim.keymap.set('n', "<buffer><silent>", "<C-r> <Cmd>GinStatus<CR>", { buffer = true, silent = true })
-vim.cmd("nmap <buffer><silent><nowait> p <Plug>(gin-action-diff:smart:vsplit)")
-vim.cmd("nmap <buffer><silent> sa <Plug>(gin-action-stash)")
-vim.cmd("nmap <buffer><silent> S yy<Cmd>call <SID>stash_message(@\")<CR>")
-vim.keymap.set('n', "sp", function() vim.cmd("Gin stash pop") end, { buffer = true, silent = true })
-vim.keymap.set('n', "cC", function() vim.cmd("call <SID>commit_by_oco()") end, { buffer = true, silent = true })
-vim.keymap.set('n', "cc", function() vim.cmd("call <SID>open_commit_buffer([])") end, { buffer = true, silent = true })
-vim.keymap.set('n', "ca", function() vim.cmd("call <SID>open_commit_buffer(['--amend'])") end, { buffer = true, silent = true })
-vim.keymap.set('n', "cf", ":<C-u>GCommitFixup<Space>", { buffer = true })
-vim.cmd("nmap <buffer> <: <Plug>(gin-action-restore:ours)")
-vim.cmd("nmap <buffer> >: <Plug>(gin-action-restore:theirs)")
-vim.cmd("nmap <buffer> == <Plug>(gin-action-reset)")
+vim.cmd("\\ term_finish: 'close',")
+vim.cmd('\\ })<CR>')
+vim.keymap.set('n', '<buffer><silent>', '<C-r> <Cmd>GinStatus<CR>', { buffer = true, silent = true })
+vim.cmd('nmap <buffer><silent><nowait> p <Plug>(gin-action-diff:smart:vsplit)')
+vim.cmd('nmap <buffer><silent> sa <Plug>(gin-action-stash)')
+vim.cmd('nmap <buffer><silent> S yy<Cmd>call <SID>stash_message(@")<CR>')
+vim.keymap.set('n', 'sp', function()
+  vim.cmd('Gin stash pop')
+end, { buffer = true, silent = true })
+vim.keymap.set('n', 'cC', function()
+  vim.cmd('call <SID>commit_by_oco()')
+end, { buffer = true, silent = true })
+vim.keymap.set('n', 'cc', function()
+  vim.cmd('call <SID>open_commit_buffer([])')
+end, { buffer = true, silent = true })
+vim.keymap.set('n', 'ca', function()
+  vim.cmd("call <SID>open_commit_buffer(['--amend'])")
+end, { buffer = true, silent = true })
+vim.keymap.set('n', 'cf', ':<C-u>GCommitFixup<Space>', { buffer = true })
+vim.cmd('nmap <buffer> <: <Plug>(gin-action-restore:ours)')
+vim.cmd('nmap <buffer> >: <Plug>(gin-action-restore:theirs)')
+vim.cmd('nmap <buffer> == <Plug>(gin-action-reset)')
 
 vim.cmd([[
 function! s:stash_message(file_to_save) abort
@@ -34,7 +43,7 @@ function! s:stash_message(file_to_save) abort
   endfunction
 ]])
 
-  vim.cmd([[
+vim.cmd([[
   function! local.notify_failure(stdout, stderr, exit_code) abort dict
     call s:Msg.error($'exit_code: {a:exit_code}')
     call s:Msg.error($'stdout: {string(a:stdout)}')
@@ -43,12 +52,12 @@ function! s:stash_message(file_to_save) abort
   endfunction
   ]])
 
-  vim.call("vimrc#job#start_simply(")
-    vim.cmd("\\ $'git stash push --message \"{message}\" -- \"{a:file_to_save}\"',")
-    vim.cmd("\\ local.notify_success,")
-    vim.cmd("\\ local.notify_failure,")
-  vim.cmd("\\ )")
-vim.cmd("endfunction")
+vim.call('vimrc#job#start_simply(')
+vim.cmd('\\ $\'git stash push --message "{message}" -- "{a:file_to_save}"\',')
+vim.cmd('\\ local.notify_success,')
+vim.cmd('\\ local.notify_failure,')
+vim.cmd('\\ )')
+vim.cmd('endfunction')
 
 vim.cmd([[
 function! s:commit_by_oco() abort
@@ -63,13 +72,15 @@ function! s:commit_by_oco() abort
   endfunction
 ]])
 
-  vim.cmd("const oco_bufnr = term_start('oco --yes', #{")
-    vim.cmd("\\ vertical: v:true,")
-    vim.cmd("\\ out_cb: { _job, data -> local.notify_when_generated(oco_bufnr, data) },")
-    vim.cmd("\\ err_cb: { _job, data -> vimrc#popup_atcursor(data) },")
-  vim.cmd("\\ })")
-  vim.keymap.set('n', "Q", function() vim.cmd("bwipe") end, { buffer = true })
-vim.cmd("endfunction")
+vim.cmd("const oco_bufnr = term_start('oco --yes', #{")
+vim.cmd('\\ vertical: v:true,')
+vim.cmd('\\ out_cb: { _job, data -> local.notify_when_generated(oco_bufnr, data) },')
+vim.cmd('\\ err_cb: { _job, data -> vimrc#popup_atcursor(data) },')
+vim.cmd('\\ })')
+vim.keymap.set('n', 'Q', function()
+  vim.cmd('bwipe')
+end, { buffer = true })
+vim.cmd('endfunction')
 
 vim.cmd([[
 function! s:open_commit_buffer(subcmd_list) abort
@@ -114,4 +125,4 @@ function! s:force_show_stash_size() abort
 endfunction
 ]])
 
-vim.call("s:force_show_stash_size()")
+vim.call('s:force_show_stash_size()')

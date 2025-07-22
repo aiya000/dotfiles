@@ -1,26 +1,37 @@
-vim.cmd("setlocal")
-  vim.cmd("\\ tabstop=4")
-  vim.cmd("\\ shiftwidth=4")
-  vim.cmd("\\ conceallevel=0")
-  vim.cmd("\\ commentstring=\\ <!--\\ %s\\ -->")
-  vim.cmd("\\ completefunc=github_complete#complete")
+vim.cmd('setlocal')
+vim.cmd('\\ tabstop=4')
+vim.cmd('\\ shiftwidth=4')
+vim.cmd('\\ conceallevel=0')
+vim.cmd('\\ commentstring=\\ <!--\\ %s\\ -->')
+vim.cmd('\\ completefunc=github_complete#complete')
 
-vim.keymap.set('n', "r", function() vim.cmd("PrevimOpen") end, { buffer = true, silent = true })
-vim.keymap.set('n', "d", function() vim.cmd("w<CR>:!doctoc %<CR>:edit %") end, { buffer = true, silent = true })
+vim.keymap.set('n', 'r', function()
+  vim.cmd('PrevimOpen')
+end, { buffer = true, silent = true })
+vim.keymap.set('n', 'd', function()
+  vim.cmd('w<CR>:!doctoc %<CR>:edit %')
+end, { buffer = true, silent = true })
 -- nnoremap <silent><buffer> <localleader>f <Cmd>!textlint --fix <C-r>=expand('%:p')<CR><CR>
 -- nmap <silent><buffer> <C-l> <C-[>:syntax sync fromstart<CR>
 
-vim.keymap.set('n', "r", function() vim.call("<SID>start_grip()") end, { buffer = true, silent = true })
+vim.keymap.set('n', 'r', function()
+  vim.call('<SID>start_grip()')
+end, { buffer = true, silent = true })
 -- TODO: Do 'gg' after glow finished
-vim.keymap.set('n', "R", "<Cmd>call term_start(", { buffer = true, silent = true })
-  vim.cmd("\\ $'glow {fnameescape(expand('%:p'))}',")
-  vim.cmd("\\ #{ vertical: v:true }")
-vim.cmd("\\ )<CR>")
+vim.keymap.set('n', 'R', '<Cmd>call term_start(', { buffer = true, silent = true })
+vim.cmd("\\ $'glow {fnameescape(expand('%:p'))}',")
+vim.cmd('\\ #{ vertical: v:true }')
+vim.cmd('\\ )<CR>')
 
 -- TODO: ちゃんと.vimrcと同様に、lsp_documentSymbolあたりを使う。可能ならここで<C-k><C-f>を押すとオーバーライドするよりも、lspを導入することで済むなら、そちらの方がよい
-vim.keymap.set('n', "<silent><buffer>", "<C-k><C-f> :<C-u>call <SID>open_ddu_section_list()<CR>", { buffer = true, silent = true })
+vim.keymap.set(
+  'n',
+  '<silent><buffer>',
+  '<C-k><C-f> :<C-u>call <SID>open_ddu_section_list()<CR>',
+  { buffer = true, silent = true }
+)
 
-vim.cmd("syntax sync fromstart")
+vim.cmd('syntax sync fromstart')
 
 vim.cmd([[
 if g:vimrc->has_key('git_root') && filereadable($'{g:vimrc.git_root}/.textlintrc')

@@ -50,7 +50,7 @@ vim.g.quickrun_config = {
   },
   typescript = {
     command = 'ts-node',
-    exec = {'%c %o %s'},
+    exec = { '%c %o %s' },
     cmdopt = '',
     tempfile = '%{tempname()}.ts',
   },
@@ -68,7 +68,7 @@ vim.g.quickrun_config = {
   },
   lhaskell = {
     command = 'stack exec runghc',
-    exec = {'grep "^>.*$" %s | sed -r "s/^>//g" > %s:p:r.hs', '%c %o %s:p:r.hs'},
+    exec = { 'grep "^>.*$" %s | sed -r "s/^>//g" > %s:p:r.hs', '%c %o %s:p:r.hs' },
     tempfile = '%{tempname()}.lhs',
     ['hook/sweep/files'] = '%S:p:r.hs',
   },
@@ -108,11 +108,11 @@ vim.g.quickrun_config = {
   },
   happy = {
     runner = 'vimproc',
-    exec = {'happy %s', 'stack runghc %s:p:r.hs'},
+    exec = { 'happy %s', 'stack runghc %s:p:r.hs' },
     ['hook/sweep/files'] = '%S:p:r.hs',
   },
   dhall = {
-    exec = {'dhall --explain --plain %o < %s'},
+    exec = { 'dhall --explain --plain %o < %s' },
   },
   dot = {
     runner = 'vimproc',
@@ -132,7 +132,7 @@ vim.g.quickrun_config = {
 if vim.g.vimrc.is_wsl then
   vim.g.quickrun_config.ps1 = {
     command = 'powershell.exe',
-    exec = {'%c `wslpath -m %s`'},
+    exec = { '%c `wslpath -m %s`' },
     tempfile = '%{tempname()}.ps1',
   }
 end
@@ -235,12 +235,12 @@ local function create_hlint_command()
 end
 
 vim.g.ale_linters = {
-  haskell = {create_hlint_command(), 'stack ghc'},
-  dhall = {'dhall lint'},
-  html = {'htmlhint', 'tidy'},
-  css = {'csslint', 'stylelint'},
-  kotlin = {'ktlint'},
-  java = {'checkstyle', 'google-java-format', 'PMD'},
+  haskell = { create_hlint_command(), 'stack ghc' },
+  dhall = { 'dhall lint' },
+  html = { 'htmlhint', 'tidy' },
+  css = { 'csslint', 'stylelint' },
+  kotlin = { 'ktlint' },
+  java = { 'checkstyle', 'google-java-format', 'PMD' },
 }
 
 local typescript_variants = {
@@ -252,7 +252,7 @@ local typescript_variants = {
 }
 
 for _, ts in ipairs(typescript_variants) do
-  vim.g.ale_linters[ts] = {'prettier', 'eslint', 'vim-lsp'}
+  vim.g.ale_linters[ts] = { 'prettier', 'eslint', 'vim-lsp' }
 end
 
 vim.g.ale_scala_scalastyle_config = vim.fn.expand('$HOME/.dotfiles/scalastyle_config_default.xml')
@@ -264,12 +264,12 @@ vim.g.ale_scala_scalastyle_config = vim.fn.expand('$HOME/.dotfiles/scalastyle_co
 vim.g.ale_fix_on_save = true
 
 vim.g.ale_fixers = {
-  sh = {'shfmt'},
-  go = {'gofmt', 'goimports'},
+  sh = { 'shfmt' },
+  go = { 'gofmt', 'goimports' },
 }
 
 for _, ts in ipairs(typescript_variants) do
-  vim.g.ale_fixers[ts] = {'prettier', 'eslint'}
+  vim.g.ale_fixers[ts] = { 'prettier', 'eslint' }
 end
 
 -- elm-vim
@@ -287,7 +287,7 @@ vim.g.highlightedyank_highlight_duration = 200
 
 -- vim-fmap
 vim.g.fmap_use_default_keymappings = false
-vim.g.fmap_escape_keys = {'', '', ''}
+vim.g.fmap_escape_keys = { '', '', '' }
 
 -- vim-indent-guides
 vim.g.indent_guides_enable_on_vim_startup = 1
@@ -324,9 +324,9 @@ vim.g.lsp_settings = {
   solargraph = { disabled = 1 },
 }
 
-vim.g.lsp_settings_filetype_vue = {'typescript-language-server', 'volar-server'}
-vim.g.lsp_settings_filetype_typescript = {'typescript-language-server', 'deno'}
-vim.g.lsp_settings_filetype_javascript = {'typescript-language-server', 'deno'}
+vim.g.lsp_settings_filetype_vue = { 'typescript-language-server', 'volar-server' }
+vim.g.lsp_settings_filetype_typescript = { 'typescript-language-server', 'deno' }
+vim.g.lsp_settings_filetype_javascript = { 'typescript-language-server', 'deno' }
 
 -- translate.vim
 vim.g.translate_source = 'en'
@@ -367,14 +367,14 @@ vim.g.webpage_source = {
 }
 
 -- jumpy.vim
-vim.g.jumpy_map = {')', '('}
+vim.g.jumpy_map = { ')', '(' }
 
 -- vim-quickrepl
 vim.g.quickrepl_config = {
-  vue = {'tsx'},
-  ['typescript.tsx'] = {'tsx'},
-  go = {'gore'},
-  ps1 = {'powrshell', 'powershell.exe'},
+  vue = { 'tsx' },
+  ['typescript.tsx'] = { 'tsx' },
+  go = { 'gore' },
+  ps1 = { 'powrshell', 'powershell.exe' },
 }
 
 vim.g.quickrepl_use_default_key_mapping = true
@@ -391,7 +391,7 @@ if vim.g.vimrc.is_wsl then
   vim.g.openbrowser_browser_commands = {
     {
       name = 'wslview',
-      args = {'{browser}', '{uri}'},
+      args = { '{browser}', '{uri}' },
     },
   }
 end
@@ -428,7 +428,7 @@ vim.g.scratch_buffer_default_open_method = 'vsp'
 vim.g.scratch_buffer_default_buffer_size = nil
 vim.g.scratch_buffer_use_default_keymappings = false
 vim.g.scratch_buffer_file_pattern = {
-  when_file_buffer = vim.fn.expand('~/tmp/scratch-%d')
+  when_file_buffer = vim.fn.expand('~/tmp/scratch-%d'),
 }
 
 -- vim-session
@@ -441,7 +441,7 @@ vim.g.write_sync_echo_success_on_write = true
 
 -- `['~/tmp/a', '~/tmp/b', '~/tmp/c']` for test
 vim.g.write_sync_lists = {
-  {'~/tmp/a', '~/tmp/b', '~/tmp/c'},
+  { '~/tmp/a', '~/tmp/b', '~/tmp/c' },
   {
     '~/.dotfiles/Windows/Preferences/AutoHotkey.ahk',
     '~/Desktop/AutoHotkey.ahk',

@@ -1,6 +1,6 @@
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-  pattern = "*.cassius",
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  pattern = '*.cassius',
   callback = function()
-    vim.bo.filetype = "cassius"
+    vim.bo.filetype = 'cassius'
   end,
 })

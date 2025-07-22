@@ -102,7 +102,7 @@ autocmd('TermOpen', {
 })
 
 -- Show relative numbers only on the current window
-autocmd({'BufEnter', 'WinEnter'}, {
+autocmd({ 'BufEnter', 'WinEnter' }, {
   group = vimrc_group,
   callback = function()
     if vim.wo.number then
@@ -111,7 +111,7 @@ autocmd({'BufEnter', 'WinEnter'}, {
   end,
 })
 
-autocmd({'BufLeave', 'WinLeave'}, {
+autocmd({ 'BufLeave', 'WinLeave' }, {
   group = vimrc_group,
   callback = function()
     vim.wo.relativenumber = false
@@ -126,7 +126,7 @@ autocmd('ColorScheme', {
   end,
 })
 
-autocmd({'VimEnter', 'WinEnter'}, {
+autocmd({ 'VimEnter', 'WinEnter' }, {
   group = vimrc_group,
   callback = function()
     vim.fn.matchadd('EmSpace', '　')
@@ -141,7 +141,7 @@ autocmd('ColorScheme', {
   end,
 })
 
-autocmd({'VimEnter', 'WinEnter'}, {
+autocmd({ 'VimEnter', 'WinEnter' }, {
   group = vimrc_group,
   callback = function()
     vim.fn.matchadd('GitConflict', [[^\(<\|=\|>\)\{7\}\([^=].\+\)\?$]])
@@ -164,21 +164,21 @@ autocmd('InsertLeave', {
 })
 
 -- Hightlight cursors of another windows
-autocmd({'BufEnter', 'WinEnter'}, {
+autocmd({ 'BufEnter', 'WinEnter' }, {
   group = vimrc_group,
   callback = function()
     vim.opt_local.cursorline = false
   end,
 })
 
-autocmd({'BufLeave', 'WinLeave'}, {
+autocmd({ 'BufLeave', 'WinLeave' }, {
   group = vimrc_group,
   callback = function()
     vim.opt_local.cursorline = true
   end,
 })
 
-autocmd({'VimEnter', 'ColorScheme'}, {
+autocmd({ 'VimEnter', 'ColorScheme' }, {
   group = vimrc_group,
   callback = function()
     vim.api.nvim_set_hl(0, 'CursorLine', { ctermbg = 60 })
@@ -193,7 +193,7 @@ local natural_language_filetypes = {
 }
 
 -- 自然言語を書いているとddcが重すぎるので、一時的に無効化する
-autocmd({'BufEnter', 'WinEnter'}, {
+autocmd({ 'BufEnter', 'WinEnter' }, {
   group = vimrc_group,
   callback = function()
     if vim.tbl_contains(natural_language_filetypes, vim.bo.filetype) then
@@ -216,7 +216,7 @@ end
 
 autocmd('FileType', {
   group = vimrc_group,
-  pattern = {'typescript', 'javascript'},
+  pattern = { 'typescript', 'javascript' },
   callback = read_deno_local_tsconfig,
 })
 
@@ -259,7 +259,7 @@ autocmd('VimEnter', {
 })
 
 -- vim-indent-guides
-autocmd({'VimEnter', 'ColorScheme'}, {
+autocmd({ 'VimEnter', 'ColorScheme' }, {
   group = vimrc_group,
   callback = function()
     vim.api.nvim_set_hl(0, 'IndentGuidesOdd', { ctermbg = 60, bg = '#468F8C' })
@@ -268,7 +268,7 @@ autocmd({'VimEnter', 'ColorScheme'}, {
 })
 
 -- TODO: When I move to another window, the terminal buffer also becomes IndentGuidesEnable in the autocmd below
-autocmd({'BufEnter', 'WinEnter'}, {
+autocmd({ 'BufEnter', 'WinEnter' }, {
   group = vimrc_group,
   callback = function()
     if vim.bo.buftype == 'terminal' then
@@ -278,7 +278,7 @@ autocmd({'BufEnter', 'WinEnter'}, {
   end,
 })
 
-autocmd({'BufLeave', 'WinLeave'}, {
+autocmd({ 'BufLeave', 'WinLeave' }, {
   group = vimrc_group,
   callback = function()
     vim.wo.relativenumber = false
@@ -305,7 +305,7 @@ autocmd({'BufLeave', 'WinLeave'}, {
 -- })
 
 -- vim-cursorword
-autocmd({'VimEnter', 'ColorScheme'}, {
+autocmd({ 'VimEnter', 'ColorScheme' }, {
   group = vimrc_group,
   callback = function()
     vim.api.nvim_set_hl(0, 'CursorWord0', { ctermbg = 'LightGray', ctermfg = 'Black' })

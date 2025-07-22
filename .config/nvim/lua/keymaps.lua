@@ -47,7 +47,7 @@ map('n', '<leader><leader>B', function()
   vim.cmd('split ' .. vim.g.vimrc.memo_path)
 end, { silent = true })
 map('n', 'g*', '<Cmd>execute "silent! normal! *<C-o>"<CR>', { silent = true })
-map('n', 'Q', function() 
+map('n', 'Q', function()
   require('vimrc').bufclose_filetype(vim.g.vimrc.temporary_buftypes)
 end, { silent = true })
 
@@ -80,7 +80,9 @@ map('n', '<Space>l', '<C-w>l')
 
 -- gh prefix
 map('n', 'ghR', '<C-w>r')
-map('n', 'ghq', function() require('vimrc').hide_or_quit() end, { silent = true })
+map('n', 'ghq', function()
+  require('vimrc').hide_or_quit()
+end, { silent = true })
 map('n', 'ghQ', '<Cmd>quitall<CR>', { silent = true })
 map('n', 'ghc', '<Cmd>bdelete<CR>', { silent = true })
 map('n', 'ghC', '<Cmd>bdelete!<CR>', { silent = true })
@@ -130,35 +132,43 @@ map('n', 'gh', '<NOP>')
 local function open_terminal(options)
   local default_opts = {
     vertical = true,
-    cwd = require('vimrc').get_current_buffer_dir({alt_dir = vim.g.vimrc.git_root})
+    cwd = require('vimrc').get_current_buffer_dir({ alt_dir = vim.g.vimrc.git_root }),
   }
   local opts = vim.tbl_extend('force', default_opts, options or {})
-  
+
   if opts.vertical then
     vim.cmd('vsplit')
   end
-  
+
   if opts.curwin then
     vim.cmd('terminal')
   else
     vim.cmd('terminal')
   end
-  
+
   if opts.cwd then
     vim.cmd('lcd ' .. opts.cwd)
   end
 end
 
-map('n', '<leader>v', function() open_terminal({vertical = true}) end, { silent = true })
-map('n', '<leader><leader>v', function() open_terminal({vertical = false}) end, { silent = true })
-map('n', '<leader>V', function() open_terminal({curwin = true}) end, { silent = true })
-map('n', '<leader><leader>V', function() 
+map('n', '<leader>v', function()
+  open_terminal({ vertical = true })
+end, { silent = true })
+map('n', '<leader><leader>v', function()
+  open_terminal({ vertical = false })
+end, { silent = true })
+map('n', '<leader>V', function()
+  open_terminal({ curwin = true })
+end, { silent = true })
+map('n', '<leader><leader>V', function()
   vim.cmd('tabnew')
-  open_terminal({curwin = true})
+  open_terminal({ curwin = true })
 end, { silent = true })
 
 -- set
-map('n', '<C-h><C-d>', function() require('vimrc').toggle_diff() end, { silent = true })
+map('n', '<C-h><C-d>', function()
+  require('vimrc').toggle_diff()
+end, { silent = true })
 map('n', '<C-h><C-v>', function()
   local ve = vim.opt_local.virtualedit:get()
   vim.opt_local.virtualedit = (ve[1] == '' or #ve == 0) and 'all' or ''
@@ -237,12 +247,12 @@ map('n', '<C-k>s', function()
   return string.format(':%%s/\\m\\C\\<%s\\>/%s/g\027\027', word, word)
 end, { expr = true })
 map('n', '<C-k><C-j>', save_clear, { silent = true })
-map('n', '<C-k><Space>', function() 
-  require('vimrc').remove_trailing_spaces() 
+map('n', '<C-k><Space>', function()
+  require('vimrc').remove_trailing_spaces()
 end, { silent = true })
 map('n', '<C-k>J', '<Cmd>wall | echo "written all !"<CR>', { silent = true })
-map('n', '<Space><Space>', function() 
-  require('vimrc').compress_spaces() 
+map('n', '<Space><Space>', function()
+  require('vimrc').compress_spaces()
 end, { silent = true })
 map('n', '<leader>q', '<Cmd>copen<CR>', { silent = true })
 map('n', '<leader><leader>q', '<Cmd>cclose<CR>', { silent = true })

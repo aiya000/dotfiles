@@ -1,25 +1,34 @@
-vim.cmd("let s:V = vital#vimrc#new()")
+vim.cmd('let s:V = vital#vimrc#new()')
 vim.cmd("let s:JSON = s:V.import('Web.JSON')")
 vim.cmd("let s:Job = s:V.import('System.Job')")
-
 
 vim.opt_local.ts = 4
 vim.opt_local.sw = 4
 vim.opt_local.et = true
 vim.opt_local.conceallevel = 0
-vim.opt.commentstring = " -- %s"
+vim.opt.commentstring = ' -- %s'
 vim.opt.errorformat = "'%f:%l:%c: %m' \" for the below :ElmReportErrors"
 
 -- nnoremap <buffer><silent> <localleader>r :<C-u>ElmMake<CR>
-vim.keymap.set('n', "r", function() vim.cmd("<C-u>ElmReportErrors <C-r>=expand('%')<CR>") end, { buffer = true, silent = true })
-vim.keymap.set('n', "S", function() vim.cmd("<C-u>Aref elm-search <C-r>=expand('<cword>')<CR>") end, { buffer = true, silent = true })
+vim.keymap.set('n', 'r', function()
+  vim.cmd("<C-u>ElmReportErrors <C-r>=expand('%')<CR>")
+end, { buffer = true, silent = true })
+vim.keymap.set('n', 'S', function()
+  vim.cmd("<C-u>Aref elm-search <C-r>=expand('<cword>')<CR>")
+end, { buffer = true, silent = true })
 
-local augroup_FtpluginElm = vim.api.nvim_create_augroup("FtpluginElm", { clear = true })
-  vim.api.nvim_create_autocmd("BufWritePre", { group = augroup_FtpluginElm, pattern = "*.elm", callback = function() vim.cmd("ElmFormat") end })
+local augroup_FtpluginElm = vim.api.nvim_create_augroup('FtpluginElm', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePre', {
+  group = augroup_FtpluginElm,
+  pattern = '*.elm',
+  callback = function()
+    vim.cmd('ElmFormat')
+  end,
+})
 
 -- ElmReportErrors {{{
 
-vim.cmd("command! -bar -nargs=1 ElmReportErrors call s:start_quickfix(<q-args>)")
+vim.cmd('command! -bar -nargs=1 ElmReportErrors call s:start_quickfix(<q-args>)')
 
 vim.cmd([[
 function! s:aggregate_output(data) abort dict

@@ -1,6 +1,6 @@
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-  pattern = {"*.idr", "idris-response"},
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  pattern = { '*.idr', 'idris-response' },
   callback = function()
-    vim.bo.filetype = "idris"
+    vim.bo.filetype = 'idris'
   end,
 })

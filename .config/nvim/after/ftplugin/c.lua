@@ -1,12 +1,23 @@
+vim.opt.commentstring = '  // %s'
 
-vim.opt.commentstring = "  // %s"
+vim.keymap.set('n', 'r', function()
+  vim.call('<SID>run_quickfix()')
+end, { buffer = true, silent = true })
+vim.keymap.set('n', 'w', function()
+  vim.call('<SID>start_quickfix()')
+end, { buffer = true, silent = true })
+vim.keymap.set('n', 'W', function()
+  vim.call('<SID>stop_quickfix()')
+end, { buffer = true, silent = true })
 
-vim.keymap.set('n', "r", function() vim.call("<SID>run_quickfix()") end, { buffer = true, silent = true })
-vim.keymap.set('n', "w", function() vim.call("<SID>start_quickfix()") end, { buffer = true, silent = true })
-vim.keymap.set('n', "W", function() vim.call("<SID>stop_quickfix()") end, { buffer = true, silent = true })
-
-local augroup_FtpluginC = vim.api.nvim_create_augroup("FtpluginC", { clear = true })
-  vim.api.nvim_create_autocmd("BufWritePost", { group = augroup_FtpluginC, pattern = "*.c,*.h", callback = function() vim.cmd("call s:exec_quickfix_if_available()") end })
+local augroup_FtpluginC = vim.api.nvim_create_augroup('FtpluginC', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePost', {
+  group = augroup_FtpluginC,
+  pattern = '*.c,*.h',
+  callback = function()
+    vim.cmd('call s:exec_quickfix_if_available()')
+  end,
+})
 
 vim.cmd([[
 function! s:run_quickfix() abort
