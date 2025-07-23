@@ -199,13 +199,13 @@ abbr satisfies
 
 # Expressions
 
-snippet println
+snippet print
 alias pr
 abbr console.log(${0:#:here})
     console.log(${0:#:here})
 
-snippet print_error_ln
-alias er
+snippet print_error
+alias pre
 abbr console.error(${0:#:here})
     console.error(${0:#:here})
 
@@ -417,6 +417,6 @@ abbr console.log('poi:', ${0})
   console.log('poi:', ${0})
 
 snippet exhaustive
-alias check_unreachable satisfied
+alias check_unreachable satisfied unreachable
 abbr throw new Error(\`unreachable: ${${0:var} satisfies never}\`)
   throw new Error(\`unreachable: ${${0:var} satisfies never}\`)
