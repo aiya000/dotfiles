@@ -40,7 +40,17 @@
         "hooks": [
           {
             "type": "command",
-            "command": "notifu.exe /p 'Claude Code' /m 'Requested' || true"
+            "command": "notifu.exe /p 'Claude Code' /m 'Claude Code respond' || true"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "notifu.exe /p 'Claude Code' /m 'Claude Code stopped' || true"
           }
         ]
       }
