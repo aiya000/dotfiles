@@ -81,26 +81,461 @@ Usage:
 ---@field call fun(func: string|function, ...: any): any
 ---@field paste function|nil
 
---- Neovim API Functions
+---Neovim API Functions
 ---@class vim.api
 
---- Vim Functions
+---Vim Functions (See builtin.txt)
 ---@class vim.fn
----@field expand fun(expr: string): string パスやファイル名を展開
----@field executable fun(name: string): number コマンドが実行可能かチェック
----@field line fun(expr: string): number 行番号を取得
----@field col fun(expr: string): number カラム位置を取得
----@field exists fun(expr: string): number 変数や関数の存在チェック
----@field has fun(feature: string): number 機能サポートチェック
----@field printf fun(fmt: string, ...: any): string 文字列フォーマット
----@field reverse fun(list: any[]): any[] リスト逆順
----@field jobstart fun(cmd: string, opts?: table): number ジョブ開始
----@field pumvisible fun(): number ポップアップメニュー表示状態
+---@field abs fun(expr: any): number
+---@field acos fun(expr: number): number
+---@field add fun(object: any[], expr: any): any[]
+---@field and fun(expr: any, expr2: any): number
+---@field api_info fun(): table
+---@field append fun(lnum: number, text: string|string[]): number
+---@field appendbufline fun(buf: any, lnum: number, text: string|string[]): number
+---@field argc fun(winid?: number): number
+---@field argidx fun(): number
+---@field arglistid fun(winnr?: number, tabnr?: number): number
+---@field argv fun(nr?: number, winid?: number): string|string[]
+---@field asin fun(expr: number): number
+---@field assert_beeps fun(cmd: string): any
+---@field assert_equal fun(expected: any, actual: any, msg?: string): any
+---@field assert_equalfile fun(fname_one: string, fname_two: string): any
+---@field assert_exception fun(error: string, msg?: string): any
+---@field assert_fails fun(cmd: string, error?: string, msg?: string, lnum?: number, context?: any): any
+---@field assert_false fun(actual: any, msg?: string): any
+---@field assert_inrange fun(lower: number, upper: number, actual: number, msg?: string): any
+---@field assert_match fun(pattern: string, actual: string, msg?: string): any
+---@field assert_nobeep fun(cmd: string): any
+---@field assert_notequal fun(expected: any, actual: any, msg?: string): any
+---@field assert_notmatch fun(pattern: string, actual: string, msg?: string): any
+---@field assert_report fun(msg: string): any
+---@field assert_true fun(actual: any, msg?: string): any
+---@field atan fun(expr: number): number
+---@field atan2 fun(expr1: number, expr2: number): number
+---@field blob2list fun(blob: any): number[]
+---@field browse fun(save: number, title: string, initdir: string, default: string): string
+---@field browsedir fun(title: string, initdir: string): string
+---@field bufadd fun(name: string): number
+---@field bufexists fun(buf: any): number
+---@field buflisted fun(buf: any): number
+---@field bufload fun(buf: any): any
+---@field bufloaded fun(buf: any): number
+---@field bufname fun(buf?: any): string
+---@field bufnr fun(buf?: any, create?: boolean): number
+---@field bufwinid fun(buf: any): number
+---@field bufwinnr fun(buf: any): number
+---@field byte2line fun(byte: number): number
+---@field byteidx fun(expr: string, nr: number, utf16?: boolean): number
+---@field byteidxcomp fun(expr: string, nr: number, utf16?: boolean): number
+---@field call fun(func: string|function, arglist: any[], dict?: table): any
+---@field ceil fun(expr: number): number
+---@field chanclose fun(id: number, stream?: string): number
+---@field changenr fun(): number
+---@field chansend fun(id: number, data: string|string[]): number
+---@field char2nr fun(string: string, utf8?: boolean): number
+---@field charclass fun(string: string): number
+---@field charcol fun(expr: string, winid?: number): number
+---@field charidx fun(string: string, idx: number, countcc?: boolean, utf16?: boolean): number
+---@field chdir fun(dir: string): number
+---@field cindent fun(lnum: number): number
+---@field clearmatches fun(win?: number): any
+---@field col fun(expr: string, winid?: number): number
+---@field complete fun(startcol: number, matches: any[]): any
+---@field complete_add fun(expr: any): number
+---@field complete_check fun(): number
+---@field complete_info fun(what?: string[]): table
+---@field confirm fun(msg: string, choices?: string, default?: number, type?: string): number
+---@field copy fun(expr: any): any
+---@field cos fun(expr: number): number
+---@field cosh fun(expr: number): number
+---@field count fun(comp: any, expr: any, ic?: boolean, start?: number): number
+---@field ctxget fun(index?: number): table
+---@field ctxpop fun(): any
+---@field ctxpush fun(types?: string[]): any
+---@field ctxset fun(context: table, index?: number): any
+---@field ctxsize fun(): number
+---@field cursor fun(lnum: number, col: number, off?: number): number
+---@field debugbreak fun(pid: number): number
+---@field deepcopy fun(expr: any, noref?: boolean): any
+---@field delete fun(fname: string, flags?: string): number
+---@field deletebufline fun(buf: any, first: number, last?: number): number
+---@field dictwatcheradd fun(dict: table, pattern: string, callback: function): any
+---@field dictwatcherdel fun(dict: table, pattern: string, callback: function): any
+---@field did_filetype fun(): number
+---@field diff_filler fun(lnum: number): number
+---@field diff_hlID fun(lnum: number, col: number): number
+---@field digraph_get fun(chars: string): string
+---@field digraph_getlist fun(listall?: boolean): table[]
+---@field digraph_set fun(chars: string, digraph: string): any
+---@field digraph_setlist fun(digraphlist: table[]): any
+---@field empty fun(expr: any): number
+---@field environ fun(): table
+---@field escape fun(string: string, chars: string): string
+---@field eval fun(string: string): any
+---@field eventhandler fun(): number
+---@field executable fun(expr: string): number
+---@field execute fun(command: string, silent?: string): string
+---@field exepath fun(expr: string): string
+---@field exists fun(expr: string): number
+---@field exp fun(expr: number): number
+---@field expand fun(string: string, nosuf?: boolean, list?: boolean): string|string[]
+---@field expandcmd fun(string: string, options?: table): string
+---@field extend fun(expr1: table, expr2: table, expr3?: string): table
+---@field extendnew fun(expr1: table, expr2: table, expr3?: string): table
+---@field feedkeys fun(string: string, mode?: string): any
+---@field filecopy fun(from: string, to: string): number
+---@field filereadable fun(file: string): number
+---@field filewritable fun(file: string): number
+---@field filter fun(expr1: any, expr2: string|function): any
+---@field finddir fun(name: string, path?: string, count?: number): string|string[]
+---@field findfile fun(name: string, path?: string, count?: number): string|string[]
+---@field flatten fun(list: any[], maxdepth?: number): any[]
+---@field flattennew fun(list: any[], maxdepth?: number): any[]
+---@field float2nr fun(expr: number): number
+---@field floor fun(expr: number): number
+---@field fmod fun(expr1: number, expr2: number): number
+---@field fnameescape fun(string: string): string
+---@field fnamemodify fun(fname: string, mods: string): string
+---@field foldclosed fun(lnum: number): number
+---@field foldclosedend fun(lnum: number): number
+---@field foldlevel fun(lnum: number): number
+---@field foldtext fun(): string
+---@field foldtextresult fun(lnum: number): string
+---@field foreach fun(expr1: any, expr2: string|function): any
+---@field fullcommand fun(name: string): string
+---@field funcref fun(name: string, arglist?: any[], dict?: table): function
+---@field function fun(name: string, arglist?: any[], dict?: table): function
+---@field garbagecollect fun(atexit?: boolean): any
+---@field get fun(list: any[], idx: number, default?: any): any
+---@field getbufinfo fun(buf?: any): table[]
+---@field getbufline fun(buf: any, lnum: number, end?: number): string[]
+---@field getbufoneline fun(buf: any, lnum: number): string
+---@field getbufvar fun(buf: any, varname: string, def?: any): any
+---@field getcellwidths fun(): number[][]
+---@field getchangelist fun(buf?: any): table
+---@field getchar fun(expr?: any, opts?: table): number|string
+---@field getcharmod fun(): number
+---@field getcharpos fun(expr: string): number[]
+---@field getcharsearch fun(): table
+---@field getcharstr fun(expr?: any): string
+---@field getcmdcomplpat fun(): string
+---@field getcmdcompltype fun(): string
+---@field getcmdline fun(): string
+---@field getcmdpos fun(): number
+---@field getcmdprompt fun(): string
+---@field getcmdscreenpos fun(): number
+---@field getcmdtype fun(): string
+---@field getcmdwintype fun(): string
+---@field getcompletion fun(pat: string, type: string, filtered?: boolean): string[]
+---@field getcurpos fun(winid?: number): number[]
+---@field getcursorcharpos fun(winid?: number): number[]
+---@field getcwd fun(winnr?: number, tabnr?: number): string
+---@field getenv fun(name: string): string
+---@field getfontname fun(name?: string): string
+---@field getfperm fun(fname: string): string
+---@field getfsize fun(fname: string): number
+---@field getftime fun(fname: string): number
+---@field getftype fun(fname: string): string
+---@field getjumplist fun(winnr?: number, tabnr?: number): table
+---@field getline fun(lnum: number, end?: number): string|string[]
+---@field getloclist fun(nr: number, what?: table): table
+---@field getmarklist fun(buf?: any): table[]
+---@field getmatches fun(win?: number): table[]
+---@field getmousepos fun(): table
+---@field getpid fun(): number
+---@field getpos fun(expr: string): number[]
+---@field getqflist fun(what?: table): table
+---@field getreg fun(regname?: string, one?: number, list?: boolean): string|string[]
+---@field getreginfo fun(regname?: string): table
+---@field getregion fun(pos1: any[], pos2: any[], opts?: table): string[]
+---@field getregionpos fun(pos1: any[], pos2: any[], opts?: table): table[]
+---@field getregtype fun(regname?: string): string
+---@field getscriptinfo fun(opts?: table): table[]
+---@field getstacktrace fun(): table[]
+---@field gettabinfo fun(tabnr?: number): table[]
+---@field gettabvar fun(tabnr: number, varname: string, def?: any): any
+---@field gettabwinvar fun(tabnr: number, winnr: number, varname: string, def?: any): any
+---@field gettagstack fun(winnr?: number): table
+---@field gettext fun(text: string): string
+---@field getwininfo fun(winid?: number): table[]
+---@field getwinpos fun(timeout?: number): number[]
+---@field getwinposx fun(): number
+---@field getwinposy fun(): number
+---@field getwinvar fun(winnr: number, varname: string, def?: any): any
+---@field glob fun(expr: string, nosuf?: boolean, list?: boolean, alllinks?: boolean): string|string[]
+---@field glob2regpat fun(string: string): string
+---@field globpath fun(path: string, expr: string, nosuf?: boolean, list?: boolean, alllinks?: boolean): string|string[]
+---@field has fun(feature: string): number
+---@field has_key fun(dict: table, key: string): number
+---@field haslocaldir fun(winnr?: number, tabnr?: number): number
+---@field hasmapto fun(what: string, mode?: string, abbr?: boolean): number
+---@field histadd fun(history: string, item: string): number
+---@field histdel fun(history: string, item?: string|number): number
+---@field histget fun(history: string, index?: number): string
+---@field histnr fun(history: string): number
+---@field hlID fun(name: string): number
+---@field hlexists fun(name: string): number
+---@field hostname fun(): string
+---@field iconv fun(string: string, from: string, to: string): string
+---@field id fun(expr: any): number
+---@field indent fun(lnum: number): number
+---@field index fun(object: any[], expr: any, start?: number, ic?: boolean): number
+---@field indexof fun(object: any[], expr: string|function, opts?: table): number
+---@field input fun(prompt: string, text?: string, completion?: string): string
+---@field inputlist fun(textlist: string[]): number
+---@field inputrestore fun(): number
+---@field inputsave fun(): number
+---@field inputsecret fun(prompt: string, text?: string): string
+---@field insert fun(object: any[], item: any, idx?: number): any[]
+---@field interrupt fun(): any
+---@field invert fun(expr: number): number
+---@field isabsolutepath fun(path: string): number
+---@field isdirectory fun(directory: string): number
+---@field isinf fun(expr: any): number
+---@field islocked fun(expr: string): number
+---@field isnan fun(expr: any): number
+---@field items fun(dict: table): any[][]
+---@field jobpid fun(job: any): number
+---@field jobresize fun(job: any, width: number, height: number): number
+---@field jobstart fun(cmd: string|string[], opts?: table): number
+---@field jobstop fun(job: any): number
+---@field jobwait fun(jobs: any[], timeout?: number): number[]
+---@field join fun(list: any[], sep?: string): string
+---@field json_decode fun(string: string): any
+---@field json_encode fun(expr: any): string
+---@field keys fun(dict: table): string[]
+---@field keytrans fun(string: string): string
+---@field len fun(expr: any): number
+---@field libcall fun(lib: string, func: string, arg: string): string
+---@field libcallnr fun(lib: string, func: string, arg: any): number
+---@field line fun(expr: string, winid?: number): number
+---@field line2byte fun(lnum: number): number
+---@field lispindent fun(lnum: number): number
+---@field list2blob fun(list: number[]): any
+---@field list2str fun(list: number[], utf8?: boolean): string
+---@field localtime fun(): number
+---@field log fun(expr: number): number
+---@field log10 fun(expr: number): number
+---@field luaeval fun(expr: string, expr2?: any): any
+---@field map fun(expr1: any, expr2: string|function): any
+---@field maparg fun(name: string, mode?: string, abbr?: boolean, dict?: boolean): string|table
+---@field mapcheck fun(name: string, mode?: string, abbr?: boolean): string
+---@field maplist fun(abbr?: boolean): table[]
+---@field mapnew fun(expr1: any, expr2: string|function): any
+---@field mapset fun(mode: string, abbr: boolean, dict: table): any
+---@field match fun(expr: string, pat: string, start?: number, count?: number): number
+---@field matchadd fun(group: string, pattern: string, priority?: number, id?: number, dict?: table): number
+---@field matchaddpos fun(group: string, pos: any[], priority?: number, id?: number, dict?: table): number
+---@field matcharg fun(nr: number): string[]
+---@field matchbufline fun(buf: any, pat: string, lnum: number, end: number): table[]
+---@field matchdelete fun(id: number, win?: number): number
+---@field matchend fun(expr: string, pat: string, start?: number, count?: number): number
+---@field matchfuzzy fun(list: string[], str: string, dict?: table): string[]
+---@field matchfuzzypos fun(list: string[], str: string, dict?: table): any[]
+---@field matchlist fun(expr: string, pat: string, start?: number, count?: number): string[]
+---@field matchstr fun(expr: string, pat: string, start?: number, count?: number): string
+---@field matchstrlist fun(list: string[], pat: string): table[]
+---@field matchstrpos fun(expr: string, pat: string, start?: number, count?: number): any[]
+---@field max fun(list: any[]): any
+---@field menu_get fun(name: string, modes?: string): table[]
+---@field menu_info fun(name: string, mode?: string): table
+---@field min fun(list: any[]): any
+---@field mkdir fun(name: string, path?: string, prot?: number): number
+---@field mode fun(expr?: boolean): string
+---@field msgpackdump fun(list: any[]): string[]
+---@field msgpackparse fun(list: string[]): any[]
+---@field nextnonblank fun(lnum: number): number
+---@field nr2char fun(expr: number, utf8?: boolean): string
+---@field or fun(expr: any, expr2: any): number
+---@field pathshorten fun(expr: string, len?: number): string
+---@field perleval fun(expr: string): any
+---@field pow fun(x: number, y: number): number
+---@field prevnonblank fun(lnum: number): number
+---@field printf fun(fmt: string, ...): string
+---@field prompt_getprompt fun(buf: any): string
+---@field prompt_setcallback fun(buf: any, expr: string|function): any
+---@field prompt_setinterrupt fun(buf: any, expr: string|function): any
+---@field prompt_setprompt fun(buf: any, text: string): any
+---@field pum_getpos fun(): table
+---@field pumvisible fun(): number
+---@field py3eval fun(expr: string): any
+---@field pyeval fun(expr: string): any
+---@field pyxeval fun(expr: string): any
+---@field rand fun(expr?: any[]): number
+---@field range fun(expr: number, max?: number, stride?: number): number[]
+---@field readblob fun(fname: string): any
+---@field readdir fun(dir: string, expr?: string|function): string[]
+---@field readfile fun(fname: string, type?: string, max?: number): string[]
+---@field reduce fun(object: any[], func: string|function, initial?: any): any
+---@field reg_executing fun(): string
+---@field reg_recorded fun(): string
+---@field reg_recording fun(): string
+---@field reltime fun(start?: any[], end?: any[]): any[]
+---@field reltimefloat fun(time: any[]): number
+---@field reltimestr fun(time: any[]): string
+---@field remove fun(list: any[], idx: number, end?: number): any
+---@field rename fun(from: string, to: string): number
+---@field repeat fun(expr: any, count: number): any
+---@field resolve fun(filename: string): string
+---@field reverse fun(list: any[]): any[]
+---@field round fun(expr: number): number
+---@field rpcnotify fun(channel: number, event: string, ...): number
+---@field rpcrequest fun(channel: number, method: string, ...): any
+---@field rubyeval fun(expr: string): any
+---@field screenattr fun(row: number, col: number): number
+---@field screenchar fun(row: number, col: number): number
+---@field screenchars fun(row: number, col: number): number[]
+---@field screencol fun(): number
+---@field screenpos fun(winid: number, lnum: number, col: number): table
+---@field screenrow fun(): number
+---@field screenstring fun(row: number, col: number): string
+---@field search fun(pattern: string, flags?: string, stopline?: number, timeout?: number): number
+---@field searchcount fun(opts?: table): table
+---@field searchdecl fun(name: string, global?: boolean, thisblock?: boolean): number
+---@field searchpair fun(start: string, middle: string, end: string, flags?: string, skip?: string, stopline?: number, timeout?: number): number
+---@field searchpairpos fun(start: string, middle: string, end: string, flags?: string, skip?: string, stopline?: number, timeout?: number): number[]
+---@field searchpos fun(pattern: string, flags?: string, stopline?: number, timeout?: number): number[]
+---@field serverlist fun(): string
+---@field serverstart fun(address?: string): string
+---@field serverstop fun(address: string): number
+---@field setbufline fun(buf: any, lnum: number, text: string|string[]): number
+---@field setbufvar fun(buf: any, varname: string, val: any): any
+---@field setcellwidths fun(list: any[][]): any
+---@field setcharpos fun(expr: string, list: number[]): number
+---@field setcharsearch fun(dict: table): table
+---@field setcmdline fun(str: string, pos?: number): number
+---@field setcmdpos fun(pos: number): number
+---@field setcursorcharpos fun(lnum: number, col: number, off?: number): number
+---@field setenv fun(name: string, val: string): any
+---@field setfperm fun(fname: string, mode: string): number
+---@field setline fun(lnum: number, text: string|string[]): number
+---@field setloclist fun(nr: number, list: table[], action?: string, what?: table): number
+---@field setmatches fun(list: table[], win?: number): number
+---@field setpos fun(expr: string, list: number[]): number
+---@field setqflist fun(list: table[], action?: string, what?: table): number
+---@field setreg fun(regname: string, value: any, options?: string): number
+---@field settabvar fun(tabnr: number, varname: string, val: any): any
+---@field settabwinvar fun(tabnr: number, winnr: number, varname: string, val: any): any
+---@field settagstack fun(winnr: number, dict: table, action?: string): number
+---@field setwinvar fun(winnr: number, varname: string, val: any): any
+---@field sha256 fun(string: string): string
+---@field shellescape fun(string: string, special?: boolean): string
+---@field shiftwidth fun(col?: number): number
+---@field sign_define fun(name: string, dict?: table): any
+---@field sign_getdefined fun(name?: string): table[]
+---@field sign_getplaced fun(buf?: any, dict?: table): table[]
+---@field sign_jump fun(id: number, group: string, buf: any): number
+---@field sign_place fun(id: number, group: string, name: string, buf: any, dict?: table): number
+---@field sign_placelist fun(list: table[]): number[]
+---@field sign_undefine fun(name?: string): number
+---@field sign_unplace fun(group: string, dict?: table): number
+---@field sign_unplacelist fun(list: table[]): number[]
+---@field simplify fun(filename: string): string
+---@field sin fun(expr: number): number
+---@field sinh fun(expr: number): number
+---@field slice fun(expr: any, start: number, end?: number): any
+---@field sockconnect fun(mode: string, address: string, opts?: table): number
+---@field sort fun(list: any[], func?: string|function, dict?: table): any[]
+---@field soundfold fun(word: string): string
+---@field spellbadword fun(sentence?: string): string[]
+---@field spellsuggest fun(word: string, max?: number, capital?: boolean): string[]
+---@field split fun(string: string, pattern?: string, keepempty?: boolean): string[]
+---@field sqrt fun(expr: number): number
+---@field srand fun(expr?: any[]): any[]
+---@field state fun(what?: string): string
+---@field stdioopen fun(dict: table): number
+---@field stdpath fun(what: string): string|string[]
+---@field str2float fun(string: string, quoted?: boolean): number
+---@field str2list fun(string: string, utf8?: boolean): number[]
+---@field str2nr fun(string: string, base?: number, quoted?: boolean): number
+---@field strcharlen fun(string: string): number
+---@field strcharpart fun(src: string, start: number, len?: number): string
+---@field strchars fun(string: string, skipcc?: boolean): number
+---@field strdisplaywidth fun(string: string, col?: number): number
+---@field strftime fun(format: string, time?: number): string
+---@field strgetchar fun(str: string, index: number): number
+---@field stridx fun(haystack: string, needle: string, start?: number): number
+---@field string fun(expr: any): string
+---@field strlen fun(string: string): number
+---@field strpart fun(src: string, start: number, len?: number, chars?: boolean): string
+---@field strptime fun(format: string, timestring: string): number
+---@field strridx fun(haystack: string, needle: string, start?: number): number
+---@field strtrans fun(string: string): string
+---@field strutf16len fun(string: string, countcc?: boolean): number
+---@field strwidth fun(string: string): number
+---@field submatch fun(nr: number, list?: boolean): string|string[]
+---@field substitute fun(expr: string, pat: string, sub: string, flags: string): string
+---@field swapfilelist fun(): string[]
+---@field swapinfo fun(fname: string): table
+---@field swapname fun(buf: any): string
+---@field synID fun(lnum: number, col: number, trans: number): number
+---@field synIDattr fun(synID: number, what: string, mode?: string): string
+---@field synIDtrans fun(synID: number): number
+---@field synconcealed fun(lnum: number, col: number): any[]
+---@field synstack fun(lnum: number, col: number): number[]
+---@field system fun(expr: string, input?: string): string
+---@field systemlist fun(expr: string, input?: string, keepempty?: boolean): string[]
+---@field tabpagebuflist fun(arg?: number): number[]
+---@field tabpagenr fun(arg?: string): number
+---@field tabpagewinnr fun(tabarg: number, arg?: string): number
+---@field tagfiles fun(): string[]
+---@field taglist fun(expr: string, filename?: string): table[]
+---@field tan fun(expr: number): number
+---@field tanh fun(expr: number): number
+---@field tempname fun(): string
+---@field test_garbagecollect_now fun(): any
+---@field timer_info fun(id?: number): table[]
+---@field timer_pause fun(id: number, pause: boolean): any
+---@field timer_start fun(time: number, callback: string|function, opts?: table): number
+---@field timer_stop fun(id: number): any
+---@field timer_stopall fun(): any
+---@field tolower fun(expr: string): string
+---@field toupper fun(expr: string): string
+---@field tr fun(src: string, fromstr: string, tostr: string): string
+---@field trim fun(text: string, mask?: string, dir?: number): string
+---@field trunc fun(expr: number): number
+---@field type fun(expr: any): number
+---@field undofile fun(name: string): string
+---@field undotree fun(): table
+---@field uniq fun(list: any[], func?: string|function, dict?: table): any[]
+---@field utf16idx fun(string: string, idx: number): number
+---@field values fun(dict: table): any[]
+---@field virtcol fun(expr: string, list?: boolean): number|number[]
+---@field virtcol2col fun(winid: number, lnum: number, col: number): number
+---@field visualmode fun(expr?: boolean): string
+---@field wait fun(delay: number, condition?: string|function, interval?: number): number
+---@field wildmenumode fun(): number
+---@field win_execute fun(id: number, command: string, silent?: boolean): string
+---@field win_findbuf fun(bufnr: number): number[]
+---@field win_getid fun(winnr?: number, tabnr?: number): number
+---@field win_gettype fun(winnr?: number): string
+---@field win_gotoid fun(expr: number): number
+---@field win_id2tabwin fun(expr: number): number[]
+---@field win_id2win fun(expr: number): number
+---@field win_move_separator fun(winnr: number, offset: number): number
+---@field win_move_statusline fun(winnr: number, offset: number): number
+---@field win_screenpos fun(winnr: number): number[]
+---@field win_splitmove fun(winnr: number, target: number, options?: table): number
+---@field winbufnr fun(winnr: number): number
+---@field wincol fun(): number
+---@field windowsversion fun(): string
+---@field winheight fun(winnr: number): number
+---@field winlayout fun(tabnr?: number): any[]
+---@field winline fun(): number
+---@field winnr fun(arg?: string): number
+---@field winrestcmd fun(): string
+---@field winrestview fun(dict: table): any
+---@field winsaveview fun(): table
+---@field winwidth fun(winnr: number): number
+---@field wordcount fun(): table
+---@field writefile fun(object: string[], fname: string, flags?: string): number
+---@field xor fun(expr: any, expr2: any): number
 
---- Vim Option Type
+---Vim Option Type
 ---@class vim.Option
 
---- Option setting (set format)
+---Option setting (set format)
 ---@class vim.opt
 ---@field smarttab boolean|vim.Option
 ---@field expandtab boolean|vim.Option
@@ -117,7 +552,7 @@ Usage:
 ---@field shortmess string|vim.Option
 ---@field whichwrap string|vim.Option
 
---- Log level constants
+---Log level constants
 ---@class vim.log
 ---@field levels vim.log.levels
 
@@ -129,12 +564,12 @@ Usage:
 ---@field ERROR number
 ---@field OFF number
 
---- Keymap management
+---Keymap management
 ---@class vim.keymap
 ---@field set fun(mode: string|string[], lhs: string, rhs: string|function, opts?: table)
 ---@field del fun(modes: string|string[], lhs: string, opts?: table)
 
---- File System Operations
+---File System Operations
 ---@class vim.fs
 ---@field abspath fun(path: string): string
 ---@field basename fun(file: string): string
@@ -147,44 +582,44 @@ Usage:
 ---@field root fun(source: string, marker: string|string[]): string|nil
 ---@field rm fun(path: string, opts?: table)
 
---- UI Operation
+---UI Operation
 ---@class vim.ui
 ---@field input fun(opts: table, on_confirm: function)
 ---@field select fun(items: any[], opts: table, on_choice: function)
 ---@field open fun(path: string, opts?: table): boolean, string|nil
 
---- Highlight Operation
+---Highlight Operation
 ---@class vim.hl
 ---@field on_yank fun(opts?: table)
 ---@field range fun(bufnr: number, ns: number, higroup: string, start: number[], finish: number[], opts?: table)
 ---@field priorities table
 
---- File Type Management
+---File Type Management
 ---@class vim.filetype
 ---@field add fun(filetypes: table)
 ---@field match fun(args: table): string|nil
 ---@field get_option fun(filetype: string, option: string): any
 
---- Spell Check
+---Spell Check
 ---@class vim.spell
 ---@field check fun(str: string): table[]
 
---- Base64 encoding
+---Base64 encoding
 ---@class vim.base64
 ---@field encode fun(str: string): string
 ---@field decode fun(str: string): string
 
---- JSON processing
+---JSON processing
 ---@class vim.json
 ---@field encode fun(obj: any, opts?: table): string
 ---@field decode fun(str: string, opts?: table): any
 
---- MessagePack Serialization
+---MessagePack Serialization
 ---@class vim.mpack
 ---@field encode fun(obj: any): string
 ---@field decode fun(str: string): any
 
---- LSP (Language Server Protocol)
+---LSP (Language Server Protocol)
 ---@class vim.lsp
 ---@field config fun(name: string, opts: table): table
 ---@field enable fun(name: string, bufnr?: number)
@@ -199,7 +634,7 @@ Usage:
 ---@field buf vim.lsp.buf
 ---@field completion table
 
---- LSP buffer operation
+---LSP buffer operation
 ---@class vim.lsp.buf
 ---@field hover fun()
 ---@field definition fun()
@@ -214,7 +649,7 @@ Usage:
 ---@field workspace_symbol fun(query?: string)
 ---@field type_definition fun()
 
---- Diagnostics
+---Diagnostics
 ---@class vim.diagnostic
 ---@field config fun(opts?: table, namespace?: number)
 ---@field enable fun(bufnr?: number, namespace?: number)
@@ -232,14 +667,14 @@ Usage:
 ---@field severity vim.diagnostic.severity
 ---@field handlers table
 
---- Diagnostic level
+---Diagnostic level
 ---@class vim.diagnostic.severity
 ---@field ERROR number
 ---@field WARN number
 ---@field INFO number
 ---@field HINT number
 
---- Tree-sitter
+---Tree-sitter
 ---@class vim.treesitter
 ---@field language_version number
 ---@field minimum_language_version number
@@ -255,13 +690,13 @@ Usage:
 ---@field language vim.treesitter.language
 ---@field query vim.treesitter.query
 
---- Tree-sitter language management
+---Tree-sitter language management
 ---@class vim.treesitter.language
 ---@field add fun(lang: string, opts?: table)
 ---@field register fun(lang: string, opts: table)
 ---@field get_lang fun(filetype: string): string
 
---- Tree-sitter query
+---Tree-sitter query
 ---@class vim.treesitter.query
 ---@field get fun(lang: string, query_name: string): table|nil
 ---@field parse fun(lang: string, query: string): table
@@ -270,11 +705,11 @@ Usage:
 ---@field add_predicate fun(name: string, handler: function, opts?: table)
 ---@field add_directive fun(name: string, handler: function, opts?: table)
 
---- glob pattern matching
+---glob pattern matching
 ---@class vim.glob
 ---@field to_lpeg fun(pattern: string): table
 
---- LPeg pattern matching
+---LPeg pattern matching
 ---@class vim.lpeg
 ---@field match fun(pattern: table, subject: string, init?: number, ...: any): any
 ---@field P fun(value: any): table
@@ -294,13 +729,13 @@ Usage:
 ---@field Cp fun(): table
 ---@field Cs fun(patt: table): table
 
---- Module Loader
+---Module Loader
 ---@class vim.loader
 ---@field enable fun(enable?: boolean)
 ---@field find fun(modname: string, opts?: table): table[]
 ---@field reset fun(path?: string)
 
---- Health Check
+---Health Check
 ---@class vim.health
 ---@field start fun(name: string)
 ---@field ok fun(msg: string)
