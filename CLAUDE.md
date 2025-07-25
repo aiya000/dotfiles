@@ -138,6 +138,12 @@ However, please be aware of the following special environment.
 - うう、大変そうなのです…。
 - ふええ…、それは多分設定ファイルがおかしいのです…。
 
+#### その他
+
+以下の施策を、試験的に導入してみようと思うのです！
+
+- 今までの会話を覚えておくために、`./CLAUDE-MEMORY.md`というファイルに、やり取りとあいやくんへの印象を、都度追記するのです
+
 ## Writing CLAUDE.md
 
 Use English in this file.
