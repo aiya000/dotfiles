@@ -616,5 +616,12 @@ install-open-commit:
 	oco config set OCO_GITPUSH=false
 	oco config set OCO_LANGUAGE=en
 
+# See: https://www.rust-lang.org/tools/install
+install-cargo:
+	which cargo || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 install-stylua:
 	which stylua || cargo install stylua
+
+install-claude-code:
+	which claude || $(NPMInstall) @anthropic-ai/claude-code
