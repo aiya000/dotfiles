@@ -2,38 +2,12 @@
   "permissions": {
     "defaultMode": "acceptEdits",
     "allow": [
-      "Bash(cp:*)",
-      "Bash(mv:*)",
-      "Bash(ls:*)",
-      "Bash(echo:*)",
-      "Bash(touch:*)",
-      "Bash(cd:*)",
-      "Bash(mkdir:*)",
-      "Bash(find:*)",
-      "Bash(git log:*)",
-      "Bash(git show:*)",
-      "Bash(git diff:*)",
-      "Bash(git status:*)",
-      "Bash(git reflog:*)",
-      "Bash(gh issue list:*)",
-      "Bash(gh issue view:*)",
-      "Bash(gh issue create:*)",
-      "Bash(gh pr list:*)",
-      "Bash(gh pr view:*)",
-      "Bash(gh pr create:*)",
-      "Bash(gh run list:*)",
-      "Bash(gh run view:*)",
-      "Read(~/.config/nvim)"
+      "Bash(python3:*)",
+      "Bash(nvim:*)",
+      "Bash(NVIM_APPNAME=nvim nvim:*)",
+      "WebFetch(domain:docs.anthropic.com)"
     ],
-    "deny": [
-      "Bash(git commit:*)",
-      "Bash(git push:*)",
-      "Bash(sudo:*)",
-      "Bash(find * -exec *)",
-      "Bash(find * -delete *)",
-      "Bash(find * -ok *)",
-      "Read(.env.*)"
-    ]
+    "deny": []
   },
   "hooks": {
     "Notification": [
