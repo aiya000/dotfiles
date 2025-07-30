@@ -1,19 +1,9 @@
-# Vim
-.vim/.netrwhist
-.vim/bundle/**
-.vim/doc/tags
-.vim/doc/dein.txt
-.vim/doc/matchit.txt
-.vim/resource/Java  # :Unite javasrc
-
-# NeoVim
-..vimrc-rplugin~
-.vim/.log/nvim_python.log_*
-
 # ZSH
 .zsh/_git
 .zsh/.zcompdump
 .zsh/history
+## For each environment
+.zsh/history_archive
 
 # bash
 .bashfiles/git-completion.bash
@@ -33,17 +23,3 @@
 .xmonad/xmonad.hi
 .xmonad/xmonad.o
 .xmonad/.stack-work
-
-# For each environment
-.zsh/history_archive
-
-# Why macOS's stack put '.stack' to ~/.dotfiles when 'stack setup' is executed ?
-.stack
-.idris/repl/history
-.config/karabiner/karabiner.json
-.domterm/default.socket
-.history
-.vim/en.utf-8.add.spl
-.DS_Store
-zprof.log
-nvm.log

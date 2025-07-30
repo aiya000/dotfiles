@@ -1,2 +1,3 @@
 init_env.lua
 init_env_post.lua
+bundle/**
