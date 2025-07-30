@@ -2,6 +2,7 @@
 
 local list_util = require('utils.list')
 local msg_util = require('utils.message')
+local fn = require('utils.functions')
 
 local M = {}
 
@@ -45,7 +46,7 @@ end
 
 ---@param install_dir_path string --ここのディレクトリパスにdein.vimをgit-cloneする
 function M.install_dein_if_not_installed(install_dir_path)
-  if vim.fn.isdirectory(install_dir_path) then
+  if vim.fn.exists('*dein#begin') then
     return
   end
 
@@ -54,15 +55,16 @@ function M.install_dein_if_not_installed(install_dir_path)
   end
 
   print('Installing dein.vim...')
-  vim.system({'git', 'clone', 'https://github.com/Shougo/dein.vim', install_dir_path}, {
-    text = true,
-    stdout = true,
-    stderr = true,
-  }, function(result)
-    if result.code ~= 0 then
-      error('Failed to install dein.vim')
-    end
-  end)
+  local result = vim.system(
+    {'git', 'clone', 'https://github.com/Shougo/dein.vim', install_dir_path},
+    { text = true }
+  ):wait()
+
+  if result.code ~= 0 then
+    print('Failed to install dein.vim. Result:')
+    fn.print_table(result)
+    error('Exit.')
+  end
   print('Done!')
 end
 

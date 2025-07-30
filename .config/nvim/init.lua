@@ -94,8 +94,7 @@ end
 -- }}}
 -- Prepare dein.vim {{{
 
--- TODO: Future migration to lazy.nvim
--- For now, we'll keep the existing dein.vim setup until the basic conversion is complete
+-- TODO: Future migration to lazy.nvim or something. For now, keep using dein.vim
 
 local dein_dir = vim.g.vimrc.vim_home .. '/bundle/repos/github.com/Shougo/dein.vim'
 init_lua.install_dein_if_not_installed(dein_dir)
@@ -109,19 +108,27 @@ vim.call('dein#begin', bundle_dir)
 -- }}}
 -- Prepare backup directories {{{
 
+---@return string | nil
+local function whoami()
+  local result = vim.fn.system('whoami'):wait()
+  if result.code ~= 0 then
+    return nil
+  end
+  return result
+end
+
 ---@param dir string
 local function ensure_directory(dir)
   if vim.fn.isdirectory(dir) == 0 then
-    if vim.env.USER == nil then
-      error('$USER is not provided')
+    local user = vim.env.USER or whoami()
+    if user == nil then
+      error('Both $USER and `whoami` are not provided')
     end
-    if vim.env.GROUP == nil then
-      error('$GROUP is not provided')
-    end
+    local group = vim.env.GROUP or ''
 
     vim.fn.mkdir(dir, 'p', '700')
     vim.fn.system(
-      s('chown -R "{user}:{group}" "{dir}"', {
+      fn.s('chown -R "{user}:{group}" "{dir}"', {
         user = user,
         group = group,
         dir = dir,
@@ -137,20 +144,15 @@ ensure_directory(vim.g.vimrc.sessiondir)
 -- }}}
 
 --------------
--- dein.vim --
---------------
--- {{{
+
+-- dein.vim {{{
 
 vim.call('dein#load_toml', '~/.config/dein.toml', { lazy = false })
 vim.call('dein#load_toml', '~/.config/dein_lazy.toml', { lazy = true })
 vim.call('dein#add', 'Shougo/dein.vim', { rtp = '' })
 
 -- }}}
-
--------------------
--- Local scripts --
--------------------
--- {{{
+-- local scripts {{{
 
 -- Load private configuration
 local init_private_lua = vim.fn.expand('~/.dotfiles/.private/nvim_init_private.lua')
@@ -164,11 +166,9 @@ if vim.fn.filereadable(init_env_lua) == 1 then
 end
 
 -- }}}
-
------------
--- Options --
------------
--- {{{
+require('autocmds')
+require('plugins.config')
+-- options {{{
 vim.opt.autoindent = true
 vim.opt.backspace = { 'indent', 'eol', 'start' }
 vim.opt.breakindent = true
@@ -309,18 +309,12 @@ vim.g.mapleader = '['
 vim.g.maplocalleader = '['
 
 -- }}}
-
--- Load configuration modules
--- Plugin config will be loaded later when we migrate to lazy.nvim
--- require('plugins.config')
 require('keymaps')
-require('autocmds')
 
--- Load post-configuration (disabled until dein.vim is properly set up)
--- local env_post_vimrc = vim.fn.expand('$HOME/.vimrc_env_post')
--- if vim.fn.filereadable(env_post_vimrc) == 1 then
---   vim.cmd('source ' .. env_post_vimrc)
--- end
+local env_post_vimrc = vim.fn.expand('~/.vimrc_env_post')
+if vim.fn.filereadable(env_post_vimrc) == 1 then
+  vim.cmd('source ' .. env_post_vimrc)
+end
 
 vim.cmd('filetype plugin indent on')
 vim.cmd('syntax enable')
