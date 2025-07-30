@@ -1,14 +1,16 @@
 snippet if
 options indent
-  if ${1:cond} then
+  if ${1:condition} then
     ${0}
   end
 
-snippet eq
+snippet equal
+alias eq
 abbr ==
   ==
 
-snippet ne
+snippet not_equal
+alias ne
 abbr ~=
   ~=
 
@@ -79,3 +81,12 @@ snippet error
 alias panic
 abbr error(${0:here})
   error(${0:here})
+
+snippet conditional_operator
+alias cond
+abbr ${1:condition} and ${2:if_true} or ${0:if_false}
+  ${1:condition} and ${2:if_true} or ${0:if_false}
+
+snippet nullish_operator
+abbr or
+  or
