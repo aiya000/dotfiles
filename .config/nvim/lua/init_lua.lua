@@ -46,7 +46,7 @@ end
 
 ---@param install_dir_path string --ここのディレクトリパスにdein.vimをgit-cloneする
 function M.install_dein_if_not_installed(install_dir_path)
-  if vim.fn.exists('*dein#begin') then
+  if vim.fn.exists('*dein#begin') ~= 0 then
     return
   end
 
