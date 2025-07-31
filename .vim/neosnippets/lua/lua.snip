@@ -82,6 +82,10 @@ alias panic
 abbr error(${0:here})
   error(${0:here})
 
+snippet assert
+abbr assert(${1:condition}, '${0:error_message}')
+  assert(${1:condition}, '${0:error_message}')
+
 snippet conditional_operator
 alias cond
 abbr ${1:condition} and ${2:if_true} or ${0:if_false}

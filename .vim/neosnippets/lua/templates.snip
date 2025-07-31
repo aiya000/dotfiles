@@ -1,9 +1,9 @@
 snippet try_catch
 alias try catch
 options indent
-  local ok, ${2:result} = pcall(${1:func_name})
+  local ok, ${3:result} = pcall(${1:func_name}${2:#:, args})
   if not ok then
-    ${0:catching}
+    ${0:handling}
   end
 snippet define_module
 
@@ -112,3 +112,39 @@ snippet s
 alias template_string
 abbr s(${1:string}, {${0:interpolated_variables}})
   s(${1:string}, {${0:interpolated_variables}})
+
+snippet class
+alias cla
+options indent
+  ---@class ${1:ClassName}
+  local $1 = {}
+  $1.__index = $1
+
+  ---@return $1
+  function $1.new(${2:#:construtor_args})
+    local self = setmetatable({}, $1)
+    self.${3:arg} = $3
+    return self
+  end
+
+snippet method
+alias met
+options indent
+  ---@param self ${1:ClassName}
+  function $1:${2:method_name}()
+    ${0}
+  end
+
+snippet call_lambda
+options indent
+  (function ${1:f}(${2:#:args})
+     ${0}
+  end)(${2:#:args});
+
+snippet define_simple_test
+alias define_test deftest
+options indent
+  (function()
+    local result = ${3}
+    assert(result == ${4}, '- Failed: ${1:tested_func}() should ${2:do}')
+ end)();

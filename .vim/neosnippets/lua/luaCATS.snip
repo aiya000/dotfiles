@@ -13,6 +13,7 @@ snippet return
 abbr @return ${1:type}${0:#:description}
   ---@return ${1:type}${0:#:--description}
 
+# Example
 snippet alias
 alias type_alias
 abbr @alias ${1:NewName} ${0:type}
@@ -20,27 +21,39 @@ abbr @alias ${1:NewName} ${0:type}
 
 # Usage:
 # ```lua
-# --- A person class
+# ---A person class
 # ---@class Person
 # ---@field name string
 # ---@field age number
+# local Person = {}
+# Person.__index = Person
 #
 # ---@param person Person
 # function f(person)
 # end
 # ```
-snippet type_define_class
-alias define_class
+snippet type_define_class_type
+alias define_class_type
   ---@class ${1:ClassName}
   ---@field ${2:prop_name} ${0:type}
 
-snippet type_class
+snippet type_class_type
 abbr @class ${0:ClassName}
   ---@class ${0:ClassName}
 
 snippet type_field
 abbr @field ${1:field_name} ${0:type}
   ---@field ${1:field_name} ${0:type}
+
+snippet type_generic
+alias generic
+abbr ---@generic <name> [:parent_type] [, <name> [:parent_type]]
+  ---@generic ${0:TypeArgName}
+
+snippet type_overload
+alias overload
+abbr ---@overload ${0:function_type}
+  ---@overload fun(${1:#:args}): ${0:return_type}
 
 # Example:
 # ```lua
@@ -80,7 +93,8 @@ snippet type_boolean
 abbr boolean
   boolean
 
-snippet type_table
+snippet type_table_any
+alias type_any_table
 abbr table
   table
 
@@ -91,6 +105,11 @@ abbr function
 snippet type_any
 abbr any
   any
+
+snippet type_unknown
+alias unknown unk
+abbr unknown
+  unknown
 
 snippet type_nil
 abbr nil
