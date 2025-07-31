@@ -1,5 +1,7 @@
 local M = {}
 
+M.pipe = require('utils.pipe')
+
 -- TODO: Recursively
 function M.print_table(t)
   print('{')
@@ -7,25 +9,6 @@ function M.print_table(t)
     print('  ' .. k, '=', v .. ',')
   end
   print('}')
-end
-
----Example:
----```lua
----local result = pipe('hello')
----  :map(string.upper)
----  :map(function(s) return s .. '!' end)
----  :get()  -- 'HELLO!'
----```
-function M.pipe(value)
-  return {
-    value = value,
-    let = function(self, f)
-      return M.pipe(f(self.value))
-    end,
-    get = function(self)
-      return self.value
-    end,
-  }
 end
 
 ---Example:
@@ -60,6 +43,13 @@ function M.s(text, env)
     local f = load('return' .. expr, nil, nil, env)
     return f and f() or '{' .. expr .. '}'
   end)
+end
+
+---@generic T
+---@param x T
+---@return T
+function M.identity(x)
+  return x
 end
 
 return M

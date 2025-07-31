@@ -1,4 +1,4 @@
--- Functions for init.lua
+---Helper functions for init.lua
 
 local list_util = require('utils.list')
 local msg_util = require('utils.message')
@@ -6,47 +6,9 @@ local fn = require('utils.functions')
 
 local M = {}
 
--- Allows to reuse `self`.
--- Params:
---   self: A
---   f: (self: A) -> B
--- Result: B
--- Example:
---   join(a:stdout, '')->vimrc#let({ result ->
---     \ result ==# foo
---       \ ? bar
---       \ : result
---    \ })
-function M.let(self, f)
-  return f(self)
-end
-
--- Applies `f` if `p(value)`.
--- To re-use a:value.
--- Params:
---   value: A
---   p: (value: A) -> Bool
---   f: (value: A) -> B
--- Result: A | B
-function M.apply_if(value, p, f)
-  return M.let(value, function(val)
-    return p(val) and f(val) or val
-  end)
-end
-
-function M.identity(x)
-  return x
-end
-
--- Returns alt if f() throws an exception.
-function M.catch(f, alt)
-  local ok, result = pcall(f)
-  return ok and result or alt
-end
-
 ---@param install_dir_path string --ここのディレクトリパスにdein.vimをgit-cloneする
 function M.install_dein_if_not_installed(install_dir_path)
-  if vim.fn.exists('*dein#begin') ~= 0 then
+  if vim.fn.isdirectory(install_dir_path) == 1 then
     return
   end
 

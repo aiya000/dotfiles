@@ -1,6 +1,6 @@
 -- NOTE: Don't use the mark Z, this is reserved by some my functions.
 
-local init_lua = require('init_lua')
+local init_helper = require('init_helper')
 local git = require('git')
 local fn = require('utils.functions')
 
@@ -97,7 +97,7 @@ end
 -- TODO: Future migration to lazy.nvim or something. For now, keep using dein.vim
 
 local dein_dir = vim.g.vimrc.vim_home .. '/bundle/repos/github.com/Shougo/dein.vim'
-init_lua.install_dein_if_not_installed(dein_dir)
+init_helper.install_dein_if_not_installed(dein_dir)
 vim.opt.runtimepath:append(dein_dir)
 
 local bundle_dir = vim.g.vimrc.vim_home .. '/bundle'
