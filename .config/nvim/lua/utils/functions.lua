@@ -80,6 +80,8 @@ end
 
 -- In-source testing
 if vim == nil then
+  -- Helpers {{{
+
   ---@param description string
   ---@param check fun(): nil
   ---Example:
@@ -123,6 +125,8 @@ if vim == nil then
       error(string.format('Expected: %s, but got: %s', tostring(expected), tostring(actual)))
     end
   end
+
+  -- }}}
 
   test('s() should return the taken string simply if with no embedded expressions', function()
     assert_equal(M.s('hi'), 'hi')

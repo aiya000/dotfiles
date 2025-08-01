@@ -145,6 +145,8 @@ alias in_source_test
 options indent
   -- In-source testing
   if vim == nil then
+    -- Helpers {{{
+
     ---@param description string
     ---@param check fun(): nil
     ---Example:
@@ -188,6 +190,8 @@ options indent
         error(string.format('Expected: %s, but got: %s', tostring(expected), tostring(actual)))
       end
     end
+
+    -- }}}
 
     ${0}
   end
