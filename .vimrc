@@ -1083,6 +1083,7 @@ set
   \ suffixes=
   \ tabline=%!vimrc#tabline#make()
   \ tabstop=2
+  \ textwidth=0
   \ viminfo='400,<50,s10,h
   \ visualbell
   \ wildignorecase
