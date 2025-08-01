@@ -32,26 +32,24 @@ abbr @alias ${1:NewName} ${0:type}
 # function f(person)
 # end
 # ```
-snippet type_define_class_type
-alias define_class_type
+snippet define_class_type
+alias defclass
   ---@class ${1:ClassName}
   ---@field ${2:prop_name} ${0:type}
 
-snippet type_class_type
+snippet class_type
 abbr @class ${0:ClassName}
   ---@class ${0:ClassName}
 
-snippet type_field
+snippet field
 abbr @field ${1:field_name} ${0:type}
   ---@field ${1:field_name} ${0:type}
 
-snippet type_generic
-alias generic
+snippet generic
 abbr ---@generic <name> [:parent_type] [, <name> [:parent_type]]
   ---@generic ${0:TypeArgName}
 
-snippet type_overload
-alias overload
+snippet overload
 abbr ---@overload ${0:function_type}
   ---@overload fun(${1:#:args}): ${0:return_type}
 
@@ -64,6 +62,10 @@ snippet type
 abbr ---@type ${0:VarType}
   ---@type ${0:VarType}
 
+snippet see
+abbr --@see ${0:symbol}
+  --@see ${0:symbol}
+
 # Example:
 # ```lua
 # f(x --[[@as string]])
@@ -72,7 +74,8 @@ snippet as
 abbr ---[[@as ${0:CoercedType}]]
   --[[@as ${0:CoercedType}]]
 
-snippet as_array
+snippet array_as
+alias as_of_array
 abbr --[=[@as ${0:ElementType}[]]=]
   --[=[@as ${0:ElementType}[]]=]
 
@@ -93,8 +96,8 @@ snippet type_boolean
 abbr boolean
   boolean
 
-snippet type_table_any
-alias type_any_table
+snippet type_any_table
+alias type_table_any
 abbr table
   table
 
@@ -157,3 +160,10 @@ abbr ${0:type}?
 snippet type_varargs
 abbr ...${0:type}
   ...${0:type}
+
+snippet example_comment
+alias example
+  ---Example:
+  ---\`\`\`lua
+  ---${0}
+  ---\`\`\`
