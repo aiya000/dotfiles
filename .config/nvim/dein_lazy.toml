@@ -1,0 +1,264 @@
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+depends = 'vimproc.vim'
+on_cmd = 'QuickRun'
+on_map = [
+  '<Plug>(quickrun)',
+  '<Plug>(quickrun-op)',
+]
+
+[[plugins]]
+repo = 'thinca/vim-themis'
+on_ft = [
+  'vim',
+  'vimspec',
+]
+
+[[plugins]]
+repo = 'kannokanno/previm'
+on_ft = 'markdown',
+on_cmd = 'PrevimOpen'
+
+[[plugins]]
+repo = 'mbbill/undotree'
+on_cmd = [
+  'UndotreeToggle',
+  'UndotreeFocus',
+  'UndotreeShow',
+  'UndotreeHide',
+]
+
+[[plugins]]
+repo = 'aiya000/adrone.vim'
+on_cmd = [
+  'AdroneHome',
+  'AdroneSay',
+  'AdroneVersion',
+]
+
+[[plugins]]
+repo = 'lambdalisue/vim-manpager'
+on_cmd = [
+  'Man',
+]
+
+[[plugins]]
+repo = 'thinca/vim-ft-clojure'
+on_ft = [
+  'clojure',
+  'lisp',  # Please see ~/.vim/syntax/lisp.vim
+]
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+[[plugins]]
+repo = 'derekwyatt/vim-scala'
+on_ft = 'scala'
+
+[[plugins]]
+repo = 'udalov/kotlin-vim'
+on_ft = 'kotlin'
+
+[[plugins]]
+repo = 'ianks/vim-tsx'
+on_event = ['BufNewFile', 'BufRead']
+on_ft = 'expand("%") =~# "\.tsx$"'
+
+[[plugins]]
+repo = 'vmchale/ghci-syntax'
+on_ft = 'dot-ghci'
+
+[[plugins]]
+repo = 'aiya000/elm-vim'
+rev = 'aiya000/use-command-bang'
+on_ft = 'elm'
+on_cmd = ['ElmFormat']
+
+[[plugins]]
+repo = 'aiya000/idris-vim'
+rev = 'aiya000/can-be-disabled-keymappings'
+on_ft = [
+  'idris',
+  'lidris',
+]
+
+[[plugins]]
+repo = 'haya14busa/incsearch.vim'
+on_map = [
+  '<Plug>(incsearch-forward)',
+  '<Plug>(incsearch-backward)',
+  '<Plug>(incsearch-stay)',
+  '<Plug>(incsearch-nohl)',
+  '<Plug>(incsearch-nohl0)',
+  '<Plug>(incsearch-nohl-n)',
+  '<Plug>(incsearch-nohl-N)',
+  '<Plug>(incsearch-nohl-*)',
+  '<Plug>(incsearch-nohl-#)',
+  '<Plug>(incsearch-nohl-g*)',
+  '<Plug>(incsearch-nohl-g#)',
+]
+
+[[plugins]]
+repo = 'vim-scripts/alex.vim'
+on_ft = 'alex'
+
+[[plugins]]
+repo = 'thinca/vim-textobj-between'
+on_map = [
+  '<Plug>(textobj-between-a)',
+  '<Plug>(textobj-between-i)',
+]
+
+[[plugins]]
+repo = 'rhysd/vim-operator-surround'
+depends = 'vim-operator-user'
+hook_source = 'call vimrc#dein#hook_source#operator_surround()'
+on_map = [
+  '<Plug>(operator-surround-append)',
+  '<Plug>(operator-surround-delete)',
+  '<Plug>(operator-surround-replace)',
+]
+
+[[plugins]]
+repo = 'aiya000/vim-review'
+on_ft = 'review'
+
+[[plugins]]
+repo = 'aiya000/vim-fmap'
+on_cmd = 'FNoreMap'
+on_map = [
+  '<Plug>(fmap-forward-f)',
+  '<Plug>(fmap-backward-f)',
+  '<Plug>(fmap-forward-t)',
+  '<Plug>(fmap-backward-t)',
+]
+
+[[plugins]]
+repo = 'rhysd/vim-gfm-syntax'
+on_ft = ['markdown']
+
+[[plugins]]
+repo = 'vmchale/dhall-vim'
+on_ft = ['dhall']
+
+[[plugins]]
+repo = 'haya14busa/dein-command.vim'
+on_cmd = 'Dein'
+
+[[plugins]]
+repo = 'posva/vim-vue'
+on_ft = ['vue']
+
+[[plugins]]
+repo = 'aiya000/vim-ghcid-quickfix'
+on_ft = [
+  'haskell',
+  'happy',
+  'alex',
+]
+
+[[plugins]]
+repo = 'tyru/open-browser-github.vim'
+on_cmd = [
+  'OpenGithubFile',
+  'OpenGithubIssue',
+  'OpenGithubPullReq',
+  'OpenGithubProject',
+]
+
+[[plugins]]
+repo = 'gutenye/json5.vim'
+on_ft = ['json5']
+
+[[plugins]]
+repo = 'itchyny/vim-haskell-sort-import'
+on_ft = ['haskell']
+
+[[plugins]]
+repo = 'skanehira/translate.vim'
+on_cmd = [
+  'Translate',
+  'AutoTranslateModeToggle',
+  'AutoTranslateModeEnable',
+  'AutoTranslateModeDisable',
+]
+
+[[plugins]]
+repo = 'segeljakt/vim-silicon'
+on_cmd = [
+  'Silicon',
+  'SiliconHighlight',
+]
+
+[[plugins]]
+repo = 'aiya000/vim-webpage'
+on_cmd = 'Webpage'
+
+[[plugins]]
+repo = 'tyru/operator-camelize.vim'
+on_map = [
+  '<Plug>(operator-camelize)',
+  '<Plug>(operator-decamelize)',
+  '<Plug>(operator-camelize-toggle)',
+]
+
+[[plugins]]
+repo = 'AndrewRadev/quickpeek.vim'
+on_ft = 'qf'
+
+[[plugins]]
+repo = 'aiya000/vim-quickrepl'
+on_map = '<Plug>(quickrepl-open)'
+on_cmd = 'QuickReplOpen'
+
+[[plugins]]
+repo = 'aiya000/yankround.vim'
+on_map = [
+  '<Plug>(yankround-p)',
+  '<Plug>(yankround-P)',
+  '<Plug>(yankround-gp)',
+  '<Plug>(yankround-gP)',
+  '<Plug>(yankround-prev)',
+  '<Plug>(yankround-next)',
+]
+
+[[plugins]]
+repo = 'ap/vim-css-color'
+on_ft = [
+  'css',
+  'scss',
+  'sass',
+  'html',
+  'xml',
+  'typescript.tsx',
+]
+
+[[plugins]]
+repo = 'delphinus/vim-firestore'
+on_ft = 'firestore'
+
+[[plugins]]
+repo = 'chikatoike/concealedyank.vim'
+on_source = 'gina.vim'
+
+[[plugins]]
+repo = 'jparise/vim-graphql'
+on_ft = ['graphql']
+
+[[plugins]]
+repo = 'mattn/webapi-vim'
+
+[[plugins]]
+repo = 'mattn/vim-gist'
+on_cmd = 'Gist'
+depends = ['webapi-vim']
+
+[[plugins]]
+repo = 'vim-scripts/ShaderHighLight'
+on_ft = 'shaderlab'
+
+[[plugins]]
+repo = 'PProvost/vim-ps1'
+on_ft = 'ps1'
