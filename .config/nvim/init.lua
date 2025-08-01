@@ -1,6 +1,6 @@
 -- NOTE: Don't use the mark Z, this is reserved by some my functions.
 
-local init_helper = require('init_helper')
+local helper = require('helper')
 local git = require('git')
 local fn = require('utils.functions')
 
@@ -97,7 +97,7 @@ end
 -- TODO: Future migration to lazy.nvim or something. For now, keep using dein.vim
 
 local dein_dir = vim.g.vimrc.vim_home .. '/bundle/repos/github.com/Shougo/dein.vim'
-init_helper.install_dein_if_not_installed(dein_dir)
+helper.install_dein_if_not_installed(dein_dir)
 vim.opt.runtimepath:append(dein_dir)
 
 local bundle_dir = vim.g.vimrc.vim_home .. '/bundle'
@@ -108,38 +108,9 @@ vim.call('dein#begin', bundle_dir)
 -- }}}
 -- Prepare backup directories {{{
 
----@return string | nil
-local function whoami()
-  local result = vim.fn.system('whoami'):wait()
-  if result.code ~= 0 then
-    return nil
-  end
-  return result
-end
-
----@param dir string
-local function ensure_directory(dir)
-  if vim.fn.isdirectory(dir) == 0 then
-    local user = vim.env.USER or whoami()
-    if user == nil then
-      error('Both $USER and `whoami` are not provided')
-    end
-    local group = vim.env.GROUP or ''
-
-    vim.fn.mkdir(dir, 'p', '700')
-    vim.fn.system(
-      fn.s('chown -R "{user}:{group}" "{dir}"', {
-        user = user,
-        group = group,
-        dir = dir,
-      })
-    )
-  end
-end
-
-ensure_directory(vim.g.vimrc.directory)
-ensure_directory(vim.g.vimrc.undodir)
-ensure_directory(vim.g.vimrc.sessiondir)
+helper.ensure_directory(vim.g.vimrc.directory)
+helper.ensure_directory(vim.g.vimrc.undodir)
+helper.ensure_directory(vim.g.vimrc.sessiondir)
 
 -- }}}
 
@@ -147,14 +118,13 @@ ensure_directory(vim.g.vimrc.sessiondir)
 
 -- dein.vim {{{
 
-vim.call('dein#load_toml', '~/.config/dein.toml', { lazy = false })
-vim.call('dein#load_toml', '~/.config/dein_lazy.toml', { lazy = true })
+vim.call('dein#load_toml', '~/.config/nvim/dein.toml', { lazy = false })
+vim.call('dein#load_toml', '~/.config/nvim/dein_lazy.toml', { lazy = true })
 vim.call('dein#add', 'Shougo/dein.vim', { rtp = '' })
 
 -- }}}
 -- local scripts {{{
 
--- Load private configuration
 local init_private_lua = vim.fn.expand('~/.dotfiles/.private/nvim_init_private.lua')
 if vim.fn.filereadable(init_private_lua) == 1 then
   vim.cmd('source ' .. init_private_lua)
@@ -167,7 +137,7 @@ end
 
 -- }}}
 require('autocmds')
-require('plugins.config')
+require('plugins-configs')
 -- options {{{
 vim.opt.autoindent = true
 vim.opt.backspace = { 'indent', 'eol', 'start' }

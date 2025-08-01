@@ -83,6 +83,128 @@ Usage:
 
 ---Neovim API Functions
 ---@class vim.api
+---@field nvim_chan_send fun(chan: integer, data: string)
+---@field nvim_create_buf fun(listed: boolean, scratch: boolean): integer
+---@field nvim_del_current_line fun()
+---@field nvim_del_keymap fun(mode: string, lhs: string)
+---@field nvim_del_mark fun(name: string): boolean
+---@field nvim_del_var fun(name: string)
+---@field nvim_echo fun(chunks: table[], history: boolean, opts?: table)
+---@field nvim_eval_statusline fun(str: string, opts?: table): table
+---@field nvim_exec_lua fun(code: string, args?: any[]): any
+---@field nvim_get_current_buf fun(): integer
+---@field nvim_get_current_line fun(): string
+---@field nvim_get_current_tabpage fun(): integer
+---@field nvim_get_current_win fun(): integer
+---@field nvim_get_hl fun(ns_id: integer, opts?: table): table
+---@field nvim_get_mark fun(name: string, opts?: table): table
+---@field nvim_get_mode fun(): table
+---@field nvim_get_var fun(name: string): any
+---@field nvim_list_bufs fun(): integer[]
+---@field nvim_list_tabpages fun(): integer[]
+---@field nvim_list_wins fun(): integer[]
+---@field nvim_set_current_buf fun(buffer: integer)
+---@field nvim_set_current_line fun(line: string)
+---@field nvim_set_current_tabpage fun(tabpage: integer)
+---@field nvim_set_current_win fun(window: integer)
+---@field nvim_set_hl fun(ns_id: integer, name: string, val: table)
+---@field nvim_set_keymap fun(mode: string, lhs: string, rhs: string, opts?: table)
+---@field nvim_set_var fun(name: string, value: any)
+---@field nvim_buf_get_lines fun(buffer: integer, start: integer, end_: integer, strict_indexing: boolean): string[]
+---@field nvim_buf_set_lines fun(buffer: integer, start: integer, end_: integer, strict_indexing: boolean, replacement: string[])
+---@field nvim_buf_get_name fun(buffer: integer): string
+---@field nvim_buf_set_name fun(buffer: integer, name: string)
+---@field nvim_buf_is_loaded fun(buffer: integer): boolean
+---@field nvim_buf_is_valid fun(buffer: integer): boolean
+---@field nvim_buf_get_mark fun(buffer: integer, name: string): integer[]
+---@field nvim_buf_set_mark fun(buffer: integer, name: string, line: integer, col: integer, opts?: table): boolean
+---@field nvim_buf_del_mark fun(buffer: integer, name: string): boolean
+---@field nvim_buf_line_count fun(buffer: integer): integer
+---@field nvim_buf_attach fun(buffer: integer, send_buffer: boolean, opts: table): boolean
+---@field nvim_buf_detach fun(buffer: integer): boolean
+---@field nvim_buf_get_changedtick fun(buffer: integer): integer
+---@field nvim_buf_get_keymap fun(buffer: integer, mode: string): table[]
+---@field nvim_buf_set_keymap fun(buffer: integer, mode: string, lhs: string, rhs: string, opts?: table)
+---@field nvim_buf_del_keymap fun(buffer: integer, mode: string, lhs: string)
+---@field nvim_buf_get_var fun(buffer: integer, name: string): any
+---@field nvim_buf_set_var fun(buffer: integer, name: string, value: any)
+---@field nvim_buf_del_var fun(buffer: integer, name: string)
+---@field nvim_buf_get_option fun(buffer: integer, name: string): any
+---@field nvim_buf_set_option fun(buffer: integer, name: string, value: any)
+---@field nvim_buf_call fun(buffer: integer, fun: function): any
+---@field nvim_win_get_cursor fun(window: integer): integer[]
+---@field nvim_win_set_cursor fun(window: integer, pos: integer[])
+---@field nvim_win_get_height fun(window: integer): integer
+---@field nvim_win_set_height fun(window: integer, height: integer)
+---@field nvim_win_get_width fun(window: integer): integer
+---@field nvim_win_set_width fun(window: integer, width: integer)
+---@field nvim_win_get_buf fun(window: integer): integer
+---@field nvim_win_set_buf fun(window: integer, buffer: integer)
+---@field nvim_win_get_position fun(window: integer): integer[]
+---@field nvim_win_get_tabpage fun(window: integer): integer
+---@field nvim_win_get_number fun(window: integer): integer
+---@field nvim_win_is_valid fun(window: integer): boolean
+---@field nvim_win_hide fun(window: integer)
+---@field nvim_win_close fun(window: integer, force: boolean)
+---@field nvim_win_get_config fun(window: integer): table
+---@field nvim_win_set_config fun(window: integer, config: table)
+---@field nvim_win_get_var fun(window: integer, name: string): any
+---@field nvim_win_set_var fun(window: integer, name: string, value: any)
+---@field nvim_win_del_var fun(window: integer, name: string)
+---@field nvim_win_get_option fun(window: integer, name: string): any
+---@field nvim_win_set_option fun(window: integer, name: string, value: any)
+---@field nvim_tabpage_get_number fun(tabpage: integer): integer
+---@field nvim_tabpage_is_valid fun(tabpage: integer): boolean
+---@field nvim_tabpage_list_wins fun(tabpage: integer): integer[]
+---@field nvim_tabpage_get_var fun(tabpage: integer, name: string): any
+---@field nvim_tabpage_set_var fun(tabpage: integer, name: string, value: any)
+---@field nvim_tabpage_del_var fun(tabpage: integer, name: string)
+---@field nvim_tabpage_get_win fun(tabpage: integer): integer
+---@field nvim_command fun(command: string)
+---@field nvim_eval fun(expr: string): any
+---@field nvim_call_function fun(fn: string, args: any[]): any
+---@field nvim_strwidth fun(text: string): integer
+---@field nvim_list_runtime_paths fun(): string[]
+---@field nvim_get_runtime_file fun(name: string, all: boolean): string[]
+---@field nvim_set_current_dir fun(dir: string)
+---@field nvim_get_current_dir fun(): string
+---@field nvim_get_option fun(name: string): any
+---@field nvim_set_option fun(name: string, value: any)
+---@field nvim_get_vvar fun(name: string): any
+---@field nvim_set_vvar fun(name: string, value: any)
+---@field nvim_out_write fun(str: string)
+---@field nvim_err_write fun(str: string)
+---@field nvim_err_writeln fun(str: string)
+---@field nvim_list_bufs fun(): integer[]
+---@field nvim_get_option_info fun(name: string): table
+---@field nvim_create_namespace fun(name: string): integer
+---@field nvim_get_namespaces fun(): table
+---@field nvim_paste fun(data: string, crlf: boolean, phase: integer): boolean
+---@field nvim_put fun(lines: string[], type: string, after: boolean, follow: boolean)
+---@field nvim_subscribe fun(event: string)
+---@field nvim_unsubscribe fun(event: string)
+---@field nvim_get_color_by_name fun(name: string): integer
+---@field nvim_get_color_map fun(): table
+---@field nvim_get_context fun(opts?: table): table
+---@field nvim_load_context fun(dict: table)
+---@field nvim_get_api_info fun(): table[]
+---@field nvim_set_client_info fun(name: string, version: table, type: string, methods: table, attributes: table)
+---@field nvim_get_chan_info fun(chan: integer): table
+---@field nvim_list_chans fun(): table[]
+---@field nvim_call_dict_function fun(dict: table, fn: string, args: any[]): any
+---@field nvim_parse_expression fun(expr: string, flags: string, highlight: boolean): table
+---@field nvim_open_win fun(buffer: integer, enter: boolean, config: table): integer
+---@field nvim_win_set_hl_ns fun(window: integer, ns_id: integer)
+---@field nvim_win_get_hl_ns fun(window: integer): integer
+---@field nvim_create_augroup fun(name: string, opts?: table): integer
+---@field nvim_create_autocmd fun(event: string|string[], opts: table): integer
+---@field nvim_del_augroup_by_id fun(id: integer)
+---@field nvim_del_augroup_by_name fun(name: string)
+---@field nvim_del_autocmd fun(id: integer)
+---@field nvim_get_autocmds fun(opts?: table): table[]
+---@field nvim_clear_autocmds fun(opts: table)
+---@field nvim_create_user_command fun(name: string, command: string|function, opts?: table)
+---@field nvim_del_user_command fun(name: string)
 
 ---Vim Functions (See builtin.txt)
 ---@class vim.fn

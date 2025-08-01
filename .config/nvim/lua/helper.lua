@@ -30,14 +30,43 @@ function M.install_dein_if_not_installed(install_dir_path)
   print('Done!')
 end
 
--- Compresses continuously spaces to a space.
+---@return string | nil
+local function whoami()
+  local result = vim.fn.system('whoami'):wait()
+  if result.code ~= 0 then
+    return nil
+  end
+  return result
+end
+
+---@param dir string
+function M.ensure_directory(dir)
+  if vim.fn.isdirectory(dir) == 0 then
+    local user = vim.env.USER or whoami()
+    if user == nil then
+      error('Both $USER and `whoami` are not provided')
+    end
+    local group = vim.env.GROUP or ''
+
+    vim.fn.mkdir(dir, 'p', '700')
+    vim.fn.system(
+      fn.s('chown -R "{user}:{group}" "{dir}"', {
+        user = user,
+        group = group,
+        dir = dir,
+      })
+    )
+  end
+end
+
+---Compresses continuously spaces to a space.
 function M.compress_spaces()
   local recent_pattern = vim.fn.getreg('/')
   vim.cmd('try | s/\\s\\+/ /g | execute "normal! ==" | finally | let @/ = "' .. recent_pattern .. '" | endtry')
   vim.cmd('nohlsearch')
 end
 
--- Removes trailing spaces of all lines.
+---Removes trailing spaces of all lines.
 function M.remove_trailing_spaces()
   local recent_pattern = vim.fn.getreg('/')
   local curpos = vim.fn.getcurpos()
@@ -54,7 +83,7 @@ function M.remove_trailing_spaces()
   vim.fn.setpos('.', curpos)
 end
 
--- Toggles diffthis and diffoff with some keymappings.
+---Toggles diffthis and diffoff with some keymappings.
 function M.toggle_diff()
   if vim.wo.diff then
     vim.cmd('diffoff')
@@ -71,7 +100,7 @@ function M.toggle_diff()
   vim.cmd('set diff?')
 end
 
--- Closes buffers of a specified filetypes.
+---Closes buffers of a specified filetypes.
 function M.bufclose_filetype(filetypes)
   local closed = false
   for w = 1, vim.fn.winnr('$') do
@@ -85,7 +114,7 @@ function M.bufclose_filetype(filetypes)
   return closed
 end
 
--- Toggles a file explorer
+---Toggles a file explorer
 function M.toggle_explorer(path)
   path = path or vim.fn.expand('%:p:h')
   local closed = M.bufclose_filetype({ 'dirvish' })
@@ -111,7 +140,7 @@ function M.open_explorer(split, path)
   vim.cmd(cmd .. ' ' .. path)
 end
 
--- Fetches a detail of <title> from a URL
+---Fetches a detail of <title> from a URL
 function M.get_webpage_title(url)
   local ok, result = pcall(function()
     print('fetching now...')
@@ -125,8 +154,8 @@ function M.get_webpage_title(url)
   return result
 end
 
--- :quit if only a window is existent.
--- :hide otherwise.
+---:quit if only a window is existent.
+---:hide otherwise.
 function M.hide_or_quit()
   local tabnum = vim.fn.tabpagenr('$')
   local winnum = vim.fn.tabpagewinnr(vim.fn.tabpagenr(), '$')
@@ -144,13 +173,13 @@ function M.toggle_ale_at_buffer()
   vim.cmd('ALEToggle')
 end
 
--- Toggles indent-guides
+---Toggles indent-guides
 function M.toggle_indent_guides()
   vim.g['vimrc#indent_guides_enable'] = not (vim.g['vimrc#indent_guides_enable'] or true)
   vim.cmd('IndentGuidesToggle')
 end
 
--- Puts a register as stdin into the terminal buffer.
+---Puts a register as stdin into the terminal buffer.
 function M.put_as_stdin(detail)
   local current_bufnr = vim.fn.bufnr('%')
   vim.defer_fn(function()
@@ -159,7 +188,7 @@ function M.put_as_stdin(detail)
   return 'i'
 end
 
--- Moves a current buffer to left of tab.
+---Moves a current buffer to left of tab.
 function M.move_window_forward()
   local tabwin_num = #vim.fn.tabpagebuflist()
   vim.cmd('mark Z')
@@ -176,7 +205,7 @@ function M.move_window_forward()
   vim.cmd('normal! zz')
 end
 
--- Moves a current buffer to right of tab.
+---Moves a current buffer to right of tab.
 function M.move_window_backward()
   vim.cmd('mark Z')
   vim.cmd('hide')
@@ -190,7 +219,7 @@ function M.move_window_backward()
   vim.cmd('normal! zz')
 end
 
--- Moves tab to left.
+---Moves tab to left.
 function M.move_tab_prev()
   if vim.fn.tabpagenr() == 1 then
     vim.cmd('$tabmove')
@@ -199,7 +228,7 @@ function M.move_tab_prev()
   end
 end
 
--- Moves tab to right.
+---Moves tab to right.
 function M.move_tab_next()
   if vim.fn.tabpagenr() == vim.fn.tabpagenr('$') then
     vim.cmd('0tabmove')
@@ -208,7 +237,7 @@ function M.move_tab_next()
   end
 end
 
--- Moves the cursor position to the last position of a file.
+---Moves the cursor position to the last position of a file.
 function M.visit_past_position()
   local past_posit = vim.fn.line('"')
   if past_posit > 0 and past_posit <= vim.fn.line('$') then
@@ -216,7 +245,7 @@ function M.visit_past_position()
   end
 end
 
--- Renames a file name of the current buffer.
+---Renames a file name of the current buffer.
 function M.rename_to(new_name)
   local this_file = vim.fn.fnameescape(vim.fn.expand('%'))
   local new_name_esc = vim.fn.fnameescape(new_name)
@@ -246,7 +275,7 @@ function M.rename_to(new_name)
   print(string.format('Renamed %s to %s', this_file, new_file))
 end
 
--- Get current buffer directory with fallback
+---Get current buffer directory with fallback
 function M.get_current_buffer_dir(options)
   options = options or {}
   local dir = vim.bo.buftype ~= 'terminal' and vim.bo.buftype ~= 'nofile' and vim.fn.expand('%:p:h')
@@ -262,12 +291,12 @@ function M.get_current_buffer_dir(options)
   end
 end
 
--- Shows a popup window by vim.notify with good options
+---Shows a popup window by vim.notify with good options
 function M.popup_atcursor(messages)
   vim.notify(messages, vim.log.levels.INFO)
 end
 
--- Export functions for backward compatibility with vim function calls
+---Export functions for backward compatibility with vim function calls
 _G.vimrc = M
 
 return M
