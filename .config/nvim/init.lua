@@ -3,6 +3,7 @@
 local helper = require('helper')
 local git = require('git')
 local fn = require('utils.functions')
+local s = fn.s
 
 -------------------
 -- Global values --
@@ -26,21 +27,21 @@ vim.g.vimrc = vim.g.vimrc
 vim.defer_fn(function()
   git.read_git_root(function(git_root)
     vim.g.vimrc.git_root = git_root
-    io.write('vimrc: a git root detected: ' .. git_root)
+    io.write(s'vimrc: a git root detected: {git_root}')
   end)
 end, 100)
 
 vim.g.vimrc.open_on_gui = vim.g.vimrc.is_macos and 'open'
   or vim.g.vimrc.is_wsl and 'wslview'
   or vim.g.vimrc.is_unix and 'xdg-open'
-  or 'echo "no method for GUI-open"'
+  or print('init.lua: No method found for opening GUI')
 
 local backupdir = vim.fn.expand('~/.backup/vim-backup')
 vim.g.vimrc.backupdir = backupdir
-vim.g.vimrc.directory = backupdir .. '/swp'
-vim.g.vimrc.undodir = backupdir .. '/undo'
-vim.g.vimrc.viewdir = backupdir .. '/view'
-vim.g.vimrc.sessiondir = backupdir .. '/session'
+vim.g.vimrc.directory = s'{backupdir}/swp'
+vim.g.vimrc.undodir = s'{backupdir}/undo'
+vim.g.vimrc.viewdir = s'{backupdir}/view'
+vim.g.vimrc.sessiondir = s'{backupdir}/session'
 
 -- Please see 'vimrc#bufclose_filetype()'.
 vim.g.vimrc.temporary_buftypes = {
@@ -96,11 +97,11 @@ end
 
 -- TODO: Future migration to lazy.nvim or something. For now, keep using dein.vim
 
-local dein_dir = vim.g.vimrc.vim_home .. '/bundle/repos/github.com/Shougo/dein.vim'
+local dein_dir = s'{vim.g.vimrc.vim_home}/bundle/repos/github.com/Shougo/dein.vim'
 helper.install_dein_if_not_installed(dein_dir)
 vim.opt.runtimepath:append(dein_dir)
 
-local bundle_dir = vim.g.vimrc.vim_home .. '/bundle'
+local bundle_dir = s'{vim.g.vimrc.vim_home}/bundle'
 vim.call('dein#begin', bundle_dir)
 
 -- TODO: Generate dein.vim doc by :helptags
@@ -127,12 +128,12 @@ vim.call('dein#add', 'Shougo/dein.vim', { rtp = '' })
 
 local init_private_lua = vim.fn.expand('~/.dotfiles/.private/nvim_init_private.lua')
 if vim.fn.filereadable(init_private_lua) == 1 then
-  vim.cmd('source ' .. init_private_lua)
+  vim.cmd(s'source {init_private_lua}')
 end
 
 local init_env_lua = vim.fn.expand('~/.config/nvim/init_env.lua')
 if vim.fn.filereadable(init_env_lua) == 1 then
-  vim.cmd('source ' .. init_env_lua)
+  vim.cmd(s'source {init_env_lua}')
 end
 
 -- }}}
@@ -202,7 +203,7 @@ function _G.simple_tabline()
   local current_tab = vim.fn.tabpagenr()
 
   -- Show tab count
-  line = line .. '[' .. tab_count .. '] '
+  line = line .. s'[{tab_count}] '
 
   -- Show tabs
   for i = 1, tab_count do
@@ -218,15 +219,15 @@ function _G.simple_tabline()
 
     -- Highlight current tab
     if i == current_tab then
-      line = line .. '[* ' .. filename .. ' *]'
+      line = line .. s'[* {filename} *]'
     else
-      line = line .. '[' .. filename .. ']'
+      line = line .. s'[{filename}]'
     end
   end
 
   -- Show working directory
   local cwd = vim.fn.getcwd()
-  line = line .. ' => [PWD=' .. vim.fn.fnamemodify(cwd, ':~') .. ']'
+  line = line .. s' => [PWD={vim.fn.fnamemodify(cwd, ":~")}]'
 
   return line
 end
@@ -268,11 +269,12 @@ vim.opt.iminsert = 0
 vim.g.tex_flavor = 'latex'
 
 -- Reference tags of ctags
+local path_at_started = vim.g.vimrc.path_at_started
 vim.opt.tags:append({
   'tags',
   '.git/tags',
-  vim.g.vimrc.path_at_started .. '/tags',
-  vim.g.vimrc.path_at_started .. '/.git/tags',
+  s'{path_at_started}/tags',
+  s'{path_at_started}/.git/tags',
 })
 
 vim.g.mapleader = '['
@@ -283,7 +285,7 @@ require('keymaps')
 
 local env_post_vimrc = vim.fn.expand('~/.vimrc_env_post')
 if vim.fn.filereadable(env_post_vimrc) == 1 then
-  vim.cmd('source ' .. env_post_vimrc)
+  vim.cmd(s'source {env_post_vimrc}')
 end
 
 vim.cmd('filetype plugin indent on')

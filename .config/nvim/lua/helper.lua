@@ -3,6 +3,7 @@
 local list_util = require('utils.list')
 local msg_util = require('utils.message')
 local fn = require('utils.functions')
+local s = fn.s
 
 local M = {}
 
@@ -62,7 +63,7 @@ end
 ---Compresses continuously spaces to a space.
 function M.compress_spaces()
   local recent_pattern = vim.fn.getreg('/')
-  vim.cmd('try | s/\\s\\+/ /g | execute "normal! ==" | finally | let @/ = "' .. recent_pattern .. '" | endtry')
+  vim.cmd(s'try | s/\\s\\+/ /g | execute "normal! ==" | finally | let @/ = "{recent_pattern}" | endtry')
   vim.cmd('nohlsearch')
 end
 
@@ -106,7 +107,7 @@ function M.bufclose_filetype(filetypes)
   for w = 1, vim.fn.winnr('$') do
     local buf_ft = vim.fn.getwinvar(w, '&filetype')
     if list_util.has(filetypes, buf_ft) then
-      vim.cmd(':' .. w .. 'wincmd w')
+      vim.cmd(s':{w}wincmd w')
       vim.cmd('quit')
       closed = true
     end
@@ -129,15 +130,15 @@ function M.open_explorer(split, path)
     or split == 'split' and ':split | silent Dirvish'
     or split == 'vsplit' and ':vsplit | silent Dirvish'
     or split == 'tabnew' and ':tabnew | silent Dirvish'
-    or error('an unexpected way to open the explorer: ' .. split)
+    or error(s'an unexpected way to open the explorer: {split}')
 
   if vim.fn.isdirectory(path) == 0 then
     -- :silent to ignore an error message. Because opening seems success.
-    vim.cmd('silent ' .. cmd)
+    vim.cmd(s'silent {cmd}')
     return
   end
 
-  vim.cmd(cmd .. ' ' .. path)
+  vim.cmd(s'{cmd} {path}')
 end
 
 ---Fetches a detail of <title> from a URL
@@ -148,7 +149,7 @@ function M.get_webpage_title(url)
   end)
 
   if not ok then
-    return 'vimrc#get_webpage_title(): something happened: ' .. result
+    return s'vimrc#get_webpage_title(): something happened: {result}'
   end
 
   return result
@@ -268,11 +269,11 @@ function M.rename_to(new_name)
     return
   end
 
-  vim.cmd('edit ' .. new_file)
+  vim.cmd(s'edit {new_file}')
   vim.cmd('silent write')
-  vim.cmd('silent bdelete ' .. this_file)
+  vim.cmd(s'silent bdelete {this_file}')
 
-  print(string.format('Renamed %s to %s', this_file, new_file))
+  print(s'Renamed {this_file} to {new_file}')
 end
 
 ---Get current buffer directory with fallback

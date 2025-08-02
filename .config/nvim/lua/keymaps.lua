@@ -1,5 +1,8 @@
 -- キーマップ設定
 
+local fn = require('utils.functions')
+local s = fn.s
+
 local function map(mode, lhs, rhs, opts)
   opts = opts or {}
   vim.keymap.set(mode, lhs, rhs, opts)
@@ -44,7 +47,7 @@ map('n', 'q>', '<Cmd>registers<CR>', { silent = true })
 
 map('n', '<C-k>o', '<Cmd>e! %<CR>', { silent = true })
 map('n', '<leader><leader>B', function()
-  vim.cmd('split ' .. vim.g.vimrc.memo_path)
+  vim.cmd(s'split {vim.g.vimrc.memo_path}')
 end, { silent = true })
 map('n', 'g*', '<Cmd>execute "silent! normal! *<C-o>"<CR>', { silent = true })
 map('n', 'Q', function()
@@ -104,12 +107,12 @@ map('n', 'ghv', '<Cmd>vsplit<CR>', { silent = true })
 
 map('n', 'gH', function()
   local fold_open = vim.fn.foldlevel('.') > 0 and 'zo' or ''
-  return 'mZ:tabnew<CR>`Zzz' .. fold_open
+  return s'mZ:tabnew<CR>`Zzz{fold_open}'
 end, { silent = true, expr = true })
 
 map('n', 'ghh', function()
   local fold_open = vim.fn.foldlevel('.') > 0 and 'zo' or ''
-  return 'mZ:hide<CR>:tabnew<CR>`Zzz' .. fold_open
+  return s'mZ:hide<CR>:tabnew<CR>`Zzz{fold_open}'
 end, { silent = true, expr = true })
 
 -- Disable defaults
@@ -147,7 +150,7 @@ local function open_terminal(options)
   end
 
   if opts.cwd then
-    vim.cmd('lcd ' .. opts.cwd)
+    vim.cmd(s'lcd {opts.cwd}')
   end
 end
 
@@ -188,7 +191,7 @@ map('n', '<C-h><C-n>', '<Cmd>setlocal number! number?<CR>', { silent = true })
 -- Visualize a last pasted range
 map('n', 'gp', function()
   local regtype = vim.fn.getregtype()
-  return '`[' .. string.sub(regtype, 1, 1) .. '`]'
+  return s'`[{string.sub(regtype, 1, 1)}`]'
 end, { expr = true })
 
 -- copy & paste
@@ -204,10 +207,10 @@ map('n', '<leader>x', '"+x')
 
 -- Put the relative path of a current file
 map('n', '"gp', function()
-  vim.cmd('put=system("git ls-files --full-name " .. expand("%"))')
+  vim.cmd(s'put=system("git ls-files --full-name {vim.fn.expand("%")}")')
 end)
 map('n', '"gP', function()
-  vim.cmd('put!=system("git ls-files --full-name " .. expand("%"))')
+  vim.cmd(s'put!=system("git ls-files --full-name {vim.fn.expand("%")}")')
 end)
 
 -- cr

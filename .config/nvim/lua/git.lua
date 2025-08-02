@@ -1,3 +1,5 @@
+local s = require('utils.functions').s
+
 local M = {}
 
 ---Parses git root output
@@ -46,9 +48,9 @@ end
 function M.cd_git_root(cd)
   local git_root = M.read_git_root()
   if git_root then
-    print('vimrc: The current directory changed to: ' .. git_root)
+    print(s'vimrc: The current directory changed to: {git_root}')
     if type(cd) == 'string' then
-      vim.cmd(cd .. ' ' .. git_root)
+      vim.cmd(s'{cd} {git_root}')
     else
       cd(git_root)
     end
