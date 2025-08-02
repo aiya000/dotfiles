@@ -32,7 +32,6 @@ options indent
     print('}')
   end
 
-
 snippet print_table
 alias prt pt
 abbr ${1:module.}print_table(${0:var})
@@ -45,6 +44,9 @@ abbr ${1:module.}print_table(${0:var})
 #   :map(function(s) return s .. '!' end)
 #   :get()  -- 'HELLO!'
 # ```
+# More useful implementation is:
+# - ../../../.config/nvim/lua/utils/pipe.lua
+# - https://github.com/aiya000/dotfiles/blob/main/.config/nvim/lua/utils/pipe.lua
 snippet define_pipe
 options indent
   local function pipe(value)
@@ -89,29 +91,56 @@ alias comp
 abbr ${1:module.}compose(${0:functions, })
   ${1:module.}compose(${0:functions, })
 
-# Example:
-# ```lua
-# local name = 'Alice'
-# local age = 30
-# local msg = s('Hello {name}! Next year you'll be {age + 1}.', {
-#   name = name,
-#   age = age,
-# })
-# ```
+#---@param text string --テンプレートリテラルっぽい文字列
+#---@return string --変数埋め込み済み文字列
+#---Example:
+#---```lua
+#----- 変数の埋め込み
+#---local name = 'Alice'
+#---local age = 30
+#---local msg = s('Hello {name}! Next year you will be {age + 1}.')
+#---
+#----- （値の埋め込み）
+#---s('{10}')      -- '10'
+#---s('{5 + 3}')   -- '8'
+#---s('{math.pi}') -- '3.1415926535898'
+#---s('{"hello"}') -- 'hello'
+#---s('{true}')    -- 'true'
+#---s('{nil}')     -- 'nil'
+#---
+#----- 省略記法
+#---s'{10}'
+#---```
 snippet define_s
 alias define_template_string
 options indent
-  local function s(text, env)
+  local function s(text)
+    -- 呼び出し元のローカル変数を取得
+    local context = {}
+    local level = 2
+    local i = 1
+    while true do
+      local name, value = debug.getlocal(level, i)
+      if not name then break end
+      if not name:match('^%(') then -- 一時変数を除外
+        context[name] = value
+      end
+      i = i + 1
+    end
+
+    -- グローバル変数を取得
+    setmetatable(context, { __index = _G })
+
     return text:gsub('{([^}]+)}', function(expr)
-      local f = load('return'  .. expr, nil, nil, env)
-      return f and f() or '{' .. expr .. '}'
+      local f = load('return ' .. expr, nil, nil, context)
+      return f and tostring(f()) or '{' .. expr .. '}'
     end)
   end
 
 snippet s
 alias template_string
-abbr ${1:module.}s('${1:text}}')
-  ${1:module.}s('${1:text}}')
+abbr s'${1:text}}'
+  s'${1:text}}'
 
 snippet class
 alias cla
