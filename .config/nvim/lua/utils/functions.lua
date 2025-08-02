@@ -130,19 +130,28 @@ if vim == nil then
 
   test('s() should return the taken string simply if with no embedded expressions', function()
     assert_equal(M.s('hi'), 'hi')
+    assert_equal(M.s'hi', 'hi') -- Shorthand
   end)
 
   test('s() should embed variables', function()
     local name = 'aiya000'
-    assert_equal(M.s('{name}'), 'aiya000')
+    assert_equal(M.s'{name}', 'aiya000') -- A local variable
+    assert_equal(M.s'{math.pi}', tostring(math.pi)) -- A global variable
   end)
 
   test('s() should embed values', function()
-    assert_equal(M.s('{10}'), '10')
-    assert_equal(M.s('{5 + 3}'), '8')
-    assert_equal(M.s('{1.25}'), '1.25')
-    assert_equal(M.s('{"hello"}'), 'hello')
-    assert_equal(M.s('{nil}'), 'nil') -- TODO: Fix
+    assert_equal(M.s'{10}', '10')
+    assert_equal(M.s'{5 + 3}', '8')
+    assert_equal(M.s'{1.25}', '1.25')
+    assert_equal(M.s'{"hello"}', 'hello')
+    assert_equal(M.s'{nil}', 'nil') -- TODO: Fix
+  end)
+
+  test('s() should embed function and function call', function()
+    local function f(x)
+      return x
+    end
+    assert_equal(M.s'{f(10)}', '10')
   end)
 end
 
