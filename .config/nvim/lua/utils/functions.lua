@@ -67,7 +67,7 @@ function M.s(text)
 
   return text:gsub('{([^}]+)}', function(expr)
     local f = load('return ' .. expr, nil, nil, context)
-    return f and f() or '{' .. expr .. '}'
+    return f and tostring(f()) or '{' .. expr .. '}'
   end)
 end
 
