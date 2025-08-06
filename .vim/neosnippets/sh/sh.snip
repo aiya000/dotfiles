@@ -11,64 +11,64 @@ abbr #!/usr/bin/env bats
 # Syntaxes
 
 snippet if
-    if ${1:#:condtion} ; then
-        ${0}
-    fi
+  if ${1:#:condtion} ; then
+    ${0}
+  fi
 
 snippet else
-    else
-        ${0:TARGET}
+  else
+    ${0:TARGET}
 
 snippet elif
-    elif ${1:#:condition} ; then
-        ${0:TARGET}
+  elif ${1:#:condition} ; then
+    ${0:TARGET}
 
 snippet for
-    for ${1:x} in ${2:#:var} ; do
-        ${0}
-    done
+  for ${1:x} in ${2:#:var} ; do
+    ${0}
+  done
 
 snippet for_index
-    for (( ${1:#:init}; ${2:#:condtion}; ${3:#:effect} )) ; do
-        ${0}
-    done
+  for (( ${1:#:init}; ${2:#:condtion}; ${3:#:effect} )) ; do
+    ${0}
+  done
 
 snippet while
-    while ${1:#:condition} ; do
-        ${0:TARGET}
-    done
+  while ${1:#:condition} ; do
+    ${0:TARGET}
+  done
 
 snippet case
-    case ${1} in
-        ${0}
-    esac
+  case ${1} in
+    ${0}
+  esac
 
 snippet case_pattern
-    ${2})
-        ${0}
-    ;;
+  ${2})
+    ${0}
+  ;;
 
 snippet case_pattern_wildcard
-    *)
-        ${0}
+  *)
+    ${0}
 
 snippet template_case
-    case ${1} in
-    ${2:pattern})
-        ${0}
-    ;;
-    *)
-        ${3:echo "$$1 Didn't match anything"}
-    esac
+  case ${1} in
+  ${2:pattern})
+    ${0}
+  ;;
+  *)
+    ${3:echo "$$1 Didn't match anything"}
+  esac
 
 snippet array_length
 alias array_size
 abbr ${#${1:array_name}}${0}
-    ${#${1:array_name}}${0}
+  ${#${1:array_name}}${0}
 
 snippet array_whole
 abbr ${${1:array_name}[@]}${0}
-    ${${1:array_name}[@]}${0}
+  ${${1:array_name}[@]}${0}
 
 snippet array_index
 abbr ${${1:array_name}[${2:0}]}
@@ -86,28 +86,34 @@ snippet array_join
 snippet args_length
 alias args_size
 abbr $#
-    $#
+  $#
 
 snippet args_whole
 abbr $@
-    $@
+  $@
 
 # Templates
 
 snippet array_from_string
 abbr IFS='${2: }' read -ra ${1:var_name} <<< "${3:str_split_by_ifs}"${0}
-    IFS='${2: }' read -ra ${1:var_name} <<< "${3:str_split_by_ifs}"${0}
+  IFS='${2: }' read -ra ${1:var_name} <<< "${3:str_split_by_ifs}"${0}
 
 snippet array_from_cmd_lines
-    ${1:array}=()
-    while IFS='' read -r line ; do
-      $1+=("$line") ;
-    done < <(${2:cmd})${0}
+  ${1:array}=()
+  while IFS='' read -r line ; do
+    $1+=("$line") ;
+  done < <(${2:cmd})${0}
+
+snippet read_lines_from_pipe
+alias while_lines
+  while read -r ${1:line} ; do
+    ${0}
+  done
 
 snippet prompt
 alias prompt_for_input ask_for_input
 abbr read -rp '${1:message}' ${0:var}
-    read -rp '${1:message}' ${0:var}
+  read -rp '${1:message}' ${0:var}
 
 # NOTE: Deprecated. Use `define_sourced_dir` instead.
 # snippet source_script_on_this_dir
