@@ -91,10 +91,16 @@ alias rel=reload
 # }}}
 # General plugins {{{
 
-# I don't load heavy plugins at here.
-#   e.g. nvm, rbenv, etc.
+function zshrc::autoload-mise () {
+  if contains_value "${DOTFILES_ZSHRC_AUTO_LOADED_ENVS[@]}" mise ; then
+    return
+  fi
+  load-my-env mise
+  echo '> load-my-env mise'
+  DOTFILES_ZSHRC_AUTO_LOADED_ENVS+=(mise)
+}
 
-# Please see ~/.sh_generic/aliases/functions/load-my-env.sh
+zshrc::autoload-mise
 
 # }}}
 
@@ -159,8 +165,10 @@ function zshrc::autoload-nvm () {
 
 function zshrc::autoload-my-env () {
   zshrc::autoload-nvm
+  # Add other environments here if needed
 }
 
+# Register the operation if started Shell is on Vim terminal
 if [[ -z $VIM_TERMINAL ]] ; then
   # Be called when `cd` executed
   function chpwd () {
