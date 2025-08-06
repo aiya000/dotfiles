@@ -452,6 +452,13 @@ function kill-vue-lsp-servers () {
     || echo failed
 }
 
+function slice () {
+  local delimiter=$1 field_from=$2 field_to=$3
+  while read -r line ; do
+    echo "$line" | cut -d "$delimiter" -f "$field_from-$field_to"
+  done
+}
+
 # }}}
 
 export PATH=$PATH:$HOME/.sh_generic/bin
