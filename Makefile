@@ -625,3 +625,6 @@ install-stylua:
 
 install-claude-code:
 	which claude || $(NPMInstall) @anthropic-ai/claude-code
+
+install-mise:
+	which mise || curl https://mise.run | sh
