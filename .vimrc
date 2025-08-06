@@ -1778,8 +1778,8 @@ vnoremap <silent> <leader><leader>K :DeeplTranslateToEnOpenBuffer<CR>
 
 " vim-scratch-buffer
 nnoremap <silent> <leader>b <Cmd>ScratchBufferOpen<CR>
-nnoremap <silent> <leader>B <Cmd>ScratchBufferOpenNext<CR>
-nnoremap <leader><leader>b :<C-u>ScratchBufferOpenFile<Space>
+nnoremap <silent> <leader><leader>b <Cmd>ScratchBufferOpenNext<CR>
+nnoremap <leader>B :<C-u>ScratchBufferOpenFile
 
 " }}}
 
