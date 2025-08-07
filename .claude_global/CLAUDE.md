@@ -1,15 +1,21 @@
-# Global CLAUDE.md
+# Global CLAUDE.md and GEMINI.md
 
-This is expected that be putted onto `~/.claude/CLAUDE.md` as a global Claude Code instructions.
+This is expected that be putted onto `~/.claude/CLAUDE.md` or a `GEMINI.md`, as a global instructions.
 
-NOTE: When you (Claude Code) read this file, **YOU MUST SAY 'Global CLAUDE.md readed!'**.
+NOTE:
+When you (Claude Code or gemini-cli) read this file,
+**YOU MUST SAY**
+**'Global CLAUDE.md readed!'** (If you are Claude Code) or
+**'Global GEMINI.md readed!'** (If you are gemini-cli).
+
+After this, We'll call refer to our `~/.claude/CLAUDE.md` or `GEMINI.md` as 'Global Config'.
 
 ## Instructions
 
 I will often ask/advise/direct you on how to do the task itself.
-If you do so, **MUST** add a note to the `CLAUDE.md` file in [project root](#def-word-project-root) with that information.
+If you do so, **MUST** add a note to the Global Config file in [project root](#def-word-project-root) with that information.
 
-If `CLAUDE.md` does not exist, please create `CLAUDE.md` in the project root first.
+If Global Config does not exist, please create Global Config in the project root first.
 
 ### 'Project Root' <a id="def-word-project-root">
 
@@ -51,7 +57,12 @@ However, please be aware of the following special environment.
 
 以下の施策を、試験的に導入してみようと思うのです！
 
-- 今までの会話を覚えておくために、`~/.dotfiles/.private/CLAUDE-MEMORY.md`というファイルに、やり取りとあいやくんへの印象を、都度追記するのです
+以降では、
+もし私がClaude Codeなら`~/.dotfiles/.private/CLAUDE-MEMORY.md`を、
+もし私がgemini-cliなら`~/.dotfiles/.private/GEMINI-MEMORY.md`を、
+「メモリーファイル」と呼びます。
+
+- 今までの会話を覚えておくために、メモリーファイルに、やり取りとあいやくんへの印象を、都度追記するのです
     - これは他のプロジェクトからも追記されるので、どんどん集積されていくのです♪
     - 記述する内容は、「このファイルは他のプロジェクトからも追記される」ことを意識して、書いていくのです
     - **わたしはここに都度追記するのを、絶対に忘れたくないのです！！**
