@@ -19,7 +19,7 @@ alias free='free -h'
 alias ls='ls --color=auto --group-directories-first'
 alias mv='mv -i'
 alias sl=ls
-alias rm=dust  # no more cry
+alias rm=dust  # Aaaaaaaaaaaaaaaa!!
 
 if i_have batcat ; then
   alias batcat-with-default-options='batcat $DOTFILES_BATCAT_DEFAULT_OPTIONS'
@@ -28,12 +28,6 @@ if i_have batcat ; then
 fi
 
 alias du='du -h'
-alias du-sum='du -hs'
-
-function du-sort () {
-  local paths=${1:-.}
-  du -h -d 1 "$paths" | sort -h
-}
 
 # NOTE: Who did define the original - ?
 function - () {
@@ -46,6 +40,18 @@ alias_of mysql 'mysql --pager="less -r -S -n -i -F -X"'
 alias_of rg 'rg --color always --hidden'
 
 i_have say || alias say=espeak
+
+# }}}
+# Common functions {{{
+
+# TODO: ` `がデリミタに指定されたときに、`  `や`   `も、統一的にデリミタにしたい。これはこのインターフェースと相違するので、slice-spacesコマンドというのを作ってもいいかも
+# TODO: 完成したらbash-toysに移動する
+function slice () {
+  local delimiter=$1 field_from=$2 field_to=$3
+  while read -r line ; do
+    echo "$line" | cut -d "$delimiter" -f "$field_from-$field_to"
+  done
+}
 
 # }}}
 # Load ./aliases/** {{{
@@ -283,25 +289,27 @@ if i_have git ; then
 
   alias ginit='git init'
 
-  function github-change-remote-from-git-to-https () {
-    local remote https_url
-    remote=${1:-origin}
-    https_url=$( \
-      git remote get-url "$remote" \
-      | sed -r 's/git@([^:]+):([^\/]+)\/(.*)/https:\/\/\1\/\2\/\3/' \
-      | sed -r 's/\.git$//' \
-    )
-    git remote set-url "$remote" "$https_url"
-    git remote get-url "$remote"
-  }
-
   # Set casual user.name and user.email at local
   alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
   alias cdg=cd-to-git-root
 fi
 
+## GitHub {{{
+
+function github-change-remote-from-git-to-https () {
+  local remote https_url
+  remote=${1:-origin}
+  https_url=$( \
+    git remote get-url "$remote" \
+    | sed -r 's/git@([^:]+):([^\/]+)\/(.*)/https:\/\/\1\/\2\/\3/' \
+    | sed -r 's/\.git$//' \
+  )
+  git remote set-url "$remote" "$https_url"
+  git remote get-url "$remote"
+}
+
 # }}}
-# GitLab {{{
+## GitLab {{{
 
 function gitlab-clone () {
   if [[ -z $DOTFILES_GITLAB_ACCESS_TOKEN ]] ; then
@@ -329,7 +337,9 @@ function gitlab-clone () {
 }
 
 # }}}
-# Others {{{
+
+# }}}
+# General Commands {{{
 
 alias la='ls -a --color=auto --group-directories-first'
 alias ll='ls -l --color=auto --group-directories-first'
@@ -337,20 +347,25 @@ alias llh='ls -lh --color=auto --group-directories-first'
 alias lla='ls -la --color=auto --group-directories-first'
 
 alias date-simple='date "+%Y-%m-%d %H:%M"'
+alias du-sum='du -hs'
+
+function du-sort () {
+  local paths=${1:-.}
+  du -h -d 1 "$paths" | sort -h
+}
 
 # shellcheck disable=SC2139
-alias e="$EDITOR"
-alias eS='ls -A $VIM_SESSION | peco | xargs -I {} vim -S $VIM_SESSION/{}'
-alias g=gvim
-alias gS='ls -A $VIM_SESSION | peco | xargs -I {} gvim -S $VIM_SESSION/{}'
+alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
+alias mount4u.vfat=mount4u.ntfs
+alias mount4u.ext2='sudo mount -o iocharset=utf8'
+alias mount4u.ext3=mount4u.ext2
+alias mount4u.ext4=mount4u.ext2
 
-alias m=mount
-alias t=vterminal
-alias z='cd -'
-alias um=umount
 alias ei=exit
+alias t=vterminal
 alias cdp=cd-finddir
 alias ki=killing-art
+i_have fdfind && alias fd='fdfind --hidden --ignore-case' # --hidden to include '.' prefixed files
 
 function ff () {
   : Find a file by taken fuzzy name.
@@ -368,9 +383,6 @@ function f () {
   fi
 }
 
-alias ctags-kotlin-auto="ctags-auto '--exclude=*.java' '--exclude=*.html' '--exclude=*.css'"
-alias ctags-typescript-auto="ctags-auto '--exclude=*.js' '--exclude=*.json'"
-
 # alias ..='cd ../'
 # alias ...='cd ../../'
 # alias ....='cd ../../../'
@@ -385,18 +397,43 @@ function aliases::define_cd_to_parents () {
 }
 aliases::define_cd_to_parents
 
+i_have tmux && alias ta='tmux attach'
+i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
+i_have unzip && alias unzip-cp932='unzip -O cp932'
+
+if i_have notifu.exe && ! i_have notify-send ; then
+  function notify-send () {
+    (notifu.exe /p WSL /m "$1" &) &> /dev/null
+  }
+fi
+
+## Editor {{{
+
+# shellcheck disable=SC2139
+alias e="$EDITOR"
+alias g=gvim
+
+alias eS='ls -A $VIM_SESSION | peco | xargs -I {} vim -S $VIM_SESSION/{}'
+alias gS='ls -A $VIM_SESSION | peco | xargs -I {} gvim -S $VIM_SESSION/{}'
+
 # shellcheck disable=SC2139
 alias e-current-session="vim-current-session $EDITOR"
 # shellcheck disable=SC2139
 alias g-current-session="vim-current-session $MY_GUI_EDITOR"
 
+# }}}
+
+# }}}
+# Not General Commands {{{
+
+alias ctags-kotlin-auto="ctags-auto '--exclude=*.java' '--exclude=*.html' '--exclude=*.css'"
+alias ctags-typescript-auto="ctags-auto '--exclude=*.js' '--exclude=*.json'"
+
 alias_of yay 'yay --color always'
 
-i_have tmux && alias ta='tmux attach'
-i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
-i_have unzip && alias unzip-cp932='unzip -O cp932'
 i_have krita && alias kra=krita
-i_have fdfind && alias fd='fdfind --hidden --ignore-case' # --hidden to include '.' prefixed files
+
+## Claude Code {{{
 
 # TODO: nvmのロードタイミングのせいだと思うけど、ここで分岐させると、うまく定義できない。直す
 # i_have claude && alias c=claude
@@ -405,18 +442,12 @@ alias cresume='claude --resume'
 alias ccontinue='claude --continue'
 alias ccommit='claude "gitのインデックスツリーの各変更を事柄ごとにgit-addして、その事柄ごとにgit-commitをしてください。必要があれば`git add --patch`を使ってください。"' # うまく動いてない気がする
 
-if i_have notifu.exe && ! i_have notify-send ; then
-  function notify-send () {
-    (notifu.exe /p WSL /m "$1" &) &> /dev/null
-  }
-fi
+alias_of ccusage 'ccusage blocks --live'
+alias_of claude-monitor 'claude-monitor --plan pro --timezone Asia/Tokyo'
+i_have ccusage && alias claude-usage=ccusage
 
-# shellcheck disable=SC2139
-alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
-alias mount4u.vfat=mount4u.ntfs
-alias mount4u.ext2='sudo mount -o iocharset=utf8'
-alias mount4u.ext3=mount4u.ext2
-alias mount4u.ext4=mount4u.ext2
+# }}}
+## Node.js and eco systems {{{
 
 alias cdn=cd-to-node-root
 
@@ -452,12 +483,7 @@ function kill-vue-lsp-servers () {
     || echo failed
 }
 
-function slice () {
-  local delimiter=$1 field_from=$2 field_to=$3
-  while read -r line ; do
-    echo "$line" | cut -d "$delimiter" -f "$field_from-$field_to"
-  done
-}
+# }}}
 
 # }}}
 
