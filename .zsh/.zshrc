@@ -91,16 +91,7 @@ alias rel=reload
 # }}}
 # General plugins {{{
 
-function zshrc::autoload-mise () {
-  if contains_value "${DOTFILES_ZSHRC_AUTO_LOADED_ENVS[@]}" mise ; then
-    return
-  fi
-  load-my-env mise
-  echo '> load-my-env mise'
-  DOTFILES_ZSHRC_AUTO_LOADED_ENVS+=(mise)
-}
 
-zshrc::autoload-mise
 
 # }}}
 
