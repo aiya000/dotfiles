@@ -14,6 +14,7 @@ AptUpdate = sudo apt-fast update
 AptBuildDep = sudo apt-fast build-dep
 
 NPMInstall = npm install --global --user
+UVInstall = uv tool install
 
 prepare:
 	if [ ! -d ~/.config ] ; then \
@@ -623,8 +624,16 @@ install-cargo:
 install-stylua:
 	which stylua || cargo install stylua
 
+install-claude-code-tools:
+	$(MAKE) install-claude-code
+	which ccusage || $(NPMInstall) ccusage
+	which claude-monitor || $(UVInstall) claude-monitor
+
 install-claude-code:
 	which claude || $(NPMInstall) @anthropic-ai/claude-code
 
 install-mise:
 	which mise || curl https://mise.run | sh
+
+install-gemini-cli:
+	which gemini || $(NPMInstall) @google/gemini-cli
