@@ -435,16 +435,21 @@ i_have krita && alias kra=krita
 
 ## Claude Code {{{
 
-# TODO: nvmのロードタイミングのせいだと思うけど、ここで分岐させると、うまく定義できない。直す
+# TODO: nvmのロードタイミングのせいだと思うけど、ここで分岐させると、うまく定義できない。直す。load-my-envにhook的なものをサポートさせるのがいいと思う
 # i_have claude && alias c=claude
+# alias_of ccusage 'ccusage blocks --live'
+# i_have ccusage && alias claude-usage=ccusage
+
 alias c=claude
 alias cresume='claude --resume'
 alias ccontinue='claude --continue'
 alias ccommit='claude "gitのインデックスツリーの各変更を事柄ごとにgit-addして、その事柄ごとにgit-commitをしてください。必要があれば`git add --patch`を使ってください。"' # うまく動いてない気がする
 
-alias_of ccusage 'ccusage blocks --live'
+alias ccusage='ccusage blocks --live'
+alias claude-usage=ccusage
+
 alias_of claude-monitor 'claude-monitor --plan pro --timezone Asia/Tokyo'
-i_have ccusage && alias claude-usage=ccusage
+alias_of claude-code-monitor 'claude-code-monitor --plan pro --timezone Asia/Tokyo'
 
 # }}}
 ## Node.js and eco systems {{{
