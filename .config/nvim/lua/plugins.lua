@@ -1,20 +1,13 @@
 -- プラグイン設定
 
+local s = require('utils.functions').s
+
 -- vim-quickrun {{{
 vim.g.quickrun_no_default_key_mappings = 0
 
 vim.g.quickrun_config = {
   ['_'] = {
-    split = '',
-    runner = 'system',
-    ['runner/vimproc/updatetime'] = 10,
-    ['hook/time/enable'] = 1,
-    outputter = 'error',
-    ['outputter/error/error'] = 'quickfix',
-    ['outputter/error/success'] = 'buffer',
-  },
-  cpp = {
-    cmdopt = '-std=c++17',
+    -- Global Config
   },
   java = {
     cmdopt = '-encoding UTF-8 -source 1.8',
@@ -26,7 +19,7 @@ vim.g.quickrun_config = {
     command = 'themis',
     cmdopt = '--runtimepath ".."',
     exec = '%c %o %s:p | tr -d "\\r"',
-    tempfile = vim.env.TMP .. '/{tempname()}.vimspec',
+    tempfile = vim.g.vimrc.vim_home .. '/{tempname()}.vimspec',
   },
   html = {
     command = vim.g.vimrc.open_on_gui,
@@ -99,7 +92,7 @@ vim.g.quickrun_config = {
     cmdopt = '--warn',
     exec = {
       '%c %s %o --output /tmp/vim-quickrun-elm.html',
-      vim.g.vimrc.open_on_gui .. ' /tmp/vim-quickrun-elm.html',
+      s'{vim.g.vimrc.open_on_gui} /tmp/vim-quickrun-elm.html',
     },
     tempfile = '%{tempname()}.elm',
   },

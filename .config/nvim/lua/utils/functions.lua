@@ -78,55 +78,50 @@ function M.identity(x)
   return x
 end
 
+---Wait until p satisfied
+---@param p fun(): boolean
+---@param f fun(): nil --called when `p()` satisfied
+---@param interval? integer --`p()` called every `interval` milliseconds. Defaults to 1000(ms)
+---@return fun(): nil --A function to stop the timer
+---Example:
+---```lua
+---local some_var = nil
+---local stop_timer = wait_for(
+---  function()
+---    return some_var ~= nil
+---  end,
+---  function()
+---    print('You got it!')
+---  end
+---)
+----- Output: You got it!
+----- (When `some_var` is set to a non-nil value by another thread)
+---```
+function M.wait_for(p, f, interval)
+  local timer = vim.loop.new_timer()
+  local start_time = vim.loop.hrtime()
+
+  timer:start(0, interval or 1000, function()
+    if p() then
+      timer:stop()
+      timer:close()
+      vim.schedule(f)
+    end
+  end)
+
+  return function()
+    if not timer:is_closing() then
+      timer:stop()
+      timer:close()
+    end
+  end
+end
+
 -- In-source testing
 if vim == nil then
-  -- Helpers {{{
-
-  ---@param description string
-  ---@param check fun(): nil
-  ---Example:
-  ---```lua
-  ----- No output
-  ---test('X should Y', function()
-  ---  -- No errors
-  ---end);
-  ---
-  ----- - Failed: X should Y
-  -----   X could not Y
-  ---test('X should Y', function()
-  ---  error('X could not Y')
-  ---end);
-  ---```
-  local function test(description, check)
-    local ok, maybe_error_message = pcall(check)
-    if not ok then
-      print('- Failed: ' .. description)
-      print('  ' .. maybe_error_message)
-    end
-  end
-
-  ---@generic T
-  ---@param actual T
-  ---@param expected T
-  ---@return nil --Throws an error message if `actual` does not equal `expected`
-  ---Example:
-  ---```lua
-  ---assert_equal(1 + 1, 2) -- No error
-  ---assert_equal(1 + 1, 3) -- Expected: 3, but got: 2
-  ---
-  ----- - Failed: `1 + 1` should be `3`
-  -----   Expected: 3, but got: 2
-  ---test('`1 + 1` should be `3`', function()
-  ---  assert_equal(1 + 1, 3)
-  ---end);
-  ---```
-  local function assert_equal(actual, expected)
-    if actual ~= expected then
-      error(string.format('Expected: %s, but got: %s', tostring(expected), tostring(actual)))
-    end
-  end
-
-  -- }}}
+  local Test = require('utils.test')
+  local test = Test.test
+  local assert_equal = Test.assert_equal
 
   test('s() should return the taken string simply if with no embedded expressions', function()
     assert_equal(M.s('hi'), 'hi')

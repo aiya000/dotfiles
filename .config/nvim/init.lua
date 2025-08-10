@@ -8,6 +8,7 @@ local s = fn.s
 -------------------
 -- Global values --
 -------------------
+-- TODO: Rename vim.g.vimrc to vim.g.init_lua
 -- vim.g.vimrc {{{
 
 vim.g.vimrc = vim.g.vimrc
@@ -35,6 +36,16 @@ vim.g.vimrc.open_on_gui = vim.g.vimrc.is_macos and 'open'
   or vim.g.vimrc.is_wsl and 'wslview'
   or vim.g.vimrc.is_unix and 'xdg-open'
   or print('init.lua: No method found for opening GUI')
+print(vim.g.vimrc.is_macos and 'open')
+print(vim.g.vimrc.is_wsl and 'wslview')
+print(vim.g.vimrc.is_unix and 'xdg-open')
+
+print(
+vim.g.vimrc.is_macos and 'open'
+  or vim.g.vimrc.is_wsl and 'wslview'
+  or vim.g.vimrc.is_unix and 'xdg-open'
+  or print('init.lua: No method found for opening GUI')
+)
 
 local backupdir = vim.fn.expand('~/.backup/vim-backup')
 vim.g.vimrc.backupdir = backupdir
