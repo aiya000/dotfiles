@@ -637,3 +637,15 @@ install-mise:
 
 install-gemini-cli:
 	which gemini || $(NPMInstall) @google/gemini-cli
+
+# Example:
+# ```shell-session
+# $ nircmd monitor off
+# ```
+install-nircmd:
+	which nircmd.exe || ( \
+		wget https://www.nirsoft.net/utils/nircmd-x64.zip -O /tmp/nircmd.zip && \
+		unzip /tmp/nircmd.zip -d /tmp/nircmd && \
+		mv /tmp/nircmd/nircmd.exe ~/bin/nircmd.exe && \
+		ln -s ~/bin/nircmd.exe ~/bin/nircmd
+	)
