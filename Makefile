@@ -647,5 +647,5 @@ install-nircmd:
 		wget https://www.nirsoft.net/utils/nircmd-x64.zip -O /tmp/nircmd.zip && \
 		unzip /tmp/nircmd.zip -d /tmp/nircmd && \
 		mv /tmp/nircmd/nircmd.exe ~/bin/nircmd.exe && \
-		ln -s ~/bin/nircmd.exe ~/bin/nircmd
+		ln -s ~/bin/nircmd.exe ~/bin/nircmd \
 	)
