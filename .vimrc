@@ -1034,6 +1034,18 @@ let g:write_sync_lists = [
 \ ]
 
 " }}}
+" vim-fakeclip {{{
+
+let g:fakeclip_provide_clipboard_key_mappings = v:true
+let g:fakeclip_force_override_clip_command = 'clip.exe'
+
+call vimrc#job#start_simply(
+  \ ['/bin/which', 'nkf'],
+  \ v:null,
+  \ { _, __ -> s:Msg.warn('nkf is not found.') }
+\ )
+
+" }}}
 
 call dein#end()
 
@@ -1294,14 +1306,16 @@ nnoremap <expr> gp '`[' .. strpart(getregtype(), 0, 1) .. '`]'
 
 " copy & paste
 "" clipboard
-nnoremap <leader>p "+p
-nnoremap <leader>P "+P
-nnoremap <leader>y "+y
-nnoremap <leader>Y "+yg_
-nnoremap <leader>dd "+dd
-nnoremap <leader>D "+D
-nnoremap <leader>d "+d
-nnoremap <leader>x "+x
+"" TODO: Branch by `systeminfo.exe | grep "OS Name" | grep "Windows 10"`
+"" NOTE: Don't use noremap to allow remap by fakeclip
+nmap <leader>p "+p
+nmap <leader>P "+P
+nmap <leader>y "+y
+nmap <leader>Y "+yg_
+nmap <leader>dd "+dd
+nmap <leader>D "+D
+nmap <leader>d "+d
+nmap <leader>x "+x
 " nnoremap "%p <Cmd>put=expand('%:p')<CR>
 " nnoremap "%P <Cmd>put!=expand('%:p')<CR>
 "" Put the relative path of a current file
@@ -1448,9 +1462,10 @@ vnoremap <leader><leader>s :sort<CR>
 vnoremap g_ $
 vnoremap 'p "+p
 vnoremap 'P "+P
-vnoremap 'y "+y
-vnoremap 'd "+d
-vnoremap 'x "+x
+"" NOTE: Don't use noremap to allow remap by fakeclip
+vmap 'y "+y
+vmap 'd "+d
+vmap 'x "+x
 
 " }}}
 " select mode {{{
@@ -1467,6 +1482,8 @@ tnoremap <C-]> <C-l>
 tnoremap <C-q><C-v> <C-q><C-n><C-w>H
 " tnoremap <C-q><C-s> <C-q><C-n>
 tnoremap <C-q><C-s> <C-q><C-n><Cmd>GLogOneline --pretty='%h %ad %s' --date='format:%Y-%m-%d %H:%M'<CR><Cmd>resize 5<CR>
+tnoremap <C-q><C-n> <C-q>gt
+tnoremap <C-q><C-p> <C-q>gT
 
 " }}}
 " abbr {{{
