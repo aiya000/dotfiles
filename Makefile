@@ -549,7 +549,7 @@ install-wsl-hello-sudo:
 		wget http://github.com/nullpo-head/WSL-Hello-sudo/releases/latest/download/release.tar.gz ; \
 		tar xvf release.tar.gz
 	cd /tmp/release ; ./install.sh
-	rm /tmp/release /tmp/release.tar.gz
+	rm -rf /tmp/release /tmp/release.tar.gz
 
 build-surfingkeys:
 	git clone https://github.com/brookhong/Surfingkeys ~/git/Surfingkeys
