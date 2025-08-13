@@ -649,3 +649,10 @@ install-nircmd:
 		mv /tmp/nircmd/nircmd.exe ~/bin/nircmd.exe && \
 		ln -s ~/bin/nircmd.exe ~/bin/nircmd \
 	)
+
+# This is required by `install-vim-build-deps`
+enable-ubuntu-deb-src:
+	$(AptUpdate) \
+		&& sudo DEBIAN_FRONTEND=noninteractive apt --no-install-recommends -y install python3-software-properties \
+		&& sudo /usr/bin/python3 -c "from softwareproperties.SoftwareProperties import SoftwareProperties; SoftwareProperties(deb822=True).enable_source_code_sources()" \
+		&& $(AptUpdate)
