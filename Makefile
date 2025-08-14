@@ -656,3 +656,6 @@ enable-ubuntu-deb-src:
 		&& sudo DEBIAN_FRONTEND=noninteractive apt --no-install-recommends -y install python3-software-properties \
 		&& sudo /usr/bin/python3 -c "from softwareproperties.SoftwareProperties import SoftwareProperties; SoftwareProperties(deb822=True).enable_source_code_sources()" \
 		&& $(AptUpdate)
+
+install-nkf:
+	which nkf || $(AptInstall) nkf
