@@ -1794,8 +1794,8 @@ vnoremap <silent> <leader><leader>k :DeeplTranslateToJaOpenBuffer<CR>
 vnoremap <silent> <leader><leader>K :DeeplTranslateToEnOpenBuffer<CR>
 
 " vim-scratch-buffer
-nnoremap <silent> <leader>b <Cmd>ScratchBufferOpen<CR>
-nnoremap <silent> <leader>B <Cmd>ScratchBufferOpenNext<CR>
+nnoremap <silent> <leader>b <Cmd>ScratchBufferOpenFile md<CR>
+nnoremap <silent> <leader>B <Cmd>ScratchBufferOpenFileNext md<CR>
 nnoremap <leader><leader>b :<C-u>ScratchBufferOpenFile<Space>
 
 " }}}
