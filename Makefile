@@ -659,3 +659,9 @@ enable-ubuntu-deb-src:
 
 install-nkf:
 	which nkf || $(AptInstall) nkf
+
+install-apt-file:
+	which apt-file || ( \
+		$(AptInstall) apt-file && \
+		sudo apt-file update \
+	)
