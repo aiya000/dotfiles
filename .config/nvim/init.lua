@@ -77,84 +77,17 @@ vim.g.vimrc.temporary_buftypes = {
 }
 
 -- }}}
--- Others {{{
+-- Options {{{
 
--- TODO: Remove this after https://github.com/aiya000/bash-toys/issues/12 fixed
--- Please see https://github.com/aiya000/bash-toys
-vim.env.BASH_TOYS_DUSTBOX_DIR = vim.fn.expand('~/.backup/dustbox')
+vim.g.mapleader = "'"
+vim.g.maplocalleader = "'"
+-- Use below if you are using JIS keyboard
+-- vim.g.mapleader = '['
+-- vim.g.maplocalleader = '['
 
-local typescript_variants = {
-  'typescript',
-  'javascript',
-  'vue',
-  'typescript.tsx',
-  'javascript.jsx',
-}
-
--- }}}
-
--------------
--- Prepare --
--------------
--- Set encoding {{{
-
-if not vim.g.vimrc.loaded then
-  vim.opt.fileencoding = 'utf-8'
-  vim.opt.encoding = 'utf-8'
-end
-
--- }}}
--- Prepare dein.vim {{{
-
--- TODO: Future migration to lazy.nvim or something. For now, keep using dein.vim
-
-local dein_dir = s'{vim.g.vimrc.vim_home}/bundle/repos/github.com/Shougo/dein.vim'
-helper.install_dein_if_not_installed(dein_dir)
-vim.opt.runtimepath:append(dein_dir)
-
-local bundle_dir = s'{vim.g.vimrc.vim_home}/bundle'
-vim.call('dein#begin', bundle_dir)
-
--- TODO: Generate dein.vim doc by :helptags
-
--- }}}
--- Prepare backup directories {{{
-
-helper.ensure_directory(vim.g.vimrc.directory)
-helper.ensure_directory(vim.g.vimrc.undodir)
-helper.ensure_directory(vim.g.vimrc.sessiondir)
-
--- }}}
-
---------------
-
--- dein.vim {{{
-
-vim.call('dein#load_toml', '~/.config/nvim/dein.toml', { lazy = false })
-vim.call('dein#load_toml', '~/.config/nvim/dein_lazy.toml', { lazy = true })
-vim.call('dein#add', 'Shougo/dein.vim', { rtp = '' })
-
--- }}}
--- local scripts {{{
-
-local init_private_lua = vim.fn.expand('~/.dotfiles/.private/nvim_init_private.lua')
-if vim.fn.filereadable(init_private_lua) == 1 then
-  vim.cmd(s'source {init_private_lua}')
-end
-
-local init_env_lua = vim.fn.expand('~/.config/nvim/init_env.lua')
-if vim.fn.filereadable(init_env_lua) == 1 then
-  vim.cmd(s'source {init_env_lua}')
-end
-
--- }}}
-require('autocmds')
-require('plugins-configs')
--- options {{{
 vim.opt.autoindent = true
 vim.opt.backspace = { 'indent', 'eol', 'start' }
 vim.opt.breakindent = true
--- vim.opt.browsedir = 'buffer'  -- Not supported in Neovim
 vim.opt.cindent = true
 vim.opt.cmdheight = 2
 vim.opt.cmdwinheight = 20
@@ -175,9 +108,8 @@ vim.opt.fileencodings = {
   'latin1',
   'default',
 }
-vim.opt.helplang = 'en'
 vim.opt.hidden = true
-vim.opt.history = 1000
+vim.opt.history = 100000
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.laststatus = 2
@@ -202,11 +134,16 @@ vim.opt.shellslash = true
 vim.opt.shiftwidth = 2
 vim.opt.suffixes = {}
 vim.opt.tabstop = 2
--- vim.opt.viminfo = "'400,<50,s10,h"  -- Use shada in Neovim
+vim.opt.shada = "'400,<50,s10,h"
 vim.opt.visualbell = true
 vim.opt.wildignorecase = true
 vim.opt.wildmenu = true
+vim.opt.ambiwidth = 'double'
+vim.opt.background = 'dark'
+vim.opt.showtabline = 2
+vim.opt.tabline = '%!v:lua.simple_tabline()'
 
+-- TODO: Replace to vimrc#tabline#make()
 -- Simple tabline function (temporary replacement for vimrc#tabline#make())
 function _G.simple_tabline()
   local line = ''
@@ -243,26 +180,18 @@ function _G.simple_tabline()
   return line
 end
 
--- Tabline - temporary simple version until we convert vimrc#tabline#make()
-vim.opt.tabline = '%!v:lua.simple_tabline()'
-
-vim.opt.ambiwidth = 'double'
-vim.opt.background = 'dark'
-
 -- TODO: Convert colorscheme
 -- vim.cmd('colorscheme lucariox')
 vim.cmd('colorscheme default')
 
-vim.opt.showtabline = 2
-
--- Set the fold options
+-- Fold options
 vim.opt.foldcolumn = '1'
 vim.opt.foldopen = { 'search', 'jump', 'mark', 'percent', 'insert', 'tag', 'undo' }
 vim.opt.foldclose = 'all'
 vim.opt.foldmethod = 'marker'
 vim.opt.fillchars = { vert = '|', fold = ' ' }
 
--- The backup options
+-- Backup options
 vim.opt.directory = vim.g.vimrc.directory
 vim.opt.viewdir = vim.g.vimrc.viewdir
 vim.opt.undofile = true
@@ -280,18 +209,72 @@ vim.opt.iminsert = 0
 vim.g.tex_flavor = 'latex'
 
 -- Reference tags of ctags
-local path_at_started = vim.g.vimrc.path_at_started
 vim.opt.tags:append({
   'tags',
   '.git/tags',
-  s'{path_at_started}/tags',
-  s'{path_at_started}/.git/tags',
+  s'{vim.g.vimrc.path_at_started}/tags',
+  s'{vim.g.vimrc.path_at_started}/.git/tags',
 })
 
-vim.g.mapleader = '['
-vim.g.maplocalleader = '['
+-- }}}
+-- Others {{{
+
+-- TODO: Remove this after https://github.com/aiya000/bash-toys/issues/12 fixed
+-- Please see https://github.com/aiya000/bash-toys
+vim.env.BASH_TOYS_DUSTBOX_DIR = vim.fn.expand('~/.backup/dustbox')
 
 -- }}}
+
+-------------
+-- Prepare --
+-------------
+-- Set encoding {{{
+
+if not vim.g.vimrc.loaded then
+  vim.opt.fileencoding = 'utf-8'
+  vim.opt.encoding = 'utf-8'
+end
+
+-- }}}
+-- Prepare dein.vim {{{
+
+-- TODO: Future migration to lazy.nvim or something. For now, keep using dein.vim
+
+local dein_dir = s'{vim.g.vimrc.vim_home}/bundle/repos/github.com/Shougo/dein.vim'
+helper.install_dein_if_not_installed(dein_dir)
+vim.opt.runtimepath:append(dein_dir)
+
+vim.call('dein#begin', s'{vim.g.vimrc.vim_home}/bundle')
+vim.call('dein#load_toml', '~/.config/nvim/dein.toml', { lazy = false })
+vim.call('dein#load_toml', '~/.config/nvim/dein_lazy.toml', { lazy = true })
+vim.call('dein#add', 'Shougo/dein.vim', { rtp = '' })
+
+-- TODO: Generate dein.vim doc by :helptags
+
+-- }}}
+-- Prepare backup directories {{{
+
+helper.ensure_directory(vim.g.vimrc.directory)
+helper.ensure_directory(vim.g.vimrc.undodir)
+helper.ensure_directory(vim.g.vimrc.sessiondir)
+
+-- }}}
+-- Read local scripts {{{
+
+local init_private_lua = vim.fn.expand('~/.dotfiles/.private/nvim_init_private.lua')
+if vim.fn.filereadable(init_private_lua) == 1 then
+  vim.cmd(s'source {init_private_lua}')
+end
+
+local init_env_lua = vim.fn.expand('~/.config/nvim/init_env.lua')
+if vim.fn.filereadable(init_env_lua) == 1 then
+  vim.cmd(s'source {init_env_lua}')
+end
+
+-- }}}
+
+require('autocmds')
+require('plugins')
 require('keymaps')
 
 local env_post_vimrc = vim.fn.expand('~/.vimrc_env_post')

@@ -3,52 +3,23 @@
 local s = require('utils.functions').s
 
 -- vim-quickrun {{{
+
 vim.g.quickrun_no_default_key_mappings = 0
 
 vim.g.quickrun_config = {
   ['_'] = {
     -- Global Config
   },
-  java = {
-    cmdopt = '-encoding UTF-8 -source 1.8',
-  },
-  cs = {
-    command = 'mcs',
-  },
-  vimspec = {
-    command = 'themis',
-    cmdopt = '--runtimepath ".."',
-    exec = '%c %o %s:p | tr -d "\\r"',
-    tempfile = vim.g.vimrc.vim_home .. '/{tempname()}.vimspec',
-  },
   html = {
     command = vim.g.vimrc.open_on_gui,
     outputter = 'null',
     exec = '%c %s:p',
-  },
-  tex = {
-    command = 'ptex2pdf',
-    cmdopt = '-l',
-    exec = '%c %o %s:r',
-  },
-  clojure = {
-    command = 'lein',
-    cmdopt = 'exec',
-  },
-  swift = {
-    command = 'swift',
-  },
-  scala = {
-    cmdopt = '-feature',
   },
   typescript = {
     command = 'ts-node',
     exec = { '%c %o %s' },
     cmdopt = '',
     tempfile = '%{tempname()}.ts',
-  },
-  brainfuck = {
-    command = 'brainfuck',
   },
   nico = {
     command = 'nicorun',
@@ -64,48 +35,6 @@ vim.g.quickrun_config = {
     exec = { 'grep "^>.*$" %s | sed -r "s/^>//g" > %s:p:r.hs', '%c %o %s:p:r.hs' },
     tempfile = '%{tempname()}.lhs',
     ['hook/sweep/files'] = '%S:p:r.hs',
-  },
-  stack_test = {
-    command = 'stack',
-    cmdopt = 'test',
-    exec = '%c %o',
-    runner = 'vimproc',
-    outputter = 'quickfix',
-  },
-  stack_build = {
-    type = 'stack_test',
-    cmdopt = 'build',
-  },
-  eta = {
-    runner = 'vimproc',
-  },
-  etlas_build = {
-    command = 'etlas',
-    cmdopt = 'build',
-    exec = '%c %o',
-    runner = 'vimproc',
-    outputter = 'quickfix',
-  },
-  elm = {
-    runner = 'vimproc',
-    command = 'elm-make',
-    cmdopt = '--warn',
-    exec = {
-      '%c %s %o --output /tmp/vim-quickrun-elm.html',
-      s'{vim.g.vimrc.open_on_gui} /tmp/vim-quickrun-elm.html',
-    },
-    tempfile = '%{tempname()}.elm',
-  },
-  idris = {
-    cmdopt = '-p base -p prelude -p effects -p contrib',
-  },
-  happy = {
-    runner = 'vimproc',
-    exec = { 'happy %s', 'stack runghc %s:p:r.hs' },
-    ['hook/sweep/files'] = '%S:p:r.hs',
-  },
-  dhall = {
-    exec = { 'dhall --explain --plain %o < %s' },
   },
   dot = {
     runner = 'vimproc',
@@ -132,46 +61,72 @@ end
 
 -- }}}
 -- foldCC {{{
+
 vim.g.foldCCtext_maxchars = 120
 
 -- }}}
 -- vim-submode {{{
+
 vim.g.submode_timeout = 0
 
--- TODO: Implement submode equivalent for Neovim
--- call submode#enter_with('win_resize', 'n', '', '<C-s>w')
--- ... (other submode configurations)
+-- Window resize submode
+vim.call('submode#enter_with', 'win_resize', 'n', '', '<C-s>w')
+vim.call('submode#map', 'win_resize', 'n', '', 'j', '3<C-w>+')
+vim.call('submode#map', 'win_resize', 'n', '', 'k', '3<C-w>-')
+vim.call('submode#map', 'win_resize', 'n', '', 'h', '3<C-w><')
+vim.call('submode#map', 'win_resize', 'n', '', 'l', '3<C-w>>')
+vim.call('submode#map', 'win_resize', 'n', '', '<', '20<C-w><')
+vim.call('submode#map', 'win_resize', 'n', '', '>', '20<C-w>>')
+
+-- Tab move submode
+vim.call('submode#enter_with', 'tab_move', 'n', 's', '<C-s>n', ':<C-u>call vimrc#move_tab_next()<CR>')
+vim.call('submode#enter_with', 'tab_move', 'n', 's', '<C-s>p', ':<C-u>call vimrc#move_tab_prev()<CR>')
+vim.call('submode#map', 'tab_move', 'n', 's', 'n', ':<C-u>call vimrc#move_tab_next()<CR>')
+vim.call('submode#map', 'tab_move', 'n', 's', 'p', ':<C-u>call vimrc#move_tab_prev()<CR>')
+
+-- Window move submode
+vim.call('submode#enter_with', 'win_move', 'n', 's', '<C-s>N', ':<C-u>call vimrc#move_window_forward()<CR>')
+vim.call('submode#enter_with', 'win_move', 'n', 's', '<C-s>P', ':<C-u>call vimrc#move_window_backward()<CR>')
+vim.call('submode#map', 'win_move', 'n', 's', 'N', ':<C-u>call vimrc#move_window_forward()<CR>')
+vim.call('submode#map', 'win_move', 'n', 's', 'P', ':<C-u>call vimrc#move_window_backward()<CR>')
+vim.call('submode#map', 'win_move', 'n', 'e', 'H', '"\\<C-w>H" .. (foldlevel(".") > 0 ? "zO" : "") .. "zz"')
+vim.call('submode#map', 'win_move', 'n', 'e', 'J', '"\\<C-w>J" .. (foldlevel(".") > 0 ? "zO" : "") .. "zz"')
+vim.call('submode#map', 'win_move', 'n', 'e', 'K', '"\\<C-w>K" .. (foldlevel(".") > 0 ? "zO" : "") .. "zz"')
+vim.call('submode#map', 'win_move', 'n', 'e', 'L', '"\\<C-w>L" .. (foldlevel(".") > 0 ? "zO" : "") .. "zz"')
+vim.call('submode#map', 'win_move', 'n', 's', '_', '<C-w>_')
+vim.call('submode#map', 'win_move', 'n', 's', '"', ':resize 5<CR>')
 
 -- }}}
 -- aho-bakaup.vim {{{
+
 vim.g.bakaup_backup_dir = vim.g.vimrc.backupdir
 vim.g.bakaup_auto_backup = 1
 
 -- }}}
 -- neosnippet.vim {{{
-vim.g.neosnippet_snippets_directory = vim.g.vimrc.vim_home .. '/neosnippets'
+
+vim.g.neosnippet_snippets_directory = s'{vim.g.vimrc.vim_home}/neosnippets'
 vim.g.neosnippet_disable_select_select_mappings = 1
 
 -- }}}
 -- vim-textobj-indent {{{
+
 vim.g.textobj_indent_no_default_key_mappings = 1
 
 -- }}}
 -- vim-visualstar {{{
+
 -- Do zzzv after execute visualstar
 vim.g.visualstar_extra_commands = 'zzzv'
 
 -- }}}
--- autofmt {{{
--- TODO: Implement autofmt equivalent
--- vim.opt.formatexpr = 'autofmt#japanese#formatexpr()'
-
--- }}}
 -- vim-textobj-between {{{
+
 vim.g.textobj_between_no_default_key_mappings = 1
 
 -- }}}
 -- ale {{{
+
 -- ======
 -- Common
 -- ======
@@ -183,8 +138,7 @@ vim.g.ale_virtualtext_cursor = 'current'
 -- Linters
 -- =======
 
--- let s:ghc_standard_extensions
-local ghc_standard_extensions = {
+local ghc_standard_extensions = { -- {{{
   'AutoDeriveTypeable',
   'BangPatterns',
   'BinaryLiterals',
@@ -226,7 +180,7 @@ local ghc_standard_extensions = {
   'TypeFamilies',
   'TypeSynonymInstances',
   'ViewPatterns',
-}
+} -- }}}
 
 local function create_hlint_command()
   local extensions = {}
@@ -275,28 +229,19 @@ for _, ts in ipairs(typescript_variants) do
 end
 
 -- }}}
--- elm-vim {{{
-vim.g.elm_browser_command = vim.g.vimrc.open_on_gui
-vim.g.elm_format_autosave = 1
-vim.g.elm_make_output_file = '/tmp/elm-vim-output.html'
-vim.g.elm_make_show_warnings = 1
-vim.g.elm_setup_keybindings = 0
-
--- }}}
--- idris-vim {{{
-vim.g.idris_vim_enable_keymappings_by_default = false
-
--- }}}
 -- vim-highlightedyank {{{
+
 vim.g.highlightedyank_highlight_duration = 200
 
 -- }}}
 -- vim-fmap {{{
+
 vim.g.fmap_use_default_keymappings = false
-vim.g.fmap_escape_keys = { '', '', '' }
+vim.g.fmap_escape_keys = { '', '', '' }
 
 -- }}}
 -- vim-indent-guides {{{
+
 vim.g.indent_guides_enable_on_vim_startup = 1
 vim.g.indent_guides_start_level = 2
 vim.g.indent_guides_default_mapping = 0
@@ -318,6 +263,7 @@ vim.g.indent_guides_exclude_filetypes = {
 
 -- }}}
 -- vim-lsp {{{
+
 vim.g.lsp_async_completion = 1
 vim.g.lsp_diagnostics_enabled = 0
 vim.g.lsp_document_code_action_signs_enabled = 0
@@ -328,6 +274,7 @@ vim.g.lsp_log_verbose = 1
 
 -- }}}
 -- vim-lsp-settings {{{
+
 -- solargraph is temporary disabled because it occurs error at runtime (dein.vim?)
 vim.g.lsp_settings = {
   solargraph = { disabled = 1 },
@@ -339,12 +286,14 @@ vim.g.lsp_settings_filetype_javascript = { 'typescript-language-server', 'deno' 
 
 -- }}}
 -- translate.vim {{{
+
 vim.g.translate_source = 'en'
 vim.g.translate_target = 'ja'
 vim.g.translate_winsize = 10
 
 -- }}}
 -- vim-precious {{{
+
 vim.g.precious_enable_switch_CursorMoved = {
   ['*'] = false,
 }
@@ -355,6 +304,7 @@ vim.g.textobj_precious_no_default_key_mappings = true
 
 -- }}}
 -- context_filetype.vim {{{
+
 vim.g.context_filetype_filetypes = {
   help = {},
   vue = {},
@@ -371,21 +321,20 @@ vim.g.context_filetype_filetypes = {
 
 -- }}}
 -- sync-term-cwd.vim {{{
+
 vim.g.synctermcwd_cd_command = 'lcd'
 
 -- }}}
 -- vim-webpage {{{
+
 vim.g.webpage_source = {
   weblio = 'http://ejje.weblio.jp/content/%s',
   stackage = 'https://www.stackage.org/lts-15.4/hoogle?q=%s',
 }
 
 -- }}}
--- jumpy.vim {{{
-vim.g.jumpy_map = { ')', '(' }
-
--- }}}
 -- vim-quickrepl {{{
+
 vim.g.quickrepl_config = {
   vue = { 'tsx' },
   ['typescript.tsx'] = { 'tsx' },
@@ -397,25 +346,18 @@ vim.g.quickrepl_use_default_key_mapping = true
 vim.g.quickrepl_enable_debug = true
 
 -- }}}
--- gist.vim {{{
-if vim.g.vimrc.is_wsl then
-  vim.g.gist_clip_command = 'clip.exe'
-end
-
--- }}}
 -- open-browser.vim {{{
-if vim.g.vimrc.is_wsl then
-  -- Copied from the help of open-browser.vim
-  vim.g.openbrowser_browser_commands = {
-    {
-      name = 'wslview',
-      args = { '{browser}', '{uri}' },
-    },
-  }
-end
+
+vim.g.openbrowser_browser_commands = {
+  {
+    name = 'wslview',
+    args = { '{browser}', '{uri}' },
+  },
+}
 
 -- }}}
 -- previm {{{
+
 vim.g.previm_code_language_show = 1
 vim.g.previm_hard_line_break = 1
 
@@ -426,30 +368,37 @@ end
 
 -- }}}
 -- fern.vim {{{
+
 vim.g.fern_default_hidden = 1
 
 -- }}}
 -- copilot.vim {{{
+
 vim.g.copilot_no_tab_map = true
 
 -- }}}
 -- ddu-source-lsp {{{
+
 vim.g.ddu_source_lsp_clientName = 'vim-lsp'
 
 -- }}}
 -- rainbow {{{
+
 vim.g.rainbow_active = 1
 
 -- }}}
 -- gin.vim {{{
+
 vim.g.gin_proxy_editor_opener = 'vsplit'
 
 -- }}}
 -- deepl.vim {{{
+
 vim.g.deepl_endpoint = 'https://api-free.deepl.com/v2/translate'
 
 -- }}}
 -- vim-scatch-buffer {{{
+
 vim.g.scratch_buffer_default_open_method = 'vsp'
 vim.g.scratch_buffer_default_buffer_size = nil
 vim.g.scratch_buffer_use_default_keymappings = false
@@ -458,18 +407,12 @@ vim.g.scratch_buffer_file_pattern = {
 }
 
 -- }}}
--- vim-session {{{
-vim.g.session_directory = vim.g.vimrc.sessiondir
-vim.g.session_autosave = 'no'
-vim.g.session_autoload = 'no'
-
--- }}}
 -- vim-write-sync {{{
+
 vim.g.write_sync_echo_success_on_write = true
 
--- `['~/tmp/a', '~/tmp/b', '~/tmp/c']` for test
 vim.g.write_sync_lists = {
-  { '~/tmp/a', '~/tmp/b', '~/tmp/c' },
+  { '~/tmp/a', '~/tmp/b', '~/tmp/c' },  -- For test
   {
     '~/.dotfiles/Windows/Preferences/AutoHotkey.ahk',
     '~/Desktop/AutoHotkey.ahk',
@@ -483,22 +426,22 @@ vim.g.write_sync_lists = {
 
 -- }}}
 -- lexima.vim {{{
--- TODO: Implement lexima rules for Neovim
--- vim.call('lexima#add_rule', {char = '<', input_after = '>'})
--- ... (other lexima rules)
 
--- }}}
--- vital.vim {{{
--- If you want to :Vitalize,
--- do `make install-vital-vim` first,
--- then add installed vital.vim and plugins onto &rutimepath using `set rtp+=`.
+vim.call('lexima#add_rule', { char = '<', input_after = '>' })
+-- vim.call('lexima#add_rule', { char = '<', at = '\\%#\\>', leave = 1 })
+-- vim.call('lexima#add_rule', { char = '<BS>', at = '\\<\\%#\\>', delete = 1 })
+vim.call('lexima#add_rule', { char = '「', input_after = '」' })
+vim.call('lexima#add_rule', { char = '（', input_after = '）' })
+vim.call('lexima#add_rule', { char = '【', input_after = '】' })
 
 -- }}}
 -- quickpeek.vim {{{
+
 vim.g.quickpeek_auto = true
 
 -- }}}
 -- vim-ghcid-quickfix {{{
+
 -- TODO: Implement ghcid_quickfix equivalent
 -- vim.g.ghcid_quickfix = {
 --   showing = function(qf_bufnr)

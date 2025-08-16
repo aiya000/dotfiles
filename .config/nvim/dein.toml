@@ -208,13 +208,6 @@ repo = 'ryicoh/deepl.vim'
 repo = 'aliou/bats.vim'
 
 [[plugins]]
-repo = 'xolox/vim-session'
-depends = 'vim-misc'
-
-[[plugins]]
-repo = 'xolox/vim-misc'
-
-[[plugins]]
 repo = 'skywind3000/asyncrun.vim'
 
 [[plugins]]
