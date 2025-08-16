@@ -451,6 +451,22 @@ alias claude-usage=ccusage
 alias_of claude-monitor 'claude-monitor --plan pro --timezone Asia/Tokyo'
 alias_of claude-code-monitor 'claude-code-monitor --plan pro --timezone Asia/Tokyo'
 
+function claude-with-monitors () {
+  local claude_command=$*
+  local current_dir=$(pwd)
+
+  tmux split-window -h
+  tmux split-window -v
+
+  # Sleep to wait for starting up shell
+  sleep 2
+  tmux send-keys -t 1 "cd $current_dir && ccusage" Enter
+  tmux send-keys -t 2 "cd $current_dir && claude-monitor" Enter
+
+  tmux select-pane -t 0
+  claude "$*"
+}
+
 # }}}
 ## Node.js and eco systems {{{
 
