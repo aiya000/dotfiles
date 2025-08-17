@@ -32,20 +32,44 @@ vim.defer_fn(function()
   end)
 end, 100)
 
+print(nil) -- To enable echo area
+
+local x = vim.g.vimrc.is_macos and 'open'
+  or vim.g.vimrc.is_wsl and 'wslview'
+  or vim.g.vimrc.is_unix and 'xdg-open'
+  or error('init.lua: No method found for opening GUI')
+
+-- good: wslview
+if x == 'wslview' then
+  print(s'good: {x}')
+else
+  print(s'bad: {x}')
+end
+
+vim.g.foo = vim.g.vimrc.is_macos and 'open'
+  or vim.g.vimrc.is_wsl and 'wslview'
+  or vim.g.vimrc.is_unix and 'xdg-open'
+  or error('init.lua: No method found for opening GUI')
+
+-- good: wslview
+if vim.g.foo == 'wslview' then
+  print(s'good: {x}')
+else
+  print(s'bad: {x}')
+end
+
+-- TODO: ちゃんと取得できてない？？
 vim.g.vimrc.open_on_gui = vim.g.vimrc.is_macos and 'open'
   or vim.g.vimrc.is_wsl and 'wslview'
   or vim.g.vimrc.is_unix and 'xdg-open'
-  or print('init.lua: No method found for opening GUI')
-print(vim.g.vimrc.is_macos and 'open')
-print(vim.g.vimrc.is_wsl and 'wslview')
-print(vim.g.vimrc.is_unix and 'xdg-open')
+  or error('init.lua: No method found for opening GUI')
 
-print(
-vim.g.vimrc.is_macos and 'open'
-  or vim.g.vimrc.is_wsl and 'wslview'
-  or vim.g.vimrc.is_unix and 'xdg-open'
-  or print('init.lua: No method found for opening GUI')
-)
+-- bad: nil
+if vim.g.vimrc.open_on_gui == 'wslview' then
+  print(s'good: {vim.g.vimrc.open_on_gui}')
+else
+  print(s'bad: {vim.g.vimrc.open_on_gui}')
+end
 
 local backupdir = vim.fn.expand('~/.backup/vim-backup')
 vim.g.vimrc.backupdir = backupdir
@@ -109,7 +133,7 @@ vim.opt.fileencodings = {
   'default',
 }
 vim.opt.hidden = true
-vim.opt.history = 100000
+vim.opt.history = 10000
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.laststatus = 2
@@ -119,7 +143,6 @@ vim.opt.listchars = { tab = '»_', trail = '_', extends = '»', precedes = '«',
 vim.opt.matchpairs:append({ '<:>', '（:）', '｛:｝', '「:」', '＜:＞', '『:』', '【:】' })
 vim.opt.foldenable = false
 vim.opt.joinspaces = false
-vim.opt.ruler = false
 vim.opt.timeout = false
 vim.opt.wrap = false
 vim.opt.wrapscan = false
@@ -142,6 +165,9 @@ vim.opt.ambiwidth = 'double'
 vim.opt.background = 'dark'
 vim.opt.showtabline = 2
 vim.opt.tabline = '%!v:lua.simple_tabline()'
+
+-- TODO: なぜか怒られたので一旦コメントアウト
+-- vim.opt.ruler = false
 
 -- TODO: Replace to vimrc#tabline#make()
 -- Simple tabline function (temporary replacement for vimrc#tabline#make())
