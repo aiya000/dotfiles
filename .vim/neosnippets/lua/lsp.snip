@@ -1,0 +1,19 @@
+snippet lsp_diagnostic_disable
+abbr ---@diagnostic disable: ${0}
+  ---@diagnostic disable: ${0}
+
+snippet lsp_diagnostic_enable
+abbr ---@diagnostic enable: ${0}
+  ---@diagnostic enable: ${0}
+
+snippet lsp_diagnostic_disable_section
+options indent
+  ---@diagnostic disable: ${1}
+
+  ${0}
+
+  ---@diagnostic enable: $1
+
+snippet lsp_diagnostic_disable_next_line
+abbr ---@diagnostic disable-next-line: ${0}
+  ---@diagnostic disable-next-line: ${0}
