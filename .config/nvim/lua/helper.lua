@@ -280,7 +280,7 @@ end
 function M.get_current_buffer_dir(options)
   options = options or {}
   local dir = vim.bo.buftype ~= 'terminal' and vim.bo.buftype ~= 'nofile' and vim.fn.expand('%:p:h')
-    or vim.g.vimrc.git_root
+    or InitLua.git_root
 
   local alt_dir = options.alt_dir
   if dir and dir ~= '' then

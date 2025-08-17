@@ -1,2 +1,2 @@
 -- Extend ftplugin 'int-ghci'
-vim.cmd("execute 'source' (g:vimrc['vim_home'] . '/after/ftplugin/int-ghci.vim')")
+vim.cmd("execute 'source' (InitLua.neovim_home . '/after/ftplugin/int-ghci.vim')")

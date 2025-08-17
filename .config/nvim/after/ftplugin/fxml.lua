@@ -1,1 +1,1 @@
-vim.cmd("execute 'source' (g:vimrc['vim_home'] . '/after/ftplugin/xml.vim')")
+vim.cmd("execute 'source' (InitLua.neovim_home . '/after/ftplugin/xml.vim')")

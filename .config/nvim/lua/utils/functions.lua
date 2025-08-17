@@ -117,6 +117,28 @@ function M.wait_for(p, f, interval)
   end
 end
 
+---Helper function to set a field in Vim dictionary variables.
+---See `:h lua-vim-variables@nv` why this should be used.
+---@param scope table --Expected: vim.g, vim.b, vim.w, vim.t, vim.v
+---@param varname string --
+---@param field string --
+---@param value unknown --
+---Example:
+---```lua
+---set_vim_dict_field(vim.g, 'my_config', 'debug_mode', true)
+---set_vim_dict_field(vim.g, 'quickrun_config', 'ps1', {
+---  command = 'powershell.exe',
+---  exec = { '%c `wslpath -m %s`' },
+---  tempfile = '%{tempname()}.ps1',
+---})
+---```
+function M.set_vim_dict_field(scope, varname, field, value)
+  M.modify_vim_dict(scope, varname, function(dict)
+    dict[field] = value
+    return dict
+  end)
+end
+
 -- In-source testing
 if vim == nil then
   local Test = require('utils.test')

@@ -8,78 +8,43 @@ local s = fn.s
 -------------------
 -- Global values --
 -------------------
--- TODO: Rename vim.g.vimrc to vim.g.init_lua
--- vim.g.vimrc {{{
+-- InitLua global configuration {{{
 
-vim.g.vimrc = vim.g.vimrc
-  or {
-    loaded = false,
-    vim_home = vim.fn.expand('~/.config/nvim'),
-    path_at_started = vim.fn.getcwd(),
-    is_wsl = vim.fn.executable('uname') == 1 and vim.fn.system('uname -a'):match('microsoft%-standard'),
-    is_unix = vim.fn.has('unix') == 1,
-    is_macos = vim.fn.has('macunix') == 1,
-    git_root = nil,
-    memo_path = '~/.backup/memo.md',
-    is_ddc_enabled = nil,
-  }
+InitLua = InitLua or {
+  loaded = false,
+  neovim_home = vim.fn.expand('~/.config/nvim'),
+  path_at_started = vim.fn.getcwd(),
+  is_wsl = vim.fn.executable('uname') == 1 and vim.fn.system('uname -a'):match('microsoft%-standard'),
+  is_unix = vim.fn.has('unix') == 1,
+  is_macos = vim.fn.has('macunix') == 1,
+  git_root = nil,
+  memo_path = '~/.backup/memo.md',
+  is_ddc_enabled = nil,
+}
 
 -- Delayed to avoid startup slowdown
 vim.defer_fn(function()
   git.read_git_root(function(git_root)
-    vim.g.vimrc.git_root = git_root
+    InitLua.git_root = git_root
     io.write(s'vimrc: a git root detected: {git_root}')
   end)
 end, 100)
 
-print(nil) -- To enable echo area
-
-local x = vim.g.vimrc.is_macos and 'open'
-  or vim.g.vimrc.is_wsl and 'wslview'
-  or vim.g.vimrc.is_unix and 'xdg-open'
+InitLua.open_on_gui =
+  InitLua.is_macos and 'open'
+  or InitLua.is_wsl and 'wslview'
+  or InitLua.is_unix and 'xdg-open'
   or error('init.lua: No method found for opening GUI')
-
--- good: wslview
-if x == 'wslview' then
-  print(s'good: {x}')
-else
-  print(s'bad: {x}')
-end
-
-vim.g.foo = vim.g.vimrc.is_macos and 'open'
-  or vim.g.vimrc.is_wsl and 'wslview'
-  or vim.g.vimrc.is_unix and 'xdg-open'
-  or error('init.lua: No method found for opening GUI')
-
--- good: wslview
-if vim.g.foo == 'wslview' then
-  print(s'good: {x}')
-else
-  print(s'bad: {x}')
-end
-
--- TODO: ちゃんと取得できてない？？
-vim.g.vimrc.open_on_gui = vim.g.vimrc.is_macos and 'open'
-  or vim.g.vimrc.is_wsl and 'wslview'
-  or vim.g.vimrc.is_unix and 'xdg-open'
-  or error('init.lua: No method found for opening GUI')
-
--- bad: nil
-if vim.g.vimrc.open_on_gui == 'wslview' then
-  print(s'good: {vim.g.vimrc.open_on_gui}')
-else
-  print(s'bad: {vim.g.vimrc.open_on_gui}')
-end
 
 local backupdir = vim.fn.expand('~/.backup/vim-backup')
-vim.g.vimrc.backupdir = backupdir
-vim.g.vimrc.directory = s'{backupdir}/swp'
-vim.g.vimrc.undodir = s'{backupdir}/undo'
-vim.g.vimrc.viewdir = s'{backupdir}/view'
-vim.g.vimrc.sessiondir = s'{backupdir}/session'
+InitLua.backupdir = backupdir
+InitLua.directory = s'{backupdir}/swp'
+InitLua.undodir = s'{backupdir}/undo'
+InitLua.viewdir = s'{backupdir}/view'
+InitLua.sessiondir = s'{backupdir}/session'
 
 -- Please see 'vimrc#bufclose_filetype()'.
-vim.g.vimrc.temporary_buftypes = {
+InitLua.temporary_buftypes = {
   'aref_web',
   'diff',
   'gin-branch',
@@ -218,10 +183,10 @@ vim.opt.foldmethod = 'marker'
 vim.opt.fillchars = { vert = '|', fold = ' ' }
 
 -- Backup options
-vim.opt.directory = vim.g.vimrc.directory
-vim.opt.viewdir = vim.g.vimrc.viewdir
+vim.opt.directory = InitLua.directory
+vim.opt.viewdir = InitLua.viewdir
 vim.opt.undofile = true
-vim.opt.undodir = vim.g.vimrc.undodir
+vim.opt.undodir = InitLua.undodir
 vim.opt.backup = false
 
 -- Always I use the ignorecase
@@ -238,8 +203,8 @@ vim.g.tex_flavor = 'latex'
 vim.opt.tags:append({
   'tags',
   '.git/tags',
-  s'{vim.g.vimrc.path_at_started}/tags',
-  s'{vim.g.vimrc.path_at_started}/.git/tags',
+  s'{InitLua.path_at_started}/tags',
+  s'{InitLua.path_at_started}/.git/tags',
 })
 
 -- }}}
@@ -256,7 +221,7 @@ vim.env.BASH_TOYS_DUSTBOX_DIR = vim.fn.expand('~/.backup/dustbox')
 -------------
 -- Set encoding {{{
 
-if not vim.g.vimrc.loaded then
+if not InitLua.loaded then
   vim.opt.fileencoding = 'utf-8'
   vim.opt.encoding = 'utf-8'
 end
@@ -266,23 +231,24 @@ end
 
 -- TODO: Future migration to lazy.nvim or something. For now, keep using dein.vim
 
-local dein_dir = s'{vim.g.vimrc.vim_home}/bundle/repos/github.com/Shougo/dein.vim'
+local dein_dir = s'{InitLua.neovim_home}/bundle/repos/github.com/Shougo/dein.vim'
 helper.install_dein_if_not_installed(dein_dir)
 vim.opt.runtimepath:append(dein_dir)
 
-vim.call('dein#begin', s'{vim.g.vimrc.vim_home}/bundle')
+vim.call('dein#begin', s'{InitLua.neovim_home}/bundle')
 vim.call('dein#load_toml', '~/.config/nvim/dein.toml', { lazy = false })
 vim.call('dein#load_toml', '~/.config/nvim/dein_lazy.toml', { lazy = true })
 vim.call('dein#add', 'Shougo/dein.vim', { rtp = '' })
+vim.call('dein#end')
 
 -- TODO: Generate dein.vim doc by :helptags
 
 -- }}}
 -- Prepare backup directories {{{
 
-helper.ensure_directory(vim.g.vimrc.directory)
-helper.ensure_directory(vim.g.vimrc.undodir)
-helper.ensure_directory(vim.g.vimrc.sessiondir)
+helper.ensure_directory(InitLua.directory)
+helper.ensure_directory(InitLua.undodir)
+helper.ensure_directory(InitLua.sessiondir)
 
 -- }}}
 -- Read local scripts {{{
@@ -310,4 +276,4 @@ end
 
 vim.cmd('filetype plugin indent on')
 vim.cmd('syntax enable')
-vim.g.vimrc.loaded = true
+InitLua.loaded = true

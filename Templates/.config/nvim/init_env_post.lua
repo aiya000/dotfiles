@@ -1,9 +1,4 @@
-local function s(text, env)
-  return text:gsub('{([^}]+)}', function(expr)
-    local f = load('return'  .. expr, nil, nil, env)
-    return f and f() or '{' .. expr .. '}'
-  end)
-end
+local s = require('utils.functions').s
 
 ---自分が開発している前提のとき用
 ---@param path string
@@ -24,12 +19,12 @@ add_to_runtime_path(vim.fn.expand('~/git/vital.vim'))
 ---@param worktree? string
 local function use_locally_instead(name, worktree)
   vim.call('dein#disable', name)
+  local worktree_dir = worktree == nil and '' or s'/{worktree}'
 
   local plugin_dir = vim.fn.expand(
-    s('~/Repository/{name}{worktree}', {
+    s'~/Repository/{name}{worktree_dir}', {
       name = name,
-      worktree = worktree == nil and '' or ('/' .. worktree)
-    })
+    }
   )
   vim.opt.runtimepath = plugin_dir .. ',' .. vim.opt.runtimepath
 end

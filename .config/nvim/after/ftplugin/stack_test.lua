@@ -1,4 +1,4 @@
-vim.cmd("execute 'source' (g:vimrc['vim_home'] . '/after/ftplugin/stack_build.vim')")
+vim.cmd("execute 'source' (InitLua.neovim_home . '/after/ftplugin/stack_build.vim')")
 
 vim.keymap.set(
   'n',

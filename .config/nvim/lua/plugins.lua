@@ -1,6 +1,7 @@
 -- プラグイン設定
 
-local s = require('utils.functions').s
+local fn = require('utils.functions')
+local s = fn.s
 
 -- vim-quickrun {{{
 
@@ -11,7 +12,7 @@ vim.g.quickrun_config = {
     -- Global Config
   },
   html = {
-    command = vim.g.vimrc.open_on_gui,
+    command = InitLua.open_on_gui,
     outputter = 'null',
     exec = '%c %s:p',
   },
@@ -40,10 +41,11 @@ vim.g.quickrun_config = {
     runner = 'vimproc',
     exec = {
       'dot -T png %o %s -o %s.png',
-      vim.g.vimrc.open_on_gui .. ' %s.png',
+      'wslview %s.png', -- 今は仮で、WSLであると断定しておく。See: ↓TODOコメント
+      -- TODO: InitLua.open_on_guiが正しく代入できてない。できてたら、このコメントを消して、↓をアンコメントする
+      -- InitLua.open_on_gui .. ' %s.png',
     },
     ['hook/sweep/files'] = '%S:p:r.png',
-    ['outputter/error/error'] = 'quickfix',
     ['outputter/error/success'] = 'message',
   },
   python = {
@@ -51,12 +53,12 @@ vim.g.quickrun_config = {
   },
 }
 
-if vim.g.vimrc.is_wsl then
-  vim.g.quickrun_config.ps1 = {
+if InitLua.is_wsl then
+  fn.set_vim_dict_field(vim.g, 'quickrun_config', 'ps1', {
     command = 'powershell.exe',
     exec = { '%c `wslpath -m %s`' },
     tempfile = '%{tempname()}.ps1',
-  }
+  })
 end
 
 -- }}}
@@ -99,13 +101,13 @@ vim.call('submode#map', 'win_move', 'n', 's', '"', ':resize 5<CR>')
 -- }}}
 -- aho-bakaup.vim {{{
 
-vim.g.bakaup_backup_dir = vim.g.vimrc.backupdir
+vim.g.bakaup_backup_dir = InitLua.backupdir
 vim.g.bakaup_auto_backup = 1
 
 -- }}}
 -- neosnippet.vim {{{
 
-vim.g.neosnippet_snippets_directory = s'{vim.g.vimrc.vim_home}/neosnippets'
+vim.g.neosnippet_snippets_directory = s'{InitLua.neovim_home}/neosnippets'
 vim.g.neosnippet_disable_select_select_mappings = 1
 
 -- }}}
@@ -211,7 +213,7 @@ for _, ts in ipairs(typescript_variants) do
   vim.g.ale_linters[ts] = { 'prettier', 'eslint', 'vim-lsp' }
 end
 
-vim.g.ale_scala_scalastyle_config = vim.fn.expand('$HOME/.dotfiles/scalastyle_config_default.xml')
+vim.g.ale_scala_scalastyle_config = vim.fn.expand('~/.dotfiles/scalastyle_config_default.xml')
 
 -- ==========
 -- Formatters
@@ -361,7 +363,7 @@ vim.g.openbrowser_browser_commands = {
 vim.g.previm_code_language_show = 1
 vim.g.previm_hard_line_break = 1
 
-if vim.g.vimrc.is_wsl then
+if InitLua.is_wsl then
   vim.g.previm_wsl_mode = true
   vim.g.previm_open_cmd = 'wslview'
 end

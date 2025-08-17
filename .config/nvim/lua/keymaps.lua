@@ -47,11 +47,11 @@ map('n', 'q>', '<Cmd>registers<CR>', { silent = true })
 
 map('n', '<C-k>o', '<Cmd>e! %<CR>', { silent = true })
 map('n', '<leader><leader>B', function()
-  vim.cmd(s'split {vim.g.vimrc.memo_path}')
+  vim.cmd(s'split {InitLua.memo_path}')
 end, { silent = true })
 map('n', 'g*', '<Cmd>execute "silent! normal! *<C-o>"<CR>', { silent = true })
 map('n', 'Q', function()
-  require('vimrc').bufclose_filetype(vim.g.vimrc.temporary_buftypes)
+  require('vimrc').bufclose_filetype(InitLua.temporary_buftypes)
 end, { silent = true })
 
 -- folds
@@ -135,7 +135,7 @@ map('n', 'gh', '<NOP>')
 local function open_terminal(options)
   local default_opts = {
     vertical = true,
-    cwd = require('vimrc').get_current_buffer_dir({ alt_dir = vim.g.vimrc.git_root }),
+    cwd = require('vimrc').get_current_buffer_dir({ alt_dir = InitLua.git_root }),
   }
   local opts = vim.tbl_extend('force', default_opts, options or {})
 
@@ -232,10 +232,10 @@ map('n', '(', '(zv')
 map('n', ')', ')zv')
 map('n', '::', ':%s/')
 map('n', ':ev', function()
-  return ':e ' .. vim.g.vimrc.path_at_started .. '/'
+  return ':e ' .. InitLua.path_at_started .. '/'
 end, { expr = true })
 map('n', ':eg', function()
-  return ':e ' .. (vim.g.vimrc.git_root or '') .. '/'
+  return ':e ' .. (InitLua.git_root or '') .. '/'
 end, { expr = true })
 map('n', ':eb', function()
   return ':e ' .. vim.fn.expand('%:p:h') .. '/'

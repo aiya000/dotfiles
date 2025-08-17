@@ -49,7 +49,7 @@ create_command(
   function(opts)
     local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
     local path = fn.s('{nvim_home}/after/ftplugin/{filetype}.lua', {
-        nvim_home = vim.g.vimrc.vim_home,
+        nvim_home = InitLua.neovim_home,
         filetype = filetype,
       })
     vim.cmd('edit ' .. path)
@@ -59,32 +59,32 @@ create_command(
 
 create_command('FtDictionaryEdit', function(opts)
   local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd('edit ' .. string.format('%s/dict/filetype/%s.dict', vim.g.vimrc.vim_home, filetype))
+  vim.cmd('edit ' .. string.format('%s/dict/filetype/%s.dict', InitLua.neovim_home, filetype))
 end, { nargs = '?', complete = 'filetype', bar = true })
 
 create_command('SyntaxEdit', function(opts)
   local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd('edit ' .. string.format('%s/syntax/%s.vim', vim.g.vimrc.vim_home, filetype))
+  vim.cmd('edit ' .. string.format('%s/syntax/%s.vim', InitLua.neovim_home, filetype))
 end, { nargs = '?', complete = 'filetype', bar = true })
 
 create_command('IndentEdit', function(opts)
   local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd('edit ' .. string.format('%s/indent/%s.vim', vim.g.vimrc.vim_home, filetype))
+  vim.cmd('edit ' .. string.format('%s/indent/%s.vim', InitLua.neovim_home, filetype))
 end, { nargs = '?', complete = 'filetype', bar = true })
 
 create_command('FtDetectEdit', function(opts)
   local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd('edit ' .. string.format('%s/ftdetect/%s.vim', vim.g.vimrc.vim_home, filetype))
+  vim.cmd('edit ' .. string.format('%s/ftdetect/%s.vim', InitLua.neovim_home, filetype))
 end, { nargs = '?', complete = 'filetype', bar = true })
 
 create_command('PluginEdit', function(opts)
   local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd('edit ' .. string.format('%s/plugin/%s.vim', vim.g.vimrc.vim_home, filetype))
+  vim.cmd('edit ' .. string.format('%s/plugin/%s.vim', InitLua.neovim_home, filetype))
 end, { nargs = '?', complete = 'filetype', bar = true })
 
 create_command('AutoloadEdit', function(opts)
   local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd('edit ' .. string.format('%s/autoload/%s.vim', vim.g.vimrc.vim_home, filetype))
+  vim.cmd('edit ' .. string.format('%s/autoload/%s.vim', InitLua.neovim_home, filetype))
 end, { nargs = '?', complete = 'filetype', bar = true })
 
 -- }}}
@@ -158,7 +158,7 @@ create_command('CdBufDir', function()
 end, { bar = true })
 
 create_command('CdStarted', function()
-  vim.cmd('cd ' .. vim.g.vimrc.path_at_started)
+  vim.cmd('cd ' .. InitLua.path_at_started)
 end, { bar = true })
 
 create_command('CdGitRoot', function()
@@ -175,7 +175,7 @@ create_command('LcdBufDir', function()
 end, { bar = true })
 
 create_command('LcdStarted', function()
-  vim.cmd('lcd ' .. vim.g.vimrc.path_at_started)
+  vim.cmd('lcd ' .. InitLua.path_at_started)
 end, { bar = true })
 
 create_command('LcdGitRoot', function()
@@ -192,7 +192,7 @@ create_command('TcdBufDir', function()
 end, { bar = true })
 
 create_command('TcdStarted', function()
-  vim.cmd('tcd ' .. vim.g.vimrc.path_at_started)
+  vim.cmd('tcd ' .. InitLua.path_at_started)
 end, { bar = true })
 
 create_command('TcdGitRoot', function()
@@ -205,15 +205,15 @@ end, { bar = true })
 
 -- g:vimrc.path_at_started assignment
 create_command('ScdBufDir', function()
-  vim.g.vimrc.path_at_started = vim.fn.expand('%:p:h')
+  InitLua.path_at_started = vim.fn.expand('%:p:h')
 end, { bar = true })
 
 create_command('ScdCurrentDir', function()
-  vim.g.vimrc.path_at_started = vim.fn.getcwd()
+  InitLua.path_at_started = vim.fn.getcwd()
 end, { bar = true })
 
 create_command('ScdGitRoot', function()
-  vim.g.vimrc.path_at_started = vim.g.vimrc.git_root
+  InitLua.path_at_started = InitLua.git_root
 end, { bar = true })
 
 create_command('ScdNodeRoot', function()
