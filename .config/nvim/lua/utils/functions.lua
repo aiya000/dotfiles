@@ -133,10 +133,16 @@ end
 ---})
 ---```
 function M.set_vim_dict_field(scope, varname, field, value)
-  M.modify_vim_dict(scope, varname, function(dict)
-    dict[field] = value
-    return dict
-  end)
+  if not scope[varname] then
+    scope[varname] = {}
+  end
+  if type(scope[varname]) ~= 'table' then
+    error(string.format(
+      "Expected '%s' to be a table, but got %s",
+      varname, type(scope[varname])
+    ))
+  end
+  scope[varname][field] = value
 end
 
 -- In-source testing
@@ -169,6 +175,24 @@ if vim == nil then
       return x
     end
     assert_equal(M.s'{f(10)}', '10')
+  end)
+
+  test('set_vim_dict_field() should set a sub field', function()
+    local dict = {
+      field = {},
+    }
+    M.set_vim_dict_field(dict, 'field', 'sub_field', 10)
+    assert_equal(dict.field.sub_field, 10)
+  end)
+
+
+  test('set_vim_dict_field() should keep another field values', function()
+    local dict = {
+      another = 10,
+      field = {},
+    }
+    M.set_vim_dict_field(dict, 'field', 'sub_field', 10)
+    assert_equal(dict.another, 10)
   end)
 end
 
