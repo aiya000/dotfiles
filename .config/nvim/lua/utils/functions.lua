@@ -31,6 +31,27 @@ function M.compose(...)
   end
 end
 
+---@see s
+---For Lua 5.1 compatibility
+---@param ref { code: string, context: table }
+---@return string --The interplated string
+local function replace_expr_in_context_for_lua_5_1_non_jit(ref)
+  local f = loadstring(ref.code)
+  if f then
+    setfenv(f, ref.context)
+  end
+  return f and tostring(f()) or '{' .. expr .. '}'
+end
+
+---This function is same as `replace_expr_in_context_for_lua_5_1_non_jit()`,
+---but for LuaJIT/Lua 5.2+ (Neovim).
+---@see s
+---@see replace_expr_in_context_for_lua_5_1_non_jit --
+local function replace_expr_in_context(ref)
+  local f = load(ref.code, nil, nil, ref.context)
+  return f and tostring(f()) or '{' .. expr .. '}'
+end
+
 ---@param text string --テンプレートリテラルっぽい文字列
 ---@return string --変数埋め込み済み文字列
 ---Example:
@@ -65,22 +86,18 @@ function M.s(text)
   -- グローバル変数を取得
   setmetatable(context, { __index = _G })
 
-  local result = text:gsub('{([^}]+)}', function(expr)
-    local code = 'return ' .. expr
-    local f
-    if _VERSION == 'Lua 5.1' and not jit then
-      -- Lua 5.1 compatibility
-      f = loadstring(code)
-      if f then
-        setfenv(f, context)
-      end
-    else
-      -- LuaJIT/Lua 5.2+ (Neovim)
-      f = load(code, nil, nil, context)
-    end
-    return f and tostring(f()) or '{' .. expr .. '}'
+  return text:gsub('{([^}]+)}', function(expr)
+    -- A ref to enhance performance
+    local replacing_ref = {
+      code = 'return ' .. expr,
+      context = context,
+    }
+    return (
+      (_VERSION == 'Lua 5.1' and not jit)
+        and replace_expr_in_context_for_lua_5_1_non_jit
+        or replace_expr_in_context
+    )(replacing_ref)
   end)
-  return result
 end
 
 ---@generic T
