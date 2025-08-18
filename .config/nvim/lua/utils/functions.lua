@@ -65,10 +65,22 @@ function M.s(text)
   -- グローバル変数を取得
   setmetatable(context, { __index = _G })
 
-  return text:gsub('{([^}]+)}', function(expr)
-    local f = load('return ' .. expr, nil, nil, context)
+  local result = text:gsub('{([^}]+)}', function(expr)
+    local code = 'return ' .. expr
+    local f
+    if _VERSION == 'Lua 5.1' and not jit then
+      -- Lua 5.1 compatibility
+      f = loadstring(code)
+      if f then
+        setfenv(f, context)
+      end
+    else
+      -- LuaJIT/Lua 5.2+ (Neovim)
+      f = load(code, nil, nil, context)
+    end
     return f and tostring(f()) or '{' .. expr .. '}'
   end)
+  return result
 end
 
 ---@generic T
