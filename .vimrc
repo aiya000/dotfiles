@@ -1037,7 +1037,9 @@ let g:write_sync_lists = [
 " vim-fakeclip {{{
 
 let g:fakeclip_provide_clipboard_key_mappings = v:true
-let g:fakeclip_force_override_clip_command = 'clip.exe'
+let g:fakeclip_force_override_clip_command = 'nkf -s | clip.exe'
+" NOTE: ↑↓勝手にShift-JISにしてはいけないときと、Shift-JISにしなければいけないときがある？？ WSLを新規セットアップしたときに`nkf -s |`を削除しなければ動かなかったが、またこれがないと文字化けするようになった
+" let g:fakeclip_force_override_clip_command = 'nkf -s | clip.exe'
 
 call vimrc#job#start_simply(
   \ ['/bin/which', 'nkf'],
