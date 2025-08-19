@@ -648,6 +648,7 @@ install-nircmd:
 		unzip /tmp/nircmd.zip -d /tmp/nircmd && \
 		mv /tmp/nircmd/nircmd.exe ~/bin/nircmd.exe && \
 		ln -s ~/bin/nircmd.exe ~/bin/nircmd \
+		chmod +x ~/bin/nircmd \
 	)
 
 # This is required by `install-vim-build-deps`
