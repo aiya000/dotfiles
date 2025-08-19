@@ -139,6 +139,7 @@ if i_have soundvolumeview ; then
 
   function soundvolumeview-set-default () {
     : Exected: 'output' or 'input'
+    : TODO: $'Currently, if the device of $device_name exists both as output and input, this function sets it to both as output and input. This maybe SoundVolumeView.exe\'s spec.'
     local device_type=$1
     local device_name=${2:-$(soundvolumeview-list | peco | awk '{print $3}')}
 
