@@ -651,6 +651,15 @@ install-nircmd:
 		chmod +x ~/bin/nircmd \
 	)
 
+install-sound-volume-view:
+	which nircmd.exe || ( \
+		wget https://www.nirsoft.net/utils/soundvolumeview-x64.zip -O /tmp/soundvolumeview.zip && \
+		unzip /tmp/soundvolumeview.zip -d /tmp/soundvolumeview && \
+		mv /tmp/soundvolumeview/SoundVolumeView.exe ~/bin/SoundVolumeView.exe && \
+		ln -s ~/bin/SoundVolumeView.exe ~/bin/soundvolumeview \
+		chmod +x ~/bin/soundvolumeview \
+	)
+
 # This is required by `install-vim-build-deps`
 enable-ubuntu-deb-src:
 	$(AptUpdate) \
