@@ -29,6 +29,10 @@ snippet var_replace_tail
 abbr ${${1:varname}/%${2:pattern_str}/${3:replaced}}${0}
   ${${1:varname}/%${2:pattern_str}/${3:replaced}}${0}
 
+snippet var_or_default
+abbr ${${1:varname}:-${2:default_value}}
+  ${${1:varname}:-${2:default_value}}${0}
+
 snippet array_slice
 alias slice
 abbr ${${1:array}[@]:${2:start}:${3:end}}${0}
