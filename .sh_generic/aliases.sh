@@ -61,6 +61,91 @@ source ~/.sh_generic/aliases/os-package-managers.sh
 source ~/.sh_generic/aliases/vim.sh
 
 # }}}
+# General Commands {{{
+
+alias la='ls -a --color=auto --group-directories-first'
+alias ll='ls -l --color=auto --group-directories-first'
+alias llh='ls -lh --color=auto --group-directories-first'
+alias lla='ls -la --color=auto --group-directories-first'
+
+alias date-simple='date "+%Y-%m-%d %H:%M"'
+alias du-sum='du -hs'
+
+function du-sort () {
+  local paths=${1:-.}
+  du -h -d 1 "$paths" | sort -h
+}
+
+# shellcheck disable=SC2139
+alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
+alias mount4u.vfat=mount4u.ntfs
+alias mount4u.ext2='sudo mount -o iocharset=utf8'
+alias mount4u.ext3=mount4u.ext2
+alias mount4u.ext4=mount4u.ext2
+
+alias ei=exit
+alias t=vterminal
+alias cdp=cd-finddir
+alias ki=killing-art
+i_have fdfind && alias fd='fdfind --hidden --ignore-case' # --hidden to include '.' prefixed files
+
+function ff () {
+  : Find a file by taken fuzzy name.
+  f . "$1"
+}
+
+function f () {
+  : Find a file on a directory by taken fuzzy name.
+  local base_path=$1 fuzzy_name=$2
+
+  if i_have fdfind ; then
+    fdfind "$fuzzy_name" "$base_path"
+  else
+    find "$base_path" -name "*$fuzzy_name*"
+  fi
+}
+
+# alias ..='cd ../'
+# alias ...='cd ../../'
+# alias ....='cd ../../../'
+# ...
+function aliases::define_cd_to_parents () {
+  local name dir
+  for (( i = 2; i <= 10; ++i )) ; do
+    name=$(eval "printf '.%.0s' {1..$i}")
+    dir=$(eval "printf '../%.0s' {2..$i}")
+    eval "alias $name='cd $dir'"
+  done
+}
+aliases::define_cd_to_parents
+
+i_have tmux && alias ta='tmux attach'
+i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
+i_have unzip && alias unzip-cp932='unzip -O cp932'
+
+if i_have notifu.exe && ! i_have notify-send ; then
+  function notify-send () {
+    (notifu.exe /p WSL /m "$1" &) &> /dev/null
+  }
+fi
+
+## Editor {{{
+
+# shellcheck disable=SC2139
+alias e="$EDITOR"
+alias g=gvim
+
+alias eS='ls -A $VIM_SESSION | peco | xargs -I {} vim -S $VIM_SESSION/{}'
+alias gS='ls -A $VIM_SESSION | peco | xargs -I {} gvim -S $VIM_SESSION/{}'
+
+# shellcheck disable=SC2139
+alias e-current-session="vim-current-session $EDITOR"
+# shellcheck disable=SC2139
+alias g-current-session="vim-current-session $MY_GUI_EDITOR"
+
+# }}}
+
+# }}}
 # Git {{{
 
 if i_have git ; then
@@ -339,101 +424,7 @@ function gitlab-clone () {
 # }}}
 
 # }}}
-# General Commands {{{
-
-alias la='ls -a --color=auto --group-directories-first'
-alias ll='ls -l --color=auto --group-directories-first'
-alias llh='ls -lh --color=auto --group-directories-first'
-alias lla='ls -la --color=auto --group-directories-first'
-
-alias date-simple='date "+%Y-%m-%d %H:%M"'
-alias du-sum='du -hs'
-
-function du-sort () {
-  local paths=${1:-.}
-  du -h -d 1 "$paths" | sort -h
-}
-
-# shellcheck disable=SC2139
-alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
-alias mount4u.vfat=mount4u.ntfs
-alias mount4u.ext2='sudo mount -o iocharset=utf8'
-alias mount4u.ext3=mount4u.ext2
-alias mount4u.ext4=mount4u.ext2
-
-alias ei=exit
-alias t=vterminal
-alias cdp=cd-finddir
-alias ki=killing-art
-i_have fdfind && alias fd='fdfind --hidden --ignore-case' # --hidden to include '.' prefixed files
-
-function ff () {
-  : Find a file by taken fuzzy name.
-  f . "$1"
-}
-
-function f () {
-  : Find a file on a directory by taken fuzzy name.
-  local base_path=$1 fuzzy_name=$2
-
-  if i_have fdfind ; then
-    fdfind "$fuzzy_name" "$base_path"
-  else
-    find "$base_path" -name "*$fuzzy_name*"
-  fi
-}
-
-# alias ..='cd ../'
-# alias ...='cd ../../'
-# alias ....='cd ../../../'
-# ...
-function aliases::define_cd_to_parents () {
-  local name dir
-  for (( i = 2; i <= 10; ++i )) ; do
-    name=$(eval "printf '.%.0s' {1..$i}")
-    dir=$(eval "printf '../%.0s' {2..$i}")
-    eval "alias $name='cd $dir'"
-  done
-}
-aliases::define_cd_to_parents
-
-i_have tmux && alias ta='tmux attach'
-i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
-i_have unzip && alias unzip-cp932='unzip -O cp932'
-
-if i_have notifu.exe && ! i_have notify-send ; then
-  function notify-send () {
-    (notifu.exe /p WSL /m "$1" &) &> /dev/null
-  }
-fi
-
-## Editor {{{
-
-# shellcheck disable=SC2139
-alias e="$EDITOR"
-alias g=gvim
-
-alias eS='ls -A $VIM_SESSION | peco | xargs -I {} vim -S $VIM_SESSION/{}'
-alias gS='ls -A $VIM_SESSION | peco | xargs -I {} gvim -S $VIM_SESSION/{}'
-
-# shellcheck disable=SC2139
-alias e-current-session="vim-current-session $EDITOR"
-# shellcheck disable=SC2139
-alias g-current-session="vim-current-session $MY_GUI_EDITOR"
-
-# }}}
-
-# }}}
-# Not General Commands {{{
-
-alias ctags-kotlin-auto="ctags-auto '--exclude=*.java' '--exclude=*.html' '--exclude=*.css'"
-alias ctags-typescript-auto="ctags-auto '--exclude=*.js' '--exclude=*.json'"
-
-alias_of yay 'yay --color always'
-
-i_have krita && alias kra=krita
-
-## Claude Code {{{
+# Claude Code {{{
 
 # TODO: nvmのロードタイミングのせいだと思うけど、ここで分岐させると、うまく定義できない。直す。load-my-envにhook的なものをサポートさせるのがいいと思う
 # i_have claude && alias c=claude
@@ -468,7 +459,7 @@ function claude-with-monitors () {
 }
 
 # }}}
-## Node.js and eco systems {{{
+# Eco Systems for Node.js, TypeScript, and JavaScript  {{{
 
 alias cdn=cd-to-node-root
 
@@ -505,6 +496,14 @@ function kill-vue-lsp-servers () {
 }
 
 # }}}
+# Another Not General Commands {{{
+
+alias ctags-kotlin-auto="ctags-auto '--exclude=*.java' '--exclude=*.html' '--exclude=*.css'"
+alias ctags-typescript-auto="ctags-auto '--exclude=*.js' '--exclude=*.json'"
+
+alias_of yay 'yay --color always'
+
+i_have krita && alias kra=krita
 
 # }}}
 
