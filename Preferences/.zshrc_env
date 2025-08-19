@@ -5,11 +5,16 @@
 export WINDOWS_USER=$(whoami.exe | tr -d '\r\n' | cut -d '\' -f 2)
 export DOTFILES_ZSHRC_NVM_NODE_VERSION=v22.14.0
 
+export BASH_TOYS_MUSIC_PLAYER='notifu.exe /m pomodoro-end'
+export BASH_TOYS_MUSIC_PLAYER_OPTIONS=
+export BASH_TOYS_POMODORO_NOTIFICATION_MUSIC=
+
 # export NODE_OPTIONS=--max-old-space-size=16384
 # PATH=$PATH:/usr/share/bash-completion/completions
 PATH=$PATH:~/.nvm/versions/node/$DOTFILES_ZSHRC_NVM_NODE_VERSION/bin
 PATH="$PATH:/mnt/c/Users/$WINDOWS_USER/AppData/Local/Programs/Microsoft VS Code"
 PATH="$PATH:/mnt/c/Program Files/Rancher Desktop/resources/resources/linux/bin"
+PATH="$PATH:/mnt/c/Program Files (x86)/Bluetooth Command Line Tools/bin"
 
 if ! i_have code && i_have Code.exe ; then
   alias code=Code.exe
