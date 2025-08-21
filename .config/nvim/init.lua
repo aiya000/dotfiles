@@ -19,7 +19,6 @@ InitLua = InitLua or {
   is_macos = vim.fn.has('macunix') == 1,
   git_root = nil,
   memo_path = '~/.backup/memo.md',
-  is_ddc_enabled = nil,
 }
 
 -- Delayed to avoid startup slowdown
@@ -239,7 +238,6 @@ vim.call('dein#begin', s'{InitLua.neovim_home}/bundle')
 vim.call('dein#load_toml', '~/.config/nvim/dein.toml', { lazy = false })
 vim.call('dein#load_toml', '~/.config/nvim/dein_lazy.toml', { lazy = true })
 vim.call('dein#add', 'Shougo/dein.vim', { rtp = '' })
-vim.call('dein#end')
 
 -- TODO: Generate dein.vim doc by :helptags
 
@@ -268,6 +266,7 @@ end
 require('autocmds')
 require('plugins')
 require('keymaps')
+vim.call('dein#end')
 
 local env_post_vimrc = vim.fn.expand('~/.vimrc_env_post')
 if vim.fn.filereadable(env_post_vimrc) == 1 then
