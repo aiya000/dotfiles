@@ -12,9 +12,6 @@ local function add_to_runtime_path(path)
   end
 end
 
-add_to_runtime_path(vim.fn.expand('~/git/vital.vim'))
--- add_to_runtime_path(vim.fn.expand('~/git/scratch.vim'))
-
 ---PR出すときだけ有効にする（dein.tomlには書いておくとき）用
 ---@param worktree? string
 local function use_locally_instead(name, worktree)
