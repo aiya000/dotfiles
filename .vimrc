@@ -1037,7 +1037,7 @@ let g:write_sync_lists = [
 " vim-fakeclip {{{
 
 let g:fakeclip_provide_clipboard_key_mappings = v:true
-let g:fakeclip_force_override_clip_command = 'nkf -s | clip.exe'
+let g:fakeclip_force_override_clip_command = 'clip.exe'
 " NOTE: ↑↓勝手にShift-JISにしてはいけないときと、Shift-JISにしなければいけないときがある？？ WSLを新規セットアップしたときに`nkf -s |`を削除しなければ動かなかったが、またこれがないと文字化けするようになった
 " let g:fakeclip_force_override_clip_command = 'nkf -s | clip.exe'
 
@@ -1462,9 +1462,9 @@ onoremap iK i<
 vnoremap <C-l> <Esc>
 vnoremap <leader><leader>s :sort<CR>
 vnoremap g_ $
-vnoremap 'p "+p
-vnoremap 'P "+P
 "" NOTE: Don't use noremap to allow remap by fakeclip
+vmap 'p "+p
+vmap 'P "+P
 vmap 'y "+y
 vmap 'd "+d
 vmap 'x "+x
