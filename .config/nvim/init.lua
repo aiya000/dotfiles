@@ -79,6 +79,7 @@ vim.opt.breakindent = true
 vim.opt.cindent = true
 vim.opt.cmdheight = 2
 vim.opt.cmdwinheight = 20
+---@diagnostic disable-next-line: undefined-field --なぜか怒られるので無視する
 vim.opt.completeopt:remove('preview')
 vim.opt.conceallevel = 1
 vim.opt.expandtab = true
@@ -104,6 +105,7 @@ vim.opt.laststatus = 2
 vim.opt.linebreak = true
 vim.opt.list = true
 vim.opt.listchars = { tab = '»_', trail = '_', extends = '»', precedes = '«', nbsp = '%', eol = '↲' }
+---@diagnostic disable-next-line: undefined-field --なぜか怒られるので無視する
 vim.opt.matchpairs:append({ '<:>', '（:）', '｛:｝', '「:」', '＜:＞', '『:』', '【:】' })
 vim.opt.foldenable = false
 vim.opt.joinspaces = false
@@ -199,6 +201,7 @@ vim.opt.iminsert = 0
 vim.g.tex_flavor = 'latex'
 
 -- Reference tags of ctags
+---@diagnostic disable-next-line: undefined-field --なぜか怒られるので無視する
 vim.opt.tags:append({
   'tags',
   '.git/tags',
@@ -232,6 +235,7 @@ end
 
 local dein_dir = s'{InitLua.neovim_home}/bundle/repos/github.com/Shougo/dein.vim'
 helper.install_dein_if_not_installed(dein_dir)
+---@diagnostic disable-next-line: undefined-field --なぜか怒られるので無視する
 vim.opt.runtimepath:append(dein_dir)
 
 vim.call('dein#begin', s'{InitLua.neovim_home}/bundle')
