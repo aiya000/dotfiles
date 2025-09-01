@@ -1,4 +1,5 @@
-local fn = require('utils.functions')
+local s = require('utils.functions').s
+local helper = require('helper')
 
 ---@class CreateCommandOptions
 ---@field nargs? 0 | 1 | '*' | '?' | '+'
@@ -48,105 +49,102 @@ create_command(
   'FtpluginEditAfter',
   function(opts)
     local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-    local path = fn.s('{nvim_home}/after/ftplugin/{filetype}.lua', {
-        nvim_home = InitLua.neovim_home,
-        filetype = filetype,
-      })
-    vim.cmd('edit ' .. path)
+    local path = s'{InitLua.neovim_home}/after/ftplugin/{filetype}.lua'
+    vim.cmd(s'edit {path}')
   end,
   { nargs = '?', complete = 'filetype', bar = true }
 )
 
 create_command('FtDictionaryEdit', function(opts)
   local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd('edit ' .. string.format('%s/dict/filetype/%s.dict', InitLua.neovim_home, filetype))
+  vim.cmd(s'edit {InitLua.neovim_home}/dict/filetype/{filetype}.dict')
 end, { nargs = '?', complete = 'filetype', bar = true })
 
 create_command('SyntaxEdit', function(opts)
   local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd('edit ' .. string.format('%s/syntax/%s.vim', InitLua.neovim_home, filetype))
+  vim.cmd(s'edit {InitLua.neovim_home}/syntax/{filetype}.vim')
 end, { nargs = '?', complete = 'filetype', bar = true })
 
 create_command('IndentEdit', function(opts)
   local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd('edit ' .. string.format('%s/indent/%s.vim', InitLua.neovim_home, filetype))
+  vim.cmd(s'edit {InitLua.neovim_home}/indent/{filetype}.vim')
 end, { nargs = '?', complete = 'filetype', bar = true })
 
 create_command('FtDetectEdit', function(opts)
   local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd('edit ' .. string.format('%s/ftdetect/%s.vim', InitLua.neovim_home, filetype))
+  vim.cmd(s'edit {InitLua.neovim_home}/ftdetect/{filetype}.vim')
 end, { nargs = '?', complete = 'filetype', bar = true })
 
 create_command('PluginEdit', function(opts)
   local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd('edit ' .. string.format('%s/plugin/%s.vim', InitLua.neovim_home, filetype))
+  vim.cmd(s'edit {InitLua.neovim_home}/plugin/{filetype}.vim')
 end, { nargs = '?', complete = 'filetype', bar = true })
 
 create_command('AutoloadEdit', function(opts)
   local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd('edit ' .. string.format('%s/autoload/%s.vim', InitLua.neovim_home, filetype))
+  vim.cmd(s'edit {InitLua.neovim_home}/autoload/{filetype}.vim')
 end, { nargs = '?', complete = 'filetype', bar = true })
 
 -- }}}
 -- Cushion commands for git {{{
 
 create_command('GStatus', function(opts)
-  vim.cmd('GinStatus ' .. opts.args)
+  vim.cmd(s'GinStatus {opts.args}')
 end, { nargs = '*', bar = true })
 
 create_command('GLog', function(opts)
-  vim.cmd('GitLogViewer -100 --name-only ' .. opts.args)
+  vim.cmd(s'GitLogViewer -100 --name-only {opts.args}')
 end, { nargs = '*', bar = true })
 
 create_command('GLogPatch', function(opts)
-  vim.cmd('GitLogViewer --patch -100 ' .. opts.args)
+  vim.cmd(s'GitLogViewer --patch -100 {opts.args}')
 end, { nargs = '*', bar = true })
 
 create_command('GLogOneline', function(opts)
-  vim.cmd('GitLogViewer --oneline ' .. opts.args)
+  vim.cmd(s'GitLogViewer --oneline {opts.args}')
 end, { nargs = '*', bar = true })
 
 create_command('GDiff', function(opts)
-  vim.cmd('GitDiffViewer ' .. opts.args)
+  vim.cmd(s'GitDiffViewer {opts.args}')
 end, { nargs = '*', bar = true })
 
 create_command('GDS', function(opts)
-  vim.cmd('GitDiffViewer --staged ' .. opts.args)
+  vim.cmd(s'GitDiffViewer --staged {opts.args}')
 end, { nargs = '*', bar = true })
 
 create_command('GDH', function(opts)
-  vim.cmd('GitDiffViewer HEAD~ ' .. opts.args)
+  vim.cmd(s'GitDiffViewer HEAD~ {opts.args}')
 end, { nargs = '*', bar = true })
 
 create_command('GCommitFixup', function(opts)
-  vim.cmd('echomsg system("git commit --fixup " .. ' .. vim.fn.string(opts.args) .. ')')
+  vim.cmd(s'echomsg system("git commit --fixup " .. {vim.fn.string(opts.args)})')
 end, { nargs = 1, bar = true })
 
 create_command('GTree', function(opts)
-  vim.cmd('GinLog --graph --decorate --oneline ' .. opts.args)
+  vim.cmd(s'GinLog --graph --decorate --oneline {opts.args}')
 end, { nargs = '*', bar = true })
 
 create_command('GTreeAll', function(opts)
-  vim.cmd('GinLog --graph --decorate --oneline --all ' .. opts.args)
+  vim.cmd(s'GinLog --graph --decorate --oneline --all {opts.args}')
 end, { nargs = '*', bar = true })
 
 create_command('GBrahcnAll', function(opts)
-  vim.cmd('GinBranch --all ' .. opts.args)
+  vim.cmd(s'GinBranch --all {opts.args}')
 end, { nargs = '*', bar = true })
 
 create_command('GBlame', function(opts)
-  vim.cmd('Gin blame ' .. opts.args)
+  vim.cmd(s'Gin blame {opts.args}')
 end, { nargs = '*', bar = true })
 
 -- }}}
 -- vim-webpage {{{
 
 create_command('Weblio', function(opts)
-  vim.cmd('WebpageShow weblio ' .. opts.args)
+  vim.cmd(s'WebpageShow weblio {opts.args}')
 end, { nargs = '+', bar = true })
 
 create_command('Stackage', function(opts)
-  vim.cmd('WebpageShow stackage ' .. opts.args)
+  vim.cmd(s'WebpageShow stackage {opts.args}')
 end, { nargs = '+' })
 
 -- }}}
@@ -154,11 +152,11 @@ end, { nargs = '+' })
 
 -- :cd
 create_command('CdBufDir', function()
-  vim.cmd('cd ' .. vim.fn.fnameescape(vim.fn.expand('%:p:h')))
+  vim.cmd(s'cd {vim.fn.fnameescape(vim.fn.expand("%:p:h"))}')
 end, { bar = true })
 
 create_command('CdStarted', function()
-  vim.cmd('cd ' .. InitLua.path_at_started)
+  vim.cmd(s'cd {InitLua.path_at_started}')
 end, { bar = true })
 
 create_command('CdGitRoot', function()
@@ -171,11 +169,11 @@ end, { bar = true })
 
 -- :lcd
 create_command('LcdBufDir', function()
-  vim.cmd('lcd ' .. vim.fn.fnameescape(vim.fn.expand('%:p:h')))
+  vim.cmd(s'lcd {vim.fn.fnameescape(vim.fn.expand("%:p:h"))}')
 end, { bar = true })
 
 create_command('LcdStarted', function()
-  vim.cmd('lcd ' .. InitLua.path_at_started)
+  vim.cmd(s'lcd {InitLua.path_at_started}')
 end, { bar = true })
 
 create_command('LcdGitRoot', function()
@@ -188,11 +186,11 @@ end, { bar = true })
 
 -- :tcd
 create_command('TcdBufDir', function()
-  vim.cmd('tcd ' .. vim.fn.fnameescape(vim.fn.expand('%:p:h')))
+  vim.cmd(s'tcd {vim.fn.fnameescape(vim.fn.expand("%:p:h"))}')
 end, { bar = true })
 
 create_command('TcdStarted', function()
-  vim.cmd('tcd ' .. InitLua.path_at_started)
+  vim.cmd(s'tcd {InitLua.path_at_started}')
 end, { bar = true })
 
 create_command('TcdGitRoot', function()
@@ -239,12 +237,12 @@ end, { bar = true })
 
 -- Rename a file of the current buffer
 create_command('Rename', function(opts)
-  vim.fn['vimrc#rename_to'](opts.args)
+  helper.rename_to(opts.args)
 end, { nargs = 1, complete = 'file', bar = true })
 
 -- TODO: 普通にautofixプラグインを使う（aleあたり）
 create_command('KtlintAutoFix', function()
-  vim.fn.system('ktlint --format ' .. vim.fn.fnameescape(vim.fn.expand('%')))
+  vim.fn.system(s'ktlint --format {vim.fn.fnameescape(vim.fn.expand("%"))}')
   vim.cmd('edit %')
 end, { bar = true })
 
@@ -306,7 +304,7 @@ function Tapi_Tabnew(_, args)
   local paths = vim.tbl_map(vim.fn.fnameescape, files)
 
   for _, path in ipairs(paths) do
-    vim.cmd('tabnew ' .. path)
+    vim.cmd(s'tabnew {path}')
   end
 end
 
@@ -315,7 +313,7 @@ function Tapi_Verticalnew(_, args)
   local paths = vim.tbl_map(vim.fn.fnameescape, files)
 
   for _, path in ipairs(paths) do
-    vim.cmd('vertical new ' .. path)
+    vim.cmd(s'vertical new {path}')
   end
 end
 
