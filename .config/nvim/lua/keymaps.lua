@@ -1,5 +1,6 @@
 -- キーマップ設定
 
+local helper = require('helper')
 local fn = require('utils.functions')
 local s = fn.s
 
@@ -8,27 +9,26 @@ local function map(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
--- variables
 local function clear()
-  -- TODO: Implement yankround#inactivate() equivalent
-  -- TODO: Implement PreciousSwitch equivalent
-  -- TODO: Implement popup_clear() equivalent
-  return vim.cmd('nohlsearch')
+  vim.call('yankround#inactivate')
+  vim.cmd('PreciousSwitch')
+  helper.close_all_popups()
+  vim.cmd('nohlsearch')
 end
 
 local function clear_deep()
   print('clearing...')
-  -- TODO: Implement PreciousReset equivalent (heavy)
+  vim.cmd('PreciousReset')  -- NOTE: This is a little heavy
   clear()
   print('cleared!')
 end
 
-local function save_clear()
+local function clear_and_write()
+  clear()
   vim.cmd('write')
-  -- TODO: Implement yankround#inactivate() equivalent
 end
 
--- normal mode
+-- normal mode {{{
 
 -- Allow keymaps like <C-c>{foo}, and {bar}<C-c>
 map('n', '<C-c>', '<NOP>')
@@ -37,7 +37,7 @@ map('n', '<C-c><C-c>', '<C-c>')
 map('n', '<C-[>', clear, { silent = true })
 map('n', '<Esc>', clear, { silent = true })
 map('n', '<C-l>', clear, { silent = true })
-map('n', '<C-k><C-l>', clear_deep, { silent = true })
+map('n', '<C-k><C-l>', clear_deep)
 
 -- listup
 map('n', 'g:', '<Cmd>buffers<CR>', { silent = true })
@@ -51,7 +51,7 @@ map('n', '<leader><leader>B', function()
 end, { silent = true })
 map('n', 'g*', '<Cmd>execute "silent! normal! *<C-o>"<CR>', { silent = true })
 map('n', 'Q', function()
-  require('vimrc').bufclose_filetype(InitLua.temporary_buftypes)
+  helper.bufclose_filetype(InitLua.temporary_buftypes)
 end, { silent = true })
 
 -- folds
@@ -83,9 +83,7 @@ map('n', '<Space>l', '<C-w>l')
 
 -- gh prefix
 map('n', 'ghR', '<C-w>r')
-map('n', 'ghq', function()
-  require('vimrc').hide_or_quit()
-end, { silent = true })
+map('n', 'ghq', helper.hide_or_quit, { silent = true })
 map('n', 'ghQ', '<Cmd>quitall<CR>', { silent = true })
 map('n', 'ghc', '<Cmd>bdelete<CR>', { silent = true })
 map('n', 'ghC', '<Cmd>bdelete!<CR>', { silent = true })
@@ -249,7 +247,7 @@ map('n', '<C-k>s', function()
   local word = vim.fn.expand('<cword>')
   return string.format(':%%s/\\m\\C\\<%s\\>/%s/g\027\027', word, word)
 end, { expr = true })
-map('n', '<C-k><C-j>', save_clear, { silent = true })
+map('n', '<C-k><C-j>', clear_and_write)
 map('n', '<C-k><Space>', function()
   require('vimrc').remove_trailing_spaces()
 end, { silent = true })
@@ -268,21 +266,11 @@ map('n', '}', '}zv')
 map('n', '<C-x><C-n>', '<C-n>')
 map('n', '<C-x><C-p>', '<C-p>')
 
--- insert mode
+-- }}}
+-- insert mode {{{
 
 -- fake digraphs
-map('i', '<C-k>\\+', '＋')
-map('i', '<C-k>\\-', '−')
-map('i', '<C-k>\\=', '＝')
-map('i', '<C-k>?=', '≒')
-map('i', '<C-k>=~', '≅')
-map('i', '<C-k>\\N', 'ℕ')
-map('i', '<C-k>\\Z', 'ℤ')
-map('i', '<C-k>\\R', 'ℝ')
-map('i', '<C-k>\\Q', 'ℚ')
-map('i', '<C-k>\\C', 'ℂ')
-map('i', '<C-k>..', '◉')
-map('i', '<C-k>\\|>', '↦')
+-- -> See below 'digraphs' section
 
 -- others
 map('i', '<C-j>', '<CR>')
@@ -299,7 +287,9 @@ map('i', '<C-l>', '<Space><Backspace><Esc>')
 -- Meaning "n"ame
 map('i', '<C-r>n', '<C-r>=expand("%:t")<CR>')
 
--- command-line mode
+-- }}}
+-- command-line mode {{{
+
 map('c', '<C-]>', '\\m\\C\\<\\><Left><Left>')
 map('c', '<C-b>', '<Left>')
 map('c', '<C-f>', '<Right>')
@@ -316,7 +306,8 @@ map('c', "<C-r>'", '<C-r>+')
 -- Meaning "n"ame
 map('c', '<C-r>n', '<C-r>=expand("%:t")<CR>')
 
--- visual/operator mode
+-- }}}
+-- visual/operator mode {{{
 
 -- folds
 map('v', 'zo', 'zogv')
@@ -364,28 +355,9 @@ map('v', "'y", '"+y')
 map('v', "'d", '"+d')
 map('v', "'x", '"+x')
 
--- select mode
-map('s', '<C-l>', '<Esc>')
+-- }}}
+-- digraphs{{{
 
--- terminal mode
-map('t', '<C-l>', '<C-\\><C-n>')
-map('t', '<C-\\><C-n>', '<Esc>')
-map('t', '<C-[>', '<Esc>')
-map('t', '<C-]>', '<C-l>')
-
--- typo abbreviations
-vim.cmd([[
-inoreabbr reuslt result
-inoreabbr unkonwn unknown
-inoreabbr uknown unknown
-inoreabbr Parnes Parens
-inoreabbr parnes parens
-inoreabbr reuslt result
-inoreabbr Encrpyt Encrypt
-inoreabbr encrpyt encrypt
-]])
-
--- digraph - Use vim.cmd for compatibility
 vim.cmd([[
 digraph (( 8834   " ⊂ right includes left
 digraph )) 8835   " ⊃ left includes right
@@ -407,4 +379,41 @@ digraph \|^ 8593  " ↑ arrow up
 digraph \|v 8595  " ↓ arrow down
 digraph ph 934    " Φ phi
 digraph pi 960    " π pi
+]])
+
+-- fake digraphs
+map('i', '<C-k>\\+', '＋')
+map('i', '<C-k>\\-', '−')
+map('i', '<C-k>\\=', '＝')
+map('i', '<C-k>?=', '≒')
+map('i', '<C-k>=~', '≅')
+map('i', '<C-k>\\N', 'ℕ')
+map('i', '<C-k>\\Z', 'ℤ')
+map('i', '<C-k>\\R', 'ℝ')
+map('i', '<C-k>\\Q', 'ℚ')
+map('i', '<C-k>\\C', 'ℂ')
+map('i', '<C-k>..', '◉')
+map('i', '<C-k>\\|>', '↦')
+
+-- }}}
+
+-- select mode
+map('s', '<C-l>', '<Esc>')
+
+-- terminal mode
+map('t', '<C-l>', '<C-\\><C-n>')
+map('t', '<C-\\><C-n>', '<Esc>')
+map('t', '<C-[>', '<Esc>')
+map('t', '<C-]>', '<C-l>')
+
+-- typo abbreviations
+vim.cmd([[
+inoreabbr reuslt result
+inoreabbr unkonwn unknown
+inoreabbr uknown unknown
+inoreabbr Parnes Parens
+inoreabbr parnes parens
+inoreabbr reuslt result
+inoreabbr Encrpyt Encrypt
+inoreabbr encrpyt encrypt
 ]])

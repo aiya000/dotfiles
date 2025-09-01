@@ -292,9 +292,30 @@ function M.get_current_buffer_dir(options)
   end
 end
 
----Shows a popup window by vim.notify with good options
+---Shows a popup window at cursor with good options
+---@param messages string|string[]
 function M.popup_atcursor(messages)
-  vim.notify(messages, vim.log.levels.INFO)
+  -- TODO: 微調整。atcursorになってないかもしれない。今はとりあえずなゆちゃんが出してくれたコードをそのまま使ってる
+  vim.api.nvim_open_win(
+    vim.api.nvim_create_buf(false, true),
+    true,
+    {
+      relative = 'editor',
+      width = 20,
+      height = 3,
+      row = 10,
+      col = 10,
+    }
+  )
+end
+
+function M.close_all_popups()
+  for _, window in ipairs(vim.api.nvim_list_wins()) do
+    local config = vim.api.nvim_win_get_config(window)
+    if config.relative ~= '' then -- If it is a popup window
+      vim.api.nvim_win_close(window, false)
+    end
+  end
 end
 
 ---Export functions for backward compatibility with vim function calls
