@@ -128,7 +128,6 @@ end
 ---```
 function M.wait_for(p, f, interval)
   local timer = vim.loop.new_timer()
-  local start_time = vim.loop.hrtime()
 
   timer:start(0, interval or 1000, function()
     if p() then
