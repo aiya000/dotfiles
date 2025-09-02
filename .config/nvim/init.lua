@@ -79,7 +79,6 @@ vim.opt.breakindent = true
 vim.opt.cindent = true
 vim.opt.cmdheight = 2
 vim.opt.cmdwinheight = 20
----@diagnostic disable-next-line: undefined-field --なぜか怒られるので無視する
 vim.opt.completeopt:remove('preview')
 vim.opt.conceallevel = 1
 vim.opt.expandtab = true
@@ -130,47 +129,9 @@ vim.opt.wildmenu = true
 vim.opt.ambiwidth = 'double'
 vim.opt.background = 'dark'
 vim.opt.showtabline = 2
-vim.opt.tabline = '%!v:lua.simple_tabline()'
 
 -- TODO: なぜか怒られたので一旦コメントアウト
 -- vim.opt.ruler = false
-
--- TODO: Replace to vimrc#tabline#make()
--- Simple tabline function (temporary replacement for vimrc#tabline#make())
-function _G.simple_tabline()
-  local line = ''
-  local tab_count = vim.fn.tabpagenr('$')
-  local current_tab = vim.fn.tabpagenr()
-
-  -- Show tab count
-  line = line .. s'[{tab_count}] '
-
-  -- Show tabs
-  for i = 1, tab_count do
-    local buflist = vim.fn.tabpagebuflist(i)
-    local winnr = vim.fn.tabpagewinnr(i)
-    local bufnr = buflist[winnr]
-    local bufname = vim.fn.bufname(bufnr)
-    local filename = vim.fn.fnamemodify(bufname, ':t')
-
-    if filename == '' then
-      filename = '[NoName]'
-    end
-
-    -- Highlight current tab
-    if i == current_tab then
-      line = line .. s'[* {filename} *]'
-    else
-      line = line .. s'[{filename}]'
-    end
-  end
-
-  -- Show working directory
-  local cwd = vim.fn.getcwd()
-  line = line .. s' => [PWD={vim.fn.fnamemodify(cwd, ":~")}]'
-
-  return line
-end
 
 -- TODO: Convert colorscheme
 -- vim.cmd('colorscheme lucariox')
