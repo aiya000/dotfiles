@@ -364,6 +364,7 @@ end
 
 ---Starts ddu with optional input
 ---@param options table --ddu#start() options
+---@param search_word string
 function M.ddu_start_from_input(options, search_word)
   search_word = search_word or ''
   -- TODO: vim.g.vimrc_ddu_start_with_insert_next のサポートって、.vimrcをinit.luaに置き換えたとき、ちゃんと置き換えたっけ？ 置き換えたなら、vim.gじゃなくてlua変数でいいかも？

@@ -65,10 +65,9 @@ add_autocmd('VimEnter', function()
   vim.cmd('ScdCurrentDir')
 end)
 
--- TODO: Implement visit_past_position equivalent
--- add_autocmd('BufReadPost', function()
---   vim.call('vimrc#visit_past_position')
--- end)
+add_autocmd('BufReadPost', function()
+  vim.call('vimrc#visit_past_position')
+end)
 
 add_autocmd('CmdwinEnter', setup_cmdwin)
 
@@ -81,10 +80,7 @@ add_autocmd('InsertLeave', function()
   toggle_buftype:restore_buftype()
 end)
 
--- NOTE: ↓このコメントどういう意味？
--- TODO: for any registers
--- TODO: Implement terminal mappings for non-nvim
-
+-- TODO: Neovimでこれ動いてる？
 -- Show simply for terminal buffers
 add_autocmd('TermOpen', function()
   vim.opt_local.list = false
@@ -153,11 +149,9 @@ local natural_language_filetypes = {
 -- 自然言語を書いているとddcが重すぎるので、一時的に無効化する
 add_autocmd({ 'BufEnter', 'WinEnter' }, function()
   if vim.tbl_contains(natural_language_filetypes, vim.bo.filetype) then
-    -- TODO: Implement ddc#disable() equivalent
-    -- vim.call('ddc#disable')
+    vim.call('ddc#disable')
   else
-    -- TODO: Implement ddc#enable() equivalent
-    -- vim.call('ddc#enable')
+    vim.call('ddc#enable')
   end
 end)
 
@@ -188,20 +182,22 @@ add_autocmd('VimEnter', function()
   end
 end)
 
--- vim-fmap
+-- vim-fmap {{{
+
 add_autocmd('VimEnter', function()
-  -- TODO: Implement FNoreMap equivalent
-  -- vim.cmd('FNoreMap / ・')
-  -- vim.cmd('FNoreMap T ・')
-  -- vim.cmd('FNoreMap tt …')
-  -- vim.cmd("FNoreMap '' 　")
-  -- vim.cmd('FNoreMap p （')
-  -- vim.cmd('FNoreMap k 「')
-  -- vim.cmd('FNoreMap K 〈')
-  -- vim.cmd('FNoreMap -k 『')
+  vim.cmd('FNoreMap / ・')
+  vim.cmd('FNoreMap T ・')
+  vim.cmd('FNoreMap tt …')
+  vim.cmd("FNoreMap '' 　")
+  vim.cmd('FNoreMap p （')
+  vim.cmd('FNoreMap k 「')
+  vim.cmd('FNoreMap K 〈')
+  vim.cmd('FNoreMap -k 『')
 end)
 
--- vim-indent-guides
+-- }}}
+-- vim-indent-guides {{{
+
 add_autocmd({ 'VimEnter', 'ColorScheme' }, function()
   vim.api.nvim_set_hl(0, 'IndentGuidesOdd', { ctermbg = 60, bg = '#468F8C' })
   vim.api.nvim_set_hl(0, 'IndentGuidesEven', { ctermbg = 60, bg = '#468F8C' })
@@ -210,42 +206,47 @@ end)
 -- TODO: When I move to another window, the terminal buffer also becomes IndentGuidesEnable in the autocmd below
 add_autocmd({ 'BufEnter', 'WinEnter' }, function()
   if vim.bo.buftype == 'terminal' then
-    -- TODO: Implement IndentGuidesDisable equivalent
-    -- vim.cmd('IndentGuidesDisable')
+    vim.cmd('IndentGuidesDisable')
   end
 end)
 
 add_autocmd({ 'BufLeave', 'WinLeave' }, function()
   vim.wo.relativenumber = false
-  -- TODO: Implement IndentGuidesEnable equivalent
-  -- vim.cmd('IndentGuidesEnable')
+  vim.cmd('IndentGuidesEnable')
 end)
 
--- vim-precious
--- TODO: Implement precious plugin equivalent
--- add_autocmd('User', function()
---   vim.cmd('IndentGuidesToggle | IndentGuidesToggle')
--- end, 'PreciousFileType')
+-- }}}
+-- vim-precious {{{
 
--- add_autocmd({'WinEnter', 'BufEnter', 'TabEnter'}, function()
---   vim.cmd('PreciousSwitch')
--- end)
+add_autocmd('User', function()
+  vim.cmd('IndentGuidesToggle | IndentGuidesToggle')
+end, 'PreciousFileType')
 
--- vim-cursorword
+add_autocmd({'WinEnter', 'BufEnter', 'TabEnter'}, function()
+  vim.cmd('PreciousSwitch')
+end)
+
+-- }}}
+-- vim-cursorword {{{
+
 add_autocmd({ 'VimEnter', 'ColorScheme' }, function()
   vim.api.nvim_set_hl(0, 'CursorWord0', { ctermbg = 'LightGray', ctermfg = 'Black' })
   vim.api.nvim_set_hl(0, 'CursorWord1', { ctermbg = 'LightGray', ctermfg = 'Black' })
 end)
 
--- AsyncRun
--- TODO: Implement popup_atcursor equivalent
--- add_autocmd('User', function()
---   vim.call('vimrc#popup_atcursor', ':AsyncRun finished')
--- end, 'AsyncRunStop')
+-- }}}
+-- AsyncRun {{{
 
--- ddu.vim
--- boolean | string
+add_autocmd('User', function()
+  vim.call('vimrc#popup_atcursor', ':AsyncRun finished')
+end, 'AsyncRunStop')
+
+-- }}}
+-- ddu.vim {{{
+
+---@type boolean | string
 vim.g.vimrc_ddu_start_with_insert_next = false
+-- TODO: ↑ これはvim.gじゃなくて、luaのグローバル変数にする
 
 local function get_feedkeys_for_ddu_start()
   if type(vim.g.vimrc_ddu_start_with_insert_next) == 'string' then
@@ -258,10 +259,11 @@ local function get_feedkeys_for_ddu_start()
 end
 
 -- When the next ddu ready, ddu starts from insert
--- TODO: Implement ddu equivalent
--- add_autocmd('User', function()
---   if vim.g.vimrc_ddu_start_with_insert_next ~= false then
---     vim.fn.feedkeys(get_feedkeys_for_ddu_start())
---     vim.g.vimrc_ddu_start_with_insert_next = false
---   end
--- end, 'Ddu:uiReady')
+add_autocmd('User', function()
+  if vim.g.vimrc_ddu_start_with_insert_next ~= false then
+    vim.fn.feedkeys(get_feedkeys_for_ddu_start())
+    vim.g.vimrc_ddu_start_with_insert_next = false
+  end
+end, 'Ddu:uiReady')
+
+-- }}}

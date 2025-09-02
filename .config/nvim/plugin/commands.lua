@@ -212,8 +212,8 @@ create_command('KtlintAutoFix', function()
   vim.cmd('edit %')
 end, { bar = true })
 
-create_command('Grep', function(...)
-  local args = { ... }
+---@param search_word string
+create_command('Grep', function(search_word)
   helper.ddu_start_from_input({
     sources = { {
       name = 'rg',
@@ -229,7 +229,7 @@ create_command('Grep', function(...)
         autoResize = false,
       },
     },
-  }, unpack(args))
+  }, search_word)
 end, { nargs = '?', bar = true })
 
 create_command('ReverseLines', '!tac', { bar = true })
