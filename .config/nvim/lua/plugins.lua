@@ -1,5 +1,6 @@
 -- プラグイン設定
 
+local helper = require('helper')
 local fn = require('utils.functions')
 local s = fn.s
 
@@ -450,5 +451,10 @@ vim.g.quickpeek_auto = true
 --     -- Implementation needed
 --   end,
 -- }
+
+-- }}}
+-- vim-operator-surround {{{
+
+vim.schedule(helper.setup_operator_surround)
 
 -- }}}

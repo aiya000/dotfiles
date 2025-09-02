@@ -1,7 +1,6 @@
----Helper functions for init.lua
+---Functions for init.lua and Neovim
 
-local list_util = require('utils.list')
-local msg_util = require('utils.message')
+local list = require('utils.list')
 local fn = require('utils.functions')
 local s = fn.s
 
@@ -106,7 +105,7 @@ function M.bufclose_filetype(filetypes)
   local closed = false
   for w = 1, vim.fn.winnr('$') do
     local buf_ft = vim.fn.getwinvar(w, '&filetype')
-    if list_util.has(filetypes, buf_ft) then
+    if vim.tbl_contains(filetypes, buf_ft) then
       vim.cmd(s':{w}wincmd w')
       vim.cmd('quit')
       closed = true
@@ -252,20 +251,20 @@ function M.rename_to(new_name)
   local new_name_esc = vim.fn.fnameescape(new_name)
 
   if vim.fn.fnamemodify(this_file, ':t') == new_name then
-    msg_util.error('New name is same old name, operation abort')
+    vim.notify('New name is same old name, operation abort', vim.log.levels.ERROR)
     return
   end
 
   local file_editing = vim.bo.modified
   if file_editing then
-    msg_util.error('Please :write this file')
+    vim.notify('Please :write this file', vim.log.levels.ERROR)
     return
   end
 
   local new_file = vim.fn.fnamemodify(this_file, ':h') .. '/' .. new_name
   local failed = vim.fn.rename(this_file, new_file)
   if failed ~= 0 then
-    msg_util.error(string.format('Rename %s to %s is failed', this_file, new_file))
+    vim.notify(s'Rename {this_file} to {new_file} is failed', vim.log.levels.ERROR)
     return
   end
 
@@ -276,10 +275,11 @@ function M.rename_to(new_name)
   print(s'Renamed {this_file} to {new_file}')
 end
 
----Get current buffer directory with fallback
+---Gets current buffer directory with fallback
 function M.get_current_buffer_dir(options)
   options = options or {}
-  local dir = vim.bo.buftype ~= 'terminal' and vim.bo.buftype ~= 'nofile' and vim.fn.expand('%:p:h')
+  local dir =
+    vim.bo.buftype ~= 'terminal' and vim.bo.buftype ~= 'nofile' and vim.fn.expand('%:p:h')
     or InitLua.git_root
 
   local alt_dir = options.alt_dir
@@ -318,7 +318,123 @@ function M.close_all_popups()
   end
 end
 
----Export functions for backward compatibility with vim function calls
-_G.vimrc = M
+---Opens a buffer with DeepL translation result
+local function deepl_translate_open_buffer(result)
+  vim.cmd('ScratchBufferOpenNext md sp')
+  vim.cmd('put=' .. vim.fn.string(result))
+  vim.cmd('normal! gg')
+  vim.cmd('normal! "zdd')
+end
+
+---DeepL translation function with multiple output methods
+function M.deepl_translate(line_count, start_line, end_line, target_lang, source_lang, methods)
+  -- If range is not specified, translate the current line, or translate the specified range
+  local lines
+  if line_count == -1 then
+    lines = { vim.fn.getline('.') }
+  else
+    lines = vim.fn.getline(start_line, end_line)
+  end
+
+  local put_by = {
+    ---@param result string
+    yank = function(result)
+      vim.fn.setreg('"', result)
+    end,
+    ---@param result string
+    echo = function(result)
+      print(result)  -- Equivalent to s:Msg.echo('Normal', result)
+    end,
+    ---@param result string
+    buffer = function(result)
+      deepl_translate_open_buffer(result)
+    end,
+  }
+
+  local text = table.concat(lines, '\n')
+  local result = vim.fn['deepl#translate'](text, target_lang, source_lang)
+
+  for _, method in ipairs(methods) do
+    if not put_by[method] then
+      error('Unknown method: ' .. method)
+    end
+    put_by[method](result)
+  end
+end
+
+---Starts ddu with optional input
+---@param options table --ddu#start() options
+function M.ddu_start_from_input(options, search_word)
+  search_word = search_word or ''
+  -- TODO: vim.g.vimrc_ddu_start_with_insert_next のサポートって、.vimrcをinit.luaに置き換えたとき、ちゃんと置き換えたっけ？ 置き換えたなら、vim.gじゃなくてlua変数でいいかも？
+  vim.g.vimrc_ddu_start_with_insert_next = (search_word ~= '') and search_word or true
+  vim.fn['ddu#start'](options)
+end
+
+function M.setup_operator_surround()
+  -- Basic symbols excluding brackets () [] {} and ` for unique mappings
+  local basic_symbols = {}
+  vim.list_extend(basic_symbols, list.char_range('!', "'"))
+  vim.list_extend(basic_symbols, {'*', '&', '_', '|', '~', ':', '/'})
+
+  local basic_between = {}
+  for _, char in ipairs(basic_symbols) do
+    table.insert(basic_between, {
+      block = {char, char},
+      motionwise = {'char', 'line', 'block'},
+      keys = {char}
+    })
+  end
+
+  local basic_html_tags = {
+    {block = {'<p>', '</p>'}, motionwise = {'char'}, keys = {'[p'}},
+    {block = {'<a>', '</a>'}, motionwise = {'char'}, keys = {'[a'}},
+    {block = {'<div>', '</div>'}, motionwise = {'char'}, keys = {'[d'}},
+    {block = {'<span>', '</span>'}, motionwise = {'char'}, keys = {'[s'}},
+    {block = {'<h1>', '</h1>'}, motionwise = {'char'}, keys = {'[h1'}},
+    {block = {'<h2>', '</h2>'}, motionwise = {'char'}, keys = {'[h2'}},
+    {block = {'<h3>', '</h3>'}, motionwise = {'char'}, keys = {'[h3'}},
+    {block = {'<h4>', '</h4>'}, motionwise = {'char'}, keys = {'[h4'}},
+    {block = {'<h5>', '</h5>'}, motionwise = {'char'}, keys = {'[h5'}},
+    {block = {'<ol>', '</ol>'}, motionwise = {'char'}, keys = {'[ol'}},
+    {block = {'<ul>', '</ul>'}, motionwise = {'char'}, keys = {'[ul'}},
+    {block = {'<li>', '</li>'}, motionwise = {'char'}, keys = {'[li'}},
+  }
+
+  -- Set operator#surround#blocks configuration
+  vim.g['operator#surround#blocks'] = {
+    ['-'] = vim.list_extend({
+      {block = {'(', ')'}, motionwise = {'char', 'line', 'block'}, keys = {'(', ')', 'p'}},
+      {block = {'[', ']'}, motionwise = {'char', 'line', 'block'}, keys = {']', 'k'}},
+      {block = {'{', '}'}, motionwise = {'char', 'line', 'block'}, keys = {'{', '}', 'P'}},
+      {block = {'<', '>'}, motionwise = {'char', 'line', 'block'}, keys = {'<', '>', 'K'}},
+      {block = {' ', ' '}, motionwise = {'char', 'line', 'block'}, keys = {'  '}},
+      {block = {'`', '`'}, motionwise = {'char', 'line', 'block'}, keys = {'`', 'b'}},
+      {block = {'（', '）'}, motionwise = {'char', 'line', 'block'}, keys = {'jp'}},
+      {block = {'「', '」'}, motionwise = {'char', 'line', 'block'}, keys = {'jk'}},
+      {block = {'【', '】'}, motionwise = {'char', 'line', 'block'}, keys = {'jK'}},
+      {block = {'『', '』'}, motionwise = {'char', 'line', 'block'}, keys = {'j-k'}},
+    }, basic_between),
+    review = {
+      {block = {'@<b>{', '}'}, motionwise = {'char'}, keys = {'B'}},
+      {block = {'@<i>{', '}'}, motionwise = {'char'}, keys = {'i'}},
+      {block = {'@<u>{', '}'}, motionwise = {'char'}, keys = {'u'}},
+      {block = {'@<tt>{', '}'}, motionwise = {'char'}, keys = {'t'}},
+      {block = {'@<idx>{', '}'}, motionwise = {'char'}, keys = {'x'}},
+      {block = {'@<ruby>{', ', ruby}'}, motionwise = {'char'}, keys = {'r'}},
+      {block = {'@<code>{', '}'}, motionwise = {'char'}, keys = {'c'}},
+      {block = {'@<mathcode>{', '}'}, motionwise = {'char'}, keys = {'m'}},
+      {block = {'@<img>{', '}'}, motionwise = {'char'}, keys = {'[i'}},
+      {block = {'@<list>{', '}'}, motionwise = {'char'}, keys = {'[l'}},
+    },
+    markdown = {
+      {block = {'**', '**'}, motionwise = {'char', 'block'}, keys = {'B'}},
+      {block = {'~~', '~~'}, motionwise = {'char', 'block'}, keys = {'~'}},
+    },
+    html = basic_html_tags,
+    vue = basic_html_tags,
+    ['typescript.tsx'] = basic_html_tags,
+  }
+end
 
 return M

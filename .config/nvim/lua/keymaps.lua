@@ -28,6 +28,106 @@ local function clear_and_write()
   vim.cmd('write')
 end
 
+---surround operations (migrated from ~/.vim/autoload/vimrc.vim)
+local function get_current_obj_keys()
+  local surrounds = vim.g['operator#surround#blocks']['-'] or {}
+  local filetype_surrounds = vim.g['operator#surround#blocks'][vim.bo.filetype] or {}
+
+  -- Combine default and filetype-specific surrounds
+  local all_surrounds = vim.list_extend(vim.deepcopy(surrounds), filetype_surrounds)
+
+  -- Extract all keys from surrounds
+  local obj_keys = {}
+  for _, surround in ipairs(all_surrounds) do
+    if surround.keys then
+      vim.list_extend(obj_keys, surround.keys)
+    end
+  end
+  return obj_keys
+end
+
+local function input_obj_key_of(obj_keys)
+  local stroke = ''
+  while not vim.tbl_contains(obj_keys, stroke) do
+    local char = vim.fn.getchar()
+    char = vim.fn.nr2char(char)
+
+    -- Check for escape sequences (Esc, Ctrl-C, Ctrl-[)
+    if char == '\027' or char == '\003' or char == '' then
+      return nil
+    end
+    stroke = stroke .. char
+  end
+  return stroke
+end
+
+local function append_choose_surround(visualizer)
+  vim.call('dein#source', 'vim-operator-surround')
+  local obj_keys = get_current_obj_keys()
+  local obj_key = input_obj_key_of(obj_keys)
+  if obj_key == nil then
+    print('Cancelled')
+    return nil
+  end
+
+  -- Execute the normal command
+  vim.cmd('normal ' .. visualizer .. '\\<Plug>(operator-surround-append)' .. obj_key)
+  return obj_key
+end
+
+local function delete_mostly_inner_surround()
+  vim.call('dein#source', 'vim-operator-surround')
+  local obj_keys = get_current_obj_keys()
+  local obj_key = input_obj_key_of(obj_keys)
+  if obj_key == nil then
+    print('Cancelled')
+    return
+  end
+
+  -- TODO: Workaround. For some reason 'B' ('**foo**') cannot be deleted
+  if obj_key == 'B' then
+    vim.cmd('normal! d\\<Plug>(textobj-between-i)*')
+    vim.cmd('s/\\*\\*\\*\\*/' .. vim.fn.getreg('"') .. '/')
+    print('**deleted**')
+    return
+  end
+
+  vim.cmd('normal! va' .. obj_key .. '\\<Plug>(operator-surround-delete)')
+  vim.fn['repeat#set']('\\<Plug>(vimrc-surround-delete-mostly-inner)' .. obj_key)
+end
+
+local function replace_mostly_inner_surround()
+  vim.call('dein#source', 'vim-operator-surround')
+  local obj_keys = get_current_obj_keys()
+  local obj_key_from = input_obj_key_of(obj_keys)
+  if obj_key_from == nil then
+    print('Cancelled')
+    return
+  end
+  local obj_key_to = input_obj_key_of(obj_keys)
+  if obj_key_to == nil then
+    print('Cancelled')
+    return
+  end
+
+  vim.cmd('normal! va' .. obj_key_from .. '\\<Plug>(operator-surround-replace)' .. obj_key_to)
+  vim.fn['repeat#set']('\\<Plug>(vimrc-surround-replace-mostly-inner)' .. obj_key_from .. obj_key_to)
+end
+
+local function append_choose_surround_normal()
+  local obj_key = append_choose_surround('viw')
+  if obj_key then
+    vim.fn['repeat#set']('\\<Plug>(vimrc-surround-append-choice)' .. obj_key)
+  end
+end
+
+local function append_choose_surround_wide()
+  local obj_key = append_choose_surround('viW')
+  if obj_key then
+    vim.fn['repeat#set']('\\<Plug>(vimrc-surround-append-choice-wide)' .. obj_key)
+  end
+end
+
 -- normal mode {{{
 
 -- Allow keymaps like <C-c>{foo}, and {bar}<C-c>
@@ -223,6 +323,12 @@ map('n', '<C-g><C-d>', '<Cmd>LspDefinition<CR>', { silent = true })
 map('n', '<C-g><C-i>', '<Cmd>LspPeekImplementation<CR>', { silent = true })
 map('n', '<C-g><C-t>', '<Cmd>LspPeekTypeDefinition<CR>', { silent = true })
 map('n', '<C-g><C-g>', '<C-g>')
+
+-- surround
+map('n', 'ga', append_choose_surround_normal, { silent = true })
+map('n', 'gs', append_choose_surround_wide, { silent = true })
+map('n', 'ds', delete_mostly_inner_surround, { silent = true })
+map('n', 'cs', replace_mostly_inner_surround, { silent = true })
 
 -- others
 map('n', 'gG', 'ggVG')

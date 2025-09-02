@@ -1,5 +1,7 @@
-local s = require('utils.functions').s
 local helper = require('helper')
+local git = require('git')
+local nodejs = require('nodejs')
+local s = require('utils.functions').s
 
 ---@class CreateCommandOptions
 ---@field nargs? 0 | 1 | '*' | '?' | '+'
@@ -16,33 +18,6 @@ local function create_command(name, command, options)
   vim.api.nvim_create_user_command(name, command, options)
 end
 
--- Virtual keymaps {{{
-
-vim.keymap.set(
-  'n',
-  '<Plug>(vimrc-surround-append-choice)',
-  '<Cmd>call vimrc#append_choose_surround()<CR>',
-  { silent = true }
-)
-vim.keymap.set(
-  'n',
-  '<Plug>(vimrc-surround-append-choice-wide)',
-  '<Cmd>call vimrc#append_choose_surround_wide()<CR>',
-  { silent = true }
-)
-vim.keymap.set(
-  'n',
-  '<Plug>(vimrc-surround-delete-mostly-inner)',
-  '<Cmd>call vimrc#delete_mostly_inner_surround()<CR>',
-  { silent = true }
-)
-vim.keymap.set(
-  'n',
-  '<Plug>(vimrc-surround-replace-mostly-inner)',
-  '<Cmd>call vimrc#replace_mostly_inner_surround()<CR>',
-  { silent = true }
-)
--- }}}
 -- Neovim echo systems {{{
 
 create_command(
@@ -160,11 +135,11 @@ create_command('CdStarted', function()
 end, { bar = true })
 
 create_command('CdGitRoot', function()
-  vim.fn['vimrc#cd_git_root'](':cd')
+  git.cd_git_root('cd')
 end, { bar = true })
 
 create_command('CdNodeRoot', function()
-  vim.fn['vimrc#cd_node_root'](':cd')
+  nodejs.cd_node_root('cd')
 end, { bar = true })
 
 -- :lcd
@@ -177,11 +152,11 @@ create_command('LcdStarted', function()
 end, { bar = true })
 
 create_command('LcdGitRoot', function()
-  vim.fn['vimrc#cd_git_root'](':lcd')
+  git.cd_git_root('lcd')
 end, { bar = true })
 
 create_command('LcdNodeRoot', function()
-  vim.fn['vimrc#cd_node_root'](':lcd')
+  nodejs.cd_node_root('lcd')
 end, { bar = true })
 
 -- :tcd
@@ -194,11 +169,11 @@ create_command('TcdStarted', function()
 end, { bar = true })
 
 create_command('TcdGitRoot', function()
-  vim.fn['vimrc#cd_git_root'](':tcd')
+  git.cd_git_root('tcd')
 end, { bar = true })
 
 create_command('TcdNodeRoot', function()
-  vim.fn['vimrc#cd_node_root'](':tcd')
+  nodejs.cd_node_root('tcd')
 end, { bar = true })
 
 -- g:vimrc.path_at_started assignment
@@ -217,15 +192,6 @@ end, { bar = true })
 create_command('ScdNodeRoot', function()
   -- TODO: Implement equivalent for s:Msg.error
   vim.cmd('echohl ErrorMsg | echo "Not implemented yet" | echohl None')
-end, { bar = true })
-
--- Others
-create_command('GitReadRoot', function()
-  vim.fn['vimrc#read_to_set_git_root']()
-end, { bar = true })
-
-create_command('ReadGitRoot', function()
-  vim.fn['vimrc#read_to_set_git_root']()
 end, { bar = true })
 
 -- }}}
@@ -248,8 +214,7 @@ end, { bar = true })
 
 create_command('Grep', function(...)
   local args = { ... }
-  -- TODO: Implement ddu_start_from_input equivalent
-  vim.fn['vimrc#ddu_start_from_input']({
+  helper.ddu_start_from_input({
     sources = { {
       name = 'rg',
       options = {
@@ -267,14 +232,6 @@ create_command('Grep', function(...)
   }, unpack(args))
 end, { nargs = '?', bar = true })
 
-create_command('SetTabTitle', function(opts)
-  vim.t.vimrc_tabtitle = opts.args
-end, { nargs = '+', bar = true })
-
-create_command('UnsetTabTitle', function()
-  vim.t.vimrc_tabtitle = nil
-end, { bar = true })
-
 create_command('ReverseLines', '!tac', { bar = true })
 
 create_command('ReplaceListSign', function()
@@ -283,19 +240,19 @@ end, { range = true, bar = true })
 
 -- deepl.vim
 create_command('DeeplTranslateToEn', function(opts)
-  vim.fn['vimrc#deepl_translate'](opts.count, opts.line1, opts.line2, 'EN', 'JA', { 'yank', 'echo' })
+  helper.deepl_translate(opts.count, opts.line1, opts.line2, 'EN', 'JA', { 'yank', 'echo' })
 end, { range = '%', bar = true })
 
 create_command('DeeplTranslateToJa', function(opts)
-  vim.fn['vimrc#deepl_translate'](opts.count, opts.line1, opts.line2, 'JA', 'EN', { 'yank', 'echo' })
+  helper.deepl_translate(opts.count, opts.line1, opts.line2, 'JA', 'EN', { 'yank', 'echo' })
 end, { range = '%', bar = true })
 
 create_command('DeeplTranslateToEnOpenBuffer', function(opts)
-  vim.fn['vimrc#deepl_translate'](opts.count, opts.line1, opts.line2, 'EN', 'JA', { 'yank', 'buffer' })
+  helper.deepl_translate(opts.count, opts.line1, opts.line2, 'EN', 'JA', { 'yank', 'buffer' })
 end, { range = '%', bar = true })
 
 create_command('DeeplTranslateToJaOpenBuffer', function(opts)
-  vim.fn['vimrc#deepl_translate'](opts.count, opts.line1, opts.line2, 'JA', 'EN', { 'yank', 'buffer' })
+  helper.deepl_translate(opts.count, opts.line1, opts.line2, 'JA', 'EN', { 'yank', 'buffer' })
 end, { range = '%', bar = true })
 
 ---Tapis functions
@@ -316,6 +273,3 @@ function Tapi_Verticalnew(_, args)
     vim.cmd(s'vertical new {path}')
   end
 end
-
--- Debug message
--- print("📋 vimrc.lua plugin loaded with all commands and functions")
