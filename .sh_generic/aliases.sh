@@ -19,7 +19,7 @@ alias free='free -h'
 alias ls='ls --color=auto --group-directories-first'
 alias mv='mv -i'
 alias sl=ls
-alias rm=dust  # Aaaaaaaaaaaaaaaa!!
+alias rm=rm-dust  # Aaaaaaaaaaaaaaaa!!
 
 if i_have batcat ; then
   alias batcat-with-default-options='batcat $DOTFILES_BATCAT_DEFAULT_OPTIONS'
