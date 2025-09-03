@@ -438,4 +438,16 @@ function M.setup_operator_surround()
   }
 end
 
+
+---Kills from cursor to end of command line
+function M.remove_text_after_cursor()
+  local cmdpos = vim.fn.getcmdpos()
+  local cmdline = vim.fn.getcmdline()
+  if cmdpos < 2 then
+    return ''
+  else
+    return cmdline:sub(1, cmdpos - 2)
+  end
+end
+
 return M

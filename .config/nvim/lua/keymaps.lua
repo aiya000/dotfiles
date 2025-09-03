@@ -1,5 +1,3 @@
--- キーマップ設定
-
 local helper = require('helper')
 local fn = require('utils.functions')
 local s = fn.s
@@ -384,8 +382,9 @@ map('i', '<C-a>', '<Right>')
 map('i', '<C-k><C-k>', '<C-o>"_d$')
 map('i', '<C-k><C-j>', '<Esc>:write<CR>', { silent = true })
 map('i', '<C-k>J', '<Esc>:wall | echo "written all!"<CR>', { silent = true })
--- TODO: Implement get_webpage_title equivalent
--- map('i', '<C-b>', '<Cmd>call vimrc#get_webpage_title(@+)<CR>', { silent = true, expr = true })
+
+map('i', '<C-b>', helper.fetch_webpage_title, { silent = true, expr = true })
+
 map('i', "<C-r>'", '<C-r>+')
 -- Execute iabbr and Escape
 map('i', '<C-l>', '<Space><Backspace><Esc>')
@@ -403,8 +402,7 @@ map('c', '<C-a>', '<Home>')
 map('c', '<C-h>', '<BS>')
 map('c', '<C-d>', '<Del>')
 map('c', '<C-e>', '<End>')
--- TODO: Implement command line kill equivalent
--- map('c', '<C-k><C-k>', '<C-\\>e getcmdpos() < 2 ? "" : getcmdline()[ : getcmdpos() - 2]<CR>')
+map('c', '<C-k><C-k>', helper.remove_text_after_cursor, { expr = true })
 map('c', '<C-l>', '<C-c>')
 map('c', '<C-o>', '<Up>')
 map('c', '<C-y>', '<Down>')
