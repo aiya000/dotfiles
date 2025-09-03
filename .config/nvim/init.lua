@@ -104,7 +104,6 @@ vim.opt.laststatus = 2
 vim.opt.linebreak = true
 vim.opt.list = true
 vim.opt.listchars = { tab = '»_', trail = '_', extends = '»', precedes = '«', nbsp = '%', eol = '↲' }
----@diagnostic disable-next-line: undefined-field --なぜか怒られるので無視する
 vim.opt.matchpairs:append({ '<:>', '（:）', '｛:｝', '「:」', '＜:＞', '『:』', '【:】' })
 vim.opt.foldenable = false
 vim.opt.joinspaces = false
@@ -132,10 +131,6 @@ vim.opt.showtabline = 2
 
 -- TODO: なぜか怒られたので一旦コメントアウト
 -- vim.opt.ruler = false
-
--- TODO: Convert colorscheme
--- vim.cmd('colorscheme lucariox')
-vim.cmd('colorscheme default')
 
 -- Fold options
 vim.opt.foldcolumn = '1'

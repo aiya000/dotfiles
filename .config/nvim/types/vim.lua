@@ -9,6 +9,7 @@
 
 ---@class VimOptions : vim.opt
 ---@field completeopt VimOption
+---@field matchpairs VimOption
 
 ---@class VimFunctions : vim.fn
 ---@field getcwd fun(): string
