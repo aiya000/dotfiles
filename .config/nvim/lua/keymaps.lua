@@ -1,6 +1,7 @@
 local helper = require('helper')
 local fn = require('utils.functions')
 local s = fn.s
+local network = require('utils.network')
 
 local function map(mode, lhs, rhs, opts)
   opts = opts or {}
@@ -227,11 +228,12 @@ map('n', '<C-w>s', '<NOP>')
 map('n', '<C-w>v', '<NOP>')
 map('n', 'gh', '<NOP>')
 
+-- TODO: luaで書いている時点でVimとNeovimの際を吸収する必要ないから、この関数は必要ないかも？
 -- :terminal
 local function open_terminal(options)
   local default_opts = {
     vertical = true,
-    cwd = require('vimrc').get_current_buffer_dir({ alt_dir = InitLua.git_root }),
+    cwd = helper.get_current_buffer_dir({ alt_dir = InitLua.git_root }),
   }
   local opts = vim.tbl_extend('force', default_opts, options or {})
 
@@ -383,7 +385,7 @@ map('i', '<C-k><C-k>', '<C-o>"_d$')
 map('i', '<C-k><C-j>', '<Esc>:write<CR>', { silent = true })
 map('i', '<C-k>J', '<Esc>:wall | echo "written all!"<CR>', { silent = true })
 
-map('i', '<C-b>', helper.fetch_webpage_title, { silent = true, expr = true })
+map('i', '<C-b>', network.fetch_webpage_title, { silent = true, expr = true })
 
 map('i', "<C-r>'", '<C-r>+')
 -- Execute iabbr and Escape
