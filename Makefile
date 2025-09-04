@@ -359,6 +359,19 @@ install-gtran:
 		go install ; \
 	fi
 
+download-nerd-fonts:
+	cd ~/Downloads ; \
+		wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip ; \
+		explorer.exe . ; \
+		@echo 'Install JetBrainsMonoNerdFont-Regular.ttf, and setting \'プロファイル > Ubuntu > 外観 > フォントフェイス\' to \'JetBrainsMono Nerd Font\', manually'
+
+install-neovim-runtime-deps:
+	$(MAKE) install-deno
+	$(MAKE) install-gtran
+	which rg || $(AptInstall) ripgrep
+	which nkf || $(AptInstall) nkf
+	which pup || go install github.com/ericchiang/pup@latest
+
 ifeq ($(OS),Ubuntu)  # {{{
 
 install-w3m:
@@ -675,3 +688,6 @@ install-apt-file:
 		$(AptInstall) apt-file && \
 		sudo apt-file update \
 	)
+
+install-luarocks:
+	which luarocks || brew install luarocks
