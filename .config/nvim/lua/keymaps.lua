@@ -201,16 +201,8 @@ map('n', 'ghK', '<C-w>K')
 map('n', 'ghL', '<C-w>L')
 map('n', 'ghs', '<Cmd>split<CR>', { silent = true })
 map('n', 'ghv', '<Cmd>vsplit<CR>', { silent = true })
-
-map('n', 'gH', function()
-  local fold_open = vim.fn.foldlevel('.') > 0 and 'zo' or ''
-  return s'mZ:tabnew<CR>`Zzz{fold_open}'
-end, { silent = true, expr = true })
-
-map('n', 'ghh', function()
-  local fold_open = vim.fn.foldlevel('.') > 0 and 'zo' or ''
-  return s'mZ:hide<CR>:tabnew<CR>`Zzz{fold_open}'
-end, { silent = true, expr = true })
+map('n', 'gH', 'mZ:tabnew<CR>`Z', { silent = true })
+map('n', 'ghh', 'mZ:hide<CR>:tabnew<CR>`Z', { silent = true })
 
 -- Disable defaults
 map('n', '<C-w>q', '<NOP>')
