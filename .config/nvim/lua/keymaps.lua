@@ -17,7 +17,7 @@ end
 
 local function clear_deep()
   print('clearing...')
-  vim.cmd('PreciousReset')  -- NOTE: This is a little heavy
+  vim.cmd('PreciousReset') -- NOTE: This is a little heavy
   clear()
   print('cleared!')
 end
@@ -146,7 +146,7 @@ map('n', 'q>', '<Cmd>registers<CR>', { silent = true })
 
 map('n', '<C-k>o', '<Cmd>e! %<CR>', { silent = true })
 map('n', '<leader><leader>B', function()
-  vim.cmd(s'split {InitLua.memo_path}')
+  vim.cmd(s('split {InitLua.memo_path}'))
 end, { silent = true })
 map('n', 'g*', '<Cmd>execute "silent! normal! *<C-o>"<CR>', { silent = true })
 map('n', 'Q', function()
@@ -240,7 +240,7 @@ local function open_terminal(options)
   end
 
   if opts.cwd then
-    vim.cmd(s'lcd {opts.cwd}')
+    vim.cmd(s('lcd {opts.cwd}'))
   end
 end
 
@@ -281,7 +281,7 @@ map('n', '<C-h><C-n>', '<Cmd>setlocal number! number?<CR>', { silent = true })
 -- Visualize a last pasted range
 map('n', 'gp', function()
   local regtype = vim.fn.getregtype()
-  return s'`[{string.sub(regtype, 1, 1)}`]'
+  return s('`[{string.sub(regtype, 1, 1)}`]')
 end, { expr = true })
 
 -- copy & paste
@@ -297,10 +297,10 @@ map('n', '<leader>x', '"+x')
 
 -- Put the relative path of a current file
 map('n', '"gp', function()
-  vim.cmd(s'put=system("git ls-files --full-name {vim.fn.expand("%")}")')
+  vim.cmd(s('put=system("git ls-files --full-name {vim.fn.expand("%")}")'))
 end)
 map('n', '"gP', function()
-  vim.cmd(s'put!=system("git ls-files --full-name {vim.fn.expand("%")}")')
+  vim.cmd(s('put!=system("git ls-files --full-name {vim.fn.expand("%")}")'))
 end)
 
 -- cr

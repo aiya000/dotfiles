@@ -74,14 +74,11 @@ if vim == nil then
   end)();
 
   (function()
-    local result = PipedData.new(42):apply(
-      function()
-        error('error')
-      end,
-      function()
-        return -1
-      end
-    )
+    local result = PipedData.new(42):apply(function()
+      error('error')
+    end, function()
+      return -1
+    end)
     assert(result == -1, '- Failed: apply() should handle occurred error if application failed')
   end)();
 
@@ -92,7 +89,7 @@ if vim == nil then
       end)
     end)
     assert(not ok, '- Failed: apply() should be error if application failed and handle is nil')
-  end)();
+  end)()
 end
 
 return pipe

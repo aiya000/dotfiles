@@ -17,10 +17,9 @@ function M.install_dein_if_not_installed(install_dir_path)
   end
 
   print('Installing dein.vim...')
-  local result = vim.system(
-    {'git', 'clone', 'https://github.com/Shougo/dein.vim', install_dir_path},
-    { text = true }
-  ):wait()
+  local result = vim
+    .system({ 'git', 'clone', 'https://github.com/Shougo/dein.vim', install_dir_path }, { text = true })
+    :wait()
 
   if result.code ~= 0 then
     print('Failed to install dein.vim. Result:')
@@ -49,20 +48,18 @@ function M.ensure_directory(dir)
     local group = vim.env.GROUP or ''
 
     vim.fn.mkdir(dir, 'p', '700')
-    vim.fn.system(
-      fn.s('chown -R "{user}:{group}" "{dir}"', {
-        user = user,
-        group = group,
-        dir = dir,
-      })
-    )
+    vim.fn.system(fn.s('chown -R "{user}:{group}" "{dir}"', {
+      user = user,
+      group = group,
+      dir = dir,
+    }))
   end
 end
 
 ---Compresses continuously spaces to a space.
 function M.compress_spaces()
   local recent_pattern = vim.fn.getreg('/')
-  vim.cmd(s'try | s/\\s\\+/ /g | execute "normal! ==" | finally | let @/ = "{recent_pattern}" | endtry')
+  vim.cmd(s('try | s/\\s\\+/ /g | execute "normal! ==" | finally | let @/ = "{recent_pattern}" | endtry'))
   vim.cmd('nohlsearch')
 end
 
@@ -106,7 +103,7 @@ function M.bufclose_filetype(filetypes)
   for w = 1, vim.fn.winnr('$') do
     local buf_ft = vim.fn.getwinvar(w, '&filetype')
     if vim.tbl_contains(filetypes, buf_ft) then
-      vim.cmd(s':{w}wincmd w')
+      vim.cmd(s(':{w}wincmd w'))
       vim.cmd('quit')
       closed = true
     end
@@ -129,15 +126,15 @@ function M.open_explorer(split, path)
     or split == 'split' and ':split | silent Dirvish'
     or split == 'vsplit' and ':vsplit | silent Dirvish'
     or split == 'tabnew' and ':tabnew | silent Dirvish'
-    or error(s'an unexpected way to open the explorer: {split}')
+    or error(s('an unexpected way to open the explorer: {split}'))
 
   if vim.fn.isdirectory(path) == 0 then
     -- :silent to ignore an error message. Because opening seems success.
-    vim.cmd(s'silent {cmd}')
+    vim.cmd(s('silent {cmd}'))
     return
   end
 
-  vim.cmd(s'{cmd} {path}')
+  vim.cmd(s('{cmd} {path}'))
 end
 
 ---Fetches a detail of <title> from a URL
@@ -148,7 +145,7 @@ function M.get_webpage_title(url)
   end)
 
   if not ok then
-    return s'vimrc#get_webpage_title(): something happened: {result}'
+    return s('vimrc#get_webpage_title(): something happened: {result}')
   end
 
   return result
@@ -264,23 +261,21 @@ function M.rename_to(new_name)
   local new_file = vim.fn.fnamemodify(this_file, ':h') .. '/' .. new_name
   local failed = vim.fn.rename(this_file, new_file)
   if failed ~= 0 then
-    vim.notify(s'Rename {this_file} to {new_file} is failed', vim.log.levels.ERROR)
+    vim.notify(s('Rename {this_file} to {new_file} is failed'), vim.log.levels.ERROR)
     return
   end
 
-  vim.cmd(s'edit {new_file}')
+  vim.cmd(s('edit {new_file}'))
   vim.cmd('silent write')
-  vim.cmd(s'silent bdelete {this_file}')
+  vim.cmd(s('silent bdelete {this_file}'))
 
-  print(s'Renamed {this_file} to {new_file}')
+  print(s('Renamed {this_file} to {new_file}'))
 end
 
 ---Gets current buffer directory with fallback
 function M.get_current_buffer_dir(options)
   options = options or {}
-  local dir =
-    vim.bo.buftype ~= 'terminal' and vim.bo.buftype ~= 'nofile' and vim.fn.expand('%:p:h')
-    or InitLua.git_root
+  local dir = vim.bo.buftype ~= 'terminal' and vim.bo.buftype ~= 'nofile' and vim.fn.expand('%:p:h') or InitLua.git_root
 
   local alt_dir = options.alt_dir
   if dir and dir ~= '' then
@@ -296,17 +291,13 @@ end
 ---@param messages string|string[]
 function M.popup_atcursor(messages)
   -- TODO: 微調整。atcursorになってないかもしれない。今はとりあえずなゆちゃんが出してくれたコードをそのまま使ってる
-  vim.api.nvim_open_win(
-    vim.api.nvim_create_buf(false, true),
-    true,
-    {
-      relative = 'editor',
-      width = 20,
-      height = 3,
-      row = 10,
-      col = 10,
-    }
-  )
+  vim.api.nvim_open_win(vim.api.nvim_create_buf(false, true), true, {
+    relative = 'editor',
+    width = 20,
+    height = 3,
+    row = 10,
+    col = 10,
+  })
 end
 
 function M.close_all_popups()
@@ -343,7 +334,7 @@ function M.deepl_translate(line_count, start_line, end_line, target_lang, source
     end,
     ---@param result string
     echo = function(result)
-      print(result)  -- Equivalent to s:Msg.echo('Normal', result)
+      print(result) -- Equivalent to s:Msg.echo('Normal', result)
     end,
     ---@param result string
     buffer = function(result)
@@ -376,68 +367,67 @@ function M.setup_operator_surround()
   -- Basic symbols excluding brackets () [] {} and ` for unique mappings
   local basic_symbols = {}
   vim.list_extend(basic_symbols, list.char_range('!', "'"))
-  vim.list_extend(basic_symbols, {'*', '&', '_', '|', '~', ':', '/'})
+  vim.list_extend(basic_symbols, { '*', '&', '_', '|', '~', ':', '/' })
 
   local basic_between = {}
   for _, char in ipairs(basic_symbols) do
     table.insert(basic_between, {
-      block = {char, char},
-      motionwise = {'char', 'line', 'block'},
-      keys = {char}
+      block = { char, char },
+      motionwise = { 'char', 'line', 'block' },
+      keys = { char },
     })
   end
 
   local basic_html_tags = {
-    {block = {'<p>', '</p>'}, motionwise = {'char'}, keys = {'[p'}},
-    {block = {'<a>', '</a>'}, motionwise = {'char'}, keys = {'[a'}},
-    {block = {'<div>', '</div>'}, motionwise = {'char'}, keys = {'[d'}},
-    {block = {'<span>', '</span>'}, motionwise = {'char'}, keys = {'[s'}},
-    {block = {'<h1>', '</h1>'}, motionwise = {'char'}, keys = {'[h1'}},
-    {block = {'<h2>', '</h2>'}, motionwise = {'char'}, keys = {'[h2'}},
-    {block = {'<h3>', '</h3>'}, motionwise = {'char'}, keys = {'[h3'}},
-    {block = {'<h4>', '</h4>'}, motionwise = {'char'}, keys = {'[h4'}},
-    {block = {'<h5>', '</h5>'}, motionwise = {'char'}, keys = {'[h5'}},
-    {block = {'<ol>', '</ol>'}, motionwise = {'char'}, keys = {'[ol'}},
-    {block = {'<ul>', '</ul>'}, motionwise = {'char'}, keys = {'[ul'}},
-    {block = {'<li>', '</li>'}, motionwise = {'char'}, keys = {'[li'}},
+    { block = { '<p>', '</p>' }, motionwise = { 'char' }, keys = { '[p' } },
+    { block = { '<a>', '</a>' }, motionwise = { 'char' }, keys = { '[a' } },
+    { block = { '<div>', '</div>' }, motionwise = { 'char' }, keys = { '[d' } },
+    { block = { '<span>', '</span>' }, motionwise = { 'char' }, keys = { '[s' } },
+    { block = { '<h1>', '</h1>' }, motionwise = { 'char' }, keys = { '[h1' } },
+    { block = { '<h2>', '</h2>' }, motionwise = { 'char' }, keys = { '[h2' } },
+    { block = { '<h3>', '</h3>' }, motionwise = { 'char' }, keys = { '[h3' } },
+    { block = { '<h4>', '</h4>' }, motionwise = { 'char' }, keys = { '[h4' } },
+    { block = { '<h5>', '</h5>' }, motionwise = { 'char' }, keys = { '[h5' } },
+    { block = { '<ol>', '</ol>' }, motionwise = { 'char' }, keys = { '[ol' } },
+    { block = { '<ul>', '</ul>' }, motionwise = { 'char' }, keys = { '[ul' } },
+    { block = { '<li>', '</li>' }, motionwise = { 'char' }, keys = { '[li' } },
   }
 
   -- Set operator#surround#blocks configuration
   vim.g['operator#surround#blocks'] = {
     ['-'] = vim.list_extend({
-      {block = {'(', ')'}, motionwise = {'char', 'line', 'block'}, keys = {'(', ')', 'p'}},
-      {block = {'[', ']'}, motionwise = {'char', 'line', 'block'}, keys = {']', 'k'}},
-      {block = {'{', '}'}, motionwise = {'char', 'line', 'block'}, keys = {'{', '}', 'P'}},
-      {block = {'<', '>'}, motionwise = {'char', 'line', 'block'}, keys = {'<', '>', 'K'}},
-      {block = {' ', ' '}, motionwise = {'char', 'line', 'block'}, keys = {'  '}},
-      {block = {'`', '`'}, motionwise = {'char', 'line', 'block'}, keys = {'`', 'b'}},
-      {block = {'（', '）'}, motionwise = {'char', 'line', 'block'}, keys = {'jp'}},
-      {block = {'「', '」'}, motionwise = {'char', 'line', 'block'}, keys = {'jk'}},
-      {block = {'【', '】'}, motionwise = {'char', 'line', 'block'}, keys = {'jK'}},
-      {block = {'『', '』'}, motionwise = {'char', 'line', 'block'}, keys = {'j-k'}},
+      { block = { '(', ')' }, motionwise = { 'char', 'line', 'block' }, keys = { '(', ')', 'p' } },
+      { block = { '[', ']' }, motionwise = { 'char', 'line', 'block' }, keys = { ']', 'k' } },
+      { block = { '{', '}' }, motionwise = { 'char', 'line', 'block' }, keys = { '{', '}', 'P' } },
+      { block = { '<', '>' }, motionwise = { 'char', 'line', 'block' }, keys = { '<', '>', 'K' } },
+      { block = { ' ', ' ' }, motionwise = { 'char', 'line', 'block' }, keys = { '  ' } },
+      { block = { '`', '`' }, motionwise = { 'char', 'line', 'block' }, keys = { '`', 'b' } },
+      { block = { '（', '）' }, motionwise = { 'char', 'line', 'block' }, keys = { 'jp' } },
+      { block = { '「', '」' }, motionwise = { 'char', 'line', 'block' }, keys = { 'jk' } },
+      { block = { '【', '】' }, motionwise = { 'char', 'line', 'block' }, keys = { 'jK' } },
+      { block = { '『', '』' }, motionwise = { 'char', 'line', 'block' }, keys = { 'j-k' } },
     }, basic_between),
     review = {
-      {block = {'@<b>{', '}'}, motionwise = {'char'}, keys = {'B'}},
-      {block = {'@<i>{', '}'}, motionwise = {'char'}, keys = {'i'}},
-      {block = {'@<u>{', '}'}, motionwise = {'char'}, keys = {'u'}},
-      {block = {'@<tt>{', '}'}, motionwise = {'char'}, keys = {'t'}},
-      {block = {'@<idx>{', '}'}, motionwise = {'char'}, keys = {'x'}},
-      {block = {'@<ruby>{', ', ruby}'}, motionwise = {'char'}, keys = {'r'}},
-      {block = {'@<code>{', '}'}, motionwise = {'char'}, keys = {'c'}},
-      {block = {'@<mathcode>{', '}'}, motionwise = {'char'}, keys = {'m'}},
-      {block = {'@<img>{', '}'}, motionwise = {'char'}, keys = {'[i'}},
-      {block = {'@<list>{', '}'}, motionwise = {'char'}, keys = {'[l'}},
+      { block = { '@<b>{', '}' }, motionwise = { 'char' }, keys = { 'B' } },
+      { block = { '@<i>{', '}' }, motionwise = { 'char' }, keys = { 'i' } },
+      { block = { '@<u>{', '}' }, motionwise = { 'char' }, keys = { 'u' } },
+      { block = { '@<tt>{', '}' }, motionwise = { 'char' }, keys = { 't' } },
+      { block = { '@<idx>{', '}' }, motionwise = { 'char' }, keys = { 'x' } },
+      { block = { '@<ruby>{', ', ruby}' }, motionwise = { 'char' }, keys = { 'r' } },
+      { block = { '@<code>{', '}' }, motionwise = { 'char' }, keys = { 'c' } },
+      { block = { '@<mathcode>{', '}' }, motionwise = { 'char' }, keys = { 'm' } },
+      { block = { '@<img>{', '}' }, motionwise = { 'char' }, keys = { '[i' } },
+      { block = { '@<list>{', '}' }, motionwise = { 'char' }, keys = { '[l' } },
     },
     markdown = {
-      {block = {'**', '**'}, motionwise = {'char', 'block'}, keys = {'B'}},
-      {block = {'~~', '~~'}, motionwise = {'char', 'block'}, keys = {'~'}},
+      { block = { '**', '**' }, motionwise = { 'char', 'block' }, keys = { 'B' } },
+      { block = { '~~', '~~' }, motionwise = { 'char', 'block' }, keys = { '~' } },
     },
     html = basic_html_tags,
     vue = basic_html_tags,
     ['typescript.tsx'] = basic_html_tags,
   }
 end
-
 
 ---Kills from cursor to end of command line
 function M.remove_text_after_cursor()

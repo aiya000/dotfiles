@@ -1,18 +1,22 @@
 -- NOTE: ? Prevent appearing the character '«' at the beginning of a line when opened
-vim.cmd("normal! 0")
+vim.cmd('normal! 0')
 
-vim.cmd("nmap <buffer> H <Plug>(dirvish_up)")
-vim.cmd("nmap <buffer> E eb")
-vim.keymap.set('n', "/", "/", { buffer = true })
-vim.keymap.set('n', "<buffer>", "<C-n> gT", { buffer = true })
-vim.keymap.set('n', "<buffer>", "<C-n> gt", { buffer = true })
-vim.keymap.set('n', "?", "?", { buffer = true })
-vim.keymap.set('n', "Q", function() vim.cmd("quit") end, { buffer = true })
-vim.keymap.set('n', "d", ":!mkdir<Space>", { buffer = true })
-vim.keymap.set('n', "D", function() vim.cmd("call <SID>delete_file_or_dir()") end, { buffer = true, silent = true })
+vim.cmd('nmap <buffer> H <Plug>(dirvish_up)')
+vim.cmd('nmap <buffer> E eb')
+vim.keymap.set('n', '/', '/', { buffer = true })
+vim.keymap.set('n', '<buffer>', '<C-n> gT', { buffer = true })
+vim.keymap.set('n', '<buffer>', '<C-n> gt', { buffer = true })
+vim.keymap.set('n', '?', '?', { buffer = true })
+vim.keymap.set('n', 'Q', function()
+  vim.cmd('quit')
+end, { buffer = true })
+vim.keymap.set('n', 'd', ':!mkdir<Space>', { buffer = true })
+vim.keymap.set('n', 'D', function()
+  vim.cmd('call <SID>delete_file_or_dir()')
+end, { buffer = true, silent = true })
 
 -- Redraw
-vim.keymap.set('n', "<buffer>", "<C-r> :Dirvish<CR>", { buffer = true })
+vim.keymap.set('n', '<buffer>', '<C-r> :Dirvish<CR>', { buffer = true })
 
 vim.cmd([[
 function s:delete_file_or_dir() abort
@@ -32,8 +36,3 @@ function s:delete_file_or_dir() abort
   echomsg $'Deleted: {file_or_dir_name}'
 endfunction
 ]])
-
-local augroup_FtpluginDirvish = vim.api.nvim_create_augroup("FtpluginDirvish", { clear = true })
-    \  if &ft ==# 'dirvish'
-      \| execute ':lcd' expand('%:p:h')
-    \| endif

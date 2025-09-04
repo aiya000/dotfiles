@@ -76,7 +76,9 @@ function M.s(text)
   local i = 1
   while true do
     local name, value = debug.getlocal(level, i)
-    if not name then break end
+    if not name then
+      break
+    end
     if not name:match('^%(') then -- 一時変数を除外
       context[name] = value
     end
@@ -93,9 +95,8 @@ function M.s(text)
       context = context,
     }
     return (
-      (_VERSION == 'Lua 5.1' and not jit)
-        and replace_expr_in_context_for_lua_5_1_non_jit
-        or replace_expr_in_context
+      (_VERSION == 'Lua 5.1' and not jit) and replace_expr_in_context_for_lua_5_1_non_jit
+      or replace_expr_in_context
     )(replacing_ref)
   end)
 end
@@ -165,10 +166,7 @@ function M.set_vim_dict_field(scope, varname, field, value)
     scope[varname] = {}
   end
   if type(scope[varname]) ~= 'table' then
-    error(string.format(
-      "Expected '%s' to be a table, but got %s",
-      varname, type(scope[varname])
-    ))
+    error(string.format("Expected '%s' to be a table, but got %s", varname, type(scope[varname])))
   end
   scope[varname][field] = value
 end
@@ -181,28 +179,28 @@ if vim == nil then
 
   test('s() should return the taken string simply if with no embedded expressions', function()
     assert_equal(M.s('hi'), 'hi')
-    assert_equal(M.s'hi', 'hi') -- Shorthand
+    assert_equal(M.s('hi'), 'hi') -- Shorthand
   end)
 
   test('s() should embed variables', function()
     local name = 'aiya000'
-    assert_equal(M.s'{name}', 'aiya000') -- A local variable
-    assert_equal(M.s'{math.pi}', tostring(math.pi)) -- A global variable
+    assert_equal(M.s('{name}'), 'aiya000') -- A local variable
+    assert_equal(M.s('{math.pi}'), tostring(math.pi)) -- A global variable
   end)
 
   test('s() should embed values', function()
-    assert_equal(M.s'{10}', '10')
-    assert_equal(M.s'{5 + 3}', '8')
-    assert_equal(M.s'{1.25}', '1.25')
-    assert_equal(M.s'{"hello"}', 'hello')
-    assert_equal(M.s'{nil}', 'nil') -- TODO: Fix
+    assert_equal(M.s('{10}'), '10')
+    assert_equal(M.s('{5 + 3}'), '8')
+    assert_equal(M.s('{1.25}'), '1.25')
+    assert_equal(M.s('{"hello"}'), 'hello')
+    assert_equal(M.s('{nil}'), 'nil') -- TODO: Fix
   end)
 
   test('s() should embed function and function call', function()
     local function f(x)
       return x
     end
-    assert_equal(M.s'{f(10)}', '10')
+    assert_equal(M.s('{f(10)}'), '10')
   end)
 
   test('set_vim_dict_field() should set a sub field', function()
@@ -212,7 +210,6 @@ if vim == nil then
     M.set_vim_dict_field(dict, 'field', 'sub_field', 10)
     assert_equal(dict.field.sub_field, 10)
   end)
-
 
   test('set_vim_dict_field() should keep another field values', function()
     local dict = {

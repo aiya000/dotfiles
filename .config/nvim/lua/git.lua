@@ -16,7 +16,7 @@ local function parse_git_root(stdout, stderr)
 
   -- Replace to the wsl2's path if git_root is a windows path (by git.exe)
   local git_root = vim.fn.fnameescape(type(stdout) == 'table' and table.concat(stdout, '') or stdout)
-  return is_windows_git_root(git_root) and vim.fn.trim(vim.system({'wslpath', root_windows})) or git_root
+  return is_windows_git_root(git_root) and vim.fn.trim(vim.system({ 'wslpath', root_windows })) or git_root
 end
 
 ---Windows上のgit-rootなのか、Linux/Unix上のgit-rootなのかを判断する
@@ -48,9 +48,9 @@ end
 function M.cd_git_root(cd)
   local git_root = M.read_git_root()
   if git_root then
-    print(s'vimrc: The current directory changed to: {git_root}')
+    print(s('vimrc: The current directory changed to: {git_root}'))
     if type(cd) == 'string' then
-      vim.cmd(s'{cd} {git_root}')
+      vim.cmd(s('{cd} {git_root}'))
     else
       cd(git_root)
     end
