@@ -17,10 +17,14 @@
 ---@field filereadable fun(path_to_file: string): boolean
 ---@field fnameescape fun(path: string): string
 
+-- TODO: なぜかvim.cmdを認識しないので、手動で従来の`string | table`を加えている
+---@alias VimCmd string | table | { colorscheme: fun(name: string): nil }
+
 ---@class vim
 ---@field list_extend fun(xs: unknown[], ys: unknown[]): unknown[] --TODO: 型引数持たせられない？ lspのバージョンを上げたら、型引数を持たせる
 ---@field opt VimOptions
 ---@field fn VimFunctions
+---@field cmd VimCmd
 
 -- Attach defined types to `vim` variable
 ---@type vim
