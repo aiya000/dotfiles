@@ -65,13 +65,7 @@ InitLua.temporary_buftypes = {
 }
 
 -- }}}
--- Options {{{
-
-vim.g.mapleader = "'"
-vim.g.maplocalleader = "'"
--- Use below if you are using JIS keyboard
--- vim.g.mapleader = '['
--- vim.g.maplocalleader = '['
+-- vim.opt, buitin vim.g, and another options {{{
 
 vim.opt.autoindent = true
 vim.opt.backspace = { 'indent', 'eol', 'start' }
@@ -153,9 +147,6 @@ vim.opt.infercase = false
 -- I control the IME state by myself
 vim.opt.iminsert = 0
 
--- Open .tex as LaTex
-vim.g.tex_flavor = 'latex'
-
 -- Reference tags of ctags
 ---@diagnostic disable-next-line: undefined-field --なぜか怒られるので無視する
 vim.opt.tags:append({
@@ -164,6 +155,15 @@ vim.opt.tags:append({
   s'{InitLua.path_at_started}/tags',
   s'{InitLua.path_at_started}/.git/tags',
 })
+
+vim.g.mapleader = "'"
+vim.g.maplocalleader = "'"
+-- Use below if you are using JIS keyboard
+-- vim.g.mapleader = '['
+-- vim.g.maplocalleader = '['
+
+-- Open .tex as LaTex
+vim.g.tex_flavor = 'latex'
 
 -- }}}
 -- Others {{{
