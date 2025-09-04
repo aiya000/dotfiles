@@ -145,7 +145,6 @@ ifeq ($(OS),Arch)  # {{{
 		termite \
 		thunar \
 		tmux \
-		tmux-mem-cpu-load \
 		unzip-iconv \
 		xf86-video-intel \
 		xinit-xsession \
@@ -432,7 +431,6 @@ install-brew:
 install-cli-recommended:
 	brew install \
 		gh \
-		tmux-mem-cpu-load \
 		watchexec
 	$(AptInstall) \
 		jq \
@@ -691,3 +689,9 @@ install-apt-file:
 
 install-luarocks:
 	which luarocks || brew install luarocks
+
+install-cmake:
+	$(AptInstall) cmake  # To build tmux-cpu-mem-load
+
+install-tmux-runtime-deps:
+	$(MAKE) install-cmake
