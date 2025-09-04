@@ -214,3 +214,18 @@ repo = 'aiya000/vim-scratch-buffer'
 
 [[plugins]]
 repo = 'aiya000/vim-write-sync'
+
+[[plugins]]
+repo = 'catppuccin/nvim'
+name = 'catppuccin'
+
+[[plugins]]
+repo = 'NTBBloodbath/galaxyline.nvim'
+depends = 'nvim-web-devicons'
+
+[[plugins]]
+repo = 'akinsho/bufferline.nvim'
+depends = 'nvim-web-devicons'
+
+[[plugins]]
+repo = 'nvim-tree/nvim-web-devicons'
