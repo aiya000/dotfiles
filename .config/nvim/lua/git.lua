@@ -2,6 +2,12 @@ local s = require('utils.functions').s
 
 local M = {}
 
+---Windows上のgit-rootなのか、Linux/Unix上のgit-rootなのかを判断する
+---@param git_root string -- Linux/Unixパスのgit-root、もしくはWindowsパスのgit-root
+local function is_windows_git_root(git_root)
+  return not git_root:match('^/') and vim.fn.executable('wslpath') == 1
+end
+
 ---Parses git root output
 ---@param stdout string
 ---@param stderr string
@@ -19,14 +25,14 @@ local function parse_git_root(stdout, stderr)
   return is_windows_git_root(git_root) and vim.fn.trim(vim.system({ 'wslpath', root_windows })) or git_root
 end
 
----Windows上のgit-rootなのか、Linux/Unix上のgit-rootなのかを判断する
----@param git_root string -- Linux/Unixパスのgit-root、もしくはWindowsパスのgit-root
-local function is_windows_git_root(git_root)
-  return not git_root:match('^/') and vim.fn.executable('wslpath') == 1
+---最初期のNeovimのスケジュールでvim.fn.trim()が使えないので、代わりに使う
+---@param text string
+local function trim(text)
+  return text:gsub("^%s*(.-)%s*$", "%1")
 end
 
----@param on_succeed fun(git_root: string): nil -- git-rootが正常に読み込めた場合に、git-rootを渡して実行される関数
----@param on_failed? fun(error_message: string): nil -- git-rootが正常に読み込めなかった場合に、エラーメッセージを渡して実行される関数
+---@param on_succeed fun(git_root: string): nil --git-rootが正常に読み込めた場合に、git-rootを渡して実行される関数
+---@param on_failed? fun(error_message: string): nil --git-rootが正常に読み込めなかった場合に、エラーメッセージを渡して実行される関数
 function M.read_git_root(on_succeed, on_failed)
   vim.system({ 'git', 'rev-parse', '--show-toplevel' }, {
     text = true,
@@ -34,7 +40,7 @@ function M.read_git_root(on_succeed, on_failed)
     stderr = true,
   }, function(result)
     if result.code == 0 then
-      local git_root = parse_git_root(vim.fn.trim(result.stdout), vim.fn.trim(result.stderr))
+      local git_root = parse_git_root(trim(result.stdout), trim(result.stderr))
       on_succeed(git_root)
     end
 
