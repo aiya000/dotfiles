@@ -46,6 +46,10 @@ depends = 'vim-textobj-user'
 repo = 'kana/vim-operator-user'
 
 [[plugins]]
+repo = 'rhysd/vim-operator-surround'
+depends = 'vim-operator-user'
+
+[[plugins]]
 repo = 'thinca/vim-visualstar'
 
 [[plugins]]
