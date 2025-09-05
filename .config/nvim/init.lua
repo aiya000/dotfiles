@@ -23,7 +23,7 @@ InitLua = InitLua
   }
 
 -- Delayed to avoid startup slowdown
-vim.defer_fn(function()
+vim.schedule(function()
   git.read_git_root(function(git_root)
     InitLua.git_root = git_root
     io.write(s('vimrc: a git root detected: {git_root}'))
@@ -35,7 +35,7 @@ InitLua.open_on_gui = InitLua.is_macos and 'open'
   or InitLua.is_unix and 'xdg-open'
   or error('init.lua: No method found for opening GUI')
 
-local backupdir = vim.fn.expand('~/.backup/vim-backup')
+local backupdir = vim.fn.expand('~/.backup/neovim-backup')
 InitLua.backupdir = backupdir
 InitLua.directory = s('{backupdir}/swp')
 InitLua.undodir = s('{backupdir}/undo')
@@ -204,9 +204,10 @@ vim.call('dein#add', 'Shougo/dein.vim', { rtp = '' })
 -- }}}
 -- Prepare backup directories {{{
 
-helper.ensure_directory(InitLua.directory)
-helper.ensure_directory(InitLua.undodir)
-helper.ensure_directory(InitLua.sessiondir)
+helper.make_directory_if_missing(InitLua.backupdir)
+helper.make_directory_if_missing(InitLua.directory)
+helper.make_directory_if_missing(InitLua.undodir)
+helper.make_directory_if_missing(InitLua.sessiondir)
 
 -- }}}
 -- Read local scripts {{{
