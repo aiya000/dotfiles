@@ -108,8 +108,8 @@ vim.g.bakaup_auto_backup = 1
 -- }}}
 -- neosnippet.vim {{{
 
-vim.g.neosnippet_snippets_directory = s('{InitLua.neovim_home}/neosnippets')
-vim.g.neosnippet_disable_select_select_mappings = 1
+vim.g['neosnippet#snippets_directory'] = s('{InitLua.neovim_home}/neosnippets')
+vim.g['neosnippet#disable_select_select_mappings'] = 1
 
 -- }}}
 -- vim-textobj-indent {{{
@@ -526,26 +526,9 @@ local colors = {
   red = '#ec5f67',
 }
 
-local buffer_not_empty = function()
-  if vim.fn.empty(vim.fn.expand('%:t')) ~= 1 then
-    return true
-  end
-  return false
-end
-
-local checkwidth = function()
-  local squeeze_width = vim.fn.winwidth(0) / 2
-  if squeeze_width > 40 then
-    return true
-  end
-  return false
-end
-
 gls.left[1] = {
   RainbowRed = {
-    provider = function()
-      return '▊ '
-    end,
+    provider = fn.const('▊ '),
     highlight = { colors.blue, colors.bg },
   },
 }
@@ -557,7 +540,6 @@ gls.left[2] = {
         n = colors.red,
         i = colors.green,
         v = colors.blue,
-        [''] = colors.blue,
         V = colors.blue,
         c = colors.magenta,
         no = colors.red,
@@ -575,7 +557,9 @@ gls.left[2] = {
         ['!'] = colors.red,
         t = colors.red,
       }
-      vim.api.nvim_command('hi GalaxyViMode guifg=' .. mode_color[vim.fn.mode()])
+      local current_mode = vim.fn.mode() or 'n'
+      local color = mode_color[current_mode] or colors.red
+      vim.api.nvim_command('highlight GalaxyViMode guifg=' .. color)
       return '  '
     end,
     highlight = { colors.red, colors.bg, 'bold' },
