@@ -2,9 +2,9 @@ vim.opt_local.list = false
 vim.opt_local.tabstop = 8
 
 vim.keymap.set('n', 'Q', function()
-  vim.cmd('bdelete!')
+  vim.api.nvim_buf_delete(0, { force = true })
 end, { buffer = true, silent = true })
 
-vim.cmd("\\  if &filetype ==# 'gin-diff'")
-vim.cmd('\\| IndentGuidesDisable')
-vim.cmd('\\| endif')
+if vim.bo.filetype == 'gin-diff' then
+  vim.cmd('IndentGuidesDisable')
+end

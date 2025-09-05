@@ -1,3 +1,3 @@
 vim.keymap.set('n', 'Q', function()
-  vim.cmd('<C-u>bdelete')
+  vim.api.nvim_buf_delete(0, { force = false })
 end, { buffer = true, silent = true })

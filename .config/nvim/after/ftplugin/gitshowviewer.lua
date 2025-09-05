@@ -1,1 +1,4 @@
-vim.cmd("execute 'source' (InitLua.neovim_home . '/after/ftplugin/gitdiffviewer.vim')")
+-- Load gitdiffviewer.lua settings
+vim.keymap.set('n', 'Q', function()
+  vim.api.nvim_buf_delete(0, { force = true })
+end, { buffer = true, silent = true })

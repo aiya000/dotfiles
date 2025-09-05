@@ -1,1 +1,4 @@
-vim.cmd('source ~/.vim/after/ftplugin/sh.vim')
+vim.opt_local.commentstring = ' # %s'
+vim.opt_local.ts = 2
+vim.opt_local.sw = 2
+vim.opt_local.et = true

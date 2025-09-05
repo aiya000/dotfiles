@@ -1,18 +1,14 @@
-vim.cmd("execute 'source' (InitLua.neovim_home . '/after/ftplugin/haskell.vim')")
+-- TODO: Load haskell ftplugin
 
-vim.opt.commentstring = '{- %s -}'
+vim.opt_local.commentstring = '{- %s -}'
 vim.opt_local.ts = 2
 vim.opt_local.sw = 2
 vim.opt_local.et = true
 vim.opt_local.tw = 0
 
-vim.keymap.set('v', 'i{', function()
-  vim.call('<SID>align()')
-end, { buffer = true, silent = true })
+local function align()
+  vim.cmd("'<,'>Alignta => {\\(\\s\\|%\\)")
+  vim.cmd("'<,'>Alignta => \\s}")
+end
 
-vim.cmd([[
-function! s:align() abort
-  '<,'>Alignta => {\(\s\|%\)
-  '<,'>Alignta => \s}
-endfunction
-]])
+vim.keymap.set('v', 'i{', align, { buffer = true, silent = true })
