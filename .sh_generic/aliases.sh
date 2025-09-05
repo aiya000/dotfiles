@@ -386,6 +386,14 @@ if i_have git ; then
     git log "$@" "origin/$(git-branch-name)..HEAD"
   }
 
+  # TODO: これだけでsubmoduleは削除できるっけ？ .gitmodulesを編集しなきゃだめ？ そうだったらめんどいから、aliasはなくていいや
+  # TODO: deinitに-fっているっけ？
+  # どれだっけ？ ってならないように、いっぱい登録しておく！
+  alias git-submodule-remove='git submodule deinit'
+  alias git-submodule-delete='git-submodule-remove'
+  alias git-remove-submodule='git-submodule-remove'
+  alias git-delete-submodule='git-submodule-remove'
+
   function gwb () {
     local branch_name=$1
     git worktree add "$branch_name" -b "$branch_name"
