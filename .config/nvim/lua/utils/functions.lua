@@ -108,6 +108,31 @@ function M.identity(x)
   return x
 end
 
+---@generic T
+---@param x T
+---@return fun(): T
+function M.const(x)
+  return function()
+    return x
+  end
+end
+
+---@generic T
+---@param maybe_nil (T | nil) | (fun(): T | nil)
+---@param default T
+---@return T
+function M.get_or_default(maybe_nil, default)
+  local maybe_value = type(maybe_nil) == 'function'
+    and maybe_nil()
+    or maybe_nil
+
+  if maybe_value == nil then
+    return default
+  else
+    return maybe_value
+  end
+end
+
 ---Wait until p satisfied
 ---@param p fun(): boolean
 ---@param f fun(): nil --called when `p()` satisfied
