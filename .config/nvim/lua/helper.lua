@@ -6,6 +6,16 @@ local s = fn.s
 
 local M = {}
 
+---Storkes a stroke starts with normal mode.
+---Also Can storke with virtual keymaps, compared to vim.cmd('normal stroke'), like `<Plug>(foo-bar)` and `viw<Plug>(foo-bar)p`.
+---(NOTE: `vim.cmd('normal foo')` cannot handle `<Plug>(foo-bar)` correctly.)
+---
+---@param keystroke string --Like `<Plug>(foo-bar)`, `viw<Plug>(foo-bar)p`
+---@return nil
+function M.run_with_virtual_keymaps(keystroke)
+  vim.fn.feedkeys(vim.api.nvim_replace_termcodes(keystroke, true, false, true))
+end
+
 ---@param install_dir_path string --ここのディレクトリパスにdein.vimをgit-cloneする
 function M.install_dein_if_not_installed(install_dir_path)
   if vim.fn.isdirectory(install_dir_path) == 1 then
@@ -38,8 +48,9 @@ local function whoami()
   return result
 end
 
+---NOTE: This requires `$USER` or `whoami` command
 ---@param dir string
-function M.ensure_directory(dir)
+function M.make_directory_if_missing(dir)
   if vim.fn.isdirectory(dir) == 0 then
     local user = vim.env.USER or whoami()
     if user == nil then
@@ -47,12 +58,7 @@ function M.ensure_directory(dir)
     end
     local group = vim.env.GROUP or ''
 
-    vim.fn.mkdir(dir, 'p', '700')
-    vim.fn.system(fn.s('chown -R "{user}:{group}" "{dir}"', {
-      user = user,
-      group = group,
-      dir = dir,
-    }))
+    vim.fn.mkdir(dir, 'p', '755')
   end
 end
 
@@ -65,18 +71,8 @@ end
 
 ---Removes trailing spaces of all lines.
 function M.remove_trailing_spaces()
-  local recent_pattern = vim.fn.getreg('/')
   local curpos = vim.fn.getcurpos()
-
-  local ok = pcall(function()
-    vim.cmd('%s/\\s*\\?$//g')
-  end)
-
-  if not ok then
-    print('nothing todo')
-  end
-
-  vim.fn.setreg('/', recent_pattern)
+  vim.cmd(':%s/\\s*$//g')
   vim.fn.setpos('.', curpos)
 end
 
@@ -438,6 +434,132 @@ function M.remove_text_after_cursor()
   else
     return cmdline:sub(1, cmdpos - 2)
   end
+end
+
+function M.tabnext_loop()
+  if vim.fn.tabpagenr() == vim.fn.tabpagenr('$') then
+    vim.cmd('tabnext 1')
+  else
+    vim.cmd('tabnext')
+  end
+end
+
+function M.tabprev_loop()
+  if vim.fn.tabpagenr() == 1 then
+    vim.cmd('tablast')
+  else
+    vim.cmd('tabprevious')
+  end
+end
+
+function M.open_buffer_to_execute(cmd)
+  local full_size = 100
+  -- Use ScratchBufferOpen command similar to scratch_buffer#open
+  vim.cmd('ScratchBufferOpen md sp ' .. full_size)
+  
+  -- Execute the command and capture output
+  local output = vim.fn.execute(cmd)
+  
+  -- Put the output into the buffer
+  vim.cmd('put=' .. vim.fn.string(output))
+  
+  -- Go to beginning and delete first 2 empty lines
+  vim.cmd('normal! gg2dd')
+end
+
+---surround operations
+local function get_current_obj_keys()
+  local surround_blocks = vim.g['operator#surround#blocks'] or {}
+  local surrounds = surround_blocks['-'] or {}
+  local filetype_surrounds = surround_blocks[vim.bo.filetype] or {}
+
+  -- Combine default and filetype-specific surrounds
+  local all_surrounds = vim.list_extend(vim.deepcopy(surrounds), filetype_surrounds)
+
+  -- Extract all keys from surrounds
+  local obj_keys = {}
+  for _, surround in ipairs(all_surrounds) do
+    if surround.keys then
+      vim.list_extend(obj_keys, surround.keys)
+    end
+  end
+  return obj_keys
+end
+
+local function input_obj_key_of(obj_keys)
+  local stroke = ''
+  while not vim.tbl_contains(obj_keys, stroke) do
+    local char = vim.fn.getchar()
+    char = vim.fn.nr2char(char)
+
+    -- Check for escape sequences (Esc, Ctrl-C, Ctrl-[)
+    if char == '' or char == '' then
+      return nil
+    end
+    stroke = stroke .. char
+  end
+  return stroke
+end
+
+---@param visualizer string --See append_choose_surround_()
+---@return string | nil --Ran key stroke if not cancelled
+local function append_choose_surround(visualizer)
+  local obj_keys = get_current_obj_keys()
+  local obj_key = input_obj_key_of(obj_keys)
+  if obj_key == nil then
+    print('Cancelled')
+    return nil
+  end
+
+  M.run_with_virtual_keymaps(visualizer .. '<Plug>(operator-surround-append)' .. obj_key)
+  return visualizer .. '\\<Plug>(operator-surround-append)' .. obj_key
+end
+
+function M.delete_mostly_inner_surround()
+  local obj_keys = get_current_obj_keys()
+  local obj_key = input_obj_key_of(obj_keys)
+  if obj_key == nil then
+    print('Cancelled')
+    return
+  end
+
+  M.run_with_virtual_keymaps('va' .. obj_key .. '<Plug>(operator-surround-delete)')
+  vim.call('repeat#set', 'va' .. obj_key .. '\\<Plug>(operator-surround-delete)')
+end
+
+function M.replace_mostly_inner_surround()
+  local obj_keys = get_current_obj_keys()
+
+  local obj_key_from = input_obj_key_of(obj_keys)
+  if obj_key_from == nil then
+    print('Cancelled')
+    return
+  end
+
+  local obj_key_to = input_obj_key_of(obj_keys)
+  if obj_key_to == nil then
+    print('Cancelled')
+    return
+  end
+
+  M.run_with_virtual_keymaps('va' .. obj_key_from .. '<Plug>(operator-surround-replace)' .. obj_key_to)
+  vim.call('repeat#set', 'va' .. obj_key_from .. '\\<Plug>(operator-surround-replace)' .. obj_key_to)
+end
+
+---@param visualizer string --To select text, like 'viw' or 'viW'
+local function append_choose_surround_(visualizer)
+  local stroked = append_choose_surround(visualizer)
+  if stroked ~= nil then
+    vim.call('repeat#set', stroked)
+  end
+end
+
+function M.append_choose_surround_normal()
+  append_choose_surround_('viw')
+end
+
+function M.append_choose_surround_wide()
+  append_choose_surround_('viW')
 end
 
 return M
