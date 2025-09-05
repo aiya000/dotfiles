@@ -27,106 +27,6 @@ local function clear_and_write()
   vim.cmd('write')
 end
 
----surround operations (migrated from ~/.vim/autoload/vimrc.vim)
-local function get_current_obj_keys()
-  local surrounds = vim.g['operator#surround#blocks']['-'] or {}
-  local filetype_surrounds = vim.g['operator#surround#blocks'][vim.bo.filetype] or {}
-
-  -- Combine default and filetype-specific surrounds
-  local all_surrounds = vim.list_extend(vim.deepcopy(surrounds), filetype_surrounds)
-
-  -- Extract all keys from surrounds
-  local obj_keys = {}
-  for _, surround in ipairs(all_surrounds) do
-    if surround.keys then
-      vim.list_extend(obj_keys, surround.keys)
-    end
-  end
-  return obj_keys
-end
-
-local function input_obj_key_of(obj_keys)
-  local stroke = ''
-  while not vim.tbl_contains(obj_keys, stroke) do
-    local char = vim.fn.getchar()
-    char = vim.fn.nr2char(char)
-
-    -- Check for escape sequences (Esc, Ctrl-C, Ctrl-[)
-    if char == '\027' or char == '\003' or char == '' then
-      return nil
-    end
-    stroke = stroke .. char
-  end
-  return stroke
-end
-
-local function append_choose_surround(visualizer)
-  vim.call('dein#source', 'vim-operator-surround')
-  local obj_keys = get_current_obj_keys()
-  local obj_key = input_obj_key_of(obj_keys)
-  if obj_key == nil then
-    print('Cancelled')
-    return nil
-  end
-
-  -- Execute the normal command
-  vim.cmd('normal ' .. visualizer .. '\\<Plug>(operator-surround-append)' .. obj_key)
-  return obj_key
-end
-
-local function delete_mostly_inner_surround()
-  vim.call('dein#source', 'vim-operator-surround')
-  local obj_keys = get_current_obj_keys()
-  local obj_key = input_obj_key_of(obj_keys)
-  if obj_key == nil then
-    print('Cancelled')
-    return
-  end
-
-  -- TODO: Workaround. For some reason 'B' ('**foo**') cannot be deleted
-  if obj_key == 'B' then
-    vim.cmd('normal! d\\<Plug>(textobj-between-i)*')
-    vim.cmd('s/\\*\\*\\*\\*/' .. vim.fn.getreg('"') .. '/')
-    print('**deleted**')
-    return
-  end
-
-  vim.cmd('normal! va' .. obj_key .. '\\<Plug>(operator-surround-delete)')
-  vim.fn['repeat#set']('\\<Plug>(vimrc-surround-delete-mostly-inner)' .. obj_key)
-end
-
-local function replace_mostly_inner_surround()
-  vim.call('dein#source', 'vim-operator-surround')
-  local obj_keys = get_current_obj_keys()
-  local obj_key_from = input_obj_key_of(obj_keys)
-  if obj_key_from == nil then
-    print('Cancelled')
-    return
-  end
-  local obj_key_to = input_obj_key_of(obj_keys)
-  if obj_key_to == nil then
-    print('Cancelled')
-    return
-  end
-
-  vim.cmd('normal! va' .. obj_key_from .. '\\<Plug>(operator-surround-replace)' .. obj_key_to)
-  vim.fn['repeat#set']('\\<Plug>(vimrc-surround-replace-mostly-inner)' .. obj_key_from .. obj_key_to)
-end
-
-local function append_choose_surround_normal()
-  local obj_key = append_choose_surround('viw')
-  if obj_key then
-    vim.fn['repeat#set']('\\<Plug>(vimrc-surround-append-choice)' .. obj_key)
-  end
-end
-
-local function append_choose_surround_wide()
-  local obj_key = append_choose_surround('viW')
-  if obj_key then
-    vim.fn['repeat#set']('\\<Plug>(vimrc-surround-append-choice-wide)' .. obj_key)
-  end
-end
-
 -- normal mode {{{
 
 -- Allow keymaps like <C-c>{foo}, and {bar}<C-c>
@@ -137,12 +37,6 @@ map('n', '<C-[>', clear, { silent = true })
 map('n', '<Esc>', clear, { silent = true })
 map('n', '<C-l>', clear, { silent = true })
 map('n', '<C-k><C-l>', clear_deep)
-
--- listup
-map('n', 'g:', '<Cmd>buffers<CR>', { silent = true })
-map('n', 'g>', '<Cmd>messages<CR>', { silent = true })
-map('n', 'm:', '<Cmd>marks<CR>', { silent = true })
-map('n', 'q>', '<Cmd>registers<CR>', { silent = true })
 
 map('n', '<C-k>o', '<Cmd>e! %<CR>', { silent = true })
 map('n', '<leader><leader>B', function()
@@ -260,7 +154,7 @@ end, { silent = true })
 
 -- set
 map('n', '<C-h><C-d>', function()
-  require('vimrc').toggle_diff()
+  helper.toggle_diff()
 end, { silent = true })
 map('n', '<C-h><C-v>', function()
   local ve = vim.opt_local.virtualedit:get()
@@ -281,7 +175,7 @@ map('n', '<C-h><C-n>', '<Cmd>setlocal number! number?<CR>', { silent = true })
 -- Visualize a last pasted range
 map('n', 'gp', function()
   local regtype = vim.fn.getregtype()
-  return s('`[{string.sub(regtype, 1, 1)}`]')
+  return string.format('`[%s`]', string.sub(regtype, 1, 1))
 end, { expr = true })
 
 -- copy & paste
@@ -295,6 +189,7 @@ map('n', '<leader>D', '"+D')
 map('n', '<leader>d', '"+d')
 map('n', '<leader>x', '"+x')
 
+-- TODO: なんでgit使ってるんだっけ？ ちょっと考えてみて、gitを使う意図がなければ、直す（なゆちゃんが誤解していたかもしれないので、なぜかgitが挟まっていてもおかしくない）
 -- Put the relative path of a current file
 map('n', '"gp', function()
   vim.cmd(s('put=system("git ls-files --full-name {vim.fn.expand("%")}")'))
@@ -304,9 +199,9 @@ map('n', '"gP', function()
 end)
 
 -- cr
-map('n', '<C-j>', '<CR>')
-map('n', '<C-m>', '<CR>')
 map('n', '<CR>', 'o<Esc>')
+map('n', '<C-j>', '<CR>', { remap = true })
+map('n', '<C-m>', '<CR>', { remap = true })
 
 -- lsp
 map('n', '<C-g><C-o>', '<Cmd>LspHover<CR>', { silent = true })
@@ -317,42 +212,19 @@ map('n', '<C-g><C-t>', '<Cmd>LspPeekTypeDefinition<CR>', { silent = true })
 map('n', '<C-g><C-g>', '<C-g>')
 
 -- surround
-map('n', 'ga', append_choose_surround_normal, { silent = true })
-map('n', 'gs', append_choose_surround_wide, { silent = true })
-map('n', 'ds', delete_mostly_inner_surround, { silent = true })
-map('n', 'cs', replace_mostly_inner_surround, { silent = true })
+map('n', 'ga', helper.append_choose_surround_normal, { silent = true })
+map('n', 'gs', helper.append_choose_surround_wide, { silent = true })
+map('n', 'ds', helper.delete_mostly_inner_surround, { silent = true })
+map('n', 'cs', helper.replace_mostly_inner_surround, { silent = true })
 
 -- others
 map('n', 'gG', 'ggVG')
 map('n', '(', '(zv')
 map('n', ')', ')zv')
 map('n', '::', ':%s/')
-map('n', ':ev', function()
-  return ':e ' .. InitLua.path_at_started .. '/'
-end, { expr = true })
-map('n', ':eg', function()
-  return ':e ' .. (InitLua.git_root or '') .. '/'
-end, { expr = true })
-map('n', ':eb', function()
-  return ':e ' .. vim.fn.expand('%:p:h') .. '/'
-end, { expr = true })
-map('n', '<C-]>', 'g<C-]>')
-map('n', '<C-k><C-s>', function()
-  local word = vim.fn.expand('<cword>')
-  return string.format(':%%s/\\m\\C\\<%s\\>//g\027\027', word)
-end, { expr = true })
-map('n', '<C-k>s', function()
-  local word = vim.fn.expand('<cword>')
-  return string.format(':%%s/\\m\\C\\<%s\\>/%s/g\027\027', word, word)
-end, { expr = true })
 map('n', '<C-k><C-j>', clear_and_write)
-map('n', '<C-k><Space>', function()
-  require('vimrc').remove_trailing_spaces()
-end, { silent = true })
 map('n', '<C-k>J', '<Cmd>wall | echo "written all !"<CR>', { silent = true })
-map('n', '<Space><Space>', function()
-  require('vimrc').compress_spaces()
-end, { silent = true })
+map('n', '<C-]>', 'g<C-]>')
 map('n', '<leader>q', '<Cmd>copen<CR>', { silent = true })
 map('n', '<leader><leader>q', '<Cmd>cclose<CR>', { silent = true })
 map('n', 'Y', 'yg_')
@@ -363,6 +235,23 @@ map('n', '{', '{zv')
 map('n', '}', '}zv')
 map('n', '<C-x><C-n>', '<C-n>')
 map('n', '<C-x><C-p>', '<C-p>')
+map('n', '<C-k><Space>', helper.remove_trailing_spaces, { silent = true })
+map('n', '<Space><Space>', helper.compress_spaces, { silent = true })
+map('n', ':lp', fn.const(':lua print()<Left>'), { expr = true })
+map('n', ':ev', fn.const(':e ' .. InitLua.path_at_started .. '/'), { expr = true })
+map('n', ':eg', fn.const(':e ' .. (InitLua.git_root or '') .. '/'), { expr = true })
+map('n', ':eb', fn.const(':e ' .. vim.fn.expand('%:p:h') .. '/'), { expr = true })
+map('n', ':h', fn.const(':h '), { expr = true })
+
+map('n', '<C-k><C-s>', function()
+  local word = vim.fn.expand('<cword>')
+  return s(':%s/\\m\\C\\<{word}\\>//g<Left><Left>')
+end, { expr = true })
+
+map('n', '<C-k>s', function()
+  local word = vim.fn.expand('<cword>')
+  return s':%s/\\m\\C\\<{word}\\>/{word}/g<Left><left>'
+end, { expr = true })
 
 -- }}}
 -- insert mode {{{
@@ -515,3 +404,206 @@ inoreabbr reuslt result
 inoreabbr Encrpyt Encrypt
 inoreabbr encrpyt encrypt
 ]])
+
+-- }}}
+-- Additional mappings from .vimrc migration {{{
+
+-- File explorer mappings
+map('n', '<leader>e', function() helper.toggle_explorer() end, { silent = true })
+map('n', '<leader><leader>e', function() helper.open_explorer('split') end, { silent = true })
+map('n', '<leader>E', function() helper.open_explorer('stay') end, { silent = true })
+map('n', '<leader><leader>E', function() helper.open_explorer('tabnew') end, { silent = true })
+map('n', '\\e', function() helper.toggle_explorer(InitLua.path_at_started) end, { silent = true })
+map('n', '\\\\e', function() helper.open_explorer('split', InitLua.path_at_started) end, { silent = true })
+map('n', '\\E', function() helper.open_explorer('stay', InitLua.path_at_started) end, { silent = true })
+map('n', '\\\\E', function() helper.open_explorer('tabnew', InitLua.path_at_started) end, { silent = true })
+
+-- ALE (Linter) mappings
+map('n', '<C-k><C-a>', '<Cmd>ALEToggle<CR>', { silent = true })
+map('n', '<C-k>a', function() helper.toggle_ale_at_buffer() end, { silent = true })
+map('n', '[]', '<Cmd>ALEDetail<CR>')
+map('n', '[c', '<Cmd>ALEPrevious<CR>')
+map('n', ']c', '<Cmd>ALENext<CR>')
+
+-- Indent guides toggle
+map('n', '<C-h><C-i>', function() helper.toggle_indent_guides() end, { silent = true })
+
+-- Weblio dictionary
+map('n', '<leader>K', ':<C-u>Weblio <C-r>=expand("<cword>")<CR><CR>')
+map('v', '<leader>K', '"zy:<C-u>Weblio <C-r>z<CR>')
+
+-- Translation mappings
+map('v', '<leader>k', '"zy:Translate <C-r>z<CR>', { silent = true })
+map('v', '<leader><leader>k', ':DeeplTranslateToJaOpenBuffer<CR>', { silent = true })
+map('v', '<leader><leader>K', ':DeeplTranslateToEnOpenBuffer<CR>', { silent = true })
+
+-- OpenBrowser
+map('n', '<leader>w', '<Plug>(openbrowser-open)', { remap = true })
+map('v', '<leader>w', '<Plug>(openbrowser-open)', { remap = true })
+
+-- QuickRun
+map('n', '<leader>r', '<Plug>(quickrun)', { remap = true })
+map('v', '<leader>r', '<Plug>(quickrun)', { remap = true })
+
+-- Scratch buffer
+map('n', '<leader>b', '<Cmd>ScratchBufferOpenFile md<CR>', { silent = true })
+map('n', '<leader>B', '<Cmd>ScratchBufferOpenFileNext md<CR>', { silent = true })
+map('n', '<leader><leader>b', ':<C-u>ScratchBufferOpenFile ')
+
+-- Text objects
+map('v', 'ai', '<Plug>(textobj-indent-a)', { remap = true })
+map('v', 'ii', '<Plug>(textobj-indent-i)', { remap = true })
+map('v', 'aB', '<Plug>(textobj-between-a)', { remap = true })
+map('v', 'iB', '<Plug>(textobj-between-i)', { remap = true })
+map('v', 'a*', '<Plug>(textobj-between-a)*', { remap = true })
+map('v', 'i*', '<Plug>(textobj-between-i)*', { remap = true })
+
+-- Japanese brackets text objects
+map('v', 'ijp', '<Plug>(textobj-jabraces-parens-i)', { remap = true })
+map('v', 'ajp', '<Plug>(textobj-jabraces-parens-a)', { remap = true })
+map('v', 'ijK', '<Plug>(textobj-jabraces-yama-kakko-i)', { remap = true })
+map('v', 'ajK', '<Plug>(textobj-jabraces-yama-kakko-a)', { remap = true })
+map('v', 'ij-k', '<Plug>(textobj-jabraces-double-kakko-i)', { remap = true })
+map('v', 'aj-k', '<Plug>(textobj-jabraces-double-kakko-a)', { remap = true })
+
+-- Neosnippet
+map('i', '<C-s>', function()
+  return vim.fn['neosnippet#mappings#expand_or_jump_impl']()
+end, { silent = true, expr = true })
+
+-- incsearch
+map('n', 'g/', '<Plug>(incsearch-stay)', { remap = true })
+
+-- Visual star
+map('v', 'g*', '<Plug>(visualstar-*)Nzz', { remap = true })
+
+-- Anzu (search highlighting)
+map('n', 'n', function()
+  if vim.v.searchforward == 1 then
+    return '<Plug>(anzu-n-with-echo)zv'
+  else
+    return '<Plug>(anzu-N-with-echo)zv'
+  end
+end, { expr = true })
+
+map('n', 'N', function()
+  if vim.v.searchforward == 1 then
+    return '<Plug>(anzu-N-with-echo)zv'
+  else
+    return '<Plug>(anzu-n-with-echo)zv'
+  end
+end, { expr = true })
+
+map('n', '*', '<Plug>(anzu-star-with-echo)zv', { remap = true })
+map('n', '#', '<Plug>(anzu-sharp-with-echo)zv', { remap = true })
+
+-- Copilot
+map('i', '<C-g><Tab>', 'copilot#Accept("\\<CR>")', {
+  expr = true,
+  replace_keycodes = false,
+})
+map('i', '<C-]>', '<Plug>(copilot-next)', { remap = true })
+
+-- Sort selected text
+map('n', '<leader><leader>s', 'vii:sort<CR>', { silent = true })
+
+-- DDU (fuzzy finder) mappings
+map('n', '<C-k><C-e>', function() helper.ddu_start_from_input({ name = 'file_rec' }, '') end)
+map('n', '<C-k>e', function() helper.ddu_start_from_input({ name = 'file_rec' }) end)
+map('n', 'H', function()
+  vim.fn['ddu#start']({ sources = { { name = 'help' } } })
+end)
+map('n', 'L', function() helper.ddu_start_from_input({ sources = { { name = 'line' } } }) end)
+map('n', 'M', function() helper.ddu_start_from_input({ sources = { { name = 'mr' } } }) end)
+-- map('n', ':h', function() helper.ddu_start_from_input({ sources = { { name = 'help' } } }) end)
+map('n', '<C-k><C-f>', function()
+  vim.fn['ddu#start']({ sources = { { name = 'rg', params = { input = vim.fn.input('Pattern: ') } } } })
+end)
+
+-- Tab navigation with wraparound
+map('n', '<C-n>', function()
+  return vim.fn['yankround#is_active']() == 1
+    and '<Plug>(yankround-next)'
+    or helper.tabnext_loop()
+end, { silent = true })
+
+map('n', '<C-p>', function()
+  return vim.fn['yankround#is_active']() == 1
+    and '<Plug>(yankround-prev)'
+    or helper.tabprev_loop()
+end, { silent = true })
+
+map('n', 'P', '<Plug>(yankround-P)', { remap = true })
+map('n', 'p', '<Plug>(yankround-p)', { remap = true })
+
+-- UndoTree
+map('n', '<leader>U', '<Cmd>UndotreeToggle<CR>', { silent = true })
+
+-- F/T movement enhancement (fmap)
+map('n', "'f", '<Plug>(fmap-forward-f)', { remap = true })
+map('n', "'F", '<Plug>(fmap-backward-f)', { remap = true })
+map('n', "'t", '<Plug>(fmap-forward-t)', { remap = true })
+map('n', "'T", '<Plug>(fmap-backward-T)', { remap = true })
+map('v', "'f", '<Plug>(fmap-forward-f)', { remap = true })
+map('v', "'F", '<Plug>(fmap-backward-f)', { remap = true })
+map('v', "'t", '<Plug>(fmap-forward-t)', { remap = true })
+map('v', "'T", '<Plug>(fmap-backward-T)', { remap = true })
+
+-- Camelize toggle
+map('n', '<leader><leader>c', function()
+  -- This requires a custom function implementation
+  print('Camelize toggle - needs custom implementation')
+end, { silent = true })
+map('v', '<leader><leader>c', '<Plug>(operator-camelize-toggle)', { remap = true })
+
+-- Repeat operation
+map('n', '.', '<Plug>(repeat-.)', { remap = true })
+
+-- QuickREPL
+map('n', '<leader>R', '<Plug>(quickrepl-open)', { remap = true })
+
+-- Kensaku (Japanese search)
+map('c', '<CR>', '<Plug>(kensaku-search-replace)<CR>', { remap = true })
+
+-- Text object extensions
+map('v', 'a_', fn.const(vim.call('textobj#from_regexp#mapexpr', '[^A-Za-z0-9][A-Za-z0-9]\\+[^A-Za-z0-9]')), { expr = true })
+map('v', 'i_', fn.const(vim.call('textobj#from_regexp#mapexpr', '[A-Za-z0-9]\\+')), { expr = true })
+map('v', 'al', fn.const(vim.call('textobj#from_regexp#mapexpr', '^.*$')), { expr = true })
+map('v', 'il', fn.const(vim.call('textobj#from_regexp#mapexpr', '^\\s*\\zs.*\\ze.*$')), { expr = true })
+
+-- Select inner line content (visual inner line)
+map('n', 'vil', function()
+  vim.cmd('normal! ^vg_')
+end, { silent = true })
+map('o', 'il', fn.const(vim.call('textobj#from_regexp#mapexpr', '^\\s*\\zs.*\\ze.*$')), { expr = true })
+
+-- Special buffer operations
+map('n', 'g:', function() helper.open_buffer_to_execute('buffers') end, { silent = true })
+map('n', 'g>', function() helper.open_buffer_to_execute('messages') end, { silent = true })
+map('n', 'm:', function() helper.open_buffer_to_execute('marks') end, { silent = true })
+map('n', 'q>', function() helper.open_buffer_to_execute('register') end, { silent = true })
+
+-- Git operations (<leader>g* mappings)
+map('n', '<leader>gs', '<Cmd>GStatus<CR>', { silent = true })
+map('n', '<leader>gS', '<Cmd>GitShowViewer<CR>', { silent = true })
+map('n', '<leader>gc', '<Cmd>GCommit<CR>', { silent = true })
+map('n', '<leader>gC', '<Cmd>GCommitAmmend<CR>', { silent = true })
+map('n', '<leader>ga', '<Cmd>GAddPatch<CR>', { silent = true })
+map('n', '<leader>gl', '<Cmd>GLog<CR>', { silent = true })
+map('n', '<leader>gL', '<Cmd>GLogPatch<CR>', { silent = true })
+map('n', '<leader>go', '<Cmd>GLogOneline --pretty=\'%h %ad %s\' --date=\'format:%Y-%m-%d %H:%M\'<CR>', { silent = true })
+map('n', '<leader>gd', '<Cmd>GDiff<CR>', { silent = true })
+map('n', '<leader>gb', '<Cmd>GBranchAll<CR>', { silent = true }) -- Fixed typo: GBrahcnAll -> GBranchAll
+map('n', '<leader>gt', '<Cmd>GLogTree<CR>', { silent = true })
+map('n', '<leader>gT', '<Cmd>GLogTreeAll<CR>', { silent = true })
+
+-- Git operations (\g* mappings - open in new tab)
+map('n', '\\gs', '<Cmd>tabnew | GStatus<CR>', { silent = true })
+map('n', '\\gl', '<Cmd>tabnew | GLog<CR>', { silent = true })
+map('n', '\\gL', '<Cmd>tabnew | GLogPatch<CR>', { silent = true })
+map('n', '\\go', '<Cmd>tabnew | GLogOneline --pretty=\'%h %ad %s\' --date=\'format:%Y-%m-%d %H:%M\'<CR>', { silent = true })
+
+-- }}}
+
+-- なぜかdirvishが開くので無効化
+map('n', '-', '-')
