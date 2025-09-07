@@ -768,3 +768,56 @@ require('bufferline').setup({
 })
 
 -- }}}
+-- flatten.nvim {{{
+
+-- TODO: flatten.nvim has compatibility issues, temporarily disabled
+--[[
+require('flatten').setup({
+  window = {
+    open = 'alternate', -- How to open new files: 'current', 'alternate', 'tab', 'split', 'vsplit'
+  },
+  callbacks = {
+    should_block = function(argv)
+      -- Block if opening for editing (common git commit scenarios)
+      -- Don't block if it's just for viewing or with specific flags
+      return vim.tbl_contains(argv, '-c')
+        or vim.tbl_contains(argv, '+')
+        or vim.tbl_contains(argv, '--cmd')
+    end,
+
+    pre_open = function()
+      -- Set working directory to the nested instance's directory
+      local cwd = vim.fn.getcwd()
+      vim.api.nvim_set_current_dir(cwd)
+    end,
+
+    post_open = function(bufnr, winnr, ft, is_blocking)
+      -- Special handling for git commit files
+      if ft == 'gitcommit' or ft == 'gitrebase' then
+        -- Auto-close buffer when commit is complete
+        vim.api.nvim_create_autocmd({'BufDelete', 'BufWipeout'}, {
+          buffer = bufnr,
+          callback = function()
+            -- Optional: show a message
+            vim.notify('Git operation completed', vim.log.levels.INFO)
+          end,
+          once = true,
+        })
+      end
+    end,
+
+    block_end = function()
+      -- Called when a blocking session ends
+      vim.notify('Nested nvim session ended', vim.log.levels.INFO)
+    end,
+  },
+
+  -- Allow nested sessions for these file types (optional)
+  allow_cmd_passthrough = true,
+
+  -- Nest level limit (optional)
+  nest_limit = 3,
+})
+--]]
+
+-- }}}

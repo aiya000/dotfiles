@@ -184,6 +184,9 @@ repo = 'lambdalisue/kensaku.vim'
 repo = 'lambdalisue/kensaku-search.vim'
 
 [[plugins]]
+repo = 'willothy/flatten.nvim'
+
+[[plugins]]
 repo = 'Shougo/ddu-source-line'
 
 [[plugins]]
