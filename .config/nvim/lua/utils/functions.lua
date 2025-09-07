@@ -3,6 +3,7 @@
 local M = {}
 
 M.pipe = require('utils.pipe')
+M.s = require('utils.functions.s')
 
 -- TODO: Recursively
 function M.print_table(t)
@@ -29,76 +30,6 @@ function M.compose(...)
     end
     return value
   end
-end
-
----@see s
----For Lua 5.1 compatibility
----@param ref { code: string, context: table }
----@return string --The interplated string
-local function replace_expr_in_context_for_lua_5_1_non_jit(ref)
-  local f = loadstring(ref.code)
-  if f then
-    setfenv(f, ref.context)
-  end
-  return f and tostring(f()) or '{' .. expr .. '}'
-end
-
----This function is same as `replace_expr_in_context_for_lua_5_1_non_jit()`,
----but for LuaJIT/Lua 5.2+ (Neovim).
----@see s
----@see replace_expr_in_context_for_lua_5_1_non_jit --
-local function replace_expr_in_context(ref)
-  local f = load(ref.code, nil, nil, ref.context)
-  return f and tostring(f()) or '{' .. expr .. '}'
-end
-
----@param text string --テンプレートリテラルっぽい文字列
----@return string --変数埋め込み済み文字列
----Example:
----```lua
------ 変数の埋め込み
----local name = 'Alice'
----local age = 30
----local msg = s('Hello {name}! Next year you will be {age + 1}.')
----
------ （値の埋め込み）
----s('{10}')      -- '10'
----s('{5 + 3}')   -- '8'
----s('{math.pi}') -- '3.1415926535898'
----s('{"hello"}') -- 'hello'
----s('{true}')    -- 'true'
----s('{nil}')     -- 'nil'
----```
-function M.s(text)
-  -- 呼び出し元のローカル変数を取得
-  local context = {}
-  local level = 2
-  local i = 1
-  while true do
-    local name, value = debug.getlocal(level, i)
-    if not name then
-      break
-    end
-    if not name:match('^%(') then -- 一時変数を除外
-      context[name] = value
-    end
-    i = i + 1
-  end
-
-  -- グローバル変数を取得
-  setmetatable(context, { __index = _G })
-
-  return text:gsub('{([^}]+)}', function(expr)
-    -- A ref to enhance performance
-    local replacing_ref = {
-      code = 'return ' .. expr,
-      context = context,
-    }
-    return (
-      (_VERSION == 'Lua 5.1' and not jit) and replace_expr_in_context_for_lua_5_1_non_jit
-      or replace_expr_in_context
-    )(replacing_ref)
-  end)
 end
 
 ---@generic T
@@ -202,30 +133,21 @@ if vim == nil then
   local test = Test.test
   local assert_equal = Test.assert_equal
 
-  test('s() should return the taken string simply if with no embedded expressions', function()
-    assert_equal(M.s('hi'), 'hi')
-    assert_equal(M.s('hi'), 'hi') -- Shorthand
+  test('set_vim_dict_field() should set a sub field', function()
+    local dict = {
+      field = {},
+    }
+    M.set_vim_dict_field(dict, 'field', 'sub_field', 10)
+    assert_equal(dict.field.sub_field, 10)
   end)
 
-  test('s() should embed variables', function()
-    local name = 'aiya000'
-    assert_equal(M.s('{name}'), 'aiya000') -- A local variable
-    assert_equal(M.s('{math.pi}'), tostring(math.pi)) -- A global variable
-  end)
-
-  test('s() should embed values', function()
-    assert_equal(M.s('{10}'), '10')
-    assert_equal(M.s('{5 + 3}'), '8')
-    assert_equal(M.s('{1.25}'), '1.25')
-    assert_equal(M.s('{"hello"}'), 'hello')
-    assert_equal(M.s('{nil}'), 'nil') -- TODO: Fix
-  end)
-
-  test('s() should embed function and function call', function()
-    local function f(x)
-      return x
-    end
-    assert_equal(M.s('{f(10)}'), '10')
+  test('set_vim_dict_field() should keep another field values', function()
+    local dict = {
+      another = 10,
+      field = {},
+    }
+    M.set_vim_dict_field(dict, 'field', 'sub_field', 10)
+    assert_equal(dict.another, 10)
   end)
 
   test('set_vim_dict_field() should set a sub field', function()
