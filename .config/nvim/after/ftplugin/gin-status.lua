@@ -95,6 +95,13 @@ end, { buffer = true, silent = true })
 
 vim.keymap.set('n', 'A', run_add_patch, { buffer = true, silent = true })
 vim.keymap.set('n', 'o', ':<C-u>vsp<CR><Plug>(gin-action-edit)', { buffer = true, silent = true })
+
+vim.keymap.set('n', 'O', function()
+  vim.cmd('normal "zyy')
+  vim.cmd('tabnew')
+  vim.cmd('edit ' .. vim.fn.trim(vim.fn.getreg('z')))
+end, { buffer = true, silent = true })
+
 vim.keymap.set('n', '<C-r>', '<Cmd>GinStatus<CR>', { buffer = true, silent = true })
 vim.keymap.set('n', 'p', '<Plug>(gin-action-diff:smart:vsplit)', { buffer = true, silent = true, nowait = true })
 vim.keymap.set('n', 'sa', '<Plug>(gin-action-stash)', { buffer = true, silent = true })
