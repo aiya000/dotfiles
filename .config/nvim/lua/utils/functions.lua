@@ -5,7 +5,7 @@ local Test = require('utils.test')
 local M = {}
 
 M.pipe = require('utils.pipe')
-M.s = require('utils.functions').s
+M.s = require('utils.functions.s').s
 M.deep_equal = Test.deep_equal
 
 -- TODO: Recursively
