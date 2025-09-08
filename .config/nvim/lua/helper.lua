@@ -141,7 +141,7 @@ function M.get_webpage_title(url)
   end)
 
   if not ok then
-    return s('vimrc#get_webpage_title(): something happened: {result}')
+    return s('vimrc#get_webpage_title(): something happened: {result}', { result = result })
   end
 
   return result

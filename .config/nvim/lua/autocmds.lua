@@ -158,9 +158,9 @@ end)
 -- TypeScript/JavaScript specific
 local function read_deno_local_tsconfig()
   local cwd = vim.fn.getcwd()
-  local local_tsconfig = s('{cwd}/tsconfig.json')
+  local local_tsconfig = s('{cwd}/tsconfig.json', { cwd = cwd })
   if vim.fn.filereadable(local_tsconfig) == 1 then
-    vim.g.ale_javascript_deno_lint_options = s('--config {local_tsconfig}')
+    vim.g.ale_javascript_deno_lint_options = s('--config {local_tsconfig}', { local_tsconfig = local_tsconfig })
   end
 end
 
@@ -176,8 +176,9 @@ add_autocmd('VimEnter', function()
   if vim.fn.filereadable('./scalastyle_config.xml') == 1 then
     local answer = vim.fn.input('locally scalastyle_config.xml was found, Do you want to load? (y/n)')
     if answer == 'y' then
-      vim.g.ale_scala_scalastyle_config = s('{vim.fn.getcwd()}/scalastyle-config.xml')
-      vim.cmd(s('echomsg "a scalastyle config loaded: {vim.g.ale_scala_scalastyle_config}"'))
+      local cwd = vim.fn.getcwd()
+      vim.g.ale_scala_scalastyle_config = s('{cwd}/scalastyle-config.xml', { cwd = cwd })
+      vim.cmd(s('echomsg "a scalastyle config loaded: {config}"', { config = vim.g.ale_scala_scalastyle_config }))
     end
   end
 end)

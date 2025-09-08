@@ -108,7 +108,7 @@ vim.g.bakaup_auto_backup = 1
 -- }}}
 -- neosnippet.vim {{{
 
-vim.g['neosnippet#snippets_directory'] = s('{InitLua.neovim_home}/neosnippets')
+vim.g['neosnippet#snippets_directory'] = s('{neovim_home}/neosnippets', { neovim_home = InitLua.neovim_home })
 vim.g['neosnippet#disable_select_select_mappings'] = 1
 
 -- }}}

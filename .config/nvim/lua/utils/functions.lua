@@ -1,9 +1,12 @@
 ---Neovimに関係がない、一般的なUtility関数を定義するモジュール
 
+local Test = require('utils.test')
+
 local M = {}
 
 M.pipe = require('utils.pipe')
-M.s = require('utils.functions.s')
+M.s = require('utils.functions').s
+M.deep_equal = Test.deep_equal
 
 -- TODO: Recursively
 function M.print_table(t)
@@ -129,7 +132,6 @@ end
 
 -- In-source testing
 if vim == nil then
-  local Test = require('utils.test')
   local test = Test.test
   local assert_equal = Test.assert_equal
 
