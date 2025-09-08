@@ -1,128 +1,114 @@
-vim.cmd("let s:Msg = vital#vimrc#import('Vim.Message')")
+local helper = require('helper')
+local s = require('utils.functions').s
 
 vim.opt_local.cursorline = true
+
+---Runs `git stash push --message "{message}" -- "{file_to_save}"`
+---@param file_to_save string ---The path of a file to stash
+local function stash_push(file_to_save)
+  local message = vim.fn.input('Stash message: ')
+  if message == '' then
+    return
+  end
+
+  local cmd = s('git stash push --message "{message}" -- "{file_to_save}"', { message = message, file_to_save = file_to_save })
+
+  vim.system({'git', 'stash', 'push', '--message', message, '--', file_to_save}, {
+    text = true,
+  }, function(result)
+    vim.schedule(function()
+      if result.code == 0 then
+        vim.notify(result.stdout or 'Stash created successfully', vim.log.levels.INFO)
+        vim.cmd('GinStatus') -- Refresh
+      else
+        vim.notify(s('Stash failed: {error}', { error = result.stderr or 'Unknown error' }), vim.log.levels.ERROR)
+        vim.cmd('GinStatus') -- Refresh
+      end
+    end)
+  end)
+end
+
+---Runs git-stash with the file on the current line
+local function run_stash_push_message()
+  local filename = vim.fn.trim(vim.fn.getline('.'))
+  if filename ~= nil and filename ~= '' then
+    stash_push(filename)
+    return
+  end
+  error('No filename found on the current line')
+end
+
+local function run_add_patch()
+  local line = vim.fn.getline('.')
+  local filename = line:match('%s*(.-)%s*$') -- Trim whitespace
+  if filename and filename ~= '' then
+    vim.fn.termopen({'git', 'add', '--patch', filename}, {
+      on_exit = function()
+        vim.cmd('close')
+      end
+    })
+  end
+end
+
+---@param subcmd_list string[] --Arguments after `:Gin commit --verbose`
+local function open_commit_buffer(subcmd_list)
+  subcmd_list = subcmd_list or {}
+
+  local ok = pcall(function()
+    local cmd_list = {'Gin', 'commit', '--verbose'}
+    for _, subcmd in ipairs(subcmd_list) do
+      table.insert(cmd_list, subcmd)
+    end
+    vim.cmd(table.concat(cmd_list, ' '))
+  end)
+end
+
+local function force_show_stash_size()
+  vim.system({'git', 'stash', 'list'}, {
+    text = true,
+  }, function(result)
+    vim.schedule(function()
+      if result.code == 0 then
+        local lines = vim.split(result.stdout or '', '\n')
+        local size = #lines
+
+        if lines[1] == '' then
+          size = 0
+        end
+
+        if size > 0 then
+          local topline = vim.fn.getline(1)
+          local new_topline = s('{topline} [stash:{size}]', { topline = topline, size = size })
+
+          vim.bo.modifiable = true
+          vim.fn.setline(1, new_topline)
+          vim.bo.modifiable = false
+        end
+      end
+    end)
+  end)
+end
 
 vim.keymap.set('n', 'Q', function()
   vim.cmd('bdelete!')
 end, { buffer = true, silent = true })
-vim.cmd("nmap <buffer><silent> A yy<Cmd>call term_start(['git', 'add','--patch', @\"[:-1]], #{")
-vim.cmd("\\ term_finish: 'close',")
-vim.cmd('\\ })<CR>')
-vim.keymap.set('n', '<buffer><silent>', '<C-r> <Cmd>GinStatus<CR>', { buffer = true, silent = true })
-vim.cmd('nmap <buffer><silent><nowait> p <Plug>(gin-action-diff:smart:vsplit)')
-vim.cmd('nmap <buffer><silent> sa <Plug>(gin-action-stash)')
-vim.cmd('nmap <buffer><silent> S yy<Cmd>call <SID>stash_message(@")<CR>')
-vim.keymap.set('n', 'sp', function()
-  vim.cmd('Gin stash pop')
-end, { buffer = true, silent = true })
-vim.keymap.set('n', 'cC', function()
-  vim.cmd('call <SID>commit_by_oco()')
-end, { buffer = true, silent = true })
-vim.keymap.set('n', 'cc', function()
-  vim.cmd('call <SID>open_commit_buffer([])')
-end, { buffer = true, silent = true })
+
+vim.keymap.set('n', 'A', run_add_patch, { buffer = true, silent = true })
+vim.keymap.set('n', 'o', ':<C-u>vsp<CR><Plug>(gin-action-edit)', { buffer = true, silent = true })
+vim.keymap.set('n', '<C-r>', '<Cmd>GinStatus<CR>', { buffer = true, silent = true })
+vim.keymap.set('n', 'p', '<Plug>(gin-action-diff:smart:vsplit)', { buffer = true, silent = true, nowait = true })
+vim.keymap.set('n', 'sa', '<Plug>(gin-action-stash)', { buffer = true, silent = true })
+vim.keymap.set('n', 'S', run_stash_push_message, { buffer = true, silent = true })
+vim.keymap.set('n', 'sp', 'Gin stash pop', { buffer = true, silent = true })
+vim.keymap.set('n', 'cc', open_commit_buffer, { buffer = true, silent = true })
+
 vim.keymap.set('n', 'ca', function()
-  vim.cmd("call <SID>open_commit_buffer(['--amend'])")
+  open_commit_buffer({'--amend'})
 end, { buffer = true, silent = true })
-vim.keymap.set('n', 'cf', ':<C-u>GCommitFixup<Space>', { buffer = true })
-vim.cmd('nmap <buffer> <: <Plug>(gin-action-restore:ours)')
-vim.cmd('nmap <buffer> >: <Plug>(gin-action-restore:theirs)')
-vim.cmd('nmap <buffer> == <Plug>(gin-action-reset)')
 
-vim.cmd([[
-function! s:stash_message(file_to_save) abort
-  const message = input('Stash message: ')
-  let local = {}
+vim.keymap.set('n', 'cf', ':<C-u>GCommitFixup ', { buffer = true })
+vim.keymap.set('n', '<:', '<Plug>(gin-action-restore:ours)', { buffer = true })
+vim.keymap.set('n', '>:', '<Plug>(gin-action-restore:theirs)', { buffer = true })
+vim.keymap.set('n', '==', '<Plug>(gin-action-reset)', { buffer = true })
 
-  function! local.notify_success(stdout, stderr) abort dict
-    echomsg a:stdout->join("\n")
-    if len(a:stderr) isnot 0
-      call s:Msg.error(a:stderr->join("\n"))
-    endif
-    GinStatus " Refresh
-  endfunction
-]])
-
-vim.cmd([[
-  function! local.notify_failure(stdout, stderr, exit_code) abort dict
-    call s:Msg.error($'exit_code: {a:exit_code}')
-    call s:Msg.error($'stdout: {string(a:stdout)}')
-    call s:Msg.error($'stderr: {string(a:stderr)}')
-    GinStatus " Refresh
-  endfunction
-  ]])
-
-vim.call('vimrc#job#start_simply(')
-vim.cmd('\\ $\'git stash push --message "{message}" -- "{a:file_to_save}"\',')
-vim.cmd('\\ local.notify_success,')
-vim.cmd('\\ local.notify_failure,')
-vim.cmd('\\ )')
-vim.cmd('endfunction')
-
-vim.cmd([[
-function! s:commit_by_oco() abort
-  let local = {}
-
-  " Notify result when oco is finished if Vim had leaved from the buffer of oco
-  function! local.notify_when_generated(oco_bufnr, data) abort dict
-    const current_bufnr = bufnr('%')
-    if current_bufnr !=# a:oco_bufnr && a:data =~# 'Successfully committed'
-      call vimrc#popup_atcursor('commit finished')
-    endif
-  endfunction
-]])
-
-vim.cmd("const oco_bufnr = term_start('oco --yes', #{")
-vim.cmd('\\ vertical: v:true,')
-vim.cmd('\\ out_cb: { _job, data -> local.notify_when_generated(oco_bufnr, data) },')
-vim.cmd('\\ err_cb: { _job, data -> vimrc#popup_atcursor(data) },')
-vim.cmd('\\ })')
-vim.keymap.set('n', 'Q', function()
-  vim.cmd('bwipe')
-end, { buffer = true })
-vim.cmd('endfunction')
-
-vim.cmd([[
-function! s:open_commit_buffer(subcmd_list) abort
-  try
-    execute 'Gin' 'commit' '--verbose' a:subcmd_list->join(' ')
-  catch
-    echomsg $'Opening terminal instead of `:Gin commit` because: {v:exception}'
-    call term_start(['git', 'commit'] + a:subcmd, #{
-      \ term_finish: 'close',
-    \ })
-    return
-  endtry
-endfunction
-]])
-
-vim.cmd([[
-function! s:open_terminal_git_buffer(filetype, subcmd_list) abort
-  call term_start(&shell, #{ curwin: v:true })
-  const subcmd = a:subcmd_list->map({ _, x -> $"'{x}'" })->join(' ')
-
-  const current_bufnr = bufnr('%')
-  const sleeping_time_to_wait_spawning_terminal = 1000
-  call timer_start(sleeping_time_to_wait_spawning_terminal, { _ ->
-    \ term_sendkeys(current_bufnr, $"git {subcmd}\<CR>")
-  \ })
-endfunction
-]])
-
-vim.cmd([[
-function! s:force_show_stash_size() abort
-  const size = system('git stash list | wc -l')[:-2]
-  if size ==# '0'
-    return
-  endif
-
-  const topline = getline(1)
-  const new_topline = $'{topline} [stash:{size}]'
-
-  setl modifiable
-  call setline(1, new_topline)
-  setl nomodifiable
-endfunction
-]])
-
-vim.call('s:force_show_stash_size()')
+force_show_stash_size()

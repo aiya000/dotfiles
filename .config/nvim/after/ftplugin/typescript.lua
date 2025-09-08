@@ -1,102 +1,63 @@
+local nodejs = require('nodejs')
+
 vim.opt.commentstring = ' // %s'
 
+-- TODO: Neovim（lua）に変えたので、大丈夫かも？ 大丈夫だったら、このコメントを削除する
 -- .vimrcでも同じ内容を設定しているものの、なぜかemptyになるので、設定
-vim.opt_local.omnifunc = 'lsp#complete'
+-- vim.opt_local.omnifunc = 'lsp#complete'
 
-vim.cmd([[
-function! s:run_script(subcmd, errorformat) abort
-  let &errorformat = a:errorformat
+---Checks what package manager should be used (e.g., yarn, npm, bun),
+---Sets it to `vim.opt.makeprg`,
+---and runs `:AsyncRun` with the given subcommand and errorformat.
+---
+---@param subcmd string
+---@param errorformat string
+local function run_script(subcmd, errorformat)
+  vim.opt.errorformat = errorformat
 
-  " Use git root dir if available to support bun workspace
-  try
-    const project_root = vimrc#read_node_root_dir(expand('%:p:h'))
-  catch
-    const project_root = expand('%:p:h')
-  endtry
-  const manager = vimrc#check_node_project_manager(project_root)
-  if manager !=# v:null
-    let &makeprg = $'{manager} run {a:subcmd}'
-    " .. ' | sed -r ''s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g''' " sed to remove ansi colors
-  endif
+  local current_dir = vim.fn.expand('%:p:h')
+  local project_root = nodejs.read_node_root_dir(current_dir)
+  if project_root == nil then
+    project_root = current_dir
+  end
 
-  " echo $':AsyncRun -cwd={project_root} {&makeprg}'
-  execute ':AsyncRun' $'-cwd={project_root}' &makeprg
-  vertical copen 120
-endfunction
-]])
+  local manager = nodejs.check_node_project_manager(project_root)
+  if manager then
+    vim.opt.makeprg = manager .. ' run ' .. subcmd
+    -- .. ' | sed -r ''s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g''' " sed to remove ansi colors
+  end
 
-vim.cmd([[
-function! s:run_typecheck() abort
-  call s:run_script('typecheck', '%f(%l\,%c): %m')  " tsc's errorformat
-endfunction
-]])
+  -- echo ':AsyncRun -cwd=' .. project_root .. ' ' .. vim.opt.makeprg:get()
+  vim.cmd('AsyncRun -cwd=' .. project_root .. ' ' .. vim.opt.makeprg:get())
+  vim.cmd('vertical copen 120')
+end
 
--- eslintは逐次出力をせずに、最後に一気に出力するので、焦らずに待とう
-vim.cmd([[
-function! s:run_lint() abort
-  call s:run_script('lint', 'TODO: efm-langserverが使える？')
-endfunction
-]])
+local function run_typecheck()
+  run_script('typecheck', '%f(%l,%c): %m') -- tsc's errorformat
+end
 
-vim.cmd([[
-function! s:run_dev(subcmd) abort
-  const subcmd = a:subcmd ==# ''
-    \ ? 'dev:local'
-    \ : a:subcmd
-  " TODO: eslintのエラーフォーマットもサポートできる？
-  call s:run_script(subcmd, '%f(%l\,%c): %m')  " tsc's errorformat
-endfunction
-]])
+---eslintは逐次出力をせずに、最後に一気に出力するので、焦らずに待とう
+local function run_lint()
+  run_script('lint', 'TODO: efm-langserverが使える？')
+  vim.cmd('copen')
+end
 
-vim.cmd([[
-function! s:run_all() abort
-  call s:run_typecheck()
-  call s:run_lint()
-endfunction
-]])
+---@param subcmd string
+local function run_dev(subcmd)
+  local actual_subcmd = (subcmd == '' or subcmd == nil) and 'dev:local' or subcmd
+  -- TODO: eslintのエラーフォーマットもサポートできる？
+  run_script(actual_subcmd, '%f(%l,%c): %m') -- tsc's errorformat
+end
 
-vim.cmd('command! -bar RunTypeCheck call s:run_typecheck()')
-vim.cmd('command! -bar RunLint call s:run_typecheck() | copen')
-vim.cmd('command! -bar RunAll call s:run_all()')
+local function run_all()
+  run_typecheck()
+  run_lint()
+end
+
+-- Create user commands
+vim.api.nvim_create_user_command('RunTypeCheck', run_typecheck, {})
+vim.api.nvim_create_user_command('RunLint', run_lint, {})
+vim.api.nvim_create_user_command('RunAll', run_all, {})
 -- TODO: Ansi Colorが削除できない
 -- command! -bar -nargs=? Make call s:run_dev(<q-args>)
-vim.cmd('command! -bar Make RunAll')
-
--- TODO: Check this working and fix this
-vim.cmd([[
-function! s:run_yarn_quickfix(yarn_subcmd) abort
-  const current = getcwd()
-  try
-    CClear
-    const yarn_cmd = ['yarn'] + split(a:yarn_subcmd, ' ')
-    execute ':lcd' g:vimrc.path_at_started
-    call s:read_to_quickfix_it(yarn_cmd)
-    copen
-  finally
-    execute ':lcd' current
-  endtry
-endfunction
-]])
-
--- TODO: Do this only when lsp started
--- To lighten the completion performance
--- setl complete-=t
-
-vim.keymap.set('n', 'r', function()
-  vim.cmd('<C-u>QuickfixRunYarn build')
-end, { buffer = true, silent = true })
-vim.keymap.set('n', 'w', function()
-  vim.call('<SID>start_quickfix()')
-end, { buffer = true, silent = true })
-vim.keymap.set('n', 'W', function()
-  vim.call('<SID>stop_quickfix()')
-end, { buffer = true, silent = true })
-vim.cmd('nmap <silent><buffer> <C-l> <C-[>:syntax sync fromstart<CR>')
-
--- TODO: Enable this if needed
--- nnoremap <buffer> <localleader><localleader>R :<C-u>call vimrc#open_terminal_as('', 'horizontal', 'yarn build', {'path': g:vimrc.path_at_started, 'noclose': v:true})<CR>
-
--- augroup FtpluginTypeScript
--- autocmd!
--- autocmd BufWritePost *.ts,*.tsx call s:exec_quickfix_if_available()
--- augroup END
+vim.api.nvim_create_user_command('Make', run_all, {})

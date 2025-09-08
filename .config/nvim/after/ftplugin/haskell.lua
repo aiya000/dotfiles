@@ -9,9 +9,9 @@ vim.opt_local.commentstring = ' -- %s'
 vim.opt_local.errorformat = '%f:%l:%c:%m' -- format for stack build and stack test
 
 local function stack_test(test_name)
-  helper.open_terminal_as('stack_test', 'vertical', 'stack test --fast ' .. test_name, {
-    noclose = true,
-    path = vim.g.vimrc.path_at_started
+  vim.cmd('vertical new')
+  vim.fn.termopen('stack test --fast ' .. test_name, {
+    cwd = InitLua.path_at_started
   })
 end
 
@@ -49,7 +49,8 @@ local function stack_integrate_test_or_unit_or_both()
   }
   local target = fn.get_or_default(selection[answer], ':tasty-test')
 
-  helper.open_terminal_as('stack_test', 'horizontal', 'stack test --fast ' .. target)
+  vim.cmd('new')
+  vim.fn.termopen('stack test --fast ' .. target)
 end
 
 -- Key mappings
@@ -57,9 +58,9 @@ vim.keymap.set('n', '<localleader><localleader>R', stack_test_tasty, { buffer = 
 vim.keymap.set('n', '<localleader><localleader><localleader>R', stack_test_doctest, { buffer = true, silent = true })
 
 vim.keymap.set('n', '<localleader><localleader>b', function()
-  helper.open_terminal_as('stack_build', 'vertical', 'stack build --fast', {
-    noclose = true,
-    path = vim.g.vimrc.path_at_started
+  vim.cmd('vertical new')
+  vim.fn.termopen('stack build --fast', {
+    cwd = InitLua.path_at_started
   })
 end, { buffer = true, silent = true })
 
