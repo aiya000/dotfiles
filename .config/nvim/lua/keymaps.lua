@@ -114,42 +114,23 @@ map('n', '<C-w>s', '<NOP>')
 map('n', '<C-w>v', '<NOP>')
 map('n', 'gh', '<NOP>')
 
--- TODO: luaで書いている時点でVimとNeovimの際を吸収する必要ないから、この関数は必要ないかも？
--- :terminal
-local function open_terminal(options)
-  local default_opts = {
-    vertical = true,
-    cwd = helper.get_current_buffer_dir({ alt_dir = InitLua.git_root }),
-  }
-  local opts = vim.tbl_extend('force', default_opts, options or {})
-
-  if opts.vertical then
-    vim.cmd('vsplit')
-  end
-
-  if opts.curwin then
-    vim.cmd('terminal')
-  else
-    vim.cmd('terminal')
-  end
-
-  if opts.cwd then
-    vim.cmd(s('lcd {opts.cwd}'))
-  end
-end
 
 map('n', '<leader>v', function()
-  open_terminal({ vertical = true })
+  vim.cmd('vertical new')
+  vim.fn.termopen(vim.env.SHELL)
 end, { silent = true })
 map('n', '<leader><leader>v', function()
-  open_terminal({ vertical = false })
+  vim.cmd('new')  -- horizontal split
+  vim.fn.termopen(vim.env.SHELL)
 end, { silent = true })
 map('n', '<leader>V', function()
-  open_terminal({ curwin = true })
+  local cwd = helper.get_current_buffer_dir({ alt_dir = InitLua.git_root })
+  vim.fn.termopen(vim.env.SHELL, { cwd = cwd })
 end, { silent = true })
 map('n', '<leader><leader>V', function()
   vim.cmd('tabnew')
-  open_terminal({ curwin = true })
+  local cwd = helper.get_current_buffer_dir({ alt_dir = InitLua.git_root })
+  vim.fn.termopen(vim.env.SHELL, { cwd = cwd })
 end, { silent = true })
 
 -- set
@@ -237,20 +218,23 @@ map('n', '<C-x><C-n>', '<C-n>')
 map('n', '<C-x><C-p>', '<C-p>')
 map('n', '<C-k><Space>', helper.remove_trailing_spaces, { silent = true })
 map('n', '<Space><Space>', helper.compress_spaces, { silent = true })
+map('n', 'L', ':b ')
 map('n', ':lp', fn.const(':lua print()<Left>'), { expr = true })
 map('n', ':ev', fn.const(':e ' .. InitLua.path_at_started .. '/'), { expr = true })
 map('n', ':eg', fn.const(':e ' .. (InitLua.git_root or '') .. '/'), { expr = true })
-map('n', ':eb', fn.const(':e ' .. vim.fn.expand('%:p:h') .. '/'), { expr = true })
+map('n', ':eb', function()
+  return ':e ' .. vim.fn.expand('%:p:h') .. '/'
+end, { expr = true })
 map('n', ':h', fn.const(':h '), { expr = true })
 
 map('n', '<C-k><C-s>', function()
   local word = vim.fn.expand('<cword>')
-  return s(':%s/\\m\\C\\<{word}\\>//g<Left><Left>')
+  return s(':%s/\\m\\C\\<{word}\\>//g<Left><Left>', { word = word })
 end, { expr = true })
 
 map('n', '<C-k>s', function()
   local word = vim.fn.expand('<cword>')
-  return s':%s/\\m\\C\\<{word}\\>/{word}/g<Left><left>'
+  return s(':%s/\\m\\C\\<{word}\\>/{word}/g<Left><left>', { word = word })
 end, { expr = true })
 
 -- }}}
@@ -513,7 +497,6 @@ map('n', '<C-k>e', function() helper.ddu_start_from_input({ name = 'file_rec' })
 map('n', 'H', function()
   vim.fn['ddu#start']({ sources = { { name = 'help' } } })
 end)
-map('n', 'L', function() helper.ddu_start_from_input({ sources = { { name = 'line' } } }) end)
 map('n', 'M', function() helper.ddu_start_from_input({ sources = { { name = 'mr' } } }) end)
 -- map('n', ':h', function() helper.ddu_start_from_input({ sources = { { name = 'help' } } }) end)
 map('n', '<C-k><C-f>', function()
@@ -562,8 +545,9 @@ map('n', '.', '<Plug>(repeat-.)', { remap = true })
 -- QuickREPL
 map('n', '<leader>R', '<Plug>(quickrepl-open)', { remap = true })
 
+-- TODO: 動いてない
 -- Kensaku (Japanese search)
-map('c', '<CR>', '<Plug>(kensaku-search-replace)<CR>', { remap = true })
+map('c', '<CR>', '<Plug>(kensaku-search-replace)<CR>')
 
 -- Text object extensions
 map('v', 'a_', fn.const(vim.call('textobj#from_regexp#mapexpr', '[^A-Za-z0-9][A-Za-z0-9]\\+[^A-Za-z0-9]')), { expr = true })
