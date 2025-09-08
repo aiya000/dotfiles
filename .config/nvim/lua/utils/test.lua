@@ -119,23 +119,60 @@ function M.to_pretty_string(x)
   end
 end
 
+---Checks two values are deeply equal
+---
 ---@generic T
 ---@param actual T
 ---@param expected T
----@return true | nil --Returns true if assertion is succeed. Throws an error message if `actual` does not equal `expected`
+---@return boolean
+---
 ---Example:
 ---```lua
----assert_equal(1 + 1, 2) -- No error
----assert_equal(1 + 1, 3) -- Expected: 3, but got: 2
+---deep_equal(1, 1)          -- true
+---deep_equal(1, 2)          -- false
 ---
------ - Failed: `1 + 1` should be `3`
------   Expected: 3, but got: 2
----test('`1 + 1` should be `3`', function()
----  assert_equal(1 + 1, 3)
----end);
+---deep_equal('hello', 'hello') -- true
+---deep_equal('hello', 'world') -- false
+---
+---deep_equal(true, true)    -- true
+---deep_equal(true, false)   -- false
+---
+---deep_equal(nil, nil)      -- true
+---deep_equal(1, nil)       -- false
+---deep_equal(nil, 2)       -- false
+---
+---deep_equal({a = 1}, {a = 1}) -- true
+---deep_equal({a = 1}, {a = 2}) -- false
+---deep_equal({a = 1, b = {c = 2}}, {a = 1, b = {c = 2}}) -- true
+---
+---deep_equal({1, 2, 3}, {1, 2, 3}) -- true
+---deep_equal({1, 2, 3}, {10, 20, 30}) -- false
 ---```
+---
+function M.deep_equal(a, b)
+  if type(a) ~= type(b) then
+    return false
+  end
+  if type(a) ~= 'table' then
+    return a == b
+  end
+
+  -- Check if both tables have the same keys and values
+  for key, value in pairs(a) do
+    if not M.deep_equal(value, b[key]) then
+      return false
+    end
+  end
+  for key, _ in pairs(b) do
+    if a[key] == nil then
+      return false
+    end
+  end
+  return true
+end
+
 function M.assert_equal(actual, expected)
-  if actual ~= expected then
+  if not M.deep_equal(actual, expected) then
     error(string.format('Expected: %s, but got: %s', M.to_pretty_string(expected), M.to_pretty_string(actual)))
   end
   return true
@@ -153,6 +190,55 @@ end
 
 -- In-source testing
 if vim == nil then
+  -- Test deep_equal
+  if not M.deep_equal(1, 1) then
+    error('1 should equal 1')
+  end
+  if M.deep_equal(1, 2) then
+    error('1 should not equal 2')
+  end
+
+  if not M.deep_equal('hello', 'hello') then
+    error("'hello' should equal 'hello'")
+  end
+  if M.deep_equal('hello', 'world') then
+    error("'hello' should not equal 'world'")
+  end
+
+  if not M.deep_equal(true, true) then
+    error('true should equal true')
+  end
+  if M.deep_equal(true, false) then
+    error('true should not equal false')
+  end
+
+  if not M.deep_equal(nil, nil) then
+    error('nil should equal nil')
+  end
+  if M.deep_equal(1, nil) then
+    error('1 should not equal nil')
+  end
+  if M.deep_equal(nil, 2) then
+    error('nil should not equal 2')
+  end
+
+  if not M.deep_equal({a = 1}, {a = 1}) then
+    error('{a = 1} should equal {a = 1}')
+  end
+  if M.deep_equal({a = 1}, {a = 2}) then
+    error('{a = 1} should not equal {a = 2}')
+  end
+  if not M.deep_equal({a = 1, b = {c = 2}}, {a = 1, b = {c = 2}}) then
+    error('{a = 1, b = {c = 2}} should equal {a = 1, b = {c = 2}}')
+  end
+
+  if not M.deep_equal({1, 2, 3}, {1, 2, 3}) then
+    error('{1, 2, 3} should equal {1, 2, 3}')
+  end
+  if M.deep_equal({1, 2, 3}, {10, 20, 30}) then
+    error('{1, 2, 3} should not equal {10, 20, 30}')
+  end
+
   -- Test assert_equal
   if not M.assert_equal(1 + 1, 2) then
     error('1 + 1 should be 2')
