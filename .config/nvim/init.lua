@@ -185,23 +185,7 @@ if not InitLua.loaded then
 end
 
 -- }}}
--- Prepare dein.vim {{{
-
--- TODO: Future migration to lazy.nvim or something. For now, keep using dein.vim
-
-local dein_dir = s('{neovim_home}/bundle/repos/github.com/Shougo/dein.vim', { neovim_home = InitLua.neovim_home })
-helper.install_dein_if_not_installed(dein_dir)
----@diagnostic disable-next-line: undefined-field --なぜか怒られるので無視する
-vim.opt.runtimepath:append(dein_dir)
-
-vim.call('dein#begin', s('{neovim_home}/bundle', { neovim_home = InitLua.neovim_home }))
-vim.call('dein#load_toml', '~/.config/nvim/dein.toml', { lazy = false })
-vim.call('dein#load_toml', '~/.config/nvim/dein_lazy.toml', { lazy = true })
-vim.call('dein#add', 'Shougo/dein.vim', { rtp = '' })
-
--- TODO: Generate dein.vim doc by :helptags
-
--- }}}
+require('lazy-nvim-config')
 -- Prepare backup directories {{{
 
 helper.make_directory_if_missing(InitLua.backupdir)
@@ -214,12 +198,12 @@ helper.make_directory_if_missing(InitLua.sessiondir)
 
 local init_private_lua = vim.fn.expand('~/.dotfiles/.private/nvim_init_private.lua')
 if vim.fn.filereadable(init_private_lua) == 1 then
-  vim.cmd(s('source {init_private_lua}', { init_private_lua = init_private_lua }))
+  vim.cmd('source ' .. init_private_lua)
 end
 
 local init_env_lua = vim.fn.expand('~/.config/nvim/init_env.lua')
 if vim.fn.filereadable(init_env_lua) == 1 then
-  vim.cmd(s('source {init_env_lua}', { init_env_lua = init_env_lua }))
+  vim.cmd('source ' .. init_env_lua)
 end
 
 -- }}}
@@ -227,11 +211,10 @@ end
 require('autocmds')
 require('plugins')
 require('keymaps')
-vim.call('dein#end')
 
-local env_post_vimrc = vim.fn.expand('~/.vimrc_env_post')
-if vim.fn.filereadable(env_post_vimrc) == 1 then
-  vim.cmd(s('source {env_post_vimrc}', { env_post_vimrc = env_post_vimrc }))
+local init_env_post_lua = vim.fn.expand('~/.config/nvim/init_env_post.lua')
+if vim.fn.filereadable(init_env_post_lua) == 1 then
+  vim.cmd('source ' .. init_env_post_lua)
 end
 
 vim.cmd('filetype plugin indent on')
