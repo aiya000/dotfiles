@@ -505,8 +505,10 @@ return {
 
   -- Git plugins {{{
   { 'tpope/vim-fugitive' },
+  { 'vim-denops/denops.vim', lazy = false },
   {
     'lambdalisue/gin.vim',
+    dependencies = { 'vim-denops/denops.vim' },
     config = function()
       vim.g.gin_proxy_editor_opener = 'vsplit'
     end,

@@ -18,6 +18,7 @@
   "context_filetype.vim": { "branch": "master", "commit": "ffb1ec4b2b3b34d77dd1a1b3610f2533eb69506c" },
   "copilot.vim": { "branch": "release", "commit": "c2c435419e081a87e909e8979c66d874e75e4155" },
   "deepl.vim": { "branch": "main", "commit": "59df8cc17bb28989ce562bf4712c724d23baadcd" },
+  "denops.vim": { "branch": "main", "commit": "a278b8342459e4687f24d4d575d72ff593326cee" },
   "dhall-vim": { "branch": "master", "commit": "bd9fd99f21dbc7174fb728a21d04e073ef7dd930" },
   "editorconfig-vim": { "branch": "master", "commit": "6a58b7c11f79c0e1d0f20533b3f42f2a11490cf8" },
   "fern.vim": { "branch": "main", "commit": "88f6d81c2d2348cbfb3120931ce72268195859c6" },
