@@ -243,28 +243,5 @@ add_autocmd('User', function()
 end, 'AsyncRunStop')
 
 -- }}}
--- ddu.vim {{{
-
----@type boolean | string
-vim.g.vimrc_ddu_start_with_insert_next = false
--- TODO: ↑ これはvim.gじゃなくて、luaのグローバル変数にする
-
-local function get_feedkeys_for_ddu_start()
-  if type(vim.g.vimrc_ddu_start_with_insert_next) == 'string' then
-    return 'i' .. vim.g.vimrc_ddu_start_with_insert_next
-  end
-  if vim.g.vimrc_ddu_start_with_insert_next then
-    return 'i'
-  end
-  error('Nothing feedkeys')
-end
-
--- When the next ddu ready, ddu starts from insert
-add_autocmd('User', function()
-  if vim.g.vimrc_ddu_start_with_insert_next ~= false then
-    vim.fn.feedkeys(get_feedkeys_for_ddu_start())
-    vim.g.vimrc_ddu_start_with_insert_next = false
-  end
-end, 'Ddu:uiReady')
 
 -- }}}

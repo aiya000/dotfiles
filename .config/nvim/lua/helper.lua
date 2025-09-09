@@ -349,15 +349,6 @@ function M.deepl_translate(line_count, start_line, end_line, target_lang, source
   end
 end
 
----Starts ddu with optional input
----@param options table --ddu#start() options
----@param search_word string
-function M.ddu_start_from_input(options, search_word)
-  search_word = search_word or ''
-  -- TODO: vim.g.vimrc_ddu_start_with_insert_next のサポートって、.vimrcをinit.luaに置き換えたとき、ちゃんと置き換えたっけ？ 置き換えたなら、vim.gじゃなくてlua変数でいいかも？
-  vim.g.vimrc_ddu_start_with_insert_next = (search_word ~= '') and search_word or true
-  vim.fn['ddu#start'](options)
-end
 
 function M.setup_operator_surround()
   -- Basic symbols excluding brackets () [] {} and ` for unique mappings
@@ -560,6 +551,13 @@ end
 
 function M.append_choose_surround_wide()
   append_choose_surround_('viW')
+end
+
+-- Camelize or uncamelize current word with repeat support
+function M.camelize_or_uncamelize_current_word_as_repeatable()
+  -- Use vim-operator-camelize plugin to toggle camelCase/snake_case
+  M.run_with_virtual_keymaps('viw<Plug>(operator-camelize-toggle)')
+  vim.call('repeat#set', 'viw\\<Plug>(operator-camelize-toggle)')
 end
 
 return M
