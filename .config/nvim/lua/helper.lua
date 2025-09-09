@@ -126,11 +126,11 @@ function M.open_explorer(split, path)
 
   if vim.fn.isdirectory(path) == 0 then
     -- :silent to ignore an error message. Because opening seems success.
-    vim.cmd(s('silent {cmd}'))
+    vim.cmd('silent ' .. cmd)
     return
   end
 
-  vim.cmd(s('{cmd} {path}'))
+  vim.cmd(cmd .. ' ' .. path)
 end
 
 ---Fetches a detail of <title> from a URL
@@ -140,11 +140,9 @@ function M.get_webpage_title(url)
     return vim.fn.system(string.format('curl --silent %s | pup --plain "title json{}" | jq -r ".[0].text"', url))
   end)
 
-  if not ok then
-    return s('vimrc#get_webpage_title(): something happened: {result}', { result = result })
-  end
-
-  return result
+  return ok
+    and resultor 
+    or 'get_webpage_title(): something happened: ' .. result
 end
 
 ---:quit if only a window is existent.
