@@ -38,6 +38,7 @@
   "lucariox.vim": { "branch": "master", "commit": "cb06fd2306c5f98ab3a304bc054818af68081062" },
   "neomru.vim": { "branch": "master", "commit": "d9b92f73f7d9158e803d72f2baeb7da9ea30040e" },
   "neosnippet.vim": { "branch": "master", "commit": "efb2a615df2e6df9364087686dacca223fcfa16a" },
+  "nvim-notify": { "branch": "master", "commit": "8701bece920b38ea289b457f902e2ad184131a5d" },
   "nvim-treesitter": { "branch": "master", "commit": "42fc28ba918343ebfd5565147a42a26580579482" },
   "nvim-web-devicons": { "branch": "master", "commit": "6e51ca170563330e063720449c21f43e27ca0bc1" },
   "open-browser-github.vim": { "branch": "master", "commit": "ac7c034e300f36d591ef234dcd5eb5cd5c07c74f" },
