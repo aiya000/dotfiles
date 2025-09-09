@@ -40,19 +40,17 @@ end
 ---@param text string --テンプレートリテラル文字列
 ---@param vars table --変数テーブル（必須）
 ---@return string --変数埋め込み済み文字列
+---
 ---Example:
 ---```lua
 ----- 変数の埋め込み
----local name = 'Alice'
----local age = 30
 ---local msg = s('Hello {name}! Next year you will be {age + 1}.', {
----  name = name,
----  age = age,
+---  name = 'Alice',
+---  age = 19,
 ---})
 ---
------ 複数の変数
----local foo = 'world'
----local x = s('Hello, {foo}! {foo}', { foo = foo })
+----- 複数回の変数の使用
+---local x = s('Hello, {foo}! {foo}', { foo = 'world' })
 ---
 ----- 式の評価
 ---s('{x + y}', { x = 5, y = 3 })      -- '8'
