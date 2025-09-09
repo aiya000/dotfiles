@@ -1,4 +1,4 @@
--- プラグイン設定
+---プラグイン設定
 
 local helper = require('helper')
 local fn = require('utils.functions')
@@ -67,12 +67,27 @@ return {
       'nvim-telescope/telescope-fzf-native.nvim',
     },
     config = function()
+      local actions = require('telescope.actions')
       require('telescope').setup({
         defaults = {
           mappings = {
+            n = {
+              ['<C-l>'] = actions.close,
+              ['<C-j>'] = actions.select_default,
+            },
             i = {
-              ['<C-u>'] = false,
-              ['<C-d>'] = false,
+              -- Same as Neovim insert mode
+              ['<Esc>'] = false,
+              ['<C-l>'] = actions.close,
+              ['<C-j>'] = actions.select_default,
+              -- TODO: Implement these keys
+              -- Bash like keys
+              -- ['<C-b>'] = custom.move_left,
+              -- ['<C-f>'] = custom.move_right,
+              -- ['<C-a>'] = custom.move_home,
+              -- ['<C-e>'] = custom.move_end,
+              -- ['<C-h>'] = custom.backspace,
+              -- ['<C-d>'] = custom.delete,
             },
           },
         },
