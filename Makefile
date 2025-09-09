@@ -360,9 +360,9 @@ install-gtran:
 
 download-nerd-fonts:
 	cd ~/Downloads ; \
-		wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip ; \
+		wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Hack.zip ; \
 		explorer.exe . ; \
-		@echo 'Install JetBrainsMonoNerdFont-Regular.ttf, and setting \'プロファイル > Ubuntu > 外観 > フォントフェイス\' to \'JetBrainsMono Nerd Font\', manually'
+		@echo 'Install HackNerdFontMono-Regular.ttf, and set it to \'プロファイル > Ubuntu > 外観 > フォントフェイス\' manually'
 
 install-neovim-runtime-deps:
 	$(MAKE) install-deno
