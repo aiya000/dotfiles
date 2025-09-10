@@ -489,6 +489,14 @@ function gitlab-clone () {
 # }}}
 
 # }}}
+# WSL {{{
+
+if is-in-wsl ; then
+  alias pbcopy='clip.exe'
+  alias pbpaste='powershell.exe -command "Get-Clipboard"'
+fi
+
+# }}}
 # Claude Code {{{
 
 # TODO: nvmのロードタイミングのせいだと思うけど、ここで分岐させると、うまく定義できない。直す。load-my-envにhook的なものをサポートさせるのがいいと思う
