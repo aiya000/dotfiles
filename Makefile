@@ -205,7 +205,6 @@ ifeq ($(OS),Ubuntu)  # {{{
 		git \
 		libssl-dev \
 		man-db \
-		peco \
 		progress \
 		rsync \
 		tmux \
@@ -361,8 +360,8 @@ install-gtran:
 download-nerd-fonts:
 	cd ~/Downloads ; \
 		wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Hack.zip ; \
-		explorer.exe . ; \
-		@echo 'Install HackNerdFontMono-Regular.ttf, and set it to \'プロファイル > Ubuntu > 外観 > フォントフェイス\' manually'
+		explorer.exe .
+	@echo 'Install HackNerdFontMono-Regular.ttf, and set it to \'プロファイル > Ubuntu > 外観 > フォントフェイス\' manually'
 
 install-neovim-runtime-deps:
 	$(MAKE) install-deno
@@ -695,3 +694,6 @@ install-cmake:
 
 install-tmux-runtime-deps:
 	$(MAKE) install-cmake
+
+install-peco:
+	which peco || brew install peco
