@@ -57,8 +57,7 @@ return {
     end,
   },
   -- }}}
-
-  -- Telescope {{{
+  -- telescope {{{
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
@@ -95,7 +94,8 @@ return {
       pcall(require('telescope').load_extension, 'fzf')
     end,
   },
-
+  -- }}}
+  -- telescope-fzf-native {{{
   {
     'nvim-telescope/telescope-fzf-native.nvim',
     build = 'make',
@@ -104,8 +104,7 @@ return {
     end,
   },
   -- }}}
-
-  -- UI {{{
+  -- nvim-notify {{{
   {
     'rcarriga/nvim-notify',
     config = function()
@@ -130,7 +129,8 @@ return {
       vim.notify = notify
     end,
   },
-
+  -- }}}
+  -- galaxyline {{{
   {
     'NTBBloodbath/galaxyline.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -370,7 +370,8 @@ return {
       }
     end,
   },
-
+  -- }}}
+  -- bufferline {{{
   {
     'akinsho/bufferline.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -398,10 +399,10 @@ return {
       }
     end,
   },
-
+  -- }}}
+  -- nvim-web-devicons {{{
   { 'nvim-tree/nvim-web-devicons' },
   -- }}}
-
   -- vim-quickrun {{{
   {
     'thinca/vim-quickrun',
@@ -468,7 +469,6 @@ return {
     end,
   },
   -- }}}
-
   -- foldCC {{{
   {
     'LeafCage/foldCC',
@@ -477,7 +477,6 @@ return {
     end,
   },
   -- }}}
-
   -- vim-submode {{{
   {
     'kana/vim-submode',
@@ -516,7 +515,6 @@ return {
     end,
   },
   -- }}}
-
   -- aho-bakaup.vim {{{
   {
     'aiya000/aho-bakaup.vim',
@@ -526,7 +524,6 @@ return {
     end,
   },
   -- }}}
-
   -- neosnippet.vim {{{
   {
     'Shougo/neosnippet.vim',
@@ -536,16 +533,33 @@ return {
     end,
   },
   -- }}}
+  -- vimproc.vim {{{
 
-  -- Base libraries and dependencies {{{
   { 'Shougo/vimproc.vim', build = 'make' },
-  { 'nvim-lua/plenary.nvim' },
-  { 'prabirshrestha/async.vim' },
-  -- }}}
 
-  -- Git plugins {{{
+  -- }}}
+  -- plenary.nvim {{{
+
+  { 'nvim-lua/plenary.nvim' },
+
+  -- }}}
+  -- async.vim {{{
+
+  { 'prabirshrestha/async.vim' },
+
+  -- }}}
+  -- vim-fugitive {{{
+
   { 'tpope/vim-fugitive' },
+
+  -- }}}
+  -- denops.vim {{{
+
   { 'vim-denops/denops.vim', lazy = false },
+
+  -- }}}
+  -- gin.vim {{{
+
   {
     'lambdalisue/gin.vim',
     dependencies = { 'vim-denops/denops.vim' },
@@ -553,9 +567,10 @@ return {
       vim.g.gin_proxy_editor_opener = 'vsplit'
     end,
   },
-  -- }}}
 
-  -- LSP and completion {{{
+  -- }}}
+  -- vim-lsp {{{
+
   {
     'prabirshrestha/vim-lsp',
     dependencies = { 'prabirshrestha/async.vim' },
@@ -567,6 +582,10 @@ return {
       vim.g.lsp_log_verbose = 1
     end,
   },
+
+  -- }}}
+  -- vim-lsp-settings {{{
+
   {
     'mattn/vim-lsp-settings',
     config = function()
@@ -578,20 +597,38 @@ return {
       vim.g.lsp_settings_filetype_javascript = { 'typescript-language-server', 'deno' }
     end,
   },
+
+  -- }}}
+  -- vim-lsp-ale (disabled) {{{
+
   -- {
   --   'rhysd/vim-lsp-ale',
   --   dependencies = { 'prabirshrestha/vim-lsp' },
   -- },
+
+  -- }}}
+  -- asyncomplete.vim {{{
+
   { 'prabirshrestha/asyncomplete.vim' },
+
+  -- }}}
+  -- asyncomplete-lsp.vim {{{
+
   { 'prabirshrestha/asyncomplete-lsp.vim' },
-  -- }}}
 
-  -- Syntax and parsing {{{
+  -- }}}
+  -- nvim-treesitter {{{
+
   { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
-  -- }}}
 
-  -- Text manipulation and editing {{{
+  -- }}}
+  -- vim-surround {{{
+
   { 'tpope/vim-surround' },
+
+  -- }}}
+  -- lexima.vim {{{
+
   {
     'cohama/lexima.vim',
     config = function()
@@ -601,10 +638,15 @@ return {
       vim.fn['lexima#add_rule']({ char = '【', input_after = '】' })
     end,
   },
-  -- }}}
 
-  -- Text objects and operators {{{
+  -- }}}
+  -- vim-textobj-user {{{
+
   { 'kana/vim-textobj-user' },
+
+  -- }}}
+  -- vim-textobj-indent {{{
+
   {
     'kana/vim-textobj-indent',
     dependencies = { 'kana/vim-textobj-user' },
@@ -612,18 +654,34 @@ return {
       vim.g.textobj_indent_no_default_key_mappings = 1
     end,
   },
+
+  -- }}}
+  -- vim-textobj-from_regexp {{{
+
   {
     'osyo-manga/vim-textobj-from_regexp',
     dependencies = { 'kana/vim-textobj-user' },
   },
+
+  -- }}}
+  -- vim-textobj-xmlattr {{{
+
   {
     'whatyouhide/vim-textobj-xmlattr',
     dependencies = { 'kana/vim-textobj-user' },
   },
+
+  -- }}}
+  -- vim-textobj-jabraces {{{
+
   {
     'kana/vim-textobj-jabraces',
     dependencies = { 'kana/vim-textobj-user' },
   },
+
+  -- }}}
+  -- vim-textobj-between {{{
+
   {
     'thinca/vim-textobj-between',
     keys = {
@@ -635,11 +693,22 @@ return {
     end,
   },
 
+  -- }}}
+  -- vim-operator-user {{{
+
   { 'kana/vim-operator-user' },
+
+  -- }}}
+  -- vim-operator-surround {{{
+
   {
     'rhysd/vim-operator-surround',
     dependencies = { 'kana/vim-operator-user' },
   },
+
+  -- }}}
+  -- operator-camelize.vim {{{
+
   {
     'tyru/operator-camelize.vim',
     keys = {
@@ -648,14 +717,35 @@ return {
       { '<Plug>(operator-camelize-toggle)', mode = { 'n', 'x' } },
     },
   },
-  -- }}}
 
-  -- Utilities and tools {{{
+  -- }}}
+  -- vim-repeat {{{
+
   { 'kana/vim-repeat' },
+
+  -- }}}
+  -- vim-fat-finger {{{
+
   { 'chip/vim-fat-finger' },
+
+  -- }}}
+  -- vim-cursorword {{{
+
   { 'itchyny/vim-cursorword' },
+
+  -- }}}
+  -- vim-dirvish {{{
+
   { 'justinmk/vim-dirvish' },
+
+  -- }}}
+  -- vim-matchup {{{
+
   { 'andymass/vim-matchup' },
+
+  -- }}}
+  -- vim-indent-guides {{{
+
   {
     'nathanaelkane/vim-indent-guides',
     config = function()
@@ -671,9 +761,10 @@ return {
       }
     end,
   },
-  -- }}}
 
-  -- Search and navigation {{{
+  -- }}}
+  -- incsearch.vim {{{
+
   {
     'haya14busa/incsearch.vim',
     keys = {
@@ -690,14 +781,30 @@ return {
       { '<Plug>(incsearch-nohl-g#)', mode = 'n' },
     },
   },
+
+  -- }}}
+  -- vim-visualstar {{{
+
   {
     'thinca/vim-visualstar',
     config = function()
       vim.g.visualstar_extra_commands = 'zzzv'
     end,
   },
+
+  -- }}}
+  -- vim-anzu {{{
+
   { 'osyo-manga/vim-anzu' },
+
+  -- }}}
+  -- vim-shot-f {{{
+
   { 'deris/vim-shot-f' },
+
+  -- }}}
+  -- vim-fmap {{{
+
   {
     'aiya000/vim-fmap',
     cmd = 'FNoreMap',
@@ -712,18 +819,35 @@ return {
       vim.g.fmap_escape_keys = { '', '', '' }
     end,
   },
-  { 'lambdalisue/kensaku.vim' },
-  { 'lambdalisue/kensaku-search.vim' },
-  -- }}}
 
-  -- Documentation and help {{{
+  -- }}}
+  -- kensaku.vim {{{
+
+  { 'lambdalisue/kensaku.vim' },
+
+  -- }}}
+  -- kensaku-search.vim {{{
+
+  { 'lambdalisue/kensaku-search.vim' },
+
+  -- }}}
+  -- vimdoc-ja {{{
+
   { 'vim-jp/vimdoc-ja' },
+
+  -- }}}
+  -- vim-highlightedyank {{{
+
   {
     'machakann/vim-highlightedyank',
     config = function()
       vim.g.highlightedyank_highlight_duration = 200
     end,
   },
+
+  -- }}}
+  -- yanky.nvim {{{
+
   {
     'gbprod/yanky.nvim',
     dependencies = { 'nvim-telescope/telescope.nvim' },
@@ -779,7 +903,15 @@ return {
       { "<leader>y", "<cmd>Telescope yank_history<cr>", desc = "Open Yank History" },
     },
   },
+
+  -- }}}
+  -- vim-qfedit {{{
+
   { 'itchyny/vim-qfedit' },
+
+  -- }}}
+  -- quickpeek.vim {{{
+
   {
     'AndrewRadev/quickpeek.vim',
     ft = 'qf',
@@ -787,17 +919,30 @@ return {
       vim.g.quickpeek_auto = true
     end,
   },
-  { 'tyru/caw.vim' },
-  -- }}}
 
-  -- Development tools {{{
+  -- }}}
+  -- caw.vim {{{
+
+  { 'tyru/caw.vim' },
+
+  -- }}}
+  -- copilot.vim {{{
+
   {
     'github/copilot.vim',
     config = function()
       vim.g.copilot_no_tab_map = true
     end,
   },
+
+  -- }}}
+  -- Align {{{
+
   { 'vim-scripts/Align' },
+
+  -- }}}
+  -- vim-scratch-buffer {{{
+
   {
     'aiya000/vim-scratch-buffer',
     config = function()
@@ -809,6 +954,10 @@ return {
       }
     end,
   },
+
+  -- }}}
+  -- vim-write-sync {{{
+
   {
     'aiya000/vim-write-sync',
     config = function()
@@ -827,53 +976,195 @@ return {
       }
     end,
   },
+
+  -- }}}
+  -- rainbow {{{
+
   {
     'luochen1990/rainbow',
     config = function()
       vim.g.rainbow_active = 1
     end,
   },
+
+  -- }}}
+  -- flatten.nvim {{{
+
   { 'willothy/flatten.nvim' },
-  -- }}}
 
-  -- Language specific plugins {{{
+  -- }}}
+  -- vim-go {{{
+
   { 'fatih/vim-go', ft = 'go' },
-  { 'pangloss/vim-javascript', ft = 'javascript' },
-  { 'leafgarland/typescript-vim', ft = 'typescript' },
-  { 'peitalin/vim-jsx-typescript', ft = { 'typescript.tsx', 'javascript.jsx' } },
-  { 'ianks/vim-tsx', ft = 'tsx' },
-  { 'posva/vim-vue', ft = 'vue' },
-  { 'cespare/vim-toml', ft = 'toml' },
-  { 'stephpy/vim-yaml', ft = 'yaml' },
-  { 'gutenye/json5.vim', ft = 'json5' },
-  { 'rust-lang/rust.vim', ft = 'rust' },
-  { 'dag/vim-fish', ft = 'fish' },
-  { 'PProvost/vim-ps1', ft = 'ps1' },
-  { 'aliou/bats.vim', ft = 'bats' },
-  { 'vim-crystal/vim-crystal', ft = 'crystal' },
-  { 'udalov/kotlin-vim', ft = 'kotlin' },
-  { 'derekwyatt/vim-scala', ft = 'scala' },
-  { 'neovimhaskell/haskell-vim', ft = 'haskell' },
-  { 'vmchale/ghci-syntax', ft = 'dot-ghci' },
-  { 'itchyny/vim-haskell-sort-import', ft = 'haskell' },
-  { 'aiya000/vim-ghcid-quickfix', ft = { 'haskell', 'happy', 'alex' } },
-  { 'thinca/vim-ft-clojure', ft = { 'clojure', 'lisp' } },
-  { 'vim-scripts/alex.vim', ft = 'alex' },
-  { 'rhysd/vim-gfm-syntax', ft = 'markdown' },
-  { 'vmchale/dhall-vim', ft = 'dhall' },
-  { 'ap/vim-css-color', ft = { 'css', 'scss', 'sass', 'html', 'xml', 'typescript.tsx' } },
-  { 'delphinus/vim-firestore', ft = 'firestore' },
-  { 'jparise/vim-graphql', ft = 'graphql' },
-  { 'vim-scripts/ShaderHighLight', ft = 'shaderlab' },
-  { 'aiya000/vim-review', ft = 'review' },
-  { 'thinca/vim-themis', ft = { 'vim', 'vimspec' } },
-  -- }}}
 
-  -- Miscellaneous and rarely used {{{
+  -- }}}
+  -- vim-javascript {{{
+
+  { 'pangloss/vim-javascript', ft = 'javascript' },
+
+  -- }}}
+  -- typescript-vim {{{
+
+  { 'leafgarland/typescript-vim', ft = 'typescript' },
+
+  -- }}}
+  -- vim-jsx-typescript {{{
+
+  { 'peitalin/vim-jsx-typescript', ft = { 'typescript.tsx', 'javascript.jsx' } },
+
+  -- }}}
+  -- vim-tsx {{{
+
+  { 'ianks/vim-tsx', ft = 'tsx' },
+
+  -- }}}
+  -- vim-vue {{{
+
+  { 'posva/vim-vue', ft = 'vue' },
+
+  -- }}}
+  -- vim-toml {{{
+
+  { 'cespare/vim-toml', ft = 'toml' },
+
+  -- }}}
+  -- vim-yaml {{{
+
+  { 'stephpy/vim-yaml', ft = 'yaml' },
+
+  -- }}}
+  -- json5.vim {{{
+
+  { 'gutenye/json5.vim', ft = 'json5' },
+
+  -- }}}
+  -- rust.vim {{{
+
+  { 'rust-lang/rust.vim', ft = 'rust' },
+
+  -- }}}
+  -- vim-fish {{{
+
+  { 'dag/vim-fish', ft = 'fish' },
+
+  -- }}}
+  -- vim-ps1 {{{
+
+  { 'PProvost/vim-ps1', ft = 'ps1' },
+
+  -- }}}
+  -- bats.vim {{{
+
+  { 'aliou/bats.vim', ft = 'bats' },
+
+  -- }}}
+  -- vim-crystal {{{
+
+  { 'vim-crystal/vim-crystal', ft = 'crystal' },
+
+  -- }}}
+  -- kotlin-vim {{{
+
+  { 'udalov/kotlin-vim', ft = 'kotlin' },
+
+  -- }}}
+  -- vim-scala {{{
+
+  { 'derekwyatt/vim-scala', ft = 'scala' },
+
+  -- }}}
+  -- haskell-vim {{{
+
+  { 'neovimhaskell/haskell-vim', ft = 'haskell' },
+
+  -- }}}
+  -- ghci-syntax {{{
+
+  { 'vmchale/ghci-syntax', ft = 'dot-ghci' },
+
+  -- }}}
+  -- vim-haskell-sort-import {{{
+
+  { 'itchyny/vim-haskell-sort-import', ft = 'haskell' },
+
+  -- }}}
+  -- vim-ghcid-quickfix {{{
+
+  { 'aiya000/vim-ghcid-quickfix', ft = { 'haskell', 'happy', 'alex' } },
+
+  -- }}}
+  -- vim-ft-clojure {{{
+
+  { 'thinca/vim-ft-clojure', ft = { 'clojure', 'lisp' } },
+
+  -- }}}
+  -- alex.vim {{{
+
+  { 'vim-scripts/alex.vim', ft = 'alex' },
+
+  -- }}}
+  -- vim-gfm-syntax {{{
+
+  { 'rhysd/vim-gfm-syntax', ft = 'markdown' },
+
+  -- }}}
+  -- dhall-vim {{{
+
+  { 'vmchale/dhall-vim', ft = 'dhall' },
+
+  -- }}}
+  -- vim-css-color {{{
+
+  { 'ap/vim-css-color', ft = { 'css', 'scss', 'sass', 'html', 'xml', 'typescript.tsx' } },
+
+  -- }}}
+  -- vim-firestore {{{
+
+  { 'delphinus/vim-firestore', ft = 'firestore' },
+
+  -- }}}
+  -- vim-graphql {{{
+
+  { 'jparise/vim-graphql', ft = 'graphql' },
+
+  -- }}}
+  -- ShaderHighLight {{{
+
+  { 'vim-scripts/ShaderHighLight', ft = 'shaderlab' },
+
+  -- }}}
+  -- vim-review {{{
+
+  { 'aiya000/vim-review', ft = 'review' },
+
+  -- }}}
+  -- vim-themis {{{
+
+  { 'thinca/vim-themis', ft = { 'vim', 'vimspec' } },
+
+  -- }}}
+  -- neomru.vim {{{
+
   { 'Shougo/neomru.vim' },
+
+  -- }}}
+  -- vim-textobj-from_regexp (duplicate) {{{
+
   { 'osyo-manga/vim-textobj-from_regexp', dependencies = { 'kana/vim-textobj-user' } },
+
+  -- }}}
+  -- autofmt {{{
+
   { 'vim-jp/autofmt' },
+
+  -- }}}
+  -- editorconfig-vim {{{
+
   { 'editorconfig/editorconfig-vim' },
+
+  -- }}}
+  -- context_filetype.vim {{{
+
   { 'Shougo/context_filetype.vim',
     config = function()
       vim.g.context_filetype_filetypes = {
@@ -891,6 +1182,10 @@ return {
       }
     end,
   },
+
+  -- }}}
+  -- vim-precious {{{
+
   {
     'osyo-manga/vim-precious',
     config = function()
@@ -902,21 +1197,30 @@ return {
       vim.g.textobj_precious_no_default_key_mappings = true
     end,
   },
+
+  -- }}}
+  -- sync-term-cwd.vim {{{
+
   {
     'tyru/sync-term-cwd.vim',
     config = function()
       vim.g.synctermcwd_cd_command = 'lcd'
     end,
   },
+
+  -- }}}
+  -- fern.vim {{{
+
   {
     'lambdalisue/fern.vim',
     config = function()
       vim.g.fern_default_hidden = 1
     end,
   },
-  -- }}}
 
-  -- ALE (Asynchronous Lint Engine) {{{
+  -- }}}
+  -- ale {{{
+
   {
     'dense-analysis/ale',
     config = function()
@@ -980,9 +1284,10 @@ return {
       end
     end,
   },
-  -- }}}
 
-  -- External tools and rare plugins {{{
+  -- }}}
+  -- translate.vim {{{
+
   {
     'skanehira/translate.vim',
     cmd = {
@@ -997,12 +1302,20 @@ return {
       vim.g.translate_winsize = 10
     end,
   },
+
+  -- }}}
+  -- deepl.vim {{{
+
   {
     'ryicoh/deepl.vim',
     config = function()
       vim.g.deepl_endpoint = 'https://api-free.deepl.com/v2/translate'
     end,
   },
+
+  -- }}}
+  -- vim-webpage {{{
+
   {
     'aiya000/vim-webpage',
     cmd = 'Webpage',
@@ -1013,10 +1326,30 @@ return {
       }
     end,
   },
+
+  -- }}}
+  -- vim-silicon {{{
+
   { 'segeljakt/vim-silicon', cmd = { 'Silicon', 'SiliconHighlight' } },
+
+  -- }}}
+  -- vim-manpager {{{
+
   { 'lambdalisue/vim-manpager', cmd = 'Man' },
+
+  -- }}}
+  -- webapi-vim {{{
+
   { 'mattn/webapi-vim' },
+
+  -- }}}
+  -- vim-gist {{{
+
   { 'mattn/vim-gist', cmd = 'Gist', dependencies = { 'mattn/webapi-vim' } },
+
+  -- }}}
+  -- vim-quickrepl {{{
+
   {
     'aiya000/vim-quickrepl',
     keys = { '<Plug>(quickrepl-open)' },
@@ -1032,17 +1365,41 @@ return {
       vim.g.quickrepl_enable_debug = true
     end,
   },
+
+  -- }}}
+  -- asyncrun.vim {{{
+
   { 'skywind3000/asyncrun.vim' },
+
+  -- }}}
+  -- concealedyank.vim {{{
+
   { 'chikatoike/concealedyank.vim' },
+
+  -- }}}
+  -- lucariox.vim {{{
+
   { 'aiya000/lucariox.vim' },
+
+  -- }}}
+  -- adrone.vim {{{
+
   {
     'aiya000/adrone.vim',
     cmd = { 'AdroneHome', 'AdroneSay', 'AdroneVersion' },
   },
+
+  -- }}}
+  -- undotree {{{
+
   {
     'mbbill/undotree',
     cmd = { 'UndotreeToggle', 'UndotreeFocus', 'UndotreeShow', 'UndotreeHide' },
   },
+
+  -- }}}
+  -- previm {{{
+
   {
     'kannokanno/previm',
     ft = 'markdown',
@@ -1056,9 +1413,10 @@ return {
       end
     end,
   },
-  -- }}}
 
-  -- Browser integration {{{
+  -- }}}
+  -- open-browser.vim {{{
+
   {
     'tyru/open-browser.vim',
     config = function()
@@ -1067,9 +1425,14 @@ return {
       }
     end,
   },
+
+  -- }}}
+  -- open-browser-github.vim {{{
+
   {
     'tyru/open-browser-github.vim',
     cmd = { 'OpenGithubFile', 'OpenGithubIssue', 'OpenGithubPullReq', 'OpenGithubProject' },
   },
+
   -- }}}
 }
