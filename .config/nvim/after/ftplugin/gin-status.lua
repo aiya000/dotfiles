@@ -11,19 +11,16 @@ local function stash_push(file_to_save)
     return
   end
 
-  local cmd = s('git stash push --message "{message}" -- "{file_to_save}"', { message = message, file_to_save = file_to_save })
-
   vim.system({'git', 'stash', 'push', '--message', message, '--', file_to_save}, {
     text = true,
   }, function(result)
     vim.schedule(function()
       if result.code == 0 then
         vim.notify(result.stdout or 'Stash created successfully', vim.log.levels.INFO)
-        vim.cmd('GinStatus') -- Refresh
       else
         vim.notify(s('Stash failed: {error}', { error = result.stderr or 'Unknown error' }), vim.log.levels.ERROR)
-        vim.cmd('GinStatus') -- Refresh
       end
+      vim.cmd('GinStatus') -- Refresh
     end)
   end)
 end
@@ -50,17 +47,10 @@ local function run_add_patch()
   end
 end
 
----@param subcmd_list string[] --Arguments after `:Gin commit --verbose`
-local function open_commit_buffer(subcmd_list)
-  subcmd_list = subcmd_list or {}
-
-  local ok = pcall(function()
-    local cmd_list = {'Gin', 'commit', '--verbose'}
-    for _, subcmd in ipairs(subcmd_list) do
-      table.insert(cmd_list, subcmd)
-    end
-    vim.cmd(table.concat(cmd_list, ' '))
-  end)
+---@param subcmd? string[] --`:Gin commit --verbose {subcmd (concatenated)}`
+local function open_commit_buffer(subcmd)
+  local git_commit = vim.fn.extendnew({'Gin', 'commit', '--verbose'}, subcmd or {})
+  vim.cmd(table.concat(git_commit, ' '))
 end
 
 local function force_show_stash_size()
@@ -106,14 +96,14 @@ vim.keymap.set('n', '<C-r>', '<Cmd>GinStatus<CR>', { buffer = true, silent = tru
 vim.keymap.set('n', 'p', '<Plug>(gin-action-diff:smart:vsplit)', { buffer = true, silent = true, nowait = true })
 vim.keymap.set('n', 'sa', '<Plug>(gin-action-stash)', { buffer = true, silent = true })
 vim.keymap.set('n', 'S', run_stash_push_message, { buffer = true, silent = true })
-vim.keymap.set('n', 'sp', 'Gin stash pop', { buffer = true, silent = true })
+vim.keymap.set('n', 'sp', '<Cmd>Gin stash pop<CR>', { buffer = true })
 vim.keymap.set('n', 'cc', open_commit_buffer, { buffer = true, silent = true })
 
 vim.keymap.set('n', 'ca', function()
   open_commit_buffer({'--amend'})
 end, { buffer = true, silent = true })
 
-vim.keymap.set('n', 'cf', ':<C-u>GCommitFixup ', { buffer = true })
+vim.keymap.set('n', 'cf', '<Cmd>GitCommitFixup<Space>', { buffer = true })
 vim.keymap.set('n', '<:', '<Plug>(gin-action-restore:ours)', { buffer = true })
 vim.keymap.set('n', '>:', '<Plug>(gin-action-restore:theirs)', { buffer = true })
 vim.keymap.set('n', '==', '<Plug>(gin-action-reset)', { buffer = true })
