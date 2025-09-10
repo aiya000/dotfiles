@@ -494,18 +494,15 @@ function gitlab-clone () {
 # TODO: nvmのロードタイミングのせいだと思うけど、ここで分岐させると、うまく定義できない。直す。load-my-envにhook的なものをサポートさせるのがいいと思う
 # i_have claude && alias c=claude
 # alias_of ccusage 'ccusage blocks --live'
-# i_have ccusage && alias claude-usage=ccusage
 
 alias c=claude
 alias cresume='claude --resume'
 alias ccontinue='claude --continue'
+alias cc=ccontinue
 alias ccommit='claude "gitのインデックスツリーの各変更を事柄ごとにgit-addして、その事柄ごとにgit-commitをしてください。必要があれば`git add --patch`を使ってください。"' # うまく動いてない気がする
 
-alias ccusage='ccusage blocks --live'
-alias claude-usage=ccusage
-
-alias_of claude-monitor 'claude-monitor --plan pro --timezone Asia/Tokyo'
-alias_of claude-code-monitor 'claude-code-monitor --plan pro --timezone Asia/Tokyo'
+alias ccusage='ccusage blocks --live --refresh-interval 60'
+alias_of claude-monitor 'claude-monitor --plan pro --timezone Asia/Tokyo --refresh-rate 60'
 
 function claude-with-monitors () {
   local claude_command=$*
