@@ -8,18 +8,18 @@ local function read_git_log(args)
   vim.cmd('normal! gg')
 end
 
-function M.git_log_viewer(args)
+function M.git_log(args)
   vim.cmd('enew!')
   vim.bo.buftype = 'nofile'
-  vim.b.gitlogviewer_args = args
+  vim.b.gitlog_args = args
   read_git_log(args)
-  vim.bo.filetype = 'gitlogviewer'
+  vim.bo.filetype = 'gitlog'
   vim.wo.foldmethod = 'expr'
-  vim.wo.foldexpr = 'v:lua.gitlogviewer_fold_expr(v:lnum)'
-  vim.wo.foldtext = 'v:lua.gitlogviewer_fold_text()'
+  vim.wo.foldexpr = 'v:lua.gitlog_fold_expr(v:lnum)'
+  vim.wo.foldtext = 'v:lua.gitlog_fold_text()'
 end
 
-function _G.gitlogviewer_fold_expr(lnum)
+function _G.gitlog_fold_expr(lnum)
   local current_line = vim.fn.getline(lnum)
   local next_line = vim.fn.getline(lnum + 1)
 
@@ -32,7 +32,7 @@ function _G.gitlogviewer_fold_expr(lnum)
   end
 end
 
-function _G.gitlogviewer_fold_text()
+function _G.gitlog_fold_text()
   local month_map = {
     Jan = '01', Feb = '02', Mar = '03', Apr = '04',
     May = '05', Jun = '06', Jul = '07', Aug = '08',

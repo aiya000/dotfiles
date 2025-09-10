@@ -1,4 +1,4 @@
--- This filetype was presented by plugin/gitlogviewer.vim
+-- This filetype was presented by plugin/gitlog.vim
 
 local list = require('utils.list')
 
@@ -18,7 +18,7 @@ local function show_git_show()
   vim.cmd('normal! [z')
   vim.cmd('vsplit')
 
-  local args = vim.split(vim.b.gitlogviewer_args or '', '%s+')
+  local args = vim.split(vim.b.gitlog_args or '', '%s+')
   if list.has(args, '--oneline') then
     vim.cmd('normal! _"zyiw')
   else
@@ -26,7 +26,7 @@ local function show_git_show()
     vim.cmd('normal! g_"zyiw')
   end
 
-  vim.cmd('GitShowViewer ' .. vim.fn.getreg('z'))
+  vim.cmd('GitShow ' .. vim.fn.getreg('z'))
 end
 
 vim.keymap.set('n', 'Q', function()
@@ -37,5 +37,5 @@ vim.keymap.set('n', 'S', try_show_git_show, { buffer = true, silent = true })
 vim.keymap.set('n', 'p', try_show_git_show, { buffer = true, silent = true })
 
 vim.keymap.set('n', '<C-r>', function()
-  vim.cmd('GitLogViewer ' .. (vim.b.gitlogviewer_args or ''))
+  vim.cmd('GitLog ' .. (vim.b.gitlog_args or ''))
 end, { buffer = true, silent = true })
