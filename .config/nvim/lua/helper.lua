@@ -164,7 +164,9 @@ end
 ---- termopen_temporary()
 ---@param opts? table --See `:h jobstart()`
 function M.termopen_shell(opts)
-  M.termopen_temporary(vim.env.SHELL)
+  M.termopen_temporary(vim.env.SHELL, {
+    env = { NEOVIM_TERMINAL = true },
+  })
   vim.fn.feedkeys('i')
 end
 
@@ -254,17 +256,23 @@ function M.rename_to(new_name)
   end
 
   local new_file = vim.fn.fnamemodify(this_file, ':h') .. '/' .. new_name
-  local failed = vim.fn.rename(this_file, new_file)
-  if failed ~= 0 then
-    vim.notify(s('Rename {this_file} to {new_file} is failed'), vim.log.levels.ERROR)
+  local result_code = vim.fn.rename(this_file, new_file)
+  if result_code ~= 0 then
+    vim.notify(s('Rename {this_file} to {new_file} is failed', {
+      this_file = this_file,
+      new_file = new_file,
+    }), vim.log.levels.ERROR)
     return
   end
 
-  vim.cmd(s('edit {new_file}'))
+  vim.cmd('edit ' .. new_file)
   vim.cmd('silent write')
-  vim.cmd(s('silent bdelete {this_file}'))
+  vim.cmd('silent bdelete ' .. this_file)
 
-  print(s('Renamed {this_file} to {new_file}'))
+  vim.notify(s('Renamed {this_file} to {new_file}', {
+    this_file = this_file,
+    new_file = new_file,
+  }), vim.log.levels.INFO)
 end
 
 ---Gets current buffer directory with fallback
