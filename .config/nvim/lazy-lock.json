@@ -109,7 +109,6 @@
   "vim-webpage": { "branch": "master", "commit": "afa149f887b4bb23aca8b8db3e5feabcc4fc03cf" },
   "vim-write-sync": { "branch": "main", "commit": "4d0d5852bf7fd49d3ece74f989589ac9c378c62a" },
   "vim-yaml": { "branch": "master", "commit": "dce19542d5ec1663183b0f6844ec663b5d1f3d24" },
-  "vimdoc-ja": { "branch": "master", "commit": "75bf2ba2c73910517503a865288e45d9b43048fc" },
   "vimproc.vim": { "branch": "master", "commit": "63a4ce0768c7af434ac53d37bdc1e7ff7fd2bece" },
   "webapi-vim": { "branch": "master", "commit": "70c49ada7827d3545a65cbdab04c5c89a3a8464e" },
   "yanky.nvim": { "branch": "main", "commit": "04775cc6e10ef038c397c407bc17f00a2f52b378" }

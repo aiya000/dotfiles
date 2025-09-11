@@ -831,11 +831,6 @@ return {
   { 'lambdalisue/kensaku-search.vim' },
 
   -- }}}
-  -- vimdoc-ja {{{
-
-  { 'vim-jp/vimdoc-ja' },
-
-  -- }}}
   -- vim-highlightedyank {{{
 
   {
