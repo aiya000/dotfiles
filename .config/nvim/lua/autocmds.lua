@@ -70,7 +70,7 @@ end)
 -- Show :help by vertical split default
 M.add_autocmd('BufWinEnter', function()
   if vim.bo.filetype == 'help' then
-    vim.cmd('wincmd L')
+    vim.cmd('wincmd H')
   end
 end, { '*.txt' })
 
