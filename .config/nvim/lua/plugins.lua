@@ -1232,21 +1232,50 @@ return {
       vim.g.ale_virtualtext_cursor = 'current'
 
       -- Linters
-      local ghc_standard_extensions = {
-        'AutoDeriveTypeable', 'BangPatterns', 'BinaryLiterals', 'ConstraintKinds',
-        'DataKinds', 'DefaultSignatures', 'DeriveDataTypeable', 'DeriveFoldable',
-        'DeriveFunctor', 'DeriveGeneric', 'DeriveTraversable', 'DoAndIfThenElse',
-        'DuplicateRecordFields', 'EmptyDataDecls', 'ExistentialQuantification',
-        'FlexibleContexts', 'FlexibleInstances', 'FunctionalDependencies', 'GADTs',
-        'GeneralizedNewtypeDeriving', 'InstanceSigs', 'KindSignatures', 'LambdaCase',
-        'MonadFailDesugaring', 'MultiParamTypeClasses', 'MultiWayIf', 'NamedFieldPuns',
-        'NoImplicitPrelude', 'OverloadedStrings', 'PartialTypeSignatures', 'PatternGuards',
-        'PolyKinds', 'RankNTypes', 'RecordWildCards', 'ScopedTypeVariables',
-        'StandaloneDeriving', 'TupleSections', 'TypeApplications', 'TypeFamilies',
-        'TypeSynonymInstances', 'ViewPatterns',
-      }
-
       local function create_hlint_command()
+        local ghc_standard_extensions = { -- {{{
+          'AutoDeriveTypeable',
+          'BangPatterns',
+          'BinaryLiterals',
+          'ConstraintKinds',
+          'DataKinds',
+          'DefaultSignatures',
+          'DeriveDataTypeable',
+          'DeriveFoldable',
+          'DeriveFunctor',
+          'DeriveGeneric',
+          'DeriveTraversable',
+          'DoAndIfThenElse',
+          'DuplicateRecordFields',
+          'EmptyDataDecls',
+          'ExistentialQuantification',
+          'FlexibleContexts',
+          'FlexibleInstances',
+          'FunctionalDependencies',
+          'GADTs',
+          'GeneralizedNewtypeDeriving',
+          'InstanceSigs',
+          'KindSignatures',
+          'LambdaCase',
+          'MonadFailDesugaring',
+          'MultiParamTypeClasses',
+          'MultiWayIf',
+          'NamedFieldPuns',
+          'NoImplicitPrelude',
+          'OverloadedStrings',
+          'PartialTypeSignatures',
+          'PatternGuards',
+          'PolyKinds',
+          'RankNTypes',
+          'RecordWildCards',
+          'ScopedTypeVariables',
+          'StandaloneDeriving',
+          'TupleSections',
+          'TypeApplications',
+          'TypeFamilies',
+          'TypeSynonymInstances',
+          'ViewPatterns',
+        } -- }}}
         local extensions = {}
         for _, ext in ipairs(ghc_standard_extensions) do
           table.insert(extensions, '-X ' .. ext)
@@ -1264,7 +1293,11 @@ return {
       }
 
       local typescript_variants = {
-        'typescript', 'javascript', 'vue', 'typescript.tsx', 'javascript.jsx',
+        'typescript',
+        'javascript',
+        'vue',
+        'typescript.tsx',
+        'javascript.jsx',
       }
 
       for _, ts in ipairs(typescript_variants) do
@@ -1280,10 +1313,22 @@ return {
         sh = { 'shfmt' },
         go = { 'gofmt', 'goimports' },
       }
-
       for _, ts in ipairs(typescript_variants) do
         vim.g.ale_fixers[ts] = { 'prettier', 'eslint' }
       end
+
+      -- Autocmds
+      -- Read local tsconfig by deno
+      autocmds.add('FileType', function ()
+        local local_tsconfig = vim.fn.getcwd() .. '/tsconfig.json'
+        if vim.fn.filereadable(local_tsconfig) == 1 then
+          vim.g.ale_javascript_deno_lint_options = '--config ' .. local_tsconfig
+        end
+      end, { 'typescript', 'javascript' })
+
+      autocmds.add('ColorScheme', function()
+        vim.api.nvim_set_hl(0, 'ALEError', { ctermbg = 'gray', ctermfg = 'black' })
+      end)
     end,
   },
 
