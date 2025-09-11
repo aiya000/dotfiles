@@ -37,15 +37,3 @@
 [submodule "Preferences/Surfingkeys.js"]
 	path = Preferences/Surfingkeys.js
 	url = https://github.com/aiya000/Surfingkeys.js
-[submodule ".tmux/plugins/tmux-mem-cpu-load"]
-	path = .tmux/plugins/tmux-mem-cpu-load
-	url = https://github.com/thewtex/tmux-mem-cpu-load
-[submodule ".tmux/plugins/tmux-yank"]
-	path = .tmux/plugins/tmux-yank
-	url = https://@github.com/tmux-plugins/tmux-yank
-[submodule ".tmux/plugins/catppuccin-tmux"]
-	path = .tmux/plugins/catppuccin-tmux
-	url = https://github.com/catppuccin/tmux.git
-[submodule ".tmux/plugins/tmux-cpu"]
-	path = .tmux/plugins/tmux-cpu
-	url = https://github.com/tmux-plugins/tmux-cpu
