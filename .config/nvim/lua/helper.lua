@@ -62,26 +62,26 @@ function M.make_directory_if_missing(dir)
   end
 end
 
----Compresses continuously spaces to a space.
+---Compresses continuously spaces to a space
 function M.compress_spaces()
   local recent_pattern = vim.fn.getreg('/')
   vim.cmd(s('try | s/\\s\\+/ /g | execute "normal! ==" | finally | let @/ = "{recent_pattern}" | endtry'))
   vim.cmd('nohlsearch')
 end
 
----Removes trailing spaces of all lines.
+---Removes trailing spaces of all lines
 function M.remove_trailing_spaces()
   local curpos = vim.fn.getcurpos()
   vim.cmd(':%s/\\s*$//g')
   vim.fn.setpos('.', curpos)
 end
 
----Toggles diffthis and diffoff with some keymappings.
+---Toggles diffthis and diffoff with some keymappings
 function M.toggle_diff()
   if vim.wo.diff then
     vim.cmd('diffoff')
     -- NOTE: This restores [c and ]c of .vimrc,
-    -- Please see [c, ]c, [ale-previous], and [ale-next] in .vimrc.
+    -- Please see [c, ]c, [ale-previous], and [ale-next] in .vimrc
     vim.keymap.set('n', '[c', '[ale-previous]', { buffer = true })
     vim.keymap.set('n', ']c', '[ale-next]', { buffer = true })
   else
@@ -93,7 +93,7 @@ function M.toggle_diff()
   vim.cmd('set diff?')
 end
 
----Closes buffers of a specified filetypes.
+---Closes buffers of a specified filetypes
 function M.bufclose_filetype(filetypes)
   local closed = false
   for w = 1, vim.fn.winnr('$') do
@@ -125,7 +125,7 @@ function M.open_explorer(split, path)
     or error(s('an unexpected way to open the explorer: {split}'))
 
   if vim.fn.isdirectory(path) == 0 then
-    -- :silent to ignore an error message. Because opening seems success.
+    -- :silent to ignore an error message. Because opening seems success
     vim.cmd('silent ' .. cmd)
     return
   end
@@ -180,21 +180,9 @@ function M.get_webpage_title(url)
     or 'get_webpage_title(): something happened: ' .. result
 end
 
----:quit if only a window is existent.
----:hide otherwise.
-function M.hide_or_quit()
-  local tabnum = vim.fn.tabpagenr('$')
-  local winnum = vim.fn.tabpagewinnr(vim.fn.tabpagenr(), '$')
-  if tabnum == 1 and winnum == 1 then
-    vim.cmd('quit')
-  else
-    vim.cmd('hide')
-  end
-end
-
 function M.toggle_ale_at_buffer()
   vim.b.ale_enabled = not (vim.b.ale_enabled or true)
-  -- Refresh the state
+  -- Refresh
   vim.cmd('ALEToggle')
   vim.cmd('ALEToggle')
 end
@@ -205,16 +193,7 @@ function M.toggle_indent_guides()
   vim.cmd('IndentGuidesToggle')
 end
 
----Puts a register as stdin into the terminal buffer.
-function M.put_as_stdin(detail)
-  local current_bufnr = vim.fn.bufnr('%')
-  vim.defer_fn(function()
-    vim.fn.term_sendkeys(current_bufnr, detail)
-  end, 0)
-  return 'i'
-end
-
----Moves a current buffer to left of tab.
+---Moves a current buffer to left of tab
 function M.move_window_forward()
   local tabwin_num = #vim.fn.tabpagebuflist()
   vim.cmd('mark Z')
@@ -231,7 +210,7 @@ function M.move_window_forward()
   vim.cmd('normal! zz')
 end
 
----Moves a current buffer to right of tab.
+---Moves a current buffer to right of tab
 function M.move_window_backward()
   vim.cmd('mark Z')
   vim.cmd('hide')
@@ -245,7 +224,7 @@ function M.move_window_backward()
   vim.cmd('normal! zz')
 end
 
----Moves tab to left.
+---Moves tab to left
 function M.move_tab_prev()
   if vim.fn.tabpagenr() == 1 then
     vim.cmd('$tabmove')
@@ -254,7 +233,7 @@ function M.move_tab_prev()
   end
 end
 
----Moves tab to right.
+---Moves tab to right
 function M.move_tab_next()
   if vim.fn.tabpagenr() == vim.fn.tabpagenr('$') then
     vim.cmd('0tabmove')
@@ -263,15 +242,7 @@ function M.move_tab_next()
   end
 end
 
----Moves the cursor position to the last position of a file.
-function M.visit_past_position()
-  local past_posit = vim.fn.line('"')
-  if past_posit > 0 and past_posit <= vim.fn.line('$') then
-    vim.cmd('normal! g`"')
-  end
-end
-
----Renames a file name of the current buffer.
+---Renames a file name of the current buffer
 function M.rename_to(new_name)
   local this_file = vim.fn.fnameescape(vim.fn.expand('%'))
   local new_name_esc = vim.fn.fnameescape(new_name)
@@ -460,7 +431,8 @@ function M.remove_text_after_cursor()
   end
 end
 
-function M.tabnext_loop()
+function M.tabnext_loop_or_yanky_next()
+  -- TODO: yankyがactiveなら`<Plug>(YankyNextEntry)`を実行する
   if vim.fn.tabpagenr() == vim.fn.tabpagenr('$') then
     vim.cmd('tabnext 1')
   else
@@ -468,7 +440,8 @@ function M.tabnext_loop()
   end
 end
 
-function M.tabprev_loop()
+function M.tabprev_loop_or_yanky_prev()
+  -- TODO: yankyがactiveなら`<Plug>(YankyPreviousEntry)`を実行する
   if vim.fn.tabpagenr() == 1 then
     vim.cmd('tablast')
   else
