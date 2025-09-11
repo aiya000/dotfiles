@@ -110,6 +110,7 @@ vim.opt.relativenumber = true
 vim.opt.scrolloff = 16
 vim.opt.sessionoptions = { 'buffers', 'tabpages', 'localoptions', 'winsize', 'winpos' }
 vim.opt.shellslash = true
+vim.opt.clipboard = 'unnamedplus'
 vim.opt.shiftwidth = 2
 vim.opt.suffixes = {}
 vim.opt.tabstop = 2
@@ -162,6 +163,22 @@ vim.g.maplocalleader = "'"
 
 -- Open .tex as LaTex
 vim.g.tex_flavor = 'latex'
+
+-- WSL clipboard integration
+if InitLua.is_wsl then
+  vim.g.clipboard = {
+    name = 'WslClipboard',
+    copy = {
+      ['+'] = 'clip.exe',
+      ['*'] = 'clip.exe',
+    },
+    paste = {
+      ['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+      ['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+    },
+    cache_enabled = 0,
+  }
+end
 
 -- }}}
 -- Others {{{
