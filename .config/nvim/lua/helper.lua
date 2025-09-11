@@ -133,6 +133,41 @@ function M.open_explorer(split, path)
   vim.cmd(cmd .. ' ' .. path)
 end
 
+---Creates `termopen_temporary()`'s default on_exit option.
+---See `:h job-id` for what is job_id of the returned function.
+---See `:h on_exit`  for what this returns.
+---@param opts? table --See `:h jobstart()`
+---@return fun(job_id: integer, exit_code: integer, event_type: 'exit'): nil
+function M.get_termopen_options_bdelete_when_on_exit(opts)
+  return function(job_id, exit_code, event_type)
+    if (opts or {}).on_exit ~= nil then
+      opts.on_exit(job_id, exit_code, event_type)
+    end
+    vim.cmd('bdelete!')
+  end
+end
+
+---Opens a terminal buffer that closes it when exited immediately.
+---See `:h jobstart()` about the params.
+---@params cmd string
+---@param opts? table
+function M.termopen_temporary(cmd, opts)
+  local opts_with_on_exit = vim.tbl_extend('force', opts or {}, {
+    on_exit = M.get_termopen_options_bdelete_when_on_exit(opts),
+  })
+  vim.fn.termopen(cmd, opts_with_on_exit)
+end
+
+---Opens a terminal buffer with $SHELL that closes it when exited immediately.
+---See:
+---- get_termopen_options_bdelete_when_on_exit()
+---- termopen_temporary()
+---@param opts? table --See `:h jobstart()`
+function M.termopen_shell(opts)
+  M.termopen_temporary(vim.env.SHELL)
+  vim.fn.feedkeys('i')
+end
+
 ---Fetches a detail of <title> from a URL
 function M.get_webpage_title(url)
   local ok, result = pcall(function()
