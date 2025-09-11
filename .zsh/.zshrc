@@ -20,14 +20,16 @@ fi
 source ~/.sh_generic/vars.sh
 source ~/.sh_generic/aliases.sh
 
-# For each environment
-case $(uname) in
-  Linux )
-    source ~/.sh_generic/linux.sh
-    ;;
-  Darwin )
-    source ~/.sh_generic/macOS.sh
-esac
+local uname=$(uname)
+if [[ -n $WSL_INTEROP ]] ; then
+  source ~/.sh_generic/wsl.sh
+elif [[ $uname == Linux ]] ; then
+  source ~/.sh_generic/linux.sh
+elif [[ $uname == Darwin ]] ; then
+  source ~/.sh_generic/macOS.sh
+else
+  echo "zshrc: Not supported OS. uname: $uname" >&2
+fi
 
 ###########################################
 # Configure zsh with the local conditions #

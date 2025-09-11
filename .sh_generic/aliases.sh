@@ -58,7 +58,7 @@ function slice () {
 
 source ~/.sh_generic/aliases/build-tools.sh
 source ~/.sh_generic/aliases/os-package-managers.sh
-source ~/.sh_generic/aliases/vim.sh
+source ~/.sh_generic/aliases/neovim.sh
 
 # }}}
 # General Commands {{{
@@ -181,19 +181,16 @@ if i_have soundvolumeview ; then
 fi
 
 # }}}
-# Editor {{{
+# Editors {{{
 
 # shellcheck disable=SC2139
 alias e="$EDITOR"
 alias g=gvim
 
-alias eS='ls -A $VIM_SESSION | peco | xargs -I {} vim -S $VIM_SESSION/{}'
-alias gS='ls -A $VIM_SESSION | peco | xargs -I {} gvim -S $VIM_SESSION/{}'
-
-# shellcheck disable=SC2139
-alias e-current-session="vim-current-session $EDITOR"
-# shellcheck disable=SC2139
-alias g-current-session="vim-current-session $MY_GUI_EDITOR"
+# VS Code
+if ! i_have code && i_have Code.exe ; then
+  alias code=Code.exe
+fi
 
 # }}}
 # Git {{{
@@ -487,14 +484,6 @@ function gitlab-clone () {
 }
 
 # }}}
-
-# }}}
-# WSL {{{
-
-if is-in-wsl ; then
-  alias pbcopy='clip.exe'
-  alias pbpaste='powershell.exe -command "Get-Clipboard"'
-fi
 
 # }}}
 # Claude Code {{{
