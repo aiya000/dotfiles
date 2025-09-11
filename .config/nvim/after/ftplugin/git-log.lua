@@ -1,20 +1,11 @@
--- This filetype was presented by plugin/gitlog.vim
+-- This filetype defined by plugin/gitlog.vim
 
 local list = require('utils.list')
 
 vim.opt_local.list = false
 vim.opt_local.cul = true
 
-local function try_show_git_show()
-  local ok, err = pcall(show_git_show)
-  if not ok then
-    vim.notify(err, vim.log.levels.ERROR)
-    vim.cmd('close')
-    show_git_show()
-  end
-end
-
-local function show_git_show()
+local function open_git_show()
   vim.cmd('normal! [z')
   vim.cmd('vsplit')
 
@@ -33,9 +24,9 @@ vim.keymap.set('n', 'Q', function()
   vim.api.nvim_buf_delete(0, { force = true })
 end, { buffer = true, silent = true })
 
-vim.keymap.set('n', 'S', try_show_git_show, { buffer = true, silent = true })
-vim.keymap.set('n', 'p', try_show_git_show, { buffer = true, silent = true })
-
+-- Refresh
 vim.keymap.set('n', '<C-r>', function()
   vim.cmd('GitLog ' .. (vim.b.gitlog_args or ''))
 end, { buffer = true, silent = true })
+
+vim.keymap.set('n', 'S', open_git_show, { buffer = true, silent = true })

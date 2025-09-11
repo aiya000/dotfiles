@@ -1,22 +1,42 @@
 -- Inspired by ujihisa's vimrc
 -- And deris's code (http://deris.hatenablog.jp/entry/2013/05/10/003430)
 
+local s = require('utils.functions').s
+
 local M = {}
 
-local function read_git_log(args)
-  vim.cmd('put!=system(\'git log \' .. ' .. vim.fn.string(args) .. ')')
-  vim.cmd('normal! gg')
+---@param args string | string[]
+local function put(args)
+  local args = type(args) == 'table'
+    and args
+    or vim.fn.split(args, ' ') -- TODO: `:GitLog --oneline --pretty="%h %ad %s"`のように、オプション中の文字列にもスペースが入ってると壊れると思うので、パースする
+  local cmd = vim.fn.extendnew({'git', 'log'}, args)
+
+  local result = vim.system(cmd):wait()
+  if result.code ~= 0 then
+    error(result.stderr)
+  end
+
+  vim.fn.setreg('z', result.stdout)
+  vim.cmd('put!=@z')
+  vim.cmd('normal! G"zddgg')
 end
 
-function M.git_log(args)
+---@param args string | string[]
+function M.open_buffer(args)
   vim.cmd('enew!')
   vim.bo.buftype = 'nofile'
   vim.b.gitlog_args = args
-  read_git_log(args)
-  vim.bo.filetype = 'gitlog'
+  put(args)
+  vim.bo.filetype = 'git-log'
   vim.wo.foldmethod = 'expr'
   vim.wo.foldexpr = 'v:lua.gitlog_fold_expr(v:lnum)'
   vim.wo.foldtext = 'v:lua.gitlog_fold_text()'
+end
+
+---@param args string | string[]
+function M.git_log(args)
+  M.open_buffer(args)
 end
 
 function _G.gitlog_fold_expr(lnum)
