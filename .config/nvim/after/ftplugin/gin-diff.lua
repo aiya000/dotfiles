@@ -5,6 +5,3 @@ vim.keymap.set('n', 'Q', function()
   vim.api.nvim_buf_delete(0, { force = true })
 end, { buffer = true, silent = true })
 
-if vim.bo.filetype == 'gin-diff' then
-  vim.cmd('IndentGuidesDisable')
-end

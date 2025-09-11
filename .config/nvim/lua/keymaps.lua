@@ -100,8 +100,6 @@ map('n', ':eb', function()
 end, { expr = true })
 
 -- Search
-map('n', 'g/', '<Plug>(incsearch-stay)', { remap = true })
-
 --- Search cword without moving
 map('n', 'g*', function ()
   local pos = vim.fn.getpos('.')
@@ -241,7 +239,6 @@ map('n', '<C-h><C-c>', '<Cmd>setlocal cursorline! cursorline?<CR>', { silent = t
 map('n', '<C-h><C-r>', '<Cmd>setlocal relativenumber! relativenumber?<CR>', { silent = true })
 map('n', '<C-h><C-l>', '<Cmd>setlocal list! list?<CR>', { silent = true })
 map('n', '<C-h><C-n>', '<Cmd>setlocal number! number?<CR>', { silent = true })
-map('n', '<C-h><C-i>', function() helper.toggle_indent_guides() end, { silent = true })
 
 map('n', '<C-h><C-d>', function()
   helper.toggle_diff()

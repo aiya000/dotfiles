@@ -470,14 +470,6 @@ return {
     end,
   },
   -- }}}
-  -- foldCC {{{
-  {
-    'LeafCage/foldCC',
-    config = function()
-      vim.g.foldCCtext_maxchars = 120
-    end,
-  },
-  -- }}}
   -- vim-submode {{{
   {
     'kana/vim-submode',
@@ -534,11 +526,6 @@ return {
     end,
   },
   -- }}}
-  -- vimproc.vim {{{
-
-  { 'Shougo/vimproc.vim', build = 'make' },
-
-  -- }}}
   -- plenary.nvim {{{
 
   { 'nvim-lua/plenary.nvim' },
@@ -547,11 +534,6 @@ return {
   -- async.vim {{{
 
   { 'prabirshrestha/async.vim' },
-
-  -- }}}
-  -- vim-fugitive {{{
-
-  { 'tpope/vim-fugitive' },
 
   -- }}}
   -- denops.vim {{{
@@ -598,14 +580,6 @@ return {
       vim.g.lsp_settings_filetype_javascript = { 'typescript-language-server', 'deno' }
     end,
   },
-
-  -- }}}
-  -- vim-lsp-ale (disabled) {{{
-
-  -- {
-  --   'rhysd/vim-lsp-ale',
-  --   dependencies = { 'prabirshrestha/vim-lsp' },
-  -- },
 
   -- }}}
   -- asyncomplete.vim {{{
@@ -725,11 +699,6 @@ return {
   { 'kana/vim-repeat' },
 
   -- }}}
-  -- vim-fat-finger {{{
-
-  { 'chip/vim-fat-finger' },
-
-  -- }}}
   -- vim-cursorword {{{
 
   { 'itchyny/vim-cursorword' },
@@ -743,60 +712,6 @@ return {
   -- vim-matchup {{{
 
   { 'andymass/vim-matchup' },
-
-  -- }}}
-  -- vim-indent-guides {{{
-
-  {
-    'nathanaelkane/vim-indent-guides',
-    config = function()
-      vim.g.indent_guides_enable_on_vim_startup = 1
-      vim.g.indent_guides_start_level = 2
-      vim.g.indent_guides_default_mapping = 0
-      vim.g.indent_guides_guide_size = 1
-      vim.g.indent_guides_auto_colors = 0
-      vim.g.indent_guides_tab_guides = 0
-      vim.g.indent_guides_exclude_filetypes = {
-        '', 'adrone_home', 'aref_web', 'gitcommit', 'happy', 'haskell',
-        'help', 'man', 'markdown', 'review',
-      }
-    end,
-  },
-
-  -- }}}
-  -- incsearch.vim {{{
-
-  {
-    'haya14busa/incsearch.vim',
-    keys = {
-      { '<Plug>(incsearch-forward)', mode = 'n' },
-      { '<Plug>(incsearch-backward)', mode = 'n' },
-      { '<Plug>(incsearch-stay)', mode = 'n' },
-      { '<Plug>(incsearch-nohl)', mode = 'n' },
-      { '<Plug>(incsearch-nohl0)', mode = 'n' },
-      { '<Plug>(incsearch-nohl-n)', mode = 'n' },
-      { '<Plug>(incsearch-nohl-N)', mode = 'n' },
-      { '<Plug>(incsearch-nohl-*)', mode = 'n' },
-      { '<Plug>(incsearch-nohl-#)', mode = 'n' },
-      { '<Plug>(incsearch-nohl-g*)', mode = 'n' },
-      { '<Plug>(incsearch-nohl-g#)', mode = 'n' },
-    },
-  },
-
-  -- }}}
-  -- vim-visualstar {{{
-
-  {
-    'thinca/vim-visualstar',
-    config = function()
-      vim.g.visualstar_extra_commands = 'zzzv'
-    end,
-  },
-
-  -- }}}
-  -- vim-anzu {{{
-
-  { 'osyo-manga/vim-anzu' },
 
   -- }}}
   -- vim-shot-f {{{
@@ -921,11 +836,6 @@ return {
       vim.g.quickpeek_auto = true
     end,
   },
-
-  -- }}}
-  -- caw.vim {{{
-
-  { 'tyru/caw.vim' },
 
   -- }}}
   -- copilot.vim {{{
@@ -1060,11 +970,6 @@ return {
   { 'aliou/bats.vim', ft = 'bats' },
 
   -- }}}
-  -- vim-crystal {{{
-
-  { 'vim-crystal/vim-crystal', ft = 'crystal' },
-
-  -- }}}
   -- kotlin-vim {{{
 
   { 'udalov/kotlin-vim', ft = 'kotlin' },
@@ -1085,11 +990,6 @@ return {
   { 'vmchale/ghci-syntax', ft = 'dot-ghci' },
 
   -- }}}
-  -- vim-haskell-sort-import {{{
-
-  { 'itchyny/vim-haskell-sort-import', ft = 'haskell' },
-
-  -- }}}
   -- vim-ghcid-quickfix {{{
 
   { 'aiya000/vim-ghcid-quickfix', ft = { 'haskell', 'happy', 'alex' } },
@@ -1108,11 +1008,6 @@ return {
   -- vim-gfm-syntax {{{
 
   { 'rhysd/vim-gfm-syntax', ft = 'markdown' },
-
-  -- }}}
-  -- dhall-vim {{{
-
-  { 'vmchale/dhall-vim', ft = 'dhall' },
 
   -- }}}
   -- vim-css-color {{{
@@ -1148,16 +1043,6 @@ return {
   -- neomru.vim {{{
 
   { 'Shougo/neomru.vim' },
-
-  -- }}}
-  -- vim-textobj-from_regexp (duplicate) {{{
-
-  { 'osyo-manga/vim-textobj-from_regexp', dependencies = { 'kana/vim-textobj-user' } },
-
-  -- }}}
-  -- autofmt {{{
-
-  { 'vim-jp/autofmt' },
 
   -- }}}
   -- editorconfig-vim {{{
@@ -1197,16 +1082,6 @@ return {
       vim.g.precious_enable_switch_CursorMoved_i = vim.g.precious_enable_switch_CursorMoved
       vim.g.precious_enable_switchers = {}
       vim.g.textobj_precious_no_default_key_mappings = true
-    end,
-  },
-
-  -- }}}
-  -- sync-term-cwd.vim {{{
-
-  {
-    'tyru/sync-term-cwd.vim',
-    config = function()
-      vim.g.synctermcwd_cd_command = 'lcd'
     end,
   },
 
@@ -1333,24 +1208,6 @@ return {
   },
 
   -- }}}
-  -- translate.vim {{{
-
-  {
-    'skanehira/translate.vim',
-    cmd = {
-      'Translate',
-      'AutoTranslateModeToggle',
-      'AutoTranslateModeEnable',
-      'AutoTranslateModeDisable',
-    },
-    config = function()
-      vim.g.translate_source = 'en'
-      vim.g.translate_target = 'ja'
-      vim.g.translate_winsize = 10
-    end,
-  },
-
-  -- }}}
   -- deepl.vim {{{
 
   {
@@ -1375,24 +1232,9 @@ return {
   },
 
   -- }}}
-  -- vim-silicon {{{
-
-  { 'segeljakt/vim-silicon', cmd = { 'Silicon', 'SiliconHighlight' } },
-
-  -- }}}
   -- vim-manpager {{{
 
   { 'lambdalisue/vim-manpager', cmd = 'Man' },
-
-  -- }}}
-  -- webapi-vim {{{
-
-  { 'mattn/webapi-vim' },
-
-  -- }}}
-  -- vim-gist {{{
-
-  { 'mattn/vim-gist', cmd = 'Gist', dependencies = { 'mattn/webapi-vim' } },
 
   -- }}}
   -- vim-quickrepl {{{
@@ -1417,16 +1259,6 @@ return {
   -- asyncrun.vim {{{
 
   { 'skywind3000/asyncrun.vim' },
-
-  -- }}}
-  -- concealedyank.vim {{{
-
-  { 'chikatoike/concealedyank.vim' },
-
-  -- }}}
-  -- lucariox.vim {{{
-
-  { 'aiya000/lucariox.vim' },
 
   -- }}}
   -- adrone.vim {{{
@@ -1471,14 +1303,6 @@ return {
         { name = 'wslview', args = { '{browser}', '{uri}' } },
       }
     end,
-  },
-
-  -- }}}
-  -- open-browser-github.vim {{{
-
-  {
-    'tyru/open-browser-github.vim',
-    cmd = { 'OpenGithubFile', 'OpenGithubIssue', 'OpenGithubPullReq', 'OpenGithubProject' },
   },
 
   -- }}}

@@ -187,11 +187,6 @@ function M.toggle_ale_at_buffer()
   vim.cmd('ALEToggle')
 end
 
----Toggles indent-guides
-function M.toggle_indent_guides()
-  vim.g['vimrc#indent_guides_enable'] = not (vim.g['vimrc#indent_guides_enable'] or true)
-  vim.cmd('IndentGuidesToggle')
-end
 
 ---Moves a current buffer to left of tab
 function M.move_window_forward()

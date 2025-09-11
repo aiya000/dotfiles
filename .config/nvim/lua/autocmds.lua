@@ -190,31 +190,7 @@ M.add_autocmd('VimEnter', function()
 end)
 
 -- }}}
--- vim-indent-guides {{{
-
-M.add_autocmd({ 'VimEnter', 'ColorScheme' }, function()
-  vim.api.nvim_set_hl(0, 'IndentGuidesOdd', { ctermbg = 60, bg = '#468F8C' })
-  vim.api.nvim_set_hl(0, 'IndentGuidesEven', { ctermbg = 60, bg = '#468F8C' })
-end)
-
--- TODO: When I move to another window, the terminal buffer also becomes IndentGuidesEnable in the autocmd below
-M.add_autocmd({ 'BufEnter', 'WinEnter' }, function()
-  if vim.bo.buftype == 'terminal' then
-    vim.cmd('IndentGuidesDisable')
-  end
-end)
-
-M.add_autocmd({ 'BufLeave', 'WinLeave' }, function()
-  vim.wo.relativenumber = false
-  vim.cmd('IndentGuidesEnable')
-end)
-
--- }}}
 -- vim-precious {{{
-
-M.add_autocmd('User', function()
-  vim.cmd('IndentGuidesToggle | IndentGuidesToggle')
-end, 'PreciousFileType')
 
 M.add_autocmd({ 'WinEnter', 'BufEnter', 'TabEnter' }, function()
   vim.cmd('PreciousSwitch')
