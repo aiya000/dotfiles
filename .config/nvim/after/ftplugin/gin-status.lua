@@ -103,7 +103,7 @@ vim.keymap.set('n', 'ca', function()
   open_commit_buffer({'--amend'})
 end, { buffer = true, silent = true })
 
-vim.keymap.set('n', 'cf', '<Cmd>GitCommitFixup<Space>', { buffer = true })
+vim.keymap.set('n', 'cf', ':<C-u>GitCommitFixup<Space>', { buffer = true })
 vim.keymap.set('n', '<:', '<Plug>(gin-action-restore:ours)', { buffer = true })
 vim.keymap.set('n', '>:', '<Plug>(gin-action-restore:theirs)', { buffer = true })
 vim.keymap.set('n', '==', '<Plug>(gin-action-reset)', { buffer = true })
