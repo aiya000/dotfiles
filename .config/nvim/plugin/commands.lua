@@ -8,11 +8,8 @@ local s = require('utils.functions').s
 ---@field bar? boolean
 ---@field complete? string | function --補完に表示するリスト種類か、リストを返す関数
 
----ちょっと型を明示してみた。
----ちゃんとinit.lua用のプラグイン使えばいらないかも。
----- TODO: いらなかったら削除して、普通に`local create_command = vim.api.nvim_create_user_command`とかする
 ---@param name string --コマンド名
----@param command string|function --実行されるVimコマンド、もしくは処理
+---@param command string | function --実行されるVimコマンド、もしくは処理
 ---@param options? CreateCommandOptions
 local function create_command(name, command, options)
   vim.api.nvim_create_user_command(name, command, options)
@@ -26,85 +23,30 @@ create_command('FtpluginEditAfter', function(opts)
   vim.cmd(s('edit {path}', { path = path }))
 end, { nargs = '?', complete = 'filetype', bar = true })
 
-create_command('FtDictionaryEdit', function(opts)
-  local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd(s('edit {neovim_home}/dict/filetype/{filetype}.dict', { neovim_home = InitLua.neovim_home, filetype = filetype }))
-end, { nargs = '?', complete = 'filetype', bar = true })
-
-create_command('SyntaxEdit', function(opts)
-  local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd(s('edit {neovim_home}/syntax/{filetype}.vim', { neovim_home = InitLua.neovim_home, filetype = filetype }))
-end, { nargs = '?', complete = 'filetype', bar = true })
-
-create_command('IndentEdit', function(opts)
-  local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd(s('edit {neovim_home}/indent/{filetype}.vim', { neovim_home = InitLua.neovim_home, filetype = filetype }))
-end, { nargs = '?', complete = 'filetype', bar = true })
-
 create_command('FtDetectEdit', function(opts)
   local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
   vim.cmd(s('edit {neovim_home}/ftdetect/{filetype}.vim', { neovim_home = InitLua.neovim_home, filetype = filetype }))
 end, { nargs = '?', complete = 'filetype', bar = true })
 
-create_command('PluginEdit', function(opts)
-  local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd(s('edit {neovim_home}/plugin/{filetype}.vim', { neovim_home = InitLua.neovim_home, filetype = filetype }))
-end, { nargs = '?', complete = 'filetype', bar = true })
-
-create_command('AutoloadEdit', function(opts)
-  local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd(s('edit {neovim_home}/autoload/{filetype}.vim', { neovim_home = InitLua.neovim_home, filetype = filetype }))
-end, { nargs = '?', complete = 'filetype', bar = true })
-
 -- }}}
 -- Cushion commands for git {{{
 
-create_command('GStatus', function(opts)
-  vim.cmd(s('GinStatus {args}', { args = opts.args }))
-end, { nargs = '*', bar = true })
-
-create_command('GLog', function(opts)
-  vim.cmd(s('GitLogViewer -100 --name-only {args}', { args = opts.args }))
-end, { nargs = '*', bar = true })
-
-create_command('GLogPatch', function(opts)
-  vim.cmd(s('GitLogViewer --patch -100 {args}', { args = opts.args }))
-end, { nargs = '*', bar = true })
-
-create_command('GLogOneline', function(opts)
-  vim.cmd(s('GitLogViewer --oneline {args}', { args = opts.args }))
-end, { nargs = '*', bar = true })
-
-create_command('GDiff', function(opts)
-  vim.cmd(s('GitDiffViewer {args}', { args = opts.args }))
-end, { nargs = '*', bar = true })
-
-create_command('GDS', function(opts)
-  vim.cmd(s('GitDiffViewer --staged {args}', { args = opts.args }))
-end, { nargs = '*', bar = true })
-
-create_command('GDH', function(opts)
-  vim.cmd(s('GitDiffViewer HEAD~ {args}', { args = opts.args }))
-end, { nargs = '*', bar = true })
-
-create_command('GCommitFixup', function(opts)
-  vim.cmd(s('echomsg system("git commit --fixup " .. {commit_hash})', { commit_hash = vim.fn.string(opts.args) }))
+create_command('GitCommitFixup', function(opts)
+  local commit_hash = opts.args
+  local result = vim.system({'git', 'commit', '--fixup', commit_hash}):wait()
+  if result.code == 0 then
+    vim.notify('A fixup commit created for: ' .. commit_hash, vim.log.levels.INFO)
+  else
+    vim.notify('Failed to create a fixup commit: ' .. (result.stderr or 'Unknown error'), vim.log.levels.ERROR)
+  end
 end, { nargs = 1, bar = true })
 
-create_command('GTree', function(opts)
-  vim.cmd(s('GinLog --graph --decorate --oneline {args}', { args = opts.args }))
+create_command('GitTree', function(opts)
+  vim.cmd('GinLog --graph --decorate --oneline ' .. vim.fn.string(opts.args))
 end, { nargs = '*', bar = true })
 
-create_command('GTreeAll', function(opts)
-  vim.cmd(s('GinLog --graph --decorate --oneline --all {args}', { args = opts.args }))
-end, { nargs = '*', bar = true })
-
-create_command('GBrahcnAll', function(opts)
-  vim.cmd(s('GinBranch --all {args}', { args = opts.args }))
-end, { nargs = '*', bar = true })
-
-create_command('GBlame', function(opts)
-  vim.cmd(s('Gin blame {args}', { args = opts.args }))
+create_command('GitTreeAll', function(opts)
+  vim.cmd('GinLog --graph --decorate --oneline --all' .. opts.args)
 end, { nargs = '*', bar = true })
 
 -- }}}
