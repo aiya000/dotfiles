@@ -34,6 +34,7 @@ function M.open_buffer(args)
   vim.wo.foldtext = 'v:lua.gitlog_fold_text()'
 end
 
+---Alias for `open_buffer()`
 ---@param args string | string[]
 function M.git_log(args)
   M.open_buffer(args)
