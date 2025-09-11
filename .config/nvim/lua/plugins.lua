@@ -1,6 +1,7 @@
 ---プラグイン設定
 
 local helper = require('helper')
+local autocmds = require('autocmds')
 local fn = require('utils.functions')
 local s = fn.s
 
@@ -123,7 +124,7 @@ return {
         minimum_width = 50,
         render = "default",
         stages = "fade_in_slide_out",
-        timeout = 3000,
+        timeout = false,
         top_down = true
       })
       vim.notify = notify
@@ -857,6 +858,8 @@ return {
         picker = {
           telescope = {
             mappings = {
+            -- TODO: これ機能してる？
+            -- TODO: なゆちゃんがとりあえず書いてくれたものなので、カスタマイズする
               default = require("yanky.picker").actions.put("p"),
               i = {
                 ["<c-g>"] = require("yanky.picker").actions.put("P"),
@@ -878,24 +881,28 @@ return {
       require('telescope').load_extension('yank_history')
     end,
     keys = {
-      { "y", "<Plug>(YankyYank)", mode = { "n", "x" } },
-      { "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" } },
-      { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" } },
-      { "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" } },
-      { "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" } },
-      { "<c-p>", "<Plug>(YankyPreviousEntry)", mode = "n" },
-      { "<c-n>", "<Plug>(YankyNextEntry)", mode = "n" },
-      { "]p", "<Plug>(YankyPutIndentAfterLinewise)", mode = "n" },
-      { "[p", "<Plug>(YankyPutIndentBeforeLinewise)", mode = "n" },
-      { "]P", "<Plug>(YankyPutIndentAfterLinewise)", mode = "n" },
-      { "[P", "<Plug>(YankyPutIndentBeforeLinewise)", mode = "n" },
-      { ">p", "<Plug>(YankyPutIndentAfterShiftRight)", mode = "n" },
-      { "<p", "<Plug>(YankyPutIndentAfterShiftLeft)", mode = "n" },
-      { ">P", "<Plug>(YankyPutIndentBeforeShiftRight)", mode = "n" },
-      { "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)", mode = "n" },
-      { "=p", "<Plug>(YankyPutAfterFilter)", mode = "n" },
-      { "=P", "<Plug>(YankyPutBeforeFilter)", mode = "n" },
-      { "<leader>y", "<cmd>Telescope yank_history<cr>", desc = "Open Yank History" },
+      { 'y', '<Plug>(YankyYank)', mode = { 'n', 'x' } },
+      { 'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'x' } },
+      { 'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'x' } },
+      { ']p', '<Plug>(YankyPutIndentAfterLinewise)', mode = 'n' },
+      { '[p', '<Plug>(YankyPutIndentBeforeLinewise)', mode = 'n' },
+      { ']P', '<Plug>(YankyPutIndentAfterLinewise)', mode = 'n' },
+      { '[P', '<Plug>(YankyPutIndentBeforeLinewise)', mode = 'n' },
+      { '>p', '<Plug>(YankyPutIndentAfterShiftRight)', mode = 'n' },
+      { '<p', '<Plug>(YankyPutIndentAfterShiftLeft)', mode = 'n' },
+      { '>P', '<Plug>(YankyPutIndentBeforeShiftRight)', mode = 'n' },
+      { '<P', '<Plug>(YankyPutIndentBeforeShiftLeft)', mode = 'n' },
+      { '=p', '<Plug>(YankyPutAfterFilter)', mode = 'n' },
+      { '=P', '<Plug>(YankyPutBeforeFilter)', mode = 'n' },
+      { 'gy', '<CMD>Telescope yank_history<CR>', desc = 'Open Yank History' },
+
+      -- Disable because this is overridden by my keymap
+      -- { 'gp', '<Plug>(YankyGPutAfter)', mode = { 'n', 'x' } },
+      -- { 'gP', '<Plug>(YankyGPutBefore)', mode = { 'n', 'x' } },
+
+      -- See lua/keymaps.lua
+      -- { '<C-p>', '<Plug>(YankyPreviousEntry)', mode = 'n' },
+      -- { '<C-n>', '<Plug>(YankyNextEntry)', mode = 'n' },
     },
   },
 
