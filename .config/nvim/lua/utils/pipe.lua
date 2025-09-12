@@ -14,6 +14,20 @@
 ---  :apply(function(s) return s .. '!' end)
 ---  :get()  -- 'HELLO!'
 ---```
+---
+---`pcall()` is also supported:
+---```lua
+---PipedData.new({pcall(get_operation)})
+---  :apply_if(
+---    function(result)
+---      return result[1] -- result[1] is `ok: boolean`
+---    end,
+---    function(result)
+---      local operate = result[2]
+---      operate()
+---    end
+---  )
+---```
 local PipedData = {}
 PipedData.__index = PipedData
 
