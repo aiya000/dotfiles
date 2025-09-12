@@ -100,23 +100,42 @@ map('n', ':eb', function()
 end, { expr = true })
 
 -- Search
+local function try_show_search_number_or_do_nothing()
+  local ok, hlslens = pcall(require, 'hlslens')
+  if not ok then
+    return
+  end
+  hlslens.start()
+end
+
 --- Search cword without moving
 map('n', 'g*', function ()
   local pos = vim.fn.getpos('.')
   vim.cmd('silent! normal! *')
   vim.fn.setpos('.', pos)
-end, { silent = true })
+  try_show_search_number_or_do_nothing()
+end)
 
 --- Keep search direction
-map('n', 'N', function()
-  return vim.v.searchforward == 1
-    and 'Nzv'
-    or 'nzv'
-end, { expr = true })
+map('n', 'n', function()
+  vim.cmd('silent! normal! ' .. (vim.v.searchforward == 1 and 'nzv' or 'Nzv'))
+  try_show_search_number_or_do_nothing()
+end)
 
-map('n', '<leader><leader>B', function()
-  vim.cmd('split ' .. InitLua.memo_path)
-end, { silent = true })
+map('n', 'N', function()
+  vim.cmd('silent! normal! ' .. (vim.v.searchforward == 1 and 'Nzv' or 'nzv'))
+  try_show_search_number_or_do_nothing()
+end)
+
+map('n', '*', function()
+  vim.cmd('silent! normal! *zv')
+  try_show_search_number_or_do_nothing()
+end)
+
+map('n', '#', function()
+  vim.cmd('silent! normal! #zv')
+  try_show_search_number_or_do_nothing()
+end)
 
 -- Close windows of temporary buffers
 map('n', 'Q', function()
