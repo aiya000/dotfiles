@@ -697,3 +697,6 @@ install-tmux-runtime-deps:
 
 install-peco:
 	which peco || brew install peco
+
+install-btop:
+	which btop || $(AptInstall) btop
