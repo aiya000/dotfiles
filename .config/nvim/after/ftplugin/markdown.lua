@@ -7,9 +7,13 @@ vim.opt_local.commentstring = ' <!-- %s -->'
 vim.opt_local.completefunc = 'github_complete#complete'
 
 ---Finds free port for grip server
+---@param port integer
 local function find_free_port(port)
-  local result = vim.fn.system("ss -tuln | grep ':" .. port .. "' | wc -l")
-  if vim.trim(result) == '0' then
+  local result = vim.system("ss -tuln | grep ':" .. port .. "' | wc -l"):wait()
+  if result.code ~= 0 then
+    error('Failed to check port: ' .. result.stderr)
+  end
+  if vim.fn.trim(result.stdout) == '0' then
     return port
   end
   return find_free_port(port + 1)
@@ -53,9 +57,6 @@ vim.keymap.set('n', '<localleader><localleader>d', function()
   vim.cmd('edit ' .. vim.fn.expand('%'))
 end, { buffer = true, silent = true })
 
--- nnoremap <silent><buffer> <localleader>f <Cmd>!textlint --fix <C-r>=expand('%:p')<CR><CR>
--- nmap <silent><buffer> <C-l> <C-[>:syntax sync fromstart<CR>
-
 vim.keymap.set('n', '<localleader><localleader>r', start_grip, { buffer = true, silent = true })
 
 -- TODO: Do 'gg' after glow finished
@@ -90,9 +91,3 @@ end
 vim.keymap.set('n', '<C-k><C-f>', open_ddu_section_list, { buffer = true, silent = true })
 
 vim.cmd('syntax sync fromstart')
-
--- ALE textlint configuration
-if InitLua.git_root ~= nil and vim.fn.filereadable(InitLua.git_root .. '/.textlintrc') == 1 then
-  vim.g.ale_fixers.markdown = vim.g.ale_fixers.markdown or {}
-  table.insert(vim.g.ale_fixers.markdown, 'textlint')
-end
