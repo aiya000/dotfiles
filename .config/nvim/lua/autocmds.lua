@@ -193,7 +193,7 @@ end)
 -- vim-precious {{{
 
 M.add_autocmd({ 'WinEnter', 'BufEnter', 'TabEnter' }, function()
-  vim.cmd('PreciousSwitch')
+  pcall(vim.cmd, 'PreciousSwitch') -- もしvim-preciousがまだ読み込まれていなかったら、何もしない
 end)
 
 -- }}}

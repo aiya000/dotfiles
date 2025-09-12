@@ -11,7 +11,7 @@ local function map(mode, lhs, rhs, opts)
 end
 
 local function clear()
-  vim.cmd('PreciousSwitch')
+  pcall(vim.cmd, 'PreciousSwitch')
   helper.close_all_popups()
   require('notify').dismiss({ silent = true, pending = true })
   vim.cmd('nohlsearch')
@@ -19,7 +19,7 @@ end
 
 local function clear_deep()
   print('clearing...')
-  vim.cmd('PreciousReset') -- NOTE: This is a little heavy
+  pcall(vim.cmd, 'PreciousReset') -- NOTE: This is a little heavy
   clear()
   print('cleared!')
 end
@@ -347,6 +347,10 @@ map('n', '<leader>r', '<Plug>(quickrun)', { remap = true })
 map('n', '<leader>b', '<Cmd>ScratchBufferOpenFile md<CR>', { silent = true })
 map('n', '<leader>B', '<Cmd>ScratchBufferOpenFileNext md<CR>', { silent = true })
 map('n', '<leader><leader>b', ':<C-u>ScratchBufferOpenFile ')
+
+map('n', '<leader><leader>B', function()
+  vim.cmd('split ' .. InitLua.memo_path)
+end, { silent = true })
 
 -- File Editing
 map('n', '<C-k><Space>', helper.remove_trailing_spaces, { silent = true })
