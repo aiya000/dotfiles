@@ -19,7 +19,8 @@ end
 
 create_command('FtpluginEditAfter', function(opts)
   local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  local path = s('{neovim_home}/after/ftplugin/{filetype}.lua', { neovim_home = InitLua.neovim_home, filetype = filetype })
+  local path =
+    s('{neovim_home}/after/ftplugin/{filetype}.lua', { neovim_home = InitLua.neovim_home, filetype = filetype })
   vim.cmd(s('edit {path}', { path = path }))
 end, { nargs = '?', complete = 'filetype', bar = true })
 
@@ -33,7 +34,7 @@ end, { nargs = '?', complete = 'filetype', bar = true })
 
 create_command('GitCommitFixup', function(opts)
   local commit_hash = opts.args
-  local result = vim.system({'git', 'commit', '--fixup', commit_hash}):wait()
+  local result = vim.system({ 'git', 'commit', '--fixup', commit_hash }):wait()
   if result.code == 0 then
     vim.notify('A fixup commit created for: ' .. commit_hash, vim.log.levels.INFO)
   else

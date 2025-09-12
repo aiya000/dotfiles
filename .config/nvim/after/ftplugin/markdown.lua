@@ -25,14 +25,11 @@ local function start_grip()
   local port = find_free_port(25252)
 
   local ok, err = pcall(function()
-    vim.fn.termopen(
-      'grip ' .. token_option .. ' ' .. vim.fn.fnameescape(vim.fn.expand('%:p')) .. ' ' .. port,
-      {
-        vertical = true, -- TODO: ここらへんのオプションをVimのterm_start()から移行できてないので、無視されると思う。移行する
-        hidden = true,
-        term_finish = 'close',
-      }
-    )
+    vim.fn.termopen('grip ' .. token_option .. ' ' .. vim.fn.fnameescape(vim.fn.expand('%:p')) .. ' ' .. port, {
+      vertical = true, -- TODO: ここらへんのオプションをVimのterm_start()から移行できてないので、無視されると思う。移行する
+      hidden = true,
+      term_finish = 'close',
+    })
     -- NOTE: なぜか`setl nonumber norelativenumber nolist`になるので、とりあえず直打ちで直している
     -- TODO: なんでこうなるのか調査して、修正する
     vim.opt_local.number = true
@@ -61,10 +58,7 @@ vim.keymap.set('n', '<localleader><localleader>r', start_grip, { buffer = true, 
 
 -- TODO: Do 'gg' after glow finished
 vim.keymap.set('n', '<localleader><localleader>R', function()
-  vim.fn.termopen(
-    'glow ' .. vim.fn.fnameescape(vim.fn.expand('%:p')),
-    { vertical = true }
-  )
+  vim.fn.termopen('glow ' .. vim.fn.fnameescape(vim.fn.expand('%:p')), { vertical = true })
 end, { buffer = true, silent = true })
 
 -- TODO: ちゃんと.vimrcと同様に、lsp_documentSymbolあたりを使う。可能ならここで<C-k><C-f>を押すとオーバーライドするよりも、lspを導入することで済むなら、そちらの方がよい
@@ -73,10 +67,10 @@ local function open_ddu_section_list()
   vim.cmd('normal! gg')
   local ok, err = pcall(function()
     helper.ddu_start_from_input({
-      sources = {{ name = 'line' }},
+      sources = { { name = 'line' } },
       sourceOptions = {
         _ = {
-          matchers = {'matcher_regex'},
+          matchers = { 'matcher_regex' },
         },
       },
     }, '^#+ ')

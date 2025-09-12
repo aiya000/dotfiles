@@ -69,7 +69,7 @@ function M.s(text, vars)
         return global_value
       end
       error('undefined variable: ' .. tostring(key))
-    end
+    end,
   })
 
   return text:gsub('{([^}]+)}', function(expr)

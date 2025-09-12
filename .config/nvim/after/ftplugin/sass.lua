@@ -7,7 +7,7 @@ vim.opt_local.expandtab = true
 local function arrange_html_attribute_to_sass_attribute()
   local start_line = vim.fn.line("'<")
   local end_line = vim.fn.line("'>")
-  
+
   for line_num = start_line, end_line do
     vim.fn.cursor(line_num, 1)
     -- Replace ="..." with : ...

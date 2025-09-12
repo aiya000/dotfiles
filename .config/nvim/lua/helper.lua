@@ -177,9 +177,7 @@ function M.get_webpage_title(url)
     return vim.fn.system(string.format('curl --silent %s | pup --plain "title json{}" | jq -r ".[0].text"', url))
   end)
 
-  return ok
-    and resultor 
-    or 'get_webpage_title(): something happened: ' .. result
+  return ok and resultor or 'get_webpage_title(): something happened: ' .. result
 end
 
 function M.toggle_ale_at_buffer()
@@ -188,7 +186,6 @@ function M.toggle_ale_at_buffer()
   vim.cmd('ALEToggle')
   vim.cmd('ALEToggle')
 end
-
 
 ---Moves a current buffer to left of tab
 function M.move_window_forward()
@@ -258,10 +255,13 @@ function M.rename_to(new_name)
   local new_file = vim.fn.fnamemodify(this_file, ':h') .. '/' .. new_name
   local result_code = vim.fn.rename(this_file, new_file)
   if result_code ~= 0 then
-    vim.notify(s('Rename {this_file} to {new_file} is failed', {
-      this_file = this_file,
-      new_file = new_file,
-    }), vim.log.levels.ERROR)
+    vim.notify(
+      s('Rename {this_file} to {new_file} is failed', {
+        this_file = this_file,
+        new_file = new_file,
+      }),
+      vim.log.levels.ERROR
+    )
     return
   end
 
@@ -269,10 +269,13 @@ function M.rename_to(new_name)
   vim.cmd('silent write')
   vim.cmd('silent bdelete ' .. this_file)
 
-  vim.notify(s('Renamed {this_file} to {new_file}', {
-    this_file = this_file,
-    new_file = new_file,
-  }), vim.log.levels.INFO)
+  vim.notify(
+    s('Renamed {this_file} to {new_file}', {
+      this_file = this_file,
+      new_file = new_file,
+    }),
+    vim.log.levels.INFO
+  )
 end
 
 ---Gets current buffer directory with fallback
@@ -355,7 +358,6 @@ function M.deepl_translate(line_count, start_line, end_line, target_lang, source
     put_by[method](result)
   end
 end
-
 
 function M.setup_operator_surround()
   -- Basic symbols excluding brackets () [] {} and ` for unique mappings
@@ -456,13 +458,13 @@ function M.open_buffer_to_execute(cmd)
   local full_size = 100
   -- Use ScratchBufferOpen command similar to scratch_buffer#open
   vim.cmd('ScratchBufferOpen md sp ' .. full_size)
-  
+
   -- Execute the command and capture output
   local output = vim.fn.execute(cmd)
-  
+
   -- Put the output into the buffer
   vim.cmd('put=' .. vim.fn.string(output))
-  
+
   -- Go to beginning and delete first 2 empty lines
   vim.cmd('normal! gg2dd')
 end

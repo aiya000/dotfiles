@@ -53,9 +53,7 @@ end
 ---@param x unknown
 ---@return string
 function M.to_element_string(x)
-  return type(x) == 'string'
-    and string.format("'%s'", x)
-    or tostring(x)
+  return type(x) == 'string' and string.format("'%s'", x) or tostring(x)
 end
 
 ---Makes the taken array to a pretty string
@@ -78,7 +76,7 @@ function M.make_array_to_string(xs)
     end
   end
 
-  local result = {'{ '}
+  local result = { '{ ' }
   for i = 1, max_index do
     table.insert(result, M.to_element_string(xs[i]))
     if i < max_index then
@@ -222,20 +220,20 @@ if vim == nil then
     error('nil should not equal 2')
   end
 
-  if not M.deep_equal({a = 1}, {a = 1}) then
+  if not M.deep_equal({ a = 1 }, { a = 1 }) then
     error('{a = 1} should equal {a = 1}')
   end
-  if M.deep_equal({a = 1}, {a = 2}) then
+  if M.deep_equal({ a = 1 }, { a = 2 }) then
     error('{a = 1} should not equal {a = 2}')
   end
-  if not M.deep_equal({a = 1, b = {c = 2}}, {a = 1, b = {c = 2}}) then
+  if not M.deep_equal({ a = 1, b = { c = 2 } }, { a = 1, b = { c = 2 } }) then
     error('{a = 1, b = {c = 2}} should equal {a = 1, b = {c = 2}}')
   end
 
-  if not M.deep_equal({1, 2, 3}, {1, 2, 3}) then
+  if not M.deep_equal({ 1, 2, 3 }, { 1, 2, 3 }) then
     error('{1, 2, 3} should equal {1, 2, 3}')
   end
-  if M.deep_equal({1, 2, 3}, {10, 20, 30}) then
+  if M.deep_equal({ 1, 2, 3 }, { 10, 20, 30 }) then
     error('{1, 2, 3} should not equal {10, 20, 30}')
   end
 
@@ -273,12 +271,12 @@ if vim == nil then
   local assert_equal = M.assert_equal
 
   test('reduce() should reduce an array to a single value', function()
-    local sum = M.reduce({1, 2, 3, 4}, function(acc, item)
+    local sum = M.reduce({ 1, 2, 3, 4 }, function(acc, item)
       return acc + item
     end, 0)
     assert_equal(sum, 10)
 
-    local str = M.reduce({'a', 'b', 'c'}, function(acc, item)
+    local str = M.reduce({ 'a', 'b', 'c' }, function(acc, item)
       return acc .. item
     end, '')
     assert_equal(str, 'abc')
@@ -292,11 +290,11 @@ if vim == nil then
   end)
 
   test('concat_array_including_nil() should concat an array including nil', function()
-    assert_equal(M.concat_array_including_nil({1, ', ', nil, ', ', 'a'}), '1, nil, a')
+    assert_equal(M.concat_array_including_nil({ 1, ', ', nil, ', ', 'a' }), '1, nil, a')
     assert_equal(M.concat_array_including_nil({}), '')
   end)
 
-  test('to_element_string() should make values to the string of an array\'s element', function()
+  test("to_element_string() should make values to the string of an array's element", function()
     assert_equal(M.to_element_string('hello'), "'hello'")
     assert_equal(M.to_element_string(10), '10')
     assert_equal(M.to_element_string(true), 'true')
@@ -304,29 +302,29 @@ if vim == nil then
   end)
 
   test('make_array_to_string() should make array to string', function()
-    assert_equal(M.make_array_to_string({1, 2, 3}), '{ 1, 2, 3 }')
-    assert_equal(M.make_array_to_string({1, nil, 3}), "{ 1, nil, 3 }")
-    assert_equal(M.make_array_to_string({1, 'a', true}), "{ 1, 'a', true }")
+    assert_equal(M.make_array_to_string({ 1, 2, 3 }), '{ 1, 2, 3 }')
+    assert_equal(M.make_array_to_string({ 1, nil, 3 }), '{ 1, nil, 3 }')
+    assert_equal(M.make_array_to_string({ 1, 'a', true }), "{ 1, 'a', true }")
     assert_equal(M.make_array_to_string({}), '{  }')
   end)
 
-  test('make_array_to_string() cannot include trailing nil because Lua\'s specification', function()
-    assert_equal(M.make_array_to_string({1, 2, nil}), "{ 1, 2 }")
+  test("make_array_to_string() cannot include trailing nil because Lua's specification", function()
+    assert_equal(M.make_array_to_string({ 1, 2, nil }), '{ 1, 2 }')
   end)
 
   test('is_array() should check if a table is an array', function()
-    assert_equal(M.is_array({1, 2, 3}), true)
-    assert_equal(M.is_array({1, 'a', true, nil}), true)
+    assert_equal(M.is_array({ 1, 2, 3 }), true)
+    assert_equal(M.is_array({ 1, 'a', true, nil }), true)
     assert_equal(M.is_array({}), true)
 
-    assert_equal(M.is_array({a = 1, b = 2}), false)
+    assert_equal(M.is_array({ a = 1, b = 2 }), false)
     assert_equal(M.is_array(10), false)
     assert_equal(M.is_array(nil), false)
   end)
 
   test('to_pretty_string() should convert to a pretty string', function()
-    assert_equal(M.to_pretty_string({1, 2, 3}), '{ 1, 2, 3 }')
-    assert_equal(M.to_pretty_string({'a', 'b', 'c'}), "{ 'a', 'b', 'c' }")
+    assert_equal(M.to_pretty_string({ 1, 2, 3 }), '{ 1, 2, 3 }')
+    assert_equal(M.to_pretty_string({ 'a', 'b', 'c' }), "{ 'a', 'b', 'c' }")
     assert_equal(M.to_pretty_string(10), '10')
   end)
 end

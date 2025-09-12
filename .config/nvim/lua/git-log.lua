@@ -7,10 +7,8 @@ local M = {}
 
 ---@param args string | string[]
 local function put(args)
-  local args = type(args) == 'table'
-    and args
-    or vim.fn.split(args, ' ') -- TODO: `:GitLog --oneline --pretty="%h %ad %s"`のように、オプション中の文字列にもスペースが入ってると壊れると思うので、パースする
-  local cmd = vim.fn.extendnew({'git', 'log'}, args)
+  local args = type(args) == 'table' and args or vim.fn.split(args, ' ') -- TODO: `:GitLog --oneline --pretty="%h %ad %s"`のように、オプション中の文字列にもスペースが入ってると壊れると思うので、パースする
+  local cmd = vim.fn.extendnew({ 'git', 'log' }, args)
 
   local result = vim.system(cmd):wait()
   if result.code ~= 0 then
@@ -55,9 +53,18 @@ end
 
 function _G.gitlog_fold_text()
   local month_map = {
-    Jan = '01', Feb = '02', Mar = '03', Apr = '04',
-    May = '05', Jun = '06', Jul = '07', Aug = '08',
-    Sep = '09', Oct = '10', Nov = '11', Dec = '12',
+    Jan = '01',
+    Feb = '02',
+    Mar = '03',
+    Apr = '04',
+    May = '05',
+    Jun = '06',
+    Jul = '07',
+    Aug = '08',
+    Sep = '09',
+    Oct = '10',
+    Nov = '11',
+    Dec = '12',
   }
 
   local foldstart = vim.v.foldstart

@@ -56,9 +56,7 @@ end
 ---@param default T
 ---@return T
 function M.get_or_default(maybe_nil, default)
-  local maybe_value = type(maybe_nil) == 'function'
-    and maybe_nil()
-    or maybe_nil
+  local maybe_value = type(maybe_nil) == 'function' and maybe_nil() or maybe_nil
 
   if maybe_value == nil then
     return default

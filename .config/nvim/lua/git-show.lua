@@ -5,10 +5,8 @@ local s = require('utils.functions').s
 local M = {}
 
 local function put(args)
-  local args = type(args) == 'table'
-    and args
-    or vim.fn.split(args, ' ') -- TODO: `./git-log.lua`と同じ
-  local cmd = vim.fn.extendnew({'git', 'show'}, args)
+  local args = type(args) == 'table' and args or vim.fn.split(args, ' ') -- TODO: `./git-log.lua`と同じ
+  local cmd = vim.fn.extendnew({ 'git', 'show' }, args)
 
   local result = vim.system(cmd):wait()
   if result.code ~= 0 then

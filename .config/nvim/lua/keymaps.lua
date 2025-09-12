@@ -109,7 +109,7 @@ local function try_show_search_number_or_do_nothing()
 end
 
 --- Search cword without moving
-map('n', 'g*', function ()
+map('n', 'g*', function()
   local pos = vim.fn.getpos('.')
   vim.cmd('silent! normal! *')
   vim.fn.setpos('.', pos)
@@ -144,15 +144,11 @@ end, { silent = true })
 
 -- Foldings
 map('n', 'h', function()
-  return vim.fn.foldclosed('.') > -1
-    and 'zo'
-    or 'h'
+  return vim.fn.foldclosed('.') > -1 and 'zo' or 'h'
 end, { expr = true })
 
 map('n', 'l', function()
-  return vim.fn.foldclosed('.') > -1
-    and 'zo'
-    or 'l'
+  return vim.fn.foldclosed('.') > -1 and 'zo' or 'l'
 end, { expr = true })
 
 map('n', 'zj', 'zjzo')
@@ -222,26 +218,42 @@ end, { silent = true })
 
 map('n', '<leader>V', function()
   vim.fn.termopen(vim.env.SHELL, {
-    cwd = helper.get_current_buffer_dir({ alt_dir = InitLua.git_root })
+    cwd = helper.get_current_buffer_dir({ alt_dir = InitLua.git_root }),
   })
 end, { silent = true })
 
 map('n', '<leader><leader>V', function()
   vim.cmd('tabnew')
   vim.fn.termopen(vim.env.SHELL, {
-    cwd = helper.get_current_buffer_dir({ alt_dir = InitLua.git_root })
+    cwd = helper.get_current_buffer_dir({ alt_dir = InitLua.git_root }),
   })
 end, { silent = true })
 
 -- File explorer
-map('n', '<leader>e', function() helper.toggle_explorer() end, { silent = true })
-map('n', '<leader><leader>e', function() helper.open_explorer('split') end, { silent = true })
-map('n', '<leader>E', function() helper.open_explorer('stay') end, { silent = true })
-map('n', '<leader><leader>E', function() helper.open_explorer('tabnew') end, { silent = true })
-map('n', '\\e', function() helper.toggle_explorer(InitLua.path_at_started) end, { silent = true })
-map('n', '\\\\e', function() helper.open_explorer('split', InitLua.path_at_started) end, { silent = true })
-map('n', '\\E', function() helper.open_explorer('stay', InitLua.path_at_started) end, { silent = true })
-map('n', '\\\\E', function() helper.open_explorer('tabnew', InitLua.path_at_started) end, { silent = true })
+map('n', '<leader>e', function()
+  helper.toggle_explorer()
+end, { silent = true })
+map('n', '<leader><leader>e', function()
+  helper.open_explorer('split')
+end, { silent = true })
+map('n', '<leader>E', function()
+  helper.open_explorer('stay')
+end, { silent = true })
+map('n', '<leader><leader>E', function()
+  helper.open_explorer('tabnew')
+end, { silent = true })
+map('n', '\\e', function()
+  helper.toggle_explorer(InitLua.path_at_started)
+end, { silent = true })
+map('n', '\\\\e', function()
+  helper.open_explorer('split', InitLua.path_at_started)
+end, { silent = true })
+map('n', '\\E', function()
+  helper.open_explorer('stay', InitLua.path_at_started)
+end, { silent = true })
+map('n', '\\\\E', function()
+  helper.open_explorer('tabnew', InitLua.path_at_started)
+end, { silent = true })
 
 -- List up
 map('n', '<C-k><C-e>', telescope.find_files) -- TODO: もしパフォーマンスが遅ければ、このキーマッピングはカレントディレクトリ以下のみを表示して、プロジェクトルート以下の表示（`InitLua.git_root or InitLua.path_at_started`）は以下の<C-k>eに分担させる
@@ -326,7 +338,9 @@ map('v', "'T", '<Plug>(fmap-backward-T)', { remap = true })
 
 -- Informations
 map('n', '<C-k><C-a>', '<Cmd>ALEToggle<CR>', { silent = true })
-map('n', '<C-k>a', function() helper.toggle_ale_at_buffer() end, { silent = true })
+map('n', '<C-k>a', function()
+  helper.toggle_ale_at_buffer()
+end, { silent = true })
 map('n', '[]', '<Cmd>ALEDetail<CR>')
 map('n', '[c', '<Cmd>ALEPrevious<CR>')
 map('n', ']c', '<Cmd>ALENext<CR>')
@@ -372,7 +386,7 @@ map('n', '<leader>gL', '<Cmd>GitLog -100 --patch<CR>', { silent = true })
 map('n', '\\gs', '<Cmd>tabnew | GinStatus<CR>', { silent = true })
 
 map('n', '<leader>go', function()
-  git_log.open_buffer({'-100', '--oneline', '--pretty=%h %ad %s', '--date=format:%Y-%m-%d %H:%M'})
+  git_log.open_buffer({ '-100', '--oneline', '--pretty=%h %ad %s', '--date=format:%Y-%m-%d %H:%M' })
 end, { silent = true })
 
 -- Open list up commands with new temporary buffer

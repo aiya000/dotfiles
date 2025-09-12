@@ -123,13 +123,13 @@ return {
             else
               text = ('[%d/%d]'):format(idx, cnt)
             end
-            chunks = {{' ', 'Ignore'}, {text, 'HlSearchLensNear'}}
+            chunks = { { ' ', 'Ignore' }, { text, 'HlSearchLensNear' } }
           else
             text = ('[%s %d]'):format(indicator, idx)
-            chunks = {{' ', 'Ignore'}, {text, 'HlSearchLens'}}
+            chunks = { { ' ', 'Ignore' }, { text, 'HlSearchLens' } }
           end
           render.setVirt(0, lnum - 1, col - 1, chunks, nearest)
-        end
+        end,
       })
     end,
   },
@@ -139,7 +139,7 @@ return {
     'nvim-telescope/telescope-fzf-native.nvim',
     build = 'make',
     cond = function()
-      return vim.fn.executable 'make' == 1
+      return vim.fn.executable('make') == 1
     end,
   },
   -- }}}
@@ -149,21 +149,21 @@ return {
     config = function()
       local notify = require('notify')
       notify.setup({
-        background_colour = "#000000",
+        background_colour = '#000000',
         fps = 30,
         icons = {
-          DEBUG = "",
-          ERROR = "",
-          INFO = "",
-          TRACE = "✎",
-          WARN = ""
+          DEBUG = '',
+          ERROR = '',
+          INFO = '',
+          TRACE = '✎',
+          WARN = '',
         },
         level = 2,
         minimum_width = 50,
-        render = "default",
-        stages = "fade_in_slide_out",
+        render = 'default',
+        stages = 'fade_in_slide_out',
         timeout = false,
-        top_down = true
+        top_down = true,
       })
       vim.notify = notify
     end,
@@ -415,9 +415,9 @@ return {
     'akinsho/bufferline.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      require("bufferline").setup {
+      require('bufferline').setup({
         options = {
-          mode = "tabs",
+          mode = 'tabs',
           numbers = 'none',
           indicator = {
             icon = '▎',
@@ -427,15 +427,15 @@ return {
           modified_icon = '●',
           close_icon = '',
           max_name_length = 30,
-          diagnostics = "nvim_lsp",
+          diagnostics = 'nvim_lsp',
           color_icons = true,
           show_buffer_icons = true,
           show_buffer_close_icons = true,
           show_close_icon = true,
-          separator_style = "slant",
+          separator_style = 'slant',
           always_show_bufferline = true,
         },
-      }
+      })
     end,
   },
   -- }}}
@@ -805,20 +805,20 @@ return {
       require('yanky').setup({
         ring = {
           history_length = 100,
-          storage = "shada",
+          storage = 'shada',
           sync_with_numbered_registers = true,
-          cancel_event = "update",
+          cancel_event = 'update',
         },
         picker = {
           telescope = {
             mappings = {
-            -- TODO: これ機能してる？
-            -- TODO: なゆちゃんがとりあえず書いてくれたものなので、カスタマイズする
-              default = require("yanky.picker").actions.put("p"),
+              -- TODO: これ機能してる？
+              -- TODO: なゆちゃんがとりあえず書いてくれたものなので、カスタマイズする
+              default = require('yanky.picker').actions.put('p'),
               i = {
-                ["<c-g>"] = require("yanky.picker").actions.put("P"),
-                ["<c-x>"] = require("yanky.picker").actions.delete(),
-                ["<c-r>"] = require("yanky.picker").actions.set_register(),
+                ['<c-g>'] = require('yanky.picker').actions.put('P'),
+                ['<c-x>'] = require('yanky.picker').actions.delete(),
+                ['<c-r>'] = require('yanky.picker').actions.set_register(),
               },
             },
           },
@@ -1091,7 +1091,8 @@ return {
   -- }}}
   -- context_filetype.vim {{{
 
-  { 'Shougo/context_filetype.vim',
+  {
+    'Shougo/context_filetype.vim',
     config = function()
       vim.g.context_filetype_filetypes = {
         help = {},
@@ -1233,7 +1234,7 @@ return {
 
       -- Autocmds
       -- Read local tsconfig by deno
-      autocmds.add('FileType', function ()
+      autocmds.add('FileType', function()
         local local_tsconfig = vim.fn.getcwd() .. '/tsconfig.json'
         if vim.fn.filereadable(local_tsconfig) == 1 then
           vim.g.ale_javascript_deno_lint_options = '--config ' .. local_tsconfig

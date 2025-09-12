@@ -97,63 +97,87 @@ if vim == nil then
 
   test('char_range() should generates the char array correctly', function()
     assert_equal(M.char_range('a', 'z'), {
-      'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-      'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+      'a',
+      'b',
+      'c',
+      'd',
+      'e',
+      'f',
+      'g',
+      'h',
+      'i',
+      'j',
+      'k',
+      'l',
+      'm',
+      'n',
+      'o',
+      'p',
+      'q',
+      'r',
+      's',
+      't',
+      'u',
+      'v',
+      'w',
+      'x',
+      'y',
+      'z',
     })
   end)
 
   test('char_range() should handle single character range', function()
-    assert_equal(M.char_range('x', 'x'), {'x'})
+    assert_equal(M.char_range('x', 'x'), { 'x' })
   end)
 
   test('char_range() should handle numbers', function()
-    assert_equal(M.char_range('0', '5'), {'0', '1', '2', '3', '4', '5'})
+    assert_equal(M.char_range('0', '5'), { '0', '1', '2', '3', '4', '5' })
   end)
 
   test('equal() should compare arrays correctly', function()
     -- 同一参照
-    local arr = {1, 2, 3}
+    local arr = { 1, 2, 3 }
     assert_equal(M.equal(arr, arr), true)
 
     -- 同じ内容
-    assert_equal(M.equal({1, 2, 3}, {1, 2, 3}), true)
-    assert_equal(M.equal({'a', 'b'}, {'a', 'b'}), true)
+    assert_equal(M.equal({ 1, 2, 3 }, { 1, 2, 3 }), true)
+    assert_equal(M.equal({ 'a', 'b' }, { 'a', 'b' }), true)
     assert_equal(M.equal({}, {}), true)
 
     -- 異なる内容
-    assert_equal(M.equal({1, 2, 3}, {1, 2, 4}), false)
-    assert_equal(M.equal({1, 2}, {1, 2, 3}), false)
-    assert_equal(M.equal({1, 2, 3}, {1, 2}), false)
+    assert_equal(M.equal({ 1, 2, 3 }, { 1, 2, 4 }), false)
+    assert_equal(M.equal({ 1, 2 }, { 1, 2, 3 }), false)
+    assert_equal(M.equal({ 1, 2, 3 }, { 1, 2 }), false)
   end)
 
   test('equal() should handle nested arrays', function()
-    assert_equal(M.equal({{1, 2}, {3, 4}}, {{1, 2}, {3, 4}}), true)
-    assert_equal(M.equal({{1, 2}, {3, 4}}, {{1, 2}, {3, 5}}), false)
-    assert_equal(M.equal({1, {2, 3}, 4}, {1, {2, 3}, 4}), true)
+    assert_equal(M.equal({ { 1, 2 }, { 3, 4 } }, { { 1, 2 }, { 3, 4 } }), true)
+    assert_equal(M.equal({ { 1, 2 }, { 3, 4 } }, { { 1, 2 }, { 3, 5 } }), false)
+    assert_equal(M.equal({ 1, { 2, 3 }, 4 }, { 1, { 2, 3 }, 4 }), true)
   end)
 
   test('index_of() should find correct index', function()
-    assert_equal(M.index_of({1, 2, 3}, 2), 2)
-    assert_equal(M.index_of({'a', 'b', 'c'}, 'c'), 3)
-    assert_equal(M.index_of({1, 2, 3}, 1), 1)
+    assert_equal(M.index_of({ 1, 2, 3 }, 2), 2)
+    assert_equal(M.index_of({ 'a', 'b', 'c' }, 'c'), 3)
+    assert_equal(M.index_of({ 1, 2, 3 }, 1), 1)
     assert_equal(M.index_of({}, 1), nil)
-    assert_equal(M.index_of({1, 2, 3}, 4), nil)
+    assert_equal(M.index_of({ 1, 2, 3 }, 4), nil)
   end)
 
   test('index_of() should return first occurrence', function()
-    assert_equal(M.index_of({1, 2, 2, 3}, 2), 2)
-    assert_equal(M.index_of({'a', 'b', 'a'}, 'a'), 1)
+    assert_equal(M.index_of({ 1, 2, 2, 3 }, 2), 2)
+    assert_equal(M.index_of({ 'a', 'b', 'a' }, 'a'), 1)
   end)
 
   test('has() should check if value exists', function()
-    assert_equal(M.has({1, 2, 3}, 2), true)
-    assert_equal(M.has({'a', 'b', 'c'}, 'b'), true)
-    assert_equal(M.has({1, 2, 3}, 4), false)
+    assert_equal(M.has({ 1, 2, 3 }, 2), true)
+    assert_equal(M.has({ 'a', 'b', 'c' }, 'b'), true)
+    assert_equal(M.has({ 1, 2, 3 }, 4), false)
     assert_equal(M.has({}, 1), false)
   end)
 
   test('has() cannot find values after nil due to ipairs() limitation', function()
-    assert_equal(M.has({1, nil, 2}, 2), false)
+    assert_equal(M.has({ 1, nil, 2 }, 2), false)
   end)
 end
 

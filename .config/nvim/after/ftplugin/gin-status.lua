@@ -11,7 +11,7 @@ local function stash_push(file_to_save)
     return
   end
 
-  vim.system({'git', 'stash', 'push', '--message', message, '--', file_to_save}, {
+  vim.system({ 'git', 'stash', 'push', '--message', message, '--', file_to_save }, {
     text = true,
   }, function(result)
     vim.schedule(function()
@@ -39,22 +39,22 @@ local function run_add_patch()
   local line = vim.fn.getline('.')
   local filename = line:match('%s*(.-)%s*$') -- Trim whitespace
   if filename and filename ~= '' then
-    vim.fn.termopen({'git', 'add', '--patch', filename}, {
+    vim.fn.termopen({ 'git', 'add', '--patch', filename }, {
       on_exit = function()
         vim.cmd('close')
-      end
+      end,
     })
   end
 end
 
 ---@param subcmd? string[] --`:Gin commit --verbose {subcmd (concatenated)}`
 local function open_commit_buffer(subcmd)
-  local git_commit = vim.fn.extendnew({'Gin', 'commit', '--verbose'}, subcmd or {})
+  local git_commit = vim.fn.extendnew({ 'Gin', 'commit', '--verbose' }, subcmd or {})
   vim.cmd(table.concat(git_commit, ' '))
 end
 
 local function force_show_stash_size()
-  vim.system({'git', 'stash', 'list'}, {
+  vim.system({ 'git', 'stash', 'list' }, {
     text = true,
   }, function(result)
     vim.schedule(function()
@@ -100,7 +100,7 @@ vim.keymap.set('n', 'sp', '<Cmd>Gin stash pop<CR>', { buffer = true })
 vim.keymap.set('n', 'cc', open_commit_buffer, { buffer = true, silent = true })
 
 vim.keymap.set('n', 'ca', function()
-  open_commit_buffer({'--amend'})
+  open_commit_buffer({ '--amend' })
 end, { buffer = true, silent = true })
 
 vim.keymap.set('n', 'cf', ':<C-u>GitCommitFixup<Space>', { buffer = true })

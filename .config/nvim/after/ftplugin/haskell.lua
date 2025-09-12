@@ -11,7 +11,7 @@ vim.opt_local.errorformat = '%f:%l:%c:%m' -- format for stack build and stack te
 local function stack_test(test_name)
   vim.cmd('vertical new')
   vim.fn.termopen('stack test --fast ' .. test_name, {
-    cwd = InitLua.path_at_started
+    cwd = InitLua.path_at_started,
   })
 end
 
@@ -36,7 +36,7 @@ local function stack_integrate_test_or_unit_or_both()
     'a: do tasty-test (default)',
     'b: do doctest',
     'c: do liquid-haskell',
-    'd: all'
+    'd: all',
   }
   print(table.concat(options, '\n'))
 
@@ -60,16 +60,26 @@ vim.keymap.set('n', '<localleader><localleader><localleader>R', stack_test_docte
 vim.keymap.set('n', '<localleader><localleader>b', function()
   vim.cmd('vertical new')
   vim.fn.termopen('stack build --fast', {
-    cwd = InitLua.path_at_started
+    cwd = InitLua.path_at_started,
   })
 end, { buffer = true, silent = true })
 
-vim.keymap.set('n', '<localleader><localleader>w', ghcid_quickfix_start_on_path_started, { buffer = true, silent = true })
+vim.keymap.set(
+  'n',
+  '<localleader><localleader>w',
+  ghcid_quickfix_start_on_path_started,
+  { buffer = true, silent = true }
+)
 vim.keymap.set('n', '<localleader><localleader>W', function()
   vim.cmd('GhcidQuickfixStop')
 end, { buffer = true, silent = true })
 
-vim.keymap.set('n', '<localleader><localleader>T', stack_integrate_test_or_unit_or_both, { buffer = true, silent = true })
+vim.keymap.set(
+  'n',
+  '<localleader><localleader>T',
+  stack_integrate_test_or_unit_or_both,
+  { buffer = true, silent = true }
+)
 vim.keymap.set('n', '<localleader><localleader>t', function()
   vim.cmd('GhcidQuickfixStart "--command=stack ghci :tasty"')
 end, { buffer = true, silent = true })

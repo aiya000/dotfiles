@@ -9,10 +9,7 @@ local helper = require('helper')
 
 local M = {}
 
-M.AugroupInitLua = vim.api.nvim_create_augroup(
-  'InitLua',
-  { clear = true }
-)
+M.AugroupInitLua = vim.api.nvim_create_augroup('InitLua', { clear = true })
 
 ---@param event string | string[]
 ---@param callback (fun(): nil) | string --Lua function or Vim script function name
@@ -46,7 +43,7 @@ end)
 
 -- Move the cursor position to the last position of a file
 M.add_autocmd('BufReadPost', function()
-    vim.cmd(':' .. vim.fn.line("'\""))
+  vim.cmd(':' .. vim.fn.line('\'"'))
 end)
 
 -- Setup Cmdwin

@@ -28,7 +28,7 @@ end
 ---最初期のNeovimのスケジュールでvim.fn.trim()が使えないので、代わりに使う
 ---@param text string
 local function trim(text)
-  return text:gsub("^%s*(.-)%s*$", "%1")
+  return text:gsub('^%s*(.-)%s*$', '%1')
 end
 
 ---@param on_succeed fun(git_root: string): nil --git-rootが正常に読み込めた場合に、git-rootを渡して実行される関数
