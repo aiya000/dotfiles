@@ -8,13 +8,23 @@ M.pipe = require('utils.pipe')
 M.s = require('utils.functions.s').s
 M.deep_equal = Test.deep_equal
 
--- TODO: Recursively
-function M.print_table(t)
-  print('{')
+---TODO: Recursively
+---@param t table
+---@return string
+function M.make_table_to_string(t)
+  local result = {'{'}
   for k, v in pairs(t) do
-    print('  ' .. k, '=', v .. ',')
+    table.insert(result, '  ' .. k, '=', v .. ',')
   end
-  print('}')
+  table.insert(result, '}')
+  return result
+end
+
+---Strong version `tostring()`
+---@param x unknown
+---@return string
+function M.to_pretty_string(x)
+  return type(x) == 'table' and M.make_table_to_string(x) or tostring(x)
 end
 
 ---Example:
