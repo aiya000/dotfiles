@@ -134,6 +134,18 @@ return {
     end,
   },
   -- }}}
+  -- nvim-highlight-colors {{{
+  {
+    'brenoprata10/nvim-highlight-colors',
+    config = function()
+      require('nvim-highlight-colors').setup({
+        render = 'background', -- or 'foreground' or 'first_column'
+        enable_named_colors = true,
+        enable_tailwind = false, -- Enable tailwind colors
+      })
+    end,
+  },
+  -- }}}
   -- telescope-fzf-native {{{
   {
     'nvim-telescope/telescope-fzf-native.nvim',
@@ -1047,11 +1059,6 @@ return {
   -- vim-gfm-syntax {{{
 
   { 'rhysd/vim-gfm-syntax', ft = 'markdown' },
-
-  -- }}}
-  -- vim-css-color {{{
-
-  { 'ap/vim-css-color', ft = { 'css', 'scss', 'sass', 'html', 'xml', 'typescript.tsx' } },
 
   -- }}}
   -- vim-firestore {{{
