@@ -77,33 +77,39 @@ end
 
 -- In-source testing
 if vim == nil then
-  (function()
-    local result = PipedData.new(42):get()
-    assert(result == 42, '- Failed: get() should return the inside value simply')
-  end)();
+  local Test = require('utils.test')
+  local test = Test.test
+  local assert_equal = Test.assert_equal
 
-  (function()
-    local result = PipedData.new('nayu'):apply(string.upper):get()
-    assert(result == 'NAYU', '- Failed: apply() should apply a function to the inside value')
-  end)();
+  test('get() should return the inside value simply', function()
+    local result = pipe(10):get()
+    assert_equal(result, 10)
+  end)
 
-  (function()
-    local result = PipedData.new(42):apply(function()
-      error('error')
-    end, function()
-      return -1
-    end)
-    assert(result == -1, '- Failed: apply() should handle occurred error if application failed')
-  end)();
+  test('apply() should apply a function to the inside value', function()
+    local result = pipe('nayu')
+      :apply(string.upper)
+      :get()
+    assert_equal(result, 'NAYU')
+  end)
 
-  (function()
-    local ok, result = pcall(function()
-      PipedData.new(42):apply(function()
+  test('apply() should handle occurred error if application failed', function()
+    local result = pipe(10)
+      :apply(
+        function() error('error') end,
+        function() return -1 end
+      )
+    assert_equal(result, -1)
+  end)
+
+  test('apply() should be error if application failed and handle is nil', function()
+    local ok, _ = pcall(function()
+      pipe(10):apply(function()
         error('error')
       end)
     end)
-    assert(not ok, '- Failed: apply() should be error if application failed and handle is nil')
-  end)()
+    assert_equal(ok, false)
+  end)
 end
 
 return pipe
