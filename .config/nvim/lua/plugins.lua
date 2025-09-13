@@ -520,38 +520,6 @@ return {
     end,
   },
   -- }}}
-  -- vim-submode {{{
-  {
-    'kana/vim-submode',
-    config = function()
-      vim.g.submode_timeout = 0
-
-      -- Window resize submode
-      vim.fn['submode#enter_with']('win_resize', 'n', '', '<C-s>w')
-      vim.fn['submode#map']('win_resize', 'n', '', 'j', '3<C-w>+')
-      vim.fn['submode#map']('win_resize', 'n', '', 'k', '3<C-w>-')
-      vim.fn['submode#map']('win_resize', 'n', '', 'h', '3<C-w><')
-      vim.fn['submode#map']('win_resize', 'n', '', 'l', '3<C-w>>')
-      vim.fn['submode#map']('win_resize', 'n', '', '<', '20<C-w><')
-      vim.fn['submode#map']('win_resize', 'n', '', '>', '20<C-w>>')
-
-      -- Tab move submode
-      vim.fn['submode#enter_with']('tab_move', 'n', 's', '<C-s>n', ':<C-u>call vimrc#move_tab_next()<CR>')
-      vim.fn['submode#enter_with']('tab_move', 'n', 's', '<C-s>p', ':<C-u>call vimrc#move_tab_prev()<CR>')
-      vim.fn['submode#map']('tab_move', 'n', 's', 'n', ':<C-u>call vimrc#move_tab_next()<CR>')
-      vim.fn['submode#map']('tab_move', 'n', 's', 'p', ':<C-u>call vimrc#move_tab_prev()<CR>')
-
-      -- Window move submode
-      vim.fn['submode#enter_with']('win_move', 'n', 's', '<C-s>N', ':<C-u>call vimrc#move_window_forward()<CR>')
-      vim.fn['submode#enter_with']('win_move', 'n', 's', '<C-s>P', ':<C-u>call vimrc#move_window_backward()<CR>')
-      vim.fn['submode#map']('win_move', 'n', 's', 'N', ':<C-u>call vimrc#move_window_forward()<CR>')
-      vim.fn['submode#map']('win_move', 'n', 's', 'P', ':<C-u>call vimrc#move_window_backward()<CR>')
-      vim.fn['submode#map']('win_move', 'n', 'e', 'H', '"\\<C-w>H" .. (foldlevel(".") > 0 ? "zO" : "") .. "zz"')
-      vim.fn['submode#map']('win_move', 'n', 'e', 'J', '"\\<C-w>J" .. (foldlevel(".") > 0 ? "zO" : "") .. "zz"')
-      vim.fn['submode#map']('win_move', 'n', 'e', 'K', '"\\<C-w>K" .. (foldlevel(".") > 0 ? "zO" : "") .. "zz"')
-      vim.fn['submode#map']('win_move', 'n', 'e', 'L', '"\\<C-w>L" .. (foldlevel(".") > 0 ? "zO" : "") .. "zz"')
-      vim.fn['submode#map']('win_move', 'n', 's', '_', '<C-w>_')
-      vim.fn['submode#map']('win_move', 'n', 's', '"', ':resize 5<CR>')
 
       -- Setup operator-surround
       vim.schedule(helper.setup_operator_surround)
@@ -598,36 +566,6 @@ return {
     dependencies = { 'vim-denops/denops.vim' },
     config = function()
       vim.g.gin_proxy_editor_opener = 'vsplit'
-    end,
-  },
-
-  -- }}}
-  -- vim-lsp {{{
-
-  {
-    'prabirshrestha/vim-lsp',
-    dependencies = { 'prabirshrestha/async.vim' },
-    config = function()
-      vim.g.lsp_async_completion = 1
-      vim.g.lsp_diagnostics_enabled = 0
-      vim.g.lsp_document_code_action_signs_enabled = 0
-      vim.g.lsp_log_file = vim.fn.expand('~/vim-lsp.log')
-      vim.g.lsp_log_verbose = 1
-    end,
-  },
-
-  -- }}}
-  -- vim-lsp-settings {{{
-
-  {
-    'mattn/vim-lsp-settings',
-    config = function()
-      vim.g.lsp_settings = {
-        solargraph = { disabled = 1 },
-      }
-      vim.g.lsp_settings_filetype_vue = { 'typescript-language-server', 'volar-server' }
-      vim.g.lsp_settings_filetype_typescript = { 'typescript-language-server', 'deno' }
-      vim.g.lsp_settings_filetype_javascript = { 'typescript-language-server', 'deno' }
     end,
   },
 
@@ -1223,7 +1161,7 @@ return {
       }
 
       for _, ts in ipairs(typescript_variants) do
-        vim.g.ale_linters[ts] = { 'prettier', 'eslint', 'vim-lsp' }
+        vim.g.ale_linters[ts] = { 'prettier', 'eslint' }
       end
 
       vim.g.ale_scala_scalastyle_config = vim.fn.expand('~/.dotfiles/scalastyle_config_default.xml')
