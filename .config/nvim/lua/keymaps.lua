@@ -11,7 +11,10 @@ local function map(mode, lhs, rhs, opts)
 end
 
 local function clear()
-  pcall(vim.cmd, 'PreciousSwitch')
+  -- Don't enter filetypes by :PreciousSwitch if the filetype is 'help'
+  if not vim.list_contains(InitLua.excluded_filetypes_for_precious_auto_switch, vim.opt.filetype:get()) then
+    pcall(helper.vim_cmd, 'PreciousSwitch')
+  end
   helper.close_all_popups()
   require('notify').dismiss({ silent = true, pending = true })
   vim.cmd('nohlsearch')
@@ -19,7 +22,7 @@ end
 
 local function clear_deep()
   print('clearing...')
-  pcall(vim.cmd, 'PreciousReset') -- NOTE: This is a little heavy
+  pcall(helper.vim_cmd, 'PreciousReset') -- NOTE: This is a little heavy
   clear()
   print('cleared!')
 end
@@ -199,11 +202,38 @@ map('n', '<C-w>s', '<NOP>')
 map('n', '<C-w>v', '<NOP>')
 map('n', 'gh', '<NOP>')
 
---- tabs navigation (yanky handles yank history with different keys)
--- TODO: <C-n>/<C-p> がyanky.nvimのYankyNextEntry/YankyPreviousEntryと競合しています
--- タブ移動を別のキーに変更するか、yanky.nvimの設定を変更してください
-map('n', '<C-n>', helper.tabnext_loop_or_yanky_next, { silent = true })
-map('n', '<C-p>', helper.tabprev_loop_or_yanky_prev, { silent = true })
+--- Window navigations
+map('n', '<C-s>N', function()
+  helper.move_window_forward()
+end, { silent = true })
+
+map('n', '<C-s>P', function()
+  helper.move_window_forward()
+end, { silent = true })
+
+--- Tabs navigations
+--- NOTE: This is overridden when yanky.nvim pasted a text
+map('n', '<C-n>', helper.tabnext_loop, { silent = true })
+map('n', '<C-p>', helper.tabprev_loop, { silent = true })
+
+--- Start tab move mode with moving the current tab
+vim.keymap.set('n', '<C-s>n', function()
+  helper.move_tab_next()
+  if InitLua.hydra.tab_move == nil then
+    vim.notify('InitLua.hydra.tab_move is not loaded', vim.log.levels.ERROR)
+  else
+    InitLua.hydra.tab_move:activate()
+  end
+end)
+
+vim.keymap.set('n', '<C-s>p', function()
+  helper.move_tab_prev()
+  if InitLua.hydra.tab_move == nil then
+    vim.notify('InitLua.hydra.tab_move is not loaded', vim.log.levels.ERROR)
+  else
+    InitLua.hydra.tab_move:activate()
+  end
+end)
 
 -- :terminal
 map('n', '<leader>v', function()
@@ -217,14 +247,16 @@ map('n', '<leader><leader>v', function()
 end, { silent = true })
 
 map('n', '<leader>V', function()
-  vim.fn.termopen(vim.env.SHELL, {
+  vim.fn.jobstart(vim.env.SHELL, {
+    term = true,
     cwd = helper.get_current_buffer_dir({ alt_dir = InitLua.git_root }),
   })
 end, { silent = true })
 
 map('n', '<leader><leader>V', function()
   vim.cmd('tabnew')
-  vim.fn.termopen(vim.env.SHELL, {
+  vim.fn.jobstart(vim.env.SHELL, {
+    term = true,
     cwd = helper.get_current_buffer_dir({ alt_dir = InitLua.git_root }),
   })
 end, { silent = true })
@@ -233,24 +265,31 @@ end, { silent = true })
 map('n', '<leader>e', function()
   helper.toggle_explorer()
 end, { silent = true })
+
 map('n', '<leader><leader>e', function()
   helper.open_explorer('split')
 end, { silent = true })
+
 map('n', '<leader>E', function()
   helper.open_explorer('stay')
 end, { silent = true })
+
 map('n', '<leader><leader>E', function()
   helper.open_explorer('tabnew')
 end, { silent = true })
+
 map('n', '\\e', function()
   helper.toggle_explorer(InitLua.path_at_started)
 end, { silent = true })
+
 map('n', '\\\\e', function()
   helper.open_explorer('split', InitLua.path_at_started)
 end, { silent = true })
+
 map('n', '\\E', function()
   helper.open_explorer('stay', InitLua.path_at_started)
 end, { silent = true })
+
 map('n', '\\\\E', function()
   helper.open_explorer('tabnew', InitLua.path_at_started)
 end, { silent = true })
@@ -276,7 +315,7 @@ map('n', '<C-h><C-d>', function()
 end, { silent = true })
 
 map('n', '<C-h><C-v>', function()
-  local verticaledit = vim.opt_local.virtualedit:get()
+  local verticaledit = vim.opt_local.virtualedit
   vim.opt_local.virtualedit = (verticaledit[1] == '' or #verticaledit == 0) and 'all' or ''
   vim.cmd('set virtualedit?')
 end, { silent = true })
@@ -336,19 +375,34 @@ map('v', "'F", '<Plug>(fmap-backward-f)', { remap = true })
 map('v', "'t", '<Plug>(fmap-forward-t)', { remap = true })
 map('v', "'T", '<Plug>(fmap-backward-T)', { remap = true })
 
--- Informations
+-- ALE and LSP
 map('n', '<C-k><C-a>', '<Cmd>ALEToggle<CR>', { silent = true })
-map('n', '<C-k>a', function()
-  helper.toggle_ale_at_buffer()
-end, { silent = true })
-map('n', '[]', '<Cmd>ALEDetail<CR>')
-map('n', '[c', '<Cmd>ALEPrevious<CR>')
-map('n', ']c', '<Cmd>ALENext<CR>')
-map('n', '<C-g><C-o>', '<Cmd>LspHover<CR>', { silent = true })
-map('n', '<C-g><C-a>', '<Cmd>LspCodeAction<CR>', { silent = true })
-map('n', '<C-g><C-d>', '<Cmd>LspDefinition<CR>', { silent = true })
-map('n', '<C-g><C-i>', '<Cmd>LspPeekImplementation<CR>', { silent = true })
-map('n', '<C-g><C-t>', '<Cmd>LspPeekTypeDefinition<CR>', { silent = true })
+map('n', '[]', function()
+  helper.open_diagnostic_detail()
+end)
+
+map('n', '[c', function()
+  helper.goto_diagnostic('previous')
+end)
+
+map('n', ']c', function()
+  helper.goto_diagnostic('next')
+end)
+
+map('n', '<C-g><C-o>', vim.lsp.buf.hover, { silent = true })
+map('n', '<C-g><C-a>', vim.lsp.buf.code_action, { silent = true })
+map('n', '<C-g><C-d>', vim.lsp.buf.definition, { silent = true })
+map('n', '<C-g>d', vim.lsp.buf.declaration, { silent = true })
+map('n', '<C-g><C-i>', vim.lsp.buf.implementation, { silent = true })
+map('n', '<C-g><C-t>', vim.lsp.buf.type_definition, { silent = true })
+
+-- TODO: これはなゆちゃんがおすすめしてくれたやつ。設定する？
+-- map('n', '<C-k>', vim.lsp.buf.signature_help, { silent = true })
+-- map('n', '<space>wa', vim.lsp.buf.add_workspace_folder, { silent = true })
+-- map('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, { silent = true })
+-- map('n', '<space>wl', function()
+--   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+-- end, { silent = true })
 
 -- Translation
 map('n', '<leader>K', ':<C-u>Weblio <C-r>=expand("<cword>")<CR><CR>')

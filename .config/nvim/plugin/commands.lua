@@ -148,6 +148,13 @@ create_command('Rename', function(opts)
   helper.rename_to(opts.args)
 end, { nargs = 1, complete = 'file', bar = true })
 
+-- Rename variables by lsp
+create_command('LspRename', vim.lsp.buf.references, { bar = true })
+
+create_command('LspFormat', function()
+  vim.lsp.buf.format({ async = true })
+end, { bar = true })
+
 -- TODO: 普通にautofixプラグインを使う（aleあたり）
 create_command('KtlintAutoFix', function()
   local current_file = vim.fn.fnameescape(vim.fn.expand('%'))

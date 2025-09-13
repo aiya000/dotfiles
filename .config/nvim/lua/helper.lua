@@ -6,6 +6,16 @@ local s = fn.s
 
 local M = {}
 
+---Almost same as `vim.cmd`, but typed as a function
+---```lua
+----- pcall(vim.cmd, 'SomeComand') -- This is type mismatched, because vim.cmd is a table
+---pcall(vim_cmd, 'SomeComand') -- This is OK
+---```
+---@param cmd string
+function M.vim_cmd(cmd)
+  vim.cmd(cmd)
+end
+
 ---Storkes a stroke starts with normal mode.
 ---Also Can storke with virtual keymaps, compared to vim.cmd('normal stroke'), like `<Plug>(foo-bar)` and `viw<Plug>(foo-bar)p`.
 ---(NOTE: `vim.cmd('normal foo')` cannot handle `<Plug>(foo-bar)` correctly.)
@@ -41,31 +51,33 @@ end
 
 ---@return string | nil
 local function whoami()
-  local result = vim.fn.system('whoami'):wait()
+  local result = vim.system({'whoami'}):wait()
   if result.code ~= 0 then
     return nil
   end
-  return result
+  return vim.fn.trim(result.stdout)
 end
 
 ---NOTE: This requires `$USER` or `whoami` command
 ---@param dir string
 function M.make_directory_if_missing(dir)
-  if vim.fn.isdirectory(dir) == 0 then
-    local user = vim.env.USER or whoami()
-    if user == nil then
-      error('Both $USER and `whoami` are not provided')
-    end
-    local group = vim.env.GROUP or ''
-
-    vim.fn.mkdir(dir, 'p', '755')
+  local is_directory_existent = vim.fn.isdirectory(dir) == 0
+  if is_directory_existent then
+    return
   end
+
+  local user = vim.env.USER or whoami()
+  if user == nil then
+    error('Both $USER and `whoami` are not provided')
+  end
+
+  vim.fn.mkdir(dir, 'p', '755')
 end
 
 ---Compresses continuously spaces to a space
 function M.compress_spaces()
-  local recent_pattern = vim.fn.getreg('/')
-  vim.cmd(s('try | s/\\s\\+/ /g | execute "normal! ==" | finally | let @/ = "{recent_pattern}" | endtry'))
+  vim.cmd('s/\\s\\+/ /g')
+  vim.cmd('execute "normal! =="')
   vim.cmd('nohlsearch')
 end
 
@@ -177,14 +189,7 @@ function M.get_webpage_title(url)
     return vim.fn.system(string.format('curl --silent %s | pup --plain "title json{}" | jq -r ".[0].text"', url))
   end)
 
-  return ok and resultor or 'get_webpage_title(): something happened: ' .. result
-end
-
-function M.toggle_ale_at_buffer()
-  vim.b.ale_enabled = not (vim.b.ale_enabled or true)
-  -- Refresh
-  vim.cmd('ALEToggle')
-  vim.cmd('ALEToggle')
+  return ok and result or 'get_webpage_title(): something happened: ' .. result
 end
 
 ---Moves a current buffer to left of tab
@@ -436,8 +441,7 @@ function M.remove_text_after_cursor()
   end
 end
 
-function M.tabnext_loop_or_yanky_next()
-  -- TODO: yankyがactiveなら`<Plug>(YankyNextEntry)`を実行する
+function M.tabnext_loop()
   if vim.fn.tabpagenr() == vim.fn.tabpagenr('$') then
     vim.cmd('tabnext 1')
   else
@@ -445,8 +449,7 @@ function M.tabnext_loop_or_yanky_next()
   end
 end
 
-function M.tabprev_loop_or_yanky_prev()
-  -- TODO: yankyがactiveなら`<Plug>(YankyPreviousEntry)`を実行する
+function M.tabprev_loop()
   if vim.fn.tabpagenr() == 1 then
     vim.cmd('tablast')
   else
@@ -569,6 +572,88 @@ function M.camelize_or_uncamelize_current_word_as_repeatable()
   -- Use vim-operator-camelize plugin to toggle camelCase/snake_case
   M.run_with_virtual_keymaps('viw<Plug>(operator-camelize-toggle)')
   vim.call('repeat#set', 'viw\\<Plug>(operator-camelize-toggle)')
+end
+
+---@param direction 'next' | 'previous'
+local function get_diagnostic_method(direction)
+  return direction == 'next'
+    and { lsp_func = vim.diagnostic.goto_next, ale_cmd = 'ALENext' }
+    or direction == 'previous'
+      and { lsp_func = vim.diagnostic.goto_prev, ale_cmd = 'ALEPrevious' }
+      or error('Invalid direction: ' .. tostring(direction))
+end
+
+---LSP診断での移動を試行。
+---LSPで移動できなかった場合はALEで移動。
+---@param direction 'next' | 'previous'
+function M.goto_diagnostic(direction)
+  local goto = get_diagnostic_method(direction)
+  local current_line = vim.fn.line('.')
+  local lsp_moved = false
+
+  local ok, _ = pcall(goto.lsp_func, { float = { border = 'rounded' } })
+  if ok and vim.fn.line('.') ~= current_line then
+    lsp_moved = true
+  end
+
+  if not lsp_moved then
+    vim.cmd(goto.ale_cmd)
+  end
+end
+
+---Opens diagnostic detail in a new window (LSP or ALE)
+function M.open_diagnostic_detail()
+  local current_line = vim.fn.line('.')
+  local lsp_diagnostics = vim.diagnostic.get(0, {
+    lnum = current_line - 1, -- LSPは0-based
+  })
+
+  -- 現在行のLSP診断があるか確認
+  local current_lsp_diagnostic = nil
+  for _, diag in ipairs(lsp_diagnostics) do
+    if diag.lnum == current_line - 1 then
+      current_lsp_diagnostic = diag
+      break
+    end
+  end
+
+  if not current_lsp_diagnostic then
+    -- LSP診断がない場合はALEの詳細を表示
+    vim.cmd('ALEDetail')
+    return
+  end
+
+  -- LSP診断を新しいウィンドウで表示
+  local content = {}
+  table.insert(content, '# LSP Diagnostic')
+  table.insert(content, '')
+  table.insert(content, '**Severity:** ' .. vim.diagnostic.severity[current_lsp_diagnostic.severity])
+  table.insert(content, '**Source:** ' .. (current_lsp_diagnostic.source or 'LSP'))
+  table.insert(content, '**Line:** ' .. (current_lsp_diagnostic.lnum + 1))
+  table.insert(content, '**Column:** ' .. (current_lsp_diagnostic.col + 1))
+  table.insert(content, '')
+  table.insert(content, '**Message:**')
+
+  -- メッセージを行ごとに分割
+  local message_lines = vim.split(current_lsp_diagnostic.message, '\n')
+  for _, line in ipairs(message_lines) do
+    table.insert(content, line)
+  end
+
+  -- 新しいバッファを作成
+  vim.cmd('new')
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, content)
+  vim.bo.buftype = 'nofile'
+  vim.bo.bufhidden = 'wipe'
+  vim.bo.filetype = 'markdown'
+  vim.bo.readonly = true
+  vim.bo.modifiable = false
+  vim.wo.wrap = true
+  vim.wo.linebreak = true
+
+  -- ウィンドウサイズを調整
+  local height = math.min(#content + 2, math.floor(vim.o.lines * 0.4))
+  vim.cmd('resize ' .. height)
 end
 
 return M

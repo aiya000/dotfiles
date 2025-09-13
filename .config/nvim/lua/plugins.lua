@@ -1,4 +1,4 @@
----プラグイン設定
+---プラグイン設定（ただしキーマッピングは`./keymaps.lua`に書く）
 
 local helper = require('helper')
 local autocmds = require('autocmds')
@@ -144,6 +144,188 @@ return {
         enable_tailwind = false, -- Enable tailwind colors
       })
     end,
+  },
+  -- }}}
+  -- nvim-lspconfig {{{
+  {
+    'neovim/nvim-lspconfig',
+    config = function()
+      local lspconfig = require('lspconfig')
+
+      -- ホバーウィンドウの設定を改善
+      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+        border = "rounded",
+        max_width = 80,
+        max_height = 20,
+        focusable = true,
+      })
+
+      -- 診断表示の設定
+      vim.diagnostic.config({
+        virtual_text = true,       -- 行末に診断テキストを表示
+        signs = true,              -- サインカラムに表示
+        underline = true,          -- 下線表示
+        update_in_insert = false,  -- インサートモード中は更新しない
+        severity_sort = true,      -- 重要度でソート
+        float = {
+          border = 'rounded',
+          source = 'always',
+          header = '',
+          prefix = '',
+        },
+      })
+
+      -- LSPクライアント接続時のキーマッピング設定
+      local function on_attach(client, bufnr)
+        -- ホバーウィンドウにフォーカスを移すキーマッピング
+        vim.keymap.set('n', '<C-g><C-f>', function()
+          vim.lsp.buf.hover()
+          -- 少し待ってからフローティングウィンドウにフォーカス
+          vim.defer_fn(function()
+            local wins = vim.api.nvim_list_wins()
+            for _, win in ipairs(wins) do
+              if vim.api.nvim_win_get_config(win).relative ~= "" then
+                vim.api.nvim_set_current_win(win)
+                break
+              end
+            end
+          end, 100)
+        end, { buffer = bufnr, desc = 'LSP hover with focus' })
+
+        -- カーソル行の診断を自動表示
+        vim.api.nvim_create_autocmd("CursorHold", {
+          buffer = bufnr,
+          callback = function()
+            local opts = {
+              focusable = false,
+              close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+              border = 'rounded',
+              source = 'always',
+              prefix = ' ',
+              scope = 'cursor',
+            }
+            vim.diagnostic.open_float(nil, opts)
+          end
+        })
+      end
+
+      -- 共通設定
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+      lspconfig.ts_ls.setup{
+        capabilities = capabilities,
+        on_attach = on_attach,
+      }
+
+      lspconfig.lua_ls.setup{
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = {
+          Lua = {
+            runtime = { version = 'LuaJIT' },
+            diagnostics = { globals = {'vim'} },
+            workspace = { library = vim.api.nvim_get_runtime_file("", true) },
+            telemetry = { enable = false },
+          },
+        },
+      }
+    end
+  },
+  -- }}}
+  -- nvim-cmp {{{
+  {
+    'hrsh7th/nvim-cmp',
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp',        -- LSP補完
+      'hrsh7th/cmp-buffer',          -- バッファ補完
+      'hrsh7th/cmp-path',            -- パス補完
+      'hrsh7th/cmp-cmdline',         -- コマンドライン補完
+      'L3MON4D3/LuaSnip',            -- スニペットエンジン
+      'saadparwaiz1/cmp_luasnip',    -- LuaSnipとの統合
+    },
+    config = function()
+      local cmp = require('cmp')
+      local luasnip = require('luasnip')
+
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.abort(),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+          ['<Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+          ['<S-Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+        }),
+        sources = cmp.config.sources({
+          { name = 'nvim_lsp' },
+          { name = 'luasnip' },
+        }, {
+          { name = 'buffer' },
+          { name = 'path' },
+        })
+      })
+
+      -- コマンドライン補完
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = 'path' }
+        }, {
+          { name = 'cmdline' }
+        })
+      })
+    end
+  },
+  -- }}}
+  -- mason.nvim {{{
+  {
+    'williamboman/mason.nvim',
+    config = function()
+      require('mason').setup({
+        ui = {
+          border = 'rounded'
+        }
+      })
+    end
+  },
+  -- }}}
+  -- mason-lspconfig.nvim {{{
+  {
+    'williamboman/mason-lspconfig.nvim',
+    config = function()
+      require('mason-lspconfig').setup({
+        ensure_installed = { 'lua_ls', 'ts_ls' },
+        automatic_installation = true,
+        handlers = {
+          -- デフォルトハンドラー（自動セットアップを無効にして重複を防ぐ）
+          function(server_name)
+            -- 何もしない（nvim-lspconfigで手動設定しているため）
+          end,
+        },
+      })
+    end
   },
   -- }}}
   -- telescope-fzf-native {{{
@@ -520,9 +702,75 @@ return {
     end,
   },
   -- }}}
+  -- hydra.nvim {{{
+  {
+    'anuvyklack/hydra.nvim',
+    config = function()
+      local Hydra = require('hydra')
+      local helper = require('helper')
 
-      -- Setup operator-surround
-      vim.schedule(helper.setup_operator_surround)
+      Hydra({
+        name = 'Window Resize',
+        mode = 'n',
+        body = '<C-s>w',
+        heads = {
+          { 'j', '<C-w>+', { desc = 'increase height' } },
+          { 'k', '<C-w>-', { desc = 'decrease height' } },
+          { 'h', '3<C-w><', { desc = 'decrease width' } },
+          { 'l', '3<C-w>>', { desc = 'increase width' } },
+          { '<Esc>', nil, { exit = true, desc = 'exit' } },
+        },
+        config = {
+          hint = {
+            type = 'window',
+            border = 'rounded',
+          },
+        },
+      })
+
+      InitLua.hydra.tab_move = Hydra({
+        name = 'Tab Move',
+        mode = 'n',
+        body = 'dummy key',
+        heads = {
+          { 'n', function() helper.move_tab_next() end, { desc = 'next tab' } },
+          { 'p', function() helper.move_tab_prev() end, { desc = 'prev tab' } },
+          { '<Esc>', nil, { exit = true, desc = 'exit' } },
+        },
+        config = {
+          hint = {
+            type = 'window',
+            border = 'rounded',
+          },
+        },
+      })
+
+      InitLua.hydra.window_move = Hydra({
+        name = 'Window Move',
+        mode = 'n',
+        body = 'dummy key',
+        heads = {
+          { 'N', function() helper.move_window_forward() end, { desc = 'move forward' } },
+          { 'P', function() helper.move_window_backward() end, { desc = 'move backward' } },
+          { 'H', '<C-w>H<Cmd>normal! zz<CR>', { desc = 'move left' } },
+          { 'J', '<C-w>J<Cmd>normal! zz<CR>', { desc = 'move down' } },
+          { 'K', '<C-w>K<Cmd>normal! zz<CR>', { desc = 'move up' } },
+          { 'L', '<C-w>L<Cmd>normal! zz<CR>', { desc = 'move right' } },
+          { '_', '<C-w>_', { desc = 'maximize height' } },
+          { '"', '<Cmd>resize 5<CR>', { desc = 'resize to 5' } },
+          { 'q', nil, { exit = true, desc = 'exit' } },
+          { '<Esc>', nil, { exit = true, desc = 'exit' } },
+        },
+        config = {
+          timeout = false,
+          hint = {
+            type = 'window',
+            position = 'bottom',
+            offset = 0,
+            border = 'rounded',
+          },
+        },
+      })
     end,
   },
   -- }}}
@@ -568,16 +816,6 @@ return {
       vim.g.gin_proxy_editor_opener = 'vsplit'
     end,
   },
-
-  -- }}}
-  -- asyncomplete.vim {{{
-
-  { 'prabirshrestha/asyncomplete.vim' },
-
-  -- }}}
-  -- asyncomplete-lsp.vim {{{
-
-  { 'prabirshrestha/asyncomplete-lsp.vim' },
 
   -- }}}
   -- nvim-treesitter {{{
@@ -667,6 +905,9 @@ return {
   {
     'rhysd/vim-operator-surround',
     dependencies = { 'kana/vim-operator-user' },
+    config = function()
+      vim.schedule(helper.setup_operator_surround)
+    end
   },
 
   -- }}}

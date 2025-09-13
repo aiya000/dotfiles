@@ -20,6 +20,7 @@ InitLua = InitLua
     is_macos = vim.fn.has('macunix') == 1,
     git_root = nil,
     memo_path = '~/.backup/memo.md',
+    hydra = {}, -- To activate by keymaps. See `./lua/plugins.lua`
   }
 
 -- Delayed to avoid startup slowdown
@@ -42,7 +43,7 @@ InitLua.undodir = s('{backupdir}/undo', { backupdir = backupdir })
 InitLua.viewdir = s('{backupdir}/view', { backupdir = backupdir })
 InitLua.sessiondir = s('{backupdir}/session', { backupdir = backupdir })
 
--- Please see 'vimrc#bufclose_filetype()'.
+-- See `bufclose_filetype()` in `./lua/helper.lua`
 InitLua.temporary_buftypes = {
   'aref_web',
   'diff',
@@ -60,6 +61,11 @@ InitLua.temporary_buftypes = {
   'ddu-ff',
   'ddu-filter',
   'fern',
+}
+
+-- See `./lua/keymaps.lua`
+InitLua.excluded_filetypes_for_precious_auto_switch = {
+  'help',
 }
 
 -- }}}
