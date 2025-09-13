@@ -36,15 +36,18 @@ local function run_stash_push_message()
 end
 
 local function run_add_patch()
-  local line = vim.fn.getline('.')
-  local filename = line:match('%s*(.-)%s*$') -- Trim whitespace
-  if filename and filename ~= '' then
-    vim.fn.termopen({ 'git', 'add', '--patch', filename }, {
-      on_exit = function()
-        vim.cmd('close')
-      end,
-    })
+  local line = vim.fn.getline('.') -- Like ' M path/to/file.txt', 'M  path/to/file.txt', '?? path/to/file.txt', and etc
+  local filename = line:match('^%s+%S+%s+(.*)$') 
+  if filename == nil or filename == '' then
+    return
   end
+  vim.cmd('vertical new')
+  vim.fn.termopen({ 'git', 'add', '--patch', filename }, {
+    on_exit = function()
+      vim.cmd('close')
+    end,
+  })
+  vim.fn.feedkeys('i', 'n') -- Enter insert mode
 end
 
 ---@param subcmd? string[] --`:Gin commit --verbose {subcmd (concatenated)}`
