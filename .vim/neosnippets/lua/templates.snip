@@ -197,5 +197,5 @@ abbr print('TODO: Not Implemented Yet (${0:function_name})')
   print('TODO: Not Implemented Yet (${0:function_name})')
 
 snippet poi
-abbr vim.api.nvim_echo({{'poi: ' .. vim.inspect(${0})}}, true, {})
-    vim.api.nvim_echo({{'poi: ' .. vim.inspect(${0})}}, true, {})
+abbr vim.notify('poi: ' .. vim.inspect(${0}), vim.log.levels.DEBUG)
+    vim.notify('poi: ' .. vim.inspect(${0}), vim.log.levels.DEBUG)
