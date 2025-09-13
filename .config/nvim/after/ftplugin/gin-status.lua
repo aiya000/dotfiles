@@ -1,4 +1,3 @@
-local helper = require('helper')
 local s = require('utils.functions').s
 
 vim.opt_local.cursorline = true
@@ -36,13 +35,21 @@ local function run_stash_push_message()
 end
 
 local function run_add_patch()
+  if InitLua.git_root == nil then
+    vim.notify('git root directory is never loaded. wait.', vim.log.levels.ERROR)
+    return
+  end
+
   local line = vim.fn.getline('.') -- Like ' M path/to/file.txt', 'M  path/to/file.txt', '?? path/to/file.txt', and etc
-  local filename = line:match('^%s+%S+%s+(.*)$') 
+  local filename = line:match('^%s+%S+%s+(.*)$')
   if filename == nil or filename == '' then
     return
   end
+  local filepath = InitLua.git_root .. '/' .. filename
+
   vim.cmd('vertical new')
-  vim.fn.termopen({ 'git', 'add', '--patch', filename }, {
+  vim.fn.jobstart({ 'git', 'add', '--patch', filepath }, {
+    term = true,
     on_exit = function()
       vim.cmd('close')
     end,
