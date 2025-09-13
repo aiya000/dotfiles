@@ -571,4 +571,113 @@ function M.camelize_or_uncamelize_current_word_as_repeatable()
   vim.call('repeat#set', 'viw\\<Plug>(operator-camelize-toggle)')
 end
 
+---Maybe a pair of a function and its arguments, or not callable value
+---@generic Result
+---@alias MaybeCallable ((fun(): Result) | nil) | { callee: (fun(...): Result) | nil, args: unknown[] } | [(fun(...): Result) | nil, ...unknown]
+
+---Just a pair of a function and its arguments
+---@generic Result
+---@alias Callable (fun(): Result) | { callee: fun(...): Result, args: unknown[] } | [fun(...): Result, ...unknown]
+
+---Normalizes `MaybeCallable` to `Callable`
+---@generic Result
+---@param f MaybeCallable<Result>
+---@return Callable<Result> | nil
+local function get_callable(f)
+  if f == nil then
+    return nil
+  end
+
+  if type(f) == 'function' then
+    return f
+  end
+
+  if type(f) ~= 'table' then
+    return nil
+  end
+
+  if f.callee ~= nil and type(f.callee) == 'function' then
+    return f
+  end
+
+  if f[1] ~= nil and type(f[1]) == 'function' then
+    return f
+  end
+
+  error('Invalid argument: the argument type is unexpected, the argument is: ' .. M.to_pretty_string(f))
+end
+
+---@generic Result
+---@param f Callable<Result>
+---@return fun(): Result
+local function get_call(f)
+  if type(f) == 'function' then
+    return f
+  end
+
+  if f.callee ~= nil then
+    return f.callee
+  end
+
+  if f[1] ~= nil then
+    return f[1]
+  end
+
+  error('Invalid argument: the argument type is unexpected, the argument is: ' .. M.to_pretty_string(f))
+end
+
+---@generic Result
+---@param f Callable<Result>
+---@return unknown[]
+local function get_args(f)
+  if type(f) == 'function' then
+    return {}
+  end
+
+  if f.callee ~= nil then
+    return f.args
+  end
+
+  if f[1] ~= nil then
+    local args = { table.unpack(f) }
+    table.remove(args, 1)
+    return args
+  end
+
+  error('Invalid argument: the argument type is unexpected, the argument is: ' .. M.to_pretty_string(f))
+end
+
+---See `call_when_non_nil_or_notify_error` for the params
+---@param loglevel_or_function nil | integer | fun(error_message: string): nil
+---@param error_message string
+local function notify_error(loglevel_or_function, error_message)
+  if loglevel_or_function == nil or type(loglevel_or_function) == 'number' then
+    local loglevel = loglevel_or_function or vim.log.levels.ERROR
+    vim.notify(error_message, loglevel)
+    return
+  end
+
+  local func = loglevel_or_function
+  func(error_message)
+end
+
+---Calls `f()` when `f` is not nil
+---@generic Result
+---@param f Callable
+---@param error_message string --An error message to vim.notify (or the function of `loglevel_or_function`) when `f` is nil
+---@param loglevel_or_function? integer | fun(error_message: string): nil --Defaults to `vim.log.levels.ERROR`. (integer) A log level for `error_message`. (function) To be called if `f` is nil, as `loglevel_or_function(error_message)`
+---@return Result | nil --Returns nil if the taken function is nil
+---TODO: 少し一般化したらvim.notifyが消えるので、`utils/functins.lua`に移せる
+function M.call_when_non_nil_or_notify_error(f, error_message, loglevel_or_function)
+  if f == nil then
+    notify_error(loglevel_or_function, error_message)
+    return
+  end
+
+  local callable = get_callable(f)
+  local call = get_call(callable)
+  local args = get_args(callable)
+  return call(table.unpack(args))
+end
+
 return M
