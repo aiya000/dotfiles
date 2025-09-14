@@ -184,6 +184,38 @@ function M.termopen_shell(opts)
   vim.fn.feedkeys('i')
 end
 
+---Opens claude code as a floating terminal window
+---@param args? string --`$ claude {args}`
+function M.termopen_claude_code(args)
+  -- Calculate window dimensions
+  local width = math.floor(vim.o.columns * 0.8)
+  local height = math.floor(vim.o.lines * 0.8)
+  local row = math.floor((vim.o.lines - height) / 2)
+  local col = math.floor((vim.o.columns - width) / 2)
+
+  -- Create floating window
+  local buf = vim.api.nvim_create_buf(false, true)
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = 'editor',
+    width = width,
+    height = height,
+    row = row,
+    col = col,
+    style = 'minimal',
+    border = 'rounded',
+  })
+
+  -- Start claude in the terminal
+  M.termopen_temporary('claude ' .. (args or ''))
+  -- Debug: ↓
+  -- vim.fn.jobstart('claude ' .. (args or ''))
+
+  -- Enter insert mode
+  vim.cmd('startinsert')
+
+  return win, buf
+end
+
 ---Fetches a detail of <title> from a URL
 function M.get_webpage_title(url)
   local ok, result = pcall(function()
