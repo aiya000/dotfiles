@@ -206,7 +206,6 @@ if not InitLua.loaded then
 end
 
 -- }}}
-require('lazy-nvim-config')
 -- Prepare backup directories {{{
 
 helper.make_directory_if_missing(InitLua.backupdir)
@@ -229,6 +228,7 @@ end
 
 -- }}}
 
+require('lazy-nvim-config')
 require('autocmds')
 require('plugins')
 require('keymaps')
