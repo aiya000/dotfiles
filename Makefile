@@ -700,3 +700,7 @@ install-peco:
 
 install-btop:
 	which btop || $(AptInstall) btop
+
+# 画面上にキーを表示するツール
+install-keycastow:
+	powershell.exe -Command "Start-Process choco -ArgumentList 'install keycastow' -Verb RunAs"
