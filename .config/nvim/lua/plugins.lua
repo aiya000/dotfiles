@@ -363,6 +363,22 @@ return {
     end,
   },
   -- }}}
+  -- indentmini.nvim {{{
+  {
+    'nvimdev/indentmini.nvim',
+    config = function()
+      require('indentmini').setup({
+        exclude = {
+          'help',
+          'lazy',
+          'mason',
+        }
+      })
+      vim.cmd.highlight('IndentLine guifg=#454545')
+      vim.cmd.highlight('IndentLineCurrent guifg=#123456')
+    end,
+  },
+  -- }}}
   -- galaxyline {{{
   {
     'NTBBloodbath/galaxyline.nvim',
