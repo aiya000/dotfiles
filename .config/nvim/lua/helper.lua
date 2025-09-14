@@ -165,9 +165,10 @@ end
 ---@param opts? table
 function M.termopen_temporary(cmd, opts)
   local opts_with_on_exit = vim.tbl_extend('force', opts or {}, {
+    term = true,
     on_exit = M.get_termopen_options_bdelete_when_on_exit(opts),
   })
-  vim.fn.termopen(cmd, opts_with_on_exit)
+  vim.fn.jobstart(cmd, opts_with_on_exit)
 end
 
 ---Opens a terminal buffer with $SHELL that closes it when exited immediately.
@@ -179,6 +180,7 @@ function M.termopen_shell(opts)
   M.termopen_temporary(vim.env.SHELL, {
     env = { NEOVIM_TERMINAL = true },
   })
+  vim.opt_local.filetype = 'terminal-shell'
   vim.fn.feedkeys('i')
 end
 
