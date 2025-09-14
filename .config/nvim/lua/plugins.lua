@@ -153,8 +153,8 @@ return {
       local lspconfig = require('lspconfig')
 
       -- ホバーウィンドウの設定を改善
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-        border = "rounded",
+      vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
+        border = 'rounded',
         max_width = 80,
         max_height = 20,
         focusable = true,
@@ -162,11 +162,11 @@ return {
 
       -- 診断表示の設定
       vim.diagnostic.config({
-        virtual_text = true,       -- 行末に診断テキストを表示
-        signs = true,              -- サインカラムに表示
-        underline = true,          -- 下線表示
-        update_in_insert = false,  -- インサートモード中は更新しない
-        severity_sort = true,      -- 重要度でソート
+        virtual_text = true, -- 行末に診断テキストを表示
+        signs = true, -- サインカラムに表示
+        underline = true, -- 下線表示
+        update_in_insert = false, -- インサートモード中は更新しない
+        severity_sort = true, -- 重要度でソート
         float = {
           border = 'rounded',
           source = 'always',
@@ -184,7 +184,7 @@ return {
           vim.defer_fn(function()
             local wins = vim.api.nvim_list_wins()
             for _, win in ipairs(wins) do
-              if vim.api.nvim_win_get_config(win).relative ~= "" then
+              if vim.api.nvim_win_get_config(win).relative ~= '' then
                 vim.api.nvim_set_current_win(win)
                 break
               end
@@ -193,55 +193,55 @@ return {
         end, { buffer = bufnr, desc = 'LSP hover with focus' })
 
         -- カーソル行の診断を自動表示
-        vim.api.nvim_create_autocmd("CursorHold", {
+        vim.api.nvim_create_autocmd('CursorHold', {
           buffer = bufnr,
           callback = function()
             local opts = {
               focusable = false,
-              close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+              close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' },
               border = 'rounded',
               source = 'always',
               prefix = ' ',
               scope = 'cursor',
             }
             vim.diagnostic.open_float(nil, opts)
-          end
+          end,
         })
       end
 
       -- 共通設定
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-      lspconfig.ts_ls.setup{
+      lspconfig.ts_ls.setup({
         capabilities = capabilities,
         on_attach = on_attach,
-      }
+      })
 
-      lspconfig.lua_ls.setup{
+      lspconfig.lua_ls.setup({
         capabilities = capabilities,
         on_attach = on_attach,
         settings = {
           Lua = {
             runtime = { version = 'LuaJIT' },
-            diagnostics = { globals = {'vim'} },
-            workspace = { library = vim.api.nvim_get_runtime_file("", true) },
+            diagnostics = { globals = { 'vim' } },
+            workspace = { library = vim.api.nvim_get_runtime_file('', true) },
             telemetry = { enable = false },
           },
         },
-      }
-    end
+      })
+    end,
   },
   -- }}}
   -- nvim-cmp {{{
   {
     'hrsh7th/nvim-cmp',
     dependencies = {
-      'hrsh7th/cmp-nvim-lsp',        -- LSP補完
-      'hrsh7th/cmp-buffer',          -- バッファ補完
-      'hrsh7th/cmp-path',            -- パス補完
-      'hrsh7th/cmp-cmdline',         -- コマンドライン補完
-      'L3MON4D3/LuaSnip',            -- スニペットエンジン
-      'saadparwaiz1/cmp_luasnip',    -- LuaSnipとの統合
+      'hrsh7th/cmp-nvim-lsp', -- LSP補完
+      'hrsh7th/cmp-buffer', -- バッファ補完
+      'hrsh7th/cmp-path', -- パス補完
+      'hrsh7th/cmp-cmdline', -- コマンドライン補完
+      'L3MON4D3/LuaSnip', -- スニペットエンジン
+      'saadparwaiz1/cmp_luasnip', -- LuaSnipとの統合
     },
     config = function()
       local cmp = require('cmp')
@@ -284,19 +284,19 @@ return {
         }, {
           { name = 'buffer' },
           { name = 'path' },
-        })
+        }),
       })
 
       -- コマンドライン補完
       cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
-          { name = 'path' }
+          { name = 'path' },
         }, {
-          { name = 'cmdline' }
-        })
+          { name = 'cmdline' },
+        }),
       })
-    end
+    end,
   },
   -- }}}
   -- mason.nvim {{{
@@ -305,10 +305,10 @@ return {
     config = function()
       require('mason').setup({
         ui = {
-          border = 'rounded'
-        }
+          border = 'rounded',
+        },
       })
-    end
+    end,
   },
   -- }}}
   -- mason-lspconfig.nvim {{{
@@ -325,7 +325,7 @@ return {
           end,
         },
       })
-    end
+    end,
   },
   -- }}}
   -- telescope-fzf-native {{{
@@ -733,8 +733,20 @@ return {
         mode = 'n',
         body = 'dummy key',
         heads = {
-          { 'n', function() helper.move_tab_next() end, { desc = 'next tab' } },
-          { 'p', function() helper.move_tab_prev() end, { desc = 'prev tab' } },
+          {
+            'n',
+            function()
+              helper.move_tab_next()
+            end,
+            { desc = 'next tab' },
+          },
+          {
+            'p',
+            function()
+              helper.move_tab_prev()
+            end,
+            { desc = 'prev tab' },
+          },
           { '<Esc>', nil, { exit = true, desc = 'exit' } },
         },
         config = {
@@ -750,8 +762,20 @@ return {
         mode = 'n',
         body = 'dummy key',
         heads = {
-          { 'N', function() helper.move_window_forward() end, { desc = 'move forward' } },
-          { 'P', function() helper.move_window_backward() end, { desc = 'move backward' } },
+          {
+            'N',
+            function()
+              helper.move_window_forward()
+            end,
+            { desc = 'move forward' },
+          },
+          {
+            'P',
+            function()
+              helper.move_window_backward()
+            end,
+            { desc = 'move backward' },
+          },
           { 'H', '<C-w>H<Cmd>normal! zz<CR>', { desc = 'move left' } },
           { 'J', '<C-w>J<Cmd>normal! zz<CR>', { desc = 'move down' } },
           { 'K', '<C-w>K<Cmd>normal! zz<CR>', { desc = 'move up' } },
@@ -907,7 +931,7 @@ return {
     dependencies = { 'kana/vim-operator-user' },
     config = function()
       vim.schedule(helper.setup_operator_surround)
-    end
+    end,
   },
 
   -- }}}

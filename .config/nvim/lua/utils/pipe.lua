@@ -93,13 +93,9 @@ end
 ---@param handle? fun(): NextType
 ---@return PipedData<NextType>
 function PipedData:apply_if_not_nil(f, handle)
-  return self:apply_if(
-    function(value)
-      return value ~= nil
-    end,
-    f,
-    handle
-  )
+  return self:apply_if(function(value)
+    return value ~= nil
+  end, f, handle)
 end
 
 ---Calls a `self.value`'s `method` method, and returns the result.
@@ -138,18 +134,16 @@ if vim == nil then
   end)
 
   test('apply() should apply a function to the inside value', function()
-    local result = pipe('nayu')
-      :apply(string.upper)
-      :get()
+    local result = pipe('nayu'):apply(string.upper):get()
     assert_equal(result, 'NAYU')
   end)
 
   test('apply() should handle occurred error if application failed', function()
-    local result = pipe(10)
-      :apply(
-        function() error('error') end,
-        function() return -1 end
-      )
+    local result = pipe(10):apply(function()
+      error('error')
+    end, function()
+      return -1
+    end)
     assert_equal(result, -1)
   end)
 
@@ -164,85 +158,94 @@ if vim == nil then
 
   test('apply_if() should apply function when predicate is true', function()
     local result = pipe(10)
-      :apply_if(
-        function(x) return x > 5 end,
-        function(x) return x * 2 end
-      )
+      :apply_if(function(x)
+        return x > 5
+      end, function(x)
+        return x * 2
+      end)
       :get()
     assert_equal(result, 20)
   end)
 
   test('apply_if() should not apply function when predicate is false', function()
     local result = pipe(3)
-      :apply_if(
-        function(x) return x > 5 end,
-        function(x) return x * 2 end
-      )
+      :apply_if(function(x)
+        return x > 5
+      end, function(x)
+        return x * 2
+      end)
       :get()
     assert_equal(result, 3)
   end)
 
   test('apply_if() should handle error with handle function', function()
-    local result = pipe(10)
-      :apply_if(
-        function(x) return x > 5 end,
-        function() error('error') end,
-        function() return -1 end
-      )
+    local result = pipe(10):apply_if(function(x)
+      return x > 5
+    end, function()
+      error('error')
+    end, function()
+      return -1
+    end)
     assert_equal(result, -1)
   end)
 
   test('apply_conditional() should apply if_true when predicate is true', function()
     local result = pipe(10)
-      :apply_conditional(
-        function(x) return x > 5 end,
-        function(x) return x * 2 end,
-        function(x) return x + 100 end
-      )
+      :apply_conditional(function(x)
+        return x > 5
+      end, function(x)
+        return x * 2
+      end, function(x)
+        return x + 100
+      end)
       :get()
     assert_equal(result, 20)
   end)
 
   test('apply_conditional() should apply if_false when predicate is false', function()
     local result = pipe(3)
-      :apply_conditional(
-        function(x) return x > 5 end,
-        function(x) return x * 2 end,
-        function(x) return x + 100 end
-      )
+      :apply_conditional(function(x)
+        return x > 5
+      end, function(x)
+        return x * 2
+      end, function(x)
+        return x + 100
+      end)
       :get()
     assert_equal(result, 103)
   end)
 
   test('apply_if_not_nil() should apply function when value is not nil', function()
-    local result = pipe('nayu')
-      :apply_if_not_nil(string.upper)
-      :get()
+    local result = pipe('nayu'):apply_if_not_nil(string.upper):get()
     assert_equal(result, 'NAYU')
   end)
 
   test('apply_if_not_nil() should not apply function when value is nil', function()
     local result = pipe('nayu')
-      :apply(function() return nil end)
+      :apply(function()
+        return nil
+      end)
       :apply_if_not_nil(string.upper)
       :get()
     assert_equal(result, nil)
   end)
 
   test('apply_if_not_nil() should handle error with handle function', function()
-    local result = pipe('nayu')
-      :apply_if_not_nil(
-        function() error('error') end,
-        function() return 'handled' end
-      )
+    local result = pipe('nayu'):apply_if_not_nil(function()
+      error('error')
+    end, function()
+      return 'handled'
+    end)
     assert_equal(result, 'handled')
   end)
 
   test('apply_method() should call method of self.value', function()
     local result = pipe({
-      number = 10,
-      get_number = function(self) return self.number end
-    })
+        number = 10,
+        get_number = function(self)
+          return self.number
+        end,
+      })
       :apply_method('get_number')
       :get()
     assert_equal(result, 10)
@@ -250,9 +253,11 @@ if vim == nil then
 
   test('apply_method_if_not_nil() should call method when value is not nil', function()
     local result = pipe({
-      number = 10,
-      get_double = function(self) return self.number * 2 end
-    })
+        number = 10,
+        get_double = function(self)
+          return self.number * 2
+        end,
+      })
       :apply_method_if_not_nil('get_double')
       :get()
     assert_equal(result, 20)
@@ -260,10 +265,14 @@ if vim == nil then
 
   test('apply_method_if_not_nil() should not apply function when value is nil', function()
     local result = pipe({
-      number = 10,
-      get_double = function(self) return self.number * 2 end,
-    })
-      :apply(function() return nil end)
+        number = 10,
+        get_double = function(self)
+          return self.number * 2
+        end,
+      })
+      :apply(function()
+        return nil
+      end)
       :apply_method_if_not_nil('get_double')
       :get()
     assert_equal(result, nil)

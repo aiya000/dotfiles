@@ -116,13 +116,9 @@ end
 ---@return T[]
 function M.slice(array, start_index, end_index)
   -- 負のインデックスを正に変換
-  local start_index = (start_index < 0)
-    and (#array + start_index + 1)
-    or start_index
+  local start_index = (start_index < 0) and (#array + start_index + 1) or start_index
 
-  local end_index = (end_index ~= nil and end_index < 0)
-    and (#array + end_index + 1)
-    or end_index
+  local end_index = (end_index ~= nil and end_index < 0) and (#array + end_index + 1) or end_index
 
   return simple_slice(array, start_index, end_index)
 end
@@ -218,7 +214,7 @@ if vim == nil then
   end)
 
   test('slice() should take a sub array from the taken array', function()
-    assert_equal(M.slice({1, 2, 3, 4, 5}, 2, 4), {2, 3, 4})
+    assert_equal(M.slice({ 1, 2, 3, 4, 5 }, 2, 4), { 2, 3, 4 })
   end)
 end
 

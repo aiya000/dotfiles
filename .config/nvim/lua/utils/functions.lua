@@ -12,7 +12,7 @@ M.deep_equal = Test.deep_equal
 ---@param t table
 ---@return string
 function M.make_table_to_string(t)
-  local result = {'{'}
+  local result = { '{' }
   for k, v in pairs(t) do
     table.insert(result, '  ' .. k, '=', v .. ',')
   end

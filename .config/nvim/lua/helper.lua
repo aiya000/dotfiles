@@ -51,7 +51,7 @@ end
 
 ---@return string | nil
 local function whoami()
-  local result = vim.system({'whoami'}):wait()
+  local result = vim.system({ 'whoami' }):wait()
   if result.code ~= 0 then
     return nil
   end
@@ -576,11 +576,9 @@ end
 
 ---@param direction 'next' | 'previous'
 local function get_diagnostic_method(direction)
-  return direction == 'next'
-    and { lsp_func = vim.diagnostic.goto_next, ale_cmd = 'ALENext' }
-    or direction == 'previous'
-      and { lsp_func = vim.diagnostic.goto_prev, ale_cmd = 'ALEPrevious' }
-      or error('Invalid direction: ' .. tostring(direction))
+  return direction == 'next' and { lsp_func = vim.diagnostic.goto_next, ale_cmd = 'ALENext' }
+    or direction == 'previous' and { lsp_func = vim.diagnostic.goto_prev, ale_cmd = 'ALEPrevious' }
+    or error('Invalid direction: ' .. tostring(direction))
 end
 
 ---LSP診断での移動を試行。
