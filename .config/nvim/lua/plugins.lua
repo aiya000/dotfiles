@@ -5,6 +5,17 @@ local autocmds = require('autocmds')
 local fn = require('utils.functions')
 local s = fn.s
 
+---@param cond boolean --Pull plugin from lazynvim_plugin_table.dir , or from lazynvim_plugin_table[1]
+---@param lazynvim_plugin_table table --LazyPlugin
+local function load_local_or_upstream(cond, lazynvim_plugin_table)
+  if cond then
+    lazynvim_plugin_table[1] = nil
+  else
+    lazynvim_plugin_table.dir = nil
+  end
+  return lazynvim_plugin_table
+end
+
 return {
   -- catppuccin {{{
   {
@@ -1125,17 +1136,23 @@ return {
   -- }}}
   -- vim-scratch-buffer {{{
 
-  {
+  load_local_or_upstream(InitLua.disable_scratch_buffer ~= true, {
     'aiya000/vim-scratch-buffer',
+    dir = vim.fn.expand('~/Repository/vim-scratch-buffer'),
     config = function()
       vim.g.scratch_buffer_default_open_method = 'vsp'
-      vim.g.scratch_buffer_default_buffer_size = nil
       vim.g.scratch_buffer_use_default_keymappings = false
       vim.g.scratch_buffer_file_pattern = {
         when_file_buffer = vim.fn.expand('~/tmp/scratch-%d'),
+        when_tmp_buffer = vim.fn.expand('/tmp/scratch-%d'),
+      }
+      vim.g.scratch_buffer_default_buffer_size = vim.v.null
+      vim.g.scratch_buffer_auto_hide_buffer = {
+        when_tmp_buffer = 1,
+        when_file_buffer = 1,
       }
     end,
-  },
+  }),
 
   -- }}}
   -- vim-write-sync {{{
