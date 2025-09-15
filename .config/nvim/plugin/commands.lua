@@ -214,20 +214,15 @@ create_command('ClaudeCodeAtGitRoot', function(opts)
   end
 
   local current_dir = vim.fn.getcwd()
-  vim.cmd(s([[
-    lcd {git_root}
-    ClaudeCode {args}
-  ]], {
-    git_root = git_root,
-    args = opts.args,
-  }))
+  vim.cmd('lcd ' .. git_root)
+  vim.cmd('ClaudeCode ' .. opts.args)
   vim.cmd('lcd ' .. current_dir)
 end, {
   nargs = '*',
   desc = [[
-    Run ClaudeCode at git root directory.
+    Open ClaudeCode at git root directory with a floating window.
     Useful when wanting to use a conversation related with gir-root.
-    e.g., --continue, --resume'.
+    e.g., --continue, --resume.
   ]]
 })
 

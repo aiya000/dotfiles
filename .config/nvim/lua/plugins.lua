@@ -1139,9 +1139,9 @@ return {
   fn.pipe('<leader>cc')
     :apply(function(toggle_key)
       local have_claude_code_opened = false
-      function toggle()
+      local function toggle()
         if not have_claude_code_opened then
-          vim.cmd('ClaudeCode --continue')
+          vim.cmd('ClaudeCodeAtGitRoot --continue')
           have_claude_code_opened = true
           return
         end
@@ -1161,7 +1161,6 @@ return {
           'ClaudeCodeTreeAdd',
           'ClaudeCodeDiffAccept',
           'ClaudeCodeDiffDeny',
-          'ClaudeCodeAtGitRoot',
         },
         keys = {
           { '<leader>c', nil, desc = 'Claude Code' },
