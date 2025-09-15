@@ -643,4 +643,22 @@ function M.open_diagnostic_detail()
   vim.cmd('resize ' .. height)
 end
 
+function M.open_claude_code_watchers()
+  -- Open watchers
+  vim.cmd('tabnew')
+  local ccusage_job = vim.fn.jobstart({'ccusage', 'blocks', '--live'}, { term = true })
+  vim.opt_local.filetype = 'claude-code-watcher' -- See `after/ftplugin/claude-code-watcher.lua` for keymaps and autocmds
+  vim.cmd('vertical new')
+  local claude_monitor_job = vim.fn.jobstart({'claude-monitor', '--plan', 'pro', '--timezone', 'Asia/Tokyo'}, { term = true })
+  vim.opt_local.filetype = 'claude-code-watcher'
+
+  ---@type ClaudeCodeWatchersTabState
+  vim.b.tab_state = {
+    ccusage_job = ccusage_job,
+    claude_monitor_job = claude_monitor_job,
+    ccusage_pid = vim.fn.jobpid(ccusage_job),
+    claude_monitor_pid = vim.fn.jobpid(claude_monitor_job),
+  }
+end
+
 return M

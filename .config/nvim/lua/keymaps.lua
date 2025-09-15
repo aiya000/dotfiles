@@ -296,6 +296,7 @@ end, { silent = true })
 
 --- Claude Code
 --- See `claudecode.nvim` section in `./plugins.lua`
+map('n', '<leader>cm', helper.open_claude_code_watchers, { desc = 'Open ccusage and claude-monitor in new tab' })
 
 -- List up
 map('n', '<C-k><C-e>', telescope.find_files) -- TODO: もしパフォーマンスが遅ければ、このキーマッピングはカレントディレクトリ以下のみを表示して、プロジェクトルート以下の表示（`InitLua.git_root or InitLua.path_at_started`）は以下の<C-k>eに分担させる
