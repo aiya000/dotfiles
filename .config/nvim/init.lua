@@ -124,7 +124,7 @@ vim.opt.shada = "'400,<50,s10,h"
 vim.opt.visualbell = true
 vim.opt.wildignorecase = true
 vim.opt.wildmenu = true
-vim.opt.ambiwidth = 'double'
+vim.opt.ambiwidth = 'single'
 vim.opt.background = 'dark'
 vim.opt.showtabline = 2
 
