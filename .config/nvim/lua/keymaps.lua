@@ -331,7 +331,8 @@ end, { silent = true })
 
 -- Visualize a last pasted range
 map('n', 'gp', function()
-  return s('`[%s`]', { reg = string.sub(vim.fn.getregtype(), 1, 1) })
+  local reg = string.sub(vim.fn.getregtype(), 1, 1)
+  return s('`[{reg}`]', { reg = reg })
 end, { expr = true })
 
 -- Copy and paste
