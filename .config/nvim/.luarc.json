@@ -8,6 +8,7 @@
     "${workspaceFolder}/types"
   ],
   "Lua.workspace.library": [
+    "${workspaceFolder}/types",
     "${3rd}/luv/library",
     "/home/linuxbrew/.linuxbrew/share/nvim/runtime"
   ],
