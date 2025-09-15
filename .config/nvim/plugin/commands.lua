@@ -30,7 +30,7 @@ create_command('FtDetectEdit', function(opts)
 end, { nargs = '?', complete = 'filetype', bar = true })
 
 -- }}}
--- Cushion commands for git {{{
+-- Git Utils {{{
 
 create_command('GitCommitFixup', function(opts)
   local commit_hash = opts.args
@@ -204,6 +204,32 @@ end, { range = '%', bar = true })
 create_command('DeeplTranslateToJaOpenBuffer', function(opts)
   helper.deepl_translate(opts.count, opts.line1, opts.line2, 'JA', 'EN', { 'yank', 'buffer' })
 end, { range = '%', bar = true })
+
+-- Helper for claudecode.nvim
+create_command('ClaudeCodeAtGitRoot', function(opts)
+  local git_root = InitLua.git_root
+  if not git_root then
+    vim.notify('Git root not found!', vim.log.levels.ERROR)
+    return
+  end
+
+  local current_dir = vim.fn.getcwd()
+  vim.cmd(s([[
+    lcd {git_root}
+    ClaudeCode {args}
+  ]], {
+    git_root = git_root,
+    args = opts.args,
+  }))
+  vim.cmd('lcd ' .. current_dir)
+end, {
+  nargs = '*',
+  desc = [[
+    Run ClaudeCode at git root directory.
+    Useful when wanting to use a conversation related with gir-root.
+    e.g., --continue, --resume'.
+  ]]
+})
 
 ---Tapis functions
 function Tapi_Tabnew(_, args)
