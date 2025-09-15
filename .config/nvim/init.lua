@@ -116,7 +116,6 @@ vim.opt.relativenumber = true
 vim.opt.scrolloff = 16
 vim.opt.sessionoptions = { 'buffers', 'tabpages', 'localoptions', 'winsize', 'winpos' }
 vim.opt.shellslash = true
-vim.opt.clipboard = 'unnamedplus'
 vim.opt.shiftwidth = 2
 vim.opt.suffixes = {}
 vim.opt.tabstop = 2
