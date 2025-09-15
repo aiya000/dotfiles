@@ -111,7 +111,7 @@ function M.bufclose_filetype(filetypes)
   for w = 1, vim.fn.winnr('$') do
     local buf_ft = vim.fn.getwinvar(w, '&filetype')
     if vim.tbl_contains(filetypes, buf_ft) then
-      vim.cmd(s(':{w}wincmd w'))
+      vim.cmd(s(':{w}wincmd w', { w = w }))
       vim.cmd('quit')
       closed = true
     end
@@ -134,7 +134,7 @@ function M.open_explorer(split, path)
     or split == 'split' and ':split | silent Dirvish'
     or split == 'vsplit' and ':vsplit | silent Dirvish'
     or split == 'tabnew' and ':tabnew | silent Dirvish'
-    or error(s('an unexpected way to open the explorer: {split}'))
+    or error('an unexpected way to open the explorer: ' .. split)
 
   if vim.fn.isdirectory(path) == 0 then
     -- :silent to ignore an error message. Because opening seems success
@@ -182,38 +182,6 @@ function M.termopen_shell(opts)
   })
   vim.opt_local.filetype = 'terminal-shell'
   vim.fn.feedkeys('i')
-end
-
----Opens claude code as a floating terminal window
----@param args? string --`$ claude {args}`
-function M.termopen_claude_code(args)
-  -- Calculate window dimensions
-  local width = math.floor(vim.o.columns * 0.8)
-  local height = math.floor(vim.o.lines * 0.8)
-  local row = math.floor((vim.o.lines - height) / 2)
-  local col = math.floor((vim.o.columns - width) / 2)
-
-  -- Create floating window
-  local buf = vim.api.nvim_create_buf(false, true)
-  local win = vim.api.nvim_open_win(buf, true, {
-    relative = 'editor',
-    width = width,
-    height = height,
-    row = row,
-    col = col,
-    style = 'minimal',
-    border = 'rounded',
-  })
-
-  -- Start claude in the terminal
-  M.termopen_temporary('claude ' .. (args or ''))
-  -- Debug: ↓
-  -- vim.fn.jobstart('claude ' .. (args or ''))
-
-  -- Enter insert mode
-  vim.cmd('startinsert')
-
-  return win, buf
 end
 
 ---Fetches a detail of <title> from a URL
@@ -278,9 +246,9 @@ end
 ---Renames a file name of the current buffer
 function M.rename_to(new_name)
   local this_file = vim.fn.fnameescape(vim.fn.expand('%'))
-  local new_name_esc = vim.fn.fnameescape(new_name)
+  local new_name_ = vim.fn.fnameescape(new_name)
 
-  if vim.fn.fnamemodify(this_file, ':t') == new_name then
+  if vim.fn.fnamemodify(this_file, ':t') == new_name_ then
     vim.notify('New name is same old name, operation abort', vim.log.levels.ERROR)
     return
   end
@@ -291,7 +259,7 @@ function M.rename_to(new_name)
     return
   end
 
-  local new_file = vim.fn.fnamemodify(this_file, ':h') .. '/' .. new_name
+  local new_file = vim.fn.fnamemodify(this_file, ':h') .. '/' .. new_name_
   local result_code = vim.fn.rename(this_file, new_file)
   if result_code ~= 0 then
     vim.notify(
@@ -330,19 +298,6 @@ function M.get_current_buffer_dir(options)
   else
     error('The current buffer directory does not exist and an alter directory is not specified')
   end
-end
-
----Shows a popup window at cursor with good options
----@param messages string|string[]
-function M.popup_atcursor(messages)
-  -- TODO: 微調整。atcursorになってないかもしれない。今はとりあえずなゆちゃんが出してくれたコードをそのまま使ってる
-  vim.api.nvim_open_win(vim.api.nvim_create_buf(false, true), true, {
-    relative = 'editor',
-    width = 20,
-    height = 3,
-    row = 10,
-    col = 10,
-  })
 end
 
 function M.close_all_popups()

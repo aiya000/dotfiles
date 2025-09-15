@@ -295,13 +295,7 @@ map('n', '\\\\E', function()
 end, { silent = true })
 
 --- Claude Code
-map('n', '<leader>c', function()
-  helper.termopen_claude_code('--continue')
-end, { desc = 'Open `$ claude --continue` in floating window' })
-
-map('n', '<leader>C', function()
-  helper.termopen_claude_code()
-end, { desc = 'Open `$ claude` in floating window' })
+--- See `claudecode.nvim` section in `./plugins.lua`
 
 -- List up
 map('n', '<C-k><C-e>', telescope.find_files) -- TODO: もしパフォーマンスが遅ければ、このキーマッピングはカレントディレクトリ以下のみを表示して、プロジェクトルート以下の表示（`InitLua.git_root or InitLua.path_at_started`）は以下の<C-k>eに分担させる
