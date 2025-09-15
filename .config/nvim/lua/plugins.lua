@@ -848,6 +848,11 @@ return {
   { 'nvim-lua/plenary.nvim' },
 
   -- }}}
+  -- snacks.nvim {{{
+
+  { 'folke/snacks.nvim' },
+
+  -- }}}
   -- async.vim {{{
 
   { 'prabirshrestha/async.vim' },
@@ -1127,6 +1132,81 @@ return {
       vim.g.copilot_no_tab_map = true
     end,
   },
+
+  -- }}}
+  -- claudecode.nvim {{{
+
+  fn.pipe('<leader>cc')
+    :apply(function(toggle_key)
+      local have_claude_code_opened = false
+      function toggle()
+        if not have_claude_code_opened then
+          vim.cmd('ClaudeCode --continue')
+          have_claude_code_opened = true
+          return
+        end
+        vim.cmd('ClaudeCodeFocus')
+      end
+
+      return {
+        'coder/claudecode.nvim',
+        dependencies = { 'folke/snacks.nvim' },
+        config = true,
+        cmd = {
+          'ClaudeCode',
+          'ClaudeCodeFocus',
+          'ClaudeCodeSelectModel',
+          'ClaudeCodeAdd',
+          'ClaudeCodeSend',
+          'ClaudeCodeTreeAdd',
+          'ClaudeCodeDiffAccept',
+          'ClaudeCodeDiffDeny',
+          'ClaudeCodeAtGitRoot',
+        },
+        keys = {
+          { '<leader>c', nil, desc = 'Claude Code' },
+          { toggle_key , mode = { 'n' }, toggle, desc = 'Open a new Claude Code window or toggle the already opened window' },
+          -- { '<leader>cc', mode = { 'n' }, '<Cmd>ClaudeCode<CR>', desc = 'Toggle Claude' },
+          -- { '<leader>cf', mode = { 'n' }, '<Cmd>ClaudeCodeFocus<CR>', desc = 'Focus Claude' },
+          { '<leader>cr', mode = { 'n' }, '<Cmd>ClaudeCode --resume<CR>', desc = 'Resume Claude' },
+          { '<leader>cC', mode = { 'n' }, '<Cmd>ClaudeCode<CR>', desc = 'New Claude' },
+          { '<leader>cm', mode = { 'n' }, '<Cmd>ClaudeCodeSelectModel<CR>', desc = 'Select Claude model' },
+          { '<leader>cb', mode = { 'n' }, '<Cmd>ClaudeCodeAdd %<CR>', desc = 'Add current buffer' },
+          { '<leader>cs', mode = { 'v' }, '<Cmd>ClaudeCodeSend<CR>', desc = 'Send to Claude' },
+          {
+            '<leader>cs',
+            '<Cmd>ClaudeCodeTreeAdd<CR>',
+            desc = 'Add file',
+            ft = { 'NvimTree', 'neo-tree', 'oil', 'minifiles' },
+          },
+          { '<leader>ca', '<Cmd>ClaudeCodeDiffAccept<CR>', desc = 'Accept diff' },
+          { '<leader>cd', '<Cmd>ClaudeCodeDiffDeny<CR>', desc = 'Deny diff' },
+        },
+        opts = {
+          -- Open in a floating window
+          terminal = {
+            ---@module 'snacks'
+            ---@type snacks.win.Config | {}
+            snacks_win_opts = {
+              position = 'float',
+              width = 0.9,
+              height = 0.9,
+              keys = {
+                claude_hide = {
+                  toggle_key,
+                  function(self)
+                    self:hide()
+                  end,
+                  mode = 't',
+                  desc = 'Hide',
+                },
+              },
+            },
+          },
+        },
+      }
+    end)
+  :get(),
 
   -- }}}
   -- Align {{{
