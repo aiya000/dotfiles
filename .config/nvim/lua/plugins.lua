@@ -1165,12 +1165,11 @@ return {
         keys = {
           { '<leader>c', nil, desc = 'Claude Code' },
           { toggle_key , mode = { 'n' }, toggle, desc = 'Open a new Claude Code window or toggle the already opened window' },
-          -- { '<leader>cc', mode = { 'n' }, '<Cmd>ClaudeCode<CR>', desc = 'Toggle Claude' },
-          -- { '<leader>cf', mode = { 'n' }, '<Cmd>ClaudeCodeFocus<CR>', desc = 'Focus Claude' },
           { '<leader>cr', mode = { 'n' }, '<Cmd>ClaudeCode --resume<CR>', desc = 'Resume Claude' },
           { '<leader>cC', mode = { 'n' }, '<Cmd>ClaudeCode<CR>', desc = 'New Claude' },
-          { '<leader>cm', mode = { 'n' }, '<Cmd>ClaudeCodeSelectModel<CR>', desc = 'Select Claude model' },
+          { '<leader>cM', mode = { 'n' }, '<Cmd>ClaudeCodeSelectModel<CR>', desc = 'Select Claude model' },
           { '<leader>cb', mode = { 'n' }, '<Cmd>ClaudeCodeAdd %<CR>', desc = 'Add current buffer' },
+          { '<leader>cs', mode = { 'n' }, 'V:ClaudeCodeSend<CR>', desc = 'Send to Claude' },
           { '<leader>cs', mode = { 'v' }, '<Cmd>ClaudeCodeSend<CR>', desc = 'Send to Claude' },
           {
             '<leader>cs',
