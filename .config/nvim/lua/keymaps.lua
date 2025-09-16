@@ -1,9 +1,10 @@
-local helper = require('helper')
 local fn = require('utils.functions')
-local s = fn.s
-local network = require('utils.network')
 local git_log = require('git-log')
+local helper = require('helper')
+local network = require('utils.network')
 local telescope = require('telescope.builtin')
+
+local s = fn.s
 
 local function map(mode, lhs, rhs, opts)
   opts = opts or {}
@@ -394,7 +395,8 @@ map('n', ']c', function()
   helper.goto_diagnostic('next')
 end)
 
-map('n', '<C-g><C-o>', vim.lsp.buf.hover, { silent = true })
+map('n', '<C-g><C-o>', vim.lsp.buf.hover, { silent = true }) -- Also can enter the floating window by stroke this keymap again when the floating window is opened
+map('n', '<C-g>o', helper.show_lsp_diagnostic_float, { silent = true })
 map('n', '<C-g><C-a>', vim.lsp.buf.code_action, { silent = true })
 map('n', '<C-g><C-d>', vim.lsp.buf.definition, { silent = true })
 map('n', '<C-g>d', vim.lsp.buf.declaration, { silent = true })
@@ -674,6 +676,7 @@ map('s', '<C-l>', '<Esc>')
 
 -- }}}
 -- operator-pending mode {{{
+
 -- }}}
 -- abbr {{{
 

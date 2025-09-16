@@ -186,51 +186,15 @@ return {
         },
       })
 
-      -- LSPクライアント接続時のキーマッピング設定
-      local function on_attach(client, bufnr)
-        -- ホバーウィンドウにフォーカスを移すキーマッピング
-        vim.keymap.set('n', '<C-g><C-f>', function()
-          vim.lsp.buf.hover()
-          -- 少し待ってからフローティングウィンドウにフォーカス
-          vim.defer_fn(function()
-            local wins = vim.api.nvim_list_wins()
-            for _, win in ipairs(wins) do
-              if vim.api.nvim_win_get_config(win).relative ~= '' then
-                vim.api.nvim_set_current_win(win)
-                break
-              end
-            end
-          end, 100)
-        end, { buffer = bufnr, desc = 'LSP hover with focus' })
-
-        -- カーソル行の診断を自動表示
-        vim.api.nvim_create_autocmd('CursorHold', {
-          buffer = bufnr,
-          callback = function()
-            local opts = {
-              focusable = false,
-              close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' },
-              border = 'rounded',
-              source = 'always',
-              prefix = ' ',
-              scope = 'cursor',
-            }
-            vim.diagnostic.open_float(nil, opts)
-          end,
-        })
-      end
-
       -- 共通設定
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
       lspconfig.ts_ls.setup({
         capabilities = capabilities,
-        on_attach = on_attach,
       })
 
       lspconfig.lua_ls.setup({
         capabilities = capabilities,
-        on_attach = on_attach,
         settings = {
           Lua = {
             runtime = { version = 'LuaJIT' },
