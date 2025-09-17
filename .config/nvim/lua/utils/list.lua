@@ -5,7 +5,7 @@ local Test = require('utils.test')
 local M = {}
 
 M.reduce = Test.reduce
-M.concat_array_including_nil = Test.concat_array_including_nil
+M.concat_array_including_nil = Test.concat_array_including_nil -- TODO: 後述のM.concatと意味が相違するので、こちらを`concat`でない名前にリネームする
 M.to_element_string = Test.to_element_string
 M.make_array_to_string = Test.make_array_to_string
 M.is_array = Test.is_array
@@ -45,6 +45,28 @@ function M.equal(xs, ys)
   end
 
   return true
+end
+
+---Simular to `vim.list_extend()`, but can take multiple lists (varargs).
+---
+---@generic T
+---@param ... T
+---@return T[]
+---
+---Example:
+---```lua
+---concat(
+---  { 1, 2, 3 },
+---  { 4, 5 },
+---  { 6 }
+---) -- { 1, 2, 3, 4, 5, 6 }
+---```
+function M.concat(...)
+  local result = {}
+  for _, x in ipairs({...}) do
+    vim.list_extend(result, x)
+  end
+  return result
 end
 
 ---Generates character range
