@@ -6,6 +6,7 @@ local utils = require('utils.luasnip')
 local sm = utils.sm
 local s = ls.snippet
 local i = ls.insert_node
+local t = ls.text_node
 
 return list.concat(
   {
@@ -19,13 +20,8 @@ return list.concat(
     })),
   },
 
-  sm({'equal', 'eq'}, fmt([[
-    ==
-  ]], {})),
-
-  sm({'not_equal', 'ne'}, fmt([[
-    ~=
-  ]], {})),
+  sm({'equal', 'eq'}, t('==')),
+  sm({'not_equal', 'ne'}, t('~=')),
 
   {
     s('for_in', fmt([[
@@ -96,9 +92,7 @@ return list.concat(
     i(2, ''),
   })),
 
-  sm({'array_length', 'len'}, fmt([[
-    #{array}
-  ]], {
+  sm({'array_length', 'len'}, fmt('#{array}', {
     array = i(1, 'array'),
   })),
 
@@ -111,45 +105,33 @@ return list.concat(
   })),
 
   {
-    s('require', fmt([[
-      require('{here}')
-    ]], {
+    s('require', fmt("require('{here}')", {
       here = i(1, 'here'),
     })),
   },
 
-  sm({'print', 'pr'}, fmt([[
-    print({})
-  ]], {
+  sm({'print', 'pr'}, fmt('print({})', {
     i(1, ''),
   })),
 
-  sm({'error', 'panic', 'er', 'err'}, fmt([[
-    error({here})
-  ]], {
-    here = i(1, 'here'),
+  sm({'error', 'panic', 'er', 'err'}, fmt('error({})', {
+    i(1, ''),
   })),
 
   {
-    s('assert', fmt([[
-      assert({condition}, '{error_message}')
-    ]], {
+    s('assert', fmt("assert({condition}, '{error_message}')", {
       condition = i(1, 'condition'),
       error_message = i(2, 'error_message'),
     })),
   },
 
-  sm({'conditional_operator', 'cond'}, fmt([[
-    {condition} and {if_true} or {if_false}
-  ]], {
+  sm({'conditional_operator', 'cond'}, fmt('{condition} and {if_true} or {if_false}', {
     condition = i(1, 'condition'),
     if_true = i(2, 'if_true'),
     if_false = i(3, 'if_false'),
   })),
 
   {
-    s('nullish_operator', fmt([[
-      or
-    ]], {}))
+    s('nullish_operator', t('or'))
   }
 )

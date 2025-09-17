@@ -75,26 +75,72 @@ include deno-lint.snip
 
 **解決方法**: 動的requireを使用
 
+#### include構造の正しい再現
+
+neosnippetのincludeは、言語に依存しない共通スニペットを参照する仕組みです。
+例：`neosnippets/typescript/typescript.snip`が`include eslint.snip`している場合、
+`eslint.snip`は`neosnippets/`直下にある共通ファイルです。
+
+LuaSnipでは以下の構造で再現：
+
 ```
-lua/snippets/(filetype)/
-├── (filetype).lua      # メインファイル（require で他をまとめる）
-├── eslint.lua          # 個別ファイル
-├── deno-lint.lua       # 個別ファイル
-└── その他.lua
+lua/snippets/
+├── javascript/              # 共通スニペット用ディレクトリ
+│   ├── eslint.lua          # 共通スニペット
+│   ├── deno-lint.lua       # 共通スニペット
+│   └── reactnative.lua     # JavaScript固有スニペット
+├── javascript.lua          # JavaScriptメインファイル
+├── typescript/             # TypeScript固有スニペット
+│   ├── jest.lua
+│   ├── gas.lua
+│   └── ...
+└── typescript.lua          # TypeScriptメインファイル
 ```
 
-メインファイルで以下のようにrequire:
+#### requireパスの設計
+
+**JavaScriptメインファイル** (`javascript.lua`):
 ```lua
 local list = require('utils.list')
 
 return list.concat(
-  require('snippets.typescript.eslint'),
-  require('snippets.typescript.deno-lint'),
-  require('snippets.typescript.jest'),
-  require('snippets.typescript.gas'),
-  -- 他のスニペット
+  require('snippets.javascript.eslint'),      -- 共通
+  require('snippets.javascript.deno-lint'),   -- 共通
+  require('snippets.javascript.reactnative')  -- JavaScript固有
 )
 ```
+
+**TypeScriptメインファイル** (`typescript.lua`):
+```lua
+local list = require('utils.list')
+
+return list.concat(
+  require('snippets.javascript.eslint'),      -- 共通スニペットをJavaScriptから参照
+  require('snippets.javascript.deno-lint'),   -- 共通スニペットをJavaScriptから参照
+  require('snippets.typescript.jest'),        -- TypeScript固有
+  require('snippets.typescript.gas'),         -- TypeScript固有
+  -- その他TypeScript固有スニペット
+)
+```
+
+これにより、neosnippetのinclude構造を正確に再現できます。
+
+#### 特殊言語での追加考慮事項
+
+**ファイル名の命名規則**:
+- ドット区切りのファイル名（例: `typescript.tsx`）はLuaのrequireで問題となる
+- 解決方法: アンダースコア区切りに変換する（例: `typescript_tsx`）
+
+**複雑なエイリアス処理**:
+- neosnippetの`alias`ディレクティブは、LuaSnipでは直接サポートされていない
+- 解決方法: `sm({'trigger1', 'trigger2'}, snippet_def)`関数で実装
+- s関数は単一トリガーのみサポート、複数トリガーには必ずsm関数を使用する
+
+**言語固有の特殊パターン**:
+- **FXML**: JavaFX特有の`fx:controller`、GridPane属性の適切な処理
+- **Re:VIEW**: 技術書執筆用マークアップ、キャラクター会話システム（`//talkright`等）
+- **XAML**: WPF/UWP、DataBinding、RelativeSource構文の複雑なエスケープ
+- **Hamlet**: Yesod/Haskell Webテンプレートの特殊記法
 
 ### 変換例
 
@@ -125,8 +171,32 @@ abbr throw new Error(${0:#:here})
 
 - 必ずfmtを使うこと
 - ${0}は最後に{}として`i(last_index, '')`に変換すること
+- **重要**: 最終ジャンプポイント（${0}）は位置ベースの`{}`として使用し、名前付きプレースホルダーは使わない
 - smはスニペットのリストを返すので、list.concatでまとめること
 - **重要**: vim.tbl_extendとsm関数の組み合わせは動作しないため、list.concatを使用する
+
+#### 最終ジャンプポイントの正しい変換
+
+**❌ 間違い（名前付きプレースホルダーを使用）**:
+```lua
+sm({'const_function', 'cfun'}, fmt('const {name} = ({args}) => {body}', {
+  name = i(1, 'name'),
+  args = i(2, 'args'),
+  body = i(3, ''),  -- 名前付きプレースホルダー
+}))
+```
+
+**✅ 正しい（位置ベースの{}を使用）**:
+```lua
+sm({'const_function', 'cfun'}, fmt('const {name} = ({args}) => {}', {
+  name = i(1, 'name'),
+  args = i(2, 'args'),
+  i(3, ''),  -- 位置ベース
+}))
+```
+
+これは、neosnippetの`${0}`が最終ジャンプポイントとして機能するため、
+LuaSnipでも位置ベースの`{}`として実装する必要があるためです。
 
 LuaSnip
 ```lua
