@@ -13,7 +13,7 @@ local s = fn.s
 InitLua = InitLua
   or {
     loaded = false,
-    neovim_home = vim.fn.expand('~/.config/nvim'),
+    neovim_home = vim.fn.expand('~/.config/nvim'), -- TODO: これは消して、`vim.fn.stdpath('config')`を使う
     path_at_started = vim.fn.getcwd(),
     is_wsl = vim.fn.executable('uname') == 1 and vim.fn.system('uname -a'):match('microsoft%-standard'),
     is_unix = vim.fn.has('unix') == 1,
