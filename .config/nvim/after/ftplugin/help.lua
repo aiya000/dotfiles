@@ -6,8 +6,9 @@ if vim.bo.readonly then
   vim.keymap.set('n', 'Q', '<Cmd>helpclose<CR>', { buffer = true, silent = true })
 else
   -- Settings for editable help files
-  vim.opt_local.tabstop = 8
-  vim.opt_local.shiftwidth = 8
-  vim.opt_local.expandtab = false
+  vim.opt_local.tabstop = 2
+  vim.opt_local.shiftwidth = 2
+  vim.opt_local.expandtab = true
   vim.opt_local.conceallevel = 1
+  vim.keymap.set('i', '<Tab>', '	', { buffer = true })
 end
