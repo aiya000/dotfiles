@@ -1,7 +1,10 @@
----Functions for init.lua and Neovim
+---Functions for init.lua and Neovim.
+---関数がNeovimに関する事柄を意図しているか、もしくは`vim.*`に依存している場合は、こっち。
+---それ以外の汎用的な関数は`./utils/functions.lua`に。
 
 local list = require('utils.list')
 local fn = require('utils.functions')
+
 local s = fn.s
 
 local M = {}
@@ -177,9 +180,10 @@ end
 ---- termopen_temporary()
 ---@param opts? table --See `:h jobstart()`
 function M.termopen_shell(opts)
-  M.termopen_temporary(vim.env.SHELL, {
-    env = { NEOVIM_TERMINAL = true },
-  })
+  opts = opts or {}
+  M.termopen_temporary(vim.env.SHELL, vim.tbl_extend('force', opts, {
+    env = vim.tbl_extend('keep', { NEOVIM_TERMINAL = true }, opts.env or {}),
+  }))
   vim.opt_local.filetype = 'terminal-shell'
   vim.fn.feedkeys('i')
 end
