@@ -3,6 +3,7 @@ local git_log = require('git-log')
 local helper = require('helper')
 local network = require('utils.network')
 local telescope = require('telescope.builtin')
+local snip = require('luasnip')
 
 local s = fn.s
 
@@ -308,6 +309,9 @@ map('n', 'L', telescope.buffers)
 map('n', 'H', telescope.live_grep)
 map('n', 'M', telescope.oldfiles)
 
+--- gemini-cli
+map('n', '<leader>gc', helper.toggle_gemini_cli)
+
 -- Options
 map('n', '<C-h><C-w>', '<Cmd>setlocal wrap! wrap?<CR>', { silent = true })
 map('n', '<C-h><C-c>', '<Cmd>setlocal cursorline! cursorline?<CR>', { silent = true })
@@ -365,6 +369,8 @@ map('n', 'ds', helper.delete_mostly_inner_surround, { silent = true })
 map('n', 'cs', helper.replace_mostly_inner_surround, { silent = true })
 map('n', '.', '<Plug>(repeat-.)', { remap = true })
 map('n', '<leader><leader>c', helper.camelize_or_uncamelize_current_word_as_repeatable, { silent = true })
+--- Fake operator
+map('n', '<C-v>ii', 'v<Plug>(textobj-indent-i)<C-v>ow', { remap = true }) -- Simular to vii, but select by <C-v>
 
 --- Select inner line content (visual inner line)
 map('n', 'vil', function()
@@ -419,9 +425,9 @@ map('n', '<leader>R', '<Plug>(quickrepl-open)', { remap = true })
 map('n', '<leader>r', '<Plug>(quickrun)', { remap = true })
 
 -- File Manupilation
-map('n', '<leader>b', '<Cmd>ScratchBufferOpenFile md<CR>', { silent = true })
-map('n', '<leader>B', '<Cmd>ScratchBufferOpenFileNext md<CR>', { silent = true })
-map('n', '<leader><leader>b', ':<C-u>ScratchBufferOpenFile ')
+map('n', '<leader>b', '<Cmd>MadoScratchBufferOpenFile md<CR>', { silent = true })
+map('n', '<leader>B', '<Cmd>MadoScratchBufferOpenFileNext md<CR>', { silent = true })
+map('n', '<leader><leader>b', ':<C-u>MadoScratchBufferOpenFile ')
 
 map('n', '<leader><leader>B', function()
   vim.cmd('split ' .. InitLua.memo_path)
@@ -496,8 +502,26 @@ map('i', '<C-g><C-n>', '<Plug>(copilot-next)', { remap = true })
 
 -- File Editing
 map('i', '<C-s>', function()
-  return vim.fn['neosnippet#mappings#expand_or_jump_impl']()
-end, { silent = true, expr = true })
+  if not snip.expand_or_jumpable() then
+    vim.notify('No snippet to expand or jump to', vim.log.levels.INFO)
+    return
+  end
+  snip.expand_or_jump()
+end, { silent = true })
+
+-- }}}
+-- select mode {{{
+
+map('s', '<C-l>', '<Esc>')
+
+-- File Editing
+map('s', '<C-s>', function()
+  if not snip.jumpable(1) then
+    vim.notify('No snippet to jump to', vim.log.levels.INFO)
+    return
+  end
+  snip.jump(1)
+end, { silent = true })
 
 -- }}}
 -- command-line mode {{{
@@ -668,11 +692,6 @@ map('i', '<C-k>\\Q', 'ℚ')
 map('i', '<C-k>\\C', 'ℂ')
 map('i', '<C-k>..', '◉')
 map('i', '<C-k>\\|>', '↦')
-
--- }}}
--- select mode {{{
-
-map('s', '<C-l>', '<Esc>')
 
 -- }}}
 -- operator-pending mode {{{
