@@ -798,12 +798,82 @@ return {
     end,
   },
   -- }}}
-  -- neosnippet.vim {{{
+  -- LuaSnip {{{
   {
-    'Shougo/neosnippet.vim',
+    'L3MON4D3/LuaSnip',
+    version = 'v2.*',
+    build = 'make install_jsregexp',
     config = function()
-      vim.g['neosnippet#snippets_directory'] = s('{neovim_home}/neosnippets', { neovim_home = InitLua.neovim_home })
-      vim.g['neosnippet#disable_select_select_mappings'] = 1
+      local ls = require('luasnip')
+
+      -- 基本設定
+      ls.config.set_config({
+        history = true,
+        updateevents = 'TextChanged,TextChangedI',
+      })
+
+      ---Scan filetypes in the given directory.
+      ---The return array is possibly contains duplicated filetypes.
+      ---@param directory string --This function collects filetypes from this directory
+      ---@return string[] --Filetypes
+      local function scan_filetypes_in_directory_but_can_duplicate(directory)
+        local handler = vim.uv.fs_scandir(directory)
+        if handler == nil then
+          error('Failed to scan directory: ' .. directory)
+        end
+
+        local filetypes = {} ---@type string[]
+        while true do
+          local name, type = vim.uv.fs_scandir_next(handler)
+          if name == nil then
+            break
+          elseif type == 'file' then
+            local filetype = name:gsub('%.lua$', '')
+            table.insert(filetypes, filetype)
+          elseif type == 'directory' then
+            local filetype = name
+            table.insert(filetypes, filetype)
+          else
+            error(('Not suported file type: { type = "%s", name = "%s" }'):format(type, name))
+          end
+        end
+
+        return filetypes
+      end
+
+      ---Scan filetypes in the given directory.
+      ---The return array does not contain duplicated filetypes.
+      ---See `scan_filetypes_in_directory_but_can_duplicate()` for about params and the return type.
+      ---@param directory string
+      ---@return string[]
+      local function scan_filetypes_in_directory(directory)
+        return vim.iter(scan_filetypes_in_directory_but_can_duplicate(directory))
+          :fold({}, function(filetypes, filetype)
+              return not vim.tbl_contains(filetypes, filetype)
+                and list.append(filetypes, filetype)
+                or filetypes
+          end)
+      end
+
+      -- from_luaローダーでディレクトリを登録しても、スニペットが展開できないので、それぞれスニペットファイルを手動で登録
+      -- TODO: ちゃんとfrom_luaローダーを使って動くようにする
+      local snippets_dir = vim.fn.stdpath('config') .. '/lua/luasnippets'
+      local filetypes = scan_filetypes_in_directory(snippets_dir) -- TODO: '_'キーを'all'キーに変換する
+      for _, filetype in ipairs(filetypes) do
+        local ok, snips = pcall(require, 'luasnippets.' .. filetype)
+        if not ok then
+          vim.notify(('Failed to load snippets: "%s" - %s'):format(filetype, snips), vim.log.levels.ERROR)
+        elseif snips and snips.snippets and type(snips.snippets) == 'table' and #snips.snippets > 0 then
+          local add_ok = pcall(ls.add_snippets, filetype, snips.snippets)
+          if add_ok then
+            vim.notify(('Successfully loaded %d snippets for %s'):format(#snips.snippets, filetype), vim.log.levels.INFO)
+          else
+            vim.notify(('Failed to add snippets for %s'):format(filetype), vim.log.levels.ERROR)
+          end
+        else
+          vim.notify(('Snippets file "%s" has no valid snippets table'):format(filetype), vim.log.levels.WARN)
+        end
+      end
     end,
   },
   -- }}}

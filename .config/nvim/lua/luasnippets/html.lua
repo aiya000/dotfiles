@@ -10,10 +10,10 @@ local function combine_snippets(...)
 end
 
 return combine_snippets(
-  require('snippets.html.bootstrap4'),
-  require('snippets.html.attr'),
-  require('snippets.html.vue'),
-  require('snippets.html.html'),
-  require('snippets.html.nativescript'),
-  require('snippets.html.template')
+  require('luasnippets.html.bootstrap4'),
+  require('luasnippets.html.attr'),
+  require('luasnippets.html.vue'),
+  require('luasnippets.html.html'),
+  require('luasnippets.html.nativescript'),
+  require('luasnippets.html.template')
 )

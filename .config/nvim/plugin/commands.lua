@@ -223,7 +223,29 @@ end, {
     Open ClaudeCode at git root directory with a floating window.
     Useful when wanting to use a conversation related with gir-root.
     e.g., --continue, --resume.
-  ]]
+  ]],
+  bar = true,
+})
+
+-- LuaSnipEdit コマンド（修正版）
+create_command('LuaSnipEdit', function(opts)
+  local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
+  if filetype == '' then
+    vim.notify('No filetype specified or detected', vim.log.levels.WARN)
+    return
+  end
+
+  local luasnip_path = ('%s/lua/luasnippets/%s.lua'):format(
+    vim.fn.stdpath('config'),
+    filetype
+  )
+  vim.cmd('edit ' .. vim.fn.fnameescape(luasnip_path))
+end, {
+  nargs = '?',  -- 修正: args → nargs
+  desc = 'Edit LuaSnip snippet file for current or specified filetype',
+  complete = function()
+    return vim.fn.getcompletion('', 'filetype')
+  end
 })
 
 ---Tapis functions

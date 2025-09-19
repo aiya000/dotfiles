@@ -10,6 +10,6 @@ local function combine_snippets(...)
 end
 
 return combine_snippets(
-  require('snippets.css.css'),
-  require('snippets.css.tailwind')
+  require('luasnippets.css.css'),
+  require('luasnippets.css.tailwind')
 )

@@ -9,14 +9,17 @@ local i = ls.insert_node
 local t = ls.text_node
 
 return {
-  sm({ 'template_plugins', 'plugins', 'plug' }, fmt([[
-    [[plugins]]
-    repo = '{}'
-  ]], {
-    i(1, ''),
-  })),
+  snippets = {
+    sm({ 'template_plugins', 'plugins', 'plug' }, fmt([[
+      [[plugins]]
+      repo = '{}'
+    ]], {
+      i(1, ''),
+    })),
 
-  s('rev', fmt("rev = '{}'", {
-    i(1, 'here'),
-  })),
+    s('rev', fmt("rev = '{}'", {
+      i(1, 'here'),
+    })),
+  },
+  autosnippets = {}
 }

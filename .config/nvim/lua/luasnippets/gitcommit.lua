@@ -11,9 +11,11 @@ local t = ls.text_node
 -- Reference:
 -- - Conventional Commits: https://www.conventionalcommits.org/ja/v1.0.0/
 
-return list.concat(
-  -- Include markdown snippets (will need to be handled separately)
-  require('snippets.markdown'),
+-- LuaSnip from_lua loader用の正しい形式
+return {
+  snippets = list.concat(
+    -- Include markdown snippets
+    require('luasnippets.markdown').snippets,
 
   {
     s('feat', fmt('feat({}): {}', {
@@ -89,5 +91,7 @@ return list.concat(
     s('BREAKING_CHANGE', fmt('BREAKING CHANGE: {}', {
       i(1, 'description'),
     })),
-  }
-)
+    }
+  ),
+  autosnippets = {}
+}

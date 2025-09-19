@@ -47,6 +47,17 @@ function M.equal(xs, ys)
   return true
 end
 
+---Simular to `table.insert()`, but a pure function
+---@generic T
+---@param xs T[] --The original list. This will not be mutated
+---@param x T --The element to append
+---@return T[] --A new list with the element appended
+function M.append(xs, x)
+  local result = { unpack(xs) }
+  table.insert(result, x)
+  return result
+end
+
 ---Simular to `vim.list_extend()`, but can take multiple lists (varargs).
 ---
 ---@generic T
@@ -63,8 +74,10 @@ end
 ---```
 function M.concat(...)
   local result = {}
-  for _, x in ipairs({...}) do
-    vim.list_extend(result, x)
+  for _, xs in ipairs({...}) do
+    for _, x in ipairs(xs) do
+      table.insert(result, x)
+    end
   end
   return result
 end
@@ -237,6 +250,22 @@ if vim == nil then
 
   test('slice() should take a sub array from the taken array', function()
     assert_equal(M.slice({ 1, 2, 3, 4, 5 }, 2, 4), { 2, 3, 4 })
+  end)
+
+  test('concat() should concatenate multiple arrays', function()
+    assert_equal(M.concat({ 1, 2 }, { 3, 4 }, { 5 }), { 1, 2, 3, 4, 5 })
+    assert_equal(M.concat({}, { 'a' }, { 'b', 'c' }), { 'a', 'b', 'c' })
+  end)
+
+  test('append() should append an element to the array', function()
+    assert_equal(M.append({ 1, 2, 3 }, 4), { 1, 2, 3, 4 })
+    assert_equal(M.append({}, 'a'), { 'a' })
+  end)
+
+  test('append() should not mutate the original array', function()
+    local original = { 1, 2, 3 }
+    M.append(original, 4)
+    assert_equal(original, { 1, 2, 3 })
   end)
 end
 

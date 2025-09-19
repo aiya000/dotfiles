@@ -34,20 +34,20 @@ return {
     i(2, ''),
   })),
 
-  s('if', fmt('if {cond} {{{content}}}', {
-    cond = i(1, 'cond'),
-    content = i(2, 'here'),
+  s('if', fmt('if {} {{{}}}', {
+    i(1, 'cond'),
+    i(2, 'here'),
   })),
 
-  s('else', fmt('else {{{content}}}', {
-    content = i(1, 'here'),
+  s('else', fmt('else {{{}}}', {
+    i(1, 'here'),
   })),
 
   s('array_type', fmt('[]{}', {
     i(1, 'TypeName'),
   })),
 
-  sm({ 'array_constant', 'array' }, fmt('[]{}{{{}}}', {
+  sm({ 'array_constant', 'array' }, fmt('[]{}{{{}}}}', {
     i(1, 'TypeName'),
     i(2, 'here'),
   })),
@@ -115,11 +115,11 @@ return {
     i(2, 'err'),
   })),
 
-  sm({ 'println', 'pr' }, fmt('fmt.Println({}})', {
+  sm({ 'println', 'pr' }, fmt('fmt.Println({})', {
     i(1, 'here'),
   })),
 
-  sm({ 'log_println', 'log' }, fmt('log.Println({}})', {
+  sm({ 'log_println', 'log' }, fmt('log.Println({})', {
     i(1, 'here'),
   })),
 
