@@ -1176,25 +1176,33 @@ return {
   { 'vim-scripts/Align' },
 
   -- }}}
-  -- vim-scratch-buffer {{{
+  -- nvim-mado-scratch-buffer {{{
 
-  load_local_or_upstream(InitLua.disable_scratch_buffer ~= true, {
-    'aiya000/vim-scratch-buffer',
-    dir = vim.fn.expand('~/Repository/vim-scratch-buffer'),
-    config = function()
-      vim.g.scratch_buffer_default_open_method = 'vsp'
-      vim.g.scratch_buffer_use_default_keymappings = false
-      vim.g.scratch_buffer_file_pattern = {
+  -- TODO: load_local_or_remoteが直ったらアンコメント
+  -- load_local_or_remote(InitLua.disable_scratch_buffer ~= true, {
+  --   'aiya000/nvim-mado-scratch-buffer',
+  --   dir = vim.fn.expand('~/Repository/nvim-mado-scratch-buffer'),
+  --   opts = {
+  --     file_pattern = {
+  --       when_file_buffer = vim.fn.expand('~/tmp/scratch-%d'),
+  --     },
+  --     default_file_ext = 'md',
+  --     default_open_method = 'vsp',
+  --     default_buffer_size = nil,
+  --   },
+  -- }),
+
+  {
+    dir = vim.fn.expand('~/Repository/nvim-mado-scratch-buffer'),
+    opts = {
+      file_pattern = {
         when_file_buffer = vim.fn.expand('~/tmp/scratch-%d'),
-        when_tmp_buffer = vim.fn.expand('/tmp/scratch-%d'),
-      }
-      vim.g.scratch_buffer_default_buffer_size = vim.v.null
-      vim.g.scratch_buffer_auto_hide_buffer = {
-        when_tmp_buffer = 1,
-        when_file_buffer = 1,
-      }
-    end,
-  }),
+      },
+      default_file_ext = 'md',
+      default_open_method = 'vsp',
+      default_buffer_size = 'no-auto-resize',
+    },
+  },
 
   -- }}}
   -- vim-write-sync {{{
@@ -1227,11 +1235,6 @@ return {
       vim.g.rainbow_active = 1
     end,
   },
-
-  -- }}}
-  -- flatten.nvim {{{
-
-  { 'willothy/flatten.nvim' },
 
   -- }}}
   -- vim-go {{{
@@ -1401,10 +1404,11 @@ return {
   {
     'osyo-manga/vim-precious',
     config = function()
-      vim.g.precious_enable_switch_CursorMoved = {
-        ['*'] = false,
-      }
-      vim.g.precious_enable_switch_CursorMoved_i = vim.g.precious_enable_switch_CursorMoved
+      local no_auto_switch_filetypes = { ['*'] = false }
+      vim.g.precious_enable_switch_CursorMoved = no_auto_switch_filetypes
+      vim.g.precious_enable_switch_CursorMoved_i = no_auto_switch_filetypes
+      vim.g.precious_enable_switch_CursorHold = no_auto_switch_filetypes
+      vim.g.precious_enable_switch_BufEnter = no_auto_switch_filetypes
       vim.g.precious_enable_switchers = {}
       vim.g.textobj_precious_no_default_key_mappings = true
     end,
@@ -1629,6 +1633,34 @@ return {
       }
     end,
   },
+
+  -- }}}
+  -- toggleterm.nvim {{{
+
+  -- TODO: Configure this
+  {
+     'akinsho/toggleterm.nvim',
+     opts = {
+       hide_numbers = true,
+       shade_filetypes = {},
+       shade_terminals = true,
+       shading_factor = 2,
+       start_in_insert = true,
+       insert_mappings = true,
+       persist_size = true,
+       direction = 'float',
+       close_on_exit = true,
+       shell = vim.o.shell,
+       float_opts = {
+         border = 'curved',
+         winblend = 0,
+         highlights = {
+           border = 'Normal',
+           background = 'Normal',
+         },
+       },
+     },
+   },
 
   -- }}}
 }
