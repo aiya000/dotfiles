@@ -69,6 +69,9 @@ alias llh='ls -lh --color=auto --group-directories-first'
 alias lla='ls -la --color=auto --group-directories-first'
 
 alias date-simple='date "+%Y-%m-%d %H:%M"'
+alias date-today='date +"%Y-%m-%d"'
+alias today=date-today
+
 alias du-sum='du -hs'
 
 function du-sort () {
