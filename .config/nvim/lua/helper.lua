@@ -676,4 +676,24 @@ function M.show_lsp_diagnostic_float()
   })
 end
 
+local gemini_term = nil
+vim.schedule(function()
+  gemini_term = require("toggleterm.terminal").Terminal:new({
+    cmd = 'gemini',
+    hidden = true,
+    direction = 'float',
+    on_open = function(_)
+      -- Enter insert mode when the terminal opens
+      vim.cmd('startinsert!')
+    end,
+  })
+end)
+
+function M.toggle_gemini_cli()
+  if gemini_term == nil then
+    error('toggle_gemini_cli(): gemini_term has never initialized yet')
+  end
+  gemini_term:toggle()
+end
+
 return M
