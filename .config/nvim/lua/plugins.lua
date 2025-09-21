@@ -864,14 +864,7 @@ return {
         if not ok then
           vim.notify(('Failed to load snippets: "%s" - %s'):format(filetype, snips), vim.log.levels.ERROR)
         elseif snips and snips.snippets and type(snips.snippets) == 'table' and #snips.snippets > 0 then
-          local add_ok = pcall(ls.add_snippets, filetype, snips.snippets)
-          if add_ok then
-            vim.notify(('Successfully loaded %d snippets for %s'):format(#snips.snippets, filetype), vim.log.levels.INFO)
-          else
-            vim.notify(('Failed to add snippets for %s'):format(filetype), vim.log.levels.ERROR)
-          end
-        else
-          vim.notify(('Snippets file "%s" has no valid snippets table'):format(filetype), vim.log.levels.WARN)
+          ls.add_snippets(filetype, snips.snippets)
         end
       end
     end,
