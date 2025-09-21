@@ -237,29 +237,31 @@ vim.keymap.set('n', '<C-s>p', function()
   end
 end)
 
--- :terminal
+-- `termopen()`
 map('n', '<leader>v', function()
   vim.cmd('vertical new')
-  helper.termopen_shell()
+  helper.termopen_shell({
+    cwd = helper.read_current_buffer_dir(InitLua.git_root),
+  })
 end, { silent = true })
 
 map('n', '<leader><leader>v', function()
   vim.cmd('new')
-  helper.termopen_shell()
+  helper.termopen_shell({
+    cwd = helper.read_current_buffer_dir(InitLua.git_root),
+  })
 end, { silent = true })
 
 map('n', '<leader>V', function()
-  vim.fn.jobstart(vim.env.SHELL, {
-    term = true,
-    cwd = helper.get_current_buffer_dir({ alt_dir = InitLua.git_root }),
+  helper.termopen_shell({
+    cwd = helper.read_current_buffer_dir(InitLua.git_root),
   })
 end, { silent = true })
 
 map('n', '<leader><leader>V', function()
   vim.cmd('tabnew')
-  vim.fn.jobstart(vim.env.SHELL, {
-    term = true,
-    cwd = helper.get_current_buffer_dir({ alt_dir = InitLua.git_root }),
+  helper.termopen_shell({
+    cwd = helper.read_current_buffer_dir(InitLua.git_root),
   })
 end, { silent = true })
 

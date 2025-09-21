@@ -43,7 +43,7 @@ end
 ---In some cases, this does not mean the npm root or bun root.
 ---If you hit a child workspace of npm workspaces or bun workspaces, :cd there.
 ---
----@param cd_type ':cd' | ':lcd' | ':tcd'
+---@param cd_type 'cd' | 'lcd' | 'tcd'
 ---@param base_dir string
 function M.cd_node_root(cd_type, base_dir)
   base_dir = base_dir or vim.fn.expand('%:p:h')

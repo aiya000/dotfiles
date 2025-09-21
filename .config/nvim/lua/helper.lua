@@ -289,19 +289,54 @@ function M.rename_to(new_name)
   )
 end
 
----Gets current buffer directory with fallback
-function M.get_current_buffer_dir(options)
-  options = options or {}
-  local dir = vim.bo.buftype ~= 'terminal' and vim.bo.buftype ~= 'nofile' and vim.fn.expand('%:p:h') or InitLua.git_root
-
-  local alt_dir = options.alt_dir
-  if dir and dir ~= '' then
-    return dir
-  elseif alt_dir then
-    return alt_dir
-  else
-    error('The current buffer directory does not exist and an alter directory is not specified')
+---TODO: This is not working
+---Reads a cwd of the current terminal buffer.
+---Throws error if not in a terminal buffer or failed to get cwd.
+---@return string
+function M.get_term_shell_buffer_current_dir()
+  if vim.b.terminal_job_id == nil then
+    error('Not in a terminal buffer')
   end
+
+  local pid = vim.fn.jobpid(vim.b.terminal_job_id)
+  if pid <= 0 then
+    error('Failed to get a pid of the terminal job')
+  end
+
+  local cwd = vim.fn.readlink(('/proc/%d/cwd'):format(pid))
+  if cwd == nil or cwd == '' then
+    error('Failed to get a cwd of the terminal job')
+  end
+
+  return cwd
+end
+
+---Reads current buffer directory with fallback.
+---@param fallback_dir? string --If the current buffer does not have the directory, use this
+function M.read_current_buffer_dir(fallback_dir)
+  if vim.bo.buftype ~= 'terminal' then
+    local ok, result = pcall(M.get_term_shell_buffer_current_dir)
+    return ok and result or fallback_dir
+  end
+
+  if vim.bo.buftype == 'nofile' then
+    return fallback_dir
+  end
+
+  local file_dir = vim.fn.expand('%:p:h')
+  if file_dir ~= '' then
+    return file_dir
+  end -- NOTE: `file_dir == ''`なんてことある？
+
+  if InitLua.git_root ~= nil then
+    return InitLua.git_root
+  end
+
+  if fallback_dir ~= nil then
+    return fallback_dir
+  end
+
+  error('The current buffer does not have the current directory, and an alter directory is not specified')
 end
 
 function M.close_all_popups()
