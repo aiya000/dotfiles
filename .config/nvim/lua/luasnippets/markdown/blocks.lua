@@ -14,7 +14,7 @@ local function sm(triggers, nodes)
   return snippets
 end
 
-local blocks_snippets = list.concat({
+local blocks_snippets = list.concat(
   sm({"block_haskell", "blhs"}, fmt([[
 ```haskell
 {}
@@ -70,6 +70,6 @@ local blocks_snippets = list.concat({
 ```]], {
     i(1, "")
   }))
-})
+)
 
-return blocks_snippets
+return { snippets = blocks_snippets, autosnippets = {} }

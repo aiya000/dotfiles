@@ -8,14 +8,16 @@ local s = ls.snippet
 local i = ls.insert_node
 local t = ls.text_node
 
-return {
-  s('ktlint_disable', fmt([[
-    // ktlint-disable {rule}
-  ]], {
-    rule = i(1, ''),
-  })),
+local ktlint_snippets = {}
 
-  s('ktlint_disable_all', t('// ktlint-disable')),
+table.insert(ktlint_snippets, s('ktlint_disable', fmt([[
+  // ktlint-disable {rule}
+]], {
+  rule = i(1, ''),
+})))
 
-  s('ktlint_disable_no_wildcard_imports', t('// ktlint-disable no-wildcard-imports')),
-}
+table.insert(ktlint_snippets, s('ktlint_disable_all', t('// ktlint-disable')))
+
+table.insert(ktlint_snippets, s('ktlint_disable_no_wildcard_imports', t('// ktlint-disable no-wildcard-imports')))
+
+return { snippets = ktlint_snippets, autosnippets = {} }

@@ -1,5 +1,8 @@
 local list = require('utils.list')
 
-return list.concat(
-  require('snippets.typescript_tsx.typescript_tsx')
-)
+return {
+  snippets = list.concat(
+    require('luasnippets.typescript_tsx.typescript_tsx').snippets
+  ),
+  autosnippets = {}
+}

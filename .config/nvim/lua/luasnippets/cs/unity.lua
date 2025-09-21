@@ -11,4 +11,7 @@ local unity_snippets = {
   })
 }
 
-return unity_snippets
+return {
+  snippets = unity_snippets,
+  autosnippets = {}
+}

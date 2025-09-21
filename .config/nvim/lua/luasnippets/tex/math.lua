@@ -8,39 +8,41 @@ local s = ls.snippet
 local i = ls.insert_node
 local t = ls.text_node
 
-return {
-  -- Logical operators
-  s('forall', t('\\forall')),
-  s('exists', t('\\exists')),
+local math_snippets = {}
 
-  -- Set operators
-  s('subset', t('\\subset')),
-  s('in', t('\\in')),
-  s('ni', t('\\ni')),
-  s('mid', t('\\mid')),
+-- Logical operators
+table.insert(math_snippets, s('forall', t('\\forall')))
+table.insert(math_snippets, s('exists', t('\\exists')))
 
-  -- Arrows
-  s('rightarrow', t('\\rightarrow')),
-  s('Longrightarrow', t('\\Longrightarrow')),
-  s('mapsto', t('\\mapsto')),
+-- Set operators
+table.insert(math_snippets, s('subset', t('\\subset')))
+table.insert(math_snippets, s('in', t('\\in')))
+table.insert(math_snippets, s('ni', t('\\ni')))
+table.insert(math_snippets, s('mid', t('\\mid')))
 
-  -- Special formatting
-  sm({ 'comma', 'com' }, fmt('{{{}}}', {
-    i(1, ','),
-  })),
+-- Arrows
+table.insert(math_snippets, s('rightarrow', t('\\rightarrow')))
+table.insert(math_snippets, s('Longrightarrow', t('\\Longrightarrow')))
+table.insert(math_snippets, s('mapsto', t('\\mapsto')))
 
-  s('mathrm', t('\\mathrm{m/s}')),
+-- Special formatting
+vim.list_extend(math_snippets, sm({ 'comma', 'com' }, fmt('{{{}}}', {
+  i(1, ','),
+})))
 
-  -- Fractions and operators
-  sm({ 'fraction', 'frac' }, fmt('\\frac{{{}}}{{{}}}{}', {
-    i(1, 'numerator'),
-    i(2, 'denominator'),
-    i(3, ''),
-  })),
+table.insert(math_snippets, s('mathrm', t('\\mathrm{m/s}')))
 
-  s('sum', fmt('\\sum_{{{}}}^{{{}}}{}', {
-    i(1, 'under'),
-    i(2, 'over'),
-    i(3, ''),
-  })),
-}
+-- Fractions and operators
+vim.list_extend(math_snippets, sm({ 'fraction', 'frac' }, fmt('\\frac{{{}}}{{{}}}{}', {
+  i(1, 'numerator'),
+  i(2, 'denominator'),
+  i(3, ''),
+})))
+
+table.insert(math_snippets, s('sum', fmt('\\sum_{{{}}}^{{{}}}{}', {
+  i(1, 'under'),
+  i(2, 'over'),
+  i(3, ''),
+})))
+
+return { snippets = math_snippets, autosnippets = {} }

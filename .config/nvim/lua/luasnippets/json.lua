@@ -8,8 +8,13 @@ local s = ls.snippet
 local i = ls.insert_node
 local t = ls.text_node
 
+local snippets = {}
+
+vim.list_extend(snippets, sm({ 'comment', 'com' }, fmt('"//": "{}",', {
+  i(1, ''),
+})))
+
 return {
-  sm({ 'comment', 'com' }, fmt('"//": "{}",', {
-    i(1, ''),
-  })),
+  snippets = snippets,
+  autosnippets = {}
 }

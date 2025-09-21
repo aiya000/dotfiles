@@ -20,4 +20,7 @@ local import_snippets = {
   s("FriendlyWPFStandardControls;", t("RM.Friendly.WPFStandardControls;"))
 }
 
-return import_snippets
+return {
+  snippets = import_snippets,
+  autosnippets = {}
+}

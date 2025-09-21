@@ -96,4 +96,7 @@ local region_snippets = {
   }))
 }
 
-return region_snippets
+return {
+  snippets = region_snippets,
+  autosnippets = {}
+}

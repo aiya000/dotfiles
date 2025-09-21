@@ -1,19 +1,14 @@
 -- Combine all HTML snippet modules
-local function combine_snippets(...)
-  local result = {}
-  for _, module in ipairs({...}) do
-    for key, snippet in pairs(module) do
-      result[key] = snippet
-    end
-  end
-  return result
-end
+local list = require('utils.list')
 
-return combine_snippets(
-  require('luasnippets.html.bootstrap4'),
-  require('luasnippets.html.attr'),
-  require('luasnippets.html.vue'),
-  require('luasnippets.html.html'),
-  require('luasnippets.html.nativescript'),
-  require('luasnippets.html.template')
-)
+return {
+  snippets = list.concat(
+    require('luasnippets.html.bootstrap4').snippets,
+    require('luasnippets.html.attr').snippets,
+    require('luasnippets.html.vue').snippets,
+    require('luasnippets.html.html').snippets,
+    require('luasnippets.html.nativescript').snippets,
+    require('luasnippets.html.template').snippets
+  ),
+  autosnippets = {}
+}

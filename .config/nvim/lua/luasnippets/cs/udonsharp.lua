@@ -13,17 +13,20 @@ local function sm(triggers, nodes)
   return snippets
 end
 
-local udonsharp_snippets = list.concat({
-  sm({"udon_synced_none", "udonsharp_synced_none"}, t("[UdonSynced(UdonSyncMode.None)]")),
+local udonsharp_snippets = {}
 
-  -- Import this before using below items
-  sm({"using vrc_udon_common_interfaces;", "using_udonsharp_network_namespace"}, t("using VRC.Udon.Common.Interfaces;")),
+vim.list_extend(udonsharp_snippets, sm({"udon_synced_none", "udonsharp_synced_none"}, t("[UdonSynced(UdonSyncMode.None)]")))
 
-  s("udonsharp_networking_player", t("Networking.LocalPlayer")),
+-- Import this before using below items
+vim.list_extend(udonsharp_snippets, sm({"using vrc_udon_common_interfaces;", "using_udonsharp_network_namespace"}, t("using VRC.Udon.Common.Interfaces;")))
 
-  sm({"udonsharp_set_owner", "udonsharp_set_game_object_owner"}, {
+table.insert(udonsharp_snippets, s("udonsharp_networking_player", t("Networking.LocalPlayer")))
+
+vim.list_extend(udonsharp_snippets, sm({"udonsharp_set_owner", "udonsharp_set_game_object_owner"}, {
     t("Networking.SetOwner("), i(1, "Networking.LocalPlayer"), t(", "), i(2, "gameObject"), t(");")
-  })
-})
+  }))
 
-return udonsharp_snippets
+return {
+  snippets = udonsharp_snippets,
+  autosnippets = {}
+}

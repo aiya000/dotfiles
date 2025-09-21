@@ -1,3 +1,3 @@
 local list = require('utils.list')
 
-return require('snippets.sh')
+return require('luasnippets.sh')

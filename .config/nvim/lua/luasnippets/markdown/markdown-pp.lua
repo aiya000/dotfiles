@@ -13,10 +13,10 @@ local function sm(triggers, nodes)
   return snippets
 end
 
-local markdown_pp_snippets = list.concat({
-  sm({"markdown_pp_include", "include"}, {
-    t('!INCLUDE "'), i(1, "file-name.mdpp"), t('"')
-  })
-})
+local markdown_pp_snippets = {}
 
-return markdown_pp_snippets
+vim.list_extend(markdown_pp_snippets, sm({"markdown_pp_include", "include"}, {
+  t('!INCLUDE "'), i(1, "file-name.mdpp"), t('"')
+}))
+
+return { snippets = markdown_pp_snippets, autosnippets = {} }

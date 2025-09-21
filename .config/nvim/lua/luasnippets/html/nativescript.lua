@@ -100,4 +100,10 @@ M[":class"] = s(":class",
   })
 )
 
-return M
+-- Convert M table to array format for LuaSnip
+local snippets = {}
+for _, snippet in pairs(M) do
+  table.insert(snippets, snippet)
+end
+
+return { snippets = snippets, autosnippets = {} }

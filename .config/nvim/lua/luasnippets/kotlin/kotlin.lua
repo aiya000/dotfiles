@@ -8,7 +8,7 @@ local s = utils.s
 local i = ls.insert_node
 local t = ls.text_node
 
-return list.concat(
+local kotlin_snippets = list.concat(
   sm({'fun', 'def', 'public_method', 'pubmet'}, fmt([[
     fun {func_name}({args}){return_type}
   ]], {
@@ -401,3 +401,5 @@ return list.concat(
 
   s('suppress_unused_parameter', t('@Suppress("UNUSED_PARAMETER")'))
 )
+
+return { snippets = kotlin_snippets, autosnippets = {} }

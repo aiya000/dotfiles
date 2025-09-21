@@ -311,4 +311,10 @@ M.html_large_space = s("html_large_space", t("&emsp;"))
 
 M.html_small_space = s("html_small_space", t("&thinsp;"))
 
-return M
+-- Convert M table to array format for LuaSnip
+local snippets = {}
+for _, snippet in pairs(M) do
+  table.insert(snippets, snippet)
+end
+
+return { snippets = snippets, autosnippets = {} }

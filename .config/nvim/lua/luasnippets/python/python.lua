@@ -12,57 +12,60 @@ local function sm(trigger, nodes, aliases)
   return snippets
 end
 
-return {
-  -- Syntaxes
-  s("import_single", fmt("import {}", { i(1, "module") })),
+-- Convert to proper array structure for LuaSnip compatibility
+local python_snippets = {}
 
-  sm("import_as", fmt("import {} as {}", { i(1, "module"), i(2, "alias") }), {"import_qualified", "imq"}),
+-- Syntaxes
+table.insert(python_snippets, s("import_single", fmt("import {}", { i(1, "module") })))
 
-  sm("from", fmt("from {} import {}", { i(1, "module"), i(2, "stuff") }), {"import", "imp"}),
+vim.list_extend(python_snippets, sm("import_as", fmt("import {} as {}", { i(1, "module"), i(2, "alias") }), {"import_qualified", "imq"}))
 
-  s("if", fmt("if {}:{}", { i(1), i(0) })),
+vim.list_extend(python_snippets, sm("from", fmt("from {} import {}", { i(1, "module"), i(2, "stuff") }), {"import", "imp"}))
 
-  s("else", t("else:")),
+table.insert(python_snippets, s("if", fmt("if {}:{}", { i(1), i(0) })))
 
-  s("for", fmt("for {} in {}:{}", { i(1, "x"), i(2, "xs"), i(0) })),
+table.insert(python_snippets, s("else", t("else:")))
 
-  s("while", fmt("while {}:{}", { i(1, "cond"), i(0) })),
+table.insert(python_snippets, s("for", fmt("for {} in {}:{}", { i(1, "x"), i(2, "xs"), i(0) })))
 
-  sm("def", fmt("def {}({}) -> {}:{}", { i(1, "name"), i(2, "#:self"), i(3, "type"), i(0) }), {"fun"}),
+table.insert(python_snippets, s("while", fmt("while {}:{}", { i(1, "cond"), i(0) })))
 
-  sm("class", fmt("class {}{}:{}", { i(1, "Name"), i(2, "#:(Super)"), i(0) }), {"cla"}),
+vim.list_extend(python_snippets, sm("def", fmt("def {}({}) -> {}:{}", { i(1, "name"), i(2, "#:self"), i(3, "type"), i(0) }), {"fun"}))
 
-  sm("conditional_operator", fmt("{} if {} else {}", { i(1, "value_if_true"), i(2, "cond"), i(3, "value_if_false") }), {"cond"}),
+vim.list_extend(python_snippets, sm("class", fmt("class {}{}:{}", { i(1, "Name"), i(2, "#:(Super)"), i(0) }), {"cla"}))
 
-  sm("lambda", fmt("lambda {}: {}", { i(1, "args"), i(0) }), {"lam"}),
+vim.list_extend(python_snippets, sm("conditional_operator", fmt("{} if {} else {}", { i(1, "value_if_true"), i(2, "cond"), i(3, "value_if_false") }), {"cond"}))
 
-  s("raise", fmt("raise {}({})", { i(1, "Exception"), i(2, "msg") })),
+vim.list_extend(python_snippets, sm("lambda", fmt("lambda {}: {}", { i(1, "args"), i(0) }), {"lam"}))
 
-  s("try", t("try:")),
+table.insert(python_snippets, s("raise", fmt("raise {}({})", { i(1, "Exception"), i(2, "msg") })))
 
-  sm("except", fmt("except{}: {}", { i(1, "#: ErrorType"), i(0) }), {"catch", "handle"}),
+table.insert(python_snippets, s("try", t("try:")))
 
-  sm("list_comprehension", fmt("[{} for {} in {}]", { i(3, "result"), i(1, "var"), i(2, "source") }), {"list"}),
+vim.list_extend(python_snippets, sm("except", fmt("except{}: {}", { i(1, "#: ErrorType"), i(0) }), {"catch", "handle"}))
 
-  -- Templates
-  sm("print", fmt("print({})", { i(0) }), {"pr"}),
+vim.list_extend(python_snippets, sm("list_comprehension", fmt("[{} for {} in {}]", { i(3, "result"), i(1, "var"), i(2, "source") }), {"list"}))
 
-  sm("__init__",
-    fmt([[def __init__(self{}) -> None:
+-- Templates
+vim.list_extend(python_snippets, sm("print", fmt("print({})", { i(0) }), {"pr"}))
+
+vim.list_extend(python_snippets, sm("__init__",
+  fmt([[def __init__(self{}) -> None:
     {}]], { i(1, "#:, x"), i(0) }),
-    {"init"}),
+  {"init"}))
 
-  sm("__post_init__",
-    fmt([[def __post_init__(self{}) -> None:
+vim.list_extend(python_snippets, sm("__post_init__",
+  fmt([[def __post_init__(self{}) -> None:
     {}]], { i(1, "#:, x"), i(0) }),
-    {"post_init"}),
+  {"post_init"}))
 
-  sm("__str__",
-    fmt([[def __str__(self) -> str:
+vim.list_extend(python_snippets, sm("__str__",
+  fmt([[def __str__(self) -> str:
     {}]], { i(0) }),
-    {"__str"}),
+  {"__str"}))
 
-  s("if_name_is_main",
-    fmt([[if __name__ == '__main__':
-    {}]], { i(0) })),
-}
+table.insert(python_snippets, s("if_name_is_main",
+  fmt([[if __name__ == '__main__':
+    {}]], { i(0) })))
+
+return { snippets = python_snippets, autosnippets = {} }

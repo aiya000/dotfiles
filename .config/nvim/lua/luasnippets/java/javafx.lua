@@ -8,34 +8,36 @@ local s = ls.snippet
 local i = ls.insert_node
 local t = ls.text_node
 
-return {
-  s('javafx_template', fmt([[
-    import javafx.application.*;
-    import javafx.stage.*;
-    import javafx.scene.*;
-    import javafx.scene.layout.*;
-    import javafx.fxml.*;
+local javafx_snippets = {}
 
-    public class Main extends Application {{
-        @Override
-        public void start(Stage primaryStage) {{
-            try {{
-                GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("{fxml_file}.fxml"));
-                Scene scene = new Scene(root, {width}, {height});
-                primaryStage.setScene(scene);
-                primaryStage.show();
-            }} catch (Exception e) {{
-                e.printStackTrace();
-            }}
-        }}
+table.insert(javafx_snippets, s('javafx_template', fmt([[
+  import javafx.application.*;
+  import javafx.stage.*;
+  import javafx.scene.*;
+  import javafx.scene.layout.*;
+  import javafx.fxml.*;
 
-        public static void main(String[] args) {{
-            launch(args);
-        }}
-    }}
-  ]], {
-    fxml_file = i(1, '#:FxmlFilePath'),
-    width = i(2, '540'),
-    height = i(3, '400'),
-  })),
-}
+  public class Main extends Application {{
+      @Override
+      public void start(Stage primaryStage) {{
+          try {{
+              GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("{fxml_file}.fxml"));
+              Scene scene = new Scene(root, {width}, {height});
+              primaryStage.setScene(scene);
+              primaryStage.show();
+          }} catch (Exception e) {{
+              e.printStackTrace();
+          }}
+      }}
+
+      public static void main(String[] args) {{
+          launch(args);
+      }}
+  }}
+]], {
+  fxml_file = i(1, '#:FxmlFilePath'),
+  width = i(2, '540'),
+  height = i(3, '400'),
+})))
+
+return { snippets = javafx_snippets, autosnippets = {} }

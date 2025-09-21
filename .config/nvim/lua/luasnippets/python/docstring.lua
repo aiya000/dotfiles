@@ -12,24 +12,27 @@ local function sm(trigger, nodes, aliases)
   return snippets
 end
 
-return {
-  s("doc", fmt('"""{}"""', { i(1, "#:here") })),
+-- Convert to proper array structure for LuaSnip compatibility
+local docstring_snippets = {}
 
-  sm("doc_attributes", t([[Attributes
-----------]]), {"attrs"}),
+table.insert(docstring_snippets, s("doc", fmt('"""{}"""', { i(1, "#:here") })))
 
-  sm("doc_attribute",
-    fmt([[{} : {}
+vim.list_extend(docstring_snippets, sm("doc_attributes", t([[Attributes
+----------]]), {"attrs"}))
+
+vim.list_extend(docstring_snippets, sm("doc_attribute",
+  fmt([[{} : {}
     {}]], { i(1, "field_name"), i(2, "type"), i(3, "description") }),
-    {"doc_attr", "attr", "doc_parameter", "doc_param", "param"}),
+  {"doc_attr", "attr", "doc_parameter", "doc_param", "param"}))
 
-  sm("doc_methods", t([[Methods
--------]]), {"methods"}),
+vim.list_extend(docstring_snippets, sm("doc_methods", t([[Methods
+-------]]), {"methods"}))
 
-  s("doc_method",
-    fmt([[{}({})
-    {}]], { i(1, "method_name"), i(2, "#:args"), i(3, "description") })),
+table.insert(docstring_snippets, s("doc_method",
+  fmt([[{}({})
+    {}]], { i(1, "method_name"), i(2, "#:args"), i(3, "description") })))
 
-  sm("doc_parameters", t([[Parameters
-----------]]), {"parameters", "params"}),
-}
+vim.list_extend(docstring_snippets, sm("doc_parameters", t([[Parameters
+----------]]), {"parameters", "params"}))
+
+return { snippets = docstring_snippets, autosnippets = {} }

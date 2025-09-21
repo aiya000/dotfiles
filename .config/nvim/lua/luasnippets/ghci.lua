@@ -8,14 +8,19 @@ local s = ls.snippet
 local i = ls.insert_node
 local t = ls.text_node
 
-return {
-  s('import', fmt('import {} ({})', {
-    i(1),
-    i(2, ''),
-  })),
+local snippets = {}
 
-  sm({ 'import_qualified', 'imq' }, fmt('import qualified {} as {}', {
-    i(1),
-    i(2, ''),
-  })),
+table.insert(snippets, s('import', fmt('import {} ({})', {
+  i(1),
+  i(2, ''),
+})))
+
+vim.list_extend(snippets, sm({ 'import_qualified', 'imq' }, fmt('import qualified {} as {}', {
+  i(1),
+  i(2, ''),
+})))
+
+return {
+  snippets = snippets,
+  autosnippets = {}
 }

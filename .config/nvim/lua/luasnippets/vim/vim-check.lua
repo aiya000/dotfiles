@@ -8,49 +8,51 @@ local s = ls.snippet
 local i = ls.insert_node
 local t = ls.text_node
 
-return {
-  -- JSDoc-style annotations for Vim scripts
-  s('typedef', fmt('@typedef {{{}}} {}', {
-    i(2, 'type'),
-    i(1, 'name'),
-  })),
+local vim_check_snippets = {}
 
-  sm({ 'property', 'prop' }, fmt('@property {{{}}} {}', {
-    i(2, 'type'),
-    i(1, 'name'),
-  })),
+-- JSDoc-style annotations for Vim scripts
+table.insert(vim_check_snippets, s('typedef', fmt('@typedef {{{}}} {}', {
+  i(2, 'type'),
+  i(1, 'name'),
+})))
 
-  sm({ 'property_optional', 'opt_prop' }, fmt('@property {{{}}} [{}]', {
-    i(2, 'type'),
-    i(1, 'name'),
-  })),
+vim.list_extend(vim_check_snippets, sm({ 'property', 'prop' }, fmt('@property {{{}}} {}', {
+  i(2, 'type'),
+  i(1, 'name'),
+})))
 
-  s('type', fmt('@type {{{}}}', {
-    i(1, 'type'),
-  })),
+vim.list_extend(vim_check_snippets, sm({ 'property_optional', 'opt_prop' }, fmt('@property {{{}}} [{}]', {
+  i(2, 'type'),
+  i(1, 'name'),
+})))
 
-  sm({ 'template', 'generic', 'generics' }, fmt('@template {}', {
-    i(1, 'T'),
-  })),
+table.insert(vim_check_snippets, s('type', fmt('@type {{{}}}', {
+  i(1, 'type'),
+})))
 
-  sm({ 'template_default', 'generic_default', 'generics_default' }, fmt('@template [{}={}]', {
-    i(1, 'T'),
-    i(2, 'Default'),
-  })),
+vim.list_extend(vim_check_snippets, sm({ 'template', 'generic', 'generics' }, fmt('@template {}', {
+  i(1, 'T'),
+})))
 
-  s('param', fmt('@param {} {{{}}}', {
-    i(1, 'name'),
-    i(2, 'type'),
-  })),
+vim.list_extend(vim_check_snippets, sm({ 'template_default', 'generic_default', 'generics_default' }, fmt('@template [{}={}]', {
+  i(1, 'T'),
+  i(2, 'Default'),
+})))
 
-  sm({ 'param_optional', 'opt', 'opt_param' }, fmt('@param [{}] {{{}}}', {
-    i(1, 'name'),
-    i(2, 'type'),
-  })),
+table.insert(vim_check_snippets, s('param', fmt('@param {} {{{}}}', {
+  i(1, 'name'),
+  i(2, 'type'),
+})))
 
-  sm({ 'returns', 'return' }, fmt('@returns {{{}}}', {
-    i(1, 'type'),
-  })),
+vim.list_extend(vim_check_snippets, sm({ 'param_optional', 'opt', 'opt_param' }, fmt('@param [{}] {{{}}}', {
+  i(1, 'name'),
+  i(2, 'type'),
+})))
 
-  s('throws', t('@throws')),
-}
+vim.list_extend(vim_check_snippets, sm({ 'returns', 'return' }, fmt('@returns {{{}}}', {
+  i(1, 'type'),
+})))
+
+table.insert(vim_check_snippets, s('throws', t('@throws')))
+
+return { snippets = vim_check_snippets, autosnippets = {} }

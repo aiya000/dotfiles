@@ -14,24 +14,24 @@ local function sm(triggers, nodes)
   return snippets
 end
 
-local zenn_snippets = list.concat({
-  sm({"details", "zenn_details", "zenn_folding"}, fmt([[
+local zenn_snippets = {}
+
+vim.list_extend(zenn_snippets, sm({"details", "zenn_details", "zenn_folding"}, fmt([[
 :::details
 
 {}
 
 :::]], {
-    i(1, "")
-  })),
+  i(1, "")
+})))
 
-  sm({"message", "zenn_message", "zenn_info"}, fmt([[
+vim.list_extend(zenn_snippets, sm({"message", "zenn_message", "zenn_info"}, fmt([[
 :::message
 
 {}
 
 :::]], {
-    i(1, "")
-  }))
-})
+  i(1, "")
+})))
 
-return zenn_snippets
+return { snippets = zenn_snippets, autosnippets = {} }

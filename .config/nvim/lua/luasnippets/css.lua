@@ -1,15 +1,10 @@
 -- Combine all CSS snippet modules
-local function combine_snippets(...)
-  local result = {}
-  for _, module in ipairs({...}) do
-    for key, snippet in pairs(module) do
-      result[key] = snippet
-    end
-  end
-  return result
-end
+local list = require('utils.list')
 
-return combine_snippets(
-  require('luasnippets.css.css'),
-  require('luasnippets.css.tailwind')
-)
+return {
+  snippets = list.concat(
+    require('luasnippets.css.css').snippets,
+    require('luasnippets.css.tailwind').snippets
+  ),
+  autosnippets = {}
+}

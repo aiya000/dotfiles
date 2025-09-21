@@ -14,16 +14,16 @@ local import_snippets = require('luasnippets.cs.import')
 -- Concatenate all snippets into a single table
 -- LuaSnip from_lua loader用の正しい形式
 return {
-  snippets = list.concat({
-  cs_snippets,
-  method_snippets,
-  attr_snippets,
-  pragma_snippets,
-  unity_snippets,
-  udonsharp_snippets,
-  region_snippets,
-  template_snippets,
-  import_snippets
-}),
+  snippets = list.concat(
+    cs_snippets.snippets,
+    method_snippets.snippets,
+    attr_snippets.snippets,
+    pragma_snippets.snippets,
+    unity_snippets.snippets,
+    udonsharp_snippets.snippets,
+    region_snippets.snippets,
+    template_snippets.snippets,
+    import_snippets.snippets
+  ),
   autosnippets = {}
 }

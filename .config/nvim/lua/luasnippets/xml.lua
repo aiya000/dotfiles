@@ -1,7 +1,10 @@
 local list = require('utils.list')
 
-return list.concat(
-  require('snippets.xml.xml'),
-  require('snippets.xml.android'),
-  require('snippets.xml.csproj')
-)
+return {
+  snippets = list.concat(
+    require('luasnippets.xml.xml').snippets,
+    require('luasnippets.xml.android').snippets,
+    require('luasnippets.xml.csproj').snippets
+  ),
+  autosnippets = {}
+}

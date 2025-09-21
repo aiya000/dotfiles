@@ -9,4 +9,7 @@ local pragma_snippets = {
   })
 }
 
-return pragma_snippets
+return {
+  snippets = pragma_snippets,
+  autosnippets = {}
+}

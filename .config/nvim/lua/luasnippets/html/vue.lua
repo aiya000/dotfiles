@@ -59,4 +59,10 @@ for k, v in pairs(v_model_snippets) do
   M[k] = v
 end
 
-return M
+-- Convert M table to array format for LuaSnip
+local snippets = {}
+for _, snippet in pairs(M) do
+  table.insert(snippets, snippet)
+end
+
+return { snippets = snippets, autosnippets = {} }

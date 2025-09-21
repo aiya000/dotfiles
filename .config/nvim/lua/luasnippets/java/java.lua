@@ -8,7 +8,7 @@ local s = utils.s
 local i = ls.insert_node
 local t = ls.text_node
 
-return list.concat(
+local java_snippets = list.concat(
   -- Syntaxes
   sm({'class', 'cla'}, fmt([[
     class {name} {{{body}}}
@@ -214,3 +214,8 @@ return list.concat(
 
   s('br', t('<br>'))
 )
+
+return {
+  snippets = java_snippets,
+  autosnippets = {}
+}

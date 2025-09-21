@@ -35,4 +35,7 @@ local attr_snippets = {
   })
 }
 
-return attr_snippets
+return {
+  snippets = attr_snippets,
+  autosnippets = {}
+}

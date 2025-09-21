@@ -4,7 +4,8 @@ local s = ls.snippet
 local t = ls.text_node
 
 return {
-  s("emoji_hash", t("#")),
+  snippets = {
+    s("emoji_hash", t("#")),
   s("emoji_zero", t("0")),
   s("emoji_one", t("1")),
   s("emoji_two", t("2")),
@@ -864,9 +865,9 @@ return {
   s("emoji_it", t("🇮🇹")),
   s("emoji_jp", t("🇯🇵")),
   s("emoji_kr", t("🇰🇷")),
-  s("emoji_ru", t("🇷🇺
+  s("emoji_ru", t("🇷🇺")),
 
-# Uncommon emojis (Never supported by GFM)")),
+  -- # Uncommon emojis (Never supported by GFM),
   s("emoji_hugging_face", t("🤗")),
   s("emoji_thinking_face", t("🤔")),
   s("emoji_victory_hand", t("✌️")),
@@ -874,4 +875,6 @@ return {
   s("emoji_hand_over_mouth_face", t("🤭")),
   s("emoji_heart_exclamation", t("❣️")),
   s("emoji_celebrating_face", t("🥳")),
+  },
+  autosnippets = {}
 }

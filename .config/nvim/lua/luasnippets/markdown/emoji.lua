@@ -27,4 +27,4 @@ local emoji_snippets = {
   -- s("emoji_name", t("emoji_character_or_code"))
 }
 
-return emoji_snippets
+return { snippets = emoji_snippets, autosnippets = {} }

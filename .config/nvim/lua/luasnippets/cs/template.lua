@@ -14,8 +14,9 @@ local function sm(triggers, nodes)
   return snippets
 end
 
-local template_snippets = list.concat({
-  sm({"ViewModelTemplate", "VMTemplate"}, fmt([[
+local template_snippets = {}
+
+vim.list_extend(template_snippets, sm({"ViewModelTemplate", "VMTemplate"}, fmt([[
 #region public field
 
 public event PropertyChangedEventHandler PropertyChanged;
@@ -65,9 +66,9 @@ private void OnPropertyChanged(string name) {{
     i(4, "Constructor"),
     i(1, ""),
     i(5, "string.Empty")
-  })),
+  })))
 
-  sm({"ViewModelProperty", "VMProperty"}, fmt([[
+vim.list_extend(template_snippets, sm({"ViewModelProperty", "VMProperty"}, fmt([[
 public {} {} {{
     get {{
         return this.{};
@@ -88,9 +89,9 @@ this.{} = {};]], {
     i(3, ""),
     i(2, ""),
     i(4, "string.Empty")
-  })),
+  })))
 
-  s("ICommandTemplate", fmt([[
+table.insert(template_snippets, s("ICommandTemplate", fmt([[
 #region public field
 
 // Suppress warning of unuse
@@ -110,9 +111,9 @@ public void Execute(object parameter) {{
 
 #endregion]], {
     i(1, "")
-  })),
+  })))
 
-  s("FriendlyTestClassTemplate", fmt([[
+table.insert(template_snippets, s("FriendlyTestClassTemplate", fmt([[
 using System;
 using System.Windows;
 using System.Diagnostics;
@@ -161,7 +162,9 @@ public class {}Test {{
     i(3, "Debug"),
     i(2, ""),
     i(4, "#:Context")
-  }))
-})
+  })))
 
-return template_snippets
+return {
+  snippets = template_snippets,
+  autosnippets = {}
+}

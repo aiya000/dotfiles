@@ -12,12 +12,10 @@ local t = ls.text_node
 -- - Conventional Commits: https://www.conventionalcommits.org/ja/v1.0.0/
 
 -- LuaSnip from_lua loader用の正しい形式
-return {
-  snippets = list.concat(
-    -- Include markdown snippets
-    require('luasnippets.markdown').snippets,
+local gitcommit_snippets = {}
 
-  {
+-- Git commit specific snippets
+vim.list_extend(gitcommit_snippets, {
     s('feat', fmt('feat({}): {}', {
       i(1, 'scope'),
       i(2, 'description'),
@@ -91,7 +89,9 @@ return {
     s('BREAKING_CHANGE', fmt('BREAKING CHANGE: {}', {
       i(1, 'description'),
     })),
-    }
-  ),
+})
+
+return {
+  snippets = gitcommit_snippets,
   autosnippets = {}
 }

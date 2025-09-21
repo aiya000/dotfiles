@@ -8,10 +8,10 @@ local gtest_snippets = require('luasnippets.cpp.gtest')
 -- Concatenate all snippets into a single table
 -- LuaSnip from_lua loader用の正しい形式
 return {
-  snippets = list.concat({
-  cpp_snippets,
-  doxygen_snippets,
-  gtest_snippets
-}),
+  snippets = list.concat(
+    cpp_snippets.snippets,
+    doxygen_snippets.snippets,
+    gtest_snippets.snippets
+  ),
   autosnippets = {}
 }
