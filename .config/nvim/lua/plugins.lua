@@ -3,17 +3,22 @@
 local helper = require('helper')
 local autocmds = require('autocmds')
 local fn = require('utils.functions')
-local s = fn.s
+local list = require('utils.list')
 
----@param cond boolean --Pull plugin from lazynvim_plugin_table.dir , or from lazynvim_plugin_table[1]
+---@param remote_repo string
+---@param local_dir string
+---@param should_load_from_remote boolean
 ---@param lazynvim_plugin_table table --LazyPlugin
-local function load_local_or_upstream(cond, lazynvim_plugin_table)
-  if cond then
-    lazynvim_plugin_table[1] = nil
-  else
-    lazynvim_plugin_table.dir = nil
-  end
-  return lazynvim_plugin_table
+local function load_from_local_or_remote(
+  remote_repo,
+  local_dir,
+  should_load_from_remote,
+  lazynvim_plugin_table
+)
+  local from = should_load_from_remote
+    and { remote_repo }
+    or { dir = vim.fn.expand(local_dir) }
+  return vim.tbl_extend('keep', from, lazynvim_plugin_table)
 end
 
 return {
@@ -1241,31 +1246,21 @@ return {
   -- }}}
   -- nvim-mado-scratch-buffer {{{
 
-  -- TODO: load_local_or_remoteが直ったらアンコメント
-  -- load_local_or_remote(InitLua.disable_scratch_buffer ~= true, {
-  --   'aiya000/nvim-mado-scratch-buffer',
-  --   dir = vim.fn.expand('~/Repository/nvim-mado-scratch-buffer'),
-  --   opts = {
-  --     file_pattern = {
-  --       when_file_buffer = vim.fn.expand('~/tmp/scratch-%d'),
-  --     },
-  --     default_file_ext = 'md',
-  --     default_open_method = 'vsp',
-  --     default_buffer_size = nil,
-  --   },
-  -- }),
-
-  {
-    dir = vim.fn.expand('~/Repository/nvim-mado-scratch-buffer'),
-    opts = {
-      file_pattern = {
-        when_file_buffer = vim.fn.expand('~/tmp/scratch-%d'),
+  load_from_local_or_remote(
+    'aiya000/nvim-mado-scratch-buffer',
+    '~/Repository/nvim-mado-scratch-buffer',
+    InitLua.disable_scratch_buffer ~= true,
+    {
+      opts = {
+        file_pattern = {
+          when_file_buffer = vim.fn.expand('~/tmp/scratch-%d'),
+        },
+        default_file_ext = 'md',
+        default_open_method = 'vsp',
+        default_buffer_size = 'no-auto-resize',
       },
-      default_file_ext = 'md',
-      default_open_method = 'vsp',
-      default_buffer_size = 'no-auto-resize',
-    },
-  },
+    }
+  ),
 
   -- }}}
   -- vim-write-sync {{{
