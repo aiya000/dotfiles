@@ -58,6 +58,7 @@ PATH=$PATH:$HOME/.npm-prefix/bin
 PATH=$PATH:$HOME/.cargo/bin
 PATH=$PATH:$HOME/.ghcup/bin
 PATH=$PATH:$HOME/.local/bin
+PATH=$PATH:$HOME/.luarocks/bin
 PATH=$PATH:$HOME/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/bin
 
 # Plugins
