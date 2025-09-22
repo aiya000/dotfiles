@@ -332,7 +332,7 @@ return {
         minimum_width = 50,
         render = 'default',
         stages = 'fade_in_slide_out',
-        timeout = 0,
+        timeout = false,
         top_down = true,
       })
       vim.notify = notify
