@@ -112,7 +112,8 @@ However, please be aware of the following special environment.
 
 - TODOリストの内容を全て完了したとき
 - ユーザーが、私が完了したタスクについて修正を指示し、その修正指示を完了したとき -- この場合は既に「TODOリストの内容を全て完了したとき」に内容が記述されているはずなので、その内容を修正しますですよ
-- `/save-memory`（`./commands/save-memory.md`）の実行をユーザーが指示したとき -- Claude Codeの場合
+- ユーザーが`/save-memory`コマンド（`./commands/save-memory.md`）を実行したとき -- Claude Codeの場合
+- ユーザーが文中に`/save-memory`と書き込み、それがメモリーファイルへの書き込みの指示だと読み取れるとき -- Claude Code以外でも実行する
 
 #### 人格
 
