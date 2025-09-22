@@ -1,5 +1,7 @@
 local helper = require('helper')
+local pipe = require('utils.functions').pipe
 
+vim.opt_local.conceallevel = 0
 vim.opt_local.tabstop = 4
 vim.opt_local.shiftwidth = 4
 vim.opt_local.conceallevel = 0
@@ -9,7 +11,22 @@ vim.opt_local.completefunc = 'github_complete#complete'
 ---Finds free port for grip server
 ---@param port integer
 local function find_free_port(port)
-  local result = vim.system("ss -tuln | grep ':" .. port .. "' | wc -l"):wait()
+  pipe(vim.system({ 'ss', '-tuln' }):wait())
+    :apply(function(result)
+      return vim.split(result.stdout, '\n')
+    end)
+    :apply(function(lines)
+      return vim.iter(ipairs(lines)):find(function(_, line)
+        return line:match(':%d+%s')
+      end)
+    end)
+    :apply_if_not_nil(iiijghQj)
+    :get()
+
+  -- 最後の要素が空文字列なら削除する
+  vim.print(lines)
+
+  local result = vim.system({' | grep ':' .. port .. "' | wc -l"}):wait()
   if result.code ~= 0 then
     error('Failed to check port: ' .. result.stderr)
   end
@@ -25,16 +42,18 @@ local function start_grip()
   local port = find_free_port(25252)
 
   local ok, err = pcall(function()
-    vim.fn.termopen('grip ' .. token_option .. ' ' .. vim.fn.fnameescape(vim.fn.expand('%:p')) .. ' ' .. port, {
+    vim.fn.jobstart({ 'grip', token_option, vim.fn.fnameescape(vim.fn.expand('%:p')), port }, {
+      term = true,
       vertical = true, -- TODO: ここらへんのオプションをVimのterm_start()から移行できてないので、無視されると思う。移行する
       hidden = true,
       term_finish = 'close',
     })
-    -- NOTE: なぜか`setl nonumber norelativenumber nolist`になるので、とりあえず直打ちで直している
-    -- TODO: なんでこうなるのか調査して、修正する
-    vim.opt_local.number = true
-    vim.opt_local.relativenumber = true
-    vim.opt_local.list = true
+
+    -- -- NOTE: なぜか`setl nonumber norelativenumber nolist`になるので、とりあえず直打ちで直している
+    -- -- TODO: なんでこうなるのか調査して、修正する
+    -- vim.opt_local.number = true
+    -- vim.opt_local.relativenumber = true
+    -- vim.opt_local.list = true
   end)
 
   if not ok then
