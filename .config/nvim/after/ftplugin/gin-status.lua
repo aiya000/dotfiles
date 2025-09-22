@@ -2,36 +2,40 @@ local s = require('utils.functions').s
 
 vim.opt_local.cursorline = true
 
----Runs `git stash push --message "{message}" -- "{file_to_save}"`
----@param file_to_save string ---The path of a file to stash
-local function stash_push(file_to_save)
-  local message = vim.fn.input('Stash message: ')
-  if message == '' then
-    return
+---TODO: 相対パスにする。サブディレクトリでこれやるとエラーになる
+---@return string | nil ---nil when failed to parse the line
+local function get_current_line_file_path()
+  local line = vim.fn.getline('.') -- Like ' M path/to/file.txt', 'M  path/to/file.txt', '?? path/to/file.txt', and etc
+  local filepath = line:match('^%s+%S+%s+(.*)$')
+  if filepath == nil or filepath == '' then
+    return nil
   end
-
-  vim.system({ 'git', 'stash', 'push', '--message', message, '--', file_to_save }, {
-    text = true,
-  }, function(result)
-    vim.schedule(function()
-      if result.code == 0 then
-        vim.notify(result.stdout or 'Stash created successfully', vim.log.levels.INFO)
-      else
-        vim.notify(s('Stash failed: {error}', { error = result.stderr or 'Unknown error' }), vim.log.levels.ERROR)
-      end
-      vim.cmd('GinStatus') -- Refresh
-    end)
-  end)
+  return filepath
 end
 
----Runs git-stash with the file on the current line
+---Runs `git stash push --message "{message}" -- "{current_line_file_path}"`
 local function run_stash_push_message()
-  local filename = vim.fn.trim(vim.fn.getline('.'))
-  if filename ~= nil and filename ~= '' then
-    stash_push(filename)
+  local filepath = get_current_line_file_path()
+  if filepath == nil then
+    vim.notify('Failed to parse the current line for file path', vim.log.levels.ERROR)
     return
   end
-  error('No filename found on the current line')
+
+  local message = vim.fn.input('Stash message: ')
+  if message == '' then
+    vim.notify('Stash message cannot be empty', vim.log.levels.ERROR)
+    return
+  end
+
+  vim.notify('poi: ' .. vim.inspect({ 'git', 'stash', 'push', '--message', message, '--', filepath }), vim.log.levels.INFO)
+  local result = vim.system({ 'git', 'stash', 'push', '--message', message, '--', filepath }):wait()
+  if result.code ~= 0 then
+    vim.notify(s('Stash failed: {error}', { error = result.stderr or 'Unknown error' }), vim.log.levels.ERROR)
+    return
+  end
+
+  vim.notify(result.stdout or 'Stash created successfully', vim.log.levels.INFO)
+  vim.cmd('GinStatus') -- Refresh
 end
 
 local function run_add_patch()
@@ -39,12 +43,7 @@ local function run_add_patch()
     vim.notify('git root directory is never loaded. wait.', vim.log.levels.ERROR)
     return
   end
-
-  local line = vim.fn.getline('.') -- Like ' M path/to/file.txt', 'M  path/to/file.txt', '?? path/to/file.txt', and etc
-  local filename = line:match('^%s+%S+%s+(.*)$')
-  if filename == nil or filename == '' then
-    return
-  end
+  local filename = get_current_line_file_path()
   local filepath = InitLua.git_root .. '/' .. filename
 
   vim.cmd('vertical new')
@@ -68,23 +67,22 @@ local function force_show_stash_size()
     text = true,
   }, function(result)
     vim.schedule(function()
-      if result.code == 0 then
-        local lines = vim.split(result.stdout or '', '\n')
-        local size = #lines
-
-        if lines[1] == '' then
-          size = 0
-        end
-
-        if size > 0 then
-          local topline = vim.fn.getline(1)
-          local new_topline = s('{topline} [stash:{size}]', { topline = topline, size = size })
-
-          vim.bo.modifiable = true
-          vim.fn.setline(1, new_topline)
-          vim.bo.modifiable = false
-        end
+      if result.code ~= 0 then
+        return
       end
+
+      local lines = vim.split(result.stdout or '', '\n')
+      local size = #lines - 1
+      if size <= 0 then
+        return
+      end
+
+      local topline = vim.fn.getline(1)
+      local new_topline = s('{topline} [stash:{size}]', { topline = topline, size = size })
+
+      vim.bo.modifiable = true
+      vim.fn.setline(1, new_topline)
+      vim.bo.modifiable = false
     end)
   end)
 end
