@@ -242,8 +242,6 @@ return {
           ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-              luasnip.expand_or_jump()
             else
               fallback()
             end
@@ -251,8 +249,6 @@ return {
           ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-              luasnip.jump(-1)
             else
               fallback()
             end
@@ -336,7 +332,7 @@ return {
         minimum_width = 50,
         render = 'default',
         stages = 'fade_in_slide_out',
-        timeout = false,
+        timeout = 0,
         top_down = true,
       })
       vim.notify = notify
@@ -381,53 +377,53 @@ return {
         magenta = '#c678dd',
         blue = '#51afef',
         red = '#ec5f67',
+        white = '#ffffff',
       }
 
+      local mode_colors = {
+        n = colors.blue,
+        i = colors.magenta,
+        R = colors.magenta,
+        Rv = colors.magenta,
+        v = colors.yellow,
+        V = colors.yellow,
+        s = colors.yellow,
+        S = colors.yellow,
+        c = colors.green,
+        t = colors.yellow,
+        ['!'] = colors.red,
+      }
+
+      local function get_current_mode_color()
+        local color = mode_colors[vim.fn.mode()]
+        return color == nil
+          and colors.white
+          or color
+      end
+
       gls.left[1] = {
-        RainbowRed = {
+        CurrentWindowHighlightLeft = {
           provider = fn.const('▊ '),
           highlight = { colors.blue, colors.bg },
         },
       }
+
       gls.left[2] = {
         ViMode = {
           provider = function()
-            local mode_color = {
-              n = colors.red,
-              i = colors.green,
-              v = colors.blue,
-              V = colors.blue,
-              c = colors.magenta,
-              no = colors.red,
-              s = colors.orange,
-              S = colors.orange,
-              [''] = colors.orange,
-              ic = colors.yellow,
-              R = colors.violet,
-              Rv = colors.violet,
-              cv = colors.red,
-              ce = colors.red,
-              r = colors.cyan,
-              rm = colors.cyan,
-              ['r?'] = colors.cyan,
-              ['!'] = colors.red,
-              t = colors.red,
-            }
-            local current_mode = vim.fn.mode() or 'n'
-            local color = mode_color[current_mode] or colors.red
-            vim.api.nvim_command('highlight GalaxyViMode guifg=' .. color)
-            return '  '
+            -- ハイライトを動的に設定
+            vim.api.nvim_set_hl(0, 'GalaxyViMode', {
+              fg = get_current_mode_color(),
+              bg = colors.bg,
+              bold = true
+            })
+
+            return ' '
           end,
-          highlight = { colors.red, colors.bg, 'bold' },
+          highlight = 'GalaxyViMode',
         },
       }
-      gls.left[3] = {
-        FileSize = {
-          provider = 'FileSize',
-          condition = condition.buffer_not_empty,
-          highlight = { colors.fg, colors.bg },
-        },
-      }
+
       gls.left[4] = {
         FileName = {
           provider = 'FileName',
@@ -461,6 +457,7 @@ return {
           highlight = { colors.red, colors.bg },
         },
       }
+
       gls.left[8] = {
         DiagnosticWarn = {
           provider = 'DiagnosticWarn',
