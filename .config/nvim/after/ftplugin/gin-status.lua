@@ -27,7 +27,10 @@ local function run_stash_push_message()
     return
   end
 
-  vim.notify('poi: ' .. vim.inspect({ 'git', 'stash', 'push', '--message', message, '--', filepath }), vim.log.levels.INFO)
+  vim.notify(
+    'poi: ' .. vim.inspect({ 'git', 'stash', 'push', '--message', message, '--', filepath }),
+    vim.log.levels.INFO
+  )
   local result = vim.system({ 'git', 'stash', 'push', '--message', message, '--', filepath }):wait()
   if result.code ~= 0 then
     vim.notify(s('Stash failed: {error}', { error = result.stderr or 'Unknown error' }), vim.log.levels.ERROR)

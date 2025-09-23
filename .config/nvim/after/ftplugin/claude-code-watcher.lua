@@ -26,7 +26,7 @@ vim.keymap.set('n', 'Q', close_claude_code_tab, { buffer = true, desc = 'Close t
 
 -- Stop this tab's watchers when leaving the tab,
 -- and resume them when entering the tab
-vim.api.nvim_create_autocmd({'TabLeave', 'TabEnter'}, {
+vim.api.nvim_create_autocmd({ 'TabLeave', 'TabEnter' }, {
   group = vim.api.nvim_create_augroup('FtpluginClaudeCodeWatcher', { clear = true }),
   callback = function(ev)
     ---@type ClaudeCodeWatchersTabState | nil
@@ -38,12 +38,12 @@ vim.api.nvim_create_autocmd({'TabLeave', 'TabEnter'}, {
 
     if ev.event == 'TabEnter' then
       -- 再開
-      vim.system({'kill', '-CONT ', tostring(tab_state.ccusage_pid)}):wait()
-      vim.system({'kill', '-CONT ', tostring(tab_state.claude_monitor_pid)}):wait()
+      vim.system({ 'kill', '-CONT ', tostring(tab_state.ccusage_pid) }):wait()
+      vim.system({ 'kill', '-CONT ', tostring(tab_state.claude_monitor_pid) }):wait()
     else
       -- 停止
-      vim.system({'kill', '-STOP ', tostring(tab_state.ccusage_pid)}):wait()
-      vim.system({'kill', '-STOP ', tostring(tab_state.claude_monitor_pid)}):wait()
+      vim.system({ 'kill', '-STOP ', tostring(tab_state.ccusage_pid) }):wait()
+      vim.system({ 'kill', '-STOP ', tostring(tab_state.claude_monitor_pid) }):wait()
     end
   end,
 })

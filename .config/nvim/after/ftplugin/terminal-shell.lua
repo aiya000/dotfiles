@@ -33,7 +33,7 @@ vim.api.nvim_buf_create_user_command(0, 'ParentEdit', function(opts)
 end, {
   nargs = 1,
   complete = 'file',
-  desc = 'Open file in parent Neovim'
+  desc = 'Open file in parent Neovim',
 })
 
 -- COMMENTED OUT: Shell command approach implementation (causing issues)
