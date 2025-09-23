@@ -179,8 +179,11 @@ end
 ---- get_termopen_options_bdelete_when_on_exit()
 ---- termopen_temporary()
 ---@param opts? table --See `:h jobstart()`
-function M.termopen_shell(opts)
+---@param should_enter_insert_mode? boolean --Default is `true`
+function M.termopen_shell(opts, should_enter_insert_mode)
   opts = opts or {}
+  should_enter_insert_mode = should_enter_insert_mode == nil
+
   M.termopen_temporary(
     vim.env.SHELL,
     vim.tbl_extend('force', opts, {
@@ -188,7 +191,10 @@ function M.termopen_shell(opts)
     })
   )
   vim.opt_local.filetype = 'terminal-shell'
-  vim.fn.feedkeys('i')
+
+  if should_enter_insert_mode then
+    vim.fn.feedkeys('i')
+  end
 end
 
 ---Fetches a detail of <title> from a URL

@@ -253,9 +253,15 @@ map('n', '<leader><leader>v', function()
 end, { silent = true })
 
 map('n', '<leader>V', function()
+  -- Open in the current window
+  -- NOTE: 現在のウィンドウでlspのエラーなどがあると、タイミングによってその表示を持ち越してしまうので、新しいウィンドウで開く
+  local current_win = vim.api.nvim_get_current_win()
+  vim.cmd('new')
   helper.termopen_shell({
     cwd = helper.read_current_buffer_dir(InitLua.git_root),
-  })
+  }, false)
+  vim.api.nvim_win_close(current_win, false)
+  vim.fn.feedkeys('i')
 end, { silent = true })
 
 map('n', '<leader><leader>V', function()
