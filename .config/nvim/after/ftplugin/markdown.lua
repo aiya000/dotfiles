@@ -10,55 +10,52 @@ vim.opt_local.completefunc = 'github_complete#complete'
 
 ---Finds free port for grip server
 ---@param port integer
-local function find_free_port(port)
-  pipe(vim.system({ 'ss', '-tuln' }):wait())
-    :apply(function(result)
-      return vim.split(result.stdout, '\n')
-    end)
-    :apply(function(lines)
-      return vim.iter(ipairs(lines)):find(function(_, line)
-        return line:match(':%d+%s')
-      end)
-    end)
-    :apply_if_not_nil(iiijghQj)
-    :get()
+---@param rest_count_to_cancel integer --When this is 0, it stops searching and throws an error
+local function find_free_port(port, rest_count_to_cancel)
+  if rest_count_to_cancel == 0 then
+    error('Cannot find free port. The expected port: ' .. port)
+  end
 
-  -- 最後の要素が空文字列なら削除する
-  vim.print(lines)
-
-  local result = vim.system({' | grep ':' .. port .. "' | wc -l"}):wait()
-  if result.code ~= 0 then
+  local result = vim.system({ 'ss', '-tuln' }):wait()
+  if result.code ~= 0 or result.stdout == nil then
     error('Failed to check port: ' .. result.stderr)
   end
-  if vim.fn.trim(result.stdout) == '0' then
+
+  local lines = vim.split(result.stdout, '\n')
+  local free_port = vim.iter(lines):find(function(line)
+    return line:match(':' .. port) ~= nil
+  end)
+
+  if free_port == nil then
     return port
   end
-  return find_free_port(port + 1)
+  return find_free_port(port + 1, rest_count_to_cancel - 1)
+end
+
+---Returns A GitHub Token for grip from environment variable,
+---if the environment variable is a correct token.
+---Or returns nil.
+---@return string | nil
+local function get_grip_token()
+  return vim.env.DOTFILES_PRIVATE_GITHUB_GRIP_TOKEN:match(' ') == nil
+    and vim.env.DOTFILES_PRIVATE_GITHUB_GRIP_TOKEN
+    or nil
 end
 
 local function start_grip()
-  local token = vim.env.DOTFILES_PRIVATE_GITHUB_GRIP_TOKEN or ''
-  local token_option = (token == '') and '' or ('--pass ' .. token)
-  local port = find_free_port(25252)
+  local token = get_grip_token()
+  local token_option = (token == nil) and '' or ('--pass ' .. token)
+  local filepath = vim.fn.fnameescape(vim.fn.expand('%:p'))
+  local port = find_free_port(25252, 5) -- 5 is very random value. Can change if needed
+  local cmd = vim.iter({ 'grip', token_option, filepath, tostring(port) })
+    :filter(function(v)
+      return v ~= ''
+    end)
+    :totable()
 
-  local ok, err = pcall(function()
-    vim.fn.jobstart({ 'grip', token_option, vim.fn.fnameescape(vim.fn.expand('%:p')), port }, {
-      term = true,
-      vertical = true, -- TODO: ここらへんのオプションをVimのterm_start()から移行できてないので、無視されると思う。移行する
-      hidden = true,
-      term_finish = 'close',
-    })
-
-    -- -- NOTE: なぜか`setl nonumber norelativenumber nolist`になるので、とりあえず直打ちで直している
-    -- -- TODO: なんでこうなるのか調査して、修正する
-    -- vim.opt_local.number = true
-    -- vim.opt_local.relativenumber = true
-    -- vim.opt_local.list = true
-  end)
-
-  if not ok then
-    vim.notify('grip error: ' .. tostring(err), vim.log.levels.ERROR)
-  end
+  vim.cmd('vertical new')
+  vim.fn.jobstart(cmd, { term = true })
+  vim.cmd('quit')
 
   vim.fn.system(InitLua.open_on_gui .. ' http://localhost:' .. port)
 end
@@ -77,7 +74,10 @@ vim.keymap.set('n', '<localleader><localleader>r', start_grip, { buffer = true, 
 
 -- TODO: Do 'gg' after glow finished
 vim.keymap.set('n', '<localleader><localleader>R', function()
-  vim.fn.termopen('glow ' .. vim.fn.fnameescape(vim.fn.expand('%:p')), { vertical = true })
+  vim.fn.jobstart('glow ' .. vim.fn.fnameescape(vim.fn.expand('%:p')), {
+    term = true,
+    vertical = true,
+  })
 end, { buffer = true, silent = true })
 
 -- TODO: ちゃんと.vimrcと同様に、lsp_documentSymbolあたりを使う。可能ならここで<C-k><C-f>を押すとオーバーライドするよりも、lspを導入することで済むなら、そちらの方がよい
@@ -102,5 +102,3 @@ local function open_ddu_section_list()
 end
 
 vim.keymap.set('n', '<C-k><C-f>', open_ddu_section_list, { buffer = true, silent = true })
-
-vim.cmd('syntax sync fromstart')
