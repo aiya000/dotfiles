@@ -227,6 +227,7 @@ end
 
 -- }}}
 
+require('luarocks-config')
 require('lazy-nvim-config')
 require('autocmds')
 require('plugins')
