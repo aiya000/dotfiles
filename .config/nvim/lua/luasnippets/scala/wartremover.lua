@@ -32,7 +32,13 @@ end
 
 return {
   -- WartRemover suppress warnings
-  sm({ 'suppress_warnings_wartremover', 'wartremover_ignore' }, s('suppress_warnings_wartremover', fmt('@SuppressWarnings(Array("org.wartremover.warts.{}"))', {
-    i(1, 'Var')
-  }))),
+  sm(
+    { 'suppress_warnings_wartremover', 'wartremover_ignore' },
+    s(
+      'suppress_warnings_wartremover',
+      fmt('@SuppressWarnings(Array("org.wartremover.warts.{}"))', {
+        i(1, 'Var'),
+      })
+    )
+  ),
 }

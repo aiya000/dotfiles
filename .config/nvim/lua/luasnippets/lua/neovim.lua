@@ -7,8 +7,14 @@ local sm = utils.sm
 local s = ls.snippet
 local i = ls.insert_node
 
-return sm({'vim_system', 'neovim_system', 'system'}, fmt([[
+return sm(
+  { 'vim_system', 'neovim_system', 'system' },
+  fmt(
+    [[
   vim.system({{'{command}'}}, {{ text = true }})
-]], {
-  command = i(1, 'command'),
-}))
+]],
+    {
+      command = i(1, 'command'),
+    }
+  )
+)

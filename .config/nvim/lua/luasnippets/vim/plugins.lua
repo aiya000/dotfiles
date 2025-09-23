@@ -11,12 +11,24 @@ local t = ls.text_node
 local plugins_snippets = {}
 
 -- Themis (Vim testing framework) functions
-vim.list_extend(plugins_snippets, sm({ 'themis_log', 'log' }, fmt('call themis#log({})', {
-  i(1, ''),
-})))
+vim.list_extend(
+  plugins_snippets,
+  sm(
+    { 'themis_log', 'log' },
+    fmt('call themis#log({})', {
+      i(1, ''),
+    })
+  )
+)
 
-vim.list_extend(plugins_snippets, sm({ 'themis_poi', 'tpoi' }, fmt('call themis#log($\'poi: {{{}}}\')', {
-  i(1, ''),
-})))
+vim.list_extend(
+  plugins_snippets,
+  sm(
+    { 'themis_poi', 'tpoi' },
+    fmt("call themis#log($'poi: {{{}}}')", {
+      i(1, ''),
+    })
+  )
+)
 
 return { snippets = plugins_snippets, autosnippets = {} }

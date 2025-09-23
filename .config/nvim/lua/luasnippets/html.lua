@@ -10,5 +10,5 @@ return {
     require('luasnippets.html.nativescript').snippets,
     require('luasnippets.html.template').snippets
   ),
-  autosnippets = {}
+  autosnippets = {},
 }

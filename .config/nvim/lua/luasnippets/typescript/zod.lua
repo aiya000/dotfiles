@@ -9,21 +9,33 @@ local i = ls.insert_node
 
 return list.concat(
   {
-    s('zod_interface', fmt([[
+    s(
+      'zod_interface',
+      fmt(
+        [[
       const {name} = z.object({{
         {}
       }})
-    ]], {
-      name = i(1, 'name'),
-      i(2, ''),
-    })),
+    ]],
+        {
+          name = i(1, 'name'),
+          i(2, ''),
+        }
+      )
+    ),
   },
 
-  sm({'zod_type', 'zod_infer'}, fmt([[
+  sm(
+    { 'zod_type', 'zod_infer' },
+    fmt(
+      [[
     type {Name} = z.infer<typeof {name}>{};
-  ]], {
-    Name = i(1, 'Name'),
-    name = i(2, 'name'),
-    i(3, ''),
-  }))
+  ]],
+      {
+        Name = i(1, 'Name'),
+        name = i(2, 'name'),
+        i(3, ''),
+      }
+    )
+  )
 )

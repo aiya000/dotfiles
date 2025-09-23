@@ -5,9 +5,15 @@ local s = ls.snippet
 local i = ls.insert_node
 
 return {
-  s('logger_log', fmt([[
+  s(
+    'logger_log',
+    fmt(
+      [[
     Logger.log({})
-  ]], {
-    i(1, 'here'),
-  }))
+  ]],
+      {
+        i(1, 'here'),
+      }
+    )
+  ),
 }

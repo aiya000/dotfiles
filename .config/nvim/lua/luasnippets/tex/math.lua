@@ -26,23 +26,41 @@ table.insert(math_snippets, s('Longrightarrow', t('\\Longrightarrow')))
 table.insert(math_snippets, s('mapsto', t('\\mapsto')))
 
 -- Special formatting
-vim.list_extend(math_snippets, sm({ 'comma', 'com' }, fmt('{{{}}}', {
-  i(1, ','),
-})))
+vim.list_extend(
+  math_snippets,
+  sm(
+    { 'comma', 'com' },
+    fmt('{{{}}}', {
+      i(1, ','),
+    })
+  )
+)
 
 table.insert(math_snippets, s('mathrm', t('\\mathrm{m/s}')))
 
 -- Fractions and operators
-vim.list_extend(math_snippets, sm({ 'fraction', 'frac' }, fmt('\\frac{{{}}}{{{}}}{}', {
-  i(1, 'numerator'),
-  i(2, 'denominator'),
-  i(3, ''),
-})))
+vim.list_extend(
+  math_snippets,
+  sm(
+    { 'fraction', 'frac' },
+    fmt('\\frac{{{}}}{{{}}}{}', {
+      i(1, 'numerator'),
+      i(2, 'denominator'),
+      i(3, ''),
+    })
+  )
+)
 
-table.insert(math_snippets, s('sum', fmt('\\sum_{{{}}}^{{{}}}{}', {
-  i(1, 'under'),
-  i(2, 'over'),
-  i(3, ''),
-})))
+table.insert(
+  math_snippets,
+  s(
+    'sum',
+    fmt('\\sum_{{{}}}^{{{}}}{}', {
+      i(1, 'under'),
+      i(2, 'over'),
+      i(3, ''),
+    })
+  )
+)
 
 return { snippets = math_snippets, autosnippets = {} }

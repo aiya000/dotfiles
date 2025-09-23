@@ -16,5 +16,5 @@ return {
     require('luasnippets.javascript.deno-lint'),
     require('luasnippets.typescript.typescript')
   ),
-  autosnippets = {}
+  autosnippets = {},
 }

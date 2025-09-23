@@ -10,28 +10,55 @@ local t = ls.text_node
 
 local android_snippets = {}
 
-vim.list_extend(android_snippets, sm({'log_debug', 'logd'}, fmt([[
+vim.list_extend(
+  android_snippets,
+  sm(
+    { 'log_debug', 'logd' },
+    fmt(
+      [[
   Log.d({tag}, {message});
-]], {
-  tag = i(1, 'TAG'),
-  message = i(2, ''),
-})))
+]],
+      {
+        tag = i(1, 'TAG'),
+        message = i(2, ''),
+      }
+    )
+  )
+)
 
-vim.list_extend(android_snippets, sm({'log_error', 'loge'}, fmt([[
+vim.list_extend(
+  android_snippets,
+  sm(
+    { 'log_error', 'loge' },
+    fmt(
+      [[
   Log.e({tag}, {message});
-]], {
-  tag = i(1, 'TAG'),
-  message = i(2, ''),
-})))
+]],
+      {
+        tag = i(1, 'TAG'),
+        message = i(2, ''),
+      }
+    )
+  )
+)
 
-vim.list_extend(android_snippets, sm({'log_verbose', 'logv'}, fmt([[
+vim.list_extend(
+  android_snippets,
+  sm(
+    { 'log_verbose', 'logv' },
+    fmt(
+      [[
   Log.v({tag}, {message});
-]], {
-  tag = i(1, 'TAG'),
-  message = i(2, ''),
-})))
+]],
+      {
+        tag = i(1, 'TAG'),
+        message = i(2, ''),
+      }
+    )
+  )
+)
 
 return {
   snippets = android_snippets,
-  autosnippets = {}
+  autosnippets = {},
 }

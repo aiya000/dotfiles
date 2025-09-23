@@ -10,11 +10,20 @@ local t = ls.text_node
 
 local ktlint_snippets = {}
 
-table.insert(ktlint_snippets, s('ktlint_disable', fmt([[
+table.insert(
+  ktlint_snippets,
+  s(
+    'ktlint_disable',
+    fmt(
+      [[
   // ktlint-disable {rule}
-]], {
-  rule = i(1, ''),
-})))
+]],
+      {
+        rule = i(1, ''),
+      }
+    )
+  )
+)
 
 table.insert(ktlint_snippets, s('ktlint_disable_all', t('// ktlint-disable')))
 

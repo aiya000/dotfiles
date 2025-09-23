@@ -9,17 +9,32 @@ local i = ls.insert_node
 local t = ls.text_node
 
 local snippets = {}
-vim.list_extend(snippets, sm({ 'template_plugins', 'plugins', 'plug' }, fmt([=[
+vim.list_extend(
+  snippets,
+  sm(
+    { 'template_plugins', 'plugins', 'plug' },
+    fmt(
+      [=[
   [[plugins]]
   repo = '{}'
-]=], {
-  i(1, ''),
-})))
-table.insert(snippets, s('rev', fmt("rev = '{}'", {
-  i(1, 'here'),
-})))
+]=],
+      {
+        i(1, ''),
+      }
+    )
+  )
+)
+table.insert(
+  snippets,
+  s(
+    'rev',
+    fmt("rev = '{}'", {
+      i(1, 'here'),
+    })
+  )
+)
 
 return {
   snippets = snippets,
-  autosnippets = {}
+  autosnippets = {},
 }

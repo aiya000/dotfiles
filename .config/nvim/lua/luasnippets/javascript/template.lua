@@ -9,7 +9,10 @@ local i = ls.insert_node
 local t = ls.text_node
 
 return {
-  s('template_electron_main_js', fmt([[
+  s(
+    'template_electron_main_js',
+    fmt(
+      [[
     'use strict';
 
     var app           = require('app');
@@ -34,19 +37,28 @@ return {
             mainWindow = null;
         }});
     }});
-  ]], {
-    company = i(1, 'aiya000'),
-    url = i(2, 'dummy'),
-    width = i(3, '800'),
-    height = i(4, '600'),
-  })),
+  ]],
+      {
+        company = i(1, 'aiya000'),
+        url = i(2, 'dummy'),
+        width = i(3, '800'),
+        height = i(4, '600'),
+      }
+    )
+  ),
 
-  s('define_prototype_Array#map', fmt([[
+  s(
+    'define_prototype_Array#map',
+    fmt(
+      [[
     Array.prototype.map = function (f) {{
         for (var i = 0; i < this.length; ++i) {{
             this[i] = f(i);
         }}
         return this;
     }};
-  ]], {})),
+  ]],
+      {}
+    )
+  ),
 }

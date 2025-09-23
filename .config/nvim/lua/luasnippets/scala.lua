@@ -9,5 +9,5 @@ return {
     require('luasnippets.scala.scalatest'),
     require('luasnippets.scala.wartremover')
   ),
-  autosnippets = {}
+  autosnippets = {},
 }

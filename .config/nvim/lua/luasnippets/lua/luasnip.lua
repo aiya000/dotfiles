@@ -8,7 +8,8 @@ local s = ls.snippet
 local i = ls.insert_node
 
 return list.concat(
-  sm({'luasnip_snippet', 'luasnip_s'},
+  sm(
+    { 'luasnip_snippet', 'luasnip_s' },
     fmt([[
       s('{name}',
         fmt(%s
@@ -17,15 +18,15 @@ return list.concat(
           {i_nodes},
         }})
       ),
-    ]])
-    :format('[[', ']]'),
+    ]]):format('[[', ']]'),
     {
       name = i(1, 'name'),
       i_nodes = i(2, 'i_nodes'),
       i(3, ''),
     }
   ),
-  sm({'luasnip_snippet_multiple_triggers', 'luasnip_sm'},
+  sm(
+    { 'luasnip_snippet_multiple_triggers', 'luasnip_sm' },
     fmt([[
       s({{'{name1}', '{name2}'}},
         fmt(%s
@@ -34,8 +35,7 @@ return list.concat(
           {i_nodes},
         }})
       ),
-    ]])
-    :format('[[', ']]'),
+    ]]):format('[[', ']]'),
     {
       name1 = i(1, 'name1'),
       name2 = i(2, 'name2'),

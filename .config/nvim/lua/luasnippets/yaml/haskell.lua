@@ -3,15 +3,23 @@ local s = ls.snippet
 local t = ls.text_node
 local i = ls.insert_node
 local fmt = require('luasnip.extras.fmt').fmt
-local sm = ls.extend_decorator.apply(s, {}, { common = { }, condition = function() return true end })
+local sm = ls.extend_decorator.apply(s, {}, {
+  common = {},
+  condition = function()
+    return true
+  end,
+})
 
 return {
   -- haskell package.yaml template
-  sm({
-    {trig = "haskell_package_yaml", dscr = "haskell package.yaml"},
-    {trig = "package_yaml", dscr = "haskell package.yaml"},
-    {trig = "stack_package_yaml", dscr = "haskell package.yaml"},
-  }, fmt([[
+  sm(
+    {
+      { trig = 'haskell_package_yaml', dscr = 'haskell package.yaml' },
+      { trig = 'package_yaml', dscr = 'haskell package.yaml' },
+      { trig = 'stack_package_yaml', dscr = 'haskell package.yaml' },
+    },
+    fmt(
+      [[
 name: {}
 version: 0.1.0.0
 category: Simple
@@ -62,12 +70,15 @@ tests:
       - src
     dependencies:
       - tasty
-      - tasty-discover]], {
-    i(1, "package-name"),
-    i(2),
-    i(3, "subject"),
-    i(4, "what-do-this"),
-    i(5),
-    i(0)
-  })),
+      - tasty-discover]],
+      {
+        i(1, 'package-name'),
+        i(2),
+        i(3, 'subject'),
+        i(4, 'what-do-this'),
+        i(5),
+        i(0),
+      }
+    )
+  ),
 }

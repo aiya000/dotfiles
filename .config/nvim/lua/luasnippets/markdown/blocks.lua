@@ -15,61 +15,109 @@ local function sm(triggers, nodes)
 end
 
 local blocks_snippets = list.concat(
-  sm({"block_haskell", "blhs"}, fmt([[
+  sm(
+    { 'block_haskell', 'blhs' },
+    fmt(
+      [[
 ```haskell
 {}
-```]], {
-    i(1, "")
-  })),
+```]],
+      {
+        i(1, ''),
+      }
+    )
+  ),
 
-  sm({"block_shell_session", "blsh"}, fmt([[
+  sm(
+    { 'block_shell_session', 'blsh' },
+    fmt(
+      [[
 ```shell-session
 {}
-```]], {
-    i(1, "")
-  })),
+```]],
+      {
+        i(1, ''),
+      }
+    )
+  ),
 
-  sm({"block_vim", "blvim"}, fmt([[
+  sm(
+    { 'block_vim', 'blvim' },
+    fmt(
+      [[
 ```vim
 {}
-```]], {
-    i(1, "")
-  })),
+```]],
+      {
+        i(1, ''),
+      }
+    )
+  ),
 
-  sm({"block_typescript", "blts"}, fmt([[
+  sm(
+    { 'block_typescript', 'blts' },
+    fmt(
+      [[
 ```typescript
 {}
-```]], {
-    i(1, "")
-  })),
+```]],
+      {
+        i(1, ''),
+      }
+    )
+  ),
 
-  sm({"block_javascript", "bljs"}, fmt([[
+  sm(
+    { 'block_javascript', 'bljs' },
+    fmt(
+      [[
 ```javascript
 {}
-```]], {
-    i(1, "")
-  })),
+```]],
+      {
+        i(1, ''),
+      }
+    )
+  ),
 
-  sm({"block_vue", "blvue", "blv"}, fmt([[
+  sm(
+    { 'block_vue', 'blvue', 'blv' },
+    fmt(
+      [[
 ```vue
 {}
-```]], {
-    i(1, "")
-  })),
+```]],
+      {
+        i(1, ''),
+      }
+    )
+  ),
 
-  sm({"block_lua", "bllua", "bll"}, fmt([[
+  sm(
+    { 'block_lua', 'bllua', 'bll' },
+    fmt(
+      [[
 ```lua
 {}
-```]], {
-    i(1, "")
-  })),
+```]],
+      {
+        i(1, ''),
+      }
+    )
+  ),
 
-  sm({"block_markdown", "blmd"}, fmt([[
+  sm(
+    { 'block_markdown', 'blmd' },
+    fmt(
+      [[
 ```markdown
 {}
-```]], {
-    i(1, "")
-  }))
+```]],
+      {
+        i(1, ''),
+      }
+    )
+  )
 )
 
 return { snippets = blocks_snippets, autosnippets = {} }

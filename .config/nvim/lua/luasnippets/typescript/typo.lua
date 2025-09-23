@@ -4,7 +4,13 @@ local ls = require('luasnip')
 local s = ls.snippet
 
 return {
-  s('unk', fmt([[
+  s(
+    'unk',
+    fmt(
+      [[
     unknown
-  ]], {}))
+  ]],
+      {}
+    )
+  ),
 }

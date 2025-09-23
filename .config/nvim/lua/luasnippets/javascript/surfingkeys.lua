@@ -11,7 +11,10 @@ local t = ls.text_node
 -- https://github.com/aiya000/Surfingkeys.js
 
 return {
-  s('safeRun', fmt('safeRun(() => {})', {
-    i(1, ''),
-  })),
+  s(
+    'safeRun',
+    fmt('safeRun(() => {})', {
+      i(1, ''),
+    })
+  ),
 }

@@ -11,5 +11,5 @@ return {
     -- luasnip.luaは一時的にコメントアウト（エラーがあるため）
     -- require('luasnippets.lua.luasnip'),
   ),
-  autosnippets = {}
+  autosnippets = {},
 }

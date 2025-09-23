@@ -11,5 +11,5 @@ return {
     require('luasnippets.javascript.ts-check'),
     require('luasnippets.javascript.reactnative')
   ),
-  autosnippets = {}
+  autosnippets = {},
 }

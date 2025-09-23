@@ -10,135 +10,249 @@ local t = ls.text_node
 
 local snippets = {}
 
-table.insert(snippets, s('for', fmt([[
+table.insert(
+  snippets,
+  s(
+    'for',
+    fmt(
+      [[
   for ({var}; {condition}; {effect})
   {{
       {}
   }}
-]], {
-  var = i(1, 'var'),
-  condition = i(2, 'condition'),
-  effect = i(3, 'effect'),
-  i(4, ''),
-})))
+]],
+      {
+        var = i(1, 'var'),
+        condition = i(2, 'condition'),
+        effect = i(3, 'effect'),
+        i(4, ''),
+      }
+    )
+  )
+)
 
-table.insert(snippets, s('if', fmt([[
+table.insert(
+  snippets,
+  s(
+    'if',
+    fmt(
+      [[
   if ({condition})
   {{
       {}
   }}
-]], {
-  condition = i(1, 'condition'),
-  i(2, ''),
-})))
+]],
+      {
+        condition = i(1, 'condition'),
+        i(2, ''),
+      }
+    )
+  )
+)
 
-table.insert(snippets, s('else', fmt([[
+table.insert(
+  snippets,
+  s(
+    'else',
+    fmt(
+      [[
   else
   {{
       {}
   }}
-]], {
-  i(1, ''),
-})))
+]],
+      {
+        i(1, ''),
+      }
+    )
+  )
+)
 
-table.insert(snippets, s('switch', fmt([[
+table.insert(
+  snippets,
+  s(
+    'switch',
+    fmt(
+      [[
   switch ({target})
   {{
       {}
   }}
-]], {
-  target = i(1, 'target'),
-  i(2, ''),
-})))
+]],
+      {
+        target = i(1, 'target'),
+        i(2, ''),
+      }
+    )
+  )
+)
 
-table.insert(snippets, s('while', fmt([[
+table.insert(
+  snippets,
+  s(
+    'while',
+    fmt(
+      [[
   while ({condition})
   {{
       {}
   }}
-]], {
-  condition = i(1, 'condition'),
-  i(2, ''),
-})))
+]],
+      {
+        condition = i(1, 'condition'),
+        i(2, ''),
+      }
+    )
+  )
+)
 
-table.insert(snippets, s('struct', fmt([[
+table.insert(
+  snippets,
+  s(
+    'struct',
+    fmt(
+      [[
   struct {name}
   {{
       {}
   }};
-]], {
-  name = i(1, 'name'),
-  i(2, ''),
-})))
+]],
+      {
+        name = i(1, 'name'),
+        i(2, ''),
+      }
+    )
+  )
+)
 
-table.insert(snippets, s('typedef_struct', fmt([[
+table.insert(
+  snippets,
+  s(
+    'typedef_struct',
+    fmt(
+      [[
   typedef struct
   {{
       {}
   }} {name};
-]], {
-  i(1, ''),
-  name = i(2, 'name'),
-})))
+]],
+      {
+        i(1, ''),
+        name = i(2, 'name'),
+      }
+    )
+  )
+)
 
-vim.list_extend(snippets, sm({ 'function', 'fun' }, fmt([[
+vim.list_extend(
+  snippets,
+  sm(
+    { 'function', 'fun' },
+    fmt(
+      [[
   {return_type}
   {name}({args})
   {{
       {}
   }}
-]], {
-  return_type = i(1, 'return_type'),
-  name = i(2, 'name'),
-  args = i(3, 'args'),
-  i(4, ''),
-})))
+]],
+      {
+        return_type = i(1, 'return_type'),
+        name = i(2, 'name'),
+        args = i(3, 'args'),
+        i(4, ''),
+      }
+    )
+  )
+)
 
-table.insert(snippets, s('static_fun', fmt([[
+table.insert(
+  snippets,
+  s(
+    'static_fun',
+    fmt(
+      [[
   static {type}
   {name}({args})
   {{
       {}
   }}
-]], {
-  type = i(1, 'type'),
-  name = i(2, 'name'),
-  args = i(3, 'args'),
-  i(4, ''),
-})))
+]],
+      {
+        type = i(1, 'type'),
+        name = i(2, 'name'),
+        args = i(3, 'args'),
+        i(4, ''),
+      }
+    )
+  )
+)
 
 -- Macros
-vim.list_extend(snippets, sm({ 'include_library', 'include', 'import', 'imp' }, fmt('#include <{}>', {
-  i(1, 'here'),
-})))
+vim.list_extend(
+  snippets,
+  sm(
+    { 'include_library', 'include', 'import', 'imp' },
+    fmt('#include <{}>', {
+      i(1, 'here'),
+    })
+  )
+)
 
-vim.list_extend(snippets, sm({ 'include_path', 'includep' }, fmt('#include "{}"', {
-  i(1, 'path'),
-})))
+vim.list_extend(
+  snippets,
+  sm(
+    { 'include_path', 'includep' },
+    fmt('#include "{}"', {
+      i(1, 'path'),
+    })
+  )
+)
 
 -- Expressions
-table.insert(snippets, s('printf', fmt('printf("{}"{}){};', {
-  i(1, ''),
-  i(2, ''),
-  i(3, ''),
-})))
+table.insert(
+  snippets,
+  s(
+    'printf',
+    fmt('printf("{}"{}){};', {
+      i(1, ''),
+      i(2, ''),
+      i(3, ''),
+    })
+  )
+)
 
-vim.list_extend(snippets, sm({ 'printf_ln', 'pr' }, fmt('printf("{}\\n"{}){};', {
-  i(1, ''),
-  i(2, ''),
-  i(3, ''),
-})))
+vim.list_extend(
+  snippets,
+  sm(
+    { 'printf_ln', 'pr' },
+    fmt('printf("{}\\n"{}){};', {
+      i(1, ''),
+      i(2, ''),
+      i(3, ''),
+    })
+  )
+)
 
 -- Others
-vim.list_extend(snippets, sm({ 'document_comment', 'doc' }, fmt([[
+vim.list_extend(
+  snippets,
+  sm(
+    { 'document_comment', 'doc' },
+    fmt(
+      [[
   /*
    * {}
    */
-]], {
-  i(1, ''),
-})))
+]],
+      {
+        i(1, ''),
+      }
+    )
+  )
+)
 
 return {
   snippets = snippets,
-  autosnippets = {}
+  autosnippets = {},
 }

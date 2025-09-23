@@ -7,5 +7,5 @@ return {
     require('luasnippets.sh.sh'),
     require('luasnippets.sh.bash')
   ),
-  autosnippets = {}
+  autosnippets = {},
 }

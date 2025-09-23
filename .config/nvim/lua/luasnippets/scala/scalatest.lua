@@ -32,8 +32,11 @@ end
 
 return {
   -- ScalaTest test case
-  s('test', fmt('test("{}") {{{}}}', {
-    i(1, 'What does somebody do'),
-    i(0, 'here')
-  })),
+  s(
+    'test',
+    fmt('test("{}") {{{}}}', {
+      i(1, 'What does somebody do'),
+      i(0, 'here'),
+    })
+  ),
 }

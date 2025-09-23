@@ -32,16 +32,30 @@ end
 
 return {
   -- Scaladoc comment
-  sm({ 'scaladoc_comment', 'doc' }, s('scaladoc_comment', fmt([[
+  sm(
+    { 'scaladoc_comment', 'doc' },
+    s(
+      'scaladoc_comment',
+      fmt(
+        [[
     /**
      * {}
      */
-  ]], {
-    i(0)
-  }))),
+  ]],
+        {
+          i(0),
+        }
+      )
+    )
+  ),
 
   -- Scaladoc comment format
-  sm({ 'scaladoc_comment_format', 'doc_format' }, s('scaladoc_comment_format', fmt([[
+  sm(
+    { 'scaladoc_comment_format', 'doc_format' },
+    s(
+      'scaladoc_comment_format',
+      fmt(
+        [[
      === Exceptions ===
      * {}
      *
@@ -52,56 +66,111 @@ return {
      * {{{{
      * {}
      * }}}}
-  ]], {
-    i(2),
-    i(3),
-    i(4)
-  }))),
+  ]],
+        {
+          i(2),
+          i(3),
+          i(4),
+        }
+      )
+    )
+  ),
 
   -- Scaladoc exceptions section
-  sm({ 'scaladoc_comment_format_exceptions', 'doc_format_exceptions' }, s('scaladoc_comment_format_exceptions', fmt([[
+  sm(
+    { 'scaladoc_comment_format_exceptions', 'doc_format_exceptions' },
+    s(
+      'scaladoc_comment_format_exceptions',
+      fmt(
+        [[
      === Exceptions ===
      * {}
-  ]], {
-    i(0)
-  }))),
+  ]],
+        {
+          i(0),
+        }
+      )
+    )
+  ),
 
   -- Scaladoc failures section
-  sm({ 'scaladoc_comment_format_failures', 'doc_format_failures' }, s('scaladoc_comment_format_failures', fmt([[
+  sm(
+    { 'scaladoc_comment_format_failures', 'doc_format_failures' },
+    s(
+      'scaladoc_comment_format_failures',
+      fmt(
+        [[
      === Failures ===
      * {}
-  ]], {
-    i(0)
-  }))),
+  ]],
+        {
+          i(0),
+        }
+      )
+    )
+  ),
 
   -- Scaladoc example section
-  sm({ 'scaladoc_comment_format_example', 'doc_format_example', 'example' }, s('scaladoc_comment_format_example', fmt([[
+  sm(
+    { 'scaladoc_comment_format_example', 'doc_format_example', 'example' },
+    s(
+      'scaladoc_comment_format_example',
+      fmt(
+        [[
      === Example ===
      * {{{{
      * {}
      * }}}}
-  ]], {
-    i(0)
-  }))),
+  ]],
+        {
+          i(0),
+        }
+      )
+    )
+  ),
 
   -- Scaladoc link
-  sm({ 'scaladoc_comment_link', 'l' }, s('scaladoc_comment_link', fmt('[[{}]]', {
-    i(1, 'stuff')
-  }))),
+  sm(
+    { 'scaladoc_comment_link', 'l' },
+    s(
+      'scaladoc_comment_link',
+      fmt('[[{}]]', {
+        i(1, 'stuff'),
+      })
+    )
+  ),
 
   -- Scaladoc constructor
-  sm({ 'scaladoc_constructor', 'constructor' }, s('scaladoc_constructor', fmt('@constructor {}', {
-    i(0, 'description')
-  }))),
+  sm(
+    { 'scaladoc_constructor', 'constructor' },
+    s(
+      'scaladoc_constructor',
+      fmt('@constructor {}', {
+        i(0, 'description'),
+      })
+    )
+  ),
 
   -- Scaladoc param
-  sm({ 'scaladoc_param', 'param' }, s('scaladoc_param', fmt('@param {} {}', {
-    i(1, 'paramName'),
-    i(0, 'description')
-  }))),
+  sm(
+    { 'scaladoc_param', 'param' },
+    s(
+      'scaladoc_param',
+      fmt('@param {} {}', {
+        i(1, 'paramName'),
+        i(0, 'description'),
+      })
+    )
+  ),
 
   -- Scaladoc group
-  sm({ 'scaladoc_group', 'group' }, s('scaladoc_group', fmt('@group {}', {
-    i(0, 'GroupName')
-  }))),
+  sm(
+    { 'scaladoc_group', 'group' },
+    s(
+      'scaladoc_group',
+      fmt('@group {}', {
+        i(0, 'GroupName'),
+      })
+    )
+  ),
 }

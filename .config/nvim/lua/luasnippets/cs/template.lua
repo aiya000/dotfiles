@@ -16,7 +16,12 @@ end
 
 local template_snippets = {}
 
-vim.list_extend(template_snippets, sm({"ViewModelTemplate", "VMTemplate"}, fmt([[
+vim.list_extend(
+  template_snippets,
+  sm(
+    { 'ViewModelTemplate', 'VMTemplate' },
+    fmt(
+      [[
 #region public field
 
 public event PropertyChangedEventHandler PropertyChanged;
@@ -55,20 +60,29 @@ private void OnPropertyChanged(string name) {{
     }}
 }}
 
-#endregion]], {
-    i(1, "string"),
-    i(2, "#:PropertyName"),
-    i(3, "#:propertSubName"),
-    i(3, ""),
-    i(2, ""),
-    i(1, ""),
-    i(3, ""),
-    i(4, "Constructor"),
-    i(1, ""),
-    i(5, "string.Empty")
-  })))
+#endregion]],
+      {
+        i(1, 'string'),
+        i(2, '#:PropertyName'),
+        i(3, '#:propertSubName'),
+        i(3, ''),
+        i(2, ''),
+        i(1, ''),
+        i(3, ''),
+        i(4, 'Constructor'),
+        i(1, ''),
+        i(5, 'string.Empty'),
+      }
+    )
+  )
+)
 
-vim.list_extend(template_snippets, sm({"ViewModelProperty", "VMProperty"}, fmt([[
+vim.list_extend(
+  template_snippets,
+  sm(
+    { 'ViewModelProperty', 'VMProperty' },
+    fmt(
+      [[
 public {} {} {{
     get {{
         return this.{};
@@ -79,19 +93,28 @@ public {} {} {{
     }}
 }}
 private {} {};
-this.{} = {};]], {
-    i(1, "string"),
-    i(2, "#:PropertyName"),
-    i(3, "#:propertSubName"),
-    i(3, ""),
-    i(2, ""),
-    i(1, ""),
-    i(3, ""),
-    i(2, ""),
-    i(4, "string.Empty")
-  })))
+this.{} = {};]],
+      {
+        i(1, 'string'),
+        i(2, '#:PropertyName'),
+        i(3, '#:propertSubName'),
+        i(3, ''),
+        i(2, ''),
+        i(1, ''),
+        i(3, ''),
+        i(2, ''),
+        i(4, 'string.Empty'),
+      }
+    )
+  )
+)
 
-table.insert(template_snippets, s("ICommandTemplate", fmt([[
+table.insert(
+  template_snippets,
+  s(
+    'ICommandTemplate',
+    fmt(
+      [[
 #region public field
 
 // Suppress warning of unuse
@@ -109,11 +132,20 @@ public void Execute(object parameter) {{
     {}
 }}
 
-#endregion]], {
-    i(1, "")
-  })))
+#endregion]],
+      {
+        i(1, ''),
+      }
+    )
+  )
+)
 
-table.insert(template_snippets, s("FriendlyTestClassTemplate", fmt([[
+table.insert(
+  template_snippets,
+  s(
+    'FriendlyTestClassTemplate',
+    fmt(
+      [[
 using System;
 using System.Windows;
 using System.Diagnostics;
@@ -156,15 +188,19 @@ public class {}Test {{
 
     #endregion
 
-}}]], {
-    i(1, "#:TargetClass"),
-    i(2, "#:TargetProjectName"),
-    i(3, "Debug"),
-    i(2, ""),
-    i(4, "#:Context")
-  })))
+}}]],
+      {
+        i(1, '#:TargetClass'),
+        i(2, '#:TargetProjectName'),
+        i(3, 'Debug'),
+        i(2, ''),
+        i(4, '#:Context'),
+      }
+    )
+  )
+)
 
 return {
   snippets = template_snippets,
-  autosnippets = {}
+  autosnippets = {},
 }

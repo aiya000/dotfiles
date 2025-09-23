@@ -10,25 +10,52 @@ local t = ls.text_node
 
 local javadoc_snippets = {}
 
-table.insert(javadoc_snippets, s('doc', fmt([[
+table.insert(
+  javadoc_snippets,
+  s(
+    'doc',
+    fmt(
+      [[
   /**
    * {}
    */
-]], {
-  i(1, ''),
-})))
+]],
+      {
+        i(1, ''),
+      }
+    )
+  )
+)
 
-vim.list_extend(javadoc_snippets, sm({'javadoc_param', 'param'}, fmt('@param {name} {description}', {
-  name = i(1, ''),
-  description = i(2, ''),
-})))
+vim.list_extend(
+  javadoc_snippets,
+  sm(
+    { 'javadoc_param', 'param' },
+    fmt('@param {name} {description}', {
+      name = i(1, ''),
+      description = i(2, ''),
+    })
+  )
+)
 
-table.insert(javadoc_snippets, s('javadoc_return', fmt('@return {description}', {
-  description = i(1, ''),
-})))
+table.insert(
+  javadoc_snippets,
+  s(
+    'javadoc_return',
+    fmt('@return {description}', {
+      description = i(1, ''),
+    })
+  )
+)
 
-vim.list_extend(javadoc_snippets, sm({'javadoc_see', 'see'}, fmt('@see {reference}', {
-  reference = i(1, ''),
-})))
+vim.list_extend(
+  javadoc_snippets,
+  sm(
+    { 'javadoc_see', 'see' },
+    fmt('@see {reference}', {
+      reference = i(1, ''),
+    })
+  )
+)
 
 return { snippets = javadoc_snippets, autosnippets = {} }

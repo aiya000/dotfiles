@@ -11,5 +11,5 @@ vim.list_extend(all_snippets, mypy_snippets.snippets)
 
 return {
   snippets = all_snippets,
-  autosnippets = {}
+  autosnippets = {},
 }

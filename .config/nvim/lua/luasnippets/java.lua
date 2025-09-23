@@ -8,5 +8,5 @@ return {
     require('luasnippets.java.javadoc').snippets,
     require('luasnippets.java.javafx').snippets
   ),
-  autosnippets = {}
+  autosnippets = {},
 }

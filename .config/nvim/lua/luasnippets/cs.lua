@@ -25,5 +25,5 @@ return {
     template_snippets.snippets,
     import_snippets.snippets
   ),
-  autosnippets = {}
+  autosnippets = {},
 }

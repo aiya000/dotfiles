@@ -10,128 +10,200 @@ local t = ls.text_node
 
 return list.concat(
   {
-    s('if', fmt([[
+    s(
+      'if',
+      fmt(
+        [[
       if {condition} then
         {}
       end
-    ]], {
-      condition = i(1, 'condition'),
-      i(2, ''),
-    })),
+    ]],
+        {
+          condition = i(1, 'condition'),
+          i(2, ''),
+        }
+      )
+    ),
   },
 
-  sm({'equal', 'eq'}, t('==')),
-  sm({'not_equal', 'ne'}, t('~=')),
+  sm({ 'equal', 'eq' }, t('==')),
+  sm({ 'not_equal', 'ne' }, t('~=')),
 
   {
-    s('for_in', fmt([[
+    s(
+      'for_in',
+      fmt(
+        [[
       for {x} in {xs} do
         {}
       end
-    ]], {
-      x = i(1, 'x'),
-      xs = i(2, 'xs'),
-      i(3, ''),
-    })),
+    ]],
+        {
+          x = i(1, 'x'),
+          xs = i(2, 'xs'),
+          i(3, ''),
+        }
+      )
+    ),
   },
 
-  sm({'for_traditional', 'for_range'}, fmt([[
+  sm(
+    { 'for_traditional', 'for_range' },
+    fmt(
+      [[
     for {i} = 1, #{xs} do
       {}
     end
-  ]], {
-    i = i(1, 'i'),
-    xs = i(2, 'xs'),
-    i(3, ''),
-  })),
+  ]],
+      {
+        i = i(1, 'i'),
+        xs = i(2, 'xs'),
+        i(3, ''),
+      }
+    )
+  ),
 
-  sm({'foreach', 'for'}, fmt([[
+  sm(
+    { 'foreach', 'for' },
+    fmt(
+      [[
     for _, {x} in ipairs({xs}) do
       {}
     end
-  ]], {
-    x = i(1, 'x'),
-    xs = i(2, 'xs'),
-    i(3, ''),
-  })),
+  ]],
+      {
+        x = i(1, 'x'),
+        xs = i(2, 'xs'),
+        i(3, ''),
+      }
+    )
+  ),
 
-  sm({'function', 'fun'}, fmt([[
+  sm(
+    { 'function', 'fun' },
+    fmt(
+      [[
     function {f}({args})
       {}
     end
-  ]], {
-    f = i(1, 'f'),
-    args = i(2, 'args'),
-    i(3, ''),
-  })),
+  ]],
+      {
+        f = i(1, 'f'),
+        args = i(2, 'args'),
+        i(3, ''),
+      }
+    )
+  ),
 
-  sm({'local_function', 'lfun'}, fmt([[
+  sm(
+    { 'local_function', 'lfun' },
+    fmt(
+      [[
     local function {f}({args})
       {}
     end
-  ]], {
-    f = i(1, 'f'),
-    args = i(2, 'args'),
-    i(3, ''),
-  })),
+  ]],
+      {
+        f = i(1, 'f'),
+        args = i(2, 'args'),
+        i(3, ''),
+      }
+    )
+  ),
 
-  sm({'function_in_module', 'mfun'}, fmt([[
+  sm(
+    { 'function_in_module', 'mfun' },
+    fmt(
+      [[
     function M.{f}({args})
       {}
     end
-  ]], {
-    f = i(1, 'f'),
-    args = i(2, 'args'),
-    i(3, ''),
-  })),
+  ]],
+      {
+        f = i(1, 'f'),
+        args = i(2, 'args'),
+        i(3, ''),
+      }
+    )
+  ),
 
-  sm({'lambda', 'lam'}, fmt([[
+  sm(
+    { 'lambda', 'lam' },
+    fmt(
+      [[
     function({args}){} end
-  ]], {
-    args = i(1, 'args'),
-    i(2, ''),
-  })),
+  ]],
+      {
+        args = i(1, 'args'),
+        i(2, ''),
+      }
+    )
+  ),
 
-  sm({'array_length', 'len'}, fmt('#{array}', {
-    array = i(1, 'array'),
-  })),
+  sm(
+    { 'array_length', 'len' },
+    fmt('#{array}', {
+      array = i(1, 'array'),
+    })
+  ),
 
-  sm({'multi_line_comment', 'comment', 'com'}, fmt([[
+  sm(
+    { 'multi_line_comment', 'comment', 'com' },
+    fmt(
+      [[
     --[=[
     {}
     --]=]
-  ]], {
-    i(1, ''),
-  })),
+  ]],
+      {
+        i(1, ''),
+      }
+    )
+  ),
 
   {
-    s('require', fmt("require('{here}')", {
-      here = i(1, 'here'),
-    })),
+    s(
+      'require',
+      fmt("require('{here}')", {
+        here = i(1, 'here'),
+      })
+    ),
   },
 
-  sm({'print', 'pr'}, fmt('print({})', {
-    i(1, ''),
-  })),
+  sm(
+    { 'print', 'pr' },
+    fmt('print({})', {
+      i(1, ''),
+    })
+  ),
 
-  sm({'error', 'panic', 'er', 'err'}, fmt('error({})', {
-    i(1, ''),
-  })),
+  sm(
+    { 'error', 'panic', 'er', 'err' },
+    fmt('error({})', {
+      i(1, ''),
+    })
+  ),
 
   {
-    s('assert', fmt("assert({condition}, '{error_message}')", {
+    s(
+      'assert',
+      fmt("assert({condition}, '{error_message}')", {
+        condition = i(1, 'condition'),
+        error_message = i(2, 'error_message'),
+      })
+    ),
+  },
+
+  sm(
+    { 'conditional_operator', 'cond' },
+    fmt('{condition} and {if_true} or {if_false}', {
       condition = i(1, 'condition'),
-      error_message = i(2, 'error_message'),
-    })),
-  },
-
-  sm({'conditional_operator', 'cond'}, fmt('{condition} and {if_true} or {if_false}', {
-    condition = i(1, 'condition'),
-    if_true = i(2, 'if_true'),
-    if_false = i(3, 'if_false'),
-  })),
+      if_true = i(2, 'if_true'),
+      if_false = i(3, 'if_false'),
+    })
+  ),
 
   {
-    s('nullish_operator', t('or'))
+    s('nullish_operator', t('or')),
   }
 )

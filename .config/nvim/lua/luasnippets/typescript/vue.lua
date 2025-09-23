@@ -5,7 +5,10 @@ local s = ls.snippet
 local i = ls.insert_node
 
 return {
-  s('composable', fmt([[
+  s(
+    'composable',
+    fmt(
+      [[
     export const use{Something} = () => {{
       return {{
           {}
@@ -15,9 +18,12 @@ return {
     export type {Something}Composable = ReturnType<typeof use{Something}>
     export const {something}InjectionKey: InjectionKey<{Something}Composable>
       = Symbol('{something}')
-  ]], {
-    Something = i(1, 'Something'),
-    i(2, ''),
-    something = i(3, 'something'),
-  }))
+  ]],
+      {
+        Something = i(1, 'Something'),
+        i(2, ''),
+        something = i(3, 'something'),
+      }
+    )
+  ),
 }

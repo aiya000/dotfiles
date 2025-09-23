@@ -10,7 +10,12 @@ local t = ls.text_node
 
 local javafx_snippets = {}
 
-table.insert(javafx_snippets, s('javafx_template', fmt([[
+table.insert(
+  javafx_snippets,
+  s(
+    'javafx_template',
+    fmt(
+      [[
   import javafx.application.*;
   import javafx.stage.*;
   import javafx.scene.*;
@@ -34,10 +39,14 @@ table.insert(javafx_snippets, s('javafx_template', fmt([[
           launch(args);
       }}
   }}
-]], {
-  fxml_file = i(1, '#:FxmlFilePath'),
-  width = i(2, '540'),
-  height = i(3, '400'),
-})))
+]],
+      {
+        fxml_file = i(1, '#:FxmlFilePath'),
+        width = i(2, '540'),
+        height = i(3, '400'),
+      }
+    )
+  )
+)
 
 return { snippets = javafx_snippets, autosnippets = {} }

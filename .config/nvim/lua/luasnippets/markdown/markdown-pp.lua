@@ -15,8 +15,13 @@ end
 
 local markdown_pp_snippets = {}
 
-vim.list_extend(markdown_pp_snippets, sm({"markdown_pp_include", "include"}, {
-  t('!INCLUDE "'), i(1, "file-name.mdpp"), t('"')
-}))
+vim.list_extend(
+  markdown_pp_snippets,
+  sm({ 'markdown_pp_include', 'include' }, {
+    t('!INCLUDE "'),
+    i(1, 'file-name.mdpp'),
+    t('"'),
+  })
+)
 
 return { snippets = markdown_pp_snippets, autosnippets = {} }

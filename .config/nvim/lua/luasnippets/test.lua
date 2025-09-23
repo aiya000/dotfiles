@@ -7,7 +7,7 @@ local fmt = require('luasnip.extras.fmt').fmt
 return {
   snippets = {
     s('hello', t('Hello, World!')),
-    s('test', fmt('This is a test: {}', {i(1, 'placeholder')})),
+    s('test', fmt('This is a test: {}', { i(1, 'placeholder') })),
   },
-  autosnippets = {}
+  autosnippets = {},
 }

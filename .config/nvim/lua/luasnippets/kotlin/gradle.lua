@@ -10,10 +10,19 @@ local t = ls.text_node
 
 local gradle_snippets = {}
 
-table.insert(gradle_snippets, s('suppress_lint', fmt([[
+table.insert(
+  gradle_snippets,
+  s(
+    'suppress_lint',
+    fmt(
+      [[
   @SuppressLint("{lint_rule}")
-]], {
-  lint_rule = i(1, 'SetJavaScriptEnabled'),
-})))
+]],
+      {
+        lint_rule = i(1, 'SetJavaScriptEnabled'),
+      }
+    )
+  )
+)
 
 return { snippets = gradle_snippets, autosnippets = {} }

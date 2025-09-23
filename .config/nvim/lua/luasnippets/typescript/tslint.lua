@@ -9,53 +9,107 @@ local i = ls.insert_node
 
 return list.concat(
   {
-    s('tslint_disable', fmt([[
+    s(
+      'tslint_disable',
+      fmt(
+        [[
       /* tslint:disable */
-    ]], {})),
+    ]],
+        {}
+      )
+    ),
 
-    s('tslint_enable', fmt([[
+    s(
+      'tslint_enable',
+      fmt(
+        [[
       /* tslint:enable */
-    ]], {})),
+    ]],
+        {}
+      )
+    ),
 
-    s('tslint_disable_rules', fmt([[
+    s(
+      'tslint_disable_rules',
+      fmt(
+        [[
       /* tslint:disable:{rules_separated_by_space} */
-    ]], {
-      rules_separated_by_space = i(1, 'rules_separated_by_space'),
-    })),
+    ]],
+        {
+          rules_separated_by_space = i(1, 'rules_separated_by_space'),
+        }
+      )
+    ),
 
-    s('tslint_enable_rules', fmt([[
+    s(
+      'tslint_enable_rules',
+      fmt(
+        [[
       /* tslint:enable:{rules_separated_by_space} */
-    ]], {
-      rules_separated_by_space = i(1, 'rules_separated_by_space'),
-    })),
+    ]],
+        {
+          rules_separated_by_space = i(1, 'rules_separated_by_space'),
+        }
+      )
+    ),
 
-    s('tslint_disable_next_lint', fmt([[
+    s(
+      'tslint_disable_next_lint',
+      fmt(
+        [[
       // tslint:disable-next-line
-    ]], {})),
+    ]],
+        {}
+      )
+    ),
 
-    s('tslint_disable_next_lint_rules', fmt([[
+    s(
+      'tslint_disable_next_lint_rules',
+      fmt(
+        [[
       // tslint:disable-next-line:{rules_separated_by_space}
-    ]], {
-      rules_separated_by_space = i(1, 'rules_separated_by_space'),
-    })),
+    ]],
+        {
+          rules_separated_by_space = i(1, 'rules_separated_by_space'),
+        }
+      )
+    ),
   },
 
-  sm({'tslint_disable_line', 'tslint_disable_left'}, fmt([[
+  sm(
+    { 'tslint_disable_line', 'tslint_disable_left' },
+    fmt(
+      [[
     // tslint:disable-line
-  ]], {})),
+  ]],
+      {}
+    )
+  ),
 
-  sm({'tslint_disable_line_rules', 'tslint_disable_left_rules', 'tslint_suppress', 'suppress_tslint'}, fmt([[
+  sm(
+    { 'tslint_disable_line_rules', 'tslint_disable_left_rules', 'tslint_suppress', 'suppress_tslint' },
+    fmt(
+      [[
     // tslint:disable-line:{rules_separated_by_space}
-  ]], {
-    rules_separated_by_space = i(1, 'rules_separated_by_space'),
-  })),
+  ]],
+      {
+        rules_separated_by_space = i(1, 'rules_separated_by_space'),
+      }
+    )
+  ),
 
-  sm({'tslint_ignore', 'ignore_tslint'}, fmt([[
+  sm(
+    { 'tslint_ignore', 'ignore_tslint' },
+    fmt(
+      [[
     /* tslint:disable:{rules_separated_by_space} */
     {}
     /* tslint:enable:{rules_separated_by_space} */
-  ]], {
-    rules_separated_by_space = i(1, 'rules_separated_by_space'),
-    i(2, ''),
-  }))
+  ]],
+      {
+        rules_separated_by_space = i(1, 'rules_separated_by_space'),
+        i(2, ''),
+      }
+    )
+  )
 )

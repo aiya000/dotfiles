@@ -32,20 +32,29 @@ end
 
 return {
   -- Scalastyle suppress check for a single line
-  s('scalastyle_suppress_check_a_line', fmt('// scalastyle:ignore {}', {
-    i(1, 'null')
-  })),
+  s(
+    'scalastyle_suppress_check_a_line',
+    fmt('// scalastyle:ignore {}', {
+      i(1, 'null'),
+    })
+  ),
 
   -- Scalastyle suppress check for a range
-  s('scalastyle_suppress_check_a_range', fmt([[
+  s(
+    'scalastyle_suppress_check_a_range',
+    fmt(
+      [[
     // scalastyle:off {}
     {}
     // scalastyle:on {}
-  ]], {
-    i(1, 'null'),
-    i(0),
-    rep(1)
-  })),
+  ]],
+      {
+        i(1, 'null'),
+        i(0),
+        rep(1),
+      }
+    )
+  ),
 
   -- Scalastyle suppress indentation
   s('scalastyle_suppress_indentation', t('// scalastyle:ignore indentation')),

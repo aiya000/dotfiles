@@ -32,9 +32,15 @@ end
 
 return {
   -- YARD parameter documentation
-  sm({ 'yard_param', 'param' }, s('yard_param', fmt('@param [{}] {} {}', {
-    i(1, 'type'),
-    i(2, 'arg'),
-    i(0, 'desc')
-  }))),
+  sm(
+    { 'yard_param', 'param' },
+    s(
+      'yard_param',
+      fmt('@param [{}] {} {}', {
+        i(1, 'type'),
+        i(2, 'arg'),
+        i(0, 'desc'),
+      })
+    )
+  ),
 }

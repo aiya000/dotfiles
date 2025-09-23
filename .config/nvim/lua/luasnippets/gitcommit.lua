@@ -16,82 +16,127 @@ local gitcommit_snippets = {}
 
 -- Git commit specific snippets
 vim.list_extend(gitcommit_snippets, {
-    s('feat', fmt('feat({}): {}', {
+  s(
+    'feat',
+    fmt('feat({}): {}', {
       i(1, 'scope'),
       i(2, 'description'),
-    })),
+    })
+  ),
 
-    s('fix', fmt('fix({}): {}', {
+  s(
+    'fix',
+    fmt('fix({}): {}', {
       i(1, 'scope'),
       i(2, 'description'),
-    })),
+    })
+  ),
 
-    s('chore', fmt('chore({}): {}', {
+  s(
+    'chore',
+    fmt('chore({}): {}', {
       i(1, 'scope'),
       i(2, 'description'),
-    })),
+    })
+  ),
 
-    s('update', fmt('update({}): {}', {
+  s(
+    'update',
+    fmt('update({}): {}', {
       i(1, 'scope'),
       i(2, 'description'),
-    })),
+    })
+  ),
 
-    s('refactor', fmt('refactor({}): {}', {
+  s(
+    'refactor',
+    fmt('refactor({}): {}', {
       i(1, 'scope'),
       i(2, 'description'),
-    })),
+    })
+  ),
 
-    s('change', fmt('change({}): {}', {
+  s(
+    'change',
+    fmt('change({}): {}', {
       i(1, 'scope'),
       i(2, 'description'),
-    })),
+    })
+  ),
 
-    s('hotfix', fmt('hotfix({}): {}', {
+  s(
+    'hotfix',
+    fmt('hotfix({}): {}', {
       i(1, 'scope'),
       i(2, 'description'),
-    })),
+    })
+  ),
 
-    s('disable', fmt('disable({}): {}', {
+  s(
+    'disable',
+    fmt('disable({}): {}', {
       i(1, 'scope'),
       i(2, 'description'),
-    })),
+    })
+  ),
 
-    s('remove', fmt('remove({}): {}', {
+  s(
+    'remove',
+    fmt('remove({}): {}', {
       i(1, 'scope'),
       i(2, 'description'),
-    })),
+    })
+  ),
 
-    s('delete', fmt('delete({}): {}', {
+  s(
+    'delete',
+    fmt('delete({}): {}', {
       i(1, 'scope'),
       i(2, 'description'),
-    })),
+    })
+  ),
 
-    s('move', fmt('move({}): {}', {
+  s(
+    'move',
+    fmt('move({}): {}', {
       i(1, 'scope'),
       i(2, 'description'),
-    })),
+    })
+  ),
 
-    s('upgrade', fmt('upgrade({}): {}', {
+  s(
+    'upgrade',
+    fmt('upgrade({}): {}', {
       i(1, 'scope'),
       i(2, 'description'),
-    })),
+    })
+  ),
 
-    s('revert', fmt('revert({}): {}', {
+  s(
+    'revert',
+    fmt('revert({}): {}', {
       i(1, 'scope'),
       i(2, 'description'),
-    })),
+    })
+  ),
 
-    s('improve', fmt('improve({}): {}', {
+  s(
+    'improve',
+    fmt('improve({}): {}', {
       i(1, 'scope'),
       i(2, 'description'),
-    })),
+    })
+  ),
 
-    s('BREAKING_CHANGE', fmt('BREAKING CHANGE: {}', {
+  s(
+    'BREAKING_CHANGE',
+    fmt('BREAKING CHANGE: {}', {
       i(1, 'description'),
-    })),
+    })
+  ),
 })
 
 return {
   snippets = gitcommit_snippets,
-  autosnippets = {}
+  autosnippets = {},
 }

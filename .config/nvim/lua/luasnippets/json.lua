@@ -10,11 +10,17 @@ local t = ls.text_node
 
 local snippets = {}
 
-vim.list_extend(snippets, sm({ 'comment', 'com' }, fmt('"//": "{}",', {
-  i(1, ''),
-})))
+vim.list_extend(
+  snippets,
+  sm(
+    { 'comment', 'com' },
+    fmt('"//": "{}",', {
+      i(1, ''),
+    })
+  )
+)
 
 return {
   snippets = snippets,
-  autosnippets = {}
+  autosnippets = {},
 }

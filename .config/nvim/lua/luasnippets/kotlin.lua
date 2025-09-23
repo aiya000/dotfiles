@@ -9,5 +9,5 @@ return {
     require('luasnippets.kotlin.kotlin').snippets,
     require('luasnippets.kotlin.ktlint').snippets
   ),
-  autosnippets = {}
+  autosnippets = {},
 }

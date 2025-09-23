@@ -1,14 +1,16 @@
 -- HTML Template snippets converted from neosnippet format
-local ls = require("luasnip")
+local ls = require('luasnip')
 local s = ls.snippet
 local t = ls.text_node
 local i = ls.insert_node
-local fmt = require("luasnip.extras.fmt").fmt
+local fmt = require('luasnip.extras.fmt').fmt
 
 local M = {}
 
-M.template = s("template",
-  fmt([[<!DOCTYPE html>
+M.template = s(
+  'template',
+  fmt(
+    [[<!DOCTYPE html>
 <html lang="ja">
 
 <head>
@@ -20,10 +22,12 @@ M.template = s("template",
 <body>
     {}
 </body>
-</html>]], {
-    i(1, "name"),
-    i(2, "TARGET")
-  })
+</html>]],
+    {
+      i(1, 'name'),
+      i(2, 'TARGET'),
+    }
+  )
 )
 
 -- Convert M table to array format for LuaSnip

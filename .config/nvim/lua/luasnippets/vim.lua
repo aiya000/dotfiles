@@ -8,5 +8,5 @@ return {
     require('luasnippets.vim.vim').snippets,
     require('luasnippets.vim.plugins').snippets
   ),
-  autosnippets = {}
+  autosnippets = {},
 }

@@ -16,22 +16,40 @@ end
 
 local zenn_snippets = {}
 
-vim.list_extend(zenn_snippets, sm({"details", "zenn_details", "zenn_folding"}, fmt([[
+vim.list_extend(
+  zenn_snippets,
+  sm(
+    { 'details', 'zenn_details', 'zenn_folding' },
+    fmt(
+      [[
 :::details
 
 {}
 
-:::]], {
-  i(1, "")
-})))
+:::]],
+      {
+        i(1, ''),
+      }
+    )
+  )
+)
 
-vim.list_extend(zenn_snippets, sm({"message", "zenn_message", "zenn_info"}, fmt([[
+vim.list_extend(
+  zenn_snippets,
+  sm(
+    { 'message', 'zenn_message', 'zenn_info' },
+    fmt(
+      [[
 :::message
 
 {}
 
-:::]], {
-  i(1, "")
-})))
+:::]],
+      {
+        i(1, ''),
+      }
+    )
+  )
+)
 
 return { snippets = zenn_snippets, autosnippets = {} }

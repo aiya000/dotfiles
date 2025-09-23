@@ -13,5 +13,5 @@ return {
     require('luasnippets.markdown.html-attr').snippets,
     require('luasnippets.markdown.zenn').snippets
   ),
-  autosnippets = {}
+  autosnippets = {},
 }

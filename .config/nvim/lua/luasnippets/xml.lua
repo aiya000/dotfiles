@@ -6,5 +6,5 @@ return {
     require('luasnippets.xml.android').snippets,
     require('luasnippets.xml.csproj').snippets
   ),
-  autosnippets = {}
+  autosnippets = {},
 }
