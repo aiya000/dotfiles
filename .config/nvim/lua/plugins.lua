@@ -7,10 +7,10 @@ local list = require('utils.list')
 
 ---@param remote_repo string
 ---@param local_dir string
----@param should_load_from_remote boolean
+---@param should_load_from_local boolean
 ---@param lazynvim_plugin_table table --LazyPlugin
-local function load_from_local_or_remote(remote_repo, local_dir, should_load_from_remote, lazynvim_plugin_table)
-  local from = should_load_from_remote and { remote_repo } or { dir = vim.fn.expand(local_dir) }
+local function load_from_local_or_remote(remote_repo, local_dir, should_load_from_local, lazynvim_plugin_table)
+  local from = should_load_from_local and { dir = vim.fn.expand(local_dir) } or { remote_repo }
   return vim.tbl_extend('keep', from, lazynvim_plugin_table)
 end
 
@@ -1239,7 +1239,7 @@ return {
   load_from_local_or_remote(
     'aiya000/nvim-mado-scratch-buffer',
     '~/Repository/nvim-mado-scratch-buffer',
-    InitLua.disable_scratch_buffer ~= true,
+    InitLua.disable_scratch_buffer == true,
     {
       opts = {
         file_pattern = {
