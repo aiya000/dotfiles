@@ -181,9 +181,12 @@ end
 ---@param opts? table --See `:h jobstart()`
 function M.termopen_shell(opts)
   opts = opts or {}
-  M.termopen_temporary(vim.env.SHELL, vim.tbl_extend('force', opts, {
-    env = vim.tbl_extend('keep', { NEOVIM_TERMINAL = true }, opts.env or {}),
-  }))
+  M.termopen_temporary(
+    vim.env.SHELL,
+    vim.tbl_extend('force', opts, {
+      env = vim.tbl_extend('keep', { NEOVIM_TERMINAL = true }, opts.env or {}),
+    })
+  )
   vim.opt_local.filetype = 'terminal-shell'
   vim.fn.feedkeys('i')
 end
@@ -685,10 +688,13 @@ end
 function M.open_claude_code_watchers()
   -- Open watchers
   vim.cmd('tabnew')
-  local ccusage_job = vim.fn.jobstart({'ccusage', 'blocks', '--live'}, { term = true })
+  local ccusage_job = vim.fn.jobstart({ 'ccusage', 'blocks', '--live' }, { term = true })
   vim.opt_local.filetype = 'claude-code-watcher' -- See `after/ftplugin/claude-code-watcher.lua` for keymaps and autocmds
   vim.cmd('vertical new')
-  local claude_monitor_job = vim.fn.jobstart({'claude-monitor', '--plan', 'pro', '--timezone', 'Asia/Tokyo'}, { term = true })
+  local claude_monitor_job = vim.fn.jobstart(
+    { 'claude-monitor', '--plan', 'pro', '--timezone', 'Asia/Tokyo' },
+    { term = true }
+  )
   vim.opt_local.filetype = 'claude-code-watcher'
 
   ---@type ClaudeCodeWatchersTabState
@@ -713,7 +719,7 @@ end
 
 local gemini_term = nil
 vim.schedule(function()
-  gemini_term = require("toggleterm.terminal").Terminal:new({
+  gemini_term = require('toggleterm.terminal').Terminal:new({
     cmd = 'gemini',
     hidden = true,
     direction = 'float',

@@ -74,7 +74,7 @@ end
 ---```
 function M.concat(...)
   local result = {}
-  for _, xs in ipairs({...}) do
+  for _, xs in ipairs({ ... }) do
     for _, x in ipairs(xs) do
       table.insert(result, x)
     end

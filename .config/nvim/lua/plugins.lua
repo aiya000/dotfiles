@@ -9,15 +9,8 @@ local list = require('utils.list')
 ---@param local_dir string
 ---@param should_load_from_remote boolean
 ---@param lazynvim_plugin_table table --LazyPlugin
-local function load_from_local_or_remote(
-  remote_repo,
-  local_dir,
-  should_load_from_remote,
-  lazynvim_plugin_table
-)
-  local from = should_load_from_remote
-    and { remote_repo }
-    or { dir = vim.fn.expand(local_dir) }
+local function load_from_local_or_remote(remote_repo, local_dir, should_load_from_remote, lazynvim_plugin_table)
+  local from = should_load_from_remote and { remote_repo } or { dir = vim.fn.expand(local_dir) }
   return vim.tbl_extend('keep', from, lazynvim_plugin_table)
 end
 
@@ -348,7 +341,7 @@ return {
           'help',
           'lazy',
           'mason',
-        }
+        },
       })
       vim.cmd.highlight('IndentLine guifg=#454545')
       vim.cmd.highlight('IndentLineCurrent guifg=#123456')
@@ -396,9 +389,7 @@ return {
 
       local function get_current_mode_color()
         local color = mode_colors[vim.fn.mode()]
-        return color == nil
-          and colors.white
-          or color
+        return color == nil and colors.white or color
       end
 
       gls.left[1] = {
@@ -415,7 +406,7 @@ return {
             vim.api.nvim_set_hl(0, 'GalaxyViMode', {
               fg = get_current_mode_color(),
               bg = colors.bg,
-              bold = true
+              bold = true,
             })
 
             return ' '
@@ -849,12 +840,9 @@ return {
       ---@param directory string
       ---@return string[]
       local function scan_filetypes_in_directory(directory)
-        return vim.iter(scan_filetypes_in_directory_but_can_duplicate(directory))
-          :fold({}, function(filetypes, filetype)
-              return not vim.tbl_contains(filetypes, filetype)
-                and list.append(filetypes, filetype)
-                or filetypes
-          end)
+        return vim.iter(scan_filetypes_in_directory_but_can_duplicate(directory)):fold({}, function(filetypes, filetype)
+          return not vim.tbl_contains(filetypes, filetype) and list.append(filetypes, filetype) or filetypes
+        end)
       end
 
       -- from_luaローダーでディレクトリを登録しても、スニペットが展開できないので、それぞれスニペットファイルを手動で登録
@@ -1193,7 +1181,12 @@ return {
         },
         keys = {
           { '<leader>c', nil, desc = 'Claude Code' },
-          { toggle_key , mode = { 'n' }, toggle, desc = 'Open a new Claude Code window or toggle the already opened window' },
+          {
+            toggle_key,
+            mode = { 'n' },
+            toggle,
+            desc = 'Open a new Claude Code window or toggle the already opened window',
+          },
           { '<leader>cr', mode = { 'n' }, '<Cmd>ClaudeCode --resume<CR>', desc = 'Resume Claude' },
           { '<leader>cC', mode = { 'n' }, '<Cmd>ClaudeCode<CR>', desc = 'New Claude' },
           { '<leader>cM', mode = { 'n' }, '<Cmd>ClaudeCodeSelectModel<CR>', desc = 'Select Claude model' },
@@ -1233,7 +1226,7 @@ return {
         },
       }
     end)
-  :get(),
+    :get(),
 
   -- }}}
   -- Align {{{
@@ -1694,28 +1687,28 @@ return {
 
   -- TODO: Configure this
   {
-     'akinsho/toggleterm.nvim',
-     opts = {
-       hide_numbers = true,
-       shade_filetypes = {},
-       shade_terminals = true,
-       shading_factor = 2,
-       start_in_insert = true,
-       insert_mappings = true,
-       persist_size = true,
-       direction = 'float',
-       close_on_exit = true,
-       shell = vim.o.shell,
-       float_opts = {
-         border = 'curved',
-         winblend = 0,
-         highlights = {
-           border = 'Normal',
-           background = 'Normal',
-         },
-       },
-     },
-   },
+    'akinsho/toggleterm.nvim',
+    opts = {
+      hide_numbers = true,
+      shade_filetypes = {},
+      shade_terminals = true,
+      shading_factor = 2,
+      start_in_insert = true,
+      insert_mappings = true,
+      persist_size = true,
+      direction = 'float',
+      close_on_exit = true,
+      shell = vim.o.shell,
+      float_opts = {
+        border = 'curved',
+        winblend = 0,
+        highlights = {
+          border = 'Normal',
+          background = 'Normal',
+        },
+      },
+    },
+  },
 
   -- }}}
 }

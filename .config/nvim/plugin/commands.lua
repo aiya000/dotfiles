@@ -238,10 +238,7 @@ create_command('LuaSnipEdit', function(opts)
     return
   end
 
-  local luasnip_path = ('%s/lua/luasnippets/%s.lua'):format(
-    vim.fn.stdpath('config'),
-    filetype
-  )
+  local luasnip_path = ('%s/lua/luasnippets/%s.lua'):format(vim.fn.stdpath('config'), filetype)
   vim.cmd('edit ' .. vim.fn.fnameescape(luasnip_path))
 end, {
   nargs = '?',
