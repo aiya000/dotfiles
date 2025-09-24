@@ -1253,6 +1253,20 @@ return {
   ),
 
   -- }}}
+  -- nvim-just-stay-search {{{
+
+  load_from_local_or_remote(
+    'aiya000/nvim-just-stay-search',
+    '~/Repository/nvim-just-stay-search',
+    InitLua.disable_just_stay_search == true,
+    {
+      config = function()
+        require('just-stay-search').setup()
+      end,
+    }
+  ),
+
+  -- }}}
   -- vim-write-sync {{{
 
   {

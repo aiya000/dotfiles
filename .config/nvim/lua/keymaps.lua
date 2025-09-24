@@ -34,51 +34,6 @@ local function clear_and_write()
   vim.cmd.write()
 end
 
----Returns a function that does:
----- Highlight the searched result
----- Revert the cursor position to the original position
----- Remove the autocmd related with the specified autocmd id
----@param original_pos [integer, integer]
----@param revert_cursor_position_autocmd_id integer
----@return fun(): nil
-local function create_refreshing_stay_search_state(
-  original_pos,
-  revert_cursor_position_autocmd_id
-)
-  return function()
-    local search_pattern = vim.fn.getreg('/')
-    if search_pattern and search_pattern ~= '' then
-      vim.cmd(('match Search /%s/'):format(vim.fn.escape(search_pattern, '/\\')))
-    end
-
-    vim.api.nvim_win_set_cursor(0, original_pos)
-    vim.api.nvim_del_autocmd(revert_cursor_position_autocmd_id)
-  end
-end
-
----Searches without cursor moving during input
-local function stay_search()
-  local original_pos = vim.api.nvim_win_get_cursor(0)
-
-  local revert_cursor_position_autocmd_id = vim.api.nvim_create_autocmd({'CmdlineChanged', 'CmdlineEnter'}, {
-    pattern = '/',
-    callback = function()
-      vim.schedule(function()
-        vim.api.nvim_win_set_cursor(0, original_pos)
-      end)
-    end
-  })
-
-  vim.api.nvim_create_autocmd('CmdlineLeave', {
-    pattern = '/',
-    once = true,
-    callback = function()
-      vim.schedule(create_refreshing_stay_search_state(original_pos, revert_cursor_position_autocmd_id))
-    end
-  })
-
-  vim.api.nvim_feedkeys('/', 'n', false) -- Start searching
-end
 
 -- normal mode {{{
 
@@ -166,8 +121,6 @@ map('n', 'g*', function()
   vim.fn.setpos('.', pos)
   try_show_search_number_or_do_nothing()
 end)
-
-map('n', 'g/', stay_search)
 
 --- Keep search direction
 map('n', 'n', function()
