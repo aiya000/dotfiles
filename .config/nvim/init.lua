@@ -5,6 +5,9 @@ local git = require('git')
 local fn = require('utils.functions')
 local s = fn.s
 
+-- Due to use useful funcitons at runtime, export them to global
+H = helper
+
 -------------------
 -- Global values --
 -------------------
@@ -23,11 +26,10 @@ InitLua = InitLua
     hydra = {}, -- To activate by keymaps. See `./lua/plugins.lua`
   }
 
--- Delayed to avoid startup slowdown
 vim.schedule(function()
   git.read_git_root(function(git_root)
     InitLua.git_root = git_root
-    print(s('vimrc: a git root detected: {git_root}', { git_root = git_root }))
+    vim.notify(('git root detected: %s'):format(git_root), vim.log.levels.INFO, { title = 'InitLua' })
   end)
 end)
 

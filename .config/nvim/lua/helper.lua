@@ -9,6 +9,18 @@ local s = fn.s
 
 local M = {}
 
+---Removes a cache of `require(module_name)`
+---and requires it again
+---@param module_name string
+---@return unknown --
+function M.reload_module(module_name)
+  package.loaded[module_name] = nil
+  return require(module_name)
+end
+
+---A shorthand for `reload_module()`
+M.reload = M.reload_module
+
 ---Almost same as `vim.cmd`, but typed as a function
 ---```lua
 ----- pcall(vim.cmd, 'SomeComand') -- This is type mismatched, because vim.cmd is a table
