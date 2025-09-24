@@ -637,7 +637,11 @@ install-stylua:
 install-claude-code-tools:
 	$(MAKE) install-claude-code
 	which ccusage || $(NPMInstall) ccusage
-	which claude-monitor || $(UVInstall) claude-monitor
+	which claude-monitor || ( \
+		load-my-env mise && \
+		mise use uv@latest && \
+		$(UVInstall) claude-monitor \
+	)
 
 install-claude-code:
 	which claude || $(NPMInstall) @anthropic-ai/claude-code
@@ -704,3 +708,6 @@ install-btop:
 # 画面上にキーを表示するツール
 install-keycastow:
 	powershell.exe -Command "Start-Process choco -ArgumentList 'install keycastow' -Verb RunAs"
+
+install-uv:
+	which uv || mise use uv@latest
