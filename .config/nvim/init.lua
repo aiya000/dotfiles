@@ -126,6 +126,7 @@ vim.opt.wildmenu = true
 vim.opt.ambiwidth = 'single'
 vim.opt.background = 'dark'
 vim.opt.showtabline = 2
+vim.opt.mouse = ''
 
 -- TODO: なぜか怒られたので一旦コメントアウト
 -- vim.opt.ruler = false
