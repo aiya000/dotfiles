@@ -2,6 +2,7 @@ local helper = require('helper')
 local git = require('git')
 local nodejs = require('nodejs')
 local s = require('utils.functions').s
+local telescope = require('telescope.builtin')
 
 ---@param cmd_name string
 ---@param func string | function --実行されるVimコマンド、もしくは処理
@@ -168,24 +169,9 @@ create_command('KtlintAutoFix', function()
 end)
 
 ---@param search_word string
-create_command('Grep', function(search_word)
-  helper.ddu_start_from_input({
-    sources = { {
-      name = 'rg',
-      options = {
-        matchers = {},
-        volatile = true,
-      },
-    } },
-    uiParams = {
-      ff = {
-        startFilter = true,
-        ignoreEmpty = false,
-        autoResize = false,
-      },
-    },
-  }, search_word)
-end, { nargs = '?' })
+create_command('Grep', function(opts)
+  telescope.grep_string({ search = opts.args })
+end, { nargs = '+' })
 
 create_command('ReverseLines', '!tac')
 
