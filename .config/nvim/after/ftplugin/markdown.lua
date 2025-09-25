@@ -1,4 +1,5 @@
 local helper = require('helper')
+local list = require('utils.list')
 local pipe = require('utils.functions').pipe
 
 vim.opt_local.conceallevel = 0
@@ -43,15 +44,10 @@ end
 
 local function start_grip()
   local token = get_grip_token()
-  local token_option = (token == nil) and '' or ('--pass ' .. token)
+  local token_option = (token == nil) and {} or {'--pass', token}
   local filepath = vim.fn.fnameescape(vim.fn.expand('%:p'))
-  local port = find_free_port(25252, 5) -- 5 is very random value. Can change if needed
-  local cmd = vim
-    .iter({ 'grip', token_option, filepath, tostring(port) })
-    :filter(function(v)
-      return v ~= ''
-    end)
-    :totable()
+  local port = find_free_port(2525, 5) -- 2525 and 5 is very random value. Can change if needed
+  local cmd = list.format({ 'grip', list.ss(), filepath, tostring(port) }, token_option)
 
   vim.cmd('vertical new')
   vim.fn.jobstart(cmd, { term = true })
