@@ -75,30 +75,12 @@ map('n', '<C-x><C-p>', '<C-p>')
 map('n', '<leader>w', '<Plug>(openbrowser-open)', { remap = true })
 map('n', '<leader>U', '<Cmd>UndotreeToggle<CR>', { silent = true })
 
+map('n', ':l<Space>', ':lua<Space>')
 map('n', ':lp', ':lua print()<Left>')
--- NOTE: ↓以下だとNeovim起動時にエラーが出るの、なんでだろう {{{
---
--- map('n', ':ev', s(':e {path_at_started}/', { path_at_started = InitLua.path_at_started }))
--- map('n', ':ev', function()
---   return s(':e {path_at_started}/', { path_at_started = InitLua.path_at_started })
--- end, { expr = true })
---
--- Error detected while processing .config/nvim/init.lua:
--- E5113: Error while calling lua chunk: vim/keymap.lua:0: opts: expected table, got number
--- stack traceback:
---         [C]: in function 'error'
---         vim/shared.lua: in function 'validate'
---         vim/keymap.lua: in function 'set'
---         .config/nvim/lua/keymaps.lua:8: in function 'map'
---         .config/nvim/lua/keymaps.lua:232: in main chunk
---         [C]: in function 'require'
---         .dotfiles/.config/nvim/init.lua:238: in main chunk
---
--- }}}
-map('n', ':ev', ':e ' .. InitLua.path_at_started .. '/')
+map('n', ':ev', (':e %s/'):format(InitLua.path_at_started))
 
 map('n', ':eg', function()
-  return s(':e {git_root}/', { git_root = InitLua.git_root })
+  return (':e %s/'):format(InitLua.git_root) -- InitLua.git_rootは遅延実行されるので、評価を遅延
 end, { expr = true })
 
 map('n', ':eb', function()
@@ -289,25 +271,26 @@ map('n', '<leader><leader>E', function()
   helper.open_explorer('tabnew')
 end, { silent = true })
 
-map('n', '\\e', function()
+map('n', [[\e]], function()
   helper.toggle_explorer(InitLua.path_at_started)
 end, { silent = true })
 
-map('n', '\\\\e', function()
+map('n', [[\\e]], function()
   helper.open_explorer('split', InitLua.path_at_started)
 end, { silent = true })
 
-map('n', '\\E', function()
+map('n', [[\E]], function()
   helper.open_explorer('stay', InitLua.path_at_started)
 end, { silent = true })
 
-map('n', '\\\\E', function()
+map('n', [[\\E]], function()
   helper.open_explorer('tabnew', InitLua.path_at_started)
 end, { silent = true })
 
 --- Claude Code
 --- See `claudecode.nvim` section in `./plugins.lua`
-map('n', '<leader>cm', helper.open_claude_code_watchers, { desc = 'Open ccusage and claude-monitor in new tab' })
+-- TODO: めちゃめちゃバグってるので、一旦コメントアウト
+-- map('n', '<leader>cm', helper.open_claude_code_watchers, { desc = 'Open ccusage and claude-monitor in new tab' })
 
 -- List up
 map('n', '<C-k><C-e>', function()
@@ -456,18 +439,18 @@ map('n', '<Space><Space>', helper.compress_spaces, { silent = true })
 map('n', '<leader><leader>s', 'vii:sort<CR>', { silent = true })
 
 map('n', '<C-k><C-s>', function()
-  return s(':%s/\\m\\C\\<{word}\\>//g<Left><Left>', { word = vim.fn.expand('<cword>') })
+  return s([[:%s/\m\C\<{word}\>//g<Left><Left>]], { word = vim.fn.expand('<cword>') })
 end, { expr = true })
 
 map('n', '<C-k>s', function()
-  return s(':%s/\\m\\C\\<{word}\\>/{word}/g<Left><left>', { word = vim.fn.expand('<cword>') })
+  return s([[:%s/\m\C\<{word}\>/{word}/g<Left><left>]], { word = vim.fn.expand('<cword>') })
 end, { expr = true })
 
 -- Git Operations
 map('n', '<leader>gs', '<Cmd>GinStatus<CR>', { silent = true })
 map('n', '<leader>gl', '<Cmd>GitLog -100 --name-only<CR>', { silent = true }) -- Use my :GitLog due to :GinLog ignores arguments currently
 map('n', '<leader>gL', '<Cmd>GitLog -100 --patch<CR>', { silent = true })
-map('n', '\\gs', '<Cmd>tabnew | GinStatus<CR>', { silent = true })
+map('n', [[\gs]], '<Cmd>tabnew | GinStatus<CR>', { silent = true })
 
 map('n', '<leader>go', function()
   git_log.open_buffer({ '-100', '--oneline', '--pretty=%h %ad %s', '--date=format:%Y-%m-%d %H:%M' })
@@ -511,7 +494,7 @@ map('i', "<C-r>'", '<C-r>+')
 map('i', '<C-r>n', '<C-r>=expand("%:t")<CR>')
 
 -- Informations
-map('i', '<C-g><Tab>', 'copilot#Accept("\\<CR>")', {
+map('i', '<C-g><Tab>', [[copilot#Accept("\<CR>")]], {
   expr = true,
   replace_keycodes = false,
 })
@@ -543,7 +526,7 @@ end, { silent = true })
 -- }}}
 -- command-line mode {{{
 
-map('c', '<C-]>', '\\m\\C\\<\\><Left><Left>')
+map('c', '<C-]>', [[\m\C\<\><Left><Left>]])
 map('c', '<C-b>', '<Left>')
 map('c', '<C-f>', '<Right>')
 map('c', '<C-a>', '<Home>')
@@ -663,8 +646,8 @@ map('v', '<leader><leader>c', '<Plug>(operator-camelize-toggle)', { remap = true
 -- }}}
 -- terminal mode {{{
 
-map('t', '<C-l>', '<C-\\><C-n>')
-map('t', '<C-\\><C-n>', '<Esc>')
+map('t', '<C-l>', [[<C-\><C-n>]])
+map('t', [[<C-\><C-n>]], '<Esc>')
 map('t', '<C-[>', '<Esc>')
 map('t', '<C-]>', '<C-l>')
 
