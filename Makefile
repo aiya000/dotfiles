@@ -306,7 +306,7 @@ install-xml:
 
 ifeq ($(OS),Arch) # {{{
 
-install-sh:
+install-shellcheck:
 	$(YayInstall) shellcheck
 
 install-ruby:
@@ -315,7 +315,7 @@ install-ruby:
 endif # }}}
 ifeq ($(OS),Ubuntu) # {{{
 
-install-sh:
+install-shellcheck:
 	$(AptInstall) shellcheck
 
 endif # }}}
