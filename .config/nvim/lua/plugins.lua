@@ -1023,7 +1023,16 @@ return {
   -- }}}
   -- vim-shot-f {{{
 
-  { 'deris/vim-shot-f' },
+  {
+    'deris/vim-shot-f',
+    config = function()
+      autocmds.add('TermOpen', function()
+        -- VimでもNeovimでも、なぜかterminalバッファだとshot-fしても移動ができなくなるので、デフォルトのf,Fを使う
+        vim.keymap.set('n', 'f', 'f', { buffer = true, noremap = true })
+        vim.keymap.set('n', 'F', 'F', { buffer = true, noremap = true })
+      end)
+    end
+  },
 
   -- }}}
   -- vim-fmap {{{
