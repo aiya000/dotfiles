@@ -457,6 +457,9 @@ function M.setup_operator_surround()
       { block = { '【', '】' }, motionwise = { 'char', 'line', 'block' }, keys = { 'jK' } },
       { block = { '『', '』' }, motionwise = { 'char', 'line', 'block' }, keys = { 'j-k' } },
     }, basic_between),
+    lua = {
+      { block = { '[[', ']]' }, motionwise = { 'char', 'line', 'block' }, keys = { '[', ']' } },
+    },
     review = {
       { block = { '@<b>{', '}' }, motionwise = { 'char' }, keys = { 'B' } },
       { block = { '@<i>{', '}' }, motionwise = { 'char' }, keys = { 'i' } },
