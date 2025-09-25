@@ -428,7 +428,7 @@ function M.setup_operator_surround()
     })
   end
 
-  local basic_html_tags = {
+  local html_blocks = {
     { block = { '<p>', '</p>' }, motionwise = { 'char' }, keys = { '[p' } },
     { block = { '<a>', '</a>' }, motionwise = { 'char' }, keys = { '[a' } },
     { block = { '<div>', '</div>' }, motionwise = { 'char' }, keys = { '[d' } },
@@ -442,6 +442,12 @@ function M.setup_operator_surround()
     { block = { '<ul>', '</ul>' }, motionwise = { 'char' }, keys = { '[ul' } },
     { block = { '<li>', '</li>' }, motionwise = { 'char' }, keys = { '[li' } },
   }
+
+  local markdown_blocks = vim.fn.extendnew(html_blocks, {
+    { block = { '**', '**' }, motionwise = { 'char', 'block' }, keys = { 'B' } },
+    { block = { '~~', '~~' }, motionwise = { 'char', 'block' }, keys = { '~' } },
+    { block = { '<b>', '</b>' }, motionwise = { 'char' }, keys = { '[b' } },
+  })
 
   -- Set operator#surround#blocks configuration
   vim.g['operator#surround#blocks'] = {
@@ -472,13 +478,10 @@ function M.setup_operator_surround()
       { block = { '@<img>{', '}' }, motionwise = { 'char' }, keys = { '[i' } },
       { block = { '@<list>{', '}' }, motionwise = { 'char' }, keys = { '[l' } },
     },
-    markdown = {
-      { block = { '**', '**' }, motionwise = { 'char', 'block' }, keys = { 'B' } },
-      { block = { '~~', '~~' }, motionwise = { 'char', 'block' }, keys = { '~' } },
-    },
-    html = basic_html_tags,
-    vue = basic_html_tags,
-    ['typescript.tsx'] = basic_html_tags,
+    markdown = markdown_blocks,
+    html = html_blocks,
+    vue = html_blocks,
+    ['typescript.tsx'] = html_blocks,
   }
 end
 
