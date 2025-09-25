@@ -107,9 +107,9 @@ fpath=(~/.zsh/plugin/zsh-completions/src $fpath)
 source ~/.zsh/plugin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/plugin/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-for file in ~/.zsh/plugin/sh-hereis/{edit-places,hereis,place,reload-places,sh-hereis}.sh ; do
-  source "$file"
-done
+if [[ -d ~/Repository/sh-bookmark-hereis ]] ; then
+  source ~/Repository/sh-bookmark-hereis/init.sh
+fi
 
 #}}}
 
