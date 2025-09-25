@@ -1,5 +1,3 @@
--- TODO: Rename to array.lua
-
 local Test = require('utils.test')
 
 local M = {}
@@ -132,7 +130,7 @@ end
 ---@return T[]
 local function simple_slice(array, start_index, end_index)
   local result = {}
-  local end_index = end_index or #array
+  end_index = end_index or #array
 
   for i = start_index, end_index do
     if array[i] ~= nil then
@@ -151,7 +149,10 @@ end
 ---@return T[]
 function M.slice(array, start_index, end_index)
   -- 負のインデックスを正に変換
-  local start_index = (start_index < 0) and (#array + start_index + 1) or start_index
+  start_index = (start_index < 0) and (#array + start_index + 1) or start_index
+  end_index = (end_index ~= nil and end_index < 0) and (#array + end_index + 1) or end_index
+  return simple_slice(array, start_index, end_index)
+end
 
   local end_index = (end_index ~= nil and end_index < 0) and (#array + end_index + 1) or end_index
 
