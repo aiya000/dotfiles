@@ -8,23 +8,46 @@ M.pipe = require('utils.pipe')
 M.s = require('utils.functions.s').s
 M.deep_equal = Test.deep_equal
 
----TODO: Recursively
+---Quotes a string 'x' to `"'x'"` when string,
+---makes table to string by `make_table_to_string()` when table,
+---otherwise simply make to string by `tostring()`
+---@param x unknown
+---@return string
+local function to_string_and_may_quote(x)
+  return type(x) == 'string'
+    and string.format("'%s'", x)
+    or type(x) == 'table'
+      and M.make_table_to_string(x)
+      or tostring(x)
+end
+
+---Converts a table to a pretty string
 ---@param t table
 ---@return string
 function M.make_table_to_string(t)
   local result = { '{' }
+
   for k, v in pairs(t) do
-    table.insert(result, '  ' .. k, '=', v .. ',')
+    local field = (' %s = %s,'):format(
+      to_string_and_may_quote(k),
+      to_string_and_may_quote(v)
+    )
+    table.insert(result, field)
   end
+
   table.insert(result, '}')
-  return result
+  return table.concat(result, '\n')
 end
 
----Strong version `tostring()`
+---Simular to `tostring()`, but with table support
 ---@param x unknown
 ---@return string
 function M.to_pretty_string(x)
-  return type(x) == 'table' and M.make_table_to_string(x) or tostring(x)
+  if type(x) == 'table' then
+    return M.make_table_to_string(x)
+  else
+    return tostring(x)
+  end
 end
 
 ---Example:
@@ -175,6 +198,49 @@ if vim == nil then
     }
     M.set_vim_dict_field(dict, 'field', 'sub_field', 10)
     assert_equal(dict.another, 10)
+  end)
+
+  test('to_pretty_string() should convert primitives to string', function()
+    assert_equal(M.to_pretty_string(42), '42')
+    assert_equal(M.to_pretty_string('hello'), 'hello')
+    assert_equal(M.to_pretty_string(true), 'true')
+    assert_equal(M.to_pretty_string(false), 'false')
+    assert_equal(M.to_pretty_string(nil), 'nil')
+  end)
+
+  test('to_pretty_string() should convert simple table to string', function()
+    local result = M.to_pretty_string({ name = 'John', age = 30 })
+    -- テーブルの順序は保証されないので、内容をチェック
+    assert(result:find("'name' = 'John'"), 'Should contain name field with quotes')
+    assert(result:find("'age' = 30"), 'Should contain age field')
+    assert(result:find('^{'), 'Should start with {')
+    assert(result:find('}$'), 'Should end with }')
+  end)
+
+  test('to_pretty_string() should handle nested tables', function()
+    local nested = {
+      user = { name = 'Alice' },
+      active = true
+    }
+    local result = M.to_pretty_string(nested)
+    assert(result:find("'user' = {"), 'Should contain nested table')
+    assert(result:find("'name' = 'Alice'"), 'Should contain nested value with quotes')
+    assert(result:find("'active' = true"), 'Should contain top-level value')
+  end)
+
+  test('to_pretty_string() should handle empty table', function()
+    local result = M.to_pretty_string({})
+    assert_equal(result, '{\n}')
+  end)
+
+  test('make_table_to_string() should work directly', function()
+    local result = M.make_table_to_string({ key = 'value' })
+    assert_equal(result, "{\n 'key' = 'value',\n}")
+  end)
+
+  test('make_table_to_string() should handle numeric keys', function()
+    local result = M.make_table_to_string({ [1] = 'first', [2] = 'second' })
+    assert(result:find("1 = 'first'") or result:find("2 = 'second'"), 'Should handle numeric keys with quoted strings')
   end)
 end
 
