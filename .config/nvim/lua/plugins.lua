@@ -189,6 +189,9 @@ return {
         },
       })
 
+      -- unused functionがグレー化されるのを無効化
+      vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', { fg = 'NONE', bg = 'NONE' })
+
       -- 共通設定
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
