@@ -106,10 +106,7 @@ alias rel=reload
 fpath=(~/.zsh/plugin/zsh-completions/src $fpath)
 source ~/.zsh/plugin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/plugin/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-if [[ -d ~/Repository/sh-bookmark-hereis ]] ; then
-  source ~/Repository/sh-bookmark-hereis/init.sh
-fi
+source ~/.zsh/plugin/sh-bookmark-hereis/init.sh
 
 #}}}
 

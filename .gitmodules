@@ -34,3 +34,6 @@
 [submodule "Preferences/Surfingkeys.js"]
 	path = Preferences/Surfingkeys.js
 	url = https://github.com/aiya000/Surfingkeys.js
+[submodule ".zsh/plugin/sh-bookmark-hereis"]
+	path = .zsh/plugin/sh-bookmark-hereis
+	url = https://github.com/aiya000/sh-bookmark-hereis
