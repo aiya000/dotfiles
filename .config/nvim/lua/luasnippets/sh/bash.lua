@@ -10,18 +10,15 @@ local t = ls.text_node
 
 return list.concat(
   -- function definition
-  sm(
-    { 'function', 'func', 'fun' },
-    fmt(
-      [[
-function {} () {{
-    {}
-}}]],
-      {
-        i(1, '#:name'),
-        i(0, 'TARGET'),
-      }
-    )
+  sm({ 'function', 'func', 'fun' },
+    fmt([[
+      function {} () {{
+          {}
+      }}
+    ]], {
+      i(1, '#:name'),
+      i(0, 'TARGET'),
+    })
   ),
 
   -- test operations

@@ -22,8 +22,7 @@ return list.concat(
 
     -- syntaxes
     {
-      s(
-        'if',
+      s('if',
         fmt([[
           if {} ; then
             {}
@@ -34,15 +33,9 @@ return list.concat(
         })
       ),
 
-      s(
-        'else',
-        fmt([[else{}]], {
-          i(0, ''),
-        })
-      ),
+      s('else', i(0, '')),
 
-      s(
-        'elif',
+      s('elif',
         fmt([[
           elif {} ; then
             {}
@@ -54,23 +47,20 @@ return list.concat(
 
       s(
         'for',
-        fmt(
-          [[
-for {} in {} ; do
-  {}
-done]],
-          {
-            i(1, 'x'),
-            i(2, '#:var'),
-            i(0),
-          }
-        )
+        fmt([[
+          for {} in {} ; do
+            {}
+          done
+        ]], {
+          i(1, 'x'),
+          i(2, '#:var'),
+          i(0),
+        })
       ),
 
       s(
         'for_index',
-        fmt(
-          [[
+        fmt([[
 for (( {}; {}; {} )) ; do
   {}
 done]],
