@@ -446,41 +446,22 @@ return {
         },
       }
 
-      gls.left[7] = {
-        DiagnosticError = {
-          provider = 'DiagnosticError',
-          icon = '  ',
-          highlight = { colors.red, colors.bg },
-        },
-      }
+      -- gls.mid[1] = {
+      -- }
 
-      gls.left[8] = {
-        DiagnosticWarn = {
-          provider = 'DiagnosticWarn',
-          icon = '  ',
-          highlight = { colors.yellow, colors.bg },
-        },
-      }
-
-      gls.left[9] = {
-        DiagnosticHint = {
-          provider = 'DiagnosticHint',
-          icon = '  ',
-          highlight = { colors.cyan, colors.bg },
-        },
-      }
-
-      gls.left[10] = {
-        DiagnosticInfo = {
-          provider = 'DiagnosticInfo',
-          icon = '  ',
-          highlight = { colors.blue, colors.bg },
-        },
-      }
-
-      gls.mid[1] = {
+      gls.right[1] = {
         ShowLspClient = {
-          provider = 'GetLspClient',
+          provider = function()
+            local clients = vim.lsp.get_clients({ bufnr = 0 })
+            if #clients == 0 then
+              return ''
+            end
+            local client_names = {}
+            for _, client in ipairs(clients) do
+              table.insert(client_names, client.name)
+            end
+            return table.concat(client_names, ', ')
+          end,
           condition = function()
             local tbl = { ['dashboard'] = true, [''] = true }
             if tbl[vim.bo.filetype] then
@@ -493,7 +474,7 @@ return {
         },
       }
 
-      gls.right[1] = {
+      gls.right[2] = {
         FileEncode = {
           provider = 'FileEncode',
           condition = condition.hide_in_width,
@@ -503,7 +484,7 @@ return {
         },
       }
 
-      gls.right[2] = {
+      gls.right[3] = {
         FileFormat = {
           provider = 'FileFormat',
           condition = condition.hide_in_width,
@@ -513,7 +494,7 @@ return {
         },
       }
 
-      gls.right[3] = {
+      gls.right[4] = {
         GitIcon = {
           provider = function()
             return '  '
@@ -525,7 +506,7 @@ return {
         },
       }
 
-      gls.right[4] = {
+      gls.right[5] = {
         GitBranch = {
           provider = 'GitBranch',
           condition = condition.check_git_workspace,
@@ -533,7 +514,7 @@ return {
         },
       }
 
-      gls.right[5] = {
+      gls.right[6] = {
         DiffAdd = {
           provider = 'DiffAdd',
           condition = condition.hide_in_width,
@@ -541,7 +522,8 @@ return {
           highlight = { colors.green, colors.bg },
         },
       }
-      gls.right[6] = {
+
+      gls.right[7] = {
         DiffModified = {
           provider = 'DiffModified',
           condition = condition.hide_in_width,
@@ -549,7 +531,8 @@ return {
           highlight = { colors.orange, colors.bg },
         },
       }
-      gls.right[7] = {
+
+      gls.right[8] = {
         DiffRemove = {
           provider = 'DiffRemove',
           condition = condition.hide_in_width,
@@ -558,7 +541,7 @@ return {
         },
       }
 
-      gls.right[8] = {
+      gls.right[9] = {
         RainbowBlue = {
           provider = function()
             return ' ▊'
@@ -696,7 +679,6 @@ return {
     'anuvyklack/hydra.nvim',
     config = function()
       local Hydra = require('hydra')
-      local helper = require('helper')
 
       Hydra({
         name = 'Window Resize',
