@@ -212,6 +212,7 @@ if i_have git ; then
   alias _grs~~='git reset --soft HEAD~~'
   alias _grs~~~='git reset --soft HEAD~~~'
   alias _grs~~~~='git reset --soft HEAD~~~~'
+  alias gs='git status'
   alias ga='git add'
   alias gaa='git add -A'
   alias gap='git add -p'
@@ -229,7 +230,6 @@ if i_have git ; then
   alias gcem='git commit --allow-empty -m'
   alias gcf='git commit --fixup'
   alias gaacm='git add -A && git commit -m'
-  alias gaacamm='git add -A && git commit --amend -m'
   alias gco='git checkout'
   alias gsw='git switch'
   alias gswc='git switch --create'
@@ -240,19 +240,13 @@ if i_have git ; then
   alias gd='git diff'
   alias gdh='git diff HEAD~..HEAD'
   alias gds='git diff --staged'
-  alias gdst0='git diff stash@{0}'
-  alias gdst1='git diff stash@{1}'
-  alias gdst2='git diff stash@{2}'
+  alias gssp='git stash pop'
+  alias gssd='git stash drop'
+  alias gssl='git stash list'
   # shellcheck disable=SC2139
   alias gl="git log --name-only -$git_taking_limit"
   # shellcheck disable=SC2139
   alias glo="git log --oneline -$git_taking_limit"
-  alias gll='glo | head'
-  # shellcheck disable=SC2139
-  alias glp="git log --patch -$git_taking_limit"
-  # shellcheck disable=SC2139
-  alias glf="git log --name-only -$git_taking_limit"
-  alias gmv='git mv'
   alias gr='git rebase'
   alias gra='git rebase --abort'
   alias grc='git rebase --continue'
@@ -279,18 +273,6 @@ if i_have git ; then
   alias grev~~~~~~~~='git revert HEAD~~~~~~~'
   alias grev~~~~~~~~~='git revert HEAD~~~~~~~~'
   alias grev~~~~~~~~~~='git revert HEAD~~~~~~~~~'
-  alias grm='git rm'
-  alias grmc='git rm --cached'
-  alias gs='git status'
-  alias gss='git stash'
-  alias gsssm='git stash push -m'
-  alias gssp='git stash pop'
-  function gsssp () {
-      git stash push --message "$1" --patch
-  }
-  alias gssa='git stash apply'
-  alias gssd='git stash drop'
-  alias gssl='git stash list'
   alias gmt='git mergetool'
   alias gmerge='git merge --no-ff'
   alias gsm='git submodule'
@@ -303,11 +285,9 @@ if i_have git ; then
   alias gchc='git cherry-pick --continue'
   alias gcha='git cherry-pick --abort'
   alias gchs='git cherry-pick --skip'
-  alias _gclean='git clean -fd'
   alias gp='git push'
   alias gpu='git push -u'
   alias gpuo='git push -u origin'
-  alias gpua='git push -u aiya000'
   alias gpf='git push --force-with-lease'
   alias gpull='git pull --rebase'
   alias greflog='git reflog'
@@ -315,34 +295,19 @@ if i_have git ; then
   alias gclone='git clone --recurse-submodules'
   alias gf='git fetch'
   alias gfo='git fetch origin'
-  alias gbi='git bisect'
   alias gtag='git tag'
-  alias gtagam='gtag-add-m'
   alias gtag-delete='git tag --delete'
   alias gtagd='git tag --delete'
-  alias gtree='git log --graph --decorate --oneline'
-  alias gtree-all='git log --graph --decorate --oneline --all'
   alias gw='git worktree'
-  alias gaacmp='git add -A && gcmp'
-  alias gaacmu='git add -A && gcmu'
-  alias gaacmb='git add -A && gcmb'
-  alias gaacmr='git add -A && gcmr'
 
-  function gcmp () {
-    git commit -m "$DOTFILES_GIT_COMMIT_PREFIX_IMPROVEMENT $*"
+  # git-stash系のaliasは、ほとんどは自分でも覚えられなかったので、わかりやすい名前にする
+  alias git-stash-push-message='git stash push -m'
+  function git-stash-save-patch-and-message () {
+      git stash push --message "$1" --patch
   }
-
-  function gcmu () {
-    git commit -m "$DOTFILES_GIT_COMMIT_PREFIX_UPDATE $*"
-  }
-
-  function gcmb () {
-    git commit -m "$DOTFILES_GIT_COMMIT_PREFIX_BUGFIX $*"
-  }
-
-  function gcmr () {
-    git commit -m "$DOTFILES_GIT_COMMIT_PREFIX_REFACTOR $*"
-  }
+  alias git-diff-0='git diff stash@{0}'
+  alias git-diff-1='git diff stash@{1}'
+  alias git-diff-2='git diff stash@{2}'
 
   function gtag-add-m () {
     local tag_name=$1 message=$2
@@ -362,45 +327,6 @@ if i_have git ; then
     git worktree add -b "$new_branch" "${new_branch//\#/}" "$base_branch"
   }
 
-  function _grs_n () {
-    git reset --soft "HEAD~${1}"
-  }
-
-  function gdst_n () {
-    git diff "stash@{${1}}"
-  }
-
-  function gri_n () {
-    git rebase --interactive --autosquash "HEAD~${1}"
-  }
-
-  function grev_n () {
-    git revert "HEAD~${1}"
-  }
-
-  function git-branch-name () {
-    git branch 2> /dev/null | grep '\*\s.*' | awk '{print $2}'
-  }
-
-  function git-log-unpushed () {
-    git log "$@" "origin/$(git-branch-name)..HEAD"
-  }
-
-  function git-submodule-remove () {
-    local git_root=$(git-root)
-    for submodule_path in "$@" ; do
-      if [[ ! -d $submodule_path ]] ; then
-        echo "The path '$submodule_path' is not found or not a directory" > /dev/stderr
-        return 1
-      fi
-      git submodule deinit "$submodule_path" || return 1
-      echo "deinit done: $submodule_path"
-    done
-    echo "Don't forget that delete the submodule entry from:"
-    echo "  $git_root/.gitmodules"
-    echo "  $git_root/.git/config"
-  }
-
   function gwb () {
     local branch_name=$1
     git worktree add "$branch_name" -b "$branch_name"
@@ -410,6 +336,28 @@ if i_have git ; then
   alias gwp='git worktree prune'
   alias gw-erase-removed='git worktree prune'
 
+  function git-branch-name () {
+    git branch 2> /dev/null | grep '\*\s.*' | awk '{print $2}'
+  }
+
+  function git-submodule-remove () {
+    local git_root
+    git_root=$(git-root)
+
+    for submodule_path in "$@" ; do
+      if [[ ! -d $submodule_path ]] ; then
+        echo "The path '$submodule_path' is not found or not a directory" > /dev/stderr
+        return 1
+      fi
+      git submodule deinit "$submodule_path" || return 1
+      echo "deinit done: $submodule_path"
+    done
+
+    echo "Don't forget that delete the submodule entry from:"
+    echo "  $git_root/.gitmodules"
+    echo "  $git_root/.git/config"
+  }
+
   unset git_taking_limit
 
   function git-push-u-origin-branch () {
@@ -417,27 +365,38 @@ if i_have git ; then
   }
   alias gpuob=git-push-u-origin-branch
 
-  function git-push-wip () {
-    local wip_name=wip-current-unique-unique-yazawa-nico
-    git branch -D "$wip_name"
-    git checkout -b "$wip_name"
-    git add -A
-    git commit -m "Today's WIP"
-    git push -f origin "$wip_name"
-    git checkout -
-    git cherry-pick "$wip_name"
-  }
-
-  function _gre () {
-    echo -n "(at '$(git rev-parse --show-toplevel)') Do you really force reset the git index tree? (y/n)"
-    if read -rq _  ; then
-      echo
-      git reset --hard HEAD
-      echo 'done'
+  function ensure-git-wip-remote-existent () {
+    if [[ $DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP == '' ]] ; then
+      # shellcheck disable=SC2016
+      echo '$DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP is not set' >&2
+      return 1
     fi
+
+    if [[ ! -d $DOTFILES_GIT_REMOTE_NAME_DIR ]] ; then
+      echo "The directory '$DOTFILES_GIT_REMOTE_NAME_DIR' is not found or not a directory" >&2
+      return 1
+    fi
+
+    return 0
   }
 
-  alias ginit='git init'
+  function git-remote-add-wip () {
+    ensure-git-wip-remote-existent || return 1
+    git remote add "$DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP" "$DOTFILES_GIT_REMOTE_NAME_DIR"
+  }
+
+  function git-push-wip-force () {
+    : "First, run 'git-remote-add-wip' if you haven't yet."
+
+    ensure-git-wip-remote-existent || return 1
+    git push -u --force-with-lease "$DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP" "$(git branch --show-current)" || return 1
+  }
+
+  function git-add-all-and-push-wip-fource () {
+    git add -A
+    git commit -m 'wip'
+    git-push-wip
+  }
 
   # Set casual user.name and user.email at local
   alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
