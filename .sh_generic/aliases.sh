@@ -398,6 +398,8 @@ if i_have git ; then
     git-push-wip
   }
 
+  alias gpw=git-push-wip-force
+
   # Set casual user.name and user.email at local
   alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
   alias cdg=cd-to-git-root
