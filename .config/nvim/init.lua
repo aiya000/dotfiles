@@ -26,7 +26,7 @@ InitLua = InitLua
 vim.schedule(function()
   git.read_git_root(function(git_root)
     InitLua.git_root = git_root
-    vim.notify(('git root detected: %s'):format(git_root), vim.log.levels.INFO, { title = 'InitLua' })
+    print(('git root detected: %s'):format(git_root))
   end)
 end)
 
