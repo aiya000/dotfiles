@@ -867,7 +867,10 @@ return {
   -- }}}
   -- plenary.nvim {{{
 
-  { 'nvim-lua/plenary.nvim' },
+  {
+    'nvim-lua/plenary.nvim',
+    lazy = false,
+  },
 
   -- }}}
   -- snacks.nvim {{{
@@ -882,7 +885,10 @@ return {
   -- }}}
   -- denops.vim {{{
 
-  { 'vim-denops/denops.vim', lazy = false },
+  {
+    'vim-denops/denops.vim',
+    lazy = false,
+  },
 
   -- }}}
   -- gin.vim {{{
@@ -899,11 +905,6 @@ return {
   -- nvim-treesitter {{{
 
   { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
-
-  -- }}}
-  -- vim-surround {{{
-
-  { 'tpope/vim-surround' },
 
   -- }}}
   -- lexima.vim {{{
