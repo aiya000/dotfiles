@@ -154,9 +154,105 @@ function M.slice(array, start_index, end_index)
   return simple_slice(array, start_index, end_index)
 end
 
-  local end_index = (end_index ~= nil and end_index < 0) and (#array + end_index + 1) or end_index
+local symbol_of_single_to_be_replaced_by_format = tostring({})
 
-  return simple_slice(array, start_index, end_index)
+---Gets a unique marker to be used in `format()`.
+---@see format()
+---@generic T --A dirty hacked type
+---@return T
+function M.get_marker_of_single_for_format_function()
+  return symbol_of_single_to_be_replaced_by_format
+end
+
+---A shorthand for `get_marker_of_single_for_format_function()`
+---NOTE: 's' is 's' of 'space'
+M.s = M.get_marker_of_single_for_format_function
+
+local symbol_of_multi_to_be_replaced_by_format = tostring({})
+
+---Simular to `get_marker_of_single_for_format_function()`, but for multiple replacements
+---@see get_marker_of_single_for_format_function()
+---@see format()
+---@generic T --A dirty hacked type
+---@return T
+function M.get_marker_of_multi_for_format_function()
+  return symbol_of_multi_to_be_replaced_by_format
+end
+
+---A shorthand for `get_marker_of_multi_for_format_function()`
+---NOTE: 'ss' is 'ss' of 'spaces'
+M.ss = M.get_marker_of_multi_for_format_function
+
+---@class StateOfFormat
+---@field interplated_count integer
+---@field result unknown[]
+
+---Simular to `string.format()`, but for lists
+---@generic T
+---@param ... T
+---@return T[]
+---```lua
+----- Embed elements
+---list.format({ 1, list.s, 3 }, 2) -- { 1, 2, 3 }
+---list.format({ list.s(), list.s(), list.s() }, 1, 2, 3) -- { 1, 2, 3 }
+---
+----- Embed lists
+---list.format({ 1, list.ss(), 4 }, { 2, 3 }) -- { 1, 2, 3, 4 }
+---```
+function M.format(xs, ...)
+  local source = { ... }
+
+  ---@type StateOfFormat:
+  local initial_state = {
+    interplated_count = 0,
+    result = {},
+  }
+
+  ---@param state StateOfFormat
+  ---@param x unknown
+  ---@return StateOfFormat
+  local function append(state, x)
+    return {
+      interplated_count = state.interplated_count,
+      result = M.append(state.result, x),
+    }
+  end
+
+  ---@param state StateOfFormat
+  ---@param source_ unknown[]
+  ---@return StateOfFormat
+  local function embed_element(state, source_)
+    local filler = source_[state.interplated_count + 1] -- +1 to justify Lua's 1-based index
+    return {
+      interplated_count = state.interplated_count + 1,
+      result = M.append(state.result, filler),
+    }
+  end
+
+  ---@param state StateOfFormat
+  ---@param source_ unknown[]
+  ---@return StateOfFormat
+  local function embed_list(state, source_)
+    local filler = source_[state.interplated_count + 1] -- +1 to justify Lua's 1-based index
+    return {
+      interplated_count = state.interplated_count + 1,
+      result = M.concat(state.result, filler),
+    }
+  end
+
+  return vim.iter(xs)
+    :fold(initial_state, function(state, x)
+      if x == M.s() then
+        return embed_element(state, source)
+      end
+
+      if x == M.ss() then
+        return embed_list(state, source)
+      end
+
+      return append(state, x)
+    end)
+    .result
 end
 
 -- In-source testing
@@ -268,6 +364,19 @@ if vim == nil then
     M.append(original, 4)
     assert_equal(original, { 1, 2, 3 })
   end)
+
+  -- TODO: vim.iterを使ってるので、テストが失敗する。plenary.nvimのbustedを使うようにする
+  -- test('format() should replace markers with provided values', function()
+  --   assert_equal(M.format({ 1, M.s(), 3 }, 2), { 1, 2, 3 }) -- Simple
+  --   assert_equal(M.format({ M.s(), M.s(), M.s() }, 'a', 'b', 'c'), { 'a', 'b', 'c' }) -- All replaced
+  --   assert_equal(M.format({ 1, 2, 3 }, 4), { 1, 2, 3 }) -- No replacement
+  -- end)
+
+  -- test('format() should replace multi markers with provided lists', function()
+  --   assert_equal(M.format({ 1, M.ss(), 4 }, { 2, 3 }), { 1, 2, 3, 4 }) -- Simple
+  --   assert_equal(M.format({ M.ss(), M.ss() }, { 'a', 'b' }, { 'c', 'd' }), { 'a', 'b', 'c', 'd' }) -- All replaced
+  --   assert_equal(M.format({ 1, 2, 3 }, { 4, 5 }), { 1, 2, 3 }) -- No replacement
+  -- end)
 end
 
 return M
