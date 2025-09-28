@@ -128,7 +128,7 @@ i_have unzip && alias unzip-cp932='unzip -O cp932'
 
 if i_have notifu.exe && ! i_have notify-send ; then
   function notify-send () {
-    (notifu.exe /p WSL /m "$1" &) &> /dev/null
+    notifu.exe /p WSL /m "$1" &> /dev/null
   }
 fi
 
