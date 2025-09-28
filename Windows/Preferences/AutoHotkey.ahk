@@ -6,6 +6,8 @@
 ; http://ahkwiki.net/MsgBox
 ; MsgBox, 0x1000, Title, Text, 400
 
+; Global{{{
+
 ; Arrange windows
 #h::SendInput #{Left}
 #j::SendInput #{Down}
@@ -62,6 +64,78 @@ EnvGet, Home, HOME
 #v::
   Run C:\Program Files\Ditto\Ditto.exe /Open
 Return
+
+; }}}
+; Classes {{{
+
+#IfWinActive, ahk_class ConsoleWindowClass
+  ; ^p::SendInput {Up}
+  ; ^n::SendInput {Down}
+  ; ^f::SendInput {Right}
+  ; ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
+  ^,::SendInput +{Left}
+  ^.::SendInput +{Right}
+  ^[::SendInput +{Up}
+  ^]::SendInput +{Down}
+  !j::SendInput ^{Enter}
+#IfWinActive
+
+; Adobe Reader
+#IfWinActive, ahk_class AcrobatSDIWindow
+  h::SendInput {Left}
+  j::SendInput {Down}
+  k::SendInput {Up}
+  l::SendInput {Right}
+  ^b::SendInput {PgUp}
+  ^f::SendInput {PgDn}
+  /::SendInput ^f
+#IfWinActive
+
+#IfWinActive, ahk_class SUMATRA_PDF_FRAME
+  h::SendInput {Left}
+  j::SendInput {Down}
+  k::SendInput {Up}
+  l::SendInput {Right}
+  ; ^b::SendInput {PgUp}
+  ; ^f::SendInput {PgDn}
+  ^b::SendInput {Left}
+  ^f::SendInput {Right}
+  /::SendInput ^f
+#IfWinActive
+
+#IfWinActive, ahk_class UnityContainerWndClass
+  ^e::SendInput {End}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^f::SendInput +{Left}
+  ^b::SendInput +{Right}
+#IfWinActive
+
+; Excel
+#IfWinActive, ahk_class XLMAIN
+  ^p::SendInput {Up}
+  ^n::SendInput {Down}
+  ^f::SendInput {Right}
+  ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
+#IfWinActive
+
+; }}}
+; Applications {{{
 
 ; TODO: Use loop
 ; Bash-like key mapping
@@ -205,10 +279,10 @@ Return
   ^a::SendInput {Home}
   ^e::SendInput {End}
   ^j::SendInput {Enter}
-  ^u::SendInput +{Home}{BS}
+  ; ^u::SendInput +{Home}{BS}
   ^k::SendInput +{End}{BS}
   ^h::SendInput {BS}
-  ^d::SendInput {Del}
+  ; ^d::SendInput {Del}
   ^,::SendInput +{Left}
   ^.::SendInput +{Right}
   ^[::SendInput +{Up}
@@ -220,6 +294,9 @@ Return
   ; ^.::SendInput +{Right}
   ; ^[::SendInput +{Up}
   ; ^]::SendInput +{Down}
+  ; NOTE: しばらくの間、SurfingKeysで対応できない以下のキーのみをAutoHotKeyで対応する。
+  ^u::SendInput {PgUp} ; TODO: 動かん。なぜ…
+  ^d::SendInput {PgDn}
 #IfWinActive ; }}}
 #IfWinActive, ahk_exe vivaldi.exe ; {{{
   ; Due to updates in Vivaldi, SurfingKeys stopped working properly, requiring several key mappings on this side
@@ -237,68 +314,4 @@ Return
   !j::SendInput ^{Enter}
 #IfWinActive ; }}}
 
-#IfWinActive, ahk_class ConsoleWindowClass
-  ; ^p::SendInput {Up}
-  ; ^n::SendInput {Down}
-  ; ^f::SendInput {Right}
-  ; ^b::SendInput {Left}
-  ^a::SendInput {Home}
-  ^e::SendInput {End}
-  ^j::SendInput {Enter}
-  ^u::SendInput +{Home}{BS}
-  ^k::SendInput +{End}{BS}
-  ^h::SendInput {BS}
-  ^d::SendInput {Del}
-  ^,::SendInput +{Left}
-  ^.::SendInput +{Right}
-  ^[::SendInput +{Up}
-  ^]::SendInput +{Down}
-  !j::SendInput ^{Enter}
-#IfWinActive
-
-; Adobe Reader
-#IfWinActive, ahk_class AcrobatSDIWindow
-  h::SendInput {Left}
-  j::SendInput {Down}
-  k::SendInput {Up}
-  l::SendInput {Right}
-  ^b::SendInput {PgUp}
-  ^f::SendInput {PgDn}
-  /::SendInput ^f
-#IfWinActive
-
-#IfWinActive, ahk_class SUMATRA_PDF_FRAME
-  h::SendInput {Left}
-  j::SendInput {Down}
-  k::SendInput {Up}
-  l::SendInput {Right}
-  ; ^b::SendInput {PgUp}
-  ; ^f::SendInput {PgDn}
-  ^b::SendInput {Left}
-  ^f::SendInput {Right}
-  /::SendInput ^f
-#IfWinActive
-
-#IfWinActive, ahk_class UnityContainerWndClass
-  ^e::SendInput {End}
-  ^u::SendInput +{Home}{BS}
-  ^k::SendInput +{End}{BS}
-  ^h::SendInput {BS}
-  ^f::SendInput +{Left}
-  ^b::SendInput +{Right}
-#IfWinActive
-
-; Excel
-#IfWinActive, ahk_class XLMAIN
-  ^p::SendInput {Up}
-  ^n::SendInput {Down}
-  ^f::SendInput {Right}
-  ^b::SendInput {Left}
-  ^a::SendInput {Home}
-  ^e::SendInput {End}
-  ^j::SendInput {Enter}
-  ^u::SendInput +{Home}{BS}
-  ^k::SendInput +{End}{BS}
-  ^h::SendInput {BS}
-  ^d::SendInput {Del}
-#IfWinActive
+; }}}
