@@ -37,10 +37,6 @@ end
 -- ```
 M.add = M.add_autocmd
 
-M.add_autocmd('VimEnter', function()
-  vim.cmd('ScdCurrentDir')
-end)
-
 -- Move the cursor position to the last position of a file
 M.add_autocmd('BufReadPost', function()
   vim.cmd(':' .. vim.fn.line('\'"'))
