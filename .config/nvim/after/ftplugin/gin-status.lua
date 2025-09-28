@@ -27,10 +27,6 @@ local function run_stash_push_message()
     return
   end
 
-  vim.notify(
-    'poi: ' .. vim.inspect({ 'git', 'stash', 'push', '--message', message, '--', filepath }),
-    vim.log.levels.INFO
-  )
   local result = vim.system({ 'git', 'stash', 'push', '--message', message, '--', filepath }):wait()
   if result.code ~= 0 then
     vim.notify(s('Stash failed: {error}', { error = result.stderr or 'Unknown error' }), vim.log.levels.ERROR)
@@ -65,31 +61,6 @@ local function open_commit_buffer(subcmd)
   vim.cmd(table.concat(git_commit, ' '))
 end
 
-local function force_show_stash_size()
-  vim.system({ 'git', 'stash', 'list' }, {
-    text = true,
-  }, function(result)
-    vim.schedule(function()
-      if result.code ~= 0 then
-        return
-      end
-
-      local lines = vim.split(result.stdout or '', '\n')
-      local size = #lines - 1
-      if size <= 0 then
-        return
-      end
-
-      local topline = vim.fn.getline(1)
-      local new_topline = s('{topline} [stash:{size}]', { topline = topline, size = size })
-
-      vim.bo.modifiable = true
-      vim.fn.setline(1, new_topline)
-      vim.bo.modifiable = false
-    end)
-  end)
-end
-
 vim.keymap.set('n', 'Q', function()
   vim.cmd('bdelete!')
 end, { buffer = true, silent = true })
@@ -118,5 +89,3 @@ vim.keymap.set('n', 'cf', ':<C-u>GitCommitFixup<Space>', { buffer = true })
 vim.keymap.set('n', '<:', '<Plug>(gin-action-restore:ours)', { buffer = true })
 vim.keymap.set('n', '>:', '<Plug>(gin-action-restore:theirs)', { buffer = true })
 vim.keymap.set('n', '==', '<Plug>(gin-action-reset)', { buffer = true })
-
-force_show_stash_size()
