@@ -1,9 +1,12 @@
 -- NOTE: Don't use the mark Z, this is reserved by some my functions.
 
 local helper = require('helper')
-local git = require('git')
 local fn = require('utils.functions')
+local git = require('git')
+
 local s = fn.s
+
+Require = helper.reload_module
 
 -------------------
 -- Global values --
@@ -232,10 +235,6 @@ require('lazy-nvim-config')
 require('autocmds')
 require('plugins')
 require('keymaps')
-
----Due to use useful funcitons at runtime, export them to global
----@type fun(module_name: string, starts_with_only: boolean): nil
-ReloadModule = require('plenary.reload').reload_module
 
 local init_env_post_lua = vim.fn.expand('~/.config/nvim/init_env_post.lua')
 if vim.fn.filereadable(init_env_post_lua) == 1 then
