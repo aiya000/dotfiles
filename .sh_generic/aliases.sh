@@ -380,25 +380,23 @@ if i_have git ; then
     return 0
   }
 
-  function git-remote-add-wip () {
+  function git-wip-remote-add () {
     ensure-git-wip-remote-existent || return 1
     git remote add "$DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP" "$DOTFILES_GIT_REMOTE_NAME_DIR"
   }
 
-  function git-push-wip-force () {
+  function git-wip-push-force () {
     : "First, run 'git-remote-add-wip' if you haven't yet."
 
     ensure-git-wip-remote-existent || return 1
     git push -u --force-with-lease "$DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP" "$(git branch --show-current)" || return 1
   }
 
-  function git-add-all-and-push-wip-fource () {
+  function git-wip-push-all-force () {
     git add -A
     git commit -m 'wip'
-    git-push-wip
+    git-wip-push-force
   }
-
-  alias gpw=git-push-wip-force
 
   # Set casual user.name and user.email at local
   alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
