@@ -20,6 +20,8 @@ local function clear()
   helper.close_all_popups()
   require('notify').dismiss({ silent = true, pending = true })
   vim.cmd('nohlsearch')
+  -- Clear flash.nvim highlights
+  pcall(helper.clear_flash_nvim_highlight)
 end
 
 local function clear_deep()

@@ -766,4 +766,18 @@ function M.toggle_gemini_cli()
   gemini_term:toggle()
 end
 
+function M.clear_flash_nvim_highlight()
+  require('flash').toggle(false)
+
+  -- Clear flash extmarks from all buffers
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_valid(buf) then
+      pcall(vim.api.nvim_buf_clear_namespace, buf, vim.api.nvim_create_namespace('flash'), 0, -1)
+    end
+  end
+
+  -- Force redraw to clear any remaining visual artifacts
+  vim.cmd('redraw!')
+end
+
 return M

@@ -1007,17 +1007,23 @@ return {
   { 'andymass/vim-matchup' },
 
   -- }}}
-  -- vim-shot-f {{{
+  -- flash.nvim {{{
 
   {
-    'deris/vim-shot-f',
+    'folke/flash.nvim',
+    event = 'VeryLazy',
     config = function()
-      autocmds.add('TermOpen', function()
-        -- VimでもNeovimでも、なぜかterminalバッファだとshot-fしても移動ができなくなるので、デフォルトのf,Fを使う
-        vim.keymap.set('n', 'f', 'f', { buffer = true, noremap = true })
-        vim.keymap.set('n', 'F', 'F', { buffer = true, noremap = true })
-      end)
-    end
+      require('flash').setup({
+        labels = 'asdfghjklqwertyuiozxcvbnm', -- 'p' is excluded because it forcely pastes text
+        jump = {
+          nohlsearch = true,
+        },
+      })
+    end,
+    keys = {
+      { 'ss', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end, desc = 'Flash' },
+      { 'sS', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
+    },
   },
 
   -- }}}
@@ -1034,7 +1040,7 @@ return {
     },
     config = function()
       vim.g.fmap_use_default_keymappings = false
-      vim.g.fmap_escape_keys = { '', '', '' }
+      vim.g.fmap_escape_keys = { '', '', '' }
     end,
   },
 
