@@ -37,11 +37,10 @@ local function replace_expr_in_context(ref)
   return tostring(result)
 end
 
----@param text string --テンプレートリテラル文字列
----@param vars table --変数テーブル（必須）
+---`('%s'):format(text)`を使うと、各項の役割がわかりにくい時用の関数
+---@param text string --テンプレートリテラルっぽい文字列
+---@param vars table --変数テーブル
 ---@return string --変数埋め込み済み文字列
----
----Example:
 ---```lua
 ----- 変数の埋め込み
 ---local msg = s('Hello {name}! Next year you will be {age + 1}.', {
@@ -50,7 +49,7 @@ end
 ---})
 ---
 ----- 複数回の変数の使用
----local x = s('Hello, {foo}! {foo}', { foo = 'world' })
+---local x = s('Hello, {foo}! and {foo}!', { foo = 'world' })
 ---
 ----- 式の評価
 ---s('{x + y}', { x = 5, y = 3 })      -- '8'
