@@ -9,17 +9,22 @@ local s = fn.s
 
 local M = {}
 
----Removes a cache of `require(module_name)`
----and requires it again
+---Removes `module_name` from `package.loaded` and `require(module_name)` again
 ---@param module_name string
----@return unknown --
-function M.reload_module(module_name)
-  package.loaded[module_name] = nil
-  return require(module_name)
-end
+---@param starts_with_only boolean
+function M.reload_module(module_name, starts_with_only)
+  local older = require(module_name)
+  require('plenary.reload').reload_module(module_name, starts_with_only)
+  local newer = require(module_name)
 
----A shorthand for `reload_module()`
-M.reload = M.reload_module
+  vim.schedule(function()
+    if fn.deep_equal(older, newer) then
+      print(('[ReloadModule] No changes: %s'):format(module_name))
+    else
+      print(('[ReloadModule] Reloaded: %s'):format(module_name))
+    end
+  end)
+end
 
 ---Almost same as `vim.cmd`, but typed as a function
 ---```lua
