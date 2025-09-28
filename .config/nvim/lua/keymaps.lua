@@ -34,7 +34,6 @@ local function clear_and_write()
   vim.cmd.write()
 end
 
-
 -- normal mode {{{
 
 -- Allow keymaps like <C-c>{foo}, and {bar}<C-c>
@@ -502,10 +501,12 @@ map('i', '<C-g><C-n>', '<Plug>(copilot-next)', { remap = true })
 
 -- File Editing
 map('i', '<C-s>', function()
+  ---@diagnostic disable-next-line: undefined-field --なんで見つからないんだろう？ もしかしたらtypesディレクトリに追加した方がいい？
   if not snip.expand_or_jumpable() then
     vim.notify('No snippet to expand or jump to', vim.log.levels.INFO)
     return
   end
+  ---@diagnostic disable-next-line: undefined-field
   snip.expand_or_jump()
 end, { silent = true })
 
@@ -516,10 +517,12 @@ map('s', '<C-l>', '<Esc>')
 
 -- File Editing
 map('s', '<C-s>', function()
+  ---@diagnostic disable-next-line: undefined-field --なんで見つからないんだろう？
   if not snip.jumpable(1) then
     vim.notify('No snippet to jump to', vim.log.levels.INFO)
     return
   end
+  ---@diagnostic disable-next-line: undefined-field
   snip.jump(1)
 end, { silent = true })
 
