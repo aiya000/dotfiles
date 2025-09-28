@@ -9,24 +9,6 @@ local i = ls.insert_node
 
 return list.concat(
   sm(
-    { 'try_catch', 'try', 'catch' },
-    fmt(
-      [[
-    local ok, {result} = pcall({func_name}{args})
-    if not ok then
-      {}
-    end
-  ]],
-      {
-        result = i(3, 'result'),
-        func_name = i(1, 'func_name'),
-        args = i(2, ''),
-        i(4, 'handling'),
-      }
-    )
-  ),
-
-  sm(
     { 'define_module', 'module' },
     fmt(
       [[
