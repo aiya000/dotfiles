@@ -8,6 +8,74 @@ M.pipe = require('utils.pipe')
 M.s = require('utils.functions.s').s
 M.deep_equal = Test.deep_equal
 
+---A try-catch-finally expression implementation
+---@generic T
+---@param f fun(): T --A function to run that may throws error
+---@param catch fun(error_message: string) --Cathces `do`'s error and returns `T`
+---@param finally? fun() --A function that always called after `f` and `catch` called
+---```lua
+-----Simple usage like another languages:
+---try(function()
+---  -- May throw error
+---end, function()
+---  -- Catch error
+---end, function()
+---  -- Finally (always called, even if no error)
+---end)
+---
+---This result can be used as expression like Kotlin, Scala, and newer languages:
+---local result = try(function()
+---  foo() -- (May throw error)
+---  return 'Hello, World!'
+---end, function(err)
+---  return 'Error: ' .. err
+---end)  -- 'Hello, World!' or 'Error: ...'
+---
+----- If you have nothing to return in `f`, do `return nil`
+---try(function()
+---  -- ...
+---  return nil
+---end, function(err)
+---  -- Some handling
+---  return nil
+---end)
+---```
+function M.try(f, catch, finally)
+  local result = nil
+
+  local ok, err = pcall(f)
+  if ok then
+    result = ok
+  end
+  if not ok then
+    result = catch(err)
+  end
+
+  if finally ~= nil then
+    finally()
+  end
+  return result
+end
+
+---Simular to `try()`, but doesn't catch error, only running `finally` after `f`
+---@generic T
+---@param f fun(): T
+---@param finally fun()
+---```lua
+----- Throws error when `foo()` throws, but `finally()` always called
+---try_finally(function()
+---  foo() -- May throw error
+---end, function()
+---  -- Finally
+---end)
+---```
+---@see try()
+function M.try_finally(f, finally)
+  return M.try(f, function(err)
+    error(err)
+  end, finally)
+end
+
 ---Quotes a string 'x' to `"'x'"` when string,
 ---makes table to string by `make_table_to_string()` when table,
 ---otherwise simply make to string by `tostring()`
