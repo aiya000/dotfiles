@@ -163,6 +163,19 @@ Total: 183 files migrated from Vimscript to Lua
 
 ## Neovim Configuration Notes
 
+### Plugin Installation Rules
+
+- **ALWAYS ask for confirmation before adding new plugins**
+- Never automatically install or configure plugins without user approval
+- User needs to verify compatibility and avoid configuration conflicts
+- Sudden environment changes can be disruptive to workflow
+
+### GitHub Issue Rules
+
+- **Neovim-related issues must use 'Neovim: ' prefix**
+- Example: "Neovim: cmp-cmdline削除の検証" instead of "TODO: cmp-cmdline削除の検証"
+- This helps categorize and identify Neovim-specific issues in the repository
+
 ### Directory Creation Issues
 
 - NEVER create a directory named `v:null` in `.config/nvim/`
