@@ -235,6 +235,7 @@ require('lazy-nvim-config')
 require('autocmds')
 require('plugins')
 require('keymaps')
+require('commands') -- Due to `Require('commands')`, 'commands' module put here instead of `./plugins/commands.lua`
 
 local init_env_post_lua = vim.fn.expand('~/.config/nvim/init_env_post.lua')
 if vim.fn.filereadable(init_env_post_lua) == 1 then

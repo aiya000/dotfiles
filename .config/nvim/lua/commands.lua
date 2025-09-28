@@ -3,14 +3,27 @@ local git = require('git')
 local nodejs = require('nodejs')
 local s = require('utils.functions').s
 local telescope = require('telescope.builtin')
+local c = require('chotto')
+
+-- TODO: 型が参照できていないのを直す。たぶん.luarrc.jsonに`~/.luarocks/share/lua/5.1`あたりを指定すればいける？
+---@type chotto.Schema<Nargs>
+local nargs_schema = c.optional(
+  c.union({
+    c.literal('*'),
+    c.literal('+'),
+    c.literal('?'),
+    c.literal(1), -- `'1'` of string throws error! fxxx
+  })
+)
 
 ---@param cmd_name string
 ---@param func string | function --実行されるVimコマンド、もしくは処理
 ---@param options? vim.api.keyset.user_command
 local function create_command(cmd_name, func, options)
-  -- with default options
+  local nargs = nargs_schema.parse((options or {}).nargs) ---@type Nargs
   options = vim.tbl_extend('keep', options or {}, {
     bar = true,
+    nargs = nargs,
   })
   vim.api.nvim_create_user_command(cmd_name, func, options)
 end
@@ -35,7 +48,7 @@ create_command('FtDetectEdit', function(opts)
 end, { nargs = '?', complete = 'filetype' })
 
 -- }}}
--- Git Utils {{{
+-- git utils {{{
 
 create_command('GitCommitFixup', function(opts)
   local commit_hash = opts.args
@@ -58,16 +71,12 @@ end, { nargs = '*' })
 -- }}}
 -- vim-webpage {{{
 
-create_command('Weblio', function(opts)
-  vim.cmd(s('WebpageShow weblio {args}', { args = opts.args }))
-end, { nargs = '+' })
-
 create_command('Stackage', function(opts)
-  vim.cmd(s('WebpageShow stackage {args}', { args = opts.args }))
+  vim.cmd('WebpageShow stackage ' .. opts.args )
 end, { nargs = '+' })
 
 -- }}}
--- Change pwd {{{
+-- cd utils {{{
 
 -- :cd
 create_command('CdBufDir', function()
@@ -142,20 +151,20 @@ create_command('ScdNodeRoot', function()
 end)
 
 -- }}}
+-- Others {{{
 
--- Clear quickfix
 create_command('CClear', function()
   vim.fn.setqflist({})
-end)
+end, { desc = 'Clear quickfix' })
 
--- Rename a file of the current buffer
 create_command('Rename', function(opts)
   helper.rename_to(opts.args)
-end, { nargs = 1, complete = 'file' })
+end, { nargs = 1, complete = 'file', desc = 'Rename current file to the new name' })
 
--- TODO: Not working well
--- Rename variables by lsp
-create_command('LspRename', vim.lsp.buf.references)
+-- TODO: ちゃんと動いてる？
+create_command('LspRename', function(opts)
+  vim.lsp.buf.rename(opts.args)
+end, { nargs = 1, desc = 'Rename symbol under cursor to the new name' })
 
 create_command('LspFormat', function()
   vim.lsp.buf.format({ async = true })
@@ -168,18 +177,19 @@ create_command('KtlintAutoFix', function()
   vim.cmd('edit %')
 end)
 
----@param search_word string
 create_command('Grep', function(opts)
   telescope.grep_string({ search = opts.args })
-end, { nargs = '+' })
+end, { nargs = 1 })
 
-create_command('ReverseLines', '!tac')
+create_command('ReverseLines', '!tac', {
+  range = true,
+  desc = 'Reverse the order of lines in the selected range or entire buffer',
+})
 
 create_command('ReplaceListSign', function()
-  vim.cmd("'<,'>s/\\(\\s*\\)- /\\1・ /")
+  vim.cmd([['<,'>s/\(\s*\)- /\1・ /]])
 end, { range = true })
 
--- deepl.vim
 create_command('DeeplTranslateToEn', function(opts)
   helper.deepl_translate(opts.count, opts.line1, opts.line2, 'EN', 'JA', { 'yank', 'echo' })
 end, { range = '%' })
@@ -232,21 +242,4 @@ end, {
   complete = 'filetype',
 })
 
----Tapis functions
-function Tapi_Tabnew(_, args)
-  local files = vim.list_slice(args, 2) -- Skip first element (equivalent to args[1:])
-  local paths = vim.tbl_map(vim.fn.fnameescape, files)
-
-  for _, path in ipairs(paths) do
-    vim.cmd(s('tabnew {path}', { path = path }))
-  end
-end
-
-function Tapi_Verticalnew(_, args)
-  local files = vim.list_slice(args, 2) -- Skip first element (equivalent to args[1:])
-  local paths = vim.tbl_map(vim.fn.fnameescape, files)
-
-  for _, path in ipairs(paths) do
-    vim.cmd(s('vertical new {path}', { path = path }))
-  end
-end
+--}}}
