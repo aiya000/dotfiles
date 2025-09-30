@@ -1,9 +1,16 @@
+---
+allowed-tools: Bash(wslview:*), Bash(xdg-open:*), Bash(open:*)
+description: Open URLs from numbered references, repository names, or the context
+---
+
 # /open-weburl
 
 ## Description
+
 Opens URLs using wslview. Can handle numbered references from previous conversation or direct repository names.
 
 ## Usage
+
 - `/open-weburl 1, 2, 3` - Opens URLs that were referenced as "1.", "2.", "3." in the previous conversation
 - `/open-weburl foo.nvim bar.nvim nvim-baz` - Opens GitHub repositories for the specified names
 
@@ -24,6 +31,7 @@ When this command is used:
 ## Examples
 
 ### Numbered References
+
 ```
 User: /open-weburl 1, 2, 3
 Assistant: Opening URLs from recent list:
@@ -33,6 +41,7 @@ Assistant: Opening URLs from recent list:
 ```
 
 ### Repository Names
+
 ```
 User: /open-weburl telescope.nvim lazy.nvim
 Assistant: Opening repositories:
@@ -41,6 +50,7 @@ Assistant: Opening repositories:
 ```
 
 ### Mixed/Missing
+
 ```
 User: /open-weburl telescope.nvim, nonexistent-software, lazy.nvim
 Assistant: Opening only available URLs:
@@ -49,15 +59,30 @@ Assistant: Opening only available URLs:
 Also Assistant tells 'nonexistent-software is not found' to the user.
 ```
 
+### No Arguments (Reading Context)
+
+Assuming the last conversation mentioned to `telescope.nvim` and `lazy.nvim`:
+
+```
+User: /open-weburl
+Assistant: Opening repositories:
+- telescope.nvim: https://github.com/nvim-telescope/telescope.nvim
+- lazy.nvim: https://github.com/folke/lazy.nvim
+```
+
+When the context is ambiguous, the assistant should ask to the user for clarification.
+
 ## URL Resolution Logic
 
 ### For numbered references:
+
 1. Search **最直近の会話**で番号付きリストとして言及されたもの
 2. リスト形式で提示されたURLやリポジトリ名を優先
 3. Issue番号よりも、直前に説明した項目を優先する
 4. 時系列順序を正確に判断する
 
 ### For repository names:
+
 1. Common repository name patterns:
    - `telescope.nvim` → `https://github.com/nvim-telescope/telescope.nvim`
    - `lazy.nvim` → `https://github.com/folke/lazy.nvim`
@@ -66,10 +91,12 @@ Also Assistant tells 'nonexistent-software is not found' to the user.
 3. Default to `https://github.com/search?q=[name]` if exact match not found
 
 ## Error Handling
+
 - Report missing URLs clearly
 - Only open valid URLs
 - Handle malformed arguments gracefully
 - Provide helpful error messages
 
 ## Background Execution
+
 Always execute wslview commands in background using `&` to prevent blocking the conversation.
