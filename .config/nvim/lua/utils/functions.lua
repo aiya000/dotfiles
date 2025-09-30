@@ -107,7 +107,8 @@ function M.make_table_to_string(t)
   return table.concat(result, '\n')
 end
 
----Simular to `tostring()`, but with table support
+---Simular to `tostring()`, but with table support, like `vim.inspect()`.
+---This is useful if you must do something when the fisrt schedule of Neovim (Meaning, when `vim.inspect()` cannot be used).
 ---@param x unknown
 ---@return string
 function M.to_pretty_string(x)
@@ -202,6 +203,12 @@ function M.wait_for(p, f, interval)
       timer:close()
     end
   end
+end
+
+---最初期のNeovimのスケジュールでvim.fn.trim()が使えないので、代わりに使う
+---@param text string
+function M.trim(text)
+  return text:gsub('^%s*(.-)%s*$', '%1')
 end
 
 ---Helper function to set a field in Vim dictionary variables.
