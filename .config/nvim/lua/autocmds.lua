@@ -1,28 +1,31 @@
----NOTE:
 ---特定のプラグインに関連する操作をここに書かないでください。
 ---我々はこれによって、繰り返し失敗してきました
 
 local ToggleBuftype = require('models.ToggleBuftype')
 local toggle_buftype = ToggleBuftype.new()
 local s = require('utils.functions').s
-local helper = require('helper')
+local c = require('chotto')
 
 local M = {}
 
 M.AugroupInitLua = vim.api.nvim_create_augroup('InitLua', { clear = true })
 
+---See ':h vim.api.nvim_create_autocmd'
 ---@param event string | string[]
 ---@param callback (fun(): nil) | string --Lua function or Vim script function name
----@param pattern? string | string[] --Pattern for FileType events
----@see 'installed-dir/share/nvim/runtime/doc/api.txt'
-function M.add_autocmd(event, callback, pattern)
-  local opts = {
-    group = AugroupInitLua,
-    callback = callback,
-  }
-  if pattern ~= nil then
-    opts.pattern = pattern
+---@param pattern_or_opts? string | string[] | vim.api.keyset.create_autocmd --If string or string[], it is used as `pattern`. If table, it is used as options
+function M.add_autocmd(event, callback, pattern_or_opts)
+  local opts = { group = M.AugroupInitLua, callback = callback }
+  if pattern_or_opts == nil then
+    vim.tbl_extend('keep', opts, {})
   end
+  if type(pattern_or_opts) == 'string' or c.array(c.string()):safe_parse(pattern_or_opts) then
+    vim.tbl_extend('keep', opts, { pattern = pattern_or_opts })
+  end
+  if type(pattern_or_opts) == 'table' then
+    vim.tbl_extend('keep', opts, pattern_or_opts)
+  end
+
   vim.api.nvim_create_autocmd(event, opts)
 end
 
