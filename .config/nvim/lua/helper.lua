@@ -4,6 +4,7 @@
 
 local list = require('utils.list')
 local fn = require('utils.functions')
+local c = require('chotto')
 
 local s = fn.s
 
@@ -34,6 +35,46 @@ end
 ---@param cmd string
 function M.vim_cmd(cmd)
   vim.cmd(cmd)
+end
+
+---Returns a function to add autocmds related to augroup named by `group_name`
+---```lua
+---local add_autocmd = helper.create_adding_autocmd('InitLuaHelper')
+---add_autocmd('VimEnter', function()
+---  print('Neovim started.')
+---end)
+---add_autocmd('CmdwinEnter', function()
+---  print('Cmdwin entered.')
+---end)
+---```
+---@param group_name string
+---@return fun(
+---   event: string | string[],
+---   callback: (fun(args: vim.api.keyset.create_autocmd.callback_args): nil) | string,
+---   pattern_or_opts?: string | string[] | vim.api.keyset.create_autocmd,
+---)
+---@see vim.api.nvim_create_augroup()
+---@see vim.api.nvim_create_autocmd()
+---`helper.reload_module()`するときにautocmdsがクリアされるので、便利。
+---（`augroup`を`clear = true`で生成しているため。）
+function M.create_adding_autocmd(group_name)
+  local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
+
+  local function add_autocmd(event, callback, pattern_or_opts)
+    local opts = { group = augroup, callback = callback }
+    if pattern_or_opts == nil then
+      vim.tbl_extend('keep', opts, {})
+    end
+    if type(pattern_or_opts) == 'string' or c.array(c.string()):safe_parse(pattern_or_opts) then
+      vim.tbl_extend('keep', opts, { pattern = pattern_or_opts })
+    end
+    if type(pattern_or_opts) == 'table' then
+      vim.tbl_extend('keep', opts, pattern_or_opts)
+    end
+    vim.api.nvim_create_autocmd(event, opts)
+  end
+
+  return add_autocmd
 end
 
 ---Storkes a stroke starts with normal mode.
