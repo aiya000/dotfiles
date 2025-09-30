@@ -711,3 +711,6 @@ install-keycastow:
 
 install-uv:
 	which uv || mise use uv@latest
+
+install-imagemagick:
+	which convert || $(AptInstall) imagemagick
