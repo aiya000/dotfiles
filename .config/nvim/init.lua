@@ -1,5 +1,7 @@
 -- NOTE: Don't use the mark Z, this is reserved by some my functions.
 
+require('luarocks-config')
+
 local helper = require('helper')
 local fn = require('utils.functions')
 local git = require('git')
@@ -230,7 +232,6 @@ end
 
 -- }}}
 
-require('luarocks-config')
 require('lazy-nvim-config')
 require('autocmds')
 require('plugins')
