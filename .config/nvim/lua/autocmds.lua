@@ -203,9 +203,10 @@ end)
 -- }}}
 -- AsyncRun {{{
 
-M.add_autocmd('User', function()
-  vim.call('vimrc#popup_atcursor', ':AsyncRun finished')
-end, 'AsyncRunStop')
+-- TODO: vimrc#popup_atcursorがなくなったので、代替に移行する
+-- M.add_autocmd('User', function()
+--   vim.call('vimrc#popup_atcursor', ':AsyncRun finished')
+-- end, 'AsyncRunStop')
 
 -- }}}
 
