@@ -20,7 +20,7 @@ local nargs_schema = c.optional(
 ---@param func string | function --実行されるVimコマンド、もしくは処理
 ---@param options? vim.api.keyset.user_command
 local function create_command(cmd_name, func, options)
-  local nargs = nargs_schema.parse((options or {}).nargs) ---@type Nargs
+  local nargs = nargs_schema:parse((options or {}).nargs) ---@type Nargs
   options = vim.tbl_extend('keep', options or {}, {
     bar = true,
     nargs = nargs,
@@ -206,25 +206,127 @@ create_command('DeeplTranslateToJaOpenBuffer', function(opts)
   helper.deepl_translate(opts.count, opts.line1, opts.line2, 'JA', 'EN', { 'yank', 'buffer' })
 end, { range = '%' })
 
--- Helper for claudecode.nvim
 create_command('ClaudeCodeAtGitRoot', function(opts)
+  git.execute_cmd_at_git_root('ClaudeCode', opts.args or '')
+end, {
+  nargs = '*',
+  desc = 'Open ClaudeCode at git root directory',
+})
+
+create_command('ClaudeCodeAddAtGitRoot', function(opts)
+  git.execute_cmd_at_git_root('ClaudeCodeAdd', opts.args or '')
+end, {
+  nargs = '*',
+  desc = 'Add file to Claude Code context at git root',
+})
+
+create_command('ClaudeCodeOpenAtGitRoot', function(opts)
+  git.execute_cmd_at_git_root('ClaudeCodeOpen', opts.args or '')
+end, {
+  nargs = '*',
+  desc = 'Open Claude Code terminal at git root',
+})
+
+create_command('ClaudeCodeSendAtGitRoot', function(opts)
+  git.execute_cmd_at_git_root('ClaudeCodeSend', opts.args or '')
+end, {
+  nargs = '*',
+  range = true,
+  desc = 'Send selection to Claude Code at git root',
+})
+
+create_command('ClaudeCodeFocusAtGitRoot', function(opts)
+  git.execute_cmd_at_git_root('ClaudeCodeFocus', opts.args or '')
+end, {
+  nargs = '*',
+  desc = 'Focus Claude Code terminal at git root',
+})
+
+-- Store Docker Claude terminal instance globally
+_G.claude_docker_terminal = nil
+
+create_command('ClaudeCodeDockerAtGitRoot', function(opts)
   local git_root = InitLua.git_root
   if not git_root then
     vim.notify('Git root not found!', vim.log.levels.ERROR)
     return
   end
 
-  local current_dir = vim.fn.getcwd()
-  vim.cmd('lcd ' .. git_root)
-  vim.cmd('ClaudeCode ' .. opts.args)
-  vim.cmd('lcd ' .. current_dir)
+  local args = opts.args or ''
+  local image_name = 'dotfiles-claude-code:latest'
+
+  -- If terminal already exists, just toggle it
+  if _G.claude_docker_terminal then
+    _G.claude_docker_terminal:toggle()
+    return
+  end
+
+  -- Check if image exists, if not build it
+  local check_image = vim.fn.system('docker images -q ' .. image_name)
+  if check_image == '' then
+    -- Show build progress in floating window
+    local Terminal = require('toggleterm.terminal').Terminal
+    local build_cmd = string.format('docker build -t %s %s/docker/claude-code', image_name, git_root)
+
+    local build_terminal = Terminal:new({
+      cmd = build_cmd,
+      direction = 'float',
+      float_opts = {
+        border = 'curved',
+        width = math.floor(vim.o.columns * 0.8),
+        height = math.floor(vim.o.lines * 0.8),
+      },
+      on_open = function(term)
+        vim.cmd('startinsert!')
+        -- Set buffer name for clarity
+        vim.api.nvim_buf_set_name(term.bufnr, 'Docker Build Progress')
+      end,
+      on_exit = function(t, job, exit_code, name)
+        if exit_code == 0 then
+          vim.notify('Docker image built successfully! Opening Claude Code...', vim.log.levels.INFO)
+          -- Wait a bit then open Claude Code
+          vim.defer_fn(function()
+            vim.cmd('ClaudeCodeDockerAtGitRoot ' .. args)
+          end, 1000)
+        else
+          vim.notify('Failed to build Docker image (exit code: ' .. exit_code .. ')', vim.log.levels.ERROR)
+        end
+      end,
+    })
+    build_terminal:toggle()
+    return
+  end
+
+  local docker_cmd = string.format(
+    'docker run -it --rm -v %s:/workspace -v claude-code-config:/home/vscode/.claude -e CLAUDE_CONFIG_DIR=/home/vscode/.claude -w /workspace %s claude --dangerously-skip-permissions %s',
+    vim.fn.shellescape(git_root),
+    image_name,
+    args
+  )
+
+  -- Create and store terminal instance
+  local Terminal = require('toggleterm.terminal').Terminal
+  _G.claude_docker_terminal = Terminal:new({
+    cmd = docker_cmd,
+    direction = 'float',
+    float_opts = {
+      border = 'curved',
+      width = math.floor(vim.o.columns * 0.9),
+      height = math.floor(vim.o.lines * 0.9),
+    },
+    on_open = function(term)
+      vim.cmd('startinsert!')
+    end,
+    on_exit = function()
+      vim.notify('Claude Code Docker terminal closed', vim.log.levels.INFO)
+      -- Clear the global terminal instance when it exits
+      _G.claude_docker_terminal = nil
+    end,
+  })
+  _G.claude_docker_terminal:toggle()
 end, {
   nargs = '*',
-  desc = [[
-    Open ClaudeCode at git root directory with a floating window.
-    Useful when wanting to use a conversation related with gir-root.
-    e.g., --continue, --resume.
-  ]],
+  desc = 'Open ClaudeCode in Docker container at git root (auto-builds image if needed)',
 })
 
 create_command('LuaSnipEdit', function(opts)

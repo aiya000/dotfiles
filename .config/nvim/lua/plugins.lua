@@ -1197,18 +1197,20 @@ return {
         },
         keys = {
           { '<leader>c', nil, desc = 'Claude Code' },
+          -- See './keymaps.lua' for what is `ClaudeCode*AtGitRoot` commands
           {
             toggle_key,
             mode = { 'n' },
-            toggle,
-            desc = 'Open a new Claude Code window or toggle the already opened window',
+            toggle_host,
+            desc = 'Toggle host Claude Code at git root',
           },
-          { '<leader>cr', mode = { 'n' }, '<Cmd>ClaudeCode --resume<CR>', desc = 'Resume Claude' },
-          { '<leader>cC', mode = { 'n' }, '<Cmd>ClaudeCode<CR>', desc = 'New Claude' },
+          { '<leader>cr', mode = { 'n' }, '<Cmd>ClaudeCodeAtGitRoot --resume<CR>', desc = 'Resume Claude at git root' },
+          { '<leader>cC', mode = { 'n' }, '<Cmd>ClaudeCodeAtGitRoot<CR>', desc = 'New Claude at git root' },
+          { '<leader>cD', mode = { 'n' }, toggle_docker, desc = 'Toggle Docker Claude at git root' },
           { '<leader>cM', mode = { 'n' }, '<Cmd>ClaudeCodeSelectModel<CR>', desc = 'Select Claude model' },
-          { '<leader>cb', mode = { 'n' }, '<Cmd>ClaudeCodeAdd %<CR>', desc = 'Add current buffer' },
-          { '<leader>cs', mode = { 'n' }, 'V:ClaudeCodeSend<CR>', desc = 'Send to Claude' },
-          { '<leader>cs', mode = { 'v' }, '<Cmd>ClaudeCodeSend<CR>', desc = 'Send to Claude' },
+          { '<leader>cb', mode = { 'n' }, '<Cmd>ClaudeCodeAddAtGitRoot %<CR>', desc = 'Add current buffer at git root' },
+          { '<leader>cs', mode = { 'n' }, 'V:ClaudeCodeSendAtGitRoot<CR>', desc = 'Send to Claude at git root' },
+          { '<leader>cs', mode = { 'v' }, '<Cmd>ClaudeCodeSendAtGitRoot<CR>', desc = 'Send to Claude at git root' },
           {
             '<leader>cs',
             '<Cmd>ClaudeCodeTreeAdd<CR>',
@@ -1221,7 +1223,6 @@ return {
         opts = {
           -- Open in a floating window
           terminal = {
-            ---@module 'snacks'
             ---@type snacks.win.Config | {}
             snacks_win_opts = {
               position = 'float',
@@ -1238,6 +1239,13 @@ return {
                 },
               },
             },
+          },
+          -- TODO: これちゃんと動いてる？ チェックする
+          diff_opts = {
+            auto_close_on_accept = true,
+            vertical_split = true,
+            open_in_current_tab = true,
+            keep_terminal_focus = false,
           },
         },
       }
