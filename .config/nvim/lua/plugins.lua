@@ -340,21 +340,31 @@ return {
     end,
   },
   -- }}}
-  -- indentmini.nvim {{{
-  {
-    'nvimdev/indentmini.nvim',
-    config = function()
-      require('indentmini').setup({
-        exclude = {
-          'help',
-          'lazy',
-          'mason',
-        },
-      })
-      vim.cmd.highlight('IndentLine guifg=#454545')
-      vim.cmd.highlight('IndentLineCurrent guifg=#123456')
-    end,
-  },
+  -- hlchunk.nvim {{{
+
+    {
+      'shellRaining/hlchunk.nvim',
+      event = { 'BufReadPre', 'BufNewFile' },
+      config = function()
+        require('hlchunk').setup({
+          chunk = { -- NOTE: May need to `TSInstall {filetype}` to show chunk
+            enable = true,
+            style = '#c678dd',
+          },
+          indent = {
+            enable = true,
+          },
+          line_num = {
+            enable = true,
+          },
+          blank = {
+            -- chunk・indentバッティングするから無効化…
+            enable = false,
+          },
+        })
+      end
+    },
+
   -- }}}
   -- galaxyline {{{
   {
