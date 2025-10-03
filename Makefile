@@ -714,3 +714,11 @@ install-uv:
 
 install-imagemagick:
 	which convert || $(AptInstall) imagemagick
+
+install-win32yank:
+	which win32yank.exe || ( \
+		cd /tmp && \
+		wget https://github.com/equalsraf/win32yank/releases/download/v0.1.1/win32yank-x64.zip && \
+		unzip -p win32yank-x64.zip win32yank.exe > ~/bin/win32yank && \
+		chmod +x ~/bin/win32yank.exe \
+	)
