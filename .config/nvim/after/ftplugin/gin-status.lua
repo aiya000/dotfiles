@@ -1,3 +1,4 @@
+local Terminal = require('toggleterm.terminal').Terminal
 local s = require('utils.functions').s
 
 vim.opt_local.cursorline = true
@@ -61,6 +62,27 @@ local function open_commit_buffer(subcmd)
   vim.cmd(table.concat(git_commit, ' '))
 end
 
+local claude_commit_terminal = nil
+
+local function open_claude_commit_float_window()
+  -- 既存のterminalが存在し、プロセスがまだ生きている場合は再利用
+  if claude_commit_terminal ~= nil then
+    claude_commit_terminal:toggle()
+  else
+    -- 新しいterminalを作成
+    claude_commit_terminal = Terminal:new({
+      cmd = 'claude /git-commit-auto',
+      direction = 'float',
+      close_on_exit = false,
+      on_exit = function()
+        -- プロセスが終了したらnilにリセット
+        claude_commit_terminal = nil
+      end,
+    })
+    claude_commit_terminal:toggle()
+  end
+end
+
 vim.keymap.set('n', 'Q', function()
   vim.cmd('bdelete!')
 end, { buffer = true, silent = true })
@@ -79,7 +101,8 @@ vim.keymap.set('n', 'p', '<Plug>(gin-action-diff:smart:vsplit)', { buffer = true
 vim.keymap.set('n', 'sa', '<Plug>(gin-action-stash)', { buffer = true, silent = true })
 vim.keymap.set('n', 'S', run_stash_push_message, { buffer = true, silent = true })
 vim.keymap.set('n', 'sp', '<Cmd>Gin stash pop<CR>', { buffer = true })
-vim.keymap.set('n', 'cc', open_commit_buffer, { buffer = true, silent = true })
+vim.keymap.set('n', 'cc', open_claude_commit_float_window, { buffer = true, silent = true })
+vim.keymap.set('n', 'cC', open_commit_buffer, { buffer = true, silent = true })
 
 vim.keymap.set('n', 'ca', function()
   open_commit_buffer({ '--amend' })
