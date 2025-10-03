@@ -142,3 +142,4 @@ refactor(Neovim > commands): Use `helper.execute_at_git_root()` for consistency
 - Commit directly without asking for confirmation (user approval already given by invoking this command)
 - If uncertain about the type or scope, ask the user before committing
 - Analyze the actual changed files to determine appropriate scope
+- **Do NOT add Claude Code signature** (🤖 Generated with [Claude Code] and Co-Authored-By: Claude) to commit messages

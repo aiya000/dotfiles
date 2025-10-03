@@ -1,4 +1,5 @@
 ---
+allowed-tools: Read(~/.dotfiles/.private/CLAUDE-MEMORY/*)
 description: Write a daily memory file
 ---
 

@@ -219,8 +219,15 @@ However, please be aware of the following special environment.
 
 Use English in this file.
 
+## Markdown Formatting Rules
+
+### Section Spacing
+
 Add a blank line between the title and the first list item if adding new sections with list items.
 Also do not add trailing dot to list items like `- An item.`
+
+Always add blank lines before and after section headers (lines starting with `##` or `###`).
+
 For example:
 
 ```markdown
@@ -228,4 +235,21 @@ For example:
 
 - First item
 - Second item
+
+### Subsection Title
+
+- Another item
+```
+
+### List Indentation
+
+- Use 4 spaces for nested list items
+- Never use 2 spaces for indentation in markdown lists
+
+Example:
+
+```markdown
+- First level item
+    - Second level item (4 spaces)
+        - Third level item (8 spaces)
 ```
