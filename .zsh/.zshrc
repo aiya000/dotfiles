@@ -158,7 +158,7 @@ function zshrc::autoload-my-env () {
 }
 
 # Register the operation if started Shell is on Vim terminal
-if [[ -z $VIM_TERMINAL ]] ; then
+if [[ $VIM_TERMINAL == '' && $NEOVIM_TERMINAL == '' ]] ; then
   # Be called when `cd` executed
   function chpwd () {
     zshrc::autoload-my-env
