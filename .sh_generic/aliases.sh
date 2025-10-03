@@ -240,6 +240,7 @@ if i_have git ; then
   alias gd='git diff'
   alias gdh='git diff HEAD~..HEAD'
   alias gds='git diff --staged'
+  alias gss='git stash save'
   alias gssp='git stash pop'
   alias gssd='git stash drop'
   alias gssl='git stash list'
