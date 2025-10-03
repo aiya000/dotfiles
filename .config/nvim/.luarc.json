@@ -10,6 +10,8 @@
   "Lua.workspace.library": [
     "${workspaceFolder}/types",
     "${3rd}/luv/library",
+    "/home/aiya000/.luarocks/share/lua/5.1/",
+    "/home/aiya000/.luarocks/share/lua/5.2/",
     "/home/linuxbrew/.linuxbrew/share/nvim/runtime"
   ],
   "Lua.workspace.checkThirdParty": false,
