@@ -83,6 +83,18 @@ local function open_claude_commit_float_window()
   end
 end
 
+local function remove_this_file()
+  vim.cmd('normal "zyy')
+  local filepath = vim.fn.trim(vim.fn.getreg('z'))
+  local ok, err = os.remove(filepath)
+  if ok then
+    vim.notify('Removed file: ' .. filepath, vim.log.levels.INFO)
+    vim.cmd('GinStatus') -- Refresh
+  else
+    vim.notify('Failed to remove file: ' .. err, vim.log.levels.ERROR)
+  end
+end
+
 vim.keymap.set('n', 'Q', function()
   vim.cmd('bdelete!')
 end, { buffer = true, silent = true })
@@ -96,19 +108,23 @@ vim.keymap.set('n', 'O', function()
   vim.cmd('edit ' .. vim.fn.trim(vim.fn.getreg('z')))
 end, { buffer = true, silent = true })
 
-vim.keymap.set('n', '<C-r>', '<Cmd>GinStatus<CR>', { buffer = true, silent = true })
+vim.keymap.set('n', '<C-r>', '<Cmd>GinStatus<CR>', { buffer = true, silent = true }) -- TODO: `gin#util#reload()`が使えそう
 vim.keymap.set('n', 'p', '<Plug>(gin-action-diff:smart:vsplit)', { buffer = true, silent = true, nowait = true })
 vim.keymap.set('n', 'sa', '<Plug>(gin-action-stash)', { buffer = true, silent = true })
 vim.keymap.set('n', 'S', run_stash_push_message, { buffer = true, silent = true })
 vim.keymap.set('n', 'sp', '<Cmd>Gin stash pop<CR>', { buffer = true })
 vim.keymap.set('n', 'cc', open_claude_commit_float_window, { buffer = true, silent = true })
 vim.keymap.set('n', 'cC', open_commit_buffer, { buffer = true, silent = true })
+vim.keymap.set('n', 'B', '<Cmd>GinBranch<CR>', { buffer = true, silent = true })
+vim.keymap.set('n', 'C', ':<C-u>Gin switch --create<Space>', { remap = true, buffer = true })
 
 vim.keymap.set('n', 'ca', function()
   open_commit_buffer({ '--amend' })
 end, { buffer = true, silent = true })
 
-vim.keymap.set('n', 'cf', ':<C-u>GitCommitFixup<Space>', { buffer = true })
+vim.keymap.set('n', 'cf', ':<C-u>GitCommitFixup<Space>', { remap = true, buffer = true })
 vim.keymap.set('n', '<:', '<Plug>(gin-action-restore:ours)', { buffer = true })
 vim.keymap.set('n', '>:', '<Plug>(gin-action-restore:theirs)', { buffer = true })
 vim.keymap.set('n', '==', '<Plug>(gin-action-reset)', { buffer = true })
+
+vim.keymap.set('n', 'R', remove_this_file, { buffer = true })
