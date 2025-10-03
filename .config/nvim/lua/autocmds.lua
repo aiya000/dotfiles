@@ -1,112 +1,95 @@
 ---特定のプラグインに関連する操作をここに書かないでください。
 ---我々はこれによって、繰り返し失敗してきました
 
-local s = require('utils.functions').s
 local helper = require('helper')
-local ToggleBuftype = require('models.ToggleBuftype')
+local s = require('utils.functions').s
 
-local toggle_buftype = ToggleBuftype.new()
 local M = {}
 
-local add_autocmd = helper.create_adding_autocmd('InitLuaAutocmds')
+local augroup = vim.api.nvim_create_augroup('InitLuaAutocmds', { clear = true })
 
 -- Move the cursor position to the last position of a file
-add_autocmd('BufReadPost', function()
-  vim.cmd(':' .. vim.fn.line('\'"'))
-end)
+vim.api.nvim_create_autocmd('BufReadPost', {
+  group = augroup,
+  callback = function()
+    vim.cmd(':' .. vim.fn.line('\'"'))
+  end,
+})
 
 -- Setup Cmdwin
-add_autocmd('CmdwinEnter', function()
-  vim.keymap.set('n', 'Q', '<Cmd>q<CR>', { buffer = true, silent = true })
-  vim.keymap.set('n', 'ghq', '<Cmd>q<CR>', { buffer = true, silent = true })
-  vim.keymap.set('n', 'ghQ', '<Cmd>qall<CR>', { buffer = true, silent = true })
-  vim.keymap.set('n', '<C-j>', '<C-c><CR>', { buffer = true })
-  vim.keymap.set('n', '<CR>', '<C-c><CR>', { buffer = true })
-
-  if vim.fn.getcmdwintype() == ':' then
-    vim.keymap.set('i', '<C-n>', function()
-      return vim.fn.pumvisible() == 1 and '<C-n>' or '<C-x><C-v>'
-    end, { buffer = true, expr = true })
-    vim.keymap.set('i', '<C-p>', function()
-      return vim.fn.pumvisible() == 1 and '<C-p>' or '<C-x><C-v><C-p><C-p>'
-    end, { buffer = true, expr = true })
-  end
-end)
+vim.api.nvim_create_autocmd('CmdwinEnter', {
+  group = augroup,
+  callback = function()
+    vim.keymap.set('n', 'Q', '<Cmd>quit<CR>', { buffer = true, silent = true })
+    vim.keymap.set('n', 'ghq', '<Cmd>quit<CR>', { buffer = true, silent = true })
+    vim.keymap.set('n', '<C-l>', '<Cmd>quit<CR>', { buffer = true })
+    vim.keymap.set('n', 'ghQ', '<Cmd>qall<CR>', { buffer = true, silent = true })
+    vim.keymap.set('n', '<C-j>', '<Esc><CR>', { buffer = true })
+    vim.keymap.set('n', '<CR>', '<Esc><CR>', { buffer = true })
+  end,
+})
 
 -- Show :help by vertical split default
-add_autocmd('BufWinEnter', function()
-  if vim.bo.filetype == 'help' then
-    vim.cmd('wincmd H')
-  end
-end, { '*.txt' })
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  group = augroup,
+  pattern = { '*.txt' },
+  callback = function()
+    if vim.bo.filetype == 'help' then
+      vim.cmd('wincmd H')
+    end
+  end,
+})
 
--- `buftype=nofile`でddcを動かすと何かが起こったので（なんだっけ？）、一時的に`buftype=`にする
-add_autocmd('InsertEnter', function()
-  toggle_buftype:backup_buftype()
-end)
+-- Show relative numbers only on the current window {{{
 
-add_autocmd('InsertLeave', function()
-  toggle_buftype:restore_buftype()
-end)
+vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter' }, {
+  group = augroup,
+  callback = function()
+    if vim.wo.number then
+      vim.wo.relativenumber = true
+    end
+  end,
+})
 
--- TODO: Neovimでこれ動いてる？
--- Show simply for terminal buffers
-add_autocmd('TermOpen', function()
-  vim.opt_local.list = false
-  vim.opt_local.number = false
-  vim.opt_local.relativenumber = false
-end)
+vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave' }, {
+  group = augroup,
+  callback = function()
+    vim.wo.relativenumber = false
+  end,
+})
 
--- Show relative numbers only on the current window
-add_autocmd({ 'BufEnter', 'WinEnter' }, function()
-  if vim.wo.number then
-    vim.wo.relativenumber = true
-  end
-end)
-
-add_autocmd({ 'BufLeave', 'WinLeave' }, function()
-  vim.wo.relativenumber = false
-end)
+-- }}}
 
 -- Show full-width spaces
-add_autocmd('ColorScheme', function()
-  vim.api.nvim_set_hl(0, 'EmSpace', { ctermbg = 'LightBlue', bg = 'LightBlue' })
-end)
+vim.api.nvim_create_autocmd('ColorScheme', {
+  group = augroup,
+  callback = function()
+    vim.api.nvim_set_hl(0, 'EmSpace', { ctermbg = 'LightBlue', bg = 'LightBlue' })
+  end,
+})
 
-add_autocmd({ 'VimEnter', 'WinEnter' }, function()
-  vim.fn.matchadd('EmSpace', '　')
-end)
+-- TODO: Not working?
+vim.api.nvim_create_autocmd({ 'VimEnter', 'WinEnter' }, {
+  group = augroup,
+  callback = function()
+    vim.fn.matchadd('EmSpace', '　')
+  end,
+})
 
 -- Colorize git conflicts
-add_autocmd('ColorScheme', function()
-  vim.api.nvim_set_hl(0, 'GitConflict', { ctermbg = 'Red', bg = 'Red' })
-end)
+vim.api.nvim_create_autocmd('ColorScheme', {
+  group = augroup,
+  callback = function()
+    vim.api.nvim_set_hl(0, 'GitConflict', { ctermbg = 'Red', bg = 'Red' })
+  end,
+})
 
-add_autocmd({ 'VimEnter', 'WinEnter' }, function()
-  vim.fn.matchadd('GitConflict', [[^\(<\|=\|>\)\{7\}\([^=].\+\)\?$]])
-end)
-
--- StatusLine
-add_autocmd('InsertEnter', function()
-  vim.api.nvim_set_hl(0, 'StatusLine', { ctermfg = 231, ctermbg = 64 })
-end)
-
-add_autocmd('InsertLeave', function()
-  vim.api.nvim_set_hl(0, 'StatusLine', { ctermfg = 231, ctermbg = 60 })
-end)
-
--- Hightlight cursors of another windows
-add_autocmd({ 'BufEnter', 'WinEnter' }, function()
-  vim.opt_local.cursorline = false
-end)
-
-add_autocmd({ 'BufLeave', 'WinLeave' }, function()
-  vim.opt_local.cursorline = true
-end)
-
-add_autocmd({ 'VimEnter', 'ColorScheme' }, function()
-  vim.api.nvim_set_hl(0, 'CursorLine', { ctermbg = 60 })
-end)
+vim.api.nvim_create_autocmd({ 'VimEnter', 'WinEnter' }, {
+  group = augroup,
+  callback = function()
+    vim.fn.matchadd('GitConflict', [[^\(<\|=\|>\)\{7\}\([^=].\+\)\?$]])
+  end,
+})
 
 -- Language specific autocmds
 local natural_language_filetypes = {
@@ -131,44 +114,71 @@ local natural_language_filetypes = {
 -- end)
 
 -- Scala configuration
-add_autocmd('VimEnter', function()
-  if vim.fn.filereadable('./scalastyle_config.xml') == 1 then
-    local answer = vim.fn.input('locally scalastyle_config.xml was found, Do you want to load? (y/n)')
-    if answer == 'y' then
-      local cwd = vim.fn.getcwd()
-      vim.g.ale_scala_scalastyle_config = s('{cwd}/scalastyle-config.xml', { cwd = cwd })
-      vim.cmd(s('echomsg "a scalastyle config loaded: {config}"', { config = vim.g.ale_scala_scalastyle_config }))
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = augroup,
+  callback = function()
+    if vim.fn.filereadable('./scalastyle_config.xml') == 1 then
+      local answer = vim.fn.input('locally scalastyle_config.xml was found, Do you want to load? (y/n)')
+      if answer == 'y' then
+        local cwd = vim.fn.getcwd()
+        vim.g.ale_scala_scalastyle_config = s('{cwd}/scalastyle-config.xml', { cwd = cwd })
+        vim.cmd(s('echomsg "a scalastyle config loaded: {config}"', { config = vim.g.ale_scala_scalastyle_config }))
+      end
     end
-  end
-end)
+  end,
+})
+
+-- cmdpalette.nvimと連携するための、疑似的な`nnoremap ::: :<C-u>%s/`
+-- See 'cmdpalette'.nvim section in './plugins.lua'
+vim.api.nvim_create_autocmd('CmdlineChanged', {
+  group = augroup,
+  callback = function()
+    helper.replace_line(
+      {
+        ['::'] = '%s/',
+      },
+      vim.fn.getcmdline(),
+      vim.fn.setcmdline
+    )
+  end,
+})
 
 -- vim-fmap {{{
 
-add_autocmd('VimEnter', function()
-  vim.cmd('FNoreMap / ・')
-  vim.cmd('FNoreMap T ・')
-  vim.cmd('FNoreMap tt …')
-  vim.cmd("FNoreMap '' 　")
-  vim.cmd('FNoreMap p （')
-  vim.cmd('FNoreMap k 「')
-  vim.cmd('FNoreMap K 〈')
-  vim.cmd('FNoreMap -k 『')
-end)
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = augroup,
+  callback = function()
+    vim.cmd('FNoreMap / ・')
+    vim.cmd('FNoreMap T ・')
+    vim.cmd('FNoreMap tt …')
+    vim.cmd("FNoreMap '' 　")
+    vim.cmd('FNoreMap p （')
+    vim.cmd('FNoreMap k 「')
+    vim.cmd('FNoreMap K 〈')
+    vim.cmd('FNoreMap -k 『')
+  end,
+})
 
 -- }}}
 -- vim-precious {{{
 
-add_autocmd({ 'WinEnter', 'BufEnter', 'TabEnter' }, function()
-  pcall(helper.vim_cmd, 'PreciousSwitch') -- もしvim-preciousがまだ読み込まれていなかったら、何もしない
-end)
+vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter', 'TabEnter' }, {
+  group = augroup,
+  callback = function()
+    pcall(helper.vim_cmd, 'PreciousSwitch') -- もしvim-preciousがまだ読み込まれていなかったら、何もしない
+  end,
+})
 
 -- }}}
 -- vim-cursorword {{{
 
-add_autocmd({ 'VimEnter', 'ColorScheme' }, function()
-  vim.api.nvim_set_hl(0, 'CursorWord0', { ctermbg = 'LightGray', ctermfg = 'Black' })
-  vim.api.nvim_set_hl(0, 'CursorWord1', { ctermbg = 'LightGray', ctermfg = 'Black' })
-end)
+vim.api.nvim_create_autocmd({ 'VimEnter', 'ColorScheme' }, {
+  group = augroup,
+  callback = function()
+    vim.api.nvim_set_hl(0, 'CursorWord0', { ctermbg = 'LightGray', ctermfg = 'Black' })
+    vim.api.nvim_set_hl(0, 'CursorWord1', { ctermbg = 'LightGray', ctermfg = 'Black' })
+  end,
+})
 
 -- }}}
 -- AsyncRun {{{
