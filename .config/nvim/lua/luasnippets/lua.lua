@@ -7,9 +7,8 @@ return {
     require('luasnippets.lua.lsp'),
     require('luasnippets.lua.luaCATS'),
     require('luasnippets.lua.neovim'),
-    require('luasnippets.lua.templates')
-    -- luasnip.luaは一時的にコメントアウト（エラーがあるため）
-    -- require('luasnippets.lua.luasnip'),
+    require('luasnippets.lua.templates'),
+    require('luasnippets.lua.luasnip')
   ),
   autosnippets = {},
 }
