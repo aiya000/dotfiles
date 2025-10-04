@@ -1827,19 +1827,6 @@ return {
             group = augroup,
             buffer = 0,
             callback = function()
-              local line = vim.api.nvim_get_current_line()
-
-              -- normal-modeで`::`（cmdpalette突入直後に`:`）を入力した場合は通常のcmd-modeに戻す。
-              -- :%sや:gなどはcmdpaletteがハイライトなどをしないため、その場合に便利。
-              if line:match('^:') then
-                vim.schedule(function()
-                  vim.cmd('stopinsert')
-                  vim.cmd('quit')
-                  vim.fn.feedkeys(':', 'n')
-                end)
-                return
-              end
-
               -- cnoremapのcmdpalette版
               helper.replace_line(
                 {
@@ -1852,7 +1839,7 @@ return {
                     return ('e %s/'):format(InitLua.git_root) -- helper.git_rootは遅延実行されるので、評価を遅延
                   end,
                 },
-                line,
+                vim.api.nvim_get_current_line(),
                 function(rhs)
                   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(rhs, true, false, true), 'i', false)
                 end
