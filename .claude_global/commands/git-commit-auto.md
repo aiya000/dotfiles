@@ -89,16 +89,23 @@ The goal is clarity and avoiding redundancy in commit messages.
 
 ### Common Types
 
-Based on repository history, frequently used types:
+Based on repository history, frequently used types with strict usage criteria:
 
-- `feat`: New feature or enhancement
+- `feat`: New feature or enhancement (use when functionality addition/enhancement is the main change)
+- `change`: Changing behavior (use when behavior modification is the main change)
 - `fix`: Bug fix
-- `refactor`: Code refactoring
+- `refactor`: Code refactoring (ONLY when functionality remains exactly the same, internal improvements only)
+- `remove`: Removing files or features (use when deleting functions, files, or features that may have been in use)
 - `chore`: Maintenance tasks (stylua, update submodules, etc.)
-- `remove`: Removing files or features
-- `change`: Changing behavior
 - `update`: Updating dependencies or submodules
 - `move`: Moving files
+
+**Critical distinction rules**:
+
+- If there's even a possibility of functionality change, do NOT use `refactor`
+- Deletion of functions/features → use `remove`, not `refactor`
+- Main change is adding/enhancing functionality → use `feat`
+- Main change is modifying behavior → use `change`
 
 ### Special Patterns
 
