@@ -778,14 +778,20 @@ return {
     end,
   },
   -- }}}
-  -- aho-bakaup.vim {{{
-  {
-    'aiya000/aho-bakaup.vim',
-    config = function()
-      vim.g.bakaup_backup_dir = InitLua.backupdir
-      vim.g.bakaup_auto_backup = 1
-    end,
-  },
+  -- bakaup.vim {{{
+
+  load_from_local_or_remote(
+    'aiya000/bakaup.vim',
+    '~/Repository/bakaup.vim',
+    InitLua.disable_bakaup == true,
+    {
+      config = function()
+        vim.g.bakaup_backup_dir = InitLua.backupdir
+        vim.g.bakaup_auto_backup = 1
+      end,
+    }
+  ),
+
   -- }}}
   -- LuaSnip {{{
   {
