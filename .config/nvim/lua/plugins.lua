@@ -783,7 +783,7 @@ return {
     '~/Repository/bakaup.vim',
     InitLua.disable_bakaup == true,
     {
-      config = function()
+      init = function()
         vim.g.bakaup_backup_dir = InitLua.backupdir
         vim.g.bakaup_auto_backup = 1
       end,
