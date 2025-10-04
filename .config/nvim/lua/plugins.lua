@@ -1173,14 +1173,20 @@ return {
 
   fn.pipe('<leader>cc')
     :apply(function(toggle_key)
-      local have_claude_code_opened = false
-      local function toggle()
-        if not have_claude_code_opened then
+      local have_host_claude_opened = false
+
+      local function toggle_host()
+        if not have_host_claude_opened then
           vim.cmd('ClaudeCodeAtGitRoot --continue')
-          have_claude_code_opened = true
+          have_host_claude_opened = true
           return
         end
-        vim.cmd('ClaudeCodeFocus')
+        vim.cmd('ClaudeCodeFocusAtGitRoot')
+      end
+
+      local function toggle_docker()
+        -- Docker terminal is managed globally in commands.lua
+        vim.cmd('ClaudeCodeDockerAtGitRoot')
       end
 
       return {
