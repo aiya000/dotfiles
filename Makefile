@@ -722,3 +722,6 @@ install-win32yank:
 		unzip -p win32yank-x64.zip win32yank.exe > ~/bin/win32yank && \
 		chmod +x ~/bin/win32yank.exe \
 	)
+
+install-luaprompt:
+	which luap || luarocks install --local luaprompt

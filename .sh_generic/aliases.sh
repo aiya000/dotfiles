@@ -525,6 +525,12 @@ alias ctags-typescript-auto="ctags-auto '--exclude=*.js' '--exclude=*.json'"
 
 alias_of yay 'yay --color always'
 
+if i_have luap ; then
+  alias lua-repl=luap
+elif i_have lua ; then
+  alias lua-repl=lua
+fi
+
 i_have krita && alias kra=krita
 
 # }}}
