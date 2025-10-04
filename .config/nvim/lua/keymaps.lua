@@ -225,14 +225,14 @@ end)
 map('n', '<leader>v', function()
   vim.cmd('vertical new')
   helper.termopen_shell({
-    cwd = helper.read_current_buffer_dir(InitLua.git_root),
+    cwd = helper.read_current_buffer_dir() or error('No directory found'),
   })
 end, { silent = true })
 
 map('n', '<leader><leader>v', function()
   vim.cmd('new')
   helper.termopen_shell({
-    cwd = helper.read_current_buffer_dir(InitLua.git_root),
+    cwd = helper.read_current_buffer_dir() or error('No directory found'),
   })
 end, { silent = true })
 
@@ -242,7 +242,7 @@ map('n', '<leader>V', function()
   local current_win = vim.api.nvim_get_current_win()
   vim.cmd('new')
   helper.termopen_shell({
-    cwd = helper.read_current_buffer_dir(InitLua.git_root),
+    cwd = helper.read_current_buffer_dir() or error('No directory found'),
   }, false)
   vim.api.nvim_win_close(current_win, false)
   vim.fn.feedkeys('i')
@@ -251,7 +251,7 @@ end, { silent = true })
 map('n', '<leader><leader>V', function()
   vim.cmd('tabnew')
   helper.termopen_shell({
-    cwd = helper.read_current_buffer_dir(InitLua.git_root),
+    cwd = helper.read_current_buffer_dir() or error('No directory found'),
   })
 end, { silent = true })
 

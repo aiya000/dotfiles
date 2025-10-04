@@ -233,11 +233,10 @@ function M.termopen_temporary(cmd, opts)
 end
 
 ---Opens a terminal buffer with $SHELL that closes it when exited immediately.
----See:
----- get_termopen_options_bdelete_when_on_exit()
----- termopen_temporary()
 ---@param opts? table --See `:h jobstart()`
 ---@param should_enter_insert_mode? boolean --Default is `true`
+---@see get_termopen_options_bdelete_when_on_exit()
+---@see termopen_temporary()
 function M.termopen_shell(opts, should_enter_insert_mode)
   opts = opts or {}
   should_enter_insert_mode = should_enter_insert_mode == nil
@@ -378,32 +377,34 @@ function M.get_term_shell_buffer_current_dir()
   return cwd
 end
 
----Reads current buffer directory with fallback.
----@param fallback_dir? string --If the current buffer does not have the directory, use this
-function M.read_current_buffer_dir(fallback_dir)
-  if vim.bo.buftype ~= 'terminal' then
-    local ok, result = pcall(M.get_term_shell_buffer_current_dir)
-    return ok and result or fallback_dir
+---Reads the current buffer directory
+---@returns string | nil --Returns nil if failed to get the directory
+function M.read_current_buffer_dir()
+  if vim.bo.buftype == 'nofile' then
+    return nil
   end
 
-  if vim.bo.buftype == 'nofile' then
-    return fallback_dir
+  if vim.bo.buftype == 'terminal' then
+    local ok, result = pcall(M.get_term_shell_buffer_current_dir)
+    return ok and result or nil
   end
 
   local file_dir = vim.fn.expand('%:p:h')
   if file_dir ~= '' then
+    -- NOTE: nofileでなく、`file_dir == ''`なんてことある？
     return file_dir
-  end -- NOTE: `file_dir == ''`なんてことある？
-
-  if InitLua.git_root ~= nil then
-    return InitLua.git_root
   end
 
-  if fallback_dir ~= nil then
-    return fallback_dir
-  end
+  return nil
+end
 
-  error('The current buffer does not have the current directory, and an alter directory is not specified')
+---translate.nvimのfloat windowを`close_all_popups()`で閉じると、
+---次回実行時にエラーになるので、カーソル移動を使って閉じる。
+---@see M.close_all_popups()
+function M.move_cursor_and_reset()
+  local pos = vim.fn.getpos('.')
+  vim.cmd('normal! l')
+  vim.fn.setpos('.', pos)
 end
 
 function M.close_all_popups()
