@@ -634,9 +634,10 @@ install-cargo:
 install-stylua:
 	which stylua || cargo install stylua
 
-install-claude-code-tools:
-	$(MAKE) install-claude-code
-	which ccusage || $(NPMInstall) ccusage
+install-ccusage:
+	which ccusage || $(NPMInstall) ccusage@latest
+
+install-claude-monitor:
 	which claude-monitor || ( \
 		load-my-env mise && \
 		mise use uv@latest && \
