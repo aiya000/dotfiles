@@ -79,7 +79,7 @@ vim.opt.autoindent = true
 vim.opt.backspace = { 'indent', 'eol', 'start' }
 vim.opt.breakindent = true
 vim.opt.cindent = true
-vim.opt.cmdheight = 2
+vim.opt.cmdheight = 0 -- Also see 'Show/Hide command line' section in './lua/autocmds.lua'
 vim.opt.cmdwinheight = 20
 vim.opt.completeopt:remove('preview')
 vim.opt.conceallevel = 1
@@ -196,6 +196,18 @@ end
 -- TODO: Remove this after https://github.com/aiya000/bash-toys/issues/12 fixed
 -- Please see https://github.com/aiya000/bash-toys
 vim.env.BASH_TOYS_DUSTBOX_DIR = vim.fn.expand('~/.backup/dustbox')
+
+-- Highlight settings
+vim.schedule(function()
+  -- TODO: Not working?
+  -- Show full-width spaces
+  vim.api.nvim_set_hl(0, 'EmSpace', { ctermbg = 'LightBlue', bg = 'LightBlue' })
+  vim.fn.matchadd('EmSpace', '　')
+
+  -- TODO: これなくてもハイライトしてくれてる？ もしされてなかったらアンコメント。されてたらこのコメントごと消す
+  -- vim.api.nvim_set_hl(0, 'GitConflict', { ctermbg = 'Red', bg = 'Red' })
+  -- vim.fn.matchadd('GitConflict', [[^\(<\|=\|>\)\{7\}\([^=].\+\)\?$]])
+end)
 
 -- }}}
 
