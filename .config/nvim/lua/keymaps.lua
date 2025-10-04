@@ -12,30 +12,6 @@ local function map(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
-local function clear()
-  -- Don't enter filetypes by :PreciousSwitch if the filetype is 'help'
-  if not vim.list_contains(InitLua.excluded_filetypes_for_precious_auto_switch, vim.opt.filetype:get()) then
-    pcall(helper.vim_cmd, 'PreciousSwitch')
-  end
-  helper.close_all_popups()
-  require('notify').dismiss({ silent = true, pending = true })
-  vim.cmd('nohlsearch')
-  -- Clear flash.nvim highlights
-  pcall(helper.clear_flash_nvim_highlight)
-end
-
-local function clear_deep()
-  print('clearing...')
-  pcall(helper.vim_cmd, 'PreciousReset') -- NOTE: This is a little heavy
-  clear()
-  print('cleared!')
-end
-
-local function clear_and_write()
-  clear()
-  vim.cmd.write()
-end
-
 -- normal mode {{{
 
 -- Allow keymaps like <C-c>{foo}, and {bar}<C-c>
@@ -50,17 +26,17 @@ map('n', '<C-g><C-g>', '<C-g>')
 map('n', '<CR>', 'o<Esc>')
 map('n', '<C-j>', '<CR>', { remap = true })
 map('n', '<C-m>', '<CR>', { remap = true })
-map('n', '<C-[>', clear, { silent = true })
-map('n', '<Esc>', clear, { silent = true })
-map('n', '<C-l>', clear, { silent = true })
-map('n', '<C-k><C-l>', clear_deep)
+map('n', '<C-[>', helper.clear_highlight, { silent = true })
+map('n', '<Esc>', helper.clear_highlight, { silent = true })
+map('n', '<C-l>', helper.clear_highlight, { silent = true })
+map('n', '<C-k><C-l>', helper.clear_highlight_deeply)
 map('n', '<C-k>o', '<Cmd>e! %<CR>', { silent = true })
 map('n', '-', '-') -- デフォルト（？）で、なぜかdirvishが開くので、無効化
 map('n', 'gG', 'ggVG')
+map('n', 'q:', ':') -- `:`でcmdpaletteを開くので逆に`q:`でcmd-modeを開く
 map('n', '(', '(zv')
 map('n', ')', ')zv')
-map('n', '::', ':%s/')
-map('n', '<C-k><C-j>', clear_and_write)
+map('n', '<C-k><C-j>', helper.clear_highlight_and_write)
 map('n', '<C-k>J', '<Cmd>wall | echo "written all !"<CR>', { silent = true })
 map('n', '<C-]>', 'g<C-]>')
 map('n', '<leader>q', '<Cmd>copen<CR>', { silent = true })
@@ -75,18 +51,6 @@ map('n', '<C-x><C-n>', '<C-n>')
 map('n', '<C-x><C-p>', '<C-p>')
 map('n', '<leader>w', '<Plug>(openbrowser-open)', { remap = true })
 map('n', '<leader>U', '<Cmd>UndotreeToggle<CR>', { silent = true })
-
-map('n', ':l<Space>', ':lua<Space>')
-map('n', ':lp', ':lua print()<Left>')
-map('n', ':ev', (':e %s/'):format(InitLua.path_at_started))
-
-map('n', ':eg', function()
-  return (':e %s/'):format(InitLua.git_root) -- InitLua.git_rootは遅延実行されるので、評価を遅延
-end, { expr = true })
-
-map('n', ':eb', function()
-  return s(':e {current_buffer_directory}/', { current_buffer_directory = vim.fn.expand('%:p:h') })
-end, { expr = true })
 
 -- Search
 local function try_show_search_number_or_do_nothing()
@@ -299,7 +263,6 @@ map('n', '<C-k><C-e>', function()
 end) -- TODO: もしパフォーマンスが遅ければ、このキーマッピングはカレントディレクトリ以下のみを表示して、プロジェクトルート以下の表示（`InitLua.git_root or InitLua.path_at_started`）は以下の<C-k>eに分担させる
 -- map('n', '<C-k>e', telescope.find_files)
 map('n', '<C-k><C-f>', telescope.lsp_document_symbols)
-map('n', ':h<Space>', telescope.help_tags)
 map('n', 'L', telescope.buffers)
 map('n', 'H', telescope.live_grep)
 map('n', 'M', telescope.oldfiles)
@@ -419,7 +382,8 @@ map('n', '<C-g><C-t>', vim.lsp.buf.type_definition, { silent = true })
 -- end, { silent = true })
 
 -- Translation
-map('n', '<leader>K', ':<C-u>Weblio <C-r>=expand("<cword>")<CR><CR>')
+map('n', '<leader>K', 'viw:Translate JA<CR>', { silent = true })
+map('n', '<leader>k', 'viw:Translate EN<CR>', { silent = true })
 
 -- Programming Utils
 map('n', '<leader>R', '<Plug>(quickrepl-open)', { remap = true })
@@ -437,7 +401,7 @@ end, { silent = true })
 -- File Editing
 map('n', '<C-k><Space>', helper.remove_trailing_spaces, { silent = true })
 map('n', '<Space><Space>', helper.compress_spaces, { silent = true })
-map('n', '<leader><leader>s', 'vii:sort<CR>', { silent = true })
+map('n', '<leader><leader>s', 'vii:sort<CR>', { remap = true, silent = true })
 
 map('n', '<C-k><C-s>', function()
   return s([[:%s/\m\C\<{word}\>//g<Left><Left>]], { word = vim.fn.expand('<cword>') })
@@ -458,15 +422,11 @@ map('n', '<leader>go', function()
 end, { silent = true })
 
 -- Open list up commands with new temporary buffer
-map('n', 'g:', function()
-  helper.open_buffer_to_execute('buffers')
-end, { silent = true })
-
 map('n', 'g>', function()
   helper.open_buffer_to_execute('messages')
 end, { silent = true })
 
-map('n', 'm:', function()
+map('n', 'm>', function()
   helper.open_buffer_to_execute('marks')
 end, { silent = true })
 
@@ -556,11 +516,11 @@ map('c', '<C-r>n', '<C-r>=expand("%:t")<CR>')
 -- Other than below
 map('v', '<C-l>', '<Esc>')
 map('v', 'g_', '$')
-map('v', "'p", '"+p')
-map('v', "'P", '"+P')
-map('v', "'y", '"+y')
-map('v', "'d", '"+d')
-map('v', "'x", '"+x')
+map('v', '<leader>p', '"+p')
+map('v', '<leader>P', '"+P')
+map('v', '<leader>y', '"+y')
+map('v', '<leader>d', '"+d')
+map('v', '<leader>x', '"+x')
 map('v', '<leader>w', '<Plug>(openbrowser-open)', { remap = true })
 
 -- Folds
@@ -636,10 +596,10 @@ map('o', 'il', function()
 end, { expr = true })
 
 -- Translation
-map('v', '<leader>k', '"zy:Translate <C-r>z<CR>', { silent = true })
-map('v', '<leader>K', '"zy:<C-u>Weblio <C-r>z<CR>')
-map('v', '<leader><leader>k', ':DeeplTranslateToJaOpenBuffer<CR>', { silent = true })
-map('v', '<leader><leader>K', ':DeeplTranslateToEnOpenBuffer<CR>', { silent = true })
+map('v', '<leader>k', ':Translate JA<CR>', { silent = true })
+map('v', '<leader>K', ':Translate EN<CR>', { silent = true })
+map('v', '<leader><leader>k', ':Translate JA -output=split<CR>', { silent = true })
+map('v', '<leader><leader>K', ':Translate EN -output=split<CR>', { silent = true })
 
 -- Programming Utils
 map('v', '<leader>r', '<Plug>(quickrun)', { remap = true })

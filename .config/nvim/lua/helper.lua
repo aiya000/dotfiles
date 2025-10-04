@@ -368,6 +368,7 @@ function M.move_cursor_and_reset()
 end
 
 function M.close_all_popups()
+  M.move_cursor_and_reset()
   for _, window in ipairs(vim.api.nvim_list_wins()) do
     local config = vim.api.nvim_win_get_config(window)
     if config.relative ~= '' then -- If it is a popup window
@@ -521,17 +522,11 @@ end
 
 function M.open_buffer_to_execute(cmd)
   local full_size = 100
-  -- Use ScratchBufferOpen command similar to scratch_buffer#open
-  vim.cmd('ScratchBufferOpen md sp ' .. full_size)
-
-  -- Execute the command and capture output
+  vim.cmd('MadoScratchBufferOpen md sp ' .. full_size)
   local output = vim.fn.execute(cmd)
-
-  -- Put the output into the buffer
-  vim.cmd('put=' .. vim.fn.string(output))
-
-  -- Go to beginning and delete first 2 empty lines
-  vim.cmd('normal! gg2dd')
+  local lines = vim.split(output, '\n')
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
+  vim.cmd('normal! gg"zdd')
 end
 
 ---surround operations
@@ -768,6 +763,7 @@ function M.toggle_gemini_cli()
   gemini_term:toggle()
 end
 
+---Clears flash.nvim highlights
 function M.clear_flash_nvim_highlight()
   require('flash').toggle(false)
 
@@ -777,9 +773,63 @@ function M.clear_flash_nvim_highlight()
       pcall(vim.api.nvim_buf_clear_namespace, buf, vim.api.nvim_create_namespace('flash'), 0, -1)
     end
   end
+end
 
-  -- Force redraw to clear any remaining visual artifacts
-  vim.cmd('redraw!')
+function M.clear_highlight()
+  -- Don't enter filetypes by :PreciousSwitch if the filetype is 'help'
+  if not vim.list_contains(InitLua.excluded_filetypes_for_precious_auto_switch, vim.opt.filetype:get()) then
+    pcall(M.vim_cmd, 'PreciousSwitch')
+  end
+  M.close_all_popups()
+  require('notify').dismiss({ silent = true, pending = true })
+  vim.cmd('nohlsearch')
+  pcall(M.clear_flash_nvim_highlight)
+end
+
+function M.clear_highlight_deeply()
+  print('clearing...')
+  pcall(M.vim_cmd, 'PreciousReset') -- NOTE: This is a little heavy
+  M.clear_highlight()
+  print('cleared!')
+end
+
+function M.clear_highlight_and_write()
+  M.clear_highlight()
+  vim.cmd('write')
+end
+
+---今のところ、cmdpalette.nvimで入力をハックする用
+---See 'cmdpalette.nvim' section in './plugins.lua'
+---See 'cmdpalette.nvimと連携するための...' section in './autocmds.lua'
+---@param keymaps table<string, string | (fun(): string)>
+---@param input string --Like '::'
+---@param set_current_line? fun(line: string): nil --Default is `vim.api.nvim_set_current_line()`. Also can select like `vim.fn.setcmdline()` or another functions
+function M.replace_line(keymaps, input, set_current_line)
+  keymaps = c.table(c.string(), c.union({ c.string(), c.func() })):parse(keymaps)
+  input = c.string():parse(input)
+  set_current_line = c.union({ c.null(), c.func() }):parse(set_current_line)
+  set_current_line = set_current_line or vim.api.nvim_set_current_line
+
+  local rhs = keymaps[input]
+  if rhs == nil then
+    return
+  end
+
+  local is_keys, keys = c.string():safe_parse(rhs)
+  if is_keys then
+    vim.api.nvim_set_current_line('')
+    set_current_line(keys)
+    return
+  end
+
+  local is_func, func = c.func():safe_parse(rhs)
+  if is_func then
+    vim.api.nvim_set_current_line('')
+    set_current_line(func())
+    return
+  end
+
+  error('replace_line(): rhs is neither string nor function: ' .. vim.inspect(rhs))
 end
 
 return M

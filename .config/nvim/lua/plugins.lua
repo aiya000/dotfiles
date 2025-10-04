@@ -1,8 +1,7 @@
 ---プラグイン設定（ただしキーマッピングは`./keymaps.lua`に書く）
 
-local helper = require('helper')
-local autocmds = require('autocmds')
 local fn = require('utils.functions')
+local helper = require('helper')
 local list = require('utils.list')
 
 ---@param remote_repo string
@@ -224,12 +223,12 @@ return {
   {
     'hrsh7th/nvim-cmp',
     dependencies = {
-      'hrsh7th/cmp-nvim-lsp', -- LSP補完
-      'hrsh7th/cmp-buffer', -- バッファ補完
-      'hrsh7th/cmp-path', -- パス補完
-      'hrsh7th/cmp-cmdline', -- コマンドライン補完
-      'L3MON4D3/LuaSnip', -- スニペットエンジン
-      'saadparwaiz1/cmp_luasnip', -- LuaSnipとの統合
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
     },
     config = function()
       local cmp = require('cmp')
@@ -271,7 +270,6 @@ return {
         }),
       })
 
-      -- コマンドライン補完
       cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
@@ -304,7 +302,7 @@ return {
         automatic_installation = true,
         handlers = {
           -- デフォルトハンドラー（自動セットアップを無効にして重複を防ぐ）
-          function(server_name)
+          function(_)
             -- 何もしない（nvim-lspconfigで手動設定しているため）
           end,
         },
@@ -1006,7 +1004,13 @@ return {
   -- }}}
   -- vim-cursorword {{{
 
-  { 'itchyny/vim-cursorword' },
+  {
+    'itchyny/vim-cursorword',
+    config = function()
+      vim.api.nvim_set_hl(0, 'CursorWord0', { ctermbg = 'LightGray', ctermfg = 'Black' })
+      vim.api.nvim_set_hl(0, 'CursorWord1', { ctermbg = 'LightGray', ctermfg = 'Black' })
+    end,
+  },
 
   -- }}}
   -- vim-dirvish {{{
@@ -1026,15 +1030,19 @@ return {
     event = 'VeryLazy',
     config = function()
       require('flash').setup({
+        -- TODO: 遠いところにラベルが表示されず飛べないので、直す
         labels = 'asdfghjklqwertyuiozxcvbnm', -- 'p' is excluded because it forcely pastes text
+        -- TODO: ここらへん設定する
+        -- label = {
+        -- },
         jump = {
           nohlsearch = true,
         },
       })
     end,
     keys = {
-      { 'ss', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end, desc = 'Flash' },
-      { 'sS', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
+      { 'vs', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end, desc = 'Flash' },
+      { 'vS', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
     },
   },
 
@@ -1053,6 +1061,14 @@ return {
     config = function()
       vim.g.fmap_use_default_keymappings = false
       vim.g.fmap_escape_keys = { '', '', '' }
+      vim.cmd('FNoreMap / ・')
+      vim.cmd('FNoreMap T ・')
+      vim.cmd('FNoreMap tt …')
+      vim.cmd("FNoreMap '' 　")
+      vim.cmd('FNoreMap p （')
+      vim.cmd('FNoreMap k 「')
+      vim.cmd('FNoreMap K 〈')
+      vim.cmd('FNoreMap -k 『')
     end,
   },
 
@@ -1231,6 +1247,7 @@ return {
         opts = {
           -- Open in a floating window
           terminal = {
+            ---@module 'snacks'
             ---@type snacks.win.Config | {}
             snacks_win_opts = {
               position = 'float',
@@ -1371,11 +1388,6 @@ return {
   { 'peitalin/vim-jsx-typescript', ft = { 'typescript.tsx', 'javascript.jsx' } },
 
   -- }}}
-  -- vim-tsx {{{
-
-  { 'ianks/vim-tsx', ft = 'tsx' },
-
-  -- }}}
   -- vim-vue {{{
 
   { 'posva/vim-vue', ft = 'vue' },
@@ -1479,11 +1491,6 @@ return {
   -- vim-themis {{{
 
   { 'thinca/vim-themis', ft = { 'vim', 'vimspec' } },
-
-  -- }}}
-  -- neomru.vim {{{
-
-  { 'Shougo/neomru.vim' },
 
   -- }}}
   -- editorconfig-vim {{{
@@ -1635,28 +1642,26 @@ return {
         vim.g.ale_fixers[ts] = { 'prettier', 'eslint' }
       end
 
-      -- Autocmds
+      local augroup = vim.api.nvim_create_augroup('InitLuaPluginsAle', { clear = true })
+
       -- Read local tsconfig by deno
-      autocmds.add('FileType', function()
-        local local_tsconfig = vim.fn.getcwd() .. '/tsconfig.json'
-        if vim.fn.filereadable(local_tsconfig) == 1 then
-          vim.g.ale_javascript_deno_lint_options = '--config ' .. local_tsconfig
-        end
-      end, { 'typescript', 'javascript' })
+      vim.api.nvim_create_autocmd('FileType', {
+        group = augroup,
+        pattern = { 'typescript', 'javascript' },
+        callback = function()
+          local local_tsconfig = vim.fn.getcwd() .. '/tsconfig.json'
+          if vim.fn.filereadable(local_tsconfig) == 1 then
+            vim.g.ale_javascript_deno_lint_options = '--config ' .. local_tsconfig
+          end
+        end,
+      })
 
-      autocmds.add('ColorScheme', function()
-        vim.api.nvim_set_hl(0, 'ALEError', { ctermbg = 'gray', ctermfg = 'black' })
-      end)
-    end,
-  },
-
-  -- }}}
-  -- deepl.vim {{{
-
-  {
-    'ryicoh/deepl.vim',
-    config = function()
-      vim.g.deepl_endpoint = 'https://api-free.deepl.com/v2/translate'
+      vim.api.nvim_create_autocmd('ColorScheme', {
+        group = augroup,
+        callback = function()
+          vim.api.nvim_set_hl(0, 'ALEError', { ctermbg = 'gray', ctermfg = 'black' })
+        end,
+      })
     end,
   },
 
@@ -1668,7 +1673,6 @@ return {
     cmd = 'Webpage',
     config = function()
       vim.g.webpage_source = {
-        weblio = 'http://ejje.weblio.jp/content/%s',
         stackage = 'https://www.stackage.org/lts-15.4/hoogle?q=%s',
       }
     end,
@@ -1701,7 +1705,18 @@ return {
   -- }}}
   -- asyncrun.vim {{{
 
-  { 'skywind3000/asyncrun.vim' },
+  {
+    'skywind3000/asyncrun.vim',
+    config = function()
+      vim.api.nvim_create_autocmd('User', {
+        group = vim.api.nvim_create_augroup('InitLuaPluginsAsyncRun', { clear = true }),
+        pattern = 'AsyncRunStop',
+        callback = function()
+          vim.call('vimrc#popup_atcursor', ':AsyncRun finished')
+        end,
+      })
+    end,
+  },
 
   -- }}}
   -- adrone.vim {{{
@@ -1774,6 +1789,120 @@ return {
         },
       },
     },
+  },
+
+  -- }}}
+  -- nui.nvim {{{
+
+  { 'MunifTanjim/nui.nvim' },
+
+  -- }}}
+  -- cmdpalette.nvim {{{
+
+  {
+    'hachy/cmdpalette.nvim',
+    dependencies = {
+      'hrsh7th/nvim-cmp',
+      'hrsh7th/cmp-cmdline',
+    },
+    config = function()
+      require('cmdpalette').setup({
+        buf = {
+          filetype = 'cmdpalette',
+        },
+      })
+
+      require('cmp').setup.filetype('cmdpalette', {
+        sources = {
+          { name = 'cmdline' },
+        },
+      })
+
+      local augroup = vim.api.nvim_create_augroup('InitLuaPluginsCmdpalette', { clear = true })
+
+      vim.api.nvim_create_autocmd('FileType', {
+        group = augroup,
+        pattern = 'cmdpalette',
+        callback = function()
+          vim.api.nvim_create_autocmd('TextChangedI', {
+            group = augroup,
+            buffer = 0,
+            callback = function()
+              local line = vim.api.nvim_get_current_line()
+
+              -- normal-modeで`::`（cmdpalette突入直後に`:`）を入力した場合は通常のcmd-modeに戻す。
+              -- :%sや:gなどはcmdpaletteがハイライトなどをしないため、その場合に便利。
+              if line:match('^:') then
+                vim.schedule(function()
+                  vim.cmd('stopinsert')
+                  vim.cmd('quit')
+                  vim.fn.feedkeys(':', 'n')
+                end)
+                return
+              end
+
+              -- cnoremapのcmdpalette版
+              helper.replace_line(
+                {
+                  ['l '] = 'lua ',
+                  ['lp'] = 'lua = ',
+                  ['h '] = 'Telescope help_tags<CR>',
+                  ['ev'] = ('e %s/'):format(InitLua.path_at_started),
+                  ['eb'] = ('e %s/'):format(vim.fn.expand('%:p:h')),
+                  ['eg'] = function()
+                    return ('e %s/'):format(InitLua.git_root) -- helper.git_rootは遅延実行されるので、評価を遅延
+                  end,
+                },
+                line,
+                function(rhs)
+                  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(rhs, true, false, true), 'i', false)
+                end
+              )
+            end,
+          })
+
+          -- cmdpaletteバッファを閉じた後にエラーが出るので無効化
+          vim.b.ale_enabled = 0
+
+          vim.keymap.set('n', '<C-l>', '"zyy<Esc>', { remap = true, buffer = true }) -- 誤爆でEscapeすることがよくあるので、@zにバックアップ。@zは色んなところから上書きされるので、効力に注意
+          vim.keymap.set('n', '<C-j>', '<CR>', { remap = true, buffer = true })
+          vim.keymap.set('i', '<C-j>', '<Esc><CR>', { remap = true, buffer = true }) -- <Esc> to hide completion menu
+
+          vim.keymap.set('i', '<C-n>', function()
+            require('cmp').complete()
+          end, { buffer = true })
+        end,
+      })
+    end,
+    keys = {
+      { ':', '<Cmd>Cmdpalette<CR>', desc = 'Open cmdpalette' },
+    },
+  },
+
+  -- }}}
+  -- translate.nvim {{{
+
+  {
+    'uga-rosa/translate.nvim',
+    config = function()
+      if vim.env.NVIM_DEEPL_AUTH_KEY == nil then
+        vim.notify('translate.nvim: $NVIM_DEEPL_AUTH_KEY environment variable is not set', vim.log.levels.ERROR)
+      else
+        vim.g.deepl_api_auth_key = vim.env.NVIM_DEEPL_AUTH_KEY
+      end
+      require('translate').setup({
+        default = {
+          command = 'deepl_free',
+        },
+        preset = {
+          output = {
+            split = {
+              append = true,
+            },
+          },
+        },
+      })
+    end
   },
 
   -- }}}
