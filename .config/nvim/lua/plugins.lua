@@ -321,20 +321,9 @@ return {
       local notify = require('notify')
       notify.setup({
         background_colour = '#000000',
-        fps = 30,
-        icons = {
-          DEBUG = '',
-          ERROR = '',
-          INFO = '',
-          TRACE = '✎',
-          WARN = '',
-        },
         level = 2,
-        minimum_width = 50,
         render = 'default',
-        stages = 'fade_in_slide_out',
-        timeout = false,
-        top_down = true,
+        timeout = 1000000, -- TODO: falseにするとエラーが出るので、いったん大きいテキトーな値に設定
       })
       vim.notify = notify
     end,
