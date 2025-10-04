@@ -8,15 +8,22 @@ local list = require('utils.list')
 ---@param remote_repo string
 ---@param local_dir string
 ---@param should_load_from_local boolean
----@param lazynvim_plugin_table? table --LazyPlugin
+---@param lazynvim_plugin_config? table --LazyPlugin
 local function load_from_local_or_remote(
   remote_repo,
   local_dir,
   should_load_from_local,
-  lazynvim_plugin_table
+  lazynvim_plugin_config
 )
-  local from = should_load_from_local and { dir = vim.fn.expand(local_dir) } or { remote_repo }
-  return vim.tbl_extend('keep', from, lazynvim_plugin_table or {})
+  local base_config = nil
+  if should_load_from_local then
+    local local_dir_fullpath = vim.fn.expand(local_dir)
+    base_config = { dir = local_dir_fullpath }
+    vim.cmd(('helptags %s/doc'):format(local_dir_fullpath))
+  else
+    base_config = { remote_repo }
+  end
+  return vim.tbl_extend('keep', base_config, lazynvim_plugin_config or {})
 end
 
 return {
