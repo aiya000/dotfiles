@@ -79,7 +79,7 @@ vim.opt.autoindent = true
 vim.opt.backspace = { 'indent', 'eol', 'start' }
 vim.opt.breakindent = true
 vim.opt.cindent = true
-vim.opt.cmdheight = 0 -- Also see 'Show/Hide command line' section in './lua/autocmds.lua'
+vim.opt.cmdheight = 1
 vim.opt.cmdwinheight = 20
 vim.opt.completeopt:remove('preview')
 vim.opt.conceallevel = 1

@@ -72,28 +72,5 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave' }, {
 })
 
 -- }}}
--- Show/Hide command line {{{
-
-vim.api.nvim_create_autocmd({ 'RecordingEnter', 'CmdlineEnter' }, {
-  callback = function()
-    vim.opt.cmdheight = 1
-  end,
-})
-
-vim.api.nvim_create_autocmd('RecordingLeave', {
-  callback = function()
-    vim.opt.cmdheight = 0
-  end,
-})
-
-vim.api.nvim_create_autocmd('CmdlineLeave', {
-  callback = function()
-    if vim.fn.reg_recording() == '' then
-      vim.opt.cmdheight = 0
-    end
-  end,
-})
-
--- }}}
 
 return M
