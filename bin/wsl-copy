@@ -1,0 +1,14 @@
+#!/bin/bash
+# WSL clipboard copy with UTF-8 support
+# (A workaround for the clip.exe UTF-8 handling issue)
+# TODO: なぜclip.exeだと文字化けするのかよく調べる
+
+# Read stdin and encode to base64
+input_base64=$(cat | base64 -w 0)
+
+# Decode in PowerShell and set clipboard
+powershell.exe -NoLogo -NoProfile -NonInteractive -Command "
+  \$bytes = [System.Convert]::FromBase64String('$input_base64')
+  \$text = [System.Text.Encoding]::UTF8.GetString(\$bytes)
+  Set-Clipboard -Value \$text
+"

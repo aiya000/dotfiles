@@ -179,12 +179,12 @@ if InitLua.is_wsl then
   vim.g.clipboard = {
     name = 'WslClipboard',
     copy = {
-      ['+'] = 'win32yank.exe -i',
-      ['*'] = 'win32yank.exe -i',
+      ['+'] = 'wsl-copy', -- See '~/.dotfiles/bin/wsl-copy'
+      ['*'] = 'wsl-copy',
     },
     paste = {
-      ['+'] = 'win32yank.exe -o --lf',
-      ['*'] = 'win32yank.exe -o --lf',
+      ['+'] = 'wsl-paste', -- See '~/.dotfiles/bin/wsl-paste'
+      ['*'] = 'wsl-paste',
     },
     cache_enabled = 1,
   }

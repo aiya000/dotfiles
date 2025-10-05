@@ -1,0 +1,7 @@
+#!/bin/bash
+# WSL clipboard paste with UTF-8 support
+# (A workaround for the clip.exe UTF-8 handling issue)
+# TODO: なぜwin32yank.exeだと文字化けするのかよく調べる
+
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "$script_dir/wsl-paste.ps1"
