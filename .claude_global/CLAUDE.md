@@ -253,3 +253,43 @@ Example:
     - Second level item (4 spaces)
         - Third level item (8 spaces)
 ```
+
+### Trailing Spaces for Line Breaks
+
+**IMPORTANT**: In Markdown (CommonMark), two trailing spaces at the end of a line (`  `) represent a hard line break (`<br>`).
+
+- **DO NOT** remove trailing spaces (two spaces) at the end of lines
+- These are intentional and used for formatting
+- Removing them will break the intended line breaks in rendered Markdown
+
+Example:
+
+```markdown
+This is the first line.  
+This is the second line (with a line break before it).  
+This is the third line (no line break, continues from second line).
+```
+
+Renders as:
+
+```
+This is the first line.
+This is the second line (with a line break before it).
+This is the third line (no line break, continues from second line).
+```
+
+Example (Without two trailing spaces):
+
+```markdown
+This is the first line.
+This is the second line (with a line break before it).
+This is the third line (no line break, continues from second line).
+```
+
+Renders as:
+
+```
+This is the first line. This is the second line (with a line break before it). This is the third line (no line break, continues from second line).
+```
+
+NOTE: In Qiita Markdown, Zenn Markdown, and some other Markdown variants (not CommonMark), line breaks inserted even if two trailing spaces are not present.
