@@ -106,6 +106,8 @@ Based on repository history, frequently used types with strict usage criteria:
 - Deletion of functions/features → use `remove`, not `refactor`
 - Main change is adding/enhancing functionality → use `feat`
 - Main change is modifying behavior → use `change`
+- Error prevention (adding checks/guards to avoid errors) → use `fix`
+    - Example: Adding directory existence check before executing command that would fail without it
 
 ### Special Patterns
 

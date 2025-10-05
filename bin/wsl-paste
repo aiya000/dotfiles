@@ -4,4 +4,5 @@
 # TODO: なぜwin32yank.exeだと文字化けするのかよく調べる
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "$script_dir/wsl-paste.ps1"
+# Remove trailing CRLF/LF added by PowerShell
+powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "$script_dir/wsl-paste.ps1" | sed -z 's/\r\n$//' | sed -z 's/\n$//'
