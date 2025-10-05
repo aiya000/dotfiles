@@ -4,6 +4,14 @@ local fn = require('utils.functions')
 local helper = require('helper')
 local list = require('utils.list')
 
+---@param local_dir string
+local function generate_helptags_when_existing_doc(local_dir)
+  local local_doc_dir = local_dir .. '/doc'
+  if vim.fn.isdirectory(local_doc_dir) == 1 then
+    vim.cmd('helptags ' .. local_doc_dir)
+  end
+end
+
 ---@param remote_repo string
 ---@param local_dir string
 ---@param should_load_from_local boolean
@@ -16,9 +24,9 @@ local function load_from_local_or_remote(
 )
   local base_config = nil
   if should_load_from_local then
-    local local_dir_fullpath = vim.fn.expand(local_dir)
-    base_config = { dir = local_dir_fullpath }
-    vim.cmd(('helptags %s/doc'):format(local_dir_fullpath))
+    local_dir = vim.fn.expand(local_dir) -- Make '~/somepath/nvim-foo' to realpath
+    base_config = { dir = local_dir }
+    generate_helptags_when_existing_doc(local_dir)
   else
     base_config = { remote_repo }
   end
@@ -1029,11 +1037,7 @@ return {
     event = 'VeryLazy',
     config = function()
       require('flash').setup({
-        -- TODO: 遠いところにラベルが表示されず飛べないので、直す
         labels = 'asdfghjklqwertyuiozxcvbnm', -- 'p' is excluded because it forcely pastes text
-        -- TODO: ここらへん設定する
-        -- label = {
-        -- },
         jump = {
           nohlsearch = true,
         },
