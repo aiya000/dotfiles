@@ -140,7 +140,8 @@ function zshrc::autoload-nvm () {
   load-my-env nvm
   echo '> load-my-env nvm'
 
-  # e.g. `export DOTFILES_ZSHRC_NVM_NODE_VERSION=v20.13.1`
+  # For example: `export DOTFILES_ZSHRC_NVM_NODE_VERSION=v20.13.1`
+  # Should be defined in '~/.zshrc_env'
   local node_version
   if [[ $DOTFILES_ZSHRC_NVM_NODE_VERSION ]] ; then
     node_version=$DOTFILES_ZSHRC_NVM_NODE_VERSION
