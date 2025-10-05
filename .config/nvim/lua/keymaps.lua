@@ -262,11 +262,18 @@ map('n', '<C-k><C-e>', function()
   telescope.find_files({ hidden = true })
 end) -- TODO: もしパフォーマンスが遅ければ、このキーマッピングはカレントディレクトリ以下のみを表示して、プロジェクトルート以下の表示（`InitLua.git_root or InitLua.path_at_started`）は以下の<C-k>eに分担させる
 -- map('n', '<C-k>e', telescope.find_files)
-map('n', '<C-k><C-f>', telescope.lsp_document_symbols)
+
+map('n', '<C-k><C-f>', ':<C-u>Telescope treesitter<CR>function')
 map('n', '<C-k><C-r>', telescope.reloader)
 map('n', 'L', telescope.buffers)
 map('n', 'H', telescope.live_grep)
 map('n', 'M', telescope.oldfiles)
+map('n', 'm>', telescope.marks)
+map('n', 'q>', telescope.registers)
+
+map('n', 'g>', function()
+  helper.open_buffer_to_execute('messages') -- This feature is not provided by telescope.nvim. use :messages instead
+end, { silent = true })
 
 --- gemini-cli
 map('n', '<leader>gc', helper.toggle_gemini_cli)
@@ -420,19 +427,6 @@ map('n', [[\gs]], '<Cmd>tabnew | GinStatus<CR>', { silent = true })
 
 map('n', '<leader>go', function()
   git_log.open_buffer({ '-100', '--oneline', '--pretty=%h %ad %s', '--date=format:%Y-%m-%d %H:%M' })
-end, { silent = true })
-
--- Open list up commands with new temporary buffer
-map('n', 'g>', function()
-  helper.open_buffer_to_execute('messages')
-end, { silent = true })
-
-map('n', 'm>', function()
-  helper.open_buffer_to_execute('marks')
-end, { silent = true })
-
-map('n', 'q>', function()
-  helper.open_buffer_to_execute('register')
 end, { silent = true })
 
 -- }}}
