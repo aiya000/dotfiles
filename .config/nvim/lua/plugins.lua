@@ -93,6 +93,7 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-fzf-native.nvim',
+      'nvim-telescope/telescope-github.nvim', -- TODO: エラーが出て動かない。後で調査
     },
     config = function()
       local actions = require('telescope.actions')
@@ -235,6 +236,7 @@ return {
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-emoji',
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
     },
@@ -248,6 +250,7 @@ return {
             luasnip.lsp_expand(args.body)
           end,
         },
+
         mapping = cmp.mapping.preset.insert({
           ['<C-d>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -269,12 +272,13 @@ return {
             end
           end, { 'i', 's' }),
         }),
+
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
-        }, {
           { name = 'buffer' },
           { name = 'path' },
+          { name = 'emoji' },
         }),
       })
 
@@ -1842,6 +1846,7 @@ return {
                   ['eg'] = function()
                     return ('e %s/'):format(InitLua.git_root) -- helper.git_rootは遅延実行されるので、評価を遅延
                   end,
+                  [':'] = '<Esc>', -- ::でcmdpaletteに突入した場合、normal-modeで突入するように
                 },
                 vim.api.nvim_get_current_line(),
                 function(rhs)
@@ -1856,6 +1861,11 @@ return {
 
           vim.keymap.set('n', '<C-l>', '"zyy<Esc>', { remap = true, buffer = true }) -- 誤爆でEscapeすることがよくあるので、@zにバックアップ。@zは色んなところから上書きされるので、効力に注意
           vim.keymap.set('n', '<C-j>', '<CR>', { remap = true, buffer = true })
+          -- TODO: これで実行した場合、結果をhelper.open_buffer_to_execute()で開くようにする
+          -- vim.keymap.set('n', '<C-k><C-j>', function()
+          --   local line = vim.api.nvim_get_current_line()
+          -- end, { remap = true, buffer = true })
+
           vim.keymap.set('i', '<C-j>', '<Esc><CR>', { remap = true, buffer = true }) -- <Esc> to hide completion menu
 
           vim.keymap.set('i', '<C-n>', function()
@@ -1894,6 +1904,56 @@ return {
       })
     end
   },
+
+  -- }}}
+  -- dial.nvim {{{
+
+    {
+      'monaqa/dial.nvim',
+      config = function()
+        vim.keymap.set('n', '<C-a>', function()
+          require('dial.map').manipulate('increment', 'normal')
+        end)
+
+        vim.keymap.set('n', '<C-x>', function()
+          require('dial.map').manipulate('decrement', 'normal')
+        end)
+
+        vim.keymap.set('n', 'g<C-a>', function()
+          require('dial.map').manipulate('increment', 'gnormal')
+        end)
+
+        vim.keymap.set('n', 'g<C-x>', function()
+          require('dial.map').manipulate('decrement', 'gnormal')
+        end)
+
+        vim.keymap.set('x', '<C-a>', function()
+          require('dial.map').manipulate('increment', 'visual')
+        end)
+
+        vim.keymap.set('x', '<C-x>', function()
+          require('dial.map').manipulate('decrement', 'visual')
+        end)
+
+        vim.keymap.set('x', 'g<C-a>', function()
+          require('dial.map').manipulate('increment', 'gvisual')
+        end)
+
+        vim.keymap.set('x', 'g<C-x>', function()
+          require('dial.map').manipulate('decrement', 'gvisual')
+        end)
+
+        local augend = require('dial.augend')
+        require('dial.config').augends:register_group{
+          default = {
+            augend.integer.alias.decimal,
+            augend.integer.alias.hex,
+            augend.date.alias['%Y/%m/%d'],
+            augend.constant.alias.bool,
+          },
+        }
+      end
+    },
 
   -- }}}
 }
