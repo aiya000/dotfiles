@@ -1913,7 +1913,9 @@ return {
                   ['lp'] = 'lua = ',
                   ['h '] = 'Telescope help_tags<CR>',
                   ['ev'] = ('e %s/'):format(InitLua.path_at_started),
-                  ['eb'] = ('e %s/'):format(vim.fn.expand('%:p:h')),
+                  ['eb'] = function()
+                    ('e %s/'):format(vim.fn.expand('%:p:h'))
+                  end,
                   ['eg'] = function()
                     return ('e %s/'):format(InitLua.git_root) -- helper.git_rootは遅延実行されるので、評価を遅延
                   end,
