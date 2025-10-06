@@ -113,8 +113,8 @@ vim.keymap.set('n', 'p', '<Plug>(gin-action-diff:smart:vsplit)', { buffer = true
 vim.keymap.set('n', 'sa', '<Plug>(gin-action-stash)', { buffer = true, silent = true })
 vim.keymap.set('n', 'S', run_stash_push_message, { buffer = true, silent = true })
 vim.keymap.set('n', 'sp', '<Cmd>Gin stash pop<CR>', { buffer = true })
-vim.keymap.set('n', 'cc', open_claude_commit_float_window, { buffer = true, silent = true })
-vim.keymap.set('n', 'cC', open_commit_buffer, { buffer = true, silent = true })
+vim.keymap.set('n', 'cc', open_commit_buffer, { buffer = true, silent = true })
+vim.keymap.set('n', 'cC', open_claude_commit_float_window, { buffer = true, silent = true })
 vim.keymap.set('n', 'B', '<Cmd>GinBranch<CR>', { buffer = true, silent = true })
 vim.keymap.set('n', 'C', ':<C-u>Gin switch --create<Space>', { remap = true, buffer = true })
 
