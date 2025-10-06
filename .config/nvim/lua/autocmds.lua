@@ -53,6 +53,30 @@ vim.api.nvim_create_autocmd('CmdlineChanged', {
   end,
 })
 
+-- Highlighting
+vim.api.nvim_create_autocmd({'VimEnter', 'ColorScheme'}, {
+  group = augroup,
+  callback = function()
+    vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#313244' })
+
+    vim.api.nvim_set_hl(0, 'EmSpace', { ctermbg = 'LightBlue', bg = '#89B4FA' })
+    vim.fn.matchadd('EmSpace', '　')
+
+    vim.api.nvim_set_hl(0, 'TrailingSpace', { ctermbg = 'Red', bg = '#F38BA8' })
+    vim.fn.matchadd('TrailingSpace', [[\s\+$]])
+
+    -- TODO: *.luaで、'TODO:', 'FIXME:', 'NOTE:' のハイライトがいつの間にか消える
+    vim.api.nvim_set_hl(0, 'HighlightFixme', { ctermbg = 'Red', ctermfg = 'White', bg = '#EBA0AC', fg = '#1E1E2E', bold = true })
+    vim.fn.matchadd('HighlightFixme', [[\<FIXME\>:]])
+
+    vim.api.nvim_set_hl(0, 'HighlightTodo', { ctermbg = 'Yellow', ctermfg = 'Black', bg = '#F9E2AF', fg = '#1E1E2E', bold = true })
+    vim.fn.matchadd('HighlightTodo', [[\<TODO\>:]])
+
+    vim.api.nvim_set_hl(0, 'HighlightNote', { ctermbg = 'Cyan', ctermfg = 'Black', bg = '#94E2D5', fg = '#1E1E2E', bold = true })
+    vim.fn.matchadd('HighlightNote', [[\<NOTE\>:]])
+  end,
+})
+
 -- Show relative numbers only on the current window {{{
 
 vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter' }, {

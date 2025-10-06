@@ -195,18 +195,6 @@ end
 -- Please see https://github.com/aiya000/bash-toys
 vim.env.BASH_TOYS_DUSTBOX_DIR = vim.fn.expand('~/.backup/dustbox')
 
--- Highlight settings
-vim.schedule(function()
-  -- TODO: Not working?
-  -- Show full-width spaces
-  vim.api.nvim_set_hl(0, 'EmSpace', { ctermbg = 'LightBlue', bg = 'LightBlue' })
-  vim.fn.matchadd('EmSpace', '　')
-
-  -- TODO: これなくてもハイライトしてくれてる？ もしされてなかったらアンコメント。されてたらこのコメントごと消す
-  -- vim.api.nvim_set_hl(0, 'GitConflict', { ctermbg = 'Red', bg = 'Red' })
-  -- vim.fn.matchadd('GitConflict', [[^\(<\|=\|>\)\{7\}\([^=].\+\)\?$]])
-end)
-
 -- }}}
 
 -------------
