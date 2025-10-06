@@ -35,6 +35,7 @@ end
 
 return {
   -- catppuccin {{{
+
   {
     'catppuccin/nvim',
     name = 'catppuccin',
@@ -85,8 +86,10 @@ return {
       vim.cmd.colorscheme('catppuccin')
     end,
   },
+
   -- }}}
   -- telescope {{{
+
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
@@ -124,8 +127,10 @@ return {
       pcall(require('telescope').load_extension, 'fzf')
     end,
   },
+
   -- }}}
   -- nvim-hlslens {{{
+
   {
     'kevinhwang91/nvim-hlslens',
     config = function()
@@ -162,8 +167,10 @@ return {
       })
     end,
   },
+
   -- }}}
   -- nvim-highlight-colors {{{
+
   {
     'brenoprata10/nvim-highlight-colors',
     config = function()
@@ -245,6 +252,7 @@ return {
 
   -- }}}
   -- nvim-cmp {{{
+
   {
     'hrsh7th/nvim-cmp',
     dependencies = {
@@ -308,8 +316,10 @@ return {
       })
     end,
   },
+
   -- }}}
   -- mason.nvim {{{
+
   {
     'williamboman/mason.nvim',
     config = function()
@@ -320,8 +330,10 @@ return {
       })
     end,
   },
+
   -- }}}
   -- mason-lspconfig.nvim {{{
+
   {
     'williamboman/mason-lspconfig.nvim',
     config = function()
@@ -337,8 +349,10 @@ return {
       })
     end,
   },
+
   -- }}}
   -- telescope-fzf-native {{{
+
   {
     'nvim-telescope/telescope-fzf-native.nvim',
     build = 'make',
@@ -346,8 +360,10 @@ return {
       return vim.fn.executable('make') == 1
     end,
   },
+
   -- }}}
   -- nvim-notify {{{
+
   {
     'rcarriga/nvim-notify',
     config = function()
@@ -389,6 +405,7 @@ return {
 
   -- }}}
   -- galaxyline {{{
+
   {
     'NTBBloodbath/galaxyline.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -602,8 +619,10 @@ return {
       }
     end,
   },
+
   -- }}}
   -- bufferline {{{
+
   {
     'akinsho/bufferline.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -631,11 +650,15 @@ return {
       })
     end,
   },
+
   -- }}}
   -- nvim-web-devicons {{{
+
   { 'nvim-tree/nvim-web-devicons' },
+
   -- }}}
   -- vim-quickrun {{{
+
   {
     'thinca/vim-quickrun',
     dependencies = { 'Shougo/vimproc.vim' },
@@ -700,8 +723,11 @@ return {
       end
     end,
   },
+
   -- }}}
+
   -- hydra.nvim {{{
+
   {
     'anuvyklack/hydra.nvim',
     config = function()
@@ -795,6 +821,7 @@ return {
       })
     end,
   },
+
   -- }}}
   -- bakaup.vim {{{
 
