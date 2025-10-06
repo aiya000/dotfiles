@@ -693,6 +693,9 @@ local function open_lsp_diagnostic_detail(current_lsp_diagnostic)
   -- ウィンドウサイズを調整
   local height = math.min(#content + 2, math.floor(vim.o.lines * 0.4))
   vim.cmd('resize ' .. height)
+
+  -- キーマッピングを追加
+  vim.keymap.set('n', 'Q', '<cmd>bdelete!<CR>', { buffer = true, silent = true })
 end
 
 ---Opens diagnostic detail in a new window (LSP or ALE)
