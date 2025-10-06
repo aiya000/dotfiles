@@ -1216,7 +1216,7 @@ return {
       { 'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'x' } },
       { ']p', '<Plug>(YankyPutIndentAfterLinewise)', mode = 'n' },
       { '[p', '<Plug>(YankyPutIndentBeforeLinewise)', mode = 'n' },
-      { ']P', '<Plug>(YankyPutIndentAfterLinewise)', mode = 'n' },
+      { ']P', '<Plug>(YankyPutIndentBeforeLinewise)', mode = 'n' },
       { '[P', '<Plug>(YankyPutIndentBeforeLinewise)', mode = 'n' },
       { '>p', '<Plug>(YankyPutIndentAfterShiftRight)', mode = 'n' },
       { '<p', '<Plug>(YankyPutIndentAfterShiftLeft)', mode = 'n' },
