@@ -104,7 +104,7 @@ end
 
 ---Removes trailing spaces of all lines
 function M.remove_trailing_spaces()
-  if vim.opt.filetype == 'markdown' then
+  if vim.bo.filetype == 'markdown' then
     vim.notify('Removing trailing spaces in markdown file: Skipped', vim.log.levels.WARN)
     return
   end
@@ -676,8 +676,8 @@ function M.open_diagnostic_detail()
     end
   end
 
-  if not current_lsp_diagnostic then
-    -- LSP診断がない場合はALEの詳細を表示
+  -- LSP診断がない場合はALEの詳細を表示
+  if current_lsp_diagnostic == nil then
     vim.cmd('ALEDetail')
     return
   end

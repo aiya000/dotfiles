@@ -65,6 +65,7 @@ InitLua.temporary_buftypes = {
   'ddu-ff',
   'ddu-filter',
   'fern',
+  'translate', -- translate.nvim
 }
 
 -- See `./lua/keymaps.lua`

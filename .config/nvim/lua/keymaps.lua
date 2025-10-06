@@ -361,9 +361,7 @@ map('v', "'T", '<Plug>(fmap-backward-T)', { remap = true })
 
 -- ALE and LSP
 map('n', '<C-k><C-a>', '<Cmd>ALEToggle<CR>', { silent = true })
-map('n', '[]', function()
-  helper.open_diagnostic_detail()
-end)
+map('n', '[]', helper.open_diagnostic_detail)
 
 map('n', '[c', function()
   helper.goto_diagnostic('previous')
