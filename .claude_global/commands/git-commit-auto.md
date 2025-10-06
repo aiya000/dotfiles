@@ -9,6 +9,8 @@ Automatically generates a Conventional Commits compliant commit message and comm
 
 ## Behavior
 
+**Important:** This command only commits staged changes. It does not stage any new files.
+
 1. Check staged changes with `git diff --staged`
 2. Check current git status with `git status`
 3. Analyze recent commit messages with `git log --oneline -20` to learn commit style
