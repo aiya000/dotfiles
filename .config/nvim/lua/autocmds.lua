@@ -77,6 +77,24 @@ vim.api.nvim_create_autocmd({'VimEnter', 'ColorScheme'}, {
   end,
 })
 
+-- Show CursorLine only on the current window {{{
+
+vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter' }, {
+  group = augroup,
+  callback = function()
+    vim.opt.cursorline = true
+  end,
+})
+
+vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave' }, {
+  group = augroup,
+  callback = function()
+    vim.opt.cursorline = false
+  end,
+})
+
+-- }}}
+
 -- Show relative numbers only on the current window {{{
 
 vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter' }, {
