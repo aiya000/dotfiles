@@ -81,63 +81,49 @@ return list.concat(
 
   sm(
     { 'function', 'fun' },
-    fmt(
-      [[
-    function {f}({args})
-      {}
-    end
-  ]],
-      {
-        f = i(1, 'f'),
-        args = i(2, 'args'),
-        i(3, ''),
-      }
-    )
+    fmt([[
+      function {f}({})
+        {}
+      end
+    ]], {
+      f = i(1, 'f'),
+      i(2, ''),
+      i(3, ''),
+    })
   ),
 
   sm(
     { 'local_function', 'lfun' },
-    fmt(
-      [[
-    local function {f}({args})
-      {}
-    end
-  ]],
-      {
-        f = i(1, 'f'),
-        args = i(2, 'args'),
-        i(3, ''),
-      }
-    )
+    fmt([[
+      local function {f}({})
+        {}
+      end
+    ]], {
+      f = i(1, 'f'),
+      i(2, ''),
+      i(3, ''),
+    })
   ),
 
   sm(
     { 'function_in_module', 'mfun' },
-    fmt(
-      [[
-    function M.{f}({args})
-      {}
-    end
-  ]],
-      {
-        f = i(1, 'f'),
-        args = i(2, 'args'),
-        i(3, ''),
-      }
-    )
+    fmt([[
+      function M.{f}({})
+        {}
+      end
+    ]], {
+      f = i(1, 'f'),
+      i(2, ''),
+      i(3, ''),
+    })
   ),
 
   sm(
     { 'lambda', 'lam' },
-    fmt(
-      [[
-    function({args}){} end
-  ]],
-      {
-        args = i(1, 'args'),
-        i(2, ''),
-      }
-    )
+    fmt([[function({}) {} end]], {
+      i(1, ''),
+      i(2, ''),
+    })
   ),
 
   sm(
@@ -149,23 +135,20 @@ return list.concat(
 
   sm(
     { 'multi_line_comment', 'comment', 'com' },
-    fmt(
-      [[
-    --[=[
-    {}
-    --]=]
-  ]],
-      {
-        i(1, ''),
-      }
-    )
+    fmt(([[
+      --%s
+      {}
+      --%s
+    ]]):format('[[', ']]'), {
+      i(1, ''),
+    })
   ),
 
   {
     s(
       'require',
-      fmt("require('{here}')", {
-        here = i(1, 'here'),
+      fmt("require('{}')", {
+        i(1, ''),
       })
     ),
   },
