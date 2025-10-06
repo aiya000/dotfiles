@@ -180,6 +180,7 @@ return {
     'neovim/nvim-lspconfig',
     config = function()
       local lspconfig = require('lspconfig')
+      local navic = require('nvim-navic')
 
       -- ホバーウィンドウの設定を改善
       vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
@@ -208,14 +209,22 @@ return {
       vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', { fg = 'NONE', bg = 'NONE' })
 
       -- 共通設定
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      local capabilities_common = require('cmp_nvim_lsp').default_capabilities()
+
+      local function on_attach_common(client, bufnr)
+        if client.server_capabilities.documentSymbolProvider then
+          navic.attach(client, bufnr)
+        end
+      end
 
       lspconfig.ts_ls.setup({
-        capabilities = capabilities,
+        capabilities = capabilities_common,
+        on_attach = on_attach_common,
       })
 
       lspconfig.lua_ls.setup({
-        capabilities = capabilities,
+        capabilities = capabilities_common,
+        on_attach = on_attach_common,
         settings = {
           Lua = {
             runtime = { version = 'LuaJIT' },
@@ -440,14 +449,6 @@ return {
       }
 
       gls.left[4] = {
-        FileName = {
-          provider = 'FileName',
-          condition = condition.buffer_not_empty,
-          highlight = { colors.magenta, colors.bg, 'bold' },
-        },
-      }
-
-      gls.left[5] = {
         LineInfo = {
           provider = 'LineColumn',
           separator = ' ',
@@ -456,7 +457,7 @@ return {
         },
       }
 
-      gls.left[6] = {
+      gls.left[5] = {
         PerCent = {
           provider = 'LinePercent',
           separator = ' ',
@@ -1953,6 +1954,39 @@ return {
         },
       }
     end
+  },
+
+  -- }}}
+  -- incline.nvim {{{
+
+  {
+    'b0o/incline.nvim',
+    config = function()
+      require('incline').setup({
+        render = function(props)
+          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
+          local modified = vim.bo[props.buf].modified
+          return {
+            ' ',
+            filename,
+            modified and { ' *', guifg = '#888888', gui = 'bold' } or '',
+            ' ',
+            guibg = '#111111',
+            guifg = '#eeeeee',
+          }
+        end,
+      })
+    end,
+  },
+
+  -- }}}
+  -- nvim-navic {{{
+
+  {
+    'SmiteshP/nvim-navic',
+    dependencies = {
+      'neovim/nvim-lspconfig',
+    },
   },
 
   -- }}}
