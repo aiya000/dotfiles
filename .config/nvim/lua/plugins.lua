@@ -811,17 +811,50 @@ return {
 
   -- }}}
   -- LuaSnip {{{
+
   {
     'L3MON4D3/LuaSnip',
     version = 'v2.*',
     build = 'make install_jsregexp',
     config = function()
       local ls = require('luasnip')
+      local types = require('luasnip.util.types')
 
-      -- 基本設定
+      -- スニペット展開時に、ジャンプ先にマークを表示する
+      -- - (なし): 現在いるノード
+      -- - ○: 以前にジャンプした/これからジャンプする先のノード
+      -- - ◀: 終端ノード
+      -- また、終端に到達したらマークを消す
       ls.config.set_config({
         history = true,
         updateevents = 'TextChanged,TextChangedI',
+        ext_opts = {
+          [types.insertNode] = {
+            active = {
+              virt_text = { { '', 'LuasnipInsertNodeActive' } },
+              virt_text_pos = 'inline',
+              hl_mode = 'combine',
+            },
+            passive = {
+              virt_text = { { '○', 'LuasnipInsertNodePassive' } },
+              virt_text_pos = 'inline',
+              hl_group = 'LuasnipInsertNodePassive',
+              hl_mode = 'combine',
+            },
+          },
+          [types.exitNode] = {
+            active = {
+              virt_text = { { '', 'LuasnipInsertNodePassive' } },
+              virt_text_pos = 'inline',
+              hl_mode = 'combine',
+            },
+            passive = {
+              virt_text = { { '◀', 'LuasnipInsertNodePassive' } },
+              virt_text_pos = 'inline',
+              hl_mode = 'combine',
+            },
+          },
+        },
       })
 
       ---Scan filetypes in the given directory.
@@ -878,6 +911,7 @@ return {
       end
     end,
   },
+
   -- }}}
   -- plenary.nvim {{{
 

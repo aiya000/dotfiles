@@ -762,6 +762,14 @@ function M.clear_flash_nvim_highlight()
   end
 end
 
+---Clear LuaSnip snippet jump positions and highlights
+function M.clear_luasnip_highlight()
+  local ok, luasnip = pcall(require, 'luasnip')
+  if ok and luasnip.session and luasnip.session.current_nodes[vim.api.nvim_get_current_buf()] then
+    luasnip.unlink_current()
+  end
+end
+
 function M.clear_highlight()
   -- Don't enter filetypes by :PreciousSwitch if the filetype is 'help'
   if not vim.list_contains(InitLua.excluded_filetypes_for_precious_auto_switch, vim.opt.filetype:get()) then
@@ -770,6 +778,7 @@ function M.clear_highlight()
   M.close_all_popups()
   require('notify').dismiss({ silent = true, pending = true })
   vim.cmd('nohlsearch')
+  M.clear_luasnip_highlight()
   pcall(M.clear_flash_nvim_highlight)
 end
 
