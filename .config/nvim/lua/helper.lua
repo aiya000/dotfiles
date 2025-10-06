@@ -87,6 +87,10 @@ end
 
 ---Removes trailing spaces of all lines
 function M.remove_trailing_spaces()
+  if vim.opt.filetype == 'markdown' then
+    vim.notify('Removing trailing spaces in markdown file: Skipped', vim.log.levels.WARN)
+    return
+  end
   local curpos = vim.fn.getcurpos()
   vim.cmd(':%s/\\s*$//g')
   vim.fn.setpos('.', curpos)
