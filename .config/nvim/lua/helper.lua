@@ -660,29 +660,9 @@ function M.goto_diagnostic(direction)
   end
 end
 
----Opens diagnostic detail in a new window (LSP or ALE)
-function M.open_diagnostic_detail()
-  local current_line = vim.fn.line('.')
-  local lsp_diagnostics = vim.diagnostic.get(0, {
-    lnum = current_line - 1, -- LSPは0-based
-  })
-
-  -- 現在行のLSP診断があるか確認
-  local current_lsp_diagnostic = nil
-  for _, diag in ipairs(lsp_diagnostics) do
-    if diag.lnum == current_line - 1 then
-      current_lsp_diagnostic = diag
-      break
-    end
-  end
-
-  -- LSP診断がない場合はALEの詳細を表示
-  if current_lsp_diagnostic == nil then
-    vim.cmd('ALEDetail')
-    return
-  end
-
-  -- LSP診断を新しいウィンドウで表示
+---LSP診断を新しいウィンドウで表示
+---@param current_lsp_diagnostic vim.Diagnostic
+local function open_lsp_diagnostic_detail(current_lsp_diagnostic)
   local content = {}
   table.insert(content, '# LSP Diagnostic')
   table.insert(content, '')
@@ -713,6 +693,30 @@ function M.open_diagnostic_detail()
   -- ウィンドウサイズを調整
   local height = math.min(#content + 2, math.floor(vim.o.lines * 0.4))
   vim.cmd('resize ' .. height)
+end
+
+---Opens diagnostic detail in a new window (LSP or ALE)
+function M.open_diagnostic_detail()
+  local current_line = vim.fn.line('.')
+  local lsp_diagnostics = vim.diagnostic.get(0, {
+    lnum = current_line - 1, -- LSPは0-based
+  })
+
+  -- 現在行のLSP診断があるか確認
+  local current_lsp_diagnostic = nil ---@type vim.Diagnostic | nil
+  for _, diag in ipairs(lsp_diagnostics) do
+    if diag.lnum == current_line - 1 then
+      current_lsp_diagnostic = diag
+      break
+    end
+  end
+
+  -- LSP診断がない場合はALEの詳細を、そうでなければLSP診断の詳細を表示
+  if current_lsp_diagnostic == nil then
+    vim.cmd('ALEDetail')
+  else
+    open_lsp_diagnostic_detail(current_lsp_diagnostic)
+  end
 end
 
 function M.open_claude_code_watchers()
