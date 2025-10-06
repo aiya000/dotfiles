@@ -80,7 +80,7 @@ vim.api.nvim_create_autocmd({'VimEnter', 'ColorScheme'}, {
 vim.api.nvim_create_autocmd('FileType', {
   group = augroup,
   callback = function()
-    local excluded_filetypes = { 'terminal-shell', 'git-log' }
+    local excluded_filetypes = { 'terminal-shell', 'git-log', 'git-show' }
     if vim.tbl_contains(excluded_filetypes, vim.bo.filetype) then
       return
     end
