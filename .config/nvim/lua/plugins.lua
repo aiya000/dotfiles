@@ -192,7 +192,6 @@ return {
     },
 
     config = function()
-      local lspconfig = require('lspconfig')
       local navic = require('nvim-navic')
 
       -- ホバーウィンドウの設定を改善
@@ -230,12 +229,12 @@ return {
         end
       end
 
-      lspconfig.ts_ls.setup({
+      vim.lsp.config.ts_ls = {
         capabilities = capabilities_common,
         on_attach = on_attach_common,
-      })
+      }
 
-      lspconfig.lua_ls.setup({
+      vim.lsp.config.lua_ls = {
         capabilities = capabilities_common,
         on_attach = on_attach_common,
         settings = {
@@ -246,7 +245,10 @@ return {
             telemetry = { enable = false },
           },
         },
-      })
+      }
+
+      vim.lsp.enable('ts_ls')
+      vim.lsp.enable('lua_ls')
     end,
   },
 
