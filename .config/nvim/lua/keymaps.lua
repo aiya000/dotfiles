@@ -553,20 +553,24 @@ map('v', 'iK', 'i<')
 map('o', 'iK', 'i<')
 
 -- Operators and Objects
-map('v', 'ga', '<Plug>(operator-surround-append)', { silent = true })
-map('o', 'ga', '<Plug>(operator-surround-append)', { silent = true })
-map('v', 'ai', '<Plug>(textobj-indent-a)', { remap = true })
-map('v', 'ii', '<Plug>(textobj-indent-i)', { remap = true })
-map('v', 'aB', '<Plug>(textobj-between-a)', { remap = true })
-map('v', 'iB', '<Plug>(textobj-between-i)', { remap = true })
-map('v', 'a*', '<Plug>(textobj-between-a)*', { remap = true })
-map('v', 'i*', '<Plug>(textobj-between-i)*', { remap = true })
-map('v', 'ijp', '<Plug>(textobj-jabraces-parens-i)', { remap = true })
-map('v', 'ajp', '<Plug>(textobj-jabraces-parens-a)', { remap = true })
-map('v', 'ijK', '<Plug>(textobj-jabraces-yama-kakko-i)', { remap = true })
-map('v', 'ajK', '<Plug>(textobj-jabraces-yama-kakko-a)', { remap = true })
-map('v', 'ij-k', '<Plug>(textobj-jabraces-double-kakko-i)', { remap = true })
-map('v', 'aj-k', '<Plug>(textobj-jabraces-double-kakko-a)', { remap = true })
+map('v', 'ga', '<Plug>(operator-surround-append)')
+map('o', 'ga', '<Plug>(operator-surround-append)')
+map('v', 'ai', '<Plug>(textobj-indent-a)')
+map('v', 'ii', '<Plug>(textobj-indent-i)')
+map('v', 'ijp', '<Plug>(textobj-jabraces-parens-i)')
+map('v', 'ajp', '<Plug>(textobj-jabraces-parens-a)')
+map('v', 'ijK', '<Plug>(textobj-jabraces-yama-kakko-i)')
+map('v', 'ajK', '<Plug>(textobj-jabraces-yama-kakko-a)')
+map('v', 'ij-k', '<Plug>(textobj-jabraces-double-kakko-i)')
+map('v', 'aj-k', '<Plug>(textobj-jabraces-double-kakko-a)')
+--- textobj-between
+map('v', 'ab', '<Plug>(textobj-between-a)')
+map('v', 'ib', '<Plug>(textobj-between-i)')
+---- Common objects
+map('v', 'a_', '<Plug>(textobj-between-a)_')  -- sneak_case_names
+map('v', 'i_', '<Plug>(textobj-between-i)_')
+map('v', 'aB', '<Plug>(textobj-between-a)**')  -- Markdown bold texts
+map('v', 'iB', '<Plug>(textobj-between-i)**')
 
 map('v', 'a_', function()
   return vim.fn['textobj#from_regexp#mapexpr']('[^A-Za-z0-9][A-Za-z0-9]\\+[^A-Za-z0-9]')

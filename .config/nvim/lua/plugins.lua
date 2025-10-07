@@ -1049,8 +1049,8 @@ return {
   {
     'thinca/vim-textobj-between',
     keys = {
-      { '<Plug>(textobj-between-a)', mode = { 'x', 'o' } },
-      { '<Plug>(textobj-between-i)', mode = { 'x', 'o' } },
+      { '<Plug>(textobj-between-a)', mode = { 'v', 'x', 'o' } },
+      { '<Plug>(textobj-between-i)', mode = { 'v', 'x', 'o' } },
     },
     config = function()
       vim.g.textobj_between_no_default_key_mappings = 1
