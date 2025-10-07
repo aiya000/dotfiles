@@ -726,3 +726,6 @@ install-win32yank:
 
 install-luaprompt:
 	which luap || luarocks install --local luaprompt
+
+install-ffmpeg:
+	which ffmpeg || $(AptInstall) ffmpeg
