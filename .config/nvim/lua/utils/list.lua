@@ -6,7 +6,6 @@ M.reduce = Test.reduce
 M.concat_array_including_nil = Test.concat_array_including_nil -- TODO: 後述のM.concatと意味が相違するので、こちらを`concat`でない名前にリネームする
 M.to_element_string = Test.to_element_string
 M.make_array_to_string = Test.make_array_to_string
-M.is_array = Test.is_array
 M.is_list = Test.is_array
 
 ---Checks two lists are deeply equal or not

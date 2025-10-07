@@ -4,7 +4,6 @@ local M = {}
 
 ---@param description string
 ---@param check fun(): nil
----Example:
 ---```lua
 ----- No output
 ---test('X should Y', function()
@@ -25,6 +24,7 @@ function M.test(description, check)
   end
 end
 
+---TODO: `initial` argument to first argument
 ---@generic T, U
 ---@param array T[]
 ---@param reducer fun(acc: U, item: T, index: integer): U
@@ -40,7 +40,6 @@ end
 
 ---table.concat()とほぼ同じ。
 ---ただしtable.concat()はnilを無視するが、これは無視をしない。
----
 ---@param xs unknown[]
 ---@return string
 function M.concat_array_including_nil(xs)
@@ -120,8 +119,8 @@ end
 ---Checks two values are deeply equal
 ---
 ---@generic T
----@param actual T
----@param expected T
+---@param a T
+---@param b T
 ---@return boolean
 ---
 ---Example:
@@ -254,7 +253,7 @@ if vim == nil then
   local function to_throw()
     error('error')
   end
-  local ok = pcall(M.assert_to_throw, to_throw)
+  ok = pcall(M.assert_to_throw, to_throw)
   if not ok then
     error('to_throw() should throw an error')
   end
@@ -262,7 +261,7 @@ if vim == nil then
   local function not_to_throw()
     return 10
   end
-  local ok = pcall(M.assert_to_throw, not_to_throw)
+  ok = pcall(M.assert_to_throw, not_to_throw)
   if ok then
     error('not_to_throw() should throw an error')
   end
@@ -283,10 +282,10 @@ if vim == nil then
   end)
 
   test('reduce() should return the initial value if the empty array is taken', function()
-    local result = M.reduce({}, function(acc, item)
+    local result_ = M.reduce({}, function(acc, item)
       error('error')
     end, 'result')
-    assert_equal(result, 'result')
+    assert_equal(result_, 'result')
   end)
 
   test('concat_array_including_nil() should concat an array including nil', function()
@@ -316,8 +315,10 @@ if vim == nil then
     assert_equal(M.is_array({ 1, 2, 3 }), true)
     assert_equal(M.is_array({ 1, 'a', true, nil }), true)
     assert_equal(M.is_array({}), true)
-
     assert_equal(M.is_array({ a = 1, b = 2 }), false)
+
+
+    -- Below should be type error
     assert_equal(M.is_array(10), false)
     assert_equal(M.is_array(nil), false)
   end)
