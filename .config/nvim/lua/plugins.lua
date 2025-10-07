@@ -272,6 +272,8 @@ return {
       local cmp = require('cmp')
       local luasnip = require('luasnip') ---@type any -- undefined-fieldエラーが出まくるのでとりあえずanyにする。ソースを読んだところ2025-10-07現在、LuaSnipには型が書かれていなかったので、これでいいと思う
 
+      -- TODO: lsp serverが起動中の時に、進捗を表示する。nvim-notifyのREADMEあたりに例が載っていたような…？
+
       ---descがあればそれをkindの前に表示。
       ---例えば
       ---```
@@ -2087,11 +2089,20 @@ return {
                 if acc.max_depth == 0 then
                   return acc
                 end
+
+                ---See 'type render_result' in ':h incline.nvim' for coloring item children
+                ---Example:
+                ---```
+                ---local new_item = {
+                ---  { '', group = 'NavicSeparator' },
+                ---  -- ...
+                ---}
+                ---```
+                ---Don't forget, set highlight group 'NavicSeparator' in './autocmds.lua'
                 local new_item = {
-                  -- TODO: 多分このHighlight Group名はないんじゃないか？ 効いてない気がする
-                  { '  ', group = 'NavicSeparator' },
-                  { item.icon, group = 'NavicIcons' .. item.type },
-                  { item.name, group = 'NavicText' },
+                  '    ',
+                  item.icon,
+                  item.name,
                 }
                 return {
                   max_depth = acc.max_depth - 1,
