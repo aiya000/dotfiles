@@ -265,6 +265,7 @@ return {
       'hrsh7th/cmp-emoji',
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
+      'aiya000/nvim-luasnip-emoji',
     },
     config = function()
       local cmp = require('cmp')
@@ -727,7 +728,6 @@ return {
   },
 
   -- }}}
-
   -- hydra.nvim {{{
 
   {
@@ -2094,6 +2094,20 @@ return {
       'neovim/nvim-lspconfig',
     },
   },
+
+  -- }}}
+  -- nvim-luasnip-emoji {{{
+
+  load_from_local_or_remote(
+    'aiya000/nvim-luasnip-emoji',
+    '~/Repository/nvim-luasnip-emoji',
+    InitLua.disable_luasnip_emoji == true,
+    {
+      dependencies = {
+        'L3MON4D3/LuaSnip',
+      },
+    }
+  ),
 
   -- }}}
 }
