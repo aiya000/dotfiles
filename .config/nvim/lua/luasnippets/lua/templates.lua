@@ -25,46 +25,6 @@ return list.concat(
   ),
 
   sm(
-    { 'define_print_table', 'define_print_object', 'define_print_dict' },
-    fmt([[
-      local function print_table(t)
-        print('{{')
-        for k, v in pairs(t) do
-          print('  ' .. k, '=', v .. ',')
-        end
-        print('}}')
-      end
-    ]], {})
-  ),
-
-  sm(
-    { 'print_table', 'prt', 'pt' },
-    fmt([[{module}print_table({var})]], {
-      module = i(1, 'module.'),
-      var = i(2, 'var'),
-    })
-  ),
-
-  {
-    s(
-      'define_pipe',
-      fmt([[
-        local function pipe(value)
-          return {{
-            value = value,
-            let = function(self, f)
-              return pipe(f(self.value))
-            end,
-            get = function(self)
-              return self.value
-            end
-          }}
-        end
-      ]], {})
-    ),
-  },
-
-  sm(
     { 'class', 'cla' },
     fmt([[
       ---@class {ClassName}
@@ -85,34 +45,58 @@ return list.concat(
   ),
 
   sm(
-    { 'method', 'met' },
-    fmt([[
-      function {class}:{method_name}()
-        {}
-      end
-    ]], {
-      class = i(1, 'class'),
-      method_name = i(2, 'method_name'),
-      i(3, ''),
+    { 'list_join', 'join' },
+    fmt([[table.concat({list}, '{sep}')]], {
+      list = i(1, 'list'),
+      sep = i(2, 'sep'),
+    })
+  ),
+
+  -- See `:h vim.list_extend()` for about another arguments.
+  -- Consider define below fucntion when you cannot use `vim`. {{{
+  -- ```lua
+  -----Simular to `vim.list_extend()`, but can take multiple lists (varargs).
+  -----
+  -----@generic T
+  -----@param ... T
+  -----@return T[]
+  -----
+  -----Example:
+  -----```lua
+  -----concat(
+  -----  { 1, 2, 3 },
+  -----  { 4, 5 },
+  -----  { 6 }
+  -----) -- { 1, 2, 3, 4, 5, 6 }
+  -----```
+  -- function concat(...)
+  --   local result = {}
+  --   for _, xs in ipairs({ ... }) do
+  --     for _, x in ipairs(xs) do
+  --       table.insert(result, x)
+  --     end
+  --   end
+  --   return result
+  -- end
+  -- ```
+  -- }}}
+  sm(
+    { 'list_concat', 'concat' },
+    fmt([[vim.list_extend({xs}, {ys})]], {
+      xs = i(1, 'xs'),
+      ys = i(2, 'ys'),
     })
   ),
 
   {
     s(
-      'call_lambda',
-      fmt([[
-        (function {f}({args})
-           {}
-        end)({args})
-      ]], {
-        f = i(1, 'f'),
-        args = i(2, 'args'),
-        i(3, ''),
+      'list_push',
+      fmt([[table.concat({list}, '{}')]], {
+        list = i(1, 'list'),
+        i(2, ''),
       })
     ),
-  },
 
-  {
     s(
       'todo',
       fmt(
