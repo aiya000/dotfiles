@@ -321,6 +321,24 @@ return {
           { name = 'path' },
           { name = 'emoji' },
         }),
+
+        -- NOTE: なぜかこれらを削除すると、nvim-cmpの補完候補が出た後に<C-n>キー・<C-p>キーを実行すると、Neovim標準の補完に落ちるので、削除しない
+        mapping = cmp.mapping.preset.insert({
+          ['<Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+          ['<S-Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+        }),
       })
 
       cmp.setup.cmdline(':', {
