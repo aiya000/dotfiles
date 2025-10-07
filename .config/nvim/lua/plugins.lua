@@ -269,7 +269,28 @@ return {
     },
     config = function()
       local cmp = require('cmp')
-      local luasnip = require('luasnip')
+      local luasnip = require('luasnip') ---@type any -- undefined-fieldエラーが出まくるのでとりあえずanyにする。ソースを読んだところ2025-10-07現在、LuaSnipには型が書かれていなかったので、これでいいと思う
+
+      ---descがあればそれをkindの前に表示。
+      ---例えば
+      ---```
+      ---emoji_pig   🐷 Snippet
+      ---emoji_dog   🐶 Snippet
+      ---emoji_cow   🐮 Snippet
+      ---emoji_cat   🐱 Snippet
+      ---emoji_ram   🐏 Snippet
+      ---```
+      ---のようになる。
+      local function format_entry_to_show_first_candidate(entry, vim_item)
+        local snip = entry:get_completion_item()
+        if snip.data ~= nil and snip.data.snip_id ~= nil then
+          local snippet = luasnip.get_id_snippet(snip.data.snip_id)
+          if snippet ~= nil and snippet.dscr ~= nil and snippet.dscr[1] ~= nil then
+            vim_item.kind = snippet.dscr[1] .. ' ' .. vim_item.kind
+          end
+        end
+        return vim_item
+      end
 
       cmp.setup({
         snippet = {
@@ -278,27 +299,13 @@ return {
           end,
         },
 
-        mapping = cmp.mapping.preset.insert({
-          ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-e>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),
-          ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            else
-              fallback()
+        formatting = {
+          format = function(entry, vim_item)
+            if entry.source.name == 'luasnip' then
+              format_entry_to_show_first_candidate(entry, vim_item)
             end
-          end, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-        }),
+          end,
+        },
 
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
