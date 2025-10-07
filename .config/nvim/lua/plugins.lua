@@ -2081,13 +2081,24 @@ return {
           }
 
           if props.focused then
-            for _, item in ipairs(navic.get_data(props.buf) or {}) do
-              table.insert(res, {
-                { ' > ', group = 'NavicSeparator' },
-                { item.icon, group = 'NavicIcons' .. item.type },
-                { item.name, group = 'NavicText' },
-              })
-            end
+            -- パンくずリストが多くなりすぎると見にくくなるので制限
+            local pankuzu_list = vim.iter(navic.get_data(props.buf) or {})
+              :fold({ max_depth = 3, result = {} }, function(acc, item)
+                if acc.max_depth == 0 then
+                  return acc
+                end
+                local new_item = {
+                  -- TODO: 多分このHighlight Group名はないんじゃないか？ 効いてない気がする
+                  { '  ', group = 'NavicSeparator' },
+                  { item.icon, group = 'NavicIcons' .. item.type },
+                  { item.name, group = 'NavicText' },
+                }
+                return {
+                  max_depth = acc.max_depth - 1,
+                  result = vim.list_extend(acc.result, new_item)
+                }
+              end).result
+              table.insert(res, pankuzu_list)
           end
 
           table.insert(res, ' ')
