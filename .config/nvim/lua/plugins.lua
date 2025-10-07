@@ -268,6 +268,7 @@ return {
       'aiya000/nvim-luasnip-emoji',
     },
     config = function()
+      ---@module 'cmp' -- Not working?
       local cmp = require('cmp')
       local luasnip = require('luasnip') ---@type any -- undefined-fieldエラーが出まくるのでとりあえずanyにする。ソースを読んだところ2025-10-07現在、LuaSnipには型が書かれていなかったので、これでいいと思う
 
@@ -281,6 +282,9 @@ return {
       ---emoji_ram   🐏 Snippet
       ---```
       ---のようになる。
+      ---@param entry cmp.Entry
+      ---@param vim_item vim.CompletedItem
+      ---@return vim.CompletedItem
       local function format_entry_to_show_first_candidate(entry, vim_item)
         local snip = entry:get_completion_item()
         if snip.data ~= nil and snip.data.snip_id ~= nil then
@@ -302,8 +306,9 @@ return {
         formatting = {
           format = function(entry, vim_item)
             if entry.source.name == 'luasnip' then
-              format_entry_to_show_first_candidate(entry, vim_item)
+              return format_entry_to_show_first_candidate(entry, vim_item)
             end
+            return vim_item
           end,
         },
 
