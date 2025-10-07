@@ -806,10 +806,20 @@ function M.clear_highlight()
   pcall(M.clear_flash_nvim_highlight)
 end
 
+function M.restart_lsp_related_with_current_buffer()
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  for _, client in ipairs(clients) do
+    -- Toggle
+    vim.lsp.enable(client.name, false)
+    vim.lsp.enable(client.name, true)
+  end
+end
+
 function M.clear_highlight_deeply()
   print('clearing...')
   pcall(M.vim_cmd, 'PreciousReset') -- NOTE: This is a little heavy
   M.clear_highlight()
+  pcall(M.restart_lsp_related_with_current_buffer)
   print('cleared!')
 end
 
