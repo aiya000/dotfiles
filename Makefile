@@ -653,6 +653,9 @@ install-mise:
 install-gemini-cli:
 	which gemini || $(NPMInstall) @google/gemini-cli
 
+install-copilot-cli:
+	which copilot || $(NPMInstall) @github/copilot
+
 # Example:
 # ```shell-session
 # $ nircmd monitor off
