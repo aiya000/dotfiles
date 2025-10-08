@@ -661,6 +661,14 @@ function M.show_lsp_diagnostic_float()
   })
 end
 
+---Toggle LSP diagnostic virtual text
+function M.toggle_diagnostic_virtual_text()
+  local current_config = vim.diagnostic.config()
+  local new_virtual_text = not current_config.virtual_text
+  vim.diagnostic.config({ virtual_text = new_virtual_text })
+  print('LSP virtual text: ' .. (new_virtual_text and 'enabled' or 'disabled'))
+end
+
 local copilot_term = nil
 function M.toggle_copilot_cli()
   if copilot_term == nil then

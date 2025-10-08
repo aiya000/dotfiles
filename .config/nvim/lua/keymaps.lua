@@ -419,6 +419,7 @@ end)
 
 map('n', '<C-g><C-o>', vim.lsp.buf.hover, { silent = true }) -- Also can enter the floating window by stroke this keymap again when the floating window is opened
 map('n', '<C-g>o', helper.show_lsp_diagnostic_float, { silent = true })
+map('n', '<C-g>v', helper.toggle_diagnostic_virtual_text, { silent = true })
 map('n', '<C-g><C-a>', vim.lsp.buf.code_action, { silent = true })
 map('n', '<C-g><C-d>', vim.lsp.buf.definition, { silent = true })
 map('n', '<C-g>d', vim.lsp.buf.declaration, { silent = true })
