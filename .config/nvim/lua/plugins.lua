@@ -1216,6 +1216,19 @@ return {
         jump = {
           nohlsearch = true,
         },
+        modes = {
+          char = {
+            char_actions = function(motion)
+              -- ftは常に右、FTは常に左
+              return {
+                ['f'] = 'right',
+                ['F'] = 'left',
+                ['t'] = 'right',
+                ['T'] = 'left',
+              }
+            end,
+          },
+        },
       })
     end,
     keys = {
