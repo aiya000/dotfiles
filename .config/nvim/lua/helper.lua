@@ -683,23 +683,35 @@ function M.show_lsp_diagnostic_float()
 end
 
 local gemini_term = nil
-vim.schedule(function()
-  gemini_term = require('toggleterm.terminal').Terminal:new({
-    cmd = 'gemini',
-    hidden = true,
-    direction = 'float',
-    on_open = function(_)
-      -- Enter insert mode when the terminal opens
-      vim.cmd('startinsert!')
-    end,
-  })
-end)
-
 function M.toggle_gemini_cli()
   if gemini_term == nil then
-    error('toggle_gemini_cli(): gemini_term has never initialized yet')
+    gemini_term = require('toggleterm.terminal').Terminal:new({
+      cmd = 'gemini',
+      hidden = true,
+      direction = 'float',
+      on_open = function(_)
+        -- Enter insert mode when the terminal opens
+        vim.cmd('startinsert!')
+      end,
+    })
   end
   gemini_term:toggle()
+end
+
+local copilot_term = nil
+function M.toggle_copilot_cli()
+  if copilot_term == nil then
+    copilot_term = require('toggleterm.terminal').Terminal:new({
+      cmd = 'copilot',
+      hidden = true,
+      direction = 'float',
+      on_open = function(_)
+        -- Enter insert mode when the terminal opens
+        vim.cmd('startinsert!')
+      end,
+    })
+  end
+  copilot_term:toggle()
 end
 
 ---Clears flash.nvim highlights

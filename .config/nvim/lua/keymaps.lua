@@ -275,8 +275,9 @@ map('n', 'g>', function()
   helper.open_buffer_to_execute('messages') -- This feature is not provided by telescope.nvim. use :messages instead
 end, { silent = true })
 
---- gemini-cli
+--- Another AI Agents
 map('n', '<leader>gc', helper.toggle_gemini_cli)
+map('n', '<leader>Gc', helper.toggle_copilot_cli)
 
 -- Options
 map('n', '<C-h><C-w>', '<Cmd>setlocal wrap! wrap?<CR>', { silent = true })
