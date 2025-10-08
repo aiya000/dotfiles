@@ -82,7 +82,7 @@ return list.concat(
   -- }}}
   sm(
     { 'list_concat', 'concat' },
-    fmt([[vim.list_extend({xs}, {ys})]], {
+    fmt([[vim.fn.extendnew({xs}, {ys})]], {
       xs = i(1, 'xs'),
       ys = i(2, 'ys'),
     })
