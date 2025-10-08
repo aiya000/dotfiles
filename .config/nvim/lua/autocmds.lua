@@ -106,7 +106,6 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave' }, {
 })
 
 -- }}}
-
 -- Show relative numbers only on the current window {{{
 
 vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter' }, {
