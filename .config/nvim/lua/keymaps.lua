@@ -325,14 +325,28 @@ map('n', '<leader>D', '"+D')
 map('n', '<leader>d', '"+d')
 map('n', '<leader>x', '"+x')
 
--- TODO: なんでgit使ってるんだっけ？ ちょっと考えてみて、gitを使う意図がなければ、直す（なゆちゃんが誤解していたかもしれないので、なぜかgitが挟まっていてもおかしくない）
--- Put the relative path of a current file
+---Puts the current file path relative to the git root to buffer
+---@param put_to 'above' | 'bellow'
+local function put_filepath_relative_to_git_root(put_to)
+  local current_filepath = vim.system({ 'git', 'ls-files', '--full-name', vim.fn.expand('%') }):wait()
+  if current_filepath.code ~= 0 then
+    vim.notify(current_filepath.stderr, vim.log.levels.ERROR)
+    return
+  end
+
+  -- local put_method = put_to == 'above' and 'put!' or 'put'
+  -- TODO: なんかうまくいかないので他の方法でやる
+  -- vim.cmd(('%s="%s"'):format(put_method, vim.trim(current_filepath.stdout)))
+  local put_method = put_to == 'above' and 'O' or 'o'
+  vim.cmd(('normal! %s %s'):format(put_method, vim.trim(current_filepath.stdout)))
+end
+
 map('n', '"gp', function()
-  vim.cmd(s('put=system("git ls-files --full-name {filename}")', { filename = vim.fn.expand('%') }))
+  put_filepath_relative_to_git_root('bellow')
 end)
 
 map('n', '"gP', function()
-  vim.cmd(s('put!=system("git ls-files --full-name {filename}")', { filename = vim.fn.expand('%') }))
+  put_filepath_relative_to_git_root('above')
 end)
 
 -- Operators and Objects
