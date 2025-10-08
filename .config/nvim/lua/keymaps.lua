@@ -22,6 +22,10 @@ map('n', '<C-c><C-c>', '<C-c>')
 map('n', '<C-g>', '<NOP>')
 map('n', '<C-g><C-g>', '<C-g>')
 
+-- flash.nvimでfFtTでの進む/戻るを手に入れたので、矯正ギプスを試しに使ってみる
+map('n', ',', '<NOP>')
+map('n', ';', '<NOP>')
+
 -- Other than below
 map('n', '<CR>', 'o<Esc>')
 map('n', '<C-j>', '<CR>', { remap = true })
@@ -276,8 +280,8 @@ map('n', 'g>', function()
 end, { silent = true })
 
 --- Another AI Agents
-map('n', '<leader>gc', helper.toggle_gemini_cli)
-map('n', '<leader>Gc', helper.toggle_copilot_cli)
+map('n', '<leader>gc', helper.toggle_copilot_cli)
+map('n', '<leader>Gc', helper.toggle_gemini_cli)
 
 -- Options
 map('n', '<C-h><C-w>', '<Cmd>setlocal wrap! wrap?<CR>', { silent = true })
@@ -285,6 +289,8 @@ map('n', '<C-h><C-c>', '<Cmd>setlocal cursorline! cursorline?<CR>', { silent = t
 map('n', '<C-h><C-r>', '<Cmd>setlocal relativenumber! relativenumber?<CR>', { silent = true })
 map('n', '<C-h><C-l>', '<Cmd>setlocal list! list?<CR>', { silent = true })
 map('n', '<C-h><C-n>', '<Cmd>setlocal number! number?<CR>', { silent = true })
+-- TODO: LSPのバーチャルテキストをトグルしたい
+-- map('n', '<C-h><C-i>', '<Cmd>setlocal number! number?<CR>', { silent = true })
 
 map('n', '<C-h><C-d>', function()
   helper.toggle_diff()
@@ -564,14 +570,23 @@ map('v', 'ijK', '<Plug>(textobj-jabraces-yama-kakko-i)')
 map('v', 'ajK', '<Plug>(textobj-jabraces-yama-kakko-a)')
 map('v', 'ij-k', '<Plug>(textobj-jabraces-double-kakko-i)')
 map('v', 'aj-k', '<Plug>(textobj-jabraces-double-kakko-a)')
---- textobj-between
-map('v', 'ab', '<Plug>(textobj-between-a)')
-map('v', 'ib', '<Plug>(textobj-between-i)')
----- Common objects
-map('v', 'a_', '<Plug>(textobj-between-a)_')  -- sneak_case_names
-map('v', 'i_', '<Plug>(textobj-between-i)_')
-map('v', 'aB', '<Plug>(textobj-between-a)**')  -- Markdown bold texts
-map('v', 'iB', '<Plug>(textobj-between-i)**')
+map('v', 'i_', '<Plug>(textobj-between-a)_')
+map('v', 'a_', '<Plug>(textobj-between-i)_')
+map('v', 'iB', '<Plug>(textobj-between-a)*') -- TODO: **を対象にしたい（vim-textobj-betweenは多分1-charのみ対応）
+map('v', 'aB', '<Plug>(textobj-between-i)*')
+-- TODO: 今度↑をvim-surround-operatorで置き換える（可能なら）
+-- --- vim-operator-surround
+-- map('v', 'ajp', '<Plug>(operator-surround-append)gajp')
+-- map('o', 'ajp', '<Plug>(operator-surround-append)gajp')
+--           { block = { '「', '」' }, motionwise = { 'char', 'line', 'block' }, keys = { 'jk' } },
+-- map('v', '', '<Plug>(operator-surround-append)gajp')
+-- map('o', 'ajp', '<Plug>(operator-surround-append)gajp')
+--           { block = { '【', '】' }, motionwise = { 'char', 'line', 'block' }, keys = { 'jK' } },
+-- map('v', 'ajp', '<Plug>(operator-surround-append)gajp')
+-- map('o', 'ajp', '<Plug>(operator-surround-append)gajp')
+--           { block = { '『', '』' }, motionwise = { 'char', 'line', 'block' }, keys = { 'j-k' } },
+-- map('v', 'ajp', '<Plug>(operator-surround-append)gajp')
+-- map('o', 'ajp', '<Plug>(operator-surround-append)gajp')
 
 map('v', 'a_', function()
   return vim.fn['textobj#from_regexp#mapexpr']('[^A-Za-z0-9][A-Za-z0-9]\\+[^A-Za-z0-9]')
