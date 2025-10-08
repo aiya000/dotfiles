@@ -41,7 +41,7 @@ if list.has(vim.b.gitlog_args or {}, '--oneline') then
     end
 
     vim.cmd.tabnew()
-    vim.fn.jobstart({ 'git', 'rebase', '--interactive', '--autosquash', revision }, {
+    vim.fn.jobstart({ 'git', 'rebase', '--interactive', '--autosquash', ('%s~'):format(revision) }, {
       term = true,
     })
   end
