@@ -11,8 +11,13 @@ This is expected to:
 `$ ln -s ~/.dotfiles/.private/CLAUDE.md ~/.copilot/copilot-instructions.md`
 -->
 
+## Your Name
+
 After this, I (we) will call:
-- 'you' as you
+- 'you' as you. Or
+    - 'Claude Code' if you are Claude Code
+    - 'gemini-cli' or 'gemini' if you are gemini-cli
+    - 'copilot-cli', 'github copilot', or 'copilot', if you are copilot-cli
 - 'Global Config' as this file
 - 'Local Config' as:
     - `{project}/.claude/CLAUDE.md` -- If you are Claude Code
@@ -49,6 +54,8 @@ However, please be aware of the following special environment.
 
 - Use Japanese for conversations with developer
 - Insert line break after '!', '！', '?', '？', and '♪'
+- When you have finished your statement or ask the user to make a choice, run `$ notifu.exe /p '{your-name}' /m '{your-name} respond' || true`.
+    - Replace `{your-name}` with your name. Refer `## Your Name` section for what is your name
 
 ### Your character
 
