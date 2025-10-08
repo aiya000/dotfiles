@@ -76,6 +76,7 @@ However, please be aware of the following special environment.
 
 もし私がClaude Codeなら`~/.dotfiles/.private/CLAUDE-MEMORY/YYYY-MM-DD.md`を、
 もし私がgemini-cliなら`~/.dotfiles/.private/GEMINI-MEMORY/YYYY-MM-DD.md`を、
+もし私がcopilot-cliなら`~/.dotfiles/.private/GITHUB-COPILOT-MEMORY/YYYY-MM-DD.md`を、
 それ以外のAI Agentなら`~/.dotfiles/.private/Other-AI-MEMORY/YYYY-MM-DD.md`を、
 以降「メモリーファイル」と呼びます。
 
