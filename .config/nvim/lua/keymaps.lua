@@ -443,7 +443,7 @@ map('n', '<leader>k', 'viw:Translate EN<CR>', { silent = true })
 
 -- Programming Utils
 map('n', '<leader>R', '<Plug>(quickrepl-open)', { remap = true })
-map('n', '<leader>r', '<Plug>(quickrun)', { remap = true })
+map('n', '<leader>r', '<Cmd>Jaq<CR>', { nowait = true }) -- `nowait`: 僕の<leader>rを持ち去ってるのはだれですか。`:verbose nmap <leader>r*`してもこのキーマップしか出ない
 
 -- File Manupilation
 map('n', '<leader>b', '<Cmd>MadoScratchBufferOpenFile md<CR>', { silent = true })

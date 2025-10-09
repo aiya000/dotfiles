@@ -695,72 +695,56 @@ return {
   { 'nvim-tree/nvim-web-devicons' },
 
   -- }}}
-  -- vim-quickrun {{{
+  -- jaq-nvim {{{
 
-  {
-    'thinca/vim-quickrun',
-    dependencies = { 'Shougo/vimproc.vim' },
-    cmd = 'QuickRun',
-    keys = {
-      { '<Plug>(quickrun)', mode = { 'n', 'v' } },
-      { '<Plug>(quickrun-op)', mode = { 'n', 'v' } },
-    },
-    config = function()
-      vim.g.quickrun_no_default_key_mappings = 0
-
-      vim.g.quickrun_config = {
-        ['_'] = {
-          -- Global Config
-        },
-        html = {
-          command = InitLua.open_on_gui,
-          outputter = 'null',
-          exec = '%c %s:p',
-        },
-        typescript = {
-          command = 'ts-node',
-          exec = { '%c %o %s' },
-          cmdopt = '',
-          tempfile = '%{tempname()}.ts',
-        },
-        nico = {
-          command = 'nicorun',
-        },
-        haskell = {
-          cmdopt = '--ghc-arg=-fprint-explicit-kinds',
-          command = 'stack',
-          exec = '%c exec runghc -- %o %s',
-          runner = 'vimproc',
-        },
-        lhaskell = {
-          command = 'stack exec runghc',
-          exec = { 'grep "^>.*$" %s | sed -r "s/^>//g" > %s:p:r.hs', '%c %o %s:p:r.hs' },
-          tempfile = '%{tempname()}.lhs',
-          ['hook/sweep/files'] = '%S:p:r.hs',
-        },
-        dot = {
-          runner = 'vimproc',
-          exec = {
-            'dot -T png %o %s -o %s.png',
-            'wslview %s.png',
+    {
+      'is0n/jaq-nvim',
+      opts = {
+        cmds = {
+          internal = {
+            lua = 'luafile %',
+            vim = 'source %'
           },
-          ['hook/sweep/files'] = '%S:p:r.png',
-          ['outputter/error/success'] = 'message',
+          external = {
+            -- markdown = 'glow %', -- 'after/ftplugin/markdown.lua'で管理
+            typescript = 'bun run %',
+          }
         },
-        python = {
-          command = 'python3',
-        },
-      }
 
-      if InitLua.is_wsl then
-        fn.set_vim_dict_field(vim.g, 'quickrun_config', 'ps1', {
-          command = 'powershell.exe',
-          exec = { '%c `wslpath -m %s`' },
-          tempfile = '%{tempname()}.ps1',
-        })
-      end
-    end,
-  },
+        behavior = {
+          default = 'float',
+          startinsert = true, -- これやってると、すぐEnterで閉じられる
+          wincmd = false,
+          autosave = false,
+        },
+
+        ui = {
+          float = {
+            border = {'╔', '═' ,'╗', '║', '╝', '═', '╚', '║'} ,
+            winhl     = 'Normal', -- See ':h winhl'
+            borderhl  = 'FloatBorder',
+            winblend  = 0, -- See ':h winblend'
+
+            -- Num from `0-1` for measurements
+            height = 0.8,
+            width = 0.8,
+            x = 0.5,
+            y = 0.5,
+          },
+
+          terminal = {
+            position = 'bot', -- Window position
+            size = 10, -- Window size
+            line_no = false, -- Disable line numbers
+          },
+
+          quickfix = {
+            position = 'bot', -- Window position
+            size = 10, -- Window size
+          },
+        },
+      },
+    },
 
   -- }}}
   -- hydra.nvim {{{

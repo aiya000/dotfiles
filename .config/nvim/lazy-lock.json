@@ -33,6 +33,7 @@
   "hlchunk.nvim": { "branch": "main", "commit": "474ec5d0f220158afa83aaefab32402e710d3032" },
   "hydra.nvim": { "branch": "master", "commit": "3ced42c0b6a6c85583ff0f221635a7f4c1ab0dd0" },
   "incline.nvim": { "branch": "main", "commit": "0fd2d5a27504dba7fdc507a53275f22c081fe640" },
+  "jaq-nvim": { "branch": "master", "commit": "236296aae555657487d1bb4d066cbde9d79d8cd4" },
   "json5.vim": { "branch": "master", "commit": "29af1618015157caf2ac68813ec37cbf8982a049" },
   "kensaku-search.vim": { "branch": "main", "commit": "9568c2b174a9cf31bd9922c0a991117f4dd4f0c3" },
   "kensaku.vim": { "branch": "main", "commit": "67727c8cc81f45b3c3abc600ecfef6fba620eb88" },
@@ -87,7 +88,6 @@
   "vim-ps1": { "branch": "master", "commit": "839cec1550e09fc902c74103053e9e765051083d" },
   "vim-qfedit": { "branch": "master", "commit": "5b85a472632d928a252b0a0446bf223d4b44f627" },
   "vim-quickrepl": { "branch": "master", "commit": "a6acb8f1ce750f9091b48f045c8e4548e733ea81" },
-  "vim-quickrun": { "branch": "master", "commit": "77b4d6ea9972a206f02c736882c2398c36d2983c" },
   "vim-repeat": { "branch": "master", "commit": "6dd787884b4df5c9193073325775b22c3a800225" },
   "vim-review": { "branch": "master", "commit": "e9a8cdc53af6469505944e604a96ed7196e753c3" },
   "vim-scala": { "branch": "master", "commit": "7657218f14837395a4e6759f15289bad6febd1b4" },
@@ -103,6 +103,5 @@
   "vim-webpage": { "branch": "master", "commit": "afa149f887b4bb23aca8b8db3e5feabcc4fc03cf" },
   "vim-write-sync": { "branch": "main", "commit": "4d0d5852bf7fd49d3ece74f989589ac9c378c62a" },
   "vim-yaml": { "branch": "master", "commit": "dce19542d5ec1663183b0f6844ec663b5d1f3d24" },
-  "vimproc.vim": { "branch": "master", "commit": "63a4ce0768c7af434ac53d37bdc1e7ff7fd2bece" },
   "yanky.nvim": { "branch": "main", "commit": "04775cc6e10ef038c397c407bc17f00a2f52b378" }
 }
