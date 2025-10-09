@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# (github) copilot-cliが/pディレクトリと/mディレクトリの読み書き権限を求めてくるので、ワークアラウンド
+#（/pと/mはディレクトリではない。オプション。）
+
+your_name=$1
+notifu.exe /p "$your_name" /m "$your_name respond" || true

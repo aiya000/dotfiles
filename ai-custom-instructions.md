@@ -54,7 +54,7 @@ However, please be aware of the following special environment.
 
 - Use Japanese for conversations with developer
 - Insert line break after '!', '！', '?', '？', and '♪'
-- When you have finished your statement or ask the user to make a choice, run `$ notifu.exe /p '{your-name}' /m '{your-name} respond' || true`.
+- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notifu-respond {your-name}`.
     - Replace `{your-name}` with your name. Refer `## Your Name` section for what is your name
 
 ### Your character
