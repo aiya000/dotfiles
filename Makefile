@@ -14,7 +14,8 @@ AptUpdate = sudo apt-fast update
 AptBuildDep = sudo apt-fast build-dep
 
 NPMInstall = npm install --global --user
-UVInstall = uv tool install
+UVInstall = uv tool install # 事前に`load-my-env mise`してね。まだmiseでuvを入れてなければ`mise use uv@latest`もしよう！
+PIPInstall = $(UVInstall) # pip installよくわからん
 
 prepare:
 	if [ ! -d ~/.config ] ; then \
