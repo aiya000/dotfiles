@@ -520,6 +520,8 @@ function kill-vue-lsp-servers () {
 # }}}
 # Another Contextual Commands {{{
 
+alias_of copilot 'copilot --allow-tool write --allow-tool "shell(notifu-respond)" --allow-tool "shell(notifu.exe)" --allow-tool "shell(git log)" --allow-tool "shell(git show)" --allow-tool "shell(git diff)" --allow-tool "shell(git status)" --allow-tool "shell(git reflog)"'
+
 alias ctags-kotlin-auto="ctags-auto '--exclude=*.java' '--exclude=*.html' '--exclude=*.css'"
 alias ctags-typescript-auto="ctags-auto '--exclude=*.js' '--exclude=*.json'"
 
