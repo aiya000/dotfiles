@@ -47,32 +47,6 @@ InitLua.undodir = s('{backupdir}/undo', { backupdir = backupdir })
 InitLua.viewdir = s('{backupdir}/view', { backupdir = backupdir })
 InitLua.sessiondir = s('{backupdir}/session', { backupdir = backupdir })
 
--- See `bufclose_filetype()` in `./lua/helper.lua`
-InitLua.temporary_buftypes = {
-  'aref_web',
-  'diff',
-  'gin-branch',
-  'gin-log',
-  'gin-status',
-  'git-log',
-  'git-show',
-  'help',
-  'man',
-  'netrw',
-  'dirvish',
-  'quickrun',
-  'scratch',
-  'ddu-ff',
-  'ddu-filter',
-  'fern',
-  'translate', -- translate.nvim
-}
-
--- See `./lua/keymaps.lua`
-InitLua.excluded_filetypes_for_precious_auto_switch = {
-  'help',
-}
-
 -- }}}
 -- vim.opt, buitin vim.g, and another options {{{
 

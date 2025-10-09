@@ -95,8 +95,27 @@ map('n', '#', function()
 end)
 
 -- Close windows of temporary buffers
+local temporary_buftypes = {
+  'aref_web',
+  'diff',
+  'gin-branch',
+  'gin-log',
+  'gin-status',
+  'git-log',
+  'git-show',
+  'help',
+  'man',
+  'netrw',
+  'dirvish',
+  'quickrun',
+  'scratch',
+  'ddu-ff',
+  'ddu-filter',
+  'fern',
+  'translate', -- translate.nvim
+}
 map('n', 'Q', function()
-  helper.bufclose_filetype(InitLua.temporary_buftypes)
+  helper.bufclose_filetype(temporary_buftypes)
 end, { silent = true })
 
 -- Foldings

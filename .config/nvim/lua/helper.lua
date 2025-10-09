@@ -744,9 +744,12 @@ function M.clear_luasnip_highlight()
   end
 end
 
+local excluded_filetypes_for_precious_auto_switch = {
+  'help',
+}
 function M.clear_highlight()
   -- Don't enter filetypes by :PreciousSwitch if the filetype is 'help'
-  if not vim.list_contains(InitLua.excluded_filetypes_for_precious_auto_switch, vim.opt.filetype:get()) then
+  if not vim.list_contains(excluded_filetypes_for_precious_auto_switch, vim.opt.filetype:get()) then
     pcall(M.vim_cmd, 'PreciousSwitch')
   end
   M.close_all_popups()
