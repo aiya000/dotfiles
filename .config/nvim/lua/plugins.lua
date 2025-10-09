@@ -2213,4 +2213,22 @@ return {
   ),
 
   -- }}}
+  -- neoscroll.nvim {{{
+
+    {
+      'karb94/neoscroll.nvim',
+      opts = {
+        mappings = {
+          '<C-b>',
+          '<C-f>',
+          'zt',
+          'zz',
+          'zb',
+        },
+        duration_multiplier = 0.5,
+        performance_mode = true,
+      },
+    },
+
+  -- }}}
 }
