@@ -2,9 +2,9 @@
 ---関数がNeovimに関する事柄を意図しているか、もしくは`vim.*`に依存している場合は、こっち。
 ---それ以外の汎用的な関数は`./utils/functions.lua`に。
 
-local list = require('utils.list')
-local fn = require('utils.functions')
 local c = require('chotto')
+local fn = require('utils.functions')
+local list = require('utils.list')
 
 local s = fn.s
 
@@ -682,6 +682,32 @@ function M.show_lsp_diagnostic_float()
   })
 end
 
+local copilot_term = nil
+function M.toggle_copilot_cli()
+  if copilot_term == nil then
+    copilot_term = require('toggleterm.terminal').Terminal:new({
+      cmd = ([[
+        copilot
+          --allow-tool write
+          --allow-tool 'shell(notifu-respond)'
+          --allow-tool 'shell(notifu.exe)'
+          --allow-tool 'shell(git log)'
+          --allow-tool 'shell(git show)'
+          --allow-tool 'shell(git diff)'
+          --allow-tool 'shell(git status)'
+          --allow-tool 'shell(git reflog)'
+      ]]):gsub('\r?\n', ' '),
+      hidden = true,
+      direction = 'float',
+      on_open = function(_)
+        -- Enter insert mode when the terminal opens
+        vim.cmd('startinsert!')
+      end,
+    })
+  end
+  copilot_term:toggle()
+end
+
 local gemini_term = nil
 function M.toggle_gemini_cli()
   if gemini_term == nil then
@@ -696,22 +722,6 @@ function M.toggle_gemini_cli()
     })
   end
   gemini_term:toggle()
-end
-
-local copilot_term = nil
-function M.toggle_copilot_cli()
-  if copilot_term == nil then
-    copilot_term = require('toggleterm.terminal').Terminal:new({
-      cmd = 'copilot',
-      hidden = true,
-      direction = 'float',
-      on_open = function(_)
-        -- Enter insert mode when the terminal opens
-        vim.cmd('startinsert!')
-      end,
-    })
-  end
-  copilot_term:toggle()
 end
 
 ---Clears flash.nvim highlights
