@@ -185,7 +185,6 @@ map('n', '<C-s>P', function()
 end, { silent = true })
 
 --- Tabs navigations
---- NOTE: This is overridden when yanky.nvim pasted a text
 map('n', '<C-n>', helper.tabnext_loop, { silent = true })
 map('n', '<C-p>', helper.tabprev_loop, { silent = true })
 
@@ -293,6 +292,7 @@ map('n', 'H', telescope.live_grep)
 map('n', 'M', telescope.oldfiles)
 map('n', 'm>', telescope.marks)
 map('n', 'q>', telescope.registers)
+map('n', 'y>', '<Cmd>Telescope yank_history<CR>', { silent = true })
 
 map('n', 'g>', function()
   helper.open_buffer_to_execute('messages') -- This feature is not provided by telescope.nvim. use :messages instead
@@ -343,6 +343,16 @@ map('n', '<leader>dd', '"+dd')
 map('n', '<leader>D', '"+D')
 map('n', '<leader>d', '"+d')
 map('n', '<leader>x', '"+x')
+
+map('n', 'p', function()
+  helper.run_with_virtual_keymaps('<Plug>(YankyPutAfter)')
+  InitLua.hydra.yanky_ring:activate()
+end)
+
+map('n', 'P', function()
+  helper.run_with_virtual_keymaps('<Plug>(YankyPutBefore)')
+  InitLua.hydra.yanky_ring:activate()
+end)
 
 ---Puts the current file path relative to the git root to buffer
 ---@param put_to 'above' | 'bellow'

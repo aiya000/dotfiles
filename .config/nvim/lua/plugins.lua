@@ -97,6 +97,7 @@ return {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-fzf-native.nvim',
       'nvim-telescope/telescope-github.nvim', -- TODO: エラーが出て動かない。後で調査
+      'gbprod/yanky.nvim',
     },
     config = function()
       local actions = require('telescope.actions')
@@ -112,7 +113,7 @@ return {
               ['<Esc>'] = false,
               ['<C-l>'] = actions.close,
               ['<C-j>'] = actions.select_default,
-              -- TODO: Implement these keys
+              -- TODO: fzf-native使ってるから？ 動いてない
               -- Bash like keys
               -- ['<C-b>'] = custom.move_left,
               -- ['<C-f>'] = custom.move_right,
@@ -124,7 +125,9 @@ return {
           },
         },
       })
-      pcall(require('telescope').load_extension, 'fzf')
+      require('telescope').load_extension('fzf')
+      require('telescope').load_extension('gh')
+      require('telescope').load_extension('yank_history')
     end,
   },
 
@@ -789,7 +792,6 @@ return {
       InitLua.hydra.tab_move = Hydra({
         name = 'Tab Move',
         mode = 'n',
-        body = 'dummy key',
         heads = {
           {
             'n',
@@ -818,7 +820,6 @@ return {
       InitLua.hydra.window_move = Hydra({
         name = 'Window Move',
         mode = 'n',
-        body = 'dummy key',
         heads = {
           {
             'N',
@@ -851,6 +852,15 @@ return {
             offset = 0,
             border = 'rounded',
           },
+        },
+      })
+
+      InitLua.hydra.yanky_ring = Hydra({
+        name = 'yanky-ring',
+        mode = 'n',
+        heads = {
+          { '<C-p>', '<Plug>(YankyPreviousEntry)', { private = true, desc = '↑' } },
+          { '<C-n>', '<Plug>(YankyNextEntry)', { private = true, desc = '↓' } },
         },
       })
     end,
@@ -1249,18 +1259,19 @@ return {
       { '<Plug>(fmap-forward-t)', mode = 'n' },
       { '<Plug>(fmap-backward-t)', mode = 'n' },
     },
-    config = function()
-      vim.g.fmap_use_default_keymappings = false
-      vim.g.fmap_escape_keys = { '', '', '' }
-      vim.cmd('FNoreMap / ・')
-      vim.cmd('FNoreMap T ・')
-      vim.cmd('FNoreMap tt …')
-      vim.cmd("FNoreMap '' 　")
-      vim.cmd('FNoreMap p （')
-      vim.cmd('FNoreMap k 「')
-      vim.cmd('FNoreMap K 〈')
-      vim.cmd('FNoreMap -k 『')
-    end,
+    -- TODO: flash.nvimとバッティングしてるのか、`'f.`ーでflash.nvimのエラーが出るので、調査する
+    -- init = function()
+    --   vim.g.fmap_use_default_keymappings = false
+    --   vim.g.fmap_escape_keys = { '', '', '' }
+    --   vim.cmd('FNoreMap / ・')
+    --   vim.cmd('FNoreMap T ・')
+    --   vim.cmd('FNoreMap tt …')
+    --   vim.cmd("FNoreMap '' 　")
+    --   vim.cmd('FNoreMap p （')
+    --   vim.cmd('FNoreMap k 「')
+    --   vim.cmd('FNoreMap K 〈')
+    --   vim.cmd('FNoreMap -k 『')
+    -- end,
   },
 
   -- }}}
@@ -1274,21 +1285,10 @@ return {
   { 'lambdalisue/kensaku-search.vim' },
 
   -- }}}
-  -- vim-highlightedyank {{{
-
-  {
-    'machakann/vim-highlightedyank',
-    config = function()
-      vim.g.highlightedyank_highlight_duration = 200
-    end,
-  },
-
-  -- }}}
   -- yanky.nvim {{{
 
   {
     'gbprod/yanky.nvim',
-    dependencies = { 'nvim-telescope/telescope.nvim' },
     enabled = InitLua.disable_yanky ~= true,
     config = function()
       require('yanky').setup({
@@ -1297,20 +1297,6 @@ return {
           storage = 'shada',
           sync_with_numbered_registers = true,
           cancel_event = 'update',
-        },
-        picker = {
-          telescope = {
-            mappings = {
-              -- TODO: これ機能してる？
-              -- TODO: なゆちゃんがとりあえず書いてくれたものなので、カスタマイズする
-              default = require('yanky.picker').actions.put('p'),
-              i = {
-                ['<c-g>'] = require('yanky.picker').actions.put('P'),
-                ['<c-x>'] = require('yanky.picker').actions.delete(),
-                ['<c-r>'] = require('yanky.picker').actions.set_register(),
-              },
-            },
-          },
         },
         highlight = {
           on_put = true,
@@ -1321,12 +1307,9 @@ return {
           enabled = true,
         },
       })
-      require('telescope').load_extension('yank_history')
     end,
     keys = {
       { 'y', '<Plug>(YankyYank)', mode = { 'n', 'x' } },
-      { 'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'x' } },
-      { 'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'x' } },
       { ']p', '<Plug>(YankyPutIndentAfterLinewise)', mode = 'n' },
       { '[p', '<Plug>(YankyPutIndentBeforeLinewise)', mode = 'n' },
       { ']P', '<Plug>(YankyPutIndentBeforeLinewise)', mode = 'n' },
@@ -1337,7 +1320,10 @@ return {
       { '<P', '<Plug>(YankyPutIndentBeforeShiftLeft)', mode = 'n' },
       { '=p', '<Plug>(YankyPutAfterFilter)', mode = 'n' },
       { '=P', '<Plug>(YankyPutBeforeFilter)', mode = 'n' },
-      { 'gy', '<CMD>Telescope yank_history<CR>', desc = 'Open Yank History' },
+
+      -- Hydraと連携するために無効化。See './keymaps.lua'
+      -- { 'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'x' } },
+      -- { 'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'x' } },
 
       -- Disable because this is overridden by my keymap
       -- { 'gp', '<Plug>(YankyGPutAfter)', mode = { 'n', 'x' } },
@@ -2045,7 +2031,7 @@ return {
           -- cmdpaletteバッファを閉じた後にエラーが出るので無効化
           vim.b.ale_enabled = 0
 
-          vim.keymap.set('n', '<C-l>', '"zyy<Esc>', { remap = true, buffer = true }) -- 誤爆でEscapeすることがよくあるので、@zにバックアップ。@zは色んなところから上書きされるので、効力に注意
+          vim.keymap.set('n', '<C-l>', '"yyy<Esc>', { remap = true, buffer = true }) -- 誤爆でEscapeすることがよくあるので、@zにバックアップ
           vim.keymap.set('n', '<C-j>', '<CR>', { remap = true, buffer = true })
           -- TODO: これで実行した場合、結果をhelper.open_buffer_to_execute()で開くようにする
           -- vim.keymap.set('n', '<C-k><C-j>', function()
