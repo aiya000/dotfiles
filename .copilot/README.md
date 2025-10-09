@@ -1,1 +1,1 @@
-ln -s ~/.dotfiles/.copilot/copilot-instructions.md ./.copilot/copilot-instructions.md
+ln -s ~/.dotfiles/.copilot/copilot-instructions.md ~/.copilot/copilot-instructions.md
