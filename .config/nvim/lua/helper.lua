@@ -744,11 +744,11 @@ function M.clear_luasnip_highlight()
   end
 end
 
-local excluded_filetypes_for_precious_auto_switch = {
-  'help',
-}
 function M.clear_highlight()
   -- Don't enter filetypes by :PreciousSwitch if the filetype is 'help'
+  local excluded_filetypes_for_precious_auto_switch = {
+    'help',
+  }
   if not vim.list_contains(excluded_filetypes_for_precious_auto_switch, vim.opt.filetype:get()) then
     pcall(M.vim_cmd, 'PreciousSwitch')
   end
@@ -760,11 +760,17 @@ function M.clear_highlight()
 end
 
 function M.restart_lsp_related_with_current_buffer()
+  local excluded_lsp_servers = {
+    'GitHub Copilot', -- TODO: 効いてない？
+  }
+
   local clients = vim.lsp.get_clients({ bufnr = 0 })
   for _, client in ipairs(clients) do
-    -- Toggle
-    vim.lsp.enable(client.name, false)
-    vim.lsp.enable(client.name, true)
+    if not vim.list_contains(excluded_lsp_servers) then
+      -- Toggle
+      vim.lsp.enable(client.name, false)
+      vim.lsp.enable(client.name, true)
+    end
   end
 end
 
