@@ -1289,7 +1289,7 @@ return {
   {
     'gbprod/yanky.nvim',
     dependencies = { 'nvim-telescope/telescope.nvim' },
-    enabled = InitLua.disable_yanky ~= true, -- because yanky.nvim is heavy
+    enabled = InitLua.disable_yanky ~= true,
     config = function()
       require('yanky').setup({
         ring = {
