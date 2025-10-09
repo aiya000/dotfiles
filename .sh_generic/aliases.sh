@@ -390,7 +390,7 @@ if i_have git ; then
     : "First, run 'git-remote-add-wip' if you haven't yet."
 
     ensure-git-wip-remote-existent || return 1
-    git push -u --force-with-lease "$DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP" "$(git branch --show-current)" || return 1
+    git push --force-with-lease "$DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP" "$(git branch --show-current)" || return 1
   }
 
   function git-wip-push-all-force () {
