@@ -821,4 +821,28 @@ function M.replace_line(keymaps, input, set_current_line)
   error('replace_line(): rhs is neither string nor function: ' .. vim.inspect(rhs))
 end
 
+---Copy selected lines, open scratch buffer with current file extension, paste and save
+function M.copy_to_scratch_with_extension()
+  -- Yank the selected text to the default register
+  vim.cmd('normal! y')
+  
+  -- Get the current file extension
+  local current_file = vim.fn.expand('%:t')
+  local extension = vim.fn.fnamemodify(current_file, ':e')
+  
+  -- If no extension, use 'txt' as default
+  if extension == '' or extension == nil then
+    extension = 'txt'
+  end
+  
+  -- Open MadoScratchBufferOpenFile with vsp and the extension
+  vim.cmd('MadoScratchBufferOpenFile vsp ' .. extension)
+  
+  -- Paste the yanked content
+  vim.cmd('normal! p')
+  
+  -- Save the buffer
+  vim.cmd('write')
+end
+
 return M

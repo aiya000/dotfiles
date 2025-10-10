@@ -658,7 +658,7 @@ map('v', '<leader><leader>k', ':Translate JA -output=split<CR>', { silent = true
 map('v', '<leader><leader>K', ':Translate EN -output=split<CR>', { silent = true })
 
 -- Programming Utils
-map('v', '<leader>r', '<Plug>(quickrun)', { remap = true })
+map('v', '<leader>r', helper.copy_to_scratch_with_extension, { silent = true })
 
 -- File Editing
 map('v', '<leader><leader>s', ':sort<CR>')
