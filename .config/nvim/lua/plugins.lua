@@ -4,7 +4,7 @@ local fn = require('utils.functions')
 local helper = require('helper')
 local list = require('utils.list')
 
----@param local_dir string
+---@param local_dir string -- Assuming this is a realpath (not a relative path)
 local function generate_helptags_when_existing_doc(local_dir)
   local local_doc_dir = local_dir .. '/doc'
   if vim.fn.isdirectory(local_doc_dir) == 1 then
@@ -22,9 +22,18 @@ local function load_from_local_or_remote(
   should_load_from_local,
   lazynvim_plugin_config
 )
+  local_dir = vim.fn.expand(local_dir) -- Make '~/somepath/nvim-foo' to realpath
+  if should_load_from_local and not vim.fn.isdirectory(local_dir) then
+    local message = ([[
+      A plugin directory not found: %s
+      Use remote repository instead.
+    ]]):format(local_dir)
+    vim.notify(message, vim.log.levels.ERROR)
+    return load_from_local_or_remote(remote_repo, local_dir, false, lazynvim_plugin_config)
+  end
+
   local base_config = nil
   if should_load_from_local then
-    local_dir = vim.fn.expand(local_dir) -- Make '~/somepath/nvim-foo' to realpath
     base_config = { dir = local_dir }
     generate_helptags_when_existing_doc(local_dir)
   else
