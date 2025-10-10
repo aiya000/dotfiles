@@ -2006,10 +2006,10 @@ return {
                   ['h '] = 'Telescope help_tags<CR>',
                   ['ev'] = ('e %s/'):format(InitLua.path_at_started),
                   ['eb'] = function()
-                    ('e %s/'):format(vim.fn.expand('%:p:h'))
+                    return ('e %s/'):format(vim.fn.expand('%:p:h'))
                   end,
                   ['eg'] = function()
-                    return ('e %s/'):format(InitLua.git_root) -- helper.git_rootは遅延実行されるので、評価を遅延
+                    return ('e %s/'):format(InitLua.git_root) -- helper.git_rootは代入が遅延されるので、評価も遅延
                   end,
                   [':'] = '<Esc>', -- ::でcmdpaletteに突入した場合、normal-modeで突入するように
                 },
@@ -2226,17 +2226,40 @@ return {
 
     {
       'karb94/neoscroll.nvim',
-      opts = {
-        mappings = {
-          '<C-b>',
-          '<C-f>',
-          'zt',
-          'zz',
-          'zb',
-        },
-        duration_multiplier = 0.5,
-        performance_mode = true,
-      },
+      config = function()
+        local neoscroll = require('neoscroll')
+
+        neoscroll.setup({
+          mappings = {
+            '<C-b>',
+            '<C-f>',
+            'zt',
+            'zz',
+            'zb',
+          },
+          duration_multiplier = 0.25,
+          performance_mode = true,
+        })
+
+        local keymaps_opts = {
+          duration = 200,
+          easing = 'quadratic',
+        }
+
+        vim.keymap.set('n', 'gg', function()
+          neoscroll.scroll(-100, keymaps_opts)
+          vim.defer_fn(function()
+            vim.cmd('normal! gg')
+          end, 100)
+        end)
+
+        vim.keymap.set('n', 'G', function()
+          neoscroll.scroll(100, keymaps_opts)
+          vim.defer_fn(function()
+            vim.cmd('normal! G')
+          end, 100)
+        end)
+      end,
     },
 
   -- }}}
