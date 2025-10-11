@@ -23,6 +23,7 @@
       "Bash(gh pr create:*)",
       "Bash(gh run list:*)",
       "Bash(gh run view:*)",
+      "Bash(notifu-respond:*)",
       "Read(~/.config/nvim)"
     ],
     "deny": [

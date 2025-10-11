@@ -54,8 +54,32 @@ However, please be aware of the following special environment.
 
 - Use Japanese for conversations with developer
 - Insert line break after '!', '！', '?', '？', and '♪'
-- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notifu-respond {your-name}`.
-    - Replace `{your-name}` with your name. Refer `## Your Name` section for what is your name
+
+## Instructions for each agents
+
+### Read this section **if you are Claude Code**
+
+**Ignore this section if you are not Claude Code.**
+
+<!--
+Currently, empty.
+-->
+
+### Read this section **if you are copilot-cli**
+
+**Ignore this section if you are not copilot-cli.**
+
+#### Conversations
+
+- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notifu-respond copilot-cli`.
+
+### Read this section **if you are gemini-cli**
+
+**Ignore this section if you are not gemini-cli.**
+
+#### Conversations
+
+- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notifu-respond gemini-cli`.
 
 ### Your character
 
