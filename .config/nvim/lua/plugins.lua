@@ -2246,7 +2246,31 @@ return {
           easing = 'quadratic',
         }
 
+        ---`{line_num}gg` and `{line_num}G` support
+        local function goto_line()
+          local count = vim.v.count
+          local current_line, col = unpack(vim.api.nvim_win_get_cursor(0))
+          local distance = count - current_line
+          if distance == 0 then
+            return
+          end
+
+          local distance_to_scroll = distance > 0
+            and math.min(distance, 100) -- Example: max(200, 100)
+            or math.max(distance, -100) -- Example: min(-200, -100)
+          neoscroll.scroll(distance_to_scroll, keymaps_opts)
+          vim.defer_fn(function()
+            vim.notify('poi: ' .. vim.inspect(count), vim.log.levels.INFO)
+            vim.api.nvim_win_set_cursor(0, { count, col })
+          end, 200)
+        end
+
         vim.keymap.set('n', 'gg', function()
+          if vim.v.count ~= 0 then
+            goto_line()
+            return
+          end
+
           neoscroll.scroll(-100, keymaps_opts)
           vim.defer_fn(function()
             vim.cmd('normal! gg')
@@ -2254,6 +2278,11 @@ return {
         end)
 
         vim.keymap.set('n', 'G', function()
+          if vim.v.count ~= 0 then
+            goto_line()
+            return
+          end
+
           neoscroll.scroll(100, keymaps_opts)
           vim.defer_fn(function()
             vim.cmd('normal! G')
