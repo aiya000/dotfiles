@@ -200,11 +200,13 @@ return {
     'neovim/nvim-lspconfig',
 
     dependencies = {
+      'rcarriga/nvim-notify',
       'SmiteshP/nvim-navic',
     },
 
     config = function()
-      local navic = require('nvim-navic')
+      -- unused functionがグレー化されるのを無効化
+      vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', { fg = 'NONE', bg = 'NONE' })
 
       -- ホバーウィンドウの設定を改善
       vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
@@ -229,22 +231,70 @@ return {
         },
       })
 
-      -- unused functionがグレー化されるのを無効化
-      vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', { fg = 'NONE', bg = 'NONE' })
+      -- LSPの起動進捗を表示 {{{
+
+      ---@type table<string, integer>
+      local lsp_progress_notification_ids = {}
+      local notify = require('notify')
+
+      vim.lsp.handlers['$/progress'] = function(_, result, ctx)
+        local client = vim.lsp.get_client_by_id(ctx.client_id)
+        if not client then
+          return
+        end
+
+        local token = result.token
+        local value = result.value
+        local progress_key = ('%d:%s'):format(ctx.client_id, token)
+
+        if value.kind == 'begin' then
+          local notification = notify('Loading...', vim.log.levels.INFO, {
+            title = client.name,
+            timeout = 500,
+          })
+          lsp_progress_notification_ids[progress_key] = notification.id
+        elseif value.kind == 'report' then
+          local notification_id = lsp_progress_notification_ids[progress_key]
+          if notification_id == nil then
+            vim.notify('No notification found: ' .. vim.inspect({token = token, value = value}), vim.log.levels.ERROR)
+            return
+          end
+
+          local message = ('%s (%d%%)'):format(value.message, value.percentage)
+          local notification = notify(message, vim.log.levels.INFO, {
+            title = client.name,
+            replace = notification_id,
+            timeout = 500,
+          })
+          lsp_progress_notification_ids[progress_key] = notification.id
+        elseif value.kind == 'end' then
+          local message = value.message or 'Started!'
+          local notification_id = lsp_progress_notification_ids[progress_key]
+          if notification_id == nil then
+            vim.notify('No notification found: ' .. vim.inspect({token = token, value = value}), vim.log.levels.ERROR)
+            return
+          end
+
+          notify(message, vim.log.levels.INFO, {
+            title = client.name,
+            replace = notification_id,
+            timeout = 500,
+          })
+          lsp_progress_notification_ids[progress_key] = nil
+        end
+      end
+
+      -- }}}
+      -- 各LSPサーバーの設定 {{{
 
       -- 共通設定
+      local navic = require('nvim-navic')
       local capabilities_common = require('cmp_nvim_lsp').default_capabilities()
-
       local function on_attach_common(client, bufnr)
         if client.server_capabilities.documentSymbolProvider then
           navic.attach(client, bufnr)
         end
       end
-
-      vim.lsp.config.ts_ls = {
-        capabilities = capabilities_common,
-        on_attach = on_attach_common,
-      }
 
       vim.lsp.config.lua_ls = {
         capabilities = capabilities_common,
@@ -259,8 +309,16 @@ return {
         },
       }
 
-      vim.lsp.enable('ts_ls')
-      vim.lsp.enable('lua_ls')
+      vim.lsp.config.ts_ls = {
+        capabilities = capabilities_common,
+        on_attach = on_attach_common,
+      }
+
+      -- TODO: これ必要ない？ もし必要あったら、有効化する。もし必要ないことがわかったら、コメントごと削除する
+      -- vim.lsp.enable('lua_ls')
+      -- vim.lsp.enable('ts_ls')
+
+      -- }}}
     end,
   },
 
@@ -283,8 +341,6 @@ return {
       ---@module 'cmp' -- Not working?
       local cmp = require('cmp')
       local luasnip = require('luasnip') ---@type any -- undefined-fieldエラーが出まくるのでとりあえずanyにする。ソースを読んだところ2025-10-07現在、LuaSnipには型が書かれていなかったので、これでいいと思う
-
-      -- TODO: lsp serverが起動中の時に、進捗を表示する。nvim-notifyのREADMEあたりに例が載っていたような…？
 
       ---descがあればそれをkindの前に表示。
       ---例えば
