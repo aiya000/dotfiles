@@ -10,11 +10,14 @@ export BASH_TOYS_MUSIC_PLAYER_OPTIONS=
 export BASH_TOYS_POMODORO_NOTIFICATION_MUSIC=
 
 # export NODE_OPTIONS=--max-old-space-size=16384
+# export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
 # PATH=$PATH:/usr/share/bash-completion/completions
 PATH=$PATH:~/.nvm/versions/node/$DOTFILES_ZSHRC_NVM_NODE_VERSION/bin
+PATH=$PATH:~/.GoPath/bin
 PATH="$PATH:/mnt/c/Users/$WINDOWS_USER/AppData/Local/Programs/Microsoft VS Code"
 PATH="$PATH:/mnt/c/Program Files/Rancher Desktop/resources/resources/linux/bin"
 PATH="$PATH:/mnt/c/Program Files (x86)/Bluetooth Command Line Tools/bin"
+PATH="$PATH:/mnt/c/Users/$WINDOWS_USER/Desktop/Programs/android-platform-tools"
 
 if ! i_have code && i_have Code.exe ; then
   alias code=Code.exe
@@ -22,11 +25,11 @@ fi
 
 # To enable npm and GitHub Copilot (copilot.vim)
 load-my-env nvm
-if [[ $VIM_TERMINAL == '' ]] ; then
+if [[ $VIM_TERMINAL == '' && $NEOVIM_TERMINAL == '' ]] ; then
   dotfiles::find_nodejs_to_load
 fi
 
-if [[ $VIM_TERMINAL != '' ]] ; then
+if [[ $VIM_TERMINAL != '' || $NEOVIM_TERMINAL != '' ]] ; then
   xl
 fi
 
