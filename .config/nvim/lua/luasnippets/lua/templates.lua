@@ -44,6 +44,7 @@ return list.concat(
     })
   ),
 
+  -- `table.concat()`がjoinで、`extendnew()`がconcatなの、紛らわしい
   sm(
     { 'list_join', 'join' },
     fmt([[table.concat({list}, '{sep}')]], {
@@ -91,7 +92,7 @@ return list.concat(
   {
     s(
       'list_push',
-      fmt([[table.concat({list}, '{}')]], {
+      fmt([[table.insert({list}, {})]], {
         list = i(1, 'list'),
         i(2, ''),
       })
