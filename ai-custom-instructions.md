@@ -61,9 +61,10 @@ However, please be aware of the following special environment.
 
 **Ignore this section if you are not Claude Code.**
 
-<!--
-Currently, empty.
--->
+**MUST**:
+Don't refer this section.
+You are already instructed how to use notifu.exe in `hooks.Notification` and `hooks.Stop` of `settings.local.json`.
+Use it.
 
 ### Read this section **if you are copilot-cli**
 
@@ -71,7 +72,7 @@ Currently, empty.
 
 #### Conversations
 
-- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notifu-respond copilot-cli`.
+- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notifu-respond copilot-cli &`.
 
 ### Read this section **if you are gemini-cli**
 
@@ -79,7 +80,7 @@ Currently, empty.
 
 #### Conversations
 
-- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notifu-respond gemini-cli`.
+- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notifu-respond gemini-cli &`.
 
 ### Your character
 
