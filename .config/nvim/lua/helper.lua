@@ -4,27 +4,33 @@
 
 local c = require('chotto')
 local fn = require('utils.functions')
-local list = require('utils.list')
 
 local s = fn.s
 
 local M = {}
 
+---@see M.reload_module
+function M.reload_modules(...)
+  return vim.iter({...}):map(M.reload_module):totable()
+end
+
+---TODO: ちゃんと変更を検知できてない。でもリロードはできてるっぽい
 ---Removes `module_name` from `package.loaded` and `require(module_name)` again
 ---@param module_name string
----@param starts_with_only boolean
-function M.reload_module(module_name, starts_with_only)
+function M.reload_module(module_name)
   local older = require(module_name)
-  require('plenary.reload').reload_module(module_name, starts_with_only)
+  package.loaded[module_name] = nil
   local newer = require(module_name)
 
   vim.schedule(function()
     if fn.deep_equal(older, newer) then
-      print(('[ReloadModule] No changes: %s'):format(module_name))
+      vim.notify(("[ReloadModule] No changes: '%s'"):format(module_name), vim.log.levels.INFO)
     else
-      print(('[ReloadModule] Reloaded: %s'):format(module_name))
+      vim.notify(("[ReloadModule] Changed: '%s'"):format(module_name), vim.log.levels.INFO)
     end
   end)
+
+  return newer
 end
 
 ---Almost same as `vim.cmd`, but typed as a function

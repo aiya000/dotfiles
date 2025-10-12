@@ -116,7 +116,8 @@ function M.to_pretty_string(x)
   end
 end
 
----Checks two values are deeply equal
+---Alternative of vim.deep_equal().
+---Checks two values are deeply equal.
 ---
 ---@generic T
 ---@param a T

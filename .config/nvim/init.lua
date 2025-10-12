@@ -8,7 +8,7 @@ local git = require('git')
 
 local s = fn.s
 
-Require = helper.reload_module
+Require = helper.reload_modules
 
 -------------------
 -- Global values --
