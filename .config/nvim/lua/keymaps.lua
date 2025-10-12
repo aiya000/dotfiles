@@ -209,37 +209,33 @@ end)
 
 -- `termopen()`
 map('n', '<leader>v', function()
+  local cwd = helper.read_current_buffer_dir() or error('No directory found')
   vim.cmd('vertical new')
-  helper.termopen_shell({
-    cwd = helper.read_current_buffer_dir() or error('No directory found'),
-  })
-end, { silent = true })
+  helper.termopen_shell({ cwd = cwd })
+end)
 
 map('n', '<leader><leader>v', function()
+  local cwd = helper.read_current_buffer_dir() or error('No directory found')
   vim.cmd('new')
-  helper.termopen_shell({
-    cwd = helper.read_current_buffer_dir() or error('No directory found'),
-  })
-end, { silent = true })
+  helper.termopen_shell({ cwd = cwd })
+end)
 
 map('n', '<leader>V', function()
   -- Open in the current window
   -- NOTE: 現在のウィンドウでlspのエラーなどがあると、タイミングによってその表示を持ち越してしまうので、新しいウィンドウで開く
+  local cwd = helper.read_current_buffer_dir() or error('No directory found')
   local current_win = vim.api.nvim_get_current_win()
   vim.cmd('new')
-  helper.termopen_shell({
-    cwd = helper.read_current_buffer_dir() or error('No directory found'),
-  }, false)
+  helper.termopen_shell({ cwd = cwd }, false)
   vim.api.nvim_win_close(current_win, false)
   vim.fn.feedkeys('i')
-end, { silent = true })
+end)
 
 map('n', '<leader><leader>V', function()
+  local cwd = helper.read_current_buffer_dir() or error('No directory found')
   vim.cmd('tabnew')
-  helper.termopen_shell({
-    cwd = helper.read_current_buffer_dir() or error('No directory found'),
-  })
-end, { silent = true })
+  helper.termopen_shell({ cwd = cwd })
+end)
 
 -- File explorer
 map('n', '<leader>e', function()
