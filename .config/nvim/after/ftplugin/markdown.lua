@@ -76,25 +76,5 @@ vim.keymap.set('n', '<localleader><localleader>R', function()
   })
 end, { buffer = true, silent = true })
 
--- TODO: ちゃんと.vimrcと同様に、lsp_documentSymbolあたりを使う。可能ならここで<C-k><C-f>を押すとオーバーライドするよりも、lspを導入することで済むなら、そちらの方がよい
-local function open_ddu_section_list()
-  -- TODO: なんかここ効いてないので直す
-  vim.cmd('normal! gg')
-  local ok, err = pcall(function()
-    helper.ddu_start_from_input({
-      sources = { { name = 'line' } },
-      sourceOptions = {
-        _ = {
-          matchers = { 'matcher_regex' },
-        },
-      },
-    }, '^#+ ')
-  end)
-  -- TODO: なんかここ効いてないので直す
-  vim.cmd('normal! \\<C-o>')
-  if not ok then
-    vim.notify(err, vim.log.levels.ERROR)
-  end
-end
-
-vim.keymap.set('n', '<C-k><C-f>', open_ddu_section_list, { buffer = true, silent = true })
+vim.keymap.set('n', '<C-k><C-f>', '<Cmd>Telescope lsp_document_symbols<CR>', { buffer = true, silent = true })
+vim.keymap.set('n', '<C-g>e', '<Cmd>FeMaco<CR>', { buffer = true, silent = true })
