@@ -367,7 +367,7 @@ end
 ---@see M.close_all_popups()
 function M.move_cursor_and_reset()
   local pos = vim.fn.getpos('.')
-  vim.cmd('normal! l')
+  vim.fn.feedkeys('l', 'n')
   vim.fn.setpos('.', pos)
 end
 
