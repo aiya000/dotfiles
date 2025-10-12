@@ -1,4 +1,4 @@
----プラグイン設定（ただしキーマッピングは`./keymaps.lua`に書く）
+---プラグイン設定
 
 local fn = require('utils.functions')
 local helper = require('helper')
@@ -231,60 +231,6 @@ return {
         },
       })
 
-      -- LSPの起動進捗を表示 {{{
-
-      ---@type table<string, integer>
-      local lsp_progress_notification_ids = {}
-      local notify = require('notify')
-
-      vim.lsp.handlers['$/progress'] = function(_, result, ctx)
-        local client = vim.lsp.get_client_by_id(ctx.client_id)
-        if not client then
-          return
-        end
-
-        local token = result.token
-        local value = result.value
-        local progress_key = ('%d:%s'):format(ctx.client_id, token)
-
-        if value.kind == 'begin' then
-          local notification = notify('Loading...', vim.log.levels.INFO, {
-            title = client.name,
-            timeout = 500,
-          })
-          lsp_progress_notification_ids[progress_key] = notification.id
-        elseif value.kind == 'report' then
-          local notification_id = lsp_progress_notification_ids[progress_key]
-          if notification_id == nil then
-            vim.notify('No notification found: ' .. vim.inspect({token = token, value = value}), vim.log.levels.ERROR)
-            return
-          end
-
-          local message = ('%s (%d%%)'):format(value.message, value.percentage)
-          local notification = notify(message, vim.log.levels.INFO, {
-            title = client.name,
-            replace = notification_id,
-            timeout = 500,
-          })
-          lsp_progress_notification_ids[progress_key] = notification.id
-        elseif value.kind == 'end' then
-          local message = value.message or 'Started!'
-          local notification_id = lsp_progress_notification_ids[progress_key]
-          if notification_id == nil then
-            vim.notify('No notification found: ' .. vim.inspect({token = token, value = value}), vim.log.levels.ERROR)
-            return
-          end
-
-          notify(message, vim.log.levels.INFO, {
-            title = client.name,
-            replace = notification_id,
-            timeout = 500,
-          })
-          lsp_progress_notification_ids[progress_key] = nil
-        end
-      end
-
-      -- }}}
       -- 各LSPサーバーの設定 {{{
 
       -- 共通設定
@@ -610,13 +556,9 @@ return {
             return table.concat(client_names, ', ')
           end,
           condition = function()
-            local tbl = { ['dashboard'] = true, [''] = true }
-            if tbl[vim.bo.filetype] then
-              return false
-            end
-            return true
+            return not list.has({ 'dashboard', '' }, vim.bo.filetype)
           end,
-          icon = ' LSP:',
+          icon = 'LSP: ',
           highlight = { colors.cyan, colors.bg, 'bold' },
         },
       }
@@ -2356,6 +2298,16 @@ return {
       lazy = false,
       version = "*",
     },
+
+  -- }}}
+  -- fidget.nvim {{{
+
+  {
+    'j-hui/fidget.nvim',
+    opts = {
+      -- options
+    },
+  },
 
   -- }}}
 }
