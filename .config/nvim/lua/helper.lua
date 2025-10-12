@@ -745,13 +745,6 @@ function M.clear_luasnip_highlight()
 end
 
 function M.clear_highlight()
-  -- Don't enter filetypes by :PreciousSwitch if the filetype is 'help'
-  local excluded_filetypes_for_precious_auto_switch = {
-    'help',
-  }
-  if not vim.list_contains(excluded_filetypes_for_precious_auto_switch, vim.opt.filetype:get()) then
-    pcall(M.vim_cmd, 'PreciousSwitch')
-  end
   M.close_all_popups()
   require('notify').dismiss({ silent = true, pending = true })
   vim.cmd('nohlsearch')
@@ -776,7 +769,6 @@ end
 
 function M.clear_highlight_deeply()
   print('clearing...')
-  pcall(M.vim_cmd, 'PreciousReset') -- NOTE: This is a little heavy
   M.clear_highlight()
   pcall(M.restart_lsp_related_with_current_buffer)
   print('cleared!')

@@ -1688,22 +1688,6 @@ return {
   },
 
   -- }}}
-  -- vim-precious {{{
-
-  {
-    'osyo-manga/vim-precious',
-    config = function()
-      local no_auto_switch_filetypes = { ['*'] = false }
-      vim.g.precious_enable_switch_CursorMoved = no_auto_switch_filetypes
-      vim.g.precious_enable_switch_CursorMoved_i = no_auto_switch_filetypes
-      vim.g.precious_enable_switch_CursorHold = no_auto_switch_filetypes
-      vim.g.precious_enable_switch_BufEnter = no_auto_switch_filetypes
-      vim.g.precious_enable_switchers = {}
-      vim.g.textobj_precious_no_default_key_mappings = true
-    end,
-  },
-
-  -- }}}
   -- fern.vim {{{
 
   {
@@ -2305,9 +2289,20 @@ return {
   {
     'j-hui/fidget.nvim',
     opts = {
-      -- options
+      -- TODO: 設定する
     },
   },
+
+  -- }}}
+  -- fidget.nvim {{{
+
+  {
+    'AckslD/nvim-FeMaco.lua',
+    config = function()
+      require('femaco').setup()
+    end,
+    ft = { 'markdown', 'html' },
+  }
 
   -- }}}
 }
