@@ -19,8 +19,8 @@ return list.concat(
   sm(
     { 'import', 'imp' },
     fmt([[local {name} = require('{module}')]], {
-      name = i(1, 'name'),
-      module = i(2, 'module'),
+      module = i(1, 'module'),
+      name = i(2, 'name'),
     })
   ),
 
