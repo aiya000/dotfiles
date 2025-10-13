@@ -4,44 +4,6 @@ local fn = require('utils.functions')
 local helper = require('helper')
 local list = require('utils.list')
 
----@param local_dir string -- Assuming this is a realpath (not a relative path)
-local function generate_helptags_when_existing_doc(local_dir)
-  local local_doc_dir = local_dir .. '/doc'
-  if vim.fn.isdirectory(local_doc_dir) == 1 then
-    vim.cmd('helptags ' .. local_doc_dir)
-  end
-end
-
----@param remote_repo string
----@param local_dir string
----@param should_load_from_local boolean
----@param lazynvim_plugin_config? table --LazyPlugin
-local function load_from_local_or_remote(
-  remote_repo,
-  local_dir,
-  should_load_from_local,
-  lazynvim_plugin_config
-)
-  local_dir = vim.fn.expand(local_dir) -- Make '~/somepath/nvim-foo' to realpath
-  if should_load_from_local and not vim.fn.isdirectory(local_dir) then
-    local message = ([[
-      A plugin directory not found: %s
-      Use remote repository instead.
-    ]]):format(local_dir)
-    vim.notify(message, vim.log.levels.ERROR)
-    return load_from_local_or_remote(remote_repo, local_dir, false, lazynvim_plugin_config)
-  end
-
-  local base_config = nil
-  if should_load_from_local then
-    base_config = { dir = local_dir }
-    generate_helptags_when_existing_doc(local_dir)
-  else
-    base_config = { remote_repo }
-  end
-  return vim.tbl_extend('keep', base_config, lazynvim_plugin_config or {})
-end
-
 return {
   -- catppuccin {{{
 
@@ -860,7 +822,7 @@ return {
   -- }}}
   -- bakaup.vim {{{
 
-  load_from_local_or_remote(
+  helper.load_from_local_or_remote(
     'aiya000/bakaup.vim',
     '~/Repository/bakaup.vim',
     InitLua.disable_bakaup == true,
@@ -1453,7 +1415,7 @@ return {
   -- }}}
   -- nvim-mado-scratch-buffer {{{
 
-  load_from_local_or_remote(
+  helper.load_from_local_or_remote(
     'aiya000/nvim-mado-scratch-buffer',
     '~/Repository/nvim-mado-scratch-buffer',
     InitLua.disable_scratch_buffer == true,
@@ -1472,7 +1434,7 @@ return {
   -- }}}
   -- nvim-just-stay-search {{{
 
-  load_from_local_or_remote(
+  helper.load_from_local_or_remote(
     'aiya000/nvim-just-stay-search',
     '~/Repository/nvim-just-stay-search',
     InitLua.disable_just_stay_search == true,
@@ -2192,7 +2154,7 @@ return {
   -- }}}
   -- nvim-luasnip-emoji {{{
 
-  load_from_local_or_remote(
+  helper.load_from_local_or_remote(
     'aiya000/nvim-luasnip-emoji',
     '~/Repository/nvim-luasnip-emoji',
     InitLua.disable_luasnip_emoji == true,
