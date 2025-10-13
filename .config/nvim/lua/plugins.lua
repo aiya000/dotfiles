@@ -1989,32 +1989,6 @@ return {
   },
 
   -- }}}
-  -- translate.nvim {{{
-
-  {
-    'uga-rosa/translate.nvim',
-    config = function()
-      if vim.env.NVIM_DEEPL_AUTH_KEY == nil then
-        vim.notify('translate.nvim: $NVIM_DEEPL_AUTH_KEY environment variable is not set', vim.log.levels.ERROR)
-      else
-        vim.g.deepl_api_auth_key = vim.env.NVIM_DEEPL_AUTH_KEY
-      end
-      require('translate').setup({
-        default = {
-          command = 'deepl_free',
-        },
-        preset = {
-          output = {
-            split = {
-              append = true,
-            },
-          },
-        },
-      })
-    end
-  },
-
-  -- }}}
   -- dial.nvim {{{
 
   {
@@ -2256,7 +2230,7 @@ return {
   },
 
   -- }}}
-  -- fidget.nvim {{{
+  -- nvim-FeMaco.lua {{{
 
   {
     'AckslD/nvim-FeMaco.lua',
@@ -2264,7 +2238,74 @@ return {
       require('femaco').setup()
     end,
     ft = { 'markdown', 'html' },
-  }
+  },
+
+  -- }}}
+  -- pantran.nvim {{{
+
+  {
+    'potamides/pantran.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      if vim.env.NVIM_DEEPL_AUTH_KEY == nil then
+        vim.notify('pantran.nvim: $NVIM_DEEPL_AUTH_KEY environment variable is not set', vim.log.levels.ERROR)
+      end
+      local pantran = require('pantran')
+
+      pantran.setup({
+        default_engine = 'deepl',
+        engines = {
+          deepl = {
+            auth_key = vim.env.NVIM_DEEPL_AUTH_KEY,
+            free_api = true,
+          },
+        },
+      })
+
+      ---@param target_lang string
+      local function create_opening_with_current_word(target_lang)
+        return function()
+          local word = vim.fn.expand('<cword>')
+          vim.cmd('Pantran target=' .. target_lang)
+
+          vim.schedule(function()
+            vim.api.nvim_paste(word, false, -1)
+            vim.keymap.set('n', '?', 'g?', { buffer = true, remap = true })
+            vim.keymap.set('n', '<C-k><C-j>', 'gy', { buffer = true, remap = true })
+            vim.keymap.set('n', '<C-l>', 'q', { buffer = true, remap = true })
+          end)
+        end
+      end
+
+      ---@param target_lang string
+      local function create_opening_with_selected_line(target_lang)
+        return function()
+          local start_line = vim.fn.line('v')
+          local end_line = vim.fn.line('.')
+          -- 逆順の場合もあるので、小さい方をstart_lineに
+          if start_line > end_line then
+            start_line, end_line = end_line, start_line
+          end
+
+          local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+          local selected_text = table.concat(lines, '\n')
+          vim.cmd('Pantran target=' .. target_lang)
+
+          vim.schedule(function()
+            vim.api.nvim_paste(selected_text, false, -1)
+            vim.keymap.set('n', '?', 'g?', { buffer = true, remap = true })
+            vim.keymap.set('n', '<C-k><C-j>', 'gy', { buffer = true, remap = true })
+            vim.keymap.set('n', '<C-l>', 'q', { buffer = true, remap = true })
+          end)
+        end
+      end
+
+      vim.keymap.set('n', '<leader>k', create_opening_with_current_word('EN-US'))
+      vim.keymap.set('n', '<leader>K', create_opening_with_current_word('JA'))
+      vim.keymap.set('v', '<leader>k', create_opening_with_selected_line('EN-US'))
+      vim.keymap.set('v', '<leader>K', create_opening_with_selected_line('JA'))
+    end,
+  },
 
   -- }}}
 }

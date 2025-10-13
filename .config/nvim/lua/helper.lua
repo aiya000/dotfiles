@@ -373,7 +373,7 @@ end
 ---@see M.close_all_popups()
 function M.move_cursor_and_reset()
   local pos = vim.fn.getpos('.')
-  vim.fn.feedkeys('l', 'n')
+  vim.fn.feedkeys('lh', 'n')
   vim.fn.setpos('.', pos)
 end
 
@@ -384,50 +384,6 @@ function M.close_all_popups()
     if config.relative ~= '' then -- If it is a popup window
       vim.api.nvim_win_close(window, false)
     end
-  end
-end
-
----Opens a buffer with DeepL translation result
-local function deepl_translate_open_buffer(result)
-  vim.cmd('ScratchBufferOpenNext md sp')
-  vim.cmd('put=' .. vim.fn.string(result))
-  vim.cmd('normal! gg')
-  vim.cmd('normal! "zdd')
-end
-
----DeepL translation function with multiple output methods
-function M.deepl_translate(line_count, start_line, end_line, target_lang, source_lang, methods)
-  -- If range is not specified, translate the current line, or translate the specified range
-  local lines
-  if line_count == -1 then
-    lines = { vim.fn.getline('.') }
-  else
-    lines = vim.fn.getline(start_line, end_line)
-  end
-
-  local put_by = {
-    ---@param result string
-    yank = function(result)
-      vim.fn.setreg('"', result)
-    end,
-    ---@param result string
-    echo = function(result)
-      print(result) -- Equivalent to s:Msg.echo('Normal', result)
-    end,
-    ---@param result string
-    buffer = function(result)
-      deepl_translate_open_buffer(result)
-    end,
-  }
-
-  local text = table.concat(lines, '\n')
-  local result = vim.fn['deepl#translate'](text, target_lang, source_lang)
-
-  for _, method in ipairs(methods) do
-    if not put_by[method] then
-      error('Unknown method: ' .. method)
-    end
-    put_by[method](result)
   end
 end
 

@@ -433,10 +433,6 @@ map('n', '<C-g><C-t>', vim.lsp.buf.type_definition, { silent = true })
 --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 -- end, { silent = true })
 
--- Translation
-map('n', '<leader>K', 'viw:Translate JA<CR>', { silent = true })
-map('n', '<leader>k', 'viw:Translate EN<CR>', { silent = true })
-
 -- Programming Utils
 map('n', '<leader>R', '<Plug>(quickrepl-open)', { remap = true })
 map('n', '<leader>r', '<Cmd>Jaq<CR>', { nowait = true }) -- `nowait`: 僕の<leader>rを持ち去ってるのはだれですか。`:verbose nmap <leader>r*`してもこのキーマップしか出ない
@@ -646,12 +642,6 @@ end, { expr = true })
 map('o', 'il', function()
   return vim.fn['textobj#from_regexp#mapexpr']('^\\s*\\zs.*\\ze.*$')
 end, { expr = true })
-
--- Translation
-map('v', '<leader>k', ':Translate JA<CR>', { silent = true })
-map('v', '<leader>K', ':Translate EN<CR>', { silent = true })
-map('v', '<leader><leader>k', ':Translate JA -output=split<CR>', { silent = true })
-map('v', '<leader><leader>K', ':Translate EN -output=split<CR>', { silent = true })
 
 -- Programming Utils
 map('v', '<leader>r', '<Plug>(quickrun)', { remap = true })

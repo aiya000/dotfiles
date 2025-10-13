@@ -191,22 +191,6 @@ create_command('ReplaceListSign', function()
   vim.cmd([['<,'>s/\(\s*\)- /\1・ /]])
 end, { range = true })
 
-create_command('DeeplTranslateToEn', function(opts)
-  helper.deepl_translate(opts.count, opts.line1, opts.line2, 'EN', 'JA', { 'yank', 'echo' })
-end, { range = '%' })
-
-create_command('DeeplTranslateToJa', function(opts)
-  helper.deepl_translate(opts.count, opts.line1, opts.line2, 'JA', 'EN', { 'yank', 'echo' })
-end, { range = '%' })
-
-create_command('DeeplTranslateToEnOpenBuffer', function(opts)
-  helper.deepl_translate(opts.count, opts.line1, opts.line2, 'EN', 'JA', { 'yank', 'buffer' })
-end, { range = '%' })
-
-create_command('DeeplTranslateToJaOpenBuffer', function(opts)
-  helper.deepl_translate(opts.count, opts.line1, opts.line2, 'JA', 'EN', { 'yank', 'buffer' })
-end, { range = '%' })
-
 create_command('ClaudeCodeAtGitRoot', function(opts)
   git.execute_cmd_at_git_root('ClaudeCode', opts.args or '')
 end, {
