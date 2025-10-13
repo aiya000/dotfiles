@@ -4,6 +4,7 @@
 
 local c = require('chotto')
 local fn = require('utils.functions')
+local list = require('utils.list')
 
 local s = fn.s
 
@@ -109,13 +110,29 @@ function M.compress_spaces()
 end
 
 ---Removes trailing spaces of all lines
-function M.remove_trailing_spaces()
-  if vim.bo.filetype == 'markdown' then
-    vim.notify('Removing trailing spaces in markdown file: Skipped', vim.log.levels.WARN)
+---@param force? boolean --If true, removes trailing spaces even in excluded filetypes. Default is false
+---@param range? [integer, integer] --If specified, removes trailing spaces in the range. Default is all lines.
+function M.remove_trailing_spaces(force, range)
+  force = force == true
+
+  local excluded_filetypes = {
+    'markdown',
+  }
+  if not force and list.has(excluded_filetypes, vim.bo.filetype) then
+    vim.notify(('Removing trailing spaces in %s: Skipped'):format(vim.bo.filetype), vim.log.levels.WARN)
     return
   end
   local curpos = vim.fn.getcurpos()
-  vim.cmd(':%s/\\s*$//g')
+
+  local range_str = '%'
+  if range ~= nil then
+    range_str = ('%d,%d'):format(range[1], range[2])
+  end
+
+  -- Use vim.cmd with string.format to avoid escaping issues
+  -- Match spaces, tabs, and carriage returns at line end
+  vim.cmd(([[%s s/[ \t\r]\+$//ge]]):format(range_str))
+
   vim.fn.setpos('.', curpos)
 end
 

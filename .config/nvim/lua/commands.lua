@@ -187,10 +187,6 @@ create_command('ReverseLines', '!tac', {
   desc = 'Reverse the order of lines in the selected range or entire buffer',
 })
 
-create_command('ReplaceListSign', function()
-  vim.cmd([['<,'>s/\(\s*\)- /\1・ /]])
-end, { range = true })
-
 create_command('ClaudeCodeAtGitRoot', function(opts)
   git.execute_cmd_at_git_root('ClaudeCode', opts.args or '')
 end, {
@@ -352,5 +348,10 @@ end, {
   desc = 'Edit LuaSnip snippet file for current or specified filetype',
   complete = 'filetype',
 })
+
+vim.api.nvim_create_user_command('RemoveTrailingSpacesWithForce', function(opts)
+  local range = opts.range > 0 and { opts.line1, opts.line2 } or nil
+  helper.remove_trailing_spaces(true, range)
+end, { range = true })
 
 --}}}
