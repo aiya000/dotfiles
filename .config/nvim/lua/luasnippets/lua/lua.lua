@@ -120,7 +120,7 @@ return list.concat(
 
   sm(
     { 'lambda', 'lam' },
-    fmt([[function({}) {} end]], {
+    fmt([[function({}){}end]], {
       i(1, ''),
       i(2, ''),
     })
