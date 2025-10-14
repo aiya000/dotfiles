@@ -22,7 +22,7 @@ local function delete_current_line_branch()
     return
   end
 
-  local result = vim.system({ 'git', 'branch', '-d', im.fn.shellescape(branch_name) }):wait()
+  local result = vim.system({ 'git', 'branch', '-d', branch_name }):wait()
   if result.code ~= 0 then
     vim.notify(("Failed to delete branch '%s': %s"):format(branch_name, result.stderr), vim.log.levels.ERROR)
     return
@@ -36,7 +36,18 @@ vim.keymap.set('n', 'Q', function()
   vim.api.nvim_buf_delete(0, { force = true })
 end, { buffer = true, silent = true, desc = 'Close this window' })
 
+vim.keymap.set('n', 'dd', delete_current_line_branch, {
+  buffer = true,
+  desc = 'Delete branch under cursor',
+})
+
 vim.keymap.set('n', 'D', delete_current_line_branch, {
   buffer = true,
   desc = 'Delete branch under cursor',
+})
+
+vim.keymap.set('n', '<C-r>', '<Cmd>GinBranch<CR>', {
+  buffer = true,
+  silent = true,
+  desc = 'Refresh buffer',
 })
