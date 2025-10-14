@@ -1,34 +1,42 @@
-vim.keymap.set('n', 'Q', function()
-  vim.api.nvim_buf_delete(0, { force = true })
-end, { buffer = true, silent = true })
+local function confirm_to_delete_branch(branch_name)
+  vim.api.nvim_echo({
+    {
+      ("Delete '%s' branch? (y/n):"):format(branch_name),
+      'Question',
+    }
+  }, false, {})
+  vim.cmd('redraw')
+  return vim.fn.getcharstr()
+end
 
-vim.keymap.set('n', 'D', function()
-  -- Get current line and extract branch name
+local function delete_current_line_branch()
   local line = vim.api.nvim_get_current_line()
-  -- Remove leading spaces and asterisk
   local branch_name = line:match('^[%s*]*([^%s]+)')
-
   if not branch_name then
     vim.notify('Could not extract branch name from current line', vim.log.levels.ERROR)
     return
   end
 
-  -- Ask for confirmation
-  local answer = vim.fn.input(string.format('Delete branch "%s"? (y/n): ', branch_name))
-
-  -- Clear the input prompt
-  vim.cmd('redraw')
-
-  if answer:lower() == 'y' then
-    -- Execute git branch -d
-    local result = vim.fn.system(string.format('git branch -d %s', vim.fn.shellescape(branch_name)))
-
-    if vim.v.shell_error == 0 then
-      vim.notify(string.format('Branch "%s" deleted successfully', branch_name), vim.log.levels.INFO)
-      -- Refresh the buffer
-      vim.cmd('edit')
-    else
-      vim.notify(string.format('Failed to delete branch "%s": %s', branch_name, result), vim.log.levels.ERROR)
-    end
+  local answer = confirm_to_delete_branch(branch_name)
+  if answer:lower() ~= 'y' then
+    return
   end
-end, { buffer = true, silent = true, desc = 'Delete branch under cursor' })
+
+  local result = vim.system({ 'git', 'branch', '-d', im.fn.shellescape(branch_name) }):wait()
+  if result.code ~= 0 then
+    vim.notify(("Failed to delete branch '%s': %s"):format(branch_name, result.stderr), vim.log.levels.ERROR)
+    return
+  end
+
+  vim.notify(("Branch '%s' deleted successfully"):format(branch_name), vim.log.levels.INFO)
+  vim.cmd('GinBranch') -- Refresh the buffer
+end
+
+vim.keymap.set('n', 'Q', function()
+  vim.api.nvim_buf_delete(0, { force = true })
+end, { buffer = true, silent = true, desc = 'Close this window' })
+
+vim.keymap.set('n', 'D', delete_current_line_branch, {
+  buffer = true,
+  desc = 'Delete branch under cursor',
+})
