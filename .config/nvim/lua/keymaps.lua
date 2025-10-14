@@ -304,12 +304,8 @@ map('n', '<C-h><C-c>', '<Cmd>setlocal cursorline! cursorline?<CR>', { silent = t
 map('n', '<C-h><C-r>', '<Cmd>setlocal relativenumber! relativenumber?<CR>', { silent = true })
 map('n', '<C-h><C-l>', '<Cmd>setlocal list! list?<CR>', { silent = true })
 map('n', '<C-h><C-n>', '<Cmd>setlocal number! number?<CR>', { silent = true })
--- TODO: LSPのバーチャルテキストをトグルしたい
--- map('n', '<C-h><C-i>', '<Cmd>setlocal number! number?<CR>', { silent = true })
-
-map('n', '<C-h><C-d>', function()
-  helper.toggle_diff()
-end, { silent = true })
+map('n', '<C-h>v', helper.toggle_diagnostic_virtual_text, { silent = true })
+map('n', '<C-h><C-d>', helper.toggle_diff, { silent = true })
 
 map('n', '<C-h><C-v>', function()
   local verticaledit = vim.opt_local.virtualedit
