@@ -194,6 +194,11 @@ return {
       })
 
       -- 各LSPサーバーの設定 {{{
+      --
+      -- 注意: vim.lsp.configでサーバーを設定すると、対応するファイルタイプを開いた際に
+      -- 自動的にLSPサーバーが起動します（Neovim 0.11+の仕様）
+      -- サーバー名（例: lua_ls）と実行ファイル名（例: lua-language-server）は異なる場合が
+      -- ありますが、これは正常な動作です
 
       -- 共通設定
       local navic = require('nvim-navic')
