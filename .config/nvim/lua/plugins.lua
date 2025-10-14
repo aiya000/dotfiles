@@ -156,14 +156,28 @@ return {
     end,
   },
   -- }}}
-  -- nvim-lspconfig {{{
+  -- nvim-lspconfig (legacy) {{{
+  -- Note: In Neovim 0.11+, this plugin is kept ONLY as a dependency for other plugins (nvim-navic)
+  -- Actual LSP configuration is done via vim.lsp.config
 
   {
     'neovim/nvim-lspconfig',
+    lazy = true, -- Only load when needed as a dependency
+  },
+
+  -- }}}
+  -- LSP Configuration (pseudo-plugin) {{{
+
+  {
+    'nvim-lsp-setup', -- Pseudo plugin name for organization
+    dir = vim.fn.stdpath('config'),
+    lazy = false,
+    priority = 50,
 
     dependencies = {
       'rcarriga/nvim-notify',
       'SmiteshP/nvim-navic',
+      'hrsh7th/cmp-nvim-lsp',
     },
 
     config = function()
@@ -221,10 +235,6 @@ return {
         capabilities = capabilities_common,
         on_attach = on_attach_common,
       }
-
-      -- TODO: これ必要ない？ もし必要あったら、有効化する。もし必要ないことがわかったら、コメントごと削除する
-      -- vim.lsp.enable('lua_ls')
-      -- vim.lsp.enable('ts_ls')
 
       -- }}}
     end,
