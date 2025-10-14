@@ -156,9 +156,9 @@ return {
     end,
   },
   -- }}}
-  -- nvim-lspconfig {{{
+  -- nvim-lspconfig (legacy) {{{
   -- Note: In Neovim 0.11+, this plugin is kept ONLY as a dependency for other plugins (nvim-navic)
-  -- Actual LSP configuration is done via vim.lsp.config (see below)
+  -- Actual LSP configuration is done via vim.lsp.config
 
   {
     'neovim/nvim-lspconfig',
@@ -166,7 +166,7 @@ return {
   },
 
   -- }}}
-  -- LSP Configuration (Neovim 0.11+ built-in API) {{{
+  -- LSP Configuration (pseudo-plugin) {{{
 
   {
     'nvim-lsp-setup', -- Pseudo plugin name for organization
@@ -208,9 +208,6 @@ return {
       })
 
       -- 各LSPサーバーの設定 {{{
-      --
-      -- 注意: Neovim 0.11+ではvim.lsp.config（組み込みAPI）を使用します
-      -- nvim-lspconfigプラグインは使用しません（他のプラグインの依存関係としてのみ保持）
 
       -- 共通設定
       local navic = require('nvim-navic')
