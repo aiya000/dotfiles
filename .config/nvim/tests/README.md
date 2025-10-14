@@ -2,6 +2,16 @@
 
 このディレクトリには、plenary.nvimのbustedテストフレームワークを使用したテストが含まれています。
 
+## 移行されたファイル
+
+以下のファイルのin-source testingをplenary.nvimのbustedテストに移行しました：
+
+- `lua/utils/test.lua` → `tests/utils/test_spec.lua`
+- `lua/utils/list.lua` → `tests/utils/list_spec.lua`
+- `lua/utils/functions.lua` → `tests/utils/functions_spec.lua`
+- `lua/utils/functions/s.lua` → `tests/utils/functions/s_spec.lua`
+- `lua/utils/pipe.lua` → `tests/utils/pipe_spec.lua`
+
 ## テストの実行方法
 
 ### すべてのテストを実行
@@ -65,3 +75,14 @@ plenary.nvimのbustedテストフレームワークに移行しました。
 2. テストコードとプロダクションコードの分離
 3. より標準的なテストフレームワーク
 4. より良いテストレポート
+
+### neosnippetテンプレートの更新
+
+新しいbusted形式のテストを書くためのsnippetを追加しました：
+
+- `busted_test` / `plenary_test` - 新しいbustedテストの骨組み
+- `busted_describe` / `describe` - describeブロック
+- `busted_it` / `it` - itブロック
+- `deftest` - 従来の`test()`から`it()`に更新
+
+従来の`in_source_test`スニペットは非推奨としてマークされていますが、後方互換性のために残されています。
