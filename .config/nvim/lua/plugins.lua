@@ -157,13 +157,27 @@ return {
   },
   -- }}}
   -- nvim-lspconfig {{{
+  -- Note: In Neovim 0.11+, this plugin is kept ONLY as a dependency for other plugins (nvim-navic)
+  -- Actual LSP configuration is done via vim.lsp.config (see below)
 
   {
     'neovim/nvim-lspconfig',
+    lazy = true, -- Only load when needed as a dependency
+  },
+
+  -- }}}
+  -- LSP Configuration (Neovim 0.11+ built-in API) {{{
+
+  {
+    'nvim-lsp-setup', -- Pseudo plugin name for organization
+    dir = vim.fn.stdpath('config'),
+    lazy = false,
+    priority = 50,
 
     dependencies = {
       'rcarriga/nvim-notify',
       'SmiteshP/nvim-navic',
+      'hrsh7th/cmp-nvim-lsp',
     },
 
     config = function()
@@ -195,10 +209,8 @@ return {
 
       -- 各LSPサーバーの設定 {{{
       --
-      -- 注意: vim.lsp.configでサーバーを設定すると、対応するファイルタイプを開いた際に
-      -- 自動的にLSPサーバーが起動します（Neovim 0.11+の仕様）
-      -- サーバー名（例: lua_ls）と実行ファイル名（例: lua-language-server）は異なる場合が
-      -- ありますが、これは正常な動作です
+      -- 注意: Neovim 0.11+ではvim.lsp.config（組み込みAPI）を使用します
+      -- nvim-lspconfigプラグインは使用しません（他のプラグインの依存関係としてのみ保持）
 
       -- 共通設定
       local navic = require('nvim-navic')
@@ -226,9 +238,6 @@ return {
         capabilities = capabilities_common,
         on_attach = on_attach_common,
       }
-
-      -- vim.lsp.config経由で設定されたLSPサーバーは自動的に有効化されるため、
-      -- vim.lsp.enable()の明示的な呼び出しは不要です（Neovim 0.11+の仕様）
 
       -- }}}
     end,
