@@ -304,12 +304,8 @@ map('n', '<C-h><C-c>', '<Cmd>setlocal cursorline! cursorline?<CR>', { silent = t
 map('n', '<C-h><C-r>', '<Cmd>setlocal relativenumber! relativenumber?<CR>', { silent = true })
 map('n', '<C-h><C-l>', '<Cmd>setlocal list! list?<CR>', { silent = true })
 map('n', '<C-h><C-n>', '<Cmd>setlocal number! number?<CR>', { silent = true })
--- TODO: LSPのバーチャルテキストをトグルしたい
--- map('n', '<C-h><C-i>', '<Cmd>setlocal number! number?<CR>', { silent = true })
-
-map('n', '<C-h><C-d>', function()
-  helper.toggle_diff()
-end, { silent = true })
+map('n', '<C-h>v', helper.toggle_diagnostic_virtual_text, { silent = true })
+map('n', '<C-h><C-d>', helper.toggle_diff, { silent = true })
 
 map('n', '<C-h><C-v>', function()
   local verticaledit = vim.opt_local.virtualedit
@@ -419,7 +415,6 @@ end)
 
 map('n', '<C-g><C-o>', vim.lsp.buf.hover, { silent = true }) -- Also can enter the floating window by stroke this keymap again when the floating window is opened
 map('n', '<C-g>o', helper.show_lsp_diagnostic_float, { silent = true })
-map('n', '<C-g>v', helper.toggle_diagnostic_virtual_text, { silent = true })
 map('n', '<C-g><C-a>', vim.lsp.buf.code_action, { silent = true })
 map('n', '<C-g><C-d>', vim.lsp.buf.definition, { silent = true })
 map('n', '<C-g>d', vim.lsp.buf.declaration, { silent = true })
