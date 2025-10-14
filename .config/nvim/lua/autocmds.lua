@@ -15,6 +15,17 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   end,
 })
 
+-- Open Fern drawer when nvim starts without arguments
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = augroup,
+  callback = function()
+    -- Check if no files were opened (argc() returns 0)
+    if vim.fn.argc() == 0 then
+      vim.cmd('Fern . -drawer')
+    end
+  end,
+})
+
 -- Setup Cmdwin
 vim.api.nvim_create_autocmd('CmdwinEnter', {
   group = augroup,
