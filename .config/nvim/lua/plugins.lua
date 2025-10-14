@@ -222,9 +222,8 @@ return {
         on_attach = on_attach_common,
       }
 
-      -- TODO: これ必要ない？ もし必要あったら、有効化する。もし必要ないことがわかったら、コメントごと削除する
-      -- vim.lsp.enable('lua_ls')
-      -- vim.lsp.enable('ts_ls')
+      -- vim.lsp.config経由で設定されたLSPサーバーは自動的に有効化されるため、
+      -- vim.lsp.enable()の明示的な呼び出しは不要です（Neovim 0.11+の仕様）
 
       -- }}}
     end,
