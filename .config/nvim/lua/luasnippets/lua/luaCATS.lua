@@ -10,25 +10,30 @@ local i = ls.insert_node
 return list.concat(
   sm(
     { 'document_comment', 'doc' },
-    fmt(
-      [[
-    ---
-  ]],
-      {}
-    )
+    fmt([[---]], {})
   ),
 
   {
     s(
       'param',
       fmt(
-        [[
-      ---@param {var} {type}{description}
-    ]],
+        [[@param {var} {type}{}]],
         {
           var = i(1, 'var'),
           type = i(2, 'type'),
-          description = i(3, ''),
+          i(3, ''),
+        }
+      )
+    ),
+
+    s(
+      '_param',
+      fmt(
+        [[---@param {var} {type}{}]],
+        {
+          var = i(1, 'var'),
+          type = i(2, 'type'),
+          i(3, ''),
         }
       )
     ),
@@ -36,12 +41,21 @@ return list.concat(
     s(
       'return',
       fmt(
-        [[
-      ---@return {type}{description}
-    ]],
+        [[@return {type}{}]],
         {
           type = i(1, 'type'),
-          description = i(2, ''),
+          i(2, ''),
+        }
+      )
+    ),
+
+    s(
+      '_return',
+      fmt(
+        [[---@return {type}{}]],
+        {
+          type = i(1, 'type'),
+          i(2, ''),
         }
       )
     ),
@@ -50,9 +64,7 @@ return list.concat(
   sm(
     { 'alias', 'type_alias' },
     fmt(
-      [[
-    ---@alias {NewName} {type}
-  ]],
+      [[---@alias {NewName} {type}]],
       {
         NewName = i(1, 'NewName'),
         type = i(2, 'type'),
@@ -62,26 +74,21 @@ return list.concat(
 
   sm(
     { 'define_class_type', 'defclass' },
-    fmt(
-      [[
-    ---@class {ClassName}
-    ---@field {prop_name} {type}
-  ]],
-      {
-        ClassName = i(1, 'ClassName'),
-        prop_name = i(2, 'prop_name'),
-        type = i(3, 'type'),
-      }
-    )
+    fmt([[
+      ---@class {ClassName}
+      ---@field {prop_name} {type}
+    ]], {
+      ClassName = i(1, 'ClassName'),
+      prop_name = i(2, 'prop_name'),
+      type = i(3, 'type'),
+    })
   ),
 
   {
     s(
       'class_type',
       fmt(
-        [[
-      ---@class {ClassName}
-    ]],
+        [[---@class {ClassName}]],
         {
           ClassName = i(1, 'ClassName'),
         }
@@ -91,9 +98,7 @@ return list.concat(
     s(
       'field',
       fmt(
-        [[
-      ---@field {field_name} {type}
-    ]],
+        [[@field {field_name} {type}]],
         {
           field_name = i(1, 'field_name'),
           type = i(2, 'type'),
@@ -104,9 +109,17 @@ return list.concat(
     s(
       'generic',
       fmt(
-        [[
-      ---@generic {TypeArgName}
-    ]],
+        [[@generic {TypeArgName}]],
+        {
+          TypeArgName = i(1, 'TypeArgName'),
+        }
+      )
+    ),
+
+    s(
+      '_generic',
+      fmt(
+        [[---@generic {TypeArgName}]],
         {
           TypeArgName = i(1, 'TypeArgName'),
         }
@@ -116,9 +129,7 @@ return list.concat(
     s(
       'overload',
       fmt(
-        [[
-      ---@overload fun({args}): {return_type}
-    ]],
+        [[---@overload fun({args}): {return_type}]],
         {
           args = i(1, 'args'),
           return_type = i(2, 'return_type'),
@@ -129,9 +140,7 @@ return list.concat(
     s(
       'type',
       fmt(
-        [[
-      ---@type {VarType}
-    ]],
+        [[---@type {VarType}]],
         {
           VarType = i(1, 'VarType'),
         }
@@ -141,9 +150,7 @@ return list.concat(
     s(
       'see',
       fmt(
-        [[
-      ---@see {symbol}
-    ]],
+        [[@see {symbol}]],
         {
           symbol = i(1, 'symbol'),
         }
@@ -152,38 +159,27 @@ return list.concat(
 
     s(
       'as',
-      fmt(
-        [=[
-      --[[@as {CoercedType}]]
-    ]=],
-        {
-          CoercedType = i(1, 'CoercedType'),
-        }
-      )
+      fmt([=[
+        --[[@as {CoercedType}]]
+      ]=], {
+        CoercedType = i(1, 'CoercedType'),
+      })
     ),
   },
 
   sm(
     { 'array_as', 'as_of_array' },
-    fmt(
-      [==[
-    --[=[@as {ElementType}[]]=]
-  ]==],
-      {
-        ElementType = i(1, 'ElementType'),
-      }
-    )
+    fmt([==[
+      --[=[@as {ElementType}[]]=]
+    ]==], {
+      ElementType = i(1, 'ElementType'),
+    })
   ),
 
   {
     s(
       'type_string',
-      fmt(
-        [[
-      string
-    ]],
-        {}
-      )
+      fmt([[string]], {})
     ),
 
     s(
