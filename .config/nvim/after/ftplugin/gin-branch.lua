@@ -66,3 +66,9 @@ vim.keymap.set('n', 'A', '<Cmd>GinBranch --all<CR>', {
   silent = true,
   desc = 'Show all branches',
 })
+
+vim.keymap.set('n', 's', '<Cmd>GinStatus<CR>', {
+  buffer = true,
+  silent = true,
+  desc = 'Open GinStatus',
+})
