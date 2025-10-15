@@ -1,12 +1,26 @@
+local helper = require('helper')
+local list = require('utils.list')
+
+---@param branch_name string
+---@return boolean --true if 'y'
 local function confirm_to_delete_branch(branch_name)
-  vim.api.nvim_echo({
-    {
-      ("Delete '%s' branch? (y/n):"):format(branch_name),
-      'Question',
-    }
-  }, false, {})
-  vim.cmd('redraw')
-  return vim.fn.getcharstr()
+  local protected_branches = { 'main', 'master', 'develop', 'release' }
+
+  local answer = helper.confirm_to_get_charstr(("Delete '%s' branch? (y/n):"):format(branch_name))
+  if answer:lower() ~= 'y' then
+    return false
+  end
+
+  if list.has(protected_branches, branch_name) then
+    local next_answer = helper.confirm_to_get_charstr(
+      ("'%s' is a protected branch. Are you sure you want to delete it? (y/n):"):format(branch_name)
+    )
+    if next_answer:lower() ~= 'y' then
+      return false
+    end
+  end
+
+  return true
 end
 
 local function delete_current_line_branch()
@@ -17,8 +31,8 @@ local function delete_current_line_branch()
     return
   end
 
-  local answer = confirm_to_delete_branch(branch_name)
-  if answer:lower() ~= 'y' then
+  local want_to_delete = confirm_to_delete_branch(branch_name)
+  if not want_to_delete then
     return
   end
 
@@ -36,12 +50,7 @@ vim.keymap.set('n', 'Q', function()
   vim.api.nvim_buf_delete(0, { force = true })
 end, { buffer = true, silent = true, desc = 'Close this window' })
 
-vim.keymap.set('n', 'dd', delete_current_line_branch, {
-  buffer = true,
-  desc = 'Delete branch under cursor',
-})
-
-vim.keymap.set('n', 'D', delete_current_line_branch, {
+helper.keymaps_set('n', { 'dd', 'D' }, delete_current_line_branch, {
   buffer = true,
   desc = 'Delete branch under cursor',
 })

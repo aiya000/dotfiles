@@ -54,6 +54,29 @@ function M.run_with_virtual_keymaps(keystroke)
   vim.fn.feedkeys(vim.api.nvim_replace_termcodes(keystroke, true, false, true))
 end
 
+---Sets same mapping to multiple keys
+---@param mode string | string[]
+---@param keys string[]
+---@param mapping string | fun(opts: table)
+---@param opts vim.keymap.set.Opts
+function M.keymaps_set(mode, keys, mapping, opts)
+  for _, key in ipairs(keys) do
+    vim.keymap.set(mode, key, mapping, opts)
+  end
+end
+
+---@param prompt string
+---@param hl_group? string
+---@return string
+function M.confirm_to_get_charstr(prompt, hl_group)
+  hl_group = hl_group or 'Question'
+  vim.api.nvim_echo({
+    { prompt, hl_group },
+  }, false, {})
+  vim.cmd('redraw')
+  return vim.fn.getcharstr()
+end
+
 ---@param install_dir_path string --ここのディレクトリパスにdein.vimをgit-cloneする
 function M.install_dein_if_not_installed(install_dir_path)
   if vim.fn.isdirectory(install_dir_path) == 1 then
