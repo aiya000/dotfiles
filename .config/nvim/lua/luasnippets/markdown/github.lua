@@ -1,12 +1,7 @@
 local fmt = require('luasnip.extras.fmt').fmt
+local i = require('luasnip').insert_node
 local list = require('utils.list')
-local ls = require('luasnip')
-local utils = require('utils.luasnip')
-
-local i = ls.insert_node
-local s = ls.snippet
-local sm = utils.sm
-local t = ls.text_node
+local sm = require('utils.luasnip').sm
 
 return list.concat(
   sm(

@@ -1,18 +1,7 @@
-local list = require('utils.list')
-local ls = require('luasnip')
-local s = ls.snippet
-local t = ls.text_node
-local i = ls.insert_node
 local fmt = require('luasnip.extras.fmt').fmt
-
--- Helper function to create snippets with multiple triggers
-local function sm(triggers, nodes)
-  local snippets = {}
-  for _, trigger in ipairs(triggers) do
-    table.insert(snippets, s(trigger, nodes))
-  end
-  return snippets
-end
+local i = require('luasnip').insert_node
+local list = require('utils.list')
+local sm = require('utils.luasnip').sm
 
 local blocks_snippets = list.concat(
   sm(
@@ -120,4 +109,4 @@ local blocks_snippets = list.concat(
   )
 )
 
-return { snippets = blocks_snippets, autosnippets = {} }
+return blocks_snippets

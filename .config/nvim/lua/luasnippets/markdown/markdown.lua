@@ -1,18 +1,11 @@
+local fmt = require('luasnip.extras.fmt').fmt
 local list = require('utils.list')
 local ls = require('luasnip')
+local sm = require('utils.luasnip').sm
+
+local i = ls.insert_node
 local s = ls.snippet
 local t = ls.text_node
-local i = ls.insert_node
-local fmt = require('luasnip.extras.fmt').fmt
-
--- Helper function to create snippets with multiple triggers
-local function sm(triggers, nodes)
-  local snippets = {}
-  for _, trigger in ipairs(triggers) do
-    table.insert(snippets, s(trigger, nodes))
-  end
-  return snippets
-end
 
 -- Syntax
 
@@ -127,4 +120,4 @@ vim.list_extend(
   })
 )
 
-return { snippets = markdown_snippets, autosnippets = {} }
+return markdown_snippets

@@ -3,14 +3,12 @@ local list = require('utils.list')
 
 return {
   snippets = list.concat(
-    require('luasnippets.markdown.markdown').snippets,
-    require('luasnippets.markdown.blocks').snippets,
-    require('luasnippets.markdown.html').snippets,
-    require('luasnippets.markdown.subjects').snippets,
-    require('luasnippets.markdown.markdown-pp').snippets,
-    require('luasnippets.markdown.html-attr').snippets,
+    require('luasnippets.markdown.markdown'),
+    require('luasnippets.markdown.blocks'),
+    require('luasnippets.markdown.html'),
+    require('luasnippets.markdown.html-attr'),
     require('luasnippets.markdown.github'),
-    require('luasnippets.markdown.zenn').snippets
+    require('luasnippets.markdown.zenn')
   ),
   autosnippets = {},
 }
