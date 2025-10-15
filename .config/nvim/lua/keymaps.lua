@@ -300,8 +300,8 @@ map('n', '<C-h>v', helper.toggle_diagnostic_virtual_text, { silent = true })
 map('n', '<C-h><C-d>', helper.toggle_diff, { silent = true })
 
 map('n', '<C-h><C-v>', function()
-  local verticaledit = vim.opt_local.virtualedit
-  vim.opt_local.virtualedit = (verticaledit[1] == '' or #verticaledit == 0) and 'all' or ''
+  local virtualedit = vim.wo.virtualedit
+  vim.wo.virtualedit = (virtualedit == '' or virtualedit == 'none') and 'all' or ''
   vim.cmd('set virtualedit?')
 end, { silent = true })
 
