@@ -28,11 +28,8 @@ map('n', ';', '<NOP>')
 
 -- Other than below
 map('n', '<CR>', 'o<Esc>')
-map('n', '<C-j>', '<CR>', { remap = true })
-map('n', '<C-m>', '<CR>', { remap = true })
-map('n', '<C-[>', helper.clear_highlight, { silent = true })
-map('n', '<Esc>', helper.clear_highlight, { silent = true })
-map('n', '<C-l>', helper.clear_highlight, { silent = true })
+helper.keymaps_set('n', { '<C-j>', '<C-m>' }, '<CR>', { remap = true })
+helper.keymaps_set('n', { '<C-[>', '<Esc>', '<C-l>' }, helper.clear, { silent = true })
 map('n', '<C-k><C-l>', helper.clear_highlight_deeply)
 map('n', '<C-k>o', '<Cmd>e! %<CR>', { silent = true })
 map('n', '-', '-') -- デフォルト（？）で、なぜかdirvishが開くので、無効化
