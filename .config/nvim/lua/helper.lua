@@ -408,17 +408,7 @@ function M.read_current_buffer_dir()
   return nil
 end
 
----translate.nvimのfloat windowを`close_all_popups()`で閉じると、
----次回実行時にエラーになるので、カーソル移動を使って閉じる。
----@see M.close_all_popups()
-function M.move_cursor_and_reset()
-  local pos = vim.fn.getpos('.')
-  vim.fn.feedkeys('lh', 'n')
-  vim.fn.setpos('.', pos)
-end
-
 function M.close_all_popups()
-  M.move_cursor_and_reset()
   for _, window in ipairs(vim.api.nvim_list_wins()) do
     local config = vim.api.nvim_win_get_config(window)
     if config.relative ~= '' then -- If it is a popup window
@@ -747,18 +737,18 @@ function M.clear_flash_nvim_highlight()
 end
 
 ---Clear LuaSnip snippet jump positions and highlights
-function M.clear_luasnip_highlight()
+function M.clear_luasnip()
   local ok, luasnip = pcall(require, 'luasnip')
   if ok and luasnip.session and luasnip.session.current_nodes[vim.api.nvim_get_current_buf()] then
     luasnip.unlink_current()
   end
 end
 
-function M.clear_highlight()
+function M.clear()
   M.close_all_popups()
   require('notify').dismiss({ silent = true, pending = true })
   vim.cmd('nohlsearch')
-  M.clear_luasnip_highlight()
+  M.clear_luasnip()
   pcall(M.clear_flash_nvim_highlight)
 end
 
@@ -779,13 +769,13 @@ end
 
 function M.clear_highlight_deeply()
   print('clearing...')
-  M.clear_highlight()
+  M.clear()
   pcall(M.restart_lsp_related_with_current_buffer)
   print('cleared!')
 end
 
 function M.clear_highlight_and_write()
-  M.clear_highlight()
+  M.clear()
   vim.cmd('write')
 end
 
