@@ -1332,17 +1332,24 @@ return {
       local have_host_claude_opened = false
 
       local function toggle_host()
-        if not have_host_claude_opened then
-          vim.cmd('ClaudeCodeAtGitRoot --continue')
-          have_host_claude_opened = true
-          return
+        if have_host_claude_opened then
+          vim.cmd('ClaudeCodeFocus')
         end
-        vim.cmd('ClaudeCodeFocusAtGitRoot')
+
+        local cwd = vim.fn.getcwd()
+        fn.try_finally(function()
+          vim.cmd('lcd ' .. InitLua.path_at_started)
+          vim.cmd('ClaudeCode --continue')
+          have_host_claude_opened = true
+          return nil
+        end, function()
+          vim.cmd('lcd ' .. cwd)
+        end)
       end
 
       local function toggle_docker()
         -- Docker terminal is managed globally in commands.lua
-        vim.cmd('ClaudeCodeDockerAtGitRoot')
+        vim.cmd('ClaudeCodeDocker')
       end
 
       return {
@@ -1361,20 +1368,19 @@ return {
         },
         keys = {
           { '<leader>c', nil, desc = 'Claude Code' },
-          -- See './keymaps.lua' for what is `ClaudeCode*AtGitRoot` commands
           {
             toggle_key,
             mode = { 'n' },
             toggle_host,
             desc = 'Toggle host Claude Code at git root',
           },
-          { '<leader>cr', mode = { 'n' }, '<Cmd>ClaudeCodeAtGitRoot --resume<CR>', desc = 'Resume Claude at git root' },
-          { '<leader>cC', mode = { 'n' }, '<Cmd>ClaudeCodeAtGitRoot<CR>', desc = 'New Claude at git root' },
+          { '<leader>cr', mode = { 'n' }, '<Cmd>ClaudeCode --resume<CR>', desc = 'Resume Claude at git root' },
+          { '<leader>cC', mode = { 'n' }, '<Cmd>ClaudeCode<CR>', desc = 'New Claude at git root' },
           { '<leader>cD', mode = { 'n' }, toggle_docker, desc = 'Toggle Docker Claude at git root' },
           { '<leader>cM', mode = { 'n' }, '<Cmd>ClaudeCodeSelectModel<CR>', desc = 'Select Claude model' },
-          { '<leader>cb', mode = { 'n' }, '<Cmd>ClaudeCodeAddAtGitRoot %<CR>', desc = 'Add current buffer at git root' },
-          { '<leader>cs', mode = { 'n' }, 'V:ClaudeCodeSendAtGitRoot<CR>', desc = 'Send to Claude at git root' },
-          { '<leader>cs', mode = { 'v' }, '<Cmd>ClaudeCodeSendAtGitRoot<CR>', desc = 'Send to Claude at git root' },
+          { '<leader>cb', mode = { 'n' }, '<Cmd>ClaudeCodeAdd %<CR>', desc = 'Add current buffer at git root' },
+          { '<leader>cs', mode = { 'n' }, 'V:ClaudeCodeSend<CR>', desc = 'Send to Claude at git root' },
+          { '<leader>cs', mode = { 'v' }, '<Cmd>ClaudeCodeSend<CR>', desc = 'Send to Claude at git root' },
           {
             '<leader>cs',
             '<Cmd>ClaudeCodeTreeAdd<CR>',

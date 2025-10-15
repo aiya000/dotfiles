@@ -6,7 +6,6 @@ local nodejs = require('nodejs')
 local s = require('utils.functions').s
 local telescope = require('telescope.builtin')
 
--- TODO: 型が参照できていないのを直す。たぶん.luarrc.jsonに`~/.luarocks/share/lua/5.1`あたりを指定すればいける？
 ---@type chotto.Schema<Nargs>
 local nargs_schema = c.optional(
   c.union({
@@ -187,42 +186,6 @@ create_command('ReverseLines', '!tac', {
   desc = 'Reverse the order of lines in the selected range or entire buffer',
 })
 
-create_command('ClaudeCodeAtGitRoot', function(opts)
-  git.execute_cmd_at_git_root('ClaudeCode', opts.args or '')
-end, {
-  nargs = '*',
-  desc = 'Open ClaudeCode at git root directory',
-})
-
-create_command('ClaudeCodeAddAtGitRoot', function(opts)
-  git.execute_cmd_at_git_root('ClaudeCodeAdd', opts.args or '')
-end, {
-  nargs = '*',
-  desc = 'Add file to Claude Code context at git root',
-})
-
-create_command('ClaudeCodeOpenAtGitRoot', function(opts)
-  git.execute_cmd_at_git_root('ClaudeCodeOpen', opts.args or '')
-end, {
-  nargs = '*',
-  desc = 'Open Claude Code terminal at git root',
-})
-
-create_command('ClaudeCodeSendAtGitRoot', function(opts)
-  git.execute_cmd_at_git_root('ClaudeCodeSend', opts.args or '')
-end, {
-  nargs = '*',
-  range = true,
-  desc = 'Send selection to Claude Code at git root',
-})
-
-create_command('ClaudeCodeFocusAtGitRoot', function(opts)
-  git.execute_cmd_at_git_root('ClaudeCodeFocus', opts.args or '')
-end, {
-  nargs = '*',
-  desc = 'Focus Claude Code terminal at git root',
-})
-
 ClaudeDockerTerminal = nil
 
 ---@param git_root string
@@ -266,14 +229,14 @@ local function start_creating_claude_docker_terminal(git_root, image_name, args)
   }):toggle()
 end
 
----@param git_root string
+---@param project_root string
 ---@param image_name string
 ---@param args string
-local function run_claude_docker_terminal(git_root, image_name, args)
+local function run_claude_docker_terminal(project_root, image_name, args)
   local cmd = s(
-    'docker run -it --rm -v {git_root}:/workspace -v claude-code-config:/home/vscode/.claude -e CLAUDE_CONFIG_DIR=/home/vscode/.claude -w /workspace {image_name} claude --dangerously-skip-permissions {args}',
+    'docker run -it --rm -v {project_root}:/workspace -v claude-code-config:/home/vscode/.claude -e CLAUDE_CONFIG_DIR=/home/vscode/.claude -w /workspace {image_name} claude --dangerously-skip-permissions {args}',
     {
-      git_root = vim.fn.shellescape(git_root),
+      project_root = vim.fn.shellescape(project_root),
       image_name = image_name,
       args = args,
     }
@@ -303,19 +266,15 @@ local function run_claude_docker_terminal(git_root, image_name, args)
   ClaudeDockerTerminal:toggle()
 end
 
-create_command('ClaudeCodeDockerAtGitRoot', function(opts)
-  local git_root = InitLua.git_root
-  if not git_root then
-    vim.notify('Git root not found!', vim.log.levels.ERROR)
-    return
-  end
+---@param args? string
+local function start_claude_docker(args)
+  args = args or ''
 
   -- Show ClaudeDockerTerminal when it is still running
   if ClaudeDockerTerminal ~= nil then
     ClaudeDockerTerminal:toggle()
     return
   end
-  local args = opts.args or ''
   local image_name = 'dotfiles-claude-code:latest'
 
   -- Check if image exists, if not build it
@@ -325,10 +284,15 @@ create_command('ClaudeCodeDockerAtGitRoot', function(opts)
     return
   end
 
+  local cwd = vim.fn.getcwd() -- TODO: Detect project root?
   if check_image.stdout == '' then
-    start_creating_claude_docker_terminal(git_root, image_name, args)
+    start_creating_claude_docker_terminal(cwd, image_name, args)
   end
-  run_claude_docker_terminal(git_root, image_name, args)
+  run_claude_docker_terminal(cwd, image_name, args)
+end
+
+create_command('ClaudeCodeDocker', function(opts)
+  start_claude_docker(opts.args)
 end, {
   nargs = '*',
   desc = 'Open ClaudeCode in Docker container at git root (auto-builds image if needed)',

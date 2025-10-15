@@ -270,11 +270,6 @@ map('n', [[\\E]], function()
   helper.open_explorer('tabnew', InitLua.path_at_started)
 end, { silent = true })
 
---- Claude Code
---- See `claudecode.nvim` section in `./plugins.lua`
--- TODO: めちゃめちゃバグってるので、一旦コメントアウト
--- map('n', '<leader>cm', helper.open_claude_code_watchers, { desc = 'Open ccusage and claude-monitor in new tab' })
-
 -- List up
 map('n', '<C-k><C-e>', function()
   telescope.find_files({ hidden = true })
