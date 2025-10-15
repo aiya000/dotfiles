@@ -1670,9 +1670,16 @@ return {
 
   {
     'lambdalisue/fern.vim',
+
     init = function()
       vim.g['fern#default_hidden'] = 1
       vim.g['fern#drawer_width'] = 40
+    end,
+
+    config = function()
+      if vim.fn.argc() == 0 then
+        vim.cmd('Fern . -drawer')
+      end
     end,
   },
 
