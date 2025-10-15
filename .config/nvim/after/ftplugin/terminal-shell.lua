@@ -20,7 +20,26 @@ end, {
   desc = 'Open file in parent Neovim',
 })
 
--- Setup shell command approach for opening files in parent Neovim
+-- OSC 51 handler function for opening files from terminal
+-- This is called via escape sequences from shell commands
+_G.Tapi_OpenFileInParent = function(filepath)
+  if not filepath or filepath == '' then
+    vim.notify('Tapi_OpenFileInParent: No filepath provided', vim.log.levels.ERROR)
+    return
+  end
+  
+  -- Convert relative path to absolute if needed
+  if not string.match(filepath, '^/') then
+    local cwd = vim.fn.getcwd()
+    filepath = cwd .. '/' .. filepath
+  end
+  
+  vim.schedule(function()
+    vim.cmd('edit ' .. vim.fn.fnameescape(filepath))
+  end)
+end
+
+-- Setup shell commands using OSC 51 escape sequences
 local function setup_shell_commands()
   if vim.bo.buftype ~= 'terminal' then
     return
@@ -31,16 +50,14 @@ local function setup_shell_commands()
     return
   end
 
-  -- Create a communication file for this terminal session
-  local request_file = vim.fn.stdpath('cache') .. '/nvim_parent_request_' .. job_id
-
-  -- Create a shell function script
+  -- Create shell function script that uses OSC 51 escape sequences
   local nvim_cache = vim.fn.stdpath('cache')
   local script_path = nvim_cache .. '/nvim_parent_open_' .. job_id .. '.sh'
 
-  -- Create the shell function script
-  local script_content = string.format([[#!/bin/bash
-# Neovim parent file opening functions
+  -- OSC 51 format: \e]51;["call", "function_name", ["arg1", "arg2", ...]]\a
+  -- We'll use a simpler approach with printf and escape sequences
+  local script_content = [[#!/bin/bash
+# Neovim parent file opening via OSC 51 escape sequences
 # Auto-generated for terminal integration
 
 nvim_parent_edit() {
@@ -55,15 +72,15 @@ nvim_parent_edit() {
     filepath="$(pwd)/$filepath"
   fi
   
-  # Write filepath to request file for parent Neovim to monitor
-  echo "$filepath" > "%s"
-  echo "Opening in parent Neovim: $filepath"
+  # Send OSC 51 escape sequence to call Tapi_OpenFileInParent
+  # Format: ESC]51;["call","Tapi_OpenFileInParent",["filepath"]]BEL
+  printf '\033]51;["call","Tapi_OpenFileInParent",["%s"]]\007' "$filepath"
 }
 
 # Aliases for convenience
 alias e='nvim_parent_edit'
 alias nvim='nvim_parent_edit'
-]], request_file)
+]]
 
   -- Write the script file
   local file = io.open(script_path, 'w')
@@ -76,47 +93,6 @@ alias nvim='nvim_parent_edit'
     return
   end
 
-  -- Setup file watcher for the request file
-  local timer = vim.loop.new_timer()
-  if not timer then
-    vim.notify('Failed to create timer for file monitoring', vim.log.levels.ERROR)
-    return
-  end
-
-  -- Monitor for file edit requests
-  timer:start(
-    100, -- Start after 100ms
-    200, -- Check every 200ms
-    vim.schedule_wrap(function()
-      if vim.fn.filereadable(request_file) == 1 then
-        local content = vim.fn.readfile(request_file)
-        if #content > 0 and content[1] ~= '' then
-          local filepath = content[1]
-          -- Delete the request file immediately
-          vim.fn.delete(request_file)
-          -- Open the file in parent Neovim
-          vim.schedule(function()
-            vim.cmd('edit ' .. vim.fn.fnameescape(filepath))
-          end)
-        end
-      end
-    end)
-  )
-
-  -- Cleanup on buffer delete
-  vim.api.nvim_create_autocmd('BufDelete', {
-    buffer = 0,
-    once = true,
-    callback = function()
-      if timer then
-        timer:stop()
-        timer:close()
-      end
-      vim.fn.delete(request_file)
-      vim.fn.delete(script_path)
-    end,
-  })
-
   -- Send command to source the script in the terminal
   vim.defer_fn(function()
     local source_cmd = 'source ' .. script_path .. '\n'
@@ -128,6 +104,15 @@ alias nvim='nvim_parent_edit'
       vim.fn.chansend(job_id, msg)
     end, 100)
   end, 250)
+
+  -- Cleanup on buffer delete
+  vim.api.nvim_create_autocmd('BufDelete', {
+    buffer = 0,
+    once = true,
+    callback = function()
+      vim.fn.delete(script_path)
+    end,
+  })
 end
 
 -- Setup when terminal buffer opens
