@@ -60,3 +60,9 @@ vim.keymap.set('n', '<C-r>', '<Cmd>GinBranch<CR>', {
   silent = true,
   desc = 'Refresh buffer',
 })
+
+vim.keymap.set('n', 'A', '<Cmd>GinBranch --all<CR>', {
+  buffer = true,
+  silent = true,
+  desc = 'Show all branches',
+})
