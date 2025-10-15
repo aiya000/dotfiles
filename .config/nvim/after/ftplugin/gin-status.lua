@@ -16,11 +16,18 @@ end
 
 ---Runs `git stash push --message "{message}" -- "{current_line_file_path}"`
 local function run_stash_push_message()
-  local filepath = get_current_line_file_path()
-  if filepath == nil then
+  if InitLua.git_root == nil then
+    vim.notify('git root directory is never loaded. wait.', vim.log.levels.ERROR)
+    return
+  end
+
+  local filename = get_current_line_file_path()
+  if filename == nil then
     vim.notify('Failed to parse the current line for file path', vim.log.levels.ERROR)
     return
   end
+
+  local filepath = InitLua.git_root .. '/' .. filename
 
   local message = vim.fn.input('Stash message: ')
   if message == '' then
@@ -30,7 +37,7 @@ local function run_stash_push_message()
 
   local result = vim.system({ 'git', 'stash', 'push', '--message', message, '--', filepath }):wait()
   if result.code ~= 0 then
-    vim.notify(s('Stash failed: {error}', { error = result.stderr or 'Unknown error' }), vim.log.levels.ERROR)
+    vim.notify('Stash failed: ' .. (result.stderr or 'Unknown error'), vim.log.levels.ERROR)
     return
   end
 
