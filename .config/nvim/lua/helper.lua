@@ -254,7 +254,10 @@ function M.termopen_shell(opts, should_enter_insert_mode)
   M.termopen_temporary(
     vim.env.SHELL,
     vim.tbl_extend('force', opts, {
-      env = vim.tbl_extend('keep', { NEOVIM_TERMINAL = true }, opts.env or {}),
+      env = vim.tbl_extend('keep', {
+        NEOVIM_TERMINAL = true,
+        NVIM_PARENT_ADDRESS = vim.v.servername, -- See '~/.dotfiles/.sh_generic/aliases/neovim.sh' and '~/.dotfiles/bash-toys/sources/nvim-parent-edit.sh'
+      }, opts.env or {}),
     })
   )
   vim.opt_local.filetype = 'terminal-shell'
