@@ -157,18 +157,15 @@ return list.concat(
 
   sm(
     { 'function', 'fun' },
-    fmt(
-      [[
-    function {name}({args}) {{
-      {}
-    }}
-  ]],
-      {
-        name = i(1, 'name'),
-        args = i(2, 'args'),
-        i(3, ''),
-      }
-    )
+    fmt([[
+      function {name}({}) {{
+        {}
+      }}
+    ]], {
+      name = i(1, 'name'),
+      i(2, ''),
+      i(3, ''),
+    })
   ),
 
   sm(

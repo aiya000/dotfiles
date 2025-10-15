@@ -71,7 +71,7 @@ end
 function M.execute_cmd_at_git_root(cmd_name, args)
   local git_root = InitLua.git_root
   if git_root == nil then
-    vim.notify('Git root not found.', vim.log.levels.ERROR)
+    vim.notify('Git root is never read or not found.', vim.log.levels.ERROR)
     return
   end
 

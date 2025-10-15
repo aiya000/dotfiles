@@ -9,10 +9,12 @@ M.s = require('utils.functions.s').s
 M.deep_equal = Test.deep_equal
 
 ---A try-catch-finally expression implementation
+---
 ---@generic T
 ---@param f fun(): T --A function to run that may throws error
----@param catch fun(error_message: string) --Cathces `do`'s error and returns `T`
+---@param catch fun(error_message: string): T --Cathces `do`'s error and returns `T`
 ---@param finally? fun() --A function that always called after `f` and `catch` called
+---
 ---```lua
 -----Simple usage like another languages:
 ---try(function()
@@ -23,7 +25,7 @@ M.deep_equal = Test.deep_equal
 ---  -- Finally (always called, even if no error)
 ---end)
 ---
----This result can be used as expression like Kotlin, Scala, and newer languages:
+----- This result can be used as expression like Kotlin, Scala, and newer languages:
 ---local result = try(function()
 ---  foo() -- (May throw error)
 ---  return 'Hello, World!'
@@ -69,7 +71,7 @@ end
 ---  -- Finally
 ---end)
 ---```
----@see try()
+---@see M.try
 function M.try_finally(f, finally)
   return M.try(f, function(err)
     error(err)
