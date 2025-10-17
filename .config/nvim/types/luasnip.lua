@@ -1,8 +1,8 @@
 ---@meta
 
----@alias LuaSnip.NodeReference number|LuaSnip.KeyIndexer|LuaSnip.AbsoluteIndexer|LuaSnip.Node
+---@alias LuaSnip.NodeReference number | LuaSnip.KeyIndexer | LuaSnip.AbsoluteIndexer | LuaSnip.Node
 
----@alias LuaSnip.Addable LuaSnip.Snippet|LuaSnip.MultiSnippet
+---@alias LuaSnip.Addable LuaSnip.Snippet | LuaSnip.MultiSnippet
 
 ---@alias LuaSnip.SnippetID integer
 
@@ -13,14 +13,14 @@
 ---@field expand_pos_mark_id integer
 
 ---@class LuaSnip.PreExpandEventRes
----@field env_override? table<string, string|string[]>
+---@field env_override? table<string, string | string[]>
 
 ---@class LuaSnip.ExtmarkOpts
 ---@field hl_group? string
 ---@field virt_text? [string, string][]
 ---@field priority? integer
----@field hl_mode? "replace"|"combine"|"blend"
----@field virt_text_pos? "eol"|"overlay"|"right_align"
+---@field hl_mode? "replace" | "combine" | "blend"
+---@field virt_text_pos? "eol" | "overlay" | "right_align"
 
 ---@class LuaSnip.ExtOpts
 ---@field active? LuaSnip.ExtmarkOpts
@@ -38,17 +38,17 @@
 ---@class LuaSnip.SnippetContext
 ---@field trig string
 ---@field name? string
----@field desc? string|string[]
----@field dscr? string|string[]
+---@field desc? string | string[]
+---@field dscr? string | string[]
 ---@field wordTrig? boolean
 ---@field regTrig? boolean
----@field trigEngine? string|fun(trigger: string, opts: table): table
+---@field trigEngine? string | fun(trigger: string, opts: table): table
 ---@field trigEngineOpts? table
----@field docstring? string|string[]
+---@field docstring? string | string[]
 ---@field docTrig? string
 ---@field hidden? boolean
 ---@field priority? integer
----@field snippetType? "snippet"|"autosnippet"
+---@field snippetType? "snippet" | "autosnippet"
 ---@field resolveExpandParams? fun(snippet: LuaSnip.Snippet, line_to_cursor: string, matched_trigger: string, captures: table): table
 ---@field condition? fun(line_to_cursor: string, matched_trigger: string, captures: table): boolean
 ---@field show_condition? fun(line_to_cursor: string): boolean
@@ -81,7 +81,7 @@
 ---@field raw? boolean
 
 ---@class LuaSnip.AddSnippetsOpts
----@field type? "snippets"|"autosnippets"
+---@field type? "snippets" | "autosnippets"
 ---@field key? string
 ---@field override_priority? integer
 ---@field default_priority? integer
@@ -97,7 +97,7 @@
 ---@field pos? LuaSnip.BytecolBufferPosition
 
 ---@class LuaSnip.EnvNamespaceOpts
----@field vars? fun(name: string): string[]|string
+---@field vars? fun(name: string): string[] | string
 ---@field init? fun(pos: table): table<string, string>
 ---@field eager? boolean
 ---@field multiline_vars? boolean
@@ -129,8 +129,8 @@
 ---@field dedent? boolean
 
 ---@class LuaSnip.LoaderOpts
----@field paths? string|string[]
----@field lazy_paths? string|string[]
+---@field paths? string | string[]
+---@field lazy_paths? string | string[]
 ---@field exclude? string[]
 ---@field include? string[]
 ---@field override_priority? integer
@@ -145,7 +145,7 @@
 
 ---@class LuaSnip.EditSnippetFilesOpts
 ---@field ft_filter? fun(ft: string): boolean
----@field format? "lua"|"vscode"|"snipmate"
+---@field format? "lua" | "vscode" | "snipmate"
 ---@field edit? fun(file: string)
 ---@field extend? fun(ft: string, existing_paths: string[]): string[]
 
@@ -158,9 +158,9 @@
 ---@field exit_roots? boolean
 ---@field link_children? boolean
 ---@field history? boolean
----@field update_events? string|string[]
----@field region_check_events? string|string[]
----@field delete_check_events? string|string[]
+---@field update_events? string | string[]
+---@field region_check_events? string | string[]
+---@field delete_check_events? string | string[]
 ---@field cut_selection_keys? string
 ---@field store_selection_keys? string
 ---@field enable_autosnippets? boolean
@@ -241,7 +241,7 @@
 ---@field time_fmt string
 ---@field open fun(self: LuaSnip.Log)
 ---@field log_location fun(self: LuaSnip.Log): string
----@field set_loglevel fun(self: LuaSnip.Log, level: "error"|"warn"|"info"|"debug")
+---@field set_loglevel fun(self: LuaSnip.Log, level: "error" | "warn" | "info" | "debug")
 ---@field ping fun(self: LuaSnip.Log)
 
 ---@class LuaSnip.SourceData
@@ -263,30 +263,30 @@
 ---@field log LuaSnip.Log
 ---@field snippet_source LuaSnip.SnippetSource
 ---@field config LuaSnip.Config
----@field s fun(context: string|LuaSnip.SnippetContext, nodes: LuaSnip.Node|LuaSnip.Node[], opts?: LuaSnip.SnippetOpts): LuaSnip.Snippet
----@field ms fun(contexts: LuaSnip.MultiSnippetContext, nodes: LuaSnip.Node|LuaSnip.Node[], opts?: LuaSnip.MultiSnippetOpts): LuaSnip.MultiSnippet
+---@field s fun(context: string | LuaSnip.SnippetContext, nodes: LuaSnip.Node | LuaSnip.Node[], opts?: LuaSnip.SnippetOpts): LuaSnip.Snippet
+---@field ms fun(contexts: LuaSnip.MultiSnippetContext, nodes: LuaSnip.Node | LuaSnip.Node[], opts?: LuaSnip.MultiSnippetOpts): LuaSnip.MultiSnippet
 ---@field expand fun(opts?: LuaSnip.ExpandOpts): boolean
 ---@field expand_auto fun()
 ---@field expand_repeat fun()
 ---@field expand_or_jump fun(): boolean
 ---@field snip_expand fun(snippet: LuaSnip.Snippet, opts?: LuaSnip.SnipExpandOpts): LuaSnip.ExpandedSnippet
 ---@field lsp_expand fun(body: string, opts?: LuaSnip.SnipExpandOpts)
----@field jump fun(dir: 1|-1): boolean
----@field jump_destination fun(dir: 1|-1): LuaSnip.Node
+---@field jump fun(dir: 1 | -1): boolean
+---@field jump_destination fun(dir: 1 | -1): LuaSnip.Node
 ---@field expandable fun(): boolean
 ---@field expand_or_jumpable fun(): boolean
----@field jumpable fun(dir: 1|-1): boolean
+---@field jumpable fun(dir: 1 | -1): boolean
 ---@field in_snippet fun(): boolean
 ---@field expand_or_locally_jumpable fun(): boolean
----@field locally_jumpable fun(dir: 1|-1): boolean
+---@field locally_jumpable fun(dir: 1 | -1): boolean
 ---@field choice_active fun(): boolean
----@field change_choice fun(val: 1|-1)
+---@field change_choice fun(val: 1 | -1)
 ---@field set_choice fun(choice_indx: integer)
 ---@field get_current_choices fun(): string[]
 ---@field get_active_snip fun(): LuaSnip.Snippet?
----@field get_snippets fun(ft?: string, opts?: { type?: "snippets"|"autosnippets" }): LuaSnip.Snippet[]|table<string, LuaSnip.Snippet[]>
+---@field get_snippets fun(ft?: string, opts?: { type?: "snippets" | "autosnippets" }): LuaSnip.Snippet[] | table<string, LuaSnip.Snippet[]>
 ---@field available fun<T>(snip_info?: fun(snippet: LuaSnip.Snippet): T?): table<string, T[]>
----@field add_snippets fun(ft?: string, snippets: LuaSnip.Addable[]|table<string, LuaSnip.Addable[]>, opts?: LuaSnip.AddSnippetsOpts)
+---@field add_snippets fun(ft?: string, snippets: LuaSnip.Addable[] | table<string, LuaSnip.Addable[]>, opts?: LuaSnip.AddSnippetsOpts)
 ---@field get_id_snippet fun(id: LuaSnip.SnippetID): LuaSnip.Snippet
 ---@field unlink_current fun()
 ---@field unlink_current_if_deleted fun()
@@ -303,11 +303,11 @@
 ---@field setup_snip_env fun()
 ---@field get_snip_env fun(): table
 ---@field env_namespace fun(name: string, opts: LuaSnip.EnvNamespaceOpts)
----@field t fun(text: string|string[], node_opts?: LuaSnip.NodeOpts): LuaSnip.TextNode
----@field i fun(jump_index: integer, text?: string|string[], node_opts?: LuaSnip.NodeOpts): LuaSnip.InsertNode
----@field f fun(fn: fun(argnode_text: string[][], parent: LuaSnip.Node, ...any): string|string[], argnode_references?: LuaSnip.NodeReference[]|LuaSnip.NodeReference, node_opts?: LuaSnip.FunctionNodeOpts): LuaSnip.FunctionNode
----@field c fun(pos: integer, choices: (LuaSnip.Node|LuaSnip.Node[])[], opts?: LuaSnip.ChoiceNodeOpts): LuaSnip.ChoiceNode
----@field sn fun(jump_index: integer, nodes: LuaSnip.Node[]|LuaSnip.Node, node_opts?: LuaSnip.SnippetNodeOpts): LuaSnip.SnippetNode
----@field isn fun(jump_index: integer, nodes: LuaSnip.Node[]|LuaSnip.Node, indentstring: string, node_opts?: LuaSnip.SnippetNodeOpts): LuaSnip.IndentSnippetNode
----@field d fun(jump_index: integer, fn: fun(args: string[][], parent: LuaSnip.Node, old_state: table?, ...any): LuaSnip.SnippetNode, node_references?: LuaSnip.NodeReference[]|LuaSnip.NodeReference, opts?: LuaSnip.DynamicNodeOpts): LuaSnip.DynamicNode
----@field r fun(jump_index: integer, key: string, nodes?: LuaSnip.Node[]|LuaSnip.Node, node_opts?: LuaSnip.NodeOpts): LuaSnip.RestoreNode
+---@field t fun(text: string | string[], node_opts?: LuaSnip.NodeOpts): LuaSnip.TextNode
+---@field i fun(jump_index: integer, text?: string | string[], node_opts?: LuaSnip.NodeOpts): LuaSnip.InsertNode
+---@field f fun(fn: fun(argnode_text: string[][], parent: LuaSnip.Node, ...): string | string[], argnode_references?: LuaSnip.NodeReference[] | LuaSnip.NodeReference, node_opts?: LuaSnip.FunctionNodeOpts): LuaSnip.FunctionNode
+---@field c fun(pos: integer, choices: (LuaSnip.Node | LuaSnip.Node[])[], opts?: LuaSnip.ChoiceNodeOpts): LuaSnip.ChoiceNode
+---@field sn fun(jump_index: integer, nodes: LuaSnip.Node[] | LuaSnip.Node, node_opts?: LuaSnip.SnippetNodeOpts): LuaSnip.SnippetNode
+---@field isn fun(jump_index: integer, nodes: LuaSnip.Node[] | LuaSnip.Node, indentstring: string, node_opts?: LuaSnip.SnippetNodeOpts): LuaSnip.IndentSnippetNode
+---@field d fun(jump_index: integer, fn: fun(args: string[][], parent: LuaSnip.Node, old_state: table?, ...): LuaSnip.SnippetNode, node_references?: LuaSnip.NodeReference[] | LuaSnip.NodeReference, opts?: LuaSnip.DynamicNodeOpts): LuaSnip.DynamicNode
+---@field r fun(jump_index: integer, key: string, nodes?: LuaSnip.Node[] | LuaSnip.Node, node_opts?: LuaSnip.NodeOpts): LuaSnip.RestoreNode
