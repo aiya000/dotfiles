@@ -8,13 +8,15 @@ local s = ls.snippet
 local i = ls.insert_node
 
 return list.concat(
-  sm(
-    { 'define_module', 'module' },
-    fmt([[
-      local M = {{}}
-      return M
-    ]], {})
-  ),
+  {
+    s(
+      'define_module',
+      fmt([[
+        local M = {{}}
+        return M
+      ]], {})
+    ),
+  },
 
   sm(
     { 'import', 'imp' },

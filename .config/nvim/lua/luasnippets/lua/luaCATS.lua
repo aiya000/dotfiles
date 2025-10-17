@@ -158,6 +158,16 @@ return list.concat(
     ),
 
     s(
+      'module',
+      fmt(
+        [[---@module '{module_name}']],
+        {
+          module_name = i(1, 'module_name'),
+        }
+      )
+    ),
+
+    s(
       'as',
       fmt([=[
         --[[@as {CoercedType}]]
