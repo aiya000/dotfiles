@@ -2034,10 +2034,10 @@ return {
 
           vim.keymap.set('n', '<C-l>', '"yyy<Esc>', { remap = true, buffer = true }) -- 誤爆でEscapeすることがよくあるので、@zにバックアップ
           vim.keymap.set('n', '<C-j>', '<CR>', { remap = true, buffer = true })
-          -- TODO: これで実行した場合、結果をhelper.open_buffer_to_execute()で開くようにする
-          -- vim.keymap.set('n', '<C-k><C-j>', function()
-          --   local line = vim.api.nvim_get_current_line()
-          -- end, { remap = true, buffer = true })
+          vim.keymap.set('n', '<C-k><C-j>', function()
+            local line = vim.api.nvim_get_current_line()
+            helper.open_buffer_to_execute(line)
+          end, { remap = true, buffer = true })
 
           vim.keymap.set('i', '<C-j>', '<Esc><CR>', { remap = true, buffer = true }) -- <Esc> to hide completion menu
 
