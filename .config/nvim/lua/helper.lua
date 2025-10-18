@@ -879,4 +879,17 @@ function M.arg_files()
     :totable()
 end
 
+
+---Checks if quickfix window is open and closes it
+---@return boolean true if quickfix was open and closed, false otherwise
+function M.close_quickfix_if_open()
+  for _, wininfo in ipairs(vim.fn.getwininfo()) do
+    if wininfo.quickfix == 1 then
+      vim.cmd('cclose')
+      return true
+    end
+  end
+  return false
+end
+
 return M

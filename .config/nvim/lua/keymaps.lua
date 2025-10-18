@@ -111,7 +111,11 @@ local temporary_buftypes = {
   'fern',
   'translate', -- translate.nvim
 }
+
 map('n', 'Q', function()
+  if helper.close_quickfix_if_open() then
+    return
+  end
   helper.bufclose_filetype(temporary_buftypes)
 end, { silent = true })
 
