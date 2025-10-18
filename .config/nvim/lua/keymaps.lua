@@ -91,32 +91,23 @@ map('n', '#', function()
   try_show_search_number_or_do_nothing()
 end)
 
--- Close windows of temporary buffers
-local temporary_buftypes = {
-  'aref_web',
-  'diff',
-  'gin-branch',
-  'gin-log',
-  'gin-status',
-  'git-log',
-  'git-show',
-  'help',
-  'man',
-  'netrw',
-  'dirvish',
-  'quickrun',
-  'scratch',
-  'ddu-ff',
-  'ddu-filter',
-  'fern',
-  'translate', -- translate.nvim
-}
-
 map('n', 'Q', function()
   if helper.close_quickfix_if_open() then
     return
   end
-  helper.bufclose_filetype(temporary_buftypes)
+
+  local closing_target_buffer_filetype = {
+    'diff',
+    'gin-branch',
+    'gin-log',
+    'gin-status',
+    'git-log',
+    'git-show',
+    'netrw',
+    'dirvish',
+    'quickrun',
+  }
+  helper.bufclose_filetype(closing_target_buffer_filetype)
 end)
 
 -- Foldings
