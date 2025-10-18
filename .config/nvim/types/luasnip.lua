@@ -285,7 +285,7 @@
 ---@field get_current_choices fun(): string[]
 ---@field get_active_snip fun(): LuaSnip.Snippet?
 ---@field get_snippets fun(ft?: string, opts?: { type?: "snippets" | "autosnippets" }): LuaSnip.Snippet[] | table<string, LuaSnip.Snippet[]>
----@field available fun<T>(snip_info?: fun(snippet: LuaSnip.Snippet): T?): table<string, T[]>
+---@field available fun(snip_info?: fun(snippet: LuaSnip.Snippet): unknown): table<string, unknown[]>
 ---@field add_snippets fun(ft?: string, snippets: LuaSnip.Addable[] | table<string, LuaSnip.Addable[]>, opts?: LuaSnip.AddSnippetsOpts)
 ---@field get_id_snippet fun(id: LuaSnip.SnippetID): LuaSnip.Snippet
 ---@field unlink_current fun()
@@ -305,9 +305,9 @@
 ---@field env_namespace fun(name: string, opts: LuaSnip.EnvNamespaceOpts)
 ---@field t fun(text: string | string[], node_opts?: LuaSnip.NodeOpts): LuaSnip.TextNode
 ---@field i fun(jump_index: integer, text?: string | string[], node_opts?: LuaSnip.NodeOpts): LuaSnip.InsertNode
----@field f fun(fn: fun(argnode_text: string[][], parent: LuaSnip.Node, ...): string | string[], argnode_references?: LuaSnip.NodeReference[] | LuaSnip.NodeReference, node_opts?: LuaSnip.FunctionNodeOpts): LuaSnip.FunctionNode
+---@field f fun(fn: fun(argnode_text: string[][], parent: LuaSnip.Node, ...): (string | string[]), argnode_references?: LuaSnip.NodeReference[] | LuaSnip.NodeReference, node_opts?: LuaSnip.FunctionNodeOpts): LuaSnip.FunctionNode
 ---@field c fun(pos: integer, choices: (LuaSnip.Node | LuaSnip.Node[])[], opts?: LuaSnip.ChoiceNodeOpts): LuaSnip.ChoiceNode
 ---@field sn fun(jump_index: integer, nodes: LuaSnip.Node[] | LuaSnip.Node, node_opts?: LuaSnip.SnippetNodeOpts): LuaSnip.SnippetNode
 ---@field isn fun(jump_index: integer, nodes: LuaSnip.Node[] | LuaSnip.Node, indentstring: string, node_opts?: LuaSnip.SnippetNodeOpts): LuaSnip.IndentSnippetNode
----@field d fun(jump_index: integer, fn: fun(args: string[][], parent: LuaSnip.Node, old_state: table?, ...): LuaSnip.SnippetNode, node_references?: LuaSnip.NodeReference[] | LuaSnip.NodeReference, opts?: LuaSnip.DynamicNodeOpts): LuaSnip.DynamicNode
+---@field d fun(jump_index: integer, fn: fun(args: string[][], parent: LuaSnip.Node, old_state: table?, ...): (LuaSnip.SnippetNode), node_references?: LuaSnip.NodeReference[] | LuaSnip.NodeReference, opts?: LuaSnip.DynamicNodeOpts): LuaSnip.DynamicNode
 ---@field r fun(jump_index: integer, key: string, nodes?: LuaSnip.Node[] | LuaSnip.Node, node_opts?: LuaSnip.NodeOpts): LuaSnip.RestoreNode
