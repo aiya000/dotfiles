@@ -1677,8 +1677,12 @@ return {
     end,
 
     config = function()
-      if vim.fn.argc() == 0 then
-        vim.cmd('Fern . -drawer')
+      local arg_files = helper.arg_files()
+      if #arg_files == 0 then
+        vim.schedule(function()
+          vim.cmd('Fern . -drawer')
+          vim.cmd('wincmd p')
+        end)
       end
     end,
   },

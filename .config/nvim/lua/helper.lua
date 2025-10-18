@@ -867,5 +867,27 @@ function M.load_from_local_or_remote(
   return vim.tbl_extend('keep', base_config, lazynvim_plugin_config or {})
 end
 
+---Simular to `vim.v.argv`, but only returns files (not options and $0. $0 is usually 'nvim')
+---```shell-session
+---$ nvim
+---:lua = helper.arg_files() -- returns {}
+---
+---$ nvim somefile.txt
+---:lua = helper.arg_files() -- returns { 'somefile.txt' }
+---
+---$ nvim foo.txt bar.txt
+---:lua = helper.arg_files() -- returns { 'foo.txt', 'bar.txt' }
+---
+---$ nvim --headless somefile.txt +qa
+---:lua = helper.arg_files() -- returns { 'somefile.txt' } - Unlike `vim.v.argv` ( `nvim`, `--headless`, and `+qa` omitted)
+---```
+---@return string[]
+function M.arg_files()
+  return vim.iter(vim.v.argv)
+    :filter(function(arg)
+      return vim.loop.fs_stat(vim.fn.fnamemodify(arg, ':p')) ~= nil
+    end)
+    :totable()
+end
 
 return M
