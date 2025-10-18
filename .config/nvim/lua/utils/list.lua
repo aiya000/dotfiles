@@ -1,12 +1,85 @@
-local Test = require('utils.test')
-
 local M = {}
 
-M.reduce = Test.reduce
-M.concat_array_including_nil = Test.concat_array_including_nil -- TODO: 後述のM.concatと意味が相違するので、こちらを`concat`でない名前にリネームする
-M.to_element_string = Test.to_element_string
-M.make_array_to_string = Test.make_array_to_string
-M.is_list = Test.is_array
+---TODO: `initial` argument to first argument
+---@generic T, U
+---@param array T[]
+---@param reducer fun(acc: U, item: T, index: integer): U
+---@param initial U
+---@return U
+function M.reduce(array, reducer, initial)
+  local acc = initial
+  for i = 1, #array do
+    acc = reducer(acc, array[i], i)
+  end
+  return acc
+end
+
+---table.concat()とほぼ同じ。
+---ただしtable.concat()はnilを無視するが、これは無視をしない。
+---@param xs unknown[]
+---@return string
+function M.concat_array_including_nil(xs)
+  return M.reduce(xs, function(str, new)
+    return str .. tostring(new)
+  end, '')
+end
+
+---配列の要素としての見た目に変換する
+---@param x unknown
+---@return string
+function M.to_element_string(x)
+  return type(x) == 'string' and string.format("'%s'", x) or tostring(x)
+end
+
+---Makes the taken array to a pretty string
+---
+---@param xs unknown[]
+---@return string
+---
+---Warning:
+---```lua
+----- The trailing nil is omitted because of Lua's specification
+---local result = make_array_to_string({1, 2, nil})
+---print(result) -- { 1, 2 }
+---```
+function M.make_array_to_string(xs)
+  -- nilを含む配列の長さを正しく取得
+  local max_index = 0
+  for i, _ in pairs(xs) do
+    if type(i) == 'number' and i > max_index then
+      max_index = i
+    end
+  end
+
+  local result = { '{ ' }
+  for i = 1, max_index do
+    table.insert(result, M.to_element_string(xs[i]))
+    if i < max_index then
+      table.insert(result, ', ')
+    end
+  end
+  return M.concat_array_including_nil(result) .. ' }'
+end
+
+---@param xs table | unknown[]
+---@return boolean
+function M.is_array(xs)
+  if type(xs) ~= 'table' then
+    return false
+  end
+
+  local count = 0
+  for k, _ in pairs(xs) do
+    if type(k) ~= 'number' then
+      return false
+    end
+    count = count + 1
+  end
+
+  return count == #xs
+end
+
+M.is_list = M.is_array
 
 ---Checks two lists are deeply equal or not
 ---@generic T

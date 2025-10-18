@@ -166,22 +166,9 @@ options indent
      ${0}
   end)(${2:#:args});
 
-snippet define_busted_test_for_plenary
-alias busted_test plenary_test
-options indent
-  describe('${1:module_name}', function()
-    describe('${2:function_name}()', function()
-      it('should ${3:expected_behavior}', function()
-        ${0}
-      end)
-    end)
-  end)
-
 snippet define_in_source_test_for_neovim
 alias in_source_test
 options indent
-  -- Deprecated: Use plenary.nvim busted tests instead
-  -- See tests/ directory for examples
   -- In-source testing
   if vim == nil then
     local Test = require('utils.test')
@@ -198,24 +185,10 @@ options indent
     ${0}
   end
 
-snippet busted_describe
-alias describe
-options indent
-  describe('${1:description}', function()
-    ${0}
-  end)
-
-snippet busted_it
-alias it
-options indent
-  it('should ${1:expected_behavior}', function()
-    ${0}
-  end)
-
 snippet define_test
 alias deftest
 options indent
-  it('${1:tested_function}() should ${2:what_should_be_done}', function()
+  test('${1:tested_function}() should ${2:what_should_be_done}', function()
     ${0}
   end)
 

@@ -1,12 +1,62 @@
 ---Neovimに関係がない、一般的なUtility関数を定義するモジュール
 
-local Test = require('utils.test')
-
 local M = {}
 
 M.pipe = require('utils.pipe')
 M.s = require('utils.functions.s').s
-M.deep_equal = Test.deep_equal
+
+---Alternative of vim.deep_equal().
+---Checks two values are deeply equal.
+---
+---@generic T
+---@param a T
+---@param b T
+---@return boolean
+---
+---Example:
+---```lua
+---deep_equal(1, 1)          -- true
+---deep_equal(1, 2)          -- false
+---
+---deep_equal('hello', 'hello') -- true
+---deep_equal('hello', 'world') -- false
+---
+---deep_equal(true, true)    -- true
+---deep_equal(true, false)   -- false
+---
+---deep_equal(nil, nil)      -- true
+---deep_equal(1, nil)       -- false
+---deep_equal(nil, 2)       -- false
+---
+---deep_equal({a = 1}, {a = 1}) -- true
+---deep_equal({a = 1}, {a = 2}) -- false
+---deep_equal({a = 1, b = {c = 2}}, {a = 1, b = {c = 2}}) -- true
+---
+---deep_equal({1, 2, 3}, {1, 2, 3}) -- true
+---deep_equal({1, 2, 3}, {10, 20, 30}) -- false
+---```
+---
+function M.deep_equal(a, b)
+  if type(a) ~= type(b) then
+    return false
+  end
+  if type(a) ~= 'table' then
+    return a == b
+  end
+
+  -- Check if both tables have the same keys and values
+  for key, value in pairs(a) do
+    if not M.deep_equal(value, b[key]) then
+      return false
+    end
+  end
+  for key, _ in pairs(b) do
+    if a[key] == nil then
+      return false
+    end
+  end
+  return true
+end
 
 ---A try-catch-finally expression implementation
 ---@generic T
