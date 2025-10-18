@@ -118,6 +118,7 @@ end, { buffer = true, silent = true })
 vim.keymap.set('n', '<C-r>', '<Cmd>GinStatus<CR>', { buffer = true, silent = true }) -- TODO: `gin#util#reload()`が使えそう
 vim.keymap.set('n', 'p', '<Plug>(gin-action-diff:smart:vsplit)', { buffer = true, silent = true, nowait = true })
 vim.keymap.set('n', 'P', ':<C-u>!git push', { remap = true, buffer = true })
+vim.keymap.set('n', 'gP', ':<C-u>!git pull', { remap = true, buffer = true })
 vim.keymap.set('n', 'sa', '<Plug>(gin-action-stash)', { buffer = true, silent = true })
 vim.keymap.set('n', 'S', run_stash_push_message, { buffer = true, silent = true })
 vim.keymap.set('n', 'sp', '<Cmd>Gin stash pop<CR>', { buffer = true })
