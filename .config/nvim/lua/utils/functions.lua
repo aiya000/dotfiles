@@ -236,6 +236,4 @@ function M.set_vim_dict_field(scope, varname, field, value)
   scope[varname][field] = value
 end
 
--- In-source testing
-
 return M

@@ -84,6 +84,4 @@ function M.s(text, vars)
   end)
 end
 
--- In-source testing
-
 return M

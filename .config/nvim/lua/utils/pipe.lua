@@ -122,6 +122,4 @@ function PipedData:apply_method_if_not_nil(method_name, handle)
   end, handle)
 end
 
--- In-source testing
-
 return pipe
