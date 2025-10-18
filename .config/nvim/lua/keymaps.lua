@@ -117,7 +117,7 @@ map('n', 'Q', function()
     return
   end
   helper.bufclose_filetype(temporary_buftypes)
-end, { silent = true })
+end)
 
 -- Foldings
 map('n', 'h', function()
@@ -208,34 +208,33 @@ vim.keymap.set('n', '<C-s>p', function()
   end
 end)
 
+local function fallback_to_path_at_started()
+  vim.notify('No directory found. Fallback to the path at started: ' .. InitLua.path_at_started, vim.log.levels.INFO)
+  return InitLua.path_at_started
+end
+
 -- `termopen()`
 map('n', '<leader>v', function()
-  local cwd = helper.read_current_buffer_dir() or error('No directory found')
+  local cwd = helper.read_current_buffer_dir() or fallback_to_path_at_started()
   vim.cmd('vertical new')
   helper.termopen_shell({ cwd = cwd })
 end)
 
 map('n', '<leader><leader>v', function()
-  local cwd = helper.read_current_buffer_dir() or error('No directory found')
+  local cwd = helper.read_current_buffer_dir() or fallback_to_path_at_started()
   vim.cmd('new')
   helper.termopen_shell({ cwd = cwd })
 end)
 
+--- Open in the current window
 map('n', '<leader>V', function()
-  -- Open in the current window
   -- NOTE: 現在のウィンドウでlspのエラーなどがあると、タイミングによってその表示を持ち越してしまうので、新しいウィンドウで開く
-  local cwd = helper.read_current_buffer_dir() or error('No directory found')
+  local cwd = helper.read_current_buffer_dir() or fallback_to_path_at_started()
   local current_win = vim.api.nvim_get_current_win()
   vim.cmd('new')
   helper.termopen_shell({ cwd = cwd }, false)
   vim.api.nvim_win_close(current_win, false)
   vim.fn.feedkeys('i')
-end)
-
-map('n', '<leader><leader>V', function()
-  local cwd = helper.read_current_buffer_dir() or error('No directory found')
-  vim.cmd('tabnew')
-  helper.termopen_shell({ cwd = cwd })
 end)
 
 -- File explorer
