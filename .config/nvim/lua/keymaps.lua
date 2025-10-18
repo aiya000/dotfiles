@@ -270,8 +270,7 @@ end, { silent = true })
 -- List up
 map('n', '<C-k><C-e>', function()
   telescope.find_files({ hidden = true })
-end) -- TODO: もしパフォーマンスが遅ければ、このキーマッピングはカレントディレクトリ以下のみを表示して、プロジェクトルート以下の表示（`InitLua.git_root or InitLua.path_at_started`）は以下の<C-k>eに分担させる
--- map('n', '<C-k>e', telescope.find_files)
+end)
 
 map('n', '<C-k><C-f>', ':<C-u>Telescope treesitter<CR>function')
 map('n', '<C-k><C-r>', telescope.reloader)
