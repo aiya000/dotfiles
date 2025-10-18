@@ -226,6 +226,12 @@ map('n', '<leader>V', function()
   vim.fn.feedkeys('i')
 end)
 
+map('n', '<leader><leader>V', function()
+  local cwd = helper.read_current_buffer_dir() or fallback_to_path_at_started()
+  vim.cmd('tabnew')
+  helper.termopen_shell({ cwd = cwd })
+end)
+
 -- File explorer
 map('n', '<leader>e', function()
   local picker = require('telescope').extensions.file_browser
