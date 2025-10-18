@@ -67,7 +67,7 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-fzf-native.nvim',
-      'nvim-telescope/telescope-github.nvim', -- TODO: エラーが出て動かない。後で調査
+      'nvim-telescope/telescope-github.nvim',
       'gbprod/yanky.nvim',
     },
     config = function()
