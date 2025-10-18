@@ -32,7 +32,6 @@ helper.keymaps_set('n', { '<C-j>', '<C-m>' }, '<CR>', { remap = true })
 helper.keymaps_set('n', { '<C-[>', '<Esc>', '<C-l>' }, helper.clear, { silent = true })
 map('n', '<C-k><C-l>', helper.clear_highlight_deeply)
 map('n', '<C-k>o', '<Cmd>e! %<CR>', { silent = true })
-map('n', '-', '-') -- デフォルト（？）で、なぜかdirvishが開くので、無効化
 map('n', 'gG', 'ggVG')
 map('n', 'q:', ':') -- `:`でcmdpaletteを開くので逆に`q:`でcmd-modeを開く
 map('n', '(', '(zv')
@@ -104,7 +103,6 @@ map('n', 'Q', function()
     'git-log',
     'git-show',
     'netrw',
-    'dirvish',
     'quickrun',
   }
   helper.bufclose_filetype(closing_target_buffer_filetype)
@@ -230,7 +228,11 @@ end)
 
 -- File explorer
 map('n', '<leader>e', function()
-  helper.toggle_explorer()
+  local picker = require('telescope').extensions.file_browser
+  picker.file_browser({
+    cwd = helper.read_current_buffer_dir() or fallback_to_path_at_started(),
+  })
+  helper.run_with_virtual_keymaps('<Esc>') -- Starting with normal-mode
 end, { silent = true })
 
 map('n', '<leader><leader>e', function()

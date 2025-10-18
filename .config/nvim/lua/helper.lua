@@ -190,32 +190,6 @@ function M.bufclose_filetype(filetypes)
   return closed
 end
 
----Toggles a file explorer
-function M.toggle_explorer(path)
-  path = path or vim.fn.expand('%:p:h')
-  local closed = M.bufclose_filetype({ 'dirvish' })
-  if not closed then
-    M.open_explorer('vsplit', path)
-  end
-end
-
-function M.open_explorer(split, path)
-  path = path or vim.fn.expand('%:p:h')
-  local cmd = split == 'stay' and ':Dirvish'
-    or split == 'split' and ':split | silent Dirvish'
-    or split == 'vsplit' and ':vsplit | silent Dirvish'
-    or split == 'tabnew' and ':tabnew | silent Dirvish'
-    or error('an unexpected way to open the explorer: ' .. split)
-
-  if vim.fn.isdirectory(path) == 0 then
-    -- :silent to ignore an error message. Because opening seems success
-    vim.cmd('silent ' .. cmd)
-    return
-  end
-
-  vim.cmd(cmd .. ' ' .. path)
-end
-
 ---Creates `termopen_temporary()`'s default on_exit option.
 ---See `:h job-id` for what is job_id of the returned function.
 ---See `:h on_exit`  for what this returns.
