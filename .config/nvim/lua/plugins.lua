@@ -184,14 +184,6 @@ return {
       -- unused functionがグレー化されるのを無効化
       vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', { fg = 'NONE', bg = 'NONE' })
 
-      -- ホバーウィンドウの設定を改善
-      vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-        border = 'rounded',
-        max_width = 80,
-        max_height = 20,
-        focusable = true,
-      })
-
       -- 診断表示の設定
       vim.diagnostic.config({
         virtual_text = true, -- 行末に診断テキストを表示
@@ -212,6 +204,8 @@ return {
       -- 共通設定
       local navic = require('nvim-navic')
       local capabilities_common = require('cmp_nvim_lsp').default_capabilities()
+
+      -- ホバーウィンドウの設定を改善
       local function on_attach_common(client, bufnr)
         if client.server_capabilities.documentSymbolProvider then
           navic.attach(client, bufnr)
