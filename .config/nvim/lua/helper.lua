@@ -47,11 +47,17 @@ end
 ---Storkes a stroke starts with normal mode.
 ---Also Can storke with virtual keymaps, compared to vim.cmd('normal stroke'), like `<Plug>(foo-bar)` and `viw<Plug>(foo-bar)p`.
 ---(NOTE: `vim.cmd('normal foo')` cannot handle `<Plug>(foo-bar)` correctly.)
----
----@param keystroke string --Like `<Plug>(foo-bar)`, `viw<Plug>(foo-bar)p`
----@return nil
-function M.run_with_virtual_keymaps(keystroke)
-  vim.fn.feedkeys(vim.api.nvim_replace_termcodes(keystroke, true, false, true))
+---@param keys string --Like `<Plug>(foo-bar)`, `viw<Plug>(foo-bar)p`
+function M.run_with_virtual_keymaps(keys)
+  vim.fn.feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true))
+end
+
+---Replaces keys to key codes and do `vim.api.nvim_feedkeys()` it
+---@param keys string
+---@param mode? string --Default to 'n'. Expected to 'n', 'i', and etc. See `:h nvim_feedkeys()`
+function M.feedkeys(keys, mode)
+  mode = mode or 'n'
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), mode, true)
 end
 
 ---Sets same mapping to multiple keys
