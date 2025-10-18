@@ -1215,8 +1215,12 @@ return {
       })
     end,
     keys = {
-      { 'vs', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end, desc = 'Flash' },
-      { 'vS', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
+      -- NOTE: ;で訓練中
+      -- { 'vs', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end, desc = 'Flash' },
+      { ';', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end, desc = 'Flash' },
+      -- NOTE: g;で訓練中
+      -- { 'vS', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
+      { 'g;', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
     },
   },
 

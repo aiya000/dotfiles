@@ -24,7 +24,7 @@ map('n', '<C-g><C-g>', '<C-g>')
 
 -- flash.nvimでfFtTでの進む/戻るを手に入れたので、矯正ギプスを試しに使ってみる
 map('n', ',', '<NOP>')
-map('n', ';', '<NOP>')
+-- map('n', ';', '<NOP>')
 
 -- Other than below
 map('n', '<CR>', 'o<Esc>')
