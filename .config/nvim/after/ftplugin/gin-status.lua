@@ -1,6 +1,5 @@
 local Terminal = require('toggleterm.terminal').Terminal
 local helper = require('helper')
-local s = require('utils.functions').s
 
 vim.opt_local.cursorline = true
 
@@ -71,10 +70,9 @@ local function open_commit_buffer(subcmd)
 end
 
 local ClaudeCommitTerminal = nil
-
 local function open_claude_commit_float_window()
   if ClaudeCommitTerminal ~= nil then
-    ClaudeCommitTerminal:toggle()
+    ClaudeCommitTerminal:toggle() -- Show
     return
   end
 
@@ -86,11 +84,11 @@ local function open_claude_commit_float_window()
       vim.notify('Claude commit process exited.', vim.log.levels.INFO)
     end,
   })
-  ClaudeCommitTerminal:toggle()
+  ClaudeCommitTerminal:toggle() -- Show
 
   vim.schedule(function()
     helper.keymaps_set('t', helper.escaping_keys, function()
-      ClaudeCommitTerminal:toggle() -- hide
+      ClaudeCommitTerminal:toggle() -- Hide
     end, { buffer = true })
   end)
 end
@@ -107,19 +105,9 @@ local function remove_this_file()
   end
 end
 
-vim.keymap.set('n', 'Q', function()
-  vim.cmd('bdelete!')
-end, { buffer = true, silent = true })
-
+vim.keymap.set('n', 'Q', '<Cmd>bdelete!<CR>', { buffer = true, silent = true })
 vim.keymap.set('n', 'A', run_add_patch, { buffer = true, silent = true })
 vim.keymap.set('n', 'o', ':<C-u>vsp<CR><Plug>(gin-action-edit)', { buffer = true, silent = true })
-
-vim.keymap.set('n', 'O', function()
-  vim.cmd('normal "zyy')
-  vim.cmd('tabnew')
-  vim.cmd('edit ' .. vim.fn.trim(vim.fn.getreg('z')))
-end, { buffer = true, silent = true })
-
 vim.keymap.set('n', '<C-r>', '<Cmd>GinStatus<CR>', { buffer = true, silent = true }) -- TODO: `gin#util#reload()`が使えそう
 vim.keymap.set('n', 'p', '<Plug>(gin-action-diff:smart:vsplit)', { buffer = true, silent = true, nowait = true })
 vim.keymap.set('n', 'P', ':<C-u>!git push', { remap = true, buffer = true })
@@ -130,10 +118,21 @@ vim.keymap.set('n', 'cc', open_commit_buffer, { buffer = true, silent = true })
 vim.keymap.set('n', 'cC', open_claude_commit_float_window, { buffer = true, silent = true })
 vim.keymap.set('n', 'B', '<Cmd>GinBranch<CR>', { buffer = true, silent = true })
 vim.keymap.set('n', 'C', ':<C-u>Gin switch --create<Space>', { remap = true, buffer = true })
+vim.keymap.set('n', 'cf', ':<C-u>GitCommitFixup<Space>', { remap = true, buffer = true })
+vim.keymap.set('n', '<:', '<Plug>(gin-action-restore:ours)', { buffer = true })
+vim.keymap.set('n', '>:', '<Plug>(gin-action-restore:theirs)', { buffer = true })
+vim.keymap.set('n', '==', '<Plug>(gin-action-reset)', { buffer = true })
+vim.keymap.set('n', 'R', remove_this_file, { buffer = true })
+
+vim.keymap.set('n', 'O', function()
+  vim.cmd('normal "zyy')
+  vim.cmd('tabnew')
+  vim.cmd('edit ' .. vim.fn.trim(vim.fn.getreg('z')))
+end, { buffer = true, silent = true })
 
 vim.keymap.set('n', 'S', function()
   if vim.fn.line('.') == 1 then
-    helper.feedkeys(':<C-u>Gin switch<Space>')
+    helper.feedkeys(':<C-u>Cmdpalette<CR>Gin switch<Space>')
   else
     run_stash_push_message()
   end
@@ -142,10 +141,3 @@ end, { buffer = true, silent = true })
 vim.keymap.set('n', 'ca', function()
   open_commit_buffer({ '--amend' })
 end, { buffer = true, silent = true })
-
-vim.keymap.set('n', 'cf', ':<C-u>GitCommitFixup<Space>', { remap = true, buffer = true })
-vim.keymap.set('n', '<:', '<Plug>(gin-action-restore:ours)', { buffer = true })
-vim.keymap.set('n', '>:', '<Plug>(gin-action-restore:theirs)', { buffer = true })
-vim.keymap.set('n', '==', '<Plug>(gin-action-reset)', { buffer = true })
-
-vim.keymap.set('n', 'R', remove_this_file, { buffer = true })
