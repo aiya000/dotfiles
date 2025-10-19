@@ -85,16 +85,18 @@ function M.setup_git_windows()
     vim.cmd('wincmd p')
   end
 
-  fn.wait_for(
-    function()
-      return InitLua.git_root ~= nil -- See 'Global values' section in 'init.lua' for how to assign this variable
-    end,
-    function()
-      vim.api.nvim_win_call(main_win, function()
-        M.run_with_virtual_keymaps(':<C-u>GinStatus<CR>')
-      end)
-    end
-  )
+  if vim.fn.argc() == 0 then
+    fn.wait_for(
+      function()
+        return InitLua.git_root ~= nil -- See 'Global values' section in 'init.lua' for how to assign this variable
+      end,
+      function()
+        vim.api.nvim_win_call(main_win, function()
+          M.run_with_virtual_keymaps(':<C-u>GinStatus<CR>')
+        end)
+      end
+    )
+  end
 end
 
 ---@param prompt string
