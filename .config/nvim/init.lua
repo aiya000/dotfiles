@@ -4,6 +4,7 @@ require('luarocks-config')
 
 local helper = require('helper')
 local fn = require('utils.functions')
+local git = require('git')
 
 local s = fn.s
 
@@ -27,6 +28,13 @@ InitLua = InitLua
     hydra = {}, -- To activate by keymaps. See `./lua/plugins.lua`
   }
 
+vim.schedule(function()
+  git.read_git_root(function(git_root)
+    InitLua.git_root = git_root
+    print('git root detected: ' .. git_root)
+  end)
+end)
+
 InitLua.open_on_gui = InitLua.is_macos and 'open'
   or InitLua.is_wsl and 'wslview'
   or InitLua.is_unix and 'xdg-open'
@@ -38,8 +46,6 @@ InitLua.directory = s('{backupdir}/swp', { backupdir = backupdir })
 InitLua.undodir = s('{backupdir}/undo', { backupdir = backupdir })
 InitLua.viewdir = s('{backupdir}/view', { backupdir = backupdir })
 InitLua.sessiondir = s('{backupdir}/session', { backupdir = backupdir })
-
-vim.schedule(helper.setup_git_and_windows)
 
 -- }}}
 -- vim.opt, buitin vim.g, and another options {{{

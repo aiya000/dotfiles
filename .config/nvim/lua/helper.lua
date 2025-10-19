@@ -4,7 +4,6 @@
 
 local c = require('chotto')
 local fn = require('utils.functions')
-local git = require('git')
 local list = require('utils.list')
 
 local s = fn.s
@@ -77,25 +76,18 @@ end
 ---1. Reads git root
 ---2. Opens fern.vim drawer if no files in arguments of `nvim` command
 ---3. Opens `:GinStatus` if in a git directory
-function M.setup_git_and_windows()
+function M.setup_git_windows()
   local main_win = vim.api.nvim_get_current_win()
-
-  git.read_git_root(function(git_root)
-    InitLua.git_root = git_root
-    print(('git root detected: %s'):format(git_root))
-  end)
 
   local arg_files = M.arg_files()
   if #arg_files == 0 then
-    vim.schedule(function()
-      vim.cmd('Fern . -drawer')
-      vim.cmd('wincmd p')
-    end)
+    vim.cmd('Fern . -drawer')
+    vim.cmd('wincmd p')
   end
 
   fn.wait_for(
     function()
-      return InitLua.git_root ~= nil
+      return InitLua.git_root ~= nil -- See 'Global values' section in 'init.lua' for how to assign this variable
     end,
     function()
       vim.api.nvim_win_call(main_win, function()

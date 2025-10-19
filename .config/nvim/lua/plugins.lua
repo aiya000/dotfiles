@@ -1710,6 +1710,7 @@ return {
 
   {
     'lambdalisue/fern.vim',
+
     dependencies = {
       'lambdalisue/vim-fern-git-status',
       'lambdalisue/vim-nerdfont',
@@ -1720,6 +1721,12 @@ return {
     init = function()
       vim.g['fern#default_hidden'] = 1
       vim.g['fern#drawer_width'] = 40
+      vim.g['fern#renderer'] = 'nerdfont'
+    end,
+
+    config = function()
+      vim.schedule(helper.setup_git_windows)
+      vim.fn['glyph_palette#apply']() -- とてもかっこいい色に設定する
     end,
   },
 
