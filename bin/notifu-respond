@@ -4,4 +4,9 @@
 #（/pと/mはディレクトリではない。オプション。）
 
 your_name=$1
-notifu.exe /p "$your_name" /m "$your_name respond" || true
+message=$2
+if [[ $message == '' ]] ; then
+  message="$your_name respond"
+fi
+
+( notifu.exe /p "$your_name" /m "$message" || true ) &

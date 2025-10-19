@@ -17,8 +17,9 @@ Automatically generates a Conventional Commits compliant commit message and comm
 4. Generate a commit message following:
    - Conventional Commits specification (structure and basic rules)
    - User's commit style patterns learned from repository history
-5. Execute `git commit` with the generated message
-6. **DON'T FORGET:** Run `notifu.exe /p 'Claude Code' /m Committed`
+5. **DON'T FORGET:** (**MUST**) Run `$ ~/.dotfiles/bin/notifu-respond` **before** run `git commit`
+    - Maybe this causes an error, but it's okay
+6. Execute `git commit` with the generated message
 
 ## Conventional Commits Specification Summary
 

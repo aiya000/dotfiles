@@ -71,22 +71,28 @@ local function open_commit_buffer(subcmd)
 end
 
 local ClaudeCommitTerminal = nil
+
 local function open_claude_commit_float_window()
-  -- 既存のterminalが存在し、プロセスがまだ生きている場合は再利用
   if ClaudeCommitTerminal ~= nil then
     ClaudeCommitTerminal:toggle()
-  else
-    -- 新しいterminalを作成
-    ClaudeCommitTerminal = Terminal:new({
-      cmd = 'claude /git-commit-auto',
-      direction = 'float',
-      close_on_exit = false,
-      on_exit = function()
-        ClaudeCommitTerminal = nil
-      end,
-    })
-    ClaudeCommitTerminal:toggle()
+    return
   end
+
+  ClaudeCommitTerminal = Terminal:new({
+    cmd = 'claude /git-commit-auto',
+    direction = 'float',
+    close_on_exit = false,
+    on_exit = function()
+      vim.notify('Claude commit process exited.', vim.log.levels.INFO)
+    end,
+  })
+  ClaudeCommitTerminal:toggle()
+
+  vim.schedule(function()
+    helper.keymaps_set('t', helper.escaping_keys, function()
+      ClaudeCommitTerminal:toggle() -- hide
+    end, { buffer = true })
+  end)
 end
 
 local function remove_this_file()
