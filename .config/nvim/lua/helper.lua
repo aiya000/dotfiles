@@ -4,6 +4,7 @@
 
 local c = require('chotto')
 local fn = require('utils.functions')
+local git = require('git')
 local list = require('utils.list')
 
 local s = fn.s
@@ -73,6 +74,37 @@ function M.keymaps_set(mode, keys, mapping, opts)
   end
 end
 
+---1. Reads git root
+---2. Opens fern.vim drawer if no files in arguments of `nvim` command
+---3. Opens `:GinStatus` if in a git directory
+function M.setup_git_and_windows()
+  local main_win = vim.api.nvim_get_current_win()
+
+  git.read_git_root(function(git_root)
+    InitLua.git_root = git_root
+    print(('git root detected: %s'):format(git_root))
+  end)
+
+  local arg_files = M.arg_files()
+  if #arg_files == 0 then
+    vim.schedule(function()
+      vim.cmd('Fern . -drawer')
+      vim.cmd('wincmd p')
+    end)
+  end
+
+  fn.wait_for(
+    function()
+      return InitLua.git_root ~= nil
+    end,
+    function()
+      vim.api.nvim_win_call(main_win, function()
+        M.run_with_virtual_keymaps(':<C-u>GinStatus<CR>')
+      end)
+    end
+  )
+end
+
 ---@param prompt string
 ---@param hl_group? string
 ---@return string
@@ -83,29 +115,6 @@ function M.confirm_to_get_charstr(prompt, hl_group)
   }, false, {})
   vim.cmd('redraw')
   return vim.fn.getcharstr()
-end
-
----@param install_dir_path string --ここのディレクトリパスにdein.vimをgit-cloneする
-function M.install_dein_if_not_installed(install_dir_path)
-  if vim.fn.isdirectory(install_dir_path) == 1 then
-    return
-  end
-
-  if vim.fn.executable('git') == 0 then
-    error('git required to install dein.vim, but git is not executable.')
-  end
-
-  print('Installing dein.vim...')
-  local result = vim
-    .system({ 'git', 'clone', 'https://github.com/Shougo/dein.vim', install_dir_path }, { text = true })
-    :wait()
-
-  if result.code ~= 0 then
-    print('Failed to install dein.vim. Result:')
-    fn.print_table(result)
-    error('Exit.')
-  end
-  print('Done!')
 end
 
 ---@return string | nil
