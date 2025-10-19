@@ -2325,6 +2325,10 @@ return {
 
       pantran.setup({
         default_engine = 'deepl',
+        ui = {
+          width_percentage = 0.8,
+          height_percentage = 0.9,
+        },
         engines = {
           deepl = {
             auth_key = vim.env.NVIM_DEEPL_AUTH_KEY,
