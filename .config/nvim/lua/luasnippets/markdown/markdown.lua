@@ -42,16 +42,14 @@ vim.list_extend(
   markdown_snippets,
   sm(
     { 'block', 'bl' },
-    fmt(
-      [[
-```{}
-{}
-```]],
-      {
-        i(1, '#:type'),
-        i(2, ''),
-      }
-    )
+    fmt([[
+      ```{}
+      {}
+      ```
+    ]], {
+      i(1, ''),
+      i(2, ''),
+    })
   )
 )
 

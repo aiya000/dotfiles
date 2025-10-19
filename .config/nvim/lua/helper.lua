@@ -10,6 +10,8 @@ local s = fn.s
 
 local M = {}
 
+M.escaping_keys = { '<Esc>', '<C-[>','<C-l>' }
+
 ---@see M.reload_module
 function M.reload_modules(...)
   return vim.iter({...}):map(M.reload_module):totable()
@@ -64,7 +66,7 @@ end
 ---@param mode string | string[]
 ---@param keys string[]
 ---@param mapping string | fun(opts: table)
----@param opts vim.keymap.set.Opts
+---@param opts? vim.keymap.set.Opts
 function M.keymaps_set(mode, keys, mapping, opts)
   for _, key in ipairs(keys) do
     vim.keymap.set(mode, key, mapping, opts)
@@ -625,27 +627,6 @@ function M.open_diagnostic_detail()
   end
 end
 
-function M.open_claude_code_watchers()
-  -- Open watchers
-  vim.cmd('tabnew')
-  local ccusage_job = vim.fn.jobstart({ 'ccusage', 'blocks', '--live' }, { term = true })
-  vim.opt_local.filetype = 'claude-code-watcher' -- See `after/ftplugin/claude-code-watcher.lua` for keymaps and autocmds
-  vim.cmd('vertical new')
-  local claude_monitor_job = vim.fn.jobstart(
-    { 'claude-monitor', '--plan', 'pro', '--timezone', 'Asia/Tokyo' },
-    { term = true }
-  )
-  vim.opt_local.filetype = 'claude-code-watcher'
-
-  ---@type ClaudeCodeWatchersTabState
-  vim.b.tab_state = {
-    ccusage_job = ccusage_job,
-    claude_monitor_job = claude_monitor_job,
-    ccusage_pid = vim.fn.jobpid(ccusage_job),
-    claude_monitor_pid = vim.fn.jobpid(claude_monitor_job),
-  }
-end
-
 ---Toggle LSP diagnostic virtual text
 function M.toggle_diagnostic_virtual_text()
   local current_config = vim.diagnostic.config()
@@ -654,10 +635,10 @@ function M.toggle_diagnostic_virtual_text()
   print('LSP virtual text: ' .. (new_virtual_text and 'enabled' or 'disabled'))
 end
 
-local copilot_term = nil
+local CopilotTerm = nil
 function M.toggle_copilot_cli()
-  if copilot_term == nil then
-    copilot_term = require('toggleterm.terminal').Terminal:new({
+  if CopilotTerm == nil then
+    CopilotTerm = require('toggleterm.terminal').Terminal:new({
       cmd = ([[
         copilot
           --allow-tool write
@@ -677,13 +658,13 @@ function M.toggle_copilot_cli()
       end,
     })
   end
-  copilot_term:toggle()
+  CopilotTerm:toggle()
 end
 
-local gemini_term = nil
+local GeminiTerm = nil
 function M.toggle_gemini_cli()
-  if gemini_term == nil then
-    gemini_term = require('toggleterm.terminal').Terminal:new({
+  if GeminiTerm == nil then
+    GeminiTerm = require('toggleterm.terminal').Terminal:new({
       cmd = 'gemini',
       hidden = true,
       direction = 'float',
@@ -693,7 +674,7 @@ function M.toggle_gemini_cli()
       end,
     })
   end
-  gemini_term:toggle()
+  GeminiTerm:toggle()
 end
 
 ---Clears flash.nvim highlights
@@ -729,15 +710,19 @@ function M.restart_lsp_related_with_current_buffer()
     'GitHub Copilot', -- TODO: 効いてない？
   }
 
+  -- Clear all diagnostics for current buffer (including virtual text)
+  vim.diagnostic.reset(nil, 0)
+
   local clients = vim.lsp.get_clients({ bufnr = 0 })
   for _, client in ipairs(clients) do
-    if not vim.list_contains(excluded_lsp_servers) then
+    if not vim.list_contains(excluded_lsp_servers, client.name) then
       -- Toggle
       vim.lsp.enable(client.name, false)
       vim.lsp.enable(client.name, true)
     end
   end
 end
+
 
 function M.clear_highlight_deeply()
   print('clearing...')

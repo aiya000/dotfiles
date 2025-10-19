@@ -245,14 +245,6 @@ map('n', '<leader><leader>e', function()
   helper.open_explorer('split')
 end, { silent = true })
 
-map('n', '<leader>E', function()
-  helper.open_explorer('stay')
-end, { silent = true })
-
-map('n', '<leader><leader>E', function()
-  helper.open_explorer('tabnew')
-end, { silent = true })
-
 map('n', [[\e]], function()
   helper.toggle_explorer(InitLua.path_at_started)
 end, { silent = true })

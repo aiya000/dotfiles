@@ -190,6 +190,9 @@ end
 ---```
 function M.wait_for(p, f, interval)
   local timer = vim.loop.new_timer()
+  if timer == nil then
+    error('Failed to create a new timer')
+  end
 
   timer:start(0, interval or 1000, function()
     if p() then

@@ -33,6 +33,15 @@ vim.schedule(function()
     InitLua.git_root = git_root
     print(('git root detected: %s'):format(git_root))
   end)
+
+  fn.wait_for(
+    function()
+      return InitLua.git_root ~= nil
+    end,
+    function()
+      helper.run_with_virtual_keymaps(':<C-u>GinStatus<CR>')
+    end
+  )
 end)
 
 InitLua.open_on_gui = InitLua.is_macos and 'open'

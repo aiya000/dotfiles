@@ -1201,7 +1201,7 @@ return {
         },
         modes = {
           char = {
-            char_actions = function(motion)
+            char_actions = function()
               -- ftは常に右、FTは常に左
               return {
                 ['f'] = 'right',
