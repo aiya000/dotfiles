@@ -733,3 +733,6 @@ install-luaprompt:
 
 install-ffmpeg:
 	which ffmpeg || $(AptInstall) ffmpeg
+
+install-editprompt:
+	which editprompt || $(NPMInstall) editprompt
