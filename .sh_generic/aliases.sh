@@ -296,6 +296,7 @@ if i_have git ; then
   alias gclone='git clone --recurse-submodules'
   alias gf='git fetch'
   alias gfo='git fetch origin'
+  alias gfp='git fetch --prune'  # GitHub（など）の上に既にない`remotes/origin/xxxx`のようなリモート追跡ブランチを、ローカルから削除するやつ
   alias gtag='git tag'
   alias gtag-delete='git tag --delete'
   alias gtagd='git tag --delete'
