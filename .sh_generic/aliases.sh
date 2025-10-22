@@ -20,6 +20,7 @@ alias ls='ls --color=auto --group-directories-first'
 alias mv='mv -i'
 alias sl=ls
 alias rm=rm-dust  # Aaaaaaaaaaaaaaaa!!
+alias du='du -h'
 
 if i_have batcat ; then
   alias batcat-with-default-options='batcat $DOTFILES_BATCAT_DEFAULT_OPTIONS'
@@ -27,7 +28,7 @@ if i_have batcat ; then
   alias cat=batcat-with-default-options
 fi
 
-alias du='du -h'
+i_have btop && alias top=btop
 
 # NOTE: Who did define the original - ?
 function - () {
@@ -38,8 +39,6 @@ function - () {
 alias_of sudo 'sudo '  # Enable aliases on sudo
 alias_of mysql 'mysql --pager="less -r -S -n -i -F -X"'
 alias_of rg 'rg --color always --hidden'
-
-i_have say || alias say=espeak
 
 # }}}
 # Common functions {{{
@@ -452,34 +451,10 @@ function gitlab-clone () {
 # }}}
 # Claude Code {{{
 
-# TODO: nvmのロードタイミングのせいだと思うけど、ここで分岐させると、うまく定義できない。直す。load-my-envにhook的なものをサポートさせるのがいいと思う
-# i_have claude && alias c=claude
-# alias_of ccusage 'ccusage blocks --live'
-
 alias c=claude
 alias cresume='claude --resume'
 alias ccontinue='claude --continue'
 alias cc=ccontinue
-alias ccommit='claude "gitのインデックスツリーの各変更を事柄ごとにgit-addして、その事柄ごとにgit-commitをしてください。必要があれば`git add --patch`を使ってください。"' # うまく動いてない気がする
-
-alias ccusage='ccusage blocks --live --refresh-interval 60'
-alias_of claude-monitor 'claude-monitor --plan pro --timezone Asia/Tokyo --refresh-rate 60'
-
-function claude-with-monitors () {
-  local claude_command=$*
-  local current_dir=$(pwd)
-
-  tmux split-window -h
-  tmux split-window -v
-
-  # Sleep to wait for starting up shell
-  sleep 2
-  tmux send-keys -t 1 "cd $current_dir && ccusage" Enter
-  tmux send-keys -t 2 "cd $current_dir && claude-monitor" Enter
-
-  tmux select-pane -t 0
-  claude "$*"
-}
 
 # }}}
 # Eco Systems for Node.js, TypeScript, and JavaScript  {{{
