@@ -1725,7 +1725,6 @@ return {
     end,
 
     config = function()
-      vim.schedule(helper.setup_git_windows)
       vim.fn['glyph_palette#apply']() -- とてもかっこいい色に設定する
     end,
   },
