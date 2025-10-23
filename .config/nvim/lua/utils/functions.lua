@@ -78,6 +78,36 @@ function M.try_finally(f, finally)
   end, finally)
 end
 
+---Creates a readonly table
+---@generic K, V
+---@param x table<K, V>
+---@return table<K, V> --But readonly
+function M.readonly(x)
+  return setmetatable({}, {
+    __index = x,
+    __newindex = function(_, key, value)
+      error(('The table is readonly. { key = %s, value = %s }'):format(key, value))
+    end,
+    __metatable = false -- getmetatableを防ぐ
+  })
+end
+
+
+---Simular to `readonly()`
+---```lua
+----- These are same:
+---local x = readonly({ value = 10 })
+---local y = readonly_value(10)
+---```
+---@generic T
+---@param value T
+---@return { value: T }
+function M.readonly_value(value)
+  return M.readonly({
+    value = value,
+  })
+end
+
 ---Quotes a string 'x' to `"'x'"` when string,
 ---makes table to string by `make_table_to_string()` when table,
 ---otherwise simply make to string by `tostring()`
