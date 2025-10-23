@@ -68,12 +68,10 @@ return {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-fzf-native.nvim',
       'nvim-telescope/telescope-github.nvim',
-      'nvim-telescope/telescope-file-browser.nvim',
       'gbprod/yanky.nvim',
     },
     config = function()
       local actions = require('telescope.actions')
-      local fb_actions = require('telescope').extensions.file_browser.actions
       require('telescope').setup({
         defaults = {
           mappings = {
@@ -103,9 +101,6 @@ return {
             mappings = {
               i = {},
               n = {
-                E = fb_actions.create,
-                D = fb_actions.remove,
-                dd = fb_actions.remove,
                 o = actions.select_default,
                 O = actions.select_tab,
                 V = actions.select_vertical,
@@ -117,7 +112,6 @@ return {
       })
       require('telescope').load_extension('fzf')
       require('telescope').load_extension('gh')
-      require('telescope').load_extension('file_browser')
       require('telescope').load_extension('yank_history')
     end,
   },

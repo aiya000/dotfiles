@@ -198,7 +198,7 @@ vim.keymap.set('n', '<C-s>p', function()
 end)
 
 local function fallback_to_path_at_started()
-  vim.notify('No directory found. Fallback to the path at started: ' .. InitLua.path_at_started, vim.log.levels.INFO)
+  vim.api.nvim_echo({ 'No directory found. Fallback to the path at started: ' .. InitLua.path_at_started }, false, {})
   return InitLua.path_at_started
 end
 
@@ -234,11 +234,7 @@ end)
 
 -- File explorer
 map('n', '<leader>e', function()
-  local picker = require('telescope').extensions.file_browser
-  picker.file_browser({
-    cwd = helper.read_current_buffer_dir() or fallback_to_path_at_started(),
-  })
-  helper.run_with_virtual_keymaps('<Esc>') -- Starting with normal-mode
+  vim.notify('TODO', vim.log.levels.ERROR)
 end, { silent = true })
 
 map('n', '<leader><leader>e', function()
