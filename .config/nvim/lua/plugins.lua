@@ -1475,7 +1475,13 @@ return {
           when_file_buffer = vim.fn.expand('~/tmp/scratch-%d'),
         },
         default_file_ext = 'md',
-        default_open_method = 'vsp',
+        default_open_method = {
+          method = 'float',
+          size = {
+            width = 100,
+            height = 100,
+          },
+        },
         default_buffer_size = 'no-auto-resize',
       },
     }
