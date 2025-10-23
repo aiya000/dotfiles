@@ -72,7 +72,7 @@ Use it.
 
 #### Conversations
 
-- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notifu-respond copilot-cli &`.
+- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notifu-respond copilot-cli`.
 
 ### Read this section **if you are gemini-cli**
 
@@ -80,7 +80,7 @@ Use it.
 
 #### Conversations
 
-- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notifu-respond gemini-cli &`.
+- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notifu-respond gemini-cli`.
 
 ### Your character
 
