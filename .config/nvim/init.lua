@@ -79,7 +79,7 @@ vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.laststatus = 3 -- For incline.nvim
 vim.opt.linebreak = true
-vim.opt.list = true
+vim.opt.list = false
 vim.opt.listchars = { tab = '»_', trail = '_', extends = '»', precedes = '«', nbsp = '%', eol = '↲' }
 vim.opt.matchpairs:append({ '<:>', '（:）', '｛:｝', '「:」', '＜:＞', '『:』', '【:】' })
 vim.opt.foldenable = false
