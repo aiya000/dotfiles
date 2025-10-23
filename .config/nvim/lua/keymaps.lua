@@ -417,26 +417,9 @@ map('n', '<C-g>d', vim.lsp.buf.declaration, { silent = true })
 map('n', '<C-g><C-i>', vim.lsp.buf.implementation, { silent = true })
 map('n', '<C-g><C-t>', vim.lsp.buf.type_definition, { silent = true })
 
--- TODO: これはなゆちゃんがおすすめしてくれたやつ。設定する？
--- map('n', '<C-k>', vim.lsp.buf.signature_help, { silent = true })
--- map('n', '<space>wa', vim.lsp.buf.add_workspace_folder, { silent = true })
--- map('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, { silent = true })
--- map('n', '<space>wl', function()
---   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
--- end, { silent = true })
-
 -- Programming Utils
 map('n', '<leader>R', '<Plug>(quickrepl-open)', { remap = true })
 map('n', '<leader>r', '<Cmd>Jaq<CR>', { nowait = true }) -- `nowait`: 僕の<leader>rを持ち去ってるのはだれですか。`:verbose nmap <leader>r*`してもこのキーマップしか出ない
-
---- Opens an editprompt in a new tmux pane, and then inserts the result text automatically.
---- This is useful when you want to write a long text for your AI Companion.
-map('n', '<leader>i', function()
-  local current_path = vim.fn.system('tmux display-message -p "#{pane_current_path}"'):gsub('\n', '')
-  local pane_id = vim.fn.system('tmux display-message -p "#{pane_id}"'):gsub('\n', '')
-  vim.cmd('startinsert')
-  vim.system({ 'tmux', 'split-window', '-v', '-l', '15', '-c', current_path, 'editprompt', '--editor', 'nvim', '--always-copy', '--target-pane', pane_id }):wait()
-end)
 
 -- File Manupilation
 map('n', '<leader>b', '<Cmd>MadoScratchBufferOpenFile md<CR>', { silent = true })
