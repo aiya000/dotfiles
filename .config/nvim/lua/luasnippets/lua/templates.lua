@@ -27,7 +27,7 @@ return list.concat(
   ),
 
   sm(
-    { 'class', 'cla' },
+    { 'define_class' },
     fmt([[
       ---@class {ClassName}
       local {ClassName} = {{}}
@@ -55,42 +55,6 @@ return list.concat(
     })
   ),
 
-  -- See `:h vim.list_extend()` for about another arguments.
-  -- Consider define below fucntion when you cannot use `vim`. {{{
-  -- ```lua
-  -----Simular to `vim.list_extend()`, but can take multiple lists (varargs).
-  -----
-  -----@generic T
-  -----@param ... T
-  -----@return T[]
-  -----
-  -----Example:
-  -----```lua
-  -----concat(
-  -----  { 1, 2, 3 },
-  -----  { 4, 5 },
-  -----  { 6 }
-  -----) -- { 1, 2, 3, 4, 5, 6 }
-  -----```
-  -- function concat(...)
-  --   local result = {}
-  --   for _, xs in ipairs({ ... }) do
-  --     for _, x in ipairs(xs) do
-  --       table.insert(result, x)
-  --     end
-  --   end
-  --   return result
-  -- end
-  -- ```
-  -- }}}
-  sm(
-    { 'list_concat', 'concat' },
-    fmt([[vim.fn.extendnew({xs}, {ys})]], {
-      xs = i(1, 'xs'),
-      ys = i(2, 'ys'),
-    })
-  ),
-
   {
     s(
       'list_push',
@@ -108,46 +72,6 @@ return list.concat(
           function_name = i(1, 'function_name'),
         }
       )
-    ),
-
-    s(
-      'poi',
-      fmt(
-        [[vim.notify('poi: ' .. vim.inspect({}), vim.log.levels.INFO)]],
-        {
-          i(1, ''),
-        }
-      )
-    ),
-
-    s('autocmd',
-      fmt([[
-        vim.api.nvim_create_autocmd({event_or_events}, {{
-          group = vim.api.nvim_create_augroup('{group_name}', {{ clear = true }}),
-          callback = {callback},
-        }})
-      ]], {
-        event_or_events = i(1, 'event_or_events'),
-        group_name = i(2, 'group_name'),
-        callback = i(3, 'callback'),
-      })
-    ),
-
-    s('augroup',
-      fmt([[vim.api.nvim_create_augroup('{group_name}', {{ clear = true }})]], {
-        group_name = i(1, 'group_name'),
-      })
-    ),
-
-    s('autocmd_without_group',
-      fmt([[
-        vim.api.nvim_create_autocmd({event_or_events}, {{
-          callback = {callback},
-        }})
-      ]], {
-        event_or_events = i(1, 'event_or_events'),
-        callback = i(2, 'callback'),
-      })
     ),
   }
 )

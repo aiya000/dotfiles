@@ -73,7 +73,7 @@ return list.concat(
   ),
 
   sm(
-    { 'define_class_type', 'defclass' },
+    { 'class_type', 'class', 'cla' },
     fmt([[
       ---@class {ClassName}
       ---@field {prop_name} {type}
