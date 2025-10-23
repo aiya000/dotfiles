@@ -1,3 +1,4 @@
+---TODO: nvim.luaとかにリネームする
 ---Functions for init.lua and Neovim.
 ---関数がNeovimに関する事柄を意図しているか、もしくは`vim.*`に依存している場合は、こっち。
 ---それ以外の汎用的な関数は`./utils/functions.lua`に。
@@ -10,7 +11,17 @@ local s = fn.s
 
 local M = {}
 
-M.escaping_keys = { '<Esc>', '<C-[>','<C-l>' }
+M.escaping_keys = fn.readonly({ '<Esc>', '<C-[>','<C-l>' })
+
+---Validates `validatee` with `schema`.
+---Thrown error Handled by `vim.notify()` if thrown.
+---@generic T
+---@param schema chotto.Schema<T>
+function M.ensure(schema, validatee)
+  schema:ensure(validatee, function(e)
+    vim.notify('Validation failed: ' .. e, vim.log.levels.ERROR)
+  end)
+end
 
 ---@see M.reload_module
 function M.reload_modules(...)
@@ -72,6 +83,14 @@ function M.keymaps_set(mode, keys, mapping, opts)
     vim.keymap.set(mode, key, mapping, opts)
   end
 end
+
+M.hl_groups = fn.readonly({
+  ErrorMsg = 'ErrorMsg', -- Red
+  WarningMsg = 'WarningMsg', -- Yellow
+  MoreMsg = 'MoreMsg', -- Green
+  Question = 'Question', -- ?
+  Normal = 'Normal', -- No color
+})
 
 ---@param prompt string
 ---@param hl_group? string
@@ -820,7 +839,6 @@ function M.arg_files()
     end)
     :totable()
 end
-
 
 ---Checks if quickfix window is open and closes it
 ---@return boolean true if quickfix was open and closed, false otherwise
