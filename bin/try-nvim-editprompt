@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Wrapper script for launching editprompt with nvim.
+# See ~/.dotfiles/.tmux.conf
+
+# Load PATH for editprompt and nvim
+# shellcheck disable=SC1090
+source ~/.bashrc_env
+
+if ! command -v editprompt > /dev/null 2>&1; then
+  echo 'Error: editprompt not found. Please install it with: npm install -g editprompt'
+  read -p 'Press enter to close...'
+  exit 1
+fi
+
+if ! command -v nvim > /dev/null 2>&1; then
+  echo 'Error: nvim not found. Please install it with: brew install neovim'
+  read -p 'Press enter to close...'
+  exit 1
+fi
+
+# Launch editprompt with nvim
+editprompt --editor nvim "$@"

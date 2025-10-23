@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Original files: ~/.dotfiles/Preferences/.bash_env
+
+export DOTFILES_NVM_NODE_VERSION=v22.14.0
+export DOTFILES_NVM_PATH=$HOME/.nvm/versions/node/$DOTFILES_NVM_NODE_VERSION/bin
+
+PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
+PATH="$PATH:$DOTFILES_NVM_PATH"
+export PATH
