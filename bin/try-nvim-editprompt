@@ -4,17 +4,19 @@
 # See ~/.dotfiles/.tmux.conf
 
 # Load PATH for editprompt and nvim
-# shellcheck disable=SC1090
-source ~/.bashrc_env
+if [[ -f ~/.bashrc_env ]] ; then
+  # shellcheck disable=SC1090
+  source ~/.bashrc_env
+fi
 
-if ! command -v editprompt > /dev/null 2>&1; then
-  echo 'Error: editprompt not found. Please install it with: npm install -g editprompt'
+if ! command -v editprompt > /dev/null 2>&1 ; then
+  echo 'Error: editprompt not found. Please install it.'
   read -p 'Press enter to close...'
   exit 1
 fi
 
-if ! command -v nvim > /dev/null 2>&1; then
-  echo 'Error: nvim not found. Please install it with: brew install neovim'
+if ! command -v nvim > /dev/null 2>&1 ; then
+  echo 'Error: nvim not found. Please install it.'
   read -p 'Press enter to close...'
   exit 1
 fi
