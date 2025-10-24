@@ -9,12 +9,10 @@ M.s = require('utils.functions.s').s
 M.deep_equal = Test.deep_equal
 
 ---A try-catch-finally expression implementation
----
 ---@generic T
 ---@param f fun(): T --A function to run that may throws error
 ---@param catch fun(error_message: string): T --Cathces `do`'s error and returns `T`
 ---@param finally? fun() --A function that always called after `f` and `catch` called
----
 ---```lua
 -----Simple usage like another languages:
 ---try(function()
@@ -78,34 +76,99 @@ function M.try_finally(f, finally)
   end, finally)
 end
 
+-- TODO: Write tests
 ---Creates a readonly table
 ---@generic K, V
 ---@param x table<K, V>
 ---@return table<K, V> --But readonly
+---
+---raedonly() is lightweight than deep_readonly()
+---@see deep_readonly
+---
+---```lua
+----- OK - Flat tables can be readonly
+---local x = readonly({
+---  a = 10,
+---})
+---local ok1 = pcall(function()
+---  x.a = 20
+---end)
+---print(not ok1) -- true
+---
+----- NG - Nested tables doesn't deny assignment to its fields
+---local y = readonly({
+---  a = {
+---    b = 10,
+---  },
+---})
+---local ok2 = pcall(function()
+---  y.a.b = 20
+---end)
+---print(not ok2) -- false
+---```
 function M.readonly(x)
   return setmetatable({}, {
     __index = x,
     __newindex = function(_, key, value)
-      error(('The table is readonly. { key = %s, value = %s }'):format(key, value))
+      error(('The table is readonly. { key = %s, value = %s }'):format(key, M.to_pretty_string(value)))
     end,
-    __metatable = false -- getmetatableを防ぐ
+    __metatable = false
   })
 end
 
-
----Simular to `readonly()`
+-- TODO: Write tests
+---Creates a deeply readonly table
+---@generic K, V
+---@param x table<K, V>
+---@return table<K, V> --But deeply readonly
+---
+---deep_raedonly() is heavy than readonly()
+---@see readonly
+---
 ---```lua
------ These are same:
----local x = readonly({ value = 10 })
----local y = readonly_value(10)
+----- OK - Flat tables can be readonly
+---local x = deep_readonly({
+---  a = 10,
+---})
+---local ok1, result1 = pcall(function()
+---  x.a = 20
+---end)
+---print(not ok1) -- true
+---
+----- OK - Nested tables are also readonly
+---local y = deep_readonly({
+---  a = {
+---    b = 10,
+---  },
+---})
+---local ok2, result2 = pcall(function()
+---  y.a.b = 20
+---end)
+---print(not ok2) -- true
 ---```
----@generic T
----@param value T
----@return { value: T }
-function M.readonly_value(value)
-  return M.readonly({
-    value = value,
-  })
+function M.deep_readonly(x)
+  ---@generic K, V
+  ---@param a table<K, V>
+  ---@return table<K, V>
+  local function create_nested_deep_readonly(a)
+    return setmetatable({}, {
+      __index = M.deep_readonly(a),
+      __newindex = function(_, key, value)
+        error(('The table is readonly. { key = %s, value = %s }'):format(key, M.to_pretty_string(value)))
+      end,
+      __metatable = false
+    })
+  end
+
+  local result = {}
+  for key, value in pairs(x) do
+    if type(value) == 'table' then
+      result[key] = create_nested_deep_readonly(value)
+    else
+      result[key] = value
+    end
+  end
+  return M.readonly(result)
 end
 
 ---Quotes a string 'x' to `"'x'"` when string,
