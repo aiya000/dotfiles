@@ -2390,4 +2390,20 @@ return {
   },
 
   -- }}}
+  -- oil.nvim {{{
+
+  ---@module 'oil'
+  {
+    'stevearc/oil.nvim',
+    lazy = false,
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    ---@type oil.SetupOpts
+    opts = {
+      keymaps = {
+        Q = { '<Cmd>quit<CR>', mode = 'n' },
+      },
+    },
+  },
+
+  -- }}}
 }

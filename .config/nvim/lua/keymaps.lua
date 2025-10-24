@@ -233,13 +233,10 @@ map('n', '<leader><leader>V', function()
 end)
 
 -- File explorer
-map('n', '<leader>e', function()
-  vim.notify('TODO', vim.log.levels.ERROR)
-end, { silent = true })
-
-map('n', '<leader><leader>e', function()
-  helper.open_explorer('split')
-end, { silent = true })
+map('n', '<leader>e', '<Cmd>vsp|Oil<CR>', { silent = true })
+map('n', '<leader>E', '<Cmd>Oil<CR>', { silent = true })
+map('n', '<leader><leader>e', '<Cmd>sp|Oil<CR>', { silent = true })
+map('n', '<leader><leader>E', '<Cmd>tanew|Oil<CR>', { silent = true })
 
 map('n', [[\e]], function()
   helper.toggle_explorer(InitLua.path_at_started)
