@@ -106,9 +106,7 @@ vim.opt.ambiwidth = 'single'
 vim.opt.background = 'dark'
 vim.opt.showtabline = 2
 vim.opt.mouse = ''
-
--- TODO: なぜか怒られたので一旦コメントアウト
--- vim.opt.ruler = false
+vim.opt.winbar = ' ' -- To allocate overlap with the bar incline.nvim
 
 -- Fold options
 vim.opt.foldcolumn = '1'

@@ -172,7 +172,7 @@ return {
   },
   -- }}}
   -- nvim-lspconfig (legacy) {{{
-  -- Note: In Neovim 0.11+, this plugin is kept ONLY as a dependency for other plugins (nvim-navic)
+  -- Note: In Neovim 0.11+, this plugin is kept ONLY as a dependency for other plugins
   -- Actual LSP configuration is done via vim.lsp.config
 
   {
@@ -1479,7 +1479,7 @@ return {
           method = 'float',
           size = {
             width = 100,
-            height = 100,
+            height = 40,
           },
         },
         default_buffer_size = 'no-auto-resize',
@@ -2126,13 +2126,15 @@ return {
         window = {
           padding = 0,
           margin = { horizontal = 0, vertical = 0 },
+          overlap = { -- ウィンドウの1行目を入力しているときに、incline.nvimのバーと入力中のカーソルが被らないようにする
+            borders = true,
+            statusline = false,
+            tabline = false,
+            winbar = true,
+          },
         },
 
         render = function(props)
-          if vim.bo.filetype == 'gitcommit' then
-            return {}
-          end
-
           local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
           if filename == '' then
             filename = '[No Name]'
@@ -2151,7 +2153,7 @@ return {
           if props.focused then
             -- パンくずリストが多くなりすぎると見にくくなるので制限
             local pankuzu_list = vim.iter(navic.get_data(props.buf) or {})
-              :fold({ max_depth = 3, result = {} }, function(acc, item)
+              :fold({ max_depth = 2, result = {} }, function(acc, item)
                 if acc.max_depth == 0 then
                   return acc
                 end
@@ -2317,9 +2319,6 @@ return {
     'potamides/pantran.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
-      if vim.env.NVIM_DEEPL_AUTH_KEY == nil then
-        vim.notify('pantran.nvim: $NVIM_DEEPL_AUTH_KEY environment variable is not set', vim.log.levels.ERROR)
-      end
       local pantran = require('pantran')
 
       pantran.setup({
