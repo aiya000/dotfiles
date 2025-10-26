@@ -2207,9 +2207,54 @@ return {
 
   {
     'AckslD/nvim-FeMaco.lua',
-    config = function()
-      require('femaco').setup()
-    end,
+    opts = {
+      float_opts = function(_)
+        local function get_winsize()
+          local ui = vim.api.nvim_list_uis()[1]
+          if ui ~= nil then
+            return ui.width, ui.height
+          else
+            return 120, 40
+          end
+        end
+
+        ---@param width integer --Width of floating window
+        ---@param height integer --Height of floating window
+        ---@return { width: integer, height: integer, row: integer, col: integer }
+        local function create_geometry(width, height)
+          local win_width, win_height = get_winsize()
+          local row = math.floor((win_height - height) / 2)
+          local col = math.floor((win_width - width) / 2)
+          return {
+            width = width,
+            height = height,
+            row = row,
+            col = col,
+          }
+        end
+        local geometry = create_geometry(100, 40)
+
+        return {
+          -- Open at the center of the screen
+          width = geometry.width,
+          height = geometry.height,
+          row = geometry.row,
+          col = geometry.col,
+          -- Below configurations are copied from `:h FeMaco-femaco-configuration`
+          relative = 'cursor',
+          anchor = 'NW',
+          style = 'minimal',
+          border = 'rounded',
+          zindex = 1,
+        }
+      end,
+
+      post_open_float = function(_)
+        -- Because it disables by default
+        vim.opt.number = true
+        vim.opt.relativenumber = true
+      end
+    },
     ft = { 'markdown', 'html' },
   },
 
