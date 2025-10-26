@@ -171,23 +171,10 @@ return {
     end,
   },
   -- }}}
-  -- nvim-lspconfig (legacy) {{{
-  -- Note: In Neovim 0.11+, this plugin is kept ONLY as a dependency for other plugins
-  -- Actual LSP configuration is done via vim.lsp.config
+  -- nvim-lspconfig {{{
 
   {
     'neovim/nvim-lspconfig',
-    lazy = true, -- Only load when needed as a dependency
-  },
-
-  -- }}}
-  -- LSP Configuration (pseudo-plugin) {{{
-
-  {
-    'nvim-lsp-setup', -- Pseudo plugin name for organization
-    dir = vim.fn.stdpath('config'),
-    lazy = false,
-    priority = 50,
 
     dependencies = {
       'rcarriga/nvim-notify',
@@ -227,24 +214,23 @@ return {
         end
       end
 
-      vim.lsp.config.lua_ls = {
+      vim.lsp.config('lua_ls', {
         capabilities = capabilities_common,
         on_attach = on_attach_common,
         settings = {
           Lua = {
             runtime = { version = 'LuaJIT' },
-            diagnostics = { globals = { 'vim' } },
             workspace = { library = vim.api.nvim_get_runtime_file('', true) },
-            telemetry = { enable = false },
           },
         },
-      }
+      })
 
-      vim.lsp.config.ts_ls = {
+      vim.lsp.config('ts_ls', {
         capabilities = capabilities_common,
         on_attach = on_attach_common,
-      }
+      })
 
+      -- See also mason-lspconfig.nvim section?
       -- }}}
     end,
   },
