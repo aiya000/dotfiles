@@ -1540,31 +1540,6 @@ return {
   },
 
   -- }}}
-  -- vim-go {{{
-
-  { 'fatih/vim-go', ft = 'go' },
-
-  -- }}}
-  -- vim-javascript {{{
-
-  { 'pangloss/vim-javascript', ft = 'javascript' },
-
-  -- }}}
-  -- typescript-vim {{{
-
-  { 'leafgarland/typescript-vim', ft = 'typescript' },
-
-  -- }}}
-  -- vim-jsx-typescript {{{
-
-  { 'peitalin/vim-jsx-typescript', ft = { 'typescript.tsx', 'javascript.jsx' } },
-
-  -- }}}
-  -- vim-vue {{{
-
-  { 'posva/vim-vue', ft = 'vue' },
-
-  -- }}}
   -- vim-toml {{{
 
   { 'cespare/vim-toml', ft = 'toml' },
@@ -1575,59 +1550,9 @@ return {
   { 'stephpy/vim-yaml', ft = 'yaml' },
 
   -- }}}
-  -- json5.vim {{{
-
-  { 'gutenye/json5.vim', ft = 'json5' },
-
-  -- }}}
-  -- rust.vim {{{
-
-  { 'rust-lang/rust.vim', ft = 'rust' },
-
-  -- }}}
-  -- vim-fish {{{
-
-  { 'dag/vim-fish', ft = 'fish' },
-
-  -- }}}
-  -- vim-ps1 {{{
-
-  { 'PProvost/vim-ps1', ft = 'ps1' },
-
-  -- }}}
   -- bats.vim {{{
 
   { 'aliou/bats.vim', ft = 'bats' },
-
-  -- }}}
-  -- kotlin-vim {{{
-
-  { 'udalov/kotlin-vim', ft = 'kotlin' },
-
-  -- }}}
-  -- vim-scala {{{
-
-  { 'derekwyatt/vim-scala', ft = 'scala' },
-
-  -- }}}
-  -- haskell-vim {{{
-
-  { 'neovimhaskell/haskell-vim', ft = 'haskell' },
-
-  -- }}}
-  -- ghci-syntax {{{
-
-  { 'vmchale/ghci-syntax', ft = 'dot-ghci' },
-
-  -- }}}
-  -- vim-ghcid-quickfix {{{
-
-  { 'aiya000/vim-ghcid-quickfix', ft = { 'haskell', 'happy', 'alex' } },
-
-  -- }}}
-  -- vim-ft-clojure {{{
-
-  { 'thinca/vim-ft-clojure', ft = { 'clojure', 'lisp' } },
 
   -- }}}
   -- alex.vim {{{
@@ -1638,16 +1563,6 @@ return {
   -- vim-gfm-syntax {{{
 
   { 'rhysd/vim-gfm-syntax', ft = 'markdown' },
-
-  -- }}}
-  -- vim-firestore {{{
-
-  { 'delphinus/vim-firestore', ft = 'firestore' },
-
-  -- }}}
-  -- vim-graphql {{{
-
-  { 'jparise/vim-graphql', ft = 'graphql' },
 
   -- }}}
   -- ShaderHighLight {{{
