@@ -721,6 +721,19 @@ return {
     },
 
   -- }}}
+  -- vim-neoquickrun {{{
+
+  helper.load_from_local_or_remote(
+    'aiya000/vim-neoquickrun',
+    '~/Repository/vim-neoquickrun',
+    InitLua.disable_neoquickrun == true,
+    {
+      init = function()
+      end,
+    }
+  ),
+
+  -- }}}
   -- hydra.nvim {{{
 
   {
@@ -1109,7 +1122,9 @@ return {
         vim.g['operator#surround#blocks'] = {
           ['-'] = common_blocks,
           markdown = list.concat(common_markdown_blocks, html_blocks, {
-            { block = { '<b>', '</b>' }, motionwise = { 'char' }, keys = { '[b' } }, -- HTMLではご法度なのでこっち（README.mdとかで使う）
+            -- これらはHTMLではご法度なので、Markdownのみで使う（README.mdなどで使うと便利）
+            { block = { '<b>', '</b>' }, motionwise = { 'char' }, keys = { '[b' } },
+            { block = { '<code>', '</code>' }, motionwise = { 'char' }, keys = { '[c' } },
           }),
           html = html_blocks,
           lua = {
@@ -1461,13 +1476,14 @@ return {
           when_file_buffer = vim.fn.expand('~/tmp/scratch-%d'),
         },
         default_file_ext = 'md',
-        default_open_method = {
-          method = 'float',
-          size = {
-            width = 100,
-            height = 40,
-          },
-        },
+        default_open_method = 'vsp',
+        -- default_open_method = {
+        --   method = 'float',
+        --   size = {
+        --     width = 100,
+        --     height = 40,
+        --   },
+        -- },
         default_buffer_size = 'no-auto-resize',
       },
     }
@@ -2054,7 +2070,7 @@ return {
           if props.focused then
             -- パンくずリストが多くなりすぎると見にくくなるので制限
             local pankuzu_list = vim.iter(navic.get_data(props.buf) or {})
-              :fold({ max_depth = 2, result = {} }, function(acc, item)
+              :fold({ max_depth = 10, result = {} }, function(acc, item)
                 if acc.max_depth == 0 then
                   return acc
                 end
@@ -2124,6 +2140,8 @@ return {
           mappings = {
             '<C-b>',
             '<C-f>',
+            '<C-u>',
+            '<C-d>',
             'zt',
             'zz',
             'zb',
@@ -2345,8 +2363,14 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     ---@type oil.SetupOpts
     opts = {
+      default_file_explorer = true,
+      delete_to_trash = true,
       keymaps = {
         Q = { '<Cmd>quit<CR>', mode = 'n' },
+        H = { '-', mode = 'n', remap = true }, -- Go to parent directory
+      },
+      view_options = {
+        show_hidden = true,
       },
     },
   },

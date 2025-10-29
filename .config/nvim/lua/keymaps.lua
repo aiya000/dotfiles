@@ -588,8 +588,8 @@ map('v', 'ij-k', '<Plug>(textobj-jabraces-double-kakko-i)')
 map('v', 'aj-k', '<Plug>(textobj-jabraces-double-kakko-a)')
 map('v', 'i_', '<Plug>(textobj-between-a)_')
 map('v', 'a_', '<Plug>(textobj-between-i)_')
-map('v', 'iB', '<Plug>(textobj-between-a)*') -- TODO: **を対象にしたい（vim-textobj-betweenは多分1-charのみ対応）
-map('v', 'aB', '<Plug>(textobj-between-i)*')
+map('v', 'iB', '<Plug>(textobj-between-i)*') -- TODO: **を対象にしたい（vim-textobj-betweenは多分1-charのみ対応）
+map('v', 'aB', '<Plug>(textobj-between-a)*')
 -- TODO: 今度↑をvim-surround-operatorで置き換える（可能なら）
 -- --- vim-operator-surround
 -- map('v', 'ajp', '<Plug>(operator-surround-append)gajp')
@@ -625,7 +625,7 @@ map('o', 'il', function()
 end, { expr = true })
 
 -- Programming Utils
-map('v', '<leader>r', '<Plug>(quickrun)', { remap = true })
+map('v', '<leader>r', '<Plug>(neoquickrun)', { remap = true })
 
 -- File Editing
 map('v', '<leader><leader>s', ':sort<CR>')

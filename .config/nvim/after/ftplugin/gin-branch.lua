@@ -23,6 +23,31 @@ local function confirm_to_delete_branch(branch_name)
   return true
 end
 
+local function force_delete_not_merged_branch()
+  error('TODO: Not Implemented Yet (force_delete_not_merged_branch)')
+end
+
+local function confirm_to_force_delete_not_merged_branch()
+  -- TODO: YES<Enter>と入力することのみで、強制削除を実行できるようにする
+  error('TODO: Not Implemented Yet (confirm_to_force_delete_not_merged_branch)')
+end
+
+-- TODO: 動いてなさそう。直す
+---@param stderr string | nil
+---@return boolean
+local function is_error_due_to_no_merge(stderr)
+  if stderr == nil then
+    return false
+  end
+
+  local first_line = vim.split(stderr, '\r')[1]
+  if first_line == nil then
+    return false
+  end
+
+  return first_line:match('^error: the branch') and first_line:match('is not fully merged\\.$')
+end
+
 local function delete_current_line_branch()
   local line = vim.api.nvim_get_current_line()
   local branch_name = line:match('^[%s*]*([^%s]+)')
@@ -37,6 +62,10 @@ local function delete_current_line_branch()
   end
 
   local result = vim.system({ 'git', 'branch', '-d', branch_name }):wait()
+  if result.code ~= 0 and is_error_due_to_no_merge(result.stderr) then
+    confirm_to_force_delete_not_merged_branch()
+    return
+  end
   if result.code ~= 0 then
     vim.notify(("Failed to delete branch '%s': %s"):format(branch_name, result.stderr), vim.log.levels.ERROR)
     return
