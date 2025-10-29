@@ -10,10 +10,9 @@ local t = ls.text_node
 
 return {
   snippets = list.concat(
-    {
-      s('bar', fmt([[==================]], {})),
-      s('subbar', fmt([[------------]], {})),
-    }
+    sm({ 'bar', 'h2' }, fmt([[==================]], {})),
+    sm({ 'subbar', 'h3' }, fmt([[------------]], {})),
+    sm({ 'subsubbar', 'h4' }, fmt([[---------------]], {}))
   ),
   autosnippets = {},
 }
