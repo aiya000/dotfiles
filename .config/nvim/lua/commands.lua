@@ -288,8 +288,9 @@ local function start_claude_docker(args, project_root)
 
   if check_image.stdout == '' then
     start_creating_claude_docker_terminal(project_root, image_name, args)
+  else
+    run_claude_docker_terminal(project_root, image_name, args)
   end
-  run_claude_docker_terminal(project_root, image_name, args)
 end
 
 create_command('ClaudeCodeDocker', function(opts)
@@ -302,7 +303,7 @@ end, {
 create_command('ClaudeCodeDockerAtGitRoot', function(opts)
   local git_root = InitLua.git_root
   if git_root == nil then
-    vim.notify('Git root is never read or not found.', vim.log.levels.ERROR)
+    vim.notify('Git root is not available or not found.', vim.log.levels.ERROR)
     return
   end
   start_claude_docker(opts.args, git_root)
