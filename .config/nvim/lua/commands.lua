@@ -223,7 +223,7 @@ local function start_creating_claude_docker_terminal(git_root, image_name, args)
       vim.notify('Docker image built successfully! Opening Claude Code...', vim.log.levels.INFO)
       -- Wait a bit then open Claude Code
       vim.defer_fn(function()
-        vim.cmd('ClaudeCodeDockerAtGitRoot ' .. args)
+        start_claude_docker(args, git_root)
       end, 1000)
     end,
   }):toggle()
@@ -267,8 +267,10 @@ local function run_claude_docker_terminal(project_root, image_name, args)
 end
 
 ---@param args? string
-local function start_claude_docker(args)
+---@param project_root? string
+local function start_claude_docker(args, project_root)
   args = args or ''
+  project_root = project_root or vim.fn.getcwd()
 
   -- Show ClaudeDockerTerminal when it is still running
   if ClaudeDockerTerminal ~= nil then
@@ -284,15 +286,26 @@ local function start_claude_docker(args)
     return
   end
 
-  local cwd = vim.fn.getcwd() -- TODO: Detect project root?
   if check_image.stdout == '' then
-    start_creating_claude_docker_terminal(cwd, image_name, args)
+    start_creating_claude_docker_terminal(project_root, image_name, args)
   end
-  run_claude_docker_terminal(cwd, image_name, args)
+  run_claude_docker_terminal(project_root, image_name, args)
 end
 
 create_command('ClaudeCodeDocker', function(opts)
   start_claude_docker(opts.args)
+end, {
+  nargs = '*',
+  desc = 'Open ClaudeCode in Docker container at current directory (auto-builds image if needed)',
+})
+
+create_command('ClaudeCodeDockerAtGitRoot', function(opts)
+  local git_root = InitLua.git_root
+  if git_root == nil then
+    vim.notify('Git root is never read or not found.', vim.log.levels.ERROR)
+    return
+  end
+  start_claude_docker(opts.args, git_root)
 end, {
   nargs = '*',
   desc = 'Open ClaudeCode in Docker container at git root (auto-builds image if needed)',
