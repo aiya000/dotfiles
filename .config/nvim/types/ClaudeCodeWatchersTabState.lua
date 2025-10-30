@@ -1,6 +1,0 @@
----See `./lua/helper.lua` and `ftplugin/claude-code-watcher`
----@class ClaudeCodeWatchersTabState
----@field ccusage_job integer
----@field claude_monitor_job integer
----@field ccusage_pid integer
----@field claude_monitor_pid integer
