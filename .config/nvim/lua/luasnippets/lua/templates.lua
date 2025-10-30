@@ -73,5 +73,21 @@ return list.concat(
         }
       )
     ),
+
+    s(
+      'try',
+      fmt(
+        [[
+          local ok, result = pcall({f})
+          if not ok then
+            {}
+          end
+        ]],
+        {
+          f = i(1, 'f'),
+          i(2, ''),
+        }
+      )
+    ),
   }
 )
