@@ -9,3 +9,13 @@ package.path = ('%s;%s/.luarocks/share/lua/5.2/?.lua'):format(
   package.path,
   vim.env.HOME
 )
+
+local function validate(package)
+  local ok = pcall(require, package)
+  if not ok then
+    error('Luarocks package not found: ' .. package)
+  end
+end
+
+validate('chotto')
+validate('luarrow')
