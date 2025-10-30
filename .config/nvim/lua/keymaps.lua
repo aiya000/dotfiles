@@ -238,22 +238,6 @@ map('n', '<leader>E', '<Cmd>Oil<CR>', { silent = true })
 map('n', '<leader><leader>e', '<Cmd>sp|Oil<CR>', { silent = true })
 map('n', '<leader><leader>E', '<Cmd>tanew|Oil<CR>', { silent = true })
 
-map('n', [[\e]], function()
-  helper.toggle_explorer(InitLua.path_at_started)
-end, { silent = true })
-
-map('n', [[\\e]], function()
-  helper.open_explorer('split', InitLua.path_at_started)
-end, { silent = true })
-
-map('n', [[\E]], function()
-  helper.open_explorer('stay', InitLua.path_at_started)
-end, { silent = true })
-
-map('n', [[\\E]], function()
-  helper.open_explorer('tabnew', InitLua.path_at_started)
-end, { silent = true })
-
 -- List up
 map('n', '<C-k><C-e>', function()
   telescope.find_files({ hidden = true })
