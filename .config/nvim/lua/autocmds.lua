@@ -53,6 +53,20 @@ vim.api.nvim_create_autocmd('CmdlineChanged', {
   end,
 })
 
+-- Treesitter error suppression
+vim.api.nvim_create_autocmd({ 'TextChanged', 'TextChangedI' }, {
+  group = augroup,
+  callback = function()
+    -- treesitterのハイライト更新をスケジュールして、バッファ操作との競合を避ける
+    -- TODO: これでもだめかも。だめだったら修正する。大丈夫そうだったら、このコメントを削除する
+    vim.schedule(function()
+      if vim.bo.filetype ~= '' then
+        pcall(vim.treesitter.get_parser)
+      end
+    end)
+  end,
+})
+
 -- Highlighting and ColorSchema {{{
 
 vim.api.nvim_create_autocmd({'VimEnter', 'ColorScheme'}, {
