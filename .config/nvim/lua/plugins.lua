@@ -1,5 +1,6 @@
 ---プラグイン設定
 
+local arrow = require('luarrow').arrow
 local fn = require('utils.functions')
 local helper = require('helper')
 local list = require('utils.list')
@@ -2033,6 +2034,7 @@ return {
     dependencies = {
       'nvim-tree/nvim-web-devicons',
       'SmiteshP/nvim-navic',
+      'stevearc/oil.nvim',
     },
     config = function()
       local helpers = require('incline.helpers')
@@ -2051,54 +2053,74 @@ return {
           },
         },
 
+        -- oil.nvimのようなunlisted bufferも表示する
+        ignore = {
+          buftypes = function(_, buftype)
+            -- oil.nvimのacwriteバッファは無視しない
+            if buftype == 'acwrite' then
+              return false
+            end
+            -- その他の special バッファタイプは無視
+            return buftype == 'nofile'
+              or buftype == 'prompt'
+              or buftype == 'quickfix'
+              or buftype == 'terminal'
+          end,
+          filetypes = {},
+          floating_wins = true,
+          unlisted_buffers = false, -- oil.nvimはunlistedなのでfalseにする
+          wintypes = 'special',
+        },
+
         render = function(props)
-          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
-          if filename == '' then
-            filename = '[No Name]'
+          local function get_oil_current_dir_renderer(buf)
+            local oil = require('oil')
+            local dir = oil.get_current_dir(buf)
+            local display_dir = dir and vim.fn.fnamemodify(dir, ':~')
+            local folder_icon = ''
+            local icon_color = '#5fafd7'
+
+            return {
+              { ' ', folder_icon, ' ', guibg = icon_color, guifg = helpers.contrast_color(icon_color) },
+              ' ',
+              { display_dir, gui = 'bold' },
+              ' ',
+              guibg = '#afafff',
+              guifg = '#000000',
+            }
           end
 
-          local ft_icon, ft_color = devicons.get_icon_color(filename)
-          local modified = vim.bo[props.buf].modified
-          local res = {
-            ft_icon and { ' ', ft_icon, ' ', guibg = ft_color, guifg = helpers.contrast_color(ft_color) } or '',
-            ' ',
-            { filename, gui = modified and 'bold,italic' or 'bold' },
-            guibg = '#afafff',
-            guifg = '#000000',
-          }
+          local function get_file_renderer(buf, focused)
+            local filename = vim.api.nvim_buf_get_name(buf)
+              % arrow(function(bufname)
+                return vim.fn.fnamemodify(bufname, ':t')
+              end)
+              ^ arrow(function(filename)
+                return filename == '' and '[No Name]' or filename
+              end)
 
-          if props.focused then
-            -- パンくずリストが多くなりすぎると見にくくなるので制限
-            local pankuzu_list = vim.iter(navic.get_data(props.buf) or {})
-              :fold({ max_depth = 10, result = {} }, function(acc, item)
-                if acc.max_depth == 0 then
-                  return acc
-                end
+            local ft_icon, ft_color = devicons.get_icon_color(filename)
+            local modified = vim.bo[buf].modified
+            local res = {
+              ft_icon and { ' ', ft_icon, ' ', guibg = ft_color, guifg = helpers.contrast_color(ft_color) } or '',
+              ' ',
+              { filename, gui = modified and 'bold,italic' or 'bold' },
+              guibg = '#afafff',
+              guifg = '#000000',
+            }
 
-                ---See 'type render_result' in ':h incline.nvim' for coloring item children
-                ---Example:
-                ---```
-                ---local new_item = {
-                ---  { '', group = 'NavicSeparator' },
-                ---  -- ...
-                ---}
-                ---```
-                ---Don't forget, set highlight group 'NavicSeparator' in './autocmds.lua'
-                local new_item = {
-                  '    ',
-                  item.icon,
-                  item.name,
-                }
-                return {
-                  max_depth = acc.max_depth - 1,
-                  result = vim.list_extend(acc.result, new_item)
-                }
-              end).result
-              table.insert(res, pankuzu_list)
+            if focused then
+              table.insert(res, navic.get_data(buf) or {}) -- パンくずリスト
+            end
+
+            table.insert(res, ' ')
+            return res
           end
 
-          table.insert(res, ' ')
-          return res
+          if vim.bo[props.buf].filetype == 'oil' then
+            return get_oil_current_dir_renderer(props.buf)
+          end
+          return get_file_renderer(props.buf, props.focused)
         end,
       })
     end,
@@ -2337,10 +2359,10 @@ return {
         end
       end
 
-      vim.keymap.set('n', '<leader>k', create_opening_with_current_word('EN-US'))
-      vim.keymap.set('n', '<leader>K', create_opening_with_current_word('JA'))
-      vim.keymap.set('v', '<leader>k', create_opening_with_selected_line('EN-US'))
-      vim.keymap.set('v', '<leader>K', create_opening_with_selected_line('JA'))
+      vim.keymap.set('n', '<leader>k', create_opening_with_current_word('JA'))
+      vim.keymap.set('n', '<leader>K', create_opening_with_current_word('EN-US'))
+      vim.keymap.set('v', '<leader>k', create_opening_with_selected_line('JA'))
+      vim.keymap.set('v', '<leader>K', create_opening_with_selected_line('EN-US'))
     end,
   },
 
@@ -2356,23 +2378,23 @@ return {
   -- }}}
   -- oil.nvim {{{
 
-  ---@module 'oil'
   {
     'stevearc/oil.nvim',
     lazy = false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-    ---@type oil.SetupOpts
-    opts = {
-      default_file_explorer = true,
-      delete_to_trash = true,
-      keymaps = {
-        Q = { '<Cmd>quit<CR>', mode = 'n' },
-        H = { '-', mode = 'n', remap = true }, -- Go to parent directory
-      },
-      view_options = {
-        show_hidden = true,
-      },
-    },
+    config = function()
+      require('oil').setup({
+        default_file_explorer = true,
+        delete_to_trash = true,
+        keymaps = {
+          Q = { '<Cmd>quit<CR>', mode = 'n' },
+          H = { '-', mode = 'n', remap = true }, -- Go to parent directory
+        },
+        view_options = {
+          show_hidden = true,
+        },
+      })
+    end,
   },
 
   -- }}}
