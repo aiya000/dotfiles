@@ -736,3 +736,10 @@ install-ffmpeg:
 
 install-editprompt:
 	which editprompt || $(NPMInstall) editprompt
+
+install-google-chrome:
+	which google-chrome || ( \
+		cd /tmp && \
+		wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+		$(AptInstall) ./google-chrome-stable_current_amd64.deb \
+	)
