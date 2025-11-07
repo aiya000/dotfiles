@@ -3,8 +3,8 @@ all: install
 logfile = ./dotfiles-MakeFile.log
 
 # TODO: Detect auto
-OS = Ubuntu
-WSL2 = yes # 'no' or 'yes'
+OS ?= Ubuntu
+WSL2 ?= yes # 'no' or 'yes'
 
 YayInstall = yay -S --needed --noconfirm
 YayUpdate = yay -Sy
@@ -13,9 +13,13 @@ AptInstall = sudo apt-fast install -y
 AptUpdate = sudo apt-fast update
 AptBuildDep = sudo apt-fast build-dep
 
+BrewInstall = brew install
+
 NPMInstall = npm install --global --user
 UVInstall = uv tool install # 事前に`load-my-env mise`してね。まだmiseでuvを入れてなければ`mise use uv@latest`もしよう！
 PIPInstall = $(UVInstall) # pip installよくわからん
+
+# Common {{{
 
 prepare:
 	if [ ! -d ~/.config ] ; then \
@@ -44,29 +48,137 @@ prepare:
 	$(MAKE) install-apt-fast
 	$(AptUpdate)
 	$(AptInstall) curl
-ifeq ($(WSL2),yes)  # {{{
+ifeq ($(WSL2),yes)
 	WinUserName := $(/mnt/c/Windows/system32/whoami.exe | tr -d '\r\n' | cut -d '\' -f 2)
 	ln -s /mnt/c/Users/$(WinUserName) ~/Windows
 	ln -s /mnt/c/Users/$(WinUserName)/Desktop ~/Desktop
 	ln -s /mnt/c/Users/$(WinUserName)/Download ~/Download
-endif  # }}}
+endif
 
 install:
 	$(MAKE) prepare
 	$(MAKE) install-core-package-managers
 	$(MAKE) build-os-env
 
-install-without-confirm:
-	$(MAKE) install noconfirm='--noconfirm'
+install-neovim:
+	which nvim || $(BrewInstall) neovim
 
-install-apt-fast:
-	sudo add-apt-repository ppa:apt-fast/stable
-	sudo apt update
-	sudo apt -y install apt-fast
+install-nvm:
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
+
+install-haskell-stack:
+	curl -sSL https://get.haskellstack.org/ | sh
+
+network-config:
+	sudo systemctl enable dhcpcd
+	sudo systemctl enable NetworkManager
+
+install-bun:
+	which bun || $(BrewInstall) oven-sh/bun/bun
+
+install-deno:
+	which deno || $(BrewInstall) deno
+
+install-doctoc:
+	which doctoc || $(NPMInstall) doctoc
+
+install-glow:
+	which glow || $(BrewInstall) glow
+
+install-text:
+	which textlint || $(NPMInstall) textlint
+
+install-typescript:
+	which typescript || $(NPMInstall) typescript
+
+install-ts-node:
+	which ts-node || $(NPMInstall) ts-node
+
+install-tsx:
+	which tsx || $(NPMInstall) tsx
+
+install-html:
+	which htmlhint || $(NPMInstall) htmlhint
+
+install-css:
+	which csslint || $(NPMInstall) csslint
+
+install-xml:
+	which xml || $(NPMInstall) pretty-xml
+
+install-vim-runtime-deps:
+	$(MAKE) install-deno
+	$(MAKE) install-gtran
+	$(MAKE) install-xclip
+	$(MAKE) install-pup
+	$(MAKE) install-vital-vim
+
+install-pup:
+	which pup || go install github.com/ericchiang/pup@latest
+
+install-vital-vim:
+	git clone https://github.com/vim-jp/vital.vim ~/git/vital.vim
+	git clone https://github.com/lambdalisue/vital-Whisky ~/git/vital-Whisky
+
+install-gtran:
+	# translate.vim
+	if ! which gtran ; then \
+		git clone https://github.com/skanehira/gtran.git /tmp/gtran ; \
+		cd /tmp/gtran ; \
+		go install ; \
+	fi
+
+install-neovim-runtime-deps:
+	$(MAKE) install-deno
+	$(MAKE) install-gtran
+	$(MAKE) install-rg
+	$(MAKE) install-nkf
+
+install-lice:
+	which lice || $(NPMInstall) lice
+
+install-pandoc:
+	which pandoc || $(BrewInstall) pandoc
+
+# See: https://www.rust-lang.org/tools/install
+install-cargo:
+	which cargo || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+install-stylua:
+	which stylua || cargo install stylua
+
+install-claude-code:
+	which claude || $(NPMInstall) @anthropic-ai/claude-code
+
+install-mise:
+	which mise || curl https://mise.run | sh
+
+install-gemini-cli:
+	which gemini || $(NPMInstall) @google/gemini-cli
+
+install-copilot-cli:
+	which copilot || $(NPMInstall) @github/copilot
+
+install-luarocks:
+	which luarocks || $(BrewInstall) luarocks
+
+install-peco:
+	which peco || $(BrewInstall) peco
+
+install-uv:
+	which uv || mise use uv@latest
+
+install-luaprompt:
+	which luap || luarocks install --local luaprompt
+
+install-editprompt:
+	which editprompt || $(NPMInstall) editprompt
+
+# }}}
+ifeq ($(OS),Arch) # {{{
 
 # Package managers that core packages depends.
 install-core-package-managers:
-ifeq ($(OS),Arch)  # {{{
 	$(MAKE) install-yay
 	$(YayUpdate)
 	which stack || $(YayInstall) stack-static
@@ -85,29 +197,9 @@ install-yay:
 		cd /tmp/yay && \
 		makepkg -si \
 	)
-endif  # }}}
-ifeq ($(OS),Ubuntu)  # {{{
 
-install-core-package-managers:
-	$(MAKE) install-golang
-	$(MAKE) install-python3
-
-endif  # }}}
-ifeq ($(OS),Darwin)  # {{{
-	echo 'Please define install-core-package-managers for haskell-stack' > /dev/stderr
-	echo 'Please define install-core-package-managers for nvm, npm' > /dev/stderr
-	echo 'Please define install-core-package-managers for pip3' > /dev/stderr
-endif  # }}}
-
-install-nvm:
-	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
-
-install-haskell-stack:
-	curl -sSL https://get.haskellstack.org/ | sh
-
+# Install better GUI/CLI environment
 build-os-env:
-# Install my better GUI/CLI environment
-ifeq ($(OS),Arch)  # {{{
 	# - xmonad: needed by xmonad-config --restart and --replace
 	# NOTE: You may need `$ make noconfirm='' install` after/if `$ make install` failed
 	$(YayInstall) \
@@ -164,222 +256,11 @@ ifeq ($(OS),Arch)  # {{{
 	$(MAKE) install-fcitx-imlist
 	$(MAKE) install-rictydiminished
 
-network-config:
-	sudo systemctl enable dhcpcd
-	sudo systemctl enable NetworkManager
-
-# Fix East Asian Ambiguous character width problems
-install-wcwidth-cjk:
-	git clone https://github.com/fumiyas/wcwidth-cjk /tmp/wcwidth-cjk && \
-	cd /tmp/wcwidth-cjk && \
-	autoreconf --install && \
-	./configure --prefix=/usr/local/ && \
-	make && \
-	sudo make install
-
-install-fcitx-imlist:
-	git clone https://github.com/kenhys/fcitx-imlist /tmp/fcitx-imlist && \
-	cd /tmp/fcitx-imlist && \
-	./autogen.sh && \
-	./configure && \
-	make && \
-	sudo make install
-
-install-rictydiminished:
-	# Please see https://qiita.com/nechinechi/items/27f541849db04123ea15
-	if [ ! -d ~/git/RictyDiminished ] ; then \
-		git clone https://github.com/edihbrandon/RictyDiminished ~/git/RictyDiminished ; \
-	fi
-	if [ ! -d ~/git/nerd-fonts ] ; then \
-		git clone https://github.com/ryanoasis/nerd-fonts ~/git/nerd-fonts ; \
-	fi
-	cd ~/git/nerd-fonts && \
-	fontforge -script ./font-patcher \
-		~/git/RictyDiminished/RictyDiminished-Regular.ttf \
-		-w --fontawesome --fontlinux --octicons --pomicons --powerline --powerlineextra
-	(echo 'RictyDiminished with nerd-font patch was generated to ~/git/nerd-fonts, please rename it to "RictyDiminished NF" and install it to your OS manually!' | tee $(logfile))
-
-endif  # }}}
-ifeq ($(OS),Ubuntu)  # {{{
-	# - libssl-dev: To make ruby via rbenv
-	$(AptInstall) \
-		git \
-		libssl-dev \
-		man-db \
-		progress \
-		rsync \
-		tmux \
-		vim \
-		zsh
-	$(MAKE) install-clamav
-endif  # }}}
-ifeq ($(OS),Darwin)  # {{{
-	brew install \
-		font-forge \ # for making nerd-fonts for vim-devicons
-		cmigemo \ # vim-migemo
-		scalastyle \ # ale (vim)
-		graphviz plantuml \
-		jq \
-
-	brew install --with-clang --with-lld --with-python --HEAD llvm cppunit # vim-textobj-clang
-endif  # }}}
-
-install-clamav:
-	$(AptInstall) clamav clamav-daemon
-	sudo systemctl start clamav-daemon.service
-	sudo systemctl start clamav-freshclam.service
-	# See https://zenn.dev/aiya000/articles/install-clamav-into-wsl2
-	sudo chmod 666 /var/log/clamav/freshclam.log
-	sudo pkill freshclam
-	sudo chown clamav:clamav /var/log/clamav/freshclam.log
-	# - - -
-	echo 'ExcludePath ^/proc' >> /etc/clamav/clamd.conf
-	echo 'ExcludePath ^/sys'  >> /etc/clamav/clamd.conf
-	echo 'ExcludePath ^/run'  >> /etc/clamav/clamd.conf
-	echo 'ExcludePath ^/dev'  >> /etc/clamav/clamd.conf
-	echo 'ExcludePath ^/snap' >> /etc/clamav/clamd.conf
-	echo 'ExcludePath ^/mnt'  >> /etc/clamav/clamd.conf
-	sudo freshclam
-
-##
-# NOTE: execute `which foo || $(YayInstall) foo` for AUR packages, because AUR packages may not support --needed.
-##
-
-# Below are not installed by default
-
-install-sub-all: install-languages install-tools
-
-install-languages: \
-	install-nodejs \
-	install-haskell \
-	install-markdown \
-	install-text \
-	install-typescript \
-	install-html \
-	install-css \
-	install-xml \
-	install-sh \
-
-# languages {{{
-
-install-haskell:
-	$(MAKE) install-haskell-stack
-	which hasktags || stack install hasktags
-	which haskdogs || stack install haskdogs
-	which hlint || stack install hlint
-
-install-nodejs:
-	$(MAKE) install-nvm
-	nvm ls-remote
-	$(MAKE) install-bun
-
-install-bun:
-	which bun || brew install oven-sh/bun/bun
-
-install-deno:
-	which deno || brew install deno
-
-install-markdown:
-	$(MAKE) install-doctoc
-	$(MAKE) install-glow
-
-install-doctoc:
-	which doctoc || $(NPMInstall) doctoc
-
-install-glow:
-	which glow || brew install glow
-
-install-text:
-	which textlint || $(NPMInstall) textlint
-
-install-typescript:
-	which typescript || $(NPMInstall) typescript
-	which ts-node || $(NPMInstall) ts-node
-
-install-html:
-	which htmlhint || $(NPMInstall) htmlhint
-
-install-css:
-	which csslint || $(NPMInstall) csslint
-
-install-xml:
-	which xml || $(NPMInstall) pretty-xml
-
-ifeq ($(OS),Arch) # {{{
-
 install-shellcheck:
 	$(YayInstall) shellcheck
 
 install-ruby:
 	$(YayInstall) ruby ruby-irb
-
-endif # }}}
-ifeq ($(OS),Ubuntu) # {{{
-
-install-shellcheck:
-	$(AptInstall) shellcheck
-
-endif # }}}
-
-# }}}
-
-install-tools: \
-	install-vim-build-deps \
-	install-vim-runtime-deps \
-	install-xmonad-runtime-deps \
-	install-brew \
-	install-nvm \
-	install-fonts \
-	install-media-players \
-	install-cli-recommended \
-	install-gui-recommended \
-
-# tools {{{
-
-install-vim-runtime-deps:
-	$(MAKE) install-deno
-	$(MAKE) install-gtran
-	$(MAKE) install-xclip
-	which rg || $(AptInstall) ripgrep
-	which nkf || $(AptInstall) nkf
-	which silicon || brew install silicon
-	which pup || go install github.com/ericchiang/pup@latest
-	make install-vital-vim
-
-install-vital-vim:
-	git clone https://github.com/vim-jp/vital.vim ~/git/vital.vim
-	git clone https://github.com/lambdalisue/vital-Whisky ~/git/vital-Whisky
-
-install-gtran:
-	# translate.vim
-	if ! which gtran ; then \
-		git clone https://github.com/skanehira/gtran.git /tmp/gtran ; \
-		cd /tmp/gtran ; \
-		go install ; \
-	fi
-
-download-nerd-fonts:
-	cd ~/Downloads ; \
-		wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Hack.zip ; \
-		explorer.exe .
-	@echo 'Install HackNerdFontMono-Regular.ttf, and set it to \'プロファイル > Ubuntu > 外観 > フォントフェイス\' manually'
-
-install-neovim-runtime-deps:
-	$(MAKE) install-deno
-	$(MAKE) install-gtran
-	which rg || $(AptInstall) ripgrep
-	which nkf || $(AptInstall) nkf
-	which pup || go install github.com/ericchiang/pup@latest
-
-ifeq ($(OS),Ubuntu)  # {{{
-
-install-w3m:
-	$(AptInstall) w3m
-
-endif
-
-# }}}
-ifeq ($(OS),Arch)  # {{{
 
 install-cli-recommended:
 	# From official
@@ -397,9 +278,6 @@ install-gui-recommended:
 	# From AUR
 	$(MAKE) install-vivaldi
 	$(MAKE) install-autokey
-
-install-vivaldi:
-	which vivaldi-stable || $(YayInstall) vivaldi vivaldi-ffmpeg-codecs
 
 install-autokey:
 	which autokey-gtk || $(YayInstall) autokey
@@ -421,42 +299,9 @@ install-xmonad-runtime-deps:
 install-fonts:
 	$(YayInstall) noto-fonts-cjk noto-fonts-emoji
 
-endif  # }}}
-ifeq ($(OS),Ubuntu)  # {{{
-
-install-brew:
-	$(AptInstall) build-essential procps file git
-	bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-install-cli-recommended:
-	brew install \
-		gh \
-		watchexec
-	$(AptInstall) \
-		jq \
-		universal-ctags \
-		bat
-
-# TODO: Check this make to able to build vim
-install-vim-build-deps:
-	$(AptBuildDep) vim
-
-endif
-
-# }}}
-
-# Below is very optional
-
-install-lice:
-	which lice || $(NPMInstall) lice
-
 install-java:
 	which java || $(YayInstall) jdk
 
-install-python3:
-	$(AptInstall) python3 python3-pip python-is-python3 python3-venv
-
-ifeq ($(OS),Arch)
 install-displaylink:
 	$(YayInstall) displaylink evdi-git
 
@@ -469,19 +314,10 @@ install-bluetooth:
 	# sudo systemctl enable bluetooth
 	# sudo systemctl start bluetooth
 
-ifeq ($(OS),Arch)
 install-graphic-editors:
 	which draw.io || $(YayInstall) drawio-desktop-bin
 	which gm || $(YayInstall) graphicsmagick
 	which krita || $(YayInstall) krita-appimage
-endif
-ifeq ($(OS),Ubuntu)
-install-graphic-editors:
-	which drawio || $(NPMInstall) drawio
-	which gm || $(AptInstall) graphicsmagick
-	which krita || $(AptInstall) krita
-	# TODO: Other packages
-endif
 
 install-media-players:
 	which vlc || $(YayInstall) vlc
@@ -532,14 +368,55 @@ install-for-virtualbox-vms:
 	# To automatic login
 	echo 'autologin=aiya000' | sudo tee -a /etc/lxdm/lxdm.conf
 
-endif
+endif # }}}
+ifeq ($(OS),Ubuntu) # {{{
 
-# }}}
+install-core-package-managers:
+	$(MAKE) install-golang
+	$(MAKE) install-python3
 
-install-wslu:
-	sudo add-apt-repository ppa:wslutilities/wslu
-	$(AptUpdate)
-	$(AptInstall) wslu
+install-apt-fast:
+	sudo add-apt-repository ppa:apt-fast/stable
+	sudo apt update
+	sudo apt -y install apt-fast
+
+install-fcitx-imlist:
+	git clone https://github.com/kenhys/fcitx-imlist /tmp/fcitx-imlist && \
+	cd /tmp/fcitx-imlist && \
+	./autogen.sh && \
+	./configure && \
+	make && \
+	sudo make install
+
+build-os-env:
+	$(AptInstall) \
+		git \
+		man-db \
+		progress \
+		rsync \
+		tmux \
+		vim \
+		zsh
+
+install-clamav:
+	$(AptInstall) clamav clamav-daemon
+	sudo systemctl start clamav-daemon.service
+	sudo systemctl start clamav-freshclam.service
+	# See https://zenn.dev/aiya000/articles/install-clamav-into-wsl2
+	sudo chmod 666 /var/log/clamav/freshclam.log
+	sudo pkill freshclam
+	sudo chown clamav:clamav /var/log/clamav/freshclam.log
+	# - - -
+	echo 'ExcludePath ^/proc' >> /etc/clamav/clamd.conf
+	echo 'ExcludePath ^/sys'  >> /etc/clamav/clamd.conf
+	echo 'ExcludePath ^/run'  >> /etc/clamav/clamd.conf
+	echo 'ExcludePath ^/dev'  >> /etc/clamav/clamd.conf
+	echo 'ExcludePath ^/snap' >> /etc/clamav/clamd.conf
+	echo 'ExcludePath ^/mnt'  >> /etc/clamav/clamd.conf
+	sudo freshclam
+
+install-shellcheck:
+	$(AptInstall) shellcheck
 
 install-rg:
 	which rg || $(AptInstall) ripgrep
@@ -550,6 +427,77 @@ install-fd:
 # sed alternative
 install-sd:
 	which sd || cargo install sd
+
+install-nkf:
+	which nkf || $(AptInstall) nkf
+
+install-w3m:
+	$(AptInstall) w3m
+
+install-brew:
+	$(AptInstall) build-essential procps file git
+	bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+install-cli-recommended:
+	$(BrewInstall) \
+		gh \
+		watchexec
+	$(AptInstall) \
+		jq \
+		universal-ctags \
+		bat
+
+# TODO: Check this make to able to build vim
+install-vim-build-deps:
+	$(AptBuildDep) vim
+
+install-python3:
+	$(AptInstall) python3 python3-pip python-is-python3 python3-venv
+
+install-graphic-editors:
+	which drawio || $(NPMInstall) drawio
+	which gm || $(AptInstall) graphicsmagick
+	which krita || $(AptInstall) krita
+	# TODO: Other packages
+
+install-golang:
+	sudo add-apt-repository ppa:longsleep/golang-backports
+	$(AptUpdate)
+	$(AptInstall) golang-go
+
+install-cmake:
+	$(AptInstall) cmake  # To build tmux-cpu-mem-load
+
+install-btop:
+	which btop || $(AptInstall) btop
+
+install-imagemagick:
+	which convert || $(AptInstall) imagemagick
+
+install-ffmpeg:
+	which ffmpeg || $(AptInstall) ffmpeg
+
+endif # }}}
+ifeq ($(OS),Darwin) # {{{
+
+build-os-env:
+	 $(BrewInstall) \
+		font-forge \ # for making nerd-fonts for vim-devicons
+		cmigemo \ # vim-migemo
+		scalastyle \ # ale (vim)
+		graphviz plantuml \
+		jq \
+
+install-fd:
+	which fd || $(BrewInstall) fd
+
+endif # }}}
+ifeq ($(WSL2),yes) # {{{
+
+install-wslu:
+	sudo add-apt-repository ppa:wslutilities/wslu
+	$(AptUpdate)
+	$(AptInstall) wslu
 
 fix-wsl-git-clone:
 	sudo ip link set eth0 mtu 1400
@@ -584,78 +532,12 @@ install-notifu:
 	unzip /tmp/notifu.zip notifu.exe -d ~/bin
 	chmod +x ~/bin/notifu.exe
 
-install-golang:
-	sudo add-apt-repository ppa:longsleep/golang-backports
-	$(AptUpdate)
-	$(AptInstall) golang-go
-
-install-pandoc:
-	which pandoc || brew install pandoc
-
-install-pdf-viewer:
+install-sumatora:
 	@echo 'ここからインストールしる'
 	xdg-open https://www.sumatrapdfreader.org/free-pdf-reader
 
-install-neovim:
-	which nvim || brew install neovim
-
 install-systemctl-for-wsl:
 	$(AptInstall) systemd systemd-sysv
-
-install-open-commit-and-ollama:
-	$(MAKE) install install-ollama || exit 1
-	$(MAKE) install install-open-commit || exit 1
-
-install-ollama:
-	if which ollama ; then \
-		echo 'ollama is already installed' ; \
-		exit 1 ; \
-	fi
-	curl -fsSL https://ollama.com/install.sh | sh
-	systemctl enable ollama
-	systemctl start ollama
-	ollama run mistral
-
-install-open-commit:
-	if which opencommit ; then \
-		echo 'opencommit is already installed' ; \
-		exit 1 ; \
-	fi
-	$(NPMInstall) opencommit
-	# Reference: https://ishikawa-pro.hatenablog.com/entry/2025/02/12/103919
-	oco config set OCO_AI_PROVIDER='ollama' OCO_MODEL='deepseek-r1:32b'
-	oco config set OCO_API_URL='http://localhost:11434/api/chat'
-	oco config set OCO_GITPUSH=false
-	oco config set OCO_LANGUAGE=en
-
-# See: https://www.rust-lang.org/tools/install
-install-cargo:
-	which cargo || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-install-stylua:
-	which stylua || cargo install stylua
-
-install-ccusage:
-	which ccusage || $(NPMInstall) ccusage@latest
-
-install-claude-monitor:
-	which claude-monitor || ( \
-		load-my-env mise && \
-		mise use uv@latest && \
-		$(UVInstall) claude-monitor \
-	)
-
-install-claude-code:
-	which claude || $(NPMInstall) @anthropic-ai/claude-code
-
-install-mise:
-	which mise || curl https://mise.run | sh
-
-install-gemini-cli:
-	which gemini || $(NPMInstall) @google/gemini-cli
-
-install-copilot-cli:
-	which copilot || $(NPMInstall) @github/copilot
 
 # Example:
 # ```shell-session
@@ -686,39 +568,18 @@ enable-ubuntu-deb-src:
 		&& sudo /usr/bin/python3 -c "from softwareproperties.SoftwareProperties import SoftwareProperties; SoftwareProperties(deb822=True).enable_source_code_sources()" \
 		&& $(AptUpdate)
 
-install-nkf:
-	which nkf || $(AptInstall) nkf
-
 install-apt-file:
 	which apt-file || ( \
 		$(AptInstall) apt-file && \
 		sudo apt-file update \
 	)
 
-install-luarocks:
-	which luarocks || brew install luarocks
-
-install-cmake:
-	$(AptInstall) cmake  # To build tmux-cpu-mem-load
-
 install-tmux-runtime-deps:
 	$(MAKE) install-cmake
-
-install-peco:
-	which peco || brew install peco
-
-install-btop:
-	which btop || $(AptInstall) btop
 
 # 画面上にキーを表示するツール
 install-keycastow:
 	powershell.exe -Command "Start-Process choco -ArgumentList 'install keycastow' -Verb RunAs"
-
-install-uv:
-	which uv || mise use uv@latest
-
-install-imagemagick:
-	which convert || $(AptInstall) imagemagick
 
 install-win32yank:
 	which win32yank.exe || ( \
@@ -728,18 +589,17 @@ install-win32yank:
 		chmod +x ~/bin/win32yank.exe \
 	)
 
-install-luaprompt:
-	which luap || luarocks install --local luaprompt
-
-install-ffmpeg:
-	which ffmpeg || $(AptInstall) ffmpeg
-
-install-editprompt:
-	which editprompt || $(NPMInstall) editprompt
-
 install-google-chrome:
 	which google-chrome || ( \
 		cd /tmp && \
 		wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 		$(AptInstall) ./google-chrome-stable_current_amd64.deb \
 	)
+
+endif # }}}
+
+download-nerd-fonts:
+	cd ~/Downloads ; \
+		wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Hack.zip ; \
+		explorer.exe .
+	@echo 'Install HackNerdFontMono-Regular.ttf, and set it to \'プロファイル > Ubuntu > 外観 > フォントフェイス\' manually'
