@@ -9,6 +9,10 @@ package.path = ('%s;%s/.luarocks/share/lua/5.2/?.lua'):format(
   package.path,
   vim.env.HOME
 )
+package.path = ('%s;%s/.luarocks/share/lua/5.4/?.lua'):format(
+  package.path,
+  vim.env.HOME
+)
 
 local function validate(package)
   local ok = pcall(require, package)
