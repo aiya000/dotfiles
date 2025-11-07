@@ -42,8 +42,8 @@
 [rebase]
 	autostash = true
 [credential "https://github.com"]
-	helper = !/home/linuxbrew/.linuxbrew/bin/gh auth git-credential
+	helper = !/usr/bin/env gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = !/home/linuxbrew/.linuxbrew/bin/gh auth git-credential
+	helper = !/usr/bin/env gh auth git-credential
 [commit]
 	template = ~/.dotfiles/.gitmessage
