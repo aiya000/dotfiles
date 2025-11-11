@@ -1,1 +1,1 @@
-/home/aiya000/.dotfiles/ai-custom-instructions.md
+../ai-custom-instructions.md
