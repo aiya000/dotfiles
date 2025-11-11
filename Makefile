@@ -491,6 +491,9 @@ build-os-env:
 install-fd:
 	which fd || $(BrewInstall) fd
 
+install-rg:
+	which rg || $(BrewInstall) ripgrep
+
 endif # }}}
 ifeq ($(WSL2),yes) # {{{
 
