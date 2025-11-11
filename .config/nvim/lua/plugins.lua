@@ -1858,10 +1858,12 @@ return {
 
   {
     'tyru/open-browser.vim',
-    config = function()
-      vim.g.openbrowser_browser_commands = {
-        { name = 'wslview', args = { '{browser}', '{uri}' } },
-      }
+    init = function()
+      if InitLua.is_wsl then
+        vim.g.openbrowser_browser_commands = {
+          { name = 'wslview', args = { '{browser}', '{uri}' } },
+        }
+      end
     end,
   },
 
@@ -2015,14 +2017,14 @@ return {
       end)
 
       local augend = require('dial.augend')
-      require('dial.config').augends:register_group{
+      require('dial.config').augends:register_group({
         default = {
           augend.integer.alias.decimal,
           augend.integer.alias.hex,
           augend.date.alias['%Y/%m/%d'],
           augend.constant.alias.bool,
         },
-      }
+      })
     end
   },
 
