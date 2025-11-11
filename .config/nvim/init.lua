@@ -24,7 +24,7 @@ InitLua = InitLua
     is_unix = vim.fn.has('unix') == 1,
     is_macos = vim.fn.has('macunix') == 1,
     git_root = nil,
-    memo_path = '~/.backup/memo.md',
+    memo_path = '~/memo.md',
     hydra = {}, -- To activate by keymaps. See `./lua/plugins.lua`
   }
 
