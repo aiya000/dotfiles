@@ -2198,7 +2198,6 @@ return {
             or math.max(distance, -100) -- Example: min(-200, -100)
           neoscroll.scroll(distance_to_scroll, keymaps_opts)
           vim.defer_fn(function()
-            vim.notify('poi: ' .. vim.inspect(count), vim.log.levels.INFO)
             vim.api.nvim_win_set_cursor(0, { count, col })
           end, 200)
         end
