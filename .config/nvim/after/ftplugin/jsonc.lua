@@ -1,1 +1,1 @@
-vim.cmd("execute 'source' (InitLua.neovim_home .. '/after/ftplugin/json.vim')")
+require('helper').source_after_ftplugin('json')

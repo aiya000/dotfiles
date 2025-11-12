@@ -113,6 +113,14 @@ local function whoami()
   return vim.fn.trim(result.stdout)
 end
 
+---Runs `:source (neovim_home)/after/ftplugin/{filetype}.lua`
+---@param filetype string
+function M.source_after_ftplugin(filetype)
+  vim.cmd(('execute "source" "%s"'):format(
+    vim.fn.stdpath('config') .. '/after/ftplugin/' .. filetype .. '.lua'
+  ))
+end
+
 ---NOTE: This requires `$USER` or `whoami` command
 ---@param dir string
 function M.make_directory_if_missing(dir)

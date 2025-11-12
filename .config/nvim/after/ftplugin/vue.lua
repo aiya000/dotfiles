@@ -1,1 +1,1 @@
-vim.cmd("execute ':source' (InitLua.neovim_home .. '/after/ftplugin/typescript.vim')")
+require('helper').source_after_ftplugin('typescript')
