@@ -106,6 +106,9 @@ end
 ---end)
 ---print(not ok2) -- false
 ---```
+---
+---NOTE: This allows `rawset()` to modify the table. Use `real_readonly()` if this is a problem.
+---@see real_readonly
 function M.readonly(x)
   return setmetatable({}, {
     __index = x,
@@ -116,9 +119,9 @@ function M.readonly(x)
   })
 end
 
--- TODO: Write tests
+---TODO: Write tests
 ---Creates a deeply readonly table
----@generic K, V
+---@generic K
 ---@param x table<K, V>
 ---@return table<K, V> --But deeply readonly
 ---
@@ -169,6 +172,17 @@ function M.deep_readonly(x)
     end
   end
   return M.readonly(result)
+end
+
+---Creates a readonly table that denies `rawset()` and `rawget()`
+---@param x table
+---@return userdata
+---@see readonly
+function M.real_readonly(x)
+  local proxy = newproxy(true)
+  local metatable = getmetatable(proxy)
+  metatable.__index = x
+  return proxy
 end
 
 ---Quotes a string 'x' to `"'x'"` when string,
