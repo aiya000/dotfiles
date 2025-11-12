@@ -2023,6 +2023,11 @@ return {
           augend.integer.alias.hex,
           augend.date.alias['%Y/%m/%d'],
           augend.constant.alias.bool,
+          augend.constant.new({
+            elements = { '[ ]', '[x]' },
+            word = false,
+            cyclic = true,
+          }),
         },
       })
     end
