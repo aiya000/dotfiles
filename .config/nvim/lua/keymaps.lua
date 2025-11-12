@@ -33,6 +33,7 @@ helper.keymaps_set('n', { '<C-[>', '<Esc>', '<C-l>' }, helper.clear, { silent = 
 map('n', '<C-k><C-l>', helper.clear_highlight_deeply)
 map('n', '<C-k>o', '<Cmd>e! %<CR>', { silent = true })
 map('n', 'gG', 'ggVG')
+map('n', "'gG", 'ggVG"+y')
 map('n', 'q:', ':') -- `:`でcmdpaletteを開くので逆に`q:`でcmd-modeを開く
 map('n', '(', '(zv')
 map('n', ')', ')zv')
