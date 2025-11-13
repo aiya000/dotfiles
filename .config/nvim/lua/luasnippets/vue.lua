@@ -1,9 +1,9 @@
 local list = require('utils.list')
-local typescript = require('luasnippets.typescript')
 
 return {
   snippets = list.concat(
-    typescript.snippets,
+    require('luasnippets.typescript').snippets,
+    require('luasnippets.html.html').snippets,
     require('luasnippets.vue.vue')
   ),
   autosnippets = {},
