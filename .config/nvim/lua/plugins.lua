@@ -1814,7 +1814,7 @@ return {
         group = vim.api.nvim_create_augroup('InitLuaPluginsAsyncRun', { clear = true }),
         pattern = 'AsyncRunStop',
         callback = function()
-          vim.call('vimrc#popup_atcursor', ':AsyncRun finished')
+          vim.notify(':AsyncRun finished', vim.log.levels.INFO)
         end,
       })
     end,
