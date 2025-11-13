@@ -237,7 +237,7 @@ end)
 map('n', '<leader>e', '<Cmd>vsp|Oil<CR>', { silent = true })
 map('n', '<leader>E', '<Cmd>Oil<CR>', { silent = true })
 map('n', '<leader><leader>e', '<Cmd>sp|Oil<CR>', { silent = true })
-map('n', '<leader><leader>E', '<Cmd>tanew|Oil<CR>', { silent = true })
+map('n', '<leader><leader>E', '<Cmd>tabnew|Oil<CR>', { silent = true })
 
 -- List up
 map('n', '<C-k><C-e>', function()
