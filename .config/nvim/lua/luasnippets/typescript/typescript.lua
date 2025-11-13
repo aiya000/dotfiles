@@ -108,9 +108,9 @@ return list.concat(
 
     s(
       'case',
-      fmt('case {constant}: {statement}', {
-        constant = i(1, 'constant'),
-        statement = i(2, ''),
+      fmt([[case {}: {}]], {
+        i(1, 'constant'),
+        i(2, 'statement'),
       })
     ),
 
@@ -266,9 +266,9 @@ return list.concat(
   {
     s(
       'type',
-      fmt('type {name} = {definition}', {
-        name = i(1, 'Name'),
-        definition = i(2, ''),
+      fmt([[type {} = {}]], {
+        i(1, 'Name'),
+        i(2, 'definition'),
       })
     ),
 
@@ -317,25 +317,25 @@ return list.concat(
 
   sm(
     { 'import_as', 'imq' },
-    fmt("import * as {alias} from '{module}'", {
-      alias = i(1, ''),
-      module = i(2, ''),
+    fmt([[import * as {} from '{}']], {
+      i(1, 'alias'),
+      i(2, 'module'),
     })
   ),
 
   sm(
     { 'import', 'imp' },
-    fmt("import {{ {imports} }} from '{module}'", {
-      imports = i(1, ''),
-      module = i(2, ''),
+    fmt([[import {{ {} }} from '{module}']], {
+      i(1, 'imports'),
+      module = i(2, 'module'),
     })
   ),
 
   sm(
     { 'import_default_export', 'import_default', 'imd' },
-    fmt("import {name} from '{module}'", {
-      name = i(1, ''),
-      module = i(2, ''),
+    fmt([[import {} from '{}']], {
+      i(1, 'name'),
+      i(2, 'module'),
     })
   ),
 
@@ -343,26 +343,26 @@ return list.concat(
 
   sm(
     { 'export_from', 're_export' },
-    fmt("export {{ {exports} }} from '{module}'", {
-      exports = i(1, 'stuff'),
-      module = i(2, 'module'),
+    fmt([[export {{ {} }} from '{}']], {
+      i(1, 'stuff'),
+      i(2, 'module'),
     })
   ),
 
   {
     s(
       'const',
-      fmt('const {name} = {value}', {
-        name = i(1, 'x'),
-        value = i(2, ''),
+      fmt([[const {} = {}]], {
+        i(1, 'name'),
+        i(2, 'value'),
       })
     ),
 
     s(
       'let',
-      fmt('let {name} = {value}', {
-        name = i(1, 'x'),
-        value = i(2, ''),
+      fmt([[let {} = {}]], {
+        i(1, 'name'),
+        i(2, 'value'),
       })
     ),
 
@@ -376,49 +376,40 @@ return list.concat(
   {
     s(
       'enum',
-      fmt(
-        [[
-      enum {name} {{
-        {body}
-      }}
-    ]],
-        {
-          name = i(1, 'Name'),
-          body = i(2, ''),
-        }
-      )
+      fmt([[
+        enum {name} {{
+          {}
+        }}
+      ]], {
+        name = i(1, 'Name'),
+        i(2, ''),
+      })
     ),
   },
 
   sm(
     { 'class', 'cla' },
-    fmt(
-      [[
-    class {name} {{
-      {body}
-    }}
-  ]],
-      {
-        name = i(1, 'Name'),
-        body = i(2, ''),
-      }
-    )
+    fmt([[
+      class {name} {{
+        {}
+      }}
+    ]], {
+      name = i(1, 'name'),
+      i(2, ''),
+    })
   ),
 
   {
     s(
       'constructor',
-      fmt(
-        [[
-      constructor({args}) {{
-        {body}
-      }}
-    ]],
-        {
-          args = i(1, 'args'),
-          body = i(2, ''),
-        }
-      )
+      fmt([[
+        constructor({args}) {{
+          {}
+        }}
+      ]], {
+        args = i(1, 'args'),
+        i(2, ''),
+      })
     ),
 
     s(
@@ -508,8 +499,8 @@ return list.concat(
   {
     s(
       'todo',
-      fmt("throw new Error('TODO ({location})')", {
-        location = i(1, 'somewhere'),
+      fmt([[throw new Error('TODO ({})')]], {
+        i(1, 'somewhere'),
       })
     ),
   },
@@ -518,8 +509,8 @@ return list.concat(
   {
     s(
       'reference',
-      fmt("/// <reference path='{path}'/>", {
-        path = i(1, 'd-ts-path'),
+      fmt([[/// <reference path='{}'/>]], {
+        i(1, 'd-ts-path'),
       })
     ),
   },
@@ -743,25 +734,23 @@ return list.concat(
         tuple = i(1, 'tuple'),
       })
     ),
-  },
 
-  {
     -- Maps Type.K of all Type props to Type[K]
     s(
       'mapped_type',
-      fmt('[{key} in {keyType}]: {valueType}', {
-        key = i(2, 'K'),
-        keyType = i(1, 'keyof Type'),
-        valueType = i(3, 'Type[K]'),
+      fmt([[[{k} in {keyof_type}]: {mapped}]], {
+        k = i(1, 'k'),
+        keyof_type = i(2, 'keyof_type'),
+        mapped = i(3, 'mapped'),
       })
     ),
 
     s(
       'mapped_type_object',
-      fmt('{{ [{key} in {keyType}]: {valueType} }}', {
-        key = i(2, 'K'),
-        keyType = i(1, 'keyof Type'),
-        valueType = i(3, 'Type[K]'),
+      fmt([[{{ [{} in {}]: {} }}]], {
+        i(1, 'K'),
+        i(2, 'keyof Type'),
+        i(3, 'Type[K]'),
       })
     ),
   },
@@ -772,8 +761,8 @@ return list.concat(
   {
     s(
       'new_promise',
-      fmt('new Promise((resolve, reject) => {})', {
-        i(1, ''),
+      fmt([[new Promise((resolve, reject) => {})]], {
+        i(1, 'body'),
       })
     ),
 
