@@ -244,7 +244,11 @@ map('n', '<C-k><C-e>', function()
   telescope.find_files({ hidden = true })
 end)
 
-map('n', '<C-k><C-f>', ':<C-u>Telescope treesitter<CR>function')
+map('n', '<C-k><C-f>', function()
+  telescope.lsp_document_symbols({ symbols = { 'function' } })
+end)
+
+map('n', '<C-k>f', telescope.treesitter)
 map('n', '<C-k><C-r>', telescope.reloader)
 map('n', 'L', telescope.buffers)
 map('n', 'H', telescope.live_grep)
