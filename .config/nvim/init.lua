@@ -195,12 +195,12 @@ helper.make_directory_if_missing(InitLua.sessiondir)
 
 local init_private_lua = vim.fn.expand('~/.dotfiles/.private/nvim_init_private.lua')
 if vim.fn.filereadable(init_private_lua) == 1 then
-  vim.cmd('source ' .. init_private_lua)
+  vim.cmd.source(init_private_lua)
 end
 
 local init_env_lua = vim.fn.expand('~/.config/nvim/init_env.lua')
 if vim.fn.filereadable(init_env_lua) == 1 then
-  vim.cmd('source ' .. init_env_lua)
+  vim.cmd.source(init_env_lua)
 end
 
 -- }}}
@@ -213,7 +213,7 @@ require('commands') -- Due to `Require('commands')`, 'commands' module put here 
 
 local init_env_post_lua = vim.fn.expand('~/.config/nvim/init_env_post.lua')
 if vim.fn.filereadable(init_env_post_lua) == 1 then
-  vim.cmd('source ' .. init_env_post_lua)
+  vim.cmd.source(init_env_post_lua)
 end
 
 vim.cmd('filetype plugin indent on')
