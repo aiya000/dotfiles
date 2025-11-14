@@ -9,113 +9,48 @@ local i = ls.insert_node
 local t = ls.text_node
 local f = ls.function_node
 
-local snippets = {}
+return list.concat(
+  {
+    s(
+      'date',
+      f(function()
+        return os.date('%Y-%m-%d')
+      end)
+    ),
+  },
 
-table.insert(
-  snippets,
-  s(
-    'date',
-    f(function()
-      return os.date('%Y-%m-%d')
-    end)
-  )
-)
+  {
+    s('to', t('=>')),
+    s('readme', t('README')),
+    s('ari', t('ありがとうございます')),
+    s('ariga', t('ありがとう')),
+    s('yoro', t('よろしくお願いします')),
+  },
 
-vim.list_extend(
-  snippets,
-  sm(
-    { 'braces', 'bra', 'block', 'bl' },
-    fmt('{{{}}}', {
-      i(1, 'here'),
-    })
-  )
-)
-
-vim.list_extend(
-  snippets,
-  sm(
-    { 'brackets', 'ba' },
-    fmt('[{}]', {
-      i(1, 'here'),
-    })
-  )
-)
-
-vim.list_extend(
-  snippets,
-  sm(
-    { 'parens', 'pa' },
-    fmt('({})', {
-      i(1, 'here'),
-    })
-  )
-)
-
-vim.list_extend(
-  snippets,
-  sm(
-    { 'angles', 'an' },
-    fmt('<{}>', {
-      i(1, 'here'),
-    })
-  )
-)
-
-vim.list_extend(
-  snippets,
-  sm(
-    { 'back_quotations', 'b' },
-    fmt('`{}`', {
-      i(1, 'here'),
-    })
-  )
-)
-
-table.insert(snippets, s('to', t('=>')))
-
-table.insert(snippets, s('bar', t('|')))
-
--- Re:VIEW
-table.insert(
-  snippets,
-  s(
-    'range_surround',
-    fmt(
-      [[
-  -- #@@range_begin({range_name})
-  -- #@@range_end({range_name})
-]],
-      {
+  -- Re:VIEW
+  {
+    s(
+      'range_surround',
+      fmt([[
+        -- #@@range_begin({range_name})
+        -- #@@range_end({range_name})
+      ]], {
         range_name = i(1, 'range_name'),
-      }
-    )
-  )
+      })
+    ),
+
+    s(
+      'range_begin',
+      fmt('-- #@@range_begin({})', {
+        i(1, 'range_name'),
+      })
+    ),
+
+    s(
+      'range_end',
+      fmt('-- #@@range_end({})', {
+        i(1, 'range_name'),
+      })
+    ),
+  }
 )
-
-table.insert(
-  snippets,
-  s(
-    'range_begin',
-    fmt('-- #@@range_begin({})', {
-      i(1, 'range_name'),
-    })
-  )
-)
-
-table.insert(
-  snippets,
-  s(
-    'range_end',
-    fmt('-- #@@range_end({})', {
-      i(1, 'range_name'),
-    })
-  )
-)
-
--- words
-table.insert(snippets, s('readme', t('README')))
-
-return {
-  snippets = snippets,
-  autosnippets = {},
-}
