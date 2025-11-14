@@ -108,9 +108,9 @@ return list.concat(
 
     s(
       'case',
-      fmt([[case {}: {}]], {
-        i(1, 'constant'),
-        i(2, 'statement'),
+      fmt([[case {constant}: {statement}]], {
+        constant = i(1, 'constant'),
+        statement = i(2, 'statement'),
       })
     ),
 
@@ -158,12 +158,12 @@ return list.concat(
   sm(
     { 'function', 'fun' },
     fmt([[
-      function {name}({}) {{
+      function {name}({args}) {{
         {}
       }}
     ]], {
       name = i(1, 'name'),
-      i(2, ''),
+      args = i(2, ''),
       i(3, ''),
     })
   ),
@@ -266,9 +266,9 @@ return list.concat(
   {
     s(
       'type',
-      fmt([[type {} = {}]], {
-        i(1, 'Name'),
-        i(2, 'definition'),
+      fmt([[type {name} = {definition}]], {
+        name = i(1, 'Name'),
+        definition = i(2, 'definition'),
       })
     ),
 
@@ -317,25 +317,25 @@ return list.concat(
 
   sm(
     { 'import_as', 'imq' },
-    fmt([[import * as {} from '{}']], {
-      i(1, 'alias'),
-      i(2, 'module'),
+    fmt([[import * as {alias} from '{module}']], {
+      module = i(1, 'module'),
+      alias = i(2, 'alias'),
     })
   ),
 
   sm(
     { 'import', 'imp' },
     fmt([[import {{ {} }} from '{module}']], {
-      i(1, 'imports'),
-      module = i(2, 'module'),
+      module = i(1, 'module'),
+      i(2, ''),
     })
   ),
 
   sm(
     { 'import_default_export', 'import_default', 'imd' },
-    fmt([[import {} from '{}']], {
-      i(1, 'name'),
-      i(2, 'module'),
+    fmt([[import {name} from '{module}']], {
+      module = i(1, 'module'),
+      name = i(2, 'name'),
     })
   ),
 
@@ -762,7 +762,7 @@ return list.concat(
     s(
       'new_promise',
       fmt([[new Promise((resolve, reject) => {})]], {
-        i(1, 'body'),
+        i(1, ''),
       })
     ),
 
