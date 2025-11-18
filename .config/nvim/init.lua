@@ -82,7 +82,6 @@ vim.opt.linebreak = true
 vim.opt.list = false
 vim.opt.listchars = { tab = '»_', trail = '_', extends = '»', precedes = '«', nbsp = '%', eol = '↲' }
 vim.opt.matchpairs:append({ '<:>', '（:）', '｛:｝', '「:」', '＜:＞', '『:』', '【:】' })
-vim.opt.foldenable = false
 vim.opt.joinspaces = false
 vim.opt.timeout = false
 vim.opt.wrap = false
@@ -107,13 +106,15 @@ vim.opt.background = 'dark'
 vim.opt.showtabline = 2
 vim.opt.mouse = ''
 vim.opt.winbar = ' ' -- To allocate overlap with the bar incline.nvim
+vim.opt.fillchars = { vert = '|', fold = ' ' }
 
 -- Fold options
-vim.opt.foldcolumn = '1'
+vim.opt.foldenable = true
 vim.opt.foldopen = { 'search', 'jump', 'mark', 'percent', 'insert', 'tag', 'undo' }
-vim.opt.foldclose = 'all'
-vim.opt.foldmethod = 'marker'
-vim.opt.fillchars = { vert = '|', fold = ' ' }
+vim.opt.foldlevel = 99 -- Unlimit
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldtext = '' -- Show heading line as outline when folded
 
 -- Backup options
 vim.opt.directory = InitLua.directory

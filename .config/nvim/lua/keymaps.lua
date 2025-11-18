@@ -274,6 +274,15 @@ map('n', '<C-h><C-n>', '<Cmd>setlocal number! number?<CR>', { silent = true })
 map('n', '<C-h>v', helper.toggle_diagnostic_virtual_text, { silent = true })
 map('n', '<C-h><C-d>', helper.toggle_diff, { silent = true })
 
+map('n', '<C-h><C-f>', function()
+  if vim.opt.foldmethod:get() == 'expr' then
+    vim.opt.foldmethod = 'marker'
+  else
+    vim.opt.foldmethod = 'expr'
+  end
+  print(' foldmethod=' .. vim.opt.foldmethod:get())
+end, { silent = true })
+
 map('n', '<C-h><C-v>', function()
   local verticaledit = vim.opt_local.virtualedit
   vim.opt_local.virtualedit = (verticaledit[1] == '' or #verticaledit == 0) and 'all' or ''
