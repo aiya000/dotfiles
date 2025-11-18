@@ -25,6 +25,7 @@ return list.concat(
     s('ari', t('ありがとうございます')),
     s('ariga', t('ありがとう')),
     s('yoro', t('よろしくお願いします')),
+    s('mousi', t('申し訳ございません')),
   },
 
   -- Re:VIEW
