@@ -23,9 +23,12 @@ alias rm=rm-dust  # Aaaaaaaaaaaaaaaa!!
 alias du='du -h'
 
 if i_have batcat ; then
-  alias batcat-with-default-options='batcat $DOTFILES_BATCAT_DEFAULT_OPTIONS'
+  alias batcat-with-default-options='batcat $DOTFILES_BATCAT_DEFAULT_OPTIONS' # あれ？ これってオプション変数、ここで展開しなくていいんだっけ？
   alias bat=batcat-with-default-options
   alias cat=batcat-with-default-options
+elif i_have bat ; then
+  alias bat-with-default-options='bat $DOTFILES_BATCAT_DEFAULT_OPTIONS'
+  alias cat=bat-with-default-options
 fi
 
 i_have btop && alias top=btop
