@@ -121,6 +121,9 @@ end, { expr = true })
 map('n', 'zj', 'zjzo')
 map('n', 'zk', 'zkzo[zzt')
 
+map('n', 'zC', 'zM') -- なんとなくこっちの方が僕の直感にあってた
+map('n', 'zA', 'zR') --
+
 -- Windows, buffers, and tabs
 map('n', '<Space>h', '<C-w>h')
 map('n', '<Space>j', '<C-w>j')
@@ -284,15 +287,9 @@ map('n', '<C-h><C-f>', function()
 end, { silent = true })
 
 map('n', '<C-h><C-v>', function()
-  local verticaledit = vim.opt_local.virtualedit
+  local verticaledit = vim.opt_local.virtualedit:get()
   vim.opt_local.virtualedit = (verticaledit[1] == '' or #verticaledit == 0) and 'all' or ''
   vim.cmd('set virtualedit?')
-end, { silent = true })
-
-map('n', 'zm', function()
-  local foldmethod = vim.wo.foldmethod
-  vim.wo.foldmethod = (foldmethod == 'marker') and 'syntax' or 'marker'
-  vim.cmd('set foldmethod?')
 end, { silent = true })
 
 -- Visualize a last pasted range
