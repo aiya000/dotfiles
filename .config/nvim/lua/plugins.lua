@@ -1217,6 +1217,15 @@ return {
       -- NOTE: g;で訓練中
       -- { 'vS', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
       { 'g;', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
+      -- Line jump
+      { 'gl', mode = { 'n', 'x', 'o' }, function()
+        require('flash').jump({
+          search = { mode = 'search', max_length = 0 },
+          label = { after = { 0, 0 } },
+          pattern = '^',
+          labels = 'asdfghjklqwertyuiozxcvbnm'
+        })
+      end, desc = 'Flash Line Jump' },
     },
   },
 
