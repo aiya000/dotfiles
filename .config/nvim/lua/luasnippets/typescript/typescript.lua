@@ -12,51 +12,42 @@ return list.concat(
   -- Syntaxes
   sm(
     { 'for_of', 'for' },
-    fmt(
-      [[
-    for (const {x} of {xs}) {{
-      {body}
-    }}
-  ]],
-      {
-        x = i(1, 'x'),
-        xs = i(2, 'xs'),
-        body = i(3, ''),
-      }
-    )
+    fmt([[
+      for (const {x} of {xs}) {{
+        {}
+      }}
+    ]], {
+      xs = i(1, 'xs'),
+      x = i(2, 'x'),
+      i(3, ''),
+    })
   ),
 
   sm(
     { 'for_await', 'forawait', 'fora' },
-    fmt(
-      [[
-    for await (const {x} of {xs}) {{
-      {body}
-    }}
-  ]],
-      {
-        x = i(1, 'x'),
-        xs = i(2, 'xs'),
-        body = i(3, ''),
-      }
-    )
+    fmt([[
+      for await (const {x} of {xs}) {{
+        {}
+      }}
+    ]], {
+      xs = i(1, 'xs'),
+      x = i(2, 'x'),
+      i(3, ''),
+    })
   ),
 
   {
     s(
       'for_in',
-      fmt(
-        [[
-      for (const {key} in {obj}) {{
-        {body}
-      }}
-    ]],
-        {
-          key = i(1, 'i'),
-          obj = i(2, 'xs'),
-          body = i(3, ''),
-        }
-      )
+      fmt([[
+        for (const {key} in {obj}) {{
+          {}
+        }}
+      ]], {
+        key = i(1, 'i'),
+        obj = i(2, 'xs'),
+        i(3, ''),
+      })
     ),
 
     s(
@@ -64,14 +55,14 @@ return list.concat(
       fmt(
         [[
       for ({init}; {condition}; {increment}) {{
-        {body}
+        {}
       }}
     ]],
         {
           init = i(1, 'let i = 0'),
           condition = i(2, 'i < x'),
           increment = i(3, 'i++'),
-          body = i(4, ''),
+          i(4, ''),
         }
       )
     ),
@@ -81,12 +72,12 @@ return list.concat(
       fmt(
         [[
       while ({condition}) {{
-        {body}
+        {}
       }}
     ]],
         {
           condition = i(1, 'cond'),
-          body = i(2, ''),
+          i(2, ''),
         }
       )
     ),
@@ -130,12 +121,12 @@ return list.concat(
       fmt(
         [[
       if ({condition}) {{
-        {body}
+        {}
       }}
     ]],
         {
           condition = i(1, 'cond'),
-          body = i(2, ''),
+          i(2, ''),
         }
       )
     ),
@@ -145,11 +136,11 @@ return list.concat(
       fmt(
         [[
       else {{
-        {body}
+        {}
       }}
     ]],
         {
-          body = i(1, ''),
+          i(1, ''),
         }
       )
     ),
@@ -253,12 +244,12 @@ return list.concat(
     fmt(
       [[
     interface {name} {{
-      {body}
+      {}
     }}
   ]],
       {
         name = i(1, 'Name'),
-        body = i(2, ''),
+        i(2, ''),
       }
     )
   ),
@@ -277,11 +268,11 @@ return list.concat(
       fmt(
         [[
       try {{
-        {body}
+        {}
       }}
     ]],
         {
-          body = i(1, ''),
+          i(1, ''),
         }
       )
     ),
@@ -291,11 +282,11 @@ return list.concat(
       fmt(
         [[
       catch (e) {{
-        {body}
+        {}
       }}
     ]],
         {
-          body = i(1, ''),
+          i(1, ''),
         }
       )
     ),
@@ -306,28 +297,28 @@ return list.concat(
     fmt(
       [[
     finally {{
-      {body}
+      {}
     }}
   ]],
       {
-        body = i(1, ''),
+        i(1, ''),
       }
     )
   ),
 
   sm(
     { 'import_as', 'imq' },
-    fmt([[import * as {alias} from '{module}']], {
-      module = i(1, 'module'),
+    fmt([[import * as {alias} from '{}']], {
+      i(1, 'module'),
       alias = i(2, 'alias'),
     })
   ),
 
   sm(
     { 'import', 'imp' },
-    fmt([[import {{ {} }} from '{module}']], {
-      module = i(1, 'module'),
-      i(2, ''),
+    fmt([[import {{ {stuff} }} from '{}']], {
+      i(1, ''),
+      stuff = i(2, ''),
     })
   ),
 
@@ -417,12 +408,12 @@ return list.concat(
       fmt(
         [[
       namespace {name} {{
-        {body}
+        {}
       }}
     ]],
         {
           name = i(1, 'Name'),
-          body = i(2, ''),
+          i(2, ''),
         }
       )
     ),
@@ -432,12 +423,12 @@ return list.concat(
       fmt(
         [[
       module {name} {{
-        {body}
+        {}
       }}
     ]],
         {
           name = i(1, 'Name'),
-          body = i(2, ''),
+          i(2, ''),
         }
       )
     ),
@@ -451,13 +442,13 @@ return list.concat(
       fmt(
         [[
       get {name}(): {type} {{
-        {body}
+        {}
       }}
     ]],
         {
           name = i(1, 'fieldName'),
           type = i(2, 'type'),
-          body = i(3, ''),
+          i(3, ''),
         }
       )
     ),
@@ -467,13 +458,13 @@ return list.concat(
       fmt(
         [[
       set {name}(x: {type}) {{
-        {body}
+        {}
       }}
     ]],
         {
           name = i(1, 'fieldName'),
           type = i(2, 'type'),
-          body = i(3, ''),
+          i(3, ''),
         }
       )
     ),
@@ -521,14 +512,14 @@ return list.concat(
     fmt(
       [[
     private {name}({args}): {returnType} {{
-      {body}
+      {}
     }}
   ]],
       {
         name = i(1, 'name'),
         args = i(2, 'args'),
         returnType = i(3, 'void'),
-        body = i(4, ''),
+        i(4, ''),
       }
     )
   ),
@@ -538,14 +529,14 @@ return list.concat(
     fmt(
       [[
     public {name}({args}): {returnType} {{
-      {body}
+      {}
     }}
   ]],
       {
         name = i(1, 'name'),
         args = i(2, 'args'),
         returnType = i(3, 'void'),
-        body = i(4, ''),
+        i(4, ''),
       }
     )
   ),
@@ -555,14 +546,14 @@ return list.concat(
     fmt(
       [[
     async {name}({args}): Promise<{returnType}> {{
-      {body}
+      {}
     }}
   ]],
       {
         name = i(1, 'name'),
         args = i(2, 'args'),
         returnType = i(3, 'void'),
-        body = i(4, ''),
+        i(4, ''),
       }
     )
   ),
@@ -572,14 +563,14 @@ return list.concat(
     fmt(
       [[
     public async {name}({args}): Promise<{returnType}> {{
-      {body}
+      {}
     }}
   ]],
       {
         name = i(1, 'name'),
         args = i(2, 'args'),
         returnType = i(3, 'void'),
-        body = i(4, ''),
+        i(4, ''),
       }
     )
   ),
@@ -589,14 +580,14 @@ return list.concat(
     fmt(
       [[
     private async {name}({args}): Promise<{returnType}> {{
-      {body}
+      {}
     }}
   ]],
       {
         name = i(1, 'name'),
         args = i(2, 'args'),
         returnType = i(3, 'void'),
-        body = i(4, ''),
+        i(4, ''),
       }
     )
   ),
@@ -606,14 +597,14 @@ return list.concat(
     fmt(
       [[
     public static async {name}({args}): Promise<{returnType}> {{
-      {body}
+      {}
     }}
   ]],
       {
         name = i(1, 'name'),
         args = i(2, 'args'),
         returnType = i(3, 'void'),
-        body = i(4, ''),
+        i(4, ''),
       }
     )
   ),
@@ -623,14 +614,14 @@ return list.concat(
     fmt(
       [[
     private static async {name}({args}): Promise<{returnType}> {{
-      {body}
+      {}
     }}
   ]],
       {
         name = i(1, 'name'),
         args = i(2, 'args'),
         returnType = i(3, 'void'),
-        body = i(4, ''),
+        i(4, ''),
       }
     )
   ),
@@ -651,13 +642,13 @@ return list.concat(
     fmt(
       [[
     public get {name}(): {type} {{
-      {body}
+      {}
     }}
   ]],
       {
         name = i(1, 'fieldName'),
         type = i(2, 'type'),
-        body = i(3, ''),
+        i(3, ''),
       }
     )
   ),
@@ -667,13 +658,13 @@ return list.concat(
     fmt(
       [[
     public set {name}(x: {type}) {{
-      {body}
+      {}
     }}
   ]],
       {
         name = i(1, 'fieldName'),
         type = i(2, 'type'),
-        body = i(3, ''),
+        i(3, ''),
       }
     )
   ),
@@ -683,13 +674,13 @@ return list.concat(
     fmt(
       [[
     private get {name}(): {type} {{
-      {body}
+      {}
     }}
   ]],
       {
         name = i(1, 'fieldName'),
         type = i(2, 'type'),
-        body = i(3, ''),
+        i(3, ''),
       }
     )
   ),
@@ -699,13 +690,13 @@ return list.concat(
     fmt(
       [[
     private set {name}(x: {type}) {{
-      {body}
+      {}
     }}
   ]],
       {
         name = i(1, 'fieldName'),
         type = i(2, 'type'),
-        body = i(3, ''),
+        i(3, ''),
       }
     )
   ),
@@ -716,14 +707,14 @@ return list.concat(
       fmt(
         [[
       {name}({args}): {returnType} {{
-        {body}
+        {}
       }}
     ]],
         {
           name = i(1, 'name'),
           args = i(2, 'args'),
           returnType = i(3, 'void'),
-          body = i(4, ''),
+          i(4, ''),
         }
       )
     ),
