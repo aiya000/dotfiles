@@ -5,10 +5,12 @@ package.path = ('%s;%s/.luarocks/share/lua/5.1/?.lua'):format(
   package.path,
   vim.env.HOME
 )
+
 package.path = ('%s;%s/.luarocks/share/lua/5.2/?.lua'):format(
   package.path,
   vim.env.HOME
 )
+
 package.path = ('%s;%s/.luarocks/share/lua/5.4/?.lua'):format(
   package.path,
   vim.env.HOME
@@ -21,5 +23,5 @@ local function validate(package)
   end
 end
 
-validate('chotto')
-validate('luarrow')
+-- validate('chotto')
+-- validate('luarrow')

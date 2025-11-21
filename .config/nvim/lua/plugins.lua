@@ -1,6 +1,6 @@
 ---プラグイン設定
 
-local arrow = require('luarrow').arrow
+-- local arrow = require('luarrow').arrow
 local fn = require('utils.functions')
 local list = require('utils.list')
 local nvim = require('nvim')
@@ -65,13 +65,13 @@ return {
 
   {
     'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-fzf-native.nvim',
       'nvim-telescope/telescope-github.nvim',
       'gbprod/yanky.nvim',
     },
+    branch = '0.1.x',
     config = function()
       local actions = require('telescope.actions')
       require('telescope').setup({
@@ -177,13 +177,6 @@ return {
 
   {
     'neovim/nvim-lspconfig',
-
-    dependencies = {
-      'rcarriga/nvim-notify',
-      'SmiteshP/nvim-navic',
-      'hrsh7th/cmp-nvim-lsp',
-    },
-
     config = function()
       -- unused functionがグレー化されるのを無効化
       vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', { fg = 'NONE', bg = 'NONE' })
@@ -201,136 +194,6 @@ return {
           header = '',
           prefix = '',
         },
-      })
-
-      -- 各LSPサーバーの設定 {{{
-
-      -- 共通設定
-      local navic = require('nvim-navic')
-      local capabilities_common = require('cmp_nvim_lsp').default_capabilities()
-
-      -- ホバーウィンドウの設定を改善
-      local function on_attach_common(client, bufnr)
-        if client.server_capabilities.documentSymbolProvider then
-          navic.attach(client, bufnr)
-        end
-      end
-
-      vim.lsp.config('lua_ls', {
-        capabilities = capabilities_common,
-        on_attach = on_attach_common,
-        settings = {
-          Lua = {
-            runtime = { version = 'LuaJIT' },
-            workspace = { library = vim.api.nvim_get_runtime_file('', true) },
-          },
-        },
-      })
-
-      vim.lsp.config('ts_ls', {
-        capabilities = capabilities_common,
-        on_attach = on_attach_common,
-      })
-
-      -- See also mason-lspconfig.nvim section?
-      -- }}}
-    end,
-  },
-
-  -- }}}
-  -- nvim-cmp {{{
-
-  {
-    'hrsh7th/nvim-cmp',
-    dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-cmdline',
-      'hrsh7th/cmp-emoji',
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-      'aiya000/nvim-luasnip-emoji',
-    },
-    config = function()
-      ---@module 'cmp' -- Not working?
-      local cmp = require('cmp')
-      local luasnip = require('luasnip') ---@type any -- undefined-fieldエラーが出まくるのでとりあえずanyにする。ソースを読んだところ2025-10-07現在、LuaSnipには型が書かれていなかったので、これでいいと思う
-
-      ---descがあればそれをkindの前に表示。
-      ---例えば
-      ---```
-      ---emoji_pig   🐷 Snippet
-      ---emoji_dog   🐶 Snippet
-      ---emoji_cow   🐮 Snippet
-      ---emoji_cat   🐱 Snippet
-      ---emoji_ram   🐏 Snippet
-      ---```
-      ---のようになる。
-      ---@param entry cmp.Entry
-      ---@param vim_item vim.CompletedItem
-      ---@return vim.CompletedItem
-      local function format_entry_to_show_first_candidate(entry, vim_item)
-        local snip = entry:get_completion_item()
-        if snip.data ~= nil and snip.data.snip_id ~= nil then
-          local snippet = luasnip.get_id_snippet(snip.data.snip_id)
-          if snippet ~= nil and snippet.dscr ~= nil and snippet.dscr[1] ~= nil then
-            vim_item.kind = snippet.dscr[1] .. ' ' .. vim_item.kind
-          end
-        end
-        return vim_item
-      end
-
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
-        },
-
-        formatting = {
-          format = function(entry, vim_item)
-            if entry.source.name == 'luasnip' then
-              return format_entry_to_show_first_candidate(entry, vim_item)
-            end
-            return vim_item
-          end,
-        },
-
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'buffer' },
-          { name = 'path' },
-          { name = 'emoji' },
-        }),
-
-        -- NOTE: なぜかこれらを削除すると、nvim-cmpの補完候補が出た後に<C-n>キー・<C-p>キーを実行すると、Neovim標準の補完に落ちるので、削除しない
-        mapping = cmp.mapping.preset.insert({
-          ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-        }),
-      })
-
-      cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = 'path' },
-        }, {
-          { name = 'cmdline' },
-        }),
       })
     end,
   },
@@ -426,7 +289,6 @@ return {
 
   {
     'NTBBloodbath/galaxyline.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       local gl = require('galaxyline')
       local condition = require('galaxyline.condition')
@@ -639,7 +501,6 @@ return {
 
   {
     'akinsho/bufferline.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       require('bufferline').setup({
         options = {
@@ -853,109 +714,6 @@ return {
       end,
     }
   ),
-
-  -- }}}
-  -- LuaSnip {{{
-
-  {
-    'L3MON4D3/LuaSnip',
-    version = 'v2.*',
-    build = 'make install_jsregexp',
-    config = function()
-      local ls = require('luasnip')
-      local types = require('luasnip.util.types')
-
-      -- スニペット展開時に、ジャンプ先にマークを表示する
-      -- - (なし): 現在いるノード
-      -- - ○: 以前にジャンプした/これからジャンプする先のノード
-      -- - ◀: 終端ノード
-      -- また、終端に到達したらマークを消す
-      ls.config.set_config({
-        history = true,
-        updateevents = 'TextChanged,TextChangedI',
-        ext_opts = {
-          [types.insertNode] = {
-            active = {
-              virt_text = { { '', 'LuasnipInsertNodeActive' } },
-              virt_text_pos = 'inline',
-              hl_mode = 'combine',
-            },
-            passive = {
-              virt_text = { { '○', 'LuasnipInsertNodePassive' } },
-              virt_text_pos = 'inline',
-              hl_group = 'LuasnipInsertNodePassive',
-              hl_mode = 'combine',
-            },
-          },
-          [types.exitNode] = {
-            active = {
-              virt_text = { { '', 'LuasnipInsertNodePassive' } },
-              virt_text_pos = 'inline',
-              hl_mode = 'combine',
-            },
-            passive = {
-              virt_text = { { '◀', 'LuasnipInsertNodePassive' } },
-              virt_text_pos = 'inline',
-              hl_mode = 'combine',
-            },
-          },
-        },
-      })
-
-      ---Scan filetypes in the given directory.
-      ---The return array is possibly contains duplicated filetypes.
-      ---@param directory string --This function collects filetypes from this directory
-      ---@return string[] --Filetypes
-      local function scan_filetypes_in_directory_but_can_duplicate(directory)
-        local handler = vim.uv.fs_scandir(directory)
-        if handler == nil then
-          error('Failed to scan directory: ' .. directory)
-        end
-
-        local filetypes = {} ---@type string[]
-        while true do
-          local name, type = vim.uv.fs_scandir_next(handler)
-          if name == nil then
-            break
-          elseif type == 'file' then
-            local filetype = name:gsub('%.lua$', '')
-            table.insert(filetypes, filetype)
-          elseif type == 'directory' then
-            local filetype = name
-            table.insert(filetypes, filetype)
-          else
-            error(('Not suported file type: { type = "%s", name = "%s" }'):format(type, name))
-          end
-        end
-
-        return filetypes
-      end
-
-      ---Scan filetypes in the given directory.
-      ---The return array does not contain duplicated filetypes.
-      ---See `scan_filetypes_in_directory_but_can_duplicate()` for about params and the return type.
-      ---@param directory string
-      ---@return string[]
-      local function scan_filetypes_in_directory(directory)
-        return vim.iter(scan_filetypes_in_directory_but_can_duplicate(directory)):fold({}, function(filetypes, filetype)
-          return not vim.tbl_contains(filetypes, filetype) and list.append(filetypes, filetype) or filetypes
-        end)
-      end
-
-      -- from_luaローダーでディレクトリを登録しても、スニペットが展開できないので、それぞれスニペットファイルを手動で登録
-      -- TODO: ちゃんとfrom_luaローダーを使って動くようにする
-      local snippets_dir = vim.fn.stdpath('config') .. '/lua/luasnippets'
-      local filetypes = scan_filetypes_in_directory(snippets_dir) -- TODO: '_'キーを'all'キーに変換する
-      for _, filetype in ipairs(filetypes) do
-        local ok, snips = pcall(require, 'luasnippets.' .. filetype)
-        if not ok then
-          vim.notify(('Failed to load snippets: "%s" - %s'):format(filetype, snips), vim.log.levels.ERROR)
-        elseif snips and snips.snippets and type(snips.snippets) == 'table' and #snips.snippets > 0 then
-          ls.add_snippets(filetype, snips.snippets)
-        end
-      end
-    end,
-  },
 
   -- }}}
   -- plenary.nvim {{{
@@ -1796,20 +1554,10 @@ return {
 
   {
     'hachy/cmdpalette.nvim',
-    dependencies = {
-      'hrsh7th/nvim-cmp',
-      'hrsh7th/cmp-cmdline',
-    },
     config = function()
       require('cmdpalette').setup({
         buf = {
           filetype = 'cmdpalette',
-        },
-      })
-
-      require('cmp').setup.filetype('cmdpalette', {
-        sources = {
-          { name = 'cmdline' },
         },
       })
 
@@ -1858,9 +1606,6 @@ return {
 
           vim.keymap.set('i', '<C-j>', '<Esc><CR>', { remap = true, buffer = true }) -- <Esc> to hide completion menu
 
-          vim.keymap.set('i', '<C-n>', function()
-            require('cmp').complete()
-          end, { buffer = true })
         end,
       })
     end,
@@ -1929,11 +1674,6 @@ return {
 
   {
     'b0o/incline.nvim',
-    dependencies = {
-      'nvim-tree/nvim-web-devicons',
-      'SmiteshP/nvim-navic',
-      'stevearc/oil.nvim',
-    },
     config = function()
       local helpers = require('incline.helpers')
       local navic = require('nvim-navic')
@@ -1989,13 +1729,9 @@ return {
           end
 
           local function get_file_renderer(buf, focused)
-            local filename = vim.api.nvim_buf_get_name(buf)
-              % arrow(function(bufname)
-                return vim.fn.fnamemodify(bufname, ':t')
-              end)
-              ^ arrow(function(filename)
-                return filename == '' and '[No Name]' or filename
-              end)
+            local bufname = vim.api.nvim_buf_get_name(buf)
+            local filename = vim.fn.fnamemodify(bufname, ':t')
+            filename = filename == '' and '[No Name]' or filename
 
             local ft_icon, ft_color = devicons.get_icon_color(filename)
             local modified = vim.bo[buf].modified
@@ -2029,9 +1765,6 @@ return {
 
   {
     'SmiteshP/nvim-navic',
-    dependencies = {
-      'neovim/nvim-lspconfig',
-    },
   },
 
   -- }}}
@@ -2041,11 +1774,7 @@ return {
     'aiya000/nvim-luasnip-emoji',
     '~/Repository/nvim-luasnip-emoji',
     InitLua.disable_luasnip_emoji == true,
-    {
-      dependencies = {
-        'L3MON4D3/LuaSnip',
-      },
-    }
+    {}
   ),
 
   -- }}}
@@ -2200,7 +1929,6 @@ return {
 
   {
     'potamides/pantran.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
       local pantran = require('pantran')
 
@@ -2278,7 +2006,6 @@ return {
   {
     'stevearc/oil.nvim',
     lazy = false,
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       require('oil').setup({
         default_file_explorer = true,

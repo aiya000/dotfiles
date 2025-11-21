@@ -2,7 +2,7 @@
 ---関数がNeovimに関する事柄を意図しているか、もしくは`vim.*`に依存している場合は、こっち。
 ---それ以外の汎用的な関数は`./utils/functions.lua`に。
 
-local c = require('chotto')
+-- local c = require('chotto')
 local fn = require('utils.functions')
 local list = require('utils.list')
 
@@ -746,24 +746,19 @@ end
 ---@param input string --Like '::'
 ---@param set_current_line? fun(line: string): nil --Default is `vim.api.nvim_set_current_line()`. Also can select like `vim.fn.setcmdline()` or another functions
 function M.replace_line(keymaps, input, set_current_line)
-  keymaps = c.table(c.string(), c.union({ c.string(), c.func() })):parse(keymaps)
-  input = c.string():parse(input)
-  set_current_line = c.union({ c.null(), c.func() }):parse(set_current_line)
-  set_current_line = set_current_line or vim.api.nvim_set_current_line
-
   local rhs = keymaps[input]
   if rhs == nil then
     return
   end
 
-  local is_keys, keys = c.string():safe_parse(rhs)
+  local is_keys, keys = type(rhs) == 'string', rhs
   if is_keys then
     vim.api.nvim_set_current_line('')
     set_current_line(keys)
     return
   end
 
-  local is_func, func = c.func():safe_parse(rhs)
+  local is_func, func = type(rhs) == 'function', rhs
   if is_func then
     vim.api.nvim_set_current_line('')
     set_current_line(func())

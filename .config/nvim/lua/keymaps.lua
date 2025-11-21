@@ -3,7 +3,7 @@ local git_log = require('git-log')
 local nvim = require('nvim')
 local network = require('utils.network')
 local telescope = require('telescope.builtin')
-local snip = require('luasnip')
+-- local snip = require('luasnip')
 
 local s = fn.s
 
