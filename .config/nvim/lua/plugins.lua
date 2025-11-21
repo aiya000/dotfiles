@@ -848,6 +848,7 @@ return {
     InitLua.disable_bakaup == true,
     {
       init = function()
+        vim.g.bakaup_auto_backup = 1
         vim.g.bakaup_backup_dir = InitLua.backupdir
       end,
     }
@@ -1225,7 +1226,7 @@ return {
           search = { mode = 'search', max_length = 0 },
           label = { after = { 0, 0 } },
           pattern = '^',
-          labels = 'asdfghjklqwertyuiozxcvbnm'
+          labels = table.concat(list.char_range('a', 'z'), ''),
         })
         vim.schedule(function()
           vim.fn.cursor(vim.fn.line('.'), col)
