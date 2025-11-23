@@ -1,1 +1,1 @@
-require('helper').source_after_ftplugin('json')
+require('nvim').source_after_ftplugin('json')

@@ -2,7 +2,7 @@
 
 local arrow = require('luarrow').arrow
 local fn = require('utils.functions')
-local helper = require('helper')
+local helper = require('nvim')
 local list = require('utils.list')
 
 return {

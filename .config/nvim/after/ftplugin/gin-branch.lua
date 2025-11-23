@@ -1,4 +1,4 @@
-local helper = require('helper')
+local helper = require('nvim')
 local list = require('utils.list')
 
 ---@param branch_name string

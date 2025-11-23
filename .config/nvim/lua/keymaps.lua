@@ -1,6 +1,6 @@
 local fn = require('utils.functions')
 local git_log = require('git-log')
-local helper = require('helper')
+local helper = require('nvim')
 local network = require('utils.network')
 local telescope = require('telescope.builtin')
 local snip = require('luasnip')

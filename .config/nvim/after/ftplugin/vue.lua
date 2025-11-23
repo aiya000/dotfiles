@@ -1,1 +1,1 @@
-require('helper').source_after_ftplugin('typescript')
+require('nvim').source_after_ftplugin('typescript')

@@ -2,7 +2,7 @@
 
 require('luarocks-config')
 
-local helper = require('helper')
+local helper = require('nvim')
 local fn = require('utils.functions')
 local git = require('git')
 

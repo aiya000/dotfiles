@@ -1,7 +1,7 @@
 ---特定のプラグインに関連する操作をここに書かないでください。
 ---我々はこれによって、繰り返し失敗してきました
 
-local helper = require('helper')
+local helper = require('nvim')
 
 local M = {}
 

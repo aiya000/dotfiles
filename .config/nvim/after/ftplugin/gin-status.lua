@@ -1,5 +1,5 @@
 local Terminal = require('toggleterm.terminal').Terminal
-local helper = require('helper')
+local helper = require('nvim')
 
 vim.opt_local.cursorline = true
 
