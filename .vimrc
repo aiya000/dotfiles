@@ -1784,8 +1784,6 @@ nmap <Plug>(nomap-dirvish_up) <Plug>(dirvish_up)
 nmap <leader>R <Plug>(quickrepl-open)
 
 " kensaku-search.vim
-cmap <C-j> <CR>
-cnoremap <CR> <Plug>(kensaku-search-replace)<CR>
 
 " copilot.vim
 imap <silent><script><expr> <C-g><Tab> copilot#Accept("\<CR>")
