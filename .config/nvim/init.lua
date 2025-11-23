@@ -205,7 +205,16 @@ if vim.fn.filereadable(init_env_lua) == 1 then
 end
 
 -- }}}
+-- Neovide Confiratio{{{
 
+if vim.g.neovide then
+  vim.opt.guifont = 'Hack Nerd Font:h11' -- hX is the font size
+  vim.opt.mouse = 'nvi' -- 'nvi' is the default value of Neovim
+  vim.g.neovide_opacity = 0.8
+  vim.g.transparency = 0.8
+end
+
+-- }}}
 require('lazy-nvim-config')
 require('autocmds')
 require('plugins')
