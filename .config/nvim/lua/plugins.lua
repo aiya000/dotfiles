@@ -2393,7 +2393,7 @@ return {
     event = { 'WinLeave' },
   },
 
-  -- }}
+  -- }}}
   -- oil.nvim {{{
 
   {
@@ -2417,3 +2417,5 @@ return {
 
   -- }}}
 }
+
+--vim: set foldmethod=marker foldlevel=0:
