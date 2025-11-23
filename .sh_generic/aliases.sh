@@ -20,7 +20,6 @@ alias ls='ls --color=auto --group-directories-first'
 alias mv='mv -i'
 alias sl=ls
 alias rm=rm-dust  # Aaaaaaaaaaaaaaaa!!
-alias du='du -h'
 
 if i_have batcat ; then
   alias batcat-with-default-options='batcat $DOTFILES_BATCAT_DEFAULT_OPTIONS' # あれ？ これってオプション変数、ここで展開しなくていいんだっけ？
@@ -74,12 +73,16 @@ alias date-simple='date "+%Y-%m-%d %H:%M"'
 alias date-today='date +"%Y-%m-%d"'
 alias today=date-today
 
-alias du-sum='du -hs'
-
-function du-sort () {
-  local paths=${1:-.}
-  du -h -d 1 "$paths" | sort -h
-}
+if i_have dust ; then
+  alias du=dust
+else
+  alias du='du -h'
+  alias du-sum='du -hs'
+  function du-sort () {
+    local paths=${1:-.}
+    du -h -d 1 "$paths" | sort -h
+  }
+fi
 
 # shellcheck disable=SC2139
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
