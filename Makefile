@@ -606,3 +606,17 @@ download-nerd-fonts:
 		wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Hack.zip ; \
 		explorer.exe .
 	@echo 'Install HackNerdFontMono-Regular.ttf, and set it to \'プロファイル > Ubuntu > 外観 > フォントフェイス\' manually'
+
+open-ditt-page:
+	xdg-open https://sabrogden.github.io/Ditto/
+	@echo 'Next, to enable paste to Windows Terminal by Insert+Shift:'
+	@echo '1. Download **Portable** version Ditto'
+	@echo '2. Extract zip'
+	@echo '3. Move Ditto folder to "C:\Users\UserName\Program Files\Ditto" using explorer.exe (explorer.exe because this needs Windows admin permission)'
+	@echo '4. Start Ditto.exe once'
+	@echo '5. Open Ditto options from system tray icon'
+	@echo '6. Change some settings in Ditto to generate "C:\Users\UserName\Program Files\Ditto\Ditto.settings"'
+	@echo '7. Close (Kill) Ditto from system tray'
+	@echo '8. Add "DefaultPasteString=+{INS}" to [Ditto] section in Ditto.settings - **NOTE:** This .settings is easy to read. Please care to paste into [Ditto]'
+	@echo '9. Start Ditto.exe again'
+
