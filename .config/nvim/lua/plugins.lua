@@ -1219,12 +1219,16 @@ return {
       { 'g;', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
       -- Line jump
       { 'gl', mode = { 'n', 'x', 'o' }, function()
+        local col = vim.fn.col('.')
         require('flash').jump({
           search = { mode = 'search', max_length = 0 },
           label = { after = { 0, 0 } },
           pattern = '^',
           labels = 'asdfghjklqwertyuiozxcvbnm'
         })
+        vim.schedule(function()
+          vim.fn.cursor(vim.fn.line('.'), col)
+        end)
       end, desc = 'Flash Line Jump' },
     },
   },
@@ -1479,21 +1483,20 @@ return {
   helper.load_from_local_or_remote(
     'aiya000/nvim-mado-scratch-buffer',
     '~/Repository/nvim-mado-scratch-buffer',
-    InitLua.disable_scratch_buffer == true,
+    InitLua.disable_mado_scratch_buffer == true,
     {
       opts = {
         file_pattern = {
           when_file_buffer = vim.fn.expand('~/tmp/scratch-%d'),
         },
         default_file_ext = 'md',
-        default_open_method = 'vsp',
-        -- default_open_method = {
-        --   method = 'float',
-        --   size = {
-        --     width = 100,
-        --     height = 40,
-        --   },
-        -- },
+        default_open_method = {
+          method = 'float',
+          size = {
+            width = 100,
+            height = 40,
+          },
+        },
         default_buffer_size = 'no-auto-resize',
       },
     }
@@ -2390,7 +2393,7 @@ return {
     event = { 'WinLeave' },
   },
 
-  -- }}}
+  -- }}
   -- oil.nvim {{{
 
   {
