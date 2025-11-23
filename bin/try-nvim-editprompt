@@ -22,4 +22,4 @@ if ! command -v nvim > /dev/null 2>&1 ; then
 fi
 
 # Launch editprompt with nvim
-editprompt --editor nvim "$@"
+editprompt open --editor nvim "$@" || sleep 600 # `sleep 600` to show error
