@@ -1,3 +1,5 @@
+# Dockerfile for nvim :ClaudeCodeDocker command
+
 FROM mcr.microsoft.com/devcontainers/base:ubuntu
 
 # Install Node.js 20.x

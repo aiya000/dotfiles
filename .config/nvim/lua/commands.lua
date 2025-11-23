@@ -1,5 +1,5 @@
-local Terminal = require('toggleterm.terminal').Terminal
 local c = require('chotto')
+local docker = require('docker')
 local git = require('git')
 local helper = require('helper')
 local nodejs = require('nodejs')
@@ -186,113 +186,8 @@ create_command('ReverseLines', '!tac', {
   desc = 'Reverse the order of lines in the selected range or entire buffer',
 })
 
-ClaudeDockerTerminal = nil
-
----@param git_root string
----@param image_name string
----@param args string
-local function start_creating_claude_docker_terminal(git_root, image_name, args)
-  -- Show build progress in floating window
-  local cmd = s('docker build -t {image_name} {git_root}/docker/claude-code', {
-    image_name = image_name,
-    git_root = git_root,
-  })
-
-  -- TODO: Not working?
-  -- Build the image
-  Terminal:new({
-    cmd = cmd,
-    direction = 'float',
-    float_opts = {
-      border = 'curved',
-      width = math.floor(vim.o.columns * 0.8),
-      height = math.floor(vim.o.lines * 0.8),
-    },
-
-    on_open = function(term)
-      vim.cmd('startinsert!')
-      -- Set buffer name for clarity
-      vim.api.nvim_buf_set_name(term.bufnr, 'Docker Build Progress')
-    end,
-
-    on_exit = function(_, _, exit_code, _)
-      if exit_code ~= 0 then
-        vim.notify('Failed to build Docker image (exit code: ' .. exit_code .. ')', vim.log.levels.ERROR)
-        return
-      end
-      vim.notify('Docker image built successfully! Opening Claude Code...', vim.log.levels.INFO)
-      -- Wait a bit then open Claude Code
-      vim.defer_fn(function()
-        vim.cmd('ClaudeCodeDockerAtGitRoot ' .. args)
-      end, 1000)
-    end,
-  }):toggle()
-end
-
----@param project_root string
----@param image_name string
----@param args string
-local function run_claude_docker_terminal(project_root, image_name, args)
-  local cmd = s(
-    'docker run -it --rm -v {project_root}:/workspace -v claude-code-config:/home/vscode/.claude -e CLAUDE_CONFIG_DIR=/home/vscode/.claude -w /workspace {image_name} claude --dangerously-skip-permissions {args}',
-    {
-      project_root = vim.fn.shellescape(project_root),
-      image_name = image_name,
-      args = args,
-    }
-  )
-
-  -- Create and store terminal instance
-  ClaudeDockerTerminal = Terminal:new({
-    cmd = cmd,
-    direction = 'float',
-    float_opts = {
-      border = 'curved',
-      width = math.floor(vim.o.columns * 0.9),
-      height = math.floor(vim.o.lines * 0.9),
-    },
-
-    on_open = function(_)
-      vim.cmd('startinsert!')
-    end,
-
-    on_exit = function()
-      -- Clear the global terminal instance when it exits
-      ClaudeDockerTerminal = nil
-      vim.notify('Claude Code Docker terminal closed', vim.log.levels.INFO)
-    end,
-  })
-
-  ClaudeDockerTerminal:toggle()
-end
-
----@param args? string
-local function start_claude_docker(args)
-  args = args or ''
-
-  -- Show ClaudeDockerTerminal when it is still running
-  if ClaudeDockerTerminal ~= nil then
-    ClaudeDockerTerminal:toggle()
-    return
-  end
-  local image_name = 'dotfiles-claude-code:latest'
-
-  -- Check if image exists, if not build it
-  local check_image = vim.system({ 'docker', 'images', '-q', image_name }):wait()
-  if check_image.code ~= 0 then
-    vim.notify('Failed to check Docker images: ' .. (check_image.stderr or 'Unknown error'), vim.log.levels.ERROR)
-    return
-  end
-
-  local cwd = vim.fn.getcwd() -- TODO: Detect project root?
-  if check_image.stdout == '' then
-    start_creating_claude_docker_terminal(cwd, image_name, args)
-  end
-  run_claude_docker_terminal(cwd, image_name, args)
-end
-
 create_command('ClaudeCodeDocker', function(opts)
-  start_claude_docker(opts.args)
+  docker.start_dangerous_claude_code(opts.args)
 end, {
   nargs = '*',
   desc = 'Open ClaudeCode in Docker container at git root (auto-builds image if needed)',
