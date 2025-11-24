@@ -1,6 +1,6 @@
 local fn = require('utils.functions')
 local git_log = require('git-log')
-local helper = require('nvim')
+local nvim = require('nvim')
 local network = require('utils.network')
 local telescope = require('telescope.builtin')
 local snip = require('luasnip')
@@ -28,16 +28,16 @@ map('n', ',', '<NOP>')
 
 -- Other than below
 map('n', '<CR>', 'o<Esc>')
-helper.keymaps_set('n', { '<C-j>', '<C-m>' }, '<CR>', { remap = true })
-helper.keymaps_set('n', { '<C-[>', '<Esc>', '<C-l>' }, helper.clear, { silent = true })
-map('n', '<C-k><C-l>', helper.clear_highlight_deeply)
+nvim.keymaps_set('n', { '<C-j>', '<C-m>' }, '<CR>', { remap = true })
+nvim.keymaps_set('n', { '<C-[>', '<Esc>', '<C-l>' }, nvim.clear, { silent = true })
+map('n', '<C-k><C-l>', nvim.clear_highlight_deeply)
 map('n', '<C-k>o', '<Cmd>e! %<CR>', { silent = true })
 map('n', 'gG', 'ggVG')
 map('n', "'gG", 'ggVG"+y')
 map('n', 'q:', ':') -- `:`でcmdpaletteを開くので逆に`q:`でcmd-modeを開く
 map('n', '(', '(zv')
 map('n', ')', ')zv')
-map('n', '<C-k><C-j>', helper.clear_highlight_and_write)
+map('n', '<C-k><C-j>', nvim.clear_highlight_and_write)
 map('n', '<C-k>J', '<Cmd>wall | echo "written all !"<CR>', { silent = true })
 map('n', '<C-]>', 'g<C-]>')
 map('n', '<leader>q', '<Cmd>copen<CR>', { silent = true })
@@ -92,7 +92,7 @@ map('n', '#', function()
 end)
 
 map('n', 'Q', function()
-  if helper.close_quickfix_if_open() then
+  if nvim.close_quickfix_if_open() then
     return
   end
 
@@ -106,7 +106,7 @@ map('n', 'Q', function()
     'netrw',
     'quickrun',
   }
-  helper.bufclose_filetype(closing_target_buffer_filetype)
+  nvim.bufclose_filetype(closing_target_buffer_filetype)
 end)
 
 -- Foldings
@@ -171,20 +171,20 @@ map('n', 'gh', '<NOP>')
 
 --- Window navigations
 map('n', '<C-s>N', function()
-  helper.move_window_forward()
+  nvim.move_window_forward()
 end, { silent = true })
 
 map('n', '<C-s>P', function()
-  helper.move_window_forward()
+  nvim.move_window_forward()
 end, { silent = true })
 
 --- Tabs navigations
-map('n', '<C-n>', helper.tabnext_loop, { silent = true })
-map('n', '<C-p>', helper.tabprev_loop, { silent = true })
+map('n', '<C-n>', nvim.tabnext_loop, { silent = true })
+map('n', '<C-p>', nvim.tabprev_loop, { silent = true })
 
 --- Start tab move mode with moving the current tab
 vim.keymap.set('n', '<C-s>n', function()
-  helper.move_tab_next()
+  nvim.move_tab_next()
   if InitLua.hydra.tab_move == nil then
     vim.notify('InitLua.hydra.tab_move is not loaded', vim.log.levels.ERROR)
   else
@@ -193,7 +193,7 @@ vim.keymap.set('n', '<C-s>n', function()
 end)
 
 vim.keymap.set('n', '<C-s>p', function()
-  helper.move_tab_prev()
+  nvim.move_tab_prev()
   if InitLua.hydra.tab_move == nil then
     vim.notify('InitLua.hydra.tab_move is not loaded', vim.log.levels.ERROR)
   else
@@ -208,32 +208,32 @@ end
 
 -- `termopen()`
 map('n', '<leader>v', function()
-  local cwd = helper.read_current_buffer_dir() or fallback_to_path_at_started()
+  local cwd = nvim.read_current_buffer_dir() or fallback_to_path_at_started()
   vim.cmd('vertical new')
-  helper.termopen_shell({ cwd = cwd })
+  nvim.termopen_shell({ cwd = cwd })
 end)
 
 map('n', '<leader><leader>v', function()
-  local cwd = helper.read_current_buffer_dir() or fallback_to_path_at_started()
+  local cwd = nvim.read_current_buffer_dir() or fallback_to_path_at_started()
   vim.cmd('new')
-  helper.termopen_shell({ cwd = cwd })
+  nvim.termopen_shell({ cwd = cwd })
 end)
 
 --- Open in the current window
 map('n', '<leader>V', function()
   -- NOTE: 現在のウィンドウでlspのエラーなどがあると、タイミングによってその表示を持ち越してしまうので、新しいウィンドウで開く
-  local cwd = helper.read_current_buffer_dir() or fallback_to_path_at_started()
+  local cwd = nvim.read_current_buffer_dir() or fallback_to_path_at_started()
   local current_win = vim.api.nvim_get_current_win()
   vim.cmd('new')
-  helper.termopen_shell({ cwd = cwd }, false)
+  nvim.termopen_shell({ cwd = cwd }, false)
   vim.api.nvim_win_close(current_win, false)
   vim.fn.feedkeys('i')
 end)
 
 map('n', '<leader><leader>V', function()
-  local cwd = helper.read_current_buffer_dir() or fallback_to_path_at_started()
+  local cwd = nvim.read_current_buffer_dir() or fallback_to_path_at_started()
   vim.cmd('tabnew')
-  helper.termopen_shell({ cwd = cwd })
+  nvim.termopen_shell({ cwd = cwd })
 end)
 
 -- File explorer
@@ -261,12 +261,12 @@ map('n', 'q>', telescope.registers)
 map('n', 'y>', '<Cmd>Telescope yank_history<CR>', { silent = true })
 
 map('n', 'g>', function()
-  helper.open_buffer_to_execute('messages') -- This feature is not provided by telescope.nvim. use :messages instead
+  nvim.open_buffer_to_execute('messages') -- This feature is not provided by telescope.nvim. use :messages instead
 end, { silent = true })
 
 --- Another AI Agents
-map('n', '<leader>gc', helper.toggle_copilot_cli)
-map('n', '<leader>Gc', helper.toggle_gemini_cli)
+map('n', '<leader>gc', nvim.toggle_copilot_cli)
+map('n', '<leader>Gc', nvim.toggle_gemini_cli)
 
 -- Options
 map('n', '<C-h><C-w>', '<Cmd>setlocal wrap! wrap?<CR>', { silent = true })
@@ -274,8 +274,8 @@ map('n', '<C-h><C-c>', '<Cmd>setlocal cursorline! cursorline?<CR>', { silent = t
 map('n', '<C-h><C-r>', '<Cmd>setlocal relativenumber! relativenumber?<CR>', { silent = true })
 map('n', '<C-h><C-l>', '<Cmd>setlocal list! list?<CR>', { silent = true })
 map('n', '<C-h><C-n>', '<Cmd>setlocal number! number?<CR>', { silent = true })
-map('n', '<C-h>v', helper.toggle_diagnostic_virtual_text, { silent = true })
-map('n', '<C-h><C-d>', helper.toggle_diff, { silent = true })
+map('n', '<C-h>v', nvim.toggle_diagnostic_virtual_text, { silent = true })
+map('n', '<C-h><C-d>', nvim.toggle_diff, { silent = true })
 
 map('n', '<C-h><C-f>', function()
   if vim.opt.foldmethod:get() == 'expr' then
@@ -310,12 +310,12 @@ map('n', '<leader>d', '"+d')
 map('n', '<leader>x', '"+x')
 
 map('n', 'p', function()
-  helper.run_with_virtual_keymaps('<Plug>(YankyPutAfter)')
+  nvim.run_with_virtual_keymaps('<Plug>(YankyPutAfter)')
   InitLua.hydra.yanky_ring:activate()
 end)
 
 map('n', 'P', function()
-  helper.run_with_virtual_keymaps('<Plug>(YankyPutBefore)')
+  nvim.run_with_virtual_keymaps('<Plug>(YankyPutBefore)')
   InitLua.hydra.yanky_ring:activate()
 end)
 
@@ -344,10 +344,10 @@ map('n', '"gP', function()
 end)
 
 -- Operators and Objects
-map('n', 'ga', helper.append_choose_surround_normal, { silent = true })
-map('n', 'gs', helper.append_choose_surround_wide, { silent = true })
-map('n', 'ds', helper.delete_mostly_inner_surround, { silent = true })
-map('n', 'cs', helper.replace_mostly_inner_surround, { silent = true })
+map('n', 'ga', nvim.append_choose_surround_normal, { silent = true })
+map('n', 'gs', nvim.append_choose_surround_wide, { silent = true })
+map('n', 'ds', nvim.delete_mostly_inner_surround, { silent = true })
+map('n', 'cs', nvim.replace_mostly_inner_surround, { silent = true })
 map('n', 'dijp', 'v<Plug>(textobj-jabraces-parens-i)x', { remap = true })
 map('n', 'dajp', 'v<Plug>(textobj-jabraces-parens-a)x', { remap = true })
 map('n', 'dijK', 'v<Plug>(textobj-jabraces-yama-kakko-i)x', { remap = true })
@@ -355,7 +355,7 @@ map('n', 'dajK', 'v<Plug>(textobj-jabraces-yama-kakko-a)x', { remap = true })
 map('n', 'dij-k', 'v<Plug>(textobj-jabraces-double-kakko-i)x', { remap = true })
 map('n', 'daj-k', 'v<Plug>(textobj-jabraces-double-kakko-a)x', { remap = true })
 map('n', '.', '<Plug>(repeat-.)', { remap = true })
-map('n', '<leader><leader>c', helper.camelize_or_uncamelize_current_word_as_repeatable, { silent = true })
+map('n', '<leader><leader>c', nvim.camelize_or_uncamelize_current_word_as_repeatable, { silent = true })
 --- Fake operator
 map('n', '<C-v>ii', 'v<Plug>(textobj-indent-i)<C-v>ow', { remap = true }) -- Simular to vii, but select by <C-v>
 
@@ -376,14 +376,14 @@ map('v', "'T", '<Plug>(fmap-backward-T)', { remap = true })
 
 -- ALE and LSP
 map('n', '<C-k><C-a>', '<Cmd>ALEToggle<CR>', { silent = true })
-map('n', '[]', helper.open_diagnostic_detail)
+map('n', '[]', nvim.open_diagnostic_detail)
 
 map('n', '[c', function()
-  helper.goto_diagnostic('previous')
+  nvim.goto_diagnostic('previous')
 end)
 
 map('n', ']c', function()
-  helper.goto_diagnostic('next')
+  nvim.goto_diagnostic('next')
 end)
 
 map('n', 'K', function()
@@ -423,8 +423,8 @@ map('n', '<leader><leader>B', function()
 end, { silent = true })
 
 -- File Editing
-map('n', '<C-k><Space>', helper.remove_trailing_spaces, { silent = true })
-map('n', '<Space><Space>', helper.compress_spaces, { silent = true })
+map('n', '<C-k><Space>', nvim.remove_trailing_spaces, { silent = true })
+map('n', '<Space><Space>', nvim.compress_spaces, { silent = true })
 map('n', '<leader><leader>s', 'vii:sort<CR>', { remap = true, silent = true })
 
 map('n', '<C-k><C-s>', function()
@@ -509,7 +509,7 @@ map('c', '<C-a>', '<Home>')
 map('c', '<C-h>', '<BS>')
 map('c', '<C-d>', '<Del>')
 map('c', '<C-e>', '<End>')
-map('c', '<C-k><C-k>', helper.remove_text_after_cursor, { expr = true })
+map('c', '<C-k><C-k>', nvim.remove_text_after_cursor, { expr = true })
 map('c', '<C-l>', '<C-c>')
 map('c', '<C-o>', '<Up>')
 map('c', '<C-y>', '<Down>')

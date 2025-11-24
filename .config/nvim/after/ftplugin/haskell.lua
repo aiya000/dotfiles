@@ -1,4 +1,4 @@
-local helper = require('nvim')
+local nvim = require('nvim')
 local fn = require('utils.functions')
 
 vim.opt_local.tabstop = 2

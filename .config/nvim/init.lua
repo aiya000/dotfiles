@@ -2,13 +2,13 @@
 
 require('luarocks-config')
 
-local helper = require('nvim')
+local nvim = require('nvim')
 local fn = require('utils.functions')
 local git = require('git')
 
 local s = fn.s
 
-Require = helper.reload_modules
+Require = nvim.reload_modules
 
 -------------------
 -- Global values --
@@ -186,10 +186,10 @@ end
 -- }}}
 -- Prepare backup directories {{{
 
-helper.make_directory_if_missing(InitLua.backupdir)
-helper.make_directory_if_missing(InitLua.directory)
-helper.make_directory_if_missing(InitLua.undodir)
-helper.make_directory_if_missing(InitLua.sessiondir)
+nvim.make_directory_if_missing(InitLua.backupdir)
+nvim.make_directory_if_missing(InitLua.directory)
+nvim.make_directory_if_missing(InitLua.undodir)
+nvim.make_directory_if_missing(InitLua.sessiondir)
 
 -- }}}
 -- Read local scripts {{{

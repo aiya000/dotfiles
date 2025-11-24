@@ -1,7 +1,7 @@
 local c = require('chotto')
 local docker = require('docker')
 local git = require('git')
-local helper = require('nvim')
+local nvim = require('nvim')
 local nodejs = require('nodejs')
 local s = require('utils.functions').s
 local telescope = require('telescope.builtin')
@@ -29,7 +29,7 @@ local function create_command(cmd_name, func, options)
 end
 
 local function read_node_base_dir()
-  local ok, result = pcall(helper.get_current_buffer_dir, InitLua.git_root)
+  local ok, result = pcall(nvim.get_current_buffer_dir, InitLua.git_root)
   return ok and result or InitLua.path_at_started or error('No base directory found')
 end
 
@@ -158,7 +158,7 @@ create_command('CClear', function()
 end, { desc = 'Clear quickfix' })
 
 create_command('Rename', function(opts)
-  helper.rename_to(opts.args)
+  nvim.rename_to(opts.args)
 end, { nargs = 1, complete = 'file', desc = 'Rename current file to the new name' })
 
 -- TODO: ちゃんと動いてる？
@@ -210,7 +210,7 @@ end, {
 
 vim.api.nvim_create_user_command('RemoveTrailingSpacesWithForce', function(opts)
   local range = opts.range > 0 and { opts.line1, opts.line2 } or nil
-  helper.remove_trailing_spaces(true, range)
+  nvim.remove_trailing_spaces(true, range)
 end, { range = true })
 
 --}}}

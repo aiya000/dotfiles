@@ -1,4 +1,4 @@
-local helper = require('nvim')
+local nvim = require('nvim')
 local list = require('utils.list')
 local pipe = require('utils.functions').pipe
 

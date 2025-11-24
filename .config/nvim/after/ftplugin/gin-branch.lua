@@ -1,4 +1,4 @@
-local helper = require('nvim')
+local nvim = require('nvim')
 local list = require('utils.list')
 
 ---@param branch_name string
@@ -6,13 +6,13 @@ local list = require('utils.list')
 local function confirm_to_delete_branch(branch_name)
   local protected_branches = { 'main', 'master', 'develop', 'release' }
 
-  local answer = helper.confirm_to_get_charstr(("Delete '%s' branch? (y/n):"):format(branch_name))
+  local answer = nvim.confirm_to_get_charstr(("Delete '%s' branch? (y/n):"):format(branch_name))
   if answer:lower() ~= 'y' then
     return false
   end
 
   if list.has(protected_branches, branch_name) then
-    local next_answer = helper.confirm_to_get_charstr(
+    local next_answer = nvim.confirm_to_get_charstr(
       ("'%s' is a protected branch. Are you sure you want to delete it? (y/n):"):format(branch_name)
     )
     if next_answer:lower() ~= 'y' then
@@ -79,7 +79,7 @@ vim.keymap.set('n', 'Q', function()
   vim.api.nvim_buf_delete(0, { force = true })
 end, { buffer = true, silent = true, desc = 'Close this window' })
 
-helper.keymaps_set('n', { 'dd', 'D' }, delete_current_line_branch, {
+nvim.keymaps_set('n', { 'dd', 'D' }, delete_current_line_branch, {
   buffer = true,
   desc = 'Delete branch under cursor',
 })

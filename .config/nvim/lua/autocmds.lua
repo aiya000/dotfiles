@@ -1,7 +1,7 @@
 ---特定のプラグインに関連する操作をここに書かないでください。
 ---我々はこれによって、繰り返し失敗してきました
 
-local helper = require('nvim')
+local nvim = require('nvim')
 
 local M = {}
 
@@ -43,7 +43,7 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
 vim.api.nvim_create_autocmd('CmdlineChanged', {
   group = augroup,
   callback = function()
-    helper.replace_line(
+    nvim.replace_line(
       {
         [':'] = '%s/',
       },

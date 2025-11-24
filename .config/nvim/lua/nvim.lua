@@ -1,4 +1,3 @@
----TODO: nvim.luaとかにリネームする
 ---Functions for init.lua and Neovim.
 ---関数がNeovimに関する事柄を意図しているか、もしくは`vim.*`に依存している場合は、こっち。
 ---それ以外の汎用的な関数は`./utils/functions.lua`に。
@@ -788,7 +787,7 @@ end
 ---@param should_load_from_local boolean
 ---@param lazynvim_plugin_config? table --LazyPlugin
 ---```lua
----helper.load_from_local_or_remote(
+---nvim.load_from_local_or_remote(
 ---  'aiya000/nvim-luasnip-emoji',
 ---  '~/Repository/nvim-luasnip-emoji',
 ---  InitLua.disable_luasnip_emoji == true,
@@ -828,16 +827,16 @@ end
 ---Simular to `vim.v.argv`, but only returns files (not options and $0. $0 is usually 'nvim')
 ---```shell-session
 ---$ nvim
----:lua = helper.arg_files() -- returns {}
+---:lua = nvim.arg_files() -- returns {}
 ---
 ---$ nvim somefile.txt
----:lua = helper.arg_files() -- returns { 'somefile.txt' }
+---:lua = nvim.arg_files() -- returns { 'somefile.txt' }
 ---
 ---$ nvim foo.txt bar.txt
----:lua = helper.arg_files() -- returns { 'foo.txt', 'bar.txt' }
+---:lua = nvim.arg_files() -- returns { 'foo.txt', 'bar.txt' }
 ---
 ---$ nvim --headless somefile.txt +qa
----:lua = helper.arg_files() -- returns { 'somefile.txt' } - Unlike `vim.v.argv` ( `nvim`, `--headless`, and `+qa` omitted)
+---:lua = nvim.arg_files() -- returns { 'somefile.txt' } - Unlike `vim.v.argv` ( `nvim`, `--headless`, and `+qa` omitted)
 ---```
 ---@return string[]
 function M.arg_files()

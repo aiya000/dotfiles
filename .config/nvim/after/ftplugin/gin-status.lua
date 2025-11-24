@@ -1,5 +1,5 @@
 local Terminal = require('toggleterm.terminal').Terminal
-local helper = require('nvim')
+local nvim = require('nvim')
 
 vim.opt_local.cursorline = true
 
@@ -87,7 +87,7 @@ local function open_claude_commit_float_window()
   ClaudeCommitTerminal:toggle() -- Show
 
   vim.schedule(function()
-    helper.keymaps_set('t', helper.escaping_keys, function()
+    nvim.keymaps_set('t', nvim.escaping_keys, function()
       ClaudeCommitTerminal:toggle() -- Hide
     end, { buffer = true })
   end)
@@ -132,7 +132,7 @@ end, { buffer = true, silent = true })
 
 vim.keymap.set('n', 'S', function()
   if vim.fn.line('.') == 1 then
-    helper.feedkeys(':<C-u>Cmdpalette<CR>Gin switch<Space>')
+    nvim.feedkeys(':<C-u>Cmdpalette<CR>Gin switch<Space>')
   else
     run_stash_push_message()
   end

@@ -2,7 +2,7 @@
 
 local arrow = require('luarrow').arrow
 local fn = require('utils.functions')
-local helper = require('nvim')
+local nvim = require('nvim')
 local list = require('utils.list')
 
 return {
@@ -724,7 +724,7 @@ return {
   -- }}}
   -- vim-neoquickrun {{{
 
-  helper.load_from_local_or_remote(
+  nvim.load_from_local_or_remote(
     'aiya000/vim-neoquickrun',
     '~/Repository/vim-neoquickrun',
     InitLua.disable_neoquickrun == true,
@@ -768,14 +768,14 @@ return {
           {
             'n',
             function()
-              helper.move_tab_next()
+              nvim.move_tab_next()
             end,
             { desc = 'next tab' },
           },
           {
             'p',
             function()
-              helper.move_tab_prev()
+              nvim.move_tab_prev()
             end,
             { desc = 'prev tab' },
           },
@@ -796,14 +796,14 @@ return {
           {
             'N',
             function()
-              helper.move_window_forward()
+              nvim.move_window_forward()
             end,
             { desc = 'move forward' },
           },
           {
             'P',
             function()
-              helper.move_window_backward()
+              nvim.move_window_backward()
             end,
             { desc = 'move backward' },
           },
@@ -841,7 +841,7 @@ return {
   -- }}}
   -- bakaup.vim {{{
 
-  helper.load_from_local_or_remote(
+  nvim.load_from_local_or_remote(
     'aiya000/bakaup.vim',
     '~/Repository/bakaup.vim',
     InitLua.disable_bakaup == true,
@@ -1480,7 +1480,7 @@ return {
   -- }}}
   -- nvim-mado-scratch-buffer {{{
 
-  helper.load_from_local_or_remote(
+  nvim.load_from_local_or_remote(
     'aiya000/nvim-mado-scratch-buffer',
     '~/Repository/nvim-mado-scratch-buffer',
     InitLua.disable_mado_scratch_buffer == true,
@@ -1505,7 +1505,7 @@ return {
   -- }}}
   -- nvim-just-stay-search {{{
 
-  helper.load_from_local_or_remote(
+  nvim.load_from_local_or_remote(
     'aiya000/nvim-just-stay-search',
     '~/Repository/nvim-just-stay-search',
     InitLua.disable_just_stay_search == true,
@@ -1945,7 +1945,7 @@ return {
             buffer = 0,
             callback = function()
               -- cnoremapのcmdpalette版
-              helper.replace_line(
+              nvim.replace_line(
                 {
                   ['l '] = 'lua ',
                   ['lp'] = 'lua = ',
@@ -1955,7 +1955,7 @@ return {
                     return ('e %s/'):format(vim.fn.expand('%:p:h'))
                   end,
                   ['eg'] = function()
-                    return ('e %s/'):format(InitLua.git_root) -- helper.git_rootは代入が遅延されるので、評価も遅延
+                    return ('e %s/'):format(InitLua.git_root) -- nvim.git_rootは代入が遅延されるので、評価も遅延
                   end,
                   [':'] = '<Esc>', -- ::でcmdpaletteに突入した場合、normal-modeで突入するように
                 },
@@ -1972,7 +1972,7 @@ return {
 
           vim.keymap.set('n', '<C-l>', '"yyy<Esc>', { remap = true, buffer = true }) -- 誤爆でEscapeすることがよくあるので、@zにバックアップ
           vim.keymap.set('n', '<C-j>', '<CR>', { remap = true, buffer = true })
-          -- TODO: これで実行した場合、結果をhelper.open_buffer_to_execute()で開くようにする
+          -- TODO: これで実行した場合、結果をnvim.open_buffer_to_execute()で開くようにする
           -- vim.keymap.set('n', '<C-k><C-j>', function()
           --   local line = vim.api.nvim_get_current_line()
           -- end, { remap = true, buffer = true })
@@ -2158,7 +2158,7 @@ return {
   -- }}}
   -- nvim-luasnip-emoji {{{
 
-  helper.load_from_local_or_remote(
+  nvim.load_from_local_or_remote(
     'aiya000/nvim-luasnip-emoji',
     '~/Repository/nvim-luasnip-emoji',
     InitLua.disable_luasnip_emoji == true,
