@@ -3,17 +3,17 @@
 # Original files: ~/.dotfiles/Preferences/.zshrc_env
 
 export WINDOWS_USER=$(whoami.exe | tr -d '\r\n' | cut -d '\' -f 2)
-export DOTFILES_ZSHRC_NVM_NODE_VERSION=v22.14.0
+export DOTFILES_ZSHRC_NVM_NODE_VERSION=v22.20.0
+export DOTFILES_NVM_PATH=$HOME/.nvm/versions/node/$DOTFILES_ZSHRC_NVM_NODE_VERSION/bin
 
-export BASH_TOYS_MUSIC_PLAYER='notifu.exe /m pomodoro-end'
-export BASH_TOYS_MUSIC_PLAYER_OPTIONS=
-export BASH_TOYS_POMODORO_NOTIFICATION_MUSIC=
+export BASH_TOYS_WHEN_POMODORO_TIMER_FINISHED='notifu.exe /m pomodoro-end'
+export BASH_TOYS_POMODORO_DEFAULT_INTERVAL=60
 
 # export NODE_OPTIONS=--max-old-space-size=16384
 # export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
 # PATH=$PATH:/usr/share/bash-completion/completions
-PATH=$PATH:~/.nvm/versions/node/$DOTFILES_ZSHRC_NVM_NODE_VERSION/bin
-PATH=$PATH:~/.GoPath/bin
+PATH="$PATH:$DOTFILES_NVM_PATH"
+PATH="$PATH:~/.GoPath/bin"
 PATH="$PATH:/mnt/c/Users/$WINDOWS_USER/AppData/Local/Programs/Microsoft VS Code"
 PATH="$PATH:/mnt/c/Program Files/Rancher Desktop/resources/resources/linux/bin"
 PATH="$PATH:/mnt/c/Program Files (x86)/Bluetooth Command Line Tools/bin"
@@ -43,4 +43,8 @@ fi
 touch /tmp/zsh-has-loaded
 
 cd ~/.dotfiles || exit 1
-vterminal
+
+if [[ $ZSHRC_ENV_LOADED != 1 ]] ; then
+  export ZSHRC_ENV_LOADED=1
+  vterminal
+fi
