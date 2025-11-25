@@ -8,144 +8,127 @@ local s = ls.snippet
 local i = ls.insert_node
 local t = ls.text_node
 
-local snippets = {}
-
-table.insert(
-  snippets,
-  s(
-    'for',
-    fmt(
-      [[
+return list.concat(
+  -- Control Flow (制御構文)
+  {
+    s(
+      'for',
+      fmt(
+        [[
   for ({var}; {condition}; {effect})
   {{
       {}
   }}
 ]],
-      {
-        var = i(1, 'var'),
-        condition = i(2, 'condition'),
-        effect = i(3, 'effect'),
-        i(4, ''),
-      }
-    )
-  )
-)
+        {
+          var = i(1, 'var'),
+          condition = i(2, 'condition'),
+          effect = i(3, 'effect'),
+          i(4, ''),
+        }
+      )
+    ),
 
-table.insert(
-  snippets,
-  s(
-    'if',
-    fmt(
-      [[
+    s(
+      'if',
+      fmt(
+        [[
   if ({condition})
   {{
       {}
   }}
 ]],
-      {
-        condition = i(1, 'condition'),
-        i(2, ''),
-      }
-    )
-  )
-)
+        {
+          condition = i(1, 'condition'),
+          i(2, ''),
+        }
+      )
+    ),
 
-table.insert(
-  snippets,
-  s(
-    'else',
-    fmt(
-      [[
+    s(
+      'else',
+      fmt(
+        [[
   else
   {{
       {}
   }}
 ]],
-      {
-        i(1, ''),
-      }
-    )
-  )
-)
+        {
+          i(1, ''),
+        }
+      )
+    ),
 
-table.insert(
-  snippets,
-  s(
-    'switch',
-    fmt(
-      [[
+    s(
+      'switch',
+      fmt(
+        [[
   switch ({target})
   {{
       {}
   }}
 ]],
-      {
-        target = i(1, 'target'),
-        i(2, ''),
-      }
-    )
-  )
-)
+        {
+          target = i(1, 'target'),
+          i(2, ''),
+        }
+      )
+    ),
 
-table.insert(
-  snippets,
-  s(
-    'while',
-    fmt(
-      [[
+    s(
+      'while',
+      fmt(
+        [[
   while ({condition})
   {{
       {}
   }}
 ]],
-      {
-        condition = i(1, 'condition'),
-        i(2, ''),
-      }
-    )
-  )
-)
+        {
+          condition = i(1, 'condition'),
+          i(2, ''),
+        }
+      )
+    ),
+  },
 
-table.insert(
-  snippets,
-  s(
-    'struct',
-    fmt(
-      [[
+  -- Data Types (データ型)
+  {
+    s(
+      'struct',
+      fmt(
+        [[
   struct {name}
   {{
       {}
   }};
 ]],
-      {
-        name = i(1, 'name'),
-        i(2, ''),
-      }
-    )
-  )
-)
+        {
+          name = i(1, 'name'),
+          i(2, ''),
+        }
+      )
+    ),
 
-table.insert(
-  snippets,
-  s(
-    'typedef_struct',
-    fmt(
-      [[
+    s(
+      'typedef_struct',
+      fmt(
+        [[
   typedef struct
   {{
       {}
   }} {name};
 ]],
-      {
-        i(1, ''),
-        name = i(2, 'name'),
-      }
-    )
-  )
-)
+        {
+          i(1, ''),
+          name = i(2, 'name'),
+        }
+      )
+    ),
+  },
 
-vim.list_extend(
-  snippets,
+  -- Functions (関数)
   sm(
     { 'function', 'fun' },
     fmt(
@@ -163,67 +146,56 @@ vim.list_extend(
         i(4, ''),
       }
     )
-  )
-)
+  ),
 
-table.insert(
-  snippets,
-  s(
-    'static_fun',
-    fmt(
-      [[
+  {
+    s(
+      'static_fun',
+      fmt(
+        [[
   static {type}
   {name}({args})
   {{
       {}
   }}
 ]],
-      {
-        type = i(1, 'type'),
-        name = i(2, 'name'),
-        args = i(3, 'args'),
-        i(4, ''),
-      }
-    )
-  )
-)
+        {
+          type = i(1, 'type'),
+          name = i(2, 'name'),
+          args = i(3, 'args'),
+          i(4, ''),
+        }
+      )
+    ),
+  },
 
--- Macros
-vim.list_extend(
-  snippets,
+  -- Preprocessor (プリプロセッサ)
   sm(
     { 'include_library', 'include', 'import', 'imp' },
     fmt('#include <{}>', {
       i(1, 'here'),
     })
-  )
-)
+  ),
 
-vim.list_extend(
-  snippets,
   sm(
     { 'include_path', 'includep' },
     fmt('#include "{}"', {
       i(1, 'path'),
     })
-  )
-)
+  ),
 
--- Expressions
-table.insert(
-  snippets,
-  s(
-    'printf',
-    fmt('printf("{}"{}){};', {
-      i(1, ''),
-      i(2, ''),
-      i(3, ''),
-    })
-  )
-)
+  -- I/O (入出力)
+  {
+    s(
+      'printf',
+      fmt('printf("{}"{}){};', {
+        i(1, ''),
+        i(2, ''),
+        i(3, ''),
+      })
+    ),
+  },
 
-vim.list_extend(
-  snippets,
   sm(
     { 'printf_ln', 'pr' },
     fmt('printf("{}\\n"{}){};', {
@@ -231,12 +203,9 @@ vim.list_extend(
       i(2, ''),
       i(3, ''),
     })
-  )
-)
+  ),
 
--- Others
-vim.list_extend(
-  snippets,
+  -- Others (その他)
   sm(
     { 'document_comment', 'doc' },
     fmt(
@@ -251,8 +220,3 @@ vim.list_extend(
     )
   )
 )
-
-return {
-  snippets = snippets,
-  autosnippets = {},
-}
