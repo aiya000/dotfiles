@@ -1372,11 +1372,8 @@ return {
         },
         default_file_ext = 'md',
         default_open_method = {
-          method = 'float',
-          size = {
-            width = 100,
-            height = 40,
-          },
+            method = 'float-aspect',
+            scale = { width = 0.9, height = 0.9 }
         },
         default_buffer_size = 'no-auto-resize',
       },
