@@ -620,3 +620,4 @@ open-ditt-page:
 	@echo '8. Add "DefaultPasteString=+{INS}" to [Ditto] section in Ditto.settings - **NOTE:** This .settings is easy to read. Please care to paste into [Ditto]'
 	@echo '9. Start Ditto.exe again'
 
+# vim:foldmethod=marker
