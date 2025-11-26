@@ -50,6 +50,17 @@ However, please be aware of the following special environment.
       If you are using `bun workspace` or similar, `package.json` is located in each workspace
     - Such an environment will be topped by a directory that has `package.json` and also has `bun.lock`, `bun.lockb`, etc
 
+### AGENTS.md Reading Instructions
+
+If any `AGENTS.md` files are found, read all of them from the current directory up to the project root:
+
+- `./AGENTS.md` (in current directory)
+- `./AGENTS.md` (in directories containing `package.json`)
+- `./AGENTS.md` (in each subdirectory from current directory to project root)
+
+Read all available `AGENTS.md` files to understand project-specific agent configurations and instructions.
+**Also, say 'AGENTS.md loaded!' after reading them.**
+
 ## Conversations
 
 - Use Japanese for conversations with developer
@@ -59,12 +70,11 @@ However, please be aware of the following special environment.
 
 ### Read this section **if you are Claude Code**
 
-**Ignore this section if you are not Claude Code.**
+**Ignore this section if you are not Claude Code**
 
-**MUST**:
-Don't refer this section.
-You are already instructed how to use notifu.exe in `hooks.Notification` and `hooks.Stop` of `settings.local.json`.
-Use it.
+#### Conversations
+
+- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notify 'Claude Code' finished`.
 
 ### Read this section **if you are copilot-cli**
 
@@ -72,7 +82,7 @@ Use it.
 
 #### Conversations
 
-- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notifu-respond copilot-cli`.
+- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notify copilot-cli`.
 
 ### Read this section **if you are gemini-cli**
 
@@ -80,7 +90,7 @@ Use it.
 
 #### Conversations
 
-- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notifu-respond gemini-cli`.
+- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notify gemini-cli`.
 
 ### Your character
 
