@@ -19,14 +19,21 @@ return list.concat(
 
   {
     s('to', t('=>')),
+    s('tt', t('…')),
     s('readme', t('README')),
     s('ari', t('ありがとうございます')),
     s('ariga', t('ありがとう')),
     s('yoro', t('よろしくお願いします')),
+    s('yoroo', t('よろしくおねがいします')),
     s('mousi', t('申し訳ございません')),
+    s('mousii', t('もうしわけございません')),
     s('otu', t('お疲れ様です')),
+    s('otuu', t('おつかれさまです')),
+    s('q', t('？')),
   },
+  sm({ 'bang', 'ban' }, t('！')),
 
+  -- NOTE: なんでRe:VIEWのスニペットをここに入れているんだっけ？
   -- Re:VIEW
   {
     s(
