@@ -24,6 +24,7 @@
       "Bash(gh run list:*)",
       "Bash(gh run view:*)",
       "Bash(notifu-respond:*)",
+      "Bash(notify:*)",
       "Read(~/.config/nvim)"
     ],
     "deny": [
@@ -42,7 +43,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "notifu.exe /p 'Claude Code' /m 'Claude Code respond' || true"
+            "command": "notify 'Claude Code' 'Claude Code respond'"
           }
         ]
       }
@@ -52,7 +53,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "notifu.exe /p 'Claude Code' /m 'Claude Code stopped' || true"
+            "command": "notify 'Claude Code' 'Claude Code stopped'"
           }
         ]
       }
