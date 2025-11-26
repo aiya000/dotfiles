@@ -457,6 +457,7 @@ let g:bakaup_auto_backup = 1
 
 let g:neosnippet#snippets_directory = $'{g:vimrc.vim_home}/neosnippets'
 let g:neosnippet#disable_select_select_mappings = 1
+let g:neosnippet#expand_word_boundary = 1
 
 " }}}
 " vim-textobj-indent {{{
