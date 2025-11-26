@@ -113,6 +113,7 @@ vim.keymap.set('n', 'p', '<Plug>(gin-action-diff:smart:vsplit)', { buffer = true
 vim.keymap.set('n', 'P', ':<C-u>!git push', { remap = true, buffer = true })
 vim.keymap.set('n', 'gP', ':<C-u>!git pull', { remap = true, buffer = true })
 vim.keymap.set('n', 'sa', '<Plug>(gin-action-stash)', { buffer = true, silent = true })
+vim.keymap.set('n', 'ss', run_stash_push_message, { buffer = true })
 vim.keymap.set('n', 'sp', '<Cmd>Gin stash pop<CR>', { buffer = true })
 vim.keymap.set('n', 'cc', open_commit_buffer, { buffer = true, silent = true })
 vim.keymap.set('n', 'cC', open_claude_commit_float_window, { buffer = true, silent = true })
@@ -131,11 +132,7 @@ vim.keymap.set('n', 'O', function()
 end, { buffer = true, silent = true })
 
 vim.keymap.set('n', 'S', function()
-  if vim.fn.line('.') == 1 then
-    nvim.feedkeys(':<C-u>Cmdpalette<CR>Gin switch<Space>')
-  else
-    run_stash_push_message()
-  end
+  nvim.feedkeys(':<C-u>Cmdpalette<CR>Gin switch<Space>')
 end, { buffer = true, silent = true })
 
 vim.keymap.set('n', 'ca', function()
