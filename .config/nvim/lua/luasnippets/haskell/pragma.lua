@@ -2,14 +2,7 @@ local ls = require('luasnip')
 local s = ls.snippet
 local t = ls.text_node
 local i = ls.insert_node
-
-local sm = function(trigger_table, nodes, opts)
-  local result = {}
-  for _, trigger in ipairs(trigger_table) do
-    table.insert(result, s(trigger, nodes, opts))
-  end
-  return result
-end
+local sm = require('utils.luasnip').sm
 
 local pragma_snippets = {}
 
