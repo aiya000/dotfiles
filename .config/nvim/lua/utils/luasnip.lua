@@ -36,13 +36,11 @@ end
 ---```
 function M.snip_by_multiple_triggers(triggers, snip, opts)
   return vim
-    .iter(ipairs(triggers))
-    :map(function(_, trigger)
-      -- Why deepcopy? See: https://www.reddit.com/r/neovim/comments/tzd135/regex_pattern_or_for_luasnip_lua_pattern_matching
-      -- Non functional programming is really XXXXXX!
-      return vim.deepcopy(M.s(trigger, snip, opts))
-    end)
-    :totable()
+  .iter(ipairs(triggers))
+  :map(function(_, trigger)
+    return M.s(trigger, vim.deepcopy(snip), opts)
+  end)
+  :totable()
 end
 
 M.sm = M.snip_by_multiple_triggers

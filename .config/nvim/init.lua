@@ -205,7 +205,7 @@ if vim.fn.filereadable(init_env_lua) == 1 then
 end
 
 -- }}}
--- Neovide Confiratio{{{
+-- Neovide Confiration {{{
 
 if vim.g.neovide then
   vim.opt.guifont = 'Hack Nerd Font:h11' -- hX is the font size
@@ -229,3 +229,5 @@ end
 vim.cmd('filetype plugin indent on')
 vim.cmd('syntax enable')
 InitLua.loaded = true
+
+-- vim: foldmethod=marker foldlevel=0

@@ -2104,19 +2104,97 @@ return {
     'L3MON4D3/LuaSnip',
     version = 'v2.*',
     build = 'make install_jsregexp',
-    dependencies = {
-      'rafamadriz/friendly-snippets',
-    },
     config = function()
-      local luasnip = require('luasnip')
+      local ls = require('luasnip')
+      local types = require('luasnip.util.types')
 
-      -- Load snippets from friendly-snippets
-      require('luasnip.loaders.from_vscode').lazy_load()
-
-      luasnip.config.setup({
+      -- スニペット展開時に、ジャンプ先にマークを表示する
+      -- - (なし): 現在いるノード
+      -- - ○: 以前にジャンプした/これからジャンプする先のノード
+      -- - ◀: 終端ノード
+      -- また、終端に到達したらマークを消す
+      ls.config.set_config({
         history = true,
-        delete_check_events = 'TextChanged',
+        updateevents = 'TextChanged,TextChangedI',
+        ext_opts = {
+          [types.insertNode] = {
+            active = {
+              virt_text = { { '', 'LuasnipInsertNodeActive' } },
+              virt_text_pos = 'inline',
+              hl_mode = 'combine',
+            },
+            passive = {
+              virt_text = { { '○', 'LuasnipInsertNodePassive' } },
+              virt_text_pos = 'inline',
+              hl_group = 'LuasnipInsertNodePassive',
+              hl_mode = 'combine',
+            },
+          },
+          [types.exitNode] = {
+            active = {
+              virt_text = { { '', 'LuasnipInsertNodePassive' } },
+              virt_text_pos = 'inline',
+              hl_mode = 'combine',
+            },
+            passive = {
+              virt_text = { { '◀', 'LuasnipInsertNodePassive' } },
+              virt_text_pos = 'inline',
+              hl_mode = 'combine',
+            },
+          },
+        },
       })
+
+      ---Scan filetypes in the given directory.
+      ---The return array is possibly contains duplicated filetypes.
+      ---@param directory string --This function collects filetypes from this directory
+      ---@return string[] --Filetypes
+      local function scan_filetypes_in_directory_but_can_duplicate(directory)
+        local handler = vim.uv.fs_scandir(directory)
+        if handler == nil then
+          error('Failed to scan directory: ' .. directory)
+        end
+
+        local filetypes = {} ---@type string[]
+        while true do
+          local name, type = vim.uv.fs_scandir_next(handler)
+          if name == nil then
+            break
+          elseif type == 'file' then
+            local filetype = name:gsub('%.lua$', '')
+            table.insert(filetypes, filetype)
+          elseif type == 'directory' then
+            local filetype = name
+            table.insert(filetypes, filetype)
+          else
+            error(('Not suported file type: { type = "%s", name = "%s" }'):format(type, name))
+          end
+        end
+
+        return filetypes
+      end
+
+      ---Scan filetypes in the given directory.
+      ---The return array does not contain duplicated filetypes.
+      ---See `scan_filetypes_in_directory_but_can_duplicate()` for about params and the return type.
+      ---@param directory string
+      ---@return string[]
+      local function scan_filetypes_in_directory(directory)
+        return vim.iter(scan_filetypes_in_directory_but_can_duplicate(directory)):fold({}, function(filetypes, filetype)
+          return not vim.tbl_contains(filetypes, filetype) and list.append(filetypes, filetype) or filetypes
+        end)
+      end
+
+      local snippets_dir = vim.fn.stdpath('config') .. '/lua/luasnippets'
+      local filetypes = scan_filetypes_in_directory(snippets_dir)
+      for _, filetype in ipairs(filetypes) do
+        local ok, snips = pcall(require, 'luasnippets.' .. filetype)
+        if not ok then
+          vim.notify(('Failed to load snippets: "%s" - %s'):format(filetype, snips), vim.log.levels.ERROR)
+        elseif snips and snips.snippets and type(snips.snippets) == 'table' and #snips.snippets > 0 then
+          ls.add_snippets(filetype, snips.snippets)
+        end
+      end
     end,
   },
 
