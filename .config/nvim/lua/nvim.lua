@@ -2,7 +2,6 @@
 ---関数がNeovimに関する事柄を意図しているか、もしくは`vim.*`に依存している場合は、こっち。
 ---それ以外の汎用的な関数は`./utils/functions.lua`に。
 
--- local c = require('chotto')
 local fn = require('utils.functions')
 local list = require('utils.list')
 
@@ -817,6 +816,78 @@ function M.load_from_local_or_remote(
     base_config = { remote_repo }
   end
   return vim.tbl_extend('keep', base_config, lazynvim_plugin_config or {})
+end
+
+local luasnippets_dir = vim.fn.stdpath('config') .. '/lua/luasnippets'
+
+---Finds `*.lua` files in sub directories of the given directory
+---@return string[] -- filetypes
+---NOTE: サブディレクトリのスニペット（例: `typescript/{typescript,eslint,jest}.lua`）は、親スニペット（前述の例では`typescript.lua`）で読み込む。
+local function find_luasnip_file_names()
+  local handler = vim.uv.fs_scandir(luasnippets_dir)
+  if handler == nil then
+    error('Failed to scan directory: ' .. luasnippets_dir)
+  end
+
+  local result = {} ---@type string[]
+  while true do
+    local file_name, type = vim.uv.fs_scandir_next(handler)
+    if file_name == nil then
+      break
+    elseif type == 'file' then
+      table.insert(result, file_name)
+    elseif type == 'directory' then
+      -- continue
+    else
+      error('Not suported file type: ' .. vim.inspect({ type = type, file_name = file_name }))
+    end
+  end
+
+  return result
+end
+
+---TODO: 全てのスニペットファイルが`{ snippets: LuaSnip[] }`でなく直接`LuaSnip[]`を返すようにして、この関数が必要ないようにする -- LuaSnipプラグインに型は実装されていないので、ここでLuaSnip型は擬似的な型名
+local function load_luasnip(filetype, snips)
+  local luasnip = require('luasnip')
+  if type(snips.snippets) == 'table' then
+    luasnip.add_snippets(filetype, snips.snippets)
+    return
+  elseif type(snips) == 'table' then
+    luasnip.add_snippets(filetype, snips)
+    return
+  end
+  vim.notify('Invalid snippet file: filetype =  ' .. filetype, vim.log.levels.ERROR)
+end
+
+---@param opts? { reload?: boolean } -- Run `M.reload_module()` before loading snippets when `reload` is true
+---TODO: リロードできてない。多分、親ディレクトリ内のスニペットファイルを親スニペットファイルが`require()`で読み込んでいて、そっちの`package.loaded[]`をキャッシュクリアできてないからだと思う
+function M.load_luasnips(opts)
+  opts = opts or { reload = false }
+
+  if opts.reload then
+    require('luasnip').cleanup()
+  end
+
+  local snip_files = find_luasnip_file_names()
+  for _, snip_file in ipairs(snip_files) do
+    local filetype = snip_file:gsub('%.lua$', '')
+    local submodule_name = 'luasnippets.' .. filetype
+
+    if opts.reload then
+      package.loaded[submodule_name] = nil
+    end
+
+    local ok, snips = pcall(require, submodule_name)
+    if ok then
+      load_luasnip(filetype, snips)
+    else
+      vim.notify(('Failed to load snippets: "%s" - %s'):format(snip_file, snips), vim.log.levels.ERROR)
+    end
+  end
+end
+
+function M.reload_luasnips()
+  M.load_luasnips()
 end
 
 ---Simular to `vim.v.argv`, but only returns files (not options and $0. $0 is usually 'nvim')

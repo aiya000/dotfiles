@@ -208,6 +208,12 @@ end, {
   complete = 'filetype',
 })
 
+create_command('LuaSnipReload', function()
+  nvim.load_luasnips({ reload = true })
+end, {
+  desc = 'Reload LuaSnip snippets',
+})
+
 vim.api.nvim_create_user_command('RemoveTrailingSpacesWithForce', function(opts)
   local range = opts.range > 0 and { opts.line1, opts.line2 } or nil
   nvim.remove_trailing_spaces(true, range)
