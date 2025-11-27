@@ -9,7 +9,7 @@ local s = fn.s
 
 local M = {}
 
-M.escaping_keys = fn.readonly({ '<Esc>', '<C-[>','<C-l>' })
+M.escaping_keys = fn.readonly({ '<Esc>', '<C-[>', '<C-l>' })
 
 ---Validates `validatee` with `schema`.
 ---Thrown error Handled by `vim.notify()` if thrown.

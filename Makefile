@@ -472,7 +472,7 @@ install-btop:
 	which btop || $(AptInstall) btop
 
 install-imagemagick:
-	which convert || $(AptInstall) imagemagick
+	which magick || $(AptInstall) imagemagick
 
 install-ffmpeg:
 	which ffmpeg || $(AptInstall) ffmpeg
@@ -493,6 +493,11 @@ install-fd:
 
 install-rg:
 	which rg || $(BrewInstall) ripgrep
+
+install-ghostscript:
+	ls /opt/homebrew/Cellar/ghostscript &> /dev/null || $(BrewInstall) ghostscript
+install-imagemagick:
+	which magick || $(BrewInstall) imagemagick
 
 endif # }}}
 ifeq ($(WSL2),yes) # {{{
