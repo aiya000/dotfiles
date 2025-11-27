@@ -69,26 +69,27 @@ local function open_commit_buffer(subcmd)
   vim.cmd(table.concat(git_commit, ' '))
 end
 
-local ClaudeCommitTerminal = nil
+local claude_commit_terminal = nil
 local function open_claude_commit_float_window()
-  if ClaudeCommitTerminal ~= nil then
-    ClaudeCommitTerminal:toggle() -- Show
+  if claude_commit_terminal ~= nil then
+    claude_commit_terminal:toggle() -- Show
     return
   end
 
-  ClaudeCommitTerminal = Terminal:new({
+  claude_commit_terminal = Terminal:new({
     cmd = 'claude /git-commit-auto',
     direction = 'float',
     close_on_exit = false,
     on_exit = function()
       vim.notify('Claude commit process exited.', vim.log.levels.INFO)
+      claude_commit_terminal = nil  -- Reset the terminal variable
     end,
   })
-  ClaudeCommitTerminal:toggle() -- Show
+  claude_commit_terminal:toggle() -- Show
 
   vim.schedule(function()
     nvim.keymaps_set('t', nvim.escaping_keys, function()
-      ClaudeCommitTerminal:toggle() -- Hide
+      claude_commit_terminal:toggle() -- Hide
     end, { buffer = true })
   end)
 end
