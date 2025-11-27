@@ -1677,6 +1677,11 @@ return {
             word = false,
             cyclic = true,
           }),
+          augend.constant.new({
+            elements = { '作業中', 'レビュー待ち', 'マージ済み' },
+            word = false,
+            cyclic = true,
+          }),
         },
       })
     end
@@ -2030,7 +2035,6 @@ return {
       'hrsh7th/cmp-cmdline',
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
-      'rafamadriz/friendly-snippets',
     },
     config = function()
       local cmp = require('cmp')
