@@ -419,7 +419,7 @@ map('n', '<leader>B', '<Cmd>MadoScratchBufferOpenFileNext md<CR>', { silent = tr
 map('n', '<leader><leader>b', ':<C-u>MadoScratchBufferOpenFile ')
 
 map('n', '<leader><leader>B', function()
-  vim.cmd('split ' .. InitLua.memo_path)
+  vim.cmd('vertical split ' .. InitLua.memo_path)
 end, { silent = true })
 
 -- File Editing
@@ -656,6 +656,8 @@ digraph \a 8743   " ∧ and
 digraph \o 8744   " ∨ or
 digraph \|^ 8593  " ↑ arrow up
 digraph \|v 8595  " ↓ arrow down
+digraph up 8593   " ↑ arrow up
+digraph dn 8595   " ↓ arrow down
 digraph ph 934    " Φ phi
 digraph pi 960    " π pi
 ]])
