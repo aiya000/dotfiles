@@ -29,6 +29,7 @@ return list.concat(
     s('mousii', t('もうしわけございません')),
     s('otu', t('お疲れ様です')),
     s('otuu', t('おつかれさまです')),
+    s('shouti', t('承知しました')),
     s('q', t('？')),
   },
   sm({ 'bang', 'ban' }, t('！')),
