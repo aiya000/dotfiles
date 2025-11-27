@@ -989,18 +989,28 @@ return {
       -- { 'vS', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
       { 'g;', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
       -- Line jump
-      { 'gl', mode = { 'n', 'x', 'o' }, function()
-        local col = vim.fn.col('.')
-        require('flash').jump({
-          search = { mode = 'search', max_length = 0 },
-          label = { after = { 0, 0 } },
-          pattern = '^',
-          labels = table.concat(list.char_range('a', 'z'), ''),
-        })
-        vim.schedule(function()
-          vim.fn.cursor(vim.fn.line('.'), col)
-        end)
-      end, desc = 'Flash Line Jump' },
+      {
+        'gl',
+        mode = { 'n', 'x', 'o' },
+        function()
+          local col = vim.fn.col('.')
+          require('flash').jump({
+            search = { mode = 'search', max_length = 0 },
+            label = {
+              after = { 0, 0 },
+              current = false,
+              min_pattern_length = 0,
+              style = 'overlay'
+            },
+            pattern = '\\%' .. col .. 'c',  -- Show labels on current column position
+            labels = table.concat(list.char_range('a', 'z'), ''),
+          })
+          vim.schedule(function()
+            vim.fn.cursor(vim.fn.line('.'), col)
+          end)
+        end,
+        desc = 'Flash Line Jump'
+      },
     },
   },
 
