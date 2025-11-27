@@ -871,7 +871,7 @@ return {
 
         local common_markdown_blocks = {
           { block = { '**', '**' }, motionwise = { 'char', 'block' }, keys = { 'B' } },
-          { block = { '~~', '~~' }, motionwise = { 'char', 'block' }, keys = { '~' } },
+          { block = { '~', '~' }, motionwise = { 'char', 'block' }, keys = { '~' } },
           -- { block = { '__', '__' }, motionwise = { 'char', 'block'  } } -- あんまり使わないから定義しないでおく
           { block = { '```', '```' }, motionwise = { 'line', 'block' }, keys = { '```' } },
         }
