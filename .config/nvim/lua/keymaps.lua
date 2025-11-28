@@ -22,10 +22,6 @@ map('n', '<C-c><C-c>', '<C-c>')
 map('n', '<C-g>', '<NOP>')
 map('n', '<C-g><C-g>', '<C-g>')
 
--- flash.nvimでfFtTでの進む/戻るを手に入れたので、矯正ギプスを試しに使ってみる
-map('n', ',', '<NOP>')
--- map('n', ';', '<NOP>')
-
 -- Other than below
 map('n', '<CR>', 'o<Esc>')
 nvim.keymaps_set('n', { '<C-j>', '<C-m>' }, '<CR>', { remap = true })
@@ -48,10 +44,9 @@ map('n', 'g_', '$')
 map('n', 'zs', 'zszh')
 map('n', '{', '{zv')
 map('n', '}', '}zv')
+map('n', ',,', ':<C-u>w<CR>ggVG"+s')
 map('n', '<C-x><C-n>', '<C-n>')
 map('n', '<C-x><C-p>', '<C-p>')
-map('n', '<leader>w', '<Plug>(openbrowser-open)', { remap = true })
-map('n', '<leader>U', '<Cmd>UndotreeToggle<CR>', { silent = true })
 
 -- Search
 local function try_show_search_number_or_do_nothing()

@@ -1506,6 +1506,9 @@ return {
   {
     'mbbill/undotree',
     cmd = { 'UndotreeToggle', 'UndotreeFocus', 'UndotreeShow', 'UndotreeHide' },
+    init = function()
+      vim.keymap.set('n', '<leader>U', '<Cmd>UndotreeToggle<CR>', { silent = true })
+    end,
   },
 
   -- }}}
@@ -1531,6 +1534,7 @@ return {
   {
     'tyru/open-browser.vim',
     init = function()
+      vim.keymap.set('n', '<leader>w', '<Plug>(openbrowser-open)', { remap = true })
       if InitLua.is_wsl then
         vim.g.openbrowser_browser_commands = {
           { name = 'wslview', args = { '{browser}', '{uri}' } },
@@ -2182,6 +2186,17 @@ return {
         },
       })
     end,
+  },
+
+  -- }}}
+  -- render-markdown.nvim {{{
+
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {},
   },
 
   -- }}}
