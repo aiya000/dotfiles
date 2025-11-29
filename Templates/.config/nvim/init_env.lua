@@ -1,6 +1,5 @@
-vim.g.mapleader = "'"
-vim.g.maplocalleader = "'"
-
-vim.g.vimrc.memo_path = '/mnt/p/memo.md'
-
--- プラグイン設定は ~/.config/nvim/init_env_post.lua
+InitLua.memo_path = '/mnt/p/memo.md'
+InitLua.disable_mado_scratch_buffer = true
+InitLua.disable_bakaup = true
+InitLua.disable_luasnip_emoji = true
+InitLua.disable_neoquickrun = true
