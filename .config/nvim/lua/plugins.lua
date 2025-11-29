@@ -1,10 +1,9 @@
 ---プラグイン設定
 
--- local arrow = require('luarrow').arrow
+local arrow = require('luarrow').arrow
 local fn = require('utils.functions')
 local list = require('utils.list')
 local nvim = require('nvim')
-local claudecode_nvim = require('plugins.claudecode-nvim')
 
 return {
   -- catppuccin {{{
@@ -1150,14 +1149,22 @@ return {
         file_pattern = {
           when_file_buffer = vim.fn.expand('~/tmp/scratch-%d'),
         },
-        default_file_ext = 'md',
         -- default_open_method = {
         --   method = 'float-aspect',
         --   scale = { width = 0.9, height = 0.9 }
         -- },
         -- Older config format
-        default_open_method = 'vsp',
+        -- default_file_ext = 'md',
+        -- default_open_method = 'vsp',
+        -- default_buffer_size = 'no-auto-resize',
+
+        -- TODO: Migrate
+        default_file_ext = 'md',
         default_buffer_size = 'no-auto-resize',
+        default_open_method =
+          InitLua.mado_scratch_buffer_use_next_feature == true
+            and { method = 'float-aspect', scale = { width = 0.9, height = 0.9 } }
+            or 'vsp',
       },
     }
   ),

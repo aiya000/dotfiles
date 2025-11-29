@@ -23,5 +23,5 @@ local function validate(package)
   end
 end
 
--- validate('chotto')
--- validate('luarrow')
+validate('chotto')
+validate('luarrow')
