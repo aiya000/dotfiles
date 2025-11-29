@@ -512,9 +512,8 @@ map('c', "<C-r>'", '<C-r>+')
 -- Meaning "n"ame
 map('c', '<C-r>n', '<C-r>=expand("%:t")<CR>')
 
--- TODO: 動いてない
 -- kensaku-search.vim
--- map('c', '<CR>', '<Plug>(kensaku-search-replace)<CR>')
+map('c', '<CR>', '<Plug>(kensaku-search-replace)<CR>', { remap = true })
 
 -- }}}
 -- visual/operator mode {{{
