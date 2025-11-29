@@ -21,5 +21,7 @@ if ! command -v nvim > /dev/null 2>&1 ; then
   exit 1
 fi
 
-# Launch editprompt with nvim
-editprompt --editor nvim --target-pane "$1" || sleep 600 # `sleep 600` to show error
+# Legacy version cli
+# editprompt --editor nvim --target-pane "$1" || sleep 600 # `sleep 600` to show error
+
+editprompt open --editor nvim --target-pane "$1" || sleep 600 # `sleep 600` to show error
