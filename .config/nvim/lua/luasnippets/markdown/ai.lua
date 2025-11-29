@@ -1,0 +1,17 @@
+local fmt = require('luasnip.extras.fmt').fmt
+local list = require('utils.list')
+local ls = require('luasnip')
+local sm = require('utils.luasnip').sm
+
+local i = ls.insert_node
+local s = ls.snippet
+local t = ls.text_node
+
+return list.concat(
+  -- TODO: なんかできない。多分smの実装？ 修正する
+  -- sm({ 'ultrathink', 'ult' }, t('ultrathink'))
+  {
+    s('ultrathink', t('ultrathink')),
+    s('ult', t('ultrathink')),
+  }
+)

@@ -8,7 +8,8 @@ return {
     require('luasnippets.markdown.html'),
     require('luasnippets.markdown.html-attr'),
     require('luasnippets.markdown.github'),
-    require('luasnippets.markdown.zenn')
+    require('luasnippets.markdown.zenn'),
+    require('luasnippets.markdown.ai')
   ),
   autosnippets = {},
 }
