@@ -981,15 +981,30 @@ return {
       })
     end,
     keys = {
-      -- NOTE: ;で訓練中
-      -- { 'vs', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end, desc = 'Flash' },
-      { ';', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end, desc = 'Flash' },
-      -- NOTE: g;で訓練中
-      -- { 'vS', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
-      { 'g;', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
-      -- Line jump
       {
-        'gl',
+        'g;',
+        mode = { 'n', 'x', 'o' },
+        function()
+          require('flash').treesitter()
+        end,
+        desc = 'Flash Treesitter',
+      },
+      {
+        ';', -- kensaku-jump
+        mode = { 'n', 'x', 'o' },
+        function()
+          require('flash').jump({
+            search = {
+              mode = function(str)
+                return vim.fn['kensaku#query'](str)
+              end,
+            },
+          })
+        end,
+        desc = 'Flash with Kensaku',
+      },
+      {
+        'gl', -- Line jump
         mode = { 'n', 'x', 'o' },
         function()
           local col = vim.fn.col('.')
@@ -1631,7 +1646,9 @@ return {
           -- cmdpaletteバッファを閉じた後にエラーが出るので無効化
           vim.b.ale_enabled = 0
 
-          vim.keymap.set('n', '<C-l>', '"yyy<Esc>', { remap = true, buffer = true }) -- 誤爆でEscapeすることがよくあるので、@zにバックアップ
+          -- - <C-l>だけだと間違えてEscapeすることがよくあるので<C-l><C-l>
+          -- - さらなる誤爆Escape対策として@zにバックアップ
+          vim.keymap.set('n', '<C-l><C-l>', '"yyy<Esc>', { remap = true, buffer = true })
           vim.keymap.set('n', '<C-j>', '<CR>', { remap = true, buffer = true })
           -- TODO: これで実行した場合、結果をnvim.open_buffer_to_execute()で開くようにする
           -- vim.keymap.set('n', '<C-k><C-j>', function()
@@ -2204,6 +2221,14 @@ return {
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {},
+    keys = {
+      {
+        '<C-h>r',
+        '<cmd>RenderMarkdown toggle<cr>',
+        desc = 'Toggle Markdown Rendering',
+        ft = 'markdown',
+      },
+    },
   },
 
   -- }}}
