@@ -226,7 +226,7 @@ return {
     },
     config = function()
       require('mason-lspconfig').setup({
-        ensure_installed = { 'lua_ls', 'ts_ls' },
+        ensure_installed = { 'lua_ls', 'ts_ls', 'marksman' },
         automatic_installation = true,
         handlers = {
           -- デフォルトハンドラー（自動セットアップを無効にして重複を防ぐ）
@@ -1982,7 +1982,7 @@ return {
 
         local bufnr = vim.api.nvim_win_get_buf(winnr)
 
-        vim.keymap.set('n', '<C-l>', '<Nop>', { buffer = bufnr, silent = true })
+        vim.keymap.set('n', '<C-l>', '<NOP>', { buffer = bufnr, silent = true })
         vim.keymap.set('n', '<C-l><C-l>', '<Cmd>wq<CR>', { buffer = bufnr, silent = true })
         vim.keymap.set('n', '<Esc>', '<Cmd>wq<CR>', { buffer = bufnr, silent = true })
       end
@@ -2084,6 +2084,9 @@ return {
       local cmp = require('cmp')
       local luasnip = require('luasnip')
 
+      -- nvim-cmpのために completeopt を設定
+      vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+
       cmp.setup({
         snippet = {
           expand = function(args)
@@ -2091,30 +2094,9 @@ return {
           end,
         },
         mapping = {
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-e>'] = cmp.mapping.abort(),
-          ['<C-l>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),
-          ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-              luasnip.expand_or_jump()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
+          ['<C-l>'] = cmp.mapping.confirm({ select = true }),
+          ['<C-n>'] = cmp.mapping.select_next_item(),
+          ['<C-p>'] = cmp.mapping.select_prev_item(),
         },
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
