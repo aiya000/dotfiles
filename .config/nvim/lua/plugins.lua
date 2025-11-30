@@ -1975,13 +1975,19 @@ return {
         }
       end,
 
-      post_open_float = function(_)
+      post_open_float = function(winnr)
         -- Because it disables by default
         vim.opt.number = true
         vim.opt.relativenumber = true
+
+        local bufnr = vim.api.nvim_win_get_buf(winnr)
+
+        vim.keymap.set('n', '<C-l>', '<Nop>', { buffer = bufnr, silent = true })
+        vim.keymap.set('n', '<C-l><C-l>', '<Cmd>wq<CR>', { buffer = bufnr, silent = true })
+        vim.keymap.set('n', '<Esc>', '<Cmd>wq<CR>', { buffer = bufnr, silent = true })
       end
     },
-    ft = { 'markdown', 'html' },
+    ft = { 'markdown', 'html', 'vue' },
   },
 
   -- }}}
