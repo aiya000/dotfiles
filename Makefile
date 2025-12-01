@@ -496,6 +496,7 @@ install-rg:
 
 install-ghostscript:
 	ls /opt/homebrew/Cellar/ghostscript &> /dev/null || $(BrewInstall) ghostscript
+
 install-imagemagick:
 	which magick || $(BrewInstall) imagemagick
 
