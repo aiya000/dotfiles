@@ -171,6 +171,13 @@ end
 -- Please see https://github.com/aiya000/bash-toys
 vim.env.BASH_TOYS_DUSTBOX_DIR = vim.fn.expand('~/.backup/dustbox')
 
+-- See './lua/nvim.lua'
+InitLua.canceler_keys_for_my_operator_surround = {
+  '', -- Escape and <C-[>
+  '', -- <C-c>
+  '', -- <C-l>
+}
+
 -- }}}
 
 -------------

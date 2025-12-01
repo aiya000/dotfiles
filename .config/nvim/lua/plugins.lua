@@ -1728,97 +1728,7 @@ return {
   -- }}}
   -- incline.nvim {{{
 
-  {
-    'b0o/incline.nvim',
-    dependencies = {
-      'SmiteshP/nvim-navic',
-      'nvim-tree/nvim-web-devicons',
-    },
-    config = function()
-      local helpers = require('incline.helpers')
-      local navic = require('nvim-navic')
-      local devicons = require('nvim-web-devicons')
-
-      require('incline').setup({
-        window = {
-          padding = 0,
-          margin = { horizontal = 0, vertical = 0 },
-          overlap = { -- ウィンドウの1行目を入力しているときに、incline.nvimのバーと入力中のカーソルが被らないようにする
-            borders = true,
-            statusline = false,
-            tabline = false,
-            winbar = true,
-          },
-        },
-
-        -- oil.nvimのようなunlisted bufferも表示する
-        ignore = {
-          buftypes = function(_, buftype)
-            -- oil.nvimのacwriteバッファは無視しない
-            if buftype == 'acwrite' then
-              return false
-            end
-            -- その他の special バッファタイプは無視
-            return buftype == 'nofile'
-              or buftype == 'prompt'
-              or buftype == 'quickfix'
-              or buftype == 'terminal'
-          end,
-          filetypes = {},
-          floating_wins = true,
-          unlisted_buffers = false, -- oil.nvimはunlistedなのでfalseにする
-          wintypes = 'special',
-        },
-
-        render = function(props)
-          local function get_oil_current_dir_renderer(buf)
-            local oil = require('oil')
-            local dir = oil.get_current_dir(buf)
-            local display_dir = dir and vim.fn.fnamemodify(dir, ':~')
-            local folder_icon = ''
-            local icon_color = '#5fafd7'
-
-            return {
-              { ' ', folder_icon, ' ', guibg = icon_color, guifg = helpers.contrast_color(icon_color) },
-              ' ',
-              { display_dir, gui = 'bold' },
-              ' ',
-              guibg = '#afafff',
-              guifg = '#000000',
-            }
-          end
-
-          local function get_file_renderer(buf, focused)
-            local bufname = vim.api.nvim_buf_get_name(buf)
-            local filename = vim.fn.fnamemodify(bufname, ':t')
-            filename = filename == '' and '[No Name]' or filename
-
-            local ft_icon, ft_color = devicons.get_icon_color(filename)
-            local modified = vim.bo[buf].modified
-            local res = {
-              ft_icon and { ' ', ft_icon, ' ', guibg = ft_color, guifg = helpers.contrast_color(ft_color) } or '',
-              ' ',
-              { filename, gui = modified and 'bold,italic' or 'bold' },
-              guibg = '#afafff',
-              guifg = '#000000',
-            }
-
-            if focused then
-              table.insert(res, navic.get_data(buf) or {}) -- パンくずリスト
-            end
-
-            table.insert(res, ' ')
-            return res
-          end
-
-          if vim.bo[props.buf].filetype == 'oil' then
-            return get_oil_current_dir_renderer(props.buf)
-          end
-          return get_file_renderer(props.buf, props.focused)
-        end,
-      })
-    end,
-  },
+  -- See `./plugins/incline-nvim.lua`
 
   -- }}}
   -- nvim-navic {{{
@@ -1987,7 +1897,6 @@ return {
         vim.keymap.set('n', '<Esc>', '<Cmd>wq<CR>', { buffer = bufnr, silent = true })
       end
     },
-    ft = { 'markdown', 'html', 'vue' },
   },
 
   -- }}}
@@ -2093,11 +2002,11 @@ return {
             luasnip.lsp_expand(args.body)
           end,
         },
-        mapping = {
-          ['<C-l>'] = cmp.mapping.confirm({ select = true }),
+        mapping = cmp.mapping.preset.insert({
           ['<C-n>'] = cmp.mapping.select_next_item(),
           ['<C-p>'] = cmp.mapping.select_prev_item(),
-        },
+          ['<CR>'] = cmp.mapping.confirm({ select = false }),
+        }),
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
@@ -2212,7 +2121,7 @@ return {
     keys = {
       {
         '<C-h>r',
-        '<cmd>RenderMarkdown toggle<cr>',
+        '<Cmd>RenderMarkdown toggle<CR>',
         desc = 'Toggle Markdown Rendering',
         ft = 'markdown',
       },

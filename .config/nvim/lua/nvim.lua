@@ -447,7 +447,10 @@ local function get_current_obj_keys()
   local filetype_surrounds = surround_blocks[vim.bo.filetype] or {}
 
   -- Combine default and filetype-specific surrounds
-  local all_surrounds = vim.list_extend(vim.deepcopy(surrounds), filetype_surrounds)
+  local all_surrounds = vim.list_extend(
+    vim.deepcopy(surrounds), -- TODO: なんかここ、operatorで使ってるのに、オーダー高くない？
+    filetype_surrounds
+  )
 
   -- Extract all keys from surrounds
   local obj_keys = {}
@@ -462,11 +465,9 @@ end
 local function input_obj_key_of(obj_keys)
   local stroke = ''
   while not vim.tbl_contains(obj_keys, stroke) do
-    local char = vim.fn.getchar()
-    char = vim.fn.nr2char(char)
-
-    -- Check for escape sequences (Esc, Ctrl-C, Ctrl-[)
-    if char == '' or char == '' then
+    local char = vim.fn.nr2char(vim.fn.getchar())
+    if list.has(InitLua.canceler_keys_for_my_operator_surround, char) then
+      -- if calnceled
       return nil
     end
     stroke = stroke .. char
