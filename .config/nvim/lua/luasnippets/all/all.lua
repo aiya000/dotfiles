@@ -30,9 +30,10 @@ return list.concat(
     s('otu', t('お疲れ様です')),
     s('otuu', t('おつかれさまです')),
     s('shouti', t('承知しました')),
+    s('oha', t('おはようございます')),
     s('q', t('？')),
   },
-  sm({ 'bang', 'ban' }, t('！')),
+  sm({ 'bang', 'ban', 'ba' }, t('！')),
 
   -- NOTE: なんでRe:VIEWのスニペットをここに入れているんだっけ？
   -- Re:VIEW
