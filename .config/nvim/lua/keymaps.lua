@@ -44,8 +44,8 @@ map('n', 'g_', '$')
 map('n', 'zs', 'zszh')
 map('n', '{', '{zv')
 map('n', '}', '}zv')
-map('n', ',,', 'ggVG"+y<C-o>:w<CR>')
-map('n', ',;', ':<C-u>w<CR>ggVG"+s')
+map('n', ',,', 'ggVG"+y<C-o>:w<CR>') -- Copy the buffer content to clipboard
+map('n', ',<', ':<C-u>w<CR>ggVG"+s') -- Save the current content, refresh, and starting to edit
 map('n', '<C-x><C-n>', '<C-n>')
 map('n', '<C-x><C-p>', '<C-p>')
 
