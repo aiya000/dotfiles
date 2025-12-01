@@ -36,21 +36,37 @@ local function parse_git_root(stdout, stderr)
   return convert(git_root)
 end
 
----@param on_succeed fun(git_root: string): nil --git-rootが正常に読み込めた場合に、git-rootを渡して実行される関数
+---`on_succeed`と`on_failed`の両方が`nil`の場合は同期実行
+---TODO: もっといい、同期関数・非同期関数としての使い分けられ方があるはず
+---TODO: リファクタリング
+---@param on_succeed? fun(git_root: string): nil --git-rootが正常に読み込めた場合に、git-rootを渡して実行される関数
 ---@param on_failed? fun(error_message: string): nil --git-rootが正常に読み込めなかった場合に、エラーメッセージを渡して実行される関数
----TODO: もうこれ同期関数でいいじゃん
+---@return string | nil --非同期実行がされる場合、必ずnil。同期実行の場合、git-root（成功時）またはnil（エラー時）
 function M.read_git_root(on_succeed, on_failed)
+  if on_succeed == nil and on_failed == nil then
+    local result = vim.system({ 'git', 'rev-parse', '--show-toplevel' }, {
+      text = true,
+    }):wait()
+
+    if result.code == 0 then
+      return parse_git_root(fn.trim(result.stdout), fn.trim(result.stderr))
+    else
+      return nil
+    end
+  end
+
   vim.system({ 'git', 'rev-parse', '--show-toplevel' }, {
     text = true,
   }, function(result)
-    if result.code == 0 then
-      local git_root = parse_git_root(fn.trim(result.stdout), fn.trim(result.stderr))
-      on_succeed(git_root)
+    if result.code ~= 0 then
+      fn.call_optional(on_failed, result.stderr)
+      return
     end
 
-    local ignore = function(_) end
-    (on_failed or ignore)(result.stderr)
+    local git_root = parse_git_root(fn.trim(result.stdout), fn.trim(result.stderr))
+    fn.call_optional(on_succeed, git_root)
   end)
+  return nil
 end
 
 ---`:cd` to git root

@@ -278,6 +278,17 @@ function M.get_or_default(maybe_nil, default)
   end
 end
 
+---@generic T
+---@param f (fun(...: unknown): T) | nil
+---@param ... unknown
+---@return T | nil
+function M.call_optional(f, ...)
+  if f ~= nil then
+    return f(unpack({ ... }))
+  end
+  return nil
+end
+
 ---Wait until p satisfied
 ---@param p fun(): boolean
 ---@param f fun(): nil --called when `p()` satisfied
