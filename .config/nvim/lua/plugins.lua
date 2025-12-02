@@ -1606,7 +1606,7 @@ return {
     config = function()
       require('cmdpalette').setup({
         buf = {
-          filetype = 'cmdpalette',
+          filetype = 'cmdpalette', -- See 'nvim-cmp' section
         },
       })
 
@@ -1993,8 +1993,13 @@ return {
       local cmp = require('cmp')
       local luasnip = require('luasnip')
 
-      -- nvim-cmpのために completeopt を設定
-      vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+      local common_mapping = {
+        ['<C-n>'] = cmp.mapping.select_next_item(),
+        ['<C-p>'] = cmp.mapping.select_prev_item(),
+        ['<C-i>'] = cmp.mapping.select_next_item(),
+        ['<Tab>'] = cmp.mapping.select_next_item(),
+        ['<CR>'] = cmp.mapping.confirm({ select = false }),
+      }
 
       cmp.setup({
         snippet = {
@@ -2002,11 +2007,7 @@ return {
             luasnip.lsp_expand(args.body)
           end,
         },
-        mapping = cmp.mapping.preset.insert({
-          ['<C-n>'] = cmp.mapping.select_next_item(),
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
-          ['<CR>'] = cmp.mapping.confirm({ select = false }),
-        }),
+        mapping = cmp.mapping.preset.insert(common_mapping),
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
@@ -2016,7 +2017,6 @@ return {
         }),
       })
 
-      -- Command line completion
       cmp.setup.cmdline({ '/', '?' }, {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
@@ -2032,6 +2032,18 @@ return {
           { name = 'cmdline' }
         }),
         matching = { disallow_symbol_nonprefix_matching = false }
+      })
+
+      -- See 'cmdpalette.nvim' section for other settings of cmdpalette
+      cmp.setup.filetype('cmdpalette', {
+        mapping = cmp.mapping.preset.insert(common_mapping),
+        sources = cmp.config.sources({
+          { name = 'cmdline' },
+          { name = 'path' },
+        }, {
+          { name = 'buffer' },
+          { name = 'luasnip' },
+        }),
       })
     end,
   },
