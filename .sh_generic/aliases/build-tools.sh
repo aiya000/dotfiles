@@ -13,6 +13,16 @@ function xl::echo () {
   echo "build-tools.sh>> $1"
 }
 
+# TODO: 今の実装だとnpm環境とpnpm環境を区別できないので、とりあえずこれを明示的に呼び出す運用にする。直すときに、自動で検知して、xl::defineするだけでいいようにする
+function xl::load-pnpm () {
+  alias xi='pnpm install' && 
+  alias xid='pnpm install --save-dev' && 
+  alias xr='pnpm run' && 
+  alias xb='pnpm run build' && 
+  alias xx=pnpm && 
+  xl::echo 'pnpm loaded.'
+}
+
 function xl::define () {
   if i_have stack && [[ -f ./stack.yaml ]] ; then
     alias xb='stack build'
