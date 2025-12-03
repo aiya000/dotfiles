@@ -43,18 +43,6 @@ alias_of mysql 'mysql --pager="less -r -S -n -i -F -X"'
 alias_of rg 'rg --color always --hidden'
 
 # }}}
-# Common functions {{{
-
-# TODO: ` `がデリミタに指定されたときに、`  `や`   `も、統一的にデリミタにしたい。これはこのインターフェースと相違するので、slice-spacesコマンドというのを作ってもいいかも
-# TODO: 完成したらbash-toysに移動する
-function slice () {
-  local delimiter=$1 field_from=$2 field_to=$3
-  while read -r line ; do
-    echo "$line" | cut -d "$delimiter" -f "$field_from-$field_to"
-  done
-}
-
-# }}}
 # Load ./aliases/** {{{
 
 source ~/.sh_generic/aliases/build-tools.sh
