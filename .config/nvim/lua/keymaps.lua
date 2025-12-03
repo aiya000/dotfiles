@@ -432,11 +432,10 @@ map('n', '<C-k>s', function()
 end, { expr = true })
 
 -- Git Operations
--- map('n', '<leader>gs', '<Cmd>GinStatus<CR>', { silent = true }) -- TODO: なぜか（少なくともmacOSでは）cmdpaletteごしで開かないとNeovimが固まるので、一旦remapで対応する。暇な時に直す！
-map('n', '<leader>gs', ':<C-u>GinStatus<CR>', { remap = true, silent = true })
+-- map('n', '<leader>gs', '<Cmd>GinStatus<CR>', { silent = true }) -- TODO: なぜか（少なくともmacOSでは）cmdpaletteごしで開かないとNeovimが固まるので、一旦remap ↓ で対応する。暇な時に直す！
+map('n', '<leader>gs', ':<C-u>tabnew | GinStatus<CR>', { remap = true, silent = true }) -- remapなので、:でcmdpaletteが開く
 map('n', '<leader>gl', '<Cmd>GitLog -100 --name-only<CR>', { silent = true }) -- Use my :GitLog due to :GinLog ignores arguments currently
 map('n', '<leader>gL', '<Cmd>GitLog -100 --patch<CR>', { silent = true })
-map('n', [[\gs]], '<Cmd>tabnew | GinStatus<CR>', { silent = true })
 
 map('n', '<leader>go', function()
   git_log.open_buffer({ '-100', '--oneline', '--pretty=%h %ad %s', '--date=format:%Y-%m-%d %H:%M' })
