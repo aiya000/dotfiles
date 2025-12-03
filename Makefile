@@ -503,6 +503,9 @@ install-ghostscript:
 install-imagemagick:
 	which magick || $(BrewInstall) imagemagick
 
+install-shellcheck:
+	which shellcheck || $(BrewInstall) shellcheck
+
 endif # }}}
 ifeq ($(WSL2),yes) # {{{
 
