@@ -76,6 +76,9 @@ network-config:
 install-bun:
 	which bun || $(BrewInstall) oven-sh/bun/bun
 
+install-pnpm:
+	which pnpm || $(NPMInstall) pnpm@latest-10
+
 install-deno:
 	which deno || $(BrewInstall) deno
 
