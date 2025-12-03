@@ -392,12 +392,20 @@ function gitlab-clone () {
 # }}}
 
 # }}}
-# Claude Code {{{
+# AI {{{
 
-alias c=claude
-alias cresume='claude --resume'
-alias ccontinue='claude --continue'
-alias cc=ccontinue
+if i_have claude ; then
+  alias c=claude
+  alias cresume='claude --resume'
+  alias ccontinue='claude --continue'
+  alias cc=ccontinue
+  alias claude-commit='claude "/git-commit-auto"'
+  alias ccommit=claude-commit
+fi
+
+if i_have copilot ; then
+  alias copilot-commit='copilot -p "~/.claude/commands/git-commit-auto.md を読んで、git commitをして。" --allow-tool "shell(git:*)" --deny-tool "shell(git push)" --deny-tool "shell(git add)'
+fi
 
 # }}}
 # Eco Systems for Node.js, TypeScript, and JavaScript  {{{
