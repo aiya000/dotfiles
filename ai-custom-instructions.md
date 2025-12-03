@@ -65,6 +65,7 @@ Read all available `AGENTS.md` files to understand project-specific agent config
 
 - Use Japanese for conversations with developer
 - Insert line break after '!', '！', '?', '？', and '♪'
+- **When auto-compacting conversations, compress older history but preserve recent history uncompressed**
 
 ## Instructions for each agents
 
