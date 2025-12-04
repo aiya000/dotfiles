@@ -1025,34 +1025,53 @@ return {
         end,
         desc = 'Flash Line Jump'
       },
-    },
-  },
+      -- Interactive fmap selector
+      {
+        '<leader>f',
+        mode = { 'n', 'x', 'o' },
+        function()
+          local fmap_chars = {
+            -- TODO: 多分だけどflash.nvimが<leader>f.をハンドリングしてしまっていて、こちらでハンドリングできない（直前にf{char}をしていれば再度f{char}が、そうでなければエラーが出てしまう）ので、今は'>'（Shift + '.'）で代用する。できるときにflash.nvimの<leader>f.（？）にハンドルされないようにする
+            -- ['.'] = '。',
+            ['>'] = '。',
+            [','] = '、',
+            ['!'] = '！',
+            ['?'] = '？',
+            ['T'] = '・',
+            ['p'] = '（',
+            ['k'] = '「',
+            ['K'] = '〈',
+            [' '] = '　',
+            ['tt'] = '…',
+            ['-k'] = '『',
+          }
 
-  -- }}}
-  -- vim-fmap {{{
+          vim.api.nvim_echo({{'fmap: ', 'Question'}}, false, {})
+          local stroke = ''
+          local pattern = nil
+          while true do
+            local char_code = vim.fn.getchar()
+            -- TODO: nvim.escaping_keysを参照したい
+            if char_code == 27 or char_code == 12 then -- if <Esc>, <C-[>, or <C-l>
+              break
+            end
 
-  {
-    'aiya000/vim-fmap',
-    cmd = 'FNoreMap',
-    keys = {
-      { '<Plug>(fmap-forward-f)', mode = 'n' },
-      { '<Plug>(fmap-backward-f)', mode = 'n' },
-      { '<Plug>(fmap-forward-t)', mode = 'n' },
-      { '<Plug>(fmap-backward-t)', mode = 'n' },
+            stroke = stroke .. vim.fn.nr2char(char_code)
+            if fmap_chars[stroke] ~= nil then
+              pattern = fmap_chars[stroke]
+              break
+            end
+          end
+
+          if pattern then
+            vim.fn.feedkeys('f' .. pattern)
+          else
+            vim.api.nvim_echo({{('Canceled (stroke = %s)'):format(stroke), 'ErrorMsg'}}, false, {})
+          end
+        end,
+        desc = 'Interactive fmap selector with flash.nvim'
+      },
     },
-    -- TODO: flash.nvimとバッティングしてるのか、`'f.`ーでflash.nvimのエラーが出るので、調査する
-    -- init = function()
-    --   vim.g.fmap_use_default_keymappings = false
-    --   vim.g.fmap_escape_keys = { '', '', '' }
-    --   vim.cmd('FNoreMap / ・')
-    --   vim.cmd('FNoreMap T ・')
-    --   vim.cmd('FNoreMap tt …')
-    --   vim.cmd("FNoreMap '' 　")
-    --   vim.cmd('FNoreMap p （')
-    --   vim.cmd('FNoreMap k 「')
-    --   vim.cmd('FNoreMap K 〈')
-    --   vim.cmd('FNoreMap -k 『')
-    -- end,
   },
 
   -- }}}
