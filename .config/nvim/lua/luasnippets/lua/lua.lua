@@ -79,6 +79,20 @@ return list.concat(
     )
   ),
 
+  {
+    s(
+      'while',
+      fmt([[
+        while {condition} do
+          {}
+        end
+      ]], {
+        condition = i(1, 'condition'),
+        i(2, ''),
+      })
+    ),
+  },
+
   sm(
     { 'function', 'fun' },
     fmt([[

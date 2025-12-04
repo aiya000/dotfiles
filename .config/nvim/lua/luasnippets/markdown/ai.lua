@@ -13,5 +13,7 @@ return list.concat(
   {
     s('ultrathink', t('ultrathink')),
     s('ult', t('ultrathink')),
+    s('instruct_for_autocompact', t('/compact 昔の履歴は圧縮して、最近の履歴は圧縮しないようにして')),
+    s('autocompact', t('/compact 昔の履歴は圧縮して、最近の履歴は圧縮しないようにして')),
   }
 )
