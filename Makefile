@@ -177,6 +177,14 @@ install-luaprompt:
 install-editprompt:
 	which editprompt || $(NPMInstall) editprompt
 
+
+install-ttyd:
+	which ttyd || $(BrewInstall) ttyd
+
+install-vhs:
+	$(MAKE) install-ttyd
+	which vhs || $(BrewInstall) vhs
+
 # }}}
 ifeq ($(OS),Arch) # {{{
 
