@@ -307,12 +307,14 @@ map('n', '<leader>x', '"+x')
 
 map('n', 'p', function()
   nvim.run_with_virtual_keymaps('<Plug>(YankyPutAfter)')
-  InitLua.hydra.yanky_ring:activate()
+  -- TODOO: Enable
+  -- InitLua.hydra.yanky_ring:activate()
 end)
 
 map('n', 'P', function()
   nvim.run_with_virtual_keymaps('<Plug>(YankyPutBefore)')
-  InitLua.hydra.yanky_ring:activate()
+  -- TODO: Enable
+  -- InitLua.hydra.yanky_ring:activate()
 end)
 
 ---Puts the current file path relative to the git root to buffer

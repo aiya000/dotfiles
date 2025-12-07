@@ -611,6 +611,7 @@ return {
 
   {
     'anuvyklack/hydra.nvim',
+    enabled = false, -- TODO: Enable。Hydraのいずれかのサブモードが発動すると、colorful-winsepやoilなどのプラグインが動作しなくなる
     config = function()
       local Hydra = require('hydra')
 
