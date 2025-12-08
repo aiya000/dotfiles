@@ -1,7 +1,5 @@
 all: install
 
-logfile = ./dotfiles-MakeFile.log
-
 # TODO: Detect auto
 OS ?= Ubuntu
 WSL2 ?= yes # 'no' or 'yes'
@@ -16,6 +14,7 @@ AptBuildDep = sudo apt-fast build-dep
 BrewInstall = brew install
 
 NPMInstall = npm install --global --user
+LuaRocksInstall = luarocks install --local
 UVInstall = uv tool install # 事前に`load-my-env mise`してね。まだmiseでuvを入れてなければ`mise use uv@latest`もしよう！
 PIPInstall = $(UVInstall) # pip installよくわからん
 
@@ -172,7 +171,7 @@ install-uv:
 	which uv || mise use uv@latest
 
 install-luaprompt:
-	which luap || luarocks install --local luaprompt
+	which luap || $(LuaRocksInstall) luaprompt
 
 install-editprompt:
 	which editprompt || $(NPMInstall) editprompt
