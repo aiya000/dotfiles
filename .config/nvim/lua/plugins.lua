@@ -1653,7 +1653,15 @@ return {
                   ['eg'] = function()
                     return ('e %s/'):format(InitLua.git_root) -- nvim.git_rootは代入が遅延されるので、評価も遅延
                   end,
-                  [':'] = '<Esc>', -- ::でcmdpaletteに突入した場合、normal-modeで突入するように
+                  [':'] = function()
+                    local next_char = nvim.prompt("':' or other char") -- TODO: なんか表示されないので、一時的にcmdheightを2にしたり、あるいはnui.nvimあたりでいい感じに左下に文字列を表示したりする
+                    if next_char == ':' then
+                      -- See below <C-l><C-l> keymapping
+                      return '<C-l><C-l>q:%s/' -- :::でcmdpaletteに突入した場合、cmd-modeで:%s/に突入するように
+                    else
+                      return '<Esc>' .. next_char -- ::でcmdpaletteに突入した場合、normal-modeで突入するように
+                    end
+                  end,
                 },
                 vim.api.nvim_get_current_line(),
                 function(rhs)

@@ -82,7 +82,9 @@ function M.keymaps_set(mode, keys, mapping, opts)
   end
 end
 
-M.hl_groups = fn.readonly({
+-- TODO: readonlyするとなぜかうまく動かない。readonlyの実装がおかしい？
+-- M.hl_groups = fn.readonly({
+M.hl_groups = ({
   ErrorMsg = 'ErrorMsg', -- Red
   WarningMsg = 'WarningMsg', -- Yellow
   MoreMsg = 'MoreMsg', -- Green
@@ -90,16 +92,22 @@ M.hl_groups = fn.readonly({
   Normal = 'Normal', -- No color
 })
 
----@param prompt string
+---@param message string
 ---@param hl_group? string
 ---@return string
-function M.confirm_to_get_charstr(prompt, hl_group)
-  hl_group = hl_group or 'Question'
+function M.confirm_to_get_charstr(message, hl_group)
+  hl_group = hl_group or M.hl_groups.Question
   vim.api.nvim_echo({
-    { prompt, hl_group },
+    { message, hl_group },
   }, false, {})
   vim.cmd('redraw')
   return vim.fn.getcharstr()
+end
+
+---@param message string
+---@return string
+function M.prompt(message)
+  return M.confirm_to_get_charstr(message, M.hl_groups.Normal)
 end
 
 ---@return string | nil
