@@ -85,22 +85,6 @@ alias cdp=cd-finddir
 alias ki=killing-art
 i_have fdfind && alias fd='fdfind --hidden --ignore-case' # --hidden to include '.' prefixed files
 
-function ff () {
-  : Find a file by taken fuzzy name.
-  f . "$1"
-}
-
-function f () {
-  : Find a file on a directory by taken fuzzy name.
-  local base_path=$1 fuzzy_name=$2
-
-  if i_have fdfind ; then
-    fdfind "$fuzzy_name" "$base_path"
-  else
-    find "$base_path" -name "*$fuzzy_name*"
-  fi
-}
-
 # alias ..='cd ../'
 # alias ...='cd ../../'
 # alias ....='cd ../../../'
