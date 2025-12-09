@@ -513,6 +513,9 @@ install-imagemagick:
 install-shellcheck:
 	which shellcheck || $(BrewInstall) shellcheck
 
+install-jq:
+	which jq || $(BrewInstall) jq
+
 endif # }}}
 ifeq ($(WSL2),yes) # {{{
 
