@@ -7,7 +7,12 @@ description: Open URLs from numbered references, repository names, or the contex
 
 ## Description
 
-Opens URLs using wslview. Can handle numbered references from previous conversation or direct repository names.
+Opens URLs using below method.
+Can handle numbered references from previous conversation or direct repository names.
+
+- `wslview` -- If on WSL
+- `xdg-open` -- If on Linux
+- `open` -- If on macOS
 
 ## Usage
 
