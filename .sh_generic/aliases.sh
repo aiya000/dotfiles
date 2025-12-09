@@ -103,6 +103,13 @@ i_have tmux && alias ta='tmux attach'
 i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
 i_have unzip && alias unzip-cp932='unzip -O cp932'
 
+if i_have jq ; then
+  function url-encode () {
+    echo "\"$1\"" | jq -r @uri
+  }
+  alias urlencode=url-encode
+fi
+
 # }}}
 # Editors {{{
 
