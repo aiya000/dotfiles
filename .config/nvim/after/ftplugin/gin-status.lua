@@ -94,9 +94,13 @@ local function open_claude_commit_float_window()
   end)
 end
 
-local function remove_this_file()
+local function delete_this_file()
   vim.cmd('normal "zyy')
   local filepath = vim.fn.trim(vim.fn.getreg('z'))
+  if not nvim.confirm('Delete this file?: ' .. filepath) then
+    return
+  end
+
   local ok, err = os.remove(filepath)
   if ok then
     vim.notify('Removed file: ' .. filepath, vim.log.levels.INFO)
@@ -124,7 +128,7 @@ vim.keymap.set('n', 'cf', ':<C-u>GitCommitFixup<Space>', { remap = true, buffer 
 vim.keymap.set('n', '<:', '<Plug>(gin-action-restore:ours)', { buffer = true })
 vim.keymap.set('n', '>:', '<Plug>(gin-action-restore:theirs)', { buffer = true })
 vim.keymap.set('n', '==', '<Plug>(gin-action-reset)', { buffer = true })
-vim.keymap.set('n', 'R', remove_this_file, { buffer = true })
+vim.keymap.set('n', 'D', delete_this_file, { buffer = true })
 
 vim.keymap.set('n', 'O', function()
   vim.cmd('normal "zyy')
