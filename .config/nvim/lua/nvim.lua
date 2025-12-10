@@ -9,7 +9,9 @@ local s = fn.s
 
 local M = {}
 
-M.escaping_keys = fn.readonly({ '<Esc>', '<C-[>', '<C-l>' })
+-- TODO: readonlyするとうまく動かないかも？
+-- M.escaping_keys = fn.readonly({ '<Esc>', '<C-[>', '<C-l>' })
+M.escaping_keys = { '<Esc>', '<C-[>', '<C-l>' }
 
 ---Validates `validatee` with `schema`.
 ---Thrown error Handled by `vim.notify()` if thrown.
@@ -94,20 +96,29 @@ M.hl_groups = ({
 
 ---@param message string
 ---@param hl_group? string
+---@param opts? { only_a_char: boolean }
 ---@return string
-function M.confirm_to_get_charstr(message, hl_group)
+function M.confirm_to_get_charstr(message, hl_group, opts)
+  opts = opts or { only_a_char = false }
   hl_group = hl_group or M.hl_groups.Question
+
   vim.api.nvim_echo({
     { message, hl_group },
   }, false, {})
   vim.cmd('redraw')
-  return vim.fn.getcharstr()
+
+  return opts.only_a_char
+    and vim.fn.nr2char(vim.fn.getchar())
+    or vim.fn.getcharstr()
 end
 
+M.confirm = M.confirm_to_get_charstr
+
 ---@param message string
+---@param opts? { only_a_char: boolean }
 ---@return string
-function M.prompt(message)
-  return M.confirm_to_get_charstr(message, M.hl_groups.Normal)
+function M.prompt(message, opts)
+  return M.confirm_to_get_charstr(message, M.hl_groups.Normal, opts)
 end
 
 ---@return string | nil
