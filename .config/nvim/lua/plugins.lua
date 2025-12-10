@@ -914,6 +914,9 @@ return {
     'folke/flash.nvim',
     event = 'VeryLazy',
     config = function()
+      -- TODO: 下記[1]のTODO参照
+      vim.keymap.set('n', '<leader>f.', 'f。', { remap = true })
+
       require('flash').setup({
         labels = 'asdfghjklqwertyuiozxcvbnm', -- 'p' is excluded because it forcely pastes text
         jump = {
@@ -985,9 +988,8 @@ return {
         mode = { 'n', 'x', 'o' },
         function()
           local fmap_chars = {
-            -- TODO: 多分だけどflash.nvimが<leader>f.をハンドリングしてしまっていて、こちらでハンドリングできない（直前にf{char}をしていれば再度f{char}が、そうでなければエラーが出てしまう）ので、今は'>'（Shift + '.'）で代用する。できるときにflash.nvimの<leader>f.（？）にハンドルされないようにする
+            -- TODO: [1] 多分だけどflash.nvimが<leader>f.をハンドリングしてしまっていて、こちらでハンドリングできない（直前にf{char}をしていれば再度f{char}が、そうでなければエラーが出てしまう）ので、今は'>'（Shift + '.'）で代用する。できるときにflash.nvimの<leader>f.（？）にハンドルされないようにする。↑で仮対応済み
             -- ['.'] = '。',
-            ['>'] = '。',
             [','] = '、',
             ['!'] = '！',
             ['?'] = '？',
