@@ -9,4 +9,4 @@ if [[ $message == '' ]] ; then
   message="$your_name respond"
 fi
 
-( notifu.exe /p "$your_name" /m "$message" || true ) &
+( notify "$your_name" "$message" ) &
