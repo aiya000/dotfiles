@@ -184,6 +184,10 @@ install-vhs:
 	$(MAKE) install-ttyd
 	which vhs || $(BrewInstall) vhs
 
+
+install-ffmpeg:
+	which ffmpeg || $(BrewInstall) ffmpeg
+
 # }}}
 ifeq ($(OS),Arch) # {{{
 
@@ -483,9 +487,6 @@ install-btop:
 
 install-imagemagick:
 	which magick || $(AptInstall) imagemagick
-
-install-ffmpeg:
-	which ffmpeg || $(AptInstall) ffmpeg
 
 endif # }}}
 ifeq ($(OS),Darwin) # {{{
