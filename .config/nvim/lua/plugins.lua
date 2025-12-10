@@ -607,107 +607,60 @@ return {
   ),
 
   -- }}}
-  -- hydra.nvim {{{
+  -- vim-submode {{{
 
   {
-    'anuvyklack/hydra.nvim',
-    enabled = false, -- TODO: Enable。Hydraのいずれかのサブモードが発動すると、colorful-winsepやoilなどのプラグインが動作しなくなる
+    'kana/vim-submode',
     config = function()
-      local Hydra = require('hydra')
+      -- Window Resize submode
+      vim.fn['submode#enter_with']('winresize', 'n', '', '<C-s>w', '<Nop>')
+      vim.fn['submode#map']('winresize', 'n', '', 'j', '<C-w>+')
+      vim.fn['submode#map']('winresize', 'n', '', 'k', '<C-w>-')
+      vim.fn['submode#map']('winresize', 'n', '', 'h', '3<C-w><')
+      vim.fn['submode#map']('winresize', 'n', '', 'l', '3<C-w>>')
+      vim.fn['submode#map']('winresize', 'n', '', '=', '<C-w>=')
+      vim.fn['submode#map']('winresize', 'n', '', '_', '<C-w>_')
+      vim.fn['submode#map']('winresize', 'n', '', '\\|', '<C-w>|')
 
-      Hydra({
-        name = 'Window Resize',
-        mode = 'n',
-        body = '<C-s>w',
-        heads = {
-          { 'j', '<C-w>+', { desc = 'increase height' } },
-          { 'k', '<C-w>-', { desc = 'decrease height' } },
-          { 'h', '3<C-w><', { desc = 'decrease width' } },
-          { 'l', '3<C-w>>', { desc = 'increase width' } },
-          { '<Esc>', nil, { exit = true, desc = 'exit' } },
-        },
-        config = {
-          hint = {
-            type = 'window',
-            border = 'rounded',
-          },
-        },
-      })
+      -- Tab Move submode
+      vim.fn['submode#enter_with']('tabmove', 'n', '', '<C-s>t', '<Nop>')
+      vim.keymap.set('n', '<C-s>tn', function()
+        vim.fn['submode#enter']('tabmove')
+        nvim.move_tab_next()
+      end)
+      vim.keymap.set('n', '<C-s>tp', function()
+        vim.fn['submode#enter']('tabmove')
+        nvim.move_tab_prev()
+      end)
+      vim.fn['submode#map']('tabmove', 'n', 'x', 'n', '<Cmd>lua require("nvim").move_tab_next()<CR>')
+      vim.fn['submode#map']('tabmove', 'n', 'x', 'p', '<Cmd>lua require("nvim").move_tab_prev()<CR>')
+      vim.fn['submode#map']('tabmove', 'n', '', 'c', '<Cmd>tabnew<CR>')
+      vim.fn['submode#map']('tabmove', 'n', '', 'x', '<Cmd>tabclose<CR>')
 
-      InitLua.hydra.tab_move = Hydra({
-        name = 'Tab Move',
-        mode = 'n',
-        heads = {
-          {
-            'n',
-            function()
-              nvim.move_tab_next()
-            end,
-            { desc = 'next tab' },
-          },
-          {
-            'p',
-            function()
-              nvim.move_tab_prev()
-            end,
-            { desc = 'prev tab' },
-          },
-          { '<Esc>', nil, { exit = true, desc = 'exit' } },
-        },
-        config = {
-          hint = {
-            type = 'window',
-            border = 'rounded',
-          },
-        },
-      })
+      -- Window Move submode
+      vim.fn['submode#enter_with']('winmove', 'n', '', '<C-s>m', '<Nop>')
+      vim.keymap.set('n', '<C-s>mN', function()
+        vim.fn['submode#enter']('winmove')
+        nvim.move_window_forward()
+      end)
+      vim.keymap.set('n', '<C-s>mP', function()
+        vim.fn['submode#enter']('winmove')
+        nvim.move_window_backward()
+      end)
+      vim.fn['submode#map']('winmove', 'n', 'x', 'N', '<Cmd>lua require("nvim").move_window_forward()<CR>')
+      vim.fn['submode#map']('winmove', 'n', 'x', 'P', '<Cmd>lua require("nvim").move_window_backward()<CR>')
+      vim.fn['submode#map']('winmove', 'n', '', 'H', '<C-w>H<Cmd>normal! zz<CR>')
+      vim.fn['submode#map']('winmove', 'n', '', 'J', '<C-w>J<Cmd>normal! zz<CR>')
+      vim.fn['submode#map']('winmove', 'n', '', 'K', '<C-w>K<Cmd>normal! zz<CR>')
+      vim.fn['submode#map']('winmove', 'n', '', 'L', '<C-w>L<Cmd>normal! zz<CR>')
+      vim.fn['submode#map']('winmove', 'n', '', '_', '<C-w>_')
+      vim.fn['submode#map']('winmove', 'n', '', '"', '<Cmd>resize 5<CR>')
+      vim.fn['submode#map']('winmove', 'n', '', 'q', '<Nop>')
 
-      InitLua.hydra.window_move = Hydra({
-        name = 'Window Move',
-        mode = 'n',
-        heads = {
-          {
-            'N',
-            function()
-              nvim.move_window_forward()
-            end,
-            { desc = 'move forward' },
-          },
-          {
-            'P',
-            function()
-              nvim.move_window_backward()
-            end,
-            { desc = 'move backward' },
-          },
-          { 'H', '<C-w>H<Cmd>normal! zz<CR>', { desc = 'move left' } },
-          { 'J', '<C-w>J<Cmd>normal! zz<CR>', { desc = 'move down' } },
-          { 'K', '<C-w>K<Cmd>normal! zz<CR>', { desc = 'move up' } },
-          { 'L', '<C-w>L<Cmd>normal! zz<CR>', { desc = 'move right' } },
-          { '_', '<C-w>_', { desc = 'maximize height' } },
-          { '"', '<Cmd>resize 5<CR>', { desc = 'resize to 5' } },
-          { 'q', nil, { exit = true, desc = 'exit' } },
-          { '<Esc>', nil, { exit = true, desc = 'exit' } },
-        },
-        config = {
-          timeout = false,
-          hint = {
-            type = 'window',
-            position = 'bottom',
-            offset = 0,
-            border = 'rounded',
-          },
-        },
-      })
-
-      InitLua.hydra.yanky_ring = Hydra({
-        name = 'yanky-ring',
-        mode = 'n',
-        heads = {
-          { '<C-p>', '<Plug>(YankyPreviousEntry)', { private = true, desc = '↑' } },
-          { '<C-n>', '<Plug>(YankyNextEntry)', { private = true, desc = '↓' } },
-        },
-      })
+      -- Yanky Ring submode
+      vim.fn['submode#enter_with']('yanky', 'n', '', '<C-s>y', '<Nop>')
+      vim.fn['submode#map']('yanky', 'n', '', '<C-p>', '<Plug>(YankyPreviousEntry)')
+      vim.fn['submode#map']('yanky', 'n', '', '<C-n>', '<Plug>(YankyNextEntry)')
     end,
   },
 
