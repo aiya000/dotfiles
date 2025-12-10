@@ -1737,6 +1737,7 @@ return {
           augend.integer.alias.decimal,
           augend.integer.alias.hex,
           augend.date.alias['%Y/%m/%d'],
+          augend.date.alias['%Y-%m-%d'],
           augend.constant.alias.bool,
           augend.constant.new({
             elements = { '[ ]', '[x]' },
@@ -1745,6 +1746,11 @@ return {
           }),
           augend.constant.new({
             elements = { '作業中', 'レビュー待ち', 'マージ済み' },
+            word = false,
+            cyclic = true,
+          }),
+          augend.constant.new({
+            elements = { 'yes', 'no' },
             word = false,
             cyclic = true,
           }),
