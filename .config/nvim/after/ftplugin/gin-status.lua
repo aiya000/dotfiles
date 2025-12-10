@@ -97,7 +97,17 @@ end
 local function delete_this_file()
   vim.cmd('normal "zyy')
   local filepath = vim.fn.trim(vim.fn.getreg('z'))
-  if not nvim.confirm('Delete this file?: ' .. filepath) then
+
+  -- local answer = nvim.confirm(
+  --   'Delete this file?: ' .. filepath .. ' (y/n): ',
+  --   { only_a_char = true }
+  -- )
+  local answer = nvim.confirm(
+    'Delete this file?: ' .. filepath .. ' (y/n): ',
+    nvim.hl_groups.Question,
+    { only_a_char = true }
+  )
+  if answer ~= 'y' then
     return
   end
 
