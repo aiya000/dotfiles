@@ -71,11 +71,7 @@ Read all available `AGENTS.md` files to understand project-specific agent config
 
 ### Read this section **if you are Claude Code**
 
-**Ignore this section if you are not Claude Code**
-
-#### Conversations
-
-- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notify 'Claude Code' finished`.
+I don't define any instructions here because I already instructed you in `~/.dotfiles/.claude_global/settings.local.json`.
 
 ### Read this section **if you are copilot-cli**
 
