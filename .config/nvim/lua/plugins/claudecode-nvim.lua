@@ -54,7 +54,6 @@ end
 return {
   'coder/claudecode.nvim',
   dependencies = { 'folke/snacks.nvim' },
-  config = true,
   cmd = {
     'ClaudeCode',
     'ClaudeCodeFocus',
@@ -84,8 +83,8 @@ return {
     { '<leader>cd', '<Cmd>ClaudeCodeDiffDeny<CR>', desc = 'Deny diff' },
   },
   opts = {
-    -- Open in a floating window
-    terminal = {
+    git_repo_cwd = true, -- Top-level aliases are supported and forwarded to terminal config
+    terminal = { -- Open in a floating window
       ---@module 'snacks'
       ---@type snacks.win.Config | {}
       snacks_win_opts = {
@@ -104,13 +103,6 @@ return {
           },
         },
       },
-    },
-    -- TODO: これちゃんと動いてる？ チェックする
-    diff_opts = {
-      auto_close_on_accept = true,
-      vertical_split = true,
-      open_in_current_tab = true,
-      keep_terminal_focus = false,
     },
   },
 }
