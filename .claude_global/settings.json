@@ -1,7 +1,57 @@
 {
   "permissions": {
-    "allow": [],
-    "deny": []
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Bash(cp:*)",
+      "Bash(ls:*)",
+      "Bash(echo:*)",
+      "Bash(touch:*)",
+      "Bash(cd:*)",
+      "Bash(mkdir:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git diff:*)",
+      "Bash(git status:*)",
+      "Bash(git reflog:*)",
+      "Bash(gh issue list:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh issue create:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr create:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh run view:*)",
+      "Bash(rg:*)",
+      "Bash(notify:*)",
+      "Read(~/.config/nvim)"
+    ],
+    "deny": [
+      "Bash(git push:*)",
+      "Bash(sudo:*)",
+      "Bash(grep:*)",
+      "Read(.env.*)"
+    ]
   },
-  "hooks": {}
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "notify 'Claude Code' 'Claude Code respond' ~/.dotfiles/bash-toys/assets/notification-1.mp3"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "notify 'Claude Code' 'Claude Code stopped' ~/.dotfiles/bash-toys/assets/notification-2.mp3"
+          }
+        ]
+      }
+    ]
+  }
 }
