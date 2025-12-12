@@ -80,18 +80,47 @@ return {
               ['<C-j>'] = actions.select_default,
             },
             i = {
-              -- Same as Neovim insert mode
-              ['<Esc>'] = false,
-              ['<C-l>'] = actions.close,
+              ['<C-l>'] = function()
+                nvim.run_with_virtual_keymaps('<Esc>') -- Normal Mode
+              end,
+              -- ↓ Bash like keys
               ['<C-j>'] = actions.select_default,
-              -- TODO: fzf-native使ってるから？ 動いてない
-              -- Bash like keys
-              -- ['<C-b>'] = custom.move_left,
-              -- ['<C-f>'] = custom.move_right,
-              -- ['<C-a>'] = custom.move_home,
-              -- ['<C-e>'] = custom.move_end,
-              -- ['<C-h>'] = custom.backspace,
-              -- ['<C-d>'] = custom.delete,
+              ['<Esc>'] = function()
+                nvim.run_with_virtual_keymaps('<Esc>') -- Normal Mode
+              end,
+              ['<C-b>'] = function()
+                nvim.run_with_virtual_keymaps('<Left>')
+              end ,
+              ['<C-f>'] = function()
+                nvim.run_with_virtual_keymaps('<Right>')
+              end,
+              ['<C-a>'] = function()
+                nvim.run_with_virtual_keymaps('<Home>')
+              end,
+              ['<C-e>'] = function()
+                nvim.run_with_virtual_keymaps('<End>')
+              end,
+              ['<C-h>'] = function()
+                nvim.run_with_virtual_keymaps('<Backspace>')
+              end,
+              ['<C-d>'] = function()
+                nvim.run_with_virtual_keymaps('<Delete>')
+              end,
+              -- TODO: 動くように直す
+              -- ['<C-u>'] = function()
+              --   local current_line = vim.api.nvim_get_current_line()
+              --   local cursor_pos = vim.api.nvim_win_get_cursor(0)
+              --   local row, col = cursor_pos[1], cursor_pos[2]
+              --   vim.api.nvim_set_current_line(current_line:sub(col + 1))
+              --   vim.api.nvim_win_set_cursor(0, { row, 0 })
+              -- end,
+              -- ['<C-k>'] = function()
+              --   local current_line = vim.api.nvim_get_current_line()
+              --   local cursor_pos = vim.api.nvim_win_get_cursor(0)
+              --   local row, col = cursor_pos[1], cursor_pos[2]
+              --   vim.api.nvim_set_current_line(current_line:sub(1, col))
+              --   vim.api.nvim_win_set_cursor(0, { row, col })
+              -- end,
             },
           },
         },
