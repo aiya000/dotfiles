@@ -1,6 +1,5 @@
 ---プラグイン設定
 
-local arrow = require('luarrow').arrow
 local fn = require('utils.functions')
 local list = require('utils.list')
 local nvim = require('nvim')
@@ -1072,6 +1071,8 @@ return {
     end,
     keys = {
       { 'y', '<Plug>(YankyYank)', mode = { 'n', 'x' } },
+      { 'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'v', 'x' } },
+      { 'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'v', 'x' } },
       { ']p', '<Plug>(YankyPutIndentAfterLinewise)', mode = 'n' },
       { '[p', '<Plug>(YankyPutIndentBeforeLinewise)', mode = 'n' },
       { ']P', '<Plug>(YankyPutIndentBeforeLinewise)', mode = 'n' },
