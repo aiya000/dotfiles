@@ -71,7 +71,7 @@ Read all available `AGENTS.md` files to understand project-specific agent config
 
 ### Read this section **if you are Claude Code**
 
-I don't define any instructions here because I already instructed you in `~/.dotfiles/.claude_global/settings.local.json`.
+I don't define any instructions here because I already instructed you in `~/.dotfiles/.claude_global/settings.json`.
 
 ### Read this section **if you are copilot-cli**
 
@@ -79,7 +79,7 @@ I don't define any instructions here because I already instructed you in `~/.dot
 
 #### Conversations
 
-- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notify copilot-cli`.
+- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notify copilot-cli ~/.dotfiles/bash-toys/assets/notification-1.mp3`.
 
 ### Read this section **if you are gemini-cli**
 
@@ -87,7 +87,7 @@ I don't define any instructions here because I already instructed you in `~/.dot
 
 #### Conversations
 
-- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notify gemini-cli`.
+- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notify gemini-cli ~/.dotfiles/bash-toys/assets/notification-1.mp3`.
 
 ### Your character
 
