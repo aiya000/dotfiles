@@ -38,7 +38,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "notify 'Claude Code' 'Claude Code respond' ~/.dotfiles/bash-toys/assets/notification-1.mp3"
+            "command": "notify 'Claude Code' 'Claude Code respond' {hard-code-your-$HOME-here}/.dotfiles/bash-toys/assets/notification-1.mp3"
           }
         ]
       }
@@ -48,7 +48,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "notify 'Claude Code' 'Claude Code stopped' ~/.dotfiles/bash-toys/assets/notification-2.mp3"
+            "command": "notify 'Claude Code' 'Claude Code stopped' {hard-code-your-$HOME-here}/.dotfiles/bash-toys/assets/notification-2.mp3"
           }
         ]
       }
