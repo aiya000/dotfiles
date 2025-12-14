@@ -88,12 +88,3 @@ vim.keymap.set('n', '<localleader>S', function()
   local word = vim.fn.expand('<cword>')
   vim.cmd('Stackage ' .. word)
 end, { buffer = true })
-
-local augroup_ftplugin_haskell = vim.api.nvim_create_augroup('FtpluginHaskell', { clear = true })
-vim.api.nvim_create_autocmd('BufWritePre', {
-  group = augroup_ftplugin_haskell,
-  pattern = '*.hs',
-  callback = function()
-    vim.cmd('HaskellSortImport')
-  end,
-})
