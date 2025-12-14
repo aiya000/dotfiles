@@ -390,7 +390,7 @@ map('n', '<C-g><C-o>', function()
 end, { silent = true })
 
 map('n', '<C-g><C-a>', vim.lsp.buf.code_action, { silent = true })
-map('n', '<C-g><C-d>', vim.lsp.buf.definition, { silent = true })
+map('n', '<C-g><C-d>', telescope.lsp_definitions, { silent = true })
 map('n', '<C-g>d', vim.lsp.buf.declaration, { silent = true })
 map('n', '<C-g><C-i>', vim.lsp.buf.implementation, { silent = true })
 map('n', '<C-g><C-t>', vim.lsp.buf.type_definition, { silent = true })

@@ -38,7 +38,8 @@ end
 ---Or returns nil.
 ---@return string | nil
 local function get_grip_token()
-  return vim.env.DOTFILES_PRIVATE_GITHUB_GRIP_TOKEN:match(' ') == nil and vim.env.DOTFILES_PRIVATE_GITHUB_GRIP_TOKEN
+  return vim.env.DOTFILES_PRIVATE_GITHUB_GRIP_TOKEN:match(' ') == nil
+    and vim.env.DOTFILES_PRIVATE_GITHUB_GRIP_TOKEN
     or nil
 end
 
