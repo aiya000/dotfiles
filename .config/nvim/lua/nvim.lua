@@ -714,6 +714,7 @@ end
 ---Clear LuaSnip snippet jump positions and highlights
 function M.clear_luasnip()
   local ok, luasnip = pcall(require, 'luasnip')
+  -- TODO: 各nodeに対して全てクリアする（全てのマーカーをクリアする）
   if ok and luasnip.session and luasnip.session.current_nodes[vim.api.nvim_get_current_buf()] then
     luasnip.unlink_current()
   end
@@ -722,7 +723,8 @@ end
 function M.clear()
   M.close_all_popups()
   require('notify').dismiss({ silent = true, pending = true })
-  vim.cmd('nohlsearch')
+  vim.cmd.nohlsearch()
+  pcall(vim.cmd, 'Winsep enable') -- Restore Winsep when Winsep is enabled
   M.clear_luasnip()
   pcall(M.clear_flash_nvim_highlight)
 end
