@@ -1621,8 +1621,8 @@ return {
         },
       })
 
+      -- TODO: Refactor
       local augroup = vim.api.nvim_create_augroup('InitLuaPluginsCmdpalette', { clear = true })
-
       vim.api.nvim_create_autocmd('FileType', {
         group = augroup,
         pattern = 'cmdpalette',
@@ -1645,13 +1645,19 @@ return {
                     return ('e %s/'):format(InitLua.git_root) -- nvim.git_rootは代入が遅延されるので、評価も遅延
                   end,
                   [':'] = function()
-                    local next_char = nvim.prompt("':' or other char") -- TODO: なんか表示されないので、一時的にcmdheightを2にしたり、あるいはnui.nvimあたりでいい感じに左下に文字列を表示したりする
-                    if next_char == ':' then
-                      -- See below <C-l><C-l> keymapping
-                      return '<C-l><C-l>q:%s/' -- :::でcmdpaletteに突入した場合、cmd-modeで:%s/に突入するように
-                    else
-                      return '<Esc>' .. next_char -- ::でcmdpaletteに突入した場合、normal-modeで突入するように
-                    end
+                    local backup = vim.opt.cmdheight
+                    return fn.try_finally(function()
+                      vim.opt.cmdheight = 2 -- `cmdheight = 1`だと`nvim.prompt()`が表示されないため
+                      local next_char = nvim.prompt("':' or other char")
+                      if next_char == ':' then
+                        -- See below <C-l><C-l> keymapping
+                        return '<C-l><C-l>q:%s/' -- :::でcmdpaletteに突入した場合、cmd-modeで:%s/に突入するように
+                      else
+                        return '<Esc>' .. next_char -- ::でcmdpaletteに突入した場合、normal-modeで突入するように
+                      end
+                    end, function()
+                      vim.opt.cmdheight = backup
+                    end)
                   end,
                 },
                 vim.api.nvim_get_current_line(),
@@ -2149,12 +2155,14 @@ return {
   -- }}}
   -- render-markdown.nvim {{{
 
+  ---@module 'render-markdown'
   {
     'MeanderingProgrammer/render-markdown.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
-    ---@module 'render-markdown'
-    ---@type render.md.UserConfig
-    opts = {},
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-tree/nvim-web-devicons',
+    },
+    opts = {}, ---@type render.md.UserConfig
     keys = {
       {
         '<C-h>r',
