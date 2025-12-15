@@ -13,6 +13,7 @@ M.deep_equal = Test.deep_equal
 ---@param f fun(): T --A function to run that may throws error
 ---@param catch fun(error_message: string): T --Cathces `do`'s error and returns `T`
 ---@param finally? fun() --A function that always called after `f` and `catch` called
+---@return T
 ---```lua
 -----Simple usage like another languages:
 ---try(function()
@@ -41,19 +42,16 @@ M.deep_equal = Test.deep_equal
 ---end)
 ---```
 function M.try(f, catch, finally)
-  local result = nil
-
-  local ok, err = pcall(f)
-  if ok then
-    result = ok
-  end
+  local ok, result = pcall(f)
   if not ok then
+    local err = result
     result = catch(err)
   end
 
   if finally ~= nil then
     finally()
   end
+
   return result
 end
 
@@ -61,6 +59,7 @@ end
 ---@generic T
 ---@param f fun(): T
 ---@param finally fun()
+---@return T
 ---```lua
 ----- Throws error when `foo()` throws, but `finally()` always called
 ---try_finally(function()
