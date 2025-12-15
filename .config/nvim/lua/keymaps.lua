@@ -424,6 +424,7 @@ end, { expr = true })
 -- Git Operations
 -- map('n', '<leader>gs', '<Cmd>GinStatus<CR>', { silent = true }) -- TODO: なぜか（少なくともmacOSでは）cmdpaletteごしで開かないとNeovimが固まるので、一旦remap ↓ で対応する。暇な時に直す！
 map('n', '<leader>gs', ':<C-u>tabnew | GinStatus<CR>', { remap = true, silent = true }) -- remapなので、:でcmdpaletteが開く
+map('n', '"gs', ':<C-u>GinStatus<CR>', { remap = true, silent = true }) -- remapなので、:でcmdpaletteが開く
 map('n', '<leader>gl', '<Cmd>GitLog -100 --name-only<CR>', { silent = true }) -- Use my :GitLog due to :GinLog ignores arguments currently
 map('n', '<leader>gL', '<Cmd>GitLog -100 --patch<CR>', { silent = true })
 
