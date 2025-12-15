@@ -1,5 +1,5 @@
 ---
-allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git show:*), Bash(git commit:*), Bash(notifu.exe:*), Bash(~/.dotfiles/bin/notifu-respond:*), Bash(notifu-respond:*)
+allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git show:*), Bash(git commit:*)
 description: Create a new git commit for staged changes
 ---
 
@@ -18,8 +18,6 @@ Automatically generates a Conventional Commits compliant commit message and comm
    - Conventional Commits specification (structure and basic rules)
    - User's commit style patterns learned from repository history
 5. Execute `git commit` with the generated message
-6. **DON'T FORGET:** (**MUST**) Run `$ ~/.dotfiles/bin/notifu-respond 'Claude Code' 'committed'`
-    - Maybe this causes an error, but it's okay
 
 ## Conventional Commits Specification Summary
 
