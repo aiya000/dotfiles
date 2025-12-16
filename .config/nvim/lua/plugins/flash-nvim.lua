@@ -37,7 +37,15 @@ return {
       desc = 'Flash Treesitter',
     },
     {
-      ';', -- kensaku-jump
+      ';;',
+      mode = { 'n', 'x', 'o' },
+      function()
+        require('flash').jump()
+      end,
+      desc = 'Flash',
+    },
+    {
+      ';:', -- kensaku-jump
       mode = { 'n', 'x', 'o' },
       function()
         require('flash').jump({
