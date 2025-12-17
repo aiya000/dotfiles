@@ -885,7 +885,7 @@ end
 ---@param prefix string -- Module name prefix to match (e.g., 'luasnippets.')
 local function clear_module_cache(prefix)
   for module_name, _ in pairs(package.loaded) do
-    if module_name:match('^' .. prefix:gsub('%.', '%%.')) then
+    if module_name:match('^' .. vim.pesc(prefix)) then
       package.loaded[module_name] = nil
     end
   end
