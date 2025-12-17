@@ -149,6 +149,7 @@ map('n', 'ghv', '<Cmd>vsplit<CR>', { silent = true })
 
 map('n', 'gH', 'mZ:tabnew<CR>`Z', { silent = true })
 map('n', 'ghh', 'mZ:hide<CR>:tabnew<CR>`Z', { silent = true })
+map('n', 'ght', '<Cmd>only | quit<CR>', { silent = true })
 
 map('n', '<C-w>q', '<NOP>')
 map('n', '<C-w>c', '<NOP>')
