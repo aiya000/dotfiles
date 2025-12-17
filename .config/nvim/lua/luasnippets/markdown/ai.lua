@@ -13,7 +13,15 @@ return list.concat(
   {
     s('ultrathink', t('ultrathink')),
     s('ult', t('ultrathink')),
+  },
+
+  {
     s('instruct_for_autocompact', t('/compact 昔の履歴は圧縮して、最近の履歴は圧縮しないようにして')),
     s('autocompact', t('/compact 昔の履歴は圧縮して、最近の履歴は圧縮しないようにして')),
+  },
+
+  {
+    s('instruct_for_git_commit_auto', t('`~/.dotfiles/.claude_global/commands/git-commit-auto.md`のルールを参照して、`git commit`を実行して')),
+    s('git_commit_auto', t('`~/.dotfiles/.claude_global/commands/git-commit-auto.md`のルールを参照して、`git commit`を実行して')),
   }
 )
