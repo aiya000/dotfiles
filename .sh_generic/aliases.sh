@@ -82,7 +82,7 @@ alias mount4u.ext4=mount4u.ext2
 alias ei=exit
 alias t=vterminal
 alias cdp=cd-finddir
-alias ki=killing-art
+alias ki=kill-list
 i_have fdfind && alias fd='fdfind --hidden --ignore-case' # --hidden to include '.' prefixed files
 
 # alias ..='cd ../'
