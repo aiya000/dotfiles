@@ -80,7 +80,7 @@ local function get_file_renderer(buf, focused)
 end
 
 --[[
-TODO: 以下はかつて「ターミナルバッファにシェル（もしくはカレントプロセス）のカレントディレクトリを表示」しようとしたときに、うまくいかなかったときの、進捗メモ。実装する
+TODO: [1] 以下はかつて「ターミナルバッファにシェル（もしくはカレントプロセス）のカレントディレクトリを表示」しようとしたときに、うまくいかなかったときの、進捗メモ。実装する
 Terminal表示機能の実装進捗（Neovimが固まる問題で一時停止）
 
 実装しようとした内容：
@@ -108,14 +108,28 @@ local function get_terminal_cwd(buf)
 end
 
 local function get_terminal_renderer(buf)
-  -- Terminal用のinclineレンダラー（緑色背景、🖥️アイコン）
+  -- 段階1: まずは固定文字列で表示テスト
+  return {
+    ' 🖥️ Terminal ',
+    guibg = '#4CAF50',
+    guifg = '#ffffff',
+  }
 end
 --]]
 
 local function render(props)
-  return vim.bo[props.buf].filetype == 'oil'
-    and get_oil_current_dir_renderer(props.buf)
-    or get_file_renderer(props.buf, props.focused)
+  local filetype = vim.bo[props.buf].filetype
+
+  if filetype == 'oil' then
+    return get_oil_current_dir_renderer(props.buf)
+  --[[
+  -- 'TODO: [1]'を参照
+  elseif filetype == 'terminal' then
+    return get_terminal_renderer(props.buf)
+  --]]
+  else
+    return get_file_renderer(props.buf, props.focused)
+  end
 end
 
 return {
@@ -148,11 +162,14 @@ return {
           if buftype == 'acwrite' then
             return false
           end
+          -- terminalバッファは無視しない（段階的テストのため）
+          if buftype == 'terminal' then
+            return false
+          end
           -- その他の special バッファタイプは無視
           return buftype == 'nofile'
           or buftype == 'prompt'
           or buftype == 'quickfix'
-          or buftype == 'terminal'
         end,
         filetypes = {},
         floating_wins = true,
