@@ -1108,28 +1108,6 @@ return {
   { 'editorconfig/editorconfig-vim' },
 
   -- }}}
-  -- context_filetype.vim {{{
-
-  {
-    'Shougo/context_filetype.vim',
-    config = function()
-      vim.g.context_filetype_filetypes = {
-        help = {},
-        vue = {},
-        html = {},
-        erb = {},
-        review = {
-          {
-            start = '//list\\[[^]]\\+\\]\\[[^]]\\+\\]\\[\\([^]]\\+\\)\\]{',
-            ['end'] = '//}',
-            filetype = '\\1',
-          },
-        },
-      }
-    end,
-  },
-
-  -- }}}
   -- fern.vim {{{
 
   {
