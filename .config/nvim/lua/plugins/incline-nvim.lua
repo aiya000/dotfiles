@@ -79,6 +79,39 @@ local function get_file_renderer(buf, focused)
   )
 end
 
+--[[
+TODO: 以下はかつて「ターミナルバッファにシェル（もしくはカレントプロセス）のカレントディレクトリを表示」しようとしたときに、うまくいかなかったときの、進捗メモ。実装する
+Terminal表示機能の実装進捗（Neovimが固まる問題で一時停止）
+
+実装しようとした内容：
+- Terminalバッファでカレントディレクトリを表示
+- シェルのプロセスIDから実際のカレントディレクトリを取得
+
+試した方法：
+1. /proc/{pid}/cwd を使った方法 → macOSでは/procが存在しない
+2. lsofコマンドを使った方法 → ブロッキングによりNeovimが固まる
+3. 固定文字列表示 → それでも固まる問題が発生
+
+問題の原因：
+- macOSでの/proc未対応
+- lsofコマンドでのブロッキング
+- terminalバッファでのincline表示自体に技術的課題
+
+今後の課題：
+- より安全なプロセス情報取得方法の検討
+- 非同期処理での実装
+- 別の表示手段（ステータスライン等）の検討
+
+実装予定だった関数：
+local function get_terminal_cwd(buf)
+  -- terminal jobのプロセスIDからカレントディレクトリを取得
+end
+
+local function get_terminal_renderer(buf)
+  -- Terminal用のinclineレンダラー（緑色背景、🖥️アイコン）
+end
+--]]
+
 local function render(props)
   return vim.bo[props.buf].filetype == 'oil'
     and get_oil_current_dir_renderer(props.buf)
