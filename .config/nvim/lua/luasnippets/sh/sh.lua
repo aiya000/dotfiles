@@ -301,8 +301,8 @@ done]],
 
       s(
         'poi',
-        fmt([[echo "poi: ${{{}}}"]], {
-          i(0, 'var_name'),
+        fmt([[echo "poi: {}"]], {
+          i(0, ''),
         })
       ),
     }
