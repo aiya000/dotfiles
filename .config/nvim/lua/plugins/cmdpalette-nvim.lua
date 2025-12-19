@@ -19,7 +19,7 @@ local function define_cmdpalette_keymaps()
         local backup = vim.opt.cmdheight
         return fn.try_finally(function()
           vim.opt.cmdheight = 2 -- `cmdheight = 1`だと`nvim.prompt()`が表示されないため
-          local next_char = nvim.prompt("':' or other char")
+          local next_char = nvim.prompt_rich("':' or other char", { only_a_char = true })
           if next_char == ':' then
             -- See below <C-l><C-l> keymapping
             return '<C-l><C-l>q:%s/' -- :::でcmdpaletteに突入した場合、cmd-modeで:%s/に突入するように
