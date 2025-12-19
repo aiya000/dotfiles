@@ -121,6 +121,44 @@ function M.prompt(message, opts)
   return M.confirm_to_get_charstr(message, M.hl_groups.Normal, opts)
 end
 
+---(nui.nvim required.)
+---@param message string
+---@param opts? { only_a_char: boolean } -- Currently only `only_a_char = true` is supported
+---@return string
+function M.prompt_rich(message, opts)
+  opts = opts or { only_a_char = false }
+  if not opts.only_a_char then
+    error('Currently, only `only_a_char = true` is supported')
+  end
+
+  local popup = require('nui.popup')({
+    position = '50%',
+    size = {
+      width = 40,
+      height = 3,
+    },
+    zindex = 100,
+    enter = true,
+    relative = 'editor',
+    border = {
+      style = 'rounded',
+      text = { top = message },
+    },
+    win_options = {
+      winblend = 10,
+      winhighlight = 'Normal:Normal,FloatBorder:InitLuaSimpleGreen',
+    },
+  })
+
+  return fn.try_finally(function()
+    popup:mount()
+    -- TODO: border-topじゃなくて、popup内にメッセージを表示するようにする
+    return vim.fn.nr2char(vim.fn.getchar())
+  end, function()
+    popup:unmount()
+  end)
+end
+
 ---@return string | nil
 local function whoami()
   local result = vim.system({ 'whoami' }):wait()
