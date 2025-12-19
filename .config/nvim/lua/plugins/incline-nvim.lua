@@ -162,9 +162,10 @@ return {
           if buftype == 'acwrite' then
             return false
           end
-          -- terminalバッファは無視しない（段階的テストのため）
+          -- ~terminalバッファは無視しない（段階的テストのため）~ See 'TODO: [1]'
           if buftype == 'terminal' then
-            return false
+            -- return false
+            return true
           end
           -- その他の special バッファタイプは無視
           return buftype == 'nofile'
