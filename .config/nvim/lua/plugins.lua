@@ -970,26 +970,11 @@ return {
   -- }}}
   -- nvim-mado-scratch {{{
 
- {
-   'aiya000/nvim-mado-scratch',
-   opts = {
-     file_pattern = {
-       when_file_buffer = '/tmp/scratch-%d',
-     },
-     default_file_ext = 'md',
-     default_open_method = {
-       method = 'float-aspect',
-       scale = { width = 0.8, height = 0.9 },
-     },
-   },
- },
-
   -- {
-  --   dir = '/home/aiya000/Repository/nvim-mado-scratch/main',
-  --   -- dir = '/home/aiya000/Repository/nvim-mado-scratch/main',
+  --   'aiya000/nvim-mado-scratch',
   --   opts = {
   --     file_pattern = {
-  --       when_file_buffer = vim.fn.expand('~/tmp/scratch-%d'),
+  --       when_file_buffer = '/tmp/scratch-%d',
   --     },
   --     default_file_ext = 'md',
   --     default_open_method = {
@@ -998,6 +983,21 @@ return {
   --     },
   --   },
   -- },
+
+  {
+    dir = '/home/aiya000/Repository/nvim-mado-scratch/copilot/fix-file-content-loss',
+    -- dir = '/home/aiya000/Repository/nvim-mado-scratch/main',
+    opts = {
+      file_pattern = {
+        when_file_buffer = vim.fn.expand('~/tmp/scratch-%d'),
+      },
+      default_file_ext = 'md',
+      default_open_method = {
+        method = 'float-aspect',
+        scale = { width = 0.8, height = 0.9 },
+      },
+    },
+  },
 
   -- }}}
   -- nvim-just-stay-search {{{
@@ -1772,7 +1772,7 @@ return {
         matching = { disallow_symbol_nonprefix_matching = false }
       })
 
-      if InitLua.recording_mode then
+      if not InitLua.recording_mode then
         -- See 'cmdpalette.nvim' section for other settings of cmdpalette
         cmp.setup.filetype('cmdpalette', {
           mapping = cmp.mapping.preset.insert(common_mapping),
