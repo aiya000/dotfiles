@@ -204,6 +204,7 @@ return {
 
   {
     'neovim/nvim-lspconfig',
+    enabled = not InitLua.recording_mode,
     dependencies = {
       'SmiteshP/nvim-navic',
       'rcarriga/nvim-notify',
@@ -754,6 +755,7 @@ return {
 
   {
     'cohama/lexima.vim',
+    enabled = not InitLua.recording_mode,
     config = function()
       vim.fn['lexima#add_rule']({ char = '<', input_after = '>' })
       vim.fn['lexima#add_rule']({ char = '「', input_after = '」' })
@@ -949,6 +951,7 @@ return {
 
   {
     'github/copilot.vim',
+    enabled = not InitLua.recording_mode,
     config = function()
       vim.g.copilot_no_tab_map = true
     end,
@@ -967,34 +970,18 @@ return {
   -- }}}
   -- nvim-mado-scratch-buffer {{{
 
-  nvim.load_from_local_or_remote(
-    'aiya000/nvim-mado-scratch-buffer',
-    '~/Repository/nvim-mado-scratch-buffer',
-    InitLua.disable_mado_scratch_buffer == true,
-    {
-      opts = {
-        file_pattern = {
-          when_file_buffer = vim.fn.expand('~/tmp/scratch-%d'),
-        },
-        -- default_open_method = {
-        --   method = 'float-aspect',
-        --   scale = { width = 0.9, height = 0.9 }
-        -- },
-        -- Older config format
-        -- default_file_ext = 'md',
-        -- default_open_method = 'vsp',
-        -- default_buffer_size = 'no-auto-resize',
-
-        -- TODO: Migrate
-        default_file_ext = 'md',
-        default_buffer_size = 'no-auto-resize',
-        default_open_method =
-          InitLua.mado_scratch_buffer_use_next_feature == true
-            and { method = 'float-aspect', scale = { width = 0.9, height = 0.9 } }
-            or 'vsp',
+  {
+    dir = '/home/aiya000/Repository/nvim-mado-scratch-buffer/copilot/support-open-method-float',
+    opts = {
+      file_pattern = {
+        when_file_buffer = vim.fn.expand('~/tmp/scratch-%d'),
       },
-    }
-  ),
+      default_open_method = {
+        method = 'float-aspect',
+        scale = { width = 0.9, height = 0.9 },
+      },
+    },
+  },
 
   -- }}}
   -- nvim-just-stay-search {{{
@@ -1714,6 +1701,7 @@ return {
 
   {
     'hrsh7th/nvim-cmp',
+    enabled = not InitLua.recording_mode,
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
@@ -1768,17 +1756,19 @@ return {
         matching = { disallow_symbol_nonprefix_matching = false }
       })
 
-      -- See 'cmdpalette.nvim' section for other settings of cmdpalette
-      cmp.setup.filetype('cmdpalette', {
-        mapping = cmp.mapping.preset.insert(common_mapping),
-        sources = cmp.config.sources({
-          { name = 'cmdline' },
-          { name = 'path' },
-        }, {
-          { name = 'buffer' },
-          { name = 'luasnip' },
-        }),
-      })
+      if InitLua.recording_mode then
+        -- See 'cmdpalette.nvim' section for other settings of cmdpalette
+        cmp.setup.filetype('cmdpalette', {
+          mapping = cmp.mapping.preset.insert(common_mapping),
+          sources = cmp.config.sources({
+            { name = 'cmdline' },
+            { name = 'path' },
+          }, {
+            { name = 'buffer' },
+            { name = 'luasnip' },
+          }),
+        })
+      end
     end,
   },
 
@@ -1879,4 +1869,4 @@ return {
   -- }}}
 }
 
---vim: set foldmethod=marker foldlevel=0:
+-- vim: set foldmethod=marker foldlevel=0:
