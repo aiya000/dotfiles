@@ -971,17 +971,31 @@ return {
   -- nvim-mado-scratch-buffer {{{
 
   {
-    dir = '/home/aiya000/Repository/nvim-mado-scratch-buffer/copilot/support-open-method-float',
+    'aiya000/nvim-mado-scratch-buffer',
     opts = {
       file_pattern = {
         when_file_buffer = vim.fn.expand('~/tmp/scratch-%d'),
       },
+      default_file_ext = 'md',
       default_open_method = {
         method = 'float-aspect',
-        scale = { width = 0.9, height = 0.9 },
+        scale = { width = 0.8, height = 0.9 },
       },
     },
   },
+
+  -- {
+  --   dir = '/home/aiya000/Repository/nvim-mado-scratch-buffer/copilot/support-open-method-float',
+  --   opts = {
+  --     file_pattern = {
+  --       when_file_buffer = vim.fn.expand('~/tmp/scratch-%d'),
+  --     },
+  --     default_open_method = {
+  --       method = 'float-aspect',
+  --       scale = { width = 0.9, height = 0.9 },
+  --     },
+  --   },
+  -- },
 
   -- }}}
   -- nvim-just-stay-search {{{
