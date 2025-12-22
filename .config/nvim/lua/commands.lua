@@ -6,6 +6,8 @@ local nodejs = require('nodejs')
 local s = require('utils.functions').s
 local telescope = require('telescope.builtin')
 
+---@module 'chotto'
+
 ---@type chotto.Schema<Nargs>
 local nargs_schema = c.optional(
   c.union({
@@ -218,5 +220,11 @@ vim.api.nvim_create_user_command('RemoveTrailingSpacesWithForce', function(opts)
   local range = opts.range > 0 and { opts.line1, opts.line2 } or nil
   nvim.remove_trailing_spaces(true, range)
 end, { range = true })
+
+vim.api.nvim_create_user_command(
+  'FormatTaskReport',
+  [[silent '<,'>s/^\(\s*\)-/\1・/ | silent '<,'>s/  /　/g]],
+  { range = true }
+)
 
 --}}}
