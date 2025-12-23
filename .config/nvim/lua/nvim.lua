@@ -490,7 +490,7 @@ end
 
 function M.open_buffer_to_execute(cmd)
   local full_size = 100
-  vim.cmd('MadoScratchBufferOpen md sp ' .. full_size)
+  vim.cmd('MadoScratchOpen md sp ' .. full_size)
   local output = vim.fn.execute(cmd)
   local lines = vim.split(output, '\n')
   vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
