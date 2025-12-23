@@ -153,7 +153,7 @@ return {
     'kevinhwang91/nvim-hlslens',
     config = function()
       require('hlslens').setup({
-        calm_down = true,
+        calm_down = false,
         nearest_only = true,
         override_lens = function(render, posList, nearest, idx, relIdx)
           local sfw = vim.v.searchforward == 1
