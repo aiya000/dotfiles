@@ -882,8 +882,9 @@ local function load_luasnip(filetype, snips)
 end
 
 ---Clears all loaded modules matching the given prefix pattern
----@param prefix string -- Module name prefix to match (e.g., 'luasnippets.')
-local function clear_module_cache(prefix)
+---@param target_module string -- e.g., 'luasnippets'
+local function clear_module_cache(target_module)
+  local prefix = target_module .. '.'
   for module_name, _ in pairs(package.loaded) do
     if module_name:match('^' .. vim.pesc(prefix)) then
       package.loaded[module_name] = nil
@@ -897,8 +898,7 @@ function M.load_luasnips(opts)
 
   if opts.reload then
     require('luasnip').cleanup()
-    -- Clear all luasnippets module caches, including nested modules
-    clear_module_cache('luasnippets.')
+    clear_module_cache('luasnippets')
   end
 
   local snip_files = find_luasnip_file_names()
@@ -919,7 +919,7 @@ function M.reload_luasnips()
   M.load_luasnips({ reload = true })
 end
 
----Simular to `vim.v.argv`, but only returns files (not options and $0. $0 is usually 'nvim')
+---Similar to `vim.v.argv`, but only returns files (not options and $0. $0 is usually 'nvim')
 ---```shell-session
 ---$ nvim
 ---:lua = nvim.arg_files() -- returns {}
