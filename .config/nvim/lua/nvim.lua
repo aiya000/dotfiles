@@ -516,8 +516,8 @@ function M.delete_mostly_inner_surround()
     return
   end
 
-  M.run_with_virtual_keymaps('viw<Plug>(operator-surround-delete)' .. obj_key)
-  vim.call('repeat#set', 'viw\\<Plug>(operator-surround-delete)' .. obj_key)
+  M.run_with_virtual_keymaps('<Plug>(operator-surround-delete)a' .. obj_key)
+  vim.call('repeat#set', '\\<Plug>(operator-surround-delete)a' .. obj_key)
 end
 
 function M.replace_mostly_inner_surround()
@@ -535,8 +535,8 @@ function M.replace_mostly_inner_surround()
     return
   end
 
-  M.run_with_virtual_keymaps('viw<Plug>(operator-surround-replace)' .. obj_key_from .. obj_key_to)
-  vim.call('repeat#set', 'viw\\<Plug>(operator-surround-replace)' .. obj_key_from .. obj_key_to)
+  M.run_with_virtual_keymaps('<Plug>(operator-surround-replace)a' .. obj_key_from .. obj_key_to)
+  vim.call('repeat#set', '\\<Plug>(operator-surround-replace)a' .. obj_key_from .. obj_key_to)
 end
 
 ---@param visualizer string --To select text, like 'viw' or 'viW'
