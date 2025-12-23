@@ -18,7 +18,7 @@ Require = nvim.reload_modules
 InitLua = InitLua
   or {
     loaded = false,
-    neovim_home = vim.fn.expand('~/.config/nvim'), -- TODO: これは消して、`vim.fn.stdpath('config')`を使う
+    neovim_home = vim.fn.stdpath('config'),
     path_at_started = vim.fn.getcwd(),
     is_wsl = vim.fn.executable('uname') == 1 and vim.fn.system('uname -a'):match('microsoft%-standard'),
     is_unix = vim.fn.has('unix') == 1,
@@ -206,7 +206,7 @@ if vim.fn.filereadable(init_private_lua) == 1 then
   vim.cmd.source(init_private_lua)
 end
 
-local init_env_lua = vim.fn.expand('~/.config/nvim/init_env.lua')
+local init_env_lua = vim.fn.stdpath('config') .. '/init_env.lua'
 if vim.fn.filereadable(init_env_lua) == 1 then
   vim.cmd.source(init_env_lua)
 end
@@ -229,7 +229,7 @@ require('keymaps')
 require('commands') -- Due to `Require('commands')`, 'commands' module put here instead of `./plugins/commands.lua`
 require('colors')
 
-local init_env_post_lua = vim.fn.expand('~/.config/nvim/init_env_post.lua')
+local init_env_post_lua = vim.fn.stdpath('config') .. '/init_env_post.lua'
 if vim.fn.filereadable(init_env_post_lua) == 1 then
   vim.cmd.source(init_env_post_lua)
 end
