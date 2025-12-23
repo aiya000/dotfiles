@@ -919,23 +919,30 @@ local function load_luasnip(filetype, snips)
   vim.notify('Invalid snippet file: filetype =  ' .. filetype, vim.log.levels.ERROR)
 end
 
+---Clears all loaded modules matching the given prefix pattern
+---@param target_module string -- e.g., 'luasnippets'
+local function clear_module_cache(target_module)
+  local prefix = target_module .. '.'
+  for module_name, _ in pairs(package.loaded) do
+    if module_name:match('^' .. vim.pesc(prefix)) then
+      package.loaded[module_name] = nil
+    end
+  end
+end
+
 ---@param opts? { reload?: boolean } -- Run `M.reload_module()` before loading snippets when `reload` is true
----TODO: リロードできてない。多分、親ディレクトリ内のスニペットファイルを親スニペットファイルが`require()`で読み込んでいて、そっちの`package.loaded[]`をキャッシュクリアできてないからだと思う
 function M.load_luasnips(opts)
   opts = opts or { reload = false }
 
   if opts.reload then
     require('luasnip').cleanup()
+    clear_module_cache('luasnippets')
   end
 
   local snip_files = find_luasnip_file_names()
   for _, snip_file in ipairs(snip_files) do
     local filetype = snip_file:gsub('%.lua$', '')
     local submodule_name = 'luasnippets.' .. filetype
-
-    if opts.reload then
-      package.loaded[submodule_name] = nil
-    end
 
     local ok, snips = pcall(require, submodule_name)
     if ok then
@@ -947,10 +954,10 @@ function M.load_luasnips(opts)
 end
 
 function M.reload_luasnips()
-  M.load_luasnips()
+  M.load_luasnips({ reload = true })
 end
 
----Simular to `vim.v.argv`, but only returns files (not options and $0. $0 is usually 'nvim')
+---Similar to `vim.v.argv`, but only returns files (not options and $0. $0 is usually 'nvim')
 ---```shell-session
 ---$ nvim
 ---:lua = nvim.arg_files() -- returns {}
