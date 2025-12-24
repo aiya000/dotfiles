@@ -48,6 +48,8 @@ map('n', ',,', 'ggVG"+y<C-o>:w<CR>') -- Copy the buffer content to clipboard
 map('n', ',<', ':<C-u>w<CR>ggVG"+s') -- Save the current content, refresh, and starting to edit
 map('n', '<C-x><C-n>', '<C-n>')
 map('n', '<C-x><C-p>', '<C-p>')
+map('n', '/', [[/\m]])
+map('n', '?', [[?\m]])
 
 -- Search
 local function try_show_search_number_or_do_nothing()
@@ -149,7 +151,7 @@ map('n', 'ghv', '<Cmd>vsplit<CR>', { silent = true })
 
 map('n', 'gH', 'mZ:tabnew<CR>`Z', { silent = true })
 map('n', 'ghh', 'mZ:hide<CR>:tabnew<CR>`Z', { silent = true })
-map('n', 'ght', '<Cmd>only | quit<CR>', { silent = true })
+map('n', 'ght', '<Cmd>tabclose<CR>', { silent = true })
 
 map('n', '<C-w>q', '<NOP>')
 map('n', '<C-w>c', '<NOP>')
