@@ -139,6 +139,7 @@ vim.keymap.set('n', '<:', '<Plug>(gin-action-restore:ours)', { buffer = true })
 vim.keymap.set('n', '>:', '<Plug>(gin-action-restore:theirs)', { buffer = true })
 vim.keymap.set('n', '==', '<Plug>(gin-action-reset)', { buffer = true })
 vim.keymap.set('n', 'D', delete_this_file, { buffer = true })
+vim.keymap.set('n', '<C-g>', ':<C-u>!git<Space>', { nowait = true, remap = true, buffer = true, silent = true }) -- remap to open cmdpalette
 
 vim.keymap.set('n', 'O', function()
   vim.cmd('normal "zyy')
