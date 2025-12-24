@@ -61,16 +61,19 @@ return {
         -- cmdpaletteバッファを閉じた後にエラーが出るので無効化
         vim.b.ale_enabled = 0
 
-        -- - <C-l>だけだと間違えてEscapeすることがよくあるので<C-l><C-l>
-        -- - さらなる誤爆Escape対策として@zにバックアップ
-        vim.keymap.set('n', '<C-l><C-l>', '"yyy<Esc>', { remap = true, buffer = true })
+        vim.keymap.set('n', '<C-l><C-l>', '<Esc>', { remap = true, buffer = true }) -- <C-l>だけだと間違えてEscapeすることがよくあるので<C-l><C-l>
         vim.keymap.set('n', '<C-j>', '<CR>', { remap = true, buffer = true })
-        vim.keymap.set('i', '<C-j>', '<Esc><CR>', { remap = true, buffer = true }) -- <Esc> to hide completion menu
-
         vim.keymap.set('n', '<C-k><C-j>', function()
           local line = vim.api.nvim_get_current_line()
           nvim.open_buffer_to_execute(line)
         end, { remap = true, buffer = true })
+
+        vim.keymap.set('i', '<C-j>', '<Esc><CR>', { remap = true, buffer = true }) -- <Esc> to hide completion menu
+        vim.keymap.set('i', '<C-k><C-j>', function()
+          local line = vim.api.nvim_get_current_line()
+          nvim.open_buffer_to_execute(line)
+        end, { remap = true, buffer = true })
+
       end,
     })
   end,
