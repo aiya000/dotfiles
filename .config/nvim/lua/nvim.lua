@@ -516,7 +516,17 @@ function M.delete_mostly_inner_surround()
     return
   end
 
-  -- Try using the operator with just the delimiter key, no pre-selection of text object
+  -- TODO: Workaround. For some reason 'B' ('**foo**') cannot be deleted by vim-operator-surround
+  -- See also: .vim/autoload/vimrc.vim - same workaround in Vimscript
+  if obj_key == 'B' then
+    -- Delete content between * (which leaves ** on each side)
+    vim.cmd('normal! d' .. vim.api.nvim_replace_termcodes('<Plug>(textobj-between-i)*', true, false, true))
+    -- Replace the remaining **** with the deleted content
+    vim.cmd([[s/\*\*\*\*/\=@"/]])
+    print('**deleted**')
+    return
+  end
+
   M.run_with_virtual_keymaps('<Plug>(operator-surround-delete)iw' .. obj_key)
   vim.call('repeat#set', '\\<Plug>(operator-surround-delete)iw' .. obj_key)
 end
@@ -536,8 +546,9 @@ function M.replace_mostly_inner_surround()
     return
   end
 
-  M.run_with_virtual_keymaps('<Plug>(operator-surround-replace)iw' .. obj_key_from .. obj_key_to)
-  vim.call('repeat#set', '\\<Plug>(operator-surround-replace)iw' .. obj_key_from .. obj_key_to)
+  -- Use the original pattern that works for most delimiters
+  M.run_with_virtual_keymaps('va' .. obj_key_from .. '<Plug>(operator-surround-replace)' .. obj_key_to)
+  vim.call('repeat#set', 'va' .. obj_key_from .. '\\<Plug>(operator-surround-replace)' .. obj_key_to)
 end
 
 ---@param visualizer string --To select text, like 'viw' or 'viW'
