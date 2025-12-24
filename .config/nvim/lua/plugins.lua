@@ -1878,7 +1878,10 @@ return {
       'nvim-treesitter/nvim-treesitter',
       'nvim-tree/nvim-web-devicons',
     },
-    opts = {}, ---@type render.md.UserConfig
+    ft = 'markdown', -- Load on markdown files
+    opts = {
+      enabled = true, -- Enable rendering by default
+    }, ---@type render.md.UserConfig
     keys = {
       {
         '<C-h>r',
