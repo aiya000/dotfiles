@@ -522,13 +522,13 @@ function M.delete_mostly_inner_surround()
     -- Delete content between * (which leaves ** on each side)
     vim.cmd('normal! d' .. vim.api.nvim_replace_termcodes('<Plug>(textobj-between-i)*', true, false, true))
     -- Replace the remaining **** with the deleted content
-    vim.cmd([[s/\*\*\*\*/\=@"/]])
+    vim.cmd([[s/\*\*\*\*/{@"}/]])
     print('**deleted**')
     return
   end
 
-  M.run_with_virtual_keymaps('<Plug>(operator-surround-delete)iw' .. obj_key)
-  vim.call('repeat#set', '\\<Plug>(operator-surround-delete)iw' .. obj_key)
+  M.run_with_virtual_keymaps('va' .. obj_key .. '<Plug>(operator-surround-delete)')
+  vim.call('repeat#set', 'va' .. obj_key .. '\\<Plug>(operator-surround-delete)')
 end
 
 function M.replace_mostly_inner_surround()
