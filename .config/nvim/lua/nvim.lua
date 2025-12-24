@@ -13,6 +13,10 @@ local M = {}
 -- M.escaping_keys = fn.readonly({ '<Esc>', '<C-[>', '<C-l>' })
 M.escaping_keys = { '<Esc>', '<C-[>', '<C-l>' }
 
+M.special_chars = {
+  ctrl_u = vim.api.nvim_replace_termcodes('<C-u>', true, false, true),
+}
+
 ---Validates `validatee` with `schema`.
 ---Thrown error Handled by `vim.notify()` if thrown.
 ---@generic T
@@ -521,13 +525,17 @@ end
 
 local function input_obj_key_of(obj_keys)
   local stroke = ''
+  vim.cmd.echo('"Surround key: "')
   while not vim.tbl_contains(obj_keys, stroke) do
     local char = vim.fn.nr2char(vim.fn.getchar())
-    if list.has(InitLua.canceler_keys_for_my_operator_surround, char) then
-      -- if calnceled
-      return nil
+    if char == M.special_chars.ctrl_u then
+      stroke = '' -- Clear
+    elseif list.has(InitLua.canceler_keys_for_my_operator_surround, char) then
+      return nil -- Mark as calnceled
+    else
+      stroke = stroke .. char
     end
-    stroke = stroke .. char
+    vim.cmd.echo(('"%s"'):format('Surround key: ' .. stroke))
   end
   return stroke
 end
