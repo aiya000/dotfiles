@@ -227,4 +227,10 @@ vim.api.nvim_create_user_command(
   { range = true }
 )
 
+vim.api.nvim_create_user_command(
+  'ConvertExportToVimEnv',
+  [[silent '<,'>s/^export /vim.env./ | silent <,'>s/\r$//]],
+  { range = true }
+)
+
 --}}}
