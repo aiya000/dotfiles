@@ -77,6 +77,15 @@ function M.feedkeys(keys, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), mode, true)
 end
 
+---Yanks selected text in (linewise/blockwise) visual mode
+function M.get_selected_text()
+  return vim.fn.getregion(
+    vim.fn.getpos('v'),
+    vim.fn.getpos('.'),
+    { type = vim.fn.mode()
+  })
+end
+
 ---Sets same mapping to multiple keys
 ---@param mode string | string[]
 ---@param keys string[]
