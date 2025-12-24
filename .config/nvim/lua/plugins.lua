@@ -1504,6 +1504,13 @@ return {
           },
           duration_multiplier = 0.25,
           performance_mode = true,
+          post_hook = function()
+            -- Trigger hlslens to show search highlights after scrolling
+            local ok, hlslens = pcall(require, 'hlslens')
+            if ok then
+              hlslens.start()
+            end
+          end,
         })
 
         local keymaps_opts = {
