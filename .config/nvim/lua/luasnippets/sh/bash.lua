@@ -111,5 +111,40 @@ return list.concat(
         i(0),
       })
     ),
-  }
+  },
+
+  sm(
+    { 'run_async', 'async_run', },
+    fmt([[
+      {cmd} &
+      ${pid}=$!
+      wait ${pid}
+    ]], {
+      cmd = i(1, 'cmd'),
+      pid = i(2, 'pid'),
+    })
+  ),
+
+  sm(
+    { 'wait', 'await' },
+    fmt([[
+      wait ${pid}
+    ]], {
+      pid = i(1, 'pid'),
+    })
+  ),
+
+  sm(
+    { 'parallel', 'promise_all', 'await_all' },
+    fmt([[
+      parallel --jobs 0 ::: \
+        {cmd1} \
+        {cmd2} \
+        {cmds}
+    ]], {
+      cmd1 = i(1, 'cmd1'),
+      cmd2 = i(2, 'cmd2'),
+      cmds = i(3, 'cmds'),
+    })
+  )
 )
