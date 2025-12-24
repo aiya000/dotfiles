@@ -1647,19 +1647,10 @@ return {
       end
 
       ---@param target_lang string
-      local function create_opening_with_selected_line(target_lang)
+      local function create_opening_with_selected_text(target_lang)
         return function()
-          local start_line = vim.fn.line('v')
-          local end_line = vim.fn.line('.')
-          -- 逆順の場合もあるので、小さい方をstart_lineに
-          if start_line > end_line then
-            start_line, end_line = end_line, start_line
-          end
-
-          local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
-          local selected_text = table.concat(lines, '\n')
+          local selected_text = table.concat(nvim.get_selected_text(), '\n')
           vim.cmd('Pantran target=' .. target_lang)
-
           vim.schedule(function()
             vim.api.nvim_paste(selected_text, false, -1)
             vim.keymap.set('n', '?', 'g?', { buffer = true, remap = true })
@@ -1671,8 +1662,8 @@ return {
 
       vim.keymap.set('n', '<leader>k', create_opening_with_current_word('JA'))
       vim.keymap.set('n', '<leader>K', create_opening_with_current_word('EN-US'))
-      vim.keymap.set('v', '<leader>k', create_opening_with_selected_line('JA'))
-      vim.keymap.set('v', '<leader>K', create_opening_with_selected_line('EN-US'))
+      vim.keymap.set('v', '<leader>k', create_opening_with_selected_text('JA'))
+      vim.keymap.set('v', '<leader>K', create_opening_with_selected_text('EN-US'))
     end,
   },
 
