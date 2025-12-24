@@ -523,10 +523,15 @@ local function get_current_obj_keys()
   return obj_keys
 end
 
-local function input_obj_key_of(obj_keys)
+---@param obj_keys string[]
+---@param prompt? string
+local function input_obj_key_of(obj_keys, prompt)
+  prompt = prompt or 'Surround key: '
+
   local stroke = ''
-  vim.cmd.echo('"Surround key: "')
   while not vim.tbl_contains(obj_keys, stroke) do
+    vim.cmd.echo(('"%s"'):format(prompt .. stroke))
+
     local char = vim.fn.nr2char(vim.fn.getchar())
     if char == M.special_chars.ctrl_u then
       stroke = '' -- Clear
@@ -535,7 +540,6 @@ local function input_obj_key_of(obj_keys)
     else
       stroke = stroke .. char
     end
-    vim.cmd.echo(('"%s"'):format('Surround key: ' .. stroke))
   end
   return stroke
 end
@@ -569,13 +573,13 @@ end
 function M.replace_mostly_inner_surround()
   local obj_keys = get_current_obj_keys()
 
-  local obj_key_from = input_obj_key_of(obj_keys)
+  local obj_key_from = input_obj_key_of(obj_keys, 'Replaced char: ')
   if obj_key_from == nil then
     print('Cancelled')
     return
   end
 
-  local obj_key_to = input_obj_key_of(obj_keys)
+  local obj_key_to = input_obj_key_of(obj_keys, 'Replacing char: ')
   if obj_key_to == nil then
     print('Cancelled')
     return
