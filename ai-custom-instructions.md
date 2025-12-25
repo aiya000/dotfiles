@@ -63,6 +63,13 @@ When you want to delete files or directories,
 
 `rm-dust` is located in `~/.dotfiles/bash-toys/bin/rm-dust`.
 
+### Alternative commands
+
+When you want to run the following commands, use the alternative commands instead if available:
+
+- `find` → `fd`
+- `grep` → `rg`
+
 ## Conversations
 
 - Use Japanese for conversations with developer
