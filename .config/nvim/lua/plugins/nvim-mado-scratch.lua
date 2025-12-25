@@ -5,10 +5,12 @@ return {
   dependencies = { 'nvim-lua/plenary.nvim' },
   opts = {
     default_file_ext = 'md',
-    default_open_method = { method = 'sp', height = 15 },
-    auto_hide_buffer = {
-      when_tmp_buffer = true,  -- Auto-hide temporary buffers
-      when_file_buffer = true, -- Auto-hide persistent buffers
+    default_open_method = {
+      method = 'float-aspect',
+      scale = {
+        width = 0.8,
+        height = 0.8,
+      },
     },
   },
 }
