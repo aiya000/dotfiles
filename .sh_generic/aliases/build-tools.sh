@@ -13,7 +13,7 @@ function xl::echo () {
   echo "build-tools.sh>> $1"
 }
 
-function xl::define () {
+function xl::load () {
   if i_have stack && [[ -f ./stack.yaml ]] ; then
     alias xb='stack build'
     alias xc='stack clean'
@@ -109,7 +109,7 @@ function xl () {
     pushd "$git_root" > /dev/null || exit 1
   fi
 
-  xl::define
+  xl::load
 
   if [[ $git_root != '' ]] ; then
     popd > /dev/null || exit 1
