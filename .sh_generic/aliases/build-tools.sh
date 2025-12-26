@@ -13,16 +13,6 @@ function xl::echo () {
   echo "build-tools.sh>> $1"
 }
 
-# TODO: 今の実装だとnpm環境とpnpm環境を区別できないので、とりあえずこれを明示的に呼び出す運用にする。直すときに、自動で検知して、xl::defineするだけでいいようにする
-function xl::load-pnpm () {
-  alias xi='pnpm install' && 
-  alias xid='pnpm install --save-dev' && 
-  alias xr='pnpm run' && 
-  alias xb='pnpm run build' && 
-  alias xx=pnpm && 
-  xl::echo 'pnpm loaded.'
-}
-
 function xl::define () {
   if i_have stack && [[ -f ./stack.yaml ]] ; then
     alias xb='stack build'
@@ -47,7 +37,7 @@ function xl::define () {
     alias xr='etlas run'
     alias xx=etlas
     xl::echo 'etlas loaded.'
-  elif i_have bun && [[ -e package.json ]] && [[ -e bun.lockb || -e bun.lock ]] ; then
+  elif i_have bun && [[ -e bun.lockb || -e bun.lock ]] ; then
     function xi () {
       if [[ -z $1 ]] ; then
         bun install
@@ -61,7 +51,7 @@ function xl::define () {
     alias xt='bun run test'
     alias xx=bun
     xl::echo 'bun loaded.'
-  elif i_have yarn && [[ -e package.json ]] && [[ -e yarn.lock ]] ; then
+  elif i_have yarn && [[ -e yarn.lock ]] ; then
     alias xi='yarn add'
     alias xid='yarn add --dev'
     alias xr='yarn run'
@@ -69,7 +59,14 @@ function xl::define () {
     alias xt='yarn test'
     alias xx=yarn
     xl::echo 'yarn loaded.'
-  elif i_have npm && [[ -e package.json ]] ; then
+  elif i_have pnpm && [[ -e pnpm-lock.yaml ]] ; then
+    alias xi='pnpm install'
+    alias xid='pnpm install --save-dev'
+    alias xr='pnpm run'
+    alias xb='pnpm run build'
+    alias xx=pnpm
+    xl::echo 'pnpm loaded.'
+  elif i_have npm && [[ -e package-lock.json ]] ; then
     alias xi='npm install'
     alias xid='npm install --save-dev'
     alias xr='npm run'
