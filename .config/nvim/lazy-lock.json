@@ -46,7 +46,7 @@
   "nvim-just-stay-search": { "branch": "main", "commit": "5ca9325ff5e5c1b565638e6ba0a9c290c49e257f" },
   "nvim-lspconfig": { "branch": "master", "commit": "8973916a3d015d65a8c4614e141f4270a713cf33" },
   "nvim-luasnip-emoji": { "branch": "main", "commit": "602d31c43802628cf5c85e550a103ad4328ebd6c" },
-  "nvim-mado-scratch": { "branch": "main", "commit": "e18de5ffe5499fd29fd5b6ccd0c893092704bcc1" },
+  "nvim-mado-scratch": { "branch": "main", "commit": "484289528799ba6092cdd8e8de916b7d0490b1c9" },
   "nvim-navic": { "branch": "master", "commit": "7d914a39a1ef8f4e22c2c4381abeef7c556f5a13" },
   "nvim-notify": { "branch": "master", "commit": "8701bece920b38ea289b457f902e2ad184131a5d" },
   "nvim-treesitter": { "branch": "master", "commit": "42fc28ba918343ebfd5565147a42a26580579482" },
