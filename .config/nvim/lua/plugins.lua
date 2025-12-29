@@ -68,6 +68,7 @@ return {
       'nvim-telescope/telescope-fzf-native.nvim',
       'nvim-telescope/telescope-github.nvim',
       'gbprod/yanky.nvim',
+      'crispgm/telescope-heading.nvim',
     },
     branch = '0.1.x',
     config = function()
@@ -142,6 +143,7 @@ return {
       require('telescope').load_extension('fzf')
       require('telescope').load_extension('gh')
       require('telescope').load_extension('yank_history')
+      require('telescope').load_extension('heading')
     end,
   },
 
@@ -1845,6 +1847,30 @@ return {
       },
     },
   },
+
+  -- }}}
+  -- telescope-heading.nvim {{{
+
+    {
+      'crispgm/telescope-heading.nvim',
+      config = function()
+        local augroup = vim.api.nvim_create_augroup('InitLuaPluginsTelescopeHeading', { clear = true })
+
+        vim.api.nvim_create_autocmd('FileType', {
+          group = augroup,
+          pattern = { 'markdown', 'help', 'asciidoc' },
+          callback = function()
+            -- Override `'<C-k><C-f>'` keymap in './keymaps.lua'
+            vim.keymap.set('n', '<C-k><C-f>', function()
+              require('telescope').extensions.heading.heading({
+                sorting_strategy = 'ascending',
+                layout_config = { prompt_position = 'bottom' }
+              })
+            end, { buffer = true, silent = true })
+          end,
+        })
+      end,
+    },
 
   -- }}}
 }
