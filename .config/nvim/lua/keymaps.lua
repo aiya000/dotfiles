@@ -270,6 +270,7 @@ map('n', '<leader>Gc', nvim.toggle_gemini_cli)
 -- Options
 map('n', '<C-h><C-w>', '<Cmd>setlocal wrap! wrap?<CR>', { silent = true })
 map('n', '<C-h><C-c>', '<Cmd>setlocal cursorline! cursorline?<CR>', { silent = true })
+map('n', '<C-h>c', '<Cmd>setlocal cursorcolumn! cursorcolumn?<CR>', { silent = true })
 map('n', '<C-h><C-r>', '<Cmd>setlocal relativenumber! relativenumber?<CR>', { silent = true })
 map('n', '<C-h><C-l>', '<Cmd>setlocal list! list?<CR>', { silent = true })
 map('n', '<C-h><C-n>', '<Cmd>setlocal number! number?<CR>', { silent = true })

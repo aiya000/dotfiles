@@ -109,6 +109,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter' }, {
   group = augroup,
   callback = function()
     vim.opt.cursorline = true
+    vim.opt.cursorcolumn = true
   end,
 })
 
@@ -116,6 +117,7 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave' }, {
   group = augroup,
   callback = function()
     vim.opt.cursorline = false
+    vim.opt.cursorcolumn = false
   end,
 })
 
