@@ -216,20 +216,20 @@ end, {
   desc = 'Reload LuaSnip snippets',
 })
 
-vim.api.nvim_create_user_command('RemoveTrailingSpacesWithForce', function(opts)
+create_command('RemoveTrailingSpacesWithForce', function(opts)
   local range = opts.range > 0 and { opts.line1, opts.line2 } or nil
   nvim.remove_trailing_spaces(true, range)
 end, { range = true })
 
-vim.api.nvim_create_user_command(
+create_command(
   'FormatTaskReport',
   [[silent '<,'>s/^\(\s*\)-/\1・/ | silent '<,'>s/  /　/g]],
   { range = true }
 )
 
-vim.api.nvim_create_user_command(
+create_command(
   'FormatExportToVimEnv',
-  "silent '<,'>s/^export /vim.env./ | silent <,'>s/\r$//",
+  "silent '<,'>s/^export /vim.env./ | silent <,'>s/\n$//",
   { range = true }
 )
 
