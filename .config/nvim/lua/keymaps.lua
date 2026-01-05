@@ -474,6 +474,9 @@ map('i', '<C-s>', function()
   snip.expand_or_jump()
 end, { silent = true })
 
+-- File Manupilation
+map('v', '<leader>B', '"zy<Cmd>MadoScratchOpenFileNext md<CR>V"zpgg=Ggg<Cmd>write<CR>', { silent = true })
+
 -- }}}
 -- select mode {{{
 
