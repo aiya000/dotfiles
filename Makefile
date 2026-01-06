@@ -517,6 +517,13 @@ install-shellcheck:
 install-jq:
 	which jq || $(BrewInstall) jq
 
+# Required by Raycast OCR extension (Easy OCR)
+install-tesseract:
+	which tesseract || $(BrewInstall) tesseract
+	if [[ $(tesseract --list-langs | rg jpn | wc -l | sed 's/ //g') == 0 ]] ; then \
+		$(BrewInstall) tesseract-lang ; \
+	fi
+
 endif # }}}
 ifeq ($(WSL2),yes) # {{{
 
