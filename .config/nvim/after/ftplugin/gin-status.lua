@@ -135,8 +135,8 @@ vim.keymap.set('n', 'cC', open_claude_commit_float_window, { buffer = true, sile
 vim.keymap.set('n', 'B', '<Cmd>GinBranch<CR>', { buffer = true, silent = true })
 vim.keymap.set('n', 'C', ':<C-u>Gin switch --create<Space>', { remap = true, buffer = true })
 vim.keymap.set('n', 'cf', ':<C-u>GitCommitFixup<Space>', { remap = true, buffer = true })
-vim.keymap.set('n', '<:', '<Plug>(gin-action-restore:ours)', { buffer = true })
-vim.keymap.set('n', '>:', '<Plug>(gin-action-restore:theirs)', { buffer = true })
+vim.keymap.set({ 'n', 'v' }, '<:', '<Plug>(gin-action-restore:ours)', { buffer = true })
+vim.keymap.set({ 'n', 'v' }, '>:', '<Plug>(gin-action-restore:theirs)', { buffer = true })
 vim.keymap.set('n', '==', '<Plug>(gin-action-reset)', { buffer = true })
 vim.keymap.set('n', 'D', delete_this_file, { buffer = true })
 vim.keymap.set('n', '<C-g>', ':<C-u>!git<Space>', { nowait = true, remap = true, buffer = true, silent = true }) -- remap to open cmdpalette
