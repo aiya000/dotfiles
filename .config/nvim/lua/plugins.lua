@@ -155,7 +155,7 @@ return {
     'kevinhwang91/nvim-hlslens',
     config = function()
       require('hlslens').setup({
-        calm_down = true,
+        calm_down = false,
         nearest_only = true,
         override_lens = function(render, posList, nearest, idx, relIdx)
           local sfw = vim.v.searchforward == 1
@@ -1479,6 +1479,13 @@ return {
           },
           duration_multiplier = 0.25,
           performance_mode = true,
+          post_hook = function()
+            -- Trigger hlslens to show search highlights after scrolling
+            local ok, hlslens = pcall(require, 'hlslens')
+            if ok then
+              hlslens.start()
+            end
+          end,
         })
 
         local keymaps_opts = {
@@ -1837,7 +1844,10 @@ return {
       'nvim-treesitter/nvim-treesitter',
       'nvim-tree/nvim-web-devicons',
     },
-    opts = {}, ---@type render.md.UserConfig
+    ft = 'markdown', -- Load on markdown files
+    opts = {
+      enabled = true, -- Enable rendering by default
+    }, ---@type render.md.UserConfig
     keys = {
       {
         '<C-h>r',
