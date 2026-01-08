@@ -223,7 +223,60 @@ end, { range = true })
 
 create_command(
   'FormatTaskReport',
-  [[silent '<,'>s/^\(\s*\)-/\1・/ | silent '<,'>s/  /　/g]],
+  -- TODO: Refactor
+  function(opts)
+    for line_num = opts.line1, opts.line2 do
+      vim.cmd(string.format("silent! %ds/^\\(\\s*\\)-/\\1・/", line_num))
+      vim.cmd(string.format("silent! %ds/  /　/g", line_num))
+
+      local line = vim.fn.getline(line_num)
+      local result = {}
+      local i = 1
+
+      while i <= #line do
+        local char = line:sub(i, i)
+
+        -- surround_backquotes_with_spaces
+        if char == '`' then
+          -- Open backtick
+          local backtick_start = i
+          local backtick_end = nil
+          for j = i + 1, #line do
+            if line:sub(j, j) == '`' then
+              backtick_end = j
+              break
+            end
+          end
+
+          -- Close backtick
+          if backtick_end then
+            local backtick_content = line:sub(backtick_start, backtick_end)
+            if #result > 0 and not result[#result]:match('%s$') then
+              table.insert(result, ' ')
+            end
+            table.insert(result, backtick_content)
+
+            if backtick_end < #line then
+              local next_char = line:sub(backtick_end + 1, backtick_end + 1)
+              if not next_char:match('^%s') then
+                table.insert(result, ' ')
+              end
+            end
+
+            i = backtick_end + 1
+          else
+            table.insert(result, char)
+            i = i + 1
+          end
+        else
+          table.insert(result, char)
+          i = i + 1
+        end
+      end
+
+      vim.fn.setline(line_num, table.concat(result))
+    end
+  end,
   { range = true }
 )
 
