@@ -223,12 +223,16 @@ end, { range = true })
 
 create_command(
   'FormatTaskReport',
-  -- TODO: Refactor
   function(opts)
     for line_num = opts.line1, opts.line2 do
-      vim.cmd(string.format("silent! %ds/^\\(\\s*\\)-/\\1・/", line_num))
-      vim.cmd(string.format("silent! %ds/  /　/g", line_num))
+      -- Format list notation to human readable
+      vim.cmd(([[silent! %ds/^\(\s*\)- \[ \]/\1- ⬜︎/]]):format(line_num))
+      vim.cmd(([[silent! %ds/^\(\s*\)- \[x\]/\1- ☑︎/]]):format(line_num))
+      vim.cmd(([[silent! %ds/^\(\s*\)-/\1・/]]):format(line_num))
+      -- Decrease heading level
+      vim.cmd(([[silent! %ds/^####/#/]]):format(line_num))
 
+      -- TODO: Refactor
       local line = vim.fn.getline(line_num)
       local result = {}
       local i = 1
