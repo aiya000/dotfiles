@@ -72,7 +72,8 @@ vim.api.nvim_create_autocmd({ 'TextChanged', 'TextChangedI' }, {
 vim.api.nvim_create_autocmd({'VimEnter', 'ColorScheme'}, {
   group = augroup,
   callback = function()
-    vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#313244' })
+    vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#585b70' })
+    vim.api.nvim_set_hl(0, 'CursorColumn', { bg = '#585b70', bold = true })
     vim.api.nvim_set_hl(0, 'TrailingSpace', { ctermbg = 'Red', bg = '#F38BA8' })
 
     vim.api.nvim_set_hl(0, 'EmSpace', { ctermbg = 'LightBlue', bg = '#89B4FA' })
