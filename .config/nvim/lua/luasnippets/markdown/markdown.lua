@@ -17,6 +17,9 @@ return list.concat(
     s('barr', t('- - - - -')),
   },
 
+  sm({ 'check_', 'ch_' }, t('[ ]')),
+  sm({ 'checked_', 'ch__' }, t('[x]')),
+
   sm(
     { 'block', 'bl' },
     fmt([[
