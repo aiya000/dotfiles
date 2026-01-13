@@ -226,8 +226,8 @@ create_command(
   function(opts)
     for line_num = opts.line1, opts.line2 do
       -- Format list notation to human readable
-      vim.cmd(([[silent! %ds/^\(\s*\)- \[ \]/\1- ⬜︎/]]):format(line_num))
-      vim.cmd(([[silent! %ds/^\(\s*\)- \[x\]/\1- ☑︎/]]):format(line_num))
+      vim.cmd(([[silent! %ds/^\(\s*\)- \[ \]/\1⬜/]]):format(line_num))
+      vim.cmd(([[silent! %ds/^\(\s*\)- \[x\]/\1☑️/]]):format(line_num))
       vim.cmd(([[silent! %ds/^\(\s*\)-/\1・/]]):format(line_num))
       -- Decrease heading level
       vim.cmd(([[silent! %ds/^####/#/]]):format(line_num))
