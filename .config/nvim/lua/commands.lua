@@ -229,6 +229,8 @@ create_command(
       vim.cmd(([[silent! %ds/^\(\s*\)- \[ \]/\1⬜/]]):format(line_num))
       vim.cmd(([[silent! %ds/^\(\s*\)- \[x\]/\1☑️/]]):format(line_num))
       vim.cmd(([[silent! %ds/^\(\s*\)-/\1・/]]):format(line_num))
+      vim.cmd(([[silent! %ds/\`\[x\]\`/☑️/g]]):format(line_num))
+      vim.cmd(([[silent! %ds/\`\[ \]\`/⬜/g]]):format(line_num))
       -- Decrease heading level
       vim.cmd(([[silent! %ds/^####/#/]]):format(line_num))
 
