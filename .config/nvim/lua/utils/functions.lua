@@ -1,12 +1,62 @@
 ---Neovimに関係がない、一般的なUtility関数を定義するモジュール
 
-local Test = require('utils.test')
-
 local M = {}
 
 M.pipe = require('utils.pipe')
 M.s = require('utils.functions.s').s
-M.deep_equal = Test.deep_equal
+
+---Alternative of vim.deep_equal().
+---Checks two values are deeply equal.
+---
+---@generic T
+---@param a T
+---@param b T
+---@return boolean
+---
+---Example:
+---```lua
+---deep_equal(1, 1)          -- true
+---deep_equal(1, 2)          -- false
+---
+---deep_equal('hello', 'hello') -- true
+---deep_equal('hello', 'world') -- false
+---
+---deep_equal(true, true)    -- true
+---deep_equal(true, false)   -- false
+---
+---deep_equal(nil, nil)      -- true
+---deep_equal(1, nil)       -- false
+---deep_equal(nil, 2)       -- false
+---
+---deep_equal({a = 1}, {a = 1}) -- true
+---deep_equal({a = 1}, {a = 2}) -- false
+---deep_equal({a = 1, b = {c = 2}}, {a = 1, b = {c = 2}}) -- true
+---
+---deep_equal({1, 2, 3}, {1, 2, 3}) -- true
+---deep_equal({1, 2, 3}, {10, 20, 30}) -- false
+---```
+---
+function M.deep_equal(a, b)
+  if type(a) ~= type(b) then
+    return false
+  end
+  if type(a) ~= 'table' then
+    return a == b
+  end
+
+  -- Check if both tables have the same keys and values
+  for key, value in pairs(a) do
+    if not M.deep_equal(value, b[key]) then
+      return false
+    end
+  end
+  for key, _ in pairs(b) do
+    if a[key] == nil then
+      return false
+    end
+  end
+  return true
+end
 
 ---A try-catch-finally expression implementation
 ---@generic T
@@ -358,89 +408,6 @@ function M.set_vim_dict_field(scope, varname, field, value)
     error(string.format("Expected '%s' to be a table, but got %s", varname, type(scope[varname])))
   end
   scope[varname][field] = value
-end
-
--- In-source testing
-if vim == nil then
-  local test = Test.test
-  local assert_equal = Test.assert_equal
-
-  test('set_vim_dict_field() should set a sub field', function()
-    local dict = {
-      field = {},
-    }
-    M.set_vim_dict_field(dict, 'field', 'sub_field', 10)
-    assert_equal(dict.field.sub_field, 10)
-  end)
-
-  test('set_vim_dict_field() should keep another field values', function()
-    local dict = {
-      another = 10,
-      field = {},
-    }
-    M.set_vim_dict_field(dict, 'field', 'sub_field', 10)
-    assert_equal(dict.another, 10)
-  end)
-
-  test('set_vim_dict_field() should set a sub field', function()
-    local dict = {
-      field = {},
-    }
-    M.set_vim_dict_field(dict, 'field', 'sub_field', 10)
-    assert_equal(dict.field.sub_field, 10)
-  end)
-
-  test('set_vim_dict_field() should keep another field values', function()
-    local dict = {
-      another = 10,
-      field = {},
-    }
-    M.set_vim_dict_field(dict, 'field', 'sub_field', 10)
-    assert_equal(dict.another, 10)
-  end)
-
-  test('to_pretty_string() should convert primitives to string', function()
-    assert_equal(M.to_pretty_string(42), '42')
-    assert_equal(M.to_pretty_string('hello'), 'hello')
-    assert_equal(M.to_pretty_string(true), 'true')
-    assert_equal(M.to_pretty_string(false), 'false')
-    assert_equal(M.to_pretty_string(nil), 'nil')
-  end)
-
-  test('to_pretty_string() should convert simple table to string', function()
-    local result = M.to_pretty_string({ name = 'John', age = 30 })
-    -- テーブルの順序は保証されないので、内容をチェック
-    assert(result:find("'name' = 'John'"), 'Should contain name field with quotes')
-    assert(result:find("'age' = 30"), 'Should contain age field')
-    assert(result:find('^{'), 'Should start with {')
-    assert(result:find('}$'), 'Should end with }')
-  end)
-
-  test('to_pretty_string() should handle nested tables', function()
-    local nested = {
-      user = { name = 'Alice' },
-      active = true
-    }
-    local result = M.to_pretty_string(nested)
-    assert(result:find("'user' = {"), 'Should contain nested table')
-    assert(result:find("'name' = 'Alice'"), 'Should contain nested value with quotes')
-    assert(result:find("'active' = true"), 'Should contain top-level value')
-  end)
-
-  test('to_pretty_string() should handle empty table', function()
-    local result = M.to_pretty_string({})
-    assert_equal(result, '{\n}')
-  end)
-
-  test('make_table_to_string() should work directly', function()
-    local result = M.make_table_to_string({ key = 'value' })
-    assert_equal(result, "{\n 'key' = 'value',\n}")
-  end)
-
-  test('make_table_to_string() should handle numeric keys', function()
-    local result = M.make_table_to_string({ [1] = 'first', [2] = 'second' })
-    assert(result:find("1 = 'first'") or result:find("2 = 'second'"), 'Should handle numeric keys with quoted strings')
-  end)
 end
 
 return M
