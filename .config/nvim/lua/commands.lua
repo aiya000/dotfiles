@@ -231,6 +231,9 @@ create_command(
       vim.cmd(([[silent! %ds/^\(\s*\)-/\1・/]]):format(line_num))
       vim.cmd(([[silent! %ds/\`\[x\]\`/☑️/g]]):format(line_num))
       vim.cmd(([[silent! %ds/\`\[ \]\`/⬜/g]]):format(line_num))
+      -- Adjust to Slack's notation
+      vim.cmd(([[silent! %ds/\~\~/\~/g]]):format(line_num))
+      vim.cmd(([[silent! %ds/\*\*/*/g]]):format(line_num))
       -- Decrease heading level
       vim.cmd(([[silent! %ds/^####/#/]]):format(line_num))
 
@@ -282,6 +285,10 @@ create_command(
 
       vim.fn.setline(line_num, table.concat(result))
     end
+
+    -- Set '[ and '] marks to the range that was changed
+    vim.fn.setpos("'[", { 0, opts.line1, 1, 0 })
+    vim.fn.setpos("']", { 0, opts.line2, vim.fn.col({ opts.line2, '$' }) - 1, 0 })
   end,
   { range = true }
 )
