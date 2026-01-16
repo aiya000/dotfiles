@@ -222,7 +222,7 @@ create_command('RemoveTrailingSpacesWithForce', function(opts)
 end, { range = true })
 
 create_command(
-  'FormatTaskReport',
+  'FormatMarkdownToSlack',
   function(opts)
     for line_num = opts.line1, opts.line2 do
       -- Format list notation to human readable
@@ -236,6 +236,8 @@ create_command(
       vim.cmd(([[silent! %ds/\*\*/*/g]]):format(line_num))
       -- Decrease heading level
       vim.cmd(([[silent! %ds/^####/#/]]):format(line_num))
+      -- Readability
+      vim.cmd(([[silent! %ds/  /　/g]]):format(line_num))
 
       -- TODO: Refactor
       local line = vim.fn.getline(line_num)
