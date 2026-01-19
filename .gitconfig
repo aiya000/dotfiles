@@ -1,8 +1,10 @@
 [user]
 	name = aiya000
 	email = aiya000.develop@gmail.com
+[mergetool "neovimdiff"]
+	cmd = nvim -d $LOCAL $MERGED $REMOTE -c 'wincmd h' -c 'wincmd l'
 [merge]
-	tool = vimdiff
+	tool = neovimdiff
 [github]
 	user = aiya000
 [include]
