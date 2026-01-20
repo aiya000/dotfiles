@@ -228,9 +228,7 @@ create_command(
       -- Format list notation to human readable
       vim.cmd(([[silent! %ds/^\(\s*\)- \[ \]/\1⬜/]]):format(line_num))
       vim.cmd(([[silent! %ds/^\(\s*\)- \[x\]/\1☑️/]]):format(line_num))
-      vim.cmd(([[silent! %ds/^\(\s*\)-/\1・/]]):format(line_num))
-      vim.cmd(([[silent! %ds/\`\[x\]\`/☑️/g]]):format(line_num))
-      vim.cmd(([[silent! %ds/\`\[ \]\`/⬜/g]]):format(line_num))
+      vim.cmd(([[silent! %ds/^\(\s*\)- /\1・/]]):format(line_num))
       -- Adjust to Slack's notation
       vim.cmd(([[silent! %ds/\~\~/\~/g]]):format(line_num))
       vim.cmd(([[silent! %ds/\*\*/*/g]]):format(line_num))
@@ -294,6 +292,11 @@ create_command(
   end,
   { range = true }
 )
+
+create_command('FormatMarkdownForReport', function(opts)
+  vim.cmd(([[%s,%sFormatMarkdownToSlack]]):format(opts.line1, opts.line2))
+  vim.cmd(([[%s,%ss/^#\+ //]]):format(opts.line1, opts.line2))
+end, { range = true })
 
 create_command(
   'FormatExportToVimEnv',
