@@ -15,3 +15,6 @@ vim.diagnostic.config({
     prefix = '',
   },
 })
+
+require('lspconfig.lua_ls')
+require('lspconfig.ts_ls')
