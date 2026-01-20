@@ -524,6 +524,14 @@ install-tesseract:
 		$(BrewInstall) tesseract-lang ; \
 	fi
 
+# Required by notify-at and notify-cascade
+install-alerter:
+	cd ~/bin && \
+	wget https://github.com/vjeantet/alerter/releases/download/1.0.0/alerter_v1.0.0_darwin_amd64.zip && \
+	unzip alerter_v1.0.0_darwin_amd64.zip && \
+	which alerter && \
+	rm-dust alerter_v1.0.0_darwin_amd64.zip
+
 endif # }}}
 ifeq ($(WSL2),yes) # {{{
 
