@@ -202,37 +202,6 @@ return {
     end,
   },
   -- }}}
-  -- nvim-lspconfig {{{
-
-  {
-    'neovim/nvim-lspconfig',
-    enabled = not InitLua.recording_mode,
-    dependencies = {
-      'SmiteshP/nvim-navic',
-      'rcarriga/nvim-notify',
-    },
-    config = function()
-      -- unused functionがグレー化されるのを無効化
-      vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', { fg = 'NONE', bg = 'NONE' })
-
-      -- 診断表示の設定
-      vim.diagnostic.config({
-        virtual_text = true, -- 行末に診断テキストを表示
-        signs = true, -- サインカラムに表示
-        underline = false, -- 下線表示を無効化
-        update_in_insert = false, -- インサートモード中は更新しない
-        severity_sort = true, -- 重要度でソート
-        float = {
-          border = 'rounded',
-          source = 'always',
-          header = '',
-          prefix = '',
-        },
-      })
-    end,
-  },
-
-  -- }}}
   -- mason.nvim {{{
 
   {
@@ -241,29 +210,6 @@ return {
       require('mason').setup({
         ui = {
           border = 'rounded',
-        },
-      })
-    end,
-  },
-
-  -- }}}
-  -- mason-lspconfig.nvim {{{
-
-  {
-    'williamboman/mason-lspconfig.nvim',
-    dependencies = {
-      'williamboman/mason.nvim',
-      'neovim/nvim-lspconfig',
-    },
-    config = function()
-      require('mason-lspconfig').setup({
-        ensure_installed = { 'lua_ls', 'ts_ls', 'marksman' },
-        automatic_installation = true,
-        handlers = {
-          -- デフォルトハンドラー（自動セットアップを無効にして重複を防ぐ）
-          function(_)
-            -- 何もしない（nvim-lspconfigで手動設定しているため）
-          end,
         },
       })
     end,
@@ -1441,13 +1387,6 @@ return {
   -- incline.nvim {{{
 
   -- See `./plugins/incline-nvim.lua`
-
-  -- }}}
-  -- nvim-navic {{{
-
-  {
-    'SmiteshP/nvim-navic',
-  },
 
   -- }}}
   -- nvim-luasnip-emoji {{{

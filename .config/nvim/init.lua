@@ -225,6 +225,7 @@ end
 require('lazy-nvim-config')
 require('autocmds')
 require('plugins')
+require('lspconfig')
 require('keymaps')
 require('commands') -- Due to `Require('commands')`, 'commands' module put here instead of `./plugins/commands.lua`
 require('color-presets')
