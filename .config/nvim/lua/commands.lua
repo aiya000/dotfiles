@@ -153,6 +153,93 @@ create_command('ScdNodeRoot', function()
 end)
 
 -- }}}
+-- lsp utils {{{
+
+-- TODO: インストール済みのlspをちゃんと取得する
+local available_lsp_names = { 'lua_ls', 'ts_ls', 'vue_ls', 'denols' }
+
+local function find_running_lsp_client_names()
+  return vim.iter(vim.lsp.get_clients())
+    :map(function(client)
+      return client.name
+    end)
+    :totable()
+end
+
+create_command('LspStop', function(opts)
+  local name = opts.args
+  if name == '' then
+    vim.notify('Usage: :LspStop <lsp_name>', vim.log.levels.ERROR)
+    return
+  end
+
+  local clients = vim.lsp.get_clients({ name = name })
+  if #clients == 0 then
+    vim.notify(('[LspStop] %s is not running'):format(name), vim.log.levels.WARN)
+    return
+  end
+
+  for _, client in ipairs(clients) do
+    client:stop()
+  end
+
+  vim.notify(('[LspStop] Stopped %s'):format(name), vim.log.levels.INFO)
+end, {
+  nargs = 1,
+  complete = find_running_lsp_client_names,
+})
+
+create_command('LspStart', function(opts)
+  local name = opts.args
+  if name == '' then
+    vim.notify('Usage: :LspStart <lsp_name>', vim.log.levels.ERROR)
+    return
+  end
+
+  -- 既に起動しているかチェック
+  local clients = vim.lsp.get_clients({ name = name, bufnr = 0 })
+  if #clients > 0 then
+    vim.notify(('[LspStart] %s is already running'):format(name), vim.log.levels.WARN)
+    return
+  end
+
+  -- vim.lsp.enable()で有効化し、現在のバッファにアタッチ
+  vim.lsp.enable(name, true)
+
+  -- 現在のバッファのFileTypeイベントを再発火してLSPをアタッチ
+  vim.cmd('doautocmd FileType ' .. vim.bo.filetype)
+  vim.notify(('[LspStart] Started %s'):format(name), vim.log.levels.INFO)
+end, {
+  nargs = 1,
+  complete = function()
+    return available_lsp_names
+  end,
+})
+
+create_command('LspRestart', function(opts)
+  local name = opts.args
+  if name == '' then
+    vim.notify('Usage: :LspRestart <lsp_name>', vim.log.levels.ERROR)
+    return
+  end
+
+  local clients = vim.lsp.get_clients({ name = name })
+  for _, client in ipairs(clients) do
+    client:stop()
+  end
+
+  -- 少し待ってから起動（クライアントが完全に停止するのを待つ）
+  vim.defer_fn(function()
+    vim.lsp.enable(name, true)
+    vim.cmd('doautocmd FileType ' .. vim.bo.filetype)
+    vim.notify(('[LspRestart] Restarted %s'):format(name), vim.log.levels.INFO)
+  end, 100)
+end, {
+  nargs = 1,
+  complete = find_running_lsp_client_names,
+})
+
+-- }}}
 -- Others {{{
 
 create_command('CClear', function()
