@@ -18,29 +18,25 @@ vim.diagnostic.config({
 
 local augroup = vim.api.nvim_create_augroup('InitLuaLspconfig', { clear = true })
 
-vim.api.nvim_create_autocmd('FileType', {
-  group = augroup,
-  pattern = { 'lua' },
-  once = true,
-  callback = function()
-    require('lspconfig.lua_ls')
-  end,
-})
+---@param filetypes string[]
+---@param module_name string
+---@param p? fun(): boolean
+local function require_lsp_when_filetype(filetypes, module_name, p)
+  vim.api.nvim_create_autocmd('FileType', {
+    group = augroup,
+    pattern = filetypes,
+    once = true,
+    callback = function()
+      if p == nil or p() then
+        require(module_name)
+      end
+    end,
+  })
+end
 
-vim.api.nvim_create_autocmd('FileType', {
-  group = augroup,
-  pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
-  once = true,
-  callback = function()
-    require('lspconfig.ts_ls')
-  end,
-})
-
-vim.api.nvim_create_autocmd('FileType', {
-  group = augroup,
-  pattern = { 'vue' },
-  once = true,
-  callback = function()
-    require('lspconfig.vue_ls')
-  end,
-})
+require_lsp_when_filetype({ 'lua' }, 'lspconfig.lua_ls')
+require_lsp_when_filetype(
+  { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
+  'lspconfig.ts_ls'
+)
+require_lsp_when_filetype({ 'vue' }, 'lspconfig.vue_ls')
