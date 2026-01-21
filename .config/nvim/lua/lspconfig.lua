@@ -16,6 +16,31 @@ vim.diagnostic.config({
   },
 })
 
-require('lspconfig.lua_ls')
-require('lspconfig.ts_ls')
-require('lspconfig.vue_ls')
+local augroup = vim.api.nvim_create_augroup('InitLuaLspconfig', { clear = true })
+
+vim.api.nvim_create_autocmd('FileType', {
+  group = augroup,
+  pattern = { 'lua' },
+  once = true,
+  callback = function()
+    require('lspconfig.lua_ls')
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  group = augroup,
+  pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
+  once = true,
+  callback = function()
+    require('lspconfig.ts_ls')
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  group = augroup,
+  pattern = { 'vue' },
+  once = true,
+  callback = function()
+    require('lspconfig.vue_ls')
+  end,
+})
