@@ -18,3 +18,4 @@ vim.diagnostic.config({
 
 require('lspconfig.lua_ls')
 require('lspconfig.ts_ls')
+require('lspconfig.vue_ls')
