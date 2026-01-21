@@ -39,4 +39,11 @@ require_lsp_when_filetype(
   { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
   'lspconfig.ts_ls'
 )
+require_lsp_when_filetype(
+  { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+  'lspconfig.deno_ls',
+  function()
+    return vim.fs.root(0, { 'deno.json', 'deno.jsonc' }) ~= nil
+  end
+)
 require_lsp_when_filetype({ 'vue' }, 'lspconfig.vue_ls')
