@@ -188,6 +188,9 @@ install-vhs:
 install-ffmpeg:
 	which ffmpeg || $(BrewInstall) ffmpeg
 
+install-ccstatusline:
+	which ccstatusline || $(NPMInstall) ccstatusline@latest
+
 # }}}
 ifeq ($(OS),Arch) # {{{
 
