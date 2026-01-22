@@ -23,6 +23,11 @@ return {
       group = augroup,
       pattern = 'MadoScratchBufferOpened',
       callback = function()
+        -- Float windows defaults to nonumber and norelativenumber, so enable them here
+        vim.opt.number = true
+        vim.opt.relativenumber = true
+
+        -- Avoid accidental exits
         nvim.keymaps_set('n', nvim.escaping_keys, '<Nop>', { buffer = true })
         nvim.keymaps_set('n', { '<C-l><C-l>', '<Esc><Esc>', '<C-[><C-[>' }, '<Cmd>q<CR>', { buffer = true })
       end,
@@ -32,7 +37,7 @@ return {
       group = augroup,
       pattern = 'MadoScratchBufferPreClosed',
       callback = function()
-        vim.cmd.write()
+        vim.cmd.write({ bang = true })
       end,
     })
   end,
