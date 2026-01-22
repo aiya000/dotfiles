@@ -1,0 +1,93 @@
+{
+  "version": 3,
+  "lines": [
+    [
+      {
+        "id": "45eb6852-d5ba-4722-938f-acb07ae5cbce",
+        "type": "block-timer"
+      },
+      {
+        "id": "9bfcea12-ca92-4836-b8c1-863e87b94b27",
+        "type": "separator"
+      },
+      {
+        "id": "fd7b6fd0-a933-48ef-ab10-fd60f141a458",
+        "type": "session-clock"
+      },
+      {
+        "id": "2790439c-8af2-4591-b369-f257b0606e02",
+        "type": "session-cost"
+      },
+      {
+        "id": "4ef53b8c-82bb-4e0b-9c2b-eeca472bda91",
+        "type": "separator"
+      },
+      {
+        "id": "29f6c1b4-9b59-4679-a802-74ddc99703b7",
+        "type": "context-percentage"
+      },
+      {
+        "id": "7d6dbbab-57df-4c1d-ad74-e940889c37f9",
+        "type": "context-percentage-usable"
+      },
+      {
+        "id": "3",
+        "type": "context-length",
+        "color": "brightBlack"
+      },
+      {
+        "id": "f93d2308-0eb6-4029-be9d-7b663702c04a",
+        "type": "separator"
+      },
+      {
+        "id": "37f6dd84-49b3-490a-a42d-13644561f524",
+        "type": "tokens-input"
+      },
+      {
+        "id": "b61f246c-ce22-42b0-b8f2-07f99f6b7485",
+        "type": "tokens-output"
+      },
+      {
+        "id": "8fc0ba7e-a2ac-46ac-9199-7bd60c879f63",
+        "type": "tokens-cached"
+      },
+      {
+        "id": "c1ac8465-e20e-491e-bcb1-0d9a86578b69",
+        "type": "tokens-total"
+      },
+      {
+        "id": "f7e79131-9add-4798-a4b1-8a34b89aa210",
+        "type": "separator"
+      },
+      {
+        "id": "52904565-a517-4ed5-b6b4-ee285dba7b3e",
+        "type": "claude-session-id"
+      }
+    ],
+    [],
+    []
+  ],
+  "flexMode": "full-minus-40",
+  "compactThreshold": 60,
+  "colorLevel": 2,
+  "defaultPadding": " ",
+  "inheritSeparatorColors": false,
+  "globalBold": false,
+  "powerline": {
+    "enabled": false,
+    "separators": [
+      ""
+    ],
+    "separatorInvertBackground": [
+      true
+    ],
+    "startCaps": [
+      ""
+    ],
+    "endCaps": [
+      ""
+    ],
+    "theme": "nord",
+    "autoAlign": false
+  }
+}
