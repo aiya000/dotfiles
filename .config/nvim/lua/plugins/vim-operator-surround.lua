@@ -5,16 +5,16 @@ return {
   dependencies = { 'kana/vim-operator-user' },
   init = function()
     -- Basic symbols excluding brackets () [] {} and ` for unique mappings
-    local common_symbol_blocks =
-      vim.iter(list.concat(list.char_range('!', "'"), { '*', '&', '_', '|', '~', ':', '/' }))
-        :map(function(sym)
-          return {
-            block = { sym, sym },
-            motionwise = { 'char', 'line', 'block' },
-            keys = { sym },
-          }
-        end)
-        :totable()
+    local common_symbol_blocks = vim
+      .iter(list.concat(list.char_range('!', "'"), { '*', '&', '_', '|', '~', ':', '/' }))
+      :map(function(sym)
+        return {
+          block = { sym, sym },
+          motionwise = { 'char', 'line', 'block' },
+          keys = { sym },
+        }
+      end)
+      :totable()
     local common_blocks = list.concat(common_symbol_blocks, {
       -- English
       { block = { '(', ')' }, motionwise = { 'char', 'line', 'block' }, keys = { '(', ')', 'p' } },

@@ -44,9 +44,11 @@ end
 ---@return string | nil --非同期実行がされる場合、必ずnil。同期実行の場合、git-root（成功時）またはnil（エラー時）
 function M.read_git_root(on_succeed, on_failed)
   if on_succeed == nil and on_failed == nil then
-    local result = vim.system({ 'git', 'rev-parse', '--show-toplevel' }, {
-      text = true,
-    }):wait()
+    local result = vim
+      .system({ 'git', 'rev-parse', '--show-toplevel' }, {
+        text = true,
+      })
+      :wait()
 
     if result.code == 0 then
       return parse_git_root(fn.trim(result.stdout), fn.trim(result.stderr))

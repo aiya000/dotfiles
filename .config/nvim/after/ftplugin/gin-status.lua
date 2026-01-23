@@ -82,7 +82,7 @@ local function open_claude_commit_float_window()
     close_on_exit = false,
     on_exit = function()
       vim.notify('Claude commit process exited.', vim.log.levels.INFO)
-      claude_commit_terminal = nil  -- Reset the terminal variable
+      claude_commit_terminal = nil -- Reset the terminal variable
     end,
   })
   claude_commit_terminal:toggle() -- Show
@@ -102,11 +102,8 @@ local function delete_this_file()
   --   'Delete this file?: ' .. filepath .. ' (y/n): ',
   --   { only_a_char = true }
   -- )
-  local answer = nvim.confirm(
-    'Delete this file?: ' .. filepath .. ' (y/n): ',
-    nvim.hl_groups.Question,
-    { only_a_char = true }
-  )
+  local answer =
+    nvim.confirm('Delete this file?: ' .. filepath .. ' (y/n): ', nvim.hl_groups.Question, { only_a_char = true })
   if answer ~= 'y' then
     return
   end

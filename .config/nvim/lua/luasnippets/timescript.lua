@@ -14,17 +14,20 @@ vim.list_extend(
   snippets,
   sm(
     { 'function', 'func', 'fun' },
-    fmt([[
+    fmt(
+      [[
       function {}({}): {}
           {}
       endfunction
-    ]], {
-      i(1, 'name'),
-      i(2, '#:args'),
-      i(3, 'Type'),
-      i(4, ''),
-    }
-  ))
+    ]],
+      {
+        i(1, 'name'),
+        i(2, '#:args'),
+        i(3, 'Type'),
+        i(4, ''),
+      }
+    )
+  )
 )
 
 return {

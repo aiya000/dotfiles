@@ -318,7 +318,6 @@ if vim == nil then
     assert_equal(M.is_array({}), true)
     assert_equal(M.is_array({ a = 1, b = 2 }), false)
 
-
     -- Below should be type error
     assert_equal(M.is_array(10), false)
     assert_equal(M.is_array(nil), false)

@@ -4,10 +4,7 @@ local vue_typescript_plugin_path = vim.fn.expand(
 )
 
 if not vim.uv.fs_stat(vue_typescript_plugin_path) then
-  vim.notify(
-    ('[ts_ls] @vue/typescript-plugin not found: %s'):format(vue_typescript_plugin_path),
-    vim.log.levels.WARN
-  )
+  vim.notify(('[ts_ls] @vue/typescript-plugin not found: %s'):format(vue_typescript_plugin_path), vim.log.levels.WARN)
 end
 
 vim.lsp.config('ts_ls', {

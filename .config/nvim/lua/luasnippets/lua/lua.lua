@@ -82,54 +82,66 @@ return list.concat(
   {
     s(
       'while',
-      fmt([[
+      fmt(
+        [[
         while {condition} do
           {}
         end
-      ]], {
-        condition = i(1, 'condition'),
-        i(2, ''),
-      })
+      ]],
+        {
+          condition = i(1, 'condition'),
+          i(2, ''),
+        }
+      )
     ),
   },
 
   sm(
     { 'function', 'fun' },
-    fmt([[
+    fmt(
+      [[
       function {f}({})
         {}
       end
-    ]], {
-      f = i(1, 'f'),
-      i(2, ''),
-      i(3, ''),
-    })
+    ]],
+      {
+        f = i(1, 'f'),
+        i(2, ''),
+        i(3, ''),
+      }
+    )
   ),
 
   sm(
     { 'local_function', 'lfun' },
-    fmt([[
+    fmt(
+      [[
       local function {f}({})
         {}
       end
-    ]], {
-      f = i(1, 'f'),
-      i(2, ''),
-      i(3, ''),
-    })
+    ]],
+      {
+        f = i(1, 'f'),
+        i(2, ''),
+        i(3, ''),
+      }
+    )
   ),
 
   sm(
     { 'function_in_module', 'mfun' },
-    fmt([[
+    fmt(
+      [[
       function M.{f}({})
         {}
       end
-    ]], {
-      f = i(1, 'f'),
-      i(2, ''),
-      i(3, ''),
-    })
+    ]],
+      {
+        f = i(1, 'f'),
+        i(2, ''),
+        i(3, ''),
+      }
+    )
   ),
 
   sm(
@@ -149,13 +161,16 @@ return list.concat(
 
   sm(
     { 'multi_line_comment', 'comment', 'com' },
-    fmt(([[
+    fmt(
+      ([[
       --%s
       {}
       --%s
-    ]]):format('[[', ']]'), {
-      i(1, ''),
-    })
+    ]]):format('[[', ']]'),
+      {
+        i(1, ''),
+      }
+    )
   ),
 
   {

@@ -69,16 +69,16 @@ return {
             after = { 0, 0 },
             current = false,
             min_pattern_length = 0,
-            style = 'overlay'
+            style = 'overlay',
           },
-          pattern = '\\%' .. col .. 'c',  -- Show labels on current column position
+          pattern = '\\%' .. col .. 'c', -- Show labels on current column position
           labels = table.concat(list.char_range('a', 'z'), ''),
         })
         vim.schedule(function()
           vim.fn.cursor(vim.fn.line('.'), col)
         end)
       end,
-      desc = 'Flash Line Jump'
+      desc = 'Flash Line Jump',
     },
     -- Interactive fmap selector
     {
@@ -100,7 +100,7 @@ return {
           ['-k'] = '『',
         }
 
-        vim.api.nvim_echo({{'fmap: ', 'Question'}}, false, {})
+        vim.api.nvim_echo({ { 'fmap: ', 'Question' } }, false, {})
         local stroke = ''
         local pattern = nil
         while true do
@@ -120,10 +120,10 @@ return {
         if pattern then
           vim.fn.feedkeys('f' .. pattern)
         else
-          vim.api.nvim_echo({{('Canceled (stroke = %s)'):format(stroke), 'ErrorMsg'}}, false, {})
+          vim.api.nvim_echo({ { ('Canceled (stroke = %s)'):format(stroke), 'ErrorMsg' } }, false, {})
         end
       end,
-      desc = 'Interactive fmap selector with flash.nvim'
+      desc = 'Interactive fmap selector with flash.nvim',
     },
   },
 }

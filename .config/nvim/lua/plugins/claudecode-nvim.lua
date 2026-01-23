@@ -8,8 +8,8 @@ local toggle_key = '<leader>cc'
 local function is_win_displayed(win)
   local win_config = vim.api.nvim_win_get_config(win)
   return win_config.hide
-  or (win_config.height ~= nil and win_config.height == 0)
-  or (win_config.width ~= nil and win_config.width == 0)
+    or (win_config.height ~= nil and win_config.height == 0)
+    or (win_config.width ~= nil and win_config.width == 0)
 end
 
 ---Does the buffer typically contain 'claude' in its name ClaudeCode terminal?
@@ -23,11 +23,8 @@ end
 ---NOTE: なぜか`:ClaudeCodeFocus`でfloat windowがトグルしないので、ワークアラウンド
 ---Checks if ClaudeCode window/buffer is currently visible (not hidden)
 local function is_claudecode_window_opening()
-  return vim.iter(vim.api.nvim_list_wins())
-  :any(function(win) ---@param win integer
-    return vim.api.nvim_win_is_valid(win)
-    and not is_win_displayed(win)
-    and is_buffer_name_claude(win)
+  return vim.iter(vim.api.nvim_list_wins()):any(function(win) ---@param win integer
+    return vim.api.nvim_win_is_valid(win) and not is_win_displayed(win) and is_buffer_name_claude(win)
   end)
 end
 

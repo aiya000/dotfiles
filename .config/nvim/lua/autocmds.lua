@@ -43,13 +43,9 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
 vim.api.nvim_create_autocmd('CmdlineChanged', {
   group = augroup,
   callback = function()
-    nvim.replace_line(
-      {
-        [':'] = '%s/',
-      },
-      vim.fn.getcmdline(),
-      vim.fn.setcmdline
-    )
+    nvim.replace_line({
+      [':'] = '%s/',
+    }, vim.fn.getcmdline(), vim.fn.setcmdline)
   end,
 })
 
@@ -69,7 +65,7 @@ vim.api.nvim_create_autocmd({ 'TextChanged', 'TextChangedI' }, {
 
 -- Highlighting and ColorSchema {{{
 
-vim.api.nvim_create_autocmd({'VimEnter', 'ColorScheme'}, {
+vim.api.nvim_create_autocmd({ 'VimEnter', 'ColorScheme' }, {
   group = augroup,
   callback = function()
     vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#585b70' })
@@ -81,13 +77,25 @@ vim.api.nvim_create_autocmd({'VimEnter', 'ColorScheme'}, {
     vim.fn.matchadd('EmSpace', '　')
 
     -- TODO: *.luaで、'TODO:', 'FIXME:', 'NOTE:' のハイライトがいつの間にか消える
-    vim.api.nvim_set_hl(0, 'HighlightFixme', { ctermbg = 'Red', ctermfg = 'White', bg = '#EBA0AC', fg = '#1E1E2E', bold = true })
+    vim.api.nvim_set_hl(
+      0,
+      'HighlightFixme',
+      { ctermbg = 'Red', ctermfg = 'White', bg = '#EBA0AC', fg = '#1E1E2E', bold = true }
+    )
     vim.fn.matchadd('HighlightFixme', [[\<FIXME\>:]])
 
-    vim.api.nvim_set_hl(0, 'HighlightTodo', { ctermbg = 'Yellow', ctermfg = 'Black', bg = '#F9E2AF', fg = '#1E1E2E', bold = true })
+    vim.api.nvim_set_hl(
+      0,
+      'HighlightTodo',
+      { ctermbg = 'Yellow', ctermfg = 'Black', bg = '#F9E2AF', fg = '#1E1E2E', bold = true }
+    )
     vim.fn.matchadd('HighlightTodo', [[\<TODO\>:]])
 
-    vim.api.nvim_set_hl(0, 'HighlightNote', { ctermbg = 'Cyan', ctermfg = 'Black', bg = '#94E2D5', fg = '#1E1E2E', bold = true })
+    vim.api.nvim_set_hl(
+      0,
+      'HighlightNote',
+      { ctermbg = 'Cyan', ctermfg = 'Black', bg = '#94E2D5', fg = '#1E1E2E', bold = true }
+    )
     vim.fn.matchadd('HighlightNote', [[\<NOTE\>:]])
   end,
 })

@@ -52,9 +52,7 @@ local function get_filename(buf)
   end
 
   -- プロジェクトルートからの相対パスを取得
-  return vim.fn.fnamemodify(bufname, ':p')
-    :gsub('^' .. vim.pesc(project_root) .. '/', '')
-    :gsub('^%./', '')
+  return vim.fn.fnamemodify(bufname, ':p'):gsub('^' .. vim.pesc(project_root) .. '/', ''):gsub('^%./', '')
 end
 
 local function get_file_renderer(buf, focused)
@@ -168,9 +166,7 @@ return {
             return true
           end
           -- その他の special バッファタイプは無視
-          return buftype == 'nofile'
-          or buftype == 'prompt'
-          or buftype == 'quickfix'
+          return buftype == 'nofile' or buftype == 'prompt' or buftype == 'quickfix'
         end,
         filetypes = {},
         floating_wins = true,

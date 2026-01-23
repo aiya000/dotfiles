@@ -36,11 +36,11 @@ end
 ---```
 function M.snip_by_multiple_triggers(triggers, snip, opts)
   return vim
-  .iter(ipairs(triggers))
-  :map(function(_, trigger)
-    return M.s(trigger, vim.deepcopy(snip), opts)
-  end)
-  :totable()
+    .iter(ipairs(triggers))
+    :map(function(_, trigger)
+      return M.s(trigger, vim.deepcopy(snip), opts)
+    end)
+    :totable()
 end
 
 M.sm = M.snip_by_multiple_triggers

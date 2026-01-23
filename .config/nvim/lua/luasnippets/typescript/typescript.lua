@@ -12,42 +12,51 @@ return list.concat(
   -- Syntaxes
   sm(
     { 'for_of', 'for' },
-    fmt([[
+    fmt(
+      [[
       for (const {x} of {xs}) {{
         {}
       }}
-    ]], {
-      xs = i(1, 'xs'),
-      x = i(2, 'x'),
-      i(3, ''),
-    })
+    ]],
+      {
+        xs = i(1, 'xs'),
+        x = i(2, 'x'),
+        i(3, ''),
+      }
+    )
   ),
 
   sm(
     { 'for_await', 'forawait', 'fora' },
-    fmt([[
+    fmt(
+      [[
       for await (const {x} of {xs}) {{
         {}
       }}
-    ]], {
-      xs = i(1, 'xs'),
-      x = i(2, 'x'),
-      i(3, ''),
-    })
+    ]],
+      {
+        xs = i(1, 'xs'),
+        x = i(2, 'x'),
+        i(3, ''),
+      }
+    )
   ),
 
   {
     s(
       'for_in',
-      fmt([[
+      fmt(
+        [[
         for (const {key} in {obj}) {{
           {}
         }}
-      ]], {
-        key = i(1, 'i'),
-        obj = i(2, 'xs'),
-        i(3, ''),
-      })
+      ]],
+        {
+          key = i(1, 'i'),
+          obj = i(2, 'xs'),
+          i(3, ''),
+        }
+      )
     ),
 
     s(
@@ -148,15 +157,18 @@ return list.concat(
 
   sm(
     { 'function', 'fun' },
-    fmt([[
+    fmt(
+      [[
       function {name}({args}) {{
         {}
       }}
-    ]], {
-      name = i(1, 'name'),
-      args = i(2, ''),
-      i(3, ''),
-    })
+    ]],
+      {
+        name = i(1, 'name'),
+        args = i(2, ''),
+        i(3, ''),
+      }
+    )
   ),
 
   sm(
@@ -367,40 +379,49 @@ return list.concat(
   {
     s(
       'enum',
-      fmt([[
+      fmt(
+        [[
         enum {name} {{
           {}
         }}
-      ]], {
-        name = i(1, 'Name'),
-        i(2, ''),
-      })
+      ]],
+        {
+          name = i(1, 'Name'),
+          i(2, ''),
+        }
+      )
     ),
   },
 
   sm(
     { 'class', 'cla' },
-    fmt([[
+    fmt(
+      [[
       class {name} {{
         {}
       }}
-    ]], {
-      name = i(1, 'name'),
-      i(2, ''),
-    })
+    ]],
+      {
+        name = i(1, 'name'),
+        i(2, ''),
+      }
+    )
   ),
 
   {
     s(
       'constructor',
-      fmt([[
+      fmt(
+        [[
         constructor({args}) {{
           {}
         }}
-      ]], {
-        args = i(1, 'args'),
-        i(2, ''),
-      })
+      ]],
+        {
+          args = i(1, 'args'),
+          i(2, ''),
+        }
+      )
     ),
 
     s(

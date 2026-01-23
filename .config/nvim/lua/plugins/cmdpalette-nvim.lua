@@ -73,7 +73,6 @@ return {
           local line = vim.api.nvim_get_current_line()
           nvim.open_buffer_to_execute(line)
         end, { remap = true, buffer = true })
-
       end,
     })
   end,

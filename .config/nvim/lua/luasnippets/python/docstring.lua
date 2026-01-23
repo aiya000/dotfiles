@@ -12,20 +12,32 @@ table.insert(docstring_snippets, s('doc', fmt('"""{}"""', { i(1, '#:here') })))
 
 vim.list_extend(
   docstring_snippets,
-  sm({'doc_attributes', 'attrs'}, t([[Attributes
-----------]]))
+  sm(
+    { 'doc_attributes', 'attrs' },
+    t([[Attributes
+----------]])
+  )
 )
 
 vim.list_extend(
   docstring_snippets,
-  sm({'doc_attribute', 'doc_attr', 'attr', 'doc_parameter', 'doc_param', 'param'}, fmt([[{} : {}
-    {}]], { i(1, 'field_name'), i(2, 'type'), i(3, 'description') }))
+  sm(
+    { 'doc_attribute', 'doc_attr', 'attr', 'doc_parameter', 'doc_param', 'param' },
+    fmt(
+      [[{} : {}
+    {}]],
+      { i(1, 'field_name'), i(2, 'type'), i(3, 'description') }
+    )
+  )
 )
 
 vim.list_extend(
   docstring_snippets,
-  sm({'doc_methods', 'methods'}, t([[Methods
--------]]))
+  sm(
+    { 'doc_methods', 'methods' },
+    t([[Methods
+-------]])
+  )
 )
 
 table.insert(
@@ -42,8 +54,11 @@ table.insert(
 
 vim.list_extend(
   docstring_snippets,
-  sm({'doc_parameters', 'parameters', 'params'}, t([[Parameters
-----------]]))
+  sm(
+    { 'doc_parameters', 'parameters', 'params' },
+    t([[Parameters
+----------]])
+  )
 )
 
 return { snippets = docstring_snippets, autosnippets = {} }

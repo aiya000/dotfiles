@@ -240,19 +240,17 @@ function M.format(xs, ...)
     }
   end
 
-  return vim.iter(xs)
-    :fold(initial_state, function(state, x)
-      if x == M.s() then
-        return embed_element(state, source)
-      end
+  return vim.iter(xs):fold(initial_state, function(state, x)
+    if x == M.s() then
+      return embed_element(state, source)
+    end
 
-      if x == M.ss() then
-        return embed_list(state, source)
-      end
+    if x == M.ss() then
+      return embed_list(state, source)
+    end
 
-      return append(state, x)
-    end)
-    .result
+    return append(state, x)
+  end).result
 end
 
 -- In-source testing

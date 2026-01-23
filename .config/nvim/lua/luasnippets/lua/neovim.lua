@@ -10,38 +10,50 @@ return list.concat(
   {
     s(
       'poi',
-      fmt([[
+      fmt(
+        [[
         vim.notify('poi: ' .. vim.inspect({}), vim.log.levels.INFO)
-      ]], {
-        i(1, ''),
-      })
+      ]],
+        {
+          i(1, ''),
+        }
+      )
     ),
 
     s(
       'notify',
-      fmt([[
+      fmt(
+        [[
         vim.notify({}, vim.log.levels.INFO)
-      ]], {
-        i(1, ''),
-      })
+      ]],
+        {
+          i(1, ''),
+        }
+      )
     ),
 
     s(
       'notify_warn',
-      fmt([[
+      fmt(
+        [[
         vim.notify({}, vim.log.levels.WARN)
-      ]], {
-        i(1, ''),
-      })
+      ]],
+        {
+          i(1, ''),
+        }
+      )
     ),
 
     s(
       'notify_error',
-      fmt([[
+      fmt(
+        [[
         vim.notify({}, vim.log.levels.ERROR)
-      ]], {
-        i(1, ''),
-      })
+      ]],
+        {
+          i(1, ''),
+        }
+      )
     ),
 
     s(
@@ -72,18 +84,23 @@ return list.concat(
       })
     ),
 
-    s('keymap',
-      fmt([[
+    s(
+      'keymap',
+      fmt(
+        [[
         vim.keymap.set('{mode}', '{key}', {key_or_cmd}{, opts})
-      ]], {
-        mode = i(1, 'mode'),
-        key = i(2, 'key'),
-        key_or_cmd = i(3, 'key_or_cmd'),
-        [', opts'] = i(4, ', opts'),
-      })
+      ]],
+        {
+          mode = i(1, 'mode'),
+          key = i(2, 'key'),
+          key_or_cmd = i(3, 'key_or_cmd'),
+          [', opts'] = i(4, ', opts'),
+        }
+      )
     ),
 
-    s('augroup',
+    s(
+      'augroup',
       fmt([[vim.api.nvim_create_augroup('{group_name}', {{ clear = true }})]], {
         group_name = i(1, 'group_name'),
       })
@@ -91,22 +108,31 @@ return list.concat(
 
     s(
       'autocmd',
-      fmt([[
+      fmt(
+        [[
         vim.api.nvim_create_autocmd({event_or_events}, {{
           group = vim.api.nvim_create_augroup('{group_name}', {{ clear = true }}),
           callback = {callback},
         }})
-      ]], {
-        event_or_events = i(1, 'event_or_events'),
-        group_name = i(2, 'group_name'),
-        callback = i(3, 'callback'),
-      })
+      ]],
+        {
+          event_or_events = i(1, 'event_or_events'),
+          group_name = i(2, 'group_name'),
+          callback = i(3, 'callback'),
+        }
+      )
     ),
   },
 
-  sm({ 'home', 'stdpath_config' }, fmt([[
+  sm(
+    { 'home', 'stdpath_config' },
+    fmt(
+      [[
     vim.fn.stdpath('config')
-  ]], {})),
+  ]],
+      {}
+    )
+  ),
 
   -- See `:h vim.list_extend()` for about another arguments.
   -- Consider define below fucntion when you cannot use `vim`. {{{

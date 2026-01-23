@@ -1,9 +1,10 @@
 local nvim = require('nvim')
 
 return {
-  'aiya000/nvim-mado-scratch',
+  -- 'aiya000/nvim-mado-scratch',
   -- dir = vim.fn.expand('~/Repository/nvim-mado-scratch'),
-  -- dir = vim.fn.expand('~/Repository/nvim-mado-scratch/main'),
+  dir = vim.fn.expand('~/Repository/nvim-mado-scratch/main'),
+  -- dir = vim.fn.expand('~/Repository/nvim-mado-scratch/copilot/fix-nvim-madoscratch-error'),
   dependencies = { 'nvim-lua/plenary.nvim' },
   config = function()
     require('mado-scratch').setup({

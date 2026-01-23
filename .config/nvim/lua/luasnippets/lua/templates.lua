@@ -11,10 +11,13 @@ return list.concat(
   {
     s(
       'define_module',
-      fmt([[
+      fmt(
+        [[
         local M = {{}}
         return M
-      ]], {})
+      ]],
+        {}
+      )
     ),
   },
 
@@ -28,7 +31,8 @@ return list.concat(
 
   sm(
     { 'define_class' },
-    fmt([[
+    fmt(
+      [[
       ---@class {ClassName}
       local {ClassName} = {{}}
       {ClassName}.__index = {ClassName}
@@ -39,11 +43,13 @@ return list.concat(
         self.{arg} = {arg}
         return self
       end
-    ]], {
-      ClassName = i(1, 'ClassName'),
-      constructor_args = i(2, 'constructor_args'),
-      arg = i(3, 'arg'),
-    })
+    ]],
+      {
+        ClassName = i(1, 'ClassName'),
+        constructor_args = i(2, 'constructor_args'),
+        arg = i(3, 'arg'),
+      }
+    )
   ),
 
   -- `table.concat()`がjoinで、`extendnew()`がconcatなの、紛らわしい
@@ -66,12 +72,9 @@ return list.concat(
 
     s(
       'todo',
-      fmt(
-        [[error('TODO: Not Implemented Yet ({function_name})')]],
-        {
-          function_name = i(1, 'function_name'),
-        }
-      )
+      fmt([[error('TODO: Not Implemented Yet ({function_name})')]], {
+        function_name = i(1, 'function_name'),
+      })
     ),
 
     s(

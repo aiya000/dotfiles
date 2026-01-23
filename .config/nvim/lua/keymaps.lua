@@ -201,7 +201,11 @@ vim.keymap.set('n', '<C-s>p', function()
 end)
 
 local function fallback_to_path_at_started()
-  vim.api.nvim_echo({{ 'No directory found. Fallback to the path at started: ' .. InitLua.path_at_started }}, false, {})
+  vim.api.nvim_echo(
+    { { 'No directory found. Fallback to the path at started: ' .. InitLua.path_at_started } },
+    false,
+    {}
+  )
   return InitLua.path_at_started
 end
 

@@ -6,27 +6,33 @@ local sm = require('utils.luasnip').sm
 return list.concat(
   sm(
     { 'details', 'zenn_details', 'zenn_folding' },
-    fmt([[
+    fmt(
+      [[
       :::details
 
       {}
 
       :::
-    ]], {
-      i(1, ''),
-    })
+    ]],
+      {
+        i(1, ''),
+      }
+    )
   ),
 
   sm(
     { 'message', 'zenn_message', 'zenn_info' },
-    fmt([[
+    fmt(
+      [[
       :::message
 
       {}
 
       :::
-    ]], {
-      i(1, ''),
-    })
+    ]],
+      {
+        i(1, ''),
+      }
+    )
   )
 )

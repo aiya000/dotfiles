@@ -91,7 +91,7 @@ return {
               end,
               ['<C-b>'] = function()
                 nvim.run_with_virtual_keymaps('<Left>')
-              end ,
+              end,
               ['<C-f>'] = function()
                 nvim.run_with_virtual_keymaps('<Right>')
               end,
@@ -146,7 +146,6 @@ return {
       require('telescope').load_extension('heading')
     end,
   },
-
 
   -- }}}
   -- nvim-hlslens {{{
@@ -245,28 +244,28 @@ return {
   -- }}}
   -- hlchunk.nvim {{{
 
-    {
-      'shellRaining/hlchunk.nvim',
-      event = { 'BufReadPre', 'BufNewFile' },
-      config = function()
-        require('hlchunk').setup({
-          chunk = { -- NOTE: May need to `TSInstall {filetype}` to show chunk
-            enable = true,
-            style = '#c678dd',
-          },
-          indent = {
-            enable = true,
-          },
-          line_num = {
-            enable = true,
-          },
-          blank = {
-            -- chunk・indentバッティングするから無効化…
-            enable = false,
-          },
-        })
-      end
-    },
+  {
+    'shellRaining/hlchunk.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function()
+      require('hlchunk').setup({
+        chunk = { -- NOTE: May need to `TSInstall {filetype}` to show chunk
+          enable = true,
+          style = '#c678dd',
+        },
+        indent = {
+          enable = true,
+        },
+        line_num = {
+          enable = true,
+        },
+        blank = {
+          -- chunk・indentバッティングするから無効化…
+          enable = false,
+        },
+      })
+    end,
+  },
 
   -- }}}
   -- galaxyline {{{
@@ -521,54 +520,54 @@ return {
   -- }}}
   -- jaq-nvim {{{
 
-    {
-      'is0n/jaq-nvim',
-      opts = {
-        cmds = {
-          internal = {
-            lua = 'luafile %',
-            vim = 'source %'
-          },
-          external = {
-            -- markdown = 'glow %', -- 'after/ftplugin/markdown.lua'で管理
-            typescript = 'bun run %',
-          }
+  {
+    'is0n/jaq-nvim',
+    opts = {
+      cmds = {
+        internal = {
+          lua = 'luafile %',
+          vim = 'source %',
+        },
+        external = {
+          -- markdown = 'glow %', -- 'after/ftplugin/markdown.lua'で管理
+          typescript = 'bun run %',
+        },
+      },
+
+      behavior = {
+        default = 'float',
+        startinsert = true, -- これやってると、すぐEnterで閉じられる
+        wincmd = false,
+        autosave = false,
+      },
+
+      ui = {
+        float = {
+          border = { '╔', '═', '╗', '║', '╝', '═', '╚', '║' },
+          winhl = 'Normal', -- See ':h winhl'
+          borderhl = 'FloatBorder',
+          winblend = 0, -- See ':h winblend'
+
+          -- Num from `0-1` for measurements
+          height = 0.8,
+          width = 0.8,
+          x = 0.5,
+          y = 0.5,
         },
 
-        behavior = {
-          default = 'float',
-          startinsert = true, -- これやってると、すぐEnterで閉じられる
-          wincmd = false,
-          autosave = false,
+        terminal = {
+          position = 'bot', -- Window position
+          size = 10, -- Window size
+          line_no = false, -- Disable line numbers
         },
 
-        ui = {
-          float = {
-            border = {'╔', '═' ,'╗', '║', '╝', '═', '╚', '║'} ,
-            winhl     = 'Normal', -- See ':h winhl'
-            borderhl  = 'FloatBorder',
-            winblend  = 0, -- See ':h winblend'
-
-            -- Num from `0-1` for measurements
-            height = 0.8,
-            width = 0.8,
-            x = 0.5,
-            y = 0.5,
-          },
-
-          terminal = {
-            position = 'bot', -- Window position
-            size = 10, -- Window size
-            line_no = false, -- Disable line numbers
-          },
-
-          quickfix = {
-            position = 'bot', -- Window position
-            size = 10, -- Window size
-          },
+        quickfix = {
+          position = 'bot', -- Window position
+          size = 10, -- Window size
         },
       },
     },
+  },
 
   -- }}}
   -- vim-neoquickrun {{{
@@ -578,8 +577,7 @@ return {
     '~/Repository/vim-neoquickrun',
     InitLua.disable_neoquickrun == true,
     {
-      init = function()
-      end,
+      init = function() end,
     }
   ),
 
@@ -644,17 +642,12 @@ return {
   -- }}}
   -- bakaup.vim {{{
 
-  nvim.load_from_local_or_remote(
-    'aiya000/bakaup.vim',
-    '~/Repository/bakaup.vim',
-    InitLua.disable_bakaup == true,
-    {
-      init = function()
-        vim.g.bakaup_auto_backup = 1
-        vim.g.bakaup_backup_dir = InitLua.backupdir
-      end,
-    }
-  ),
+  nvim.load_from_local_or_remote('aiya000/bakaup.vim', '~/Repository/bakaup.vim', InitLua.disable_bakaup == true, {
+    init = function()
+      vim.g.bakaup_auto_backup = 1
+      vim.g.bakaup_backup_dir = InitLua.backupdir
+    end,
+  }),
 
   -- }}}
   -- plenary.nvim {{{
@@ -1380,7 +1373,7 @@ return {
           }),
         },
       })
-    end
+    end,
   },
 
   -- }}}
@@ -1401,83 +1394,82 @@ return {
   -- }}}
   -- neoscroll.nvim {{{
 
-    {
-      'karb94/neoscroll.nvim',
-      config = function()
-        local neoscroll = require('neoscroll')
+  {
+    'karb94/neoscroll.nvim',
+    config = function()
+      local neoscroll = require('neoscroll')
 
-        neoscroll.setup({
-          mappings = {
-            '<C-b>',
-            '<C-f>',
-            '<C-u>',
-            '<C-d>',
-            'zt',
-            'zz',
-            'zb',
-          },
-          duration_multiplier = 0.25,
-          performance_mode = true,
-        })
+      neoscroll.setup({
+        mappings = {
+          '<C-b>',
+          '<C-f>',
+          '<C-u>',
+          '<C-d>',
+          'zt',
+          'zz',
+          'zb',
+        },
+        duration_multiplier = 0.25,
+        performance_mode = true,
+      })
 
-        local keymaps_opts = {
-          duration = 200,
-          easing = 'quadratic',
-        }
+      local keymaps_opts = {
+        duration = 200,
+        easing = 'quadratic',
+      }
 
-        ---`{line_num}gg` and `{line_num}G` support
-        local function goto_line()
-          local count = vim.v.count
-          local current_line, col = unpack(vim.api.nvim_win_get_cursor(0))
-          local distance = count - current_line
-          if distance == 0 then
-            return
-          end
-
-          local distance_to_scroll = distance > 0
-            and math.min(distance, 100) -- Example: max(200, 100)
-            or math.max(distance, -100) -- Example: min(-200, -100)
-          neoscroll.scroll(distance_to_scroll, keymaps_opts)
-          vim.defer_fn(function()
-            vim.api.nvim_win_set_cursor(0, { count, col })
-          end, 200)
+      ---`{line_num}gg` and `{line_num}G` support
+      local function goto_line()
+        local count = vim.v.count
+        local current_line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        local distance = count - current_line
+        if distance == 0 then
+          return
         end
 
-        vim.keymap.set('n', 'gg', function()
-          if vim.v.count ~= 0 then
-            goto_line()
-            return
-          end
+        local distance_to_scroll = distance > 0 and math.min(distance, 100) -- Example: max(200, 100)
+          or math.max(distance, -100) -- Example: min(-200, -100)
+        neoscroll.scroll(distance_to_scroll, keymaps_opts)
+        vim.defer_fn(function()
+          vim.api.nvim_win_set_cursor(0, { count, col })
+        end, 200)
+      end
 
-          neoscroll.scroll(-100, keymaps_opts)
-          vim.defer_fn(function()
-            vim.cmd('normal! gg')
-          end, 100)
-        end)
+      vim.keymap.set('n', 'gg', function()
+        if vim.v.count ~= 0 then
+          goto_line()
+          return
+        end
 
-        vim.keymap.set('n', 'G', function()
-          if vim.v.count ~= 0 then
-            goto_line()
-            return
-          end
+        neoscroll.scroll(-100, keymaps_opts)
+        vim.defer_fn(function()
+          vim.cmd('normal! gg')
+        end, 100)
+      end)
 
-          neoscroll.scroll(100, keymaps_opts)
-          vim.defer_fn(function()
-            vim.cmd('normal! G')
-          end, 100)
-        end)
-      end,
-    },
+      vim.keymap.set('n', 'G', function()
+        if vim.v.count ~= 0 then
+          goto_line()
+          return
+        end
+
+        neoscroll.scroll(100, keymaps_opts)
+        vim.defer_fn(function()
+          vim.cmd('normal! G')
+        end, 100)
+      end)
+    end,
+  },
 
   -- }}}
   -- screenkey.nvim {{{
 
-    -- :Screenkey to start
-    {
-      'NStefan002/screenkey.nvim',
-      lazy = false,
-      version = "*",
-    },
+  -- :Screenkey to start
+  {
+    'NStefan002/screenkey.nvim',
+    lazy = false,
+    version = '*',
+  },
 
   -- }}}
   -- fidget.nvim {{{
@@ -1546,7 +1538,7 @@ return {
         vim.keymap.set('n', '<C-l>', '<NOP>', { buffer = bufnr, silent = true })
         vim.keymap.set('n', '<C-l><C-l>', '<Cmd>wq<CR>', { buffer = bufnr, silent = true })
         vim.keymap.set('n', '<Esc>', '<Cmd>wq<CR>', { buffer = bufnr, silent = true })
-      end
+      end,
     },
   },
 
@@ -1663,18 +1655,18 @@ return {
       cmp.setup.cmdline({ '/', '?' }, {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
-          { name = 'buffer' }
-        }
+          { name = 'buffer' },
+        },
       })
 
       cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
-          { name = 'path' }
+          { name = 'path' },
         }, {
-          { name = 'cmdline' }
+          { name = 'cmdline' },
         }),
-        matching = { disallow_symbol_nonprefix_matching = false }
+        matching = { disallow_symbol_nonprefix_matching = false },
       })
 
       if not InitLua.recording_mode then
@@ -1790,26 +1782,26 @@ return {
   -- }}}
   -- telescope-heading.nvim {{{
 
-    {
-      'crispgm/telescope-heading.nvim',
-      config = function()
-        local augroup = vim.api.nvim_create_augroup('InitLuaPluginsTelescopeHeading', { clear = true })
+  {
+    'crispgm/telescope-heading.nvim',
+    config = function()
+      local augroup = vim.api.nvim_create_augroup('InitLuaPluginsTelescopeHeading', { clear = true })
 
-        vim.api.nvim_create_autocmd('FileType', {
-          group = augroup,
-          pattern = { 'markdown', 'help', 'asciidoc' },
-          callback = function()
-            -- Override `'<C-k><C-f>'` keymap in './keymaps.lua'
-            vim.keymap.set('n', '<C-k><C-f>', function()
-              require('telescope').extensions.heading.heading({
-                sorting_strategy = 'ascending',
-                layout_config = { prompt_position = 'bottom' }
-              })
-            end, { buffer = true, silent = true })
-          end,
-        })
-      end,
-    },
+      vim.api.nvim_create_autocmd('FileType', {
+        group = augroup,
+        pattern = { 'markdown', 'help', 'asciidoc' },
+        callback = function()
+          -- Override `'<C-k><C-f>'` keymap in './keymaps.lua'
+          vim.keymap.set('n', '<C-k><C-f>', function()
+            require('telescope').extensions.heading.heading({
+              sorting_strategy = 'ascending',
+              layout_config = { prompt_position = 'bottom' },
+            })
+          end, { buffer = true, silent = true })
+        end,
+      })
+    end,
+  },
 
   -- }}}
 }

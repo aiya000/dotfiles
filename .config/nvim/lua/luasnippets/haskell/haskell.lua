@@ -232,25 +232,19 @@ vim.list_extend(
 -- Error and debug snippets
 vim.list_extend(
   haskell_snippets,
-  sm(
-    { 'raise_fatal_error', 'fatal_error' },
-    {
-      t('['),
-      i(1, 'i'),
-      t('|'),
-      i(2, 'funcName'),
-      t(' at ${(__FILE__ :: String)}:L${(__LINE__ :: Int)}: fatal error! Sorry, please report an issue :(|]'),
-    },
-    { key = 'raise_fatal_error' }
-  )
+  sm({ 'raise_fatal_error', 'fatal_error' }, {
+    t('['),
+    i(1, 'i'),
+    t('|'),
+    i(2, 'funcName'),
+    t(' at ${(__FILE__ :: String)}:L${(__LINE__ :: Int)}: fatal error! Sorry, please report an issue :(|]'),
+  }, { key = 'raise_fatal_error' })
 )
 
 vim.list_extend(
   haskell_snippets,
-  sm(
-    { 'expand_debug_modules', 'unsafe_debug', 'debug_unsafe' },
-    {
-      t([[
+  sm({ 'expand_debug_modules', 'unsafe_debug', 'debug_unsafe' }, {
+    t([[
 --TODO: Remove these import
 import qualified GHC.Stack as Debug
 import qualified Debug.Trace as Debug
@@ -270,9 +264,7 @@ currentFuncName :: IO String
 currentFuncName = Debug.currentCallStack >>= \xs -> case xs of
   [] -> error "no callstack is found (do you `stack build --profile`?)"
   _  -> return . head . words $ xs !! (length xs - 2)]]),
-    },
-    { key = 'expand_debug_modules' }
-  )
+  }, { key = 'expand_debug_modules' })
 )
 
 -- Utility snippets
@@ -293,33 +285,26 @@ vim.list_extend(haskell_snippets, sm({ 'prism_get', 'look', 'lk' }, t('^?'), { k
 -- String utility functions
 vim.list_extend(
   haskell_snippets,
-  sm(
-    { 'trimMargins', 'stripMargins' },
-    {
-      t([[
+  sm({ 'trimMargins', 'stripMargins' }, {
+    t([[
 trimMargins :: String -> String
 trimMargins = trim . unlines . map trim . lines
   where
     trim = reverse . dropWhile (== ' ') . reverse . dropWhile (== ' ')]]),
-    },
-    { key = 'trimMargins' }
-  )
+  }, { key = 'trimMargins' })
 )
 
 table.insert(
   haskell_snippets,
-  s(
-    'flattenMargins',
-    {
-      t([[
+  s('flattenMargins', {
+    t([[
 flattenMargins :: String -> String
 flattenMargins = replace . unlines . filter (/= "") . map (dropWhile (== ' ')) . lines
     where
         replace [] = []
         replace ('\n' : xs) = ' ' : replace xs
         replace (x : xs) = x : replace xs]]),
-    }
-  )
+  })
 )
 
 table.insert(haskell_snippets, s('undefined', t('Prelude.undefined')))

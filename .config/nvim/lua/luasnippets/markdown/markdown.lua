@@ -22,28 +22,33 @@ return list.concat(
 
   sm(
     { 'block', 'bl' },
-    fmt([[
+    fmt(
+      [[
       ```{}
       {}
       ```
-    ]], {
-      i(1, ''),
-      i(2, ''),
-    })
+    ]],
+      {
+        i(1, ''),
+        i(2, ''),
+      }
+    )
   ),
 
   {
-    s('link', fmt('[{}]({})', {
-      i(1, ''),
-      i(2, ''),
-    })),
+    s(
+      'link',
+      fmt('[{}]({})', {
+        i(1, ''),
+        i(2, ''),
+      })
+    ),
   },
 
   sm({
-    'footnote_reference', 'fn' },
-    fmt('[^{name}]',
-    { name = i(1, 'name') })
-  ),
+    'footnote_reference',
+    'fn',
+  }, fmt('[^{name}]', { name = i(1, 'name') })),
 
   {
     s('footnote', fmt('[^{name}]: {}', { name = i(1, 'name'), i(2, '') })),

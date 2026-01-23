@@ -116,7 +116,7 @@ function M.readonly(x)
     __newindex = function(_, key, value)
       error(('The table is readonly. { key = %s, value = %s }'):format(key, M.to_pretty_string(value)))
     end,
-    __metatable = false
+    __metatable = false,
   })
 end
 
@@ -160,7 +160,7 @@ function M.deep_readonly(x)
       __newindex = function(_, key, value)
         error(('The table is readonly. { key = %s, value = %s }'):format(key, M.to_pretty_string(value)))
       end,
-      __metatable = false
+      __metatable = false,
     })
   end
 
@@ -192,11 +192,9 @@ end
 ---@param x unknown
 ---@return string
 local function to_string_and_may_quote(x)
-  return type(x) == 'string'
-    and string.format("'%s'", x)
-    or type(x) == 'table'
-      and M.make_table_to_string(x)
-      or tostring(x)
+  return type(x) == 'string' and string.format("'%s'", x)
+    or type(x) == 'table' and M.make_table_to_string(x)
+    or tostring(x)
 end
 
 ---Converts a table to a pretty string
@@ -206,10 +204,7 @@ function M.make_table_to_string(t)
   local result = { '{' }
 
   for k, v in pairs(t) do
-    local field = (' %s = %s,'):format(
-      to_string_and_may_quote(k),
-      to_string_and_may_quote(v)
-    )
+    local field = (' %s = %s,'):format(to_string_and_may_quote(k), to_string_and_may_quote(v))
     table.insert(result, field)
   end
 
@@ -419,7 +414,7 @@ if vim == nil then
   test('to_pretty_string() should handle nested tables', function()
     local nested = {
       user = { name = 'Alice' },
-      active = true
+      active = true,
     }
     local result = M.to_pretty_string(nested)
     assert(result:find("'user' = {"), 'Should contain nested table')

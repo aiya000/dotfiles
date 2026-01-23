@@ -38,14 +38,13 @@ end
 ---Or returns nil.
 ---@return string | nil
 local function get_grip_token()
-  return vim.env.DOTFILES_PRIVATE_GITHUB_GRIP_TOKEN:match(' ') == nil
-    and vim.env.DOTFILES_PRIVATE_GITHUB_GRIP_TOKEN
+  return vim.env.DOTFILES_PRIVATE_GITHUB_GRIP_TOKEN:match(' ') == nil and vim.env.DOTFILES_PRIVATE_GITHUB_GRIP_TOKEN
     or nil
 end
 
 local function start_grip()
   local token = get_grip_token()
-  local token_option = (token == nil) and {} or {'--pass', token}
+  local token_option = (token == nil) and {} or { '--pass', token }
   local filepath = vim.fn.fnameescape(vim.fn.expand('%:p'))
   local port = find_free_port(2525, 5) -- 2525 and 5 is very random value. Can change if needed
   local cmd = list.format({ 'grip', list.ss(), filepath, tostring(port) }, token_option)

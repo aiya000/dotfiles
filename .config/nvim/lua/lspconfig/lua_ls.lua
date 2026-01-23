@@ -21,14 +21,14 @@ vim.lsp.config('lua_ls', {
       workspace = {
         checkThirdParty = false,
         library = {
-          vim.env.VIMRUNTIME
-        }
-      }
+          vim.env.VIMRUNTIME,
+        },
+      },
     })
   end,
   settings = {
-    Lua = {}
-  }
+    Lua = {},
+  },
 })
 
 vim.lsp.enable('lua_ls')

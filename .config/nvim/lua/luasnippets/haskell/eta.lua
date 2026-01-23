@@ -131,26 +131,22 @@ vim.list_extend(
 
 vim.list_extend(
   eta_snippets,
-  sm(
-    {
-      'foreign_import_a_java_static_field',
-      'import_foreign_a_java_static_field',
-      'eta_static_field',
-      'import_foreign_a_java_enum_term',
-      'eta_enum_term',
-      'enum_term_eta',
-    },
-    {
-      t('foreign import java unsafe "@static @field '),
-      i(1, 'fieldName'),
-      t('" '),
-      i(2, 'fieldNameInHs'),
-      t(' ::'),
-      t({ '', '    ' }),
-      i(3, 'Java ClassName Int'),
-    },
-    { key = 'foreign_import_a_java_static_field' }
-  )
+  sm({
+    'foreign_import_a_java_static_field',
+    'import_foreign_a_java_static_field',
+    'eta_static_field',
+    'import_foreign_a_java_enum_term',
+    'eta_enum_term',
+    'enum_term_eta',
+  }, {
+    t('foreign import java unsafe "@static @field '),
+    i(1, 'fieldName'),
+    t('" '),
+    i(2, 'fieldNameInHs'),
+    t(' ::'),
+    t({ '', '    ' }),
+    i(3, 'Java ClassName Int'),
+  }, { key = 'foreign_import_a_java_static_field' })
 )
 
 vim.list_extend(

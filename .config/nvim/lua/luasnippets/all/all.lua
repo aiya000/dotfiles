@@ -41,12 +41,15 @@ return list.concat(
   {
     s(
       'range_surround',
-      fmt([[
+      fmt(
+        [[
         -- #@@range_begin({range_name})
         -- #@@range_end({range_name})
-      ]], {
-        range_name = i(1, 'range_name'),
-      })
+      ]],
+        {
+          range_name = i(1, 'range_name'),
+        }
+      )
     ),
 
     s(

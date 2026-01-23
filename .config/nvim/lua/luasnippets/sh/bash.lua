@@ -10,15 +10,19 @@ local t = ls.text_node
 
 return list.concat(
   -- function definition
-  sm({ 'function', 'func', 'fun' },
-    fmt([[
+  sm(
+    { 'function', 'func', 'fun' },
+    fmt(
+      [[
       function {} () {{
           {}
       }}
-    ]], {
-      i(1, '#:name'),
-      i(0, 'TARGET'),
-    })
+    ]],
+      {
+        i(1, '#:name'),
+        i(0, 'TARGET'),
+      }
+    )
   ),
 
   -- test operations
@@ -114,37 +118,46 @@ return list.concat(
   },
 
   sm(
-    { 'run_async', 'async_run', },
-    fmt([[
+    { 'run_async', 'async_run' },
+    fmt(
+      [[
       {cmd} &
       ${pid}=$!
       wait ${pid}
-    ]], {
-      cmd = i(1, 'cmd'),
-      pid = i(2, 'pid'),
-    })
+    ]],
+      {
+        cmd = i(1, 'cmd'),
+        pid = i(2, 'pid'),
+      }
+    )
   ),
 
   sm(
     { 'wait', 'await' },
-    fmt([[
+    fmt(
+      [[
       wait ${pid}
-    ]], {
-      pid = i(1, 'pid'),
-    })
+    ]],
+      {
+        pid = i(1, 'pid'),
+      }
+    )
   ),
 
   sm(
     { 'parallel', 'promise_all', 'await_all' },
-    fmt([[
+    fmt(
+      [[
       parallel --jobs 0 ::: \
         {cmd1} \
         {cmd2} \
         {cmds}
-    ]], {
-      cmd1 = i(1, 'cmd1'),
-      cmd2 = i(2, 'cmd2'),
-      cmds = i(3, 'cmds'),
-    })
+    ]],
+      {
+        cmd1 = i(1, 'cmd1'),
+        cmd2 = i(2, 'cmd2'),
+        cmds = i(3, 'cmds'),
+      }
+    )
   )
 )

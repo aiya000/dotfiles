@@ -6,51 +6,66 @@ local sm = require('utils.luasnip').sm
 return list.concat(
   sm(
     { 'alert_tip', 'tip' },
-    fmt([[
+    fmt(
+      [[
       > [!TIP]
       > {}
-    ]], {
-      i(1, ''),
-    })
+    ]],
+      {
+        i(1, ''),
+      }
+    )
   ),
 
   sm(
     { 'alert_note', 'note' },
-    fmt([[
+    fmt(
+      [[
       > [!NOTE]
       > {}
-    ]], {
-      i(1, ''),
-    })
+    ]],
+      {
+        i(1, ''),
+      }
+    )
   ),
 
   sm(
     { 'alert_important', 'important' },
-    fmt([[
+    fmt(
+      [[
       > [!IMPORTANT]
       > {}
-    ]], {
-      i(1, ''),
-    })
+    ]],
+      {
+        i(1, ''),
+      }
+    )
   ),
 
   sm(
     { 'alert_warning', 'warning' },
-    fmt([[
+    fmt(
+      [[
       > [!WARNING]
       > {}
-    ]], {
-      i(1, ''),
-    })
+    ]],
+      {
+        i(1, ''),
+      }
+    )
   ),
 
   sm(
     { 'alert_caution', 'caution' },
-    fmt([[
+    fmt(
+      [[
       > [!caution]
       > {}
-    ]], {
-      i(1, ''),
-    })
+    ]],
+      {
+        i(1, ''),
+      }
+    )
   )
 )

@@ -29,7 +29,7 @@ end
 
 ---@see M.reload_module
 function M.reload_modules(...)
-  return vim.iter({...}):map(M.reload_module):totable()
+  return vim.iter({ ... }):map(M.reload_module):totable()
 end
 
 ---TODO: ちゃんと変更を検知できてない。でもリロードはできてるっぽい
@@ -79,11 +79,7 @@ end
 
 ---Yanks selected text in (linewise/blockwise) visual mode
 function M.get_selected_text()
-  return vim.fn.getregion(
-    vim.fn.getpos('v'),
-    vim.fn.getpos('.'),
-    { type = vim.fn.mode()
-  })
+  return vim.fn.getregion(vim.fn.getpos('v'), vim.fn.getpos('.'), { type = vim.fn.mode() })
 end
 
 ---Sets same mapping to multiple keys
@@ -99,13 +95,13 @@ end
 
 -- TODO: readonlyするとなぜかうまく動かない。readonlyの実装がおかしい？
 -- M.hl_groups = fn.readonly({
-M.hl_groups = ({
+M.hl_groups = {
   ErrorMsg = 'ErrorMsg', -- Red
   WarningMsg = 'WarningMsg', -- Yellow
   MoreMsg = 'MoreMsg', -- Green
   Question = 'Question', -- ?
   Normal = 'Normal', -- No color
-})
+}
 
 ---@param message string
 ---@param hl_group? string
@@ -120,9 +116,7 @@ function M.confirm_to_get_charstr(message, hl_group, opts)
   }, false, {})
   vim.cmd('redraw')
 
-  return opts.only_a_char
-    and vim.fn.nr2char(vim.fn.getchar())
-    or vim.fn.getcharstr()
+  return opts.only_a_char and vim.fn.nr2char(vim.fn.getchar()) or vim.fn.getcharstr()
 end
 
 M.confirm = M.confirm_to_get_charstr
@@ -184,9 +178,7 @@ end
 ---Runs `:source (neovim_home)/after/ftplugin/{filetype}.lua`
 ---@param filetype string
 function M.source_after_ftplugin(filetype)
-  vim.cmd(('execute "source" "%s"'):format(
-    vim.fn.stdpath('config') .. '/after/ftplugin/' .. filetype .. '.lua'
-  ))
+  vim.cmd(('execute "source" "%s"'):format(vim.fn.stdpath('config') .. '/after/ftplugin/' .. filetype .. '.lua'))
 end
 
 ---NOTE: This requires `$USER` or `whoami` command
@@ -806,7 +798,6 @@ function M.restart_lsp_related_with_current_buffer()
   end
 end
 
-
 function M.clear_highlight_deeply()
   print('clearing...')
   M.clear()
@@ -873,12 +864,7 @@ end
 ---  }
 ---),
 ---```
-function M.load_from_local_or_remote(
-  remote_repo,
-  local_dir,
-  should_load_from_local,
-  lazynvim_plugin_config
-)
+function M.load_from_local_or_remote(remote_repo, local_dir, should_load_from_local, lazynvim_plugin_config)
   local_dir = vim.fn.expand(local_dir) -- Make '~/somepath/nvim-foo' to realpath
   if should_load_from_local and not vim.fn.isdirectory(local_dir) then
     local message = ([[
@@ -994,7 +980,8 @@ end
 ---```
 ---@return string[]
 function M.arg_files()
-  return vim.iter(vim.v.argv)
+  return vim
+    .iter(vim.v.argv)
     :filter(function(arg)
       return vim.loop.fs_stat(vim.fn.fnamemodify(arg, ':p')) ~= nil
     end)
