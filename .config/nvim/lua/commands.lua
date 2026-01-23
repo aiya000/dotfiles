@@ -206,7 +206,8 @@ create_command('LspStart', function(opts)
     return
   end
 
-  -- vim.lsp.enable()で有効化し、現在のバッファにアタッチ
+  -- 一度無効化してから有効化する（プロセスが停止していても内部状態が「有効」のままの場合に対応）
+  vim.lsp.enable(name, false)
   vim.lsp.enable(name, true)
 
   -- 現在のバッファのFileTypeイベントを再発火してLSPをアタッチ
