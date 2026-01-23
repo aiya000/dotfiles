@@ -325,6 +325,7 @@ create_command(
       vim.cmd(([[silent! %ds/  /　/g]]):format(line_num))
 
       -- TODO: Refactor
+
       local line = vim.fn.getline(line_num)
       local result = {}
       local i = 1
@@ -382,7 +383,10 @@ create_command(
 
 create_command('FormatMarkdownForReport', function(opts)
   vim.cmd(([[%s,%sFormatMarkdownToSlack]]):format(opts.line1, opts.line2))
-  vim.cmd(([[%s,%ss/^#\+ //]]):format(opts.line1, opts.line2))
+  vim.cmd(([[silent! %d,%ds/^#\+ //]]):format(opts.line1, opts.line2))
+  vim.cmd(([[silent! %d,%ds/^#\+ //]]):format(opts.line1, opts.line2))
+  vim.cmd(([[silent! %d,%ds/^\(\s*\)⬜ /・/]]):format(opts.line1, opts.line2))
+  vim.cmd(([[silent! %d,%ds/^\(\s*\)☑️ /・/]]):format(opts.line1, opts.line2))
 end, { range = true })
 
 create_command(
