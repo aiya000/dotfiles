@@ -43,6 +43,8 @@ Key rules:
 ## Does Not
 
 1. Don't add some new diff by `git-add`
+1. Ask the user, "Is it okay not to stage this file?"
+    - Do git-commit it as-is that is already been staged
 
 ## Commit Message Rules
 
