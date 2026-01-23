@@ -1543,64 +1543,6 @@ return {
   },
 
   -- }}}
-  -- pantran.nvim {{{
-
-  {
-    'potamides/pantran.nvim',
-    config = function()
-      local pantran = require('pantran')
-
-      pantran.setup({
-        default_engine = 'deepl',
-        ui = {
-          width_percentage = 0.8,
-          height_percentage = 0.9,
-        },
-        engines = {
-          deepl = {
-            auth_key = vim.env.NVIM_DEEPL_AUTH_KEY,
-            free_api = true,
-          },
-        },
-      })
-
-      ---@param target_lang string
-      local function create_opening_with_current_word(target_lang)
-        return function()
-          local word = vim.fn.expand('<cword>')
-          vim.cmd('Pantran target=' .. target_lang)
-
-          vim.schedule(function()
-            vim.api.nvim_paste(word, false, -1)
-            vim.keymap.set('n', '?', 'g?', { buffer = true, remap = true })
-            vim.keymap.set('n', '<C-k><C-j>', 'gy', { buffer = true, remap = true })
-            vim.keymap.set('n', '<C-l>', 'q', { buffer = true, remap = true })
-          end)
-        end
-      end
-
-      ---@param target_lang string
-      local function create_opening_with_selected_text(target_lang)
-        return function()
-          local selected_text = table.concat(nvim.get_selected_text(), '\n')
-          vim.cmd('Pantran target=' .. target_lang)
-          vim.schedule(function()
-            vim.api.nvim_paste(selected_text, false, -1)
-            vim.keymap.set('n', '?', 'g?', { buffer = true, remap = true })
-            vim.keymap.set('n', '<C-k><C-j>', 'gy', { buffer = true, remap = true })
-            vim.keymap.set('n', '<C-l>', 'q', { buffer = true, remap = true })
-          end)
-        end
-      end
-
-      vim.keymap.set('n', '<leader>k', create_opening_with_current_word('JA'))
-      vim.keymap.set('n', '<leader>K', create_opening_with_current_word('EN-US'))
-      vim.keymap.set('v', '<leader>k', create_opening_with_selected_text('JA'))
-      vim.keymap.set('v', '<leader>K', create_opening_with_selected_text('EN-US'))
-    end,
-  },
-
-  -- }}}
   -- colorful-winsep.nvim {{{
 
   {
@@ -1800,6 +1742,20 @@ return {
           end, { buffer = true, silent = true })
         end,
       })
+    end,
+  },
+
+  -- }}}
+  -- deepl.nvim {{{
+
+  {
+    'walkersumida/deepl.nvim',
+    config = function()
+      require('deepl').setup()
+      vim.keymap.set('n', '<leader>k', 'viw:DeepL JA<CR>')
+      vim.keymap.set('n', '<leader>K', 'viw:DeepL EN<CR>')
+      vim.keymap.set('v', '<leader>k', ':DeepL JA<CR>')
+      vim.keymap.set('v', '<leader>K', ':DeepL EN<CR>')
     end,
   },
 
