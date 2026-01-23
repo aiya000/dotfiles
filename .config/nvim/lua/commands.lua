@@ -183,6 +183,9 @@ create_command('LspStop', function(opts)
     client:stop()
   end
 
+  -- 無効化して、LspStartで再度有効化できるようにする
+  vim.lsp.enable(name, false)
+
   vim.notify(('[LspStop] Stopped %s'):format(name), vim.log.levels.INFO)
 end, {
   nargs = 1,
@@ -227,6 +230,9 @@ create_command('LspRestart', function(opts)
   for _, client in ipairs(clients) do
     client:stop()
   end
+
+  -- 無効化して再度有効化できるようにする
+  vim.lsp.enable(name, false)
 
   -- 少し待ってから起動（クライアントが完全に停止するのを待つ）
   vim.defer_fn(function()
