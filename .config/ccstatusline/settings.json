@@ -60,6 +60,14 @@
         "type": "separator"
       },
       {
+        "id": "94fd8352-3346-41da-a4f1-382cc698c774",
+        "type": "current-working-dir"
+      },
+      {
+        "id": "ff70d99d-e8c1-4ba2-83a5-09953f789149",
+        "type": "separator"
+      },
+      {
         "id": "52904565-a517-4ed5-b6b4-ee285dba7b3e",
         "type": "claude-session-id"
       }
