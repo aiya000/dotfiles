@@ -56,8 +56,9 @@ $ bin/dot-link.sh
 - **場所**: `.claude/`, `.claude_global/`
 - **主要ファイル**: `CLAUDE.md`, `.claude_global/settings.json`
 - **特徴**:
-    - AIアシスタント用のカスタム指示
-    - グローバル設定とプロジェクト固有設定
+    - Claude Code AIアシスタントの動作をカスタマイズする指示ファイル
+    - コーディングスタイル、キャラクター設定、プロジェクト固有のルール
+    - グローバル設定とプロジェクト固有設定の両方をサポート
 
 ### Shell (sh/bash)
 
