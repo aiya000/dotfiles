@@ -1,97 +1,109 @@
 # dotfiles
 
-aiya000の個人用dotfilesリポジトリです。Neovim、Vim、tmux、zsh、その他多数のツールの設定ファイルを管理しているのです♪
+Personal dotfiles collection for various development tools and environments.
 
-## 📊 リポジトリ統計
+## 📊 Repository Insights
 
-- 358個のLuaファイル（Neovim設定）
-- 215個のVimscriptファイル（Vim設定）
-- 長年にわたり改善を重ねてきた設定ファイル群
+![GitHub commit activity](https://img.shields.io/github/commit-activity/y/aiya000/dotfiles)
+![GitHub last commit](https://img.shields.io/github/last-commit/aiya000/dotfiles)
+![GitHub repo size](https://img.shields.io/github/repo-size/aiya000/dotfiles)
+![GitHub language count](https://img.shields.io/github/languages/count/aiya000/dotfiles)
+![Top language](https://img.shields.io/github/languages/top/aiya000/dotfiles)
 
-## 🚀 セットアップ方法
+## 🚀 Setup
 
-このdotfilesをインストールするには、以下のコマンドを実行してください：
+This repository is primarily for personal use. To use these dotfiles:
 
-```bash
-$ git clone https://github.com/aiya000/dotfiles ~/.dotfiles
-$ cd ~/.dotfiles
-$ bin/dot-link.sh
-```
+1. Clone this repository to `~/.dotfiles`:
+   ```bash
+   git clone https://github.com/aiya000/dotfiles ~/.dotfiles
+   cd ~/.dotfiles
+   ```
 
-`dot-link.sh`スクリプトは、ホームディレクトリ以下の既存のdotfilesを削除し、このリポジトリのファイルへのシンボリックリンクを作成します。
+2. Create symbolic links, copy, or recursively copy files as appropriate for each configuration:
+   - Use `ln -s` for files that should be linked (most dotfiles)
+   - Use `cp` for files that need to be copied (e.g., templates)
+   - Use `cp -r` for directories that need to be recursively copied
 
-⚠️ **警告**: このスクリプトは既存のdotfilesを**強制的に上書き**します。実行前にバックアップを取ることをお勧めします。
+   Example:
+   ```bash
+   ln -s ~/.dotfiles/.vimrc ~/.vimrc
+   ln -s ~/.dotfiles/.zshrc ~/.zshrc
+   cp -r ~/.dotfiles/.config/nvim ~/.config/
+   ```
 
-## 📦 含まれる設定
+Alternatively, you can use the `bin/dot-link.sh` script, though it is designed for the author's personal workflow and may not suit all use cases.
+
+## 📦 Included Configurations
 
 ### Neovim
 
-- **場所**: `.config/nvim/`
-- **主要ファイル**: `init.lua`
-- **特徴**:
-    - Lua設定への完全移行
-    - 豊富なプラグイン設定（lazy.nvim使用）
-    - カスタムキーマッピングと自動コマンド
-    - LSP、補完、スニペット設定
+- **Location**: `.config/nvim/`
+- **Main file**: `init.lua`
+- **Features**:
+    - Full Lua configuration
+    - Plugin management with lazy.nvim
+    - Custom keymappings and autocommands
+    - LSP, completion, and snippet configurations
 
 ### Vim
 
-- **場所**: `.vim/`, `.vimrc`, `.gvimrc`
-- **主要ファイル**: `.vimrc`
-- **特徴**:
-    - プラグイン管理（dein.vim使用）
-    - カスタムキーマッピング
-    - ファイルタイプ別設定
+- **Location**: `.vim/`, `.vimrc`, `.gvimrc`
+- **Main file**: `.vimrc`
+- **Features**:
+    - Plugin management with dein.vim
+    - Custom keymappings
+    - Filetype-specific configurations
 
 ### tmux
 
-- **場所**: `.tmux/`, `.tmux.conf`
-- **主要ファイル**: `.tmux.conf`
-- **特徴**:
-    - カスタムキーバインディング
-    - プラグイン設定
+- **Location**: `.tmux/`, `.tmux.conf`
+- **Main file**: `.tmux.conf`
+- **Features**:
+    - Custom key bindings
+    - Plugin configurations
 
 ### Claude Code
 
-- **場所**: `.claude/`, `.claude_global/`
-- **主要ファイル**: `CLAUDE.md`, `.claude_global/settings.json`
-- **特徴**:
-    - Claude Code AIアシスタントの動作をカスタマイズする指示ファイル
-    - コーディングスタイル、キャラクター設定、プロジェクト固有のルール
-    - グローバル設定とプロジェクト固有設定の両方をサポート
+- **Location**: `.claude/`, `.claude_global/`
+- **Main files**: `CLAUDE.md`, `.claude_global/settings.json`
+- **Features**:
+    - Custom instructions for Claude Code AI assistant
+    - Coding style, character settings, and project-specific rules
+    - Global and project-specific configurations
 
 ### Shell (sh/bash)
 
-- **場所**: `.sh_generic/`, `.bashrc`, `.bash_profile`
-- **主要ファイル**: `.bashrc`
-- **特徴**:
-    - 汎用シェル設定
-    - エイリアスと環境変数
+- **Location**: `.sh_generic/`, `.bashrc`, `.bash_profile`
+- **Main file**: `.bashrc`
+- **Features**:
+    - Generic shell configurations
+    - Aliases and environment variables
 
 ### Zsh
 
-- **場所**: `.zsh/`, `.zshrc`, `.zshenv`, `.zprofile`
-- **主要ファイル**: `.zshrc`
-- **特徴**:
-    - カスタムプロンプト設定
-    - プラグイン管理
-    - キーマッピング（`.zshrc.keymap`）
-    - 補完設定
+- **Location**: `.zsh/`, `.zshrc`, `.zshenv`, `.zprofile`
+- **Main file**: `.zshrc`
+- **Features**:
+    - Custom prompt configuration
+    - Plugin management
+    - Custom keymappings (`.zshrc.keymap`)
+    - Completion configurations
 
-## 🛠️ その他のツール
+## 🛠️ Other Tools
 
-このリポジトリには、以下のような他のツールの設定も含まれています：
+This repository also includes configurations for:
 
 - **Git**: `.gitconfig`, `.gitignore_global`, `.gitmessage`
 - **ctags**: `.ctags.d/`
 - **Docker**: `.docker/`, `docker/`
 - **Stack (Haskell)**: `.stack/`
-- **カスタムスクリプト**: `bin/`, `bash-toys/`
+- **Custom scripts**: `bin/`, `bash-toys/`
 
-## 📝 ライセンス
+## 📝 License
 
-このプロジェクトはLICENSEファイルに基づいてライセンスされています。
+This project is licensed under the terms specified in the LICENSE file.
 
-## 🔗 リンク
+## 🔗 Links
 
-- [GitHub リポジトリ](https://github.com/aiya000/dotfiles)
+- [GitHub Repository](https://github.com/aiya000/dotfiles)
