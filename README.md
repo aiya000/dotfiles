@@ -71,6 +71,7 @@ Alternatively, you can use the `bin/dot-link.sh` script, though it is designed f
     - Custom instructions for Claude Code AI assistant
     - Coding style, character settings, and project-specific rules
     - Global and project-specific configurations
+- **Note**: For `.claude_global` setup instructions, please refer to [.claude_global/README.md](.claude_global/README.md)
 
 ### Shell (sh/bash)
 
