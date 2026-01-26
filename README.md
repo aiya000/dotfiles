@@ -8,7 +8,6 @@ Personal dotfiles collection for various development tools and environments.
 ![GitHub last commit](https://img.shields.io/github/last-commit/aiya000/dotfiles)
 ![GitHub repo size](https://img.shields.io/github/repo-size/aiya000/dotfiles)
 ![GitHub language count](https://img.shields.io/github/languages/count/aiya000/dotfiles)
-![Top language](https://img.shields.io/github/languages/top/aiya000/dotfiles)
 
 ## 🚀 Setup
 
