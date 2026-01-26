@@ -36,7 +36,7 @@ Alternatively, you can use the `bin/dot-link.sh` script, though it is designed f
 
 ## 📦 Included Configurations
 
-### Neovim
+### [Neovim](.config/nvim/)
 
 - **Location**: `.config/nvim/`
 - **Main file**: `init.lua`
@@ -45,8 +45,9 @@ Alternatively, you can use the `bin/dot-link.sh` script, though it is designed f
     - Plugin management with lazy.nvim
     - Custom keymappings and autocommands
     - LSP, completion, and snippet configurations
+- **Note**: For project-specific instructions, see [AGENTS.md](.config/nvim/AGENTS.md)
 
-### Vim
+### [Vim](.vim/)
 
 - **Location**: `.vim/`, `.vimrc`, `.gvimrc`
 - **Main file**: `.vimrc`
@@ -55,7 +56,7 @@ Alternatively, you can use the `bin/dot-link.sh` script, though it is designed f
     - Custom keymappings
     - Filetype-specific configurations
 
-### tmux
+### [tmux](.tmux/)
 
 - **Location**: `.tmux/`, `.tmux.conf`
 - **Main file**: `.tmux.conf`
@@ -63,7 +64,7 @@ Alternatively, you can use the `bin/dot-link.sh` script, though it is designed f
     - Custom key bindings
     - Plugin configurations
 
-### Claude Code
+### [Claude Code](.claude/)
 
 - **Location**: `.claude/`, `.claude_global/`
 - **Main files**: `CLAUDE.md`, `.claude_global/settings.json`
@@ -73,7 +74,27 @@ Alternatively, you can use the `bin/dot-link.sh` script, though it is designed f
     - Global and project-specific configurations
 - **Note**: For `.claude_global` setup instructions, please refer to [.claude_global/README.md](.claude_global/README.md)
 
-### Shell (sh/bash)
+### [gemini-cli](GEMINI.md)
+
+- **Location**: `GEMINI.md`
+- **Main file**: `GEMINI.md`
+- **Features**:
+    - Custom instructions for gemini-cli AI assistant
+    - Global configuration shared across projects
+    - Character settings and conversation rules
+    - Memory file management for session tracking
+
+### [copilot-cli](.copilot/)
+
+- **Location**: `.copilot/`
+- **Main file**: `copilot-instructions.md` (symlink to `ai-custom-instructions.md`)
+- **Features**:
+    - Custom instructions for GitHub Copilot CLI
+    - Shared configuration with other AI assistants
+    - Notification settings and workflow customizations
+- **Note**: For setup instructions, see [.copilot/README.md](.copilot/README.md)
+
+### [Shell (sh/bash)](.sh_generic/)
 
 - **Location**: `.sh_generic/`, `.bashrc`, `.bash_profile`
 - **Main file**: `.bashrc`
@@ -81,7 +102,7 @@ Alternatively, you can use the `bin/dot-link.sh` script, though it is designed f
     - Generic shell configurations
     - Aliases and environment variables
 
-### Zsh
+### [Zsh](.zsh/)
 
 - **Location**: `.zsh/`, `.zshrc`, `.zshenv`, `.zprofile`
 - **Main file**: `.zshrc`
