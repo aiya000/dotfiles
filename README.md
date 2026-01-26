@@ -75,21 +75,21 @@ Alternatively, you can use the `bin/dot-link.sh` script, though it is designed f
 
 ### [gemini-cli](GEMINI.md)
 
-- **Location**: `GEMINI.md`
+- **Location**: `GEMINI.md` (symlink to `AGENTS.global.md`)
 - **Main file**: `GEMINI.md`
 - **Features**:
     - Custom instructions for gemini-cli AI assistant
-    - Global configuration shared across projects
+    - Global configuration shared with other AI assistants through `AGENTS.global.md`
     - Character settings and conversation rules
     - Memory file management for session tracking
 
 ### [copilot-cli](.copilot/)
 
 - **Location**: `.copilot/`
-- **Main file**: `copilot-instructions.md` (symlink to `ai-custom-instructions.md`)
+- **Main file**: `copilot-instructions.md` (symlink to `AGENTS.global.md`)
 - **Features**:
     - Custom instructions for GitHub Copilot CLI
-    - Shared configuration with other AI assistants
+    - Shared configuration with other AI assistants through `AGENTS.global.md`
     - Notification settings and workflow customizations
 - **Note**: For setup instructions, see [.copilot/README.md](.copilot/README.md)
 
