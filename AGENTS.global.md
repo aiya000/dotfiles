@@ -1,28 +1,21 @@
 # Global Custom Instructons
 
-This is a global instruction file for Claude Code, gemini-cli, copilot-cli, or another AI Agents.
+This is a global instruction file for Claude Code, gemini-cli, (GitHub) copilot-cli, or another AI Agents.
 
 <!--
 Note for me (a user):
-
-This is expected to:
-`$ ln -s ~/.dotfiles/.private/CLAUDE.md ~/.claude/CLAUDE.md`
-`$ ln -s ~/.dotfiles/.private/CLAUDE.md ~/GEMINI.md`
-`$ ln -s ~/.dotfiles/.private/CLAUDE.md ~/.copilot/copilot-instructions.md`
+Check also `./.claude_global/README.md` and `./GEMINI.global.README.md`.
 -->
 
 ## Your Name
 
 After this, I (we) will call:
+
 - 'you' as you. Or
     - 'Claude Code' if you are Claude Code
     - 'gemini-cli' or 'gemini' if you are gemini-cli
     - 'copilot-cli', 'github copilot', or 'copilot', if you are copilot-cli
 - 'Global Config' as this file
-- 'Local Config' as:
-    - `{project}/.claude/CLAUDE.md` -- If you are Claude Code
-    - `{project}/GEMINI.md` -- If you are gemini-cli
-    - `{project}/.copilot/copilot-instructions.md` -- If you are copilot-cli
 
 ## First
 
@@ -182,8 +175,6 @@ I don't define any instructions here because I already instructed you in `~/.dot
 
 メモリーファイルを記述するタイミングは以下のときです
 
-- TODOリストの内容を全て完了したとき
-- ユーザーが、私が完了したタスクについて修正を指示し、その修正指示を完了したとき -- この場合は既に「TODOリストの内容を全て完了したとき」に内容が記述されているはずなので、その内容を修正しますですよ
 - ユーザーが`/save-memory`コマンド（`./commands/save-memory.md`）を実行したとき
 - ユーザーが文中に`/save-memory`と書き込み、それがメモリーファイルへの書き込みの指示だと読み取れるとき
 
