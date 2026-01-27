@@ -14,24 +14,23 @@ Personal dotfiles collection for various development tools and environments.
 This repository is primarily for personal use. To use these dotfiles:
 
 1. Clone this repository to `~/.dotfiles`:
-   ```bash
-   git clone https://github.com/aiya000/dotfiles ~/.dotfiles
-   cd ~/.dotfiles
-   ```
+
+```shell-session
+$ git clone https://github.com/aiya000/dotfiles ~/.dotfiles
+$ cd ~/.dotfiles
+```
 
 2. Create symbolic links, copy, or recursively copy files as appropriate for each configuration:
    - Use `ln -s` for files that should be linked (most dotfiles)
    - Use `cp` for files that need to be copied (e.g., templates)
    - Use `cp -r` for directories that need to be recursively copied
 
-   Example:
-   ```bash
-   ln -s ~/.dotfiles/.vimrc ~/.vimrc
-   ln -s ~/.dotfiles/.zshrc ~/.zshrc
-   cp -r ~/.dotfiles/.config/nvim ~/.config/
-   ```
-
-Alternatively, you can use the `bin/dot-link.sh` script, though it is designed for the author's personal workflow and may not suit all use cases.
+Example:
+```shell-session
+$ ln -s ~/.dotfiles/.vimrc ~/.vimrc
+$ ln -s ~/.dotfiles/.zshrc ~/.zshrc
+$ cp -r ~/.dotfiles/.config/nvim ~/.config/
+```
 
 ## 📦 Included Configurations
 
@@ -44,7 +43,6 @@ Alternatively, you can use the `bin/dot-link.sh` script, though it is designed f
     - Plugin management with lazy.nvim
     - Custom keymappings and autocommands
     - LSP, completion, and snippet configurations
-- **Note**: For project-specific instructions, see [AGENTS.md](.config/nvim/AGENTS.md)
 
 ### [Vim](.vim/)
 
@@ -63,43 +61,44 @@ Alternatively, you can use the `bin/dot-link.sh` script, though it is designed f
     - Custom key bindings
     - Plugin configurations
 
-### [Claude Code](.claude/)
+### [Claude Code](.claude_global/)
 
-- **Location**: `.claude/`, `.claude_global/`
-- **Main files**: `CLAUDE.md`, `.claude_global/settings.json`
+- **Location**: `.claude_global/`
+- **Main files**: `.claude_global/CLAUDE.md` (symlink to `AGENTS.global.md`), `.claude_global/settings.json`
 - **Features**:
+    - Under files and directories of this directory, intended to be linked to `~/.claude/*`
     - Custom instructions for Claude Code AI assistant
     - Coding style, character settings, and project-specific rules
     - Global and project-specific configurations
-- **Note**: For `.claude_global` setup instructions, please refer to [.claude_global/README.md](.claude_global/README.md)
+- **Note**:
+    - For `.claude_global/` setup instructions, please refer to [.claude_global/README.md](.claude_global/README.md)
+    - `.claude/` is just configuration for this repository (not for global use)
 
-### [gemini-cli](GEMINI.md)
+### [AGENTS.global.md](AGENTS.global.md)
 
-- **Location**: `GEMINI.md` (symlink to `AGENTS.global.md`)
-- **Main file**: `GEMINI.md`
+- **Location**: `AGENTS.global.md`
+- **Main files**: `AGENTS.global.md`
 - **Features**:
-    - Custom instructions for gemini-cli AI assistant
-    - Global configuration shared with other AI assistants through `AGENTS.global.md`
-    - Character settings and conversation rules
-    - Memory file management for session tracking
+    - Intended to be linked to `~/AGENTS.md`
+    - Custom instructions for multiple AI assistants including **copilot-cli**
+- **Note**: For `AGENTS.global.md` setup instructions, please refer to [AGENTS.global.README.md](AGENTS.global.README.md)
 
-### [copilot-cli](.copilot/)
+### [copilot-cli](AGENTS.global.md)
 
-- **Location**: `.copilot/`
-- **Main file**: `copilot-instructions.md` (symlink to `AGENTS.global.md`)
+- **Location**: `AGENTS.global.md`
+
+### [gemini-cli](GEMINI.global.md)
+
+- **Location**: `GEMINI.global.md` (symlink to `AGENTS.global.md`), 
+- **Note**:
+    - For `GEMINI.global.md` setup instructions, please refer to [GEMINI.global.README.md](GEMINI.global.README.md) (symlink to `AGENTS.global.README.md`)
+
+### [Shell (zsh/bash)](.sh_generic/)
+
+- **Location**: `.sh_generic/`
+- **Main file**: `.sh_generic/aliases.sh`
 - **Features**:
-    - Custom instructions for GitHub Copilot CLI
-    - Shared configuration with other AI assistants through `AGENTS.global.md`
-    - Notification settings and workflow customizations
-- **Note**: For setup instructions, see [.copilot/README.md](.copilot/README.md)
-
-### [Shell (sh/bash)](.sh_generic/)
-
-- **Location**: `.sh_generic/`, `.bashrc`, `.bash_profile`
-- **Main file**: `.bashrc`
-- **Features**:
-    - Generic shell configurations
-    - Aliases and environment variables
+    - Various aliases, functions, and configurations
 
 ### [Zsh](.zsh/)
 
@@ -119,11 +118,11 @@ This repository also includes configurations for:
 - **ctags**: `.ctags.d/`
 - **Docker**: `.docker/`, `docker/`
 - **Stack (Haskell)**: `.stack/`
-- **Custom scripts**: `bin/`, `bash-toys/`
+- **Custom scripts**: `bin/`, `shell-session-toys/`
 
 ## 📝 License
 
-This project is licensed under the terms specified in the LICENSE file.
+This project is licensed under the terms specified in the [LICENSE](./LICENSE) file.
 
 ## 🔗 Links
 
