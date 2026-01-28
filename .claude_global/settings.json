@@ -23,7 +23,9 @@
       "Bash(gh run view:*)",
       "Bash(rg:*)",
       "Bash(notify:*)",
-      "Read(~/.config/nvim)"
+      "Read(~/.config/nvim)",
+      "Skill(/read-agents-md)",
+      "Skill(suggest-alternative-commands.md)"
     ],
     "deny": [
       "Bash(git push:*)",
@@ -32,6 +34,11 @@
       "Bash(rm:*)",
       "Read(.env.*)"
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "ccstatusline",
+    "padding": 0
   },
   "hooks": {
     "Stop": [
