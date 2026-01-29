@@ -49,26 +49,20 @@ Read all available `AGENTS.md` files to understand project-specific agent config
 
 ## Running CLI
 
-### Execute `rm-dust` instead of `rm`
-
-When you want to delete files or directories,
-**YOU MUST** run `rm-dust` command instead of `rm` command.
-
-`rm-dust` is located in `~/.dotfiles/bash-toys/bin/rm-dust`.
-
-### Alternative commands
+### **Alternative commands**
 
 When you want to run the following commands, use the alternative commands instead:
 
-- `find` → `fd`
-- `grep` → `rg`
+- `rm` → `rm-dust` -- To avoid accidental file deletion
+- `find` → `fd` -- For performance
+- `grep` → `rg` -- For performance
 
 If that alternative commands are not available, that's incorrect state.
 Let's stop the current operation and notify it to the user.
 
 NOTE:
 This is about using alternative commands in your responses.
-You can use `find` and `grep` when writing shell scripts.
+You can use `rm`, `find`, and `grep` when writing shell scripts.
 
 ## Conversations
 
