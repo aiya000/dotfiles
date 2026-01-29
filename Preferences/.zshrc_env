@@ -19,7 +19,7 @@ PATH="$PATH:/mnt/c/Program Files/Rancher Desktop/resources/resources/linux/bin"
 PATH="$PATH:/mnt/c/Program Files (x86)/Bluetooth Command Line Tools/bin"
 PATH="$PATH:/mnt/c/Users/$WINDOWS_USER/Desktop/Programs/android-platform-tools"
 
-if ! i_have code && i_have Code.exe ; then
+if ! i-have code && i-have Code.exe ; then
   alias code=Code.exe
 fi
 

@@ -21,16 +21,16 @@ alias mv='mv -i'
 alias sl=ls
 alias rm=rm-dust  # Aaaaaaaaaaaaaaaa!!
 
-if i_have batcat ; then
+if i-have batcat ; then
   alias batcat-with-default-options='batcat $DOTFILES_BATCAT_DEFAULT_OPTIONS' # あれ？ これってオプション変数、ここで展開しなくていいんだっけ？
   alias bat=batcat-with-default-options
   alias cat=batcat-with-default-options
-elif i_have bat ; then
+elif i-have bat ; then
   alias bat-with-default-options='bat $DOTFILES_BATCAT_DEFAULT_OPTIONS'
   alias cat=bat-with-default-options
 fi
 
-i_have btop && alias top=btop
+i-have btop && alias top=btop
 
 # NOTE: Who did define the original - ?
 function - () {
@@ -38,9 +38,9 @@ function - () {
   cd -
 }
 
-alias_of sudo 'sudo '  # Enable aliases on sudo
-alias_of mysql 'mysql --pager="less -r -S -n -i -F -X"'
-alias_of rg 'rg --color always --hidden'
+alias-of sudo 'sudo '  # Enable aliases on sudo
+alias-of mysql 'mysql --pager="less -r -S -n -i -F -X"'
+alias-of rg 'rg --color always --hidden'
 
 # }}}
 # Load ./aliases/** {{{
@@ -61,7 +61,7 @@ alias date-simple='date "+%Y-%m-%d %H:%M"'
 alias date-today='date +"%Y-%m-%d"'
 alias today=date-today
 
-if i_have dust ; then
+if i-have dust ; then
   alias du=dust
 else
   alias du='du -h'
@@ -83,7 +83,7 @@ alias ei=exit
 alias t=vterminal
 alias cdp=cd-finddir
 alias ki=kill-list
-i_have fdfind && alias fd='fdfind --hidden --ignore-case' # --hidden to include '.' prefixed files
+i-have fdfind && alias fd='fdfind --hidden --ignore-case' # --hidden to include '.' prefixed files
 
 # alias ..='cd ../'
 # alias ...='cd ../../'
@@ -99,11 +99,11 @@ function aliases::define_cd_to_parents () {
 }
 aliases::define_cd_to_parents
 
-i_have tmux && alias ta='tmux attach'
-i_have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
-i_have unzip && alias unzip-cp932='unzip -O cp932'
+i-have tmux && alias ta='tmux attach'
+i-have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
+i-have unzip && alias unzip-cp932='unzip -O cp932'
 
-if i_have jq ; then
+if i-have jq ; then
   function url-encode () {
     echo "\"$1\"" | jq -r @uri
   }
@@ -119,7 +119,7 @@ alias e="$EDITOR"
 # }}}
 # Git {{{
 
-if i_have git ; then
+if i-have git ; then
   git_taking_limit=100
 
   alias _gr='git reset'
@@ -375,7 +375,7 @@ function gitlab-clone () {
 # }}}
 # AI {{{
 
-if i_have claude ; then
+if i-have claude ; then
   alias c=claude
   alias cresume='claude --resume'
   alias ccontinue='claude --continue'
@@ -384,7 +384,7 @@ if i_have claude ; then
   alias ccommit=claude-commit
 fi
 
-if i_have copilot ; then
+if i-have copilot ; then
   alias copilot-commit='copilot -p "~/.claude/commands/git-commit-auto.md を読んで、git commitをして。" --allow-tool "shell(git:*)" --deny-tool "shell(git push)" --deny-tool "shell(git add)'
 fi
 
@@ -428,20 +428,20 @@ function kill-vue-lsp-servers () {
 # }}}
 # Another Contextual Commands {{{
 
-alias_of copilot 'copilot --allow-tool write --allow-tool "shell(notifu-respond)" --allow-tool "shell(notifu.exe)" --allow-tool "shell(git log)" --allow-tool "shell(git show)" --allow-tool "shell(git diff)" --allow-tool "shell(git status)" --allow-tool "shell(git reflog)"'
+alias-of copilot 'copilot --allow-tool write --allow-tool "shell(notifu-respond)" --allow-tool "shell(notifu.exe)" --allow-tool "shell(git log)" --allow-tool "shell(git show)" --allow-tool "shell(git diff)" --allow-tool "shell(git status)" --allow-tool "shell(git reflog)"'
 
 alias ctags-kotlin-auto="ctags-auto '--exclude=*.java' '--exclude=*.html' '--exclude=*.css'"
 alias ctags-typescript-auto="ctags-auto '--exclude=*.js' '--exclude=*.json'"
 
-alias_of yay 'yay --color always'
+alias-of yay 'yay --color always'
 
-if i_have luap ; then
+if i-have luap ; then
   alias lua-repl=luap
-elif i_have lua ; then
+elif i-have lua ; then
   alias lua-repl=lua
 fi
 
-i_have krita && alias kra=krita
+i-have krita && alias kra=krita
 
 # }}}
 

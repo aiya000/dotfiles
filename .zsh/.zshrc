@@ -130,7 +130,7 @@ fi
 # {{{
 
 function zshrc::autoload-nvm () {
-  if contains_value "${DOTFILES_ZSHRC_AUTO_LOADED_ENVS[@]}" nvm ; then
+  if contains-value "${DOTFILES_ZSHRC_AUTO_LOADED_ENVS[@]}" nvm ; then
     return
   fi
   if [[ ! -e package.json ]] ; then
