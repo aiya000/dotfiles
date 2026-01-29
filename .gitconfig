@@ -43,9 +43,11 @@
 	indentHeuristic = true
 [rebase]
 	autostash = true
+[commit]
+	template = ~/.dotfiles/.gitmessage
+[credential]
+	helper = ""
 [credential "https://github.com"]
 	helper = !/usr/bin/env gh auth git-credential
 [credential "https://gist.github.com"]
 	helper = !/usr/bin/env gh auth git-credential
-[commit]
-	template = ~/.dotfiles/.gitmessage
