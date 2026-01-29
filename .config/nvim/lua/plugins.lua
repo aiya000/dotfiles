@@ -1362,7 +1362,7 @@ return {
             cyclic = true,
           }),
           augend.constant.new({
-            elements = { '作業中', 'レビュー待ち', 'マージ済み' },
+            elements = { '作業中', 'レビュー待ち', 'レビュー対応中', 'マージ済み' },
             word = false,
             cyclic = true,
           }),
