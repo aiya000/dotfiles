@@ -159,5 +159,13 @@ return list.concat(
         cmds = i(3, 'cmds'),
       }
     )
+  ),
+
+  -- Example: `$ echo a | tee >(pbcopy)`
+  sm(
+    { 'pipe_to_cmd', 'redirect_to_pipe_cmd' },
+    fmt([[>({pipe_cmd})]], {
+      pipe_cmd = i(1, 'pipe_cmd'),
+    })
   )
 )
