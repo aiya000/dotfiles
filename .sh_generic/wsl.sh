@@ -4,11 +4,11 @@ alias x=explorer.exe
 alias pbcopy='clip.exe'
 alias pbpaste='powershell.exe -command "Get-Clipboard"'
 
-if ! i_have code && i_have Code.exe ; then
+if ! i-have code && i-have Code.exe ; then
   alias code=Code.exe # VS Code
 fi
 
-if i_have soundvolumeview ; then
+if i-have soundvolumeview ; then
   function soundvolumeview-list () {
     local tmpfile="/tmp/$RANDOM"
     soundvolumeview /stext "$tmpfile"
