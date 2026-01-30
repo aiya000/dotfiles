@@ -368,18 +368,16 @@ vim.list_extend(
   html_snippets,
   sm(
     { 'folding', 'details_summary' },
-    fmt(
-      [[
-<details>
-<summary>{}</summary> <!-- {{{{ -->
-{}
-<!-- }}}} -->
-</details>]],
-      {
-        i(1, 'summary'),
-        i(2, ''),
-      }
-    )
+    fmt([[
+      <details>
+      <summary>{}</summary> <!-- {{{{{{ -->
+      {}
+      <!-- }}}}}} -->
+      </details>
+    ]], {
+      i(1, 'summary'),
+      i(2, ''),
+    })
   )
 )
 
