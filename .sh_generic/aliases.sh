@@ -342,6 +342,21 @@ function github-change-remote-from-git-to-https () {
   git remote get-url "$remote"
 }
 
+  function gh-workflow-run-all () {
+: <<EOF
+  ```yaml
+  on:
+    workflow_dispatch:
+  ```
+  に設定されている全てのGitHub Actions Workflowを実行する
+EOF
+
+  gh workflow list --json name -q '.[].name' | while read -r workflow ; do
+    echo "Running: $workflow"
+    gh workflow run "$workflow" --ref main
+  done
+}
+
 # }}}
 ## GitLab {{{
 
