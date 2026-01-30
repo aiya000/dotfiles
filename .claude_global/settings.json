@@ -35,11 +35,6 @@
       "Read(.env.*)"
     ]
   },
-  "statusLine": {
-    "type": "command",
-    "command": "ccstatusline",
-    "padding": 0
-  },
   "hooks": {
     "Stop": [
       {
