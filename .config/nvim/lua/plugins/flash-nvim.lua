@@ -1,5 +1,41 @@
 local list = require('utils.list')
 
+local function input_for_kensaku_jump()
+  local Input = require('nui.input')
+  local event = require('nui.utils.autocmd').event
+
+  local input = Input({
+    position = '50%',
+    size = {
+      width = 20,
+    },
+    border = {
+      style = 'single',
+      text = {
+        top = ' Kensaku Flash ',
+        top_align = 'center',
+      },
+    },
+  }, {
+    prompt = '> ',
+    on_submit = function(inputted)
+      -- TODO: nui.input.Inputをsubmitしてからなんらかの文字1文字を入力しないと、なぜか候補が表示されないので、今はテキトーに1文字入力して運用する。もし何かわかれば直す（なお1文字を入力するタイミングがflash.jumpのsearch.modeでreturnした後なので、同期処理では無理だった）
+      require('flash').jump({
+        search = {
+          mode = function()
+            return vim.fn['kensaku#query'](inputted)
+          end,
+        },
+      })
+    end,
+  })
+
+  input:mount()
+  input:on(event.BufLeave, function()
+    input:unmount()
+  end)
+end
+
 return {
   'folke/flash.nvim',
   event = 'VeryLazy',
@@ -47,15 +83,7 @@ return {
     {
       ';:', -- kensaku-jump
       mode = { 'n', 'x', 'o' },
-      function()
-        require('flash').jump({
-          search = {
-            mode = function(str)
-              return vim.fn['kensaku#query'](str)
-            end,
-          },
-        })
-      end,
+      input_for_kensaku_jump,
       desc = 'Flash with Kensaku',
     },
     {
