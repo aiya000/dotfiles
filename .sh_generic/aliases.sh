@@ -33,7 +33,6 @@ fi
 i-have btop && alias top=btop
 
 if i-have rg ; then
-  alias ggrep=grep
   alias grep=rg # To enforce the use of `rg` in Claude Code
   alias rg='rg --hidden'
 fi
@@ -44,41 +43,12 @@ elif i-have fd ; then
   fd=fd
 fi
 if [[ $fd != '' ]] ; then
-  alias gfind=find
   # shellcheck disable=SC2139
   alias fd="$fd --hidden --ignore-case" # --hidden to include '.' prefixed files
   # shellcheck disable=SC2139
   alias find="$fd" # To enforce the use of `fd` in Claude Code
 fi
 unset fd
-
-# NOTE: Who did define the original - ?
-function - () {
-  # shellcheck disable=SC2164
-  cd -
-}
-
-alias-of sudo 'sudo '  # Enable aliases on sudo
-alias-of mysql 'mysql --pager="less -r -S -n -i -F -X"'
-
-# }}}
-# Load ./aliases/** {{{
-
-source ~/.sh_generic/aliases/build-tools.sh
-source ~/.sh_generic/aliases/os-package-managers.sh
-source ~/.sh_generic/aliases/neovim.sh
-
-# }}}
-# General Commands {{{
-
-alias la='ls -a --color=auto --group-directories-first'
-alias ll='ls -l --color=auto --group-directories-first'
-alias llh='ls -lh --color=auto --group-directories-first'
-alias lla='ls -la --color=auto --group-directories-first'
-
-alias date-simple='date "+%Y-%m-%d %H:%M"'
-alias date-today='date +"%Y-%m-%d"'
-alias today=date-today
 
 if i-have dust ; then
   alias du=dust
@@ -91,321 +61,23 @@ else
   }
 fi
 
-# shellcheck disable=SC2139
-alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
-alias mount4u.vfat=mount4u.ntfs
-alias mount4u.ext2='sudo mount -o iocharset=utf8'
-alias mount4u.ext3=mount4u.ext2
-alias mount4u.ext4=mount4u.ext2
-
-alias ei=exit
-alias t=vterminal
-alias cdp=cd-finddir
-alias ki=kill-list
-
-# alias ..='cd ../'
-# alias ...='cd ../../'
-# alias ....='cd ../../../'
-# ...
-function aliases::define_cd_to_parents () {
-  local name dir
-  for (( i = 2; i <= 10; ++i )) ; do
-    name=$(eval "printf '.%.0s' {1..$i}")
-    dir=$(eval "printf '../%.0s' {2..$i}")
-    eval "alias $name='cd $dir'"
-  done
-}
-aliases::define_cd_to_parents
-
-i-have tmux && alias ta='tmux attach'
-i-have nmcli && alias nmcli-connect-wifi='nmcli device wifi connect'
-i-have unzip && alias unzip-cp932='unzip -O cp932'
-
-if i-have jq ; then
-  function url-encode () {
-    echo "\"$1\"" | jq -r @uri
-  }
-  alias urlencode=url-encode
-fi
-
-alias notify-at-cancel-all='notify-at -l ; notify-at -l | drop 2 | cut -d" " -f1 | xargs -I {} notify-at -c {} ; notify-at -l'
-
-# }}}
-# Editors {{{
-
-# shellcheck disable=SC2139
-alias e="$EDITOR"
-
-# }}}
-# Git {{{
-
-if i-have git ; then
-  git_taking_limit=100
-
-  alias _gr='git reset'
-  alias _grh='git reset --hard'
-  alias _grh~='git reset --hard HEAD~'
-  alias _grh~~='git reset --hard HEAD~~'
-  alias _grh~~~='git reset --hard HEAD~~~'
-  alias _grh~~~~='git reset --hard HEAD~~~~'
-  alias _grs='git reset --soft'
-  alias _grs~='git reset --soft HEAD~'
-  alias _grs~~='git reset --soft HEAD~~'
-  alias _grs~~~='git reset --soft HEAD~~~'
-  alias _grs~~~~='git reset --soft HEAD~~~~'
-  alias gs='git status'
-  alias ga='git add'
-  alias gaa='git add -A'
-  alias gap='git add -p'
-  alias gb='git branch'
-  alias gba='git branch --all'
-  alias gbd='git branch --delete'
-  alias _gbd='git branch -D'
-  alias _gbdf='git branch --delete --force'
-  alias gbm='git branch -m'
-  alias gbc='git branch --show-current'
-  alias gc='git commit --verbose'
-  alias gcam='git commit --verbose --amend'
-  alias gcamm='git commit --verbose --amend -m'
-  alias gcm='git commit -m'
-  alias gcem='git commit --allow-empty -m'
-  alias gcf='git commit --fixup'
-  alias gaacm='git add -A && git commit -m'
-  alias gco='git checkout'
-  alias gsw='git switch'
-  alias gswc='git switch --create'
-  alias gswd='git switch --detach'
-  alias gres='git restore'
-  alias gres-select-ours-for-conflict='git restore --ours'
-  alias gres-select-theirs-for-conflict='git restore --theirs'
-  alias gd='git diff'
-  alias gdh='git diff HEAD~..HEAD'
-  alias gds='git diff --staged'
-  alias gss='git stash save'
-  alias gssp='git stash pop'
-  alias gssd='git stash drop'
-  alias gssl='git stash list'
-  # shellcheck disable=SC2139
-  alias gl="git log --name-only -$git_taking_limit"
-  # shellcheck disable=SC2139
-  alias glo="git log --oneline -$git_taking_limit"
-  alias gr='git rebase'
-  alias gra='git rebase --abort'
-  alias grc='git rebase --continue'
-  alias gri='git rebase --interactive --autosquash'
-  alias gri~='git rebase --interactive --autosquash HEAD~'
-  alias gri~~='git rebase --interactive --autosquash HEAD~~'
-  alias gri~~~='git rebase --interactive --autosquash HEAD~~~'
-  alias gri~~~~='git rebase --interactive --autosquash HEAD~~~~'
-  alias gri~~~~~='git rebase --interactive --autosquash HEAD~~~~~'
-  alias gri~~~~~~='git rebase --interactive --autosquash HEAD~~~~~~'
-  alias gri~~~~~~~='git rebase --interactive --autosquash HEAD~~~~~~~'
-  alias gri~~~~~~~~='git rebase --interactive --autosquash HEAD~~~~~~~~'
-  alias gri~~~~~~~~~='git rebase --interactive --autosquash HEAD~~~~~~~~~'
-  alias gri~~~~~~~~~~='git rebase --interactive --autosquash HEAD~~~~~~~~~~'
-  alias gr-onto='git rebase --onto'
-  alias grev='git revert'
-  alias grev~='git revert HEAD'
-  alias grev~~='git revert HEAD~'
-  alias grev~~~='git revert HEAD~~'
-  alias grev~~~~='git revert HEAD~~~'
-  alias grev~~~~~='git revert HEAD~~~~'
-  alias grev~~~~~~='git revert HEAD~~~~~'
-  alias grev~~~~~~~='git revert HEAD~~~~~~'
-  alias grev~~~~~~~~='git revert HEAD~~~~~~~'
-  alias grev~~~~~~~~~='git revert HEAD~~~~~~~~'
-  alias grev~~~~~~~~~~='git revert HEAD~~~~~~~~~'
-  alias gmt='git mergetool'
-  alias gmerge='git merge --no-ff'
-  alias gsm='git submodule'
-  alias gsma='git submodule add'
-  alias gsmd='git submodule deinit'
-  alias gsmu='git submodule update'
-  alias gsmui='git submodule update --init'
-  alias gsmuir='git submodule update --init --recursive'
-  alias gch='git cherry-pick'
-  alias gchc='git cherry-pick --continue'
-  alias gcha='git cherry-pick --abort'
-  alias gchs='git cherry-pick --skip'
-  alias gp='git push'
-  alias gpu='git push -u'
-  alias gpuo='git push -u origin'
-  alias gpf='git push --force-with-lease'
-  alias gpull='git pull --rebase'
-  alias greflog='git reflog'
-  alias gshow='git show'
-  alias gclone='git clone --recurse-submodules'
-  alias gf='git fetch'
-  alias gfo='git fetch origin'
-  alias gfp='git fetch --prune'  # GitHub（など）の上に既にない`remotes/origin/xxxx`のようなリモート追跡ブランチを、ローカルから削除するやつ
-  alias gtag='git tag'
-  alias gtag-delete='git tag --delete'
-  alias gtagd='git tag --delete'
-  alias gw='git worktree'
-
-  # git-stash系のaliasは、ほとんどは自分でも覚えられなかったので、わかりやすい名前にする
-  alias git-stash-push-message='git stash push -m'
-  function git-stash-save-patch-and-message () {
-      git stash push --message "$1" --patch
-  }
-  alias git-diff-0='git diff stash@{0}'
-  alias git-diff-1='git diff stash@{1}'
-  alias git-diff-2='git diff stash@{2}'
-
-  function gtag-add-m () {
-    local tag_name=$1 message=$2
-    git tag --annotate "$tag_name" --message "$message"
-  }
-
-  function gwa () {
-    : Makes both the new branch and the new directory.
-    target_branch=$1
-    git worktree add "$target_branch" "${target_branch//\#/}"
-  }
-
-  function gwab () {
-    : Makes the new branch basing on a base branch.
-    base_branch=$1
-    new_branch=$2
-    git worktree add -b "$new_branch" "${new_branch//\#/}" "$base_branch"
-  }
-
-  function gwb () {
-    local branch_name=$1
-    git worktree add "$branch_name" -b "$branch_name"
-  }
-
-  alias gwl='git worktree list'
-  alias gwp='git worktree prune'
-  alias gw-erase-removed='git worktree prune'
-
-  function git-branch-name () {
-    git branch 2> /dev/null | grep '\*\s.*' | awk '{print $2}'
-  }
-
-  function git-submodule-remove () {
-    local git_root
-    git_root=$(git-root)
-
-    for submodule_path in "$@" ; do
-      if [[ ! -d $submodule_path ]] ; then
-        echo "The path '$submodule_path' is not found or not a directory" > /dev/stderr
-        return 1
-      fi
-      git submodule deinit "$submodule_path" || return 1
-      echo "deinit done: $submodule_path"
-    done
-
-    echo "Don't forget that delete the submodule entry from:"
-    echo "  $git_root/.gitmodules"
-    echo "  $git_root/.git/config"
-  }
-
-  unset git_taking_limit
-
-  function git-push-u-origin-branch () {
-    git push -u origin "$(git branch --show-current)"
-  }
-  alias gpuob=git-push-u-origin-branch
-
-  function ensure-git-wip-remote-existent () {
-    if [[ $DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP == '' ]] ; then
-      # shellcheck disable=SC2016
-      echo '$DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP is not set' >&2
-      return 1
-    fi
-
-    if [[ ! -d $DOTFILES_GIT_REMOTE_NAME_DIR ]] ; then
-      echo "The directory '$DOTFILES_GIT_REMOTE_NAME_DIR' is not found or not a directory" >&2
-      return 1
-    fi
-
-    return 0
-  }
-
-  function git-wip-remote-add () {
-    ensure-git-wip-remote-existent || return 1
-    git remote add "$DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP" "$DOTFILES_GIT_REMOTE_NAME_DIR"
-  }
-
-  function git-wip-push-force () {
-    : "First, run 'git-remote-add-wip' if you haven't yet."
-
-    ensure-git-wip-remote-existent || return 1
-    git push --force-with-lease "$DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP" "$(git branch --show-current)" || return 1
-  }
-
-  function git-wip-push-all-force () {
-    git add -A
-    git commit -m 'wip'
-    git-wip-push-force
-  }
-
-  alias git-checkout-all-theirs='git checkout --theirs .'
-
-  # Set casual user.name and user.email at local
-  alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
-  alias cdg=cd-to-git-root
-fi
-
-## GitHub {{{
-
-function github-change-remote-from-git-to-https () {
-  local remote https_url
-  remote=${1:-origin}
-  https_url=$( \
-    git remote get-url "$remote" \
-    | sed -r 's/git@([^:]+):([^\/]+)\/(.*)/https:\/\/\1\/\2\/\3/' \
-    | sed -r 's/\.git$//' \
-  )
-  git remote set-url "$remote" "$https_url"
-  git remote get-url "$remote"
+# NOTE: Who did define the original - ?
+function - () {
+  # shellcheck disable=SC2164
+  cd -
 }
 
-  function gh-workflow-run-all () {
-: <<EOF
-  ```yaml
-  on:
-    workflow_dispatch:
-  ```
-  に設定されている全てのGitHub Actions Workflowを実行する
-EOF
-
-  gh workflow list --json name -q '.[].name' | while read -r workflow ; do
-    echo "Running: $workflow"
-    gh workflow run "$workflow" --ref main
-  done
-}
+alias-of sudo 'sudo '  # Enable aliases on sudo
+alias-of mysql 'mysql --pager="less -r -S -n -i -F -X"'
+alias-of yay 'yay --color always'
 
 # }}}
-## GitLab {{{
+# Load ./aliases/** {{{
 
-function gitlab-clone () {
-  if [[ -z $DOTFILES_GITLAB_ACCESS_TOKEN ]] ; then
-    # shellcheck disable=SC2016
-    {
-      echo 'Please create a personal access token on https://gitlab.com/-/profile/two_factor_auth:'
-      echo 'and add:'
-      echo '  export DOTFILES_GITLAB_ACCESS_TOKEN_NAME=it'
-      echo '  export DOTFILES_GITLAB_ACCESS_TOKEN_VALUE=it'
-      echo 'into ~/.zshrc_private'
-      echo '(Please also see ~/.dotfiles/.private/.zshrc_private)'
-    } > /dev/stderr
-    return 1
-  fi
-
-  if [[ $# -lt 1 ]] ; then
-    {
-      echo 'expected an argument like:'
-      echo "  $0 aiya000/repository-name"
-    } > /dev/stderr
-    return 1
-  fi
-
-  gclone "https://$DOTFILES_GITLAB_ACCESS_TOKEN_NAME:$DOTFILES_GITLAB_ACCESS_TOKEN_VALUE@$1"
-}
-
-# }}}
+source ~/.sh_generic/aliases/build-tools.sh
+source ~/.sh_generic/aliases/os-package-managers.sh
+source ~/.sh_generic/aliases/git.sh
+source ~/.sh_generic/aliases/neovim.sh
 
 # }}}
 # AI {{{
@@ -420,6 +92,7 @@ if i-have claude ; then
 fi
 
 if i-have copilot ; then
+  alias copilot='copilot --allow-tool write --allow-tool "shell(notify)" --allow-tool "shell(git log)" --allow-tool "shell(git show)" --allow-tool "shell(git diff)" --allow-tool "shell(git status)" --allow-tool "shell(git reflog)"'
   alias copilot-commit='copilot -p "~/.claude/commands/git-commit-auto.md を読んで、git commitをして。" --allow-tool "shell(git:*)" --deny-tool "shell(git push)" --deny-tool "shell(git add)'
 fi
 
@@ -453,22 +126,56 @@ function dotfiles::find_nodejs_to_load () {
   fi
 }
 
-function kill-vue-lsp-servers () {
-  ps aux | grep 'node\|volar' # TODO: なぜかこれを挟まないとkillできない。できるなら挟まないようにする
-  ps aux | grep 'volar-server\|typescript-language-server' | grep -v grep | awk '{print $2 }' | xargs kill \
-    && echo killed \
-    || echo failed
-}
-
 # }}}
-# Another Contextual Commands {{{
+# Others {{{
 
-alias-of copilot 'copilot --allow-tool write --allow-tool "shell(notifu-respond)" --allow-tool "shell(notifu.exe)" --allow-tool "shell(git log)" --allow-tool "shell(git show)" --allow-tool "shell(git diff)" --allow-tool "shell(git status)" --allow-tool "shell(git reflog)"'
+# shellcheck disable=SC2139
+alias e="$EDITOR"
 
-alias ctags-kotlin-auto="ctags-auto '--exclude=*.java' '--exclude=*.html' '--exclude=*.css'"
-alias ctags-typescript-auto="ctags-auto '--exclude=*.js' '--exclude=*.json'"
+alias la='ls -a --color=auto --group-directories-first'
+alias ll='ls -l --color=auto --group-directories-first'
+alias llh='ls -lh --color=auto --group-directories-first'
+alias lla='ls -la --color=auto --group-directories-first'
 
-alias-of yay 'yay --color always'
+alias date-simple='date "+%Y-%m-%d %H:%M"'
+alias date-today='date +"%Y-%m-%d"'
+alias today=date-today
+
+# shellcheck disable=SC2139
+alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
+alias mount4u.vfat=mount4u.ntfs
+alias mount4u.ext2='sudo mount -o iocharset=utf8'
+alias mount4u.ext3=mount4u.ext2
+alias mount4u.ext4=mount4u.ext2
+
+alias ei=exit
+alias t=vterminal
+alias ki=kill-list
+
+# alias ..='cd ../'
+# alias ...='cd ../../'
+# alias ....='cd ../../../'
+# ...
+function aliases::define_cd_to_parents () {
+  local name dir
+  for (( i = 2; i <= 10; ++i )) ; do
+    name=$(eval "printf '.%.0s' {1..$i}")
+    dir=$(eval "printf '../%.0s' {2..$i}")
+    eval "alias $name='cd $dir'"
+  done
+}
+aliases::define_cd_to_parents
+
+i-have tmux && alias ta='tmux attach'
+i-have unzip && alias unzip-cp932='unzip -O cp932'
+i-have krita && alias kra=krita
+
+if i-have jq ; then
+  function url-encode () {
+    echo "\"$1\"" | jq -r @uri
+  }
+  alias urlencode=url-encode
+fi
 
 if i-have luap ; then
   alias lua-repl=luap
@@ -476,8 +183,10 @@ elif i-have lua ; then
   alias lua-repl=lua
 fi
 
-i-have krita && alias kra=krita
+alias notify-at-cancel-all='notify-at -l ; notify-at -l | drop 2 | cut -d" " -f1 | xargs -I {} notify-at -c {} ; notify-at -l'
 
 # }}}
 
 export PATH=$PATH:$HOME/.sh_generic/bin
+
+# vim:foldmethod=marker
