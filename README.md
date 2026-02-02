@@ -93,10 +93,10 @@ $ cp -r ~/.dotfiles/.config/nvim ~/.config/
 - **Note**:
     - For `GEMINI.global.md` setup instructions, please refer to [GEMINI.global.README.md](GEMINI.global.README.md) (symlink to `AGENTS.global.README.md`)
 
-### [Shell (zsh/bash)](.sh_generic/)
+### [Shell (zsh/bash)](.shells/)
 
-- **Location**: `.sh_generic/`
-- **Main file**: `.sh_generic/aliases.sh`
+- **Location**: `.shells/`
+- **Main file**: `.shells/aliases.sh`
 - **Features**:
     - Various aliases, functions, and configurations
 

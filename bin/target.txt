@@ -11,7 +11,7 @@
 .git_templates
 .gitconfig
 .gvimrc
-.sh_generic
+.shells
 .stack
 .tmux.conf
 .vim

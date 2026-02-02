@@ -33,7 +33,7 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 # }}}
 # Others {{{
 
-# For variables that is not related to zsh, see ~/.dotfiles/.sh_generic/vars.sh
+# For variables that is not related to zsh, see ~/.dotfiles/.shells/vars.sh
 
 # }}}
 # Add paths to $PATH {{{

@@ -17,16 +17,16 @@ if [[ -z $(alias | grep zsh_pr_loaded) ]] ; then
   source $ZDOTDIR/.zprofile
 fi
 
-source ~/.sh_generic/vars.sh
-source ~/.sh_generic/aliases.sh
+source ~/.shells/vars.sh
+source ~/.shells/aliases.sh
 
 local uname=$(uname)
 if [[ -n $WSL_INTEROP ]] ; then
-  source ~/.sh_generic/wsl.sh
+  source ~/.shells/wsl.sh
 elif [[ $uname == Linux ]] ; then
-  source ~/.sh_generic/linux.sh
+  source ~/.shells/linux.sh
 elif [[ $uname == Darwin ]] ; then
-  source ~/.sh_generic/macOS.sh
+  source ~/.shells/macOS.sh
 else
   echo "zshrc: Not supported OS. uname: $uname" >&2
 fi
