@@ -42,6 +42,9 @@ return list.concat(
       })
     ),
 
+    s('eq', t('==')),
+    s('ne', t('!=')),
+
     -- variable replacement operations
     s(
       'var_replace_only_first',

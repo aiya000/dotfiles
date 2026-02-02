@@ -1,6 +1,4 @@
-local list = require('utils.list')
-
 return {
-  snippets = list.concat(require('luasnippets.sh')),
+  snippets = require('luasnippets.sh').snippets,
   autosnippets = {},
 }
