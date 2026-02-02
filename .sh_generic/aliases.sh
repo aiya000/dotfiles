@@ -110,6 +110,8 @@ if i-have jq ; then
   alias urlencode=url-encode
 fi
 
+alias notify-at-cancel-all='notify-at -l ; notify-at -l | drop 2 | cut -d" " -f1 | xargs -I {} notify-at -c {} ; notify-at -l'
+
 # }}}
 # Editors {{{
 
