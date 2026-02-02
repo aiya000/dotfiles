@@ -26,6 +26,10 @@ local function input_for_kensaku_jump()
             return vim.fn['kensaku#query'](inputted)
           end,
         },
+        jump = {
+          register = true,
+          history = true,
+        },
       })
     end,
   })
@@ -77,7 +81,12 @@ return {
       ';;',
       mode = { 'n', 'x', 'o' },
       function()
-        require('flash').jump()
+        require('flash').jump({
+          jump = {
+            register = true,
+            history = true,
+          },
+        })
       end,
       desc = 'Flash',
     },
