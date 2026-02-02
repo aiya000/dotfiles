@@ -32,6 +32,26 @@ fi
 
 i-have btop && alias top=btop
 
+if i-have rg ; then
+  alias ggrep=grep
+  alias grep=rg # To enforce the use of `rg` in Claude Code
+  alias rg='rg --color always --hidden'
+fi
+
+if i-have fdfind ; then
+  fd=fdfind
+elif i-have fd ; then
+  fd=fd
+fi
+if [[ $fd != '' ]] ; then
+  alias gfind=find
+  # shellcheck disable=SC2139
+  alias fd="$fd --hidden --ignore-case" # --hidden to include '.' prefixed files
+  # shellcheck disable=SC2139
+  alias find="$fd" # To enforce the use of `fd` in Claude Code
+fi
+unset fd
+
 # NOTE: Who did define the original - ?
 function - () {
   # shellcheck disable=SC2164
@@ -40,7 +60,6 @@ function - () {
 
 alias-of sudo 'sudo '  # Enable aliases on sudo
 alias-of mysql 'mysql --pager="less -r -S -n -i -F -X"'
-alias-of rg 'rg --color always --hidden'
 
 # }}}
 # Load ./aliases/** {{{
@@ -83,7 +102,6 @@ alias ei=exit
 alias t=vterminal
 alias cdp=cd-finddir
 alias ki=kill-list
-i-have fdfind && alias fd='fdfind --hidden --ignore-case' # --hidden to include '.' prefixed files
 
 # alias ..='cd ../'
 # alias ...='cd ../../'
