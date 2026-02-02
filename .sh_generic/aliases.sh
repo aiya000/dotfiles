@@ -35,7 +35,7 @@ i-have btop && alias top=btop
 if i-have rg ; then
   alias ggrep=grep
   alias grep=rg # To enforce the use of `rg` in Claude Code
-  alias rg='rg --color always --hidden'
+  alias rg='rg --hidden'
 fi
 
 if i-have fdfind ; then
