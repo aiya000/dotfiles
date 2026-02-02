@@ -69,6 +69,8 @@ function M.run_with_virtual_keymaps(keys)
   vim.fn.feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true))
 end
 
+M.feedkeys_with_replace_termcodes = M.run_with_virtual_keymaps
+
 ---Replaces keys to key codes and do `vim.api.nvim_feedkeys()` it
 ---@param keys string
 ---@param mode? string --Default to 'n'. Expected to 'n', 'i', and etc. See `:h nvim_feedkeys()`
@@ -461,10 +463,16 @@ end
 
 function M.close_all_popups()
   for _, window in ipairs(vim.api.nvim_list_wins()) do
-    local config = vim.api.nvim_win_get_config(window)
+    local success, config = pcall(vim.api.nvim_win_get_config, window) -- pcall to avoid erros such as nui.nvim popups
+    if not success then
+      goto continue
+    end
+
     if config.relative ~= '' then -- If it is a popup window
       vim.api.nvim_win_close(window, false)
     end
+
+    ::continue::
   end
 end
 
