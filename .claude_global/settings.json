@@ -30,7 +30,6 @@
     "deny": [
       "Bash(git push:*)",
       "Bash(sudo:*)",
-      "Bash(grep:*)",
       "Bash(rm:*)",
       "Read(.env.*)"
     ]
