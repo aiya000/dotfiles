@@ -306,7 +306,7 @@ function M.termopen_shell(opts, should_enter_insert_mode)
         -- TODO: `git_bridge_wsl2_and_windows`越しだと、なぜかこれがnot nilの場合、この`termopen_temporary()`の処理が正しくできず、バッファが直ちに閉じる。とりあえずgit.exeを参照していたら、`nvim-parent-edit`を無効にしておく。 -> 調査して、直す
         NEOVIM_TERMINAL = not M.is_using_windows_git() or nil,
         -- NEOVIM_TERMINAL = true,
-        NVIM_PARENT_ADDRESS = vim.v.servername, -- See '~/.dotfiles/.sh_generic/aliases/neovim.sh' and '~/.dotfiles/bash-toys/sources/nvim-parent-edit.sh'
+        NVIM_PARENT_ADDRESS = vim.v.servername, -- See '~/.dotfiles/.shells/aliases/neovim.sh' and '~/.dotfiles/bash-toys/sources/nvim-parent-edit.sh'
       }, opts.env or {}),
     })
   )

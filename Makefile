@@ -33,7 +33,7 @@ prepare:
 	if [ ! -d ~/git ] ; then \
 		mkdir ~/git ; \
 	fi
-	# Please see .vimrc and .sh_generic
+	# Please see .vimrc and .shells
 	if [ ! -d ~/.backup ] ; then \
 		mkdir -p ~/.backup/dustbox ; \
 		mkdir -p ~/.backup/temporary-store ; \

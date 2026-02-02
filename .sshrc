@@ -1,5 +1,5 @@
-rm ~/.sh_generic
-ln -s $SSHHOME/.sshrc.d/.sh_generic ~
+rm ~/.shells
+ln -s $SSHHOME/.sshrc.d/.shells ~
 rm ~/.bashrc
 ln -s $SSHHOME/.sshrc.d/.bashrc ~
 rm ~/.bash_profile
