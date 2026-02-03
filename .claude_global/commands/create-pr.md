@@ -1,5 +1,5 @@
 ---
-allowed-tools: Skill(git-commit-auto), Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git branch:*), Bash(git checkout:*), Bash(git push:*), Bash(gh:*)
+allowed-tools: Skill(git-commit), Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git branch:*), Bash(git checkout:*), Bash(git push:*), Bash(gh:*)
 description: Create a pull request with auto-generated description
 ---
 
@@ -11,7 +11,7 @@ Create a pull request using `gh pr create` with an auto-generated description.
 
 1. Check current branch status with `git status` and `git branch`
 2. If on `main` or `master` branch, create a new feature branch
-3. If there are uncommitted staged changes, use `/git-commit-auto` to commit them first
+3. If there are uncommitted staged changes, use `/git-commit` to commit them first
 4. Push the branch to remote with `git push -u origin <branch>`
 5. Create a PR using `gh pr create` with auto-generated title and description
 
