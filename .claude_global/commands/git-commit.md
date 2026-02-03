@@ -3,7 +3,7 @@ allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git s
 description: Create a new git commit for staged changes
 ---
 
-# /git-commit-auto
+# /git-commit
 
 Automatically generates a Conventional Commits compliant commit message and commits staged changes.
 

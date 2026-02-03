@@ -77,7 +77,7 @@ local function open_claude_commit_float_window()
   end
 
   claude_commit_terminal = Terminal:new({
-    cmd = 'claude /git-commit-auto',
+    cmd = 'claude /git-commit',
     direction = 'float',
     close_on_exit = false,
     on_exit = function()
