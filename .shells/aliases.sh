@@ -74,10 +74,10 @@ alias-of yay 'yay --color always'
 # }}}
 # Load ./aliases/** {{{
 
-source ~/.sh_generic/aliases/build-tools.sh
-source ~/.sh_generic/aliases/os-package-managers.sh
-source ~/.sh_generic/aliases/git.sh
-source ~/.sh_generic/aliases/neovim.sh
+source ~/.shells/aliases/build-tools.sh
+source ~/.shells/aliases/os-package-managers.sh
+source ~/.shells/aliases/git.sh
+source ~/.shells/aliases/neovim.sh
 
 # }}}
 # AI {{{
@@ -87,13 +87,13 @@ if i-have claude ; then
   alias cresume='claude --resume'
   alias ccontinue='claude --continue'
   alias cc=ccontinue
-  alias claude-commit='claude "/git-commit-auto"'
+  alias claude-commit='claude "/git-commit"'
   alias ccommit=claude-commit
 fi
 
 if i-have copilot ; then
   alias copilot='copilot --allow-tool write --allow-tool "shell(notify)" --allow-tool "shell(git log)" --allow-tool "shell(git show)" --allow-tool "shell(git diff)" --allow-tool "shell(git status)" --allow-tool "shell(git reflog)"'
-  alias copilot-commit='copilot -p "~/.claude/commands/git-commit-auto.md を読んで、git commitをして。" --allow-tool "shell(git:*)" --deny-tool "shell(git push)" --deny-tool "shell(git add)'
+  alias copilot-commit='copilot -p "~/.claude/commands/git-commit.md を読んで、git commitをして。" --allow-tool "shell(git:*)" --deny-tool "shell(git push)" --deny-tool "shell(git add)'
 fi
 
 # }}}
