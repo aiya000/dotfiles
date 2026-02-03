@@ -25,15 +25,15 @@ return list.concat(
 
   {
     s(
-      'instruct_for_git_commit_auto',
+      'instruct_for_git_commit',
       t(
-        '`~/.dotfiles/.claude_global/commands/git-commit-auto.md`のルールを参照して、`git commit`を実行して'
+        '`~/.dotfiles/.claude_global/commands/git-commit.md`のルールを参照して、`git commit`を実行して'
       )
     ),
     s(
-      'git_commit_auto',
+      'git_commit',
       t(
-        '`~/.dotfiles/.claude_global/commands/git-commit-auto.md`のルールを参照して、`git commit`を実行して'
+        '`~/.dotfiles/.claude_global/commands/git-commit.md`のルールを参照して、`git commit`を実行して'
       )
     ),
   }
