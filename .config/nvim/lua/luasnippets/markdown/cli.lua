@@ -11,7 +11,7 @@ local t = ls.text_node
 return list.concat({
   s(
     'notify_cascade_schedule_today',
-    fmt("notify-cascade --mobile --local {time_begin} '{title}' '{time_begin_} - {time_end}' 3h 1h 30m 15m 5m 1m", {
+    fmt("notify-cascade --mobile --local {time_begin} '{title}' '{time_begin_} - {time_end}' now 3h 1h 30m 15m 5m 1m", {
       time_begin = i(1, 'time_begin'),
       time_begin_ = rep(1),
       time_end = i(2, 'time_end'),
@@ -22,9 +22,10 @@ return list.concat({
   s(
     'notify_cascade_schedule_someday',
     fmt(
-      "notify-cascade --mobile --local '{date} {time_begin}' '{title}' '{time_begin_} - {time_end}' 3h 1h 30m 15m 5m 1m",
+      "notify-cascade --mobile --local '{date} {time_begin}' '{title}' '{time_begin_} - {time_end}' '{date_} 09:30' 3h 1h 30m 15m 5m 1m",
       {
         date = i(1, 'date'),
+        date_ = rep(1),
         time_begin = i(2, 'time_begin'),
         time_begin_ = rep(2),
         time_end = i(3, 'time_end'),
