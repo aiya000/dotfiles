@@ -736,6 +736,9 @@ function M.toggle_copilot_cli()
       hidden = true,
       direction = 'float',
       on_open = function(_)
+        vim.keymap.set('t', '<C-p>', '<Up>', { buffer = true })
+        vim.keymap.set('t', '<C-n>', '<Down>', { buffer = true })
+
         -- Enter insert mode when the terminal opens
         vim.cmd('startinsert!')
       end,
