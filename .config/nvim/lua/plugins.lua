@@ -138,6 +138,9 @@ return {
               },
             },
           },
+          frecency = {
+            db_safe_mode = false, -- Disable "remove n entries from database?" dialog
+          },
         },
       })
       require('telescope').load_extension('fzf')
