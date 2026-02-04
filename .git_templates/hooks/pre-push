@@ -12,3 +12,5 @@ if [[ $MY_GIT_HOOK_DISABLE_FIXUP_CHECK -ne 1 ]] && git-log-unpushed --oneline | 
   echo 'You have to rebase fixup commits.'
   exit 1
 fi
+
+gh auth switch --user aiya000
