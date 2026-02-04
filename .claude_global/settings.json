@@ -31,6 +31,8 @@
       "Bash(git push:*)",
       "Bash(sudo:*)",
       "Bash(rm:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
       "Read(.env.*)"
     ]
   },
