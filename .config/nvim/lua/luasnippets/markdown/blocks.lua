@@ -18,10 +18,10 @@ local blocks_snippets = list.concat(
   ),
 
   sm(
-    { 'block_shell_session', 'blsh' },
+    { 'block_bash', 'blsh' },
     fmt(
       [[
-```shell-session
+```bash
 {}
 ```]],
       {
