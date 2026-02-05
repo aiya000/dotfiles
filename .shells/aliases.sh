@@ -140,6 +140,11 @@ alias lla='ls -la --color=auto --group-directories-first'
 alias date-simple='date "+%Y-%m-%d %H:%M"'
 alias date-today='date +"%Y-%m-%d"'
 alias today=date-today
+alias date-tomorrow='date -v+1d +"%Y-%m-%d"'
+alias tomorrow=date-tomorrow
+alias date-now='date +%H:%M'
+alias now=date-now
+alias date-1min-after='date -v+1M +%H:%M'
 
 # shellcheck disable=SC2139
 alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
