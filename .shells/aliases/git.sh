@@ -147,6 +147,22 @@ function git-stash-apply-nth () {
 
 alias gssa=git-stash-apply-nth
 
+function git-stash-pop-force () {
+  # shellcheck disable=SC2016
+  read -rp 'Needing to run `git add -A`. OK? (y/n):' answer
+  if [[ $answer != 'y' ]] && [[ $answer != 'yes' ]] ; then
+    return 1
+  fi
+  git add -A
+  git stash show -p | git apply --3way || {
+    echo 'Failed to force git stash pop' > /dev/stderr
+    return 1
+  }
+  echo 'Succeeded to force git stash pop.'
+  # shellcheck disable=SC2016
+  echo 'Run `git stash drop` after conflicts resolved.'
+}
+
 function gtag-add-m () {
   local tag_name=$1 message=$2
   git tag --annotate "$tag_name" --message "$message"
