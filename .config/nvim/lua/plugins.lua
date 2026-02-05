@@ -1365,7 +1365,7 @@ return {
             cyclic = true,
           }),
           augend.constant.new({
-            elements = { '作業中', 'レビュー待ち', 'レビュー対応中', 'マージ済み' },
+            elements = { '作業中', 'レビュー待ち', 'レビュー対応中', '再レビュー待ち', '再レビュー対応中', 'マージ済み' },
             word = false,
             cyclic = true,
           }),
