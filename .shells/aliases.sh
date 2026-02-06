@@ -32,10 +32,7 @@ fi
 
 i-have btop && alias top=btop
 
-if i-have rg ; then
-  alias grep=rg # To enforce the use of `rg` in Claude Code
-  alias rg='rg --hidden'
-fi
+alias-of rg 'rg --hidden'
 
 if i-have fdfind ; then
   fd=fdfind
@@ -45,8 +42,6 @@ fi
 if [[ $fd != '' ]] ; then
   # shellcheck disable=SC2139
   alias fd="$fd --hidden --ignore-case" # --hidden to include '.' prefixed files
-  # shellcheck disable=SC2139
-  alias find="$fd" # To enforce the use of `fd` in Claude Code
 fi
 unset fd
 
