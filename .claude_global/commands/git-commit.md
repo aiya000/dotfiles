@@ -3,13 +3,13 @@ allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git s
 description: Create a new git commit for staged changes
 ---
 
+**Important:** **This command only commits staged changes. It does not stage any new files**.
+
 # /git-commit
 
 Automatically generates a Conventional Commits compliant commit message and commits staged changes.
 
 ## Behavior
-
-**Important:** **This command only commits staged changes. It does not stage any new files**.
 
 1. Check staged changes with `git diff --staged`
 2. Check current git status with `git status`
