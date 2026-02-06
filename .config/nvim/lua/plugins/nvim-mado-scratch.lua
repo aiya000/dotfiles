@@ -24,13 +24,15 @@ return {
       group = augroup,
       pattern = 'MadoScratchBufferOpened',
       callback = function()
-        -- Float windows defaults to nonumber and norelativenumber, so enable them here
-        vim.opt.number = true
-        vim.opt.relativenumber = true
+        if nvim.is_in_float_window() then
+          -- Float windows defaults to nonumber and norelativenumber, so enable them here
+          vim.opt.number = true
+          vim.opt.relativenumber = true
 
-        -- Avoid accidental exits
-        nvim.keymaps_set('n', nvim.escaping_keys, '<Nop>', { buffer = true })
-        nvim.keymaps_set('n', { '<C-l><C-l>', '<Esc><Esc>', '<C-[><C-[>' }, '<Cmd>q<CR>', { buffer = true })
+          -- Avoid accidental exits
+          nvim.keymaps_set('n', nvim.escaping_keys, '<Nop>', { buffer = true })
+          nvim.keymaps_set('n', { '<C-l><C-l>', '<Esc><Esc>', '<C-[><C-[>' }, '<Cmd>q<CR>', { buffer = true })
+        end
       end,
     })
 
