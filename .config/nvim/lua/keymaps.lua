@@ -457,8 +457,9 @@ map('i', '<C-b>', network.fetch_webpage_title, { silent = true, expr = true })
 
 -- Copy and paste
 map('i', "<C-r>'", '<C-r>+')
---- Meaning "n"ame
-map('i', '<C-r>n', '<C-r>=expand("%:t")<CR>')
+map('i', '<C-r>n', '<C-r>=expand("%:t")<CR>') -- Meaning "n"ame
+map('i', '<C-r>gr', '<C-r>=luaeval("InitLua.git_root")<CR>')
+map('i', '<C-r>gb', '<C-r>=system("git branch --show-current")<CR>')
 
 -- Informations
 map('i', '<C-g><Tab>', [[copilot#Accept("\<CR>")]], {
@@ -512,8 +513,8 @@ map('c', '<C-l>', '<C-c>')
 map('c', '<C-o>', '<Up>')
 map('c', '<C-y>', '<Down>')
 map('c', "<C-r>'", '<C-r>+')
--- Meaning "n"ame
-map('c', '<C-r>n', '<C-r>=expand("%:t")<CR>')
+map('c', '<C-r>n', '<C-r>=expand("%:t")<CR>') -- Meaning "n"ame
+map('c', '<C-r>g', '<C-r>=luaeval("InitLua.git_root")<CR>')
 
 -- }}}
 -- visual/operator mode {{{
@@ -575,8 +576,8 @@ map('v', 'ijK', '<Plug>(textobj-jabraces-yama-kakko-i)')
 map('v', 'ajK', '<Plug>(textobj-jabraces-yama-kakko-a)')
 map('v', 'ij-k', '<Plug>(textobj-jabraces-double-kakko-i)')
 map('v', 'aj-k', '<Plug>(textobj-jabraces-double-kakko-a)')
-map('v', 'i_', '<Plug>(textobj-between-a)_')
-map('v', 'a_', '<Plug>(textobj-between-i)_')
+map('v', 'i_', '<Plug>(textobj-between-i)_') -- TODO: 動いてない
+map('v', 'a_', '<Plug>(textobj-between-a)_') --
 map('v', 'iB', '<Plug>(textobj-between-i)*') -- TODO: **を対象にしたい（vim-textobj-betweenは多分1-charのみ対応）
 map('v', 'aB', '<Plug>(textobj-between-a)*')
 -- TODO: 今度↑をvim-surround-operatorで置き換える（可能なら）
