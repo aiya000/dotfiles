@@ -69,31 +69,6 @@ local function open_commit_buffer(subcmd)
   vim.cmd(table.concat(git_commit, ' '))
 end
 
-local claude_commit_terminal = nil
-local function open_claude_commit_float_window()
-  if claude_commit_terminal ~= nil then
-    claude_commit_terminal:toggle() -- Show
-    return
-  end
-
-  claude_commit_terminal = Terminal:new({
-    cmd = 'claude /git-commit',
-    direction = 'float',
-    close_on_exit = false,
-    on_exit = function()
-      vim.notify('Claude commit process exited.', vim.log.levels.INFO)
-      claude_commit_terminal = nil -- Reset the terminal variable
-    end,
-  })
-  claude_commit_terminal:toggle() -- Show
-
-  vim.schedule(function()
-    nvim.keymaps_set('t', nvim.escaping_keys, function()
-      claude_commit_terminal:toggle() -- Hide
-    end, { buffer = true })
-  end)
-end
-
 local function delete_this_file()
   vim.cmd('normal "zyy')
   local filepath = vim.fn.trim(vim.fn.getreg('z'))
@@ -128,7 +103,7 @@ vim.keymap.set('n', 'sa', '<Plug>(gin-action-stash)', { buffer = true, silent = 
 vim.keymap.set('n', 'ss', run_stash_push_message, { buffer = true })
 vim.keymap.set('n', 'sp', '<Cmd>Gin stash pop<CR>', { buffer = true })
 vim.keymap.set('n', 'cc', open_commit_buffer, { buffer = true, silent = true })
-vim.keymap.set('n', 'cC', open_claude_commit_float_window, { buffer = true, silent = true })
+vim.keymap.set('n', 'cC', '<Cmd>ClaudeCodeFocus<CR>/git-commit', { buffer = true, silent = true })
 vim.keymap.set('n', 'B', '<Cmd>GinBranch<CR>', { buffer = true, silent = true })
 vim.keymap.set('n', 'C', ':<C-u>Gin switch --create<Space>', { remap = true, buffer = true })
 vim.keymap.set('n', 'cf', ':<C-u>GitCommitFixup<Space>', { remap = true, buffer = true })
