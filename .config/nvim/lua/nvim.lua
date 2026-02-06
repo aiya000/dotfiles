@@ -1086,4 +1086,10 @@ function M.is_using_windows_git()
   return vim.system({ 'git', '--version' }):wait().stdout:find('windows') ~= nil
 end
 
+---現在float windowの中にいるか？
+---@return boolean
+function M.is_in_float_window()
+  return vim.api.nvim_win_get_config(0).relative ~= ''
+end
+
 return M
