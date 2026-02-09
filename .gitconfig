@@ -47,7 +47,8 @@
 	template = ~/.dotfiles/.gitmessage
 [credential]
 	helper = ""
-[credential "https://github.com"]
-	helper = !/usr/bin/env gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = !/usr/bin/env gh auth git-credential
+	helper = !/usr/bin/env git-credential-gh-switch aiya000
+[credential "https://github.com"]
+	helper = !/usr/bin/env git-credential-gh-switch aiya000
+	useHttpPath = true
