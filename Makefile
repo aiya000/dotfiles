@@ -191,6 +191,9 @@ install-ffmpeg:
 install-ccstatusline:
 	which ccstatusline || $(NPMInstall) ccstatusline@latest
 
+install-dust:
+	which dust || $(BrewInstall) dust
+
 # }}}
 ifeq ($(OS),Arch) # {{{
 
