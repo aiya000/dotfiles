@@ -9,11 +9,16 @@ return {
   config = function()
     require('mado-scratch').setup({
       default_file_ext = 'md',
-      default_open_method = {
-        method = 'float-aspect',
-        scale = {
-          width = 0.8,
-          height = 0.8,
+      default_open_method = 'float-aspect',
+      default_open_params = {
+        ['float-aspect'] = {
+          scale = {
+            width = 0.8,
+            height = 0.8,
+          },
+        },
+        vsp = {
+          width = 'no-auto-resize',
         },
       },
     })
