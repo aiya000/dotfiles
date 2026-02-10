@@ -1,6 +1,10 @@
 #!/usr/bin/env zsh
 
+# Preferences
 PROMPT_HEAD_CHAR=$
+
+# State
+git_state=""
 
 function zshrc::prompt::vim_mode () {
   case ${KEYMAP:-viins} in
@@ -10,12 +14,16 @@ function zshrc::prompt::vim_mode () {
   esac
 }
 
+function zshrc::prompt::refresh_git_state () {
+  git_state=$(zshrc::prompt::sub_status)
+}
+
 function zshrc::prompt::main () {
   # A maid represents a status of the exit code
   local feature="%(?.%{${fg_bold[green]}%}.%{${fg_bold[blue]}%})%(?!(*^-^)!(;^-^%))%{${reset_color}%}"
   local current_dir="%{$fg[yellow]%}%~%{$reset_color%}"
 
-  export PROMPT="${feature} ${current_dir}%{$reset_color%} | $(zshrc::prompt::vim_mode) | $(zshrc::prompt::sub_status)
+  export PROMPT="${feature} ${current_dir}%{$reset_color%} | $(zshrc::prompt::vim_mode) | ${git_state}
 %{$fg[cyan]%}$PROMPT_HEAD_CHAR %{$reset_color%}"
 }
 
@@ -71,5 +79,7 @@ function zshrc::prompt::sub_status::show () {
   echo $(get_git_changes)$(get_git_commits)$(get_git_stash_status)$(get_git_branch_name)
 }
 
-# Run once to start up
+chpwd_functions+=(zshrc::prompt::refresh_git_state)
+
+zshrc::prompt::refresh_git_state
 zshrc::prompt::main
