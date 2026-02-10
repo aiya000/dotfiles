@@ -247,7 +247,11 @@ map('n', '<leader><leader>E', '<Cmd>tabnew|Oil<CR>', { silent = true })
 
 -- List up
 map('n', '<C-k><C-e>', function()
-  telescope.find_files({ hidden = true })
+  telescope.find_files({
+    hidden = true,
+    no_ignore = true,
+    no_ignore_parent = true,
+  })
 end)
 
 map('n', '<C-k><C-f>', function()
