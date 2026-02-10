@@ -2,12 +2,20 @@
 
 PROMPT_HEAD_CHAR=$
 
+function zshrc::prompt::vim_mode () {
+  case ${KEYMAP:-viins} in
+    vicmd)         echo "%{$bg[magenta]$fg[black]%}[N]%{$reset_color%}" ;;
+    visual|viopp)  echo "%{$bg[yellow]$fg[black]%}[V]%{$reset_color%}" ;; # TODO: 動いてないので修正する
+    *)             echo "%{$bg[cyan]$fg[black]%}[I]%{$reset_color%}" ;;
+  esac
+}
+
 function zshrc::prompt::main () {
   # A maid represents a status of the exit code
   local feature="%(?.%{${fg_bold[green]}%}.%{${fg_bold[blue]}%})%(?!(*^-^)!(;^-^%))%{${reset_color}%}"
   local current_dir="%{$fg[yellow]%}%~%{$reset_color%}"
 
-  export PROMPT="${feature} ${current_dir}%{$reset_color%} | $(zshrc::prompt::sub_status)
+  export PROMPT="${feature} ${current_dir}%{$reset_color%} | $(zshrc::prompt::vim_mode) | $(zshrc::prompt::sub_status)
 %{$fg[cyan]%}$PROMPT_HEAD_CHAR %{$reset_color%}"
 }
 
