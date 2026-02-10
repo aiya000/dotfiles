@@ -41,7 +41,7 @@ elif i-have fd ; then
 fi
 if [[ $fd != '' ]] ; then
   # shellcheck disable=SC2139
-  alias fd="$fd --hidden --ignore-case" # --hidden to include '.' prefixed files
+  alias fd="$fd --hidden --ignore-case --no-ignore" # --hidden to include '.' prefixed files
 fi
 unset fd
 
