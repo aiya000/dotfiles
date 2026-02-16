@@ -5,8 +5,9 @@ PROMPT_HEAD_CHAR=$
 
 # State
 git_state=""
+_zshrc_prompt_async_fd=0
 
-function zshrc::prompt::vim_mode () {
+function _zshrc_prompt_vim_mode () {
   case ${KEYMAP:-viins} in
     vicmd)         echo "%{$bg[magenta]$fg[black]%}[N]%{$reset_color%}" ;;
     visual|viopp)  echo "%{$bg[yellow]$fg[black]%}[V]%{$reset_color%}" ;; # TODO: 動いてないので修正する
@@ -14,20 +15,20 @@ function zshrc::prompt::vim_mode () {
   esac
 }
 
-function zshrc::prompt::refresh_git_state () {
-  git_state=$(zshrc::prompt::sub_status)
+function _zshrc_prompt_refresh_git_state () {
+  git_state=$(_zshrc_prompt_sub_status)
 }
 
-function zshrc::prompt::main () {
+function _zshrc_prompt_main () {
   # A maid represents a status of the exit code
   local feature="%(?.%{${fg_bold[green]}%}.%{${fg_bold[blue]}%})%(?!(*^-^)!(;^-^%))%{${reset_color}%}"
   local current_dir="%{$fg[yellow]%}%~%{$reset_color%}"
 
-  export PROMPT="${feature} ${current_dir}%{$reset_color%} | $(zshrc::prompt::vim_mode) | ${git_state}
+  export PROMPT="${feature} ${current_dir}%{$reset_color%} | $(_zshrc_prompt_vim_mode) | ${git_state}
 %{$fg[cyan]%}$PROMPT_HEAD_CHAR %{$reset_color%}"
 }
 
-function zshrc::prompt::sub_status () {
+function _zshrc_prompt_sub_status () {
   if [[ $ZSHRC_PROMPT_GIT_DISABLE -ne 0 ]] ; then
     echo '[git on prompt is disabled] (env var)'
     return
@@ -38,63 +39,73 @@ function zshrc::prompt::sub_status () {
     return
   fi
 
-  zshrc::prompt::sub_status::show
+  _zshrc_prompt_sub_status_show
 }
 
-function zshrc::prompt::sub_status::show () {
-  function get_git_changes () {
-    # Subtract a head line minute
-    local changes=$(( $(git status --short 2> /dev/null | wc -l) - 1 ))
-    if [ "$changes" -ge 1 ] ; then
-      echo "%{$bg[white]$fg[black]%}[change:${changes}]%{$reset_color%}"
-    fi
+function _zshrc_prompt_sub_status_show () {
+  local git_status
+  git_status=$(git status --short --branch 2>/dev/null) || {
+    echo '[NO REPO]'
+    return
   }
 
-  function get_git_commits () {
-    local commits
-    commits=$(git status --short 2> /dev/null | head -1 | grep -o '\[.*\]')
-    if [ "$?" -eq 0 ] ; then
-      echo "%{$bg[red]$fg[black]%}${commits}%{$reset_color%}"
-    fi
-  }
+  # Parse all lines at once (no repeated git calls)
+  local -a lines=("${(@f)git_status}")
+  local header=${lines[1]}
+  local change_count=$(( ${#lines} - 1 ))
 
-  function get_git_stash_status () {
-    local item_num=$({git stash list 2> /dev/null || echo -n ''} | wc -l)
-    if [[ $item_num -ge 1 ]] ; then
-      echo "%{$bg[cyan]$fg[black]%}[stash:${item_num}]%{$reset_color%}"
-    fi
-  }
-
-  function get_git_branch_name () {
-    local branches
-    branches=$(git branch 2> /dev/null)
-    if [ "$?" -ne 0 ] ; then
-      echo '[NO REPO]'
-      exit
-    fi
-    local branch_name=$(echo $branches | grep '\*\s.*' | awk '{print $2}')
-    echo "%{$bg[green]$fg[black]%}[${branch_name}]%{$reset_color%}"
-  }
-
-  echo $(get_git_changes)$(get_git_commits)$(get_git_stash_status)$(get_git_branch_name)
-}
-
-function zshrc::prompt::preexec () {
-  if [[ "$1" == git\ * ]] ; then
-    _zshrc_prompt_git_cmd_ran=1
+  # Changed files count
+  local changes_str=''
+  if [[ $change_count -ge 1 ]] ; then
+    changes_str="%{$bg[white]$fg[black]%}[change:${change_count}]%{$reset_color%}"
   fi
-}
 
-function zshrc::prompt::precmd () {
-  if [[ -n "$_zshrc_prompt_git_cmd_ran" ]] ; then
-    zshrc::prompt::refresh_git_state
-    unset _zshrc_prompt_git_cmd_ran
+  # Ahead/behind: extract [ahead N] / [behind N] etc. from header
+  local commits_str=''
+  if [[ $header =~ '\[.*\]' ]] ; then
+    commits_str="%{$bg[red]$fg[black]%}${MATCH}%{$reset_color%}"
   fi
+
+  # Stash count
+  local stash_str=''
+  local item_num
+  item_num=$(( $(git stash list 2>/dev/null | wc -l) ))
+  if [[ $item_num -ge 1 ]] ; then
+    stash_str="%{$bg[cyan]$fg[black]%}[stash:${item_num}]%{$reset_color%}"
+  fi
+
+  # Branch name from header: "## main...origin/main [ahead 1]" → "main"
+  local branch_name=${header#'## '}
+  branch_name=${branch_name%%...*}
+  branch_name=${branch_name%% *}
+
+  echo "${changes_str}${commits_str}${stash_str}%{$bg[green]$fg[black]%}[${branch_name}]%{$reset_color%}"
 }
 
-chpwd_functions+=(zshrc::prompt::refresh_git_state)
-preexec_functions+=(zshrc::prompt::preexec)
-precmd_functions+=(zshrc::prompt::precmd)
+# Called by ZLE when the background git refresh completes
+function _zshrc_prompt_async_update() {
+  local fd=$1
+  zle -F "$fd" 2>/dev/null
+  IFS= read -r -u "$fd" git_state
+  exec {fd}<&-
+  _zshrc_prompt_async_fd=0
+  _zshrc_prompt_main
+  zle reset-prompt 2>/dev/null
+}
 
-zshrc::prompt::refresh_git_state
-zshrc::prompt::main
+# Start async git state refresh (used in precmd)
+function _zshrc_prompt_start_async_refresh() {
+  # Cancel any previous pending refresh
+  if (( _zshrc_prompt_async_fd )) ; then
+    zle -F "$_zshrc_prompt_async_fd" 2>/dev/null
+    exec {_zshrc_prompt_async_fd}<&-
+    _zshrc_prompt_async_fd=0
+  fi
+  exec {_zshrc_prompt_async_fd}< <(_zshrc_prompt_sub_status)
+  zle -F "$_zshrc_prompt_async_fd" _zshrc_prompt_async_update 2>/dev/null
+}
+
+precmd_functions+=(_zshrc_prompt_start_async_refresh)
+
+_zshrc_prompt_refresh_git_state
+_zshrc_prompt_main
