@@ -79,7 +79,22 @@ function zshrc::prompt::sub_status::show () {
   echo $(get_git_changes)$(get_git_commits)$(get_git_stash_status)$(get_git_branch_name)
 }
 
+function zshrc::prompt::preexec () {
+  if [[ "$1" == git\ * ]] ; then
+    _zshrc_prompt_git_cmd_ran=1
+  fi
+}
+
+function zshrc::prompt::precmd () {
+  if [[ -n "$_zshrc_prompt_git_cmd_ran" ]] ; then
+    zshrc::prompt::refresh_git_state
+    unset _zshrc_prompt_git_cmd_ran
+  fi
+}
+
 chpwd_functions+=(zshrc::prompt::refresh_git_state)
+preexec_functions+=(zshrc::prompt::preexec)
+precmd_functions+=(zshrc::prompt::precmd)
 
 zshrc::prompt::refresh_git_state
 zshrc::prompt::main
