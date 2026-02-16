@@ -4,6 +4,165 @@ if ! i-have git ; then
   return
 fi
 
+# git-stash {{{
+# git-stash系のaliasは、ほとんどは自分でも覚えられなかったので、わかりやすい名前にする
+
+alias git-stash-push-message='git stash push -m'
+
+function git-stash-save-patch-and-message () {
+    git stash push --message "$1" --patch
+}
+
+function git-diff-stash () {
+  : Example
+  : git-diff-stash 0 -- 'git diff stash@{0}'
+  : git-diff-stash 1 -- 'git diff stash@{1}'
+  : git-diff-stash -- 'error'
+
+  local stash_index=$1
+  if [[ ! $stash_index =~ ^[0-9]+$ ]] ; then
+    echo "The first argument must be a stash index (a non-negative integer)." > /dev/stderr
+    return 1
+  fi
+
+  git diff "stash@{$stash_index}"
+}
+
+function git-stash-apply () {
+  : Example
+  : git-stash-apply 0 -- 'git stash apply stash@{0}'
+  : git-stash-apply 1 -- 'git stash apply stash@{1}'
+  : git-stash-apply -- 'error'
+
+  local stash_index=$1
+  if [[ ! $stash_index =~ ^[0-9]+$ ]] ; then
+    echo "The first argument must be a stash index (a non-negative integer)." > /dev/stderr
+    return 1
+  fi
+
+  git stash apply "stash@{$stash_index}"
+}
+
+alias gssa=git-stash-apply
+
+function git-stash-pop-force () {
+  # shellcheck disable=SC2016
+  read -rp 'Needing to run `git add -A`. OK? (y/n):' answer
+  if [[ $answer != 'y' ]] && [[ $answer != 'yes' ]] ; then
+    return 1
+  fi
+  git add -A
+  git stash show -p | git apply --3way || {
+    echo 'Failed to force git stash pop' > /dev/stderr
+    return 1
+  }
+  echo 'Succeeded to force git stash pop.'
+  # shellcheck disable=SC2016
+  echo 'Run `git stash drop` after conflicts resolved.'
+}
+
+# }}}
+# git-worktree {{{
+
+function gwa () {
+  : 'Creates a new worktree for a new branch'
+  target_branch=$1
+  git worktree add "$target_branch" "${target_branch//\#/}"
+}
+
+function gwab () {
+  : 'Creates a worktree for a new branch basing on a base branch'
+  base_branch=$1
+  new_branch=$2
+  git worktree add -b "$new_branch" "${new_branch//\#/}" "$base_branch"
+}
+
+function gwb () {
+  : 'Creates a new worktree for an existing branch'
+  local branch_name=$1
+  git worktree add "$branch_name" -b "$branch_name"
+}
+
+alias gw='git worktree'
+alias gwl='git worktree list'
+alias gwp='git worktree prune'
+
+# }}}
+# Others {{{
+
+function gtag-add-with-mmessage () {
+  local tag_name=$1 message=$2
+  git tag --annotate "$tag_name" --message "$message"
+}
+
+function git-branch-name () {
+  git branch 2> /dev/null | grep '\*\s.*' | awk '{print $2}'
+}
+
+function git-submodule-remove () {
+  local git_root
+  git_root=$(git-root)
+
+  for submodule_path in "$@" ; do
+    if [[ ! -d $submodule_path ]] ; then
+      echo "The path '$submodule_path' is not found or not a directory" > /dev/stderr
+      return 1
+    fi
+    git submodule deinit "$submodule_path" || return 1
+    echo "deinit done: $submodule_path"
+  done
+
+  echo "Don't forget that delete the submodule entry from:"
+  echo "  $git_root/.gitmodules"
+  echo "  $git_root/.git/config"
+}
+
+function git-push-u-origin-branch () {
+  git push -u origin "$(git branch --show-current)"
+}
+alias gpuob=git-push-u-origin-branch
+
+function ensure-git-wip-remote-existent () {
+  if [[ $DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP == '' ]] ; then
+    # shellcheck disable=SC2016
+    echo '$DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP is not set' >&2
+    return 1
+  fi
+
+  if [[ ! -d $DOTFILES_GIT_REMOTE_NAME_DIR ]] ; then
+    echo "The directory '$DOTFILES_GIT_REMOTE_NAME_DIR' is not found or not a directory" >&2
+    return 1
+  fi
+
+  return 0
+}
+
+function git-wip-remote-add () {
+  ensure-git-wip-remote-existent || return 1
+  git remote add "$DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP" "$DOTFILES_GIT_REMOTE_NAME_DIR"
+}
+
+function git-wip-push-force () {
+  : "First, run 'git-remote-add-wip' if you haven't yet."
+
+  ensure-git-wip-remote-existent || return 1
+  git push --force-with-lease "$DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP" "$(git branch --show-current)" || return 1
+}
+
+function git-wip-push-all-force () {
+  git add -A
+  git commit -m 'wip'
+  git-wip-push-force
+}
+
+alias git-checkout-all-theirs='git checkout --theirs .'
+
+# Set casual user.name and user.email at local
+alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
+
+# }}}
+# Common Shorthands {{{
+
 git_taking_limit=100
 
 alias _gr='git reset'
@@ -105,160 +264,13 @@ alias gfp='git fetch --prune'  # GitHub（など）の上に既にない`remotes
 alias gtag='git tag'
 alias gtag-delete='git tag --delete'
 alias gtagd='git tag --delete'
-alias gw='git worktree'
-
-# git-stash系のaliasは、ほとんどは自分でも覚えられなかったので、わかりやすい名前にする
-
-alias git-stash-push-message='git stash push -m'
-
-function git-stash-save-patch-and-message () {
-    git stash push --message "$1" --patch
-}
-
-function git-diff-stash-nth () {
-  : Example
-  : git-diff-stash-nth 0 -- 'git diff stash@{0}'
-  : git-diff-stash-nth 1 -- 'git diff stash@{1}'
-  : git-diff-stash-nth -- 'error'
-
-  local stash_index=$1
-  if [[ ! $stash_index =~ ^[0-9]+$ ]] ; then
-    echo "The first argument must be a stash index (a non-negative integer)." > /dev/stderr
-    return 1
-  fi
-
-  git diff "stash@{$stash_index}"
-}
-
-function git-stash-apply-nth () {
-  : Example
-  : git-stash-apply-nth 0 -- 'git stash apply stash@{0}'
-  : git-stash-apply-nth 1 -- 'git stash apply stash@{1}'
-  : git-stash-apply-nth -- 'error'
-
-  local stash_index=$1
-  if [[ ! $stash_index =~ ^[0-9]+$ ]] ; then
-    echo "The first argument must be a stash index (a non-negative integer)." > /dev/stderr
-    return 1
-  fi
-
-  git stash apply "stash@{$stash_index}"
-}
-
-alias gssa=git-stash-apply-nth
-
-function git-stash-pop-force () {
-  # shellcheck disable=SC2016
-  read -rp 'Needing to run `git add -A`. OK? (y/n):' answer
-  if [[ $answer != 'y' ]] && [[ $answer != 'yes' ]] ; then
-    return 1
-  fi
-  git add -A
-  git stash show -p | git apply --3way || {
-    echo 'Failed to force git stash pop' > /dev/stderr
-    return 1
-  }
-  echo 'Succeeded to force git stash pop.'
-  # shellcheck disable=SC2016
-  echo 'Run `git stash drop` after conflicts resolved.'
-}
-
-function gtag-add-m () {
-  local tag_name=$1 message=$2
-  git tag --annotate "$tag_name" --message "$message"
-}
-
-function gwa () {
-  : Makes both the new branch and the new directory.
-  target_branch=$1
-  git worktree add "$target_branch" "${target_branch//\#/}"
-}
-
-function gwab () {
-  : Makes the new branch basing on a base branch.
-  base_branch=$1
-  new_branch=$2
-  git worktree add -b "$new_branch" "${new_branch//\#/}" "$base_branch"
-}
-
-function gwb () {
-  local branch_name=$1
-  git worktree add "$branch_name" -b "$branch_name"
-}
-
-alias gwl='git worktree list'
-alias gwp='git worktree prune'
-alias gw-erase-removed='git worktree prune'
-
-function git-branch-name () {
-  git branch 2> /dev/null | grep '\*\s.*' | awk '{print $2}'
-}
-
-function git-submodule-remove () {
-  local git_root
-  git_root=$(git-root)
-
-  for submodule_path in "$@" ; do
-    if [[ ! -d $submodule_path ]] ; then
-      echo "The path '$submodule_path' is not found or not a directory" > /dev/stderr
-      return 1
-    fi
-    git submodule deinit "$submodule_path" || return 1
-    echo "deinit done: $submodule_path"
-  done
-
-  echo "Don't forget that delete the submodule entry from:"
-  echo "  $git_root/.gitmodules"
-  echo "  $git_root/.git/config"
-}
 
 unset git_taking_limit
 
-function git-push-u-origin-branch () {
-  git push -u origin "$(git branch --show-current)"
-}
-alias gpuob=git-push-u-origin-branch
-
-function ensure-git-wip-remote-existent () {
-  if [[ $DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP == '' ]] ; then
-    # shellcheck disable=SC2016
-    echo '$DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP is not set' >&2
-    return 1
-  fi
-
-  if [[ ! -d $DOTFILES_GIT_REMOTE_NAME_DIR ]] ; then
-    echo "The directory '$DOTFILES_GIT_REMOTE_NAME_DIR' is not found or not a directory" >&2
-    return 1
-  fi
-
-  return 0
-}
-
-function git-wip-remote-add () {
-  ensure-git-wip-remote-existent || return 1
-  git remote add "$DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP" "$DOTFILES_GIT_REMOTE_NAME_DIR"
-}
-
-function git-wip-push-force () {
-  : "First, run 'git-remote-add-wip' if you haven't yet."
-
-  ensure-git-wip-remote-existent || return 1
-  git push --force-with-lease "$DOTFILES_GIT_REMOTE_NAME_TO_PUSH_WIP" "$(git branch --show-current)" || return 1
-}
-
-function git-wip-push-all-force () {
-  git add -A
-  git commit -m 'wip'
-  git-wip-push-force
-}
-
-alias git-checkout-all-theirs='git checkout --theirs .'
-
-# Set casual user.name and user.email at local
-alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
 alias cdg=cd-to-git-root
 
-## GitHub
+# }}}
+## GitHub {{{
 
 function github-change-remote-from-git-to-https () {
   local remote https_url
@@ -287,7 +299,8 @@ EOF
   done
 }
 
-## GitLab
+# }}}
+## GitLab {{{
 
 function gitlab-clone () {
   if [[ -z $DOTFILES_GITLAB_ACCESS_TOKEN ]] ; then
@@ -313,3 +326,7 @@ function gitlab-clone () {
 
   git clone "https://$DOTFILES_GITLAB_ACCESS_TOKEN_NAME:$DOTFILES_GITLAB_ACCESS_TOKEN_VALUE@$1"
 }
+
+# }}}
+
+# vim: set foldmethod=marker :
