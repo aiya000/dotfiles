@@ -81,8 +81,9 @@ export PATH
 
 #}}}
 
-
 ###########################
 # Mark the end of loading #
 ###########################
 alias zsh_pr_loaded='echo "pr_loaded"'
+
+# vim: set foldmethod=marker :

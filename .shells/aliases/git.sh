@@ -284,19 +284,24 @@ function github-change-remote-from-git-to-https () {
   git remote get-url "$remote"
 }
 
-  function gh-workflow-run-all () {
-: <<EOF
+function gh-workflow-run-all () {
+  : '
+  Runs GitHub Actions Workflows that are set to
   ```yaml
   on:
     workflow_dispatch:
   ```
-  に設定されている全てのGitHub Actions Workflowを実行する
-EOF
+  '
 
   gh workflow list --json name -q '.[].name' | while read -r workflow ; do
     echo "Running: $workflow"
     gh workflow run "$workflow" --ref main
   done
+}
+
+function gh-run-delete-for-user () {
+  : 'Deletes GitHub Actions Workflows run by the specified user'
+  gh run list "--user=$1" --json databaseId -q '.[].databaseId' | xargs -I {} gh run delete {}
 }
 
 # }}}
