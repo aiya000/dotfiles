@@ -79,7 +79,6 @@ source ~/.zsh/zshrc/prompt.sh
 
 # }}}
 
-
 ###################
 # Define Commands #
 ###################
@@ -97,7 +96,6 @@ alias rel=reload
 
 # }}}
 
-
 ##################
 # Manage Plugins #
 ##################
@@ -109,7 +107,6 @@ source ~/.zsh/plugin/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/plugin/sh-bookmark-hereis/init.sh
 
 #}}}
-
 
 # Load keymaps
 source $ZDOTDIR/.zshrc.keymap
