@@ -1,5 +1,5 @@
 ---
-allowed-tools: Read(~/.dotfiles/.private/CLAUDE-MEMORY), Read(~/.claude/CLAUDE.md), Write(~/.dotfiles/.private/CLAUDE-MEMORY/*), Edit(~/.dotfiles/.private/CLAUDE-MEMORY/*), Bash(mkdir -p ~/.dotfiles/.private/CLAUDE-MEMORY), Bash(date:*)
+allowed-tools: Read(~/.claude/CLAUDE.md), Bash(date:*)
 description: Write a daily memory file
 ---
 
