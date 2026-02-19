@@ -99,12 +99,14 @@ alias rel=reload
 ##################
 # Manage Plugins #
 ##################
-# Load zsh plugins {{{
+# Load plugins {{{
 
 fpath=(~/.zsh/plugin/zsh-completions/src $fpath)
 source ~/.zsh/plugin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/plugin/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/plugin/sh-bookmark-hereis/init.sh
+
+source ~/.dotfiles/bash-toys/source-completions-all.sh
 
 #}}}
 
@@ -171,3 +173,5 @@ alias zsh_rc_loaded='echo "rc_loaded"'
 # if (which zprof > /dev/null) ; then
 #   zprof >! ~/.dotfiles/zprof.log
 # fi
+
+# vim : set foldmethod=marker :

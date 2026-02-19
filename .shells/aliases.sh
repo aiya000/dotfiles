@@ -2,7 +2,6 @@
 
 # shellcheck disable=SC1090
 source ~/.dotfiles/bash-toys/source-all.sh
-source ~/.dotfiles/bash-toys/source-completions-all.sh
 
 #
 # This file define the aliases and functions
