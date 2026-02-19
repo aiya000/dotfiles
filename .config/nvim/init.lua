@@ -1,5 +1,3 @@
--- NOTE: Don't use the mark Z, this is reserved by some my functions.
-
 require('luarocks-config')
 
 local nvim = require('nvim')
