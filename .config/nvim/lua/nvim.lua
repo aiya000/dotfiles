@@ -119,6 +119,14 @@ function M.confirm_to_get_charstr(message, hl_group, opts)
   vim.cmd('redraw')
 
   return opts.only_a_char and vim.fn.nr2char(vim.fn.getchar()) or vim.fn.getcharstr()
+
+  -- TODO: Replace to better implementation like ↓
+  -- local choice = vim.fn.confirm(
+  --   ('Trailing spaces in %s: Apply anyway?'):format(vim.bo.filetype),
+  --   '&Yes\n&No',
+  --   2
+  -- )
+  -- return choice ~= 1
 end
 
 M.confirm = M.confirm_to_get_charstr
@@ -168,6 +176,59 @@ function M.prompt_rich(message, opts)
   end)
 end
 
+---@param x string
+---@param y string
+---@return string
+local function concat_string(x, y)
+  return x .. y
+end
+
+---@param message string
+---@param cont fun(): nil
+function M.confirm_rich(message, cont)
+  local margin = fn.times(' ', #message / 2, concat_string)
+
+  local Menu = require('nui.menu')
+  local menu = Menu({
+    position = '50%',
+    size = {
+      width = #message + 2 + 2, -- first 2 is num of surrounding spaces (see below `border.text.top`), second 2 is margin
+      height = 2,
+    },
+    border = {
+      style = 'rounded',
+      text = {
+        top = ' ' .. message .. ' ',
+        top_align = 'center', -- TODO: Not working? See below workaround [1]
+      },
+    },
+    win_options = {
+      winhighlight = 'Normal:Normal,FloatBorder:Normal',
+    },
+  }, {
+    lines = {
+      -- [1] workaround for ↑
+      -- Menu.item('Yes'),
+      -- Menu.item('No'),
+      Menu.item(margin .. 'Yes' .. margin),
+      Menu.item(margin .. 'No' .. margin),
+    },
+    keymap = {
+      focus_next = { '<C-n>', '<Down>' },
+      focus_prev = { '<C-p>', '<Up>' },
+      close = { '<Esc>', '<C-l>', '<C-c>' },
+      submit = { '<CR>', '<C-j>' },
+    },
+    on_close = function() end,
+    on_submit = function(item)
+      if item.text == 'Yes' then
+        cont()
+      end
+    end,
+  })
+  menu:mount()
+end
+
 ---@return string | nil
 local function whoami()
   local result = vim.system({ 'whoami' }):wait()
@@ -206,6 +267,22 @@ function M.compress_spaces()
   vim.cmd('nohlsearch')
 end
 
+local function create_removing_trailing_spaces(range)
+  return function()
+    local curpos = vim.fn.getcurpos()
+    fn.try_finally(function()
+      local range_str = range == nil
+        and '%'
+        or ('%d,%d'):format(range[1], range[2])
+      -- Use vim.cmd with string.format to avoid escaping issues
+      -- Match spaces, tabs, and carriage returns at line end
+      vim.cmd(([[%s s/[ \t\r]\+$//ge]]):format(range_str))
+    end, function()
+      vim.fn.setpos('.', curpos)
+    end)
+  end
+end
+
 ---Removes trailing spaces of all lines
 ---@param force? boolean --If true, removes trailing spaces even in excluded filetypes. Default is false
 ---@param range? [integer, integer] --If specified, removes trailing spaces in the range. Default is all lines.
@@ -215,22 +292,16 @@ function M.remove_trailing_spaces(force, range)
   local excluded_filetypes = {
     'markdown',
   }
+
+  local apply = create_removing_trailing_spaces(range)
   if not force and list.has(excluded_filetypes, vim.bo.filetype) then
-    vim.notify(('Removing trailing spaces in %s: Skipped'):format(vim.bo.filetype), vim.log.levels.WARN)
+    M.confirm_rich(
+      ('Trailing spaces in %s: Apply?'):format(vim.bo.filetype),
+      apply
+    )
     return
   end
-  local curpos = vim.fn.getcurpos()
-
-  local range_str = '%'
-  if range ~= nil then
-    range_str = ('%d,%d'):format(range[1], range[2])
-  end
-
-  -- Use vim.cmd with string.format to avoid escaping issues
-  -- Match spaces, tabs, and carriage returns at line end
-  vim.cmd(([[%s s/[ \t\r]\+$//ge]]):format(range_str))
-
-  vim.fn.setpos('.', curpos)
+  apply()
 end
 
 ---Toggles diffthis and diffoff with some keymappings
