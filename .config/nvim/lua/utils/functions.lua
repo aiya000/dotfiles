@@ -1,6 +1,7 @@
 ---Neovimに関係がない、一般的なUtility関数を定義するモジュール
 
 local Test = require('utils.test')
+local list = require('utils.list')
 
 local M = {}
 
@@ -283,6 +284,7 @@ function M.call_optional(f, ...)
   return nil
 end
 
+-- TODO: Move to ../nvim.lua
 ---Wait until p satisfied
 ---@param p fun(): boolean
 ---@param f fun(): nil --called when `p()` satisfied
@@ -353,6 +355,48 @@ function M.set_vim_dict_field(scope, varname, field, value)
     error(string.format("Expected '%s' to be a table, but got %s", varname, type(scope[varname])))
   end
   scope[varname][field] = value
+end
+
+
+---@generic T
+---@param elem T a value what replicated
+---@param count integer num of replication (must be non-negative)
+---@return T[]
+function M.replicate(elem, count)
+  if count < 0 then
+    error('Count must be non-negative')
+  end
+
+  local result = {}
+  for i = 1, count do
+    table.insert(result, elem)
+  end
+  return result
+end
+
+---@param x number
+---@param y number
+---@return number
+local function add(x, y)
+  return x + y
+end
+
+---Simular to `replicate()`, but appends the replicated values into the list
+---@generic T
+---@param elem T a value what replicated
+---@param count integer num of replication (must be non-negative)
+---@param append? fun(x: T, y: T): T how to append the replicated value into the list. Default to `+`
+---@return T
+function M.times(elem, count, append)
+  append = append or add
+
+  local xs = M.replicate(elem, count)
+  local result = xs[1]
+  for i = 2, #xs do
+    local x = xs[i]
+    result = append(result, x)
+  end
+  return result
 end
 
 -- In-source testing
@@ -435,6 +479,43 @@ if vim == nil then
   test('make_table_to_string() should handle numeric keys', function()
     local result = M.make_table_to_string({ [1] = 'first', [2] = 'second' })
     assert(result:find("1 = 'first'") or result:find("2 = 'second'"), 'Should handle numeric keys with quoted strings')
+  end)
+
+  test('replicate() should return a list with the element repeated count times', function()
+    local result = M.replicate(42, 3)
+    assert_equal(#result, 3)
+    assert_equal(result[1], 42)
+    assert_equal(result[2], 42)
+    assert_equal(result[3], 42)
+  end)
+
+  test('replicate() should return an empty list when count is 0', function()
+    local result = M.replicate('x', 0)
+    assert_equal(#result, 0)
+  end)
+
+  test('replicate() should return a single-element list when count is 1', function()
+    local result = M.replicate('hello', 1)
+    assert_equal(#result, 1)
+    assert_equal(result[1], 'hello')
+  end)
+
+  test('replicate() should raise an error when count is negative', function()
+    local ok = pcall(M.replicate, 'x', -1)
+    assert(not ok, 'Should raise an error for negative count')
+  end)
+
+  test('times() should sum the element repeated count times by default', function()
+    assert_equal(M.times(3, 4), 12)
+  end)
+
+  test('times() should return the element itself when count is 1', function()
+    assert_equal(M.times(7, 1), 7)
+  end)
+
+  test('times() should concatenate strings with a custom append function', function()
+    local result = M.times('ab', 3, function(a, b) return a .. b end)
+    assert_equal(result, 'ababab')
   end)
 end
 
