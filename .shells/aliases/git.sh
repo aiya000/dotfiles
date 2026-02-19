@@ -17,9 +17,9 @@ function git-diff-stash () {
   : Example
   : git-diff-stash 0 -- 'git diff stash@{0}'
   : git-diff-stash 1 -- 'git diff stash@{1}'
-  : git-diff-stash -- 'error'
+  : git-diff-stash -- 'git diff stash@{0}'
 
-  local stash_index=$1
+  local stash_index=${1:-0}
   if [[ ! $stash_index =~ ^[0-9]+$ ]] ; then
     echo "The first argument must be a stash index (a non-negative integer)." > /dev/stderr
     return 1
@@ -32,9 +32,9 @@ function git-stash-apply () {
   : Example
   : git-stash-apply 0 -- 'git stash apply stash@{0}'
   : git-stash-apply 1 -- 'git stash apply stash@{1}'
-  : git-stash-apply -- 'error'
+  : git-stash-apply -- 'git stash apply stash@{0}'
 
-  local stash_index=$1
+  local stash_index=${1:-0}
   if [[ ! $stash_index =~ ^[0-9]+$ ]] ; then
     echo "The first argument must be a stash index (a non-negative integer)." > /dev/stderr
     return 1
@@ -44,6 +44,21 @@ function git-stash-apply () {
 }
 
 alias gssa=git-stash-apply
+
+function git-show-stash () {
+  : Example
+  : git-stash-show 0 -- 'git stash show stash@{0}'
+  : git-stash-show 1 -- 'git stash show stash@{1}'
+  : git-stash-show -- 'git stash show stash@{0}'
+
+  local stash_index=${1:-0}
+  if [[ ! $stash_index =~ ^[0-9]+$ ]] ; then
+    echo "The first argument must be a stash index (a non-negative integer)." > /dev/stderr
+    return 1
+  fi
+
+  git show "stash@{$stash_index}"
+}
 
 function git-stash-pop-force () {
   # shellcheck disable=SC2016
