@@ -78,4 +78,3 @@ end, { buffer = true, silent = true })
 
 vim.keymap.set('n', '<C-k><C-f>', '<Cmd>Telescope lsp_document_symbols<CR>', { buffer = true, silent = true })
 vim.keymap.set('n', '<C-g>e', '<Cmd>FeMaco<CR>', { buffer = true, silent = true })
-vim.keymap.set('n', '<C-k><Space>', [[<Cmd>%s/\r$//<CR>]], { buffer = true, silent = true })
