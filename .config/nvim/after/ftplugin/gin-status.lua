@@ -73,23 +73,15 @@ local function delete_this_file()
   vim.cmd('normal "zyy')
   local filepath = vim.fn.trim(vim.fn.getreg('z'))
 
-  -- local answer = nvim.confirm(
-  --   'Delete this file?: ' .. filepath .. ' (y/n): ',
-  --   { only_a_char = true }
-  -- )
-  local answer =
-    nvim.confirm('Delete this file?: ' .. filepath .. ' (y/n): ', nvim.hl_groups.Question, { only_a_char = true })
-  if answer ~= 'y' then
-    return
-  end
-
-  local ok, err = os.remove(filepath)
-  if ok then
-    vim.notify('Removed file: ' .. filepath, vim.log.levels.INFO)
-    vim.cmd('GinStatus') -- Refresh
-  else
-    vim.notify('Failed to remove file: ' .. err, vim.log.levels.ERROR)
-  end
+  nvim.confirm('Delete this file?: ' .. filepath, function()
+    local ok, err = os.remove(filepath)
+    if ok then
+      vim.notify('Removed file: ' .. filepath, vim.log.levels.INFO)
+      vim.cmd('GinStatus') -- Refresh
+    else
+      vim.notify('Failed to remove file: ' .. err, vim.log.levels.ERROR)
+    end
+  end)
 end
 
 vim.keymap.set('n', 'Q', '<Cmd>bdelete!<CR>', { buffer = true, silent = true })

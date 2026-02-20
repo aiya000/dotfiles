@@ -2,29 +2,20 @@ local nvim = require('nvim')
 local list = require('utils.list')
 
 ---@param branch_name string
----@return boolean --true if 'y'
-local function confirm_to_delete_branch(branch_name)
+---@param cont fun(): nil
+local function confirm_to_delete_branch(branch_name, cont)
   local protected_branches = { 'main', 'master', 'develop', 'release' }
-
-  local answer = nvim.confirm_to_get_charstr(("Delete '%s' branch? (y/n):"):format(branch_name))
-  if answer:lower() ~= 'y' then
-    return false
-  end
-
-  if list.has(protected_branches, branch_name) then
-    local next_answer = nvim.confirm_to_get_charstr(
-      ("'%s' is a protected branch. Are you sure you want to delete it? (y/n):"):format(branch_name)
-    )
-    if next_answer:lower() ~= 'y' then
-      return false
+  nvim.confirm(("Delete '%s' branch?"):format(branch_name), function()
+    if not list.has(protected_branches, branch_name) then
+      cont()
+      return
     end
-  end
 
-  return true
-end
-
-local function force_delete_not_merged_branch()
-  error('TODO: Not Implemented Yet (force_delete_not_merged_branch)')
+    nvim.confirm(
+      ("'%s' is a protected branch. Are you sure?"):format(branch_name),
+      cont
+    )
+  end)
 end
 
 local function confirm_to_force_delete_not_merged_branch()
@@ -56,23 +47,20 @@ local function delete_current_line_branch()
     return
   end
 
-  local want_to_delete = confirm_to_delete_branch(branch_name)
-  if not want_to_delete then
-    return
-  end
+  confirm_to_delete_branch(branch_name, function()
+    local result = vim.system({ 'git', 'branch', '-d', branch_name }):wait()
+    if result.code ~= 0 and is_error_due_to_no_merge(result.stderr) then
+      confirm_to_force_delete_not_merged_branch()
+      return
+    end
+    if result.code ~= 0 then
+      vim.notify(("Failed to delete branch '%s': %s"):format(branch_name, result.stderr), vim.log.levels.ERROR)
+      return
+    end
 
-  local result = vim.system({ 'git', 'branch', '-d', branch_name }):wait()
-  if result.code ~= 0 and is_error_due_to_no_merge(result.stderr) then
-    confirm_to_force_delete_not_merged_branch()
-    return
-  end
-  if result.code ~= 0 then
-    vim.notify(("Failed to delete branch '%s': %s"):format(branch_name, result.stderr), vim.log.levels.ERROR)
-    return
-  end
-
-  vim.notify(("Branch '%s' deleted successfully"):format(branch_name), vim.log.levels.INFO)
-  vim.cmd('GinBranch') -- Refresh the buffer
+    vim.notify(("Branch '%s' deleted successfully"):format(branch_name), vim.log.levels.INFO)
+    vim.cmd('GinBranch') -- Refresh the buffer
+  end)
 end
 
 vim.keymap.set('n', 'Q', function()

@@ -106,48 +106,8 @@ M.hl_groups = {
 }
 
 ---@param message string
----@param hl_group? string
----@param opts? { only_a_char: boolean }
 ---@return string
-function M.confirm_to_get_charstr(message, hl_group, opts)
-  opts = opts or { only_a_char = false }
-  hl_group = hl_group or M.hl_groups.Question
-
-  vim.api.nvim_echo({
-    { message, hl_group },
-  }, false, {})
-  vim.cmd('redraw')
-
-  return opts.only_a_char and vim.fn.nr2char(vim.fn.getchar()) or vim.fn.getcharstr()
-
-  -- TODO: Replace to better implementation like ↓
-  -- local choice = vim.fn.confirm(
-  --   ('Trailing spaces in %s: Apply anyway?'):format(vim.bo.filetype),
-  --   '&Yes\n&No',
-  --   2
-  -- )
-  -- return choice ~= 1
-end
-
-M.confirm = M.confirm_to_get_charstr
-
----@param message string
----@param opts? { only_a_char: boolean }
----@return string
-function M.prompt(message, opts)
-  return M.confirm_to_get_charstr(message, M.hl_groups.Normal, opts)
-end
-
----(nui.nvim required.)
----@param message string
----@param opts? { only_a_char: boolean } -- Currently only `only_a_char = true` is supported
----@return string
-function M.prompt_rich(message, opts)
-  opts = opts or { only_a_char = false }
-  if not opts.only_a_char then
-    error('Currently, only `only_a_char = true` is supported')
-  end
-
+function M.prompt(message)
   local popup = require('nui.popup')({
     position = '50%',
     size = {
@@ -185,7 +145,7 @@ end
 
 ---@param message string
 ---@param cont fun(): nil
-function M.confirm_rich(message, cont)
+function M.confirm(message, cont)
   local margin = fn.times(' ', #message / 2, concat_string)
 
   local Menu = require('nui.menu')
@@ -295,7 +255,7 @@ function M.remove_trailing_spaces(force, range)
 
   local apply = create_removing_trailing_spaces(range)
   if not force and list.has(excluded_filetypes, vim.bo.filetype) then
-    M.confirm_rich(
+    M.confirm(
       ('Trailing spaces in %s: Apply?'):format(vim.bo.filetype),
       apply
     )
