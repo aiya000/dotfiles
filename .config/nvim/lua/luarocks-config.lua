@@ -1,11 +1,26 @@
 ---Enables packages installed by `luarocks install --local`
 
--- 環境によってlua5.1だったりlua5.2だったりするので、全部追加しておく
-package.path = ('%s;%s/.luarocks/share/lua/5.1/?.lua'):format(package.path, vim.env.HOME)
+if vim.fn.executable('luarocks') ~= 1 then
+  error('Luarocks is not found. Please make sure it is in your PATH.')
+end
 
-package.path = ('%s;%s/.luarocks/share/lua/5.2/?.lua'):format(package.path, vim.env.HOME)
+local handle = io.popen('luarocks path --lr-path')
+if handle then
+  local luarocks_path = handle:read('*a'):gsub('\n', '')
+  handle:close()
+  if luarocks_path ~= '' then
+    package.path = package.path .. ';' .. luarocks_path
+  end
+end
 
-package.path = ('%s;%s/.luarocks/share/lua/5.4/?.lua'):format(package.path, vim.env.HOME)
+handle = io.popen('luarocks path --lr-cpath')
+if handle then
+  local luarocks_cpath = handle:read('*a'):gsub('\n', '')
+  handle:close()
+  if luarocks_cpath ~= '' then
+    package.cpath = package.cpath .. ';' .. luarocks_cpath
+  end
+end
 
 local function validate(package)
   local ok = pcall(require, package)
