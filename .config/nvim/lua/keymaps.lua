@@ -31,7 +31,7 @@ vim.keymap.set('n', ')', ')zv')
 vim.keymap.set('n', '<C-k><C-j>', nvim.clear_highlight_and_write)
 vim.keymap.set('n', '<C-k>J', '<Cmd>wall | echo "written all !"<CR>', { silent = true })
 vim.keymap.set('n', '<C-]>', 'g<C-]>')
-vim.keymap.set('n', '<leader>q', '<Cmd>copen<CR>', { silent = true })
+vim.keymap.set('n', '<leader>q', '<Cmd>copen<CR><C-w>H', { silent = true })
 vim.keymap.set('n', '<leader><leader>q', '<Cmd>cclose<CR>', { silent = true })
 vim.keymap.set('n', 'Y', 'yg_')
 vim.keymap.set('n', 'g<C-]>', '<C-]>')
@@ -45,6 +45,9 @@ vim.keymap.set('n', '<C-x><C-n>', '<C-n>')
 vim.keymap.set('n', '<C-x><C-p>', '<C-p>')
 vim.keymap.set('n', '/', [[/\m]])
 vim.keymap.set('n', '?', [[?\m]])
+
+-- TODO: なぜかvijpはいけるのにcijpは行けないので、ワークアラウンドする
+vim.keymap.set('n', 'cijp', 'vijps', { remap = true })
 
 -- Search
 local function try_show_search_number_or_do_nothing()
@@ -409,7 +412,7 @@ vim.keymap.set('n', '<leader>r', '<Cmd>Jaq<CR>', { nowait = true }) -- `nowait`:
 -- File Manupilation
 vim.keymap.set('n', '<leader>b', '<Cmd>MadoScratchOpenFile md<CR>', { silent = true })
 vim.keymap.set('n', '<leader>B', '<Cmd>MadoScratchOpenFileNext md<CR>', { silent = true })
-vim.keymap.set('n', '<leader><leader>b', ':<C-u>MadoScratchOpen', { remap = true })
+vim.keymap.set('n', '<leader><leader>b', ':<C-u>MadoScratchOpenFile md float-aspect')
 
 vim.keymap.set('n', '<leader><leader>B', function()
   vim.cmd('vertical split ' .. InitLua.memo_path)
@@ -479,7 +482,23 @@ vim.keymap.set('i', '<C-s>', function()
 end, { silent = true })
 
 -- File Manupilation
-vim.keymap.set('v', '<leader>B', '"zy<Cmd>MadoScratchOpenFileNext md<CR>V"zpgg=Ggg<Cmd>write<CR>', { silent = true })
+vim.keymap.set('v', '<leader>b', function()
+  local start_line = vim.fn.getpos("'<")[2]
+  local end_line   = vim.fn.getpos("'>")[2]
+  local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+
+  nvim.input('Input File Extension (e.g., md, ts, hs)', function(submitted)
+    if submitted == '' or submitted == nil then
+      error('FileType is required')
+    end
+
+    vim.cmd('MadoScratchOpenFileNext ' .. submitted .. ' vsp')
+    local scratch_buf = vim.api.nvim_get_current_buf()
+    vim.api.nvim_buf_set_lines(scratch_buf, 0, -1, false, lines)
+    vim.cmd('normal! gg=Ggg')
+    vim.cmd.write()
+  end)
+end, { silent = true })
 
 -- }}}
 -- select mode {{{
@@ -669,6 +688,10 @@ vim.keymap.set('i', '<C-k>\\Q', 'ℚ')
 vim.keymap.set('i', '<C-k>\\C', 'ℂ')
 vim.keymap.set('i', '<C-k>..', '◉')
 vim.keymap.set('i', '<C-k>\\|>', '↦')
+vim.keymap.set('i', '<C-k>oo', '⚪︎')
+vim.keymap.set('i', '<C-k>xx', '×')
+vim.keymap.set('i', '<C-k>tt', '△')
+vim.keymap.set('i', '<C-k>kk', '◻︎')
 
 -- }}}
 -- operator-pending mode {{{
@@ -688,3 +711,5 @@ inoreabbr encrpyt encrypt
 ]])
 
 -- }}}
+
+-- vim: foldmethod=marker
