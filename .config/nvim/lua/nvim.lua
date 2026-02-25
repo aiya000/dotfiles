@@ -189,6 +189,50 @@ function M.confirm(message, cont)
   menu:mount()
 end
 
+---@param message string
+---@param cont fun(submitted: string): nil
+function M.input(message, cont)
+  -- NOTE: なぜか`nui.input`だと入力ができないので、自前で実装
+  vim.schedule(function()
+    local buf = vim.api.nvim_create_buf(false, true)
+    vim.bo[buf].buftype = 'nofile'
+    vim.bo[buf].modifiable = true
+
+    local width = math.max(#message + 4, 30)
+    vim.api.nvim_open_win(buf, true, {
+      relative = 'editor',
+      row = math.floor((vim.o.lines - 3) / 2),
+      col = math.floor((vim.o.columns - width - 2) / 2),
+      width = width,
+      height = 1,
+      style = 'minimal',
+      border = 'single',
+      title = ' ' .. message .. ' ',
+      title_pos = 'center',
+    })
+
+    vim.cmd('startinsert')
+
+    local function submit()
+      local value = vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] or ''
+      vim.cmd('stopinsert')
+      vim.api.nvim_win_close(0, true)
+      vim.schedule(function()
+        cont(value)
+      end)
+    end
+
+    local function cancel()
+      vim.cmd('stopinsert')
+      vim.api.nvim_win_close(0, true)
+    end
+
+    vim.keymap.set('i', '<CR>', submit, { buffer = buf, noremap = true, silent = true })
+    vim.keymap.set({ 'i', 'n' }, '<Esc>', cancel, { buffer = buf, noremap = true, silent = true })
+    vim.keymap.set({ 'i', 'n' }, '<C-c>', cancel, { buffer = buf, noremap = true, silent = true })
+  end)
+end
+
 ---@return string | nil
 local function whoami()
   local result = vim.system({ 'whoami' }):wait()
