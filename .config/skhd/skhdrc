@@ -127,7 +127,7 @@ ctrl - h [
 ]
 ctrl - u [
     "iTerm2" ~
-    * : skhd -k "cmd + shift - left"; skhd -k "backspace"
+    * : skhd -k "cmd + shift - left"; sleep 0.05; skhd -k "backspace"
 ]
 ctrl - d [
     "iTerm2" ~
@@ -148,4 +148,10 @@ ctrl - p [
 ctrl - n [
     "iTerm2" ~
     * : skhd -k down
+]
+
+# Finder: cmd + l → cmd + shift + g (Go to Folder)
+cmd - l [
+    "Finder" : skhd -k "cmd + shift - g"
+    * ~
 ]
