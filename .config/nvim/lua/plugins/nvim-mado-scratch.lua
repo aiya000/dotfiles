@@ -61,7 +61,7 @@ return {
   -- 'aiya000/nvim-mado-scratch',
   -- dir = vim.fn.expand('~/Repository/nvim-mado-scratch'),
   dir = vim.fn.expand('~/Repository/nvim-mado-scratch/main'),
-  -- dir = vim.fn.expand('~/Repository/nvim-mado-scratch/copilot/fix-nvim-madoscratch-error'),
+  -- dir = vim.fn.expand('~/Repository/nvim-mado-scratch/feature/default_open_behavior'),
   dependencies = {
     'nvim-lua/plenary.nvim',
     'MunifTanjim/nui.nvim',
@@ -69,7 +69,7 @@ return {
   config = function()
     require('mado-scratch').setup({
       default_file_ext = 'md',
-      default_open_method = 'float-aspect',
+      default_open_method = 'vsp',
       default_open_params = {
         ['float-aspect'] = {
           scale = {
@@ -81,6 +81,9 @@ return {
           width = 'no-auto-resize',
         },
       },
+    file_pattern = {
+      when_file_buffer = '~/tmp/scratch-%d',
+    },
     })
 
     vim.api.nvim_create_autocmd('User', {
