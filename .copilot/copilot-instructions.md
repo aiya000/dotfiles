@@ -1,0 +1,1 @@
+../AGENTS.global.md
