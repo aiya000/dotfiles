@@ -26,8 +26,6 @@ export PYENV_ROOT=$HOME/.pyenv
 
 export BASH_TOYS_INTERACTIVE_FILTER=peco-reverse  # To display the most recently started process nearby with kill-list command
 export BASH_TOYS_RESTORE_KEEP=1
-export BASH_TOYS_WHEN_POMODORO_TIMER_FINISHED="notify Pomodoro-Timer The-time-finished! $HOME/.dotfiles/bash-toys/assets/notification-impact.mp3"
-export BASH_TOYS_POMODORO_DEFAULT_INTERVAL=60
 
 export DOTFILES_BATCAT_DEFAULT_OPTIONS=--number
 export DOTFILES_ZSHRC_AUTO_LOADED_ENVS=()
