@@ -1,5 +1,4 @@
 ---
-allowed-tools:
 description: Inspect a project for potentially malicious code (malware, spyware, etc.)
 ---
 
