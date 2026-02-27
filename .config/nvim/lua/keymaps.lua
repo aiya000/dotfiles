@@ -412,7 +412,7 @@ vim.keymap.set('n', '<leader>r', '<Cmd>Jaq<CR>', { nowait = true }) -- `nowait`:
 -- File Manupilation
 vim.keymap.set('n', '<leader>b', '<Cmd>MadoScratchOpenFile md<CR>', { silent = true })
 vim.keymap.set('n', '<leader>B', '<Cmd>MadoScratchOpenFileNext md<CR>', { silent = true })
-vim.keymap.set('n', '<leader><leader>b', ':<C-u>MadoScratchOpenFile md float-aspect')
+vim.keymap.set('n', '<leader><leader>b', ':<C-u>MadoScratchOpenFile<Space>')
 
 vim.keymap.set('n', '<leader><leader>B', function()
   vim.cmd('vertical split ' .. InitLua.memo_path)

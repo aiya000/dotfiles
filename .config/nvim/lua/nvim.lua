@@ -800,8 +800,7 @@ function M.toggle_copilot_cli()
       cmd = ([[
         copilot
           --allow-tool write
-          --allow-tool 'shell(notifu-respond)'
-          --allow-tool 'shell(notifu.exe)'
+          --allow-tool 'shell(notify)'
           --allow-tool 'shell(git log)'
           --allow-tool 'shell(git show)'
           --allow-tool 'shell(git diff)'
