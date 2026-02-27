@@ -40,5 +40,6 @@ export HEREIS_ALIAS_PREFIX=p-
 # }}}
 
 PATH=$PATH:~/.GoPath/bin
+PATH=$PATH:~/.dotnet/tools
 
 # export NODE_OPTIONS=--max-old-space-size=16384

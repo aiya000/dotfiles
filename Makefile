@@ -17,6 +17,7 @@ NPMInstall = npm install --global --user
 LuaRocksInstall = luarocks install --local
 UVInstall = uv tool install # 事前に`load-my-env mise`してね。まだmiseでuvを入れてなければ`mise use uv@latest`もしよう！
 PIPInstall = $(UVInstall) # pip installよくわからん
+MiseUse = mise use -g
 
 # Common {{{
 
@@ -67,6 +68,25 @@ install-nvm:
 
 install-haskell-stack:
 	curl -sSL https://get.haskellstack.org/ | sh
+
+install-ghcup:
+	which ghcup || curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+
+install-dotnet:
+	which dotnet || $(MiseUse) dotnet@9
+
+install-dotnet-script:
+	which dotnet-script || dotnet tool install -g dotnet-script
+
+install-scala:
+	which 
+	mise use -g scala@3
+
+install-idris2:
+	which idris2 || $(BrewInstall) idris2
+
+install-koka:
+	which koka || $(BrewInstall) koka
 
 network-config:
 	sudo systemctl enable dhcpcd
