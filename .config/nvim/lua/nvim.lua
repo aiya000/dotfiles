@@ -652,6 +652,17 @@ function M.delete_mostly_inner_surround()
     return
   end
 
+  -- TODO: Workaround. For some reason 'B' ('**foo**') cannot be deleted by vim-operator-surround
+  -- See also: .vim/autoload/vimrc.vim - same workaround in Vimscript
+  if obj_key == 'B' then
+    -- Delete content between * (which leaves ** on each side)
+    vim.cmd('normal! d' .. vim.api.nvim_replace_termcodes('<Plug>(textobj-between-i)*', true, false, true))
+    -- Replace the remaining **** with the deleted content
+    vim.cmd([[s/\*\*\*\*/{@"}/]])
+    print('**deleted**')
+    return
+  end
+
   M.run_with_virtual_keymaps('va' .. obj_key .. '<Plug>(operator-surround-delete)')
   vim.call('repeat#set', 'va' .. obj_key .. '\\<Plug>(operator-surround-delete)')
 end
@@ -671,6 +682,7 @@ function M.replace_mostly_inner_surround()
     return
   end
 
+  -- Use the original pattern that works for most delimiters
   M.run_with_virtual_keymaps('va' .. obj_key_from .. '<Plug>(operator-surround-replace)' .. obj_key_to)
   vim.call('repeat#set', 'va' .. obj_key_from .. '\\<Plug>(operator-surround-replace)' .. obj_key_to)
 end
