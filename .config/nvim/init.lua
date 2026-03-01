@@ -1,4 +1,4 @@
-require('luarocks-config')
+require('luarocks')
 
 local nvim = require('nvim')
 local fn = require('utils.functions')

@@ -1775,6 +1775,22 @@ return {
   },
 
   -- }}}
+  -- luarrow {{{
+
+  {
+    'aiya000/luarrow.lua',
+    build = 'luarocks install --lua-version 5.1 luarrow',
+  },
+
+  -- }}}
+  -- chotto {{{
+
+  {
+    'aiya000/chotto.lua',
+    build = 'luarocks install --lua-version 5.1 chotto',
+  },
+
+  -- }}}
 }
 
 -- vim: set foldmethod=marker foldlevel=1:
