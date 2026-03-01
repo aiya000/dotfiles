@@ -102,6 +102,33 @@ alias gw='git worktree'
 alias gwl='git worktree list'
 alias gwp='git worktree prune'
 
+function git-worktree-create-env () {
+  echo '> git status'
+  git status
+  echo '------------'
+  confirm 'Destory all directory and all files for creating git-worktree base directory?' || return 1
+
+  if [[ $(git status | wc -l) -gt 1 ]] ; then
+    echo 'Some changes found. Stash them before creating git-worktree base directory.'
+    git add -A
+    git stash
+  fi
+
+  {
+    mv .git ..
+    ls -a | rg -v '^(\.|\.\.)$' | xargs rm-dust
+    mv ../.git .
+    git switch --create dummy
+    git add -
+    git commit -m dummy
+  } || {
+    echo 'Failed to create git-worktree base directory. Please check the error message above.' > /dev/stderr
+    return 1
+  }
+
+  echo 'git-worktree base directory created. You can now run `git worktree add <path>` to create a new worktree.'
+}
+
 # }}}
 # Others {{{
 
