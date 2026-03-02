@@ -48,6 +48,7 @@ vim.keymap.set('n', '?', [[?\m]])
 
 -- TODO: なぜかvijpはいけるのにcijpは行けないので、ワークアラウンドする
 vim.keymap.set('n', 'cijp', 'vijps', { remap = true })
+vim.keymap.set('n', 'cajp', 'vajps', { remap = true })
 
 -- Search
 local function try_show_search_number_or_do_nothing()
