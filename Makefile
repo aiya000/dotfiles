@@ -558,6 +558,9 @@ install-alerter:
 	which alerter && \
 	rm-dust alerter_v1.0.0_darwin_amd64.zip
 
+install-grip:
+	which grip || $(BrewInstall) grip
+
 endif # }}}
 ifeq ($(WSL2),yes) # {{{
 
