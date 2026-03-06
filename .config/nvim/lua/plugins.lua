@@ -817,7 +817,7 @@ return {
     'lambdalisue/kensaku-search.vim',
     dependencies = { 'lambdalisue/kensaku.vim' },
     config = function()
-      vim.keymap.set('c', '<CR>', '<Plug>(kensaku-search-replace)<CR>')
+      nvim.keymaps_set('c', { '<CR>', '<C-m>', '<C-j>' }, '<Plug>(kensaku-search-replace)<CR>')
     end,
   },
 
