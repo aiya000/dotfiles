@@ -561,6 +561,15 @@ install-alerter:
 install-grip:
 	which grip || $(BrewInstall) grip
 
+install-p7zip:
+	which 7z || $(BrewInstall) p7zip
+
+install-atool:
+	which aunpack || $(BrewInstall) atool
+
+install-atool-deps:
+	$(MAKE) install-p7zip
+
 endif # }}}
 ifeq ($(WSL2),yes) # {{{
 
