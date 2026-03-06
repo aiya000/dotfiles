@@ -17,7 +17,7 @@ local function find_free_port(port, rest_count_to_cancel)
     error('Cannot find free port. The expected port: ' .. port)
   end
 
-  local result = vim.system({ 'ss', '-tuln' }):wait()
+  local result = vim.system({ 'lsof', '-i', '-P', '-n' }):wait()
   if result.code ~= 0 or result.stdout == nil then
     error('Failed to check port: ' .. result.stderr)
   end
