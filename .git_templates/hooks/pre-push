@@ -19,4 +19,10 @@ gh auth switch --user "$user"
 message="Will push by **$user**"
 echo "$message"
 echo
-~/.dotfiles/bash-toys/bin/notify Git "$message" ~/.dotfiles/bash-toys/assets/notification-2.mp3
+
+if [[ $user == aiya000 ]] ; then
+  effect=~/.dotfiles/bash-toys/assets/notification-2.mp3
+else
+  effect=~/.dotfiles/bash-toys/assets/notification-3.mp3
+fi
+~/.dotfiles/bash-toys/bin/notify Git "$message" "$effect"
