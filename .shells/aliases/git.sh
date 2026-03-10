@@ -134,7 +134,8 @@ function git-worktree-create-env () {
 
 function gtag-add-with-mmessage () {
   local tag_name=$1 message=$2
-  git tag --annotate "$tag_name" --message "$message"
+  shift 2
+  git tag --annotate "$tag_name" --message "$message" "$@"
 }
 
 function git-branch-name () {
@@ -160,7 +161,7 @@ function git-submodule-remove () {
 }
 
 function git-push-u-origin-branch () {
-  git push -u origin "$(git branch --show-current)"
+  git push -u origin "$(git branch --show-current)" "$@"
 }
 alias gpuob=git-push-u-origin-branch
 
