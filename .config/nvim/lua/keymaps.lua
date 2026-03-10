@@ -46,6 +46,15 @@ vim.keymap.set('n', '<C-x><C-p>', '<C-p>')
 vim.keymap.set('n', '/', [[/\m]])
 vim.keymap.set('n', '?', [[?\m]])
 
+-- Force open (even if the file doesn't exist)
+vim.keymap.set('n', 'gF', function()
+  local file = vim.fn.expand('<cfile>')
+  if vim.fn.filereadable(file) ~= 1 then
+    vim.notify('Force opened: ' .. file, vim.log.levels.INFO)
+  end
+  vim.cmd.edit(file)
+end)
+
 -- TODO: なぜかvijpはいけるのにcijpは行けないので、ワークアラウンドする
 vim.keymap.set('n', 'cijp', 'vijps', { remap = true })
 vim.keymap.set('n', 'cajp', 'vajps', { remap = true })
