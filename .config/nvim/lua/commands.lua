@@ -44,7 +44,7 @@ end, { nargs = '?', complete = 'filetype' })
 
 create_command('FtDetectEdit', function(opts)
   local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd(s('edit {neovim_home}/ftdetect/{filetype}.vim', { neovim_home = InitLua.neovim_home, filetype = filetype }))
+  vim.cmd(s('edit {neovim_home}/ftdetect/{filetype}.lua', { neovim_home = InitLua.neovim_home, filetype = filetype }))
 end, { nargs = '?', complete = 'filetype' })
 
 -- }}}
