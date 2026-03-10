@@ -1,12 +1,3 @@
-[user]
-	name = aiya000
-	email = aiya000.develop@gmail.com
-[mergetool "neovimdiff"]
-	cmd = nvim -d $LOCAL $MERGED $REMOTE -c 'wincmd h' -c 'wincmd l'
-[merge]
-	tool = neovimdiff
-[github]
-	user = aiya000
 [include]
 	path = ~/.gitconfig_env
 [push]
@@ -30,6 +21,10 @@
 	branch = true
 [mergetool]
 	keepBackup = false
+[mergetool "neovimdiff"]
+	cmd = nvim -d $LOCAL $MERGED $REMOTE -c 'wincmd h' -c 'wincmd l'
+[merge]
+	tool = neovimdiff
 [color]
 	ui = auto
 [filter "lfs"]
@@ -45,10 +40,20 @@
 	autostash = true
 [commit]
 	template = ~/.dotfiles/.gitmessage
-[credential]
-	helper = ""
-[credential "https://gist.github.com"]
-	helper = !/usr/bin/env git-credential-gh-switch aiya000
-[credential "https://github.com"]
-	helper = !/usr/bin/env git-credential-gh-switch aiya000
-	useHttpPath = true
+
+# Save below content as `~/.gitconfig_env` if I want
+#
+# [user]
+# 	name = aiya000
+# 	email = aiya000.develop@gmail.com
+# [github]
+# 	user = aiya000
+# [credential]
+# 	helper = ""
+# [credential "https://gist.github.com"]
+# 	helper = !/usr/bin/env git-credential-gh-switch aiya000
+# [credential "https://github.com"]
+# 	helper = !/usr/bin/env git-credential-gh-switch aiya000
+# 	useHttpPath = true
+#
+# Or run `git-config-set-local-account` inside repositories.

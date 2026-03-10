@@ -199,8 +199,21 @@ function git-wip-push-all-force () {
 
 alias git-checkout-all-theirs='git checkout --theirs .'
 
-# Set casual user.name and user.email at local
-alias git-set-casual-name='git config --local user.name aiya000 && git config --local user.email aiya000.develop@gmail.com ; git config --local user.name ; git config --local user.email'
+function git-config-set-local-account () {
+  : 'Using `git config --local`, sets user.name, user.email, credential.helper, and other dependent fields'
+  git config --local user.name aiya000
+  echo "user.name: $(git config user.name)"
+  git config --local user.email aiya000.develop@gmail.com
+  echo "user.email: $(git config user.email)"
+  git config --local credential.helper ''
+  echo "credential.helper: $(git config credential.helper)"
+  git config --local credential.https://gist.github.com.helper '!/usr/bin/env git-credential-gh-switch aiya000'
+  echo "credential.https://gist.github.com.helper: $(git config credential.https://gist.github.com.helper)"
+  git config --local credential.https://github.com.helper '!/usr/bin/env git-credential-gh-switch aiya000'
+  echo "credential.https://github.com.helper: $(git config credential.https://github.com.helper)"
+  git config --local credential.https://github.com.useHttpPath true
+  echo "credential.https://github.com.useHttpPath: $(git config credential.https://github.com.useHttpPath)"
+}
 
 # }}}
 # Common Shorthands {{{

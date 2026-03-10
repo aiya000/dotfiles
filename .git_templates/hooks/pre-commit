@@ -14,3 +14,8 @@ if [[ -z $(git config --local user.email) ]] ; then
   echo '       You must set user.email at local'
   exit 1
 fi
+
+message="Will commit by **$(git config user.name)**"
+echo "$message"
+echo
+~/.dotfiles/bash-toys/bin/notify Git "$message" ~/.dotfiles/bash-toys/assets/notification-2.mp3
