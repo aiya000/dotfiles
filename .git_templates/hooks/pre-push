@@ -13,11 +13,13 @@ if [[ $MY_GIT_HOOK_DISABLE_FIXUP_CHECK -ne 1 ]] && git-log-unpushed --oneline | 
   exit 1
 fi
 
+title='Git will commit by'
 user=$(git config user.name)
+
 gh auth switch --user "$user"
 
-message="Will push by **$user**"
-echo "$message"
+echo "$title"
+echo "$user"
 echo
 
 if [[ $user == aiya000 ]] ; then
@@ -25,4 +27,4 @@ if [[ $user == aiya000 ]] ; then
 else
   effect=~/.dotfiles/bash-toys/assets/notification-2.mp3
 fi
-~/.dotfiles/bash-toys/bin/notify Git "$message" "$effect"
+~/.dotfiles/bash-toys/bin/notify "$title" "$user" "$effect"

@@ -15,10 +15,11 @@ if [[ -z $(git config --local user.email) ]] ; then
   exit 1
 fi
 
+title='Git will commit by'
 user=$(git config user.name)
-message="Will commit by **$user**"
 
-echo "$message"
+echo "$title"
+echo "$user"
 echo
 
 if [[ $user == aiya000 ]] ; then
@@ -26,4 +27,4 @@ if [[ $user == aiya000 ]] ; then
 else
   effect=~/.dotfiles/bash-toys/assets/notification-2.mp3
 fi
-~/.dotfiles/bash-toys/bin/notify Git "$message" "$effect"
+~/.dotfiles/bash-toys/bin/notify "$title" "$user" "$effect"
