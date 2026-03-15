@@ -16,7 +16,7 @@ if [[ ! -d '/mnt/p/pCloud Backup' ]] ; then
   sudo mount -t drvfs -o noatime,uid=1000,gid=1000 P: /mnt/p
 fi
 
-if [[ ! -f '/mnt/z/me.jpg' ]] ; then
+if [[ ! -d '/mnt/z/Music' ]] ; then
   sudo mount -t drvfs -o noatime,uid=1000,gid=1000 Z: /mnt/z
 fi
 
