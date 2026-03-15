@@ -520,6 +520,9 @@ install-imagemagick:
 install-bat:
 	which bat || $(AptInstall) bat
 
+install-adb:
+	which adb || $(AptInstall) adb
+
 endif # }}}
 ifeq ($(OS),Darwin) # {{{
 
