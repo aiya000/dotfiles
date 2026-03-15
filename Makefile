@@ -478,14 +478,17 @@ install-brew:
 	$(AptInstall) build-essential procps file git
 	bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-install-cli-recommended:
-	$(BrewInstall) \
-		gh \
-		watchexec
-	$(AptInstall) \
-		jq \
-		universal-ctags \
-		bat
+install-gh:
+	which gh || $(BrewInstall) gh
+
+install-watchexec:
+	which watchexec || $(BrewInstall) watchexec
+
+install-jq:
+	which jq || $(AptInstall) jq
+
+install-universal-ctags:
+	which ctags || $(AptInstall) universal-ctags
 
 # TODO: Check this make to able to build vim
 install-vim-build-deps:
@@ -513,6 +516,9 @@ install-btop:
 
 install-imagemagick:
 	which magick || $(AptInstall) imagemagick
+
+install-bat:
+	which bat || $(AptInstall) bat
 
 endif # }}}
 ifeq ($(OS),Darwin) # {{{
