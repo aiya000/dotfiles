@@ -214,6 +214,17 @@ install-ccstatusline:
 install-dust:
 	which dust || $(BrewInstall) dust
 
+install-android-cmdline-tools:
+	[[ -d ~/Android/Sdk/cmdline-tools ]] || \
+	cd /tmp && \
+	wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip && \
+	mkdir -p Android/Sdk/cmdline-tools && \
+	unzip commandlinetools-linux-11076708_latest.zip -d Android/Sdk/cmdline-tools && \
+	mv Android/Sdk/cmdline-tools/cmdline-tools Android/Sdk/cmdline-tools/latest && \
+	rm commandlinetools-linux-11076708_latest.zip && \
+	mv Android ~ && \
+	:
+
 # }}}
 ifeq ($(OS),Arch) # {{{
 
