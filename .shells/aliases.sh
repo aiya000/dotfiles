@@ -92,7 +92,7 @@ if i-have copilot ; then
 fi
 
 # }}}
-# Eco Systems for Node.js, TypeScript, and JavaScript  {{{
+# For programming languages eco systems  {{{
 
 alias cdn=cd-to-node-root
 
@@ -120,6 +120,8 @@ function dotfiles::find_nodejs_to_load () {
     return 1
   fi
 }
+
+i-have luarocks && alias luarocks-local-5.1='luarocks --local --lua-version=5.1'
 
 # }}}
 # Others {{{
