@@ -14,7 +14,7 @@ AptBuildDep = sudo apt-fast build-dep
 BrewInstall = brew install
 
 NPMInstall = npm install --global --user
-LuaRocksInstall = luarocks install --local
+LuaRocksInstall = luarocks install --local --lua-version=5.1 # 5.1 because Neovim's Lua is 5.1 or LuaJit
 UVInstall = uv tool install # 事前に`load-my-env mise`してね。まだmiseでuvを入れてなければ`mise use uv@latest`もしよう！
 PIPInstall = $(UVInstall) # pip installよくわからん
 MiseUse = mise use -g
