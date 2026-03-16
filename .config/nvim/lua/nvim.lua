@@ -181,7 +181,7 @@ function M.confirm(message, cont)
     },
     on_close = function() end,
     on_submit = function(item)
-      if item.text:match ('Yes') then
+      if item.text:match('Yes') then
         cont()
       end
     end,
@@ -275,9 +275,7 @@ local function create_removing_trailing_spaces(range)
   return function()
     local curpos = vim.fn.getcurpos()
     fn.try_finally(function()
-      local range_str = range == nil
-        and '%'
-        or ('%d,%d'):format(range[1], range[2])
+      local range_str = range == nil and '%' or ('%d,%d'):format(range[1], range[2])
       -- Use vim.cmd with string.format to avoid escaping issues
       -- Match spaces, tabs, and carriage returns at line end
       vim.cmd(([[%s s/[ \t\r]\+$//ge]]):format(range_str))
@@ -299,10 +297,7 @@ function M.remove_trailing_spaces(force, range)
 
   local apply = create_removing_trailing_spaces(range)
   if not force and list.has(excluded_filetypes, vim.bo.filetype) then
-    M.confirm(
-      ('Trailing spaces in %s: Apply?'):format(vim.bo.filetype),
-      apply
-    )
+    M.confirm(('Trailing spaces in %s: Apply?'):format(vim.bo.filetype), apply)
     return
   end
   apply()
@@ -1086,16 +1081,23 @@ end
 local function get_clients_for_config_key(config_key)
   -- 直接名前マッチ（config_key == client.name の場合）
   local clients = vim.lsp.get_clients({ name = config_key })
-  if #clients > 0 then return clients end
+  if #clients > 0 then
+    return clients
+  end
 
   -- クライアント名は "<cmd_basename>:<root_dir>" 形式になる
   -- vim.lsp.config[key].cmd[1] のバイナリ名でプレフィックスマッチ
-  local ok, lsp_cfg = pcall(function() return vim.lsp.config[config_key] end)
+  local ok, lsp_cfg = pcall(function()
+    return vim.lsp.config[config_key]
+  end)
   if ok and type(lsp_cfg) == 'table' and type(lsp_cfg.cmd) == 'table' and type(lsp_cfg.cmd[1]) == 'string' then
     local cmd_name = vim.fs.basename(lsp_cfg.cmd[1])
-    return vim.iter(vim.lsp.get_clients()):filter(function(c)
-      return vim.startswith(c.name, cmd_name)
-    end):totable()
+    return vim
+      .iter(vim.lsp.get_clients())
+      :filter(function(c)
+        return vim.startswith(c.name, cmd_name)
+      end)
+      :totable()
   end
 
   return {}

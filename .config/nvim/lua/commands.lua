@@ -157,20 +157,27 @@ end)
 local available_lsp_names = { 'lua_ls', 'ts_ls', 'vue_ls', 'denols' }
 
 local function find_running_lsp_config_keys()
-  return vim.iter(available_lsp_names):filter(function(name)
-    -- 直接名前マッチ
-    if #vim.lsp.get_clients({ name = name }) > 0 then return true end
-    -- クライアント名は "<cmd_basename>:<root_dir>" 形式になる
-    -- vim.lsp.config[name].cmd[1] のバイナリ名でプレフィックスマッチ
-    local ok, lsp_cfg = pcall(function() return vim.lsp.config[name] end)
-    if ok and type(lsp_cfg) == 'table' and type(lsp_cfg.cmd) == 'table' and type(lsp_cfg.cmd[1]) == 'string' then
-      local cmd_name = vim.fs.basename(lsp_cfg.cmd[1])
-      return vim.iter(vim.lsp.get_clients()):any(function(c)
-        return vim.startswith(c.name, cmd_name)
+  return vim
+    .iter(available_lsp_names)
+    :filter(function(name)
+      -- 直接名前マッチ
+      if #vim.lsp.get_clients({ name = name }) > 0 then
+        return true
+      end
+      -- クライアント名は "<cmd_basename>:<root_dir>" 形式になる
+      -- vim.lsp.config[name].cmd[1] のバイナリ名でプレフィックスマッチ
+      local ok, lsp_cfg = pcall(function()
+        return vim.lsp.config[name]
       end)
-    end
-    return false
-  end):totable()
+      if ok and type(lsp_cfg) == 'table' and type(lsp_cfg.cmd) == 'table' and type(lsp_cfg.cmd[1]) == 'string' then
+        local cmd_name = vim.fs.basename(lsp_cfg.cmd[1])
+        return vim.iter(vim.lsp.get_clients()):any(function(c)
+          return vim.startswith(c.name, cmd_name)
+        end)
+      end
+      return false
+    end)
+    :totable()
 end
 
 create_command('LspStop', function(opts)

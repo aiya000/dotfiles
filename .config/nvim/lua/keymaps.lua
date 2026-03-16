@@ -494,7 +494,7 @@ end, { silent = true })
 -- File Manupilation
 vim.keymap.set('v', '<leader>b', function()
   local start_line = vim.fn.getpos("'<")[2]
-  local end_line   = vim.fn.getpos("'>")[2]
+  local end_line = vim.fn.getpos("'>")[2]
   local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
 
   nvim.input('Input File Extension (e.g., md, ts, hs)', function(submitted)

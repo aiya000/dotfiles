@@ -81,9 +81,9 @@ return {
           width = 'no-auto-resize',
         },
       },
-    file_pattern = {
-      when_file_buffer = '~/tmp/scratch-%d',
-    },
+      file_pattern = {
+        when_file_buffer = '~/tmp/scratch-%d',
+      },
     })
 
     vim.api.nvim_create_autocmd('User', {

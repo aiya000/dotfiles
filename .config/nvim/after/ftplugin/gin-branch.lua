@@ -11,10 +11,7 @@ local function confirm_to_delete_branch(branch_name, cont)
       return
     end
 
-    nvim.confirm(
-      ("'%s' is a protected branch. Are you sure?"):format(branch_name),
-      cont
-    )
+    nvim.confirm(("'%s' is a protected branch. Are you sure?"):format(branch_name), cont)
   end)
 end
 

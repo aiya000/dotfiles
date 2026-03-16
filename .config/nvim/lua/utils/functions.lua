@@ -357,7 +357,6 @@ function M.set_vim_dict_field(scope, varname, field, value)
   scope[varname][field] = value
 end
 
-
 ---@generic T
 ---@param elem T a value what replicated
 ---@param count integer num of replication (must be non-negative)
@@ -514,7 +513,9 @@ if vim == nil then
   end)
 
   test('times() should concatenate strings with a custom append function', function()
-    local result = M.times('ab', 3, function(a, b) return a .. b end)
+    local result = M.times('ab', 3, function(a, b)
+      return a .. b
+    end)
     assert_equal(result, 'ababab')
   end)
 end

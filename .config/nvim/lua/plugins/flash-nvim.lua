@@ -92,30 +92,30 @@ return {
           ['-k'] = '『',
         }
 
-          vim.api.nvim_echo({ { 'fmap: ', 'Question' } }, false, {})
-          local stroke = ''
-          local pattern = nil
-          while true do
-            local char_code = vim.fn.getchar()
-            -- TODO: nvim.escaping_keysを参照したい
-            if char_code == 27 or char_code == 12 then -- if <Esc>, <C-[>, or <C-l>
-              break
-            end
-
-            stroke = stroke .. vim.fn.nr2char(char_code)
-            if fmap_chars[stroke] ~= nil then
-              pattern = fmap_chars[stroke]
-              break
-            end
+        vim.api.nvim_echo({ { 'fmap: ', 'Question' } }, false, {})
+        local stroke = ''
+        local pattern = nil
+        while true do
+          local char_code = vim.fn.getchar()
+          -- TODO: nvim.escaping_keysを参照したい
+          if char_code == 27 or char_code == 12 then -- if <Esc>, <C-[>, or <C-l>
+            break
           end
 
-          if pattern then
-            vim.fn.feedkeys('f' .. pattern)
-          else
-            vim.api.nvim_echo({ { ('Canceled (stroke = %s)'):format(stroke), 'ErrorMsg' } }, false, {})
+          stroke = stroke .. vim.fn.nr2char(char_code)
+          if fmap_chars[stroke] ~= nil then
+            pattern = fmap_chars[stroke]
+            break
           end
-        end,
-        desc = 'Interactive fmap selector with flash.nvim',
-      },
+        end
+
+        if pattern then
+          vim.fn.feedkeys('f' .. pattern)
+        else
+          vim.api.nvim_echo({ { ('Canceled (stroke = %s)'):format(stroke), 'ErrorMsg' } }, false, {})
+        end
+      end,
+      desc = 'Interactive fmap selector with flash.nvim',
     },
-  }
+  },
+}
