@@ -181,7 +181,7 @@ function M.confirm(message, cont)
     },
     on_close = function() end,
     on_submit = function(item)
-      if item.text == 'Yes' then
+      if item.text:match ('Yes') then
         cont()
       end
     end,
@@ -709,17 +709,17 @@ end
 ---LSPで移動できなかった場合はALEで移動。
 ---@param direction 'next' | 'previous'
 function M.goto_diagnostic(direction)
-  local goto = get_diagnostic_method(direction)
+  local diag_method = get_diagnostic_method(direction)
   local current_line = vim.fn.line('.')
   local lsp_moved = false
 
-  local ok, _ = pcall(goto.lsp_func, { float = { border = 'rounded' } })
+  local ok, _ = pcall(diag_method.lsp_func, { float = { border = 'rounded' } })
   if ok and vim.fn.line('.') ~= current_line then
     lsp_moved = true
   end
 
   if not lsp_moved then
-    vim.cmd(goto.ale_cmd)
+    vim.cmd(diag_method.ale_cmd)
   end
 end
 
@@ -1087,16 +1087,36 @@ function M.close_quickfix_if_open()
   return false
 end
 
----@param lsp_name string
-function M.lsp_stop(lsp_name)
-  if lsp_name == '' then
-    vim.notify('Usage: :LspStop <lsp_name>', vim.log.levels.ERROR)
+---@param config_key string LSPのconfigキー ('lua_ls', 'ts_ls' など)
+---@return vim.lsp.Client[]
+local function get_clients_for_config_key(config_key)
+  -- 直接名前マッチ（config_key == client.name の場合）
+  local clients = vim.lsp.get_clients({ name = config_key })
+  if #clients > 0 then return clients end
+
+  -- クライアント名は "<cmd_basename>:<root_dir>" 形式になる
+  -- vim.lsp.config[key].cmd[1] のバイナリ名でプレフィックスマッチ
+  local ok, lsp_cfg = pcall(function() return vim.lsp.config[config_key] end)
+  if ok and type(lsp_cfg) == 'table' and type(lsp_cfg.cmd) == 'table' and type(lsp_cfg.cmd[1]) == 'string' then
+    local cmd_name = vim.fs.basename(lsp_cfg.cmd[1])
+    return vim.iter(vim.lsp.get_clients()):filter(function(c)
+      return vim.startswith(c.name, cmd_name)
+    end):totable()
+  end
+
+  return {}
+end
+
+---@param config_key string
+function M.lsp_stop(config_key)
+  if config_key == '' then
+    vim.notify('Usage: :LspStop <config_key>', vim.log.levels.ERROR)
     return
   end
 
-  local clients = vim.lsp.get_clients({ name = lsp_name })
+  local clients = get_clients_for_config_key(config_key)
   if #clients == 0 then
-    vim.notify(('[LspStop] %s is not running'):format(lsp_name), vim.log.levels.WARN)
+    vim.notify(('[LspStop] %s is not running'):format(config_key), vim.log.levels.WARN)
     return
   end
 
@@ -1105,54 +1125,56 @@ function M.lsp_stop(lsp_name)
   end
 
   -- 無効化して、LspStartで再度有効化できるようにする
-  vim.lsp.enable(lsp_name, false)
+  vim.lsp.enable(config_key, false)
 
-  vim.notify(('[LspStop] Stopped %s'):format(lsp_name), vim.log.levels.INFO)
+  vim.notify(('[LspStop] Stopped %s'):format(config_key), vim.log.levels.INFO)
 end
 
----@param lsp_name string
-function M.lsp_start(lsp_name)
-  if lsp_name == '' then
-    vim.notify('Usage: :LspStart <lsp_name>', vim.log.levels.ERROR)
+---@param config_key string
+function M.lsp_start(config_key)
+  if config_key == '' then
+    vim.notify('Usage: :LspStart <config_key>', vim.log.levels.ERROR)
     return
   end
 
   -- 既に起動しているかチェック
-  local clients = vim.lsp.get_clients({ name = lsp_name, bufnr = 0 })
+  local clients = get_clients_for_config_key(config_key)
   if #clients > 0 then
-    vim.notify(('[LspStart] %s is already running'):format(lsp_name), vim.log.levels.WARN)
+    vim.notify(('[LspStart] %s is already running'):format(config_key), vim.log.levels.WARN)
     return
   end
 
-  -- 一度無効化してから有効化する（プロセスが停止していても内部状態が「有効」のままの場合に対応）
-  vim.lsp.enable(lsp_name, false)
-  vim.lsp.enable(lsp_name, true)
+  -- 一度無効化してから有効化する
+  vim.lsp.enable(config_key, false)
+  vim.lsp.enable(config_key, true)
 
-  -- 現在のバッファのFileTypeイベントを再発火してLSPをアタッチ
-  vim.cmd('doautocmd FileType ' .. vim.bo.filetype)
-  vim.notify(('[LspStart] Started %s'):format(lsp_name), vim.log.levels.INFO)
+  -- 次のイベントループで確実にアタッチさせる
+  vim.schedule(function()
+    vim.api.nvim_exec_autocmds('FileType', { buffer = 0 })
+    vim.notify(('[LspStart] Started %s'):format(config_key), vim.log.levels.INFO)
+  end)
 end
 
----@param lsp_name string
-function M.lsp_restart(lsp_name)
-  if lsp_name == '' then
-    vim.notify('Usage: :LspRestart <lsp_name>', vim.log.levels.ERROR)
+---@param config_key string
+function M.lsp_restart(config_key)
+  if config_key == '' then
+    vim.notify('Usage: :LspRestart <config_key>', vim.log.levels.ERROR)
     return
   end
 
-  local clients = vim.lsp.get_clients({ name = lsp_name })
+  local clients = get_clients_for_config_key(config_key)
   for _, client in ipairs(clients) do
     client:stop()
   end
 
   -- 無効化して再度有効化できるようにする
-  vim.lsp.enable(lsp_name, false)
+  vim.lsp.enable(config_key, false)
 
   -- 少し待ってから起動（クライアントが完全に停止するのを待つ）
   vim.defer_fn(function()
-    vim.lsp.enable(lsp_name, true)
-    vim.cmd('doautocmd FileType ' .. vim.bo.filetype)
-    vim.notify(('[LspRestart] Restarted %s'):format(lsp_name), vim.log.levels.INFO)
+    vim.lsp.enable(config_key, true)
+    vim.api.nvim_exec_autocmds('FileType', { buffer = 0 })
+    vim.notify(('[LspRestart] Restarted %s'):format(config_key), vim.log.levels.INFO)
   end, 100)
 end
 

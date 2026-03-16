@@ -8,6 +8,7 @@ if not vim.uv.fs_stat(vue_typescript_plugin_path) then
 end
 
 vim.lsp.config('ts_ls', {
+  name = 'ts_ls',
   cmd = { 'typescript-language-server', '--stdio' },
   filetypes = {
     'javascript',
