@@ -2,6 +2,7 @@
 ---関数がNeovimに関する事柄を意図しているか、もしくは`vim.*`に依存している場合は、こっち。
 ---それ以外の汎用的な関数は`./utils/functions.lua`に。
 
+local c = require('chotto')
 local fn = require('utils.functions')
 local list = require('utils.list')
 
@@ -1076,10 +1077,14 @@ function M.close_quickfix_if_open()
   return false
 end
 
----@param config_key string LSPのconfigキー ('lua_ls', 'ts_ls' など)
+---`vim.lsp.config[name]`のスキーマ
+M.lsp_config_schema = c.object({
+  cmd = c.array(c.string()),
+})
+
+---@param config_key string -- LSPのconfigキー ('lua_ls', 'ts_ls' など)
 ---@return vim.lsp.Client[]
 local function get_clients_for_config_key(config_key)
-  -- 直接名前マッチ（config_key == client.name の場合）
   local clients = vim.lsp.get_clients({ name = config_key })
   if #clients > 0 then
     return clients
@@ -1087,20 +1092,23 @@ local function get_clients_for_config_key(config_key)
 
   -- クライアント名は "<cmd_basename>:<root_dir>" 形式になる
   -- vim.lsp.config[key].cmd[1] のバイナリ名でプレフィックスマッチ
-  local ok, lsp_cfg = pcall(function()
+  local ok, lsp_config = pcall(function()
     return vim.lsp.config[config_key]
   end)
-  if ok and type(lsp_cfg) == 'table' and type(lsp_cfg.cmd) == 'table' and type(lsp_cfg.cmd[1]) == 'string' then
-    local cmd_name = vim.fs.basename(lsp_cfg.cmd[1])
-    return vim
-      .iter(vim.lsp.get_clients())
-      :filter(function(c)
-        return vim.startswith(c.name, cmd_name)
-      end)
-      :totable()
+  if not ok or not M.lsp_config_schema:safe_parse(lsp_config) then
+    return {}
+  end
+  if lsp_config.cmd[1] == nil then
+    return {}
   end
 
-  return {}
+  local cmd_name = vim.fs.basename(lsp_config.cmd[1])
+  return vim
+    .iter(vim.lsp.get_clients())
+    :filter(function(client)
+      return vim.startswith(client.name, cmd_name)
+    end)
+    :totable()
 end
 
 ---@param config_key string
@@ -1119,9 +1127,7 @@ function M.lsp_stop(config_key)
   for _, client in ipairs(clients) do
     client:stop()
   end
-
-  -- 無効化して、LspStartで再度有効化できるようにする
-  vim.lsp.enable(config_key, false)
+  vim.lsp.enable(config_key, false) -- 無効化して、LspStartで再度有効化できるようにする
 
   vim.notify(('[LspStop] Stopped %s'):format(config_key), vim.log.levels.INFO)
 end
@@ -1133,18 +1139,15 @@ function M.lsp_start(config_key)
     return
   end
 
-  -- 既に起動しているかチェック
   local clients = get_clients_for_config_key(config_key)
   if #clients > 0 then
     vim.notify(('[LspStart] %s is already running'):format(config_key), vim.log.levels.WARN)
     return
   end
 
-  -- 一度無効化してから有効化する
   vim.lsp.enable(config_key, false)
   vim.lsp.enable(config_key, true)
 
-  -- 次のイベントループで確実にアタッチさせる
   vim.schedule(function()
     vim.api.nvim_exec_autocmds('FileType', { buffer = 0 })
     vim.notify(('[LspStart] Started %s'):format(config_key), vim.log.levels.INFO)
