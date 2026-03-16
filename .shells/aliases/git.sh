@@ -200,7 +200,7 @@ function git-wip-push-all-force () {
 
 alias git-checkout-all-theirs='git checkout --theirs .'
 
-function git-config-set-local-account () {
+function git-config-set-local-aiya000 () {
   : 'Using `git config --local`, sets user.name, user.email, credential.helper, and other dependent fields'
   git config --local user.name aiya000
   echo "user.name: $(git config user.name)"
