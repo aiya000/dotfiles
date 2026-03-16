@@ -539,15 +539,9 @@ end
 function M.close_all_popups()
   for _, window in ipairs(vim.api.nvim_list_wins()) do
     local success, config = pcall(vim.api.nvim_win_get_config, window) -- pcall to avoid erros such as nui.nvim popups
-    if not success then
-      goto continue
-    end
-
-    if config.relative ~= '' then -- If it is a popup window
+    if success and config.relative ~= '' then -- If it is a popup window
       vim.api.nvim_win_close(window, false)
     end
-
-    ::continue::
   end
 end
 
