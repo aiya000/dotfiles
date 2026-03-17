@@ -1,8 +1,9 @@
 local c = require('chotto')
 local docker = require('docker')
 local git = require('git')
-local nvim = require('nvim')
+local list = require('utils.list')
 local nodejs = require('nodejs')
+local nvim = require('nvim')
 local s = require('utils.functions').s
 local telescope = require('telescope.builtin')
 
@@ -240,7 +241,17 @@ create_command('Grep', function(opts)
   telescope.grep_string({ search = opts.args })
 end, { nargs = 1 })
 
-create_command('ReverseLines', '!tac', {
+create_command('ReverseLines', function(opts)
+  local bufnr = vim.api.nvim_get_current_buf()
+  local lines = vim.api.nvim_buf_get_lines(bufnr, opts.line1 - 1, opts.line2, false) -- nvim_buf_get_lines is 0-indexed, end-exclusive
+  vim.api.nvim_buf_set_lines(
+    bufnr,
+    opts.line1 - 1,
+    opts.line2,
+    false,
+    list.reverse(lines)
+  )
+end, {
   range = true,
   desc = 'Reverse the order of lines in the selected range or entire buffer',
 })
