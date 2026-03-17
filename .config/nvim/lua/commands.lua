@@ -173,7 +173,7 @@ local function find_running_lsp_config_keys()
         not ok
         or lsp_config == nil
         or not nvim.lsp_config_schema:safe_parse(lsp_config)
-        or lsp_config[1] == nil
+        or lsp_config.cmd[1] == nil
       if is_valid_lsp_config_not_found then
         return false
       end
