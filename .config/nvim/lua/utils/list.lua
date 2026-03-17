@@ -253,6 +253,17 @@ function M.format(xs, ...)
   end).result
 end
 
+---@generic T
+---@param xs T[]
+---@return T[]
+function M.reverse(xs)
+  local result = {}
+  for i = #xs, 1, -1 do
+    table.insert(result, xs[i])
+  end
+  return result
+end
+
 -- In-source testing
 if vim == nil then
   local test = Test.test
