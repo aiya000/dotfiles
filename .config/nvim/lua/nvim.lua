@@ -1095,10 +1095,12 @@ local function get_clients_for_config_key(config_key)
   local ok, lsp_config = pcall(function()
     return vim.lsp.config[config_key]
   end)
-  if not ok or not M.lsp_config_schema:safe_parse(lsp_config) then
-    return {}
-  end
-  if lsp_config.cmd[1] == nil then
+  local is_valid_lsp_config_not_found =
+    not ok
+    or lsp_config == nil
+    or not M.lsp_config_schema:safe_parse(lsp_config)
+    or lsp_config.cmd[1] == nil
+  if is_valid_lsp_config_not_found then
     return {}
   end
 

@@ -169,10 +169,12 @@ local function find_running_lsp_config_keys()
       local ok, lsp_config = pcall(function()
         return vim.lsp.config[name]
       end)
-      if not ok or not nvim.lsp_config_schema:safe_parse(lsp_config) then
-        return false
-      end
-      if lsp_config[1] == nil then
+      local is_valid_lsp_config_not_found =
+        not ok
+        or lsp_config == nil
+        or not nvim.lsp_config_schema:safe_parse(lsp_config)
+        or lsp_config[1] == nil
+      if is_valid_lsp_config_not_found then
         return false
       end
 
