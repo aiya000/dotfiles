@@ -821,6 +821,7 @@ return list.concat(
 
   {
     s('ts_expect_error', t('// @ts-expect-error')),
+    s('unk', t('unknown')), -- For avoiding typo
   },
 
   sm(

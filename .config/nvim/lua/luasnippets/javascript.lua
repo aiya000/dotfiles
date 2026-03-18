@@ -9,7 +9,8 @@ return {
     require('luasnippets.javascript.surfingkeys'),
     require('luasnippets.javascript.template'),
     require('luasnippets.javascript.ts-check'),
-    require('luasnippets.javascript.reactnative')
+    require('luasnippets.javascript.reactnative'),
+    require('luasnippets.javascript.jsdoc')
   ),
   autosnippets = {},
 }
