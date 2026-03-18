@@ -22,7 +22,7 @@ return list.concat({
   s(
     'notify_cascade_schedule_someday',
     fmt(
-      "notify-cascade --ntfy --local '{date} {time_begin}' '{title}' '{time_begin_} - {time_end}' '{date_} 09:30' 10:00 3h 1h 30m 15m 5m 1m",
+      "notify-cascade --ntfy --local '{date} {time_begin}' '{title}' '{time_begin_} - {time_end}' '{date_} 09:00' 3h 1h 30m 15m 5m 1m",
       {
         date = i(1, 'date'),
         date_ = rep(1),
