@@ -3,7 +3,7 @@ allowed-tools: Skill(git-commit), Bash(git status:*), Bash(git diff:*), Bash(git
 description: Create a pull request with auto-generated description
 ---
 
-# /create-pr
+# /github-pr-create
 
 Create a pull request using `gh pr create` with an auto-generated description.
 
