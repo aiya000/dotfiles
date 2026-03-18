@@ -1114,16 +1114,17 @@ local function get_clients_for_config_key(config_key)
 end
 
 ---@param config_key string
+---@return 'invalid-usage' | 'not-running' | 'stopped'
 function M.lsp_stop(config_key)
   if config_key == '' then
     vim.notify('Usage: :LspStop <config_key>', vim.log.levels.ERROR)
-    return
+    return 'invalid-usage'
   end
 
   local clients = get_clients_for_config_key(config_key)
   if #clients == 0 then
     vim.notify(('[LspStop] %s is not running'):format(config_key), vim.log.levels.WARN)
-    return
+    return 'not-running'
   end
 
   for _, client in ipairs(clients) do
@@ -1132,19 +1133,21 @@ function M.lsp_stop(config_key)
   vim.lsp.enable(config_key, false) -- 無効化して、LspStartで再度有効化できるようにする
 
   vim.notify(('[LspStop] Stopped %s'):format(config_key), vim.log.levels.INFO)
+  return 'stopped'
 end
 
 ---@param config_key string
+---@return 'invalid-usage' | 'already-running' | 'will-start'
 function M.lsp_start(config_key)
   if config_key == '' then
     vim.notify('Usage: :LspStart <config_key>', vim.log.levels.ERROR)
-    return
+    return 'invalid-usage'
   end
 
   local clients = get_clients_for_config_key(config_key)
   if #clients > 0 then
     vim.notify(('[LspStart] %s is already running'):format(config_key), vim.log.levels.WARN)
-    return
+    return 'already-running'
   end
 
   vim.lsp.enable(config_key, false)
@@ -1154,29 +1157,40 @@ function M.lsp_start(config_key)
     vim.api.nvim_exec_autocmds('FileType', { buffer = 0 })
     vim.notify(('[LspStart] Started %s'):format(config_key), vim.log.levels.INFO)
   end)
+  return 'will-start'
 end
 
 ---@param config_key string
 function M.lsp_restart(config_key)
   if config_key == '' then
     vim.notify('Usage: :LspRestart <config_key>', vim.log.levels.ERROR)
-    return
+    return 'invalid-usage'
   end
 
-  local clients = get_clients_for_config_key(config_key)
-  for _, client in ipairs(clients) do
-    client:stop()
+  local stop_result = M.lsp_stop(config_key)
+  -- For type-checking, use 2-if
+  if stop_result == 'invalid-usage' then
+    return 'invalid-usage'
+  end
+  if stop_result == 'not-running' then
+    return 'not-running'
   end
 
-  -- 無効化して再度有効化できるようにする
-  vim.lsp.enable(config_key, false)
+  local tried_count = 0
+  local function try_lsp_start()
+    tried_count = tried_count + 1
+    if tried_count >= 10 then
+      vim.notify(('[LspRestart] Failed to start %s after stopping it. Please check if the LSP server is running and try again.'):format(config_key), vim.log.levels.ERROR)
+      return
+    end
 
-  -- 少し待ってから起動（クライアントが完全に停止するのを待つ）
-  vim.defer_fn(function()
-    vim.lsp.enable(config_key, true)
-    vim.api.nvim_exec_autocmds('FileType', { buffer = 0 })
-    vim.notify(('[LspRestart] Restarted %s'):format(config_key), vim.log.levels.INFO)
-  end, 100)
+    local start_result = M.lsp_start(config_key)
+    if start_result == 'already-running' then
+      -- まだ停止していない可能性があるので、さらに待って再試行
+      vim.defer_fn(try_lsp_start, 1000)
+    end
+  end
+  try_lsp_start()
 end
 
 function M.is_using_windows_git()
