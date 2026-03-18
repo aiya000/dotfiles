@@ -31,10 +31,6 @@ Current datetime:
 
 !`date +%Y-%m-%d_%H:%M`
 
-Parent directory existance check:
-
-!`mkdir -p ~/.dotfiles/.private/CLAUDE-MEMORY/`
-
 ## Benefits of Daily Files
 
 - Reduces token consumption by avoiding large single file
