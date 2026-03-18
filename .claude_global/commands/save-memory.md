@@ -25,6 +25,16 @@ description: Write a daily memory file
 - File format: `YYYY-MM-DD.md` (e.g., `2025-09-12.md`)
 - Automatically create directory if it doesn't exist
 
+## Current State
+
+Current datetime:
+
+!`date +%Y-%m-%d_%H:%M`
+
+Parent directory existance check:
+
+!`mkdir -p ~/.dotfiles/.private/CLAUDE-MEMORY/`
+
 ## Benefits of Daily Files
 
 - Reduces token consumption by avoiding large single file
