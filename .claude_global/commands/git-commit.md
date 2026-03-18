@@ -9,15 +9,27 @@ description: Create a new git commit for staged changes
 
 Automatically generates a Conventional Commits compliant commit message and commits staged changes.
 
+## Current State
+
+Staged changes:
+
+!`git diff --staged`
+
+Git status:
+
+!`git status`
+
+Recent commits:
+
+!`git log --oneline -20`
+
 ## Behavior
 
-1. Check staged changes with `git diff --staged`
-2. Check current git status with `git status`
-3. Analyze recent commit messages with `git log --oneline -20` to learn commit style
-4. Generate a commit message following:
+1. Analyze the staged changes and recent commits shown above
+2. Generate a commit message following:
    - Conventional Commits specification (structure and basic rules)
    - User's commit style patterns learned from repository history
-5. Execute `git commit` with the generated message
+3. Execute `git commit` with the generated message
 
 ## Conventional Commits Specification Summary
 
