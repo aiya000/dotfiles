@@ -15,6 +15,20 @@ Create a pull request using `gh pr create` with an auto-generated description.
 4. Push the branch to remote with `git push -u origin <branch>`
 5. Create a PR using `gh pr create` with auto-generated title and description
 
+## Contexts
+
+`git status`:
+!`git status`
+
+`git log main..HEAD --oneline`:
+!`git log main..HEAD --oneline`
+
+`git log develop..HEAD --oneline`:
+!`git log develop..HEAD --oneline`
+
+`git log master..HEAD --oneline`:
+!`git log master..HEAD --oneline`
+
 ## Branch Naming Convention
 
 When creating a new branch, use the following prefixes based on the changes:
