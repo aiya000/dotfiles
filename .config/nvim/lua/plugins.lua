@@ -521,58 +521,6 @@ return {
   { 'nvim-tree/nvim-web-devicons' },
 
   -- }}}
-  -- jaq-nvim {{{
-
-  {
-    'is0n/jaq-nvim',
-    opts = {
-      cmds = {
-        internal = {
-          lua = 'luafile %',
-          vim = 'source %',
-        },
-        external = {
-          -- markdown = 'glow %', -- 'after/ftplugin/markdown.lua'で管理
-          typescript = 'bun run %',
-        },
-      },
-
-      behavior = {
-        default = 'float',
-        startinsert = true, -- これやってると、すぐEnterで閉じられる
-        wincmd = false,
-        autosave = false,
-      },
-
-      ui = {
-        float = {
-          border = { '╔', '═', '╗', '║', '╝', '═', '╚', '║' },
-          winhl = 'Normal', -- See ':h winhl'
-          borderhl = 'FloatBorder',
-          winblend = 0, -- See ':h winblend'
-
-          -- Num from `0-1` for measurements
-          height = 0.8,
-          width = 0.8,
-          x = 0.5,
-          y = 0.5,
-        },
-
-        terminal = {
-          position = 'bot', -- Window position
-          size = 10, -- Window size
-          line_no = false, -- Disable line numbers
-        },
-
-        quickfix = {
-          position = 'bot', -- Window position
-          size = 10, -- Window size
-        },
-      },
-    },
-  },
-
-  -- }}}
   -- vim-neoquickrun {{{
 
   nvim.load_from_local_or_remote(
@@ -580,7 +528,9 @@ return {
     '~/Repository/vim-neoquickrun',
     InitLua.disable_neoquickrun == true,
     {
-      init = function() end,
+      init = function()
+        vim.keymap.set({ 'n', 'v' }, '<leader>r', '<Plug>(neoquickrun)', { nowait = true }) -- TODO: <leader>r以降のキーマッピングを取っているのはだれ？
+      end,
     }
   ),
 
