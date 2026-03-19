@@ -417,12 +417,11 @@ vim.keymap.set('n', '<C-g><C-t>', vim.lsp.buf.type_definition, { silent = true }
 
 -- Programming Utils
 vim.keymap.set('n', '<leader>R', '<Plug>(quickrepl-open)', { remap = true })
-vim.keymap.set('n', '<leader>r', '<Cmd>Jaq<CR>', { nowait = true }) -- `nowait`: 僕の<leader>rを持ち去ってるのはだれですか。`:verbose nmap <leader>r*`してもこのキーマップしか出ない
 
 -- File Manupilation
 vim.keymap.set('n', '<leader>b', '<Cmd>MadoScratchOpenFile md<CR>', { silent = true })
 vim.keymap.set('n', '<leader>B', '<Cmd>MadoScratchOpenFileNext md<CR>', { silent = true })
-vim.keymap.set('n', '<leader><leader>b', ':<C-u>MadoScratchOpenFile<Space>')
+vim.keymap.set('n', '<leader><leader>b', ':<C-u>MadoScratchOpenFile<Space>', { remap = true }) -- remap to open in cmdpalette
 
 vim.keymap.set('n', '<leader><leader>B', function()
   vim.cmd('vertical split ' .. InitLua.memo_path)
@@ -622,28 +621,18 @@ vim.keymap.set('v', 'aB', '<Plug>(textobj-between-a)*')
 -- vim.keymap.set('v', 'ajp', '<Plug>(operator-surround-append)gajp')
 -- vim.keymap.set('o', 'ajp', '<Plug>(operator-surround-append)gajp')
 
-vim.keymap.set('v', 'a_', function()
+vim.keymap.set({ 'v', 'o' }, 'a_', function()
   return vim.fn['textobj#from_regexp#mapexpr']('[^A-Za-z0-9][A-Za-z0-9]\\+[^A-Za-z0-9]')
 end, { expr = true })
 
-vim.keymap.set('v', 'i_', function()
+vim.keymap.set({ 'v', 'o' }, 'i_', function()
   return vim.fn['textobj#from_regexp#mapexpr']('[A-Za-z0-9]\\+')
 end, { expr = true })
 
-vim.keymap.set('v', 'al', function()
-  return vim.fn['textobj#from_regexp#mapexpr']('^.*$')
-end, { expr = true })
-
-vim.keymap.set('v', 'il', function()
+-- Select line without leading blanks, trailing blanks, and trailing return character
+vim.keymap.set({ 'v', 'o' }, 'il', function()
   return vim.fn['textobj#from_regexp#mapexpr']('^\\s*\\zs.*\\ze.*$')
 end, { expr = true })
-
-vim.keymap.set('o', 'il', function()
-  return vim.fn['textobj#from_regexp#mapexpr']('^\\s*\\zs.*\\ze.*$')
-end, { expr = true })
-
--- Programming Utils
-vim.keymap.set('v', '<leader>r', '<Plug>(neoquickrun)', { remap = true })
 
 -- File Editing
 vim.keymap.set('v', '<leader><leader>s', ':sort<CR>')
