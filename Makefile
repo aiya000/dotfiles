@@ -590,6 +590,9 @@ install-atool:
 install-atool-deps:
 	$(MAKE) install-p7zip
 
+install-mysql-client:
+	which mysql || $(BrewInstall) mysql-client
+
 endif # }}}
 ifeq ($(WSL2),yes) # {{{
 
