@@ -104,11 +104,12 @@ vim.api.nvim_create_autocmd({ 'VimEnter', 'ColorScheme' }, {
 vim.api.nvim_create_autocmd('FileType', {
   group = augroup,
   callback = function()
+    local m = vim.fn.matchadd('TrailingSpace', [[\s\+$]])
+
     local excluded_filetypes = { 'help', 'terminal-shell', 'toggleterm', 'git-log', 'git-show', 'gin-log' }
     if vim.tbl_contains(excluded_filetypes, vim.bo.filetype) then
-      return
+      vim.fn.matchdelete(m)
     end
-    vim.fn.matchadd('TrailingSpace', [[\s\+$]])
   end,
 })
 
@@ -151,5 +152,7 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave' }, {
 })
 
 -- }}}
+
+-- TODO: redraw on winopenpost
 
 return M
