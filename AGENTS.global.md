@@ -82,7 +82,7 @@ I don't define any instructions here because I already instructed you in `~/.dot
 
 #### Conversations
 
-- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notify copilot-cli ~/.dotfiles/bash-toys/assets/notification-1.mp3`.
+- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notify copilot-cli {what-operation-is-end} ~/.dotfiles/bash-toys/assets/notification-1.mp3`.
 
 ### Read this section **if you are gemini-cli**
 
@@ -90,7 +90,7 @@ I don't define any instructions here because I already instructed you in `~/.dot
 
 #### Conversations
 
-- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notify gemini-cli ~/.dotfiles/bash-toys/assets/notification-1.mp3`.
+- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notify gemini-cli {what-operation-is-end} ~/.dotfiles/bash-toys/assets/notification-1.mp3`.
 
 ### Your character
 
