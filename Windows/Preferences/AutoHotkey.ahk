@@ -266,6 +266,42 @@ Return
   ^]::SendInput +{Down}
   !j::SendInput ^{Enter}
 #IfWinActive ; }}}
+#IfWinActive, ahk_exe opendeck.exe ; {{{
+  ^p::SendInput {Up}
+  ^n::SendInput {Down}
+  ^f::SendInput {Right}
+  ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
+  ^,::SendInput +{Left}
+  ^.::SendInput +{Right}
+  ^[::SendInput +{Up}
+  ^]::SendInput +{Down}
+  !j::SendInput ^{Enter}
+#IfWinActive ; }}}
+#IfWinActive, ahk_exe vrc-worlds-manager.exe ; {{{
+  ^p::SendInput {Up}
+  ^n::SendInput {Down}
+  ^f::SendInput {Right}
+  ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
+  ^,::SendInput +{Left}
+  ^.::SendInput +{Right}
+  ^[::SendInput +{Up}
+  ^]::SendInput +{Down}
+  !j::SendInput ^{Enter}
+#IfWinActive ; }}}
 
 ; "A part of" Bash-like key mapping.
 ; However, for default browsers, let SurfingKeys handle as much as possible, and only map keys that cannot be overridden internally.
@@ -315,3 +351,5 @@ Return
 #IfWinActive ; }}}
 
 ; }}}
+
+; vim: foldmethod=marker
