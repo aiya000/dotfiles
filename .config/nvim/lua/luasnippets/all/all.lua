@@ -65,5 +65,15 @@ return list.concat(
         i(1, 'range_name'),
       })
     ),
+  },
+
+  {
+    s(
+      'vim_modeline',
+      fmt('{comment_token} vim: {opts}', {
+        comment_token = i(1, '--'),
+        opts = i(2, 'foldmethod=marker'),
+      })
+    ),
   }
 )
