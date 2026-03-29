@@ -10,11 +10,19 @@ local function is_windows_git_root(git_root)
 end
 
 local function convert_window_git_root_to_wsl_git_root(window_git_root)
-  local result = vim.system({ 'wslpath', window_git_root }):wait()
-  if result.code ~= 0 then
-    error('Failed to convert Windows git-root to WSL git-root: ' .. fn.to_pretty_string(result))
+  -- NOTE: Don't use vim.system():wait() at here because fast event context
+  local escaped = ("'%s'"):format(window_git_root:gsub("'", "'\\''"))
+  local handle = io.popen('wslpath ' .. escaped)
+  if not handle then
+    error('Failed to run wslpath for: ' .. window_git_root)
   end
-  return fn.trim(result.stdout)
+
+  local stdout = handle:read('*a')
+  local ok = handle:close()
+  if not ok then
+    error('Failed to convert Windows git-root to WSL git-root: ' .. window_git_root)
+  end
+  return fn.trim(stdout)
 end
 
 ---Parses git root output
