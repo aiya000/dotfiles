@@ -7,7 +7,7 @@ description: Instruct to suggest alternative commands for `rm`, `find`, and `gre
 When you want to run the following commands, use the alternative commands instead:
 
 - `rm` → `rm-dust`
-- `find` → `fd`
+- `find` → `fd`, or `fdfind` (if `fd` is not found)
 - `grep` → `rg`
 
 If that alternative commands are not available, that's incorrect state.
