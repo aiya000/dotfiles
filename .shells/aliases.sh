@@ -75,6 +75,15 @@ source ~/.shells/aliases/git.sh
 source ~/.shells/aliases/neovim.sh
 
 # }}}
+# Utils Functions {{{
+
+function run-with-echo () {
+  local cmd="$*"
+  echo "$cmd"
+  eval "$cmd"
+}
+
+# }}}
 # AI {{{
 
 if i-have claude ; then
@@ -186,6 +195,14 @@ elif i-have lua ; then
 fi
 
 alias notify-at-cancel-all='notify-at -l ; notify-at -l | drop 2 | cut -d" " -f1 | xargs -I {} notify-at -c {} ; notify-at -l'
+
+function docker-kill-all () {
+  run-with-echo 'docker compose down -v --remove-orphans'
+  run-with-echo 'docker container prune -f'
+  run-with-echo 'docker volume prune -f'
+  run-with-echo "docker volume rm '$(docker volume ls -q)'"
+  echo 'Succeed'
+}
 
 # }}}
 
