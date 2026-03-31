@@ -1,39 +1,48 @@
 ---
-allowed-tools: Read(~/.claude/CLAUDE.md), Bash(date:*)
-description: Write a daily memory file
+allowed-tools: Bash(date:*), Write(*), Read(*)
+description: Export and distill the current conversation into a memory file
 ---
 
 ## What you do with this command
 
-1. Read the subsection `### Your character` in `~/.claude/CLAUDE.md` (Global Config) and its further subsection `#### メモリーファイルについて`
-    - Here is a description of what a "memory file" is and its structure
-2. Determine current date in YYYY-MM-DD format (e.g., 2025-09-12)
-3. Create directory if it doesn't exist: `mkdir -p ~/.dotfiles/.private/CLAUDE-MEMORY/`
-4. Create or append to daily memory file: `~/.dotfiles/.private/CLAUDE-MEMORY/YYYY-MM-DD.md`
-    - If file doesn't exist: Create new file with header `# Claude Memory - YYYY-MM-DD`
-    - If file exists: Append new entry with current timestamp (no need to check - just append)
-5. Write memory entry according to the format specified in Global Config:
-    - Use timestamp format: `## [HH:MM] - Task Title`
-    - Include required subsections: 主な実装内容, あいやくんの特徴・印象, あいやくんの協力, 今回の成果・感想
-    - Follow the character and tone guidelines from Global Config
+This command is a thin wrapper around `/export`.
+The goal is to distill the exported conversation into a compact, machine-readable memory file
+that future Claude Code sessions can load to restore context.
 
-**IMPORTANT**: Do NOT ask for confirmation or check file existence. Just create the directory and write the file directly.
+### Steps
 
-## Daily Memory File Location
-
-- Directory: `~/.dotfiles/.private/CLAUDE-MEMORY/`
-- File format: `YYYY-MM-DD.md` (e.g., `2025-09-12.md`)
-- Automatically create directory if it doesn't exist
-
-## Current State
-
-Current datetime:
+1. Use the exported conversation content provided via `$EXPORT` as source material
+2. Determine current date and time:
 
 !`date +%Y-%m-%d_%H:%M`
 
-## Benefits of Daily Files
+3. Create directory if needed: `mkdir -p ~/.dotfiles/.private/CLAUDE-MEMORY/`
+4. Write (or append) to: `~/.dotfiles/.private/CLAUDE-MEMORY/YYYY-MM-DD.md`
+    - If file doesn't exist: create with header `# Memory - YYYY-MM-DD`
+    - If file exists: append a new entry
 
-- Reduces token consumption by avoiding large single file
-- Easier to find specific memories by date
-- Better organization of historical interactions
-- Prevents memory file from becoming too large for context window
+### How to distill the export
+
+From the exported conversation, extract only what is worth remembering across sessions.
+Write under a timestamped heading: `## [HH:MM] - <short topic title>`
+
+Keep:
+- What was decided or implemented (the outcome, not the process)
+- User preferences or constraints discovered during the session
+- Key facts about the project or codebase that are not obvious from reading the code
+- Errors or pitfalls encountered and how they were resolved
+
+Remove:
+- Tool call inputs/outputs and command logs
+- Verbose code listings (keep only the essential snippet if truly needed)
+- Back-and-forth clarification exchanges
+- Any content already derivable from the current code or git history
+- Meta-conversation about the AI itself
+
+The result should be concise — a future session should be able to read it in seconds and understand
+what happened without replaying the full conversation.
+
+## Memory File Location
+
+- Directory: `~/.dotfiles/.private/CLAUDE-MEMORY/`
+- Filename: `YYYY-MM-DD.md` (e.g., `2026-03-31.md`)
