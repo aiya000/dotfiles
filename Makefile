@@ -593,6 +593,9 @@ install-atool-deps:
 install-mysql-client:
 	which mysql || $(BrewInstall) mysql-client
 
+install-git-lfs:
+	which git-lfs || $(BrewInstall) git-lfs
+
 endif # }}}
 ifeq ($(WSL2),yes) # {{{
 
