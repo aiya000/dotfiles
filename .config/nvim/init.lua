@@ -24,6 +24,7 @@ InitLua = InitLua
     git_root = nil,
     memo_path = '~/memo.md',
     hydra = {}, -- To activate by keymaps. See `./lua/plugins.lua`
+    allowed_modeline_options = { 'filetype', 'foldmethod' }, --- See `./lua/autocmds.lua` for usage
   }
 
 vim.schedule(function()
@@ -48,6 +49,7 @@ InitLua.sessiondir = s('{backupdir}/session', { backupdir = backupdir })
 -- }}}
 -- vim.opt, buitin vim.g, and another options {{{
 
+vim.opt.modeline = false -- Use custom safe modeline parser instead. See `./lua/autocmds.lua`
 vim.opt.autoindent = true
 vim.opt.backspace = { 'indent', 'eol', 'start' }
 vim.opt.breakindent = true

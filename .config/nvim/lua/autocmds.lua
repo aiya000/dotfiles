@@ -155,4 +155,54 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave' }, {
 
 -- TODO: redraw on winopenpost
 
+-- Custom safe modeline parser (modeline is disabled; only InitLua.allowed_modeline_options are applied) {{{
+
+-- Maps modeline abbreviations to their canonical option names
+local modeline_aliases = {
+  ft = 'filetype',
+  filetype = 'filetype',
+  fdm = 'foldmethod',
+  foldmethod = 'foldmethod',
+}
+
+vim.api.nvim_create_autocmd('BufReadPost', {
+  group = augroup,
+  callback = function()
+    -- TODO: Refactor
+
+    local buf = vim.api.nvim_get_current_buf()
+    local line_count = vim.api.nvim_buf_line_count(buf)
+
+    -- Check first and last 5 lines, like Vim's built-in modeline behavior
+    local indices = {}
+    for i = 0, math.min(4, line_count - 1) do
+      table.insert(indices, i)
+    end
+    for i = math.max(5, line_count - 5), line_count - 1 do
+      table.insert(indices, i)
+    end
+
+    for _, i in ipairs(indices) do
+      local line = vim.api.nvim_buf_get_lines(buf, i, i + 1, false)[1] or ''
+      -- Match standard vim modeline: "vim: [set] key=value ..."
+      local modeline = line:match('[vV]im:%s*(.+)')
+      if modeline then
+        modeline = modeline:gsub(':$', ''):gsub('^set%s+', '')
+        for key, value in modeline:gmatch('(%w+)=(%S+)') do
+          local canonical = modeline_aliases[key]
+          if canonical and vim.tbl_contains(InitLua.allowed_modeline_options, canonical) then
+            vim.schedule(function()
+              pcall(function()
+                vim.opt_local[canonical] = value
+              end)
+            end)
+          end
+        end
+      end
+    end
+  end,
+})
+
+-- }}}
+
 return M
