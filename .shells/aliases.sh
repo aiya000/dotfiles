@@ -67,6 +67,14 @@ alias-of mysql 'mysql --pager="less -r -S -n -i -F -X"'
 alias-of yay 'yay --color always'
 
 # }}}
+# Common Utifity Functions {{{
+
+function eval-with-echo () {
+  echo "$*"
+  eval "$*"
+}
+
+# }}}
 # Load ./aliases/** {{{
 
 source ~/.shells/aliases/build-tools.sh
