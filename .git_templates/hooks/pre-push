@@ -22,6 +22,12 @@ echo "$title"
 echo "$user"
 echo
 
+if [[ $DOTFILES_GIT_HOOKS_DENY_IF_THAT_USER != '' && $user != $DOTFILES_GIT_HOOKS_DENY_IF_THAT_USER ]] ; then
+  echo "fatal: You can't commit as $user"
+  echo "       Because DOTFILES_GIT_PUSH_DENY_IF_THAT_USER is set to $DOTFILES_GIT_PUSH_DENY_IF_THAT_USER"
+  exit 1
+fi
+
 if [[ $user == aiya000 ]] ; then
   effect=~/.dotfiles/bash-toys/assets/notification-3.mp3
 else

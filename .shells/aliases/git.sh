@@ -214,6 +214,7 @@ function git-config-set-local-aiya000 () {
   echo "credential.https://github.com.helper: $(git config credential.https://github.com.helper)"
   git config --local credential.https://github.com.useHttpPath true
   echo "credential.https://github.com.useHttpPath: $(git config credential.https://github.com.useHttpPath)"
+  export DOTFILES_GIT_HOOKS_DENY_IF_THAT_USER=aiya000
 }
 
 # }}}
