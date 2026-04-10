@@ -225,6 +225,10 @@ install-android-cmdline-tools:
 	mv Android ~ && \
 	:
 
+# https://cli.devinenterprise.com/docs
+install-devin-cli:
+	which devin || curl -fsSL https://cli.devin.ai/install.sh | bash
+
 # }}}
 ifeq ($(OS),Arch) # {{{
 
