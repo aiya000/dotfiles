@@ -289,82 +289,23 @@ create_command('RemoveTrailingSpacesWithForce', function(opts)
   nvim.remove_trailing_spaces(true, range)
 end, { range = true })
 
-create_command('FormatMarkdownToSlack', function(opts)
-  for line_num = opts.line1, opts.line2 do
-    -- Format list notation to human readable
-    vim.cmd(([[silent! %ds/^\(\s*\)- \[ \]/\1⬜/]]):format(line_num))
-    vim.cmd(([[silent! %ds/^\(\s*\)- \[x\]/\1☑️/]]):format(line_num))
-    vim.cmd(([[silent! %ds/^\(\s*\)\([0-9]\+\)\. \[ \]/\1\2. ⬜/]]):format(line_num))
-    vim.cmd(([[silent! %ds/^\(\s*\)\([0-9]\+\)\. \[x\]/\1\2. ☑️/]]):format(line_num))
-    vim.cmd(([[silent! %ds/^\(\s*\)- /\1・/]]):format(line_num))
-    -- Adjust to Slack's notation
-    vim.cmd(([[silent! %ds/\~\~/\~/g]]):format(line_num))
-    vim.cmd(([[silent! %ds/\*\*/*/g]]):format(line_num))
-    -- Decrease heading level
-    vim.cmd(([[silent! %ds/^####/#/]]):format(line_num))
-    -- Readability
-    vim.cmd(([[silent! %ds/  /　/g]]):format(line_num))
-
-    -- TODO: Refactor
-
-    local line = vim.fn.getline(line_num)
-    local result = {}
-    local i = 1
-
-    while i <= #line do
-      local char = line:sub(i, i)
-
-      -- surround_backquotes_with_spaces
-      if char == '`' then
-        -- Open backtick
-        local backtick_start = i
-        local backtick_end = nil
-        for j = i + 1, #line do
-          if line:sub(j, j) == '`' then
-            backtick_end = j
-            break
-          end
-        end
-
-        -- Close backtick
-        if backtick_end then
-          local backtick_content = line:sub(backtick_start, backtick_end)
-          if #result > 0 and not result[#result]:match('%s$') then
-            table.insert(result, ' ')
-          end
-          table.insert(result, backtick_content)
-
-          if backtick_end < #line then
-            local next_char = line:sub(backtick_end + 1, backtick_end + 1)
-            if not next_char:match('^%s') then
-              table.insert(result, ' ')
-            end
-          end
-
-          i = backtick_end + 1
-        else
-          table.insert(result, char)
-          i = i + 1
-        end
-      else
-        table.insert(result, char)
-        i = i + 1
-      end
-    end
-
-    vim.fn.setline(line_num, table.concat(result))
-  end
-
-  -- Set '[ and '] marks to the range that was changed
-  vim.fn.setpos("'[", { 0, opts.line1, 1, 0 })
-  vim.fn.setpos("']", { 0, opts.line2, vim.fn.col({ opts.line2, '$' }) - 1, 0 })
-end, { range = true })
-
 create_command('FormatMarkdownForReport', function(opts)
-  vim.cmd(([[%s,%sFormatMarkdownToSlack]]):format(opts.line1, opts.line2))
-  vim.cmd(([[silent! %d,%ds/^#\+ //]]):format(opts.line1, opts.line2))
-  vim.cmd(([[silent! %d,%ds/^\(\s*\)\(⬜\|☑️\) /・/]]):format(opts.line1, opts.line2))
-  vim.cmd(([[silent! %d,%ds/^\(\s*\)\([0-9]\+\). \(⬜\|☑️\) /\1\2. /]]):format(opts.line1, opts.line2))
+  local lines = vim.api.nvim_buf_get_lines(0, opts.line1 - 1, opts.line2, false)
+  local result = {}
+  for _, line in ipairs(lines) do
+    -- Skip indented sub-items (e.g. "    - 作業中")
+    if line:match('^%s+%-%s') then
+      goto cont
+    end
+    line = line:gsub('^%- %[.%] ', '・') -- Convert checkbox list items first: - [ ] or - [x] → ・
+    line = line:gsub('%[(.-)%]%((.-)%)', '%1') -- Strip markdown links: [text](url) → text
+    line = line:gsub('^#### (.*)', '# %1') -- Convert #### headings to # headings
+    line = line:gsub('^##+ (.*)', '%1') -- Remove headings with 2+ hashes, keeping just the text
+    line = line:gsub('^%- ', '・') -- Convert remaining dash list items: - → ・
+    table.insert(result, line)
+    ::cont::
+  end
+  vim.api.nvim_buf_set_lines(0, opts.line1 - 1, opts.line2, false, result)
 end, { range = true })
 
 create_command('FormatExportToVimEnv', "silent '<,'>s/^export /vim.env./ | silent <,'>s/\n$//", { range = true })
