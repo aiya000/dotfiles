@@ -1,8 +1,6 @@
 all: install
 
-# TODO: Detect auto
-OS ?= Ubuntu
-WSL2 ?= yes # 'no' or 'yes'
+OS ?= WSL
 
 YayInstall = yay -S --needed --noconfirm
 YayUpdate = yay -Sy
@@ -601,7 +599,7 @@ install-git-lfs:
 	which git-lfs || $(BrewInstall) git-lfs
 
 endif # }}}
-ifeq ($(WSL2),yes) # {{{
+ifeq ($(OS),WSL) # {{{
 
 install-wslu:
 	sudo add-apt-repository ppa:wslutilities/wslu
