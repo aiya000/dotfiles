@@ -705,6 +705,10 @@ install-google-chrome:
 		$(AptInstall) ./google-chrome-stable_current_amd64.deb \
 	)
 
+# https://github.com/Xfennec/progress
+install-progress:
+	which progress || $(AptInstall) progress
+
 endif # }}}
 
 download-nerd-fonts:
