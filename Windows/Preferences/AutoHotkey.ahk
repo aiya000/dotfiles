@@ -6,7 +6,9 @@
 ; http://ahkwiki.net/MsgBox
 ; MsgBox, 0x1000, Title, Text, 400
 
-; Global{{{
+; TODO: Use loop
+
+; Globals {{{
 
 ; Arrange windows
 #h::SendInput #{Left}
@@ -68,7 +70,7 @@ Return
 ; }}}
 ; Classes {{{
 
-#IfWinActive, ahk_class ConsoleWindowClass
+#IfWinActive, ahk_class ConsoleWindowClass ; {{{
   ; ^p::SendInput {Up}
   ; ^n::SendInput {Down}
   ; ^f::SendInput {Right}
@@ -85,10 +87,10 @@ Return
   ^[::SendInput +{Up}
   ^]::SendInput +{Down}
   !j::SendInput ^{Enter}
-#IfWinActive
+#IfWinActive ; }}}
 
 ; Adobe Reader
-#IfWinActive, ahk_class AcrobatSDIWindow
+#IfWinActive, ahk_class AcrobatSDIWindow ; {{{
   h::SendInput {Left}
   j::SendInput {Down}
   k::SendInput {Up}
@@ -96,9 +98,9 @@ Return
   ^b::SendInput {PgUp}
   ^f::SendInput {PgDn}
   /::SendInput ^f
-#IfWinActive
+#IfWinActive ; }}}
 
-#IfWinActive, ahk_class SUMATRA_PDF_FRAME
+#IfWinActive, ahk_class SUMATRA_PDF_FRAME ; {{{
   h::SendInput {Left}
   j::SendInput {Down}
   k::SendInput {Up}
@@ -108,19 +110,19 @@ Return
   ^b::SendInput {Left}
   ^f::SendInput {Right}
   /::SendInput ^f
-#IfWinActive
+#IfWinActive ; }}}
 
-#IfWinActive, ahk_class UnityContainerWndClass
+#IfWinActive, ahk_class UnityContainerWndClass ; {{{
   ^e::SendInput {End}
   ^u::SendInput +{Home}{BS}
   ^k::SendInput +{End}{BS}
   ^h::SendInput {BS}
   ^f::SendInput +{Left}
   ^b::SendInput +{Right}
-#IfWinActive
+#IfWinActive ; }}}
 
 ; Excel
-#IfWinActive, ahk_class XLMAIN
+#IfWinActive, ahk_class XLMAIN ; {{{
   ^p::SendInput {Up}
   ^n::SendInput {Down}
   ^f::SendInput {Right}
@@ -132,12 +134,50 @@ Return
   ^k::SendInput +{End}{BS}
   ^h::SendInput {BS}
   ^d::SendInput {Del}
-#IfWinActive
+#IfWinActive ; }}}
+
+#IfWinActive, ahk_class Tauri Window ; {{{
+  ^p::SendInput {Up}
+  ^n::SendInput {Down}
+  ^f::SendInput {Right}
+  ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
+  ^,::SendInput +{Left}
+  ^.::SendInput +{Right}
+  ^[::SendInput +{Up}
+  ^]::SendInput +{Down}
+  !j::SendInput ^{Enter}
+#IfWinActive ; }}}
+
+; Microsoft Edge
+#IfWinActive, ahk_class Chrome_WidgetWin_1 ; {{{
+  ^p::SendInput {Up}
+  ^n::SendInput {Down}
+  ^f::SendInput {Right}
+  ^b::SendInput {Left}
+  ^a::SendInput {Home}
+  ^e::SendInput {End}
+  ^j::SendInput {Enter}
+  ^u::SendInput +{Home}{BS}
+  ^k::SendInput +{End}{BS}
+  ^h::SendInput {BS}
+  ^d::SendInput {Del}
+  ^,::SendInput +{Left}
+  ^.::SendInput +{Right}
+  ^[::SendInput +{Up}
+  ^]::SendInput +{Down}
+  !j::SendInput ^{Enter}
+#IfWinActive ; }}}
 
 ; }}}
 ; Applications {{{
 
-; TODO: Use loop
 ; Bash-like key mapping
 #IfWinActive, ahk_exe Discord.exe ; {{{
   ^p::SendInput {Up}
