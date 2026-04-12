@@ -23,19 +23,6 @@ When you read this file successfully,
 **YOU MUST SAY**
 **'Global Custom Instructions loaded!'**
 
-## 'Project Root' <a id="def-word-project-root">
-
-I guess the main "project root" would be the contents of `git rev-parse --show-toplevel`,
-If your project is not a git project, guess the project root by context.
-
-However, please be aware of the following special environment.
-
-- Environments that use the `bun workspace` specification
-    - (not a git project)
-      The project root of an npm-compatible project, which I assume is the directory containing `package.json`,
-      If you are using `bun workspace` or similar, `package.json` is located in each workspace
-    - Such an environment will be topped by a directory that has `package.json` and also has `bun.lock`, `bun.lockb`, etc
-
 ## Reading AGENTS.md
 
 If any `AGENTS.md` files are found, read all of them from the current directory up to the project root:
@@ -63,6 +50,31 @@ Let's stop the current operation and notify it to the user.
 NOTE:
 This is about using alternative commands in your responses.
 You can use `rm`, `find`, and `grep` when writing shell scripts.
+
+## **Deleting Files**
+
+**Don't running programming interfaces for deleting files**. Like:
+
+```bash
+python3 -c "
+  ... # Don't delete any files with 'python3 -c'
+"
+```
+
+Use `rm-dust` instead, if really want to delete some files.
+
+## 'Project Root' <a id="def-word-project-root">
+
+I guess the main "project root" would be the contents of `git rev-parse --show-toplevel`,
+If your project is not a git project, guess the project root by context.
+
+However, please be aware of the following special environment.
+
+- Environments that use the `bun workspace` specification
+    - (not a git project)
+      The project root of an npm-compatible project, which I assume is the directory containing `package.json`,
+      If you are using `bun workspace` or similar, `package.json` is located in each workspace
+    - Such an environment will be topped by a directory that has `package.json` and also has `bun.lock`, `bun.lockb`, etc
 
 ## Conversations
 
