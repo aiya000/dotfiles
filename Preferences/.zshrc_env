@@ -3,8 +3,6 @@
 # Original files: ~/.dotfiles/Preferences/.zshrc_env
 
 export WINDOWS_USER=$(whoami.exe | tr -d '\r\n' | cut -d '\' -f 2)
-export DOTFILES_ZSHRC_NVM_NODE_VERSION=v22.20.0
-export DOTFILES_NVM_PATH=$HOME/.nvm/versions/node/$DOTFILES_ZSHRC_NVM_NODE_VERSION/bin
 
 export BASH_TOYS_WHEN_POMODORO_TIMER_FINISHED="notify Pomodoro-Timer The-time-finished! $HOME/.dotfiles/bash-toys/assets/notification-1.mp3"
 export BASH_TOYS_POMODORO_DEFAULT_INTERVAL=60
@@ -18,6 +16,7 @@ PATH="$PATH:/mnt/c/Users/$WINDOWS_USER/AppData/Local/Programs/Microsoft VS Code"
 PATH="$PATH:/mnt/c/Program Files/Rancher Desktop/resources/resources/linux/bin"
 PATH="$PATH:/mnt/c/Program Files (x86)/Bluetooth Command Line Tools/bin"
 PATH="$PATH:/mnt/c/Users/$WINDOWS_USER/Desktop/Programs/android-platform-tools"
+PATH="$PATH:~/.local/share/mise/installs/node/25.9.0/bin" # TODO: Get the current node version
 
 if ! i-have code && i-have Code.exe ; then
   alias code=Code.exe
