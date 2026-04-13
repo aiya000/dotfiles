@@ -89,7 +89,7 @@ $ cp -r ~/.dotfiles/.config/nvim ~/.config/
 
 ### [gemini-cli](GEMINI.global.md)
 
-- **Location**: `GEMINI.global.md` (symlink to `AGENTS.global.md`), 
+- **Location**: `GEMINI.global.md` (symlink to `AGENTS.global.md`)
 - **Note**:
     - For `GEMINI.global.md` setup instructions, please refer to [GEMINI.global.README.md](GEMINI.global.README.md) (symlink to `AGENTS.global.README.md`)
 
