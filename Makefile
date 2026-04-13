@@ -598,6 +598,21 @@ install-mysql-client:
 install-git-lfs:
 	which git-lfs || $(BrewInstall) git-lfs
 
+# TODO: Organize
+install-coreutils:
+install-gls:
+install-gnu-ls:
+	which gls || $(BrewInstall) coreutils
+
+install-brew:
+	which brew || \
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
+		exec zsh
+
+install-tree-sitter:
+	which 
+	brew install tree-sitter
+
 endif # }}}
 ifeq ($(OS),WSL) # {{{
 
