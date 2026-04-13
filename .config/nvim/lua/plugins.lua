@@ -1370,7 +1370,7 @@ return {
           'zb',
         },
         duration_multiplier = 0.25,
-        performance_mode = true,
+        performance_mode = false,
       })
 
       local keymaps_opts = {
