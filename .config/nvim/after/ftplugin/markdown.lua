@@ -2,10 +2,8 @@ local nvim = require('nvim')
 local list = require('utils.list')
 local pipe = require('utils.functions').pipe
 
-vim.opt_local.conceallevel = 0
 vim.opt_local.tabstop = 4
 vim.opt_local.shiftwidth = 4
-vim.opt_local.conceallevel = 0
 vim.opt_local.commentstring = ' <!-- %s -->'
 vim.opt_local.completefunc = 'github_complete#complete'
 

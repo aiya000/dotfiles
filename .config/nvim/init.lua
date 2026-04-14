@@ -57,7 +57,7 @@ vim.opt.cindent = true
 vim.opt.cmdheight = 1
 vim.opt.cmdwinheight = 20
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' } -- For compatiblility with nvim-cmp. See 'nvim-cmp' section in './lua/plugins.lua'
-vim.opt.conceallevel = 1
+vim.opt.conceallevel = 0
 vim.opt.expandtab = true
 vim.opt.fileencodings = {
   'ucs-bom',
