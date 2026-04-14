@@ -213,15 +213,14 @@ install-dust:
 	which dust || $(BrewInstall) dust
 
 install-android-cmdline-tools:
-	[[ -d ~/Android/Sdk/cmdline-tools ]] || \
-	cd /tmp && \
-	wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip && \
-	mkdir -p Android/Sdk/cmdline-tools && \
-	unzip commandlinetools-linux-11076708_latest.zip -d Android/Sdk/cmdline-tools && \
-	mv Android/Sdk/cmdline-tools/cmdline-tools Android/Sdk/cmdline-tools/latest && \
-	rm commandlinetools-linux-11076708_latest.zip && \
-	mv Android ~ && \
-	:
+	[[ -d ~/android-sdk/cmdline-tools ]] || ( \
+		cd /tmp && \
+		wget https://dl.google.com/android/repository/commandlinetools-mac-14742923_latest.zip && \
+		mkdir -p ~/android-sdk/cmdline-tools && \
+		unzip commandlinetools-mac-14742923_latest.zip -d ~/android-sdk/cmdline-tools && \
+		mv ~/android-sdk/cmdline-tools/cmdline-tools ~/android-sdk/cmdline-tools/latest && \
+		rm /tmp/commandlinetools-mac-14742923_latest.zip && \
+	: )
 
 # https://cli.devinenterprise.com/docs
 install-devin-cli:
@@ -536,6 +535,9 @@ install-bat:
 install-adb:
 	which adb || $(AptInstall) adb
 
+install-fzf:
+	which fzf || $(BrewInstall) fzf
+
 endif # }}}
 ifeq ($(OS),Darwin) # {{{
 
@@ -610,8 +612,21 @@ install-brew:
 		exec zsh
 
 install-tree-sitter:
-	which 
-	brew install tree-sitter
+	brew info tree-sitte > /dev/null 2>&1 || $(BrewInstall) tree-sitter
+
+# https://junegunn.github.io/fzf/installation/
+install-fzf:
+	which fzf || $(BrewInstall) fzf
+
+install-cocoapods:
+	brew info cocoapods > /dev/null 2>&1 || $(BrewInstall) cocoapods
+
+# https://github.com/asmvik/skhd
+install-skhd:
+	which skhd || \
+  		$(BrewInstall) asmvik/formulae/skhd && \
+  		skhd --start-service && \
+		:
 
 endif # }}}
 ifeq ($(OS),WSL) # {{{
@@ -721,6 +736,20 @@ install-google-chrome:
 # https://github.com/Xfennec/progress
 install-progress:
 	which progress || $(AptInstall) progress
+
+install-fzf:
+	which fzf || $(BrewInstall) fzf
+
+install-android-cmdline-tools:
+	[[ -d ~/Android/Sdk/cmdline-tools ]] || \
+	cd /tmp && \
+	wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip && \
+	mkdir -p Android/Sdk/cmdline-tools && \
+	unzip commandlinetools-linux-11076708_latest.zip -d Android/Sdk/cmdline-tools && \
+	mv Android/Sdk/cmdline-tools/cmdline-tools Android/Sdk/cmdline-tools/latest && \
+	rm commandlinetools-linux-11076708_latest.zip && \
+	mv Android ~ && \
+	:
 
 endif # }}}
 
