@@ -75,6 +75,13 @@ return {
       local actions = require('telescope.actions')
       require('telescope').setup({
         defaults = {
+          preview = {
+            -- NOTE:
+            -- nvim-treesitter の新バージョンで parsers.ft_to_lang が削除されたため無効化
+            -- 副作用: プレビューで tree-sitter ハイライトが使われなくなる（regex/syntax ハイライトは機能する）
+            -- Telescope が新 API (vim.treesitter.language.get_lang) に対応したら true に戻せる
+            treesitter = false,
+          },
           mappings = {
             n = {
               ['<C-l>'] = actions.close,
