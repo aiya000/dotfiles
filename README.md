@@ -61,6 +61,14 @@ $ cp -r ~/.dotfiles/.config/nvim ~/.config/
     - Custom key bindings
     - Plugin configurations
 
+### [AGENTS.global.md](AGENTS.global.md)
+
+- **Location**: `AGENTS.global.md`
+- **Main files**: `AGENTS.global.md`
+- **Features**:
+    - Intended to be linked to `~/AGENTS.md`
+- **Note**: For `AGENTS.global.md` setup instructions, please refer to [AGENTS.global.README.md](AGENTS.global.README.md)
+
 ### [Claude Code](.claude_global/)
 
 - **Location**: `.claude_global/`
@@ -74,18 +82,13 @@ $ cp -r ~/.dotfiles/.config/nvim ~/.config/
     - For `.claude_global/` setup instructions, please refer to [.claude_global/README.md](.claude_global/README.md)
     - `.claude/` is just configuration for this repository (not for global use)
 
-### [AGENTS.global.md](AGENTS.global.md)
+### [copilot-cli (GitHub Copilot CLI)](.copilot/)
 
-- **Location**: `AGENTS.global.md`
-- **Main files**: `AGENTS.global.md`
+- **Location**: `.copilot/`
+- **Main files**: `.copilot/copilot-instructions.md`
 - **Features**:
-    - Intended to be linked to `~/AGENTS.md`
-    - Custom instructions for multiple AI assistants including **copilot-cli**
-- **Note**: For `AGENTS.global.md` setup instructions, please refer to [AGENTS.global.README.md](AGENTS.global.README.md)
-
-### [copilot-cli](AGENTS.global.md)
-
-- **Location**: `AGENTS.global.md`
+    - Intended to be linked to `~/.copilot/copilot-instructions.md`
+- **Note**: For `.copilot/` setup instructions, please refer to [.copilot/README.md](.copilot/README.md)
 
 ### [gemini-cli](GEMINI.global.md)
 
