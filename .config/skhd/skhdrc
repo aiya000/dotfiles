@@ -118,8 +118,6 @@
 #     "iTerm2"
 # ]
 
-ctrl + cmd - r : skhd --reload && ~/.dotfiles/bash-toys/bin/notify skhd 'skhdrc reloaded' || ~/.dotfiles/bash-toys/bin/notify skhd 'skhdrc failed to reload'
-
 # Bash-like keymaps but no-remap when iTerm2
 ctrl - h [
     "iTerm2" ~
@@ -127,7 +125,7 @@ ctrl - h [
 ]
 ctrl - u [
     "iTerm2" ~
-    * : skhd -k "cmd + shift - left"; sleep 0.05; skhd -k "backspace"
+    * : skhd -k "cmd + shift - left" ; sleep 0.05 ; skhd -k "backspace"
 ]
 ctrl - d [
     "iTerm2" ~
@@ -150,8 +148,18 @@ ctrl - n [
     * : skhd -k down
 ]
 
-# Finder: cmd + l → cmd + shift + g (Go to Folder)
+# Combine with my corne keyboard layout
+ctrl + cmd - s [
+  * : skhd -k "shift + cmd - 4"
+]
+ctrl + cmd - p : skhd -k "shift + cmd - [" # Show above tab with with Web Browser
+ctrl + cmd - n : skhd -k "shift + cmd - ]" # Show below tab with with Web Browser
+
+# Finder: Go to a folder
 cmd - l [
     "Finder" : skhd -k "cmd + shift - g"
     * ~
 ]
+
+# cmd - x ; test
+ctrl + cmd - r : skhd --reload && ~/.dotfiles/bash-toys/bin/notify skhd 'skhdrc reloaded' || ~/.dotfiles/bash-toys/bin/notify skhd 'skhdrc failed to reload'
