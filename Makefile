@@ -600,9 +600,8 @@ install-mysql-client:
 install-git-lfs:
 	which git-lfs || $(BrewInstall) git-lfs
 
-# TODO: Organize
-install-coreutils:
-install-gls:
+install-coreutils: install-gnu-ls
+install-gls: install-gnu-ls
 install-gnu-ls:
 	which gls || $(BrewInstall) coreutils
 
@@ -627,6 +626,10 @@ install-skhd:
   		$(BrewInstall) asmvik/formulae/skhd && \
   		skhd --start-service && \
 		:
+
+install-gsed: install-gnu-sed
+install-gnu-sed:
+	which gsed || $(BrewInstall) gnu-sed
 
 endif # }}}
 ifeq ($(OS),WSL) # {{{
