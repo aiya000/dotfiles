@@ -539,7 +539,7 @@ install-fzf:
 	which fzf || $(BrewInstall) fzf
 
 endif # }}}
-ifeq ($(OS),Darwin) # {{{
+ifneq ($(filter $(OS),Darwin macos),) # {{{
 
 build-os-env:
 	 $(BrewInstall) \
