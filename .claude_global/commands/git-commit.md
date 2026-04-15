@@ -99,7 +99,11 @@ The goal is clarity and avoiding redundancy in commit messages.
 ### Description Style
 
 - Use backticks for code elements: `` `function_name()` ``
-- Connect multiple changes with `&`: `Fix bug & Add feature`
+- Use `&` to separate **different concerns** (topics); use natural English (`and` / `, and`) when listing multiple objects under the **same concern**
+    - `Remove x and y & Update z` — two concerns: removal and update
+    - `Delete x, y, and z & Create v` — two concerns: deletion and creation
+    - `Do a and b` — one concern with two objects
+    - `Do a, b, and c` — one concern with three objects
 - Be specific and descriptive
 - Start with imperative verb (Add, Fix, Remove, Update, etc.)
 

@@ -324,7 +324,13 @@ alias gtagd='git tag --delete'
 
 unset git_taking_limit
 
+# TODO: Move to bash-toys
+function cd-to-git-common-root () {
+  cd "$(git-common-root)"
+}
+
 alias cdg=cd-to-git-root
+alias cdgc=cd-to-git-common-root
 
 # }}}
 ## GitHub {{{
