@@ -227,411 +227,6 @@ install-devin-cli:
 	which devin || curl -fsSL https://cli.devin.ai/install.sh | bash
 
 # }}}
-ifeq ($(OS),Arch) # {{{
-
-# Package managers that core packages depends.
-install-core-package-managers:
-	$(MAKE) install-yay
-	$(YayUpdate)
-	which stack || $(YayInstall) stack-static
-	which pip || $(YayInstall) python-pip
-	which cargo || $(YayInstall) rust
-	@echo 'Please define install-core-package-managers for go' > /dev/stderr
-	@echo 'Please define install-core-package-managers for npm by nvm' > /dev/stderr
-
-install-yay:
-	which yay || ( \
-		( \
-			[ ! -d /tmp/yay ] \
-			&& git clone https://aur.archlinux.org/yay.git /tmp/yay \
-			|| true \
-		) && \
-		cd /tmp/yay && \
-		makepkg -si \
-	)
-
-# Install better GUI/CLI environment
-build-os-env:
-	# - xmonad: needed by xmonad-config --restart and --replace
-	# NOTE: You may need `$ make noconfirm='' install` after/if `$ make install` failed
-	$(YayInstall) \
-		alsa-utils \
-		autoconf \
-		base \
-		base-devel \
-		compton \
-		dhcpcd \
-		dunst \
-		fcitx \
-		fcitx-configtool \
-		fcitx-im \
-		fcitx-mozc \
-		fontforge \
-		git \
-		go \
-		libnotify \
-		libxss \
-		linux-lts-headers \
-		lxdm \
-		man-db \
-		mimi-git \
-		networkmanager \
-		openssh \
-		pamixer \
-		pavucontrol \
-		peco \
-		pkgfile \
-		progress \
-		pulseaudio \
-		pulseaudio-alsa \
-		ristretto \
-		rsync \
-		sox \
-		termite \
-		thunar \
-		tmux \
-		unzip-iconv \
-		xf86-video-intel \
-		xinit-xsession \
-		xmonad \
-		xorg-apps \
-		xorg-server \
-		xorg-xinit \
-		zathura \
-		zathura-pdf-mupdf \
-
-	sudo systemctl enable lxdm
-	$(MAKE) network-config
-	sudo gpasswd -a aiya000 audio
-	sudo pkgfile -u
-	$(MAKE) install-wcwidth-cjk
-	$(MAKE) install-fcitx-imlist
-	$(MAKE) install-rictydiminished
-
-install-shellcheck:
-	$(YayInstall) shellcheck
-
-install-ruby:
-	$(YayInstall) ruby ruby-irb
-
-install-cli-recommended:
-	# From official
-	$(YayInstall) \
-		extundelete \
-		jq \
-		universal-ctags-git \
-		watchexec
-	# From AUR
-	which downgrade || $(YayInstall) downgrade
-
-install-gui-recommended:
-	# From official
-	$(YayInstall) arandr xfce4-settings ffmpeg xf86-input-wacom
-	# From AUR
-	$(MAKE) install-vivaldi
-	$(MAKE) install-autokey
-
-install-autokey:
-	which autokey-gtk || $(YayInstall) autokey
-
-install-xclip:
-	$(YayInstall) xclip
-
-# To build vim
-install-vim-build-deps:
-	$(YayInstall) ruby ruby-irb lua luajit
-
-install-xmonad-runtime-deps:
-	$(YayInstall) \
-		conky \
-		xfce4-screenshooter \
-		dmenu \
-		dzen2 \
-
-install-fonts:
-	$(YayInstall) noto-fonts-cjk noto-fonts-emoji
-
-install-java:
-	which java || $(YayInstall) jdk
-
-install-displaylink:
-	$(YayInstall) displaylink evdi-git
-
-install-recorders:
-	$(YayInstall) peek screenkey
-
-install-bluetooth:
-	$(YayInstall) bluez bluez-utils bluez-libs bluez-firmware pulseaudio-bluetooth
-	sudo modprobe btusb
-	# sudo systemctl enable bluetooth
-	# sudo systemctl start bluetooth
-
-install-graphic-editors:
-	which draw.io || $(YayInstall) drawio-desktop-bin
-	which gm || $(YayInstall) graphicsmagick
-	which krita || $(YayInstall) krita-appimage
-
-install-media-players:
-	which vlc || $(YayInstall) vlc
-
-install-docker:
-	which docker || \
-	which docker-compose || \
-	( \
-		$(YayInstall) docker docker-compose && \
-		sudo gpasswd -a aiya000 docker \
-	)
-
-install-dropbox:
-	which dropbox-cli || $(YayInstall) dropbox-cli
-
-# Mapping from joypad strokes to keyboard strokes
-install-antimicro:
-	which antimicro || $(YayInstall) antimicro-git
-
-install-power-managers:
-	which acpid || $(YayInstall) acpid
-	which powertop || $(YayInstall) powertop
-	which tlp || $(YayInstall) tlp
-
-install-cd-ripper:
-	which asunder || $(YayInstall) asunder
-
-install-vnc:
-	which vncserver || $(YayInstall) tigervnc
-	which x11vnc || $(YayInstall) x11vnc
-
-install-audio-editors:
-	$(YayInstall) audacity
-
-install-for-laptops:
-	# From official
-	$(YayInstall) slock
-	# From AUR
-	which light || $(YayInstall) light-git
-
-install-for-virtualbox-vms:
-	$(YayInstall) \
-		virtualbox-guest-utils \
-		virtualbox-guest-dkms \
-	sudo systemctl enable vboxservice
-	sudo systemctl start vboxservice
-	sudo VBoxClient-all
-	# To automatic login
-	echo 'autologin=aiya000' | sudo tee -a /etc/lxdm/lxdm.conf
-
-endif # }}}
-ifeq ($(OS),Ubuntu) # {{{
-
-install-core-package-managers:
-	$(MAKE) install-golang
-	$(MAKE) install-python3
-
-install-apt-fast:
-	sudo add-apt-repository ppa:apt-fast/stable
-	sudo apt update
-	sudo apt -y install apt-fast
-
-install-fcitx-imlist:
-	git clone https://github.com/kenhys/fcitx-imlist /tmp/fcitx-imlist && \
-	cd /tmp/fcitx-imlist && \
-	./autogen.sh && \
-	./configure && \
-	make && \
-	sudo make install
-
-build-os-env:
-	$(AptInstall) \
-		git \
-		man-db \
-		progress \
-		rsync \
-		tmux \
-		vim \
-		zsh
-
-install-clamav:
-	$(AptInstall) clamav clamav-daemon
-	sudo systemctl start clamav-daemon.service
-	sudo systemctl start clamav-freshclam.service
-	# See https://zenn.dev/aiya000/articles/install-clamav-into-wsl2
-	sudo chmod 666 /var/log/clamav/freshclam.log
-	sudo pkill freshclam
-	sudo chown clamav:clamav /var/log/clamav/freshclam.log
-	# - - -
-	echo 'ExcludePath ^/proc' >> /etc/clamav/clamd.conf
-	echo 'ExcludePath ^/sys'  >> /etc/clamav/clamd.conf
-	echo 'ExcludePath ^/run'  >> /etc/clamav/clamd.conf
-	echo 'ExcludePath ^/dev'  >> /etc/clamav/clamd.conf
-	echo 'ExcludePath ^/snap' >> /etc/clamav/clamd.conf
-	echo 'ExcludePath ^/mnt'  >> /etc/clamav/clamd.conf
-	sudo freshclam
-
-install-shellcheck:
-	$(AptInstall) shellcheck
-
-install-rg:
-	which rg || $(AptInstall) ripgrep
-
-install-fd:
-	which fd || $(AptInstall) fd-find
-
-# sed alternative
-install-sd:
-	which sd || cargo install sd
-
-install-nkf:
-	which nkf || $(AptInstall) nkf
-
-install-w3m:
-	$(AptInstall) w3m
-
-install-brew:
-	$(AptInstall) build-essential procps file git
-	bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-install-gh:
-	which gh || $(BrewInstall) gh
-
-install-watchexec:
-	which watchexec || $(BrewInstall) watchexec
-
-install-jq:
-	which jq || $(AptInstall) jq
-
-install-universal-ctags:
-	which ctags || $(AptInstall) universal-ctags
-
-# TODO: Check this make to able to build vim
-install-vim-build-deps:
-	$(AptBuildDep) vim
-
-install-python3:
-	$(AptInstall) python3 python3-pip python-is-python3 python3-venv
-
-install-graphic-editors:
-	which drawio || $(NPMInstall) drawio
-	which gm || $(AptInstall) graphicsmagick
-	which krita || $(AptInstall) krita
-	# TODO: Other packages
-
-install-golang:
-	sudo add-apt-repository ppa:longsleep/golang-backports
-	$(AptUpdate)
-	$(AptInstall) golang-go
-
-install-cmake:
-	$(AptInstall) cmake  # To build tmux-cpu-mem-load
-
-install-btop:
-	which btop || $(AptInstall) btop
-
-install-imagemagick:
-	which magick || $(AptInstall) imagemagick
-
-install-bat:
-	which bat || $(AptInstall) bat
-
-install-adb:
-	which adb || $(AptInstall) adb
-
-install-fzf:
-	which fzf || $(BrewInstall) fzf
-
-endif # }}}
-ifneq ($(filter $(OS),Darwin macos),) # {{{
-
-build-os-env:
-	 $(BrewInstall) \
-		font-forge \ # for making nerd-fonts for vim-devicons
-		cmigemo \ # vim-migemo
-		scalastyle \ # ale (vim)
-		graphviz plantuml \
-		jq \
-
-install-fd:
-	which fd || $(BrewInstall) fd
-
-install-rg:
-	which rg || $(BrewInstall) ripgrep
-
-install-ghostscript:
-	ls /opt/homebrew/Cellar/ghostscript &> /dev/null || $(BrewInstall) ghostscript
-
-install-imagemagick:
-	which magick || $(BrewInstall) imagemagick
-
-install-shellcheck:
-	which shellcheck || $(BrewInstall) shellcheck
-
-install-jq:
-	which jq || $(BrewInstall) jq
-
-# Required by Raycast OCR extension (Easy OCR)
-install-tesseract:
-	which tesseract || $(BrewInstall) tesseract
-	if [[ $(tesseract --list-langs | rg jpn | wc -l | sed 's/ //g') == 0 ]] ; then \
-		$(BrewInstall) tesseract-lang ; \
-	fi
-
-# Required by notify-at and notify-cascade
-install-alerter:
-	cd ~/bin && \
-	wget https://github.com/vjeantet/alerter/releases/download/1.0.0/alerter_v1.0.0_darwin_amd64.zip && \
-	unzip alerter_v1.0.0_darwin_amd64.zip && \
-	which alerter && \
-	rm-dust alerter_v1.0.0_darwin_amd64.zip
-
-install-grip:
-	which grip || $(BrewInstall) grip
-
-install-p7zip:
-	which 7z || $(BrewInstall) p7zip
-
-install-atool:
-	which aunpack || $(BrewInstall) atool
-
-install-atool-deps:
-	$(MAKE) install-p7zip
-
-install-mysql-client:
-	which mysql || $(BrewInstall) mysql-client
-
-install-git-lfs:
-	which git-lfs || $(BrewInstall) git-lfs
-
-install-coreutils: install-gnu-ls
-install-gls: install-gnu-ls
-install-gnu-ls:
-	which gls || $(BrewInstall) coreutils
-
-install-brew:
-	which brew || \
-		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
-		exec zsh
-
-install-tree-sitter:
-	brew info tree-sitte > /dev/null 2>&1 || $(BrewInstall) tree-sitter
-
-# https://junegunn.github.io/fzf/installation/
-install-fzf:
-	which fzf || $(BrewInstall) fzf
-
-install-cocoapods:
-	brew info cocoapods > /dev/null 2>&1 || $(BrewInstall) cocoapods
-
-# https://github.com/asmvik/skhd
-install-skhd:
-	which skhd || \
-  		$(BrewInstall) asmvik/formulae/skhd && \
-  		skhd --start-service && \
-		:
-
-install-gsed: install-gnu-sed
-install-gnu-sed:
-	which gsed || $(BrewInstall) gnu-sed
-
-endif # }}}
 ifeq ($(OS),WSL) # {{{
 
 install-wslu:
@@ -753,6 +348,99 @@ install-android-cmdline-tools:
 	rm commandlinetools-linux-11076708_latest.zip && \
 	mv Android ~ && \
 	:
+
+endif # }}}
+ifneq ($(filter $(OS),Darwin macos),) # {{{
+
+build-os-env:
+	 $(BrewInstall) \
+		font-forge \ # for making nerd-fonts for vim-devicons
+		cmigemo \ # vim-migemo
+		scalastyle \ # ale (vim)
+		graphviz plantuml \
+		jq \
+
+install-fd:
+	which fd || $(BrewInstall) fd
+
+install-rg:
+	which rg || $(BrewInstall) ripgrep
+
+install-ghostscript:
+	ls /opt/homebrew/Cellar/ghostscript &> /dev/null || $(BrewInstall) ghostscript
+
+install-imagemagick:
+	which magick || $(BrewInstall) imagemagick
+
+install-shellcheck:
+	which shellcheck || $(BrewInstall) shellcheck
+
+install-jq:
+	which jq || $(BrewInstall) jq
+
+# Required by Raycast OCR extension (Easy OCR)
+install-tesseract:
+	which tesseract || $(BrewInstall) tesseract
+	if [[ $(tesseract --list-langs | rg jpn | wc -l | sed 's/ //g') == 0 ]] ; then \
+		$(BrewInstall) tesseract-lang ; \
+	fi
+
+# Required by notify-at and notify-cascade
+install-alerter:
+	cd ~/bin && \
+	wget https://github.com/vjeantet/alerter/releases/download/1.0.0/alerter_v1.0.0_darwin_amd64.zip && \
+	unzip alerter_v1.0.0_darwin_amd64.zip && \
+	which alerter && \
+	rm-dust alerter_v1.0.0_darwin_amd64.zip
+
+install-grip:
+	which grip || $(BrewInstall) grip
+
+install-p7zip:
+	which 7z || $(BrewInstall) p7zip
+
+install-atool:
+	which aunpack || $(BrewInstall) atool
+
+install-atool-deps:
+	$(MAKE) install-p7zip
+
+install-mysql-client:
+	which mysql || $(BrewInstall) mysql-client
+
+install-git-lfs:
+	which git-lfs || $(BrewInstall) git-lfs
+
+install-coreutils: install-gnu-ls
+install-gls: install-gnu-ls
+install-gnu-ls:
+	which gls || $(BrewInstall) coreutils
+
+install-brew:
+	which brew || \
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
+		exec zsh
+
+install-tree-sitter:
+	brew info tree-sitte > /dev/null 2>&1 || $(BrewInstall) tree-sitter
+
+# https://junegunn.github.io/fzf/installation/
+install-fzf:
+	which fzf || $(BrewInstall) fzf
+
+install-cocoapods:
+	brew info cocoapods > /dev/null 2>&1 || $(BrewInstall) cocoapods
+
+# https://github.com/asmvik/skhd
+install-skhd:
+	which skhd || \
+  		$(BrewInstall) asmvik/formulae/skhd && \
+  		skhd --start-service && \
+		:
+
+install-gsed: install-gnu-sed
+install-gnu-sed:
+	which gsed || $(BrewInstall) gnu-sed
 
 endif # }}}
 
