@@ -9,7 +9,15 @@ source ~/.dotfiles/bash-toys/source-all.sh
 # and you can load .bashrc or another shell rc file, maybe
 #
 
-# Override existed name {{{
+# Common Utifity Functions {{{
+
+function eval-with-echo () {
+  echo "$*"
+  eval "$*"
+}
+
+# }}}
+# Override existed names {{{
 
 alias cp='cp -i'
 alias dd='dd status=progress'
@@ -34,16 +42,21 @@ i-have btop && alias top=btop
 
 alias-of rg 'rg --hidden'
 
-if i-have fdfind ; then
-  fd=fdfind
-elif i-have fd ; then
-  fd=fd
-fi
-if [[ $fd != '' ]] ; then
-  # shellcheck disable=SC2139
-  alias fd="$fd --hidden --ignore-case --no-ignore" # --hidden to include '.' prefixed files
-fi
-unset fd
+function aliases::define_fd () {
+  local fd
+
+  if i-have fdfind ; then
+    fd=fdfind
+  elif i-have fd ; then
+    fd=fd
+  fi
+
+  if [[ $fd != '' ]] ; then
+    # shellcheck disable=SC2139
+    alias fd="$fd --hidden --ignore-case --no-ignore" # --hidden to include '.' prefixed files
+  fi
+}
+aliases::define_fd
 
 if i-have dust ; then
   alias du=dust
@@ -67,14 +80,6 @@ alias-of mysql 'mysql --pager="less -r -S -n -i -F -X"'
 alias-of yay 'yay --color always'
 
 # }}}
-# Common Utifity Functions {{{
-
-function eval-with-echo () {
-  echo "$*"
-  eval "$*"
-}
-
-# }}}
 # Load ./aliases/** {{{
 
 source ~/.shells/aliases/build-tools.sh
@@ -87,22 +92,20 @@ source ~/.shells/aliases/neovim.sh
 
 if i-have claude ; then
   alias c=claude
-  alias cresume='claude --resume'
-  alias ccontinue='claude --continue'
-  alias cc=ccontinue
+  alias claude-resume='claude --resume'
+  alias claude-continue='claude --continue'
   alias claude-commit='claude "/git-commit"'
-  alias ccommit=claude-commit
+  alias git-commit-claude=claude-commit
 fi
 
 if i-have copilot ; then
   alias copilot='copilot --allow-tool write --allow-tool "shell(notify)" --allow-tool "shell(git log)" --allow-tool "shell(git show)" --allow-tool "shell(git diff)" --allow-tool "shell(git status)" --allow-tool "shell(git reflog)"'
   alias copilot-commit='copilot -p "~/.claude/commands/git-commit.md を読んで、git commitをして。" --allow-tool "shell(git:*)" --deny-tool "shell(git push)" --deny-tool "shell(git add)'
+  alias git-commit-copilot=copilot-commit
 fi
 
 # }}}
 # For programming languages eco systems  {{{
-
-alias cdn=cd-to-node-root
 
 # Load the specified version of Node.js or the latest version
 # Please also see ~/.zshrc_env
@@ -134,14 +137,6 @@ i-have luarocks && alias luarocks-local-5.1='luarocks --local --lua-version=5.1'
 # }}}
 # Others {{{
 
-# shellcheck disable=SC2139
-alias e="$EDITOR"
-
-alias la='ls -a --color=auto --group-directories-first'
-alias ll='ls -l --color=auto --group-directories-first'
-alias llh='ls -lh --color=auto --group-directories-first'
-alias lla='ls -la --color=auto --group-directories-first'
-
 alias date-simple='date "+%Y-%m-%d %H:%M"'
 alias date-today='date +"%Y-%m-%d"'
 alias today=date-today
@@ -152,11 +147,60 @@ alias now=date-now
 alias date-1min-after='date -v+1M +%H:%M'
 
 # shellcheck disable=SC2139
-alias mount4u.ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
-alias mount4u.vfat=mount4u.ntfs
-alias mount4u.ext2='sudo mount -o iocharset=utf8'
-alias mount4u.ext3=mount4u.ext2
-alias mount4u.ext4=mount4u.ext2
+alias mount-ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
+alias mount-vfat=mount-ntfs
+alias mount-ext2='sudo mount -o iocharset=utf8'
+alias mount-ext3=mount-ext2
+alias mount-ext4=mount-ext2
+
+function mount-smb2 () {
+  local ip=$1
+  local user=$2
+  local password=$3
+  local directory=$4
+  local mount_point=$5
+  mount_smbfs "//$user:$password@$ip/$directory" "$5"
+}
+
+alias tar-xz-create='tar -cvJf'
+alias tar-xz-extract='tar -xvJf'
+alias tar-xz-show-files='tar -tvJf'
+
+alias tar-gz-create='tar -cvzf'
+alias tar-gz-extract='tar -xvzf'
+alias tar-gz-show-files='tar -tvzf'
+
+alias tar-bz2-create='tar -cvjf'
+alias tar-bz2-extract='tar -xvjf'
+alias tar-bz2-show-files='tar -tvjf'
+
+i-have unzip && alias unzip-cp932='unzip -O cp932'
+
+if i-have jq ; then
+  function url-encode () {
+    echo "\"$1\"" | jq -r @uri
+  }
+  alias urlencode=url-encode
+fi
+
+if i-have luap ; then
+  alias lua-repl=luap
+elif i-have lua ; then
+  alias lua-repl=lua
+fi
+
+alias notify-at-cancel-all='notify-at -l ; notify-at -l | drop 2 | cut -d" " -f1 | xargs -I {} notify-at -c {} ; notify-at -l'
+
+# }}}
+# Other shourthands {{{
+
+# shellcheck disable=SC2139
+alias e="$EDITOR"
+
+alias la='ls -a --color=auto --group-directories-first'
+alias ll='ls -l --color=auto --group-directories-first'
+alias llh='ls -lh --color=auto --group-directories-first'
+alias lla='ls -la --color=auto --group-directories-first'
 
 alias ei=exit
 alias t=vterminal
@@ -177,23 +221,9 @@ function aliases::define_cd_to_parents () {
 aliases::define_cd_to_parents
 
 i-have tmux && alias ta='tmux attach'
-i-have unzip && alias unzip-cp932='unzip -O cp932'
 i-have krita && alias kra=krita
 
-if i-have jq ; then
-  function url-encode () {
-    echo "\"$1\"" | jq -r @uri
-  }
-  alias urlencode=url-encode
-fi
-
-if i-have luap ; then
-  alias lua-repl=luap
-elif i-have lua ; then
-  alias lua-repl=lua
-fi
-
-alias notify-at-cancel-all='notify-at -l ; notify-at -l | drop 2 | cut -d" " -f1 | xargs -I {} notify-at -c {} ; notify-at -l'
+alias cdn=cd-to-node-root
 
 # }}}
 
