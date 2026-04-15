@@ -25,14 +25,48 @@ When you read this file successfully,
 
 ## Reading AGENTS.md
 
-If any `AGENTS.md` files are found, read all of them from the current directory up to the project root:
+### At startup
 
-- `./AGENTS.md` (in current directory)
-- `./AGENTS.md` (in directories containing `package.json`)
-- `./AGENTS.md` (in each subdirectory from current directory to project root)
+Read only the `AGENTS.md` in the project root (current working directory) if it exists.
+Do **not** pre-load `AGENTS.md` files from subdirectories at this point.
+**Say 'AGENTS.md loaded!' after reading it.**
 
-Read all available `AGENTS.md` files to understand project-specific agent configurations and instructions.
-**Also, say 'AGENTS.md loaded!' after reading them.**
+### When first accessing a file in a subdirectory
+
+The first time you read or edit a file inside a subdirectory, check whether an `AGENTS.md` exists **directly** in that immediate subdirectory (one level up from the file).
+If it exists and has not been loaded yet, read it before proceeding.
+
+Rules:
+
+- "First access" means the first time in the session you touch any file inside that directory
+- Only the `AGENTS.md` of the **direct parent directory** of the file is loaded — deeper nested `AGENTS.md` files are not loaded at this point
+- If the directory has no `AGENTS.md`, nothing is loaded (do not search parent directories)
+- Each directory's `AGENTS.md` is loaded at most once per session
+
+### Example
+
+Given this structure:
+
+```
+root/
+├── AGENTS.md
+├── foo/
+│   ├── AGENTS.md
+│   ├── bar.ts
+│   └── poyo/
+│       ├── AGENTS.md
+│       └── poyo.ts
+├── hoge/
+│   ├── AGENTS.md
+│   └── piyo.ts
+└── fuga/
+    └── huga.ts
+```
+
+1. AI starts at `root/` → loads `root/AGENTS.md` only
+2. First access to `foo/bar.ts` → loads `foo/AGENTS.md` (`foo/poyo/AGENTS.md` is not loaded)
+3. First access to `fuga/huga.ts` → no `fuga/AGENTS.md` exists, nothing is loaded
+4. `hoge/` has never been accessed → `hoge/AGENTS.md` is not loaded
 
 ## Running CLI
 
