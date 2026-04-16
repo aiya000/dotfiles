@@ -162,15 +162,51 @@ function mount-smb2 () {
   mount_smbfs "//$user:$password@$ip/$directory" "$5"
 }
 
-alias tar-xz-create='tar -cvJf'
+function tar-xz-create () {
+  : '
+  Creates a .tar.xz archive.
+  - Single argument:    tar-xz-create <dir>        → <dir>.tar.xz
+  - Multiple arguments: tar-xz-create <output> ... → runs tar -cvJf as-is
+  '
+
+  if [[ $# -eq 1 ]] ; then
+    tar -cvJf "${1%/}.tar.xz" "$1"
+  else
+    tar -cvJf "$@"
+  fi
+}
 alias tar-xz-extract='tar -xvJf'
 alias tar-xz-show-files='tar -tvJf'
 
-alias tar-gz-create='tar -cvzf'
+function tar-gz-create () {
+  : '
+  Creates a .tar.gz archive.
+  - Single argument:    tar-gz-create <dir>        → <dir>.tar.gz
+  - Multiple arguments: tar-gz-create <output> ... → runs tar -cvzf as-is
+  '
+
+  if [[ $# -eq 1 ]] ; then
+    tar -cvzf "${1%/}.tar.gz" "$1"
+  else
+    tar -cvzf "$@"
+  fi
+}
 alias tar-gz-extract='tar -xvzf'
 alias tar-gz-show-files='tar -tvzf'
 
-alias tar-bz2-create='tar -cvjf'
+function tar-bz2-create () {
+  : '
+  Creates a .tar.bz2 archive.
+  - Single argument:    tar-bz2-create <dir>        → <dir>.tar.bz2
+  - Multiple arguments: tar-bz2-create <output> ... → runs tar -cvjf as-is
+  '
+
+  if [[ $# -eq 1 ]] ; then
+    tar -cvjf "${1%/}.tar.bz2" "$1"
+  else
+    tar -cvjf "$@"
+  fi
+}
 alias tar-bz2-extract='tar -xvjf'
 alias tar-bz2-show-files='tar -tvjf'
 
