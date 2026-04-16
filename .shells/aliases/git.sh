@@ -330,7 +330,7 @@ function cd-to-git-common-root () {
 }
 
 alias cdg=cd-to-git-root
-alias cdgc=cd-to-git-common-root
+alias cdc=cd-to-git-common-root
 
 # }}}
 ## GitHub {{{
