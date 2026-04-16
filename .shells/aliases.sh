@@ -135,32 +135,23 @@ function dotfiles::find_nodejs_to_load () {
 i-have luarocks && alias luarocks-local-5.1='luarocks --local --lua-version=5.1'
 
 # }}}
-# Others {{{
+# Archive file utilities {{{
 
-alias date-simple='date "+%Y-%m-%d %H:%M"'
-alias date-today='date +"%Y-%m-%d"'
-alias today=date-today
-alias date-tomorrow='date -v+1d +"%Y-%m-%d"'
-alias tomorrow=date-tomorrow
-alias date-now='date +%H:%M'
-alias now=date-now
-alias date-1min-after='date -v+1M +%H:%M'
+function zip-create () {
+  : '
+  Creates a .zip archive.
+  - Single argument:    zip-create <dir>        → <dir>.zip
+  - Multiple arguments: zip-create <output> ... → runs zip -r as-is
+  '
 
-# shellcheck disable=SC2139
-alias mount-ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
-alias mount-vfat=mount-ntfs
-alias mount-ext2='sudo mount -o iocharset=utf8'
-alias mount-ext3=mount-ext2
-alias mount-ext4=mount-ext2
-
-function mount-smb2 () {
-  local ip=$1
-  local user=$2
-  local password=$3
-  local directory=$4
-  local mount_point=$5
-  mount_smbfs "//$user:$password@$ip/$directory" "$5"
+  if [[ $# -eq 1 ]] ; then
+    zip -r "${1%/}.zip" "$1"
+  else
+    zip -r "$@"
+  fi
 }
+alias zip-extract='unzip'
+alias zip-show-files='unzip -l'
 
 function tar-xz-create () {
   : '
@@ -211,6 +202,35 @@ alias tar-bz2-extract='tar -xvjf'
 alias tar-bz2-show-files='tar -tvjf'
 
 i-have unzip && alias unzip-cp932='unzip -O cp932'
+
+
+# }}}
+# Others {{{
+
+alias date-simple='date "+%Y-%m-%d %H:%M"'
+alias date-today='date +"%Y-%m-%d"'
+alias today=date-today
+alias date-tomorrow='date -v+1d +"%Y-%m-%d"'
+alias tomorrow=date-tomorrow
+alias date-now='date +%H:%M'
+alias now=date-now
+alias date-1min-after='date -v+1M +%H:%M'
+
+# shellcheck disable=SC2139
+alias mount-ntfs="sudo mount -o user=$(whoami),uid=$(id -u),gid=$(id -g),iocharset=utf8"
+alias mount-vfat=mount-ntfs
+alias mount-ext2='sudo mount -o iocharset=utf8'
+alias mount-ext3=mount-ext2
+alias mount-ext4=mount-ext2
+
+function mount-smb2 () {
+  local ip=$1
+  local user=$2
+  local password=$3
+  local directory=$4
+  local mount_point=$5
+  mount_smbfs "//$user:$password@$ip/$directory" "$5"
+}
 
 if i-have jq ; then
   function url-encode () {
