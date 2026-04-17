@@ -118,7 +118,8 @@
 #     "iTerm2"
 # ]
 
-# Bash-like keymaps but no-remap when iTerm2
+# Bash-like keymaps (excluding iTerm2) {{{
+
 ctrl - h [
     "iTerm2" ~
     * : skhd -k backspace
@@ -147,11 +148,22 @@ ctrl - n [
     "iTerm2" ~
     * : skhd -k down
 ]
+# }}}
+# Combine with my corne keyboard layout {{{
 
-# Combine with my corne keyboard layout
 shift + cmd - s : skhd -k "shift + cmd - 4" # Capture
-ctrl + cmd - p : skhd -k "shift + cmd - 0x1E" # Go to an above tab with Web Browsers -- 0x1E = [
-ctrl + cmd - n : skhd -k "shift + cmd - 0x2A" # Go to an below tab with Web Browsers -- 0x2A = ]
+# Go to above tab in Web Browsers -- 0x1E = [ on JIS layout
+ctrl + cmd - p [
+    "Google Chrome" : skhd -k "shift + cmd - 0x1E"
+    "Safari"        : skhd -k "shift + cmd - 0x1E"
+    * ~
+]
+# Go to below tab in Web Browsers -- 0x2A = ] on JIS layout
+ctrl + cmd - n [
+    "Google Chrome" : skhd -k "shift + cmd - 0x2A"
+    "Safari"        : skhd -k "shift + cmd - 0x2A"
+    * ~
+]
 
 # Finder: Go to a folder
 cmd - l [
@@ -159,5 +171,9 @@ cmd - l [
     * ~
 ]
 
+# }}}
+
 # cmd - x ; test
 ctrl + cmd - r : skhd --reload && ~/.dotfiles/bash-toys/bin/notify skhd 'skhdrc reloaded' || ~/.dotfiles/bash-toys/bin/notify skhd 'skhdrc failed to reload'
+
+# vim:foldmethod=marker
