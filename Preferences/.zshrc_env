@@ -22,6 +22,10 @@ if ! i-have code && i-have Code.exe ; then
   alias code=Code.exe
 fi
 
+function make () {
+    OS=WSL command make -- "$@"
+}
+
 # To enable npm and GitHub Copilot (copilot.vim)
 load-my-env nvm
 if [[ $VIM_TERMINAL == '' && $NEOVIM_TERMINAL == '' ]] ; then
