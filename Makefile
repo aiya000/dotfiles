@@ -442,6 +442,10 @@ install-gsed: install-gnu-sed
 install-gnu-sed:
 	which gsed || $(BrewInstall) gnu-sed
 
+# https://docs.ntfy.sh/install/#macos
+install-ntfy:
+	which ntfy || $(BrewInstall) ntfy
+
 endif # }}}
 
 download-nerd-fonts:
