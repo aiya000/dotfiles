@@ -149,11 +149,9 @@ ctrl - n [
 ]
 
 # Combine with my corne keyboard layout
-ctrl + cmd - s [
-  * : skhd -k "shift + cmd - 4"
-]
-ctrl + cmd - p : skhd -k "shift + cmd - [" # Show above tab with with Web Browser
-ctrl + cmd - n : skhd -k "shift + cmd - ]" # Show below tab with with Web Browser
+shift + cmd - s : skhd -k "shift + cmd - 4" # Capture
+ctrl + cmd - p : skhd -k "shift + cmd - 0x1E" # Go to an above tab with Web Browsers -- 0x1E = [
+ctrl + cmd - n : skhd -k "shift + cmd - 0x2A" # Go to an below tab with Web Browsers -- 0x2A = ]
 
 # Finder: Go to a folder
 cmd - l [
