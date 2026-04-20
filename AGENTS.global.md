@@ -25,6 +25,11 @@ When you read this file successfully,
 
 ## Reading AGENTS.md
 
+If you natively support AGENTS.md, you MUST skip this section entirely.
+Or ignore the rules written in this section so that your native behavior regarding AGENTS.md remains unchanged.
+
+This section is for AI agents that do NOT natively support `AGENTS.md`.
+
 ### At startup
 
 Read only the `AGENTS.md` in the project root (current working directory) if it exists.
