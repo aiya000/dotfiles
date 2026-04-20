@@ -1,4 +1,3 @@
-local c = require('chotto')
 local docker = require('docker')
 local git = require('git')
 local list = require('utils.list')
@@ -9,18 +8,20 @@ local telescope = require('telescope.builtin')
 
 ---@module 'chotto'
 
----@type chotto.Schema<Nargs>
-local nargs_schema = c.optional(c.union({
-  c.literal('*'),
-  c.literal('+'),
-  c.literal('?'),
-  c.literal(1), -- `'1'` of string throws error! fxxx
-}))
-
 ---@param cmd_name string
 ---@param func string | function --実行されるVimコマンド、もしくは処理
 ---@param options? vim.api.keyset.user_command
 local function create_command(cmd_name, func, options)
+  local c = require('chotto')
+
+  ---@type chotto.Schema<Nargs>
+  local nargs_schema = c.optional(c.union({
+    c.literal('*'),
+    c.literal('+'),
+    c.literal('?'),
+    c.literal(1), -- `'1'` of string throws error! fxxx
+  }))
+
   local nargs = nargs_schema:parse((options or {}).nargs) ---@type Nargs
   options = vim.tbl_extend('keep', options or {}, {
     bar = true,
@@ -212,6 +213,11 @@ end, {
 
 -- }}}
 -- Others {{{
+
+create_command('LuarocksRefreshCache', function()
+  require('luarocks').refresh_cache()
+  vim.notify('luarocks path cache refreshed', vim.log.levels.INFO)
+end, { desc = 'Refresh luarocks path cache (run after installing/removing luarocks packages)' })
 
 create_command('CClear', function()
   vim.fn.setqflist({})

@@ -2,7 +2,6 @@
 ---関数がNeovimに関する事柄を意図しているか、もしくは`vim.*`に依存している場合は、こっち。
 ---それ以外の汎用的な関数は`./utils/functions.lua`に。
 
-local c = require('chotto')
 local fn = require('utils.functions')
 local list = require('utils.list')
 
@@ -1077,14 +1076,16 @@ function M.close_quickfix_if_open()
   return false
 end
 
----`vim.lsp.config[name]`のスキーマ
-M.lsp_config_schema = c.object({
-  cmd = c.array(c.string()),
-})
-
 ---@param config_key string -- LSPのconfigキー ('lua_ls', 'ts_ls' など)
 ---@return vim.lsp.Client[]
 local function get_clients_for_config_key(config_key)
+  local c = require('chotto')
+
+  ---`vim.lsp.config[name]`のスキーマ
+  M.lsp_config_schema = c.object({
+    cmd = c.array(c.string()),
+  })
+
   local clients = vim.lsp.get_clients({ name = config_key })
   if #clients > 0 then
     return clients

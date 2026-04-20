@@ -1,5 +1,4 @@
 local fn = require('utils.functions')
-local c = require('chotto')
 
 local M = {}
 
@@ -30,6 +29,8 @@ end
 ---@param stderr string
 ---@return string --Linux/Unix形式の、git-rootのパス
 local function parse_git_root(stdout, stderr)
+  local c = require('chotto')
+
   if not c.string():safe_parse(stdout) or not c.string():safe_parse(stderr) then
     error('stdout and stderr must be string: ' .. fn.to_pretty_string({ stdout = stdout, stderr = stderr }))
   end

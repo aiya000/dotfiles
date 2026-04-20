@@ -657,6 +657,7 @@ return {
   {
     'cohama/lexima.vim',
     enabled = not InitLua.recording_mode,
+    event = 'InsertEnter',
     config = function()
       vim.fn['lexima#add_rule']({ char = '<', input_after = '>' })
       vim.fn['lexima#add_rule']({ char = '「', input_after = '」' })

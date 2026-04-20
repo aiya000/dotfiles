@@ -1,5 +1,3 @@
-require('luarocks')
-
 local nvim = require('nvim')
 local fn = require('utils.functions')
 local git = require('git')
@@ -193,10 +191,13 @@ end
 -- }}}
 -- Prepare backup directories {{{
 
-nvim.make_directory_if_missing(InitLua.backupdir)
-nvim.make_directory_if_missing(InitLua.directory)
-nvim.make_directory_if_missing(InitLua.undodir)
-nvim.make_directory_if_missing(InitLua.sessiondir)
+-- For performance, defer this
+vim.defer_fn(function()
+  nvim.make_directory_if_missing(InitLua.backupdir)
+  nvim.make_directory_if_missing(InitLua.directory)
+  nvim.make_directory_if_missing(InitLua.undodir)
+  nvim.make_directory_if_missing(InitLua.sessiondir)
+end, 100)
 
 -- }}}
 -- Read local scripts {{{
@@ -223,6 +224,7 @@ end
 
 -- }}}
 require('lazy-nvim-config')
+require('luarocks') -- When you add LuaRocks packages, need to run `:LuarocksRefreshCache`
 require('autocmds')
 require('plugins')
 require('lspconfig')
