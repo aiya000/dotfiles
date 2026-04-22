@@ -20,6 +20,16 @@ return list.concat({
   ),
 
   s(
+    'notify_cascade_schedule_tomorrow',
+    fmt("notify-cascade --ntfy --local 'tomorrow {time_begin}' '{title}' '{time_begin_} - {time_end}' 09:00 3h 1h 30m 15m 5m 1m", {
+      time_begin = i(1, 'time_begin'),
+      time_begin_ = rep(1),
+      time_end = i(2, 'time_end'),
+      title = i(3, 'title'),
+    })
+  ),
+
+  s(
     'notify_cascade_schedule_someday',
     fmt(
       "notify-cascade --ntfy --local '{date} {time_begin}' '{title}' '{time_begin_} - {time_end}' '{date_} 09:00' 3h 1h 30m 15m 5m 1m",
