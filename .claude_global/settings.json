@@ -13,6 +13,7 @@
       "Bash(git diff:*)",
       "Bash(git status:*)",
       "Bash(git reflog:*)",
+      "Bash(git commit:*)",
       "Bash(gh issue list:*)",
       "Bash(gh issue view:*)",
       "Bash(gh issue create:*)",
@@ -35,6 +36,16 @@
       "Bash(find:*)",
       "Read(.env.*)"
     ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": false,
+    "filesystem": {
+      "allowWrite": [
+        "// `./bash-toys`などのsubmoduleでgit-commitを許可する",
+        "~/.dotfiles/.git/"
+      ]
+    }
   },
   "statusLine": {
     "type": "command",
