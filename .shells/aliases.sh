@@ -1,13 +1,12 @@
 #!/bin/bash
 
+# Unified aliases and functions for any shell environments
+
+# shellcheck disable=SC1090
+source ~/.shells/premise.sh
+
 # shellcheck disable=SC1090
 source ~/.dotfiles/bash-toys/source-all.sh
-
-#
-# This file define the aliases and functions
-# You can load this from .zshrc
-# and you can load .bashrc or another shell rc file, maybe
-#
 
 # Common Utifity Functions {{{
 

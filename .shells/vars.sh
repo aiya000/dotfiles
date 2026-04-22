@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# Unified configurations for any shell environment
+# Unified configurations for any shell environments
+
+# shellcheck disable=SC1090
+source ~/.shells/premise.sh
 
 # Neovim
 export EDITOR=nvim
@@ -26,6 +29,8 @@ export PYENV_ROOT=$HOME/.pyenv
 
 export BASH_TOYS_INTERACTIVE_FILTER=peco-reverse  # To display the most recently started process nearby with kill-list command
 export BASH_TOYS_RESTORE_KEEP=1
+export BASH_TOYS_TMP_BASE_DIR="$HOME/tmp/ntfy"
+dotshells::define_ntfy_serving_url
 
 export DOTFILES_BATCAT_DEFAULT_OPTIONS=--number
 export DOTFILES_ZSHRC_AUTO_LOADED_ENVS=()
