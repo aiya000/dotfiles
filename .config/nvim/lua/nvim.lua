@@ -798,12 +798,18 @@ function M.toggle_copilot_cli()
       ]]):gsub('\r?\n', ' '),
       hidden = true,
       direction = 'float',
-      on_open = function(_)
+      on_open = function(t)
         vim.keymap.set('t', '<C-p>', '<Up>', { buffer = true })
         vim.keymap.set('t', '<C-n>', '<Down>', { buffer = true })
 
-        -- Enter insert mode when the terminal opens
-        vim.cmd('startinsert!')
+        vim.api.nvim_create_autocmd('BufEnter', {
+          buffer = t.bufnr,
+          callback = function()
+            vim.schedule(function()
+              vim.cmd('startinsert!')
+            end)
+          end,
+        })
       end,
     })
   end
@@ -817,9 +823,15 @@ function M.toggle_gemini_cli()
       cmd = 'gemini',
       hidden = true,
       direction = 'float',
-      on_open = function(_)
-        -- Enter insert mode when the terminal opens
-        vim.cmd('startinsert!')
+      on_open = function(t)
+        vim.api.nvim_create_autocmd('BufEnter', {
+          buffer = t.bufnr,
+          callback = function()
+            vim.schedule(function()
+              vim.cmd('startinsert!')
+            end)
+          end,
+        })
       end,
     })
   end
