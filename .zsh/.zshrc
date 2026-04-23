@@ -6,8 +6,9 @@
 # The order of loading
 # 1. ~/.zsh/.zprofile
 # 2. ~/.zsh/.zshrc
-# 3. ~/.zshrc_env
-# 4. ~/.zshrc_private
+# 3. ~/.zshrc_private_pre
+# 4. ~/.zshrc_env
+# 5. ~/.zshrc_private
 
 ###################
 # Check .zprofile #
@@ -15,6 +16,10 @@
 # The counterplan for if .zprofile never loaded
 if [[ -z $(alias | grep zsh_pr_loaded) ]] ; then
   source $ZDOTDIR/.zprofile
+fi
+
+if [[ -f ~/.zshrc_private_pre ]] ; then
+  source ~/.zshrc_private_pre
 fi
 
 source ~/.shells/vars.sh
