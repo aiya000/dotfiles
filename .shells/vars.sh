@@ -31,6 +31,7 @@ export BASH_TOYS_INTERACTIVE_FILTER=peco-reverse  # To display the most recently
 export BASH_TOYS_RESTORE_KEEP=1
 export BASH_TOYS_TMP_BASE_DIR="$HOME/tmp/ntfy"
 dotshells::define_ntfy_serving_url
+# dotshells::define_ntfy_server_base_url
 
 export DOTFILES_BATCAT_DEFAULT_OPTIONS=--number
 export DOTFILES_ZSHRC_AUTO_LOADED_ENVS=()
