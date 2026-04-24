@@ -31,14 +31,16 @@ return {
   keys = {
     {
       'g;',
+      desc = 'Flash Treesitter',
       mode = { 'n', 'x', 'o' },
       function()
         require('flash').treesitter()
       end,
-      desc = 'Flash Treesitter',
     },
+
     {
       ';;',
+      desc = 'Flash',
       mode = { 'n', 'x', 'o' },
       function()
         require('flash').jump({
@@ -48,13 +50,13 @@ return {
           },
         })
       end,
-      desc = 'Flash',
     },
+
     {
-      'gl', -- Line jump
+      'gl',
+      desc = 'Flash Line Jump',
       mode = { 'n', 'x', 'o' },
       function()
-        local col = vim.fn.col('.')
         require('flash').jump({
           search = { mode = 'search', max_length = 0 },
           label = {
@@ -63,18 +65,15 @@ return {
             min_pattern_length = 0,
             style = 'overlay',
           },
-          pattern = '\\%' .. col .. 'c', -- Show labels on current column position
+          pattern = '^', -- Show labels at the beginning of every line
           labels = table.concat(list.char_range('a', 'z'), ''),
         })
-        vim.schedule(function()
-          vim.fn.cursor(vim.fn.line('.'), col)
-        end)
       end,
-      desc = 'Flash Line Jump',
     },
-    -- Interactive fmap selector
+
     {
       '<leader>f',
+      desc = 'Interactive fmap selector with flash.nvim',
       mode = { 'n', 'x', 'o' },
       function()
         local fmap_chars = {
@@ -115,7 +114,6 @@ return {
           vim.api.nvim_echo({ { ('Canceled (stroke = %s)'):format(stroke), 'ErrorMsg' } }, false, {})
         end
       end,
-      desc = 'Interactive fmap selector with flash.nvim',
     },
   },
 }
