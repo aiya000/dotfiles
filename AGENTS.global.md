@@ -90,9 +90,13 @@ NOTE:
 This is about using alternative commands in your responses.
 You can use `rm`, `find`, and `grep` when writing shell scripts.
 
+### **Prohibited command patterns**
+
+- **NEVER use `find -exec` or `fd --exec`** -- Can accidentally execute commands on unintended files; use a loop or `xargs` instead
+
 ## **Deleting Files**
 
-**Don't running programming interfaces for deleting files**. Like:
+**Never use interpreter invocations to delete files**. Like:
 
 ```bash
 python3 -c "
@@ -101,6 +105,14 @@ python3 -c "
 ```
 
 Use `rm-dust` instead, if really want to delete some files.
+
+## **Using Interpreter Invocations**
+
+When running code via language interpreters (e.g. `python3 -c`, `node -e`, `ruby -e`):
+
+- **NEVER write, modify, or delete files outside the project root**
+- **Always explain what the code will do before running it**
+    - Whether to ask for confirmation follows the normal flow (e.g. sandbox settings, `allow` rules)
 
 ## 'Project Root' <a id="def-word-project-root">
 
