@@ -349,6 +349,22 @@ install-android-cmdline-tools:
 	mv Android ~ && \
 	:
 
+# For claude code /sandbox
+install-bubblewrap:
+	which bwrap || $(AptInstall) bubblewrap
+
+# For claude code /sandbox
+install-socat:
+	which socat || $(AptInstall) socat
+
+install-deps-for-claude-code-sandbox:
+	$(MAKE) install-bubblewrap
+	$(MAKE) install-socat
+
+install-seccomp-filter: install-anthropic-ai-sandbox-runtime
+install-anthropic-ai-sandbox-runtime:
+	$(NPMInstall) @anthropic-ai/sandbox-runtime
+
 endif # }}}
 ifneq ($(filter $(OS),Darwin macos),) # {{{
 
