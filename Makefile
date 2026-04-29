@@ -365,6 +365,9 @@ install-seccomp-filter: install-anthropic-ai-sandbox-runtime
 install-anthropic-ai-sandbox-runtime:
 	$(NPMInstall) @anthropic-ai/sandbox-runtime
 
+install-jq:
+	which jq || $(AptInstall) jq
+
 endif # }}}
 ifneq ($(filter $(OS),Darwin macos),) # {{{
 
