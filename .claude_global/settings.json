@@ -43,7 +43,9 @@
     "filesystem": {
       "allowWrite": [
         "// `./bash-toys`などのsubmoduleでgit-commitを許可する",
-        "~/.dotfiles/.git/"
+        "~/.dotfiles/.git/",
+        "// `/save-memory`用",
+        "~/.dotfiles/.private/CLAUDE-MEMORY/"
       ]
     }
   },
@@ -52,6 +54,7 @@
     "command": "ccstatusline",
     "padding": 0
   },
+  "editorMode": "vim",
   "hooks": {
     "Stop": [
       {
