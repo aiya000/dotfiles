@@ -23,10 +23,13 @@ When you read this file successfully,
 **YOU MUST SAY**
 **'Global Custom Instructions loaded!'**
 
-Then, if you are in a git repository, check whether `git config user.name` and `git config user.email` are set.
+Then, if you are in a git repository, check below.
 
-- Result for `git config user.name`: !`git config user.name`
-- Result for `git config user.email`: !`git config user.email`
+Result for `git config user.name 2>&1 && echo 'user.name is set' || echo 'user.name is NOT set'`:
+!`git config user.name 2>&1 && echo 'user.name is set' || echo 'user.name is NOT set'`
+
+Result for `git config user.email 2>&1 && echo 'user.name is set' || echo 'user.name is NOT set'`:
+!`git config user.email 2>&1 && echo 'user.name is set' || echo 'user.name is NOT set'`
 
 If either is missing, **stop and ask the user to configure git identity before doing any work**.
 
