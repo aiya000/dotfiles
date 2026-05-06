@@ -24,6 +24,10 @@ When you read this file successfully,
 **'Global Custom Instructions loaded!'**
 
 Then, if you are in a git repository, check whether `git config user.name` and `git config user.email` are set.
+
+- Result for `git config user.name`: !`git config user.name`
+- Result for `git config user.email`: !`git config user.email`
+
 If either is missing, **stop and ask the user to configure git identity before doing any work**.
 
 ## Reading AGENTS.md
