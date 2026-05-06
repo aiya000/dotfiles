@@ -14,6 +14,7 @@
       "Bash(git status:*)",
       "Bash(git reflog:*)",
       "Bash(git commit:*)",
+      "Bash(git add:*)",
       "Bash(gh issue list:*)",
       "Bash(gh issue view:*)",
       "Bash(gh issue create:*)",
@@ -26,9 +27,10 @@
       "Bash(rg:*)",
       "Bash(notify:*)",
       "Read(~/.config/nvim)",
-      "Skill(/read-agents-md)",
-      "Skill(/suggest-alternative-commands)",
-      "Skill(/save-memory)"
+      "Skill(read-agents-md)",
+      "Skill(suggest-alternative-commands)",
+      "Skill(save-memory)",
+      "WebFetch(domain:api.github.com)"
     ],
     "deny": [
       "Bash(git push:*)",
