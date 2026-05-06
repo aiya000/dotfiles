@@ -104,7 +104,7 @@ if i-have copilot ; then
 fi
 
 # }}}
-# For programming languages eco systems  {{{
+# For programming languages eco systems {{{
 
 # Load the specified version of Node.js or the latest version
 # Please also see ~/.zshrc_env
@@ -130,6 +130,11 @@ function dotfiles::find_nodejs_to_load () {
     return 1
   fi
 }
+
+if i-have npm ; then
+  alias npm-install='npm install --global --user'
+  alias npm-uninstall='npm uninstall --global --user'
+fi
 
 i-have luarocks && alias luarocks-local-5.1='luarocks --local --lua-version=5.1'
 
