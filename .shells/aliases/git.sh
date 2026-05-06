@@ -332,6 +332,10 @@ function cd-to-git-common-root () {
 alias cdg=cd-to-git-root
 alias cdc=cd-to-git-common-root
 
+alias grm='git rm'
+alias grm-cached='git rm --cached'
+alias grmc=grm-cached
+
 # }}}
 ## GitHub {{{
 
