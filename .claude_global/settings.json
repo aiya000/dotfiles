@@ -14,7 +14,6 @@
       "Bash(git status:*)",
       "Bash(git reflog:*)",
       "Bash(git commit:*)",
-      "Bash(git add:*)",
       "Bash(gh issue list:*)",
       "Bash(gh issue view:*)",
       "Bash(gh issue create:*)",
