@@ -3,39 +3,39 @@
   "lines": [
     [
       {
-        "id": "a0b3fe8c-9698-4b93-b67a-5757fe130c28",
+        "id": "1",
         "type": "session-usage"
+      },
+      {
+        "id": "2",
+        "type": "separator"
+      },
+      {
+        "id": "3",
+        "type": "reset-timer"
       },
       {
         "id": "4",
         "type": "separator"
       },
       {
-        "id": "35a34f89-cc4a-423d-a2c3-175b2e414d4e",
-        "type": "reset-timer"
-      },
-      {
-        "id": "990c3259-2d04-45ab-b2b7-f3c6f6aefee6",
-        "type": "separator"
-      },
-      {
-        "id": "a54de1ac-33ad-42eb-9e96-83f8f977d9a4",
+        "id": "5",
         "type": "weekly-usage"
       },
       {
-        "id": "ce3a2d1c-225b-4e48-99b3-4c13898ab340",
+        "id": "6",
         "type": "separator"
       },
       {
-        "id": "5daac33b-3077-4e38-8252-2f2ef15e5229",
+        "id": "7",
         "type": "weekly-reset-timer"
       },
       {
-        "id": "83bfb75b-a6bc-4710-b2b9-bb4ccacf02c2",
+        "id": "8",
         "type": "separator"
       },
       {
-        "id": "6dfb99e3-9027-4ed0-ab1d-012ce61d7a03",
+        "id": "9",
         "type": "current-working-dir"
       }
     ],
