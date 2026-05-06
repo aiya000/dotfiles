@@ -23,6 +23,9 @@ When you read this file successfully,
 **YOU MUST SAY**
 **'Global Custom Instructions loaded!'**
 
+Then, if you are in a git repository, check whether `git config user.name` and `git config user.email` are set.
+If either is missing, **stop and ask the user to configure git identity before doing any work**.
+
 ## Reading AGENTS.md
 
 If you natively support AGENTS.md, you MUST skip this section entirely.
@@ -93,6 +96,8 @@ You can use `rm`, `find`, and `grep` when writing shell scripts.
 ### **Prohibited command patterns**
 
 - **NEVER use `find -exec` or `fd --exec`** -- Can accidentally execute commands on unintended files; use a loop or `xargs` instead
+- **Avoid `git -C <path>`** -- Prefer running git from the correct working directory; use only when necessary (e.g. submodule operations)
+- **NEVER use `git -c user.name=...` or `git -c user.email=...`** -- Never inject identity via command-line flags; if identity is missing, ask the user to configure it via `git config`
 
 ## **Deleting Files**
 
