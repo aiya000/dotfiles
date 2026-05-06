@@ -144,6 +144,51 @@ However, please be aware of the following special environment.
 
 I don't define any instructions here because I already instructed you in `~/.dotfiles/.claude_global/settings.json`.
 
+#### Git on Windows Filesystem
+
+When the working directory is on a Windows filesystem, WSL's native `git` may fail with errors.
+Avoid this by using the appropriate git binary.
+
+##### 1. Check if you are on a Windows filesystem
+
+If the output of the following command starts with a Windows drive letter (`C:`, `D:`, etc.), you are on a Windows filesystem:
+
+Result for `git rev-parse --show-toplevel`: !`git rev-parse --show-toplevel`
+
+Example: `C:/Users/UserName/Repository/ProjectName`
+
+If it shows a normal UNIX path (e.g. `/home/...`), skip the rest of this 'Git on Windows Filesystem' section.
+
+##### 2. Confirm the current directory is under `/mnt/c/`
+
+The current working directory should start with `/mnt/c/` or a similar WSL mount path.
+If it does not, notify the user.
+
+Result for `pwd`: !`pwd`
+
+##### 3. Check where the git command is from
+
+Run `which git` to find the git binary location:
+
+Result for `which git`: !`which git`
+
+If the location is **not** in a user-placed path like `~/bin/git`, skip this subsection.
+
+If it is in a user-placed path, check whether it looks like a WSL-to-Windows filesystem bridge script:
+
+Result for `ls -l $(which git)`: !`ls -l $(which git)`
+
+```bash
+# Example of a WSL-to-Windows filesystem bridge script
+lrwxrwxrwx 1 aiya000 aiya000 80 Jan 25 12:17 /home/aiya000/bin/git -> /home/aiya000/Repository/git_bridge_wsl2_and_windows/git_bridge_wsl2_and_windows
+```
+
+If it does **not** appear to be such a bridge script, skip this subsection.
+
+##### Last: If no bridge and some method for windows are found
+
+If no suitable, notify the user and explain what they need to set up.
+
 ### Read this section **if you are copilot-cli**
 
 **Ignore this section if you are not copilot-cli.**
