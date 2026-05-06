@@ -1,6 +1,6 @@
 {
+  "defaultMode": "acceptEdits",
   "permissions": {
-    "defaultMode": "acceptEdits",
     "allow": [
       "Bash(cp:*)",
       "Bash(ls:*)",
@@ -37,6 +37,18 @@
       "Read(.env.*)"
     ]
   },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "notify 'Claude Code' 'Claude Code stopped' {hard-code-your-$HOME-here}/.dotfiles/bash-toys/assets/notification-1.mp3"
+          }
+        ]
+      }
+    ]
+  },
   "sandbox": {
     "enabled": true,
     "autoAllowBashIfSandboxed": false,
@@ -55,16 +67,7 @@
     "padding": 0
   },
   "editorMode": "vim",
-  "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "notify 'Claude Code' 'Claude Code stopped' {hard-code-your-$HOME-here}/.dotfiles/bash-toys/assets/notification-1.mp3"
-          }
-        ]
-      }
-    ]
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true
   }
 }
