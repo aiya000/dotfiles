@@ -189,6 +189,14 @@ If it does **not** appear to be such a bridge script, skip this subsection.
 
 If no suitable, notify the user and explain what they need to set up.
 
+#### Path Usage
+
+When running shell commands, **prefer relative paths over full absolute paths** whenever possible.
+
+Using full paths can conflict with `/sandbox` (this name for claude code) settings and trigger unnecessary permission prompts.
+
+Use absolute paths only when truly necessary (e.g. accessing files outside the project root such as `~/.dotfiles/`).
+
 ### Read this section **if you are copilot-cli**
 
 **Ignore this section if you are not copilot-cli.**
