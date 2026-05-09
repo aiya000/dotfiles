@@ -13,13 +13,12 @@ that future Claude Code sessions can load to restore context.
 
 1. Use the exported conversation content provided via `$EXPORT` as source material
 2. Determine current date and time:
-
-!`date +%Y-%m-%d_%H:%M`
-
-3. Create directory if needed: `mkdir -p ~/.dotfiles/.private/CLAUDE-MEMORY/`
-4. Write (or append) to: `~/.dotfiles/.private/CLAUDE-MEMORY/YYYY-MM-DD.md`
-    - If file doesn't exist: create with header `# Memory - YYYY-MM-DD`
-    - If file exists: append a new entry
+    - Result for `date +%Y-%m-%d_%H:%M`: !`date +%Y-%m-%d_%H:%M`
+3. Create the directory if it does not exist yet: `mkdir -p ~/.dotfiles/.private/CLAUDE-MEMORY/`
+    - Result for `ls -d ~/.dotfiles/.private/CLAUDE-MEMORY/`: !`ls -d ~/.dotfiles/.private/CLAUDE-MEMORY/`
+4. Write (or append) to: `~/.dotfiles/.private/CLAUDE-MEMORY/YYYY-MM-DD-{topic}.md`
+    - If a file for the same or similar topic already exists: append or update it
+    - Otherwise: create a new file with header `# Memory - YYYY-MM-DD`
 
 ### How to distill the export
 
@@ -45,4 +44,4 @@ what happened without replaying the full conversation.
 ## Memory File Location
 
 - Directory: `~/.dotfiles/.private/CLAUDE-MEMORY/`
-- Filename: `YYYY-MM-DD.md` (e.g., `2026-03-31.md`)
+- Filename: `YYYY-MM-DD-{topic}.md` (e.g., `2026-03-31-nvim-config.md`)
