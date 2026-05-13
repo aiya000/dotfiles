@@ -29,6 +29,7 @@
       "Skill(read-agents-md)",
       "Skill(suggest-alternative-commands)",
       "Skill(save-memory)",
+      "Skill(git-commit)",
       "WebFetch(domain:api.github.com)"
     ],
     "deny": [

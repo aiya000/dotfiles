@@ -1,6 +1,9 @@
 {
   "permissions": {
-    "allow": [],
+    "allow": [
+      "Bash(deno --version)",
+      "Bash(chmod +x *)",
+    ],
     "deny": []
   },
   "hooks": {}

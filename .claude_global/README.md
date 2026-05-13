@@ -13,3 +13,9 @@ $ ln -s ~/.dotfiles/.claude_global/commands ~/.claude/commands
 $ cp ~/.dotfiles/.claude_global/settings.json ~/.claude/settings.json
 $ $EDITOR ~/.claude/settings.json  # ../bash-toys maybe necessary
 ```
+
+## Files
+
+- `CLAUDE.md`: See above
+- `settings.json`: See above (Don't forget configuring)
+- `settings.local.json`: A template of settings.local.json
