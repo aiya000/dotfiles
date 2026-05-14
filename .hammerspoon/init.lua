@@ -2,6 +2,7 @@ local targetAppNames = {
   'ovice',
 }
 
+-- GCによる購読解除を防ぐため、フィルターオブジェクトへの参照を保持する
 local targetFilters = {}
 
 local function raiseTargetWindows()
