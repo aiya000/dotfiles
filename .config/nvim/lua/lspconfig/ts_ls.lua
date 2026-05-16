@@ -1,6 +1,6 @@
 -- Masonでインストールされた@vue/typescript-pluginのパス
 local vue_typescript_plugin_path = vim.fn.expand(
-  '~/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin'
+  '~/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/typescript-plugin'
 )
 
 if not vim.uv.fs_stat(vue_typescript_plugin_path) then
