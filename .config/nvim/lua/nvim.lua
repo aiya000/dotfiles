@@ -1091,13 +1091,6 @@ end
 ---@param config_key string -- LSPのconfigキー ('lua_ls', 'ts_ls' など)
 ---@return vim.lsp.Client[]
 local function get_clients_for_config_key(config_key)
-  local c = require('chotto')
-
-  ---`vim.lsp.config[name]`のスキーマ
-  M.lsp_config_schema = c.object({
-    cmd = c.array(c.string()),
-  })
-
   local clients = vim.lsp.get_clients({ name = config_key })
   if #clients > 0 then
     return clients

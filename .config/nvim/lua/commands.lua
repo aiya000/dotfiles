@@ -159,6 +159,11 @@ end)
 local available_lsp_names = { 'lua_ls', 'ts_ls', 'vue_ls', 'denols' }
 
 local function find_running_lsp_config_keys()
+  local c = require('chotto')
+  local lsp_config_schema = c.object({
+    cmd = c.array(c.string()),
+  })
+
   return vim
     .iter(available_lsp_names)
     :filter(function(name)
@@ -174,7 +179,7 @@ local function find_running_lsp_config_keys()
       local is_valid_lsp_config_not_found =
         not ok
         or lsp_config == nil
-        or not nvim.lsp_config_schema:safe_parse(lsp_config)
+        or not lsp_config_schema:safe_parse(lsp_config)
         or lsp_config.cmd[1] == nil
       if is_valid_lsp_config_not_found then
         return false
