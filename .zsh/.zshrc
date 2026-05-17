@@ -7,8 +7,8 @@
 # 1. ~/.zsh/.zprofile
 # 2. ~/.zsh/.zshrc
 # 3. ~/.zshrc_private_pre
-# 4. ~/.zshrc_env
-# 5. ~/.zshrc_private
+# 4. ~/.zshrc_private
+# 5. ~/.zshrc_env
 
 ###################
 # Check .zprofile #
@@ -121,13 +121,13 @@ source $ZDOTDIR/.zshrc.keymap
 # Don't export
 force-unexport TMUX
 
+if [[ -f ~/.zshrc_private ]] ; then
+  source ~/.zshrc_private
+fi
+
 # If it exists, load environment config
 if [[ -f ~/.zshrc_env ]] ; then
   source ~/.zshrc_env
-fi
-
-if [[ -f ~/.zshrc_private ]] ; then
-  source ~/.zshrc_private
 fi
 
 # Load language environments automatically
