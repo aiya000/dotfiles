@@ -16,9 +16,11 @@ that future Claude Code sessions can load to restore context.
     - Result for `date +%Y-%m-%d_%H:%M`: !`date +%Y-%m-%d_%H:%M`
 3. Create the directory if it does not exist yet: `mkdir -p ~/.dotfiles/.private/CLAUDE-MEMORY/`
     - Result for `ls -d ~/.dotfiles/.private/CLAUDE-MEMORY/`: !`ls -d ~/.dotfiles/.private/CLAUDE-MEMORY/`
-4. Write (or append) to: `~/.dotfiles/.private/CLAUDE-MEMORY/YYYY-MM-DD-{topic}.md`
-    - If a file for the same or similar topic already exists: append or update it
-    - Otherwise: create a new file with header `# Memory - YYYY-MM-DD`
+4. Before writing, scan for related files within ±7 days of today:
+    - Result for `ls ~/.dotfiles/.private/CLAUDE-MEMORY/`: !`ls ~/.dotfiles/.private/CLAUDE-MEMORY/`
+    - Look at filenames dated within roughly one week before and after today
+    - If any of those files appear to cover the same topic as the current session, read it and append or update it
+    - Otherwise: create a new file `~/.dotfiles/.private/CLAUDE-MEMORY/YYYY-MM-DD-{topic}.md` with header `# Memory - YYYY-MM-DD`
 
 ### How to distill the export
 
