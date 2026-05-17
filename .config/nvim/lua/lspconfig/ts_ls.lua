@@ -19,7 +19,14 @@ vim.lsp.config('ts_ls', {
     'typescript.tsx',
     'vue',
   },
-  root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' },
+  root_dir = function(bufnr, on_dir)
+    if vim.fs.root(bufnr, { 'deno.json', 'deno.jsonc' }) then
+      return
+    end
+    local root = vim.fs.root(bufnr, { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' })
+      or vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr))
+    on_dir(root)
+  end,
   init_options = {
     hostInfo = 'neovim',
     plugins = {

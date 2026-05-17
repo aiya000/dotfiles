@@ -35,15 +35,6 @@ local function require_lsp_when_filetype(filetypes, module_name, p)
 end
 
 require_lsp_when_filetype({ 'lua' }, 'lspconfig.lua_ls')
-require_lsp_when_filetype(
-  { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
-  'lspconfig.ts_ls'
-)
-require_lsp_when_filetype(
-  { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
-  'lspconfig.deno_ls',
-  function()
-    return vim.fs.root(0, { 'deno.json', 'deno.jsonc' }) ~= nil
-  end
-)
+require('lspconfig.ts_ls')
+require('lspconfig.denols')
 require_lsp_when_filetype({ 'vue' }, 'lspconfig.vue_ls')
