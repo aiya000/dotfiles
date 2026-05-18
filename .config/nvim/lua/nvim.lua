@@ -838,6 +838,28 @@ function M.toggle_gemini_cli()
   GeminiTerm:toggle()
 end
 
+local DevinTerm = nil
+function M.toggle_devin_cli()
+  if DevinTerm == nil then
+    DevinTerm = require('toggleterm.terminal').Terminal:new({
+      cmd = 'devin',
+      hidden = true,
+      direction = 'float',
+      on_open = function(t)
+        vim.api.nvim_create_autocmd('BufEnter', {
+          buffer = t.bufnr,
+          callback = function()
+            vim.schedule(function()
+              vim.cmd('startinsert!')
+            end)
+          end,
+        })
+      end,
+    })
+  end
+  DevinTerm:toggle()
+end
+
 ---Clears flash.nvim highlights
 function M.clear_flash_nvim_highlight()
   require('flash').toggle(false)

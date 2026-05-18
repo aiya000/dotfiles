@@ -282,6 +282,7 @@ end, { silent = true })
 --- Another AI Agents
 vim.keymap.set('n', '<leader>gc', nvim.toggle_copilot_cli)
 vim.keymap.set('n', '<leader>Gc', nvim.toggle_gemini_cli)
+vim.keymap.set('n', '<leader>dc', nvim.toggle_devin_cli)
 
 -- Options
 vim.keymap.set('n', '<C-h><C-w>', '<Cmd>setlocal wrap! wrap?<CR>', { silent = true })
