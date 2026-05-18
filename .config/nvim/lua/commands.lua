@@ -304,15 +304,24 @@ create_command('FormatMarkdownForReport', function(opts)
   local lines = vim.api.nvim_buf_get_lines(0, opts.line1 - 1, opts.line2, false)
   local result = {}
   for _, line in ipairs(lines) do
-    -- Convert indented sub-items to 　・ (e.g. "    - 作業中" → "　・作業中")
     if line:match('^%s+%-%s') then
-      line = line:gsub('^%s+%- %[.%] ', '　・')
-      line = line:gsub('^%s+%- ', '　・')
+      local leading = #(line:match('^(%s+)') or '')
+      local depth = math.max(1, math.floor(leading / 2) - 1)
+      local indent = string.rep('　', depth)
+      local content = line:gsub('^%s+%- ', '')
+      if content:match('^%[ %] ') then
+        line = indent .. '⬜' .. content:gsub('^%[ %] ', '')
+      elseif content:match('^%[x%] ') then
+        line = indent .. '☑️' .. content:gsub('^%[x%] ', '')
+      else
+        line = indent .. '・' .. content
+      end
       line = line:gsub('%[(.-)%]%((.-)%)', '%1')
       table.insert(result, line)
       goto cont
     end
-    line = line:gsub('^%- %[.%] ', '・') -- Convert checkbox list items first: - [ ] or - [x] → ・
+    line = line:gsub('^%- %[ %] ', '⬜ ') -- - [ ] → ⬜
+    line = line:gsub('^%- %[x%] ', '☑️ ') -- - [x] → ☑️
     line = line:gsub('%[(.-)%]%((.-)%)', '%1') -- Strip markdown links: [text](url) → text
     line = line:gsub('^#### (.*)', '# %1') -- Convert #### headings to # headings
     line = line:gsub('^##+ (.*)', '%1') -- Remove headings with 2+ hashes, keeping just the text
