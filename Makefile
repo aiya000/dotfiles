@@ -46,12 +46,12 @@ prepare:
 	$(MAKE) install-apt-fast
 	$(AptUpdate)
 	$(AptInstall) curl
-ifeq ($(WSL2),yes)
-	WinUserName := $(/mnt/c/Windows/system32/whoami.exe | tr -d '\r\n' | cut -d '\' -f 2)
-	ln -s /mnt/c/Users/$(WinUserName) ~/Windows
-	ln -s /mnt/c/Users/$(WinUserName)/Desktop ~/Desktop
-	ln -s /mnt/c/Users/$(WinUserName)/Download ~/Download
-endif
+	ifeq ($(OS),WSL)
+		WinUserName := $(/mnt/c/Windows/system32/whoami.exe | tr -d '\r\n' | cut -d '\' -f 2)
+		ln -s /mnt/c/Users/$(WinUserName) ~/Windows
+		ln -s /mnt/c/Users/$(WinUserName)/Desktop ~/Desktop
+		ln -s /mnt/c/Users/$(WinUserName)/Download ~/Download
+	endif
 
 install:
 	$(MAKE) prepare
