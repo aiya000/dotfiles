@@ -782,83 +782,54 @@ function M.toggle_diagnostic_virtual_text()
   print('LSP virtual text: ' .. (new_virtual_text and 'enabled' or 'disabled'))
 end
 
-local CopilotTerm = nil
-function M.toggle_copilot_cli()
-  if CopilotTerm == nil then
-    CopilotTerm = require('toggleterm.terminal').Terminal:new({
-      cmd = ([[
-        copilot
-          --allow-tool write
-          --allow-tool 'shell(notify)'
-          --allow-tool 'shell(git log)'
-          --allow-tool 'shell(git show)'
-          --allow-tool 'shell(git diff)'
-          --allow-tool 'shell(git status)'
-          --allow-tool 'shell(git reflog)'
-      ]]):gsub('\r?\n', ' '),
-      hidden = true,
-      direction = 'float',
-      on_open = function(t)
-        vim.keymap.set('t', '<C-p>', '<Up>', { buffer = true })
-        vim.keymap.set('t', '<C-n>', '<Down>', { buffer = true })
-
-        vim.api.nvim_create_autocmd('BufEnter', {
-          buffer = t.bufnr,
-          callback = function()
-            vim.schedule(function()
-              vim.cmd('startinsert!')
-            end)
-          end,
-        })
-      end,
-    })
+---@param cmd string
+---@param on_open_extra? fun(t: table): nil --Called before the default BufEnter autocmd
+---@return fun(): nil
+local function make_ai_cli_toggler(cmd, on_open_extra)
+  local term = nil
+  return function()
+    if term == nil then
+      term = require('toggleterm.terminal').Terminal:new({
+        cmd = cmd,
+        hidden = true,
+        direction = 'float',
+        on_open = function(t)
+          if on_open_extra then
+            on_open_extra(t)
+          end
+          vim.api.nvim_create_autocmd('BufEnter', {
+            buffer = t.bufnr,
+            callback = function()
+              vim.schedule(function()
+                vim.cmd('startinsert!')
+              end)
+            end,
+          })
+        end,
+      })
+    end
+    term:toggle()
   end
-  CopilotTerm:toggle()
 end
 
-local GeminiTerm = nil
-function M.toggle_gemini_cli()
-  if GeminiTerm == nil then
-    GeminiTerm = require('toggleterm.terminal').Terminal:new({
-      cmd = 'gemini',
-      hidden = true,
-      direction = 'float',
-      on_open = function(t)
-        vim.api.nvim_create_autocmd('BufEnter', {
-          buffer = t.bufnr,
-          callback = function()
-            vim.schedule(function()
-              vim.cmd('startinsert!')
-            end)
-          end,
-        })
-      end,
-    })
+M.toggle_copilot_cli = make_ai_cli_toggler(
+  ([[
+    copilot
+      --allow-tool write
+      --allow-tool 'shell(notify)'
+      --allow-tool 'shell(git log)'
+      --allow-tool 'shell(git show)'
+      --allow-tool 'shell(git diff)'
+      --allow-tool 'shell(git status)'
+      --allow-tool 'shell(git reflog)'
+  ]]):gsub('\r?\n', ' '),
+  function()
+    vim.keymap.set('t', '<C-p>', '<Up>', { buffer = true })
+    vim.keymap.set('t', '<C-n>', '<Down>', { buffer = true })
   end
-  GeminiTerm:toggle()
-end
-
-local DevinTerm = nil
-function M.toggle_devin_cli()
-  if DevinTerm == nil then
-    DevinTerm = require('toggleterm.terminal').Terminal:new({
-      cmd = 'devin',
-      hidden = true,
-      direction = 'float',
-      on_open = function(t)
-        vim.api.nvim_create_autocmd('BufEnter', {
-          buffer = t.bufnr,
-          callback = function()
-            vim.schedule(function()
-              vim.cmd('startinsert!')
-            end)
-          end,
-        })
-      end,
-    })
-  end
-  DevinTerm:toggle()
-end
+)
+M.toggle_gemini_cli = make_ai_cli_toggler('gemini')
+M.toggle_devin_cli = make_ai_cli_toggler('devin')
 
 ---Clears flash.nvim highlights
 function M.clear_flash_nvim_highlight()
