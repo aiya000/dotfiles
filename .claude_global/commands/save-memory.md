@@ -14,13 +14,12 @@ that future Claude Code sessions can load to restore context.
 1. Use the exported conversation content provided via `$EXPORT` as source material
 2. Determine current date and time:
     - Result for `date +%Y-%m-%d_%H:%M`: !`date +%Y-%m-%d_%H:%M`
-3. Create the directory if it does not exist yet: `mkdir -p ~/.dotfiles/.private/CLAUDE-MEMORY/`
-    - Result for `ls -d ~/.dotfiles/.private/CLAUDE-MEMORY/`: !`ls -d ~/.dotfiles/.private/CLAUDE-MEMORY/`
-4. Before writing, scan for related files within ±7 days of today:
-    - Result for `ls ~/.dotfiles/.private/CLAUDE-MEMORY/`: !`ls ~/.dotfiles/.private/CLAUDE-MEMORY/`
-    - Look at filenames dated within roughly one week before and after today
-    - If any of those files appear to cover the same topic as the current session, read it and append or update it
-    - Otherwise: create a new file `~/.dotfiles/.private/CLAUDE-MEMORY/YYYY-MM-DD-{topic}.md` with header `# Memory - YYYY-MM-DD`
+3. Create the directory if it does not exist yet: `mkdir -p ~/.dotfiles/.private/AI-MEMORY/`
+    - Result for `ls -d ~/.dotfiles/.private/AI-MEMORY/`: !`ls -d ~/.dotfiles/.private/AI-MEMORY/`
+4. Write (or append) to: `~/.dotfiles/.private/AI-MEMORY/YYYY-MM-DD-{project}-{topic}.md`
+    - If a file for the same or similar project+topic already exists: append or update it
+    - Otherwise: create a new file with header `# Memory - YYYY-MM-DD`
+    - `{project}` is the short name of the current project (e.g. `dotfiles`, `my-app`); omit if the topic is not project-specific
 
 ### How to distill the export
 
@@ -45,5 +44,6 @@ what happened without replaying the full conversation.
 
 ## Memory File Location
 
-- Directory: `~/.dotfiles/.private/CLAUDE-MEMORY/`
-- Filename: `YYYY-MM-DD-{topic}.md` (e.g., `2026-03-31-nvim-config.md`)
+- Directory: `~/.dotfiles/.private/AI-MEMORY/`
+- Filename: `YYYY-MM-DD-{project}-{topic}.md` (e.g., `2026-03-31-dotfiles-nvim-config.md`)
+- `{project}` can be omitted for agent-wide or cross-project notes (e.g., `2026-03-31-workflow-tips.md`)

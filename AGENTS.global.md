@@ -139,6 +139,46 @@ However, please be aware of the following special environment.
       If you are using `bun workspace` or similar, `package.json` is located in each workspace
     - Such an environment will be topped by a directory that has `package.json` and also has `bun.lock`, `bun.lockb`, etc
 
+## Memory Files
+
+Memory files are human-readable Markdown files used by AI agents to persist context across sessions.
+
+### Location
+
+`~/.dotfiles/.private/AI-MEMORY/`
+
+### Filename Format
+
+```
+YYYY-MM-DD-{project}-{topic}.md
+```
+
+- `{project}` -- short name of the relevant project (e.g. `dotfiles`, `my-app`); omit if the content is not project-specific
+- `{topic}` -- a short keyword describing the content (e.g. `nvim-config`, `workflow-tips`)
+- Example: `2026-05-18-dotfiles-ai-memory-migration.md`
+
+### When to Write
+
+- When the user runs the `/save-memory` command
+- When the user explicitly asks to remember or note something (e.g. "remember this", "make a note")
+
+### When to Read
+
+- When the user references prior sessions or previously done work
+- When the current task is likely related to an existing memory file
+
+### What to Include
+
+- Decisions made and implementation outcomes (not the process)
+- User preferences and constraints
+- Project-specific facts not derivable from reading the code
+- Errors encountered and how they were resolved
+
+### What to Exclude
+
+- Information already derivable from the current code
+- Information already present in git history
+
 ## Conversations
 
 - Use Japanese for conversations with developer
