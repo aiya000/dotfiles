@@ -35,3 +35,6 @@ hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(win,
 end)
 
 hs.hotkey.bind({ 'ctrl', 'alt', 'cmd' }, 'P', raiseTargetWindows)
+
+-- Cmd+Q を無効化
+hs.hotkey.bind({'cmd'}, 'q', function() end)
