@@ -168,7 +168,7 @@ install-stylua:
 	which stylua || cargo install stylua
 
 install-claude-code:
-	which claude || $(NPMInstall) @anthropic-ai/claude-code
+	which claude || curl -fsSL https://claude.ai/install.sh | bash
 
 install-mise:
 	which mise || curl https://mise.run | sh
