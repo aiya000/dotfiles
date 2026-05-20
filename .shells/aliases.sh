@@ -251,6 +251,42 @@ fi
 
 alias notify-at-cancel-all='notify-at -l ; notify-at -l | drop 2 | cut -d" " -f1 | xargs -I {} notify-at -c {} ; notify-at -l'
 
+function claude-dangerously-skip-permissions-docker () {
+  echo docker compose \
+    -f ~/.dotfiles/docker/claude-code-dangerously-skip-permissions/docker-compose.yml \
+    run \
+    --rm \
+    -v "$PWD:/workspace" \
+    claude-code "$@"
+
+  docker compose \
+    -f ~/.dotfiles/docker/claude-code-dangerously-skip-permissions/docker-compose.yml \
+    run \
+    --rm \
+    -v "$PWD:/workspace" \
+    claude-code "$@"
+}
+
+function claude-dangerously-skip-permissions-docker-attach-with-bash () {
+  echo docker compose \
+    -f ~/.dotfiles/docker/claude-code-dangerously-skip-permissions/docker-compose.yml \
+    run \
+    --rm \
+    -v $PWD:/workspace \
+    --entrypoint bash \
+    claude-code
+
+  docker compose \
+    -f ~/.dotfiles/docker/claude-code-dangerously-skip-permissions/docker-compose.yml \
+    run \
+    --rm \
+    -v $PWD:/workspace \
+    --entrypoint bash \
+    claude-code
+}
+
+alias claude-dangerously-skip-permissions-docker-clean-build='docker compose -f ~/.dotfiles/docker/claude-code-dangerously-skip-permissions/docker-compose.yml build --no-cache'
+
 # }}}
 # Other shourthands {{{
 
