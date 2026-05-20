@@ -217,6 +217,8 @@ function git-config-set-local-aiya000 () {
   export DOTFILES_GIT_HOOKS_DENY_IF_THAT_USER=aiya000
 }
 
+alias git-unstage='git restore --staged'
+
 # }}}
 # Common Shorthands {{{
 
