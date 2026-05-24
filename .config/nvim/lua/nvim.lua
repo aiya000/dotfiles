@@ -828,7 +828,7 @@ M.toggle_copilot_cli = make_ai_cli_toggler(
     vim.keymap.set('t', '<C-n>', '<Down>', { buffer = true })
   end
 )
-M.toggle_gemini_cli = make_ai_cli_toggler('gemini')
+M.toggle_antigravity_cli = make_ai_cli_toggler('agy')
 M.toggle_devin_cli = make_ai_cli_toggler('devin')
 
 ---Clears flash.nvim highlights

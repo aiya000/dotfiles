@@ -90,11 +90,12 @@ $ cp -r ~/.dotfiles/.config/nvim ~/.config/
     - Intended to be linked to `~/.copilot/copilot-instructions.md`
 - **Note**: For `.copilot/` setup instructions, please refer to [.copilot/README.md](.copilot/README.md)
 
-### [gemini-cli](GEMINI.global.md)
+### [Antigravity CLI](GEMINI.global.md) & [Gemini CLI](GEMINI.global.md)
 
 - **Location**: `GEMINI.global.md` (symlink to `AGENTS.global.md`)
 - **Note**:
     - For `GEMINI.global.md` setup instructions, please refer to [GEMINI.global.README.md](GEMINI.global.README.md) (symlink to `AGENTS.global.README.md`)
+    - Currently, Antigravity CLI looks up to `~/.gemini/GEMINI.md` same as Gemini CLI
 
 ### [Shell (zsh/bash)](.shells/)
 

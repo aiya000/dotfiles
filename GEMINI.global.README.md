@@ -1,5 +1,5 @@
 ## Setup
 
 ```shell-session
-$ pushd ~ ; ln -s ~/.dotfiles/GEMINI.global.md GEMINI.md ; popd
+$ mkdir ~/.gemini ; pushd ~/.gemini ; ln -s ~/.dotfiles/GEMINI.global.md GEMINI.md ; popd
 ```

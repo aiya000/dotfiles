@@ -226,6 +226,9 @@ install-android-cmdline-tools:
 install-devin-cli:
 	which devin || curl -fsSL https://cli.devin.ai/install.sh | bash
 
+install-antigravity-cli:
+	which agy || curl -fsSL https://antigravity.google/cli/install.sh | bash
+
 # }}}
 ifeq ($(OS),WSL) # {{{
 
