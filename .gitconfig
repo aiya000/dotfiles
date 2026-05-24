@@ -7,8 +7,8 @@
 	make = create
 	pr = pull-request
 	ta = log --all --graph --oneline --decorate
-	tree = log --graph --decorate --oneline
-	tree-all = log --graph --decorate --all --oneline
+	tree = log --graph --oneline --decorate
+	tree-all = log --graph --oneline --decorate --all
 [core]
 	pager = cat
 	quotepath = false

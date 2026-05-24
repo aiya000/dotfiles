@@ -218,6 +218,8 @@ function git-config-set-local-aiya000 () {
 }
 
 alias git-unstage='git restore --staged'
+alias git-tree-all='git tree-all' # See ~/.dotfiles/.gitconfig
+alias git-tree='git tree' # See ~/.dotfiles/.gitconfig
 
 # }}}
 # Common Shorthands {{{
