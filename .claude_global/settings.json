@@ -1,5 +1,32 @@
 {
   "defaultMode": "acceptEdits",
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
+  "editorMode": "vim",
+  "agentPushNotifEnabled": true,
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": false,
+    "filesystem": {
+      "allowWrite": [
+        "// `./bash-toys`などのsubmoduleでgit-commitを許可する",
+        "~/.dotfiles/.git/",
+        "// `/save-memory`用",
+        "~/.dotfiles/.private/AI-MEMORY/",
+        "// Windows filesystem (DrvFs) - bwrapがsandbox setup時に書き込みを要求するため",
+        "/mnt/c/Users/aiya0/"
+      ]
+    }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "ccstatusline",
+    "padding": 0
+  },
+  "editorMode": "vim",
   "permissions": {
     "allow": [
       "Bash(cp:*)",
@@ -33,10 +60,11 @@
       "WebFetch(domain:api.github.com)"
     ],
     "deny": [
-      "Bash(git push:*)",
-      "Bash(sudo:*)",
       "Bash(rm:*)",
       "Read(.env.*)"
+    ],
+    "additionalDirectories": [
+      "~/.dotfiles/.private/AI-MEMORY/"
     ]
   },
   "hooks": {
@@ -51,25 +79,8 @@
       }
     ]
   },
-  "sandbox": {
-    "enabled": true,
-    "autoAllowBashIfSandboxed": false,
-    "filesystem": {
-      "allowWrite": [
-        "// `./bash-toys`などのsubmoduleでgit-commitを許可する",
-        "~/.dotfiles/.git/",
-        "// `/save-memory`用",
-        "~/.dotfiles/.private/CLAUDE-MEMORY/"
-      ]
-    }
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "ccstatusline",
-    "padding": 0
-  },
-  "editorMode": "vim",
   "enabledPlugins": {
-    "typescript-lsp@claude-plugins-official": true
+    "typescript-lsp@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true
   }
 }
