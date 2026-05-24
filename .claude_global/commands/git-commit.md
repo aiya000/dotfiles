@@ -3,7 +3,9 @@ allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git s
 description: Create a new git commit for staged changes
 ---
 
-**Important:** **This command only commits staged changes. It does not stage any new files**.
+**Important:**
+- **This command only commits staged changes. It does not stage any new files**
+- **DO NOT RUN `git push`**
 
 # /git-commit
 
