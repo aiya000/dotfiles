@@ -1,1 +1,1 @@
-../AGENTS.global.md
+/home/aiya000/.dotfiles/AGENTS.global.md
