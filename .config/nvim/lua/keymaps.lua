@@ -4,6 +4,7 @@ local nvim = require('nvim')
 local network = require('utils.network')
 local telescope = require('telescope.builtin')
 local snip = require('luasnip')
+local arrow = require('luarrow').arrow
 
 local s = fn.s
 
@@ -451,8 +452,13 @@ vim.keymap.set('n', '<C-k>s', function()
 end, { expr = true })
 
 -- Git Operations
--- vim.keymap.set('n', '<leader>gs', '<Cmd>GinStatus<CR>', { silent = true }) -- TODO: なぜか（少なくともmacOSでは）cmdpaletteごしで開かないとNeovimが固まるので、一旦remap ↓ で対応する。暇な時に直す！
-vim.keymap.set('n', '<leader>gs', ':<C-u>tabnew | GinStatus<CR>', { remap = true, silent = true }) -- remapなので、:でcmdpaletteが開く
+vim.keymap.set('n', '<leader>gs', function()
+  local _ = vim.api.nvim_create_buf(false, true)
+    % arrow(nvim.open_buffer_in_float_window)
+    ^ arrow(function()
+      vim.cmd('GinStatus ++opener=edit')
+    end)
+end, { silent = true })
 vim.keymap.set('n', '"gs', ':<C-u>GinStatus<CR>', { remap = true, silent = true }) -- remapなので、:でcmdpaletteが開く
 vim.keymap.set('n', '<leader>gl', '<Cmd>GitLog -100 --name-only<CR>', { silent = true }) -- Use my :GitLog due to :GinLog ignores arguments currently
 vim.keymap.set('n', '<leader>gL', '<Cmd>GitLog -100 --patch<CR>', { silent = true })

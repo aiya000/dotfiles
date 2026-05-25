@@ -1203,4 +1203,25 @@ function M.is_in_float_window()
   return vim.api.nvim_win_get_config(0).relative ~= ''
 end
 
+---Opens `buf` in a float window
+---@param buf integer
+---@param opts? { enter?: boolean } --`enter`: Whether to move cursor to the float window immediately. Default is `true`
+---@return integer --Window ID of the opened float window
+function M.open_buffer_in_float_window(buf, opts)
+  opts = opts or {}
+  local enter = opts.enter ~= false
+
+  local width = math.floor(vim.o.columns * 0.85)
+  local height = math.floor(vim.o.lines * 0.85)
+  return vim.api.nvim_open_win(buf, enter, {
+    relative = 'editor',
+    width = width,
+    height = height,
+    row = math.floor((vim.o.lines - height) / 2),
+    col = math.floor((vim.o.columns - width) / 2),
+    style = 'minimal',
+    border = 'rounded',
+  })
+end
+
 return M
