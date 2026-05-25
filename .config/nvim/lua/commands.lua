@@ -310,9 +310,9 @@ create_command('FormatMarkdownForReport', function(opts)
       local indent = string.rep('　', depth)
       local content = line:gsub('^%s+%- ', '')
       if content:match('^%[ %] ') then
-        line = indent .. '⬜' .. content:gsub('^%[ %] ', '')
+        line = indent .. '⬜ ' .. content:gsub('^%[ %] ', '')
       elseif content:match('^%[x%] ') then
-        line = indent .. '☑️' .. content:gsub('^%[x%] ', '')
+        line = indent .. '☑️ ' .. content:gsub('^%[x%] ', '')
       else
         line = indent .. '・' .. content
       end
@@ -323,8 +323,7 @@ create_command('FormatMarkdownForReport', function(opts)
     line = line:gsub('^%- %[ %] ', '⬜ ') -- - [ ] → ⬜
     line = line:gsub('^%- %[x%] ', '☑️ ') -- - [x] → ☑️
     line = line:gsub('%[(.-)%]%((.-)%)', '%1') -- Strip markdown links: [text](url) → text
-    line = line:gsub('^#### (.*)', '# %1') -- Convert #### headings to # headings
-    line = line:gsub('^##+ (.*)', '%1') -- Remove headings with 2+ hashes, keeping just the text
+    line = line:gsub('^##', '', 1) -- Decrease headings levels with 2
     line = line:gsub('^%- ', '・') -- Convert remaining dash list items: - → ・
     table.insert(result, line)
     ::cont::
