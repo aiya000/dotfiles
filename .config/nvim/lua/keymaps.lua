@@ -453,9 +453,11 @@ end, { expr = true })
 
 -- Git Operations
 vim.keymap.set('n', '<leader>gs', function()
+  local prev_win = vim.api.nvim_get_current_win()
   local _ = vim.api.nvim_create_buf(false, true)
     % arrow(nvim.open_buffer_in_float_window)
-    ^ arrow(function()
+    ^ arrow(function(float_win)
+      vim.api.nvim_win_set_var(float_win, 'gin_status_prev_win', prev_win)
       vim.cmd('GinStatus ++opener=edit')
     end)
 end, { silent = true })

@@ -84,11 +84,58 @@ local function delete_this_file()
   end)
 end
 
+local function close_win_later(win_id)
+  vim.schedule(function()
+    if vim.api.nvim_win_is_valid(win_id) then
+      vim.api.nvim_win_close(win_id, true)
+    end
+  end)
+end
+
 vim.keymap.set('n', 'Q', '<Cmd>bdelete!<CR>', { buffer = true, silent = true })
 vim.keymap.set('n', 'A', run_add_patch, { buffer = true, silent = true })
-vim.keymap.set('n', 'o', ':<C-u>vsp<CR><Plug>(gin-action-edit)', { buffer = true, silent = true })
+
+-- - When float window: Open the selected file in latest window
+-- - When not float window: Open the selected file in new vertical split window
+vim.keymap.set('n', 'o', function()
+  if not nvim.is_in_float_window() then
+    vim.cmd('vsp')
+    nvim.run_with_virtual_keymaps('<Plug>(gin-action-edit)')
+    return
+  end
+
+  local float_win = vim.api.nvim_get_current_win()
+  local filepath = get_current_line_file_path()
+  if filepath == nil then
+    vim.notify('Failed to parse the current line for file path', vim.log.levels.ERROR)
+    return
+  end
+
+  if InitLua.git_root ~= nil then
+    filepath = InitLua.git_root .. '/' .. filepath
+  end
+
+  local ok, prev_win = pcall(vim.api.nvim_win_get_var, float_win, 'gin_status_prev_win')
+  close_win_later(float_win)
+
+  if ok and vim.api.nvim_win_is_valid(prev_win) then
+    vim.api.nvim_set_current_win(prev_win)
+  end
+  vim.cmd('edit ' .. vim.fn.fnameescape(filepath))
+end, { buffer = true, silent = true })
+
 vim.keymap.set('n', '<C-r>', '<Cmd>GinStatus<CR>', { buffer = true, silent = true }) -- TODO: `gin#util#reload()`が使えそう
-vim.keymap.set('n', 'p', '<Plug>(gin-action-diff:smart:vsplit)', { buffer = true, silent = true, nowait = true })
+
+vim.keymap.set('n', 'p', function()
+  if not nvim.is_in_float_window() then
+    nvim.run_with_virtual_keymaps('<Plug>(gin-action-diff:smart:vsplit)')
+    return
+  end
+  local win = vim.api.nvim_get_current_win()
+  nvim.run_with_virtual_keymaps('<Plug>(gin-action-diff:smart:tabedit)')
+  close_win_later(win)
+end, { buffer = true, silent = true, nowait = true })
+
 vim.keymap.set('n', 'P', ':<C-u>!git push', { remap = true, buffer = true })
 vim.keymap.set('n', 'gP', ':<C-u>!git pull', { remap = true, buffer = true })
 vim.keymap.set('n', 'sa', '<Plug>(gin-action-stash)', { buffer = true, silent = true })
@@ -106,9 +153,13 @@ vim.keymap.set('n', 'D', delete_this_file, { buffer = true })
 vim.keymap.set('n', '<C-g>', ':<C-u>!git<Space>', { nowait = true, remap = true, buffer = true, silent = true }) -- remap to open cmdpalette
 
 vim.keymap.set('n', 'O', function()
+  local win = nvim.is_in_float_window() and vim.api.nvim_get_current_win() or nil
   vim.cmd('normal "zyy')
   vim.cmd('tabnew')
   vim.cmd('edit ' .. vim.fn.trim(vim.fn.getreg('z')))
+  if win ~= nil then
+    close_win_later(win)
+  end
 end, { buffer = true, silent = true })
 
 vim.keymap.set('n', 'S', function()
