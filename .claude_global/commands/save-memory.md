@@ -1,5 +1,5 @@
 ---
-allowed-tools: Bash(date:*), Write(*), Read(*)
+allowed-tools: Bash(date *), Bash(mkdir *), Bash(ls *), Write(*), Read(*)
 description: Export and distill the current conversation into a memory file
 ---
 
@@ -14,7 +14,9 @@ that future Claude Code sessions can load to restore context.
 1. Use the exported conversation content provided via `$EXPORT` as source material
 2. Determine current date and time:
     - Result for `date +%Y-%m-%d_%H:%M`: !`date +%Y-%m-%d_%H:%M`
-3. Create the directory if it does not exist yet: `mkdir -p "$DOTFILES_AI_MEMORY_DIR"`
+3. Create the directory and check existing files using the Bash tool:
+    - Run: `mkdir -p "$DOTFILES_AI_MEMORY_DIR"`
+    - Run: `ls "$DOTFILES_AI_MEMORY_DIR" 2>/dev/null`
 4. Write (or append) to: `$DOTFILES_AI_MEMORY_DIR/YYYY-MM-DD-{project}-{topic}.md`
     - If a file for the same or similar project+topic already exists: append or update it
     - Otherwise: create a new file with header `# Memory - YYYY-MM-DD`
@@ -43,6 +45,6 @@ what happened without replaying the full conversation.
 
 ## Memory File Location
 
-- Directory: `${DOTFILES_AI_MEMORY_DIR}`
+- Directory: `$DOTFILES_AI_MEMORY_DIR` (e.g., `~/.dotfiles/.private/AI-MEMORY/`)
 - Filename: `YYYY-MM-DD-{project}-{topic}.md` (e.g., `2026-03-31-dotfiles-nvim-config.md`)
 - `{project}` can be omitted for agent-wide or cross-project notes (e.g., `2026-03-31-workflow-tips.md`)
