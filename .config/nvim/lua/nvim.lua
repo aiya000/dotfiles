@@ -785,7 +785,7 @@ end
 ---@param cmd string
 ---@param on_open_extra? fun(t: table): nil --Called before the default BufEnter autocmd
 ---@return fun(): nil
-local function make_ai_cli_toggler(cmd, on_open_extra)
+local function make_cli_app_toggler(cmd, on_open_extra)
   local term = nil
   return function()
     if term == nil then
@@ -812,7 +812,7 @@ local function make_ai_cli_toggler(cmd, on_open_extra)
   end
 end
 
-M.toggle_copilot_cli = make_ai_cli_toggler(
+M.toggle_copilot_cli = make_cli_app_toggler(
   ([[
     copilot
       --allow-tool write
@@ -828,8 +828,9 @@ M.toggle_copilot_cli = make_ai_cli_toggler(
     vim.keymap.set('t', '<C-n>', '<Down>', { buffer = true })
   end
 )
-M.toggle_antigravity_cli = make_ai_cli_toggler('agy')
-M.toggle_devin_cli = make_ai_cli_toggler('devin')
+M.toggle_antigravity_cli = make_cli_app_toggler('agy')
+M.toggle_devin_cli = make_cli_app_toggler('devin')
+M.toggle_shell = make_cli_app_toggler(vim.env.SHELL)
 
 ---Clears flash.nvim highlights
 function M.clear_flash_nvim_highlight()

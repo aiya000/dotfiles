@@ -217,13 +217,16 @@ local function fallback_to_path_at_started()
   return InitLua.path_at_started
 end
 
--- `termopen()`
+-- `termopen()` {{{
+
+-- Open in vertical split
 vim.keymap.set('n', '<leader>v', function()
   local cwd = nvim.read_current_buffer_dir() or fallback_to_path_at_started()
   vim.cmd('vertical new')
   nvim.termopen_shell({ cwd = cwd })
 end)
 
+-- Open in horizontal split
 vim.keymap.set('n', '<leader><leader>v', function()
   local cwd = nvim.read_current_buffer_dir() or fallback_to_path_at_started()
   vim.cmd('new')
@@ -241,11 +244,17 @@ vim.keymap.set('n', '<leader>V', function()
   vim.fn.feedkeys('i')
 end)
 
+-- Open in a new tab
 vim.keymap.set('n', '<leader><leader>V', function()
   local cwd = nvim.read_current_buffer_dir() or fallback_to_path_at_started()
   vim.cmd('tabnew')
   nvim.termopen_shell({ cwd = cwd })
 end)
+
+-- Open in a float window
+vim.keymap.set('n', '"V', nvim.toggle_shell)
+
+-- }}}
 
 -- File explorer
 vim.keymap.set('n', '<leader>e', '<Cmd>vsp|Oil<CR>', { silent = true })
