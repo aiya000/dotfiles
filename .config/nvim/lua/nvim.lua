@@ -687,6 +687,16 @@ function M.camelize_or_uncamelize_current_word_as_repeatable()
   vim.call('repeat#set', 'viw\\<Plug>(operator-camelize-toggle)')
 end
 
+function M.is_using_windows_git()
+  return vim.system({ 'git', '--version' }):wait().stdout:find('windows') ~= nil
+end
+
+---現在float windowの中にいるか？
+---@return boolean
+function M.is_in_float_window()
+  return vim.api.nvim_win_get_config(0).relative ~= ''
+end
+
 ---@param direction 'next' | 'previous'
 local function get_diagnostic_method(direction)
   return direction == 'next' and { lsp_func = vim.diagnostic.goto_next, ale_cmd = 'ALENext' }
@@ -784,8 +794,9 @@ end
 
 ---@param cmd string
 ---@param on_open_extra? fun(t: table): nil --Called before the default BufEnter autocmd
+---@param env? table<string, string> --Environment variables passed to the terminal process. NOTE: on_open_extra fires after process start, so env vars must be set here via `Terminal:new()`
 ---@return fun(): nil
-local function make_cli_app_toggler(cmd, on_open_extra)
+local function make_cli_app_toggler(cmd, on_open_extra, env)
   local term = nil
   return function()
     if term == nil then
@@ -793,6 +804,7 @@ local function make_cli_app_toggler(cmd, on_open_extra)
         cmd = cmd,
         hidden = true,
         direction = 'float',
+        env = env,
         on_open = function(t)
           if on_open_extra then
             on_open_extra(t)
@@ -830,7 +842,12 @@ M.toggle_copilot_cli = make_cli_app_toggler(
 )
 M.toggle_antigravity_cli = make_cli_app_toggler('agy')
 M.toggle_devin_cli = make_cli_app_toggler('devin')
-M.toggle_shell = make_cli_app_toggler(vim.env.SHELL)
+M.toggle_shell = make_cli_app_toggler(vim.env.SHELL, nil, {
+  -- TODO: See `M.termopen_shell` comment about `NEOVIM_TERMINAL` for why this condition is needed
+  NEOVIM_TERMINAL = not M.is_using_windows_git() or nil,
+  -- NEOVIM_TERMINAL = true,
+  NVIM_PARENT_ADDRESS = vim.v.servername,
+})
 
 ---Clears flash.nvim highlights
 function M.clear_flash_nvim_highlight()
@@ -1191,16 +1208,6 @@ function M.lsp_restart(config_key)
     end
   end
   try_lsp_start()
-end
-
-function M.is_using_windows_git()
-  return vim.system({ 'git', '--version' }):wait().stdout:find('windows') ~= nil
-end
-
----現在float windowの中にいるか？
----@return boolean
-function M.is_in_float_window()
-  return vim.api.nvim_win_get_config(0).relative ~= ''
 end
 
 ---Opens `buf` in a float window
