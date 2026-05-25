@@ -459,10 +459,9 @@ vim.keymap.set('n', '<leader>gs', function()
       vim.cmd('GinStatus ++opener=edit')
     end)
 end, { silent = true })
-vim.keymap.set('n', '"gs', ':<C-u>GinStatus<CR>', { remap = true, silent = true }) -- remapなので、:でcmdpaletteが開く
+vim.keymap.set('n', '"gs', ':<C-u>tabnew | GinStatus<CR>', { remap = true, silent = true }) -- remapなので、:でcmdpaletteが開く
 vim.keymap.set('n', '<leader>gl', '<Cmd>GitLog -100 --name-only<CR>', { silent = true }) -- Use my :GitLog due to :GinLog ignores arguments currently
 vim.keymap.set('n', '<leader>gL', '<Cmd>GitLog -100 --patch<CR>', { silent = true })
-
 vim.keymap.set('n', '<leader>go', function()
   git_log.open_buffer({ '-100', '--oneline', '--pretty=%h %ad %s', '--date=format:%Y-%m-%d %H:%M' })
 end, { silent = true })
