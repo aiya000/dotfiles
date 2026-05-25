@@ -299,7 +299,7 @@ alias llh='ls -lh --color=auto --group-directories-first'
 alias lla='ls -la --color=auto --group-directories-first'
 
 alias ei=exit
-alias t=vterminal
+alias t=fterminal
 alias ki=kill-list
 
 # alias ..='cd ../'

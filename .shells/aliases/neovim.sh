@@ -1,6 +1,7 @@
 #!/bin/bash
 
 alias vterminal=$'nvim +"lua require(\'nvim\').termopen_shell()"'
+alias fterminal=$'nvim +"lua require(\'nvim\').toggle_shell()"'
 
 # Use NVIM_PARENT_ADDRESS (always set by Neovim) instead of NEOVIM_TERMINAL
 # (NEOVIM_TERMINAL is intentionally nil on Windows filesystem to avoid a terminal-close bug)
