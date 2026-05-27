@@ -307,7 +307,7 @@ create_command('FormatMarkdownForReport', function(opts)
     if line:match('^%s+%-%s') then
       local leading = #(line:match('^(%s+)') or '')
       local depth = math.max(1, math.floor(leading / 2) - 1)
-      local indent = string.rep('　', depth)
+      local indent = string.rep('　　', depth)
       local content = line:gsub('^%s+%- ', '')
       if content:match('^%[ %] ') then
         line = indent .. '⬜ ' .. content:gsub('^%[ %] ', '')
