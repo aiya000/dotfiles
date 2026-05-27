@@ -306,7 +306,7 @@ create_command('FormatMarkdownForReport', function(opts)
   for _, line in ipairs(lines) do
     if line:match('^%s+%-%s') then
       local leading = #(line:match('^(%s+)') or '')
-      local depth = math.max(1, math.floor(leading / 2) - 1)
+      local depth = math.floor(leading / 4)
       local indent = string.rep('　　', depth)
       local content = line:gsub('^%s+%- ', '')
       if content:match('^%[ %] ') then
@@ -320,8 +320,8 @@ create_command('FormatMarkdownForReport', function(opts)
       table.insert(result, line)
       goto cont
     end
-    line = line:gsub('^%- %[ %] ', '⬜ ') -- - [ ] → ⬜
-    line = line:gsub('^%- %[x%] ', '☑️ ') -- - [x] → ☑️
+    line = line:gsub('^%- %[ %] ', '(⬜) ') -- - [ ] → (⬜)
+    line = line:gsub('^%- %[x%] ', '(☑️) ') -- - [x] → (☑️)
     line = line:gsub('%[(.-)%]%((.-)%)', '%1') -- Strip markdown links: [text](url) → text
     line = line:gsub('^##', '', 1) -- Decrease headings levels with 2
     line = line:gsub('^%- ', '・') -- Convert remaining dash list items: - → ・
@@ -330,7 +330,5 @@ create_command('FormatMarkdownForReport', function(opts)
   end
   vim.api.nvim_buf_set_lines(0, opts.line1 - 1, opts.line2, false, result)
 end, { range = true })
-
-create_command('FormatExportToVimEnv', "silent '<,'>s/^export /vim.env./ | silent <,'>s/\n$//", { range = true })
 
 --}}}
