@@ -432,7 +432,7 @@ vim.keymap.set('n', '<leader>R', '<Plug>(quickrepl-open)', { remap = true })
 -- File Manupilation
 vim.keymap.set('n', '<leader>b', '<Cmd>MadoScratchOpenFile md<CR>', { silent = true })
 vim.keymap.set('n', '<leader>B', '<Cmd>MadoScratchOpenFileNext md<CR>', { silent = true })
-vim.keymap.set('n', '<leader><leader>b', ':<C-u>MadoScratchOpenFile<Space>', { remap = true }) -- remap to open in cmdpalette
+vim.keymap.set('n', '<leader><leader>b', '<Cmd>MadoScratchOpen md float-aspect<CR>', { silent = true })
 
 vim.keymap.set('n', '<leader><leader>B', function()
   vim.cmd('vertical split ' .. InitLua.memo_path)
