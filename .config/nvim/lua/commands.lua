@@ -310,23 +310,22 @@ create_command('FormatMarkdownForReport', function(opts)
       local indent = string.rep('　　', depth)
       local content = line:gsub('^%s+%- ', '')
       if content:match('^%[ %] ') then
-        line = indent .. '⬜ ' .. content:gsub('^%[ %] ', '')
+        line = indent .. '(⬜) ' .. content:gsub('^%[ %] ', '')
       elseif content:match('^%[x%] ') then
-        line = indent .. '☑️ ' .. content:gsub('^%[x%] ', '')
+        line = indent .. '(☑️) ' .. content:gsub('^%[x%] ', '')
       else
-        line = indent .. '・' .. content
+        line = indent .. '・ ' .. content
       end
       line = line:gsub('%[(.-)%]%((.-)%)', '%1')
       table.insert(result, line)
-      goto cont
+    else
+      line = line:gsub('^%- %[ %] ', '(⬜) ') -- - [ ] → (⬜)
+      line = line:gsub('^%- %[x%] ', '(☑️) ') -- - [x] → (☑️)
+      line = line:gsub('%[(.-)%]%((.-)%)', '%1') -- Strip markdown links: [text](url) → text
+      line = line:gsub('^##', '', 1) -- Decrease headings levels with 2
+      line = line:gsub('^%- ', '・ ') -- Convert remaining dash list items: - → ・
+      table.insert(result, line)
     end
-    line = line:gsub('^%- %[ %] ', '(⬜) ') -- - [ ] → (⬜)
-    line = line:gsub('^%- %[x%] ', '(☑️) ') -- - [x] → (☑️)
-    line = line:gsub('%[(.-)%]%((.-)%)', '%1') -- Strip markdown links: [text](url) → text
-    line = line:gsub('^##', '', 1) -- Decrease headings levels with 2
-    line = line:gsub('^%- ', '・') -- Convert remaining dash list items: - → ・
-    table.insert(result, line)
-    ::cont::
   end
   vim.api.nvim_buf_set_lines(0, opts.line1 - 1, opts.line2, false, result)
 end, { range = true })
