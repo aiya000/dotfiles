@@ -67,7 +67,7 @@ create_command('GitTree', function(opts)
 end, { nargs = '*' })
 
 create_command('GitTreeAll', function(opts)
-  vim.cmd('GinLog --graph --decorate --oneline --all' .. opts.args)
+  vim.cmd('GinLog --graph --decorate --oneline --all ' .. opts.args)
 end, { nargs = '*' })
 
 -- }}}
