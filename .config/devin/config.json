@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "devin": {
+    "// org_id": "{Configure `org_id`}"
+  },
+  "shell": {
+    "setup_complete": true
+  },
+  "theme_mode": "dark",
+  "permissions": {
+    "allow": [
+      "cp *",
+      "ls *",
+      "echo *",
+      "touch *",
+      "cd *",
+      "mkdir *",
+      "git log *",
+      "git show *",
+      "git diff *",
+      "git status *",
+      "git reflog *",
+      "git commit *",
+      "gh issue list *",
+      "gh issue view *",
+      "gh issue create *",
+      "gh pr list *",
+      "gh pr view *",
+      "gh pr create *",
+      "gh run list *",
+      "gh run view *",
+      "python3 *",
+      "rg *",
+      "grep *",
+      "notify *"
+    ],
+    "deny": [
+      "rm *",
+      "git push --force-with-lease *",
+      "git push --force *",
+      "gh auth switch *"
+    ]
+  }
+}
