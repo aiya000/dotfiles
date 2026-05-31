@@ -33,4 +33,4 @@ if [[ $user == aiya000 ]] ; then
 else
   effect=~/.dotfiles/bash-toys/assets/notification-2.mp3
 fi
-~/.dotfiles/bash-toys/bin/notify "$title" "$user" "$effect"
+~/.dotfiles/bash-toys/bin/notify "$title" "$user" "$effect" &
