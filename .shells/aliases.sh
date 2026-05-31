@@ -285,7 +285,9 @@ function claude-dangerously-skip-permissions-docker-attach-with-bash () {
     claude-code
 }
 
-alias claude-dangerously-skip-permissions-docker-clean-build='docker compose -f ~/.dotfiles/docker/claude-code-dangerously-skip-permissions/docker-compose.yml build --no-cache'
+alias claude-dangerously-skip-permissions-docker-build='docker compose -f ~/.dotfiles/docker/claude-code-dangerously-skip-permissions/docker-compose.yml build'
+alias claude-dangerously-skip-permissions-docker-rebuild=claude-dangerously-skip-permissions-docker-build
+alias claude-dangerously-skip-permissions-docker-clean-rebuild='claude-dangerously-skip-permissions-docker-build --no-cache'
 
 # }}}
 # Other shourthands {{{
