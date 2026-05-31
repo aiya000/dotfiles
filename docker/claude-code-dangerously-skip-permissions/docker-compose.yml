@@ -19,7 +19,11 @@ services:
           && echo "node ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/node \
           && chmod 0440 /etc/sudoers.d/node \
           && rm -rf /var/lib/apt/lists/*
-        RUN npm install -g @anthropic-ai/claude-code
+        RUN \
+          npm install -g @anthropic-ai/claude-code \
+          && claude install \
+          && echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc \
+          && npm uninstall -g @anthropic-ai/claude-code
         USER node
         RUN mkdir -p /home/node/.ai-memory
         ENV CLAUDE_CONFIG_DIR=/home/node/.claude
