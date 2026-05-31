@@ -19,18 +19,20 @@ services:
           && echo "node ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/node \
           && chmod 0440 /etc/sudoers.d/node \
           && rm -rf /var/lib/apt/lists/*
-        RUN \
-          npm install -g @anthropic-ai/claude-code \
-          && claude install \
-          && echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc \
-          && npm uninstall -g @anthropic-ai/claude-code
         USER node
+        RUN \
+          echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc \
+          && sudo npm install -g @anthropic-ai/claude-code \
+          && claude install \
+          && sudo npm uninstall -g @anthropic-ai/claude-code
         RUN mkdir -p /home/node/.ai-memory
+        ENV PATH="/home/node/.local/bin:$PATH"
         ENV CLAUDE_CONFIG_DIR=/home/node/.claude
         ENV TERM=xterm-256color
         WORKDIR /workspace
     volumes:
       - "$HOME/.claude:/home/node/.claude"
+      - "$HOME/.claude.json:/home/node/.claude.json"
       - "$HOME/.dotfiles:/home/aiya000/.dotfiles:ro"
       - "$DOTFILES_AI_MEMORY_DIR:/home/node/.ai-memory"
     environment:
@@ -39,4 +41,5 @@ services:
     working_dir: /workspace
     stdin_open: true
     tty: true
+    # command: ["/home/node/.local/bin/claude", "--dangerously-skip-permissions"]
     command: ["claude", "--dangerously-skip-permissions"]
