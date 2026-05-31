@@ -13,6 +13,9 @@ services:
             git \
             gh \
             sudo \
+            ripgrep \
+            fd-find \
+          && ln -s /usr/bin/fdfind /usr/local/bin/fd \
           && echo "node ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/node \
           && chmod 0440 /etc/sudoers.d/node \
           && rm -rf /var/lib/apt/lists/*
