@@ -9,16 +9,14 @@ local t = ls.text_node
 
 return list.concat(
   sm({ 'img', 'image' }, fmt('![]({})', { i(1, 'here') })),
+
   sm({ 'check', 'ch' }, fmt('- [ ] {}', { i(1, '') })),
+  { s('checked', fmt('- [x] {}', { i(1, '') })) },
+  sm({ 'check_', 'ch_', '_ch' }, t('[ ]')),
+  sm({ 'checked_', 'checked_', '_checked' }, t('[x]')),
 
-  {
-    s('checked', fmt('- [x] {}', { i(1, '') })),
-    s('bar', t('- - -')),
-  },
+  { s('bar', t('- - -')) },
   sm({ 'barbar', 'barr' }, t('- - - - -')),
-
-  sm({ 'check_', 'ch_' }, t('[ ]')),
-  sm({ 'checked_', 'ch__' }, t('[x]')),
 
   sm(
     { 'block', 'bl' },
@@ -44,11 +42,9 @@ return list.concat(
     'footnote_reference',
     'fn',
   }, fmt('[^{name}]', { name = i(1, 'name') })),
-
-  {
-    s('footnote', fmt('[^{name}]: {}', { name = i(1, 'name'), i(2, '') })),
-    s('niconiconi', t('🤟🙄🤟')),
-  },
+  { s('footnote', fmt('[^{name}]: {}', { name = i(1, 'name'), i(2, '') })) },
 
   sm({ 'id', 'anchor' }, fmt('<a id="{}">', { i(1, 'section_name') }))
+
+  { s('niconiconi', t('🤟🙄🤟')) }
 )
