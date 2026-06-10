@@ -20,7 +20,22 @@ that future Claude Code sessions can load to restore context.
     - Run: `ls -ld ~/.ai-memory` and confirm the output starts with `l` (i.e. `~/.ai-memory` is a symlink)
     - If it is **not** a symlink (or does not exist), **stop and ask the user to set it up** by running `ln -s ~/.dotfiles/.private/AI-MEMORY/ ~/.ai-memory` (see `~/.dotfiles/.private/README.md`). Do not create it yourself
     - Otherwise, list existing files with: `ls ~/.ai-memory 2>/dev/null`
-4. Write (or append) to: `~/.ai-memory/YYYY-MM-DD-{project}-{topic}.md`
+4. **Secret scan** — before writing, review the content you are about to save for potential secrets or sensitive values:
+
+    What to look for:
+    - API keys and tokens: strings starting with `ghp_`, `gho_`, `AKIA`, `sk-`, `xox`, or matching `-----BEGIN.*PRIVATE KEY`
+    - Variables with sensitive names holding a value: patterns like `API_KEY=`, `_SECRET=`, `_TOKEN=`, `PASSWORD=`
+    - Hardcoded absolute home paths: `/Users/<name>/` or `/home/<name>/` (prefer `~`)
+    - Personal or organizational proper nouns that could identify specific individuals or organizations
+
+    If any of the above are found in the content to be saved, use AskUserQuestion to present these options:
+    - "Save as-is" — proceed despite the finding
+    - "Fix then save" — let the user review and fix the content first
+    - "Cancel" — abort without writing
+
+    Only proceed with writing if the user selects "Save as-is", or if nothing suspicious was found.
+
+5. Write (or append) to: `~/.ai-memory/YYYY-MM-DD-{project}-{topic}.md`
     - If a file for the same or similar project+topic already exists: append or update it
     - Otherwise: create a new file with header `# Memory - YYYY-MM-DD`
     - `{project}` is the short name of the current project (e.g. `dotfiles`, `my-app`); omit if the topic is not project-specific

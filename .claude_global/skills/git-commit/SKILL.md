@@ -21,10 +21,28 @@ Automatically generates a Conventional Commits compliant commit message and comm
     - `git status` — overall working tree state
     - `git log --oneline -20` — recent commits, to learn the repository's style
 2. Analyze the staged changes and recent commits
-3. Generate a commit message following:
+3. Scan the staged diff for potential secrets (see **Secret Scan** below); ask the user before proceeding if any are found
+4. Generate a commit message following:
     - Conventional Commits specification (structure and basic rules)
     - User's commit style patterns learned from repository history
-4. Execute `git commit` with the generated message
+5. Execute `git commit` with the generated message
+
+## Secret Scan
+
+Before committing, check the staged diff for:
+
+- API keys and tokens: strings starting with `ghp_`, `gho_`, `AKIA`, `sk-`, `xox`, or matching `-----BEGIN.*PRIVATE KEY`
+- Variables with sensitive names holding a value: patterns like `API_KEY=`, `_SECRET=`, `_TOKEN=`, `PASSWORD=`
+- Hardcoded absolute home paths: `/Users/<name>/` or `/home/<name>/` (prefer `~`)
+- Personal or organizational proper nouns that could identify specific individuals or organizations
+
+**If any of the above are found**, do not commit. Use AskUserQuestion to present these options:
+
+- "Commit as-is" — proceed despite the finding
+- "Fix then commit" — cancel so the user can fix the issue first
+- "Cancel" — abort without further action
+
+Only proceed if the user selects "Commit as-is", or if nothing suspicious was found.
 
 ## Conventional Commits Specification Summary
 
