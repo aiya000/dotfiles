@@ -322,7 +322,7 @@ end, { silent = true })
 -- Visualize a last pasted range
 vim.keymap.set('n', 'gp', function()
   local reg = string.sub(vim.fn.getregtype(), 1, 1)
-  return ('`[{%s}`]'):format(reg)
+  return ('`[%s`]'):format(reg)
 end, { expr = true })
 
 -- Copy and paste
