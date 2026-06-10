@@ -430,9 +430,10 @@ vim.keymap.set('n', '<C-g><C-t>', vim.lsp.buf.type_definition, { silent = true }
 vim.keymap.set('n', '<leader>R', '<Plug>(quickrepl-open)', { remap = true })
 
 -- File Manupilation
-vim.keymap.set('n', '<leader>b', '<Cmd>MadoScratchOpenFile md<CR>', { silent = true })
-vim.keymap.set('n', '<leader>B', '<Cmd>MadoScratchOpenFileNext md<CR>', { silent = true })
-vim.keymap.set('n', '<leader><leader>b', '<Cmd>MadoScratchOpen md float-aspect<CR>', { silent = true })
+
+--- See ./plugins/nvim-mado-scratch.lua for
+--- - <leader>b
+--- - <leader><leader>b
 
 vim.keymap.set('n', '<leader><leader>B', function()
   vim.cmd('vertical split ' .. InitLua.memo_path)

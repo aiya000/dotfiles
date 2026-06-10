@@ -69,7 +69,7 @@ return {
   config = function()
     require('mado-scratch').setup({
       default_file_ext = 'md',
-      default_open_method = 'vsp',
+      default_open_method = 'float-aspect',
       default_open_params = {
         ['float-aspect'] = {
           scale = {
@@ -99,5 +99,9 @@ return {
         vim.cmd.write({ bang = true })
       end,
     })
+
+    vim.keymap.set('n', '<leader>b', '<Cmd>MadoScratchOpen md<CR>', { silent = true })
+    vim.keymap.set('n', '<leader>B', '<Cmd>MadoScratchOpenFile md<CR>', { silent = true })
+    vim.keymap.set('n', '<leader><leader>b', '<Cmd>MadoScratchOpenFileNext md<CR>', { silent = true })
   end,
 }
