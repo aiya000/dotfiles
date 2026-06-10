@@ -1,13 +1,14 @@
 ---
+name: open-weburl
+description: Open URLs from numbered references, repository names, or the context. Use when the user asks to open URLs or GitHub repositories mentioned in the conversation.
 allowed-tools: Bash(wslview:*), Bash(xdg-open:*), Bash(open:*)
-description: Open URLs from numbered references, repository names, or the context
 ---
 
-# /open-weburl
+# open-weburl
 
 ## Description
 
-Opens URLs using below method.
+Opens URLs using the method appropriate for the current OS.
 Can handle numbered references from previous conversation or direct repository names.
 
 - `wslview` -- If on WSL
@@ -16,19 +17,19 @@ Can handle numbered references from previous conversation or direct repository n
 
 ## Usage
 
-- `/open-weburl 1, 2, 3` - Opens URLs that were referenced as "1.", "2.", "3." in the previous conversation
-- `/open-weburl foo.nvim bar.nvim nvim-baz` - Opens GitHub repositories for the specified names
+- `open-weburl 1, 2, 3` - Opens URLs that were referenced as "1.", "2.", "3." in the previous conversation
+- `open-weburl foo.nvim bar.nvim nvim-baz` - Opens GitHub repositories for the specified names
 
 ## Implementation
 
-When this command is used:
+When this skill is used:
 
 1. Parse the arguments (comma-separated or space-separated)
 2. For each argument:
    - If it's a number: Look for recent URLs that were referenced with that number in the conversation
    - If it's a repository name: Convert to GitHub URL format
 3. For missing references, report "URL for [X] not found"
-4. Open available URLs using wslview in background with the format:
+4. Open available URLs in background with the format:
    ```bash
    ( wslview URL1 ; wslview URL2 ; wslview URL3 ) &
    ```
@@ -38,7 +39,7 @@ When this command is used:
 ### Numbered References
 
 ```
-User: /open-weburl 1, 2, 3
+User: open-weburl 1, 2, 3
 Assistant: Opening URLs from recent list:
 - 1: https://github.com/mtth/scratch.vim
 - 2: https://github.com/LintaoAmons/scratch.nvim
@@ -48,7 +49,7 @@ Assistant: Opening URLs from recent list:
 ### Repository Names
 
 ```
-User: /open-weburl telescope.nvim lazy.nvim
+User: open-weburl telescope.nvim lazy.nvim
 Assistant: Opening repositories:
 - telescope.nvim: https://github.com/nvim-telescope/telescope.nvim
 - lazy.nvim: https://github.com/folke/lazy.nvim
@@ -57,7 +58,7 @@ Assistant: Opening repositories:
 ### Mixed/Missing
 
 ```
-User: /open-weburl telescope.nvim, nonexistent-software, lazy.nvim
+User: open-weburl telescope.nvim, nonexistent-software, lazy.nvim
 Assistant: Opening only available URLs:
 - telescope.nvim: https://github.com/nvim-telescope/telescope.nvim
 - lazy.nvim: https://github.com/folke/lazy.nvim
@@ -69,7 +70,7 @@ Also Assistant tells 'nonexistent-software is not found' to the user.
 Assuming the last conversation mentioned to `telescope.nvim` and `lazy.nvim`:
 
 ```
-User: /open-weburl
+User: open-weburl
 Assistant: Opening repositories:
 - telescope.nvim: https://github.com/nvim-telescope/telescope.nvim
 - lazy.nvim: https://github.com/folke/lazy.nvim
@@ -104,4 +105,4 @@ When the context is ambiguous, the assistant should ask to the user for clarific
 
 ## Background Execution
 
-Always execute wslview commands in background using `&` to prevent blocking the conversation.
+Always execute the open commands in background using `&` to prevent blocking the conversation.

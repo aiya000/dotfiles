@@ -1,37 +1,30 @@
 ---
-allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git show:*), Bash(git commit:*)
-description: Create a new git commit for staged changes
+name: git-commit
+description: Create a new git commit for staged changes. Use when the user asks to commit staged changes with an auto-generated Conventional Commits message.
+allowed-tools: Bash(git config:*), Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git show:*), Bash(git commit:*)
+context: fork
 ---
 
-**Important:**
-- **This command only commits staged changes. It does not stage any new files**
-- **DO NOT RUN `git push`**
-
-# /git-commit
+# git-commit
 
 Automatically generates a Conventional Commits compliant commit message and commits staged changes.
 
-## Current State
+**Important:**
 
-Staged changes:
-
-!`git diff --staged`
-
-Git status:
-
-!`git status`
-
-Recent commits:
-
-!`git log --oneline -20`
+- **This skill only commits staged changes. It does not stage any new files**
+- **DO NOT RUN `git push`**
 
 ## Behavior
 
-1. Analyze the staged changes and recent commits shown above
-2. Generate a commit message following:
-   - Conventional Commits specification (structure and basic rules)
-   - User's commit style patterns learned from repository history
-3. Execute `git commit` with the generated message
+1. Gather the current state by running:
+    - `git diff --staged` — the staged changes to commit
+    - `git status` — overall working tree state
+    - `git log --oneline -20` — recent commits, to learn the repository's style
+2. Analyze the staged changes and recent commits
+3. Generate a commit message following:
+    - Conventional Commits specification (structure and basic rules)
+    - User's commit style patterns learned from repository history
+4. Execute `git commit` with the generated message
 
 ## Conventional Commits Specification Summary
 
@@ -170,7 +163,7 @@ refactor(Neovim > commands): Use `helper.execute_at_git_root()` for consistency
 
 ## Notes
 
-- Commit directly without asking for confirmation (user approval already given by invoking this command)
+- Commit directly without asking for confirmation (user approval already given by invoking this skill)
 - If uncertain about the type or scope, ask the user before committing
 - Analyze the actual changed files to determine appropriate scope
 - **Do NOT add Claude Code signature** (🤖 Generated with [Claude Code] and Co-Authored-By: Claude) to commit messages

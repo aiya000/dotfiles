@@ -1,33 +1,24 @@
 ---
-allowed-tools: Skill(git-commit), Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git branch:*), Bash(git checkout:*), Bash(git push:*), Bash(gh:*)
-description: Create a pull request with auto-generated description
+name: github-pr-create
+description: Create a pull request with an auto-generated description. Use when the user asks to open a PR for the current branch's changes.
+allowed-tools: Skill(git-commit), Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git branch:*), Bash(git checkout:*), Bash(git push:*), Bash(gh issue:*), Bash(gh pr:*)
 ---
 
-# /github-pr-create
+# github-pr-create
 
 Create a pull request using `gh pr create` with an auto-generated description.
 
 ## Behavior
 
-1. Check current branch status with `git status` and `git branch`
-2. If on `main` or `master` branch, create a new feature branch
-3. If there are uncommitted staged changes, use `/git-commit` to commit them first
-4. Push the branch to remote with `git push -u origin <branch>`
-5. Create a PR using `gh pr create` with auto-generated title and description
-
-## Contexts
-
-`git status`:
-!`git status`
-
-`git log main..HEAD --oneline`:
-!`git log main..HEAD --oneline`
-
-`git log develop..HEAD --oneline`:
-!`git log develop..HEAD --oneline`
-
-`git log master..HEAD --oneline`:
-!`git log master..HEAD --oneline`
+1. Check current branch status by running `git status` and `git branch`
+2. Inspect the commits ahead of the base branch by running (whichever base exists):
+    - `git log main..HEAD --oneline`
+    - `git log develop..HEAD --oneline`
+    - `git log master..HEAD --oneline`
+3. If on `main` or `master` branch, create a new feature branch
+4. If there are uncommitted staged changes, use the `git-commit` skill to commit them first
+5. Push the branch to remote with `git push -u origin <branch>`
+6. Create a PR using `gh pr create` with auto-generated title and description
 
 ## Branch Naming Convention
 

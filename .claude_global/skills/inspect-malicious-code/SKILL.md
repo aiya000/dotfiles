@@ -1,28 +1,29 @@
 ---
-description: Inspect a project for potentially malicious code (malware, spyware, etc.)
+name: inspect-malicious-code
+description: Inspect a project for potentially malicious code (malware, spyware, etc.) using static analysis only. Use when the user asks to audit a project or dependency for malicious or suspicious code.
 ---
 
-# /inspect-malicious-code
+# inspect-malicious-code
 
 Inspect a project for potentially malicious code (malware, spyware, etc.).
 
 ## Arguments
 
-- `$ARGUMENTS` (optional): Target directory path. If not specified, use current working directory
+- Target directory path (optional). If not specified, use current working directory
 - `--include-node-modules`: Include `node_modules` directory in inspection (excluded by default)
 
 ## Behavior
 
 > **⚠️ CRITICAL: NEVER execute any code during inspection.**
 >
-> This command performs **static analysis only**. Do not run, eval, or execute any scripts, commands, or code found in the target project. Malicious code may activate upon execution.
+> This skill performs **static analysis only**. Do not run, eval, or execute any scripts, commands, or code found in the target project. Malicious code may activate upon execution.
 
 ### Step 1: Confirmation
 
 1. Display the target directory path clearly
 2. Ask the user: "Do you want to inspect this project for malicious code?"
 3. If **yes** → proceed to inspection
-4. If **no** → exit the command
+4. If **no** → exit
 
 ### Step 2: Inspection
 
@@ -79,6 +80,7 @@ Report findings with severity levels:
 - **🟢 CLEAN**: No suspicious patterns detected
 
 For each finding, provide:
+
 - File path and line number
 - The suspicious code snippet
 - Explanation of why it's flagged
