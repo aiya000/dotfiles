@@ -431,7 +431,7 @@ vim.keymap.set('n', '<leader>R', '<Plug>(quickrepl-open)', { remap = true })
 
 -- File Manupilation
 
---- See ./plugins/nvim-mado-scratch.lua for
+--- See ./plugins/nvim-mado-scratch.lua for:
 --- - <leader>b
 --- - <leader><leader>b
 

@@ -348,16 +348,33 @@ function M.get_termopen_options_bdelete_when_on_exit(opts)
   end
 end
 
+---Sets up `p`/`P` to enter Terminal mode right after pasting, in the given terminal buffer.
+---@param bufnr integer
+local function setup_start_insert_after_paste(bufnr)
+  for _, key in ipairs({ 'p', 'P' }) do
+    vim.keymap.set('n', key, key .. '<Cmd>startinsert<CR>', { buffer = bufnr })
+  end
+end
+
 ---Opens a terminal buffer that closes it when exited immediately.
 ---See `:h jobstart()` about the params.
 ---@params cmd string
----@param opts? table
+---@param opts? table --See `:h jobstart()`. Also accepts `start_insert_after_paste` (see below)
+---@param opts.start_insert_after_paste? boolean --When `true`, `p`/`P` enter Terminal mode right after pasting. Default is `false`
 function M.termopen_temporary(cmd, opts)
-  local opts_with_on_exit = vim.tbl_extend('force', opts or {}, {
+  opts = vim.tbl_extend('force', {}, opts or {})
+  local start_insert_after_paste = opts.start_insert_after_paste
+  opts.start_insert_after_paste = nil
+
+  local opts_with_on_exit = vim.tbl_extend('force', opts, {
     term = true,
     on_exit = M.get_termopen_options_bdelete_when_on_exit(opts),
   })
   vim.fn.jobstart(cmd, opts_with_on_exit)
+
+  if start_insert_after_paste then
+    setup_start_insert_after_paste(vim.api.nvim_get_current_buf())
+  end
 end
 
 ---Opens a terminal buffer with $SHELL that closes it when exited immediately.
@@ -372,6 +389,7 @@ function M.termopen_shell(opts, should_enter_insert_mode)
   M.termopen_temporary(
     vim.env.SHELL,
     vim.tbl_extend('force', opts, {
+      start_insert_after_paste = true,
       env = vim.tbl_extend('keep', {
         -- TODO: `git_bridge_wsl2_and_windows`越しだと、なぜかこれがnot nilの場合、この`termopen_temporary()`の処理が正しくできず、バッファが直ちに閉じる。とりあえずgit.exeを参照していたら、`nvim-parent-edit`を無効にしておく。 -> 調査して、直す
         NEOVIM_TERMINAL = not M.is_using_windows_git() or nil,
@@ -795,8 +813,10 @@ end
 ---@param cmd string
 ---@param on_open_extra? fun(t: table): nil --Called before the default BufEnter autocmd
 ---@param env? table<string, string> --Environment variables passed to the terminal process. NOTE: on_open_extra fires after process start, so env vars must be set here via `Terminal:new()`
+---@param opts? { start_insert_after_paste?: boolean } --`start_insert_after_paste`: when `true`, `p`/`P` enter Terminal mode right after pasting. Default is `false`
 ---@return fun(): nil
-local function make_cli_app_toggler(cmd, on_open_extra, env)
+local function make_cli_app_toggler(cmd, on_open_extra, env, opts)
+  opts = opts or {}
   local term = nil
   return function()
     if term == nil then
@@ -808,6 +828,9 @@ local function make_cli_app_toggler(cmd, on_open_extra, env)
         on_open = function(t)
           if on_open_extra then
             on_open_extra(t)
+          end
+          if opts.start_insert_after_paste then
+            setup_start_insert_after_paste(t.bufnr)
           end
           vim.api.nvim_create_autocmd('BufEnter', {
             buffer = t.bufnr,
@@ -838,16 +861,18 @@ M.toggle_copilot_cli = make_cli_app_toggler(
   function()
     vim.keymap.set('t', '<C-p>', '<Up>', { buffer = true })
     vim.keymap.set('t', '<C-n>', '<Down>', { buffer = true })
-  end
+  end,
+  nil,
+  { start_insert_after_paste = true }
 )
-M.toggle_antigravity_cli = make_cli_app_toggler('agy')
-M.toggle_devin_cli = make_cli_app_toggler('devin')
+M.toggle_antigravity_cli = make_cli_app_toggler('agy', nil, nil, { start_insert_after_paste = true })
+M.toggle_devin_cli = make_cli_app_toggler('devin', nil, nil, { start_insert_after_paste = true })
 M.toggle_shell = make_cli_app_toggler(vim.env.SHELL, nil, {
   -- TODO: See `M.termopen_shell` comment about `NEOVIM_TERMINAL` for why this condition is needed
   NEOVIM_TERMINAL = not M.is_using_windows_git() or nil,
   -- NEOVIM_TERMINAL = true,
   NVIM_PARENT_ADDRESS = vim.v.servername,
-})
+}, { start_insert_after_paste = true })
 
 ---Clears flash.nvim highlights
 function M.clear_flash_nvim_highlight()
