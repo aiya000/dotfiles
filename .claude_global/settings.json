@@ -1,5 +1,4 @@
 {
-  "defaultMode": "acceptEdits",
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
   "editorMode": "vim",
@@ -14,10 +13,10 @@
       "allowWrite": [
         "// `./bash-toys`などのsubmoduleでgit-commitを許可する",
         "~/.dotfiles/.git/",
-        "// `/save-memory`用",
-        "~/.dotfiles/.private/AI-MEMORY/",
         "// Windows filesystem (DrvFs) - bwrapがsandbox setup時に書き込みを要求するため",
-        "/mnt/c/Users/aiya0/"
+        "/mnt/c/Users/aiya0/",
+        "// `rm-dust`の退避先（ゴミ箱）",
+        "~/.backup/dustbox/"
       ]
     }
   },
@@ -26,7 +25,6 @@
     "command": "ccstatusline",
     "padding": 0
   },
-  "editorMode": "vim",
   "permissions": {
     "allow": [
       "Bash(cp:*)",
@@ -51,6 +49,7 @@
       "Bash(gh run view:*)",
       "Bash(grep:*)",
       "Bash(rg:*)",
+      "Bash(python3:*)",
       "Bash(notify:*)",
       "Read(~/.config/nvim)",
       "Skill(read-agents-md)",
@@ -63,6 +62,13 @@
       "Bash(rm:*)",
       "Read(.env.*)"
     ],
+    "// `ask`: 通常モードでは確認プロンプト、bypassモードでは自動許可される（deny と違い bypass を素通りする）": "",
+    "ask": [
+      "Bash(git push:*)",
+      "Bash(sudo:*)",
+      "Bash(find:*)"
+    ],
+    "defaultMode": "acceptEdits",
     "additionalDirectories": [
       "~/.dotfiles/.private/AI-MEMORY/"
     ]
@@ -73,7 +79,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "notify 'Claude Code' 'Claude Code stopped' {hard-code-your-$HOME-here}/.dotfiles/bash-toys/assets/notification-1.mp3"
+            "command": "notify 'Claude Code' 'Claude Code stopped' ~/.dotfiles/bash-toys/assets/notification-1.mp3"
           }
         ]
       }
