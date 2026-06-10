@@ -11,11 +11,15 @@ return list.concat(
   sm({ 'img', 'image' }, fmt('![]({})', { i(1, 'here') })),
 
   sm({ 'check', 'ch' }, fmt('- [ ] {}', { i(1, '') })),
-  { s('checked', fmt('- [x] {}', { i(1, '') })) },
+  {
+    s('checked', fmt('- [x] {}', { i(1, '') })),
+  },
   sm({ 'check_', 'ch_', '_ch' }, t('[ ]')),
   sm({ 'checked_', 'checked_', '_checked' }, t('[x]')),
 
-  { s('bar', t('- - -')) },
+  {
+    s('bar', t('- - -')),
+  },
   sm({ 'barbar', 'barr' }, t('- - - - -')),
 
   sm(
@@ -42,9 +46,13 @@ return list.concat(
     'footnote_reference',
     'fn',
   }, fmt('[^{name}]', { name = i(1, 'name') })),
-  { s('footnote', fmt('[^{name}]: {}', { name = i(1, 'name'), i(2, '') })) },
+  {
+    s('footnote', fmt('[^{name}]: {}', { name = i(1, 'name'), i(2, '') })),
+  },
 
-  sm({ 'id', 'anchor' }, fmt('<a id="{}">', { i(1, 'section_name') }))
+  sm({ 'id', 'anchor' }, fmt('<a id="{}">', { i(1, 'section_name') })),
 
-  { s('niconiconi', t('🤟🙄🤟')) }
+  {
+    s('niconiconi', t('🤟🙄🤟')),
+  }
 )
