@@ -32,11 +32,14 @@ prepare:
 	if [ ! -d ~/git ] ; then \
 		mkdir ~/git ; \
 	fi
-	# Please see .vimrc and .shells
+	# See `~/.dotfiles/.config/nvim/init.lua` and `~/.dotfiles/.shells`
 	if [ ! -d ~/.backup ] ; then \
 		mkdir -p ~/.backup/dustbox ; \
 		mkdir -p ~/.backup/temporary-store ; \
 		mkdir -p ~/.backup/vim-backup/{swp,session,undo} ; \
+	fi
+	if [ ! -d ~/bin ] ; then \
+		mkdir ~/bin ; \
 	fi
 	# Please see .npmrc
 	if [ ! -d ~/.npm-prefix ] ; then \
