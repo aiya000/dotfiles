@@ -145,9 +145,34 @@ vim.keymap.set('n', 'p', function()
     nvim.run_with_virtual_keymaps('<Plug>(gin-action-diff:smart:vsplit)')
     return
   end
-  run_closing_float(function()
+
+  local float_win = vim.api.nvim_get_current_win()
+  local ok, diff_tab = pcall(vim.api.nvim_win_get_var, float_win, 'gin_diff_tabpage')
+
+  if ok and vim.api.nvim_tabpage_is_valid(diff_tab) then
+    local filepath = get_current_line_file_path()
+    if filepath == nil then
+      vim.notify('Failed to parse the current line for file path', vim.log.levels.ERROR)
+      return
+    end
+    local line = vim.fn.getline('.')
+    local status = line:match('^%s*(%S+)')
+    local has_staged = status ~= nil and status:sub(1, 1) ~= ' ' and status:sub(1, 1) ~= '?'
+    if InitLua.git_root ~= nil then
+      filepath = InitLua.git_root .. '/' .. filepath
+    end
+    vim.api.nvim_set_current_tabpage(diff_tab)
+    vim.cmd('vsplit')
+    if has_staged then
+      vim.cmd('GinDiff ++cached -- ' .. vim.fn.fnameescape(filepath))
+    else
+      vim.cmd('GinDiff -- ' .. vim.fn.fnameescape(filepath))
+    end
+  else
     nvim.run_with_virtual_keymaps('<Plug>(gin-action-diff:smart:tabedit)')
-  end)
+    local new_tab = vim.api.nvim_get_current_tabpage()
+    vim.api.nvim_win_set_var(float_win, 'gin_diff_tabpage', new_tab)
+  end
 end, { buffer = true, silent = true, nowait = true })
 
 vim.keymap.set('n', 'P', ':<C-u>!git push', { remap = true, buffer = true })
@@ -168,10 +193,8 @@ vim.keymap.set('n', '<C-g>', ':<C-u>!git<Space>', { nowait = true, remap = true,
 
 vim.keymap.set('n', 'O', function()
   vim.cmd('normal "zyy')
-  run_closing_float(function()
-    vim.cmd('tabnew')
-    vim.cmd('edit ' .. vim.fn.trim(vim.fn.getreg('z')))
-  end)
+  vim.cmd('tabnew')
+  vim.cmd('edit ' .. vim.fn.trim(vim.fn.getreg('z')))
 end, { buffer = true, silent = true })
 
 vim.keymap.set('n', 'S', function()
