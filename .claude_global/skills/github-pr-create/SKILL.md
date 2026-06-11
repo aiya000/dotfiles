@@ -1,7 +1,7 @@
 ---
 name: github-pr-create
 description: Create a pull request with an auto-generated description. Use when the user asks to open a PR for the current branch's changes.
-allowed-tools: Skill(git-commit), Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git branch:*), Bash(git checkout:*), Bash(git push:*), Bash(gh issue:*), Bash(gh pr:*)
+allowed-tools: Skill(git-commit), Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git branch:*), Bash(git checkout:*), Bash(git push:*), Bash(git config:*), Bash(gh issue:*), Bash(gh pr:*), Bash(gh auth:*)
 ---
 
 # github-pr-create
@@ -9,6 +9,15 @@ allowed-tools: Skill(git-commit), Bash(git status:*), Bash(git diff:*), Bash(git
 Create a pull request using `gh pr create` with an auto-generated description.
 
 ## Behavior
+
+0. Check git/gh user consistency:
+    - Run `git config user.name` to get the local git identity
+    - Run `gh auth status` to identify the active GitHub user
+    - If they differ:
+        - If acting autonomously: run `gh auth switch --user "$(git config user.name)"`
+            - If switch succeeds: continue
+            - If switch fails: defer this skill. After all other work is done, report to the user: the git/gh user mismatch and that the switch failed
+        - If not acting autonomously: stop the skill and ask the user to resolve the mismatch before continuing
 
 1. Check current branch status by running `git status` and `git branch`
 2. Inspect the commits ahead of the base branch by running (whichever base exists):

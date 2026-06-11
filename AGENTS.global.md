@@ -1,6 +1,10 @@
 # Global Custom Instructons
 
-This is a global instruction file for Claude Code, Antigravity CLI, (GitHub) copilot-cli, or another AI Agents.
+This is a global instruction file for Antigravity CLI, (GitHub) copilot-cli, or another AI Agents.
+
+<!--
+Claude Code users: see `~/.dotfiles/.claude_global/CLAUDE.md` instead.
+-->
 
 <!--
 Note for me (a user):
@@ -12,12 +16,13 @@ Check also `./.claude_global/README.md` and `./GEMINI.global.README.md`.
 After this, I (we) will call:
 
 - 'you' as you. Or
-    - 'Claude Code' if you are Claude Code
     - 'Antigravity CLI' or 'antigravity' if you are Antigravity CLI
     - 'copilot-cli', 'github copilot', or 'copilot', if you are copilot-cli
 - 'Global Config' as this file
 
 ## First
+
+Note for Claude Code: See the `on-instructions-loaded` and `verify-git-identity` skills instead.
 
 When you read this file successfully,
 **YOU MUST SAY**
@@ -34,6 +39,8 @@ Result for `git config user.email 2>&1 && echo 'user.name is set' || echo 'user.
 If either is missing, **stop and ask the user to configure git identity before doing any work**.
 
 ## Reading AGENTS.md
+
+Note for Claude Code: See the `read-agents-md` skill instead.
 
 If you natively support AGENTS.md, you MUST skip this section entirely.
 Or ignore the rules written in this section so that your native behavior regarding AGENTS.md remains unchanged.
@@ -86,6 +93,8 @@ root/
 ## Running CLI
 
 ### **Alternative commands**
+
+Note for Claude Code: See the `suggest-alternative-commands` skill instead.
 
 When you want to run the following commands, use the alternative commands instead:
 
@@ -141,6 +150,8 @@ However, please be aware of the following special environment.
 
 ## Memory Files
 
+Note for Claude Code: See the `save-memory` skill instead.
+
 Memory files are human-readable Markdown files used by AI agents to persist context across sessions.
 
 ### Location
@@ -186,63 +197,6 @@ YYYY-MM-DD-{project}-{topic}.md
 - **When auto-compacting conversations, compress older history but preserve recent history uncompressed**
 
 ## Instructions for each agents
-
-### Read this section **if you are Claude Code**
-
-I don't define any instructions here because I already instructed you in `~/.dotfiles/.claude_global/settings.json`.
-
-#### Git on Windows Filesystem
-
-When the working directory is on a Windows filesystem, WSL's native `git` may fail with errors.
-Avoid this by using the appropriate git binary.
-
-##### 1. Check if you are on a Windows filesystem
-
-If the output of the following command starts with a Windows drive letter (`C:`, `D:`, etc.), you are on a Windows filesystem:
-
-Result for `git rev-parse --show-toplevel`: !`git rev-parse --show-toplevel`
-
-Example: `C:/Users/UserName/Repository/ProjectName`
-
-If it shows a normal UNIX path (e.g. `/home/...`), skip the rest of this 'Git on Windows Filesystem' section.
-
-##### 2. Confirm the current directory is under `/mnt/c/`
-
-The current working directory should start with `/mnt/c/` or a similar WSL mount path.
-If it does not, notify the user.
-
-Result for `pwd`: !`pwd`
-
-##### 3. Check where the git command is from
-
-Run `which git` to find the git binary location:
-
-Result for `which git`: !`which git`
-
-If the location is **not** in a user-placed path like `~/bin/git`, skip this subsection.
-
-If it is in a user-placed path, check whether it looks like a WSL-to-Windows filesystem bridge script:
-
-Result for `ls -l $(which git)`: !`ls -l $(which git)`
-
-```bash
-# Example of a WSL-to-Windows filesystem bridge script
-lrwxrwxrwx 1 aiya000 aiya000 80 Jan 25 12:17 /home/aiya000/bin/git -> /home/aiya000/Repository/git_bridge_wsl2_and_windows/git_bridge_wsl2_and_windows
-```
-
-If it does **not** appear to be such a bridge script, skip this subsection.
-
-##### Last: If no bridge and some method for windows are found
-
-If no suitable, notify the user and explain what they need to set up.
-
-#### Path Usage
-
-When running shell commands, **prefer relative paths over full absolute paths** whenever possible.
-
-Using full paths can conflict with `/sandbox` (this name for claude code) settings and trigger unnecessary permission prompts.
-
-Use absolute paths only when truly necessary (e.g. accessing files outside the project root such as `~/.dotfiles/`).
 
 ### Read this section **if you are copilot-cli**
 

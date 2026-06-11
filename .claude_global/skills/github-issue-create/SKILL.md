@@ -1,7 +1,7 @@
 ---
 name: github-issue-create
 description: Create a GitHub issue with an auto-generated description. Use when the user asks to open an issue for a bug, feature request, or task.
-allowed-tools: Bash(git status:*), Bash(git log:*), Bash(gh issue:*), Bash(gh repo:*)
+allowed-tools: Bash(git status:*), Bash(git log:*), Bash(git config:*), Bash(gh issue:*), Bash(gh repo:*), Bash(gh auth:*)
 ---
 
 # github-issue-create
@@ -9,6 +9,15 @@ allowed-tools: Bash(git status:*), Bash(git log:*), Bash(gh issue:*), Bash(gh re
 Create a GitHub issue using `gh issue create` with an auto-generated title and description.
 
 ## Behavior
+
+0. Check git/gh user consistency:
+    - Run `git config user.name` to get the local git identity
+    - Run `gh auth status` to identify the active GitHub user
+    - If they differ:
+        - If acting autonomously: run `gh auth switch --user "$(git config user.name)"`
+            - If switch succeeds: continue
+            - If switch fails: defer this skill. After all other work is done, report to the user: the git/gh user mismatch and that the switch failed
+        - If not acting autonomously: stop the skill and ask the user to resolve the mismatch before continuing
 
 1. Review the context provided by the user (bug description, feature request, task details, etc.)
 2. Inspect the repository to understand context if needed:
