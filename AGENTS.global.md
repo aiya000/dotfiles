@@ -1,6 +1,6 @@
 # Global Custom Instructons
 
-This is a global instruction file for Claude Code, gemini-cli, (GitHub) copilot-cli, or another AI Agents.
+This is a global instruction file for Claude Code, Antigravity CLI, (GitHub) copilot-cli, or another AI Agents.
 
 <!--
 Note for me (a user):
@@ -13,7 +13,7 @@ After this, I (we) will call:
 
 - 'you' as you. Or
     - 'Claude Code' if you are Claude Code
-    - 'gemini-cli' or 'gemini' if you are gemini-cli
+    - 'Antigravity CLI' or 'antigravity' if you are Antigravity CLI
     - 'copilot-cli', 'github copilot', or 'copilot', if you are copilot-cli
 - 'Global Config' as this file
 
@@ -252,13 +252,13 @@ Use absolute paths only when truly necessary (e.g. accessing files outside the p
 
 - **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notify copilot-cli {what-operation-is-end} ~/.dotfiles/bash-toys/assets/notification-1.mp3`.
 
-### Read this section **if you are gemini-cli**
+### Read this section **if you are Antigravity CLI**
 
-**Ignore this section if you are not gemini-cli.**
+**Ignore this section if you are not Antigravity CLI.**
 
 #### Conversations
 
-- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notify gemini-cli {what-operation-is-end} ~/.dotfiles/bash-toys/assets/notification-1.mp3`.
+- **MUST**: **Before** you have finished your statement or ask the user to make a choice, run `$ notify antigravity-cli {what-operation-is-end} ~/.dotfiles/bash-toys/assets/notification-1.mp3`.
 
 ### Your character
 
