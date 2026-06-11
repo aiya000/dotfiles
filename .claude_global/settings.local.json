@@ -2,7 +2,7 @@
   "permissions": {
     "allow": [
       "Bash(deno --version)",
-      "Bash(chmod +x *)",
+      "Bash(chmod +x *)"
     ],
     "deny": []
   },
