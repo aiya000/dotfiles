@@ -53,6 +53,23 @@ Brief description of what this PR does (1-3 bullet points)
 - Description of breaking changes and migration steps
 ```
 
+## Secret Scan
+
+Before creating the PR, check the diff (commits ahead of base branch) for:
+
+- API keys and tokens: strings starting with `ghp_`, `gho_`, `AKIA`, `sk-`, `xox`, or matching `-----BEGIN.*PRIVATE KEY`
+- Variables with sensitive names holding a value: patterns like `API_KEY=`, `_SECRET=`, `_TOKEN=`, `PASSWORD=`
+- Hardcoded absolute home paths: `/Users/<name>/` or `/home/<name>/` (prefer `~`)
+- Personal or organizational proper nouns that could identify specific individuals or organizations
+
+**If any of the above are found**, do not create the PR. Use AskUserQuestion to present these options:
+
+- "Create as-is" — proceed despite the finding
+- "Fix then create" — cancel so the user can fix the issue first
+- "Cancel" — abort without further action
+
+Only proceed if the user selects "Create as-is", or if nothing suspicious was found.
+
 ## Does Not
 
 1. Create a PR if the current branch has no commits ahead of the base branch
