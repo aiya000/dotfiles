@@ -1,6 +1,6 @@
 ---
 name: suggest-alternative-commands
-description: Instruct to suggest alternative commands for `rm`, `find`, and `grep`. Use when you want to run `rm`, `find`, or `grep`, and the corresponding alternative is installed in the environment — `rm-dust` for `rm`, `fd` (or `fd-find`) for `find`, `rg` for `grep`.
+description: Instruct to suggest alternative commands for `rm`, `find`, and `grep`. Use when Claude Code started, and you want to run `rm`, `find`, or `grep`, and the corresponding alternative is installed in the environment — `rm-dust` for `rm`, `fd` (or `fd-find`) for `find`, `rg` for `grep`.
 ---
 
 # suggest-alternative-commands
