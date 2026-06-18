@@ -2,7 +2,6 @@
 name: save-memory
 description: Export and distill the current conversation into a memory file. Use when the user asks to save, remember, or note the current session for future context.
 allowed-tools: Bash(date *), Bash(ls *), Write(~/.ai-memory/*), Read(~/.ai-memory/*)
-context: fork
 ---
 
 # save-memory
@@ -42,22 +41,24 @@ that future Claude Code sessions can load to restore context.
 
 ### How to distill
 
-From the conversation, extract only what is worth remembering across sessions.
+From the conversation, extract what is worth remembering across sessions.
 Write under a timestamped heading: `## [HH:MM] - <short topic title>`
+
+The goal is a **chronological log of what happened in this session** — so a future session can understand the timeline and context without replaying the full conversation.
 
 Keep:
 
-- What was decided or implemented (the outcome, not the process)
+- What was done in this session: changes made, commands run, problems solved (summarized, not verbatim)
+- The reason or context behind each action — the "why", which is often invisible in code or git history
 - User preferences or constraints discovered during the session
-- Key facts about the project or codebase that are not obvious from reading the code
 - Errors or pitfalls encountered and how they were resolved
+- Decisions made and their rationale
 
 Remove:
 
-- Tool call inputs/outputs and command logs
+- Tool call inputs/outputs and command logs (raw output)
 - Verbose code listings (keep only the essential snippet if truly needed)
 - Back-and-forth clarification exchanges
-- Any content already derivable from the current code or git history
 - Meta-conversation about the AI itself
 
 The result should be concise — a future session should be able to read it in seconds and understand
