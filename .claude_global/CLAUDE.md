@@ -18,7 +18,7 @@ After this, I (we) will call:
 
 - **NEVER use `find -exec` or `fd --exec`** -- Can accidentally execute commands on unintended files; use a loop or `xargs` instead
 - **Avoid `git -C <path>`** -- Prefer running git from the correct working directory; use only when necessary (e.g. submodule operations)
-- **NEVER use `git -c user.name=...` or `git -c user.email=...`** -- Never inject identity via command-line flags; if identity is missing, use the `verify-git-identity` skill
+- **NEVER use `git -c user.name=...` or `git -c user.email=...`** -- Never inject identity via command-line flags; if identity is missing, use the `git-verify-identity` skill
 
 ## **Using Interpreter Invocations**
 

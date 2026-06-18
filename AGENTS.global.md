@@ -22,7 +22,7 @@ After this, I (we) will call:
 
 ## First
 
-Note for Claude Code: See the `on-instructions-loaded` and `verify-git-identity` skills instead.
+Note for Claude Code: See the `on-instructions-loaded` and `git-verify-identity` skills instead.
 
 When you read this file successfully,
 **YOU MUST SAY**

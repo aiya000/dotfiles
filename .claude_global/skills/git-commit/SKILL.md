@@ -1,7 +1,7 @@
 ---
 name: git-commit
 description: Create a new git commit for staged changes. Use when the user asks to commit staged changes with an auto-generated Conventional Commits message.
-allowed-tools: Skill(verify-git-identity), Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git show:*), Bash(git commit:*)
+allowed-tools: Skill(git-verify-identity), Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git show:*), Bash(git commit:*)
 ---
 
 # git-commit
@@ -15,7 +15,7 @@ Automatically generates a Conventional Commits compliant commit message and comm
 
 ## Behavior
 
-0. Use the `verify-git-identity` skill to confirm git user identity before proceeding
+0. Use the `git-verify-identity` skill to confirm git user identity before proceeding
 
 1. Gather the current state by running:
     - `git diff --staged` — the staged changes to commit

@@ -1,10 +1,10 @@
 ---
-name: verify-git-identity
+name: git-verify-identity
 description: Verify that git user.name and user.email are configured. Use automatically before any git operation that requires identity (commits, rebases, cherry-picks, etc.), and when the user asks to check or verify their git identity.
 allowed-tools: Bash(git config:*)
 ---
 
-# verify-git-identity
+# git-verify-identity
 
 Check that `git config user.name` and `git config user.email` are both set before proceeding with any identity-dependent git operation.
 
