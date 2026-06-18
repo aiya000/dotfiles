@@ -1,7 +1,7 @@
 ---
 name: github-pr-create
 description: Create a pull request with an auto-generated description. Use when the user asks to open a PR for the current branch's changes.
-allowed-tools: Skill(git-commit), Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git branch:*), Bash(git checkout:*), Bash(git push:*), Bash(git config:*), Bash(gh issue:*), Bash(gh pr:*), Bash(gh auth:*)
+allowed-tools: Skill(git-commit), Skill(git-push), Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git branch:*), Bash(git checkout:*), Bash(git config:*), Bash(gh issue:*), Bash(gh pr:*), Bash(gh auth:*)
 ---
 
 # github-pr-create
@@ -26,7 +26,7 @@ Create a pull request using `gh pr create` with an auto-generated description.
     - `git log master..HEAD --oneline`
 3. If on `main` or `master` branch, create a new feature branch
 4. If there are uncommitted staged changes, use the `git-commit` skill to commit them first
-5. Push the branch to remote with `git push -u origin <branch>`
+5. Push the branch to remote using the `git-push` skill
 6. Create a PR using `gh pr create` with auto-generated title and description
 
 ## Branch Naming Convention
