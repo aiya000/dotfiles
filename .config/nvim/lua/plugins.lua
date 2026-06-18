@@ -1728,18 +1728,6 @@ return {
   },
 
   -- }}}
-  -- telescope-frecency.nvim {{{
-
-  {
-    'nvim-telescope/telescope-frecency.nvim',
-    dependencies = { 'telescope.nvim' },
-    version = '*',
-    config = function()
-      require('telescope').load_extension('frecency')
-    end,
-  },
-
-  -- }}}
   -- luarrow {{{
 
   {
