@@ -2,7 +2,6 @@
 name: git-commit
 description: Create a new git commit for staged changes. Use when the user asks to commit staged changes with an auto-generated Conventional Commits message.
 allowed-tools: Bash(git config:*), Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git show:*), Bash(git commit:*)
-context: fork
 ---
 
 # git-commit
