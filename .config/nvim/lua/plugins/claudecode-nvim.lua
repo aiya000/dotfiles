@@ -16,6 +16,7 @@ return {
   },
   keys = {
     { toggle_key, mode = { 'n' }, '<Cmd>ClaudeCodeFocus<CR>', desc = 'Toggle Claude Code' },
+    { '<C-r>', mode = { 'n' }, '<Cmd>ClaudeCodeFocus<CR>', desc = 'Toggle Claude Code' },
     { '<leader>cr', mode = { 'n' }, '<Cmd>ClaudeCode --resume<CR>', desc = 'Resume Claude' },
     { '<leader>cC', mode = { 'n' }, '<Cmd>ClaudeCode<CR>', desc = 'New Claude' },
     { '<leader>cD', mode = { 'n' }, '<Cmd>ClaudeCodeDocker<CR>', desc = 'Toggle Docker Claude' },
@@ -45,6 +46,14 @@ return {
         keys = {
           claude_hide = {
             toggle_key,
+            function(self)
+              self:hide()
+            end,
+            mode = 't',
+            desc = 'Hide',
+          },
+          claude_hide_ctrl_r = {
+            '<C-r>',
             function(self)
               self:hide()
             end,
