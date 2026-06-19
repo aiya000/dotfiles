@@ -1,6 +1,6 @@
 ---
 name: git-commit
-description: Create a new git commit for staged changes. Use when the user asks to commit staged changes with an auto-generated Conventional Commits message.
+description: Create a new git commit for staged changes. Use when the user asks to commit staged changes with an auto-generated Conventional Commits message, or when Claude Code itself wants to run `git commit`.
 allowed-tools: Skill(git-verify-identity), Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git show:*), Bash(git commit:*)
 ---
 
@@ -186,3 +186,14 @@ refactor(Neovim > commands): Use `helper.execute_at_git_root()` for consistency
 - If uncertain about the type or scope, ask the user before committing
 - Analyze the actual changed files to determine appropriate scope
 - **Do NOT add Claude Code signature** (🤖 Generated with [Claude Code] and Co-Authored-By: Claude) to commit messages
+
+## Constructing the Commit Command
+
+When building the `git commit -m "..."` command:
+
+- **Use `printf` instead of a heredoc** to avoid shell escape issues:
+    ```bash
+    git commit -m "$(printf 'feat!(scope): Add `foo` & Remove `bar`\n\nBody text here.')"
+    ```
+- In a `<<'EOF'` heredoc, single-quoting the delimiter suppresses ALL expansions, so characters like `` ` `` and `!` are safe — but backslashes are also literal. Writing `\!` or `` \` `` inside `<<'EOF'` embeds the backslash verbatim into the commit message, which is wrong.
+- With `printf`, no escaping of `` ` `` or `!` is needed; only `\n` for newlines and `\\` for a literal backslash.
