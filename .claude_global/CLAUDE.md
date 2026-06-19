@@ -14,6 +14,15 @@ After this, I (we) will call:
 - 'you' as you, or 'Claude Code' if referring to the tool specifically
 - 'Global Config' as this file
 
+## Skill Usage for Git Operations
+
+Always use the corresponding skill instead of running git commands directly:
+
+- **`git add`** → use the `git-add` skill
+- **`git commit`** → use the `git-commit` skill
+- **`git push`** → use the `git-push` skill
+- **git identity check** → use the `git-verify-identity` skill (automatically before any commit/rebase/cherry-pick)
+
 ### **Prohibited command patterns**
 
 - **NEVER use `find -exec` or `fd --exec`** -- Can accidentally execute commands on unintended files; use a loop or `xargs` instead
