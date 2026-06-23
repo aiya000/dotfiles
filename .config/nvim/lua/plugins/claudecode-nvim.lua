@@ -16,7 +16,6 @@ return {
   },
   keys = {
     { toggle_key, mode = { 'n' }, '<Cmd>ClaudeCodeFocus<CR>', desc = 'Toggle Claude Code' },
-    { '<C-r>', mode = { 'n' }, '<Cmd>ClaudeCodeFocus<CR>', desc = 'Toggle Claude Code' },
     { '<leader>cr', mode = { 'n' }, '<Cmd>ClaudeCode --resume<CR>', desc = 'Resume Claude' },
     { '<leader>cC', mode = { 'n' }, '<Cmd>ClaudeCode<CR>', desc = 'New Claude' },
     { '<leader>cD', mode = { 'n' }, '<Cmd>ClaudeCodeDocker<CR>', desc = 'Toggle Docker Claude' },
@@ -44,21 +43,16 @@ return {
         height = 0.9,
         border = 'rounded',
         keys = {
-          claude_hide = {
-            toggle_key,
-            function(self)
-              self:hide()
-            end,
-            mode = 't',
-            desc = 'Hide',
-          },
-          claude_hide_ctrl_r = {
+          claude_refresh = {
             '<C-r>',
             function(self)
               self:hide()
+              vim.schedule(function()
+                require('claudecode.terminal').open()
+              end)
             end,
-            mode = 't',
-            desc = 'Hide',
+            mode = 'n',
+            desc = 'Refresh Claude Code Window',
           },
         },
       },
