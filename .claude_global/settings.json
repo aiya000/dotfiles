@@ -74,6 +74,17 @@
     ]
   },
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.command' | grep -qE '(^|[[:space:]|;&])(find|grep|rm)([[:space:]]|$)' && echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Use fd instead of find, rg instead of grep, rm-dust instead of rm.\"}}' || true"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [
