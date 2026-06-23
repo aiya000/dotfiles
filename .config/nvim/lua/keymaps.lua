@@ -509,23 +509,10 @@ vim.keymap.set('i', '<C-s>', function()
 end, { silent = true })
 
 -- File Manupilation
-vim.keymap.set('v', '<leader>b', function()
-  local start_line = vim.fn.getpos("'<")[2]
-  local end_line = vim.fn.getpos("'>")[2]
-  local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
 
-  nvim.input('Input File Extension (e.g., md, ts, hs)', function(submitted)
-    if submitted == '' or submitted == nil then
-      error('FileType is required')
-    end
-
-    vim.cmd('MadoScratchOpenFileNext ' .. submitted .. ' vsp')
-    local scratch_buf = vim.api.nvim_get_current_buf()
-    vim.api.nvim_buf_set_lines(scratch_buf, 0, -1, false, lines)
-    vim.cmd('normal! gg=Ggg')
-    vim.cmd.write()
-  end)
-end, { silent = true })
+--- See ./plugins/nvim-mado-scratch.lua for:
+--- - <leader>b
+--- - <leader><leader>b
 
 -- }}}
 -- select mode {{{
