@@ -191,9 +191,17 @@ refactor(Neovim > commands): Use `helper.execute_at_git_root()` for consistency
 
 When building the `git commit -m "..."` command:
 
-- **Use `printf` instead of a heredoc** to avoid shell escape issues:
+- **Wrap the message in single quotes** to avoid shell expansion of `` ` `` and `!`:
     ```bash
-    git commit -m "$(printf 'feat!(scope): Add `foo` & Remove `bar`\n\nBody text here.')"
+    git commit -m 'feat(scope): Add `foo` & Remove `bar`'
     ```
-- In a `<<'EOF'` heredoc, single-quoting the delimiter suppresses ALL expansions, so characters like `` ` `` and `!` are safe — but backslashes are also literal. Writing `\!` or `` \` `` inside `<<'EOF'` embeds the backslash verbatim into the commit message, which is wrong.
-- With `printf`, no escaping of `` ` `` or `!` is needed; only `\n` for newlines and `\\` for a literal backslash.
+- **For multi-line messages (with body), use `$'...'` (ANSI-C quoting)** — this is a shell syntax construct (not a command), so it does not trigger permission prompts:
+    ```bash
+    git commit -m $'feat(scope): Add `foo` & Remove `bar`\n\nBody text here.'
+    ```
+- **If the message itself contains a single quote**, use `$'...'` and escape it as `\'`:
+    ```bash
+    git commit -m $'fix(scope): Handle Someone\'s edge case'
+    ```
+- In `$'...'`, use `\n` for newlines and `\\` for a literal backslash. Backticks and `!` need no escaping.
+- **Do NOT use `printf` or heredocs** — `printf` spawns a subcommand and triggers permission prompts unnecessarily.
