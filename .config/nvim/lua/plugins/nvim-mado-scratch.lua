@@ -83,11 +83,7 @@ return {
   -- 'aiya000/nvim-mado-scratch',
   -- dir = vim.fn.expand('~/Repository/nvim-mado-scratch'),
   dir = vim.fn.expand('~/Repository/nvim-mado-scratch/main'),
-  -- dir = vim.fn.expand('~/Repository/nvim-mado-scratch/feature/default_open_behavior'),
-  dependencies = {
-    'nvim-lua/plenary.nvim',
-    'MunifTanjim/nui.nvim',
-  },
+  -- dir = vim.fn.expand([[~/Repository/nvim-mado-scratch/]] .. 'copilot/fix-flash-nvim-keybinding'),
   config = function()
     require('mado-scratch').setup({
       default_file_ext = 'md',
