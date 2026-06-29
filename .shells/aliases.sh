@@ -301,7 +301,8 @@ alias llh='ls -lh --color=auto --group-directories-first'
 alias lla='ls -la --color=auto --group-directories-first'
 
 alias ei=exit
-alias t=fterminal
+alias t=vterminal
+alias f=fterminal
 alias ki=kill-list
 
 # alias ..='cd ../'
