@@ -50,6 +50,24 @@ local function manage_buffer_keymaps(bufnr)
   })
 end
 
+local function open_selected_lines_to_scratch()
+  local start_line = vim.fn.getpos("'<")[2]
+  local end_line = vim.fn.getpos("'>")[2]
+  local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+
+  nvim.input('Input File Extension (e.g., md, ts, hs)', function(submitted)
+    if submitted == '' or submitted == nil then
+      error('FileType is required')
+    end
+
+    vim.cmd('MadoScratchOpenFileNext ' .. submitted .. ' vsp')
+    local scratch_buf = vim.api.nvim_get_current_buf()
+    vim.api.nvim_buf_set_lines(scratch_buf, 0, -1, false, lines)
+    vim.cmd('normal! gg=Ggg')
+    vim.cmd.write()
+  end)
+end
+
 local function setup_float_window()
   if not nvim.is_in_float_window() then
     return
@@ -104,26 +122,10 @@ return {
       end,
     })
 
-    vim.keymap.set('n', '<leader>b', '<Cmd>MadoScratchOpen md<CR>', { silent = true })
-    vim.keymap.set('n', '<leader>B', '<Cmd>MadoScratchOpenFile md<CR>', { silent = true })
-    vim.keymap.set('n', '<leader><leader>b', '<Cmd>MadoScratchOpenFileNext md<CR>', { silent = true })
+    vim.keymap.set('n', '<leader>b', '<Cmd>MadoScratchOpenFile md<CR>', { silent = true })
+    vim.keymap.set('n', '<leader>B', '<Cmd>MadoScratchOpenFileNext md<CR>', { silent = true })
+    vim.keymap.set('n', '<leader><leader>b', ':<C-u>MadoScratchOpen')
 
-    vim.keymap.set('v', '<leader>b', function()
-      local start_line = vim.fn.getpos("'<")[2]
-      local end_line = vim.fn.getpos("'>")[2]
-      local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
-
-      nvim.input('Input File Extension (e.g., md, ts, hs)', function(submitted)
-        if submitted == '' or submitted == nil then
-          error('FileType is required')
-        end
-
-        vim.cmd('MadoScratchOpenFileNext ' .. submitted .. ' vsp')
-        local scratch_buf = vim.api.nvim_get_current_buf()
-        vim.api.nvim_buf_set_lines(scratch_buf, 0, -1, false, lines)
-        vim.cmd('normal! gg=Ggg')
-        vim.cmd.write()
-      end)
-    end)
+    vim.keymap.set('v', '<leader>b', open_selected_lines_to_scratch)
   end,
 }
