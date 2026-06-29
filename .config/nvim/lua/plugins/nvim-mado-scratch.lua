@@ -8,6 +8,9 @@ local function set_float_window_keymaps(bufnr)
   -- Avoid accidental exits
   nvim.keymaps_set('n', nvim.escaping_keys, '<Nop>', { buffer = bufnr })
   nvim.keymaps_set('n', { '<C-l><C-l>', '<Esc><Esc>', '<C-[><C-[>' }, '<Cmd>q<CR>', { buffer = bufnr })
+
+  -- 通常の<C-k><C-j>を上書きして、float windowでおかしくならないように調整
+  nvim.keymaps_set('n', { '<C-k><C-j>', '<Esc><Esc>', '<C-[><C-[>' }, '<Cmd>w<CR>', { buffer = bufnr })
 end
 
 ---@param bufnr integer
