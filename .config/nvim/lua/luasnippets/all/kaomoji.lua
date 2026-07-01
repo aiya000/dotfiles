@@ -58,5 +58,7 @@ return list.concat(
     s('kaomoji_hamster', t('(๑╹ᆺ╹)')),
     s('kaomoji_zombi', t('ԅ(¯﹃¯ԅ))))')),
   },
-  sm({ 'kaomoji_oyasumi1', 'kaomoji_sleep' }, t('⊂´⌒つ* -ω-)っ'))
+  sm({ 'kaomoji_oyasumi1', 'kaomoji_sleep' }, t('⊂´⌒つ* -ω-)っ')),
+  sm({ 'kaomoji_ebidance' }, t('₍⁽⁽🍤₎₎⁾⁾')),
+  sm({ 'kaomoji_ebidancing', 'ebi' }, t('エビダンス ₍⁽⁽🍤₎₎⁾⁾ エビダンス'))
 )
