@@ -46,3 +46,6 @@ bindkey -M vicmd 'g_' vi-end-of-line
 bindkey -M viins '^l' vi-cmd-mode
 bindkey -M viins '^]' clear-screen
 bindkey -M vicmd '^v' edit-command-line
+
+# flash.nvim-compatible f/F/t/T repeat
+zsh-vi-flash-find-setup
