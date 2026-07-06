@@ -13,6 +13,9 @@ Create a pull request using `gh pr create` with an auto-generated description.
 0. Check git/gh user consistency:
     - Run `git config user.name` to get the local git identity
     - Run `gh auth status` to identify the active GitHub user
+    - If `gh auth status` shows `X Failed to log in ... (keyring)` for all accounts (even though the user has authenticated):
+        - This is a known keyring issue in some environments — treat it as a **keyring-unavailable environment**
+        - Do NOT stop; proceed to the **Keyring-unavailable fallback** section below
     - If they differ:
         - If acting autonomously: run `gh auth switch --user "$(git config user.name)"`
             - If switch succeeds: continue
@@ -97,6 +100,22 @@ Only proceed if the user selects "Create as-is", or if nothing suspicious was fo
 - Add `now` option to `notify_cascade_schedule_today` for immediate notification
 - Add morning reminder option (`09:30`) to `notify_cascade_schedule_someday`
 ```
+
+## Keyring-unavailable fallback
+
+When `gh auth status` shows keyring errors for all accounts (the environment cannot use the system keyring), `gh pr create` will also fail silently or with auth errors. Use this fallback instead:
+
+1. Write the PR body to a file:
+    - Use `~/tmp/` if it exists, otherwise use `/tmp/`
+    - Filename: `pr-body-<branch-name>.md` (e.g. `pr-body-feature-web.md`)
+    - Write the full PR body (the markdown content that would be passed to `--body`) to that file
+2. Tell the user the PR could not be created automatically due to the keyring issue, and provide the exact command to run manually:
+
+```
+gh pr create --title "<title>" --body-file <path-to-file> --base <base-branch>
+```
+
+3. Also mention: if `gh` itself is not authenticated, they may need to run `gh auth login` first
 
 ## Notes
 

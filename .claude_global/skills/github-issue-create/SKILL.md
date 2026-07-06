@@ -13,6 +13,9 @@ Create a GitHub issue using `gh issue create` with an auto-generated title and d
 0. Check git/gh user consistency:
     - Run `git config user.name` to get the local git identity
     - Run `gh auth status` to identify the active GitHub user
+    - If `gh auth status` shows `X Failed to log in ... (keyring)` for all accounts (even though the user has authenticated):
+        - This is a known keyring issue in some environments — treat it as a **keyring-unavailable environment**
+        - Do NOT stop; proceed to the **Keyring-unavailable fallback** section below
     - If they differ:
         - If acting autonomously: run `gh auth switch --user "$(git config user.name)"`
             - If switch succeeds: continue
@@ -118,6 +121,22 @@ Only proceed if the user selects "Create as-is", or if nothing suspicious was fo
 1. Create an issue if the title or description is empty or unclear — ask the user for more details
 2. Create duplicate issues — check existing issues first
 3. Add assignees or milestones without explicit user request
+
+## Keyring-unavailable fallback
+
+When `gh auth status` shows keyring errors for all accounts (the environment cannot use the system keyring), `gh issue create` will also fail. Use this fallback instead:
+
+1. Write the issue body to a file:
+    - Use `~/tmp/` if it exists, otherwise use `/tmp/`
+    - Filename: `issue-body-<slug>.md` where `<slug>` is a short kebab-case summary of the issue title (e.g. `issue-body-fix-login-error.md`)
+    - Write the full issue body (the markdown content that would be passed to `--body`) to that file
+2. Tell the user the issue could not be created automatically due to the keyring issue, and provide the exact command to run manually:
+
+```
+gh issue create --title "<title>" --body-file <path-to-file> --label "<label>"
+```
+
+3. Also mention: if `gh` itself is not authenticated, they may need to run `gh auth login` first
 
 ## Notes
 
