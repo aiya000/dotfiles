@@ -1,29 +1,6 @@
 {
-  "skipDangerousModePermissionPrompt": true,
-  "theme": "dark",
-  "editorMode": "vim",
-  "agentPushNotifEnabled": true,
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
-  },
-  "sandbox": {
-    "enabled": true,
-    "autoAllowBashIfSandboxed": false,
-    "filesystem": {
-      "allowWrite": [
-        "// `./bash-toys`などのsubmoduleでgit-commitを許可する",
-        "~/.dotfiles/.git/",
-        "// Windows filesystem (DrvFs) - bwrapがsandbox setup時に書き込みを要求するため",
-        "/mnt/c/Users/aiya0/",
-        "// `rm-dust`の退避先（ゴミ箱）",
-        "~/.backup/dustbox/"
-      ]
-    }
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "ccstatusline",
-    "padding": 0
   },
   "permissions": {
     "allow": [
@@ -39,6 +16,8 @@
       "Bash(git status:*)",
       "Bash(git reflog:*)",
       "Bash(git commit:*)",
+      "Bash(git config user.name)",
+      "Bash(git config user.email)",
       "Bash(gh issue list:*)",
       "Bash(gh issue view:*)",
       "Bash(gh issue create:*)",
@@ -70,7 +49,7 @@
     ],
     "defaultMode": "acceptEdits",
     "additionalDirectories": [
-      "~/.dotfiles/.private/AI-MEMORY/"
+      "~/.ai-memory/"
     ]
   },
   "hooks": {
@@ -90,14 +69,38 @@
         "hooks": [
           {
             "type": "command",
-            "command": "notify 'Claude Code' 'Claude Code stopped' ~/.dotfiles/bash-toys/assets/notification-1.mp3"
+            "command": "notify 'Claude Code' 'Claude Code stopped' {INPUT-YOUR-HOME-DIR}/.dotfiles/bash-toys/assets/notification-1.mp3"
           }
         ]
       }
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "ccstatusline",
+    "padding": 0
+  },
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true
+    "swift-lsp@claude-plugins-official": true
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": false,
+    "filesystem": {
+      "allowWrite": [
+        "// `./bash-toys`などのsubmoduleでgit-commitを許可する",
+        "~/.dotfiles/.git/",
+        "// `/save-memory`用",
+        "~/.dotfiles/.private/AI-MEMORY/",
+        "// `rm-dust`の退避先（ゴミ箱）",
+        "~/.backup/dustbox/"
+      ]
+    }
   }
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
+  "editorMode": "vim",
+  "agentPushNotifEnabled": true
 }
