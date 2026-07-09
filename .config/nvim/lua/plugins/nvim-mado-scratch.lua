@@ -120,7 +120,7 @@ return {
 
     vim.keymap.set('n', '<leader>b', '<Cmd>MadoScratchOpenFile md<CR>', { silent = true })
     vim.keymap.set('n', '<leader>B', '<Cmd>MadoScratchOpenFileNext md<CR>', { silent = true })
-    vim.keymap.set('n', '<leader><leader>b', ':<C-u>MadoScratchOpen')
+    vim.keymap.set('n', '<leader><leader>b', ':<C-u>MadoScratchOpen', { remap = true }) -- remap to use cmdpalette
 
     vim.keymap.set('v', '<leader>b', open_selected_lines_to_scratch)
   end,
