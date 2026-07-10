@@ -13,10 +13,16 @@ start:
 stop:
 	skhd --stop-service
 
+restart:
+	$(MAKE) stop
+	$(MAKE) start
+
 use-default:
 	rm skhdrc || true
-	ln -s skhdrc.default skhdrc
+	cat skhdrc.common skhdrc.default > skhdrc
+	$(MAKE) restart
 
 use-hhkb-lite-2:
 	rm skhdrc || true
-	ln -s skhdrc.hhkb-lite-2 skhdrc
+	cat skhdrc.common skhdrc.hhkb-lite-2 > skhdrc
+	$(MAKE) restart
