@@ -1,13 +1,5 @@
 # Connect keymaps to default keyboard's actions {{{
 
-# RHS (default keyboard's actions) defined by Raycast
-# # TODO: Not working well
-ctrl + cmd - a : skhd -k "cmd + 1"
-ctrl + cmd - s : skhd -k "cmd + 2"
-ctrl + cmd - d : skhd -k "cmd + 3"
-ctrl + cmd - f : skhd -k "cmd + 4"
-ctrl + cmd - g : skhd -k "cmd + 5"
-
 # Esc -> '`'
 escape : skhd -k "0x32"
 
