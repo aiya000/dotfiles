@@ -58,6 +58,7 @@ setopt transient_rprompt
 setopt ignore_eof
 setopt auto_cd
 setopt no_beep
+setopt interactive_comments
 
 # Don't use screen stopping
 stty stop  undef
