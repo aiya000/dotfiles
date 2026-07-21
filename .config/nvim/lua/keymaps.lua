@@ -47,6 +47,13 @@ vim.keymap.set('n', '<C-x><C-p>', '<C-p>')
 vim.keymap.set('n', '/', [[/\m]])
 vim.keymap.set('n', '?', [[?\m]])
 
+-- Like `J` and `gJ`, but remove the leading spaces of the next line
+vim.keymap.set('n', 'gJ', function()
+  local next_line = vim.fn.getline(vim.fn.line('.') + 1)
+  vim.fn.setline(vim.fn.line('.') + 1, (next_line:gsub('^%s+', '')))
+  vim.cmd('normal! gJ')
+end)
+
 -- Force open (even if the file doesn't exist)
 vim.keymap.set('n', 'gF', function()
   local file = vim.fn.expand('<cfile>')
