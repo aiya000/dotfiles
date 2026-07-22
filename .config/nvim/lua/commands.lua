@@ -331,3 +331,5 @@ create_command('FormatMarkdownForReport', function(opts)
 end, { range = true })
 
 --}}}
+
+-- vim: foldmethod=marker
