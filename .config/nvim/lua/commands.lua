@@ -216,22 +216,6 @@ end, {
   complete = find_running_lsp_config_keys,
 })
 
--- }}}
--- Others {{{
-
-create_command('LuarocksRefreshCache', function()
-  require('luarocks').refresh_cache()
-  vim.notify('luarocks path cache refreshed', vim.log.levels.INFO)
-end, { desc = 'Refresh luarocks path cache (run after installing/removing luarocks packages)' })
-
-create_command('CClear', function()
-  vim.fn.setqflist({})
-end, { desc = 'Clear quickfix' })
-
-create_command('Rename', function(opts)
-  nvim.rename_to(opts.args)
-end, { nargs = 1, complete = 'file', desc = 'Rename current file to the new name' })
-
 -- TODO: ちゃんと動いてる？
 create_command('LspRename', function(opts)
   vim.lsp.buf.rename(opts.args)
@@ -241,16 +225,17 @@ create_command('LspFormat', function()
   vim.lsp.buf.format({ async = true })
 end)
 
--- TODO: 普通にautofixプラグインを使う（aleあたり）
-create_command('KtlintAutoFix', function()
-  local current_file = vim.fn.fnameescape(vim.fn.expand('%'))
-  vim.fn.system(s('ktlint --format {current_file}', { current_file = current_file }))
-  vim.cmd('edit %')
-end)
+-- }}}
+-- text utils {{{
 
 create_command('Grep', function(opts)
   telescope.grep_string({ search = opts.args })
 end, { nargs = 1 })
+
+create_command('RemoveTrailingSpacesWithForce', function(opts)
+  local range = opts.range > 0 and { opts.line1, opts.line2 } or nil
+  nvim.remove_trailing_spaces(true, range)
+end, { range = true })
 
 create_command('ReverseLines', function(opts)
   local bufnr = vim.api.nvim_get_current_buf()
@@ -266,39 +251,6 @@ end, {
   range = true,
   desc = 'Reverse the order of lines in the selected range or entire buffer',
 })
-
-create_command('ClaudeCodeDocker', function(opts)
-  docker.start_dangerous_claude_code(opts.args)
-end, {
-  nargs = '*',
-  desc = 'Open ClaudeCode in Docker container at git root (auto-builds image if needed)',
-})
-
-create_command('LuaSnipEdit', function(opts)
-  local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  if filetype == '' then
-    vim.notify('No filetype specified or detected', vim.log.levels.WARN)
-    return
-  end
-
-  local luasnip_path = ('%s/lua/luasnippets/%s.lua'):format(vim.fn.stdpath('config'), filetype)
-  vim.cmd('edit ' .. vim.fn.fnameescape(luasnip_path))
-end, {
-  nargs = '?',
-  desc = 'Edit LuaSnip snippet file for current or specified filetype',
-  complete = 'filetype',
-})
-
-create_command('LuaSnipReload', function()
-  nvim.load_luasnips({ reload = true })
-end, {
-  desc = 'Reload LuaSnip snippets',
-})
-
-create_command('RemoveTrailingSpacesWithForce', function(opts)
-  local range = opts.range > 0 and { opts.line1, opts.line2 } or nil
-  nvim.remove_trailing_spaces(true, range)
-end, { range = true })
 
 create_command('FormatMarkdownForReport', function(opts)
   local lines = vim.api.nvim_buf_get_lines(0, opts.line1 - 1, opts.line2, false)
@@ -329,6 +281,57 @@ create_command('FormatMarkdownForReport', function(opts)
   end
   vim.api.nvim_buf_set_lines(0, opts.line1 - 1, opts.line2, false, result)
 end, { range = true })
+
+-- }}}
+-- Others {{{
+
+create_command('LuarocksRefreshCache', function()
+  require('luarocks').refresh_cache()
+  vim.notify('luarocks path cache refreshed', vim.log.levels.INFO)
+end, { desc = 'Refresh luarocks path cache (run after installing/removing luarocks packages)' })
+
+create_command('CClear', function()
+  vim.fn.setqflist({})
+end, { desc = 'Clear quickfix' })
+
+create_command('Rename', function(opts)
+  nvim.rename_to(opts.args)
+end, { nargs = 1, complete = 'file', desc = 'Rename current file to the new name' })
+
+-- TODO: 普通にautofixプラグインを使う（aleあたり）
+create_command('KtlintAutoFix', function()
+  local current_file = vim.fn.fnameescape(vim.fn.expand('%'))
+  vim.fn.system(s('ktlint --format {current_file}', { current_file = current_file }))
+  vim.cmd('edit %')
+end)
+
+create_command('ClaudeCodeDocker', function(opts)
+  docker.start_dangerous_claude_code(opts.args)
+end, {
+  nargs = '*',
+  desc = 'Open ClaudeCode in Docker container at git root (auto-builds image if needed)',
+})
+
+create_command('LuaSnipEdit', function(opts)
+  local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
+  if filetype == '' then
+    vim.notify('No filetype specified or detected', vim.log.levels.WARN)
+    return
+  end
+
+  local luasnip_path = ('%s/lua/luasnippets/%s.lua'):format(vim.fn.stdpath('config'), filetype)
+  vim.cmd('edit ' .. vim.fn.fnameescape(luasnip_path))
+end, {
+  nargs = '?',
+  desc = 'Edit LuaSnip snippet file for current or specified filetype',
+  complete = 'filetype',
+})
+
+create_command('LuaSnipReload', function()
+  nvim.load_luasnips({ reload = true })
+end, {
+  desc = 'Reload LuaSnip snippets',
+})
 
 --}}}
 
