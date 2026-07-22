@@ -37,7 +37,13 @@ elif i-have bat ; then
   alias cat=bat-with-default-options
 fi
 
-i-have btop && alias top=btop
+if i-have btm ; then
+  alias top=btm
+elif i-have btop ; then
+  alias top=btop
+elif i-have htop ; then
+  alias top=htop
+fi
 
 alias-of rg 'rg --hidden'
 
