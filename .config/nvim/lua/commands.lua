@@ -252,6 +252,31 @@ end, {
   desc = 'Reverse the order of lines in the selected range or entire buffer',
 })
 
+create_command('FormatToSplitJapaneseSentences', function(opts)
+  local bufnr = vim.api.nvim_get_current_buf()
+  local lines = vim.api.nvim_buf_get_lines(bufnr, opts.line1 - 1, opts.line2, false)
+  local result = {}
+  for _, line in ipairs(lines) do
+    local parts = {}
+    for part in (line .. '\0'):gmatch('(.-)。') do
+      if part ~= '' then
+        table.insert(parts, part .. '。')
+      end
+    end
+    if #parts == 0 then
+      table.insert(result, line)
+    else
+      for _, part in ipairs(parts) do
+        table.insert(result, part)
+      end
+    end
+  end
+  vim.api.nvim_buf_set_lines(bufnr, opts.line1 - 1, opts.line2, false, result)
+end, {
+  range = true,
+  desc = 'Split lines at `。` so each sentence ends on its own line',
+})
+
 create_command('FormatMarkdownForReport', function(opts)
   local lines = vim.api.nvim_buf_get_lines(0, opts.line1 - 1, opts.line2, false)
   local result = {}
