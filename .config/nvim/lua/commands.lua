@@ -63,11 +63,13 @@ create_command('GitCommitFixup', function(opts)
 end, { nargs = 1 })
 
 create_command('GitTree', function(opts)
-  vim.cmd('GinLog --graph --decorate --oneline ' .. vim.fn.string(opts.args))
+  -- Deefault to 20 commits if no argument is provided
+  vim.cmd('GinLog --graph --decorate --oneline -20 ' .. opts.args)
 end, { nargs = '*' })
 
 create_command('GitTreeAll', function(opts)
-  vim.cmd('GinLog --graph --decorate --oneline --all ' .. opts.args)
+  -- Deefault to 20 commits if no argument is provided
+  vim.cmd('GinLog --graph --decorate --oneline --all -20 ' .. opts.args)
 end, { nargs = '*' })
 
 -- }}}
