@@ -1,0 +1,270 @@
+## lightweight版に含めるものだけを残して、不要な行を削除してください
+## プラグインはrepo名、コマンドはコマンド名を識別子として使います
+
+## ============================================================
+## PLUGINS (lua/plugins.lua)
+## ============================================================
+
+catppuccin/nvim                   -- カラースキーム
+nvim-telescope/telescope.nvim     -- fuzzy finder
+kevinhwang91/nvim-hlslens         -- 検索マッチ数表示
+brenoprata10/nvim-highlight-colors -- カラーコードのハイライト
+nvim-telescope/telescope-fzf-native.nvim -- telescope用fzf
+rcarriga/nvim-notify              -- 通知UI
+shellRaining/hlchunk.nvim         -- インデント・チャンクハイライト
+aiya000/bakaup.vim                -- 自動バックアップ
+nvim-lua/plenary.nvim             -- ライブラリ（他プラグインの依存）
+    ↑ これに依存しているプラグインがなければ、削除してほしい
+folke/snacks.nvim                 -- ユーティリティ集
+    ↑ これに依存しているプラグインがなければ、削除してほしい
+prabirshrestha/async.vim          -- 非同期処理
+vim-denops/denops.vim             -- Deno ランタイム（gin.vim等の依存）
+    ↑ これに依存しているプラグインがなければ、削除してほしい
+nvim-treesitter/nvim-treesitter   -- シンタックスハイライト・fold
+cohama/lexima.vim                 -- 自動括弧補完
+kana/vim-textobj-user             -- テキストオブジェクト基盤
+kana/vim-textobj-indent           -- インデントテキストオブジェクト
+osyo-manga/vim-textobj-from_regexp -- 正規表現テキストオブジェクト
+kana/vim-textobj-jabraces         -- 日本語括弧テキストオブジェクト
+thinca/vim-textobj-between        -- 文字間テキストオブジェクト
+tyru/operator-camelize.vim        -- camelCase変換オペレータ
+kana/vim-repeat                   -- . で繰り返し
+itchyny/vim-cursorword            -- カーソル下の単語をハイライト
+andymass/vim-matchup              -- % でマッチング拡張
+lambdalisue/kensaku.vim           -- 日本語検索基盤
+lambdalisue/kensaku-search.vim    -- kensaku で / 検索
+gbprod/yanky.nvim                 -- ヤンクリング
+vim-scripts/Align                 -- テキスト整列
+aiya000/nvim-just-stay-search     -- 検索後カーソル移動しない
+aiya000/vim-write-sync            -- ファイル保存時に別パスへも同期
+hiphish/rainbow-delimiters.nvim   -- 括弧の色分け
+    ↑ 重かったら削除して欲しい
+cespare/vim-toml                  -- TOMLシンタックス
+stephpy/vim-yaml                  -- YAMLシンタックス
+aliou/bats.vim                    -- batsシンタックス
+vim-scripts/alex.vim              -- alexシンタックス
+rhysd/vim-gfm-syntax              -- GitHub Markdown拡張シンタックス
+    ↑ 重かったら削除して欲しい
+vim-scripts/ShaderHighLight       -- ShaderLabシンタックス
+aiya000/vim-review                -- Re:VIEWシンタックス
+lambdalisue/fern.vim              -- ファイルツリー
+    ↑ むしろlightweight版でなくて、plugins.luaからも削除してほしい
+aiya000/vim-webpage               -- Haskell Stackage検索
+lambdalisue/vim-manpager          -- manページビューア
+aiya000/vim-quickrepl             -- REPL起動
+skywind3000/asyncrun.vim          -- 非同期コマンド実行
+mbbill/undotree                   -- undo履歴ツリー
+kannokanno/previm                 -- Markdownプレビュー
+tyru/open-browser.vim             -- ブラウザ起動
+akinsho/toggleterm.nvim           -- ターミナルトグル
+MunifTanjim/nui.nvim              -- UIライブラリ（flash等の依存）
+    ↑ これに依存しているプラグインがなければ、削除してほしい
+monaqa/dial.nvim                  -- <C-a>/<C-x> 拡張
+AckslD/nvim-FeMaco.lua            -- Markdownコードブロック内編集
+nvim-zh/colorful-winsep.nvim      -- ウィンドウ区切り線のカラー
+hrsh7th/nvim-cmp                  -- 補完エンジン
+L3MON4D3/LuaSnip                  -- スニペット
+stevearc/oil.nvim                 -- ファイルエクスプローラ（buffer型）
+crispgm/telescope-heading.nvim    -- Markdownヘッディング一覧
+walkersumida/deepl.nvim           -- DeepL翻訳
+aiya000/luarrow.lua               -- luarrow（LuaRocksパッケージ）
+    ↑ これに依存しているプラグイン・処理がなければ、削除してほしい
+aiya000/chotto.lua                -- chotto（LuaRocksパッケージ）
+    ↑ これに依存しているプラグイン・処理がなければ、削除してほしい
+
+## ============================================================
+## PLUGINS (lua/plugins/*.lua)
+## ============================================================
+
+coder/claudecode.nvim             -- Claude Code Neovimプラグイン
+hachy/cmdpalette.nvim             -- コマンドパレット（:キーで起動）
+folke/flash.nvim                  -- 画面内ジャンプ
+nvim-mado-scratch                 -- スクラッチバッファ
+rhysd/vim-operator-surround       -- サラウンドオペレータ
+
+## ============================================================
+## COMMANDS (lua/commands.lua)
+## ============================================================
+
+Grep                              -- telescope grep
+RemoveTrailingSpacesWithForce     -- 行末スペース削除
+ReverseLines                      -- 選択行を逆順に
+CClear                            -- quickfixクリア
+
+## ============================================================
+## KEYMAPS (lua/keymaps.lua)
+## セクション単位で残す/削除を判断してください
+## ============================================================
+
+## --- normal mode: 基本操作 ---
+<C-c> / <C-c><C-c>               -- <C-c>をprefix化・二重押しで本来の動作
+<C-g> / <C-g><C-g>               -- <C-g>をprefix化・二重押しで本来の動作
+<CR> → o<Esc>                    -- normal modeでEnterを新行挿入に
+<C-j>/<C-m> → <CR>               -- <CR>と同義
+<C-[>/<Esc>/<C-l> → clear        -- ESC系キーでハイライトクリア等
+<C-k><C-l>                       -- ハイライトを深くクリア
+<C-k>o → e! %                    -- バッファを再読み込み
+gG → ggVG / 'gG → ggVG"+y        -- 全選択・全コピー
+q: → :                           -- q:でcmd-mode（:はcmdpaletteに割り当てているため）
+( ) { } → zv付き                  -- fold展開しながら移動
+<C-k><C-j>                       -- ハイライトクリア＆保存
+<C-k>J → :wall                   -- 全バッファ保存
+<C-]> → g<C-]>                   -- タグジャンプ（あいまい）
+<leader>q → copen / <leader><leader>q → cclose -- quickfix開閉
+Y → yg_                          -- 行末まで（EOLなし）ヤンク
+g<C-]> / g_ → $                  -- g$相当
+zs → zszh                        -- 水平スクロール
+,, → 全バッファ内容をクリップボードへ
+,< → 全バッファ内容を空に（リフレッシュ）
+<C-x><C-n>/<C-x><C-p>           -- デフォルト補完
+/ → /\m / ? → ?\m                -- magicモードで検索
+
+## --- normal mode: 検索 ---
+g* → カーソル移動なし検索
+n/N → 常に前後方向固定・fold展開
+* / #                            -- fold展開付きsearch
+
+## --- normal mode: Q（バッファ閉じ系）---
+Q                                -- quickfix/gin/diff等の特殊バッファを閉じる
+
+## --- normal mode: fold ---
+h/l → foldが閉じていれば zo      -- fold開閉優先移動
+zj/zk → fold開きながら移動
+zC → zM / zA → zR               -- 直感的エイリアス
+
+## --- normal mode: ウィンドウ・バッファ・タブ ---
+<Space>h/j/k/l → <C-w>移動
+ghR/ghq/ghQ/ghc/ghC/gho 等       -- ウィンドウ/タブ操作
+<C-w>* → <NOP>（誤操作防止）
+gh → <NOP>（prefix化）
+<C-s>N/<C-s>P                   -- ウィンドウ移動
+<C-n>/<C-p> → タブ移動ループ
+<C-s>n/<C-s>p → タブを移動しながら移動モードへ
+
+## --- normal mode: ターミナル ---
+<leader>v / <leader><leader>v    -- vertical/horizontal splitでシェル起動
+<leader>V / <leader><leader>V    -- 現在ウィンドウ/新タブでシェル起動
+"V → toggle_shell                -- floatウィンドウでシェルトグル
+
+## --- normal mode: ファイルエクスプローラ ---
+<leader>e / <leader>E / <leader><leader>e / <leader><leader>E -- Oil.nvimで開く
+
+## --- normal mode: Telescope ---
+<C-k><C-e> → find_files
+    ↑ 依存するプラグイン・関数などに重いものがあれば、削除してほしい
+<C-k><C-f> → lsp_document_symbols（functions）
+    ↑ 依存するプラグイン・関数などに重いものがあれば、削除してほしい
+<C-k>f → treesitter
+<C-k><C-r> → reloader
+L → buffers
+H → live_grep
+M → oldfiles
+m> → marks
+q> → registers
+y> → yank_history
+g> → messages
+
+## --- normal mode: AI Agent ---
+<leader>gc / <leader>ac / <leader>dc -- copilot/antigravity/devinのCLIトグル
+
+## --- normal mode: オプショントグル ---
+<C-h><C-w> → wrap
+<C-h><C-c> → cursorline
+<C-h>c → cursorcolumn
+<C-h><C-r> → relativenumber
+<C-h><C-l> → list
+<C-h><C-n> → number
+<C-h>v → diagnostic virtual text
+<C-h><C-d> → diff
+<C-h><C-f> → foldmethod
+<C-h><C-v> → virtualedit
+
+## --- normal mode: コピペ ---
+gp → 最後にペーストした範囲を選択
+<leader>p/<leader>P/<leader>y/<leader>Y/<leader>dd/<leader>D/<leader>d/<leader>x -- クリップボード操作
+"gp/"gP → gitルートからの相対パスを挿入
+
+## --- normal mode: オペレータ・テキストオブジェクト ---
+ga → append_choose_surround_normal
+gs → append_choose_surround_wide
+ds/cs → surround削除・置換
+dijp/dajp 等                     -- 日本語括弧 delete
+. → <Plug>(repeat-.)             -- vim-repeat
+<leader><leader>c → camelCase変換
+<C-v>ii → visual block インデント
+vil → inner line (^〜g_)
+
+## --- normal mode: f/t 拡張 ---
+'f/'F/'t/'T → fmap（日本語記号対応のf/t）
+
+## --- normal mode: プログラミング ---
+<leader>R → quickrepl
+
+## --- normal mode: ファイル操作 ---
+<leader><leader>B → memo.mdを開く
+    ↑ 依存するプラグイン・関数などに重いものがあれば、削除してほしい
+<C-k><Space> → remove_trailing_spaces
+<Space><Space> → compress_spaces
+<leader><leader>s → sort（インデント内）
+<C-k><C-s> → :%s/\<cword\>//g
+<C-k>s → :%s/\<cword\>/<cword>/g
+
+## --- insert mode ---
+<C-j> → <CR>
+<C-l> → <Esc>
+<C-a> → <Right>
+<C-k><C-k> → 行末まで削除
+<C-k><C-j> → <Esc>:write
+<C-k>J → <Esc>:wall
+<C-b> → URLタイトル取得（network.fetch_webpage_title）
+<C-r>' → クリップボードペースト
+<C-r>n → ファイル名挿入
+<C-r>gr → git root挿入
+<C-r>gb → git branch挿入
+<C-g><Tab> → copilot accept
+<C-g><C-n> → copilot next
+<C-s> → snippet展開/ジャンプ
+
+## --- select mode ---
+<C-l> → <Esc>
+<C-s> → snippet jump
+
+## --- command-line mode ---
+<C-]> → \m\C\<\>囲み
+<C-b>/<C-f>/<C-a>/<C-h>/<C-d>/<C-e> -- Bash風移動
+<C-k><C-k> → カーソル以降削除
+<C-l> → <C-c>（キャンセル）
+<C-o>/<C-y> → 履歴上下
+<C-r>'/<C-r>n/<C-r>g              -- レジスタ挿入
+
+## --- visual/operator mode ---
+<C-l> → <Esc>
+g_ → $
+<leader>p/P/y/d/x                -- クリップボード操作
+<leader>w → openbrowser
+zo/zO → gv付き（選択維持）
+a"/a'/a` → 2i（空白なし選択）
+ab/ib → backtick
+ap/aP/ak/aK/ip/iP/ik/iK          -- 括弧テキストオブジェクト
+ga → operator-surround-append
+ai/ii → textobj-indent
+ijp/ajp 等                        -- 日本語括弧テキストオブジェクト
+i_/a_ → from_regexp（単語・包含）
+il → inner line（空白なし）
+<leader><leader>s → sort
+<leader><leader>c → camelCase toggle
+
+## --- terminal mode ---
+<C-l> → normal mode
+<C-\><C-n> → <Esc>
+<C-[> → <Esc>
+<C-]> → <C-l>
+
+## --- digraphs ---
+⊂⊃≠×○÷≤＝≥∀∃∩∪∧∨↑↓Φπ 等の数学記号
+
+## --- fake digraphs (insert mode) ---
+＋−＝≒≅ℕℤℝℚℂ⊆⊇⊊⊋↦◉⚪︎⭕×❌△◻︎ 等
+
+## --- abbr ---
+よくあるタイポ補正（result/unknown/Parens/Encrypt）

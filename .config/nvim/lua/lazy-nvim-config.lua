@@ -20,9 +20,10 @@ if vim.g.mapleader == nil or vim.g.maplocalleader == nil then
   error('non nil vim.g.mapleader and vim.g.maplocalleader required by lazy.nvim')
 end
 
+local spec_module = vim.g.nvim_lightweight_mode and 'plugins-lightweight' or 'plugins'
 require('lazy').setup({
   spec = {
-    { import = 'plugins' },
+    { import = spec_module },
   },
   install = { colorscheme = { 'catppuccin' } },
   checker = {

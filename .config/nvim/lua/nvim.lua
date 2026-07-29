@@ -7,7 +7,7 @@ local list = require('utils.list')
 
 local s = fn.s
 
-local M = {}
+local M = require('nvim-lightweight')
 
 -- TODO: readonlyするとうまく動かないかも？
 -- M.escaping_keys = fn.readonly({ '<Esc>', '<C-[>', '<C-l>' })
