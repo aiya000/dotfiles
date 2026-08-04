@@ -45,7 +45,8 @@ elif i-have htop ; then
   alias top=htop
 fi
 
-alias-of rg 'rg --hidden'
+alias grep=grep-skip-self
+alias-of rg 'rg-skip-self --hidden'
 
 function aliases::define_fd () {
   local fd
