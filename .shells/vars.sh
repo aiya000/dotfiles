@@ -30,6 +30,8 @@ export PYENV_ROOT=$HOME/.pyenv
 export BASH_TOYS_INTERACTIVE_FILTER=peco-reverse  # To display the most recently started process nearby with kill-list command
 export BASH_TOYS_RESTORE_KEEP=1
 export BASH_TOYS_TMP_BASE_DIR="$HOME/tmp/ntfy"
+export BASH_TOYS_KILL_LISTED_PROCESS_NAMES='nvim claude java npm node deno'
+export BASH_TOYS_KILL_LISTED_APPS='OpenDeck'
 dotshells::define_ntfy_serving_url
 # dotshells::define_ntfy_server_base_url
 
