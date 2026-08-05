@@ -246,6 +246,9 @@ install-btm: install-bottom
 install-bottom:
 	which btm || cargo install bottom --locked
 
+install-playwright-mcp:
+	which playwright-mcp || $(NPMInstall) @playwright/mcp
+
 # }}}
 ifeq ($(OS),WSL) # {{{
 
