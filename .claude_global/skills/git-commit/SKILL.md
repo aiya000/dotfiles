@@ -68,9 +68,11 @@ Key rules:
 
 ## Staging Behavior
 
+Commits should be organized by topic. Do not automatically stage additional files unless you are confident they belong to the exact same topic as the staged changes.
+
 Before committing, check whether any unstaged changes should be staged first:
 
-1. **If there are clearly relevant unstaged changes** — changes that obviously belong to the same commit (e.g., you made the edits during this session and they are directly related to the task) — stage them automatically using the `git-add` skill without asking. When a single file contains both in-session and out-of-session changes, stage only the in-session hunks (use `git add -p` or equivalent) rather than staging the entire file.
+1. **If there are clearly relevant unstaged changes** — changes that obviously belong to the exact same topic as the staged changes (e.g., you made the edits during this session and they are directly related to the task) — stage them automatically using the `git-add` skill without asking. When a single file contains both in-session and out-of-session changes, stage only the in-session hunks (use `git add -p` or equivalent) rather than staging the entire file.
 
 2. **If there are probably relevant unstaged changes** — changes that seem like the user intends to include but it is not obvious — ask the user whether to stage them before proceeding. If the user confirms, stage them with the `git-add` skill, then continue.
 
