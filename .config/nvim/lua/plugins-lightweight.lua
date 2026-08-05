@@ -727,6 +727,20 @@ return {
   { 'nvim-tree/nvim-web-devicons' },
 
   -- }}}
+  -- vim-fmap {{{
+
+  {
+    'aiya000/vim-fmap',
+    cmd = 'FNoreMap',
+    keys = {
+      { '<Plug>(fmap-forward-f)', mode = { 'n', 'v' } },
+      { '<Plug>(fmap-backward-f)', mode = { 'n', 'v' } },
+      { '<Plug>(fmap-forward-t)', mode = { 'n', 'v' } },
+      { '<Plug>(fmap-backward-T)', mode = { 'n', 'v' } },
+    },
+  },
+
+  -- }}}
 }
 
 -- vim: set foldmethod=marker foldlevel=1:
