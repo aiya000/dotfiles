@@ -1,7 +1,7 @@
 ---
 name: git-commit
 description: Create a new git commit for staged changes. Use when the user asks to commit staged changes with an auto-generated Conventional Commits message, or when Claude Code itself wants to run `git commit`.
-allowed-tools: Skill(git-verify-identity), Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git show:*), Bash(git commit:*)
+allowed-tools: Skill(git-verify-identity), Skill(git-add), Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git show:*), Bash(git commit:*), Bash(git add:*)
 ---
 
 # git-commit
@@ -66,11 +66,13 @@ Key rules:
 - **footers**: Optional, one blank line after body, uses git trailer format (e.g., `Reviewed-by: Z`)
 - **BREAKING CHANGE**: Use exclamation mark after type/scope (e.g., `feat!:`) or footer `BREAKING CHANGE:` for breaking changes
 
-## Does Not
+## Staging Behavior
 
-1. Don't add some new diff by `git-add`
-1. Ask the user, "Is it okay not to stage this file?"
-    - Do git-commit it as-is that is already been staged
+Before committing, check whether any unstaged changes should be staged first:
+
+1. **If there are clearly relevant unstaged changes** — changes that obviously belong to the same commit (e.g., you made the edits during this session and they are directly related to the task) — stage them automatically using the `git-add` skill without asking. When a single file contains both in-session and out-of-session changes, stage only the in-session hunks (use `git add -p` or equivalent) rather than staging the entire file.
+
+2. **If there are probably relevant unstaged changes** — changes that seem like the user intends to include but it is not obvious — ask the user whether to stage them before proceeding. If the user confirms, stage them with the `git-add` skill, then continue.
 
 ## Commit Message Rules
 
