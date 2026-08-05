@@ -47,6 +47,7 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-fzf-native.nvim',
+      'nvim-telescope/telescope-github.nvim',
       'gbprod/yanky.nvim',
       'crispgm/telescope-heading.nvim',
     },
@@ -79,6 +80,7 @@ return {
         },
       })
       require('telescope').load_extension('fzf')
+      require('telescope').load_extension('gh')
       require('telescope').load_extension('yank_history')
       require('telescope').load_extension('heading')
     end,
