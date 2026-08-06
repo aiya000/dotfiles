@@ -716,7 +716,9 @@ return list.concat(lightweight, {
 
   {
     'nvim-zh/colorful-winsep.nvim',
-    config = true,
+    opts = {
+      highlight = '#cba6f7',
+    },
     event = { 'WinLeave' },
   },
 
