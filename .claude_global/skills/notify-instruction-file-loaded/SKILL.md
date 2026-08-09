@@ -1,9 +1,9 @@
 ---
-name: on-instructions-loaded
+name: notify-instruction-file-loaded
 description: Announce which instructions file was just loaded. Use immediately after reading any CLAUDE.md or AGENTS.md file (including AGENTS.global.md and subdirectory AGENTS.md files).
 ---
 
-# on-instructions-loaded
+# notify-instruction-file-loaded
 
 Say the appropriate loaded message based on the path of the instructions file that was just read.
 
