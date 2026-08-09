@@ -25,7 +25,8 @@ services:
           && sudo npm install -g @anthropic-ai/claude-code \
           && claude install \
           && sudo npm uninstall -g @anthropic-ai/claude-code
-        RUN mkdir -p /home/node/.ai-memory
+        RUN mkdir -p /home/node/.dotfiles-ai-memory \
+          && ln -s /home/node/.dotfiles-ai-memory /home/node/.ai-memory
         ENV PATH="/home/node/.local/bin:$PATH"
         ENV CLAUDE_CONFIG_DIR=/home/node/.claude
         ENV TERM=xterm-256color
@@ -34,10 +35,9 @@ services:
       - "$HOME/.claude:/home/node/.claude"
       - "$HOME/.claude.json:/home/node/.claude.json"
       - "$HOME/.dotfiles:/home/aiya000/.dotfiles:ro"
-      - "$DOTFILES_AI_MEMORY_DIR:/home/node/.ai-memory"
+      - "$DOTFILES_AI_MEMORY_DIR:/home/node/.dotfiles-ai-memory"
     environment:
       - CLAUDE_CONFIG_DIR=/home/node/.claude
-      - DOTFILES_AI_MEMORY_DIR=/home/node/.ai-memory
     working_dir: /workspace
     stdin_open: true
     tty: true
