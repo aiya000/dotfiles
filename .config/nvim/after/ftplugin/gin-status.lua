@@ -96,12 +96,13 @@ local function delete_this_file()
   local filepath = vim.fn.trim(vim.fn.getreg('z'))
 
   nvim.confirm('Delete this file?: ' .. filepath, function()
-    local ok, err = os.remove(filepath)
-    if ok then
-      vim.notify('Removed file: ' .. filepath, vim.log.levels.INFO)
+    local rm_dust = vim.fn.expand('~/.dotfiles/bash-toys/bin/rm-dust')
+    local result = vim.system({ rm_dust, filepath }):wait()
+    if result.code == 0 then
+      vim.notify('Removed file (via rm-dust): ' .. filepath, vim.log.levels.INFO)
       vim.cmd('GinStatus') -- Refresh
     else
-      vim.notify('Failed to remove file: ' .. err, vim.log.levels.ERROR)
+      vim.notify('Failed to remove file: ' .. (result.stderr or 'Unknown error'), vim.log.levels.ERROR)
     end
   end)
 end
