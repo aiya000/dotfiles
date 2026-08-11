@@ -810,6 +810,8 @@ function M.toggle_diagnostic_virtual_text()
   print('LSP virtual text: ' .. (new_virtual_text and 'enabled' or 'disabled'))
 end
 
+-- CLI + floating-window terminal toggler {{{
+
 ---@param cmd string
 ---@param on_open_extra? fun(t: table): nil --Called before the default BufEnter autocmd
 ---@param env? table<string, string> --Environment variables passed to the terminal process. NOTE: on_open_extra fires after process start, so env vars must be set here via `Terminal:new()`
@@ -847,6 +849,15 @@ local function make_cli_app_toggler(cmd, on_open_extra, env, opts)
   end
 end
 
+-- Shell
+M.toggle_shell = make_cli_app_toggler(vim.env.SHELL, nil, {
+  -- TODO: See `M.termopen_shell` comment about `NEOVIM_TERMINAL` for why this condition is needed
+  NEOVIM_TERMINAL = not M.is_using_windows_git() or nil,
+  -- NEOVIM_TERMINAL = true,
+  NVIM_PARENT_ADDRESS = vim.v.servername,
+}, { start_insert_after_paste = true })
+
+-- GitHub Copilot
 M.toggle_copilot_cli = make_cli_app_toggler(
   ([[
     copilot
@@ -865,14 +876,22 @@ M.toggle_copilot_cli = make_cli_app_toggler(
   nil,
   { start_insert_after_paste = true }
 )
+
+-- `claude --dangerously-skip-permissions` in a docker container
+M.toggle_dangerous_claude_code_docker = make_cli_app_toggler(
+  ('docker compose -f %s run --rm -v %s:/workspace claude-code'):format(
+    vim.fn.shellescape(vim.fn.expand('~/.dotfiles/docker/claude-code-dangerously-skip-permissions/docker-compose.yml')),
+    vim.fn.shellescape(vim.fn.getcwd())
+  ),
+  nil,
+  nil,
+  { start_insert_after_paste = true }
+)
+
 M.toggle_antigravity_cli = make_cli_app_toggler('agy', nil, nil, { start_insert_after_paste = true })
 M.toggle_devin_cli = make_cli_app_toggler('devin', nil, nil, { start_insert_after_paste = true })
-M.toggle_shell = make_cli_app_toggler(vim.env.SHELL, nil, {
-  -- TODO: See `M.termopen_shell` comment about `NEOVIM_TERMINAL` for why this condition is needed
-  NEOVIM_TERMINAL = not M.is_using_windows_git() or nil,
-  -- NEOVIM_TERMINAL = true,
-  NVIM_PARENT_ADDRESS = vim.v.servername,
-}, { start_insert_after_paste = true })
+
+-- }}}
 
 ---Clears flash.nvim highlights
 function M.clear_flash_nvim_highlight()
@@ -1257,3 +1276,5 @@ function M.open_buffer_in_float_window(buf, opts)
 end
 
 return M
+
+-- vim: set foldmethod=marker foldlevel=1:
