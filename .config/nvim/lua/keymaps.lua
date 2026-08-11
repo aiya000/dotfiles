@@ -461,6 +461,19 @@ end, { expr = true })
 
 -- Git Operations
 vim.keymap.set('n', '<leader>gs', function()
+  -- gin.vim doesn't work through the WSL/Windows git bridge, so fall back to a
+  -- plain colored `git status` in a floating terminal on Windows-mounted paths.
+  local cwd = vim.fn.getcwd()
+  local is_windows_path = vim.system({ 'is-in-windows-path' }, { cwd = cwd }):wait().code == 0
+  if is_windows_path then
+    local buf = vim.api.nvim_create_buf(false, true)
+    nvim.open_buffer_in_float_window(buf)
+    nvim.termopen_temporary({ 'git-bridge-wsl-and-windows', '-c', 'color.status=always', 'status' }, { cwd = cwd })
+    vim.opt_local.filetype = 'terminal-shell'
+    vim.keymap.set('n', 'q', '<Cmd>bdelete!<CR>', { buffer = buf, silent = true })
+    return
+  end
+
   local prev_win = vim.api.nvim_get_current_win()
   local _ = vim.api.nvim_create_buf(false, true)
     % arrow(nvim.open_buffer_in_float_window)
