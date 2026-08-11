@@ -2,14 +2,10 @@
 .zsh/_git
 .zsh/.zcompdump
 .zsh/history
-## For each environment
 .zsh/history_archive
 
 # bash
 .bashfiles/git-completion.bash
-
-# Others
-.backup/**
 
 # Yi
 .config/yi/.stack-work
@@ -24,3 +20,9 @@
 .xmonad/xmonad.o
 .xmonad/.stack-work
 .antigravitycli
+
+# Neovim
+**/.nvimlog
+
+# Others
+.backup/**
