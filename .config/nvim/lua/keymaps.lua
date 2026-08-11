@@ -381,7 +381,6 @@ vim.keymap.set('n', 'dajK', 'v<Plug>(textobj-jabraces-yama-kakko-a)x', { remap =
 vim.keymap.set('n', 'dij-k', 'v<Plug>(textobj-jabraces-double-kakko-i)x', { remap = true })
 vim.keymap.set('n', 'daj-k', 'v<Plug>(textobj-jabraces-double-kakko-a)x', { remap = true })
 vim.keymap.set('n', '.', '<Plug>(repeat-.)', { remap = true })
-vim.keymap.set('n', '<leader><leader>c', nvim.camelize_or_uncamelize_current_word_as_repeatable, { silent = true })
 --- Fake operator
 vim.keymap.set('n', '<C-v>ii', 'v<Plug>(textobj-indent-i)<C-v>ow', { remap = true }) -- Simular to vii, but select by <C-v>
 
@@ -650,7 +649,6 @@ end, { expr = true })
 
 -- File Editing
 vim.keymap.set('v', '<leader><leader>s', ':sort<CR>')
-vim.keymap.set('v', '<leader><leader>c', '<Plug>(operator-camelize-toggle)', { remap = true })
 
 -- }}}
 -- terminal mode {{{

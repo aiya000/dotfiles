@@ -332,6 +332,10 @@ create_command('KtlintAutoFix', function()
   vim.cmd('edit %')
 end)
 
+create_command('Camelize', function()
+  nvim.camelize_or_uncamelize_current_word_as_repeatable()
+end, { desc = 'Toggle camelCase/snake_case of the current word' })
+
 create_command('ClaudeCodeDocker', function(opts)
   docker.start_dangerous_claude_code(opts.args)
 end, {
