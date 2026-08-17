@@ -257,8 +257,6 @@ elif i-have lua ; then
   alias lua-repl=lua
 fi
 
-alias notify-at-cancel-all='notify-at -l ; notify-at -l | drop 2 | cut -d" " -f1 | xargs -I {} notify-at -c {} ; notify-at -l'
-
 function claude-dangerously-skip-permissions-docker () {
   echo docker compose \
     -f ~/.dotfiles/docker/claude-code-dangerously-skip-permissions/docker-compose.yml \
