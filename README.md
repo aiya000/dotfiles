@@ -97,6 +97,15 @@ $ cp -r ~/.dotfiles/.config/nvim ~/.config/
     - For `GEMINI.global.md` setup instructions, please refer to [GEMINI.global.README.md](GEMINI.global.README.md) (symlink to `AGENTS.global.README.md`)
     - Currently, Antigravity CLI looks up to `~/.gemini/GEMINI.md` same as Gemini CLI
 
+### [Kiro](.kiro_global/)
+
+- **Location**: `.kiro_global/`
+- **Main files**: `.kiro_global/steering/*`
+- **Features**:
+    - Under files and directories of this directory, intended to be linked to `~/.kiro/*`
+    - Steering documents for Kiro AI assistant
+- **Note**: For `.kiro_global/` setup instructions, please refer to [.kiro_global/README.md](.kiro_global/README.md)
+
 ### [Shell (zsh/bash)](.shells/)
 
 - **Location**: `.shells/`
