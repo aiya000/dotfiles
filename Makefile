@@ -242,6 +242,11 @@ install-devin-cli:
 install-antigravity-cli:
 	which agy || curl -fsSL https://antigravity.google/cli/install.sh | bash
 
+# https://kiro.dev/
+# Also see 'install-kiro-cli-force' at macOS section if you're using macOS now
+install-kiro-cli:
+	which kiro || curl -fsSL https://cli.kiro.dev/install | bash
+
 install-btm: install-bottom
 install-bottom:
 	which btm || cargo install bottom --locked
@@ -487,6 +492,23 @@ install-gnu-sed:
 # https://docs.ntfy.sh/install/#macos
 install-ntfy:
 	which ntfy || $(BrewInstall) ntfy
+
+# macOS 26 workaround: installer's open fails because Info.plist is rw------- (owner-only)
+install-kiro-cli-force:
+	@set -e; \
+	KIRO_DMG=$$(mktemp).dmg; \
+	echo "Downloading Kiro CLI DMG..."; \
+	curl -fsSL "https://prod.download.cli.kiro.dev/stable/latest/Kiro%20CLI.dmg" -o "$$KIRO_DMG"; \
+	MOUNT_PATH=$$(hdiutil attach "$$KIRO_DMG" -nobrowse -readonly | grep Volumes | cut -f 3); \
+	echo "Mounted at: $$MOUNT_PATH"; \
+	sudo rm -rf "/Applications/Kiro CLI.app"; \
+	sudo ditto "$$MOUNT_PATH/Kiro CLI.app" "/Applications/Kiro CLI.app"; \
+	sudo chmod 644 "/Applications/Kiro CLI.app/Contents/Info.plist"; \
+	sudo xattr -cr "/Applications/Kiro CLI.app"; \
+	hdiutil detach "$$MOUNT_PATH" -quiet 2>/dev/null || true; \
+	rm -f "$$KIRO_DMG"; \
+	echo "Done! Open /Applications/Kiro CLI.app to complete setup."
+
 
 endif # }}}
 
