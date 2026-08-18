@@ -18,6 +18,7 @@ After this, I (we) will call:
 - 'you' as you. Or
     - 'Antigravity CLI' or 'antigravity' if you are Antigravity CLI
     - 'copilot-cli', 'github copilot', or 'copilot', if you are copilot-cli
+    - and else
 - 'Global Config' as this file
 
 ## First
