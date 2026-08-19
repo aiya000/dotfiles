@@ -521,8 +521,9 @@ return list.concat(lightweight, {
   },
 
   -- }}}
-  -- nvim-cmp (cmdpalette) {{{
+  -- nvim-cmp {{{
 
+  -- TODO: DRY - `./plugins-lightweight.lua`と重複している記述を、モジュール分割などでリファクタリングし、削除
   {
     'hrsh7th/nvim-cmp',
     config = function()
@@ -535,6 +536,27 @@ return list.concat(lightweight, {
           ['<Tab>'] = cmp.mapping.select_next_item(),
           ['<CR>'] = cmp.mapping.confirm({ select = false }),
         }
+
+        -- In full mode, plugins-lightweight's cmp config is overridden by this block,
+        -- so we need to call cmp.setup() here as well.
+        if not vim.g.nvim_lightweight_mode then
+          local luasnip = require('luasnip')
+          cmp.setup({
+            snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
+            mapping = cmp.mapping.preset.insert(common_mapping),
+            sources = cmp.config.sources({ { name = 'nvim_lsp' }, { name = 'luasnip' } }, { { name = 'buffer' }, { name = 'path' } }),
+          })
+          cmp.setup.cmdline({ '/', '?' }, {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = { { name = 'buffer' } },
+          })
+          cmp.setup.cmdline(':', {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } }),
+            matching = { disallow_symbol_nonprefix_matching = false },
+          })
+        end
+
         -- See 'cmdpalette.nvim' section for other settings of cmdpalette
         cmp.setup.filetype('cmdpalette', {
           mapping = cmp.mapping.preset.insert(common_mapping),
