@@ -1,6 +1,8 @@
 ---Lightweight版 init.lua。editpromptなど起動速度重視の用途向け。
 ---tmux経由: ~/.dotfiles/.tmux.conf L99
 
+-- TODO: DRYしない。init.luaをモジュール分割して、このファイルでDRYしないようにする。必要な部分だけ書く
+
 vim.g.nvim_lightweight_mode = true
 
 local nvim = require('nvim-lightweight')
