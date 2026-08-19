@@ -188,6 +188,26 @@ local function switch_branch_via_cmdpalette()
   nvim.feedkeys(':<C-u>Cmdpalette<CR>Gin switch<Space>')
 end
 
+---When float window only: Open the selected file in prev window with vsplit (float stays open)
+local function open_file_in_prev_win_vsplit()
+  if not nvim.is_in_float_window() then
+    return
+  end
+
+  local float_win = vim.api.nvim_get_current_win()
+  local filepath = resolve_filepath(float_win)
+  if filepath == nil then
+    return
+  end
+
+  local ok, prev_win = pcall(vim.api.nvim_win_get_var, float_win, 'gin_status_prev_win')
+  if not (ok and vim.api.nvim_win_is_valid(prev_win)) then
+    return
+  end
+  vim.api.nvim_set_current_win(prev_win)
+  vim.cmd('vsp ' .. vim.fn.fnameescape(filepath))
+end
+
 vim.keymap.set('n', 'Q', '<Cmd>bdelete!<CR>', { buffer = true, silent = true })
 vim.keymap.set('n', 'A', run_add_patch, { buffer = true, silent = true })
 vim.keymap.set('n', '<C-r>', '<Cmd>GinStatus<CR>', { buffer = true, silent = true }) -- TODO: `gin#util#reload()`が使えそう
@@ -212,4 +232,5 @@ vim.keymap.set('n', '<C-g>', ':<C-u>!git<Space>', { nowait = true, remap = true,
 
 -- For float windows - Keymaps that behave differently between float and non-float windows
 vim.keymap.set('n', 'o', open_file_in_window, { buffer = true, silent = true })
+vim.keymap.set('n', 'V', open_file_in_prev_win_vsplit, { buffer = true, silent = true })
 vim.keymap.set('n', 'p', open_diff, { buffer = true, silent = true, nowait = true })
