@@ -185,7 +185,7 @@ local function open_file_in_new_tab()
 end
 
 local function switch_branch_via_cmdpalette()
-  nvim.feedkeys(':<C-u>Cmdpalette<CR>Gin switch<Space>')
+  nvim.feedkeys()
 end
 
 ---When float window only: Open the selected file in prev window with vsplit (float stays open)
@@ -208,11 +208,12 @@ local function open_file_in_prev_win_vsplit()
   vim.cmd('vsp ' .. vim.fn.fnameescape(filepath))
 end
 
+-- NOTE: `remap = true` to open cmdpalette
 vim.keymap.set('n', 'Q', '<Cmd>bdelete!<CR>', { buffer = true, silent = true })
 vim.keymap.set('n', 'A', run_add_patch, { buffer = true, silent = true })
 vim.keymap.set('n', '<C-r>', '<Cmd>GinStatus<CR>', { buffer = true, silent = true }) -- TODO: `gin#util#reload()`が使えそう
-vim.keymap.set('n', 'P', ':<C-u>!git push', { remap = true, buffer = true })
-vim.keymap.set('n', 'gP', ':<C-u>!git pull', { remap = true, buffer = true })
+vim.keymap.set('n', 'P', ':<C-u>AsyncRun git push', { remap = true, buffer = true })
+vim.keymap.set('n', 'gP', ':<C-u>AsyncRun git pull', { remap = true, buffer = true })
 vim.keymap.set('n', 'sa', '<Plug>(gin-action-stash)', { buffer = true, silent = true })
 vim.keymap.set('n', 'ss', run_stash_push_message, { buffer = true })
 vim.keymap.set('n', 'sp', '<Cmd>Gin stash pop<CR>', { buffer = true })
@@ -222,13 +223,13 @@ vim.keymap.set('n', 'ca', function() open_commit_buffer({ '--amend' }) end, { bu
 vim.keymap.set('n', 'B', '<Cmd>GinBranch<CR>', { buffer = true, silent = true })
 vim.keymap.set('n', 'C', ':<C-u>Gin switch --create<Space>', { remap = true, buffer = true })
 vim.keymap.set('n', 'cf', ':<C-u>GitCommitFixup<Space>', { remap = true, buffer = true })
-vim.keymap.set('n', 'S', switch_branch_via_cmdpalette, { buffer = true, silent = true })
+vim.keymap.set('n', 'S', ':<C-u>Gin switch<Space>', { remap = true, buffer = true, silent = true })
 vim.keymap.set({ 'n', 'v' }, '<:', '<Plug>(gin-action-restore:ours)', { buffer = true })
 vim.keymap.set({ 'n', 'v' }, '>:', '<Plug>(gin-action-restore:theirs)', { buffer = true })
 vim.keymap.set('n', '==', '<Plug>(gin-action-reset)', { buffer = true })
 vim.keymap.set('n', 'D', delete_this_file, { buffer = true })
 vim.keymap.set('n', 'O', open_file_in_new_tab, { buffer = true, silent = true })
-vim.keymap.set('n', '<C-g>', ':<C-u>!git<Space>', { nowait = true, remap = true, buffer = true, silent = true }) -- remap to open cmdpalette
+vim.keymap.set('n', '<C-g>', ':<C-u>AsyncRun git<Space>', { nowait = true, remap = true, buffer = true, silent = true })
 
 -- For float windows - Keymaps that behave differently between float and non-float windows
 vim.keymap.set('n', 'o', open_file_in_window, { buffer = true, silent = true })
