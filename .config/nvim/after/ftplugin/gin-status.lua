@@ -107,12 +107,23 @@ local function delete_this_file()
   end)
 end
 
-vim.keymap.set('n', 'Q', '<Cmd>bdelete!<CR>', { buffer = true, silent = true })
-vim.keymap.set('n', 'A', run_add_patch, { buffer = true, silent = true })
+---@param float_win integer
+---@return string | nil
+local function resolve_filepath(float_win)
+  local filepath = get_current_line_file_path()
+  if filepath == nil then
+    vim.notify('Failed to parse the current line for file path', vim.log.levels.ERROR)
+    return nil
+  end
+  if InitLua.git_root ~= nil then
+    filepath = InitLua.git_root .. '/' .. filepath
+  end
+  return filepath
+end
 
--- - When float window: Open the selected file in latest window
 -- - When not float window: Open the selected file in new vertical split window
-vim.keymap.set('n', 'o', function()
+-- - When float window: Open the selected file in prev window (edit)
+local function open_file_in_window()
   if not nvim.is_in_float_window() then
     vim.cmd('vsp')
     nvim.run_with_virtual_keymaps('<Plug>(gin-action-edit)')
@@ -121,14 +132,9 @@ vim.keymap.set('n', 'o', function()
 
   run_closing_float(function()
     local float_win = vim.api.nvim_get_current_win()
-    local filepath = get_current_line_file_path()
+    local filepath = resolve_filepath(float_win)
     if filepath == nil then
-      vim.notify('Failed to parse the current line for file path', vim.log.levels.ERROR)
       return
-    end
-
-    if InitLua.git_root ~= nil then
-      filepath = InitLua.git_root .. '/' .. filepath
     end
 
     local ok, prev_win = pcall(vim.api.nvim_win_get_var, float_win, 'gin_status_prev_win')
@@ -137,11 +143,11 @@ vim.keymap.set('n', 'o', function()
     end
     vim.cmd('edit ' .. vim.fn.fnameescape(filepath))
   end)
-end, { buffer = true, silent = true })
+end
 
-vim.keymap.set('n', '<C-r>', '<Cmd>GinStatus<CR>', { buffer = true, silent = true }) -- TODO: `gin#util#reload()`が使えそう
-
-vim.keymap.set('n', 'p', function()
+-- - When not float window: Open diff in vsplit
+-- - When float window: Open diff in diff tab (reuse existing diff tab if any)
+local function open_diff()
   if not nvim.is_in_float_window() then
     nvim.run_with_virtual_keymaps('<Plug>(gin-action-diff:smart:vsplit)')
     return
@@ -151,17 +157,13 @@ vim.keymap.set('n', 'p', function()
   local ok, diff_tab = pcall(vim.api.nvim_win_get_var, float_win, 'gin_diff_tabpage')
 
   if ok and vim.api.nvim_tabpage_is_valid(diff_tab) then
-    local filepath = get_current_line_file_path()
+    local filepath = resolve_filepath(float_win)
     if filepath == nil then
-      vim.notify('Failed to parse the current line for file path', vim.log.levels.ERROR)
       return
     end
     local line = vim.fn.getline('.')
     local status = line:match('^%s*(%S+)')
     local has_staged = status ~= nil and status:sub(1, 1) ~= ' ' and status:sub(1, 1) ~= '?'
-    if InitLua.git_root ~= nil then
-      filepath = InitLua.git_root .. '/' .. filepath
-    end
     vim.api.nvim_set_current_tabpage(diff_tab)
     vim.cmd('vsplit')
     if has_staged then
@@ -174,8 +176,21 @@ vim.keymap.set('n', 'p', function()
     local new_tab = vim.api.nvim_get_current_tabpage()
     vim.api.nvim_win_set_var(float_win, 'gin_diff_tabpage', new_tab)
   end
-end, { buffer = true, silent = true, nowait = true })
+end
 
+local function open_file_in_new_tab()
+  vim.cmd('normal "zyy')
+  vim.cmd('tabnew')
+  vim.cmd('edit ' .. vim.fn.trim(vim.fn.getreg('z')))
+end
+
+local function switch_branch_via_cmdpalette()
+  nvim.feedkeys(':<C-u>Cmdpalette<CR>Gin switch<Space>')
+end
+
+vim.keymap.set('n', 'Q', '<Cmd>bdelete!<CR>', { buffer = true, silent = true })
+vim.keymap.set('n', 'A', run_add_patch, { buffer = true, silent = true })
+vim.keymap.set('n', '<C-r>', '<Cmd>GinStatus<CR>', { buffer = true, silent = true }) -- TODO: `gin#util#reload()`が使えそう
 vim.keymap.set('n', 'P', ':<C-u>!git push', { remap = true, buffer = true })
 vim.keymap.set('n', 'gP', ':<C-u>!git pull', { remap = true, buffer = true })
 vim.keymap.set('n', 'sa', '<Plug>(gin-action-stash)', { buffer = true, silent = true })
@@ -183,25 +198,18 @@ vim.keymap.set('n', 'ss', run_stash_push_message, { buffer = true })
 vim.keymap.set('n', 'sp', '<Cmd>Gin stash pop<CR>', { buffer = true })
 vim.keymap.set('n', 'cc', open_commit_buffer, { buffer = true, silent = true })
 vim.keymap.set('n', 'cC', '<Cmd>ClaudeCodeFocus<CR>/git-commit', { buffer = true, silent = true })
+vim.keymap.set('n', 'ca', function() open_commit_buffer({ '--amend' }) end, { buffer = true, silent = true })
 vim.keymap.set('n', 'B', '<Cmd>GinBranch<CR>', { buffer = true, silent = true })
 vim.keymap.set('n', 'C', ':<C-u>Gin switch --create<Space>', { remap = true, buffer = true })
 vim.keymap.set('n', 'cf', ':<C-u>GitCommitFixup<Space>', { remap = true, buffer = true })
+vim.keymap.set('n', 'S', switch_branch_via_cmdpalette, { buffer = true, silent = true })
 vim.keymap.set({ 'n', 'v' }, '<:', '<Plug>(gin-action-restore:ours)', { buffer = true })
 vim.keymap.set({ 'n', 'v' }, '>:', '<Plug>(gin-action-restore:theirs)', { buffer = true })
 vim.keymap.set('n', '==', '<Plug>(gin-action-reset)', { buffer = true })
 vim.keymap.set('n', 'D', delete_this_file, { buffer = true })
+vim.keymap.set('n', 'O', open_file_in_new_tab, { buffer = true, silent = true })
 vim.keymap.set('n', '<C-g>', ':<C-u>!git<Space>', { nowait = true, remap = true, buffer = true, silent = true }) -- remap to open cmdpalette
 
-vim.keymap.set('n', 'O', function()
-  vim.cmd('normal "zyy')
-  vim.cmd('tabnew')
-  vim.cmd('edit ' .. vim.fn.trim(vim.fn.getreg('z')))
-end, { buffer = true, silent = true })
-
-vim.keymap.set('n', 'S', function()
-  nvim.feedkeys(':<C-u>Cmdpalette<CR>Gin switch<Space>')
-end, { buffer = true, silent = true })
-
-vim.keymap.set('n', 'ca', function()
-  open_commit_buffer({ '--amend' })
-end, { buffer = true, silent = true })
+-- For float windows - Keymaps that behave differently between float and non-float windows
+vim.keymap.set('n', 'o', open_file_in_window, { buffer = true, silent = true })
+vim.keymap.set('n', 'p', open_diff, { buffer = true, silent = true, nowait = true })
