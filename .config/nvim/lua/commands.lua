@@ -321,6 +321,22 @@ create_command('CClear', function()
   vim.fn.setqflist({})
 end, { desc = 'Clear quickfix' })
 
+create_command('AsyncRunHide', function(opts)
+  vim.cmd('hide')
+  vim.api.nvim_create_autocmd('User', {
+    pattern = 'AsyncRunStop',
+    once = true,
+    callback = function()
+      local return_win = vim.fn.win_getid()
+      vim.cmd('copen')
+      if vim.api.nvim_win_is_valid(return_win) then
+        vim.api.nvim_set_current_win(return_win)
+      end
+    end,
+  })
+  vim.cmd('AsyncRun ' .. opts.args)
+end, { nargs = '*', desc = 'Hide current window then run AsyncRun, opening quickfix on completion' })
+
 create_command('Rename', function(opts)
   nvim.rename_to(opts.args)
 end, { nargs = 1, complete = 'file', desc = 'Rename current file to the new name' })

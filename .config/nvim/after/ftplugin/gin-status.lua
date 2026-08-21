@@ -212,8 +212,8 @@ end
 vim.keymap.set('n', 'Q', '<Cmd>bdelete!<CR>', { buffer = true, silent = true })
 vim.keymap.set('n', 'A', run_add_patch, { buffer = true, silent = true })
 vim.keymap.set('n', '<C-r>', '<Cmd>GinStatus<CR>', { buffer = true, silent = true }) -- TODO: `gin#util#reload()`が使えそう
-vim.keymap.set('n', 'P', ':<C-u>AsyncRun git push', { remap = true, buffer = true })
-vim.keymap.set('n', 'gP', ':<C-u>AsyncRun git pull', { remap = true, buffer = true })
+vim.keymap.set('n', 'P', ':<C-u>AsyncRunHide git push', { remap = true, buffer = true })
+vim.keymap.set('n', 'gP', ':<C-u>AsyncRunHide git pull', { remap = true, buffer = true })
 vim.keymap.set('n', 'sa', '<Plug>(gin-action-stash)', { buffer = true, silent = true })
 vim.keymap.set('n', 'ss', run_stash_push_message, { buffer = true })
 vim.keymap.set('n', 'sp', '<Cmd>Gin stash pop<CR>', { buffer = true })
