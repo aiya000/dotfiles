@@ -337,6 +337,11 @@ create_command('AsyncRunHide', function(opts)
   vim.cmd('AsyncRun ' .. opts.args)
 end, { nargs = '*', desc = 'Hide current window then run AsyncRun, opening quickfix on completion' })
 
+create_command('AsyncRunNotifyHide', function(opts)
+  vim.notify(('Running: %s'):format(opts.args), vim.log.levels.INFO)
+  vim.cmd('AsyncRunHide ' .. opts.args)
+end, { nargs = '+', desc = 'Notify the command to be run, then run `AsyncRunHide`' })
+
 create_command('Rename', function(opts)
   nvim.rename_to(opts.args)
 end, { nargs = 1, complete = 'file', desc = 'Rename current file to the new name' })
