@@ -6,12 +6,20 @@ vim.opt_local.cursorline = true
 ---TODO: 相対パスにする。サブディレクトリでこれやるとエラーになる
 ---@return string | nil ---nil when failed to parse the line
 local function get_current_line_file_path()
-  local line = vim.fn.getline('.') -- Like ' M path/to/file.txt', 'M  path/to/file.txt', '?? path/to/file.txt', and etc
-  local filepath = line:match('^%s+%S+%s+(.*)$')
+  -- `git status --short` puts the XY status on the first 2 columns.
+  -- Like ' M path/to/file.txt', 'M  path/to/file.txt', '?? path/to/file.txt', 'R  old.txt -> new.txt', and etc
+  local line = vim.fn.getline('.')
+  if line:match('^##') ~= nil then -- The branch header line
+    return nil
+  end
+
+  local filepath = line:match('^..%s(.*)$')
   if filepath == nil or filepath == '' then
     return nil
   end
-  return filepath
+
+  filepath = filepath:match('.* %-> (.*)$') or filepath -- A renamed entry shows both of the paths
+  return (filepath:gsub('^"(.*)"$', '%1')) -- git quotes a path that has special characters
 end
 
 ---Runs `git stash push --message "{message}" -- "{current_line_file_path}"`
@@ -107,9 +115,9 @@ local function delete_this_file()
   end)
 end
 
----@param float_win integer
+---NOTE: Must be called when the gin-status window is the current window
 ---@return string | nil
-local function resolve_filepath(float_win)
+local function resolve_filepath()
   local filepath = get_current_line_file_path()
   if filepath == nil then
     vim.notify('Failed to parse the current line for file path', vim.log.levels.ERROR)
@@ -119,6 +127,98 @@ local function resolve_filepath(float_win)
     filepath = InitLua.git_root .. '/' .. filepath
   end
   return filepath
+end
+
+---The window that the gin-status float window was opened from
+---@param float_win integer
+---@return integer | nil
+local function get_prev_win(float_win)
+  local ok, prev_win = pcall(vim.api.nvim_win_get_var, float_win, 'gin_status_prev_win')
+  if not ok or not vim.api.nvim_win_is_valid(prev_win) then
+    return nil
+  end
+  return prev_win
+end
+
+---Gets back the cursor to the window (usually the gin-status window)
+---@param win integer
+local function back_to_win_later(win)
+  vim.schedule(function()
+    if vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_set_current_win(win)
+    end
+  end)
+end
+
+---@param win integer
+---@return boolean
+local function is_float_win(win)
+  return vim.api.nvim_win_get_config(win).relative ~= ''
+end
+
+---@param tabpage integer
+---@return integer | nil
+local function find_non_float_win(tabpage)
+  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tabpage)) do
+    if not is_float_win(win) then
+      return win
+    end
+  end
+  return nil
+end
+
+---Is the tabpage opened by `open_diff()`?
+---i.e. Does the tabpage have gin-diff windows only? (Float windows are ignored)
+---@param tabpage integer
+---@return boolean
+local function is_diff_tabpage(tabpage)
+  local found_diff_win = false
+  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tabpage)) do
+    if not is_float_win(win) then
+      local buf = vim.api.nvim_win_get_buf(win)
+      if vim.bo[buf].filetype ~= 'gin-diff' then
+        return false
+      end
+      found_diff_win = true
+    end
+  end
+  return found_diff_win
+end
+
+---Prefers the current tabpage, then falls back to another tabpage
+---@return integer | nil
+local function find_diff_tabpage()
+  local current = vim.api.nvim_get_current_tabpage()
+  if is_diff_tabpage(current) then
+    return current
+  end
+  for _, tabpage in ipairs(vim.api.nvim_list_tabpages()) do
+    if is_diff_tabpage(tabpage) then
+      return tabpage
+    end
+  end
+  return nil
+end
+
+---Does the current line have staged changes? (The X column of `git status --short`)
+---NOTE: Must be called when the gin-status window is the current window
+---@return boolean
+local function current_line_has_staged_change()
+  local x = vim.fn.getline('.'):sub(1, 1)
+  return x ~= ' ' and x ~= '?' and x ~= '!'
+end
+
+---@param filepath string
+---@param opener 'vsplit' | 'tabedit'
+---@param cached boolean
+local function exec_gin_diff(filepath, opener, cached)
+  local args = { 'GinDiff', '++opener=' .. opener }
+  if cached then
+    table.insert(args, '--cached')
+  end
+  table.insert(args, '--')
+  table.insert(args, vim.fn.fnameescape(filepath))
+  vim.cmd(table.concat(args, ' '))
 end
 
 -- - When not float window: Open the selected file in new vertical split window
@@ -132,50 +232,66 @@ local function open_file_in_window()
 
   run_closing_float(function()
     local float_win = vim.api.nvim_get_current_win()
-    local filepath = resolve_filepath(float_win)
+    local filepath = resolve_filepath()
     if filepath == nil then
       return
     end
 
-    local ok, prev_win = pcall(vim.api.nvim_win_get_var, float_win, 'gin_status_prev_win')
-    if ok and vim.api.nvim_win_is_valid(prev_win) then
+    local prev_win = get_prev_win(float_win)
+    if prev_win ~= nil then
       vim.api.nvim_set_current_win(prev_win)
     end
     vim.cmd('edit ' .. vim.fn.fnameescape(filepath))
   end)
 end
 
--- - When not float window: Open diff in vsplit
--- - When float window: Open diff in diff tab (reuse existing diff tab if any)
+---A float window belongs to its tabpage, so `:tabedit` leaves it behind on the previous tabpage.
+---Re-opens the gin-status float window on the current tabpage to keep it shown, then closes the old one.
+---@param old_float_win integer
+---@param prev_win integer --The window that the new float window opens files into (`V`, `o`)
+local function move_float_to_current_tabpage(old_float_win, prev_win)
+  local buf = vim.api.nvim_win_get_buf(old_float_win)
+  local cursor = vim.api.nvim_win_get_cursor(old_float_win)
+
+  local new_float_win = nvim.open_buffer_in_float_window(buf)
+  vim.api.nvim_win_set_var(new_float_win, 'gin_status_prev_win', prev_win)
+  vim.wo[new_float_win].cursorline = true -- 'cursorline' is window local, so the new window needs it again
+  pcall(vim.api.nvim_win_set_cursor, new_float_win, cursor)
+
+  close_win_later(old_float_win)
+end
+
+-- Opens the diff of the file on the current line. Never closes the gin-status window.
+--
+-- - When no diff tabpage is found: Open the diff in a new tabpage, and move to it with the gin-status window
+-- - When a diff tabpage (a tabpage that has gin-diff windows only) is found:
+--   Open the diff in it with vsplit, then get the cursor back to the gin-status window (same as `V`)
+--     - The current tabpage is preferred, so pressing this in a diff tabpage opens the diff in the same tabpage
 local function open_diff()
-  if not nvim.is_in_float_window() then
-    nvim.run_with_virtual_keymaps('<Plug>(gin-action-diff:smart:vsplit)')
+  local status_win = vim.api.nvim_get_current_win()
+  local filepath = resolve_filepath()
+  if filepath == nil then
+    return
+  end
+  local cached = current_line_has_staged_change()
+
+  local diff_tabpage = find_diff_tabpage()
+  if diff_tabpage == nil then
+    local is_float = is_float_win(status_win)
+    exec_gin_diff(filepath, 'tabedit', cached) -- Stays in the opened tabpage
+    if is_float then
+      move_float_to_current_tabpage(status_win, vim.api.nvim_get_current_win())
+    end
     return
   end
 
-  local float_win = vim.api.nvim_get_current_win()
-  local ok, diff_tab = pcall(vim.api.nvim_win_get_var, float_win, 'gin_diff_tabpage')
-
-  if ok and vim.api.nvim_tabpage_is_valid(diff_tab) then
-    local filepath = resolve_filepath(float_win)
-    if filepath == nil then
-      return
-    end
-    local line = vim.fn.getline('.')
-    local status = line:match('^%s*(%S+)')
-    local has_staged = status ~= nil and status:sub(1, 1) ~= ' ' and status:sub(1, 1) ~= '?'
-    vim.api.nvim_set_current_tabpage(diff_tab)
-    vim.cmd('vsplit')
-    if has_staged then
-      vim.cmd('GinDiff ++cached -- ' .. vim.fn.fnameescape(filepath))
-    else
-      vim.cmd('GinDiff -- ' .. vim.fn.fnameescape(filepath))
-    end
-  else
-    nvim.run_with_virtual_keymaps('<Plug>(gin-action-diff:smart:tabedit)')
-    local new_tab = vim.api.nvim_get_current_tabpage()
-    vim.api.nvim_win_set_var(float_win, 'gin_diff_tabpage', new_tab)
+  vim.api.nvim_set_current_tabpage(diff_tabpage)
+  local non_float_win = find_non_float_win(diff_tabpage) -- Cannot split a float window
+  if non_float_win ~= nil then
+    vim.api.nvim_set_current_win(non_float_win)
   end
+  exec_gin_diff(filepath, 'vsplit', cached)
+  back_to_win_later(status_win)
 end
 
 local function open_file_in_new_tab()
@@ -188,24 +304,28 @@ local function switch_branch_via_cmdpalette()
   nvim.feedkeys()
 end
 
----When float window only: Open the selected file in prev window with vsplit (float stays open)
-local function open_file_in_prev_win_vsplit()
-  if not nvim.is_in_float_window() then
-    return
-  end
-
-  local float_win = vim.api.nvim_get_current_win()
-  local filepath = resolve_filepath(float_win)
+---Opens the selected file with vsplit, then gets the cursor back to the gin-status window
+---(i.e. Never closes the gin-status window)
+--- - When float window: vsplit the window that gin-status was opened from
+--- - When not float window: vsplit the gin-status window itself
+local function open_file_in_vsplit()
+  local status_win = vim.api.nvim_get_current_win()
+  local filepath = resolve_filepath()
   if filepath == nil then
     return
   end
 
-  local ok, prev_win = pcall(vim.api.nvim_win_get_var, float_win, 'gin_status_prev_win')
-  if not (ok and vim.api.nvim_win_is_valid(prev_win)) then
-    return
+  if nvim.is_in_float_window() then
+    local prev_win = get_prev_win(status_win) -- Cannot split a float window
+    if prev_win == nil then
+      vim.notify('Failed to detect the window that gin-status was opened from', vim.log.levels.ERROR)
+      return
+    end
+    vim.api.nvim_set_current_win(prev_win)
   end
-  vim.api.nvim_set_current_win(prev_win)
+
   vim.cmd('vsp ' .. vim.fn.fnameescape(filepath))
+  back_to_win_later(status_win)
 end
 
 -- NOTE: `remap = true` to open cmdpalette
@@ -233,5 +353,5 @@ vim.keymap.set('n', '<C-g>', ':<C-u>AsyncRun git<Space>', { nowait = true, remap
 
 -- For float windows - Keymaps that behave differently between float and non-float windows
 vim.keymap.set('n', 'o', open_file_in_window, { buffer = true, silent = true })
-vim.keymap.set('n', 'V', open_file_in_prev_win_vsplit, { buffer = true, silent = true })
+vim.keymap.set('n', 'V', open_file_in_vsplit, { buffer = true, silent = true })
 vim.keymap.set('n', 'p', open_diff, { buffer = true, silent = true, nowait = true })
