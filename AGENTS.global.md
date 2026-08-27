@@ -157,7 +157,14 @@ Memory files are human-readable Markdown files used by AI agents to persist cont
 
 ### Location
 
-`~/.dotfiles/.private/AI-MEMORY/`
+`~/.ai-memory/`
+
+This is a symlink to a private directory kept outside the public dotfiles tree.
+Always refer to it as `~/.ai-memory/`; do not resolve, look up, or write out its real target path.
+
+Before writing, confirm the symlink exists by running `ls -ld ~/.ai-memory` and checking that the output starts with `l`.
+If it is **not** a symlink (or does not exist), **stop and ask the user to set it up**.
+Do not create it yourself.
 
 ### Filename Format
 
@@ -169,6 +176,31 @@ YYYY-MM-DD-{project}-{topic}.md
 - `{topic}` -- a short keyword describing the content (e.g. `nvim-config`, `workflow-tips`)
 - Example: `2026-05-18-dotfiles-ai-memory-migration.md`
 
+### Index
+
+`~/.ai-memory/MEMORY-INDEX.md` is the index of every memory file.
+
+Its format is a `# Memory Index` header followed by one line per memory file:
+
+```markdown
+- [<short title>](<memory-file-name>.md) — <one-line summary of what is inside>
+```
+
+- Entries are appended in chronological order (newest last)
+- **Always update the index after writing or updating a memory file**
+    - New memory file -> append a new entry
+    - Already-indexed memory file -> update its entry if the summary no longer matches the content
+- When looking for prior context, read the index first, then open only the memory files whose entries look relevant
+- If the index does not exist yet, create it with the `# Memory Index` header
+- The index may be incomplete for older memory files; fall back to `ls ~/.ai-memory` when the index has no relevant entry
+
+### File Content Format
+
+- New file: start with the header `# Memory - YYYY-MM-DD`
+- Each entry goes under a timestamped heading: `## [HH:MM] - <short topic title>`
+- Determine the current date and time by running `date +%Y-%m-%d_%H:%M`
+- If a file for the same or similar project+topic already exists, append to or update it instead of creating a new one
+
 ### When to Write
 
 - When the user runs the `/save-memory` command
@@ -179,17 +211,35 @@ YYYY-MM-DD-{project}-{topic}.md
 - When the user references prior sessions or previously done work
 - When the current task is likely related to an existing memory file
 
+### Before Writing: Secret Scan
+
+Review the content you are about to save for secrets or sensitive values:
+
+- API keys and tokens: strings starting with `ghp_`, `gho_`, `AKIA`, `sk-`, `xox`, or matching `-----BEGIN.*PRIVATE KEY`
+- Variables with sensitive names holding a value: `API_KEY=`, `_SECRET=`, `_TOKEN=`, `PASSWORD=`
+- Hardcoded absolute home paths: `/Users/<name>/` or `/home/<name>/` (prefer `~`)
+- Personal or organizational proper nouns that could identify specific individuals or organizations
+
+If anything above is found, **stop and ask the user** whether to save as-is, fix the content first, or cancel.
+Write only when the user chooses to save as-is, or when nothing suspicious was found.
+
 ### What to Include
 
-- Decisions made and implementation outcomes (not the process)
-- User preferences and constraints
+The goal is a chronological log of what happened in the session, so a future session can rebuild the timeline and context without replaying the full conversation.
+
+- What was done in the session: changes made, commands run, problems solved (summarized, not verbatim)
+- The reason or context behind each action -- the "why", which is often invisible in code or git history
+- Decisions made and their rationale
+- User preferences and constraints discovered during the session
+- Errors or pitfalls encountered and how they were resolved
 - Project-specific facts not derivable from reading the code
-- Errors encountered and how they were resolved
 
 ### What to Exclude
 
-- Information already derivable from the current code
-- Information already present in git history
+- Tool call inputs/outputs and raw command logs
+- Verbose code listings (keep only the essential snippet if truly needed)
+- Back-and-forth clarification exchanges
+- Meta-conversation about the AI itself
 
 ## Conversations
 

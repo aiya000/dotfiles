@@ -17,7 +17,7 @@ that future Claude Code sessions can load to restore context.
 2. Determine current date and time by running `date +%Y-%m-%d_%H:%M`
 3. Verify the memory directory is set up, using the Bash tool:
     - Run: `ls -ld ~/.ai-memory` and confirm the output starts with `l` (i.e. `~/.ai-memory` is a symlink)
-    - If it is **not** a symlink (or does not exist), **stop and ask the user to set it up** by running `ln -s ~/.dotfiles/.private/AI-MEMORY/ ~/.ai-memory` (see `~/.dotfiles/.private/README.md`). Do not create it yourself
+    - If it is **not** a symlink (or does not exist), **stop and ask the user to set it up**. Do not create it yourself
     - Otherwise, list existing files with: `ls ~/.ai-memory 2>/dev/null`
 4. **Secret scan** — before writing, review the content you are about to save for potential secrets or sensitive values:
 
@@ -38,6 +38,22 @@ that future Claude Code sessions can load to restore context.
     - If a file for the same or similar project+topic already exists: append or update it
     - Otherwise: create a new file with header `# Memory - YYYY-MM-DD`
     - `{project}` is the short name of the current project (e.g. `dotfiles`, `my-app`); omit if the topic is not project-specific
+
+6. **Update the index** — `~/.ai-memory/MEMORY-INDEX.md`
+
+    This step is **mandatory**; a memory file that is not indexed is hard for a future session to find.
+
+    - Read the existing index first (create it with the header `# Memory Index` if it does not exist)
+    - Entry format, one line per memory file:
+
+        ```markdown
+        - [<short title>](<memory-file-name>.md) — <one-line summary of what is inside>
+        ```
+
+    - New memory file -> append a new entry at the end (entries are in chronological order, newest last)
+    - Already-indexed memory file -> update its entry if the summary no longer matches the content
+    - The link target is the bare filename, relative to `~/.ai-memory/`
+    - Keep the summary to a single line: what the memory is about, plus any notable gotcha worth pointing at
 
 ### How to distill
 
@@ -66,6 +82,9 @@ what happened without replaying the full conversation.
 
 ## Memory File Location
 
-- Directory: `~/.ai-memory` (a symlink to `~/.dotfiles/.private/AI-MEMORY/`)
+- Directory: `~/.ai-memory` — a symlink to a private directory kept outside the public dotfiles tree.
+  Always refer to it as `~/.ai-memory`; do not resolve or write out its real target path
 - Filename: `YYYY-MM-DD-{project}-{topic}.md` (e.g., `2026-03-31-dotfiles-nvim-config.md`)
 - `{project}` can be omitted for agent-wide or cross-project notes (e.g., `2026-03-31-workflow-tips.md`)
+- Index: `~/.ai-memory/MEMORY-INDEX.md` — the lookup table for all memory files.
+  Read it first when searching for prior context, and keep it updated whenever a memory file is written
