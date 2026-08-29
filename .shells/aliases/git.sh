@@ -132,13 +132,19 @@ function git-worktree-create-env () {
 # }}}
 # Others {{{
 
-alias git-tag-delete='git tag --delete'
-
 function git-tag-add-with-mmessage () {
   local tag_name=$1 message=$2
   shift 2
   git tag --annotate "$tag_name" --message "$message" "$@"
 }
+
+function git-tag-add-with-mmessage-force () {
+  local tag_name=$1 message=$2
+  shift 2
+  git tag --annotate "$tag_name" --force --message "$message" "$@"
+}
+
+alias git-tag-add-with-mmessage-replace=git-tag-add-with-mmessage-force
 
 function git-branch-name () {
   git branch 2> /dev/null | grep '\*\s.*' | awk '{print $2}'
@@ -326,8 +332,6 @@ alias gf='git fetch'
 alias gfo='git fetch origin'
 alias gfp='git fetch --prune'  # GitHub（など）の上に既にない`remotes/origin/xxxx`のようなリモート追跡ブランチを、ローカルから削除するやつ
 alias gtag='git tag'
-alias gtagd=git-tag-delete
-alias gtag-add-with-mmessage=git-tag-add-with-mmessage
 
 unset git_taking_limit
 
