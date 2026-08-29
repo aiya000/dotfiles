@@ -37,3 +37,6 @@
 [submodule ".zsh/plugin/sh-bookmark-hereis"]
 	path = .zsh/plugin/sh-bookmark-hereis
 	url = https://github.com/aiya000/sh-bookmark-hereis
+[submodule "powershell-toys"]
+	path = powershell-toys
+	url = https://github.com/aiya000/powershell-toys
