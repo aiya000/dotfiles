@@ -69,6 +69,7 @@ appear at the root of the **current working directory**, even though the real fi
 - `.gitconfig`, `.gitmodules`, `.ripgreprc`
 - `.mcp.json`, `.vscode`
 - `.claude/agents`, `.claude/commands`, `.claude/hooks`, `.claude/settings.json`, `.claude/workflows`, `.claude/launch.json`, `.claude/loop.md`, `.claude/output-styles`, `.claude/routines`, `.claude/scheduled_tasks.json`
+- `.git/config.lock` — this one actively **breaks** git
 
 They are not real files — `stat` reports them as `character special file (1,3)`, i.e. `/dev/null` bind
 mounts owned by `nobody:nogroup`. The sandbox creates them to mask deny-listed paths, and it resolves
@@ -82,6 +83,11 @@ This reproduces in **any** working directory, not just one project.
 - When `git status` lists those names as untracked (`??`), treat them as noise, not as real files
 - Verify with `stat -c '%n: %F' <name>` before believing such a file exists
 - Never suggest adding them to `.gitignore` — they do not exist outside the sandbox
+- Any git command that writes `.git/config` fails inside the sandbox with
+  `error: could not lock config file .git/config: File exists`. That covers `git push -u`,
+  `git branch --set-upstream-to`, `git remote add`, and `git config`. Run those with
+  `dangerouslyDisableSandbox: true`
+- Never try to delete that "stale lock" — it is not a real lock file, and `rm` cannot remove it anyway
 
 ## Gratitude
 
