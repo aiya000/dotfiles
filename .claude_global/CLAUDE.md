@@ -57,6 +57,32 @@ Using full paths can conflict with `/sandbox` settings and trigger unnecessary p
 
 Use absolute paths only when truly necessary (e.g. accessing files outside the project root such as `~/.dotfiles/`).
 
+## TEMPORARY: Phantom Dotfiles in the Sandbox
+
+**This is a temporary workaround for what looks like a Claude Code sandbox bug (observed 2026-08-30).
+Delete this section once the sandbox stops doing this.**
+
+Inside a sandboxed Bash command, entries named after home-directory dotfiles and Claude config files
+appear at the root of the **current working directory**, even though the real files live in `$HOME`:
+
+- `.bashrc`, `.zshrc`, `.bash_profile`, `.zprofile`, `.profile`
+- `.gitconfig`, `.gitmodules`, `.ripgreprc`
+- `.mcp.json`, `.vscode`
+- `.claude/agents`, `.claude/commands`, `.claude/hooks`, `.claude/settings.json`, `.claude/workflows`, `.claude/launch.json`, `.claude/loop.md`, `.claude/output-styles`, `.claude/routines`, `.claude/scheduled_tasks.json`
+
+They are not real files — `stat` reports them as `character special file (1,3)`, i.e. `/dev/null` bind
+mounts owned by `nobody:nogroup`. The sandbox creates them to mask deny-listed paths, and it resolves
+those deny paths against the working directory as well as `$HOME`. They are invisible outside the sandbox.
+
+This reproduces in **any** working directory, not just one project.
+
+### What to do about it
+
+- **NEVER run `git add -A`, `git add .`, or `git add -u`** — always stage explicit paths
+- When `git status` lists those names as untracked (`??`), treat them as noise, not as real files
+- Verify with `stat -c '%n: %F' <name>` before believing such a file exists
+- Never suggest adding them to `.gitignore` — they do not exist outside the sandbox
+
 ## Gratitude
 
 Due to token usage, maybe I won't be able to thank you much before leaving the session,
