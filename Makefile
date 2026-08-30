@@ -396,6 +396,10 @@ install-anthropic-ai-sandbox-runtime:
 install-jq:
 	which jq || $(AptInstall) jq
 
+# For ps-mem
+install-smem:
+	which smem || $(AptInstall) smem
+
 endif # }}}
 ifneq ($(filter $(OS),Darwin macos),) # {{{
 
