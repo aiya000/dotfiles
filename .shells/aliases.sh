@@ -85,7 +85,11 @@ function - () {
 alias-of sudo 'sudo '  # Enable aliases on sudo
 alias-of mysql 'mysql --pager="less -r -S -n -i -F -X"'
 alias-of yay 'yay --color always'
-alias-of ps-mem 'ps-mem --process-name-max-length 999'
+
+if i-have ps-mem ; then
+  alias ps-mem='ps-mem --process-name-max-length 999' # 999 to show all of the process names
+  alias psm='ps-mem --process-name-max-length 999'
+fi
 
 # }}}
 # Load ./aliases/** {{{
