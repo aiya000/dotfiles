@@ -235,6 +235,9 @@ alias mount-ext2='sudo mount -o iocharset=utf8'
 alias mount-ext3=mount-ext2
 alias mount-ext4=mount-ext2
 
+alias restart-bash='echo "> exec bash\n" && exec bash'
+alias restart-zsh='echo "> exec zsh\n" && exec zsh'
+
 function mount-smb2 () {
   local ip=$1
   local user=$2
