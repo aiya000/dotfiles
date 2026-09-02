@@ -22,12 +22,13 @@ alias cp='cp -i'
 alias dd='dd status=progress'
 alias df='df -h'
 alias dmesg='dmesg --ctime'
-alias free='free -h'
 alias ls='ls --color=auto --group-directories-first'
 alias mv='mv -i'
 alias sl=ls
 alias rm=rm-dust  # Aaaaaaaaaaaaaaaa!!
-alias git=git-bridge-wsl-and-windows
+
+alias-of git git-bridge-wsl-and-windows
+alias-of free 'free -h'
 
 if i-have batcat ; then
   alias batcat-with-default-options='batcat $DOTFILES_BATCAT_DEFAULT_OPTIONS' # あれ？ これってオプション変数、ここで展開しなくていいんだっけ？
