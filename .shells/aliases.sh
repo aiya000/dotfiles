@@ -88,8 +88,11 @@ alias-of mysql 'mysql --pager="less -r -S -n -i -F -X"'
 alias-of yay 'yay --color always'
 
 if i-have ps-mem ; then
-  alias ps-mem='ps-mem --process-name-max-length 999' # 999 to show all of the process names
-  alias psm='ps-mem --process-name-max-length 999'
+  alias ps-mem-max='ps-mem --process-name-max-length 999 --total' # 999 to show all of the process names & total
+  alias ps-mem=ps-mem-max
+  alias psm=ps-mem-max
+  alias ps-mem-min='ps-mem --process-name-max-length 70 --total' # 70 to show the process names in a minimum length & total
+  alias psmm=ps-mem-min
 fi
 
 # }}}

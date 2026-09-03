@@ -350,18 +350,6 @@ alias grmc=grm-cached
 # }}}
 ## GitHub {{{
 
-function github-change-remote-from-git-to-https () {
-  local remote https_url
-  remote=${1:-origin}
-  https_url=$( \
-    git remote get-url "$remote" \
-    | sed -r 's/git@([^:]+):([^\/]+)\/(.*)/https:\/\/\1\/\2\/\3/' \
-    | sed -r 's/\.git$//' \
-  )
-  git remote set-url "$remote" "$https_url"
-  git remote get-url "$remote"
-}
-
 function gh-workflow-run-all () {
   : '
   Runs GitHub Actions Workflows that are set to
@@ -381,6 +369,9 @@ function gh-run-delete-for-user () {
   : 'Deletes GitHub Actions Workflows run by the specified user'
   gh run list "--user=$1" --json databaseId -q '.[].databaseId' | xargs -I {} gh run delete {}
 }
+
+alias gh-pr-view-title='gh pr view --json number,title'
+alias gh-pr-view-number=gh-pr-view-title
 
 # }}}
 ## GitLab {{{
