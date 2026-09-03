@@ -7,3 +7,4 @@ alias ps-sorted-by-mem='\ps -e -o %mem,%cpu,user,command | drop 1 | cut -c1-120 
 alias docker-force-remove-containers-data='rm -rf ~/Library/Containers/com.docker.docker/Data/*'
 
 i-have gsed && alias sed=gsed
+i-have free-macos && alias free=free-macos
