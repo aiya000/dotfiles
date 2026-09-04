@@ -28,6 +28,7 @@ Always use the corresponding skill instead of running git commands directly:
 - **NEVER use `find -exec` or `fd --exec`** -- Can accidentally execute commands on unintended files; use a loop or `xargs` instead
 - **Avoid `git -C <path>`** -- Prefer running git from the correct working directory; use only when necessary (e.g. submodule operations)
 - **NEVER use `git -c user.name=...` or `git -c user.email=...`** -- Never inject identity via command-line flags; if identity is missing, use the `git-verify-identity` skill
+- **NEVER read a config value with bare `git config <key>`** -- Use `git config --get <key>`; the bare form does not match the `Bash(git config --get:*)` allow rule, so it prompts every time. This is about reads only -- setting a value is unaffected
 
 ## **Using Interpreter Invocations**
 
