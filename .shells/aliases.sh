@@ -252,6 +252,11 @@ i-have unzip && alias unzip-cp932='unzip -O cp932'
 # }}}
 # Others {{{
 
+function generate-password () {
+  LC_ALL=C tr -dc 'A-Za-z0-9!@#$%^&*()_+-=' < /dev/urandom | head -c 32 ; echo
+}
+alias password-gen=generate-password
+
 alias date-simple='date "+%Y-%m-%d %H:%M"'
 alias date-today='date +"%Y-%m-%d"'
 alias today=date-today
