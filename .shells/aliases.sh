@@ -88,15 +88,35 @@ alias-of mysql 'mysql --pager="less -r -S -n -i -F -X"'
 alias-of yay 'yay --color always'
 
 if i-have ps-mem ; then
-  # TODO: ↓みたいにすると、`ps-mem-max`がnot foundになるのなんで？
-  # alias ps-mem-max='ps-mem --process-name-max-length 999 --footprint --total'
-  # alias psm=ps-mem-max
+  # `alias ps-mem='...' ; alias ps-foo=ps-mem ; ...`ってするとps-foo実行時にnot foundになるので…。
+  function ::dotfiles::define-ps-mem () {
+    local ps_memm ps_mem ps_mem_max ps_mem_min
 
-  alias ps-mem-max='ps-mem --process-name-max-length 999 --footprint --total' # 999 to show all of the process names & total & footprint
-  alias ps-mem='ps-mem --process-name-max-length 999 --footprint --total'
-  alias psm='ps-mem --process-name-max-length 999 --footprint --total'
-  alias ps-mem-min='ps-mem --process-name-max-length 70 --footprint --total' # 70 to show the process names in a minimum length & total & footprint
-  alias psmm='ps-mem --process-name-max-length 70 --footprint --total'
+    # 999 to show all of the process names
+    ps_memm='ps-mem --process-name-max-length 999'
+    # shellcheck disable=SC2139
+    alias ps-memm="$ps_memm"
+
+    ps_mem_max="$ps_memm --footprint --total"
+    # shellcheck disable=SC2139
+    alias ps-mem-max="$ps_mem_max"
+    # shellcheck disable=SC2139
+    alias ps-memm="$ps_mem_max"
+    # shellcheck disable=SC2139
+    alias psmm="$ps_mem_max"
+
+    # 70 to show the process names in a minimum length
+    ps_mem='ps-mem --process-name-max-length 70'
+    # shellcheck disable=SC2139
+    alias ps-mem="$ps_mem"  # Override
+
+    ps_mem_min="$ps_mem --process-name-max-length 70 --footprint --total"
+    # shellcheck disable=SC2139
+    alias ps-mem-min="$ps_mem_min"
+    # shellcheck disable=SC2139
+    alias psm="$ps_mem_min"
+  }
+  ::dotfiles::define-ps-mem
 fi
 
 # }}}
