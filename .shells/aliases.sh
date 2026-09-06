@@ -135,7 +135,7 @@ if i-have claude ; then
   alias claude-resume='claude --resume'
   alias claude-continue='claude --continue'
   alias claude-commit='claude "/git-commit"'
-  alias git-commit-claude=claude-commit
+  alias claude-open-as-general-topic='claude "このセッションは一般的なトピックを複合的に扱う、汎用セッションとして使うよ。よろしくね！"'
 fi
 
 if i-have copilot ; then
