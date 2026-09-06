@@ -3,6 +3,14 @@
   "lines": [
     [
       {
+        "id": "9c6796f1-c0f8-4f5b-bb9d-e778066166d0",
+        "type": "model"
+      },
+      {
+        "id": "8",
+        "type": "separator"
+      },
+      {
         "id": "1",
         "type": "session-usage"
       },
@@ -31,7 +39,7 @@
         "type": "weekly-reset-timer"
       },
       {
-        "id": "8",
+        "id": "9f4808c0-a8b5-4a8a-bdc9-a75240e7f471",
         "type": "separator"
       },
       {
