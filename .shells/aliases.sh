@@ -106,7 +106,7 @@ if i-have ps-mem ; then
     # shellcheck disable=SC2139
     alias ps-mem="$ps_mem"  # Override
 
-    ps_mem_min="$ps_mem --total"
+    ps_mem_min="$ps_mem --total --tail"
     # shellcheck disable=SC2139
     alias ps-mem-min="$ps_mem_min"
     # shellcheck disable=SC2139
@@ -117,7 +117,7 @@ if i-have ps-mem ; then
     # shellcheck disable=SC2139
     alias ps-memm="$ps_memm"
 
-    ps_mem_max="$ps_memm --total"
+    ps_mem_max="$ps_memm --total --tail"
     # shellcheck disable=SC2139
     alias ps-mem-max="$ps_mem_max"
     # shellcheck disable=SC2139
