@@ -90,13 +90,13 @@ alias-of yay 'yay --color always'
 if i-have ps-mem ; then
   # `alias ps-mem='...' ; alias ps-foo=ps-mem ; ...`ってするとps-foo実行時にnot foundになるので…。
   function ::dotfiles::define-ps-mem () {
-    local footprint ps_memm ps_mem ps_mem_max ps_mem_min
+    local os_opts ps_memm ps_mem ps_mem_max ps_mem_min
 
     # `--footprint` is available only on macOS
-    if ! is-in-wsl ; then # TODO: むしろis-in-macosでチェックする（今はそのコマンドはない）
-      footprint='--footprint'
+    if is-in-macos ; then
+      os_opts='--footprint'
     else
-      footprint=''
+      os_opts='--pname --rss --pss --uss --swap'
     fi
 
     # 999 to show all of the process names
@@ -104,7 +104,7 @@ if i-have ps-mem ; then
     # shellcheck disable=SC2139
     alias ps-memm="$ps_memm"
 
-    ps_mem_max="$ps_memm $footprint --total"
+    ps_mem_max="$ps_memm $os_opts --total"
     # shellcheck disable=SC2139
     alias ps-mem-max="$ps_mem_max"
     # shellcheck disable=SC2139
@@ -117,7 +117,7 @@ if i-have ps-mem ; then
     # shellcheck disable=SC2139
     alias ps-mem="$ps_mem"  # Override
 
-    ps_mem_min="$ps_mem --process-name-max-length 70 $footprint --total"
+    ps_mem_min="$ps_mem --process-name-max-length 70 $os_opts --total"
     # shellcheck disable=SC2139
     alias ps-mem-min="$ps_mem_min"
     # shellcheck disable=SC2139
