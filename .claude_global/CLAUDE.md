@@ -14,6 +14,21 @@ After this, I (we) will call:
 - 'you' as you, or 'Claude Code' if referring to the tool specifically
 - 'Global Config' as this file
 
+## First: Read the Project Root's AGENTS.md
+
+**At the start of every session, read the `AGENTS.md` in the project root** -- use the `read-agents-md` skill.
+Read it before touching any file, not after the first task has already been decided.
+
+`AGENTS.md` is where a project records how it wants to be worked on: which branch to commit to, when a
+change needs a Pull Request, what has to pass before committing. **Those rules override the habits in this
+file and any default behaviour.**
+
+- **Re-read it before branching, committing, opening a PR, or releasing.** Those are the rules easiest to
+  remember wrongly, and the ones most expensive to get wrong
+- **Work asked for in conversation is not the same as work that comes from an Issue.** Check what the
+  project says about each *before* creating a branch or a Pull Request
+- A Pull Request description is as public as an Issue. It is not a quieter place to put something
+
 ## Skill Usage for Git Operations
 
 Always use the corresponding skill instead of running git commands directly:
@@ -89,6 +104,30 @@ This reproduces in **any** working directory, not just one project.
   `git branch --set-upstream-to`, `git remote add`, and `git config`. Run those with
   `dangerouslyDisableSandbox: true`
 - Never try to delete that "stale lock" — it is not a real lock file, and `rm` cannot remove it anyway
+
+## Say When the Session Has Grown Too Long
+
+**Tell the user when a long session starts to cost you accuracy. Do not quietly degrade.**
+
+You cannot measure your own context usage. There is no percentage available to you. What you
+*can* observe are the signs below, and any one of them is enough to say something:
+
+- **The conversation was summarised or compacted.** Context was dropped to make room; whatever
+  was in it is now only as good as the summary
+- **You are re-reading files or re-deriving facts** that were already established earlier in
+  the session
+- **You are unsure whether something was already decided**, and have to ask about a decision the
+  user believes was settled
+- **You made a claim and had to correct it**, where the original claim was something the session
+  had already covered
+- The session has run long enough that early context is no longer in view
+
+When you notice one, say it in a line or two — plainly, without alarm — and offer to write a
+handoff note so a fresh session can pick the work up. Then let the user decide. Do not stop
+working on your own initiative; carrying on at reduced accuracy without warning is the failure,
+not the length of the session.
+
+**Never claim a number you do not have.** Say what you observed, not "I am at 80% context".
 
 ## Gratitude
 
