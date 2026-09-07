@@ -90,38 +90,40 @@ alias-of yay 'yay --color always'
 if i-have ps-mem ; then
   # `alias ps-mem='...' ; alias ps-foo=ps-mem ; ...`ってするとps-foo実行時にnot foundになるので…。
   function ::dotfiles::define-ps-mem () {
-    local os_opts ps_memm ps_mem ps_mem_max ps_mem_min
+    local os_opts ps_memm ps_mem ps_mem_max ps_mem_min base_opts default_opts
 
+    base_opts='--process-name-max-length 70 --tail'
     # `--footprint` is available only on macOS
     if is-in-macos ; then
-      os_opts='--footprint'
+      os_opts="$base_opts --footprint"
     else
-      os_opts='--pname --rss --pss --uss --swap'
+      os_opts="$base_opts --pname --rss --pss --uss --swap"
     fi
+    default_opts="$base_opts $os_opts"
+
+    # 70 to show the process names in a minimum length
+    ps_mem="ps-mem $default_opts"
+    # shellcheck disable=SC2139
+    alias ps-mem="$ps_mem"  # Override
+
+    ps_mem_min="$ps_mem --total"
+    # shellcheck disable=SC2139
+    alias ps-mem-min="$ps_mem_min"
+    # shellcheck disable=SC2139
+    alias psm="$ps_mem_min"
 
     # 999 to show all of the process names
-    ps_memm='ps-mem --process-name-max-length 999'
+    ps_memm="$ps_mem --process-name-max-length 999 --tail"
     # shellcheck disable=SC2139
     alias ps-memm="$ps_memm"
 
-    ps_mem_max="$ps_memm $os_opts --total"
+    ps_mem_max="$ps_memm --total"
     # shellcheck disable=SC2139
     alias ps-mem-max="$ps_mem_max"
     # shellcheck disable=SC2139
     alias ps-memm="$ps_mem_max"
     # shellcheck disable=SC2139
     alias psmm="$ps_mem_max"
-
-    # 70 to show the process names in a minimum length
-    ps_mem='ps-mem --process-name-max-length 70'
-    # shellcheck disable=SC2139
-    alias ps-mem="$ps_mem"  # Override
-
-    ps_mem_min="$ps_mem --process-name-max-length 70 $os_opts --total"
-    # shellcheck disable=SC2139
-    alias ps-mem-min="$ps_mem_min"
-    # shellcheck disable=SC2139
-    alias psm="$ps_mem_min"
   }
   ::dotfiles::define-ps-mem
 fi
