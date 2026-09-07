@@ -95,29 +95,31 @@ if i-have ps-mem ; then
     base_opts='--process-name-max-length 70 --tail'
     # `--footprint` is available only on macOS
     if is-in-macos ; then
-      os_opts="$base_opts --footprint"
+      os_opts='--footprint'
     else
-      os_opts="$base_opts --pname --rss --pss --uss --swap"
+      os_opts='--pname --rss --pss --uss --swap'
     fi
     default_opts="$base_opts $os_opts"
 
     # 70 to show the process names in a minimum length
-    ps_mem="ps-mem $default_opts"
+    # `command` keeps the `ps-mem` alias below from being expanded a second time
+    # when the aliases derived from it (psm, psmm, ...) are used
+    ps_mem="command ps-mem $default_opts"
     # shellcheck disable=SC2139
     alias ps-mem="$ps_mem"  # Override
 
-    ps_mem_min="$ps_mem --total --tail"
+    ps_mem_min="$ps_mem --total"
     # shellcheck disable=SC2139
     alias ps-mem-min="$ps_mem_min"
     # shellcheck disable=SC2139
     alias psm="$ps_mem_min"
 
     # 999 to show all of the process names
-    ps_memm="$ps_mem --process-name-max-length 999 --tail"
+    ps_memm="$ps_mem --process-name-max-length 999"
     # shellcheck disable=SC2139
     alias ps-memm="$ps_memm"
 
-    ps_mem_max="$ps_memm --total --tail"
+    ps_mem_max="$ps_memm --total"
     # shellcheck disable=SC2139
     alias ps-mem-max="$ps_mem_max"
     # shellcheck disable=SC2139
