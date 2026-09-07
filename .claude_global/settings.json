@@ -16,19 +16,19 @@
       "Bash(git status:*)",
       "Bash(git reflog:*)",
       "Bash(git commit:*)",
-      "Bash(git config user.name)",
-      "Bash(git config user.email)",
+      "Bash(git config --get:*)",
       "Bash(gh issue list:*)",
       "Bash(gh issue view:*)",
       "Bash(gh issue create:*)",
       "Bash(gh pr list:*)",
       "Bash(gh pr view:*)",
       "Bash(gh pr create:*)",
+      "Bash(gh pr merge * --merge)",
+      "Bash(gh pr merge * --merge --delete-branch)",
       "Bash(gh run list:*)",
       "Bash(gh run view:*)",
       "Bash(grep:*)",
       "Bash(rg:*)",
-      "Bash(python3:*)",
       "Bash(notify:*)",
       "Read(~/.config/nvim)",
       "Skill(read-agents-md)",
@@ -47,7 +47,7 @@
       "Bash(sudo:*)",
       "Bash(find:*)"
     ],
-    "defaultMode": "acceptEdits",
+    "defaultMode": "auto",
     "additionalDirectories": [
       "~/.ai-memory/"
     ]
@@ -73,6 +73,30 @@
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/save-memory-mark.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "auto|manual",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/save-memory-precompact-gate.sh",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
@@ -82,8 +106,7 @@
   },
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": true,
-    "lua-lsp@claude-plugins-official": true,
-    "swift-lsp@claude-plugins-official": true
+    "lua-lsp@claude-plugins-official": true
   },
   "sandbox": {
     "enabled": true,
@@ -94,6 +117,8 @@
         "~/.dotfiles/.git/",
         "// `/save-memory`用",
         "~/.ai-memory/",
+        "// auto-compact前のsave-memory強制フック用マーカー",
+        "~/.claude/state/save-memory-markers/",
         "// `rm-dust`の退避先（ゴミ箱）",
         "~/.backup/dustbox/"
       ]
