@@ -4,9 +4,12 @@ rules:
   - capability: shell
     effect: allow
     match:
-      - 'true'
+      - "true"
+      - ./node_modules/.bin/eslint *
       - /bin/bash --version
       - /opt/homebrew/bin/nvim *
+      - /usr/bin/readlink *
+      - /usr/bin/wc *
       - awk *
       - bash --version
       - bun install
@@ -19,9 +22,16 @@ rules:
       - command *
       - cut *
       - echo *
+      - exit *
       - gh --version
+      - gh auth status
       - gh issue view *
+      - gh label list *
+      - gh pr checks *
+      - gh pr list *
+      - gh pr view *
       - gh repo list *
+      - gh repo view *
       - git add *
       - git apply *
       - git branch --show-current
@@ -33,6 +43,7 @@ rules:
       - git show *
       - git stash *
       - git status *
+      - git switch *
       - head *
       - jq *
       - lib/bats/bin/bats *
@@ -41,9 +52,11 @@ rules:
       - luac *
       - mkdir *
       - mktemp *
+      - node --version
       - nvim *
       - pnpm exec eslint *
       - pnpm exec prettier *
+      - pnpm run format
       - pnpm run lint
       - pnpm run type-check
       - printf *
@@ -62,6 +75,7 @@ rules:
       - top *
       - type *
       - wc *
+      - whence *
       - which *
   - capability: fs_read
     effect: allow
@@ -69,6 +83,7 @@ rules:
       - /private/tmp/**
       - {YOUR-HOME}/.ai-memory/**
       - {YOUR-HOME}/.dotfiles/**
+      - {YOUR-HOME}/.kiro/**
   - capability: web_fetch
     effect: allow
     match:
@@ -76,13 +91,19 @@ rules:
   - capability: skill
     effect: allow
     match:
+      - apply-pr-review
+      - create-this-issue
       - define-markdown-format
+      - fd
       - git-add
       - git-commit
       - git-verify-identity
+      - github-pr-create
       - rg
+      - rm-dust
       - save-memory
       - suggest-alternative-commands
+      - sync-labels-from-prs-and-sub-issues
       - verify-git-command-location
   - capability: shell
     effect: deny
@@ -93,6 +114,12 @@ rules:
   - capability: fs_write
     effect: allow
     match:
-      - {YOUR-HOME}/.dotfiles/.private/AI-MEMORY/**
+      - {YOUR-HOME}/.ai-memory/**
+      - {YOUR-HOME}/.dotfiles/.kiro_global/**
+      - {YOUR-HOME}/.dotfiles/AGENTS.global.md
   - capability: web_search
     effect: allow
+  - capability: subagent
+    effect: allow
+    match:
+      - semantic_reviewer
