@@ -45,6 +45,24 @@ Always use the corresponding skill instead of running git commands directly:
 - **NEVER use `git -c user.name=...` or `git -c user.email=...`** -- Never inject identity via command-line flags; if identity is missing, use the `git-verify-identity` skill
 - **NEVER read a config value with bare `git config <key>`** -- Use `git config --get <key>`; the bare form does not match the `Bash(git config --get:*)` allow rule, so it prompts every time. This is about reads only -- setting a value is unaffected
 
+### **Git worktrees: another session may be standing in one**
+
+A repository is often checked out into several worktrees at once, with a different Claude Code
+session working in each. Anything that moves a branch is therefore something you can do *to
+someone else*, not only to yourself.
+
+- **NEVER `git switch` / `git checkout <branch>` in a worktree you were not launched in.** It
+  moves the branch out from under whoever is working there. To work on a different branch,
+  add your own worktree (`git worktree add ../<name> <branch>`) and move into it
+- **`gh pr merge --delete-branch` switches the current worktree to the base branch** after it
+  deletes the head branch -- silently, as part of the merge. That worktree is then holding the
+  base branch, which blocks every other worktree from checking it out. Prefer plain
+  `gh pr merge` from a worktree, and check `git worktree list` afterwards
+- **Always stage explicit paths.** `git add -A`, `git add .` and `git add -u` sweep in whatever
+  another session left uncommitted in the same tree
+- Clean up when done: `git worktree remove <path>`, then `git worktree prune` (it also clears
+  stale entries left by earlier sessions)
+
 ## **Using Interpreter Invocations**
 
 When running code via language interpreters (e.g. `python3 -c`, `node -e`, `ruby -e`):
