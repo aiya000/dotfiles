@@ -1,90 +1,90 @@
 ---
 name: save-memory
 description: Export and distill the current conversation into a memory file. Use when the user asks to save, remember, or note the current session for future context.
-allowed-tools: Bash(date *), Bash(ls *), Write(~/.ai-memory/*), Read(~/.ai-memory/*)
+allowed-tools: Bash(date *), Bash(ls *), Bash(printf *), Write(~/.ai-memory/*), Read(~/.ai-memory/*)
 ---
 
 # save-memory
 
-## What you do with this skill
+Distills the current conversation into a compact memory file that a future session loads to
+restore context. **Only an AI reads these files, never a person.** Write for a model that will
+pay tokens for every character: dense, English, no prose.
 
-This skill distills the current conversation into a compact, machine-readable memory file
-that future Claude Code sessions can load to restore context.
+## Steps
 
-### Steps
+1. Use the current conversation as the source
+2. Get the timestamp: `date +%Y-%m-%d_%H:%M`
+3. Verify the memory directory (Bash):
+    - `ls -ld ~/.ai-memory` must start with `l` (a symlink). If not a symlink, or missing,
+      **stop and ask the user to set it up**. Do not create it
+    - `ls ~/.ai-memory` to see existing files; reuse a file for the same project+topic
+4. **Secret scan** the content you are about to write:
+    - Keys/tokens: `ghp_`, `gho_`, `AKIA`, `sk-`, `xox`, `-----BEGIN.*PRIVATE KEY`
+    - Sensitive assignments: `API_KEY=`, `_SECRET=`, `_TOKEN=`, `PASSWORD=`
+    - Absolute home paths (`/home/<name>/`, `/Users/<name>/`) -- write `~` instead
+    - Proper nouns identifying a person or organisation
 
-1. Use the current conversation content as source material
-2. Determine current date and time by running `date +%Y-%m-%d_%H:%M`
-3. Verify the memory directory is set up, using the Bash tool:
-    - Run: `ls -ld ~/.ai-memory` and confirm the output starts with `l` (i.e. `~/.ai-memory` is a symlink)
-    - If it is **not** a symlink (or does not exist), **stop and ask the user to set it up**. Do not create it yourself
-    - Otherwise, list existing files with: `ls ~/.ai-memory 2>/dev/null`
-4. **Secret scan** — before writing, review the content you are about to save for potential secrets or sensitive values:
+    On any hit, AskUserQuestion: "Save as-is" / "Fix then save" / "Cancel". Write only on
+    "Save as-is" or a clean scan
+5. Write the file (format below) to `~/.ai-memory/YYYY-MM-DD-{project}-{topic}.md`
+    - Same project+topic already exists -> append a new `HH:MM` block to it
+    - `{project}`: short repo name; omit for cross-project notes
+    - **Use the Write tool, not a Bash heredoc.** The Bash hook rejects any command whose
+      text contains the three substituted command names, and a heredoc puts the whole memory
+      body into the command text
+6. **Update the index** `~/.ai-memory/MEMORY-INDEX.md` -- mandatory; an unindexed memory is
+   unfindable
+    - Append one line (format below) at the end. Chronological, newest last
+    - Existing file updated -> refresh its line if the summary drifted
+    - Append with `printf '%s\n' '<line>' >> ~/.ai-memory/MEMORY-INDEX.md`; the same hook
+      caveat applies to the line's text
 
-    What to look for:
-    - API keys and tokens: strings starting with `ghp_`, `gho_`, `AKIA`, `sk-`, `xox`, or matching `-----BEGIN.*PRIVATE KEY`
-    - Variables with sensitive names holding a value: patterns like `API_KEY=`, `_SECRET=`, `_TOKEN=`, `PASSWORD=`
-    - Hardcoded absolute home paths: `/Users/<name>/` or `/home/<name>/` (prefer `~`)
-    - Personal or organizational proper nouns that could identify specific individuals or organizations
+## Memory file format (v2)
 
-    If any of the above are found in the content to be saved, use AskUserQuestion to present these options:
-    - "Save as-is" — proceed despite the finding
-    - "Fix then save" — let the user review and fix the content first
-    - "Cancel" — abort without writing
+```
+# M YYYY-MM-DD proj=<project>
+HH:MM <topic, <=8 words>
+did: <what changed; sha/PR/path where one exists>
+why: <the reason the code does not show>
+decided: <decision> (<reason>; user: "<their words if the wording matters>")
+gotcha: <what cost time and would again; the fix>
+pref: <how the user wants to work, learned this session>
+next: <open item / waiting on whom>
+ref: <sha | path | AGENTS.md#section | handoff path | url>
+```
 
-    Only proceed with writing if the user selects "Save as-is", or if nothing suspicious was found.
+Rules:
 
-5. Write (or append) to: `~/.ai-memory/YYYY-MM-DD-{project}-{topic}.md`
-    - If a file for the same or similar project+topic already exists: append or update it
-    - Otherwise: create a new file with header `# Memory - YYYY-MM-DD`
-    - `{project}` is the short name of the current project (e.g. `dotfiles`, `my-app`); omit if the topic is not project-specific
+- **English, telegraphic.** Drop articles and pronouns; `->`, `=`, `!=`, `~`, `x2` are fine;
+  backtick identifiers. No sentences that only join facts, no markdown emphasis or tables
+- **One fact per line, <=120 chars.** A tag line may repeat (`gotcha:` x3); omit tags with
+  nothing in them
+- **Only what the repo cannot tell you.** Git log, `AGENTS.md`, code comments and a handoff
+  note already hold their own content: point at them with `ref:` instead of restating
+- **Budget: <=40 lines, ~2.5 KB per session.** Over budget means it is a log, not a memory --
+  cut the timeline down to the facts a future session would act on
+- Keep a user's quote in its original language only when the exact wording carries the
+  decision; <=1 line
+- Never write raw tool output, command logs, code listings, or the conversation's turn-taking
 
-6. **Update the index** — `~/.ai-memory/MEMORY-INDEX.md`
+## Index line format (v2)
 
-    This step is **mandatory**; a memory file that is not indexed is hard for a future session to find.
+```
+- [YYYY-MM-DD proj topic](file.md) — kw: k1, k2, k3; gotcha: <one clause>
+```
 
-    - Read the existing index first (create it with the header `# Memory Index` if it does not exist)
-    - Entry format, one line per memory file:
+- **<=160 chars.** The index is read whole at the start of a search, so every line is a tax
+  on every future session
+- `kw:` are retrieval keywords (subsystems, issue numbers, commands), English, 3-6 of them
+- `gotcha:` the single most expensive trap in the file, or omit
+- The legend for both formats lives in the index header (`<!-- legend ... -->`); do not
+  repeat it in memory files. Entries above the `<!-- v2 entries start here -->` marker are
+  v1 (Japanese narrative) and stay as they are
 
-        ```markdown
-        - [<short title>](<memory-file-name>.md) — <one-line summary of what is inside>
-        ```
+## Why this shape
 
-    - New memory file -> append a new entry at the end (entries are in chronological order, newest last)
-    - Already-indexed memory file -> update its entry if the summary no longer matches the content
-    - The link target is the bare filename, relative to `~/.ai-memory/`
-    - Keep the summary to a single line: what the memory is about, plus any notable gotcha worth pointing at
-
-### How to distill
-
-From the conversation, extract what is worth remembering across sessions.
-Write under a timestamped heading: `## [HH:MM] - <short topic title>`
-
-The goal is a **chronological log of what happened in this session** — so a future session can understand the timeline and context without replaying the full conversation.
-
-Keep:
-
-- What was done in this session: changes made, commands run, problems solved (summarized, not verbatim)
-- The reason or context behind each action — the "why", which is often invisible in code or git history
-- User preferences or constraints discovered during the session
-- Errors or pitfalls encountered and how they were resolved
-- Decisions made and their rationale
-
-Remove:
-
-- Tool call inputs/outputs and command logs (raw output)
-- Verbose code listings (keep only the essential snippet if truly needed)
-- Back-and-forth clarification exchanges
-- Meta-conversation about the AI itself
-
-The result should be concise — a future session should be able to read it in seconds and understand
-what happened without replaying the full conversation.
-
-## Memory File Location
-
-- Directory: `~/.ai-memory` — a symlink to a private directory kept outside the public dotfiles tree.
-  Always refer to it as `~/.ai-memory`; do not resolve or write out its real target path
-- Filename: `YYYY-MM-DD-{project}-{topic}.md` (e.g., `2026-03-31-dotfiles-nvim-config.md`)
-- `{project}` can be omitted for agent-wide or cross-project notes (e.g., `2026-03-31-workflow-tips.md`)
-- Index: `~/.ai-memory/MEMORY-INDEX.md` — the lookup table for all memory files.
-  Read it first when searching for prior context, and keep it updated whenever a memory file is written
+Earlier memories were Japanese narrative paragraphs of 4-11 KB each, and index lines of
+500-1000 chars (118 KB of index for 58 entries): a future session paid to read a diary.
+English telegraphic lines tokenize at a fraction of the cost, one-fact-per-line lets a reader
+stop at the tag it needs, and the caps keep both files from growing past what a session can
+afford to load.
