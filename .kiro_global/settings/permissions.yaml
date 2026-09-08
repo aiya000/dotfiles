@@ -21,25 +21,34 @@ rules:
       - cd *
       - command *
       - cut *
+      - diff *
       - echo *
       - exit *
       - gh --version
       - gh auth status
+      - gh auth status --active
+      - gh issue create *
+      - gh issue list *
       - gh issue view *
       - gh label list *
       - gh pr checks *
+      - gh pr create *
       - gh pr list *
       - gh pr view *
       - gh repo list *
       - gh repo view *
       - git add *
       - git apply *
+      - git branch --list *
       - git branch --show-current
+      - git branch -r --list *
       - git check-ignore *
       - git commit *
       - git config --get *
       - git diff *
+      - git fetch *
       - git mv *
+      - git push *
       - git show *
       - git stash *
       - git status *
@@ -52,10 +61,15 @@ rules:
       - luac *
       - mkdir *
       - mktemp *
+      - nl *
       - node --version
       - nvim *
       - pnpm exec eslint *
+      - pnpm exec nuxi prepare
+      - pnpm exec nuxt prepare
       - pnpm exec prettier *
+      - pnpm exec vitest --run *
+      - pnpm exec vitest run *
       - pnpm run format
       - pnpm run lint
       - pnpm run type-check
@@ -83,7 +97,17 @@ rules:
       - /private/tmp/**
       - {YOUR-HOME}/.ai-memory/**
       - {YOUR-HOME}/.dotfiles/**
+      - {YOUR-HOME}/.dotfiles/AGENTS.global.md
       - {YOUR-HOME}/.kiro/**
+      - {YOUR-HOME}/.local/**
+      - {YOUR-HOME}/AGENTS.local.md
+  - capability: fs_write
+    effect: allow
+    match:
+      - {YOUR-HOME}/.ai-memory/**
+      - {YOUR-HOME}/.dotfiles/.kiro_global/**
+      - {YOUR-HOME}/.dotfiles/AGENTS.global.md
+      - {YOUR-HOME}/AGENTS.local.md
   - capability: web_fetch
     effect: allow
     match:
@@ -111,12 +135,6 @@ rules:
       - find *
       - grep *
       - rm *
-  - capability: fs_write
-    effect: allow
-    match:
-      - {YOUR-HOME}/.ai-memory/**
-      - {YOUR-HOME}/.dotfiles/.kiro_global/**
-      - {YOUR-HOME}/.dotfiles/AGENTS.global.md
   - capability: web_search
     effect: allow
   - capability: subagent
