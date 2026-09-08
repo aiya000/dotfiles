@@ -25,6 +25,8 @@ After this, I (we) will call:
 
 Note for Claude Code: See the `on-instructions-loaded` and `git-verify-identity` skills instead.
 
+If `~/AGENTS.local.md` exists, read it immediately after reading this file.
+
 When you read this file successfully,
 **YOU MUST SAY**
 **'Global Custom Instructions loaded!'**
