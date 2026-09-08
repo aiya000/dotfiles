@@ -31,11 +31,14 @@ When you read this file successfully,
 
 Then, if you are in a git repository, check below.
 
-Result for `git config user.name 2>&1 && echo 'user.name is set' || echo 'user.name is NOT set'`:
-!`git config user.name 2>&1 && echo 'user.name is set' || echo 'user.name is NOT set'`
+Result for `git config --get user.name 2>&1 && echo 'user.name is set' || echo 'user.name is NOT set'`:
+!`git config --get user.name 2>&1 && echo 'user.name is set' || echo 'user.name is NOT set'`
 
-Result for `git config user.email 2>&1 && echo 'user.name is set' || echo 'user.name is NOT set'`:
-!`git config user.email 2>&1 && echo 'user.name is set' || echo 'user.name is NOT set'`
+Result for `git config --get user.email 2>&1 && echo 'user.name is set' || echo 'user.name is NOT set'`:
+!`git config --get user.email 2>&1 && echo 'user.name is set' || echo 'user.name is NOT set'`
+
+When reading a Git configuration value, **always use `git config --get <name>`**.
+Never use `git config <name>` without `--get` for value lookup.
 
 If either is missing, **stop and ask the user to configure git identity before doing any work**.
 
