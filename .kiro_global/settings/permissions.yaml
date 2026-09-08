@@ -1,0 +1,98 @@
+# NOTE: Replace {FOO} to your value to use this setting
+
+rules:
+  - capability: shell
+    effect: allow
+    match:
+      - 'true'
+      - /bin/bash --version
+      - /opt/homebrew/bin/nvim *
+      - awk *
+      - bash --version
+      - bun install
+      - bun run eslint
+      - bun run lint
+      - bun run typecheck
+      - bunx prettier *
+      - cat *
+      - cd *
+      - command *
+      - cut *
+      - echo *
+      - gh --version
+      - gh issue view *
+      - gh repo list *
+      - git add *
+      - git apply *
+      - git branch --show-current
+      - git check-ignore *
+      - git commit *
+      - git config --get *
+      - git diff *
+      - git mv *
+      - git show *
+      - git stash *
+      - git status *
+      - head *
+      - jq *
+      - lib/bats/bin/bats *
+      - ln *
+      - ls *
+      - luac *
+      - mkdir *
+      - mktemp *
+      - nvim *
+      - pnpm exec eslint *
+      - pnpm exec prettier *
+      - pnpm run lint
+      - pnpm run type-check
+      - printf *
+      - ps *
+      - ps-mem *
+      - readlink *
+      - rg *
+      - rm-dust *
+      - sed *
+      - shellcheck *
+      - sort *
+      - source ./source-all.sh
+      - stylua *
+      - tail *
+      - test *
+      - top *
+      - type *
+      - wc *
+      - which *
+  - capability: fs_read
+    effect: allow
+    match:
+      - /private/tmp/**
+      - {YOUR-HOME}/.ai-memory/**
+      - {YOUR-HOME}/.dotfiles/**
+  - capability: web_fetch
+    effect: allow
+    match:
+      - agentskills.io
+  - capability: skill
+    effect: allow
+    match:
+      - define-markdown-format
+      - git-add
+      - git-commit
+      - git-verify-identity
+      - rg
+      - save-memory
+      - suggest-alternative-commands
+      - verify-git-command-location
+  - capability: shell
+    effect: deny
+    match:
+      - find *
+      - grep *
+      - rm *
+  - capability: fs_write
+    effect: allow
+    match:
+      - {YOUR-HOME}/.dotfiles/.private/AI-MEMORY/**
+  - capability: web_search
+    effect: allow
