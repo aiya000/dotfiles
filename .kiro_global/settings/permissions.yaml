@@ -1,21 +1,18 @@
 # NOTE: Replace {FOO} to your value to use this setting
 
-# WARNING: Do not apply this config to Kiro and open a public repository (i.e. one that accepts
-# PRs from untrusted contributors) with it.
+# WARNING: Do not apply this config to Kiro and open a public repository (i.e. one that accepts PRs from untrusted contributors) with it.
 #
 # Reason: several allow rules below have a fixed command name, but the content that actually
 # gets executed depends on the repo's diff (i.e. a PR). A malicious PR can plant that content
 # and Kiro will run it as-is:
 #
-#   - bun install              : auto-runs pre/postinstall scripts of any dependency added to
-#                                package.json / the lockfile
+#   - bun install : auto-runs pre/postinstall scripts of any dependency added to package.json / the lockfile
 #   - pnpm exec vitest --run *, pnpm exec vitest run *, lib/bats/bin/bats *
-#                               : executes the contents of test files as JS/bash
+#                 : executes the contents of test files as JS/bash
 #   - pnpm run format|lint|type-check, bun run eslint|lint|typecheck
-#                               : the command name is fixed, but the actual script body comes
-#                                 from package.json's "scripts" field (part of the PR diff itself)
-#   - sed *, awk *              : both support running shell commands (the `e` flag / system())
-#   - git apply *                : a crafted patch could in theory write to unintended paths
+#                 : the command name is fixed, but the actual script body comes from package.json's "scripts" field (part of the PR diff itself)
+#   - sed *, awk * : both support running shell commands (the `e` flag / system())
+#   - git apply * : a crafted patch could in theory write to unintended paths
 #
 # Only use this config on repos/branches you fully trust.
 
