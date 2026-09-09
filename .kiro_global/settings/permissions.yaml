@@ -7,7 +7,6 @@
 # gets executed depends on the repo's diff (i.e. a PR). A malicious PR can plant that content
 # and Kiro will run it as-is:
 #
-#   - source ./source-all.sh   : runs the contents of source-all.sh directly in the current shell
 #   - bun install              : auto-runs pre/postinstall scripts of any dependency added to
 #                                package.json / the lockfile
 #   - pnpm exec vitest --run *, pnpm exec vitest run *, lib/bats/bin/bats *
@@ -103,7 +102,6 @@ rules:
       - sed *
       - shellcheck *
       - sort *
-      - source ./source-all.sh
       - stylua *
       - tail *
       - test *
