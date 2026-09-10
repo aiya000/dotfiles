@@ -494,8 +494,21 @@ install-gnu-sed:
 	which gsed || $(BrewInstall) gnu-sed
 
 # https://docs.ntfy.sh/install/#macos
+#
+# This build doesn't have server feature.
+# See 'install-ntfy-with-server-feature'.
 install-ntfy:
 	which ntfy || $(BrewInstall) ntfy
+
+install-ntfy-with-server-feature:
+	which go || ( \
+		git clone https://github.com/binwiederhier/ntfy.git && \
+		cd ntfy && \
+		make cli-darwin-server && \
+		cp ntfy/dist/ntfy_darwin_server/ntfy ~/bin && \
+		which ntfy && \
+		: \
+	)
 
 # macOS 26 workaround: installer's open fails because Info.plist is rw------- (owner-only)
 install-kiro-cli-force:
