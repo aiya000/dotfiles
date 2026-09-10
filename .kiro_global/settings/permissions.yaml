@@ -41,18 +41,23 @@ rules:
       - echo *
       - exit *
       - gh --version
+      - gh api *
       - gh auth status
       - gh auth status --active
+      - gh issue *
       - gh issue create *
       - gh issue list *
       - gh issue view *
       - gh label list *
+      - gh pr *
       - gh pr checks *
       - gh pr create *
       - gh pr list *
       - gh pr view *
       - gh repo list *
       - gh repo view *
+      - gh run *
+      - gh search *
       - git add *
       - git apply *
       - git branch --list *
