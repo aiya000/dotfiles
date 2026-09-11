@@ -177,4 +177,11 @@ cmd - l [
 # cmd - x ; test
 ctrl + cmd - r : skhd --reload && ~/.dotfiles/bash-toys/bin/notify skhd 'skhdrc reloaded' || ~/.dotfiles/bash-toys/bin/notify skhd 'skhdrc failed to reload'
 
+# Keeping shortcuts configured in Raycast here, just in case:
+# cmd - 1 : (to open iTerm)
+# cmd - 2 : (to open Chrome)
+# cmd - 3 : (to open Teams)
+# cmd - 4 : ?
+# cmd - 5 : (to open Outlook)
+
 # vim:foldmethod=marker
