@@ -30,6 +30,7 @@
       "Bash(grep:*)",
       "Bash(rg:*)",
       "Bash(notify:*)",
+      "Bash(adb shell input:*)",
       "Read(~/.config/nvim)",
       "Skill(read-agents-md)",
       "Skill(suggest-alternative-commands)",
@@ -45,7 +46,10 @@
     "ask": [
       "Bash(git push:*)",
       "Bash(sudo:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "// WSLg（GUI）を使うものは必ず確認を取る。2026-09-12にchrome-devtools MCPが6セット常駐し、OOMでセッションが落ちたため",
+      "mcp__chrome-devtools",
+      "mcp__chrome-attach"
     ],
     "defaultMode": "auto",
     "additionalDirectories": [
@@ -60,6 +64,15 @@
           {
             "type": "command",
             "command": "jq -r '.tool_input.command' | grep -qE '(^|[[:space:]|;&])(find|grep|rm)([[:space:]]|$)' && echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Use fd instead of find, rg instead of grep, rm-dust instead of rm.\"}}' || true"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.command' | rg -q '(^|[\\s|;&=])(google-chrome|google-chrome-stable|chromium|chromium-browser|firefox|xdg-open|wslview|chrome-devtools-mcp|playwright)(\\s|$)' && echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"ask\",\"permissionDecisionReason\":\"WSLgでGUIアプリが起動します。常駐してメモリを食い続けるため、ユーザーの許可を得てください。\"}}' || true"
           }
         ]
       }
