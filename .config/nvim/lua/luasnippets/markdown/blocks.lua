@@ -5,6 +5,19 @@ local sm = require('utils.luasnip').sm
 
 local blocks_snippets = list.concat(
   sm(
+    { 'block_nested', 'blbl' },
+    fmt(
+      [[
+``````
+{}
+``````]],
+      {
+        i(1, ''),
+      }
+    )
+  ),
+
+  sm(
     { 'block_haskell', 'blhs' },
     fmt(
       [[
