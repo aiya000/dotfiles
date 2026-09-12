@@ -10,6 +10,20 @@ Distills the current conversation into a compact memory file that a future sessi
 restore context. **Only an AI reads these files, never a person.** Write for a model that will
 pay tokens for every character: dense, English, no prose.
 
+## This is the durable half of a handoff
+
+`create-handoff` runs this skill first and then writes only what does not belong here, so when the
+two run together they divide the session rather than repeating it:
+
+- **Here**: decisions with their reasons, gotchas, the user's preferences, what is still open --
+  anything still worth having in a month, for any later session
+- **The handoff**: where the branch stands right now, what to do first, who is waiting on what,
+  how the user is doing -- stale within days
+
+So write the lasting facts here without worrying that the handoff will want them, and report the
+path of the file written -- `create-handoff` puts it in the handoff's first section, and
+`read-handoff` follows it back.
+
 ## Steps
 
 1. Use the current conversation as the source

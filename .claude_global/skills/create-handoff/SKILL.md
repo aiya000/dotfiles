@@ -1,13 +1,34 @@
 ---
 name: create-handoff
-description: Write the handoff prompt for the next session to a well-known file under ~/tmp, so the next session can pick the work up with read-handoff and nobody has to carry a path. Use when the user asks for a 引継ぎプロンプト or a handoff note, or when a long session is being wrapped up.
-allowed-tools: Bash(date *), Bash(mkdir *), Bash(ls *), Bash(git rev-parse *), Write(~/tmp/claude-handoff/*), Write(/tmp/claude-handoff/*)
+description: Save the session's durable half as a memory file (save-memory), then write the perishable half -- the handoff prompt for the next session -- to a well-known file under ~/tmp, so the next session can pick the work up with read-handoff and nobody has to carry a path. Use when the user asks for a 引継ぎプロンプト or a handoff note, or when a long session is being wrapped up.
+allowed-tools: Bash(date *), Bash(mkdir *), Bash(ls *), Bash(printf *), Bash(git rev-parse *), Write(~/tmp/claude-handoff/*), Write(/tmp/claude-handoff/*), Write(~/.ai-memory/*), Read(~/.ai-memory/*)
 ---
 
 # create-handoff
 
 Writes the handoff prompt for the next session, and puts it where `read-handoff` will find it on
 its own. The point of the pair is that **no one has to carry a path between sessions**.
+
+## First: save the memory, then write the handoff around it
+
+**Run the `save-memory` skill before writing the handoff**, unless the user said not to
+(`/create-handoff --no-memory`, 「メモリーは要らない」, and the like). The two files split the
+session between them, and each fact is written once, in the file it belongs to:
+
+- **The memory file (`~/.ai-memory/YYYY-MM-DD-{project}-{topic}.md`) carries the durable half** --
+  decisions with their reasons, the gotchas that cost time, the user's preferences, what is still
+  open. Dense English, read by any later session, still worth having in a month
+- **The handoff file carries the perishable half** -- where the branch stands *right now*, what to
+  do first, who is waiting on what, how the user is doing. Written for the very next session, and
+  stale within days
+
+**Never copy the memory's content into the handoff.** The handoff names the memory file and tells
+the next session to read it; that is the whole of the overlap between them.
+
+Note the path `save-memory` wrote to -- the handoff's first section needs it.
+
+If `save-memory` was skipped, say so in that section, and then this handoff carries everything
+itself, as it used to.
 
 ## Where the file goes
 
@@ -47,22 +68,32 @@ hands it over as instructions -- so drop any "paste this" preamble.
 
 Write it in the language the session was held in.
 
-Cover these, leaving out any that have nothing in them:
+The first section is the pointer at the memory; everything after it is the perishable half. Leave
+out any that has nothing in it:
 
-1. **前提** -- working directory, branch, repository, and that `AGENTS.md` has to be read first
+1. **メモリー** -- the memory file's path, and the instruction to read it before acting:
+   「このセッションの主要な状態はメモリーファイルにある。まずこれを読むこと:
+   `~/.ai-memory/<file>.md`。ここに書いていないことは、そちらにある」.
+   Add a clause saying what is in it (which Issue, which subsystem), so the next session knows
+   what it is about to load
+2. **前提** -- working directory, branch, repository, and that `AGENTS.md` has to be read first
    (`read-agents-md`), because it overrides habits and defaults
-2. **いちばん最初に** -- the exact commands to get level (`git fetch`, `--ff-only`), and where the
+3. **いちばん最初に** -- the exact commands to get level (`git fetch`, `--ff-only`), and where the
    branch stood when this was written: the SHA, and how far ahead of the release branch
-3. **最優先の作業** -- what to do first **and why**: the reasoning, what was already settled with
-   the user (in their own words where they settled it), and what is still open
-4. **未解決 / 返事待ち** -- anything blocked on the user or on the outside world, including the
+4. **最優先の作業** -- what to do first, and what was already settled with the user (in their own
+   words where they settled it) versus what is still open. The reasoning that outlives this week
+   is in the memory; here, say what to do next and leave the reasons there
+5. **未解決 / 返事待ち** -- anything blocked on the user or on the outside world, including the
    exact question that was put to them
-5. **残っている Issue** -- number and one line each
-6. **直近でやったこと** -- SHA or PR number and one line each, so the next session can read the
+6. **残っている Issue** -- number and one line each
+7. **直近でやったこと** -- SHA or PR number and one line each, so the next session can read the
    real diff rather than trust a summary
-7. **コードの落とし穴** -- what cost time this session and would cost it again
-8. **運用まわりの注意** -- the tooling traps: which commands need what, which tests are flaky
-9. **最後に** -- how the user is doing, and anything about their time and health
+8. **最後に** -- how the user is doing, and anything about their time and health
+
+**コードの落とし穴** and **運用まわりの注意** no longer get a section of their own: they are what
+the memory's `gotcha:` lines are for. What stays here is the part that is true only of this moment
+-- a half-rebased branch, a test failing right now, a deploy in flight -- under 最優先の作業 or
+未解決.
 
 ## Rules
 
@@ -71,11 +102,16 @@ Cover these, leaving out any that have nothing in them:
 - **A result is worthless without the steps that produced it.** Never write "step 4 did not work"
   and leave the steps somewhere the next session cannot reach -- it reads as a fact and is actually
   unusable, and re-deriving the procedure costs more than writing it down did. If the session ran a
-  procedure the user followed, the handoff carries the procedure, in full, next to its result
-- **Record decisions together with the reason.** A decision without its reason gets re-litigated
+  procedure the user followed, the handoff carries the procedure, in full, next to its result.
+  **This is the one durable-looking thing that stays in the handoff**: the memory's budget is forty
+  telegraphic lines and will not hold a procedure. One that every future session will run belongs
+  in `AGENTS.md` instead -- see the `apply-handoff-to-agents-md` skill
+- **Record decisions together with the reason** -- in the memory, which is where reasons live now.
+  A decision without its reason gets re-litigated
 - **No secrets**, and no real names taken from screenshots or from the conversation
 - Do not delete older handoffs
 
 ## After writing
 
-Report the absolute path, and say that the next session only has to run `/read-handoff`.
+Report both absolute paths -- the memory file and the handoff -- and say that the next session
+only has to run `/read-handoff`, which reads the handoff and follows it to the memory on its own.
