@@ -13,6 +13,7 @@ The skill being refined consists of:
 - `SKILL.md` — hard requirements, workflow, self-review checklist, notes
 - `references/style-guide.md` — the user's voice, numbered sections (§1–§7)
 - `references/article-patterns.md` — the five skeletons (型A–E)
+- `references/platforms.md` — how the current directory decides Zenn vs Qiita, and every difference that follows (output path, file format, notation, title limit, per-platform self-review)
 - `references/review-log.md` — one entry per review, the only place that keeps review text verbatim
 
 ## Inputs
@@ -33,6 +34,7 @@ For each praised point, each criticised point, and each production failure, deci
     - it changes how to produce the article (a command, an order of steps, a sandbox trick) → `SKILL.md` workflow
     - it is something to check before saving → `SKILL.md` self-review checklist, as a runnable `rg` line where possible
     - it is a habit of the user's voice or formatting → `style-guide.md`, in the matching §, as a Bad / Good pair when the review gave both sides
+    - it is true of one platform only (a notation, a layout, a limit, a repository convention) → `references/platforms.md`, in the matching §, with the other platform's column filled in too. A rule that holds on both platforms does **not** go here
     - it is a section that a pattern should have or drop → `article-patterns.md`, inside that pattern's skeleton, with a one-line 「（〜）」 stage direction
 - **Contradiction** — the review conflicts with an existing rule. Do not silently pick a side. Put both in the report with the rule's location, and ask the user, unless the reviewer is the user's own edit (then the user's edit wins and the rule changes).
 - **Not generalisable** — specific to this one article (a typo, a fact about the tool). Log it, change no rule.
@@ -42,14 +44,14 @@ A review that says 「改善点: 特にありません」 is not a no-op. Every 
 ## Write the changes
 
 1. Append an entry to `references/review-log.md` in the format its header describes: 記事 / レビュアー / 判定 / 褒められた点 → ルール / 指摘された点 → 直したこと / 制作時の失敗. One line per point, with the rule location on the right-hand side. Points that were classified **Contradiction** and are waiting on the user get a `TODO:` prefix.
-2. Apply **New rule** and sharpened **Reinforce** changes to the three rule files. Rules:
-    - Before adding, `rg` the three files for the key term. If a rule exists, edit it; never add a second one that says the same thing in other words
+2. Apply **New rule** and sharpened **Reinforce** changes to the four rule files. Rules:
+    - Before adding, `rg` the four files for the key term. If a rule exists, edit it; never add a second one that says the same thing in other words
     - Each rule carries one concrete example at most, from the article that earned it, in parentheses with the article name and date: `（ps-mem, 2026-09-06: …）`. When a rule already has an example, replace it only if the new one is shorter or clearer
     - Verbatim review text lives in `review-log.md` only. `SKILL.md` notes summarise reviews in one bullet per pattern, pointing at the log; when a note grows past ~6 sub-bullets, distil it and move the detail to the log
     - Do not renumber `style-guide.md` sections or `SKILL.md` requirements; other files point at those numbers. Add sub-bullets, not new numbers, unless the thing is genuinely new
     - Keep the persona out of every file (「なのです」「わたし」「♪」 never appear in the skill; the skill is instructions, not conversation)
     - Do not touch the `allowed-tools` line of `SKILL.md` from this skill; if a new workflow step needs a tool that is not allowed, say so in the report and let the user add it
-3. Re-read the edited files once and check: `rg -n 'なのです|ますです|♪|わたし|あいやくん' ~/.claude/skills/write-tech-note/` returns nothing; every `[[`-free cross-reference (`§5-9`, `要件4`, `Workflow 7`, `型C`) still points at something that exists.
+3. Re-read the edited files once and check: `rg -n 'なのです|ますです|♪|わたし|あいやくん' ~/.claude/skills/write-tech-note/` returns nothing; every `[[`-free cross-reference (`§5-9`, `要件4`, `Workflow 8`, `型C`, `platforms.md §3`) still points at something that exists.
 
 ## Report
 
