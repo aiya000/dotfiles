@@ -90,9 +90,9 @@ alias-of yay 'yay --color always'
 if i-have ps-mem ; then
   # `alias ps-mem='...' ; alias ps-foo=ps-mem ; ...`ってするとps-foo実行時にnot foundになるので…。
   function ::dotfiles::define-ps-mem-aliases () {
-    local os_opts ps_memm ps_mem ps_mem_max ps_mem_min base_opts default_opts
-
     # Option Variants {{{
+
+    local base_opts os_opts default_opts windows_opts
 
     base_opts='--tail'
     if is-in-macos ; then
@@ -101,10 +101,13 @@ if i-have ps-mem ; then
       os_opts='--pname --rss --pss --uss --swap'
     fi
     default_opts="$base_opts $os_opts"
+    windows_opts="$base_opts --windows-from-wsl" # `$os_opts` (`--pss` and so on) is not supported with `--windows-from-wsl`
 
     # }}}
 
-    # ps-mem (default override), ps-mem-min (psm) {{{
+    # ps-mem (default override), ps-mem-min (psm), and ps-mem-min-windows (psmw) {{{
+
+    local ps_mem ps_mem_min ps_mem_min_windows
 
     # 70 to show the process names in a minimum length
     ps_mem="command ps-mem $default_opts --process-name-max-length 70" # `command` keeps the `ps-mem` alias below from being expanded a second time when the aliases derived from it (psm, psmm, ...) are used
@@ -114,9 +117,15 @@ if i-have ps-mem ; then
     alias ps-mem-min="$ps_mem_min"
     alias psm="$ps_mem_min"
 
+    ps_mem_min_windows="command ps-mem $windows_opts --process-name-max-length 70 --total"
+    alias ps-mem-min-windows="$ps_mem_min_windows"
+    alias psmw="$ps_mem_min_windows"
+
     # }}}
 
-    # ps-mem-max (psm) {{{
+    # ps-mem-max (psmm), and ps-mem-max-windows (psmmw) {{{
+
+    local ps_memm ps_mem_max ps_mem_max_windows
 
     # 999 to show all of the process names
     ps_memm="command ps-mem $default_opts --process-name-max-length 999"
@@ -126,6 +135,10 @@ if i-have ps-mem ; then
     alias ps-mem-max="$ps_mem_max"
     alias ps-memm="$ps_mem_max"
     alias psmm="$ps_mem_max"
+
+    ps_mem_max_windows="command ps-mem $windows_opts --process-name-max-length 200 --total" # Windows process names are too long, so 200 even for the long variant
+    alias ps-mem-max-windows="$ps_mem_max_windows"
+    alias psmmw="$ps_mem_max_windows"
 
     # }}}
   }
