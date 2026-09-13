@@ -29,6 +29,13 @@ A file has a counterpart when another file differs from it only by a language ma
 - `README.md` ↔ `README_JP.md` / `README.ja.md` / `README-ja.md`
 - `docs/guide.md` ↔ `docs/guide_JP.md` / `docs/ja/guide.md`
 - `CONTRIBUTING.md` ↔ `CONTRIBUTING_JP.md`
+- `CODE_OF_CONDUCT.md` ↔ `CODE_OF_CONDUCT_JP.md`
+
+**A hook says so after the fact, but do not wait for it.** `~/.claude/hooks/remind-translated-counterpart.sh`
+runs after every markdown write and names the counterpart when one is beside the file. It is the net,
+not the plan: being told afterwards means the edit is already half-done. It follows the same rule as the
+section above -- silent when no counterpart exists -- so read its silence as "this file has no pair",
+never as "nobody checked".
 
 Check for one **before** editing, not after. `ls` the directory, or `fd 'README'`. If the pair
 exists, both files are in scope from the start -- treat "update the README" as "update both READMEs".
