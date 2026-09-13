@@ -15,6 +15,12 @@ return list.concat(
         return os.date('%Y-%m-%d')
       end)
     ),
+    s(
+      'time',
+      f(function()
+        return os.date('%H:%M')
+      end)
+    ),
   },
   sm(
     { 'datetime', 'now' },
