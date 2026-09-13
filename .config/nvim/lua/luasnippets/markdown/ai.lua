@@ -9,9 +9,9 @@ local s = ls.snippet
 local t = ls.text_node
 
 ---現在のプロジェクト名を推論する
----@return string --gitリポジトリならgit-rootのディレクトリ名、そうでなければカレントディレクトリのディレクトリ名
+---@return string --gitリポジトリならメインのworktreeのルートのディレクトリ名、そうでなければカレントディレクトリのディレクトリ名
 local function detect_project_name()
-  local git_root = require('git').read_git_root()
+  local git_root = require('git').read_main_git_root()
   local project_dir = git_root ~= nil and git_root or vim.fn.getcwd()
   return vim.fn.fnamemodify(project_dir, ':t')
 end

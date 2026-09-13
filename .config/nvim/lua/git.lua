@@ -80,6 +80,25 @@ function M.read_git_root(on_succeed, on_failed)
   return nil
 end
 
+---worktreeの中から実行した場合でも、メインのworktreeのルートを返す
+---（`read_git_root()`はworktree自身のルートを返すので、worktree名が混ざってしまう）
+---@return string | nil --Linux/Unix形式の、メインのworktreeのルート。gitリポジトリ外などで取得できなかった場合はnil
+function M.read_main_git_root()
+  local result = vim
+    .system({ 'git', 'rev-parse', '--path-format=absolute', '--git-common-dir' }, {
+      text = true,
+    })
+    :wait()
+
+  if result.code ~= 0 then
+    return nil
+  end
+
+  -- `--git-common-dir`は`<メインのworktreeのルート>/.git`を返すので、その親がルート
+  local git_common_dir = parse_git_root(fn.trim(result.stdout), fn.trim(result.stderr))
+  return vim.fn.fnamemodify(git_common_dir, ':h')
+end
+
 ---`:cd` to git root
 ---@param cd 'cd' | 'lcd' | 'tcd' | fun(git_root: string): nil 取得したgit-rootを処理するコマンド、もしくは関数
 function M.cd_git_root(cd)
