@@ -45,11 +45,7 @@
     "// `ask`: 通常モードでは確認プロンプト、bypassモードでは自動許可される（deny と違い bypass を素通りする）": "",
     "ask": [
       "Bash(git push:*)",
-      "Bash(sudo:*)",
-      "Bash(find:*)",
-      "// WSLg（GUI）を使うものは必ず確認を取る。2026-09-12にchrome-devtools MCPが6セット常駐し、OOMでセッションが落ちたため",
-      "mcp__chrome-devtools",
-      "mcp__chrome-attach"
+      "Bash(sudo:*)"
     ],
     "defaultMode": "auto",
     "additionalDirectories": [
