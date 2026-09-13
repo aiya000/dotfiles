@@ -7,6 +7,14 @@
         "type": "model"
       },
       {
+        "id": "b1b25506-80cb-4fb0-908e-8d97906c41bb",
+        "type": "separator"
+      },
+      {
+        "id": "60c5aad4-e139-45a5-bf48-1cd76609e4fd",
+        "type": "session-name"
+      },
+      {
         "id": "8",
         "type": "separator"
       },
