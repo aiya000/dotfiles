@@ -100,7 +100,7 @@ network-config:
 	sudo systemctl enable NetworkManager
 
 install-bun:
-	which bun || $(BrewInstall) oven-sh/bun/bun
+	which bun || $(BrewInstall) bun
 
 install-pnpm:
 	which pnpm || $(NPMInstall) pnpm@latest-10
