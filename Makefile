@@ -89,10 +89,6 @@ install-dotnet:
 install-dotnet-script:
 	which dotnet-script || dotnet tool install -g dotnet-script
 
-install-scala:
-	which 
-	mise use -g scala@3
-
 install-idris2:
 	which idris2 || $(BrewInstall) idris2
 
