@@ -89,45 +89,47 @@ alias-of yay 'yay --color always'
 
 if i-have ps-mem ; then
   # `alias ps-mem='...' ; alias ps-foo=ps-mem ; ...`ってするとps-foo実行時にnot foundになるので…。
-  function ::dotfiles::define-ps-mem () {
+  function ::dotfiles::define-ps-mem-aliases () {
     local os_opts ps_memm ps_mem ps_mem_max ps_mem_min base_opts default_opts
 
-    base_opts='--process-name-max-length 70 --tail'
-    # `--footprint` is available only on macOS
+    # Option Variants {{{
+
+    base_opts='--tail'
     if is-in-macos ; then
-      os_opts='--footprint'
+      os_opts='--footprint' # `--footprint` is available only on macOS
     else
       os_opts='--pname --rss --pss --uss --swap'
     fi
     default_opts="$base_opts $os_opts"
 
+    # }}}
+
+    # ps-mem (default override), ps-mem-min (psm) {{{
+
     # 70 to show the process names in a minimum length
-    # `command` keeps the `ps-mem` alias below from being expanded a second time
-    # when the aliases derived from it (psm, psmm, ...) are used
-    ps_mem="command ps-mem $default_opts"
-    # shellcheck disable=SC2139
-    alias ps-mem="$ps_mem"  # Override
+    ps_mem="command ps-mem $default_opts --process-name-max-length 70" # `command` keeps the `ps-mem` alias below from being expanded a second time when the aliases derived from it (psm, psmm, ...) are used
+    alias ps-mem="$ps_mem"  # default override
 
     ps_mem_min="$ps_mem --total"
-    # shellcheck disable=SC2139
     alias ps-mem-min="$ps_mem_min"
-    # shellcheck disable=SC2139
     alias psm="$ps_mem_min"
 
+    # }}}
+
+    # ps-mem-max (psm) {{{
+
     # 999 to show all of the process names
-    ps_memm="$ps_mem --process-name-max-length 999"
-    # shellcheck disable=SC2139
+    ps_memm="command ps-mem $default_opts --process-name-max-length 999"
     alias ps-memm="$ps_memm"
 
     ps_mem_max="$ps_memm --total"
-    # shellcheck disable=SC2139
     alias ps-mem-max="$ps_mem_max"
-    # shellcheck disable=SC2139
     alias ps-memm="$ps_mem_max"
-    # shellcheck disable=SC2139
     alias psmm="$ps_mem_max"
+
+    # }}}
   }
-  ::dotfiles::define-ps-mem
+  ::dotfiles::define-ps-mem-aliases
 fi
 
 # }}}
