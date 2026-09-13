@@ -31,7 +31,7 @@ return list.concat(
     s(
       'instruct_rename_this_project_now',
       f(function()
-        return ('/rename %s %s'):format(detect_project_name(), os.date('%Y-%m-%d %H:%M'))
+        return ('/rename %s (%s)'):format(detect_project_name(), os.date('%Y-%m-%d %H:%M'))
       end)
     ),
   }
