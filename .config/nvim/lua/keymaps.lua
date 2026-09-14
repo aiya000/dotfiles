@@ -296,11 +296,12 @@ vim.keymap.set('n', 'g>', function()
   nvim.open_buffer_to_execute('messages') -- This feature is not provided by telescope.nvim. use :messages instead
 end, { silent = true })
 
---- Another AI Agents
-vim.keymap.set('n', '<leader>gc', nvim.toggle_copilot_cli)
-vim.keymap.set('n', '<leader>ac', nvim.toggle_antigravity_cli)
-vim.keymap.set('n', '<leader>dc', nvim.toggle_devin_cli)
-vim.keymap.set('n', '"c', nvim.toggle_dangerous_claude_code_docker)
+-- AI Agents
+vim.keymap.set('n', '<leader>cc', '<Cmd>ClaudeCodeFocus<CR>', { desc = 'Toggle Claude Code' })
+vim.keymap.set('n', '<leader>gc', nvim.toggle_copilot_cli, { desc = 'Toggle Copilot CLI' })
+vim.keymap.set('n', '<leader>ac', nvim.toggle_antigravity_cli, { desc = 'Toggle Antigravity CLI' })
+vim.keymap.set('n', '<leader>dc', nvim.toggle_devin_cli, { desc = 'Toggle Devin CLI' })
+vim.keymap.set('n', '"c', nvim.toggle_dangerous_claude_code_docker, { desc = 'Toggle Dangerous Claude Code Docker' })
 
 -- Options
 vim.keymap.set('n', '<C-h><C-w>', '<Cmd>setlocal wrap! wrap?<CR>', { silent = true })

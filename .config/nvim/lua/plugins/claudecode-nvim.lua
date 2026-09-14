@@ -35,7 +35,9 @@ return {
     'ClaudeCodeDiffDeny',
   },
   keys = {
-    { '<leader>cc', mode = { 'n' }, '<Cmd>ClaudeCodeFocus<CR>', desc = 'Toggle Claude Code' },
+    -- See 'AI Agents' section in ../keymaps.lua
+    -- { '<leader>cc', mode = { 'n' }, '<Cmd>ClaudeCodeFocus<CR>', desc = 'Toggle Claude Code' },
+
     { '<leader>cr', mode = { 'n' }, '<Cmd>ClaudeCode --resume<CR>', desc = 'Resume Claude' },
     { '<leader>cC', mode = { 'n' }, '<Cmd>ClaudeCode<CR>', desc = 'New Claude' },
     { '<leader>cD', mode = { 'n' }, '<Cmd>ClaudeCodeDocker<CR>', desc = 'Toggle Docker Claude' },
