@@ -241,7 +241,7 @@ install-antigravity-cli:
 # https://kiro.dev/
 # Also see 'install-kiro-cli-force' at macOS section if you're using macOS now
 install-kiro-cli:
-	which kiro || curl -fsSL https://cli.kiro.dev/install | bash
+	which kiro-cli || curl -fsSL https://cli.kiro.dev/install | bash
 
 install-btm: install-bottom
 install-bottom:
