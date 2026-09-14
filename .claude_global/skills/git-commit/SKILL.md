@@ -22,11 +22,12 @@ Automatically generates a Conventional Commits compliant commit message and comm
     - `git status` — overall working tree state
     - `git log --oneline -20` — recent commits, to learn the repository's style
 2. Analyze the staged changes and recent commits
-3. Scan the staged diff for potential secrets (see **Secret Scan** below); ask the user before proceeding if any are found
-4. Generate a commit message following:
+3. Determine whether the changes include a breaking change (see **Breaking Changes (MANDATORY)** below); if so, you MUST indicate it explicitly in the message
+4. Scan the staged diff for potential secrets (see **Secret Scan** below); ask the user before proceeding if any are found
+5. Generate a commit message following:
     - Conventional Commits specification (structure and basic rules)
     - User's commit style patterns learned from repository history
-5. Execute `git commit` with the generated message
+6. Execute `git commit` with the generated message
 
 ## Secret Scan
 
@@ -65,6 +66,31 @@ Key rules:
 - **body**: Optional, provides additional context, begins one blank line after description
 - **footers**: Optional, one blank line after body, uses git trailer format (e.g., `Reviewed-by: Z`)
 - **BREAKING CHANGE**: Use exclamation mark after type/scope (e.g., `feat!:`) or footer `BREAKING CHANGE:` for breaking changes
+
+## Breaking Changes (MANDATORY)
+
+**When the staged changes introduce a breaking change, you MUST explicitly indicate it in the commit message, following the Conventional Commits specification. This is not optional.**
+
+A breaking change is any change that would require consumers to update their usage, such as:
+
+- Removing or renaming a public API, command, option, or configuration key
+- Changing the behavior, signature, or return value of an existing public interface in an incompatible way
+- Changing defaults, output formats, or file/directory layout that others depend on
+- Dropping support for an environment, version, or platform
+
+How to indicate it (do both when applicable):
+
+1. **Add `!` after the type/scope**, e.g. `feat!:` or `feat(Neovim)!:`
+2. **Add a `BREAKING CHANGE:` footer** describing what broke and how to migrate:
+
+    ```
+    feat(Neovim)!: Rename `setup()` to `configure()`
+
+    BREAKING CHANGE: `setup()` has been renamed to `configure()`.
+    Update all call sites to use `configure()` instead.
+    ```
+
+If you are unsure whether a change is breaking, treat it as breaking and ask the user before committing.
 
 ## Staging Behavior
 
