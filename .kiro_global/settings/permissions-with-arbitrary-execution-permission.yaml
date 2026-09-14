@@ -1,0 +1,33 @@
+rules:
+  - capability: shell
+    effect: allow
+    match:
+      - '*'
+  - capability: fs_read
+    effect: allow
+    match:
+      - '*'
+  - capability: fs_write
+    effect: allow
+    match:
+      - '*'
+  - capability: web_fetch
+    effect: allow
+    match:
+      - '*'
+  - capability: skill
+    effect: allow
+    match:
+      - '*'
+  - capability: shell
+    effect: deny
+    match:
+      - find *
+      - grep *
+      - rm *
+  - capability: web_search
+    effect: allow
+  - capability: subagent
+    effect: allow
+    match:
+      - semantic_reviewer
