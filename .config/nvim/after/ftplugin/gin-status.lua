@@ -328,6 +328,15 @@ local function open_file_in_vsplit()
   back_to_win_later(status_win)
 end
 
+---Focuses the AI agent configured at `InitLua.default_ai_agent`, then sends `/git-commit`
+local function commit_via_default_ai_agent()
+  nvim.toggle_default_ai_agent_cli()
+  -- The agent terminal enters insert mode asynchronously, so defer sending the command
+  vim.schedule(function()
+    vim.api.nvim_feedkeys('/git-commit', 't', false)
+  end)
+end
+
 -- NOTE: `remap = true` to open cmdpalette
 vim.keymap.set('n', 'Q', '<Cmd>bdelete!<CR>', { buffer = true, silent = true })
 vim.keymap.set('n', 'A', run_add_patch, { buffer = true, silent = true })
@@ -338,7 +347,7 @@ vim.keymap.set('n', 'sa', '<Plug>(gin-action-stash)', { buffer = true, silent = 
 vim.keymap.set('n', 'ss', run_stash_push_message, { buffer = true })
 vim.keymap.set('n', 'sp', '<Cmd>Gin stash pop<CR>', { buffer = true })
 vim.keymap.set('n', 'cc', open_commit_buffer, { buffer = true, silent = true })
-vim.keymap.set('n', 'cC', '<Cmd>ClaudeCodeFocus<CR>/git-commit', { buffer = true, silent = true })
+vim.keymap.set('n', 'cC', commit_via_default_ai_agent, { buffer = true, silent = true })
 vim.keymap.set('n', 'ca', function() open_commit_buffer({ '--amend' }) end, { buffer = true, silent = true })
 vim.keymap.set('n', 'B', '<Cmd>GinBranch<CR>', { buffer = true, silent = true })
 vim.keymap.set('n', 'C', ':<C-u>Gin switch --create<Space>', { remap = true, buffer = true })
