@@ -357,13 +357,14 @@ end, {
 })
 
 create_command('YankThisFullPathLine', function(opts)
-  nvim.yank_this_file_full_path_with_line(opts.args)
+  nvim.yank_this_file_full_path_with_line(opts.args, opts.line1, opts.line2)
 end, {
   nargs = '?',
+  range = true,
   complete = function()
     return nvim.register_names
   end,
-  desc = 'Yank the full path of the current file with the current line (`path#L12`) to `@"` (or the specified register)',
+  desc = 'Yank the full path of the current file with the current line (`path#L12`, or `path#L12-15` with a range) to `@"` (or the specified register)',
 })
 
 -- TODO: 普通にautofixプラグインを使う（aleあたり）

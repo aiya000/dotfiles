@@ -536,18 +536,27 @@ function M.yank_this_file_full_path(reg)
   yank_to_register(reg, full_path)
 end
 
----Yanks the full path of the current buffer's file with the current line number,
+---Yanks the full path of the current buffer's file with a line number,
 ---in the `{full_path}#L{line}` format (e.g. `/foo/bar/baz.txt#L12`), to a register.
+---When a line range is given (`line1 ~= line2`), the `{full_path}#L{line1}-{line2}`
+---format is used instead (e.g. `/foo/bar/baz.txt#L12-15`).
 ---@param reg? string A single-char register name; defaults to the unnamed register `"`
-function M.yank_this_file_full_path_with_line(reg)
+---@param line1? integer The first line of the range; defaults to the current line
+---@param line2? integer The last line of the range; defaults to `line1`
+function M.yank_this_file_full_path_with_line(reg, line1, line2)
   local full_path = vim.fn.expand('%:p')
   if full_path == '' then
     vim.notify('No file name for the current buffer', vim.log.levels.WARN)
     return
   end
 
-  local line = vim.fn.line('.')
-  yank_to_register(reg, s('{full_path}#L{line}', { full_path = full_path, line = line }))
+  local first = line1 or vim.fn.line('.')
+  local last = line2 or first
+
+  local text = first == last
+      and s('{full_path}#L{line}', { full_path = full_path, line = first })
+    or s('{full_path}#L{line1}-{line2}', { full_path = full_path, line1 = first, line2 = last })
+  yank_to_register(reg, text)
 end
 
 ---Commonly useful register names for command completion:

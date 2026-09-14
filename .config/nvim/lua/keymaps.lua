@@ -669,6 +669,9 @@ end, { expr = true })
 -- File Editing
 vim.keymap.set('v', '<leader><leader>s', ':sort<CR>')
 
+-- Helpers
+vim.keymap.set('v', '<leader>cl', ':YankThisFullPathLine<CR>', { desc = 'Yank This Full Path Line (range)' })
+
 -- }}}
 -- terminal mode {{{
 
