@@ -301,6 +301,7 @@ vim.keymap.set('n', '<leader>Cc', '<Cmd>ClaudeCodeFocus<CR>', { desc = 'Toggle C
 vim.keymap.set('n', '<leader>gc', nvim.toggle_copilot_cli, { desc = 'Toggle Copilot CLI' })
 vim.keymap.set('n', '<leader>ac', nvim.toggle_antigravity_cli, { desc = 'Toggle Antigravity CLI' })
 vim.keymap.set('n', '<leader>dc', nvim.toggle_devin_cli, { desc = 'Toggle Devin CLI' })
+vim.keymap.set('n', '<leader>kc', nvim.toggle_kiro_cli, { desc = 'Toggle Kiro CLI' })
 vim.keymap.set('n', '"c', nvim.toggle_dangerous_claude_code_docker, { desc = 'Toggle Dangerous Claude Code Docker' })
 
 -- Options

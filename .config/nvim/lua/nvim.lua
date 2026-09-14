@@ -890,6 +890,7 @@ M.toggle_dangerous_claude_code_docker = make_cli_app_toggler(
 
 M.toggle_antigravity_cli = make_cli_app_toggler('agy', nil, nil, { start_insert_after_paste = true })
 M.toggle_devin_cli = make_cli_app_toggler('devin', nil, nil, { start_insert_after_paste = true })
+M.toggle_kiro_cli = make_cli_app_toggler('kiro-cli', nil, nil, { start_insert_after_paste = true })
 
 -- }}}
 
