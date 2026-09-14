@@ -346,6 +346,16 @@ create_command('Rename', function(opts)
   nvim.rename_to(opts.args)
 end, { nargs = 1, complete = 'file', desc = 'Rename current file to the new name' })
 
+create_command('YankThisFullPath', function(opts)
+  nvim.yank_this_file_full_path(opts.args)
+end, {
+  nargs = '?',
+  complete = function()
+    return nvim.register_names
+  end,
+  desc = 'Yank the full path of the current file to `@"` (or the specified register)',
+})
+
 -- TODO: 普通にautofixプラグインを使う（aleあたり）
 create_command('KtlintAutoFix', function()
   local current_file = vim.fn.fnameescape(vim.fn.expand('%'))
