@@ -508,6 +508,24 @@ end
 
 ---Yanks the full path of the current buffer's file to a register.
 ---@param reg? string A single-char register name; defaults to the unnamed register `"`
+---Yanks the given text to a register, with validation and notification.
+---@param reg? string A single-char register name; defaults to the unnamed register `"`
+---@param text string The text to yank
+---@return boolean # Whether the yank succeeded
+local function yank_to_register(reg, text)
+  local register = reg ~= nil and reg ~= '' and reg or '"'
+  if #register ~= 1 then
+    vim.notify(s('Invalid register: {register}', { register = register }), vim.log.levels.ERROR)
+    return false
+  end
+
+  vim.fn.setreg(register, text)
+  vim.notify(s('Yanked to @{register}: {text}', { register = register, text = text }), vim.log.levels.INFO)
+  return true
+end
+
+---Yanks the full path of the current buffer's file to a register.
+---@param reg? string A single-char register name; defaults to the unnamed register `"`
 function M.yank_this_file_full_path(reg)
   local full_path = vim.fn.expand('%:p')
   if full_path == '' then
@@ -515,17 +533,21 @@ function M.yank_this_file_full_path(reg)
     return
   end
 
-  local register = reg ~= nil and reg ~= '' and reg or '"'
-  if #register ~= 1 then
-    vim.notify(s('Invalid register: {register}', { register = register }), vim.log.levels.ERROR)
+  yank_to_register(reg, full_path)
+end
+
+---Yanks the full path of the current buffer's file with the current line number,
+---in the `{full_path}#L{line}` format (e.g. `/foo/bar/baz.txt#L12`), to a register.
+---@param reg? string A single-char register name; defaults to the unnamed register `"`
+function M.yank_this_file_full_path_with_line(reg)
+  local full_path = vim.fn.expand('%:p')
+  if full_path == '' then
+    vim.notify('No file name for the current buffer', vim.log.levels.WARN)
     return
   end
 
-  vim.fn.setreg(register, full_path)
-  vim.notify(
-    s('Yanked to @{register}: {full_path}', { register = register, full_path = full_path }),
-    vim.log.levels.INFO
-  )
+  local line = vim.fn.line('.')
+  yank_to_register(reg, s('{full_path}#L{line}', { full_path = full_path, line = line }))
 end
 
 ---Commonly useful register names for command completion:

@@ -305,6 +305,10 @@ vim.keymap.set('n', '<leader>dc', nvim.toggle_devin_cli, { desc = 'Toggle Devin 
 vim.keymap.set('n', '<leader>kc', nvim.toggle_kiro_cli, { desc = 'Toggle Kiro CLI' })
 vim.keymap.set('n', '"c', nvim.toggle_dangerous_claude_code_docker, { desc = 'Toggle Dangerous Claude Code Docker' })
 
+-- Helpers
+vim.keymap.set('n', '<leader>cf', '<Cmd>YankThisFullPath<CR>', { desc = 'Yank This Full Path' })
+vim.keymap.set('n', '<leader>cl', '<Cmd>YankThisFullPathLine<CR>', { desc = 'Yank This Full Path Line' })
+
 -- Options
 vim.keymap.set('n', '<C-h><C-w>', '<Cmd>setlocal wrap! wrap?<CR>', { silent = true })
 vim.keymap.set('n', '<C-h><C-c>', '<Cmd>setlocal cursorline! cursorline?<CR>', { silent = true })
