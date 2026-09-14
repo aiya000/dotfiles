@@ -1,0 +1,39 @@
+{
+  "$schema": "https://raw.githubusercontent.com/aws/amazon-q-developer-cli/refs/heads/main/schemas/agent-v1.json",
+  "name": "kiro-with-arbitrary-execution-permission",
+  "description": "A kiro agent with arbitrary execution permission",
+  "tools": [
+    "*"
+  ],
+  "allowedTools": [
+    "*"
+  ],
+  "toolsSettings": {
+    "read": {
+      "allowedPaths": [
+        ".*"
+      ]
+    },
+    "write": {
+      "allowedPaths": [
+        ".*"
+      ]
+    },
+    "shell": {
+      "autoAllowReadonly": true,
+      "allowedCommands": [
+        ".*"
+      ],
+      "deniedCommands": [
+        "find( .*)?",
+        "grep( .*)?",
+        "rm( .*)?"
+      ]
+    },
+    "web_fetch": {
+      "trusted": [
+        ".*"
+      ]
+    }
+  }
+}
