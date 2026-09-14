@@ -159,15 +159,15 @@ source ~/.shells/aliases/neovim.sh
 if i-have claude ; then
   alias c=claude
   alias claude-resume='claude --resume'
-  alias claude-continue='claude --continue'
-  alias claude-commit='claude "/git-commit"'
   alias claude-open-as-general-topic='claude "このセッションは一般的なトピックを複合的に扱う、汎用セッションとして使うよ。よろしくね！"'
 fi
 
 if i-have copilot ; then
   alias copilot='copilot --allow-tool write --allow-tool "shell(notify)" --allow-tool "shell(git log)" --allow-tool "shell(git show)" --allow-tool "shell(git diff)" --allow-tool "shell(git status)" --allow-tool "shell(git reflog)"'
-  alias copilot-commit='copilot -p "~/.claude/commands/git-commit.md を読んで、git commitをして。" --allow-tool "shell(git:*)" --deny-tool "shell(git push)" --deny-tool "shell(git add)'
-  alias git-commit-copilot=copilot-commit
+fi
+
+if i-have kiro-cli ; then
+  alias kiro-cli-resume='kiro-cli --list'
 fi
 
 # }}}
