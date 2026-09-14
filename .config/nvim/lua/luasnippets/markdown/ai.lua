@@ -17,22 +17,33 @@ local function detect_project_name()
 end
 
 return list.concat(
+  -- AI Agents General
+  {
+    s(
+      'instruct_for_git_commit_ai_agents_general',
+      t('`~/.dotfiles/.claude_global/commands/git-commit.md`のルールを参照して、`git commit`を実行して')
+    ),
+  },
+
+  -- Claude Code
   sm(
     { 'instruct_for_autocompact', 'autocompact' },
     t('/compact 昔の履歴は圧縮して、最近の履歴は圧縮しないようにして')
   ),
-
   {
     s(
-      'instruct_for_git_commit',
-      t('`~/.dotfiles/.claude_global/commands/git-commit.md`のルールを参照して、`git commit`を実行して')
-    ),
-
-    s(
-      'instruct_rename_this_project_now',
+      'instruct_rename_this_project_now_claude_code',
       f(function()
         return ('/rename %s (%s)'):format(detect_project_name(), os.date('%Y-%m-%d %H:%M'))
       end)
+    ),
+  },
+
+  -- Kiro CLI
+  {
+    s(
+      'instruct_resume_kiro_cli',
+      t('/chat') -- Kiro CLIで過去セッション一覧を表示して、選択し、resumeするには、これ。いや、わからんくない？
     ),
   }
 )
