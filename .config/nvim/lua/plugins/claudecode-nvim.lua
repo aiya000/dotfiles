@@ -1,6 +1,3 @@
----A key to spawn claudecode.nvim
-local toggle_key = '<leader>cc'
-
 ---Routes Claude Code through a locally running headroom proxy, if headroom is installed
 ---Equivalent to `load-my-env headroom`; see the headroom section in ~/.dotfiles/bash-toys/sources/load-my-env.sh
 ---Note that /remote-control becomes unavailable while ANTHROPIC_BASE_URL points at the proxy
@@ -38,7 +35,7 @@ return {
     'ClaudeCodeDiffDeny',
   },
   keys = {
-    { toggle_key, mode = { 'n' }, '<Cmd>ClaudeCodeFocus<CR>', desc = 'Toggle Claude Code' },
+    { '<leader>cc', mode = { 'n' }, '<Cmd>ClaudeCodeFocus<CR>', desc = 'Toggle Claude Code' },
     { '<leader>cr', mode = { 'n' }, '<Cmd>ClaudeCode --resume<CR>', desc = 'Resume Claude' },
     { '<leader>cC', mode = { 'n' }, '<Cmd>ClaudeCode<CR>', desc = 'New Claude' },
     { '<leader>cD', mode = { 'n' }, '<Cmd>ClaudeCodeDocker<CR>', desc = 'Toggle Docker Claude' },
