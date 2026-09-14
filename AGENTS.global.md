@@ -121,6 +121,15 @@ You can use `rm`, `find`, and `grep` when writing shell scripts.
 - **Avoid `git -C <path>`** -- Prefer running git from the correct working directory; use only when necessary (e.g. submodule operations)
 - **NEVER use `git -c user.name=...` or `git -c user.email=...`** -- Never inject identity via command-line flags; if identity is missing, ask the user to configure it via `git config`
 
+## **Writing Outside the Repository**
+
+When you run as a command (e.g. `claude`, `copilot`, `devin`, `kiro-cli`, `agy`) and your configuration file allows access outside the repository:
+
+- You **MUST** obtain permission once per session before **writing** to anything outside the [project root](#def-word-project-root).
+    - **Reading** outside the repository is allowed without permission.
+- Once you have obtained permission ("writing to files/directories outside the repository is OK") within a session, you do **not** need to re-confirm for the rest of that session.
+    - This is to prioritize autonomous behavior.
+
 ## **Deleting Files**
 
 **Never use interpreter invocations to delete files**. Like:
