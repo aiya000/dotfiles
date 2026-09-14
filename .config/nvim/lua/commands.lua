@@ -3,7 +3,6 @@ local git = require('git')
 local list = require('utils.list')
 local nodejs = require('nodejs')
 local nvim = require('nvim')
-local s = require('utils.functions').s
 local telescope = require('telescope.builtin')
 
 ---@module 'chotto'
@@ -39,14 +38,13 @@ end
 
 create_command('FtpluginEditAfter', function(opts)
   local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  local path =
-    s('{neovim_home}/after/ftplugin/{filetype}.lua', { neovim_home = InitLua.neovim_home, filetype = filetype })
-  vim.cmd(s('edit {path}', { path = path }))
+  local path = ('%s/after/ftplugin/%s.lua'):format(InitLua.neovim_home, filetype)
+  vim.cmd(('edit %s'):format(path))
 end, { nargs = '?', complete = 'filetype' })
 
 create_command('FtDetectEdit', function(opts)
   local filetype = opts.args ~= '' and opts.args or vim.bo.filetype
-  vim.cmd(s('edit {neovim_home}/ftdetect/{filetype}.lua', { neovim_home = InitLua.neovim_home, filetype = filetype }))
+  vim.cmd(('edit %s/ftdetect/%s.lua'):format(InitLua.neovim_home, filetype))
 end, { nargs = '?', complete = 'filetype' })
 
 -- }}}
@@ -85,11 +83,11 @@ end, { nargs = '+' })
 -- :cd
 create_command('CdBufDir', function()
   local buf_dir = vim.fn.fnameescape(vim.fn.expand('%:p:h'))
-  vim.cmd(s('cd {buf_dir}', { buf_dir = buf_dir }))
+  vim.cmd(('cd %s'):format(buf_dir))
 end)
 
 create_command('CdStarted', function()
-  vim.cmd(s('cd {path_at_started}', { path_at_started = InitLua.path_at_started }))
+  vim.cmd(('cd %s'):format(InitLua.path_at_started))
 end)
 
 create_command('CdGitRoot', function()
@@ -103,11 +101,11 @@ end)
 -- :lcd
 create_command('LcdBufDir', function()
   local buf_dir = vim.fn.fnameescape(vim.fn.expand('%:p:h'))
-  vim.cmd(s('lcd {buf_dir}', { buf_dir = buf_dir }))
+  vim.cmd(('lcd %s'):format(buf_dir))
 end)
 
 create_command('LcdStarted', function()
-  vim.cmd(s('lcd {path_at_started}', { path_at_started = InitLua.path_at_started }))
+  vim.cmd(('lcd %s'):format(InitLua.path_at_started))
 end)
 
 create_command('LcdGitRoot', function()
@@ -121,11 +119,11 @@ end)
 -- :tcd
 create_command('TcdBufDir', function()
   local buf_dir = vim.fn.fnameescape(vim.fn.expand('%:p:h'))
-  vim.cmd(s('tcd {buf_dir}', { buf_dir = buf_dir }))
+  vim.cmd(('tcd %s'):format(buf_dir))
 end)
 
 create_command('TcdStarted', function()
-  vim.cmd(s('tcd {path_at_started}', { path_at_started = InitLua.path_at_started }))
+  vim.cmd(('tcd %s'):format(InitLua.path_at_started))
 end)
 
 create_command('TcdGitRoot', function()
@@ -370,7 +368,7 @@ end, {
 -- TODO: 普通にautofixプラグインを使う（aleあたり）
 create_command('KtlintAutoFix', function()
   local current_file = vim.fn.fnameescape(vim.fn.expand('%'))
-  vim.fn.system(s('ktlint --format {current_file}', { current_file = current_file }))
+  vim.fn.system(('ktlint --format %s'):format(current_file))
   vim.cmd('edit %')
 end)
 

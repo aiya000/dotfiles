@@ -61,6 +61,17 @@ end
 --- ほとんどの場合に`('%s'):format(x)`を使うこと（formatメソッド）。
 --- あるいはそれが適さない場合は`format('%s', x)`を使うこと（format関数）。
 --- `s()`は複雑なテンプレート文字列に、仮変数名が必要な場合にのみ、使うこと。
+---
+--- 有用なケースの例:
+--- 同じ変数を複数回埋め込む場合は`s()`が有用。
+--- `format`だと同じ値を複数回渡す必要があり、各`%s`が同じ値だと分かりにくくなるため。
+---```lua
+----- Good: どの`{word}`も同じ値だと一目でわかる
+---s([[:%s/\<{word}\>/{word}/g]], { word = vim.fn.expand('<cword>') })
+---
+----- Bad: `word`を2回渡す必要があり、同じ値である意図が読みにくい
+---([[:%%s/\<%s\>/%s/g]]):format(word, word)
+---```
 function M.s(text, vars)
   if type(vars) ~= 'table' then
     error('s() requires a variable table as the second argument')

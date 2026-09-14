@@ -459,7 +459,7 @@ vim.keymap.set('n', '<Space><Space>', nvim.compress_spaces, { silent = true })
 vim.keymap.set('n', '<leader><leader>s', 'vii:sort<CR>', { remap = true, silent = true })
 
 vim.keymap.set('n', '<C-k><C-s>', function()
-  return s([[:%s/\m\C\<{word}\>//g<Left><Left>]], { word = vim.fn.expand('<cword>') })
+  return ([[:%%s/\m\C\<%s\>//g<Left><Left>]]):format(vim.fn.expand('<cword>'))
 end, { expr = true })
 
 vim.keymap.set('n', '<C-k>s', function()
