@@ -56,6 +56,11 @@ end
 ---s('{math.pi}', {})                  -- '3.1415926535898' (グローバル変数)
 ---s('{name or "Unknown"}', { name = nil }) -- 'Unknown'
 ---```
+---
+--- NOTE:
+--- ほとんどの場合に`('%s'):format(x)`を使うこと（formatメソッド）。
+--- あるいはそれが適さない場合は`format('%s', x)`を使うこと（format関数）。
+--- `s()`は複雑なテンプレート文字列に、仮変数名が必要な場合にのみ、使うこと。
 function M.s(text, vars)
   if type(vars) ~= 'table' then
     error('s() requires a variable table as the second argument')
