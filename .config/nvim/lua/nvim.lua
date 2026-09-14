@@ -892,7 +892,7 @@ M.toggle_antigravity_cli = make_cli_app_toggler('agy', nil, nil, { start_insert_
 M.toggle_devin_cli = make_cli_app_toggler('devin', nil, nil, { start_insert_after_paste = true })
 M.toggle_kiro_cli = make_cli_app_toggler('kiro-cli', nil, nil, { start_insert_after_paste = true })
 
----Toggles the AI agent configured at `InitLua.default_ai`. See `~/.config/nvim/init.lua` for the expected values
+---Toggles the AI agent configured at `InitLua.default_ai_agent`. See `~/.config/nvim/init.lua` for the expected values
 function M.toggle_default_ai_agent_cli()
   local togglers = {
     claude = function()
@@ -904,9 +904,9 @@ function M.toggle_default_ai_agent_cli()
     agy = M.toggle_antigravity_cli,
   }
 
-  local toggler = togglers[InitLua.default_ai]
+  local toggler = togglers[InitLua.default_ai_agent]
   if toggler == nil then
-    error(('nvim.toggle_default_ai_agent_cli: Unknown InitLua.default_ai: %s'):format(vim.inspect(InitLua.default_ai)))
+    error(('nvim.toggle_default_ai_agent_cli: Unknown InitLua.default_ai_agent: %s'):format(vim.inspect(InitLua.default_ai_agent)))
   end
   toggler()
 end
