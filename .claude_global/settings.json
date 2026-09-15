@@ -45,7 +45,8 @@
     "// `ask`: 通常モードでは確認プロンプト、bypassモードでは自動許可される（deny と違い bypass を素通りする）": "",
     "ask": [
       "Bash(git push:*)",
-      "Bash(sudo:*)"
+      "Bash(sudo:*)",
+      "Bash(find:*)"
     ],
     "defaultMode": "auto",
     "additionalDirectories": [
@@ -146,5 +147,6 @@
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
   "editorMode": "vim",
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "remoteControlAtStartup": true
 }
