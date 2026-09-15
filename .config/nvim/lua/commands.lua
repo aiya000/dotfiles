@@ -365,6 +365,19 @@ end, {
   desc = 'Yank the full path of the current file with the current line (`path#L12`, or `path#L12-15` with a range) to `@"` (or the specified register)',
 })
 
+create_command('SendThisFullPathToAiAgent', function()
+  nvim.send_this_file_path_to_default_ai_agent(false)
+end, {
+  desc = 'Send `@{full path}` of the current file to the default AI agent (claude uses `:ClaudeCodeAdd %`)',
+})
+
+create_command('SendThisFullPathLineToAiAgent', function(opts)
+  nvim.send_this_file_path_to_default_ai_agent(true, opts.line1, opts.line2)
+end, {
+  range = true,
+  desc = 'Send `@{full path}#L{line}` (or `#L{line1}-{line2}` with a range) of the current file to the default AI agent (claude uses `:ClaudeCodeSend`)',
+})
+
 -- TODO: 普通にautofixプラグインを使う（aleあたり）
 create_command('KtlintAutoFix', function()
   local current_file = vim.fn.fnameescape(vim.fn.expand('%'))

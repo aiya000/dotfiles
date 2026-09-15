@@ -308,6 +308,8 @@ vim.keymap.set('n', '"c', nvim.toggle_dangerous_claude_code_docker, { desc = 'To
 -- Helpers
 vim.keymap.set('n', '<leader>cf', '<Cmd>YankThisFullPath<CR>', { desc = 'Yank This Full Path' })
 vim.keymap.set('n', '<leader>cl', '<Cmd>YankThisFullPathLine<CR>', { desc = 'Yank This Full Path Line' })
+vim.keymap.set('n', '<leader>cb', '<Cmd>SendThisFullPathToAiAgent<CR>', { desc = 'Send This Full Path to AI Agent' })
+vim.keymap.set('n', '<leader>cs', '<Cmd>SendThisFullPathLineToAiAgent<CR>', { desc = 'Send This Full Path Line to AI Agent' })
 
 -- Options
 vim.keymap.set('n', '<C-h><C-w>', '<Cmd>setlocal wrap! wrap?<CR>', { silent = true })
@@ -671,6 +673,7 @@ vim.keymap.set('v', '<leader><leader>s', ':sort<CR>')
 
 -- Helpers
 vim.keymap.set('v', '<leader>cl', ':YankThisFullPathLine<CR>', { desc = 'Yank This Full Path Line (range)' })
+vim.keymap.set('v', '<leader>cs', ':SendThisFullPathLineToAiAgent<CR>', { desc = 'Send This Full Path Line to AI Agent (range)' })
 
 -- }}}
 -- terminal mode {{{

@@ -27,6 +27,7 @@ return {
   cmd = {
     'ClaudeCode',
     'ClaudeCodeFocus',
+    'ClaudeCodeOpen',
     'ClaudeCodeSelectModel',
     'ClaudeCodeAdd',
     'ClaudeCodeSend',
@@ -42,9 +43,8 @@ return {
     { '<leader>cC', mode = { 'n' }, '<Cmd>ClaudeCode<CR>', desc = 'New Claude' },
     { '<leader>cD', mode = { 'n' }, '<Cmd>ClaudeCodeDocker<CR>', desc = 'Toggle Docker Claude' },
     { '<leader>cM', mode = { 'n' }, '<Cmd>ClaudeCodeSelectModel<CR>', desc = 'Select Claude model' },
-    { '<leader>cb', mode = { 'n' }, '<Cmd>ClaudeCodeAdd %<CR>', desc = 'Add current buffer' },
-    { '<leader>cs', mode = { 'n' }, 'V:ClaudeCodeSend<CR>', desc = 'Send to Claude' },
-    { '<leader>cs', mode = { 'v' }, '<Cmd>ClaudeCodeSend<CR>', desc = 'Send to Claude' },
+    -- NOTE: `<leader>cb` and `<leader>cs` are defined in ../keymaps.lua (generalized for any AI agent).
+    -- See `nvim.send_this_file_path_to_default_ai_agent()` / `:SendThisFullPath*ToAiAgent`.
     {
       '<leader>cs',
       '<Cmd>ClaudeCodeTreeAdd<CR>',

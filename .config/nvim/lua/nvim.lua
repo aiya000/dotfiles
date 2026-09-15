@@ -880,11 +880,15 @@ end
 ---@param on_open_extra? fun(t: table): nil --Called before the default BufEnter autocmd
 ---@param env? table<string, string> --Environment variables passed to the terminal process. NOTE: on_open_extra fires after process start, so env vars must be set here via `Terminal:new()`
 ---@param opts? { start_insert_after_paste?: boolean } --`start_insert_after_paste`: when `true`, `p`/`P` enter Terminal mode right after pasting. Default is `false`
----@return fun(): nil
+---@return fun(): nil --The toggler (a plain function, so it can be used directly as a keymap rhs)
+---@return fun(): table --`get_or_create_term`: returns the (lazily created) toggleterm `Terminal`
 local function make_cli_app_toggler(cmd, on_open_extra, env, opts)
   opts = opts or {}
   local term = nil
-  return function()
+
+  ---Lazily creates (once) and returns the toggleterm `Terminal` for this app.
+  ---@return table --A `toggleterm.terminal` `Terminal` instance
+  local function get_or_create_term()
     if term == nil then
       term = require('toggleterm.terminal').Terminal:new({
         cmd = cmd,
@@ -909,8 +913,15 @@ local function make_cli_app_toggler(cmd, on_open_extra, env, opts)
         end,
       })
     end
-    term:toggle()
+    return term
   end
+
+  -- Return a plain function as the toggler so it stays a drop-in keymap rhs
+  -- (`vim.keymap.set` rejects tables), and expose `get_or_create_term` separately.
+  local function toggler()
+    get_or_create_term():toggle()
+  end
+  return toggler, get_or_create_term
 end
 
 -- Shell
@@ -922,7 +933,8 @@ M.toggle_shell = make_cli_app_toggler(vim.env.SHELL, nil, {
 }, { start_insert_after_paste = true })
 
 -- GitHub Copilot
-M.toggle_copilot_cli = make_cli_app_toggler(
+local get_copilot_cli_term
+M.toggle_copilot_cli, get_copilot_cli_term = make_cli_app_toggler(
   ([[
     copilot
       --allow-tool write
@@ -952,27 +964,129 @@ M.toggle_dangerous_claude_code_docker = make_cli_app_toggler(
   { start_insert_after_paste = true }
 )
 
-M.toggle_antigravity_cli = make_cli_app_toggler('agy', nil, nil, { start_insert_after_paste = true })
-M.toggle_devin_cli = make_cli_app_toggler('devin', nil, nil, { start_insert_after_paste = true })
-M.toggle_kiro_cli = make_cli_app_toggler('kiro-cli', nil, nil, { start_insert_after_paste = true })
+local get_antigravity_cli_term
+local get_devin_cli_term
+local get_kiro_cli_term
+M.toggle_antigravity_cli, get_antigravity_cli_term = make_cli_app_toggler('agy', nil, nil, { start_insert_after_paste = true })
+M.toggle_devin_cli, get_devin_cli_term = make_cli_app_toggler('devin', nil, nil, { start_insert_after_paste = true })
+M.toggle_kiro_cli, get_kiro_cli_term = make_cli_app_toggler('kiro-cli', nil, nil, { start_insert_after_paste = true })
 
----Toggles the AI agent configured at `InitLua.default_ai_agent`. See `~/.config/nvim/init.lua` for the expected values
-function M.toggle_default_ai_agent_cli()
-  local togglers = {
-    claude = function()
-      vim.cmd('ClaudeCodeFocus')
-    end,
+---Maps `InitLua.default_ai_agent` values to their toggler functions.
+---`claude` is handled specially (claude-code.nvim), so it is not included here.
+---@return table<string, fun(): nil> --Keyed by the `InitLua.default_ai_agent` value
+local function get_toggleterm_ai_agent_togglers()
+  return {
     ['kiro-cli'] = M.toggle_kiro_cli,
     devin = M.toggle_devin_cli,
     copilot = M.toggle_copilot_cli,
     agy = M.toggle_antigravity_cli,
   }
+end
 
-  local toggler = togglers[InitLua.default_ai_agent]
+---Maps `InitLua.default_ai_agent` values to the getter of their (lazily created) toggleterm `Terminal`.
+---`claude` is handled specially (claude-code.nvim), so it is not included here.
+---@return table<string, fun(): table> --Keyed by the `InitLua.default_ai_agent` value
+local function get_toggleterm_ai_agent_term_getters()
+  return {
+    ['kiro-cli'] = get_kiro_cli_term,
+    devin = get_devin_cli_term,
+    copilot = get_copilot_cli_term,
+    agy = get_antigravity_cli_term,
+  }
+end
+
+---Toggles the AI agent configured at `InitLua.default_ai_agent`. See `~/.config/nvim/init.lua` for the expected values
+function M.toggle_default_ai_agent_cli()
+  if InitLua.default_ai_agent == 'claude' then
+    vim.cmd('ClaudeCodeFocus')
+    return
+  end
+
+  local toggler = get_toggleterm_ai_agent_togglers()[InitLua.default_ai_agent]
   if toggler == nil then
     error(('nvim.toggle_default_ai_agent_cli: Unknown InitLua.default_ai_agent: %s'):format(vim.inspect(InitLua.default_ai_agent)))
   end
   toggler()
+end
+
+---Sends the full path of the current buffer's file to the AI agent configured at
+---`InitLua.default_ai_agent`, prefixed with `@` (e.g. `@/foo/bar.txt` or `@/foo/bar.txt#L12-15`).
+---
+---- When the agent is `claude` (claude-code.nvim), delegates to `:ClaudeCodeSend` (with a line)
+---  or `:ClaudeCodeAdd %` (without a line) instead, as those provide the native integration.
+---- For the other (toggleterm-based) agents, yanks the path to `@z`, opens the agent's
+---  terminal (float window), pastes `@` + the path, and keeps the float window shown and focused.
+---@param with_line? boolean --When `true`, appends `#L{line}` (or `#L{line1}-{line2}`) to the path
+---@param line1? integer --The first line of the range; defaults to the current line. Only used when `with_line` is `true`
+---@param line2? integer --The last line of the range; defaults to `line1`. Only used when `with_line` is `true`
+function M.send_this_file_path_to_default_ai_agent(with_line, line1, line2)
+  local full_path = vim.fn.expand('%:p')
+  if full_path == '' then
+    vim.notify('No file name for the current buffer', vim.log.levels.WARN)
+    return
+  end
+
+  -- claude-code.nvim has its own integration; keep using it as before.
+  if InitLua.default_ai_agent == 'claude' then
+    if with_line then
+      -- `:ClaudeCodeSend` sends the *visual selection* (or a given range). Called from Normal
+      -- mode with no range it has nothing to send, so pass an explicit line range here
+      -- (defaults to the current line), mirroring the old `V:ClaudeCodeSend<CR>` mapping.
+      local first = line1 or vim.fn.line('.')
+      local last = line2 or first
+      vim.cmd(('%d,%dClaudeCodeSend'):format(first, last))
+    else
+      vim.cmd('ClaudeCodeAdd %')
+    end
+    -- Show and focus the Claude float window afterward, to match the other agents.
+    -- `:ClaudeCodeSend`/`:ClaudeCodeAdd` only make the terminal visible (not focused) unless
+    -- `focus_after_send` is enabled, so open it explicitly here. Use `:ClaudeCodeOpen` (idempotent)
+    -- rather than `:ClaudeCodeFocus` (a toggle): when the float is already open and focused,
+    -- `:ClaudeCodeFocus` would hide it again (flash-then-disappear). Deferred so it runs after
+    -- claudecode.nvim finishes making the terminal visible.
+    vim.schedule(function()
+      vim.cmd('ClaudeCodeOpen')
+    end)
+    return
+  end
+
+  local get_term = get_toggleterm_ai_agent_term_getters()[InitLua.default_ai_agent]
+  if get_term == nil then
+    error(('nvim.send_this_file_path_to_default_ai_agent: Unknown InitLua.default_ai_agent: %s'):format(vim.inspect(InitLua.default_ai_agent)))
+  end
+
+  -- Yank the path (into `@z`) using the existing commands, so the format stays consistent.
+  if with_line then
+    M.yank_this_file_full_path_with_line('z', line1, line2)
+  else
+    M.yank_this_file_full_path('z')
+  end
+
+  -- Append a trailing space so consecutive mentions don't glue together
+  -- (e.g. `@foo.txt @bar.txt` instead of `@foo.txt@bar.txt`).
+  local text = '@' .. vim.fn.getreg('z') .. ' '
+
+  -- Open the agent terminal (float window). When the agent is not running yet, this
+  -- lazily creates and starts it, then we still paste the mention into it.
+  local term = get_term()
+  if not term:is_open() then
+    term:open()
+  end
+
+  -- NOTE: `term:send()` appends a newline (submits the prompt), which we do NOT want here.
+  -- Send the raw text directly to the job's stdin instead.
+  if term.job_id == nil then
+    vim.notify('AI agent terminal is not ready yet', vim.log.levels.WARN)
+    return
+  end
+  vim.fn.chansend(term.job_id, text)
+
+  -- Enter Terminal mode so the user can keep typing right away.
+  vim.schedule(function()
+    if term:is_open() and vim.api.nvim_get_current_buf() == term.bufnr then
+      vim.cmd('startinsert')
+    end
+  end)
 end
 
 -- }}}
