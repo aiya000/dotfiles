@@ -221,16 +221,6 @@ install-ccstatusline:
 install-dust:
 	which dust || $(BrewInstall) dust
 
-install-android-cmdline-tools:
-	[[ -d ~/android-sdk/cmdline-tools ]] || ( \
-		cd /tmp && \
-		wget https://dl.google.com/android/repository/commandlinetools-mac-14742923_latest.zip && \
-		mkdir -p ~/android-sdk/cmdline-tools && \
-		unzip commandlinetools-mac-14742923_latest.zip -d ~/android-sdk/cmdline-tools && \
-		mv ~/android-sdk/cmdline-tools/cmdline-tools ~/android-sdk/cmdline-tools/latest && \
-		rm /tmp/commandlinetools-mac-14742923_latest.zip && \
-	: )
-
 # https://cli.devinenterprise.com/docs
 install-devin-cli:
 	which devin || curl -fsSL https://cli.devin.ai/install.sh | bash
@@ -396,6 +386,19 @@ install-jq:
 install-smem:
 	which smem || $(AptInstall) smem
 
+# libsecret-1-0 has no executable, so guard by the package itself instead of `which`
+install-libsecret:
+	dpkg -s libsecret-1-0 > /dev/null 2>&1 || $(AptInstall) libsecret-1-0
+
+install-gnome-keyring:
+	which gnome-keyring-daemon || $(AptInstall) gnome-keyring
+
+# @fitbit/sdk-cli keeps its OAuth token in keytar,
+# which needs libsecret and a Secret Service implementation
+install-fitbit-sense2-deps:
+	$(MAKE) install-libsecret
+	$(MAKE) install-gnome-keyring
+
 endif # }}}
 ifneq ($(filter $(OS),Darwin macos),) # {{{
 
@@ -522,6 +525,15 @@ install-kiro-cli-force:
 	rm -f "$$KIRO_DMG"; \
 	echo "Done! Open /Applications/Kiro CLI.app to complete setup."
 
+install-android-cmdline-tools:
+	[[ -d ~/android-sdk/cmdline-tools ]] || ( \
+		cd /tmp && \
+		wget https://dl.google.com/android/repository/commandlinetools-mac-14742923_latest.zip && \
+		mkdir -p ~/android-sdk/cmdline-tools && \
+		unzip commandlinetools-mac-14742923_latest.zip -d ~/android-sdk/cmdline-tools && \
+		mv ~/android-sdk/cmdline-tools/cmdline-tools ~/android-sdk/cmdline-tools/latest && \
+		rm /tmp/commandlinetools-mac-14742923_latest.zip && \
+	: )
 
 endif # }}}
 
