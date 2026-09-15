@@ -1029,8 +1029,8 @@ end
 ---Sends the full path of the current buffer's file to the AI agent configured at
 ---`InitLua.default_ai_agent`, prefixed with `@` (e.g. `@/foo/bar.txt` or `@/foo/bar.txt#L12-15`).
 ---
----- When the agent is `claude` (claude-code.nvim), delegates to `:ClaudeCodeSend` (with a line)
----  or `:ClaudeCodeAdd %` (without a line) instead, as those provide the native integration.
+---- When the agent is `claude` (claude-code.nvim), delegates to `:ClaudeCodeAdd %` (optionally with
+---  a `[start-line] [end-line]` range) instead, as that provides the native integration.
 ---- For the other (toggleterm-based) agents, yanks the path to `@z`, opens the agent's
 ---  terminal (float window), pastes `@` + the path, and keeps the float window shown and focused.
 ---@param with_line? boolean --When `true`, appends `#L{line}` (or `#L{line1}-{line2}`) to the path
@@ -1046,12 +1046,14 @@ function M.send_this_file_path_to_default_ai_agent(with_line, line1, line2)
   -- claude-code.nvim has its own integration; keep using it as before.
   if InitLua.default_ai_agent == 'claude' then
     if with_line then
-      -- `:ClaudeCodeSend` sends the *visual selection* (or a given range). Called from Normal
-      -- mode with no range it has nothing to send, so pass an explicit line range here
-      -- (defaults to the current line), mirroring the old `V:ClaudeCodeSend<CR>` mapping.
+      -- `:ClaudeCodeSend` sends the *tracked visual selection*, which is only populated by an
+      -- actual visual-mode selection; called here from Normal mode with a synthetic range it
+      -- silently no-ops (no error, but nothing is sent and the schedule below never fires).
+      -- `:ClaudeCodeAdd` also accepts `[start-line] [end-line]` and sends unconditionally, so
+      -- use that instead (mirrors the no-`with_line` branch below, just with an explicit range).
       local first = line1 or vim.fn.line('.')
       local last = line2 or first
-      vim.cmd(('%d,%dClaudeCodeSend'):format(first, last))
+      vim.cmd(('ClaudeCodeAdd %% %d %d'):format(first, last))
     else
       vim.cmd('ClaudeCodeAdd %')
     end
