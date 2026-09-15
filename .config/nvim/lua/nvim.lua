@@ -1046,6 +1046,17 @@ function M.send_this_file_path_to_default_ai_agent(with_line, line1, line2)
     -- claudecode.nvim finishes making the terminal visible.
     vim.schedule(function()
       vim.cmd('ClaudeCodeOpen')
+      -- Then enter Terminal mode, to match the toggleterm agents.
+      -- NOTE: `:ClaudeCodeSend` queues an `<Esc>` via `feedkeys(<Esc>, 'i', ...)` (leaving visual
+      -- mode) which drops us to Normal mode, whereas `:ClaudeCodeAdd` leaves us already in
+      -- Terminal (insert) mode. So we must NOT blindly feed `i` (that would type a literal `i`
+      -- into an already-insert terminal, e.g. `@/foo/bar.txt i`). Instead, after the `<Esc>` has
+      -- settled, only `startinsert` when we are not already in Terminal mode.
+      vim.defer_fn(function()
+        if vim.bo.buftype == 'terminal' and vim.fn.mode() ~= 't' then
+          vim.cmd('startinsert')
+        end
+      end, 50)
     end)
     return
   end
