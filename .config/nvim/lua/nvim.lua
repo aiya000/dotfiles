@@ -995,6 +995,23 @@ local function get_toggleterm_ai_agent_term_getters()
   }
 end
 
+---The known `InitLua.default_ai_agent` values. See `~/.dotfiles/.config/nvim/init.lua` for details.
+M.default_ai_agent_names = { 'claude', 'kiro-cli', 'devin', 'copilot', 'agy' }
+
+---Changes `InitLua.default_ai_agent` to `new_agent`.
+---All readers of `InitLua.default_ai_agent` look it up at call time, so this takes effect immediately.
+---@param new_agent string --One of `M.default_ai_agent_names`
+function M.change_default_ai_agent(new_agent)
+  if not vim.tbl_contains(M.default_ai_agent_names, new_agent) then
+    error(('nvim.change_default_ai_agent: Unknown AI agent: %s (expected one of: %s)'):format(
+      vim.inspect(new_agent),
+      table.concat(M.default_ai_agent_names, ', ')
+    ))
+  end
+  InitLua.default_ai_agent = new_agent
+  vim.notify(('Default AI agent changed to: %s'):format(new_agent), vim.log.levels.INFO)
+end
+
 ---Toggles the AI agent configured at `InitLua.default_ai_agent`. See `~/.config/nvim/init.lua` for the expected values
 function M.toggle_default_ai_agent_cli()
   if InitLua.default_ai_agent == 'claude' then
