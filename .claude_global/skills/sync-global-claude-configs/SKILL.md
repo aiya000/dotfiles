@@ -15,10 +15,22 @@ Keep the live global Claude Code configs and their dotfiles sources from driftin
 
 See `~/.dotfiles/.claude_global/README.md` for how the pair was set up.
 
-`settings.json` is expected to differ in machine-specific places: `{INPUT-YOUR-HOME-DIR}` placeholders,
-`sandbox.filesystem.allowWrite` paths, `autoMode.environment`, `model`, and similar. Those differences
-are not drift. Drift is a *general* change — a new allow rule, a new hook, a renamed skill — that
-landed on one side and not the other.
+## Out of Scope: Expected Differences
+
+These `settings.json` keys are expected to differ between HOME and DOTFILES. They are **not drift** —
+leave them alone, never offer to port them, and never write the HOME value into the template.
+
+- `modelSettings` (`effortLevel`) — tuned per machine; the template must not pin an effort level
+- `model` — tuned per machine
+- `{INPUT-YOUR-HOME-DIR}` placeholders, such as the `notify` command in the `Stop` hook — only HOME holds the real path
+- `sandbox.filesystem.allowWrite` paths — machine-specific, such as WSL's `/mnt/c/...`
+- `autoMode.environment` and `autoMode.soft_deny` — generated from this machine's own repos and environment
+
+Anything not on this list is **drift**: a *general* change — a new allow rule, a new hook, a renamed
+skill — that landed on one side and not the other.
+
+When a sync turns up a difference that belongs on this list, offer to add it here instead of porting
+it, so the next run stops asking about it.
 
 ## Steps
 
@@ -34,8 +46,9 @@ Run the steps for each pair in the table, `CLAUDE.md` first.
     - Different: continue
 
 3. **Show and ask.** Print the unified diff to the user as a fenced block, plus each file's mtime from
-   `stat -c '%y'`. For `settings.json`, say which hunks look machine-specific (expected) and which look
-   like general drift. Then use AskUserQuestion with these options:
+   `stat -c '%y'`. For `settings.json`, check each hunk against **Out of Scope: Expected Differences**
+   and say which are covered by it and which are general drift. Then use AskUserQuestion with these
+   options:
     - **"Hunk by hunk"** (Recommended for `settings.json`) — go to step 4a
     - **"Whole file: DOTFILES → HOME"** — go to step 4b
     - **"Whole file: HOME → DOTFILES"** — go to step 4b
@@ -45,11 +58,13 @@ Run the steps for each pair in the table, `CLAUDE.md` first.
    the user's behalf, and never merge silently
 
 4. **Apply.**
-    - **4a. Hunk by hunk.** Walk the hunks in order. For each one, use AskUserQuestion: "port to HOME",
-      "port to DOTFILES", "leave (expected difference)". Apply the chosen ports with the Edit tool,
-      keeping the template placeholders intact on the DOTFILES side (never write a real home path or
-      machine-specific value into the template). Batch consecutive hunks into one question when
-      they clearly belong together
+    - **4a. Hunk by hunk.** Walk the hunks in order, skipping any the Out of Scope list already
+      covers. For each remaining one, use AskUserQuestion: "port to HOME", "port to DOTFILES",
+      "leave (expected difference)". Apply the chosen ports with the Edit tool, keeping the template
+      placeholders intact on the DOTFILES side (never write a real home path or machine-specific
+      value into the template). Batch consecutive hunks into one question when they clearly belong
+      together. When the user picks "leave" for a key not yet on the Out of Scope list, offer to add
+      it there
     - **4b. Whole file.** `mkdir -p ~/.claude` if needed, then `cp <source> <target>`. For
       `settings.json` in the DOTFILES → HOME direction, warn first that placeholders will land in
       the live file and must be filled in afterwards
@@ -63,8 +78,8 @@ Run the steps for each pair in the table, `CLAUDE.md` first.
       Then stop and wait. Do not edit either file yourself in this mode
 
 5. **Verify.** After 4a or 4b, or when the user comes back from 4c, run `diff -u` again. For
-   `CLAUDE.md` the goal is no output. For `settings.json` the goal is that only the expected
-   machine-specific hunks remain — list them so the user can confirm. For `settings.json` also run
+   `CLAUDE.md` the goal is no output. For `settings.json` the goal is that only hunks covered by
+   **Out of Scope: Expected Differences** remain — list them so the user can confirm. Also run
    `jq empty` on both files, since a broken settings file silently disables everything in it
 
 6. **Offer the symlink** (`CLAUDE.md` only). If HOME is still a regular file and the two are now
