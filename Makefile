@@ -393,11 +393,26 @@ install-libsecret:
 install-gnome-keyring:
 	which gnome-keyring-daemon || $(AptInstall) gnome-keyring
 
+# usbutils is for `lsusb`
+install-usbutils:
+	which lsusb || $(AptInstall) usbutils
+
+# Fitbit Sense 2 speaks the developer bridge over USB, and WSL reaches a USB device
+# only through usbip. The Windows side also needs usbipd-win:
+# `winget install --interactive --exact dorssel.usbipd-win`
+install-usbip:
+	which usbip || ( \
+		$(AptInstall) linux-tools-virtual hwdata && \
+		sudo update-alternatives --install /usr/local/bin/usbip usbip "$$(ls /usr/lib/linux-tools/*/usbip | tail -n1)" 20 \
+	)
+
 # @fitbit/sdk-cli keeps its OAuth token in keytar,
 # which needs libsecret and a Secret Service implementation
 install-fitbit-sense2-deps:
 	$(MAKE) install-libsecret
 	$(MAKE) install-gnome-keyring
+	$(MAKE) install-usbutils
+	$(MAKE) install-usbip
 
 endif # }}}
 ifneq ($(filter $(OS),Darwin macos),) # {{{
