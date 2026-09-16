@@ -159,7 +159,8 @@ source ~/.shells/aliases/neovim.sh
 if i-have claude ; then
   alias c=claude
   alias claude-resume='claude --resume'
-  alias claude-open-as-general-topic='claude "このセッションは一般的なトピックを複合的に扱う、汎用セッションとして使うよ。よろしくね！"'
+  alias claude-open-as-general-topic='claude "このセッションは一般的なトピックを複合的に扱う、汎用セッションとして使いたい。よろしくね！"'
+  alias claude-resolve-git-conflicts='claude "git conflictsを直してほしい。"'
 fi
 
 if i-have copilot ; then
@@ -273,7 +274,6 @@ alias tar-bz2-extract='tar -xvjf'
 alias tar-bz2-show-files='tar -tvjf'
 
 i-have unzip && alias unzip-cp932='unzip -O cp932'
-
 
 # }}}
 # Others {{{
