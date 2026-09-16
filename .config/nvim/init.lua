@@ -208,7 +208,7 @@ if vim.fn.filereadable(init_private_lua) == 1 then
   vim.cmd.source(init_private_lua)
 end
 
-local init_env_lua = vim.fn.expand('~/init_env.lua')
+local init_env_lua = vim.fn.expand('~/nvim_init_env.lua')
 if vim.fn.filereadable(init_env_lua) == 1 then
   vim.cmd.source(init_env_lua)
 end
@@ -233,7 +233,7 @@ require('keymaps')
 require('commands') -- Due to `Require('commands')`, 'commands' module put here instead of `./plugins/commands.lua`
 require('color-presets')
 
-local init_env_post_lua = vim.fn.expand('~/init_env_post.lua')
+local init_env_post_lua = vim.fn.expand('~/nvim_init_env_post.lua')
 if vim.fn.filereadable(init_env_post_lua) == 1 then
   vim.cmd.source(init_env_post_lua)
 end
