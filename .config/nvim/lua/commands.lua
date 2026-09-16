@@ -325,6 +325,14 @@ create_command('AsyncRunHide', function(opts)
     pattern = 'AsyncRunStop',
     once = true,
     callback = function()
+      -- `g:asyncrun_code` is set before `AsyncRunStop` fires
+      local code = vim.g.asyncrun_code
+      if code == 0 then
+        vim.notify(('Succeeded: %s'):format(opts.args), vim.log.levels.INFO)
+        return
+      end
+
+      vim.notify(('Failed (exit %s): %s'):format(code, opts.args), vim.log.levels.ERROR)
       local return_win = vim.fn.win_getid()
       vim.cmd('copen')
       if vim.api.nvim_win_is_valid(return_win) then
@@ -333,7 +341,7 @@ create_command('AsyncRunHide', function(opts)
     end,
   })
   vim.cmd('AsyncRun ' .. opts.args)
-end, { nargs = '*', desc = 'Hide current window then run AsyncRun, opening quickfix on completion' })
+end, { nargs = '*', desc = 'Hide current window then run AsyncRun, opening quickfix only on failure' })
 
 create_command('AsyncRunNotifyHide', function(opts)
   vim.notify(('Running: %s'):format(opts.args), vim.log.levels.INFO)
