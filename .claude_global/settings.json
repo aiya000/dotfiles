@@ -44,9 +44,7 @@
     ],
     "// `ask`: 通常モードでは確認プロンプト、bypassモードでは自動許可される（deny と違い bypass を素通りする）": "",
     "ask": [
-      "Bash(git push:*)",
-      "Bash(sudo:*)",
-      "Bash(find:*)"
+      "Bash(sudo:*)"
     ],
     "defaultMode": "auto",
     "additionalDirectories": [
