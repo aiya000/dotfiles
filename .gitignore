@@ -24,5 +24,8 @@
 # Neovim
 **/.nvimlog
 
+# Claude Code
+.claude_global/skills/synced/
+
 # Others
 .backup/**
