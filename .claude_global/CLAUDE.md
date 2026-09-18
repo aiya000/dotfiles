@@ -45,6 +45,21 @@ Always use the corresponding skill instead of running git commands directly:
 - **NEVER use `git -c user.name=...` or `git -c user.email=...`** -- Never inject identity via command-line flags; if identity is missing, use the `git-verify-identity` skill
 - **NEVER read a config value with bare `git config <key>`** -- Use `git config --get <key>`; the bare form does not match the `Bash(git config --get:*)` allow rule, so it prompts every time. This is about reads only -- setting a value is unaffected
 
+### **One command per Bash call: avoid `|`, `&&`, `||`, `;`**
+
+The allow rules (`Bash(git status:*)`, `Bash(rg:*)`, ...) match **one** command. A compound command
+such as `git fetch && git status` matches none of them, so it prompts every time, and the
+allow list the user built up stops doing anything.
+
+- **Run each command as its own Bash call.** Independent calls can go in the same turn, in
+  parallel; a dependent one waits for the result
+- **Prefer a tool's own option over a pipe**: `rg -n --max-count 20` instead of `rg -n ... | head -n 20`,
+  `git log -n 5` instead of `git log | head`, `ls -1` instead of `ls | cat`
+- Do not fold `cd` into a command with `&&`; pass the path to the command instead
+- A pipe or `&&` is acceptable only when there is no option that does the same thing and the
+  command would otherwise flood the context. Keep it rare, and keep the first command one that
+  has an allow rule
+
 ### **Git worktrees: another session may be standing in one**
 
 A repository is often checked out into several worktrees at once, with a different Claude Code
