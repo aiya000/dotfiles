@@ -3,7 +3,7 @@
 # Original files: ~/.dotfiles/Preferences/.zshrc_env
 
 export WINDOWS_USER=$(whoami.exe | tr -d '\r\n' | cut -d '\' -f 2)
-
+export DOTFILES_CLAUDE_SAVE_MEMORY_AUTO=1
 export BASH_TOYS_WHEN_POMODORO_TIMER_FINISHED="notify Pomodoro-Timer The-time-finished! $HOME/.dotfiles/bash-toys/assets/notification-1.mp3"
 export BASH_TOYS_POMODORO_DEFAULT_INTERVAL=25
 
