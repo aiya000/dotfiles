@@ -225,6 +225,7 @@ return {
       require('nvim-treesitter').install({
         'bash',
         'css',
+        'dockerfile',
         'haskell',
         'html',
         'java',
@@ -237,6 +238,9 @@ return {
         'markdown_inline',
         'php',
         'scala',
+        'sql',
+        'toml',
+        'tsx',
         'typescript',
         'vue',
         'yaml',
