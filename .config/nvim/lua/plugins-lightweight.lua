@@ -209,7 +209,41 @@ return {
   -- }}}
   -- nvim-treesitter {{{
 
-  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+  {
+    'nvim-treesitter/nvim-treesitter',
+    -- mainブランチはlazy-loadを一切サポートしていない
+    branch = 'main',
+    lazy = false,
+    build = ':TSUpdate',
+    config = function()
+      -- jsonlのパーサはないが、jsonのパーサでそのまま読める
+      -- (jsoncのほうは、Neovimが最初からjsonに割り当てている)
+      vim.treesitter.language.register('json', 'jsonl')
+
+      -- mainブランチに`ensure_installed`はないので、ここで入れる
+      -- すでに入っているものは`install()`が弾くので、毎起動走っても実質ただの確認
+      require('nvim-treesitter').install({
+        'bash',
+        'css',
+        'haskell',
+        'html',
+        'java',
+        'javascript',
+        'json',
+        'json5',
+        'kotlin',
+        'lua',
+        'markdown',
+        'markdown_inline',
+        'php',
+        'scala',
+        'typescript',
+        'vue',
+        'yaml',
+        'zsh',
+      })
+    end,
+  },
 
   -- }}}
   -- lexima.vim {{{

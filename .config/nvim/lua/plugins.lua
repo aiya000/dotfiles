@@ -678,6 +678,13 @@ return list.concat(lightweight, {
 
   {
     'AckslD/nvim-FeMaco.lua',
+    -- FeMacoはnvim-treesitterのmasterにあった`nvim-treesitter.query`を読むが、
+    -- mainブランチにはそのモジュールがないので、自前の代替を読ませる
+    init = function()
+      package.preload['nvim-treesitter.query'] = function()
+        return require('utils.femaco-ts-query')
+      end
+    end,
     opts = {
       float_opts = function(_)
         local function get_winsize()
@@ -718,6 +725,17 @@ return list.concat(lightweight, {
           border = 'rounded',
           zindex = 1,
         }
+      end,
+
+      -- Zenn・Qiita記法の```kotlin:Note.kt```から、filetypeの部分だけを取り出す
+      -- そのまま渡すと`vim.bo.filetype = 'kotlin:Note.kt'`になって、E474で落ちる
+      ft_from_lang = function(lang)
+        if lang == nil then
+          return nil
+        end
+
+        local filetype = lang:gsub(':.*$', '')
+        return filetype
       end,
 
       post_open_float = function(winnr)
