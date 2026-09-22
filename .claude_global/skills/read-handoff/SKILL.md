@@ -1,7 +1,7 @@
 ---
 name: read-handoff
 description: Find and follow the newest handoff prompt written by create-handoff, then the memory file it points at, without being given a path. Use at the start of a session when the user asks to pick up where the last one left off, or says 引き継ぎ / 引継ぎプロンプト読んで.
-allowed-tools: Bash(ls *), Bash(git rev-parse *), Read(~/tmp/claude-handoff/*), Read(/tmp/claude-handoff/*), Read(~/.ai-memory/*)
+allowed-tools: Skill, Bash(ls *), Bash(git rev-parse *), Bash(git remote:*), Bash(gh issue:*), Bash(glab issue:*), Bash(fd:*), Read(~/tmp/claude-handoff/*), Read(/tmp/claude-handoff/*), Read(~/.ai-memory/*)
 ---
 
 # read-handoff
@@ -10,6 +10,18 @@ Picks up where the last session stopped. **The user should not have to supply a 
 
 The last session left two files, not one: the handoff under `~/tmp/claude-handoff/`, and a memory
 file under `~/.ai-memory/` that the handoff names. **Both get read**, in that order.
+
+## First: the issue overview
+
+**Before looking for the handoff, run the `show-issues-overview` skill** and show its table.
+
+It is the one thing here that reflects the world as it is *now*. The handoff and the memory were
+both written in the past, so the overview is what they get checked against -- an Issue the handoff
+calls 未解決 may already be closed, and something new may have been opened since.
+
+- Run it with no arguments -- the open issues are what matters at the start of a session
+- If it cannot produce a list (no forge, not authenticated, no TODO file), **do not stop** --
+  say so in one line and carry on to the handoff. The overview is context, not a gate
 
 ## Finding the file
 
@@ -51,8 +63,9 @@ The two are read differently:
 
 Two things neither file can know:
 
-- **They were true when they were written.** Check the branch, the open Issues, and anything
-  called 未解決 against the world as it is now, and say so where they have moved on
+- **They were true when they were written.** Check the branch, and anything called 未解決, against
+  the world as it is now -- the overview table from the first step is exactly that check for the
+  Issues -- and say so where they have moved on
 - **They may simply be wrong.** Where the code disagrees, the code wins
 
 Say in a line or two which handoff and which memory file were picked up, and what the first job

@@ -1,7 +1,7 @@
 ---
 name: create-handoff
-description: Save the session's durable half as a memory file (save-memory), then write the perishable half -- the handoff prompt for the next session -- to a well-known file under ~/tmp, so the next session can pick the work up with read-handoff and nobody has to carry a path. Use when the user asks for a 引継ぎプロンプト or a handoff note, or when a long session is being wrapped up.
-allowed-tools: Bash(date *), Bash(mkdir *), Bash(ls *), Bash(printf *), Bash(git rev-parse *), Write(~/tmp/claude-handoff/*), Write(/tmp/claude-handoff/*), Write(~/.ai-memory/*), Read(~/.ai-memory/*)
+description: Save the session's durable half as a memory file (save-memory), then write the perishable half -- the handoff prompt for the next session -- to a well-known file under ~/tmp, so the next session can pick the work up with read-handoff and nobody has to carry a path, then close the session down -- release what is holding memory, shut down what this session opened, and report it. Use when the user asks for a 引継ぎプロンプト or a handoff note, or when a long session is being wrapped up.
+allowed-tools: Bash(date *), Bash(mkdir *), Bash(ls *), Bash(printf *), Bash(git rev-parse *), Bash(pgrep *), Bash(pkill *), TaskStop, Write(~/tmp/claude-handoff/*), Write(/tmp/claude-handoff/*), Write(~/.ai-memory/*), Read(~/.ai-memory/*)
 ---
 
 # create-handoff
@@ -111,7 +111,37 @@ the memory's `gotcha:` lines are for. What stays here is the part that is true o
 - **No secrets**, and no real names taken from screenshots or from the conversation
 - Do not delete older handoffs
 
+## Then: close the session down
+
+**Running this skill means the session is about to end.** Nothing else is coming, so anything this
+session started and is still holding is now waste -- memory the machine could have back, a daemon
+the next session's build will trip over, a process nobody will read the output of.
+
+So once the handoff is written, close it all:
+
+- **Release what is holding memory.** A build daemon, a language server, a container this session
+  brought up for itself. On this machine that is `./gradlew --stop` above all -- an idle daemon
+  keeps several GB, and a session that leaves one behind is why the *next* one dies in R8
+- **Close the applications this session opened.** Emulators, simulators, dev servers, browsers
+  driven by a test, a tunnel or a port forward left listening
+- **Stop the background tasks this session armed.** A `Monitor` on a log whose writer has already
+  exited keeps its watch until it times out; `TaskStop` ends it now
+- **Verify it actually went, by pid** -- not by the stopping command's own output, which says what
+  it asked for rather than what happened
+- **Leave alone what the next session needs and what this session did not start.** A container that
+  was already up when the session began, and serves the fixture every run uses, stays up. Say that
+  it was left up, and why
+
+**What may still run after this skill, and must not be broken by the closing:** secondary work
+only -- `save-memory`, this skill again, a report to the user, a question they asked in the same
+breath. Real work (implementation, creating an Issue, a build, a test run) is not expected to
+follow; if the user asks for some after all, say plainly what was closed and bring back what that
+work needs.
+
 ## After writing
 
 Report both absolute paths -- the memory file and the handoff -- and say that the next session
 only has to run `/read-handoff`, which reads the handoff and follows it to the memory on its own.
+
+**Also report what was closed**, one line each: what was shut down, what was left running on
+purpose. The user is about to leave the machine and should not have to guess what is still on it.
