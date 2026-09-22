@@ -24,6 +24,16 @@ So write the lasting facts here without worrying that the handoff will want them
 path of the file written -- `create-handoff` puts it in the handoff's first section, and
 `read-handoff` follows it back.
 
+## When the user asks for it right after a run
+
+If the user explicitly asks to run this skill, and it already ran just before in this session --
+on your own judgement or at an earlier request, with no substantial work in between -- **do not
+run it again straight away.** AskUserQuestion first, naming the file that run wrote:
+"Run again" / "Skip". Run only on "Run again"; on "Skip", just report the existing file's path.
+
+A second run right after the first has nothing new to distill, and would only append a
+duplicate block to the same file.
+
 ## Steps
 
 1. Use the current conversation as the source
