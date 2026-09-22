@@ -125,6 +125,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "startup|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/offer-handoff.sh",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "PreCompact": [
