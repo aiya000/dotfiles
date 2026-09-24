@@ -180,6 +180,14 @@ Before writing, confirm the symlink exists by running `ls -ld ~/.ai-memory` and 
 If it is **not** a symlink (or does not exist), **stop and ask the user to set it up**.
 Do not create it yourself.
 
+The target is a git repository, shared by the local machine and Claude Code cloud sessions.
+Pull it before reading or writing, and commit and push the files you wrote afterwards, so the
+other side sees them. (Claude Code does this through the `sync-ai-memory` skill, which is also the
+one exception to "do not create it": in a cloud session it clones the repository into the cache
+directory and points `~/.ai-memory` at the clone.)
+
+Handoffs written by `create-handoff` live in the same repository, under `~/.ai-memory/handoff/`.
+
 ### Filename Format
 
 ```
