@@ -297,7 +297,7 @@ vim.keymap.set('n', 'g>', function()
 end, { silent = true })
 
 -- AI Agents
-vim.keymap.set('n', '<leader>cc', nvim.toggle_default_ai_agent_cli, { desc = 'Toggle Default AI Agent' })
+vim.keymap.set('n', '<leader>cc', '<Cmd>ToggleDefaultAIAgent<CR>', { desc = 'Toggle Default AI Agent' })
 vim.keymap.set('n', '<leader>Cc', '<Cmd>ClaudeCodeFocus<CR>', { desc = 'Toggle Claude Code' })
 vim.keymap.set('n', '<leader>gc', nvim.toggle_copilot_cli, { desc = 'Toggle Copilot CLI' })
 vim.keymap.set('n', '<leader>ac', nvim.toggle_antigravity_cli, { desc = 'Toggle Antigravity CLI' })
