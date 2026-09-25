@@ -130,6 +130,22 @@ When you run as a command (e.g. `claude`, `copilot`, `devin`, `kiro-cli`, `agy`)
 - Once you have obtained permission ("writing to files/directories outside the repository is OK") within a session, you do **not** need to re-confirm for the rest of that session.
     - This is to prioritize autonomous behavior.
 
+## Committing Changes
+
+Note for Claude Code: follow the `git-commit` skill for the commit mechanics (message style, secret scan, etc.); this section only defines **when** to commit.
+
+By default, **commit your work automatically without asking for confirmation each time**.
+Treat this section as standing permission to commit — you do not need to ask "should I commit?" before committing.
+
+Rules:
+
+- **Commit at whatever granularity works best for you.** Group changes by topic as you see fit; the timing and size of each commit are left to your judgement.
+- **Before every commit, formatting and tests MUST pass.**
+    - Run the project's formatter (e.g. `pnpm run format`) and its test suite first.
+    - If formatting or tests fail, fix them before committing. Do not commit a state with failing formatting or tests.
+- Still follow the standing safety rules: **never `git push` automatically**, and destructive git operations (force push, `reset --hard`, `clean -f`, `branch -D`) still require explicit permission.
+- If the built-in agent policy forces a confirmation prompt before committing, this section serves as the pre-granted approval — proceed once formatting and tests pass.
+
 ## **Deleting Files**
 
 **Never use interpreter invocations to delete files**. Like:
