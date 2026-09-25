@@ -37,13 +37,19 @@ fi
 [ -n "$cwd" ] || cwd=$PWD
 cd "$cwd" 2>/dev/null || exit 0
 
-# The same directory order create-handoff writes in.
-if [ -d "$HOME/tmp" ]; then
-  dir="$HOME/tmp/claude-handoff"
-else
-  dir="${TMPDIR:-/tmp}/claude-handoff"
+# Where create-handoff writes: ~/.ai-memory/handoff/, in the git repository
+# shared with Claude Code cloud sessions -- plus the old local places, where
+# handoffs written before that move may still be.
+dirs=()
+if [ -d "$HOME/.ai-memory/handoff" ]; then
+  # A handoff written in a cloud session only arrives with a pull. Fast-forward
+  # only, and give up quickly: an offline start must not hang on this.
+  timeout 5 git -C "$HOME/.ai-memory" pull --ff-only --quiet >/dev/null 2>&1 || true
+  dirs+=("$HOME/.ai-memory/handoff")
 fi
-[ -d "$dir" ] || exit 0
+[ -d "$HOME/tmp/claude-handoff" ] && dirs+=("$HOME/tmp/claude-handoff")
+[ -d "${TMPDIR:-/tmp}/claude-handoff" ] && dirs+=("${TMPDIR:-/tmp}/claude-handoff")
+[ ${#dirs[@]} -gt 0 ] || exit 0
 
 # The same project name create-handoff derives: the repository, not the
 # current directory, so a git worktree called `develop` is still reported
@@ -55,11 +61,16 @@ else
   project=$(basename "$PWD")
 fi
 
-# The file names carry the timestamp, so the last one by name is the newest.
+# The file names carry the timestamp, so the last one by name is the newest --
+# compared by name across all the directories.
 newest=''
-for f in "$dir/$project"-*.md; do
-  [ -e "$f" ] || continue
-  newest=$f
+for dir in "${dirs[@]}"; do
+  for f in "$dir/$project"-*.md; do
+    [ -e "$f" ] || continue
+    if [ -z "$newest" ] || [[ $(basename "$f") > $(basename "$newest") ]]; then
+      newest=$f
+    fi
+  done
 done
 [ -n "$newest" ] || exit 0
 
@@ -87,7 +98,7 @@ if epoch=$(date -d "$day" +%s 2>/dev/null); then
 fi
 
 context="前回のセッションは create-handoff で終わっていて、このプロジェクト（${project}）宛ての引継ぎファイルが残っている: ${newest}（${when}${age:+、$age}）。"
-context+='このセッションでは、作業に入る前にまず、その引継ぎを読むかどうかがユーザーに尋ねられる。読むと言われたときにだけ read-handoff スキルが実行される。断られたら、この件はもう持ち出さない。'
+context+='このセッションでは、作業に入る前にまず、その引継ぎを読むかどうかがユーザーに尋ねられる。読むと言われたときにだけ read-handoff スキル（読んだあと消すなら pop-handoff スキル）が実行される。断られたら、この件はもう持ち出さない。'
 context+="断られたとき（/decline-handoff-suggestion での返事も含む）は \`touch ${declined}\` でその印が残され、この引継ぎは次のセッションから提案されなくなる。返事がないまま別の話に進んだときは、印は残されない。"
 context+='ユーザーが最初から別の用件を出している場合は、その用件を先に片付けてから尋ねてよい。引継ぎの中身は、尋ねる前には読まない。'
 

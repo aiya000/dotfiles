@@ -1,7 +1,7 @@
 ---
 name: create-handoff
-description: Save the session's durable half as a memory file (save-memory), then write the perishable half -- the handoff prompt for the next session -- to a well-known file under ~/tmp, so the next session can pick the work up with read-handoff and nobody has to carry a path, then close the session down -- release what is holding memory, shut down what this session opened, and report it. Use when the user asks for a 引継ぎプロンプト or a handoff note, or when a long session is being wrapped up.
-allowed-tools: Bash(date *), Bash(mkdir *), Bash(ls *), Bash(printf *), Bash(git rev-parse *), Bash(pgrep *), Bash(pkill *), TaskStop, Write(~/tmp/claude-handoff/*), Write(/tmp/claude-handoff/*), Write(~/.ai-memory/*), Read(~/.ai-memory/*)
+description: Save the session's durable half as a memory file (save-memory), then write the perishable half -- the handoff prompt for the next session -- to a well-known place in the ~/.ai-memory repository and push it, so the next session, local or in the cloud, can pick the work up with read-handoff or pop-handoff and nobody has to carry a path, then close the session down -- release what is holding memory, shut down what this session opened, and report it. Use when the user asks for a 引継ぎプロンプト or a handoff note, or when a long session is being wrapped up.
+allowed-tools: Skill(save-memory), Skill(sync-ai-memory), Bash(date *), Bash(mkdir *), Bash(ls *), Bash(printf *), Bash(git rev-parse *), Bash(pgrep *), Bash(pkill *), TaskStop, Write(~/tmp/claude-handoff/*), Write(/tmp/claude-handoff/*), Write(~/.ai-memory/**), Read(~/.ai-memory/**)
 ---
 
 # create-handoff
@@ -32,20 +32,23 @@ itself, as it used to.
 
 ## Where the file goes
 
-Work the directory out in this order, and create it if it is not there:
+**`~/.ai-memory/handoff/`**, in the same git repository as the memory files. It is shared by the
+local machine and Claude Code cloud sessions, so a handoff written on one side is picked up on the
+other -- but only once it is pushed (see **After writing**).
 
-1. `~/tmp/claude-handoff/` -- whenever `~/tmp` exists
-2. `${TMPDIR:-/tmp}/claude-handoff/` -- otherwise
+1. Get the repository ready with the `sync-ai-memory` skill (`prepare`). If `save-memory` just ran,
+   it already did this; running it again only pulls
+2. `mkdir -p ~/.ai-memory/handoff`
 
-Both are **deterministic on purpose**. A `mktemp -d` path cannot be found again by the next
-session, which is the whole thing this pair exists to avoid. Only if neither can be created, fall
-back to `mktemp -d` -- and then **say the path loudly** in your reply, because that is the one
-case where the user does have to keep it.
+The path is **deterministic on purpose**. A `mktemp -d` path cannot be found again by the next
+session, which is the whole thing this pair exists to avoid.
 
-⚠️ **`~/tmp` is read-only inside the Bash sandbox.** Both the `mkdir` and the write need
-`dangerouslyDisableSandbox: true`, so write the file with a quoted-heredoc `cat > ... <<'EOF'`
-rather than the Write tool, which has no such option. (Adding `~/tmp` to the sandbox's write
-allowlist would remove the need -- see the `update-config` skill.)
+**Only if `~/.ai-memory` is not set up** (`prepare` says so and the user does not want to set it up
+now), fall back to the old local places, first that works: `~/tmp/claude-handoff/` when `~/tmp`
+exists, then `${TMPDIR:-/tmp}/claude-handoff/`. Say plainly that this handoff **stays on this
+machine** -- and in a cloud session, that it is gone with the container. (Locally `~/tmp` is
+read-only inside the Bash sandbox: the `mkdir` and the write need `dangerouslyDisableSandbox: true`,
+so write with a quoted heredoc rather than the Write tool.)
 
 File name: `<project>-<YYYY-MM-DD-HHMM>.md`
 
@@ -60,6 +63,8 @@ File name: `<project>-<YYYY-MM-DD-HHMM>.md`
   called `develop`, and the project is not.
 - `<YYYY-MM-DD-HHMM>` comes from `date +%Y-%m-%d-%H%M`. Never overwrite an earlier handoff. The
   names sort chronologically, and the last one is what `read-handoff` picks.
+- In a cloud session the working directory is the cloned repository, so `<project>` comes out the
+  same as it does locally.
 
 ## What to write
 
@@ -109,7 +114,7 @@ the memory's `gotcha:` lines are for. What stays here is the part that is true o
 - **Record decisions together with the reason** -- in the memory, which is where reasons live now.
   A decision without its reason gets re-litigated
 - **No secrets**, and no real names taken from screenshots or from the conversation
-- Do not delete older handoffs
+- Do not delete older handoffs -- `pop-handoff` removes the one it reads
 
 ## Then: close the session down
 
@@ -140,8 +145,15 @@ work needs.
 
 ## After writing
 
-Report both absolute paths -- the memory file and the handoff -- and say that the next session
-only has to run `/read-handoff`, which reads the handoff and follows it to the memory on its own.
+**Publish the handoff** with the `sync-ai-memory` skill:
+`publish 'handoff: <project> <YYYY-MM-DD-HHMM>' handoff/<file>.md`. Until it is pushed, the other
+machine cannot see it, and a cloud session loses it with the container. Do this **before** closing
+the session down, while the network and the clone are still there.
+
+Report both paths -- the memory file and the handoff, as `~/.ai-memory/...` -- whether each was
+pushed, and that the next session, local or in the cloud, only has to run `/read-handoff` (or
+`/pop-handoff`, which also removes it once read). Either reads the handoff and follows it to the
+memory on its own.
 
 **Also report what was closed**, one line each: what was shut down, what was left running on
 purpose. The user is about to leave the machine and should not have to guess what is still on it.

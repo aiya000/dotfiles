@@ -1,15 +1,17 @@
 ---
 name: read-handoff
 description: Find and follow the newest handoff prompt written by create-handoff, then the memory file it points at, without being given a path. Use at the start of a session when the user asks to pick up where the last one left off, or says 引き継ぎ / 引継ぎプロンプト読んで.
-allowed-tools: Skill, Bash(ls *), Bash(git rev-parse *), Bash(git remote:*), Bash(gh issue:*), Bash(glab issue:*), Bash(fd:*), Read(~/tmp/claude-handoff/*), Read(/tmp/claude-handoff/*), Read(~/.ai-memory/*)
+allowed-tools: Skill, Read(~/.ai-memory/**), Bash(ls *), Bash(git rev-parse *), Bash(git remote:*), Bash(gh issue:*), Bash(glab issue:*), Bash(fd:*), Read(~/tmp/claude-handoff/*), Read(/tmp/claude-handoff/*)
 ---
 
 # read-handoff
 
 Picks up where the last session stopped. **The user should not have to supply a path.**
 
-The last session left two files, not one: the handoff under `~/tmp/claude-handoff/`, and a memory
-file under `~/.ai-memory/` that the handoff names. **Both get read**, in that order.
+The last session left two files, not one, both in the `~/.ai-memory/` git repository: the handoff
+under `handoff/`, and a memory file that the handoff names. **Both get read**, in that order. The
+repository is shared by the local machine and Claude Code cloud sessions, so the handoff may have
+been written on the other side.
 
 ## First: the issue overview
 
@@ -25,9 +27,12 @@ calls 未解決 may already be closed, and something new may have been opened si
 
 ## Finding the file
 
-1. The directory, in the same order `create-handoff` uses:
-    1. `~/tmp/claude-handoff/` when `~/tmp` exists
-    2. `${TMPDIR:-/tmp}/claude-handoff/`
+1. **Get the repository level with the `sync-ai-memory` skill (`prepare`)** -- a pull, or in a
+   cloud session a clone. Without it, a handoff written on the other machine is not there yet.
+   The directory is `~/.ai-memory/handoff/`. Handoffs written before the move to the repository
+   live in the old local places, `~/tmp/claude-handoff/` and `${TMPDIR:-/tmp}/claude-handoff/`:
+   look there too, and take the newest across all of them. If `prepare` says `~/.ai-memory` is
+   not set up, use the old places alone and say so
 2. Work out the project the same way it does:
 
    ```sh
@@ -42,6 +47,9 @@ calls 未解決 may already be closed, and something new may have been opened si
 
 An argument overrides all of that: a path is read directly, anything else is treated as a project
 name.
+
+This skill **leaves the handoff where it is**. To remove it once read, the user runs `pop-handoff`
+instead.
 
 ## Then: follow it to the memory
 
