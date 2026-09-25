@@ -524,6 +524,35 @@ install-ntfy-with-server-feature:
 		: \
 	)
 
+# Build cursor-highlight (https://github.com/Hazyzh/cursor-highlight) for Apple Silicon (arm64),
+# because the official release only ships an Intel build.
+#
+# Notes:
+# - Uses npm (yarn.lock exists, but npm resolves it fine here).
+# - CSC_IDENTITY_AUTO_DISCOVERY=false skips code signing (self-use only; avoids revoked-cert errors).
+# - Packages the .app directly (skips .dmg, since the old electron-builder needs Python 2 for dmg).
+# - Copies the arm64 .app to /Applications and clears the quarantine attribute so it launches.
+install-cursor-highlight-arm64:
+	@set -e; \
+	WORK_DIR="$$HOME/tmp/cursor-highlight"; \
+	if [ ! -d "$$WORK_DIR" ]; then \
+		mkdir -p "$$HOME/tmp"; \
+		git clone https://github.com/Hazyzh/cursor-highlight.git "$$WORK_DIR"; \
+	fi; \
+	cd "$$WORK_DIR"; \
+	echo "Installing dependencies..."; \
+	npm install; \
+	echo "Building frontend (vite)..."; \
+	npx cross-env ELECTRON=true vite build; \
+	echo "Packaging arm64 .app (unsigned)..."; \
+	npx cross-env CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac --arm64 --dir; \
+	echo "Installing to /Applications..."; \
+	rm -rf "/Applications/Cursor Highlight.app"; \
+	cp -R "$$WORK_DIR/app_output/mac-arm64/Cursor Highlight.app" "/Applications/"; \
+	xattr -dr com.apple.quarantine "/Applications/Cursor Highlight.app" 2>/dev/null || true; \
+	lipo -info "/Applications/Cursor Highlight.app/Contents/MacOS/Cursor Highlight"; \
+	echo "Done! Launch with: open '/Applications/Cursor Highlight.app'"
+
 # macOS 26 workaround: installer's open fails because Info.plist is rw------- (owner-only)
 install-kiro-cli-force:
 	@set -e; \
@@ -549,6 +578,8 @@ install-android-cmdline-tools:
 		mv ~/android-sdk/cmdline-tools/cmdline-tools ~/android-sdk/cmdline-tools/latest && \
 		rm /tmp/commandlinetools-mac-14742923_latest.zip && \
 	: )
+
+# --
 
 endif # }}}
 
