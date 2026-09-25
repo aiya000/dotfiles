@@ -376,6 +376,7 @@ alias lla='ls -la --color=auto --group-directories-first'
 alias ei=exit
 alias t=vterminal
 alias f=fterminal
+alias a=aterminal
 alias ki=kill-list
 
 # alias ..='cd ../'

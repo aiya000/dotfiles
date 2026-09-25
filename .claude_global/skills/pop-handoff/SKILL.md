@@ -20,10 +20,12 @@ Handoffs are perishable. Once a session has picked one up, the next session shou
    file it picked up
 2. **Remove that handoff, and only that one**:
     - In `~/.ai-memory/handoff/`: with the `sync-ai-memory` skill,
-      `drop 'handoff: pop <file>' handoff/<file>.md`. It is removed and pushed; the repository's
-      history keeps it, so it can be brought back
+      `drop 'handoff: pop <file>' handoff/<file>.md handoff/<file>.declined`. It is removed and
+      pushed, with its `decline-handoff-suggestion` marker if it had one; the repository's history
+      keeps it, so it can be brought back
     - In an old local place (`~/tmp/claude-handoff/`, `${TMPDIR:-/tmp}/claude-handoff/`): not in
-      the repository, so `rm-dust <path>` (`rm` in a cloud session, where there is no `rm-dust`)
+      the repository, so `rm-dust <path>` and its `.declined` marker, if any (`rm` in a cloud
+      session, where there is no `rm-dust`)
 3. Say in one line which file was removed, and whether the removal was pushed. Then carry on with
    what the handoff says to do first -- the pop is not the end of the job
 

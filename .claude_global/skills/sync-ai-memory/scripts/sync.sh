@@ -5,7 +5,7 @@
 # Usage:
 #   sync.sh prepare [CLONE_URL]     make ~/.ai-memory usable and pull it
 #   sync.sh publish MESSAGE PATH... commit PATH... (relative to ~/.ai-memory) and push
-#   sync.sh drop MESSAGE PATH...    git rm PATH..., then publish the deletion
+#   sync.sh drop MESSAGE PATH...    git rm the tracked ones of PATH..., then commit and push
 #
 # prepare
 #   - ~/.ai-memory is a symlink: pull it (rebase, autostash)
@@ -107,8 +107,16 @@ drop() {
   [ -L "$mem" ] || code=3 die '~/.ai-memory is not set up; run `sync.sh prepare` first'
   local message=$1
   shift
-  in_repo git rm --quiet --ignore-unmatch -- "$@"
-  commit_and_push "$message" "$@"
+  # Only the paths git knows: a marker that never existed (a handoff nobody
+  # declined) is simply skipped, rather than failing the commit's pathspec.
+  local tracked=()
+  mapfile -t tracked < <(in_repo git ls-files -- "$@")
+  if [ ${#tracked[@]} -eq 0 ]; then
+    echo 'nothing to drop'
+    return 0
+  fi
+  in_repo git rm --quiet -- "${tracked[@]}"
+  commit_and_push "$message" "${tracked[@]}"
 }
 
 case "${1:-}" in

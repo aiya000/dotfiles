@@ -386,6 +386,8 @@ end, {
   desc = 'Send `@{full path}#L{line}` (or `#L{line1}-{line2}` with a range) of the current file to the default AI agent (claude uses `:ClaudeCodeSend`)',
 })
 
+--
+
 create_command('ChangeDefaultAIAgent', function(opts)
   nvim.change_default_ai_agent(opts.args)
 end, {
@@ -394,6 +396,12 @@ end, {
     return nvim.default_ai_agent_names
   end,
   desc = 'Change `InitLua.default_ai_agent` to the given AI agent name',
+})
+
+create_command('ToggleDefaultAIAgent', function()
+  nvim.toggle_default_ai_agent_cli()
+end, {
+  desc = 'Toggle the AI agent configured at `InitLua.default_ai_agent` (opens it in a float window)',
 })
 
 -- TODO: 普通にautofixプラグインを使う（aleあたり）
