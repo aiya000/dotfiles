@@ -14,6 +14,11 @@
 # fallback to another project's newest file is right when a human asked for
 # it, and noise when nobody did.
 #
+# A "no" is remembered per handoff: declining leaves an empty `<name>.declined`
+# next to `<name>.md`, and that handoff is not offered again. Only a decline
+# marks it -- an offer the user skipped past stays on the table. The marker
+# does not end in `.md`, so read-handoff can still read the file when asked.
+#
 # The injected text is written as factual statements rather than imperatives on
 # purpose. Imperative, out-of-band-sounding instructions trip Claude's
 # prompt-injection defenses, which makes it surface the text to the user
@@ -56,6 +61,9 @@ for f in "$dir/$project"-*.md; do
 done
 [ -n "$newest" ] || exit 0
 
+declined="${newest%.md}.declined"
+[ -e "$declined" ] && exit 0
+
 base=$(basename "$newest" .md)
 stamp=${base#"$project"-}  # YYYY-MM-DD-HHMM
 day=${stamp%-*}
@@ -77,7 +85,9 @@ if epoch=$(date -d "$day" +%s 2>/dev/null); then
 fi
 
 context="前回のセッションは create-handoff で終わっていて、このプロジェクト（${project}）宛ての引継ぎファイルが残っている: ${newest}（${when}${age:+、$age}）。"
-context+='このセッションでは、作業に入る前にまず、その引継ぎを読むかどうかがユーザーに尋ねられる。読むと言われたときにだけ read-handoff スキルが実行される。断られたら、この件はもう持ち出さない。ユーザーが最初から別の用件を出している場合は、その用件を先に片付けてから尋ねてよい。引継ぎの中身は、尋ねる前には読まない。'
+context+='このセッションでは、作業に入る前にまず、その引継ぎを読むかどうかがユーザーに尋ねられる。読むと言われたときにだけ read-handoff スキルが実行される。断られたら、この件はもう持ち出さない。'
+context+="断られたときは \`touch ${declined}\` でその印が残され、この引継ぎは次のセッションから提案されなくなる。返事がないまま別の話に進んだときは、印は残されない。"
+context+='ユーザーが最初から別の用件を出している場合は、その用件を先に片付けてから尋ねてよい。引継ぎの中身は、尋ねる前には読まない。'
 
 if command -v jq >/dev/null 2>&1; then
   jq -nc --arg ctx "$context" \
