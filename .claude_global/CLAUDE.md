@@ -36,6 +36,8 @@ Always use the corresponding skill instead of running git commands directly:
 - **`git add`** → use the `git-add` skill
 - **`git commit`** → use the `git-commit` skill
 - **`git push`** → use the `git-push` skill
+- **`git fetch`** → use the `git-fetch` skill
+- **`git pull`** → use the `git-pull` skill
 - **git identity check** → use the `git-verify-identity` skill (automatically before any commit/rebase/cherry-pick)
 
 ### **Prohibited command patterns**
