@@ -106,9 +106,9 @@ Examples from this repository:
 
 - `save-memory` / `create-handoff` / `read-handoff` / `pop-handoff`: already portable -- the worked
   example of "commit it to a repository". `~/.ai-memory` (memory files and `handoff/`) is a git
-  repository shared by both sides; `sync-ai-memory` pulls it before and pushes after, and in a
+  repository shared by both sides; `sync-memory` pulls it before and pushes after, and in a
   cloud session clones it into the cache directory first (`AI_MEMORY_REPO` from the environment
-  settings, `add_repo` for access). Convert them together with `sync-ai-memory`, as-is
+  settings, `add_repo` for access). Convert them together with `sync-memory`, as-is
 - `vrchat-force-purge-all-favorite-worlds`: fixed `/tmp` paths are fine -- they only need to
   last one run
 

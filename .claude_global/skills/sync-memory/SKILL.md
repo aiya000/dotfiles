@@ -1,11 +1,11 @@
 ---
-name: sync-ai-memory
+name: sync-memory
 description: Make ~/.ai-memory -- the git repository that holds memory files and handoffs, shared by the local machine and Claude Code cloud sessions -- ready to read and write, and publish what was written. In a cloud session it clones the repository into the cache directory first. Used by save-memory, create-handoff, read-handoff and pop-handoff; use directly when the user asks to sync, pull, or push their memories or handoffs.
 allowed-tools: Bash(bash *), Bash(ls *), mcp__Claude_Code_Remote__add_repo, ToolSearch
 compatibility: Needs git, and the memory repository reachable from the session. In a cloud session, AI_MEMORY_REPO (owner/name) must be set in the environment settings and the Claude GitHub App installed on that repository.
 ---
 
-# sync-ai-memory
+# sync-memory
 
 `~/.ai-memory/` is a git repository. The local machine and every Claude Code cloud session read
 and write the same one, so **each side pulls before it reads and pushes after it writes**. This

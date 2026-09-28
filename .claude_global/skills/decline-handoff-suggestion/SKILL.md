@@ -1,7 +1,7 @@
 ---
 name: decline-handoff-suggestion
 description: Decline the handoff that offer-handoff.sh offered at session start, so it is never offered again. Use when the user answers the "read the handoff?" question with no, or says 引継ぎはいい / 引継ぎ断る.
-allowed-tools: Skill(sync-ai-memory), Bash(ls *), Bash(git rev-parse *), Bash(touch *)
+allowed-tools: Skill(sync-memory), Bash(ls *), Bash(git rev-parse *), Bash(touch *)
 ---
 
 # decline-handoff-suggestion
@@ -37,7 +37,7 @@ name.
 ## Marking it
 
 1. `touch <dir>/<name>.declined` -- `<name>` is the handoff's file name without `.md`
-    - When the handoff is in `~/.ai-memory/handoff/`, publish the marker with the `sync-ai-memory`
+    - When the handoff is in `~/.ai-memory/handoff/`, publish the marker with the `sync-memory`
       skill -- `publish 'handoff: decline <name>' handoff/<name>.declined` -- so the other machine
       does not offer it either, and the marker does not sit untracked in the repository
 2. **Do not read the handoff.** Declining is the whole job

@@ -26,7 +26,7 @@ set -euo pipefail
 
 mem=~/.ai-memory
 
-die() { printf 'sync-ai-memory: %s\n' "$*" >&2; exit "${code:-1}"; }
+die() { printf 'sync-memory: %s\n' "$*" >&2; exit "${code:-1}"; }
 
 in_repo() ( cd "$mem" && "$@" )
 

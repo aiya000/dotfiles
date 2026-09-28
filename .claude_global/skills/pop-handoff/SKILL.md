@@ -1,7 +1,7 @@
 ---
 name: pop-handoff
 description: Pick up the newest handoff exactly as read-handoff does -- then remove it from the ~/.ai-memory repository and push, so it is not offered again on this machine or in a cloud session. Like git stash pop next to read-handoff's apply. Use when the user asks to pop the handoff, or to read the handoff and clear it.
-allowed-tools: Skill(read-handoff), Skill(sync-ai-memory), Bash(ls *), Bash(rm-dust *), AskUserQuestion
+allowed-tools: Skill(read-handoff), Skill(sync-memory), Bash(ls *), Bash(rm-dust *), AskUserQuestion
 ---
 
 # pop-handoff
@@ -19,7 +19,7 @@ Handoffs are perishable. Once a session has picked one up, the next session shou
    the issue overview, finding the handoff, following it to the memory file. Note which handoff
    file it picked up
 2. **Remove that handoff, and only that one**:
-    - In `~/.ai-memory/handoff/`: with the `sync-ai-memory` skill,
+    - In `~/.ai-memory/handoff/`: with the `sync-memory` skill,
       `drop 'handoff: pop <file>' handoff/<file>.md handoff/<file>.declined`. It is removed and
       pushed, with its `decline-handoff-suggestion` marker if it had one; the repository's history
       keeps it, so it can be brought back

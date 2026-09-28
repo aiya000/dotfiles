@@ -1,7 +1,7 @@
 ---
 name: save-memory
 description: Export and distill the current conversation into a memory file. Use when the user asks to save, remember, or note the current session for future context.
-allowed-tools: Skill(sync-ai-memory), Bash(date *), Bash(ls *), Bash(printf *), Write(~/.ai-memory/*), Read(~/.ai-memory/*)
+allowed-tools: Skill(sync-memory), Bash(date *), Bash(ls *), Bash(printf *), Write(~/.ai-memory/*), Read(~/.ai-memory/*)
 ---
 
 # save-memory
@@ -38,7 +38,7 @@ duplicate block to the same file.
 
 1. Use the current conversation as the source
 2. Get the timestamp: `date +%Y-%m-%d_%H:%M`
-3. **Get `~/.ai-memory` ready with the `sync-ai-memory` skill (`prepare`).** It is a git
+3. **Get `~/.ai-memory` ready with the `sync-memory` skill (`prepare`).** It is a git
    repository shared with Claude Code cloud sessions, so this pulls it first -- and in a cloud
    session, clones it. If it reports that `~/.ai-memory` is not set up, **stop and ask the user
    to set it up**. Do not create it
@@ -63,7 +63,7 @@ duplicate block to the same file.
     - Existing file updated -> refresh its line if the summary drifted
     - Append with `printf '%s\n' '<line>' >> ~/.ai-memory/MEMORY-INDEX.md`; the same hook
       caveat applies to the line's text
-7. **Publish** with the `sync-ai-memory` skill: `publish 'memory: <topic>' <file>.md
+7. **Publish** with the `sync-memory` skill: `publish 'memory: <topic>' <file>.md
    MEMORY-INDEX.md`. Until it is pushed, the other machine cannot see it -- and in a cloud
    session it is lost with the container. Report the path, and whether the push went through
 

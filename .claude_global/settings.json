@@ -121,7 +121,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/hooks/sync-ai-memory-autonomy.sh",
+            "command": "~/.claude/hooks/sync-memory-autonomy.sh",
             "timeout": 5
           }
         ]

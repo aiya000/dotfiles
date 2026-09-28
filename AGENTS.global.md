@@ -198,7 +198,7 @@ Do not create it yourself.
 
 The target is a git repository, shared by the local machine and Claude Code cloud sessions.
 Pull it before reading or writing, and commit and push the files you wrote afterwards, so the
-other side sees them. (Claude Code does this through the `sync-ai-memory` skill, which is also the
+other side sees them. (Claude Code does this through the `sync-memory` skill, which is also the
 one exception to "do not create it": in a cloud session it clones the repository into the cache
 directory and points `~/.ai-memory` at the clone.)
 

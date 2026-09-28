@@ -27,7 +27,7 @@ calls 未解決 may already be closed, and something new may have been opened si
 
 ## Finding the file
 
-1. **Get the repository level with the `sync-ai-memory` skill (`prepare`)** -- a pull, or in a
+1. **Get the repository level with the `sync-memory` skill (`prepare`)** -- a pull, or in a
    cloud session a clone. Without it, a handoff written on the other machine is not there yet.
    The directory is `~/.ai-memory/handoff/`. Handoffs written before the move to the repository
    live in the old local places, `~/tmp/claude-handoff/` and `${TMPDIR:-/tmp}/claude-handoff/`:

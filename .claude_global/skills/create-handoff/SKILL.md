@@ -1,7 +1,7 @@
 ---
 name: create-handoff
 description: Save the session's durable half as a memory file (save-memory), then write the perishable half -- the handoff prompt for the next session -- to a well-known place in the ~/.ai-memory repository and push it, so the next session, local or in the cloud, can pick the work up with read-handoff or pop-handoff and nobody has to carry a path, then close the session down -- release what is holding memory, shut down what this session opened, and report it. Use when the user asks for a 引継ぎプロンプト or a handoff note, or when a long session is being wrapped up.
-allowed-tools: Skill(save-memory), Skill(sync-ai-memory), Bash(date *), Bash(mkdir *), Bash(ls *), Bash(printf *), Bash(git rev-parse *), Bash(pgrep *), Bash(pkill *), TaskStop, Write(~/tmp/claude-handoff/*), Write(/tmp/claude-handoff/*), Write(~/.ai-memory/**), Read(~/.ai-memory/**)
+allowed-tools: Skill(save-memory), Skill(sync-memory), Bash(date *), Bash(mkdir *), Bash(ls *), Bash(printf *), Bash(git rev-parse *), Bash(pgrep *), Bash(pkill *), TaskStop, Write(~/tmp/claude-handoff/*), Write(/tmp/claude-handoff/*), Write(~/.ai-memory/**), Read(~/.ai-memory/**)
 ---
 
 # create-handoff
@@ -36,7 +36,7 @@ itself, as it used to.
 local machine and Claude Code cloud sessions, so a handoff written on one side is picked up on the
 other -- but only once it is pushed (see **After writing**).
 
-1. Get the repository ready with the `sync-ai-memory` skill (`prepare`). If `save-memory` just ran,
+1. Get the repository ready with the `sync-memory` skill (`prepare`). If `save-memory` just ran,
    it already did this; running it again only pulls
 2. `mkdir -p ~/.ai-memory/handoff`
 
@@ -145,7 +145,7 @@ work needs.
 
 ## After writing
 
-**Publish the handoff** with the `sync-ai-memory` skill:
+**Publish the handoff** with the `sync-memory` skill:
 `publish 'handoff: <project> <YYYY-MM-DD-HHMM>' handoff/<file>.md`. Until it is pushed, the other
 machine cannot see it, and a cloud session loses it with the container. Do this **before** closing
 the session down, while the network and the clone are still there.
