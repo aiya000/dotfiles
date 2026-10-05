@@ -26,7 +26,9 @@ Handoffs are perishable. Once a session has picked one up, the next session shou
     - In an old local place (`~/tmp/claude-handoff/`, `${TMPDIR:-/tmp}/claude-handoff/`): not in
       the repository, so `rm-dust <path>` and its `.declined` marker, if any (`rm` in a cloud
       session, where there is no `rm-dust`)
-3. Say in one line which file was removed, and whether the removal was pushed. Then carry on with
+3. **Run the `sync-memory` skill (`sync`)** -- always, on your own, never left to the user. It
+   pushes the removal if the `drop` could not
+4. Say in one line which file was removed, and whether the removal was pushed. Then carry on with
    what the handoff says to do first -- the pop is not the end of the job
 
 ## When not to remove it

@@ -65,7 +65,12 @@ duplicate block to the same file.
       caveat applies to the line's text
 7. **Publish** with the `sync-memory` skill: `publish 'memory: <topic>' <file>.md
    MEMORY-INDEX.md`. Until it is pushed, the other machine cannot see it -- and in a cloud
-   session it is lost with the container. Report the path, and whether the push went through
+   session it is lost with the container
+8. **Last, always: run the `sync-memory` skill (`sync`)** -- on your own, never leaving it to the
+   user. It pushes anything step 7 left unpushed. Skip it only when this skill was called from
+   `create-handoff`, which runs it itself at its own end
+9. **Report.** The report message **must** contain the exact phrase `AI Memory Saved!`, then the
+   path, and whether the push went through
 
 ## Memory file format (v2)
 

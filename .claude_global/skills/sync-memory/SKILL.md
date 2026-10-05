@@ -80,6 +80,19 @@ the handoff it read -- the file stays in the repository's history, so a drop can
 it rather than `rm`: locally `rm` is denied, and `rm-dust` would move the file out of the
 repository without recording why.
 
+## sync -- the last step of every skill that writes memory
+
+```sh
+bash <this skill>/scripts/sync.sh sync
+```
+
+Pulls, then pushes any commit still sitting in the clone -- a `publish` or `drop` whose push failed,
+or one that was skipped. It commits nothing itself, so it is safe to run when everything is already
+pushed (`synced; nothing to push`).
+
+`save-memory`, `create-handoff` and `pop-handoff` **always end by running this**, on their own.
+The user never has to run `/sync-memory` by hand after them.
+
 ## One-time setup (the user's, not this skill's)
 
 Tell the user when it is missing; do not do it for them.

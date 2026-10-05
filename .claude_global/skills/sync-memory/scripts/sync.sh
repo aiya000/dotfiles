@@ -6,6 +6,7 @@
 #   sync.sh prepare [CLONE_URL]     make ~/.ai-memory usable and pull it
 #   sync.sh publish MESSAGE PATH... commit PATH... (relative to ~/.ai-memory) and push
 #   sync.sh drop MESSAGE PATH...    git rm the tracked ones of PATH..., then commit and push
+#   sync.sh sync                    pull, then push any commits still local
 #
 # prepare
 #   - ~/.ai-memory is a symlink: pull it (rebase, autostash)
@@ -90,6 +91,10 @@ commit_and_push() {
   fi
 
   has_upstream || { echo 'committed; no upstream branch, so not pushed' >&2; return 0; }
+  push_with_retry
+}
+
+push_with_retry() {
   local wait
   for wait in 0 2 4 8 16; do
     sleep "$wait"
@@ -119,9 +124,23 @@ drop() {
   commit_and_push "$message" "${tracked[@]}"
 }
 
+# Pulls, then pushes whatever commits are still local -- a publish whose push
+# failed, or one that was never run. Commits nothing itself.
+sync() {
+  [ -L "$mem" ] || code=3 die '~/.ai-memory is not set up; run `sync.sh prepare` first'
+  has_upstream || { echo 'no upstream branch; nothing to sync'; return 0; }
+  in_repo git pull --rebase --autostash --quiet || { in_repo git rebase --abort 2>/dev/null; die 'rebase failed; resolve by hand'; }
+  if [ "$(in_repo git rev-list --count '@{u}..HEAD')" -eq 0 ]; then
+    echo 'synced; nothing to push'
+    return
+  fi
+  push_with_retry
+}
+
 case "${1:-}" in
   prepare) shift; prepare "$@" ;;
   publish) shift; publish "$@" ;;
   drop) shift; drop "$@" ;;
-  *) die 'usage: sync.sh prepare [CLONE_URL] | publish MESSAGE PATH... | drop MESSAGE PATH...' ;;
+  sync) shift; sync "$@" ;;
+  *) die 'usage: sync.sh prepare [CLONE_URL] | publish MESSAGE PATH... | drop MESSAGE PATH... | sync' ;;
 esac

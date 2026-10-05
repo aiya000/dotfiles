@@ -157,3 +157,9 @@ memory on its own.
 
 **Also report what was closed**, one line each: what was shut down, what was left running on
 purpose. The user is about to leave the machine and should not have to guess what is still on it.
+
+## Last, always: sync-memory
+
+**The final step of this skill is the `sync-memory` skill (`sync`)** -- after the closing down,
+run on your own, never left to the user. It pushes whatever the memory's or the handoff's publish
+left unpushed. (`save-memory`'s own report still says `AI Memory Saved!`.)
