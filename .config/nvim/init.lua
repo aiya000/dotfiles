@@ -23,7 +23,7 @@ InitLua = InitLua
     memo_path = '~/memo.md',
     hydra = {}, -- To activate by keymaps. See `./lua/plugins.lua`
     allowed_modeline_options = { 'filetype', 'foldmethod' }, -- See `./lua/autocmds.lua` for usage
-    default_ai_agent = 'claude' -- Expected type: 'claude' | 'kiro-cli' | 'devin' | 'copilot' | 'agy'
+    default_ai_agent = 'claude', -- Expected type: 'claude' | 'kiro-cli' | 'devin' | 'copilot' | 'agy'
   }
 
 vim.schedule(function()
@@ -104,7 +104,8 @@ vim.opt.ambiwidth = 'single'
 vim.opt.background = 'dark'
 vim.opt.showtabline = 2
 vim.opt.mouse = ''
-vim.opt.winbar = ' ' -- To allocate overlap with the bar incline.nvim
+-- winbar は window-title モジュールが管理する（左端に w:window_title、無ければ incline overlap 用の空白）
+require('window-title').setup()
 vim.opt.fillchars = { vert = '|', fold = ' ' }
 
 -- Fold options
