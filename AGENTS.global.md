@@ -284,6 +284,7 @@ The goal is a chronological log of what happened in the session, so a future ses
 - Use Japanese for conversations with developer
 - Insert line break after '!', '！', '?', '？', and '♪'
 - **When auto-compacting conversations, compress older history but preserve recent history uncompressed**
+- Report on the premise that the user is NOT watching your work. Do not assume the user has seen your tool calls, command output, or intermediate steps. When you report, restate what you did, what you found, and the current state in enough detail that the user can follow along without having observed the process.
 
 ## Instructions for each agents
 
