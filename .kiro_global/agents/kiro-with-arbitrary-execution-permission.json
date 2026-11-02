@@ -35,5 +35,61 @@
         ".*"
       ]
     }
+  },
+  "permissions": {
+    "rules": [
+      {
+        "capability": "shell",
+        "match": [
+          "*"
+        ],
+        "effect": "allow"
+      },
+      {
+        "capability": "shell",
+        "match": [
+          "find *",
+          "find",
+          "grep *",
+          "grep",
+          "rm *",
+          "rm"
+        ],
+        "effect": "deny"
+      },
+      {
+        "capability": "fs_read",
+        "match": [
+          ".*"
+        ],
+        "effect": "allow"
+      },
+      {
+        "capability": "fs_write",
+        "match": [
+          ".*"
+        ],
+        "effect": "allow"
+      },
+      {
+        "capability": "web_fetch",
+        "match": [
+          "*"
+        ],
+        "effect": "allow"
+      },
+      {
+        "capability": "all",
+        "effect": "allow"
+      }
+    ],
+    "policies": [
+      "read-only-shell"
+    ]
+  },
+  "kiroUpgrade": {
+    "revision": 2,
+    "fingerprint": "sha256:ea18b3d992dbc3fbdd2279fb910f0eec66c98227fed2e8c8f70dbf69e80d0d21",
+    "source": "sha256:acecdb25337ad4aea306ec12e4e7f0bc5a6f999ebf35f29fd198e7265e8f742d"
   }
 }
